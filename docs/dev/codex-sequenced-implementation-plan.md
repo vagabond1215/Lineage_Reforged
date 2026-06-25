@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-25
-Route: Codex local sequencing alignment after `Version 0.5.232 - Monster Schema And Validator Hardening`
+Route: Codex local sequencing alignment after `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.232 - Monster Schema And Validator Hardening`
+- `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
 
 Immediate next Codex run:
 
-- `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
+- `Version 0.5.234 - Quest Objective And Condition Validation Pass`
 
 Versioning note:
 
@@ -85,8 +85,9 @@ Versioning note:
 - Settlement Schema And Validator Hardening landed in `0.5.230`: optional settlement visual map references now resolve against current map and visual-map-feature authority, with split biome-zone families supported and no schema/content/runtime changes.
 - Crafting Recipe Schema And Validator landed in `0.5.231`: the strict future recipe schema, isolated pure semantic validator, focused tests, and schema-file registration exist without live recipe content or normal lint registration.
 - Monster Schema And Validator Hardening landed in `0.5.232`: pure monster authority validation now hardens id/slug coherence, duplicate tags and loot keys, item/market/fauna/lineage/role/preset references, with focused tests and no schema/content/runtime change.
+- Weapon And Armor Profile Schemas And Validators landed in `0.5.233`: strict future profile schemas, isolated pure validators, focused tests, and schema-file registration exist without live profile content, normal lint registration, item edits, use-profile migration, runtime, UI, storage, combat execution, inventory, or gameplay changes.
 - Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.222` direction.
-- Do not roll from `0.5.221` to `0.6.0` without a dedicated runtime-readiness decision.
+- Do not roll from `0.5.233` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -245,8 +246,8 @@ Versioning note:
 | 151 | `0.5.230` | Settlement Schema And Validator Hardening | Codex 5.5 Local | `0.5.218` decision | validator + tests | Completed | Added visual-map reference hardening only; no schema/content/runtime change. |
 | 152 | `0.5.231` | Crafting Recipe Schema And Validator | Codex 5.5 Local | `0.5.219` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content. |
 | 153 | `0.5.232` | Monster Schema And Validator Hardening | Codex 5.5 Local | `0.5.220` decision | validator + tests | Completed | Added pure monster authority validation and focused tests without schema/content/runtime change. |
-| 154 | `0.5.233` | Weapon And Armor Profile Schemas And Validators | Codex 5.5 Local | `0.5.221` decision | schemas + validators + tests | Next | Only if approved by `0.5.221`. |
-| 155 | `0.5.234` | Quest Objective And Condition Validation Pass | Codex 5.5 Local | `0.5.222` decision | validator + tests | Conditional | Only if approved by `0.5.222`. |
+| 154 | `0.5.233` | Weapon And Armor Profile Schemas And Validators | Codex 5.5 Local | `0.5.221` decision | schemas + validators + tests | Completed | Added strict future schemas, isolated pure validators, focused tests, and schema-file registration without live content or normal lint registration. |
+| 155 | `0.5.234` | Quest Objective And Condition Validation Pass | Codex 5.5 Local | `0.5.222` decision | validator + tests | Next | Only if approved by `0.5.222`. |
 | 156 | `0.5.235` | People And NPC Schemas And Validators | Codex 5.5 Local | `0.5.223` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.223`. |
 | 157 | `0.5.236` | Magic Study Source Schema And Validator | Codex 5.5 Local | `0.5.224` decision | schema + validator + tests | Conditional | Only if approved by `0.5.224`. |
 | 158 | `0.5.237` | Polity Schema And Validator | Codex 5.5 Local | `0.5.225` decision | schema + validator + tests | Conditional | Only if approved by `0.5.225`. |
@@ -274,7 +275,7 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.233 - Weapon And Armor Profile Schemas And Validators`
+1. `0.5.234 - Quest Objective And Condition Validation Pass`
 
 The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.222` must remain a documentation-only quest objective/condition decision and must not implement narrative schemas, content, or runtime behavior.
 
@@ -292,7 +293,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators` as the immediate next recommended run.
+- Keep `Version 0.5.234 - Quest Objective And Condition Validation Pass` as the immediate next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.

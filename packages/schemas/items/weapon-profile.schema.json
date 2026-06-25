@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "WeaponProfileCollection",
+  "description": "Schema for future authored weapon profile authority. Records are descriptive-only structural equipment descriptors and do not define actions, damage, runtime state, inventory, UI, storage, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/weaponProfileRecord" }
+    }
+  },
+  "$defs": {
+    "itemKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "weaponProfileId": {
+      "type": "string",
+      "pattern": "^weapon_profile\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "weaponSlotId": {
+      "type": "string",
+      "enum": ["slot.weapon.left", "slot.weapon.right"]
+    },
+    "equipmentTag": {
+      "type": "string",
+      "enum": [
+        "defensive_compatible",
+        "finesse",
+        "focus_compatible",
+        "improvised_excluded",
+        "martial",
+        "offhand_compatible",
+        "reach",
+        "thrown",
+        "two_handed"
+      ]
+    },
+    "weaponProfileRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "itemKey",
+        "weaponFamily",
+        "handedness",
+        "compatibleSlotIds",
+        "deliveryPosture",
+        "rangePosture",
+        "equipmentTags",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/weaponProfileId" },
+        "itemKey": { "$ref": "#/$defs/itemKey" },
+        "weaponFamily": {
+          "type": "string",
+          "enum": [
+            "axe",
+            "blowgun",
+            "bow",
+            "crossbow",
+            "dagger",
+            "fan",
+            "flail",
+            "mace",
+            "polearm",
+            "sling",
+            "staff",
+            "sword",
+            "thrown",
+            "whip"
+          ]
+        },
+        "handedness": {
+          "type": "string",
+          "enum": ["one_handed", "two_handed", "versatile"]
+        },
+        "compatibleSlotIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/weaponSlotId" }
+        },
+        "deliveryPosture": {
+          "type": "string",
+          "enum": ["melee", "ranged", "hybrid"]
+        },
+        "rangePosture": {
+          "type": "string",
+          "enum": ["close", "reach", "short_range", "long_range", "mixed"]
+        },
+        "equipmentTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/equipmentTag" }
+        },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/noteList" },
+        "notes": { "$ref": "#/$defs/noteList" }
+      }
+    }
+  }
+}

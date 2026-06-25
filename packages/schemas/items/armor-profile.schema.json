@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ArmorProfileCollection",
+  "description": "Schema for future authored armor profile authority. Records are descriptive-only structural equipment descriptors and do not define mitigation execution, reactions, runtime state, inventory, UI, storage, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/armorProfileRecord" }
+    }
+  },
+  "$defs": {
+    "itemKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "armorProfileId": {
+      "type": "string",
+      "pattern": "^armor_profile\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "compatibleSlotId": {
+      "type": "string",
+      "enum": [
+        "slot.weapon.left",
+        "slot.weapon.right",
+        "slot.armor.head",
+        "slot.armor.shoulder",
+        "slot.armor.chest",
+        "slot.armor.arm",
+        "slot.armor.hand",
+        "slot.armor.waist",
+        "slot.armor.leg",
+        "slot.armor.foot"
+      ]
+    },
+    "coverageSlotId": {
+      "type": "string",
+      "enum": [
+        "head",
+        "shoulder",
+        "chest",
+        "arm",
+        "hand",
+        "waist",
+        "leg",
+        "foot",
+        "shield_hand"
+      ]
+    },
+    "equipmentTag": {
+      "type": "string",
+      "enum": [
+        "body_coverage",
+        "defense",
+        "full_coverage",
+        "layerable",
+        "partial_coverage",
+        "shield",
+        "shield_bash_compatible"
+      ]
+    },
+    "armorProfileRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "itemKey",
+        "armorKind",
+        "armorFamily",
+        "compatibleSlotIds",
+        "coverageSlotIds",
+        "weightClass",
+        "encumbrancePosture",
+        "mobilityPosture",
+        "equipmentTags",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/armorProfileId" },
+        "itemKey": { "$ref": "#/$defs/itemKey" },
+        "armorKind": {
+          "type": "string",
+          "enum": ["body_armor", "shield"]
+        },
+        "armorFamily": {
+          "type": "string",
+          "enum": ["cloth", "leather", "mail", "padded", "plate", "scale", "shield"]
+        },
+        "compatibleSlotIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/compatibleSlotId" }
+        },
+        "coverageSlotIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/coverageSlotId" }
+        },
+        "weightClass": {
+          "type": "string",
+          "enum": ["light", "medium", "heavy"]
+        },
+        "encumbrancePosture": {
+          "type": "string",
+          "enum": ["low", "moderate", "high"]
+        },
+        "mobilityPosture": {
+          "type": "string",
+          "enum": ["unrestricted", "reduced", "restricted"]
+        },
+        "equipmentTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/equipmentTag" }
+        },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/noteList" },
+        "notes": { "$ref": "#/$defs/noteList" }
+      }
+    }
+  }
+}

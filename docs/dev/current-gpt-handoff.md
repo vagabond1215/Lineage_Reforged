@@ -1,49 +1,51 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.232 - Monster Schema And Validator Hardening
+Source version/run: Version 0.5.233 - Weapon And Armor Profile Schemas And Validators
 Date: 2026-06-25
-Status: monster validator hardening completed; no schema, content, runtime, UI, storage, AI, loot execution, or gameplay change
+Status: equipment profile schema/validator pass completed; no live profile content, normal lint registration, item edits, runtime, UI, storage, combat execution, inventory, or gameplay change
 
 ## Authority Rules
 
-- Existing `world.monsters` remains the canonical static monster identity, archetype, descriptor, and authored combat-baseline authority.
-- No `combat.enemy_archetypes`, replacement monster collection, field move, alias, migration, loot table, explicit monster `tacticsPresetId`, AI behavior, runtime combat behavior, reward payout, inventory mutation, or gameplay behavior was introduced.
-- Normal content lint now includes a pure monster authority helper for additional hardening:
-  - monster ids must equal `monster.<slug>`;
-  - `habitatTags` and `behaviorTags` must not duplicate values;
-  - `drops` and `loot` must not duplicate item keys within their own arrays;
-  - drop/loot item keys must resolve to `items.items` and remain covered by market item values;
-  - optional `baseFaunaId` resolves to `world.fauna`;
-  - optional `baseMonsterId` resolves to another monster and rejects self-references and cycles;
-  - optional lineage fields require `variantType`, and `variantType` requires a base fauna or monster authority;
-  - every used monster `defaultRole` must resolve to `game.combat_roles` and have the current derived `preset.enemy.<role>` tactics preset.
-- Monster `drops` and `loot` remain source-local descriptive envelopes only. They do not roll loot or create items.
-- Monster combat baselines remain static descriptors. Current HP/MP/stamina, statuses, AI state, targeting, cooldowns, rewards, inventory, encounter state, spawn state, UI, storage, commands, events, and gameplay remain runtime/future-owner concerns.
+- Existing `items.items` remains canonical item identity. No `weaponProfileId` or `armorProfileId` was added to item records.
+- Existing item-local `useProfiles` remain the current live action/use/combat-hook authority. They were not migrated, extracted, normalized, or replaced.
+- Future `items.weapon_profiles` and `items.armor_profiles` are additive descriptive authorities only.
+- Profile records reference canonical `itemKey` and enforce exact profile ids:
+  - `weapon_profile.<itemKey>`;
+  - `armor_profile.<itemKey>`.
+- Weapon profiles are restricted to item records with `itemClass: "weapon"`.
+- Armor profiles are restricted to item records with `itemClass: "armor"`, including shield records.
+- Tool-class combat use profiles and clothing armor-handling use profiles do not become equipment-profile authority.
+- Shield profiles remain armor identity while using canonical weapon-hand compatible slots.
+- Profiles do not own actions, target profiles, activation timing/costs, effect channels, resolution hooks, damage, mitigation, durability, quality, rarity, affixes, enchantments, ammo, stacks, ownership, inventory, equipped state, rewards, UI, storage, runtime, or gameplay behavior.
 
 ## Current Anchor
 
 Latest completed:
 
-- `Version 0.5.232 - Monster Schema And Validator Hardening`
+- `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
 
 Immediate next:
 
-- `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
+- `Version 0.5.234 - Quest Objective And Condition Validation Pass`
 
-## Monster Hardening Result
+## Equipment Profile Result
 
-- Added `tools/content-lint/monsters.mjs`.
-- Wired `validateMonsterAuthority(...)` into `tools/content-lint/index.mjs`.
-- Added `tests/unit/monster-validation-hardening.test.mjs`.
-- Did not edit monster schema or monster content.
+- Added `packages/schemas/items/weapon-profile.schema.json`.
+- Added `packages/schemas/items/armor-profile.schema.json`.
+- Added `tools/content-lint/equipment-profiles.mjs`.
+- Added `tests/unit/equipment-profiles-validation.test.mjs`.
+- Registered both schema files in `tests/unit/schema-files.test.mjs`.
+- Did not create `packages/content/base/items/weapon_profiles.json`.
+- Did not create `packages/content/base/items/armor_profiles.json`.
+- Did not register profile content in normal content lint.
 - Normal content lint still reports `content-lint: ok (58 files checked)`.
 
 ## Known Test Notes
 
-- `node --test tests/unit/monster-validation-hardening.test.mjs` passes.
+- `node --test tests/unit/equipment-profiles-validation.test.mjs` passes.
 - `npm.cmd run tool:content-lint` passes.
-- The broader `schema-files.test.mjs` suite still has the unrelated pre-existing Knowledge subject vocabulary assertion noted in prior handoffs.
+- `node --test tests/unit/schema-files.test.mjs` parses both new profile schemas successfully, then still fails on the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`.
 
 ## Next Route
 
-`Version 0.5.233 - Weapon And Armor Profile Schemas And Validators` is the next queued run. It must use the `0.5.221` Weapon And Armor Profile Schema Decision, preserve current item identity/use-profile and item-instance owners, and stay within approved schema/validator/focused-test scope.
+`Version 0.5.234 - Quest Objective And Condition Validation Pass` is the next queued run. It should use the `0.5.222` Quest Objective And Condition Schema Decision, preserve current embedded quest objective/condition posture unless that decision explicitly authorizes helper/schema hardening, and avoid narrative runtime, reward payout, journal/Chronicle mutation, UI, storage, command, event, or gameplay behavior.

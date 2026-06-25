@@ -1,61 +1,64 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.232 - Monster Schema And Validator Hardening
+Source version/run: Version 0.5.233 - Weapon And Armor Profile Schemas And Validators
 Date: 2026-06-25
 Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; worktree was clean and the pull was already up to date.
 
 ## Result
 
-Completed a narrow monster validation hardening pass approved by `0.5.220`.
+Completed the approved additive equipment-profile schema/validator pass from `0.5.221`.
 
-Added a pure monster authority validator helper and wired it into normal content lint as an additional dependency check for existing `world.monsters`. The helper strengthens concrete gaps found in the live audit: `id === monster.<slug>` coherence, duplicate habitat/behavior tag rejection, duplicate source-local drop/loot item-key rejection, direct drop/loot item-key resolution against `items.items`, market-value coverage preservation, optional `baseFaunaId` and `baseMonsterId` resolution, lineage self-reference/cycle rejection, minimal variant-field coupling when optional lineage is used, and the current `preset.enemy.<defaultRole>` convention for used monster roles.
+Added strict future `items.weapon_profiles` and `items.armor_profiles` wrapper schemas, an isolated pure semantic validator helper, focused in-memory tests, and schema-file registration. The validators enforce exact `weapon_profile.<itemKey>` / `armor_profile.<itemKey>` identity, duplicate id and item-key rejection, canonical `items.items` resolution, weapon-only and armor-only eligibility, weapon handedness/slot coherence, shield-as-armor with weapon-hand slot posture, body-armor slot/coverage posture, and descriptive-only field boundaries.
 
-No monster content changed. No schema changed. No collection split, field move, replacement enemy-archetype authority, loot table, runtime combat behavior, AI behavior, UI, storage, inventory mutation, reward payout, command, event, migration, alias, or gameplay behavior was added.
+No live profile content was created. No normal content-lint registration was added. No item records, `useProfiles`, equipment runtime, inventory, combat execution, UI, storage, reward, command, event, migration, or gameplay behavior changed.
 
 ## Files Changed
 
-- `tools/content-lint/monsters.mjs` - added pure monster authority hardening helper.
-- `tools/content-lint/index.mjs` - wired the helper into normal content lint dependency checks.
-- `tests/unit/monster-validation-hardening.test.mjs` - added focused in-memory validation tests for the hardened checks.
+- `packages/schemas/items/weapon-profile.schema.json` - added strict future records-only weapon profile schema.
+- `packages/schemas/items/armor-profile.schema.json` - added strict future records-only armor profile schema.
+- `tools/content-lint/equipment-profiles.mjs` - added pure in-memory semantic validators for future profile wrappers.
+- `tests/unit/equipment-profiles-validation.test.mjs` - added focused schema/validator tests and no-live-registration assertions.
+- `tests/unit/schema-files.test.mjs` - registered the two new schema files for parse coverage.
 - `docs/dev/current-codex-output.md` - replaced with this run result.
-- `docs/dev/current-gpt-handoff.md` - advanced the current anchor and monster validation posture.
-- `docs/dev/project-roadmap.md` - marked `0.5.232` complete and `0.5.233` next.
+- `docs/dev/current-gpt-handoff.md` - advanced the current anchor and profile posture.
+- `docs/dev/project-roadmap.md` - marked `0.5.233` complete and `0.5.234` next.
 - `docs/dev/codex-sequenced-implementation-plan.md` - advanced the ordered queue.
-- `docs/future_content_backlog.md` - recorded the run note and remaining deferred monster/combat boundaries.
+- `docs/future_content_backlog.md` - recorded the run note and remaining deferred profile/content/runtime boundaries.
 - `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the next recommended version.
 
 ## Checks Run
 
 - `git fetch origin` - passed.
 - `git pull --ff-only origin master` - passed; already up to date.
-- Fresh monster schema/content/validator audit against `0.5.220` - completed.
-- `node --test tests\unit\monster-validation-hardening.test.mjs` - passed.
+- Fresh item/equipment profile audit against `0.5.221` - completed.
+- `node --test tests\unit\equipment-profiles-validation.test.mjs` - passed.
+- `node --test tests\unit\schema-files.test.mjs` - expected existing failure after new schemas parse successfully; both new schemas pass parse checks, then the unrelated Knowledge subject vocabulary assertion still fails on `sacred_site`.
 - `npm.cmd run tool:content-lint` - passed; `content-lint: ok (58 files checked)`.
-- `node --test tests\unit\combat-spawn-foundation.test.mjs` - passed.
 - `git diff --check` - passed.
 - Conflict-marker scan on changed files - passed.
 - Trailing-whitespace scan on changed files - passed.
-- Changed-path scope audit - passed; changed paths are the monster lint helper, content-lint wiring, focused monster tests, and coordination docs.
-- Implementation-scope audit - passed; no runtime, AI, UI, storage, source content, schema, engine, shared runtime, loot execution, reward, inventory, command, event, or gameplay files changed.
-- Monster-authority audit - passed; no monster content, field moves, collection splits, aliases, migrations, replacement collections, new loot tables, action-package authority, tactics authority, encounter-template edits, spawn-profile edits, combat-role edits, or tactics-preset edits were introduced.
-- Version-tracking audit - passed; `0.5.232` is marked complete and `0.5.233` is the next recommended version.
+- Changed-path scope audit - passed; changed paths are the two profile schemas, isolated profile validator helper, focused profile tests, schema-file registration, and coordination docs.
+- Implementation-scope audit - passed; no profile content files, item edits, `useProfiles` migration, normal profile content-lint registration, runtime, UI, storage, command, event, reward, combat execution, inventory, equipment, or gameplay files changed.
+- Item/equipment-authority audit - passed; existing item identity, current item-local `useProfiles`, consumable profiles, market values, crafting/production references, loot/reward envelopes, and item-instance/runtime owners remain unchanged.
+- Version-tracking audit - passed; `0.5.233` is marked complete and `0.5.234` is the next recommended version.
 
 ## Behavior / Runtime Confirmation
 
-Normal content lint now performs stricter static monster authority validation. This is validation-only behavior.
+No runtime, JSON content, item catalog, normal content-lint registration, UI, storage/save-state, equipment behavior, combat execution, inventory mutation, reward payout, command, event, migration, or gameplay behavior changed.
 
-No monster records, encounter templates, spawn profiles, combat roles, tactics presets, items, market values, fauna records, quests, Knowledge, settlements, ecology, magic, runtime combat, AI, UI, storage/save-state, commands, events, rewards, inventory, loot execution, item-instance creation, migrations, aliases, or gameplay behavior changed.
+The new validator helper is pure and isolated. It is exercised only by focused tests until a later seed plan creates live profile content and explicitly authorizes normal content-lint registration.
 
 ## Risks / Follow-Up
 
-- Optional `baseFaunaId`, `baseMonsterId`, and `variantType` remain unused by live content. The new coupling only applies if those optional fields are authored later.
-- The helper enforces the current runtime convention that every used monster `defaultRole` has `preset.enemy.<role>`. If future monsters use currently ally-only roles, enemy presets must be authored first or a later decision must change the convention.
-- Future loot-table authority, status/condition/injury authority, explicit monster tactics refs, action-package authority, AI behavior, and runtime combat expansion remain deferred.
+- First live `items.weapon_profiles` and `items.armor_profiles` content remains deferred pending a seed plan. The future content paths do not exist.
+- Normal content-lint registration for profile content remains deferred until live profile content is approved.
+- Current item-local `useProfiles` remain the live action/combat-hook authority and were not migrated.
+- The broader `schema-files.test.mjs` suite still has the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`.
 
 ## Next Recommended Version
 
-Version 0.5.233 - Weapon And Armor Profile Schemas And Validators
+Version 0.5.234 - Quest Objective And Condition Validation Pass
 
 ## Suggested Commit Message
 
-`fix(world): harden monster validation`
+`feat(items): add equipment profile schemas`

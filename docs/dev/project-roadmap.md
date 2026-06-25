@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.232 - Monster Schema And Validator Hardening`
-- Next recommended version: `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
+- Latest completed version: `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
+- Next recommended version: `Version 0.5.234 - Quest Objective And Condition Validation Pass`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -82,7 +82,8 @@ Versioning rule:
 - `Version 0.5.230 - Settlement Schema And Validator Hardening` added pure settlement visual-map reference validation against current map and visual-map-feature authorities, with focused tests and no schema/content/runtime change.
 - `Version 0.5.231 - Crafting Recipe Schema And Validator` added the first strict future recipe schema, isolated pure semantic validator, focused in-memory tests, and schema-file registration without live recipe content or normal lint registration.
 - `Version 0.5.232 - Monster Schema And Validator Hardening` added pure monster authority validation for id/slug coherence, duplicate tags and loot keys, item/market/fauna/lineage/role/preset references, with focused tests and no schema/content/runtime change.
-- Do not roll from `0.5.232` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.233 - Weapon And Armor Profile Schemas And Validators` added strict future weapon/armor profile schemas, an isolated pure validator, focused tests, and schema-file registration without live profile content, normal content-lint registration, item edits, use-profile migration, runtime, UI, storage, combat execution, inventory, or gameplay change.
+- Do not roll from `0.5.233` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -352,7 +353,7 @@ These are internal development maturity markers, not public release promises. Pa
 | `0.5.230` | Settlement Schema And Validator Hardening | Codex Local | Validator + tests | Completed. Added pure settlement visual-map reference validation against `world_maps` and current `world_map_features`. | No schema/content/runtime/UI/storage/gameplay change; `visualMapRef` remains optional and non-authoritative for simulation. |
 | `0.5.231` | Crafting Recipe Schema And Validator | Codex Local | Schema + validator + tests | Completed. Added strict future recipe schema, isolated pure validator, focused tests, and schema-file registration. | No live recipe content, normal content-lint registration, production-chain extraction, runtime, UI, storage, economy, inventory, or gameplay behavior. |
 | `0.5.232` | Monster Schema And Validator Hardening | Codex Local | Validator + tests | Completed. Added pure monster authority validation and focused tests. | No schema/content/runtime/UI/storage/AI/loot execution/reward/inventory/gameplay change. |
-| `0.5.233` | Weapon And Armor Profile Schemas And Validators | Codex Local | Schemas + validators + tests | Recommended next after monster hardening. | Conditional; only if approved by the `0.5.221` weapon and armor profile schema decision. |
+| `0.5.233` | Weapon And Armor Profile Schemas And Validators | Codex Local | Schemas + validators + tests | Completed. Added strict future weapon/armor profile schemas, isolated pure validators, focused tests, and schema-file registration. | No live profile content, normal lint registration, item edits, use-profile migration, runtime/UI/storage/combat/inventory/gameplay change. |
 
 ## Expanded 0.5.x Candidate Lanes
 
@@ -374,7 +375,7 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.233 - Weapon And Armor Profile Schemas And Validators`
+1. `0.5.234 - Quest Objective And Condition Validation Pass`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.256` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan.
 

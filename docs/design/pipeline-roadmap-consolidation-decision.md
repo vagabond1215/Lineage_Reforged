@@ -130,7 +130,8 @@ Recipe/production (0.5.219)
 
 Monster (0.5.220)
   -> weapon/armor profiles (0.5.221)
-  -> combat hardening (0.5.232-0.5.233)
+  -> combat hardening (0.5.232)
+  -> weapon/armor profile implementation (0.5.233)
   -> status/condition/injury boundary (0.5.254)
 
 Quest objectives/conditions (0.5.222)
@@ -196,8 +197,8 @@ The next 39 recommended passes are:
 | `0.5.230` | Settlement Schema And Validator Hardening | Only if `0.5.218` approves changes; focused tests. |
 | `0.5.231` | Crafting Recipe Schema And Validator | Completed; strict schema, isolated validator, focused tests, no live content. |
 | `0.5.232` | Monster Schema And Validator Hardening | Completed; pure monster authority validation, focused tests, no schema/content/runtime change. |
-| `0.5.233` | Weapon And Armor Profile Schemas And Validators | Next; only if `0.5.221` approves; focused tests. |
-| `0.5.234` | Quest Objective And Condition Validation Pass | Only if `0.5.222` approves; focused tests. |
+| `0.5.233` | Weapon And Armor Profile Schemas And Validators | Completed; strict future schemas, isolated pure validators, focused tests, no live profile content or normal lint registration. |
+| `0.5.234` | Quest Objective And Condition Validation Pass | Next; only if `0.5.222` approves; focused tests. |
 | `0.5.235` | People And NPC Schemas And Validators | Only if `0.5.223` approves; focused tests. |
 | `0.5.236` | Magic Study Source Schema And Validator | Only if `0.5.224` approves; focused tests. |
 | `0.5.237` | Polity Schema And Validator | Only if `0.5.225` approves; focused tests. |
@@ -309,6 +310,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.233 - Weapon And Armor Profile Schemas And Validators`
+`Version 0.5.234 - Quest Objective And Condition Validation Pass`
 
-It should use the `0.5.221` weapon and armor profile schema decision as its source and remain within that decision's approved schema, validator, and focused-test scope.
+It should use the `0.5.222` quest objective and condition schema decision as its source and remain within that decision's approved validation/focused-test scope.
