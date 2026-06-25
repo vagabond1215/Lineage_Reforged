@@ -22,6 +22,10 @@ import { validateReligiousHotspots } from "./religious-hotspots.mjs";
 import { validateSacredSites } from "./sacred-sites.mjs";
 import { validateSettlementVisualMapRefs } from "./settlement-visual-map-refs.mjs";
 import { validateMonsterAuthority } from "./monsters.mjs";
+import {
+  validateQuestArchetypeActionTrees,
+  validateQuestDefinitionActionTrees
+} from "./quest-action-trees.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -8958,6 +8962,16 @@ async function validateQuestArchetypesAgainstWorldData() {
   const spellIds = new Set(spellParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
   const traitIds = new Set(traitParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
 
+  validateQuestArchetypeActionTrees({
+    relativePath: archetypeFile,
+    records: archetypeParsed.records,
+    attributes: attributeParsed.records,
+    skills: skillParsed.records,
+    abilities: abilityParsed.records,
+    spells: spellParsed.records,
+    items: itemParsed.records
+  });
+
   const validateCheckTarget = (kind, targetId, recordId, nodeId) => {
     if (typeof targetId !== "string" || targetId.length === 0) {
       return;
@@ -9125,6 +9139,16 @@ async function validateQuestDefinitionsAgainstWorldData() {
   const abilityIds = new Set(abilityParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
   const spellIds = new Set(spellParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
   const traitIds = new Set(traitParsed.records.map((record) => record.id).filter((value) => typeof value === "string"));
+
+  validateQuestDefinitionActionTrees({
+    relativePath: definitionFile,
+    records: definitionsParsed.records,
+    attributes: attributeParsed.records,
+    skills: skillParsed.records,
+    abilities: abilityParsed.records,
+    spells: spellParsed.records,
+    items: itemParsed.records
+  });
 
   const validateCheckTarget = (kind, targetId, recordId, nodeId) => {
     if (typeof targetId !== "string" || targetId.length === 0) {

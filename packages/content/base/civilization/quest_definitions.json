@@ -1468,7 +1468,7 @@
                 "kind": "party_size",
                 "targetId": "quiet_tail_size",
                 "minValue": 2,
-                "weight": -0.15,
+                "weight": 0.15,
                 "optional": false,
                 "notes": "Too many bodies ruin the tail."
               },
@@ -1896,7 +1896,7 @@
                 "kind": "party_size",
                 "targetId": "stealth_threshold",
                 "minValue": 3,
-                "weight": -0.15,
+                "weight": 0.15,
                 "optional": false,
                 "notes": "More people are bad during setup."
               }
