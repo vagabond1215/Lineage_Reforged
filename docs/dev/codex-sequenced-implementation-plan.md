@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-26
-Route: Codex local sequencing alignment after `Version 0.5.236 - Magic Study Source Schema And Validator`
+Route: Codex local sequencing alignment after `Version 0.5.237 - Polity Schema And Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.236 - Magic Study Source Schema And Validator`
+- `Version 0.5.237 - Polity Schema And Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.237 - Polity Schema And Validator`
+- `Version 0.5.238 - Household And Family Schemas And Validators`
 
 Versioning note:
 
@@ -89,8 +89,9 @@ Versioning note:
 - Quest Objective And Condition Validation Pass landed in `0.5.234`: pure embedded quest action-tree validation is wired into normal content lint, focused tests cover the approved hardening posture, and two negative quest definition check weights were minimally corrected without schema/runtime/UI/storage/reward/journal/Chronicle/generated-offer/player quest-state/gameplay changes.
 - People And NPC Schemas And Validators landed in `0.5.235`: strict future people/NPC schemas, an isolated pure validator, focused tests, and schema-file registration exist without live people/NPC content, normal lint registration, runtime, UI, storage, generated-person behavior, Knowledge integration, or gameplay changes.
 - Magic Study Source Schema And Validator landed in `0.5.236`: a strict future magic study source schema, isolated pure validator, focused tests, and schema-file registration exist without live magic study source content, normal lint registration, study policy, progress, runtime, known-spell acquisition, spellbook mutation, UI, storage, rewards, events, commands, or gameplay changes.
+- Polity Schema And Validator landed in `0.5.237`: a strict future polity schema, isolated pure validator, focused tests, and schema-file registration exist without live polity content, normal lint registration, government, law, claim, diplomacy, faction, institution, player legal state, runtime, UI, storage, rewards, events, commands, or gameplay changes.
 - Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.222` direction.
-- Do not roll from `0.5.236` to `0.6.0` without a dedicated runtime-readiness decision.
+- Do not roll from `0.5.237` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -253,8 +254,8 @@ Versioning note:
 | 155 | `0.5.234` | Quest Objective And Condition Validation Pass | Codex 5.5 Local | `0.5.222` decision | validator + tests | Completed | Added pure embedded action-tree validation and focused tests; preserved embedded storage and runtime boundaries. |
 | 156 | `0.5.235` | People And NPC Schemas And Validators | Codex 5.5 Local | `0.5.223` decision | schemas + validators + tests | Completed | Added strict future schemas, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 157 | `0.5.236` | Magic Study Source Schema And Validator | Codex 5.5 Local | `0.5.224` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
-| 158 | `0.5.237` | Polity Schema And Validator | Codex 5.5 Local | `0.5.225` decision | schema + validator + tests | Next | Only if approved by `0.5.225`. |
-| 159 | `0.5.238` | Household And Family Schemas And Validators | Codex 5.5 Local | `0.5.226` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.226`. |
+| 158 | `0.5.237` | Polity Schema And Validator | Codex 5.5 Local | `0.5.225` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
+| 159 | `0.5.238` | Household And Family Schemas And Validators | Codex 5.5 Local | `0.5.226` decision | schemas + validators + tests | Next | Only if approved by `0.5.226`. |
 | 160 | `0.5.239` | Settlement Economy Schema And Validator | Codex 5.5 Local | `0.5.227` decision | schema + validator + tests | Conditional | Only if approved by `0.5.227`. |
 | 161 | `0.5.240` | World Map Feature Schema And Validator | Codex 5.5 Local | `0.5.228` decision | schema + validator + tests | Conditional | Only if approved by `0.5.228`. |
 | 162 | `0.5.241` | Hazard And Route Security Schema Decision | Codex 5.5 Local docs-first | `0.5.229` decision | schema decision | Conditional | Requires the boundary decision. |
@@ -278,9 +279,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.237 - Polity Schema And Validator`
+1. `0.5.238 - Household And Family Schemas And Validators`
 
-The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.225` must remain the controlling polity schema decision until a focused implementation prompt authorizes schema and validator work.
+The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.226` must remain the controlling household/family schema decision until a focused implementation prompt authorizes schema and validator work.
 
 ## Default Prompt Pattern
 
@@ -296,7 +297,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.237 - Polity Schema And Validator` as the immediate next recommended run.
+- Keep `Version 0.5.238 - Household And Family Schemas And Validators` as the immediate next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.

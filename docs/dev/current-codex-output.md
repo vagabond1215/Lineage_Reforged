@@ -1,61 +1,61 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.236 - Magic Study Source Schema And Validator
+Source version/run: Version 0.5.237 - Polity Schema And Validator
 Date: 2026-06-26
-Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; pull was already up to date. Worktree was dirty from prior local 0.5.235 work at task handoff, but current dirty paths after this run are scoped to 0.5.236.
+Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; pull was already up to date and the worktree appeared clean before this run.
 
 ## Result
 
-Completed the narrow magic study source schema and validator pass from `0.5.224`.
+Completed the narrow polity schema and validator pass from `0.5.225`.
 
-Added a strict future `player.magic_study_sources` collection schema, an isolated pure in-memory semantic validator helper, focused tests, and schema-file parse registration only. The validator hardens records-only wrapper shape, id/slug coherence, duplicate ids/slugs, controlled source modes/kinds and compatibility, typed subject refs, typed source-anchor refs, active-only Knowledge domain and sacred-site resolution, current spell/family/school projection, current item/magic infrastructure/guild resolution, and fail-closed person/NPC/institution/ritual/trial anchor behavior.
+Added a strict future `world.polities` collection schema, an isolated pure in-memory semantic validator helper, focused tests, and schema-file parse registration only. The validator hardens records-only wrapper shape, id/slug coherence, duplicate ids/slugs, controlled lifecycle and polity-form vocabulary, alias uniqueness, place-anchor shape, place-anchor duplicate rejection, current region/locality/settlement resolution, inactive place-authority rejection when status is present, and the explicit `autonomous_settlement` settlement-anchor requirement.
 
-No live `magic_study_sources.json`, normal content-lint registration, study policy, progress, runtime state, known-spell acquisition, spellbook mutation, teacher/person content, institution content, ritual behavior, trial behavior, UI, storage, rewards, commands, events, migrations, or gameplay behavior was added.
+No live `polities.json`, normal content-lint registration, polity seed records, government, jurisdiction, law, claim, border, control, diplomacy, conflict, faction, institution, force, taxation, enforcement, player legal state, Knowledge subject, loader, migration, runtime, UI, storage, reward, command, event, or gameplay behavior was added.
 
 ## Files Changed
 
-- `packages/schemas/player/magic_study_source.schema.json` - added the strict future `player.magic_study_sources` schema.
-- `tools/content-lint/magic-study-sources.mjs` - added pure in-memory structural and semantic validation.
-- `tests/unit/magic-study-source-validation.test.mjs` - added focused schema/validator tests and no-live-content/no-lint-registration assertions.
+- `packages/schemas/world/polity.schema.json` - added the strict future `world.polities` schema.
+- `tools/content-lint/polities.mjs` - added pure in-memory structural and semantic validation.
+- `tests/unit/polity-validation.test.mjs` - added focused schema/validator tests and no-live-content/no-lint-registration assertions.
 - `tests/unit/schema-files.test.mjs` - registered the new schema for parse coverage.
 - `docs/dev/current-codex-output.md` - replaced with this run result.
 - `docs/dev/current-gpt-handoff.md` - advanced the current anchor and next route.
-- `docs/dev/project-roadmap.md` - marked `0.5.236` complete and `0.5.237` next.
+- `docs/dev/project-roadmap.md` - marked `0.5.237` complete and `0.5.238` next.
 - `docs/dev/codex-sequenced-implementation-plan.md` - advanced the ordered queue.
-- `docs/future_content_backlog.md` - recorded the run note and remaining deferred magic-study boundaries.
+- `docs/future_content_backlog.md` - recorded the run note and remaining deferred civic boundaries.
 - `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the next recommended version.
 
 ## Checks Run
 
 - `git fetch origin` - passed.
 - `git pull --ff-only origin master` - passed; already up to date.
-- `node --test tests\unit\magic-study-source-validation.test.mjs` - passed.
+- `node --test tests\unit\polity-validation.test.mjs` - passed.
 - `npm.cmd run tool:content-lint` - passed; `content-lint: ok (58 files checked)`.
-- `node --test tests\unit\known-spell-training-event-acquisition.test.mjs tests\unit\magic-runtime-readiness-blockers.test.mjs tests\unit\magic-resolver-inert-envelope.test.mjs tests\unit\magic-cast-resolver-readiness.test.mjs tests\unit\magic-cast-readiness.test.mjs` - passed.
-- `node --test tests\unit\schema-files.test.mjs` - expected existing failure after the new magic study source schema parses successfully; unrelated Knowledge subject vocabulary assertion around `sacred_site` still fails.
+- `node --test tests\unit\schema-files.test.mjs` - expected existing failure after the new polity schema parses successfully; unrelated Knowledge subject vocabulary assertion around `sacred_site` still fails.
+- `node --test tests\unit\settlement-visual-map-refs.test.mjs tests\unit\region-first-world-data.test.mjs tests\unit\geographic-knowledge-presentation.test.mjs` - settlement visual-map and geographic presentation tests passed; `region-first-world-data.test.mjs` failed on an unrelated BOM parsing issue in its local loader.
 - `git diff --check` - passed.
 - Conflict-marker scan on changed files - passed.
 - Trailing-whitespace scan on changed files - passed.
-- Scope audit - passed; no live magic study source content, normal content-lint registration, loaders, migrations, runtime, UI, storage, command, event, reward, spell ownership, spellbook, study-progress, teacher/person seed, institution seed, ritual execution, trial execution, or gameplay files changed.
-- Temp-artifact audit for `docs/dev/tmp-magic-knowledge-study-systems-research-2026-06-20.md` - passed; artifact remains absent.
+- Scope audit - passed; no live polity content, normal content-lint registration, loaders, migrations, government, jurisdiction, law, claim, border, control, diplomacy, conflict, faction, institution, force, taxation, enforcement, player legal state, Knowledge, runtime, UI, storage, command, event, reward, or gameplay files changed.
+- Temp-artifact audit for `docs/dev/tmp-civic-authority-systems-research-2026-06-20.md` - passed; artifact remains absent.
 
 ## Behavior / Runtime Confirmation
 
-No runtime, JSON live content, normal content-lint live content registration, loader, migration, UI, storage/save-state, command, event, reward, spell ownership, study progress, study policy, spellbook, teacher/person, institution, ritual, trial, or gameplay behavior changed.
+No runtime, JSON live content, normal content-lint live content registration, loader, migration, UI, storage/save-state, command, event, reward, player legal state, Knowledge subject, government, jurisdiction, law, claim, border, control, diplomacy, conflict, faction, institution, force, taxation, enforcement, or gameplay behavior changed.
 
 The new schema and validator helper are future-contract validation only and are exercised by focused in-memory tests.
 
 ## Risks / Follow-Up
 
-- First live magic study source content remains deferred and should start with a separate seed plan.
-- Study policies, progress/checkpoints, readiness, costs, attempts, evidence, completion, rewards, Arcane Lore activation, and known-spell acquisition remain separate future authorities.
-- Person/NPC, institution, ritual, and trial anchors intentionally fail closed until those authorities and explicit validator support exist.
+- First live polity content remains deferred and should start with a separate seed plan.
+- Government, settlement government, jurisdiction, law code/local law, citizenship/status, claims/borders/control, diplomacy/conflict, taxation/customs, guard/force authority, player legal state, and runtime enforcement remain separate future authorities.
 - The broader `schema-files.test.mjs` suite still has the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`.
+- `tests/unit/region-first-world-data.test.mjs` still fails independently on BOM parsing when run directly.
 
 ## Next Recommended Version
 
-Version 0.5.237 - Polity Schema And Validator
+Version 0.5.238 - Household And Family Schemas And Validators
 
 ## Suggested Commit Message
 
-`feat(player): add magic study source validation`
+`feat(world): add polity schema validation`

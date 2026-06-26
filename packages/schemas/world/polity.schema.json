@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Polity Content",
+  "description": "Static authored political identity records. This schema does not define government, jurisdiction, law, claims, borders, control, diplomacy, conflict, taxation, enforcement, player legal state, runtime state, UI, storage, rewards, commands, events, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/polity"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "aliases": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "placeAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "placeType",
+        "placeId",
+        "anchorRole"
+      ],
+      "properties": {
+        "placeType": {
+          "type": "string",
+          "enum": [
+            "region",
+            "region_locality",
+            "settlement"
+          ]
+        },
+        "placeId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "anchorRole": {
+          "type": "string",
+          "enum": [
+            "identity_anchor",
+            "seat_reference",
+            "associated_place"
+          ]
+        }
+      }
+    },
+    "polity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "aliases",
+        "summary",
+        "polityForm",
+        "placeAnchors",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^polity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "aliases": {
+          "$ref": "#/$defs/aliases"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "polityForm": {
+          "type": "string",
+          "enum": [
+            "kingdom",
+            "realm",
+            "city_state",
+            "republic",
+            "confederation",
+            "tribal_confederacy",
+            "empire",
+            "principality",
+            "temporal_religious_state",
+            "trade_league",
+            "autonomous_settlement"
+          ]
+        },
+        "placeAnchors": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/placeAnchor"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}

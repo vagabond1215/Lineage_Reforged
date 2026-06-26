@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.236 - Magic Study Source Schema And Validator`
-- Next recommended version: `Version 0.5.237 - Polity Schema And Validator`
+- Latest completed version: `Version 0.5.237 - Polity Schema And Validator`
+- Next recommended version: `Version 0.5.238 - Household And Family Schemas And Validators`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -86,7 +86,8 @@ Versioning rule:
 - `Version 0.5.234 - Quest Objective And Condition Validation Pass` added pure embedded quest action-tree semantic validation, wired it into normal content lint, added focused tests, and minimally corrected two negative quest definition check weights without schema, runtime, UI, storage, reward, journal/Chronicle, generated-offer, player quest-state, or gameplay change.
 - `Version 0.5.235 - People And NPC Schemas And Validators` added strict future people/NPC schemas, an isolated pure validator, focused tests, and schema-file registration without live people/NPC content, normal lint registration, runtime, UI, storage, generated-person behavior, Knowledge integration, or gameplay change.
 - `Version 0.5.236 - Magic Study Source Schema And Validator` added a strict future magic study source schema, an isolated pure validator, focused tests, and schema-file registration without live content, normal lint registration, study policy, progress, runtime, known-spell acquisition, spellbook mutation, UI, storage, rewards, events, commands, or gameplay change.
-- Do not roll from `0.5.236` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.237 - Polity Schema And Validator` added a strict future polity schema, an isolated pure validator, focused tests, and schema-file registration without live content, normal lint registration, government, law, claim, diplomacy, faction, institution, player legal state, runtime, UI, storage, rewards, events, commands, or gameplay change.
+- Do not roll from `0.5.237` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -379,7 +380,7 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.237 - Polity Schema And Validator`
+1. `0.5.238 - Household And Family Schemas And Validators`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.256` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan.
 
