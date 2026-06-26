@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Family Content",
+  "description": "Static authored family identity records. This schema does not define account families, members, kinship, household membership, lineage, estate, property, inheritance, marriage, economy, runtime state, UI, storage, rewards, commands, events, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/family"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "aliases": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "placeAssociation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "placeType",
+        "placeId",
+        "associationRole"
+      ],
+      "properties": {
+        "placeType": {
+          "type": "string",
+          "enum": [
+            "region",
+            "region_locality",
+            "settlement"
+          ]
+        },
+        "placeId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "associationRole": {
+          "type": "string",
+          "enum": [
+            "origin_association",
+            "public_center",
+            "historical_association"
+          ]
+        }
+      }
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "aliases",
+        "summary",
+        "recognitionPosture",
+        "placeAssociations",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^civilization_family\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "aliases": {
+          "$ref": "#/$defs/aliases"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "recognitionPosture": {
+          "type": "string",
+          "enum": [
+            "recognized",
+            "disputed",
+            "rumored",
+            "unknown"
+          ]
+        },
+        "placeAssociations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/placeAssociation"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}

@@ -202,8 +202,8 @@ The next 39 recommended passes are:
 | `0.5.235` | People And NPC Schemas And Validators | Completed; strict future schemas, isolated pure validator, focused tests, no live content. |
 | `0.5.236` | Magic Study Source Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
 | `0.5.237` | Polity Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
-| `0.5.238` | Household And Family Schemas And Validators | Next; only if `0.5.226` approves; focused tests. |
-| `0.5.239` | Settlement Economy Schema And Validator | Only if `0.5.227` approves; focused tests. |
+| `0.5.238` | Household And Family Schemas And Validators | Completed; strict future schemas, isolated pure validator, focused tests, no live content. |
+| `0.5.239` | Settlement Economy Schema And Validator | Next; only if `0.5.227` approves; focused tests. |
 | `0.5.240` | World Map Feature Schema And Validator | Only if `0.5.228` approves; focused tests. |
 | `0.5.241` | Hazard And Route Security Schema Decision | Docs-only; depends on `0.5.229`. |
 | `0.5.242` | Hazard And Route Security Schemas And Validators | Only if `0.5.241` approves; focused tests. |
@@ -310,6 +310,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.238 - Household And Family Schemas And Validators`
+`Version 0.5.239 - Settlement Economy Schema And Validator`
 
-It should use the `0.5.226` household/family schema decision as its source and remain within that decision's approved schema/validator/focused-test scope.
+It should use the `0.5.227` settlement-economy schema decision as its source and remain within that decision's approved schema/validator/focused-test scope.

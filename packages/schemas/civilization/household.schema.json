@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Household Content",
+  "description": "Static authored household identity records. This schema does not define members, kinship, family membership, lineage, estate, property, inheritance, marriage, economy, runtime state, UI, storage, rewards, commands, events, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/household"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "placeAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "placeType",
+        "placeId",
+        "anchorRole"
+      ],
+      "properties": {
+        "placeType": {
+          "type": "string",
+          "enum": [
+            "region",
+            "region_locality",
+            "settlement"
+          ]
+        },
+        "placeId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "anchorRole": {
+          "type": "string",
+          "enum": [
+            "domestic_base",
+            "associated_place"
+          ]
+        }
+      }
+    },
+    "household": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "summary",
+        "householdForm",
+        "placeAnchors",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^civilization_household\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "householdForm": {
+          "type": "string",
+          "enum": [
+            "single_person",
+            "shared_domestic",
+            "extended_domestic",
+            "communal",
+            "itinerant"
+          ]
+        },
+        "placeAnchors": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/placeAnchor"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}
