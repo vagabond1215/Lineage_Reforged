@@ -200,8 +200,8 @@ The next 39 recommended passes are:
 | `0.5.233` | Weapon And Armor Profile Schemas And Validators | Completed; strict future schemas, isolated pure validators, focused tests, no live profile content or normal lint registration. |
 | `0.5.234` | Quest Objective And Condition Validation Pass | Completed; pure embedded action-tree validation, normal content-lint wiring, focused tests, and two minimal non-negative weight fixes. |
 | `0.5.235` | People And NPC Schemas And Validators | Completed; strict future schemas, isolated pure validator, focused tests, no live content. |
-| `0.5.236` | Magic Study Source Schema And Validator | Next; only if `0.5.224` approves; focused tests. |
-| `0.5.237` | Polity Schema And Validator | Only if `0.5.225` approves; focused tests. |
+| `0.5.236` | Magic Study Source Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
+| `0.5.237` | Polity Schema And Validator | Next; only if `0.5.225` approves; focused tests. |
 | `0.5.238` | Household And Family Schemas And Validators | Only if `0.5.226` approves; focused tests. |
 | `0.5.239` | Settlement Economy Schema And Validator | Only if `0.5.227` approves; focused tests. |
 | `0.5.240` | World Map Feature Schema And Validator | Only if `0.5.228` approves; focused tests. |
@@ -310,6 +310,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.236 - Magic Study Source Schema And Validator`
+`Version 0.5.237 - Polity Schema And Validator`
 
-It should use the `0.5.224` magic-study source schema decision as its source and remain within that decision's approved schema/validator/focused-test scope.
+It should use the `0.5.225` polity schema decision as its source and remain within that decision's approved schema/validator/focused-test scope.

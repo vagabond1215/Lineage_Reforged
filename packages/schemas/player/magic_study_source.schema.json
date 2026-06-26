@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Magic Study Source Content",
+  "description": "Static metadata describing possible authored sources for future magic study. This schema does not define study policy, runtime availability, spell ownership, UI, storage, rewards, or command behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/magicStudySource"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "subjectRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "refId"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "spell",
+            "spell_family",
+            "spell_school",
+            "knowledge_domain"
+          ]
+        },
+        "refId": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "sourceAnchorRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "refId"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "item",
+            "magic_infrastructure",
+            "sacred_site",
+            "guild",
+            "person",
+            "npc",
+            "institution",
+            "ritual",
+            "trial"
+          ]
+        },
+        "refId": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "magicStudySource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "summary",
+        "sourceMode",
+        "sourceKind",
+        "subjectRefs",
+        "sourceAnchorRefs",
+        "accessPosture",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^magic_study_source\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sourceMode": {
+          "type": "string",
+          "enum": [
+            "textual_study",
+            "instruction",
+            "institutional_study",
+            "supervised_practice",
+            "observation",
+            "ritual_context",
+            "experimental_study"
+          ]
+        },
+        "sourceKind": {
+          "type": "string",
+          "enum": [
+            "book",
+            "scroll",
+            "tome",
+            "grimoire",
+            "authored_document",
+            "teacher_instruction",
+            "institutional_curriculum",
+            "guided_exercise",
+            "field_observation",
+            "combat_observation",
+            "ritual_participation",
+            "sacred_site_context",
+            "controlled_experiment"
+          ]
+        },
+        "subjectRefs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/subjectRef"
+          }
+        },
+        "sourceAnchorRefs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/sourceAnchorRef"
+          }
+        },
+        "accessPosture": {
+          "type": "string",
+          "enum": [
+            "context_only",
+            "study_candidate"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}

@@ -54,6 +54,7 @@ const schemaFiles = [
   "packages/schemas/player/skill-effect.schema.json",
   "packages/schemas/player/title.schema.json",
   "packages/schemas/player/spell.schema.json",
+  "packages/schemas/player/magic_study_source.schema.json",
   "packages/schemas/player/ability.schema.json",
   "packages/schemas/player/trait.schema.json",
   "packages/schemas/player/backstory.schema.json",
