@@ -35,6 +35,8 @@ const schemaFiles = [
   "packages/schemas/civilization/infrastructure.schema.json",
   "packages/schemas/civilization/market-item-value.schema.json",
   "packages/schemas/civilization/guild.schema.json",
+  "packages/schemas/civilization/person.schema.json",
+  "packages/schemas/civilization/npc.schema.json",
   "packages/schemas/civilization/quest-archetype.schema.json",
   "packages/schemas/civilization/quest-definition.schema.json",
   "packages/schemas/civilization/quest-template.schema.json",

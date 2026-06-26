@@ -1,54 +1,45 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.234 - Quest Objective And Condition Validation Pass
-Date: 2026-06-25
-Status: quest objective/condition validation hardening completed; embedded action trees preserved; no schema, runtime, UI, storage, command, event, reward execution, journal/Chronicle mutation, generated-offer, player quest-state, or gameplay change
+Source version/run: Version 0.5.235 - People And NPC Schemas And Validators
+Date: 2026-06-26
+Status: future people/NPC schemas and focused validators completed; no live people/NPC content, normal content-lint registration, loaders, migrations, runtime, UI, storage, generated-person behavior, quest-contact migration, Knowledge integration, social simulation, or gameplay change
 
 ## Authority Rules
 
-- Quest definitions remain canonical for unique authored quests.
-- Quest archetypes remain reusable authored action-tree structures.
-- Quest templates remain separate repeatable-offer input records and do not adopt authored action-tree validation.
-- Objectives and conditions remain embedded inside quest definitions/archetypes; standalone objective/condition collections, global ids, and registries are not approved.
-- Authored action checks remain descriptive static gates/contributions. They do not execute, select branches, mutate rewards, update journal/Chronicle state, create generated offers, or track runtime progress.
-- Current check target posture:
-  - `attribute` -> player attribute id;
-  - `skill` -> player skill id;
-  - `ability` -> player ability id;
-  - `spell` -> player spell id;
-  - `tool` / `item` -> canonical `itemKey`;
-  - `equipment_tag`, `party_size`, and `rng` -> owner-local descriptive tokens only.
-- Forbidden authored fields now guarded by content lint include global objective/condition ids, runtime progress/state, reward execution, journal/Chronicle mutation, UI/storage state, command/event state, generated-offer state, and gameplay effects.
+- `civilization.people` is approved as future canonical authored named-person identity only.
+- `civilization.npcs` is approved as a future optional authored overlay keyed one-to-one to a canonical `personId`.
+- Person identity owns only canonical name, aliases, summary, optional lineage reference, life status, lifecycle status, provenance, and notes.
+- NPC overlays own only authored presence mode, interaction posture, optional primary settlement association, lifecycle status, provenance, and notes.
+- NPC overlays must not duplicate person identity fields such as `name`, `aliases`, `summary`, `lineageId`, or `lifeStatus`.
+- Existing quest giver/contact strings, `npc.corin_ash`, `npc_individual`, `npc_household`, synthetic settlement operators, generated combatants, players/account history, roles, titles, workplaces, Knowledge labels, and prose names are not canonical person/NPC authority.
+- Relationship links, kinship, roles, workplaces, schedules, dialogue, services, quests, Chronicle, Knowledge, inventory, combat, AI, current location, runtime state, storage, UI, commands, events, rewards, and gameplay remain separate future or runtime owners.
 
 ## Current Anchor
 
 Latest completed:
 
-- `Version 0.5.234 - Quest Objective And Condition Validation Pass`
+- `Version 0.5.235 - People And NPC Schemas And Validators`
 
 Immediate next:
 
-- `Version 0.5.235 - People And NPC Schemas And Validators`
+- `Version 0.5.236 - Magic Study Source Schema And Validator`
 
-## Quest Validation Result
+## People/NPC Validation Result
 
-- Added `tools/content-lint/quest-action-trees.mjs`.
-- Wired it into `tools/content-lint/index.mjs` for live `quest_definitions.json` and `quest_archetypes.json`.
-- Added `tests/unit/quest-objective-condition-validation.test.mjs`.
-- Corrected two existing negative `party_size` check weights in `packages/content/base/civilization/quest_definitions.json` from `-0.15` to `0.15`.
-- No quest schemas were changed.
-- No quest templates were changed.
-- No standalone objective/condition content or registry was created.
-- Normal content lint still reports `content-lint: ok (58 files checked)`.
+- Added `packages/schemas/civilization/person.schema.json`.
+- Added `packages/schemas/civilization/npc.schema.json`.
+- Added `tools/content-lint/people-npcs.mjs` as a pure in-memory semantic validator helper.
+- Added `tests/unit/people-npc-validation.test.mjs`.
+- Registered both new schema files in `tests/unit/schema-files.test.mjs`.
+- No `packages/content/base/civilization/people.json` or `packages/content/base/civilization/npcs.json` files were created.
+- No normal content-lint registration for future people/NPC content was added.
 
 ## Known Test Notes
 
-- `node --test tests/unit/quest-objective-condition-validation.test.mjs` passes.
-- `npm.cmd run tool:content-lint` passes.
-- `node --test tests/unit/civilization-reputation-validation.test.mjs` passes.
-- `node --test tests/unit/civilization-system-consistency.test.mjs` passes.
-- `node --test tests/unit/schema-files.test.mjs` parses quest schemas successfully, then still fails on the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`.
+- `node --test tests\unit\people-npc-validation.test.mjs` passes.
+- `npm.cmd run tool:content-lint` passes; `content-lint: ok (58 files checked)`.
+- `node --test tests\unit\schema-files.test.mjs` parses both new people/NPC schemas successfully, then still fails on the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`.
 
 ## Next Route
 
-`Version 0.5.235 - People And NPC Schemas And Validators` is the next queued run. It should use the `0.5.223` Person vs NPC Schema Decision, keep people identity and NPC overlays separate, avoid inferred/synthetic people, and avoid runtime NPC AI, schedules, dialogue, services, relationship mutation, UI, storage, generated-person behavior, Knowledge snippets, and gameplay behavior unless a later prompt explicitly authorizes them.
+`Version 0.5.236 - Magic Study Source Schema And Validator` is the next queued run. It should use the `0.5.224` Magic Study Source Schema Decision, keep study sources static/descriptive, fail closed on missing authorities, and avoid spell acquisition mutation, study progress/runtime state, teacher/person seeding, institution seeding, UI, storage, rewards, commands, events, or gameplay behavior unless a later prompt explicitly authorizes them.

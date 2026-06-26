@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NpcOverlayCollection",
+  "description": "Schema for future authored NPC overlays keyed to canonical people. Records describe presence and interaction posture only and do not define identity, roles, workplaces, relationships, schedules, dialogue, services, quests, Knowledge, combat, runtime state, UI, storage, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/npcRecord" }
+    }
+  },
+  "$defs": {
+    "npcId": {
+      "type": "string",
+      "pattern": "^npc\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "personId": {
+      "type": "string",
+      "pattern": "^person\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "settlementId": {
+      "type": "string",
+      "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "sourceAuthorityNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "npcRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "personId",
+        "presenceMode",
+        "interactionPosture",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/npcId" },
+        "personId": { "$ref": "#/$defs/personId" },
+        "primarySettlementId": { "$ref": "#/$defs/settlementId" },
+        "presenceMode": {
+          "type": "string",
+          "enum": ["resident", "visitor", "itinerant", "remote", "unknown"]
+        },
+        "interactionPosture": {
+          "type": "string",
+          "enum": ["reference_only", "interactable"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "active", "retired"]
+        },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/sourceAuthorityNotes" },
+        "notes": { "$ref": "#/$defs/noteList" }
+      }
+    }
+  }
+}
