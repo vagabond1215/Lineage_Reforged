@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Map Feature Content",
+  "description": "Static authored semantic map-feature identity records. This schema does not define visual geometry, route topology, coordinates, grids, ecology execution, POI placement, Knowledge, runtime state, UI, storage, rewards, commands, events, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/mapFeature"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "placeAnchor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "placeType",
+        "placeId",
+        "anchorRole"
+      ],
+      "properties": {
+        "placeType": {
+          "type": "string",
+          "enum": [
+            "region",
+            "region_locality",
+            "settlement"
+          ]
+        },
+        "placeId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "anchorRole": {
+          "type": "string",
+          "enum": [
+            "contains_feature",
+            "feature_crosses",
+            "feature_borders",
+            "feature_near",
+            "named_context"
+          ]
+        }
+      }
+    },
+    "visualReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "visualAggregateId",
+        "visualFeatureId",
+        "relationship",
+        "notes"
+      ],
+      "properties": {
+        "visualAggregateId": {
+          "type": "string",
+          "pattern": "^world_map_feature\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "visualFeatureId": {
+          "type": "string",
+          "pattern": "^feature\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+        },
+        "relationship": {
+          "type": "string",
+          "enum": [
+            "approximate_depiction",
+            "partial_depiction",
+            "reference_only"
+          ]
+        },
+        "notes": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "mapFeature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "aliases",
+        "summary",
+        "featureType",
+        "extentKind",
+        "placeAnchors",
+        "descriptiveTags",
+        "visualReferences",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^map_feature\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "aliases": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          }
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "featureType": {
+          "type": "string",
+          "enum": [
+            "river",
+            "lake",
+            "wetland",
+            "coastline",
+            "estuary",
+            "mountain_range",
+            "mountain_pass",
+            "cliff",
+            "forest",
+            "grove",
+            "desert",
+            "swamp",
+            "plain",
+            "natural_harbor",
+            "natural_landmark",
+            "cultural_landscape"
+          ]
+        },
+        "extentKind": {
+          "type": "string",
+          "enum": [
+            "point_like",
+            "linear",
+            "area_like",
+            "corridor_like",
+            "distributed"
+          ]
+        },
+        "placeAnchors": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/placeAnchor"
+          }
+        },
+        "descriptiveTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        },
+        "visualReferences": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/visualReference"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}

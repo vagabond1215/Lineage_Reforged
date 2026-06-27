@@ -204,8 +204,8 @@ The next 39 recommended passes are:
 | `0.5.237` | Polity Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
 | `0.5.238` | Household And Family Schemas And Validators | Completed; strict future schemas, isolated pure validator, focused tests, no live content. |
 | `0.5.239` | Settlement Economy Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
-| `0.5.240` | World Map Feature Schema And Validator | Next; only if `0.5.228` approves; focused tests. |
-| `0.5.241` | Hazard And Route Security Schema Decision | Docs-only; depends on `0.5.229`. |
+| `0.5.240` | World Map Feature Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
+| `0.5.241` | Hazard And Route Security Schema Decision | Next; docs-only; depends on `0.5.229`. |
 | `0.5.242` | Hazard And Route Security Schemas And Validators | Only if `0.5.241` approves; focused tests. |
 | `0.5.243` | First Crafting Recipe Content Seed Plan | Docs-only; at most a narrow coherent seed. |
 | `0.5.244` | First Crafting Recipe Content Seed | Content + focused validation only. |
@@ -234,7 +234,7 @@ Near-term means `0.5.218`-`0.5.229` and is now complete:
 4. Do not create schemas while unresolved overlap exists, especially settlement embedded fields, production-chain recipes, item use profiles, quest embedded objectives, and people/household identities.
 5. End with hazard/route-security boundary work after map features stabilize.
 
-Safest immediate next local Codex run: `Version 0.5.240 - World Map Feature Schema And Validator`.
+Safest immediate next local Codex run: `Version 0.5.241 - Hazard And Route Security Schema Decision`.
 
 ## 11. Medium-Term Priority Queue
 
@@ -310,6 +310,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.240 - World Map Feature Schema And Validator`
+`Version 0.5.241 - Hazard And Route Security Schema Decision`
 
-It should use the `0.5.228` world-map-feature schema decision as its source and remain within that decision's approved schema/validator/focused-test scope.
+It should use the `0.5.229` hazard and route-security boundary decision as its source and remain within documentation/schema-decision scope.

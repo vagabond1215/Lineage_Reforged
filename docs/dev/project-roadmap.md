@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.239 - Settlement Economy Schema And Validator`
-- Next recommended version: `Version 0.5.240 - World Map Feature Schema And Validator`
+- Latest completed version: `Version 0.5.240 - World Map Feature Schema And Validator`
+- Next recommended version: `Version 0.5.241 - Hazard And Route Security Schema Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -89,7 +89,8 @@ Versioning rule:
 - `Version 0.5.237 - Polity Schema And Validator` added a strict future polity schema, an isolated pure validator, focused tests, and schema-file registration without live content, normal lint registration, government, law, claim, diplomacy, faction, institution, player legal state, runtime, UI, storage, rewards, events, commands, or gameplay change.
 - `Version 0.5.238 - Household And Family Schemas And Validators` added strict future household/family schemas, an isolated pure validator, focused tests, and schema-file registration without live content, normal lint registration, membership, kinship, account-family bridge, inheritance, property, runtime, UI, storage, rewards, events, commands, or gameplay change.
 - `Version 0.5.239 - Settlement Economy Schema And Validator` added a strict future settlement-economy schema, an isolated pure validator, focused tests, and schema-file registration without live content, normal lint registration, settlement migration, exact pricing, runtime economy, trade mutation, UI, storage, rewards, events, commands, or gameplay change.
-- Do not roll from `0.5.239` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.240 - World Map Feature Schema And Validator` added a strict future semantic map-feature schema, an isolated pure validator, focused tests, and schema-file registration without live content, normal lint registration, visual geometry migration, route topology mutation, map assets/UI, Knowledge, runtime, storage, rewards, events, commands, or gameplay change.
+- Do not roll from `0.5.240` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -382,7 +383,7 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.240 - World Map Feature Schema And Validator`
+1. `0.5.241 - Hazard And Route Security Schema Decision`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.256` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan.
 

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-27
-Route: Codex local sequencing alignment after `Version 0.5.239 - Settlement Economy Schema And Validator`
+Route: Codex local sequencing alignment after `Version 0.5.240 - World Map Feature Schema And Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.239 - Settlement Economy Schema And Validator`
+- `Version 0.5.240 - World Map Feature Schema And Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.240 - World Map Feature Schema And Validator`
+- `Version 0.5.241 - Hazard And Route Security Schema Decision`
 
 Versioning note:
 
@@ -92,8 +92,9 @@ Versioning note:
 - Polity Schema And Validator landed in `0.5.237`: a strict future polity schema, isolated pure validator, focused tests, and schema-file registration exist without live polity content, normal lint registration, government, law, claim, diplomacy, faction, institution, player legal state, runtime, UI, storage, rewards, events, commands, or gameplay changes.
 - Household And Family Schemas And Validators landed in `0.5.238`: strict future household/family schemas, an isolated pure validator, focused tests, and schema-file registration exist without live household/family content, normal lint registration, membership, kinship, account-family bridges, inheritance, property, runtime, UI, storage, rewards, events, commands, or gameplay changes.
 - Settlement Economy Schema And Validator landed in `0.5.239`: strict future settlement-economy schema, an isolated pure validator, focused tests, and schema-file registration exist without live settlement-economy content, normal lint registration, settlement migration, exact pricing, runtime economy, trade mutation, UI, storage, rewards, events, commands, or gameplay changes.
+- World Map Feature Schema And Validator landed in `0.5.240`: strict future semantic map-feature schema, an isolated pure validator, focused tests, and schema-file registration exist without live map-feature content, normal lint registration, visual geometry migration, route topology mutation, map assets/UI, Knowledge, runtime, storage, rewards, events, commands, or gameplay changes.
 - Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.222` direction.
-- Do not roll from `0.5.239` to `0.6.0` without a dedicated runtime-readiness decision.
+- Do not roll from `0.5.240` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -259,8 +260,8 @@ Versioning note:
 | 158 | `0.5.237` | Polity Schema And Validator | Codex 5.5 Local | `0.5.225` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 159 | `0.5.238` | Household And Family Schemas And Validators | Codex 5.5 Local | `0.5.226` decision | schemas + validators + tests | Completed | Added strict future schemas, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 160 | `0.5.239` | Settlement Economy Schema And Validator | Codex 5.5 Local | `0.5.227` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
-| 161 | `0.5.240` | World Map Feature Schema And Validator | Codex 5.5 Local | `0.5.228` decision | schema + validator + tests | Next | Only if approved by `0.5.228`. |
-| 162 | `0.5.241` | Hazard And Route Security Schema Decision | Codex 5.5 Local docs-first | `0.5.229` decision | schema decision | Conditional | Requires the boundary decision. |
+| 161 | `0.5.240` | World Map Feature Schema And Validator | Codex 5.5 Local | `0.5.228` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
+| 162 | `0.5.241` | Hazard And Route Security Schema Decision | Codex 5.5 Local docs-first | `0.5.229` decision | schema decision | Next | Requires the boundary decision. |
 | 163 | `0.5.242` | Hazard And Route Security Schemas And Validators | Codex 5.5 Local | `0.5.241` decision | schemas + validators + tests | Conditional | Only if approved by `0.5.241`. |
 | 164 | `0.5.243` | First Crafting Recipe Content Seed Plan | Codex 5.5 Local docs-first | `0.5.231` output | seed plan | Conditional | No live content. |
 | 165 | `0.5.244` | First Crafting Recipe Content Seed | Codex 5.5 Local | `0.5.243` plan | content + validation | Conditional | Narrow authored seed only. |
@@ -281,9 +282,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.240 - World Map Feature Schema And Validator`
+1. `0.5.241 - Hazard And Route Security Schema Decision`
 
-The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.228` must remain the controlling world-map-feature schema decision until a focused implementation prompt authorizes schema and validator work.
+The full conditional sequence through `0.5.256`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.229` must remain the controlling hazard and route-security boundary decision until a focused schema-decision prompt authorizes exact future schema posture.
 
 ## Default Prompt Pattern
 
@@ -299,7 +300,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.240 - World Map Feature Schema And Validator` as the immediate next recommended run.
+- Keep `Version 0.5.241 - Hazard And Route Security Schema Decision` as the immediate next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
