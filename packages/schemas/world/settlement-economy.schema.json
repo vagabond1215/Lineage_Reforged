@@ -1,0 +1,352 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Settlement Economy Content",
+  "description": "Static authored descriptive settlement-economy identity records. This schema does not define live settlement content, market profiles, resources, commodities, professions, institutions, trade topology, exact prices, stock, production execution, runtime state, UI, storage, rewards, commands, events, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/settlementEconomy"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "itemKey": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "economicRoleValue": {
+      "type": "string",
+      "enum": [
+        "administration",
+        "agricultural_production",
+        "animal_husbandry",
+        "craft_production",
+        "extractive_production",
+        "forest_stewardship",
+        "local_exchange",
+        "maritime_trade",
+        "regional_trade",
+        "route_support",
+        "scholarly_production",
+        "security_support",
+        "subsistence"
+      ]
+    },
+    "economicRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dominantRole",
+        "secondaryRoles"
+      ],
+      "properties": {
+        "dominantRole": {
+          "$ref": "#/$defs/economicRoleValue"
+        },
+        "secondaryRoles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/economicRoleValue"
+          }
+        }
+      }
+    },
+    "economicBands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wealthBand",
+        "resilienceBand",
+        "scarcityBand",
+        "seasonalityBand",
+        "importBand",
+        "exportBand",
+        "dependencyBand"
+      ],
+      "properties": {
+        "wealthBand": {
+          "type": "string",
+          "enum": [
+            "subsistence",
+            "modest",
+            "comfortable",
+            "prosperous",
+            "wealthy"
+          ]
+        },
+        "resilienceBand": {
+          "type": "string",
+          "enum": [
+            "fragile",
+            "strained",
+            "steady",
+            "resilient"
+          ]
+        },
+        "scarcityBand": {
+          "type": "string",
+          "enum": [
+            "abundant",
+            "adequate",
+            "constrained",
+            "scarce"
+          ]
+        },
+        "seasonalityBand": {
+          "type": "string",
+          "enum": [
+            "stable",
+            "seasonal",
+            "highly_seasonal"
+          ]
+        },
+        "importBand": {
+          "$ref": "#/$defs/dependencyBand"
+        },
+        "exportBand": {
+          "$ref": "#/$defs/dependencyBand"
+        },
+        "dependencyBand": {
+          "$ref": "#/$defs/dependencyBand"
+        }
+      }
+    },
+    "dependencyBand": {
+      "type": "string",
+      "enum": [
+        "minimal",
+        "low",
+        "moderate",
+        "high"
+      ]
+    },
+    "tradePosture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "importPosture",
+        "exportPosture",
+        "dependencyPosture",
+        "notes"
+      ],
+      "properties": {
+        "importPosture": {
+          "$ref": "#/$defs/dependencyBand"
+        },
+        "exportPosture": {
+          "$ref": "#/$defs/dependencyBand"
+        },
+        "dependencyPosture": {
+          "$ref": "#/$defs/dependencyBand"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    },
+    "itemPosture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "itemKey",
+        "role",
+        "notes"
+      ],
+      "properties": {
+        "itemKey": {
+          "$ref": "#/$defs/itemKey"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "local_specialty",
+            "regular_import",
+            "regular_export",
+            "constrained_supply"
+          ]
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    },
+    "industryPosture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "workplaceRefs",
+        "productionChainRefs",
+        "industryTags",
+        "notes"
+      ],
+      "properties": {
+        "workplaceRefs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^workplace\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "productionChainRefs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^chain\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+          }
+        },
+        "industryTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    },
+    "settlementEconomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "settlementId",
+        "summary",
+        "economicRole",
+        "specializationTags",
+        "marketScale",
+        "marketOrder",
+        "economicBands",
+        "tradePosture",
+        "itemPostures",
+        "industryPosture",
+        "guildRefs",
+        "routeDependenceNotes",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^settlement_economy\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "settlementId": {
+          "type": "string",
+          "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "economicRole": {
+          "$ref": "#/$defs/economicRole"
+        },
+        "specializationTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        },
+        "marketScale": {
+          "type": "string",
+          "enum": [
+            "minimal",
+            "local",
+            "district",
+            "regional",
+            "major"
+          ]
+        },
+        "marketOrder": {
+          "type": "string",
+          "enum": [
+            "informal_exchange",
+            "periodic_market",
+            "permanent_market",
+            "regional_exchange"
+          ]
+        },
+        "economicBands": {
+          "$ref": "#/$defs/economicBands"
+        },
+        "tradePosture": {
+          "$ref": "#/$defs/tradePosture"
+        },
+        "itemPostures": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/itemPosture"
+          }
+        },
+        "industryPosture": {
+          "$ref": "#/$defs/industryPosture"
+        },
+        "guildRefs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^guild\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+          }
+        },
+        "routeDependenceNotes": {
+          "$ref": "#/$defs/notes"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}
