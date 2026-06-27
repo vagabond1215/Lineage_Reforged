@@ -206,8 +206,8 @@ The next 39 recommended passes are:
 | `0.5.239` | Settlement Economy Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
 | `0.5.240` | World Map Feature Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
 | `0.5.241` | Hazard And Route Security Schema Decision | Completed docs-only; approved staged hazard-first schema posture. |
-| `0.5.242` | Hazard Profile Schema And Validator | Target-free reusable hazard vocabulary schema, validator, and focused tests only. |
-| `0.5.243` | Route Security Profile Schema And Validator | Route-security schema, validator, and focused tests only. |
+| `0.5.242` | Hazard Profile Schema And Validator | Completed; strict target-free reusable hazard vocabulary schema, isolated pure validator, focused tests, no live content. |
+| `0.5.243` | Route Security Profile Schema And Validator | Next; route-security schema, validator, and focused tests only. |
 | `0.5.244` | First Crafting Recipe Content Seed Plan | Docs-only; at most a narrow coherent seed. |
 | `0.5.245` | First Crafting Recipe Content Seed | Content + focused validation only. |
 | `0.5.246` | First People And NPC Content Seed Plan | Docs-only. |
@@ -235,7 +235,7 @@ Near-term means `0.5.218`-`0.5.229` and is now complete:
 4. Do not create schemas while unresolved overlap exists, especially settlement embedded fields, production-chain recipes, item use profiles, quest embedded objectives, and people/household identities.
 5. End with hazard/route-security boundary work after map features stabilize.
 
-Safest immediate next local Codex run: `Version 0.5.242 - Hazard Profile Schema And Validator`.
+Safest immediate next local Codex run: `Version 0.5.243 - Route Security Profile Schema And Validator`.
 
 ## 11. Medium-Term Priority Queue
 
@@ -311,6 +311,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.242 - Hazard Profile Schema And Validator`
+`Version 0.5.243 - Route Security Profile Schema And Validator`
 
-It should use `docs/design/hazard-route-security-schema-decision.md` as its source and remain target-free hazard vocabulary schema/validator scoped.
+It should use `docs/design/hazard-route-security-schema-decision.md` as its source and remain route-security schema/validator scoped.

@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hazard Profile Content",
+  "description": "Static authored reusable non-security hazard vocabulary records. This schema does not define target overlays, route security, current weather, current conditions, damage, disease mechanics, encounter or spawn execution, travel/pathfinding, player journey state, UI, storage, rewards, commands, events, services, access, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/hazardProfile"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "hazardCategory": {
+      "type": "string",
+      "enum": [
+        "terrain",
+        "weather_exposure",
+        "hydrology",
+        "wildlife",
+        "disease_exposure",
+        "navigation",
+        "geologic",
+        "seasonal_surface",
+        "toxic_environment"
+      ]
+    },
+    "severityBand": {
+      "type": "string",
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "severe",
+        "variable"
+      ]
+    },
+    "exposureBand": {
+      "type": "string",
+      "enum": [
+        "localized",
+        "intermittent",
+        "seasonal",
+        "persistent",
+        "widespread"
+      ]
+    },
+    "seasonTag": {
+      "type": "string",
+      "enum": [
+        "year_round",
+        "spring",
+        "summer",
+        "autumn",
+        "winter",
+        "wet_season",
+        "dry_season",
+        "storm_season",
+        "thaw",
+        "harvest"
+      ]
+    },
+    "applicablePlacePosture": {
+      "type": "string",
+      "enum": [
+        "localized",
+        "linear",
+        "area_like",
+        "region_wide",
+        "route_adjacent",
+        "waterborne"
+      ]
+    },
+    "hazardProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "summary",
+        "status",
+        "hazardCategory",
+        "severityBand",
+        "exposureBand",
+        "applicableTerrainTags",
+        "applicableSeasonTags",
+        "applicablePlacePosture",
+        "warningSigns",
+        "mitigationNotes",
+        "sourceAuthorityNotes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^hazard_profile\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "hazardCategory": {
+          "$ref": "#/$defs/hazardCategory"
+        },
+        "severityBand": {
+          "$ref": "#/$defs/severityBand"
+        },
+        "exposureBand": {
+          "$ref": "#/$defs/exposureBand"
+        },
+        "applicableTerrainTags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        },
+        "applicableSeasonTags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/seasonTag"
+          }
+        },
+        "applicablePlacePosture": {
+          "$ref": "#/$defs/applicablePlacePosture"
+        },
+        "warningSigns": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "mitigationNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "descriptiveTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}

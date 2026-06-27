@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-27
-Route: Codex local sequencing alignment after `Version 0.5.241 - Hazard And Route Security Schema Decision`
+Route: Codex local sequencing alignment after `Version 0.5.242 - Hazard Profile Schema And Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.241 - Hazard And Route Security Schema Decision`
+- `Version 0.5.242 - Hazard Profile Schema And Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.242 - Hazard Profile Schema And Validator`
+- `Version 0.5.243 - Route Security Profile Schema And Validator`
 
 Versioning note:
 
@@ -262,8 +262,8 @@ Versioning note:
 | 160 | `0.5.239` | Settlement Economy Schema And Validator | Codex 5.5 Local | `0.5.227` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 161 | `0.5.240` | World Map Feature Schema And Validator | Codex 5.5 Local | `0.5.228` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 162 | `0.5.241` | Hazard And Route Security Schema Decision | Codex 5.5 Local docs-first | `0.5.229` decision | schema decision | Completed | Approved separate future hazard-profile and route-security authorities; selected hazard schema first, route-security schema second, hazard overlays later. |
-| 163 | `0.5.242` | Hazard Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Next | Target-free reusable hazard vocabulary only; no live content or normal lint registration. |
-| 164 | `0.5.243` | Route Security Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Conditional | Explicit current target resolution only; no live content or route topology mutation. |
+| 163 | `0.5.242` | Hazard Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Completed | Added strict target-free reusable hazard vocabulary schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
+| 164 | `0.5.243` | Route Security Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Next | Explicit current target resolution only; no live content or route topology mutation. |
 | 165 | `0.5.244` | First Crafting Recipe Content Seed Plan | Codex 5.5 Local docs-first | `0.5.231` output | seed plan | Conditional | No live content. |
 | 166 | `0.5.245` | First Crafting Recipe Content Seed | Codex 5.5 Local | `0.5.244` plan | content + validation | Conditional | Narrow authored seed only. |
 | 167 | `0.5.246` | First People And NPC Content Seed Plan | Codex 5.5 Local docs-first | `0.5.235` output | seed plan | Conditional | No live content. |
@@ -283,8 +283,7 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.242 - Hazard Profile Schema And Validator`
-2. `0.5.243 - Route Security Profile Schema And Validator`
+1. `0.5.243 - Route Security Profile Schema And Validator`
 
 The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.241` is the controlling hazard and route-security schema decision until focused implementation prompts land the exact schemas and validators.
 
@@ -302,7 +301,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.242 - Hazard Profile Schema And Validator` as the immediate next recommended run.
+- Keep `Version 0.5.243 - Route Security Profile Schema And Validator` as the immediate next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.
