@@ -24,6 +24,7 @@ const schemaFiles = [
   "packages/schemas/world/settlement-economy.schema.json",
   "packages/schemas/world/map-feature.schema.json",
   "packages/schemas/world/hazard-profile.schema.json",
+  "packages/schemas/world/route-security-profile.schema.json",
   "packages/schemas/world/settlement.schema.json",
   "packages/schemas/world/travel-network.schema.json",
   "packages/schemas/world/transport-profile.schema.json",

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-27
-Route: Codex local sequencing alignment after `Version 0.5.242 - Hazard Profile Schema And Validator`
+Route: Codex local sequencing alignment after `Version 0.5.243 - Route Security Profile Schema And Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.242 - Hazard Profile Schema And Validator`
+- `Version 0.5.243 - Route Security Profile Schema And Validator`
 
 Immediate next Codex run:
 
-- `Version 0.5.243 - Route Security Profile Schema And Validator`
+- `Version 0.5.244 - First Crafting Recipe Content Seed Plan`
 
 Versioning note:
 
@@ -94,7 +94,8 @@ Versioning note:
 - Settlement Economy Schema And Validator landed in `0.5.239`: strict future settlement-economy schema, an isolated pure validator, focused tests, and schema-file registration exist without live settlement-economy content, normal lint registration, settlement migration, exact pricing, runtime economy, trade mutation, UI, storage, rewards, events, commands, or gameplay changes.
 - World Map Feature Schema And Validator landed in `0.5.240`: strict future semantic map-feature schema, an isolated pure validator, focused tests, and schema-file registration exist without live map-feature content, normal lint registration, visual geometry migration, route topology mutation, map assets/UI, Knowledge, runtime, storage, rewards, events, commands, or gameplay changes.
 - Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.222` direction.
-- Do not roll from `0.5.241` to `0.6.0` without a dedicated runtime-readiness decision.
+- Route Security Profile Schema And Validator landed in `0.5.243`: strict future route-security profile schema, an isolated pure validator, focused tests, and schema-file registration exist without live content, normal lint registration, route topology mutation, route/crossing/port/trade-route authority, civic/law/economy records, runtime, UI, storage, commands, events, rewards, services, access, or gameplay changes.
+- Do not roll from `0.5.243` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -263,8 +264,8 @@ Versioning note:
 | 161 | `0.5.240` | World Map Feature Schema And Validator | Codex 5.5 Local | `0.5.228` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 162 | `0.5.241` | Hazard And Route Security Schema Decision | Codex 5.5 Local docs-first | `0.5.229` decision | schema decision | Completed | Approved separate future hazard-profile and route-security authorities; selected hazard schema first, route-security schema second, hazard overlays later. |
 | 163 | `0.5.242` | Hazard Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Completed | Added strict target-free reusable hazard vocabulary schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
-| 164 | `0.5.243` | Route Security Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Next | Explicit current target resolution only; no live content or route topology mutation. |
-| 165 | `0.5.244` | First Crafting Recipe Content Seed Plan | Codex 5.5 Local docs-first | `0.5.231` output | seed plan | Conditional | No live content. |
+| 164 | `0.5.243` | Route Security Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
+| 165 | `0.5.244` | First Crafting Recipe Content Seed Plan | Codex 5.5 Local docs-first | `0.5.231` output | seed plan | Next | No live content. |
 | 166 | `0.5.245` | First Crafting Recipe Content Seed | Codex 5.5 Local | `0.5.244` plan | content + validation | Conditional | Narrow authored seed only. |
 | 167 | `0.5.246` | First People And NPC Content Seed Plan | Codex 5.5 Local docs-first | `0.5.235` output | seed plan | Conditional | No live content. |
 | 168 | `0.5.247` | First People And NPC Content Seed | Codex 5.5 Local | `0.5.246` plan | content + validation | Conditional | Narrow authored seed only. |
@@ -283,9 +284,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.243 - Route Security Profile Schema And Validator`
+1. `0.5.244 - First Crafting Recipe Content Seed Plan`
 
-The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. `0.5.241` is the controlling hazard and route-security schema decision until focused implementation prompts land the exact schemas and validators.
+The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. The route-security schema/validator lane from `0.5.241` is now complete; first recipe content seed planning is the next narrow docs-first pass.
 
 ## Default Prompt Pattern
 
@@ -301,7 +302,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.243 - Route Security Profile Schema And Validator` as the immediate next recommended run.
+- Keep `Version 0.5.244 - First Crafting Recipe Content Seed Plan` as the immediate next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.

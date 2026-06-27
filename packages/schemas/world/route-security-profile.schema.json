@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Route Security Profile Content",
+  "description": "Static authored descriptive route-security posture records. This schema does not define route topology, route/crossing/port/trade-route authorities, civic law or economy execution, encounter or spawn behavior, travel runtime, current conditions, UI, storage, rewards, commands, events, services, access, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/routeSecurityProfile"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "requiredNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "targetType": {
+      "type": "string",
+      "enum": [
+        "travel_route",
+        "travel_lane",
+        "world_hex_edge",
+        "region_locality",
+        "settlement",
+        "world_hex"
+      ]
+    },
+    "targetRole": {
+      "type": "string",
+      "enum": [
+        "primary_corridor",
+        "affected_segment",
+        "approach_zone",
+        "local_context",
+        "context_only"
+      ]
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "targetType",
+        "targetId",
+        "targetRole"
+      ],
+      "properties": {
+        "targetType": {
+          "$ref": "#/$defs/targetType"
+        },
+        "targetId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "targetRole": {
+          "$ref": "#/$defs/targetRole"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    },
+    "pressureBand": {
+      "type": "string",
+      "enum": [
+        "none",
+        "low",
+        "moderate",
+        "high",
+        "severe"
+      ]
+    },
+    "securityPosture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "patrolPresence",
+        "maintenancePosture",
+        "checkpointPosture",
+        "tollPosture",
+        "escortAvailability",
+        "banditPressure",
+        "piracyPressure",
+        "conflictDisruption",
+        "publicReliability"
+      ],
+      "properties": {
+        "patrolPresence": {
+          "type": "string",
+          "enum": [
+            "none",
+            "rare",
+            "intermittent",
+            "regular",
+            "strong"
+          ]
+        },
+        "maintenancePosture": {
+          "type": "string",
+          "enum": [
+            "neglected",
+            "poor",
+            "serviceable",
+            "maintained",
+            "well_maintained"
+          ]
+        },
+        "checkpointPosture": {
+          "type": "string",
+          "enum": [
+            "none",
+            "informal",
+            "periodic",
+            "standing",
+            "contested"
+          ]
+        },
+        "tollPosture": {
+          "type": "string",
+          "enum": [
+            "none",
+            "customary",
+            "formal",
+            "predatory",
+            "contested"
+          ]
+        },
+        "escortAvailability": {
+          "type": "string",
+          "enum": [
+            "none",
+            "rare",
+            "seasonal",
+            "available",
+            "organized"
+          ]
+        },
+        "banditPressure": {
+          "$ref": "#/$defs/pressureBand"
+        },
+        "piracyPressure": {
+          "$ref": "#/$defs/pressureBand"
+        },
+        "conflictDisruption": {
+          "$ref": "#/$defs/pressureBand"
+        },
+        "publicReliability": {
+          "type": "string",
+          "enum": [
+            "unreliable",
+            "strained",
+            "ordinary",
+            "reliable",
+            "secured"
+          ]
+        }
+      }
+    },
+    "routeSecurityProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "summary",
+        "status",
+        "primaryTarget",
+        "securityPosture",
+        "sourceAuthorityNotes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^route_security\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "planned",
+            "active",
+            "retired"
+          ]
+        },
+        "primaryTarget": {
+          "$ref": "#/$defs/target"
+        },
+        "relatedTargets": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/target"
+          }
+        },
+        "securityPosture": {
+          "$ref": "#/$defs/securityPosture"
+        },
+        "descriptiveTags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/slug"
+          }
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/requiredNotes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}
