@@ -10,7 +10,7 @@ Consolidate the post-`0.5.216` planning pipeline around one monotonic version se
 
 This consolidation pass temporarily occupies `0.5.217`. The previously queued `Version 0.5.217 - Settlement Identity Schema Decision` has not landed and moves to `Version 0.5.218 - Settlement Identity Schema Decision`. All other unlanded recommendations with numbers lower than the current anchor are renumbered when scheduled; their old labels remain historical references only.
 
-The immediate pipeline is docs-first: settlement, recipe/production, monster, weapon/armor, quest objective/condition, people/NPC, magic-study source, polity, household/family, settlement economy, map feature, then hazard/route security. Approved schema decisions may then advance to schema/validator/focused-test passes, followed by seed plans and narrow content seeds.
+The immediate pipeline is docs-first: settlement, recipe/production, monster, weapon/armor, quest objective/condition, people/NPC, magic-study source, polity, household/family, settlement economy, map feature, then hazard/route security. Approved schema decisions may then advance to schema/validator/focused-test passes, followed by seed plans and narrow content seeds. The hazard/route-security schema decision landed in `0.5.241` and split implementation into hazard vocabulary first, route security second, and hazard target overlays later.
 
 No outstanding new Deep Research topic blocks `0.5.230`. Existing permanent decisions provide sufficient planning input. New research should be commissioned only before the later lane that needs it, not as a broad interruption to the ready schema/validator queue.
 
@@ -95,15 +95,15 @@ No new Deep Research is required before `0.5.230`.
 
 | Topic | Classification | Required before |
 | --- | --- | --- |
-| Resource nodes, gathering, mining, forestry, fishing, foraging, extraction | Useful before later schema work | `0.5.253` resource/commodity decision or any gathering authority. |
-| Services, vendors, shops, training, lodging, repair, temples | Useful before later boundary work | `0.5.252` service boundary. |
-| Health, disease, medicine, fatigue, aging, recovery, long-term injury | Useful before later boundary work | `0.5.254` combat status/condition/injury decision. |
-| Discovery, exploration records, map reveal, POIs, secrets, landmarks | Useful before content/site work | Map-feature seed planning at `0.5.249` and settlement-site decision at `0.5.251`. |
-| Agriculture, land use, food, farming, livestock, harvests | Useful after core schema decisions | Resource/gathering/agriculture lane after `0.5.240`. |
-| Maritime systems, ships, ports, fishing, sea trade, piracy, naval travel | Useful after route/map decisions | Post-`0.5.242` maritime authority lane. |
+| Resource nodes, gathering, mining, forestry, fishing, foraging, extraction | Useful before later schema work | `0.5.254` resource/commodity decision or any gathering authority. |
+| Services, vendors, shops, training, lodging, repair, temples | Useful before later boundary work | `0.5.253` service boundary. |
+| Health, disease, medicine, fatigue, aging, recovery, long-term injury | Useful before later boundary work | `0.5.255` combat status/condition/injury decision. |
+| Discovery, exploration records, map reveal, POIs, secrets, landmarks | Useful before content/site work | Map-feature seed planning at `0.5.250` and settlement-site decision at `0.5.252`. |
+| Agriculture, land use, food, farming, livestock, harvests | Useful after core schema decisions | Resource/gathering/agriculture lane after `0.5.241`. |
+| Maritime systems, ships, ports, fishing, sea trade, piracy, naval travel | Useful after route/map decisions | Post-`0.5.243` maritime authority lane. |
 | Time, calendar, seasons, weather, festivals, recurring events | Useful after core schema decisions | Temporal/event/weather authority lane; not current schema queue. |
-| Property, ownership, estates, businesses, storage, housing runtime | Useful after person/household/site decisions | Property authority after `0.5.251`. |
-| Construction, upgrades, settlement development, projects, fortifications | Useful after site/infrastructure decisions | Construction authority after `0.5.251`. |
+| Property, ownership, estates, businesses, storage, housing runtime | Useful after person/household/site decisions | Property authority after `0.5.252`. |
+| Construction, upgrades, settlement development, projects, fortifications | Useful after site/infrastructure decisions | Construction authority after `0.5.252`. |
 | Character creation, attributes, skills, progression, backgrounds, training | Can wait | Later progression consolidation after current static-authority queue. |
 | Companions, party, followers, hirelings, recruitment, loyalty | Can wait | After people/NPC and relationship authority; before runtime integration. |
 | Dialogue, rumors, social memory, conversations, recognition, reputation runtime | Can wait | After people/NPC schema; before social runtime. |
@@ -121,39 +121,39 @@ Research artifacts should be narrow and named for one future authority question.
 Settlement identity (0.5.218)
   -> settlement economy (0.5.227)
   -> map features (0.5.228)
-  -> settlement districts/sites (0.5.251/0.5.255)
+  -> settlement districts/sites (0.5.252/0.5.256)
 
 Recipe/production (0.5.219)
   -> recipe schema/validation (0.5.231)
-  -> recipe seed (0.5.243-0.5.244)
-  -> resources/commodities (0.5.253)
+  -> recipe seed (0.5.244-0.5.245)
+  -> resources/commodities (0.5.254)
 
 Monster (0.5.220)
   -> weapon/armor profiles (0.5.221)
   -> combat hardening (0.5.232)
   -> weapon/armor profile implementation (0.5.233)
-  -> status/condition/injury boundary (0.5.254)
+  -> status/condition/injury boundary (0.5.255)
 
 Quest objectives/conditions (0.5.222)
   -> quest validation (0.5.234)
 
 People/NPC (0.5.223)
   -> household/family (0.5.226)
-  -> people schema/seed (0.5.235, 0.5.245-0.5.246)
+  -> people schema/seed (0.5.235, 0.5.246-0.5.247)
   -> services/property/companions/social runtime later
 
 Polity (0.5.225)
-  -> polity schema/seed (0.5.237, 0.5.247-0.5.248)
+  -> polity schema/seed (0.5.237, 0.5.248-0.5.249)
   -> government/jurisdiction/law later
 
 Map features (0.5.228)
-  -> hazard/route security (0.5.229, 0.5.241-0.5.242)
-  -> map-feature seed (0.5.249-0.5.250)
+  -> hazard/route security (0.5.229, 0.5.241-0.5.243)
+  -> map-feature seed (0.5.250-0.5.251)
 ```
 
-Completed docs-only schema decisions: settlement identity, recipe/production, monster, weapon/armor, quest objectives/conditions, people/NPC, magic-study sources, polity, household/family, settlement economy, map features, and the hazard/route-security boundary.
+Completed docs-only schema decisions: settlement identity, recipe/production, monster, weapon/armor, quest objectives/conditions, people/NPC, magic-study sources, polity, household/family, settlement economy, map features, and hazard/route security.
 
-Blocked lanes: hazard/route schema implementation needs the later `0.5.241` schema decision; settlement sites/districts need settlement identity review; services need people/site/economy boundaries and focused research; property needs people/household/site boundaries; resource nodes need focused research and map/economy/crafting reconciliation; status/injury needs health research; all runtime integration needs `0.6` readiness.
+Blocked lanes: hazard target overlays need stable hazard vocabulary and target policy; settlement sites/districts need settlement identity review; services need people/site/economy boundaries and focused research; property needs people/household/site boundaries; resource nodes need focused research and map/economy/crafting reconciliation; status/injury needs health research; all runtime integration needs `0.6` readiness.
 
 ## 8. Version Number Cleanup
 
@@ -205,22 +205,23 @@ The next 39 recommended passes are:
 | `0.5.238` | Household And Family Schemas And Validators | Completed; strict future schemas, isolated pure validator, focused tests, no live content. |
 | `0.5.239` | Settlement Economy Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
 | `0.5.240` | World Map Feature Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
-| `0.5.241` | Hazard And Route Security Schema Decision | Next; docs-only; depends on `0.5.229`. |
-| `0.5.242` | Hazard And Route Security Schemas And Validators | Only if `0.5.241` approves; focused tests. |
-| `0.5.243` | First Crafting Recipe Content Seed Plan | Docs-only; at most a narrow coherent seed. |
-| `0.5.244` | First Crafting Recipe Content Seed | Content + focused validation only. |
-| `0.5.245` | First People And NPC Content Seed Plan | Docs-only. |
-| `0.5.246` | First People And NPC Content Seed | Content + focused validation only. |
-| `0.5.247` | First Polity Content Seed Plan | Docs-only. |
-| `0.5.248` | First Polity Content Seed | Content + focused validation only. |
-| `0.5.249` | First World Map Feature Content Seed Plan | Docs-only; use focused discovery/POI research first if needed. |
-| `0.5.250` | First World Map Feature Content Seed | Content + focused validation only. |
-| `0.5.251` | Settlement District And Site Authority Boundary Decision | Docs-only. |
-| `0.5.252` | Service Authority Boundary Decision | Docs-only; focused service research prerequisite. |
-| `0.5.253` | Resource And Commodity Schema Decision | Docs-only; focused resource-node research prerequisite. |
-| `0.5.254` | Combat Status Condition And Injury Boundary Decision | Docs-only; focused health research prerequisite. |
-| `0.5.255` | Settlement District And Site Schema Decision | Docs-only; depends on `0.5.251`. |
-| `0.5.256` | Static Authority Validation Consolidation Audit | Read-only/docs-first audit before further seeds. |
+| `0.5.241` | Hazard And Route Security Schema Decision | Completed docs-only; approved staged hazard-first schema posture. |
+| `0.5.242` | Hazard Profile Schema And Validator | Target-free reusable hazard vocabulary schema, validator, and focused tests only. |
+| `0.5.243` | Route Security Profile Schema And Validator | Route-security schema, validator, and focused tests only. |
+| `0.5.244` | First Crafting Recipe Content Seed Plan | Docs-only; at most a narrow coherent seed. |
+| `0.5.245` | First Crafting Recipe Content Seed | Content + focused validation only. |
+| `0.5.246` | First People And NPC Content Seed Plan | Docs-only. |
+| `0.5.247` | First People And NPC Content Seed | Content + focused validation only. |
+| `0.5.248` | First Polity Content Seed Plan | Docs-only. |
+| `0.5.249` | First Polity Content Seed | Content + focused validation only. |
+| `0.5.250` | First World Map Feature Content Seed Plan | Docs-only; use focused discovery/POI research first if needed. |
+| `0.5.251` | First World Map Feature Content Seed | Content + focused validation only. |
+| `0.5.252` | Settlement District And Site Authority Boundary Decision | Docs-only. |
+| `0.5.253` | Service Authority Boundary Decision | Docs-only; focused service research prerequisite. |
+| `0.5.254` | Resource And Commodity Schema Decision | Docs-only; focused resource-node research prerequisite. |
+| `0.5.255` | Combat Status Condition And Injury Boundary Decision | Docs-only; focused health research prerequisite. |
+| `0.5.256` | Settlement District And Site Schema Decision | Docs-only; depends on `0.5.252`. |
+| `0.5.257` | Static Authority Validation Consolidation Audit | Read-only/docs-first audit before further seeds. |
 
 Any failed prerequisite pauses only its lane. Do not silently broaden another run to fill the version slot.
 
@@ -234,11 +235,11 @@ Near-term means `0.5.218`-`0.5.229` and is now complete:
 4. Do not create schemas while unresolved overlap exists, especially settlement embedded fields, production-chain recipes, item use profiles, quest embedded objectives, and people/household identities.
 5. End with hazard/route-security boundary work after map features stabilize.
 
-Safest immediate next local Codex run: `Version 0.5.241 - Hazard And Route Security Schema Decision`.
+Safest immediate next local Codex run: `Version 0.5.242 - Hazard Profile Schema And Validator`.
 
 ## 11. Medium-Term Priority Queue
 
-Medium-term means `0.5.230`-`0.5.256`:
+Medium-term means `0.5.230`-`0.5.257`:
 
 - Implement only schema/validator/focused-test work explicitly approved by the preceding decision.
 - Keep existing current-data-first contracts; do not add compatibility/migration behavior unless explicitly requested.
@@ -310,6 +311,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.241 - Hazard And Route Security Schema Decision`
+`Version 0.5.242 - Hazard Profile Schema And Validator`
 
-It should use the `0.5.229` hazard and route-security boundary decision as its source and remain within documentation/schema-decision scope.
+It should use `docs/design/hazard-route-security-schema-decision.md` as its source and remain target-free hazard vocabulary schema/validator scoped.
