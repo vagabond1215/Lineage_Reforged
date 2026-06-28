@@ -10,7 +10,7 @@ Consolidate the post-`0.5.216` planning pipeline around one monotonic version se
 
 This consolidation pass temporarily occupies `0.5.217`. The previously queued `Version 0.5.217 - Settlement Identity Schema Decision` has not landed and moves to `Version 0.5.218 - Settlement Identity Schema Decision`. All other unlanded recommendations with numbers lower than the current anchor are renumbered when scheduled; their old labels remain historical references only.
 
-The immediate pipeline is docs-first: settlement, recipe/production, monster, weapon/armor, quest objective/condition, people/NPC, magic-study source, polity, household/family, settlement economy, map feature, then hazard/route security. Approved schema decisions may then advance to schema/validator/focused-test passes, followed by seed plans and narrow content seeds. The hazard/route-security schema decision landed in `0.5.241`; hazard vocabulary landed in `0.5.242`, route security landed in `0.5.243`, and hazard target overlays remain later.
+The immediate pipeline is docs-first: settlement, recipe/production, monster, weapon/armor, quest objective/condition, people/NPC, magic-study source, polity, household/family, settlement economy, map feature, then hazard/route security. Approved schema decisions may then advance to schema/validator/focused-test passes, followed by seed plans and narrow content seeds. The hazard/route-security schema decision landed in `0.5.241`; hazard vocabulary landed in `0.5.242`, route security landed in `0.5.243`, first recipe seed planning landed in `0.5.244`, and hazard target overlays remain later.
 
 No outstanding new Deep Research topic blocks `0.5.230`. Existing permanent decisions provide sufficient planning input. New research should be commissioned only before the later lane that needs it, not as a broad interruption to the ready schema/validator queue.
 
@@ -125,7 +125,7 @@ Settlement identity (0.5.218)
 
 Recipe/production (0.5.219)
   -> recipe schema/validation (0.5.231)
-  -> recipe seed (0.5.244-0.5.245)
+  -> recipe seed plan/content seed (0.5.244-0.5.245)
   -> resources/commodities (0.5.254)
 
 Monster (0.5.220)
@@ -208,8 +208,8 @@ The next 39 recommended passes are:
 | `0.5.241` | Hazard And Route Security Schema Decision | Completed docs-only; approved staged hazard-first schema posture. |
 | `0.5.242` | Hazard Profile Schema And Validator | Completed; strict target-free reusable hazard vocabulary schema, isolated pure validator, focused tests, no live content. |
 | `0.5.243` | Route Security Profile Schema And Validator | Completed; strict future schema, isolated pure validator, focused tests, no live content. |
-| `0.5.244` | First Crafting Recipe Content Seed Plan | Next docs-only pass; at most a narrow coherent seed. |
-| `0.5.245` | First Crafting Recipe Content Seed | Content + focused validation only. |
+| `0.5.244` | First Crafting Recipe Content Seed Plan | Completed docs-only; selected conservative standard-recipe seed strategy. |
+| `0.5.245` | First Crafting Recipe Content Seed | Next conditional; content + focused validation only with explicit authorization. |
 | `0.5.246` | First People And NPC Content Seed Plan | Docs-only. |
 | `0.5.247` | First People And NPC Content Seed | Content + focused validation only. |
 | `0.5.248` | First Polity Content Seed Plan | Docs-only. |
@@ -235,7 +235,7 @@ Near-term means `0.5.218`-`0.5.229` and is now complete:
 4. Do not create schemas while unresolved overlap exists, especially settlement embedded fields, production-chain recipes, item use profiles, quest embedded objectives, and people/household identities.
 5. End with hazard/route-security boundary work after map features stabilize.
 
-Safest immediate next local Codex run: `Version 0.5.244 - First Crafting Recipe Content Seed Plan`.
+Safest immediate next local Codex run: `Version 0.5.245 - First Crafting Recipe Content Seed`, only if live recipe content is explicitly authorized.
 
 ## 11. Medium-Term Priority Queue
 
@@ -311,6 +311,6 @@ Naming/cadence policy:
 
 ## 16. Next Recommended Version
 
-`Version 0.5.244 - First Crafting Recipe Content Seed Plan`
+`Version 0.5.245 - First Crafting Recipe Content Seed`
 
-It should use the current recipe schema/validator output as its source and remain docs-first seed planning only.
+It should use `docs/design/first-crafting-recipe-content-seed-plan.md` as its source, create only a narrow planned-status recipe seed if explicitly authorized, and avoid runtime, inventory, UI, storage, command, event, reward, economy, or gameplay changes.
