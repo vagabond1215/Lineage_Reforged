@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.246 - First People And NPC Content Seed Plan`
-- Next recommended version: `Version 0.5.247 - First People And NPC Content Seed`
+- Latest completed version: `Version 0.5.247 - First People And NPC Content Seed`
+- Next recommended version: `Version 0.5.248 - First Polity Content Seed Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -96,7 +96,8 @@ Versioning rule:
 - `Version 0.5.244 - First Crafting Recipe Content Seed Plan` added `docs/design/first-crafting-recipe-content-seed-plan.md`; selected a conservative standard-recipe first seed strategy, candidate lanes, planning examples, authoring rules, future validation checklist, and conditional `0.5.245` implementation route without live recipe content, normal lint registration, production-chain migration, runtime, UI, storage, economy, inventory, or gameplay change.
 - `Version 0.5.245 - First Crafting Recipe Content Seed` added 12 planned standard recipes in `packages/content/base/crafting/recipes.json`, registered recipe content in normal lint through the existing pure validator, and preserved production-chain, runtime, UI, storage, economy, inventory, item-instance, command, event, reward, and gameplay boundaries.
 - `Version 0.5.246 - First People And NPC Content Seed Plan` added `docs/design/first-people-npc-content-seed-plan.md`; selected a people-only first seed posture, deferred NPC overlays, rejected inference from quest contacts, `npc.*` strings, generated operators, combatants, player/account identities, Knowledge labels, roles, titles, workplaces, and prose alone, and preserved no-live-content posture.
-- Do not roll from `0.5.246` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.247 - First People And NPC Content Seed` completed as a deferred docs-only result after a fresh audit found no explicit canonical named-person evidence; no `people.json`, `npcs.json`, normal lint registration, or runtime/content behavior changed.
+- Do not roll from `0.5.247` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
