@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-28
-Route: Codex local sequencing alignment after `Version 0.5.247 - First People And NPC Content Seed`
+Route: Codex local sequencing alignment after `Version 0.5.248 - First Polity Content Seed Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.247 - First People And NPC Content Seed`
+- `Version 0.5.248 - First Polity Content Seed Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.248 - First Polity Content Seed Plan`
+- `Version 0.5.249 - First Polity Content Seed`
 
 Versioning note:
 
@@ -99,7 +99,8 @@ Versioning note:
 - First Crafting Recipe Content Seed landed in `0.5.245`: 12 planned standard recipes are live in `packages/content/base/crafting/recipes.json`, normal content lint now validates 59 files through the existing pure recipe validator, and no production-chain migration, runtime, UI, storage, economy, inventory, item-instance, command, event, reward, or gameplay behavior changed.
 - First People And NPC Content Seed Plan landed in `0.5.246`: documentation-only seed planning recommends people-only first, defers NPC overlays, rejects inference from quest contacts, `npc.*` strings, generated operators, combatants, player/account identities, Knowledge labels, roles, titles, workplaces, and prose alone, and preserves no-live-content posture.
 - First People And NPC Content Seed landed in `0.5.247` as a deferred docs-only result: no safe canonical named-person candidates were found, no `people.json` or `npcs.json` was created, and no normal lint registration or runtime behavior changed.
-- Do not roll from `0.5.247` to `0.6.0` without a dedicated runtime-readiness decision.
+- First Polity Content Seed Plan landed in `0.5.248`: documentation-only seed planning recommends a tiny planned-only future `world.polities` seed, with Valtherion and Draemor as conditional candidates only after a fresh implementation audit, and preserves no-live-content posture.
+- Do not roll from `0.5.248` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -273,7 +274,7 @@ Versioning note:
 | 166 | `0.5.245` | First Crafting Recipe Content Seed | Codex 5.5 Local | `0.5.244` plan | content + validation | Completed | Added 12 planned standard recipes and normal lint registration. |
 | 167 | `0.5.246` | First People And NPC Content Seed Plan | Codex 5.5 Local docs-first | `0.5.235` output | seed plan | Completed | People-only first; NPC overlays deferred. |
 | 168 | `0.5.247` | First People And NPC Content Seed | Codex 5.5 Local | `0.5.246` plan | deferred content audit | Completed | No safe canonical named-person evidence; no live people/NPC content or normal lint registration. |
-| 169 | `0.5.248` | First Polity Content Seed Plan | Codex 5.5 Local docs-first | `0.5.237` output | seed plan | Conditional | No live content. |
+| 169 | `0.5.248` | First Polity Content Seed Plan | Codex 5.5 Local docs-first | `0.5.237` output | seed plan | Completed | Tiny planned-only future seed posture; no live content. |
 | 170 | `0.5.249` | First Polity Content Seed | Codex 5.5 Local | `0.5.248` plan | content + validation | Conditional | Narrow authored seed only. |
 | 171 | `0.5.250` | First World Map Feature Content Seed Plan | Codex 5.5 Local docs-first | `0.5.240` output | seed plan | Conditional | Focused discovery/POI research first if needed. |
 | 172 | `0.5.251` | First World Map Feature Content Seed | Codex 5.5 Local | `0.5.250` plan | content + validation | Conditional | Narrow authored seed only. |
@@ -288,9 +289,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.248 - First Polity Content Seed Plan`
+1. `0.5.249 - First Polity Content Seed`
 
-The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. First people/NPC content remains deferred because the live audit found no safe canonical named-person evidence.
+The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. First polity seed planning is now complete; the next conditional pass is a tiny planned-only polity content seed if a fresh audit reconfirms at least one approved candidate.
 
 ## Default Prompt Pattern
 
@@ -306,7 +307,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.248 - First Polity Content Seed Plan` as the immediate next recommended run.
+- Keep `Version 0.5.249 - First Polity Content Seed` as the immediate next recommended run, conditional on explicit live-content authorization and fresh candidate audit.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
