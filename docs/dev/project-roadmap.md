@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.253 - Settlement District Schema Plan`
-- Next recommended version: `Version 0.5.254 - Settlement Site Schema Plan`
+- Latest completed version: `Version 0.5.254 - Settlement Site Schema Plan`
+- Next recommended version: `Version 0.5.255 - Settlement District Schema And Validator`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -103,7 +103,8 @@ Versioning rule:
 - `Version 0.5.251 - First World Map Feature Content Seed` added exactly two planned static semantic map-feature identity records, `map_feature.windward_spine` and `map_feature.thalos_run`, and registered `world.map_features` in normal content lint through the existing validator without adding geometry, route, travel, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior.
 - `Version 0.5.252 - Settlement District And Site Authority Boundary Decision` added `docs/design/settlement-district-site-authority-boundary-decision.md`; approved separate future optional authored authorities for settlement districts and placed settlement sites while preserving `world.settlements` as settlement identity authority and avoiding schema, content, runtime, UI, storage, command, event, reward, or gameplay changes.
 - `Version 0.5.253 - Settlement District Schema Plan` added `docs/design/settlement-district-schema-plan.md`; fixed the future records-only `world.settlement_districts` schema posture, required fields, lifecycle/type vocabularies, parent-settlement anchoring, forbidden inference sources, validator expectations, normal-lint posture, and seed-readiness rules without creating schema, validator, content, tests, runtime, UI, storage, command, event, reward, or gameplay changes.
-- Do not roll from `0.5.253` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.254 - Settlement Site Schema Plan` added `docs/design/settlement-site-schema-plan.md`; fixed the future records-only `world.settlement_sites` schema posture, required fields, nullable parent-district anchoring, lifecycle/type vocabularies, settlement/district anchoring, building/workplace/economy/travel/Knowledge boundaries, forbidden inference sources, validator expectations, normal-lint posture, and seed-readiness rules without creating schema, validator, content, tests, runtime, UI, storage, command, event, reward, or gameplay changes.
+- Do not roll from `0.5.254` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -396,9 +397,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.254 - Settlement Site Schema Plan`
+1. `0.5.255 - Settlement District Schema And Validator`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority decision and sequenced implementation plan extend the active near-term queue through `0.5.260`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.262`.
 
 High-priority unresolved questions:
 
