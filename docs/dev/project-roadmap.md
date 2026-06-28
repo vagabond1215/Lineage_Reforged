@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.251 - First World Map Feature Content Seed`
-- Next recommended version: `Version 0.5.252 - Settlement District And Site Authority Boundary Decision`
+- Latest completed version: `Version 0.5.252 - Settlement District And Site Authority Boundary Decision`
+- Next recommended version: `Version 0.5.253 - Settlement District Schema Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -101,7 +101,8 @@ Versioning rule:
 - `Version 0.5.249 - First Polity Content Seed` added exactly two planned static polity identity records, `polity.valtherion` and `polity.draemor`, and registered `world.polities` in normal content lint through the existing validator without adding civic/runtime behavior.
 - `Version 0.5.250 - First World Map Feature Content Seed Plan` added `docs/design/first-world-map-feature-content-seed-plan.md`; selected a tiny planned-only future semantic map-feature seed posture, identified Windward Spine and Thalos Run as conditional future candidates, and preserved no-live-content posture.
 - `Version 0.5.251 - First World Map Feature Content Seed` added exactly two planned static semantic map-feature identity records, `map_feature.windward_spine` and `map_feature.thalos_run`, and registered `world.map_features` in normal content lint through the existing validator without adding geometry, route, travel, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior.
-- Do not roll from `0.5.251` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.252 - Settlement District And Site Authority Boundary Decision` added `docs/design/settlement-district-site-authority-boundary-decision.md`; approved separate future optional authored authorities for settlement districts and placed settlement sites while preserving `world.settlements` as settlement identity authority and avoiding schema, content, runtime, UI, storage, command, event, reward, or gameplay changes.
+- Do not roll from `0.5.252` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -394,9 +395,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.247 - First People And NPC Content Seed`
+1. `0.5.253 - Settlement District Schema Plan`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.257` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan. Under the current people/NPC seed plan, `0.5.247` should be people-only unless a newer approved prompt supersedes that posture.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority decision and sequenced implementation plan extend the active near-term queue through `0.5.260`.
 
 High-priority unresolved questions:
 

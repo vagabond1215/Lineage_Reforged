@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-28
-Route: Codex local sequencing alignment after `Version 0.5.251 - First World Map Feature Content Seed`
+Route: Codex local sequencing alignment after `Version 0.5.252 - Settlement District And Site Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.251 - First World Map Feature Content Seed`
+- `Version 0.5.252 - Settlement District And Site Authority Boundary Decision`
 
 Immediate next Codex run:
 
-- `Version 0.5.252 - Settlement District And Site Authority Boundary Decision`
+- `Version 0.5.253 - Settlement District Schema Plan`
 
 Versioning note:
 
@@ -103,7 +103,8 @@ Versioning note:
 - First Polity Content Seed landed in `0.5.249`: two planned static polity identity records, `polity.valtherion` and `polity.draemor`, are live and normal content lint validates `world.polities` through the existing pure helper without civic/runtime behavior.
 - First World Map Feature Content Seed Plan landed in `0.5.250`: documentation-only seed planning recommends a tiny planned-only future `world.map_features` seed, with Windward Spine and Thalos Run as conditional candidates only after a fresh implementation audit, and preserves no-live-content posture.
 - First World Map Feature Content Seed landed in `0.5.251`: two planned static semantic map-feature identity records, `map_feature.windward_spine` and `map_feature.thalos_run`, are live and normal content lint validates `world.map_features` through the existing pure helper without geometry, route, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior.
-- Do not roll from `0.5.251` to `0.6.0` without a dedicated runtime-readiness decision.
+- Settlement District And Site Authority Boundary Decision landed in `0.5.252`: future optional `world.settlement_districts` and `world.settlement_sites` are approved as separate authored authorities, while `world.settlements` remains settlement identity authority and runtime-derived district/plot/building state remains non-authoritative.
+- Do not roll from `0.5.252` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -281,20 +282,23 @@ Versioning note:
 | 170 | `0.5.249` | First Polity Content Seed | Codex 5.5 Local | `0.5.248` plan | content + validation | Completed | Added two planned static polity identity records and normal lint registration only. |
 | 171 | `0.5.250` | First World Map Feature Content Seed Plan | Codex 5.5 Local docs-first | `0.5.240` output | seed plan | Completed | Tiny planned-only future seed posture; no live content. |
 | 172 | `0.5.251` | First World Map Feature Content Seed | Codex 5.5 Local | `0.5.250` plan | content + validation | Completed | Added two planned static semantic map-feature identity records and normal lint registration only. |
-| 173 | `0.5.252` | Settlement District And Site Authority Boundary Decision | Codex 5.5 Local docs-first | settlement decisions | planning decision | Deferred | No schema or content. |
-| 174 | `0.5.253` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
-| 175 | `0.5.254` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
-| 176 | `0.5.255` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
-| 177 | `0.5.256` | Settlement District And Site Schema Decision | Codex 5.5 Local docs-first | `0.5.252` decision | schema decision | Deferred | Requires site boundary. |
-| 178 | `0.5.257` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
+| 173 | `0.5.252` | Settlement District And Site Authority Boundary Decision | Codex 5.5 Local docs-first | settlement decisions | planning decision | Completed | Approved split future district/site authorities; no schema or content. |
+| 174 | `0.5.253` | Settlement District Schema Plan | Codex 5.5 Local docs-first | `0.5.252` decision | schema plan | Deferred | District schema posture only; no schema file or content. |
+| 175 | `0.5.254` | Settlement Site Schema Plan | Codex 5.5 Local docs-first | `0.5.252` decision | schema plan | Deferred | Site schema posture only; no schema file or content. |
+| 176 | `0.5.255` | First Settlement District Content Seed Plan | Codex 5.5 Local docs-first | district schema plan | seed plan | Deferred | No live content. |
+| 177 | `0.5.256` | First Settlement Site Content Seed Plan | Codex 5.5 Local docs-first | site schema plan | seed plan | Deferred | No live content. |
+| 178 | `0.5.257` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
+| 179 | `0.5.258` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 180 | `0.5.259` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
+| 181 | `0.5.260` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.252 - Settlement District And Site Authority Boundary Decision`
+1. `0.5.253 - Settlement District Schema Plan`
 
-The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. The first semantic map-feature seed is now complete; the next pass is a docs-first settlement district and placed-site authority boundary decision.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary decision. The settlement district/site boundary is now complete; the next pass is a docs-first district schema plan.
 
 ## Default Prompt Pattern
 
@@ -310,7 +314,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.252 - Settlement District And Site Authority Boundary Decision` as the immediate next recommended run.
+- Keep `Version 0.5.253 - Settlement District Schema Plan` as the immediate next recommended run.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
