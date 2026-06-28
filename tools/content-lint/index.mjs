@@ -28,6 +28,7 @@ import {
 } from "./quest-action-trees.mjs";
 import { validateCraftingRecipes } from "./crafting-recipes.mjs";
 import { validatePolities } from "./polities.mjs";
+import { validateMapFeatures } from "./map-features.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -465,6 +466,12 @@ const checks = [
   },
   {
     file: "packages/content/base/world/polities.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/world/map_features.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
     forbidGeoQualifierInName: false
@@ -9614,6 +9621,32 @@ async function validatePolitiesAgainstDependencies() {
   });
 }
 
+async function validateMapFeaturesAgainstDependencies() {
+  const mapFeaturePath = path.join(ROOT, "packages/content/base/world/map_features.json");
+  const mapFeatureSchemaPath = path.join(ROOT, "packages/schemas/world/map-feature.schema.json");
+  const regionsPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const regionLocalitiesPath = path.join(ROOT, "packages/content/base/world/region_localities.json");
+  const settlementsPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+  const worldMapFeaturesPath = path.join(ROOT, "packages/content/base/world/world_map_features.json");
+
+  const mapFeatureParsed = JSON.parse(await readFile(mapFeaturePath, "utf8"));
+  const mapFeatureSchemaParsed = JSON.parse(await readFile(mapFeatureSchemaPath, "utf8"));
+  const regionsParsed = JSON.parse(await readFile(regionsPath, "utf8"));
+  const regionLocalitiesParsed = JSON.parse(await readFile(regionLocalitiesPath, "utf8"));
+  const settlementsParsed = JSON.parse(await readFile(settlementsPath, "utf8"));
+  const worldMapFeaturesParsed = JSON.parse(await readFile(worldMapFeaturesPath, "utf8"));
+
+  validateMapFeatures({
+    relativePath: "packages/content/base/world/map_features.json",
+    wrapper: mapFeatureParsed,
+    schema: mapFeatureSchemaParsed,
+    regions: regionsParsed.records,
+    regionLocalities: regionLocalitiesParsed.records,
+    settlements: settlementsParsed.records,
+    worldMapFeatures: worldMapFeaturesParsed.records
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10212,6 +10245,7 @@ async function main() {
   await validateKnowledgeTrialPoliciesAgainstDependencies();
   await validateCraftingRecipesAgainstDependencies();
   await validatePolitiesAgainstDependencies();
+  await validateMapFeaturesAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

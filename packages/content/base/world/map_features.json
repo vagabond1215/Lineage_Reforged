@@ -1,0 +1,83 @@
+{
+  "records": [
+    {
+      "id": "map_feature.windward_spine",
+      "slug": "windward_spine",
+      "name": "The Windward Spine",
+      "aliases": [],
+      "summary": "A planned static semantic identity for Serathyl's named mountain backbone.",
+      "featureType": "mountain_range",
+      "extentKind": "linear",
+      "placeAnchors": [
+        {
+          "placeType": "region",
+          "placeId": "region.windward_spine",
+          "anchorRole": "contains_feature"
+        }
+      ],
+      "descriptiveTags": [
+        "mountain",
+        "spine"
+      ],
+      "visualReferences": [
+        {
+          "visualAggregateId": "world_map_feature.first_world",
+          "visualFeatureId": "feature.mountains_windward_spine",
+          "relationship": "reference_only",
+          "notes": "Non-authoritative pointer to current mountain visual geometry only; geometry is not copied."
+        }
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Current region authority names The Windward Spine and describes it as the mountain backbone of Serathyl.",
+        "Current visual aggregate names feature.mountains_windward_spine as Windward Spine in the mountainFeatures group accepted by validateMapFeatures.",
+        "This record remains descriptive and non-executing; mountain_range and linear are the least specific accurate schema values supported by the current mountain-backbone evidence."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "map_feature.thalos_run",
+      "slug": "thalos_run",
+      "name": "Thalos Run",
+      "aliases": [],
+      "summary": "A planned static semantic identity for the named river draining Verdant Thalos toward Aurelis Bay.",
+      "featureType": "river",
+      "extentKind": "linear",
+      "placeAnchors": [
+        {
+          "placeType": "region",
+          "placeId": "region.verdant_thalos",
+          "anchorRole": "feature_crosses"
+        },
+        {
+          "placeType": "region_locality",
+          "placeId": "region_locality.verdant_thalos_coastal_bays",
+          "anchorRole": "feature_near"
+        }
+      ],
+      "descriptiveTags": [
+        "freshwater",
+        "river"
+      ],
+      "visualReferences": [
+        {
+          "visualAggregateId": "world_map_feature.first_world",
+          "visualFeatureId": "feature.river_thalos_run",
+          "relationship": "reference_only",
+          "notes": "Non-authoritative pointer to current river visual geometry only; geometry is not copied."
+        }
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Current visual aggregate names feature.river_thalos_run as Thalos Run and describes it as the primary river draining Verdant Thalos farmlands into Aurelis Bay.",
+        "Current region authority names Verdant Thalos and current locality authority names Verdant Coastal Bays, providing the required current place context beyond visual geometry alone.",
+        "This record remains descriptive and non-executing; river and linear are the least specific accurate schema values supported by the current named-river evidence."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    }
+  ]
+}

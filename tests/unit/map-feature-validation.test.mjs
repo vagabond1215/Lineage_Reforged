@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
@@ -10,6 +10,11 @@ const MAP_FEATURE_PATH = "packages/content/base/world/map_features.json";
 
 async function readJson(relativePath) {
   const raw = await readFile(path.join(ROOT, relativePath), "utf8");
+  return JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw);
+}
+
+function readJsonSync(relativePath) {
+  const raw = readFileSync(path.join(ROOT, relativePath), "utf8");
   return JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw);
 }
 
@@ -530,14 +535,56 @@ test("rejects forbidden geometry, topology, political, ecology, Knowledge, runti
   }
 });
 
-test("schema is registered while live semantic content and normal lint registration remain absent", async () => {
+test("live semantic map-feature seed validates through the focused helper", () => {
+  assert.deepEqual(
+    validateInput({
+      relativePath: MAP_FEATURE_PATH,
+      wrapper: readJsonSync(MAP_FEATURE_PATH),
+      schema: structuredClone(schema),
+      regions: structuredClone(regionsWrapper.records),
+      regionLocalities: structuredClone(regionLocalitiesWrapper.records),
+      settlements: structuredClone(settlementsWrapper.records),
+      worldMapFeatures: structuredClone(worldMapFeaturesWrapper.records)
+    }),
+    {
+      ok: true,
+      mapFeatureIds: [
+        "map_feature.thalos_run",
+        "map_feature.windward_spine"
+      ]
+    }
+  );
+});
+
+test("live semantic map-feature seed remains planned and descriptive only", () => {
+  const liveSeed = readJsonSync(MAP_FEATURE_PATH);
+
+  assert.deepEqual(
+    liveSeed.records.map((liveRecord) => liveRecord.id).sort(),
+    [
+      "map_feature.thalos_run",
+      "map_feature.windward_spine"
+    ]
+  );
+
+  for (const liveRecord of liveSeed.records) {
+    assert.equal(liveRecord.status, "planned");
+    assert.deepEqual(liveRecord.aliases, []);
+    assert.match(
+      liveRecord.notes.join(" "),
+      /does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior/
+    );
+  }
+});
+
+test("schema, live semantic content, and normal lint registration are present", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
 
   assert.match(schemaTestSource, /packages\/schemas\/world\/map-feature\.schema\.json/);
-  assert.equal(existsSync(path.join(ROOT, MAP_FEATURE_PATH)), false);
-  assert.doesNotMatch(contentLintSource, /packages\/content\/base\/world\/map_features\.json/);
-  assert.doesNotMatch(contentLintSource, /map-features\.mjs/);
+  assert.equal(existsSync(path.join(ROOT, MAP_FEATURE_PATH)), true);
+  assert.match(contentLintSource, /packages\/content\/base\/world\/map_features\.json/);
+  assert.match(contentLintSource, /map-features\.mjs/);
 });
 
 test("existing visual world-map-feature authority remains registered separately", async () => {
