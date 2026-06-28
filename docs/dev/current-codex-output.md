@@ -1,57 +1,66 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.248 - First Polity Content Seed Plan
+Source version/run: Version 0.5.249 - First Polity Content Seed
 Date: 2026-06-28
-Branch/status assumption: `master`; worktree appeared clean before `0.5.248` edits.
+Branch/status assumption: `master`; `git fetch origin` and `git pull --ff-only origin master` completed with repo already up to date; initial worktree was clean before edits.
 
 ## Result
 
-Completed the documentation-only first polity content seed plan.
+Created the first live `world.polities` seed at `packages/content/base/world/polities.json`.
 
-Added `docs/design/first-polity-content-seed-plan.md`. The plan approves a future conditional `world.polities` content seed but creates no live content now. It recommends a tiny planned-only first batch, with `polity.valtherion` and `polity.draemor` as conditional candidates only if a fresh implementation audit reconfirms their exact current evidence and place anchors.
+Both approved candidates passed the fresh local audit. Added exactly two `status: "planned"` static polity identity records: `polity.valtherion` and `polity.draemor`.
 
-No live `packages/content/base/world/polities.json`, normal content-lint registration, government, jurisdiction, law, claim, border, control, diplomacy, conflict, faction, institution, force, tax, legal/player-state, runtime, UI, storage, command, event, reward, migration, or gameplay implementation was added.
+Local evidence summary:
+
+- `polity.valtherion`: `region.valtherion` exists and is current by validator rules; its authored notes name Valtherion as the primary world civilization center and political center of the map. `settlement.highcrown` exists and is current by validator rules; its summary and site context call Highcrown Valtherion's imperial river capital and cite crown roads, palace terraces, and the empire's largest market courts. `empire` remains the least specific accurate schema value.
+- `polity.draemor`: `region.draemor` exists and is current by validator rules; its authored region record names Draemor. `settlement.riverthrone` exists and is current by validator rules; its summary calls Riverthrone the political and commercial throne city of Draemor. `realm` remains the least specific accurate schema value because current evidence supports political identity without a more exact government form.
+
+Normal content-lint registration was added narrowly for `world.polities` through the existing `validatePolities` helper.
 
 ## Files Changed
 
-- `docs/design/first-polity-content-seed-plan.md` - added the docs-only seed plan.
-- `docs/dev/current-codex-output.md` - recorded the `0.5.248` result.
-- `docs/dev/current-gpt-handoff.md` - updated immediate handoff and next route.
-- `docs/dev/project-roadmap.md` - marked `0.5.248` complete and moved the next recommendation to `0.5.249`.
-- `docs/dev/codex-sequenced-implementation-plan.md` - aligned the ordered queue after the polity seed plan.
-- `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the consolidated sequence after `0.5.248`.
-- `docs/future_content_backlog.md` - recorded the run note and durable civic/polity follow-up.
+- `packages/content/base/world/polities.json` - added two planned static polity identity records.
+- `tools/content-lint/index.mjs` - registered `world.polities` in normal content lint and wired dependency validation through `validatePolities`.
+- `tests/unit/polity-validation.test.mjs` - added live-seed validation and registration coverage.
+- `docs/dev/current-codex-output.md` - recorded the `0.5.249` result.
+- `docs/dev/current-gpt-handoff.md` - updated the current handoff after the live seed.
+- `docs/dev/project-roadmap.md` - moved the active anchor to `0.5.249` complete and `0.5.250` next.
+- `docs/dev/codex-sequenced-implementation-plan.md` - moved the immediate next run to `0.5.250`.
+- `docs/future_content_backlog.md` - recorded the completed run and updated civic authority notes.
 
 ## Checks Run
 
-- Polity schema, validator, focused test, schema-registration, normal content-lint, region, locality, settlement, world-map, guild, religion, quest, runtime/projection, and temporary-artifact audits - completed by read-only inspection.
+- `git fetch origin` - passed.
+- `git pull --ff-only origin master` - passed; already up to date.
+- `git status --short` before edits - clean.
+- Fresh region and settlement evidence audit - passed for Valtherion/Highcrown and Draemor/Riverthrone.
 - `node --test tests\unit\polity-validation.test.mjs` - passed.
-- `npm.cmd run tool:content-lint` - passed; `content-lint: ok (59 files checked)`.
+- `npm.cmd run tool:content-lint` - passed; `content-lint: ok (60 files checked)`.
 - `node --test tests\unit\schema-files.test.mjs` - failed on the known unrelated Knowledge subject vocabulary assertion at `tests/unit/schema-files.test.mjs:292` (`true !== false` for the existing `sacred_site` expectation). The polity schema parsed before that failure.
+- Direct polity content audit - passed for unique id/slug coherence, duplicate-free anchors, active/current place-anchor resolution, and forbidden-field absence.
+- Normal content-lint registration audit - passed; `world.polities` is registered exactly through `tools/content-lint/index.mjs` and `tools/content-lint/polities.mjs`.
+- Scope/behavior audit - passed by changed-path review; no government, law, claim, border, control, diplomacy, conflict, settlement, region, guild, religion, quest, Knowledge, runtime, UI, storage, command, event, reward, or gameplay files changed.
+- Non-inference audit - passed; records were not inferred from settlement administrative roles, generic political prose, world-map conflict zones, guild/religion labels, quest metadata, generated operators, player/account state, or Knowledge vocabulary alone.
 - `git diff --check` - passed with Git line-ending warnings on changed text files.
-- Conflict-marker scan on changed docs - passed.
-- Trailing-whitespace scan on changed docs - passed.
-- Polity content path audit - passed; `packages/content/base/world/polities.json` is absent.
-- Normal lint registration audit - passed; `tools/content-lint/index.mjs` still does not register `polities.mjs` or `world/polities.json`.
-- Runtime/source scope audit - passed; no `packages`, `apps`, `tools`, or `tests` files changed.
+- Conflict-marker scan on changed files - passed.
+- Trailing-whitespace scan on changed files - passed.
 
 ## Behavior / Runtime Confirmation
 
-No runtime, JSON live content, schema, validator, lint-index, UI, storage, command, event, reward, save/account, quest, Knowledge, guild, religion, settlement, region, world-map, diplomacy, law, government, claim, border, or gameplay behavior changed.
+Runtime, UI, storage, command, event, reward, migration, save/account, economy, quest, Knowledge, guild, religion, settlement, region, world-map, government, law, claim, border, control, diplomacy, conflict, taxation, legal/player-state, and gameplay behavior did not change.
 
-The new plan is documentation only. It recommends a future planned-only polity seed if explicit live-content authorization and a fresh candidate audit support it.
+The new `world.polities` content is static descriptive content only.
 
 ## Risks / Follow-Up
 
-- `Version 0.5.249 - First Polity Content Seed` is conditional and should proceed only if live polity content is explicitly authorized.
-- The candidate ids in the plan are not live records and should be skipped if the future audit finds the evidence too ambiguous.
-- Government, jurisdiction, law, claims, borders, diplomacy, conflict, citizenship/legal status, taxation, enforcement, Knowledge polity subjects, runtime, UI, storage, commands, events, rewards, and gameplay remain deferred.
+- Government, jurisdiction, law, claims, borders, control, diplomacy, conflict, citizenship/legal status, taxation, enforcement, Knowledge polity subjects, runtime, UI, storage, commands, events, rewards, and gameplay remain deferred.
+- `polity.draemor` relies on explicit Riverthrone settlement wording for political identity support; region evidence alone remains too weak.
 - The pre-existing `schema-files.test.mjs` Knowledge `sacred_site` assertion failure remains unrelated to this run.
 
 ## Next Recommended Version
 
-Version 0.5.249 - First Polity Content Seed
+Version 0.5.250 - First World Map Feature Content Seed Plan
 
 ## Suggested Commit Message
 
-`docs(civic): plan first polity content seed`
+`feat(world): seed first polity content`

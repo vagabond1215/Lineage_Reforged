@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
@@ -10,6 +10,11 @@ const POLITY_PATH = "packages/content/base/world/polities.json";
 
 async function readJson(relativePath) {
   const raw = await readFile(path.join(ROOT, relativePath), "utf8");
+  return JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw);
+}
+
+function readJsonSync(relativePath) {
+  const raw = readFileSync(path.join(ROOT, relativePath), "utf8");
   return JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw);
 }
 
@@ -409,12 +414,43 @@ test("rejects government, law, claim, tax, player-state, runtime, and gameplay f
   }
 });
 
-test("schema is registered while live polity content and normal lint registration remain absent", async () => {
+test("live polity seed validates through the focused helper", () => {
+  assert.deepEqual(
+    validateInput({
+      relativePath: POLITY_PATH,
+      wrapper: readJsonSync(POLITY_PATH),
+      schema: structuredClone(schema),
+      regions: structuredClone(regionsWrapper.records),
+      regionLocalities: structuredClone(regionLocalitiesWrapper.records),
+      settlements: structuredClone(settlementsWrapper.records)
+    }),
+    {
+      ok: true,
+      polityIds: ["polity.draemor", "polity.valtherion"]
+    }
+  );
+});
+
+test("live polity seed stays planned and descriptive", () => {
+  const liveSeed = readJsonSync(POLITY_PATH);
+
+  assert.deepEqual(liveSeed.records.map((entry) => entry.id).sort(), [
+    "polity.draemor",
+    "polity.valtherion"
+  ]);
+  for (const record of liveSeed.records) {
+    assert.equal(record.status, "planned");
+    assert.equal(record.aliases.length, 0);
+    assert.match(record.notes.join(" "), /does not define government, ruler, law, claim, border, control, diplomacy, tax, runtime, UI, storage, command, event, reward, or gameplay behavior/);
+  }
+});
+
+test("schema and live polity content are registered in normal content lint", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
 
   assert.match(schemaTestSource, /packages\/schemas\/world\/polity\.schema\.json/);
-  assert.equal(existsSync(path.join(ROOT, POLITY_PATH)), false);
-  assert.doesNotMatch(contentLintSource, /polities\.json/);
-  assert.doesNotMatch(contentLintSource, /polities\.mjs/);
+  assert.equal(existsSync(path.join(ROOT, POLITY_PATH)), true);
+  assert.match(contentLintSource, /packages\/content\/base\/world\/polities\.json/);
+  assert.match(contentLintSource, /polities\.mjs/);
 });

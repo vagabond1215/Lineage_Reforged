@@ -27,6 +27,7 @@ import {
   validateQuestDefinitionActionTrees
 } from "./quest-action-trees.mjs";
 import { validateCraftingRecipes } from "./crafting-recipes.mjs";
+import { validatePolities } from "./polities.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -461,6 +462,12 @@ const checks = [
     requiredTopLevel: ["records"],
     requireSlug: true,
     forbidGeoQualifierInName: true
+  },
+  {
+    file: "packages/content/base/world/polities.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
   },
   {
     file: "packages/content/base/items/items.json",
@@ -9584,6 +9591,29 @@ async function validateCraftingRecipesAgainstDependencies() {
   });
 }
 
+async function validatePolitiesAgainstDependencies() {
+  const polityPath = path.join(ROOT, "packages/content/base/world/polities.json");
+  const politySchemaPath = path.join(ROOT, "packages/schemas/world/polity.schema.json");
+  const regionsPath = path.join(ROOT, "packages/content/base/world/regions.json");
+  const regionLocalitiesPath = path.join(ROOT, "packages/content/base/world/region_localities.json");
+  const settlementsPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+
+  const polityParsed = JSON.parse(await readFile(polityPath, "utf8"));
+  const politySchemaParsed = JSON.parse(await readFile(politySchemaPath, "utf8"));
+  const regionsParsed = JSON.parse(await readFile(regionsPath, "utf8"));
+  const regionLocalitiesParsed = JSON.parse(await readFile(regionLocalitiesPath, "utf8"));
+  const settlementsParsed = JSON.parse(await readFile(settlementsPath, "utf8"));
+
+  validatePolities({
+    relativePath: "packages/content/base/world/polities.json",
+    wrapper: polityParsed,
+    schema: politySchemaParsed,
+    regions: regionsParsed.records,
+    regionLocalities: regionLocalitiesParsed.records,
+    settlements: settlementsParsed.records
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10181,6 +10211,7 @@ async function main() {
   await validateKnowledgeSnippetsAgainstDependencies();
   await validateKnowledgeTrialPoliciesAgainstDependencies();
   await validateCraftingRecipesAgainstDependencies();
+  await validatePolitiesAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

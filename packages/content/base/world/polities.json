@@ -1,0 +1,62 @@
+{
+  "records": [
+    {
+      "id": "polity.valtherion",
+      "slug": "valtherion",
+      "name": "Valtherion",
+      "aliases": [],
+      "summary": "A planned static polity identity for the imperial political context associated with Valtherion and Highcrown.",
+      "polityForm": "empire",
+      "placeAnchors": [
+        {
+          "placeType": "region",
+          "placeId": "region.valtherion",
+          "anchorRole": "identity_anchor"
+        },
+        {
+          "placeType": "settlement",
+          "placeId": "settlement.highcrown",
+          "anchorRole": "seat_reference"
+        }
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Current region authority names Valtherion, describes it as the primary world civilization center, and says Valtherion's border kingdoms and chokepoints make it the political center of the map.",
+        "Current settlement authority names Highcrown as Valtherion's imperial river capital and describes crown roads, palace terraces, and the empire's largest market courts.",
+        "This record remains descriptive and non-executing; empire is the least specific accurate schema form supported by the current imperial/crown wording."
+      ],
+      "notes": [
+        "Static identity only; this record does not define government, ruler, law, claim, border, control, diplomacy, tax, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "polity.draemor",
+      "slug": "draemor",
+      "name": "Draemor",
+      "aliases": [],
+      "summary": "A planned static polity identity for the throne-city political context associated with Draemor and Riverthrone.",
+      "polityForm": "realm",
+      "placeAnchors": [
+        {
+          "placeType": "region",
+          "placeId": "region.draemor",
+          "anchorRole": "identity_anchor"
+        },
+        {
+          "placeType": "settlement",
+          "placeId": "settlement.riverthrone",
+          "anchorRole": "seat_reference"
+        }
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Current region authority names Draemor as a fertile southern central continent defined by river systems and agricultural belts.",
+        "Current settlement authority names Riverthrone as the political and commercial throne city of Draemor.",
+        "This record remains descriptive and non-executing; realm is the least specific accurate schema form because current evidence supports political identity without a more exact government form."
+      ],
+      "notes": [
+        "Static identity only; this record does not define government, ruler, law, claim, border, control, diplomacy, tax, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    }
+  ]
+}
