@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Settlement District Content",
+  "description": "Static authored settlement-district identity records. This schema does not define live settlement content, coordinates, geometry, pathfinding, service execution, inventories, ownership, law, Knowledge state, runtime state, UI, storage, commands, events, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/settlementDistrict"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/slug"
+      }
+    },
+    "districtType": {
+      "type": "string",
+      "enum": [
+        "market_quarter",
+        "harbor_ward",
+        "temple_quarter",
+        "citadel_ward",
+        "craft_district",
+        "farm_fringe",
+        "gate_district",
+        "riverfront_district",
+        "noble_terrace",
+        "outer_sprawl",
+        "residential_quarter",
+        "civic_quarter",
+        "mixed_district"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "active",
+        "retired"
+      ]
+    },
+    "settlementDistrict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "aliases",
+        "summary",
+        "parentSettlementId",
+        "districtType",
+        "functionalTags",
+        "placeRoleTags",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^settlement_district\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "aliases": {
+          "$ref": "#/$defs/notes"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "parentSettlementId": {
+          "type": "string",
+          "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "districtType": {
+          "$ref": "#/$defs/districtType"
+        },
+        "functionalTags": {
+          "$ref": "#/$defs/tags"
+        },
+        "placeRoleTags": {
+          "$ref": "#/$defs/tags"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/notes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}
