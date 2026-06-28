@@ -1,15 +1,21 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.252 - Settlement District And Site Authority Boundary Decision
+Source version/run: Version 0.5.253 - Settlement District Schema Plan
 Date: 2026-06-28
-Status: docs-only authority boundary decision completed; no schema, validator, live content, content-lint registration, runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior changed
+Status: docs-only settlement district schema plan completed; no schema, validator, live content, content-lint registration, runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior changed
 
-## Current Settlement District / Site Authority Posture
+## Current Settlement District Schema Posture
 
 - `world.settlements` remains the canonical settlement identity and broad place authority.
-- Future settlement districts are approved only as a separate optional authored authority candidate, not embedded in settlement records.
-- Future placed settlement sites are approved only as a separate optional authored authority candidate, not inferred from buildings, workplaces, routes, Knowledge, map visuals, settlement prose, or runtime projections.
-- Candidate future paths are `packages/content/base/world/settlement_districts.json` and `packages/content/base/world/settlement_sites.json`; neither file exists or is authorized by the completed decision.
+- Future settlement districts are approved only as a separate optional authored authority candidate named `world.settlement_districts`, not embedded in settlement records.
+- Candidate future content path is `packages/content/base/world/settlement_districts.json`.
+- Candidate future schema path is `packages/schemas/world/settlement-district.schema.json`.
+- Candidate future validator path is `tools/content-lint/settlement-districts.mjs`.
+- Candidate future focused test path is `tests/unit/settlement-district-validation.test.mjs`.
+- None of those candidate paths exists or is authorized as implementation by the completed plan.
+- Future district ids should use `settlement_district.<settlement_slug>.<district_slug>` with `slug` as the lower-snake-case district slug only.
+- Required future record fields are `id`, `slug`, `name`, `aliases`, `summary`, `parentSettlementId`, `districtType`, `functionalTags`, `placeRoleTags`, `status`, `sourceAuthorityNotes`, and `notes`.
+- Future lifecycle values are `planned`, `active`, and `retired`; first seeds should default to `planned`.
 - Current runtime-derived `SettlementDistrictState`, `SettlementPlotState`, and `SettlementBuildingState` remain simulation/projection state, not static authored content authority.
 - Building/workplace, settlement economy, route/travel, map/visual, Knowledge, sacred-site/religious-hotspot, runtime, UI, storage, command, event, reward, and gameplay owners remain separate.
 
@@ -17,19 +23,18 @@ Status: docs-only authority boundary decision completed; no schema, validator, l
 
 Latest completed:
 
-- `Version 0.5.252 - Settlement District And Site Authority Boundary Decision`
+- `Version 0.5.253 - Settlement District Schema Plan`
 
 Immediate next:
 
-- `Version 0.5.253 - Settlement District Schema Plan`
+- `Version 0.5.254 - Settlement Site Schema Plan`
 
 ## Decision Result
 
-- Added `docs/design/settlement-district-site-authority-boundary-decision.md`.
-- Defined settlement districts as optional intra-settlement area identities.
-- Defined placed settlement sites as optional discrete local facility/POI/landmark identities.
-- Selected split future authority posture for districts and sites.
-- Rejected inference from settlement summaries, administrative/economic roles, building/workplace compatibility, route adjacency, map pixels, visual labels, Knowledge snippets, quest metadata, sacred-site/hotspot prose, runtime/demo snapshots, generated operators, or generic fantasy naming alone.
+- Added `docs/design/settlement-district-schema-plan.md`.
+- Fixed the future records-only wrapper and exact candidate paths for `world.settlement_districts`.
+- Fixed required fields, lifecycle values, district type vocabulary, parent-settlement anchoring rules, forbidden fields, forbidden inference sources, validator requirements, normal-lint posture, and first seed-readiness rules.
+- Confirmed local candidate district content/schema/validator/test paths remain absent.
 
 ## Validation Notes
 
@@ -39,4 +44,4 @@ Immediate next:
 
 ## Next Route Guardrail
 
-`Version 0.5.253 - Settlement District Schema Plan` should remain docs-first. It should decide the exact future `world.settlement_districts` schema posture without creating schemas, validators, content, normal lint registration, runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior unless a newer prompt explicitly scopes implementation.
+`Version 0.5.254 - Settlement Site Schema Plan` should remain docs-first. It should decide the exact future `world.settlement_sites` schema posture without creating schemas, validators, content, normal lint registration, runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior unless a newer prompt explicitly scopes implementation.
