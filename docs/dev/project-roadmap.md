@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.245 - First Crafting Recipe Content Seed`
-- Next recommended version: `Version 0.5.246 - First People And NPC Content Seed Plan`
+- Latest completed version: `Version 0.5.246 - First People And NPC Content Seed Plan`
+- Next recommended version: `Version 0.5.247 - First People And NPC Content Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -95,7 +95,8 @@ Versioning rule:
 - `Version 0.5.243 - Route Security Profile Schema And Validator` added a strict future route-security profile schema, an isolated pure validator, focused tests, and schema-file registration without live content, normal lint registration, route topology mutation, route/crossing/port/trade-route authority, civic/law/economy records, runtime, UI, storage, command, event, reward, service, access, or gameplay change.
 - `Version 0.5.244 - First Crafting Recipe Content Seed Plan` added `docs/design/first-crafting-recipe-content-seed-plan.md`; selected a conservative standard-recipe first seed strategy, candidate lanes, planning examples, authoring rules, future validation checklist, and conditional `0.5.245` implementation route without live recipe content, normal lint registration, production-chain migration, runtime, UI, storage, economy, inventory, or gameplay change.
 - `Version 0.5.245 - First Crafting Recipe Content Seed` added 12 planned standard recipes in `packages/content/base/crafting/recipes.json`, registered recipe content in normal lint through the existing pure validator, and preserved production-chain, runtime, UI, storage, economy, inventory, item-instance, command, event, reward, and gameplay boundaries.
-- Do not roll from `0.5.245` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.246 - First People And NPC Content Seed Plan` added `docs/design/first-people-npc-content-seed-plan.md`; selected a people-only first seed posture, deferred NPC overlays, rejected inference from quest contacts, `npc.*` strings, generated operators, combatants, player/account identities, Knowledge labels, roles, titles, workplaces, and prose alone, and preserved no-live-content posture.
+- Do not roll from `0.5.246` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -388,9 +389,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.246 - First People And NPC Content Seed Plan`
+1. `0.5.247 - First People And NPC Content Seed`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.257` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The conditional sequence through `0.5.257` is authoritative in `docs/design/pipeline-roadmap-consolidation-decision.md` and mirrored in the sequenced implementation plan. Under the current people/NPC seed plan, `0.5.247` should be people-only unless a newer approved prompt supersedes that posture.
 
 High-priority unresolved questions:
 

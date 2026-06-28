@@ -1,59 +1,62 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.245 - First Crafting Recipe Content Seed
+Source version/run: Version 0.5.246 - First People And NPC Content Seed Plan
 Date: 2026-06-28
-Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; pull was already up to date. After the requested fetch/pull/status sequence, the worktree was clean before `0.5.245` edits.
+Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; pull was already up to date. After the requested fetch/pull/status sequence, the worktree was clean before `0.5.246` edits.
 
 ## Result
 
-Completed the first live planned crafting recipe content seed.
+Completed the documentation-only first people/NPC content seed plan.
 
-Added `packages/content/base/crafting/recipes.json` with 12 planned `standard` subtype recipes for deterministic item-key transformations across food, lumber, leather, textile, metal, and tool-component lanes. Each recipe uses existing item, workplace, tool, skill, and optional non-inheriting production-chain references only.
+Added `docs/design/first-people-npc-content-seed-plan.md`. The plan chooses a people-only first live seed posture and defers NPC overlays because the current audit found no stable authored presence/interaction evidence beyond quest-contact strings, organization labels, generated settlement operators, and runtime/player/account identities.
 
-Registered the live crafting recipe content in normal content lint and added focused coverage for the live seed and registration.
-
-No runtime crafting, inventory mutation, item-instance creation, UI, storage, commands, events, rewards, economy behavior, production-chain behavior, gameplay implementation, schema expansion, or broad validator behavior changed.
+No live people/NPC content, normal content-lint registration, quest-contact migration, legacy `npc.*` normalization, generated people, settlement-operator change, Knowledge change, runtime behavior, UI, storage, commands, events, rewards, or gameplay implementation was added.
 
 ## Files Changed
 
-- `packages/content/base/crafting/recipes.json` - added 12 planned standard recipe records.
-- `tools/content-lint/index.mjs` - registered the live recipe content and dependency-backed recipe validation in normal content lint.
-- `tests/unit/crafting-recipes-validation.test.mjs` - added focused live-seed and normal-lint registration assertions.
+- `docs/design/first-people-npc-content-seed-plan.md` - added the docs-only seed plan.
 - `docs/dev/current-codex-output.md` - replaced with this run result.
 - `docs/dev/current-gpt-handoff.md` - advanced the current anchor and next route.
-- `docs/dev/project-roadmap.md` - marked `0.5.245` complete and `0.5.246` next.
+- `docs/dev/project-roadmap.md` - marked `0.5.246` complete and `0.5.247` next.
 - `docs/dev/codex-sequenced-implementation-plan.md` - advanced the ordered queue.
-- `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the completed recipe seed and next NPC/person route.
-- `docs/future_content_backlog.md` - recorded the run note and live crafting recipe authority status.
+- `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the completed people/NPC seed plan and next conditional seed route.
+- `docs/future_content_backlog.md` - recorded the run note and durable people/NPC seed-plan pointer.
 
 ## Checks Run
 
 - `git fetch origin` - passed.
 - `git pull --ff-only origin master` - passed; already up to date.
 - `git status --short` before editing - passed; clean.
-- Direct recipe seed audit - passed; 12 records, sorted ids, all `planned`, all `standard`, no prerequisites, exactly one primary output per recipe, and no direct self-transformations.
-- `node --test tests\unit\crafting-recipes-validation.test.mjs` - passed; 42 tests.
+- People/NPC schema, validator, focused test, schema-registration, normal content-lint, quest, settlement, generated-operator, player/account/runtime, Knowledge, religion, guild, and lineage/ancestry boundary audits - completed by read-only inspection.
+- Temporary artifact audit - passed; `docs/dev/tmp-npc-social-systems-research-2026-06-20.md` remains absent.
+- `node --test tests\unit\people-npc-validation.test.mjs` - passed; 75 tests.
 - `npm.cmd run tool:content-lint` - passed; `content-lint: ok (59 files checked)`.
-- `node --test tests\unit\schema-files.test.mjs` - failed on the known unrelated Knowledge subject vocabulary assertion at `tests/unit/schema-files.test.mjs:292` (`true !== false` for the existing `sacred_site` expectation). The new recipe schema parsed successfully before that failure.
+- `node --test tests\unit\schema-files.test.mjs` - failed on the known unrelated Knowledge subject vocabulary assertion at `tests/unit/schema-files.test.mjs:292` (`true !== false` for the existing `sacred_site` expectation). The person and NPC schemas parsed successfully before that failure.
 - `git diff --check` - passed with line-ending warnings on changed text files.
-- Runtime/economy/inventory scope audit - passed; no changes under `packages/engines`, `apps`, `packages/shared`, `packages/db`, `packages/schemas`, `packages/content/base/civilization`, `packages/content/base/items`, or `packages/content/base/player`.
+- Documentation scope audit - passed; no schema, validator, test, content JSON, normal content-lint registration, quest, settlement, generated-operator, Knowledge, lineage, guild, religion, player/account/runtime, UI, storage, command, event, reward, or gameplay files changed.
+- People/NPC seed-plan authority audit - passed; this pass creates planning only and does not authorize live content by itself.
+- Person/NPC boundary audit - passed; person identity and NPC overlay remain separate, with people-only first recommended and NPC overlays deferred.
+- Non-inference audit - passed; quest contacts, `npc.*` strings, generated operators, combatants, player/account identities, Knowledge labels, roles, titles, workplaces, deity/religion/order labels, and prose names remain insufficient evidence by themselves.
+- Version-tracking audit - passed; `0.5.246` is complete and `Version 0.5.247 - First People And NPC Content Seed` is the next conditional recommendation.
 
 ## Behavior / Runtime Confirmation
 
-Runtime behavior did not change.
+No runtime, JSON live content, normal content-lint live content registration, loader, migration, schema, validator, focused test, quest, settlement, generated-operator, Knowledge, lineage, guild, religion, player/account/runtime, UI, storage/save-state, command, event, reward, or gameplay behavior changed.
 
-This run adds static live recipe content plus validation registration only. The recipes remain planned descriptive authority records and do not consume inventory, create item instances, execute crafting, mutate production chains, affect markets, grant rewards, unlock recipes, or alter UI/storage/gameplay.
+The new plan is documentation only. It recommends a future people-only seed if explicit canonical named-person evidence exists; otherwise the correct future implementation result is to delay live content rather than infer from weak references.
 
 ## Risks / Follow-Up
 
-- The broad `schema-files` test still has the unrelated pre-existing Knowledge subject vocabulary failure around `sacred_site`; this run did not change or fix it.
-- Recipe execution, inventory mutation, item-instance output, crafting UI, unlocks/history, station access, tool wear, quality/rarity/affixes, repair/salvage, alchemy, enchanting, Knowledge/trial effects, quests, markets, and economy simulation remain deferred.
-- `Version 0.5.246 - First People And NPC Content Seed Plan` should stay planning-only unless explicitly scoped otherwise.
+- `Version 0.5.247 - First People And NPC Content Seed` is conditional and should proceed only if live people content is explicitly authorized.
+- Under this plan, the first live implementation should be people-only. NPC overlays remain deferred unless a newer approved plan and implementation prompt explicitly supersede that posture.
+- Current quest contact names and `npc.corin_ash` are not sufficient by themselves to seed people or NPC records.
+- `tests/unit/schema-files.test.mjs` still has the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`; this pass did not change or fix it.
+- `tests/unit/region-first-world-data.test.mjs` still has the unrelated direct-run BOM parsing issue noted by prior handoffs; it was not rerun or fixed in this docs-only pass.
 
 ## Next Recommended Version
 
-Version 0.5.246 - First People And NPC Content Seed Plan
+Version 0.5.247 - First People And NPC Content Seed
 
 ## Suggested Commit Message
 
-`feat(crafting): seed first recipe content`
+`docs(civilization): plan first people npc content seed`
