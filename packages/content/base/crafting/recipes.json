@@ -1,0 +1,560 @@
+{
+  "records": [
+    {
+      "id": "recipe.bread_dough_to_bread_loaf",
+      "slug": "bread_dough_to_bread_loaf",
+      "name": "Bread Dough to Bread Loaf",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for baking bread dough into a bread loaf.",
+      "recipeFamily": "baking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "bread_dough",
+          "quantity": 1,
+          "role": "ingredient"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "bread_loaf",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.bakehouse"
+      ],
+      "requiredToolItemKeys": [
+        "bread_peel"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.cooking",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.food.bread",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing baking transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.butchered_meat_to_smoked_meat",
+      "slug": "butchered_meat_to_smoked_meat",
+      "name": "Butchered Meat to Smoked Meat",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for preserving butchered meat with salt into smoked meat.",
+      "recipeFamily": "preserving",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "butchered_meat",
+          "quantity": 1,
+          "role": "ingredient"
+        },
+        {
+          "itemKey": "salt_crystal",
+          "quantity": 1,
+          "role": "ingredient"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "smoked_meat",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.smokehouse"
+      ],
+      "requiredToolItemKeys": [],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.cooking",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.food.preserved_meat",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing preserving transformation.",
+        "The workplace, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.cured_leather_to_leather_panel",
+      "slug": "cured_leather_to_leather_panel",
+      "name": "Cured Leather to Leather Panel",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for cutting cured leather into leather panels.",
+      "recipeFamily": "leatherworking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "cured_leather",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "leather_panel",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.tannery"
+      ],
+      "requiredToolItemKeys": [
+        "awl"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.leatherworking",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.leather.components",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing leatherworking component transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.fiber_to_cloth",
+      "slug": "fiber_to_cloth",
+      "name": "Fiber to Cloth",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for weaving fiber into cloth.",
+      "recipeFamily": "tailoring",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "fiber",
+          "quantity": 2,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "cloth",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.loomhouse"
+      ],
+      "requiredToolItemKeys": [],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.weaving",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.textile.cloth_grades",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing textile transformation.",
+        "The workplace, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.grain_bundle_to_flour",
+      "slug": "grain_bundle_to_flour",
+      "name": "Grain Bundle to Flour",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for milling grain bundles into flour.",
+      "recipeFamily": "milling",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "grain_bundle",
+          "quantity": 1,
+          "role": "ingredient"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "flour",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.millhouse"
+      ],
+      "requiredToolItemKeys": [
+        "mill_rake"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.milling",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.food.flour",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing milling transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.hide_raw_to_cured_leather",
+      "slug": "hide_raw_to_cured_leather",
+      "name": "Raw Hide to Cured Leather",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for curing raw hide into cured leather.",
+      "recipeFamily": "leatherworking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "hide_raw",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "cured_leather",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.tannery"
+      ],
+      "requiredToolItemKeys": [],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.tanning",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.leather.cured",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing leather curing transformation.",
+        "The workplace, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.iron_ingot_to_metal_rod",
+      "slug": "iron_ingot_to_metal_rod",
+      "name": "Iron Ingot to Metal Rod",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for shaping an iron ingot into metal rods.",
+      "recipeFamily": "metalsmithing",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "iron_ingot",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "metal_rod",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.weaponsmith_forge"
+      ],
+      "requiredToolItemKeys": [
+        "blacksmith_hammer"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.blacksmithing",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.metal.components",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing metalsmithing component transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.iron_ore_to_iron_ingot",
+      "slug": "iron_ore_to_iron_ingot",
+      "name": "Iron Ore to Iron Ingot",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for smelting iron ore into an iron ingot.",
+      "recipeFamily": "metalsmithing",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "iron_ore",
+          "quantity": 2,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "iron_ingot",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.bloomery_forge"
+      ],
+      "requiredToolItemKeys": [
+        "blacksmith_hammer"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.smelting",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.metal.iron_ingot",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing metalsmithing transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.log_to_plank",
+      "slug": "log_to_plank",
+      "name": "Log to Plank",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for sawing a log into planks.",
+      "recipeFamily": "woodworking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "log",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "plank",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.sawmill"
+      ],
+      "requiredToolItemKeys": [
+        "saw"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.carpentry",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.lumber.plank",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing woodworking transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.metal_rod_and_tool_handle_to_hammer",
+      "slug": "metal_rod_and_tool_handle_to_hammer",
+      "name": "Metal Rod and Tool Handle to Hammer",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for assembling a metal rod and tool handle into a hammer.",
+      "recipeFamily": "assembly",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "metal_rod",
+          "quantity": 1,
+          "role": "material"
+        },
+        {
+          "itemKey": "tool_handle",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "hammer",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.weaponsmith_forge"
+      ],
+      "requiredToolItemKeys": [
+        "blacksmith_hammer"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.basic_crafting",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.utility.tools",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing assembly transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.plank_to_tool_handle",
+      "slug": "plank_to_tool_handle",
+      "name": "Plank to Tool Handle",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for shaping a plank into tool handles.",
+      "recipeFamily": "woodworking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "plank",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "tool_handle",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.sawmill"
+      ],
+      "requiredToolItemKeys": [
+        "wood_plane"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.carpentry",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.lumber.components",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing woodworking component transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    },
+    {
+      "id": "recipe.plank_to_wood_shaft",
+      "slug": "plank_to_wood_shaft",
+      "name": "Plank to Wood Shaft",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for shaping a plank into wood shafts.",
+      "recipeFamily": "woodworking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "plank",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "wood_shaft",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.sawmill"
+      ],
+      "requiredToolItemKeys": [
+        "wood_plane"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.carpentry",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.lumber.components",
+      "sourceAuthorityNotes": [
+        "Authored from current canonical item keys for a simple player-facing woodworking component transformation.",
+        "The workplace, tool, skill, and production-chain references are descriptive only and do not execute crafting.",
+        "The production-chain link is a non-inheriting cross-reference; no recipeProfile fields are copied."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
+        "No production-chain inheritance or economy behavior."
+      ]
+    }
+  ]
+}

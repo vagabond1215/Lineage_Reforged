@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-28
-Route: Codex local sequencing alignment after `Version 0.5.244 - First Crafting Recipe Content Seed Plan`
+Route: Codex local sequencing alignment after `Version 0.5.245 - First Crafting Recipe Content Seed`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.244 - First Crafting Recipe Content Seed Plan`
+- `Version 0.5.245 - First Crafting Recipe Content Seed`
 
 Immediate next Codex run:
 
-- `Version 0.5.245 - First Crafting Recipe Content Seed`
+- `Version 0.5.246 - First People And NPC Content Seed Plan`
 
 Versioning note:
 
@@ -96,7 +96,8 @@ Versioning note:
 - Keep Quest Objective And Condition Schema Decision as the documentation-only `0.5.222` direction.
 - Route Security Profile Schema And Validator landed in `0.5.243`: strict future route-security profile schema, an isolated pure validator, focused tests, and schema-file registration exist without live content, normal lint registration, route topology mutation, route/crossing/port/trade-route authority, civic/law/economy records, runtime, UI, storage, commands, events, rewards, services, access, or gameplay changes.
 - First Crafting Recipe Content Seed Plan landed in `0.5.244`: documentation-only seed planning now selects a conservative standard-recipe first content strategy, candidate lanes, authoring gates, validation checklist, and next conditional seed route without live recipe content, normal lint registration, production-chain migration, runtime, UI, storage, economy, inventory, or gameplay change.
-- Do not roll from `0.5.244` to `0.6.0` without a dedicated runtime-readiness decision.
+- First Crafting Recipe Content Seed landed in `0.5.245`: 12 planned standard recipes are live in `packages/content/base/crafting/recipes.json`, normal content lint now validates 59 files through the existing pure recipe validator, and no production-chain migration, runtime, UI, storage, economy, inventory, item-instance, command, event, reward, or gameplay behavior changed.
+- Do not roll from `0.5.245` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -267,8 +268,8 @@ Versioning note:
 | 163 | `0.5.242` | Hazard Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Completed | Added strict target-free reusable hazard vocabulary schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 164 | `0.5.243` | Route Security Profile Schema And Validator | Codex 5.5 Local | `0.5.241` decision | schema + validator + tests | Completed | Added strict future schema, isolated pure validator, focused tests, and schema-file registration without live content or normal lint registration. |
 | 165 | `0.5.244` | First Crafting Recipe Content Seed Plan | Codex 5.5 Local docs-first | `0.5.231` output | seed plan | Completed | No live content. |
-| 166 | `0.5.245` | First Crafting Recipe Content Seed | Codex 5.5 Local | `0.5.244` plan | content + validation | Next conditional | Narrow authored seed only; explicit authorization required. |
-| 167 | `0.5.246` | First People And NPC Content Seed Plan | Codex 5.5 Local docs-first | `0.5.235` output | seed plan | Conditional | No live content. |
+| 166 | `0.5.245` | First Crafting Recipe Content Seed | Codex 5.5 Local | `0.5.244` plan | content + validation | Completed | Added 12 planned standard recipes and normal lint registration. |
+| 167 | `0.5.246` | First People And NPC Content Seed Plan | Codex 5.5 Local docs-first | `0.5.235` output | seed plan | Next | No live content. |
 | 168 | `0.5.247` | First People And NPC Content Seed | Codex 5.5 Local | `0.5.246` plan | content + validation | Conditional | Narrow authored seed only. |
 | 169 | `0.5.248` | First Polity Content Seed Plan | Codex 5.5 Local docs-first | `0.5.237` output | seed plan | Conditional | No live content. |
 | 170 | `0.5.249` | First Polity Content Seed | Codex 5.5 Local | `0.5.248` plan | content + validation | Conditional | Narrow authored seed only. |
@@ -285,9 +286,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.245 - First Crafting Recipe Content Seed`
+1. `0.5.246 - First People And NPC Content Seed Plan`
 
-The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. The first recipe content seed plan is now complete; the first live recipe content seed is conditional and requires explicit authorization.
+The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. The first live recipe content seed is now complete; first people/NPC seed planning is the next docs-first pass.
 
 ## Default Prompt Pattern
 
@@ -303,7 +304,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.245 - First Crafting Recipe Content Seed` as the immediate next conditional recommended run only if live recipe content is explicitly authorized.
+- Keep `Version 0.5.246 - First People And NPC Content Seed Plan` as the immediate next recommended run.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
 - `0.5.190` approved future direct sacred-site subjects without changing Knowledge schemas, validators, registry content, site status, snippets, pilgrimage, runtime, UI, storage, religious-order, favorability/alignment, law, spell, Magic Study, Prestige, family, NPC, inventory, map/grid, travel, or gameplay behavior.

@@ -26,6 +26,7 @@ import {
   validateQuestArchetypeActionTrees,
   validateQuestDefinitionActionTrees
 } from "./quest-action-trees.mjs";
+import { validateCraftingRecipes } from "./crafting-recipes.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -509,6 +510,12 @@ const checks = [
     requireSlug: false,
     forbidGeoQualifierInName: false,
     validateProductionChains: true
+  },
+  {
+    file: "packages/content/base/crafting/recipes.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
   },
   {
     file: "packages/content/base/civilization/meat_cut_standards.json",
@@ -9539,6 +9546,44 @@ async function validateKnowledgeTrialPoliciesAgainstDependencies() {
   });
 }
 
+async function validateCraftingRecipesAgainstDependencies() {
+  const recipePath = path.join(ROOT, "packages/content/base/crafting/recipes.json");
+  const recipeSchemaPath = path.join(ROOT, "packages/schemas/crafting/recipe.schema.json");
+  const itemPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const workplacePath = path.join(ROOT, "packages/content/base/civilization/workplaces.json");
+  const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
+  const productionChainPath = path.join(ROOT, "packages/content/base/civilization/production_chains.json");
+  const guildPath = path.join(ROOT, "packages/content/base/civilization/guilds.json");
+  const knowledgeDomainPath = path.join(ROOT, "packages/content/base/player/knowledge_domains.json");
+  const knowledgeSnippetPath = path.join(ROOT, "packages/content/base/player/knowledge_snippets.json");
+  const trialPath = path.join(ROOT, "packages/content/base/player/trials.json");
+
+  const recipeParsed = JSON.parse(await readFile(recipePath, "utf8"));
+  const recipeSchemaParsed = JSON.parse(await readFile(recipeSchemaPath, "utf8"));
+  const itemParsed = JSON.parse(await readFile(itemPath, "utf8"));
+  const workplaceParsed = JSON.parse(await readFile(workplacePath, "utf8"));
+  const skillParsed = JSON.parse(await readFile(skillPath, "utf8"));
+  const productionChainParsed = JSON.parse(await readFile(productionChainPath, "utf8"));
+  const guildParsed = JSON.parse(await readFile(guildPath, "utf8"));
+  const knowledgeDomainParsed = JSON.parse(await readFile(knowledgeDomainPath, "utf8"));
+  const knowledgeSnippetParsed = JSON.parse(await readFile(knowledgeSnippetPath, "utf8"));
+  const trialParsed = JSON.parse(await readFile(trialPath, "utf8"));
+
+  validateCraftingRecipes({
+    relativePath: "packages/content/base/crafting/recipes.json",
+    wrapper: recipeParsed,
+    schema: recipeSchemaParsed,
+    items: itemParsed.records,
+    workplaces: workplaceParsed.records,
+    skills: skillParsed.records,
+    productionChains: productionChainParsed.records,
+    guilds: guildParsed.records,
+    knowledgeDomains: knowledgeDomainParsed.records,
+    knowledgeSnippets: knowledgeSnippetParsed.records,
+    trials: trialParsed.records
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10135,6 +10180,7 @@ async function main() {
   await validateKnowledgeDomainRegistryAgainstDependencies();
   await validateKnowledgeSnippetsAgainstDependencies();
   await validateKnowledgeTrialPoliciesAgainstDependencies();
+  await validateCraftingRecipesAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

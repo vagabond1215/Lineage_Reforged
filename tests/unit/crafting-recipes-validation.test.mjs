@@ -13,6 +13,7 @@ async function readJson(relativePath) {
 }
 
 const recipeSchema = await readJson("packages/schemas/crafting/recipe.schema.json");
+const liveRecipeWrapper = await readJson(RECIPE_PATH);
 const itemWrapper = await readJson("packages/content/base/items/items.json");
 const workplaceWrapper = await readJson("packages/content/base/civilization/workplaces.json");
 const skillWrapper = await readJson("packages/content/base/player/skills.json");
@@ -319,11 +320,31 @@ test("rejects direct no-op self-transformations", () => {
   );
 });
 
-test("registers the schema file but not live recipe content lint", async () => {
+test("validates the live first planned recipe content seed", () => {
+  assert.equal(liveRecipeWrapper.records.length, 12);
+  assert.equal(
+    liveRecipeWrapper.records.every((liveRecipe) => liveRecipe.status === "planned"),
+    true
+  );
+  assert.equal(
+    liveRecipeWrapper.records.every((liveRecipe) => liveRecipe.recipeSubtype === "standard"),
+    true
+  );
+
+  const result = validate(makeInput(liveRecipeWrapper.records));
+  assert.equal(result.ok, true);
+  assert.equal(result.recipeIds.length, 12);
+  assert.deepEqual(
+    result.recipeIds,
+    [...new Set(result.recipeIds)].sort()
+  );
+});
+
+test("registers the schema file and live recipe content lint", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
 
   assert.match(schemaTestSource, /packages\/schemas\/crafting\/recipe\.schema\.json/);
-  assert.doesNotMatch(contentLintSource, /crafting-recipes\.mjs/);
-  assert.doesNotMatch(contentLintSource, /crafting\/recipes\.json/);
+  assert.match(contentLintSource, /crafting-recipes\.mjs/);
+  assert.match(contentLintSource, /crafting\/recipes\.json/);
 });

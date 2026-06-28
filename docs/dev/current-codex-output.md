@@ -1,61 +1,59 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.244 - First Crafting Recipe Content Seed Plan
+Source version/run: Version 0.5.245 - First Crafting Recipe Content Seed
 Date: 2026-06-28
-Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; pull was already up to date. After the requested fetch/pull/status sequence, the worktree was clean before `0.5.244` edits.
+Branch/status assumption: `master`; fetched and fast-forward pulled from `origin/master` before editing; pull was already up to date. After the requested fetch/pull/status sequence, the worktree was clean before `0.5.245` edits.
 
 ## Result
 
-Completed the documentation-only first crafting recipe content seed plan.
+Completed the first live planned crafting recipe content seed.
 
-Added a permanent seed-plan document that keeps future `crafting.recipes` content small, conservative, deterministic, and `standard` subtype only by default. The plan defines current schema/validator reality, first seed scope, candidate recipe family lanes, verified planning examples, authoring rules, selection criteria, future implementation order, validation checklist, deferred topics, and temporary artifact handling.
+Added `packages/content/base/crafting/recipes.json` with 12 planned `standard` subtype recipes for deterministic item-key transformations across food, lumber, leather, textile, metal, and tool-component lanes. Each recipe uses existing item, workplace, tool, skill, and optional non-inheriting production-chain references only.
 
-No live recipe content, normal content-lint registration, production-chain migration, recipe execution, inventory mutation, item-instance creation, runtime behavior, UI, storage, command, event, reward, economy behavior, or gameplay implementation was added.
+Registered the live crafting recipe content in normal content lint and added focused coverage for the live seed and registration.
+
+No runtime crafting, inventory mutation, item-instance creation, UI, storage, commands, events, rewards, economy behavior, production-chain behavior, gameplay implementation, schema expansion, or broad validator behavior changed.
 
 ## Files Changed
 
-- `docs/design/first-crafting-recipe-content-seed-plan.md` - added the docs-only seed plan for future first recipe content.
+- `packages/content/base/crafting/recipes.json` - added 12 planned standard recipe records.
+- `tools/content-lint/index.mjs` - registered the live recipe content and dependency-backed recipe validation in normal content lint.
+- `tests/unit/crafting-recipes-validation.test.mjs` - added focused live-seed and normal-lint registration assertions.
 - `docs/dev/current-codex-output.md` - replaced with this run result.
 - `docs/dev/current-gpt-handoff.md` - advanced the current anchor and next route.
-- `docs/dev/project-roadmap.md` - marked `0.5.244` complete and `0.5.245` next.
+- `docs/dev/project-roadmap.md` - marked `0.5.245` complete and `0.5.246` next.
 - `docs/dev/codex-sequenced-implementation-plan.md` - advanced the ordered queue.
-- `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the next conditional recipe seed route.
-- `docs/future_content_backlog.md` - recorded the run note and durable crafting seed-plan pointer.
+- `docs/design/pipeline-roadmap-consolidation-decision.md` - aligned the completed recipe seed and next NPC/person route.
+- `docs/future_content_backlog.md` - recorded the run note and live crafting recipe authority status.
 
 ## Checks Run
 
 - `git fetch origin` - passed.
 - `git pull --ff-only origin master` - passed; already up to date.
 - `git status --short` before editing - passed; clean.
-- Recipe schema, validator, focused test, schema-registration, normal content-lint, item, workplace, skill, guild, Knowledge, trial, market-value, production-chain, and runtime boundary audits - completed by read-only inspection.
-- Temporary artifact audit - passed; `docs/dev/tmp-crafting-production-systems-research-2026-06-20.md` remains absent.
+- Direct recipe seed audit - passed; 12 records, sorted ids, all `planned`, all `standard`, no prerequisites, exactly one primary output per recipe, and no direct self-transformations.
+- `node --test tests\unit\crafting-recipes-validation.test.mjs` - passed; 42 tests.
+- `npm.cmd run tool:content-lint` - passed; `content-lint: ok (59 files checked)`.
+- `node --test tests\unit\schema-files.test.mjs` - failed on the known unrelated Knowledge subject vocabulary assertion at `tests/unit/schema-files.test.mjs:292` (`true !== false` for the existing `sacred_site` expectation). The new recipe schema parsed successfully before that failure.
 - `git diff --check` - passed with line-ending warnings on changed text files.
-- Conflict-marker scan on changed files - passed.
-- Trailing-whitespace scan on changed files - passed.
-- Documentation scope audit - passed; no schema, validator, test, content JSON, normal content-lint registration, production-chain, item, workplace, skill, Knowledge, guild, trial, market-value, loader, runtime, UI, storage, command, event, reward, economy, or gameplay files changed.
-- Recipe seed-plan authority audit - passed; this pass creates planning only and does not authorize live content by itself.
-- Recipe boundary audit - passed; `civilization.production_chains` remains current macro-production authority, future recipe links are non-inheriting only, and `packages/content/base/crafting/recipes.json` remains absent.
-- Version-tracking audit - passed; `0.5.244` is complete and `Version 0.5.245 - First Crafting Recipe Content Seed` is the next conditional recommendation.
+- Runtime/economy/inventory scope audit - passed; no changes under `packages/engines`, `apps`, `packages/shared`, `packages/db`, `packages/schemas`, `packages/content/base/civilization`, `packages/content/base/items`, or `packages/content/base/player`.
 
 ## Behavior / Runtime Confirmation
 
-No runtime, JSON live content, normal content-lint live content registration, loader, migration, schema, validator, focused test, production-chain, item, workplace, skill, Knowledge, guild, trial, market-value, UI, storage/save-state, command, event, reward, economy, inventory, item-instance, or gameplay behavior changed.
+Runtime behavior did not change.
 
-The new plan is documentation only. Candidate exact item keys and authority ids are planning references that must be revalidated before any future content seed.
+This run adds static live recipe content plus validation registration only. The recipes remain planned descriptive authority records and do not consume inventory, create item instances, execute crafting, mutate production chains, affect markets, grant rewards, unlock recipes, or alter UI/storage/gameplay.
 
 ## Risks / Follow-Up
 
-- `Version 0.5.245 - First Crafting Recipe Content Seed` is conditional and should proceed only if live recipe content is explicitly authorized.
-- First live recipe content should stay small, planned-status by default, and standard-subtype only unless a later prompt explicitly narrows and approves an exception.
-- Normal content-lint registration should happen in the future seed only if explicitly authorized.
-- Alchemy, enchanting, repair, salvage, quality, rarity, affix, masterwork, flexible substitutions, station profiles, tool profiles, recipe unlock state, crafting history, runtime execution, inventory consumption/creation, item-instance mutation, tool wear, service/station access, transactions/rewards, Knowledge/trial/magic progress, quest mutation, and economy simulation remain deferred.
-- `tests/unit/schema-files.test.mjs` still has the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`; it was not rerun or fixed in this docs-only pass.
-- `tests/unit/region-first-world-data.test.mjs` still has the unrelated direct-run BOM parsing issue noted by prior handoffs; it was not rerun or fixed in this docs-only pass.
+- The broad `schema-files` test still has the unrelated pre-existing Knowledge subject vocabulary failure around `sacred_site`; this run did not change or fix it.
+- Recipe execution, inventory mutation, item-instance output, crafting UI, unlocks/history, station access, tool wear, quality/rarity/affixes, repair/salvage, alchemy, enchanting, Knowledge/trial effects, quests, markets, and economy simulation remain deferred.
+- `Version 0.5.246 - First People And NPC Content Seed Plan` should stay planning-only unless explicitly scoped otherwise.
 
 ## Next Recommended Version
 
-Version 0.5.245 - First Crafting Recipe Content Seed
+Version 0.5.246 - First People And NPC Content Seed Plan
 
 ## Suggested Commit Message
 
-`docs(crafting): plan first recipe content seed`
+`feat(crafting): seed first recipe content`
