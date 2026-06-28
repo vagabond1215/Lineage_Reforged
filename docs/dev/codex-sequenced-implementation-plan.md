@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-28
-Route: Codex local sequencing alignment after `Version 0.5.249 - First Polity Content Seed`
+Route: Codex local sequencing alignment after `Version 0.5.250 - First World Map Feature Content Seed Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.249 - First Polity Content Seed`
+- `Version 0.5.250 - First World Map Feature Content Seed Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.250 - First World Map Feature Content Seed Plan`
+- `Version 0.5.251 - First World Map Feature Content Seed`
 
 Versioning note:
 
@@ -101,7 +101,8 @@ Versioning note:
 - First People And NPC Content Seed landed in `0.5.247` as a deferred docs-only result: no safe canonical named-person candidates were found, no `people.json` or `npcs.json` was created, and no normal lint registration or runtime behavior changed.
 - First Polity Content Seed Plan landed in `0.5.248`: documentation-only seed planning recommends a tiny planned-only future `world.polities` seed, with Valtherion and Draemor as conditional candidates only after a fresh implementation audit, and preserves no-live-content posture.
 - First Polity Content Seed landed in `0.5.249`: two planned static polity identity records, `polity.valtherion` and `polity.draemor`, are live and normal content lint validates `world.polities` through the existing pure helper without civic/runtime behavior.
-- Do not roll from `0.5.249` to `0.6.0` without a dedicated runtime-readiness decision.
+- First World Map Feature Content Seed Plan landed in `0.5.250`: documentation-only seed planning recommends a tiny planned-only future `world.map_features` seed, with Windward Spine and Thalos Run as conditional candidates only after a fresh implementation audit, and preserves no-live-content posture.
+- Do not roll from `0.5.250` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -277,7 +278,7 @@ Versioning note:
 | 168 | `0.5.247` | First People And NPC Content Seed | Codex 5.5 Local | `0.5.246` plan | deferred content audit | Completed | No safe canonical named-person evidence; no live people/NPC content or normal lint registration. |
 | 169 | `0.5.248` | First Polity Content Seed Plan | Codex 5.5 Local docs-first | `0.5.237` output | seed plan | Completed | Tiny planned-only future seed posture; no live content. |
 | 170 | `0.5.249` | First Polity Content Seed | Codex 5.5 Local | `0.5.248` plan | content + validation | Completed | Added two planned static polity identity records and normal lint registration only. |
-| 171 | `0.5.250` | First World Map Feature Content Seed Plan | Codex 5.5 Local docs-first | `0.5.240` output | seed plan | Conditional | Focused discovery/POI research first if needed. |
+| 171 | `0.5.250` | First World Map Feature Content Seed Plan | Codex 5.5 Local docs-first | `0.5.240` output | seed plan | Completed | Tiny planned-only future seed posture; no live content. |
 | 172 | `0.5.251` | First World Map Feature Content Seed | Codex 5.5 Local | `0.5.250` plan | content + validation | Conditional | Narrow authored seed only. |
 | 173 | `0.5.252` | Settlement District And Site Authority Boundary Decision | Codex 5.5 Local docs-first | settlement decisions | planning decision | Deferred | No schema or content. |
 | 174 | `0.5.253` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
@@ -290,9 +291,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.250 - First World Map Feature Content Seed Plan`
+1. `0.5.251 - First World Map Feature Content Seed`
 
-The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. First polity seed planning is now complete; the next conditional pass is a tiny planned-only polity content seed if a fresh audit reconfirms at least one approved candidate.
+The full conditional sequence through `0.5.257`, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md`. First semantic map-feature seed planning is now complete; the next conditional pass is a tiny planned-only semantic map-feature content seed if a fresh audit reconfirms at least one approved candidate.
 
 ## Default Prompt Pattern
 
@@ -308,7 +309,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.250 - First World Map Feature Content Seed Plan` as the immediate next recommended run.
+- Keep `Version 0.5.251 - First World Map Feature Content Seed` as the immediate next recommended run, conditional on explicit live-content authorization and fresh candidate audit.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
