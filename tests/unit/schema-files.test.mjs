@@ -23,6 +23,7 @@ const schemaFiles = [
   "packages/schemas/world/polity.schema.json",
   "packages/schemas/world/settlement-economy.schema.json",
   "packages/schemas/world/settlement-district.schema.json",
+  "packages/schemas/world/settlement-site.schema.json",
   "packages/schemas/world/map-feature.schema.json",
   "packages/schemas/world/hazard-profile.schema.json",
   "packages/schemas/world/route-security-profile.schema.json",

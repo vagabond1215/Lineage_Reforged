@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Settlement Site Content",
+  "description": "Static authored settlement-site identity records. This schema does not define live settlement content, coordinates, geometry, pathfinding, service execution, inventories, ownership, law, Knowledge state, runtime state, UI, storage, commands, events, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/settlementSite"
+      }
+    }
+  },
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/slug"
+      }
+    },
+    "siteType": {
+      "type": "string",
+      "enum": [
+        "market",
+        "palace",
+        "citadel",
+        "gatehouse",
+        "dock",
+        "wharf",
+        "shrine",
+        "temple_compound",
+        "guildhall",
+        "mill",
+        "bridgehead",
+        "caravanserai",
+        "workshop_cluster",
+        "civic_hall",
+        "landmark_plaza",
+        "watch_post",
+        "warehouse",
+        "inn",
+        "stable",
+        "customs_house",
+        "administrative_hall",
+        "other_landmark"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "active",
+        "retired"
+      ]
+    },
+    "settlementSite": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "aliases",
+        "summary",
+        "parentSettlementId",
+        "parentDistrictId",
+        "siteType",
+        "functionalTags",
+        "placeRoleTags",
+        "status",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^settlement_site\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "slug": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "aliases": {
+          "$ref": "#/$defs/notes"
+        },
+        "summary": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "parentSettlementId": {
+          "type": "string",
+          "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "parentDistrictId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^settlement_district\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+        },
+        "siteType": {
+          "$ref": "#/$defs/siteType"
+        },
+        "functionalTags": {
+          "$ref": "#/$defs/tags"
+        },
+        "placeRoleTags": {
+          "$ref": "#/$defs/tags"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "sourceAuthorityNotes": {
+          "$ref": "#/$defs/notes"
+        },
+        "notes": {
+          "$ref": "#/$defs/notes"
+        }
+      }
+    }
+  }
+}
