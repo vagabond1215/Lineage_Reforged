@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-06-28
+Last reviewed: 2026-06-29
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.256 - Settlement Site Schema And Validator`
-- Next recommended version: `Version 0.5.257 - First Settlement District Content Seed Plan`
+- Latest completed version: `Version 0.5.257 - First Settlement District Content Seed Plan`
+- Next recommended version: `Version 0.5.258 - First Settlement District Content Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -106,7 +106,8 @@ Versioning rule:
 - `Version 0.5.254 - Settlement Site Schema Plan` added `docs/design/settlement-site-schema-plan.md`; fixed the future records-only `world.settlement_sites` schema posture, required fields, nullable parent-district anchoring, lifecycle/type vocabularies, settlement/district anchoring, building/workplace/economy/travel/Knowledge boundaries, forbidden inference sources, validator expectations, normal-lint posture, and seed-readiness rules without creating schema, validator, content, tests, runtime, UI, storage, command, event, reward, or gameplay changes.
 - `Version 0.5.255 - Settlement District Schema And Validator` added the strict future `world.settlement_districts` schema, isolated pure validator helper, focused in-memory tests, and schema-file parse coverage without live district content, normal lint registration, runtime, UI, storage, command, event, reward, migration, or gameplay changes.
 - `Version 0.5.256 - Settlement Site Schema And Validator` added the strict future `world.settlement_sites` schema, isolated pure validator helper, focused in-memory tests, and schema-file parse coverage without live site content, normal lint registration, runtime, UI, storage, command, event, reward, migration, or gameplay changes.
-- Do not roll from `0.5.256` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.257 - First Settlement District Content Seed Plan` added `docs/design/first-settlement-district-content-seed-plan.md`; selected exactly two conditional future planned Highcrown district records and preserved no-live-content, no-normal-lint-registration, no-schema-change, no-runtime posture.
+- Do not roll from `0.5.257` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -399,9 +400,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.257 - First Settlement District Content Seed Plan`
+1. `0.5.258 - First Settlement District Content Seed`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.262`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.263`.
 
 High-priority unresolved questions:
 

@@ -1,54 +1,54 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.256 - Settlement Site Schema And Validator
+Source version/run: Version 0.5.257 - First Settlement District Content Seed Plan
 Date: 2026-06-29
-Status: settlement site schema, isolated validator, and focused in-memory tests completed; no live content or normal content-lint registration
+Status: first settlement district content seed plan completed; no live content or normal content-lint registration
 
-## Current Settlement Site Posture
+## Current Settlement District And Site Posture
 
 - `world.settlements` remains the canonical settlement identity and broad place authority.
 - Future settlement districts have a strict schema at `packages/schemas/world/settlement-district.schema.json`, an isolated pure validator at `tools/content-lint/settlement-districts.mjs`, and focused tests at `tests/unit/settlement-district-validation.test.mjs`.
-- Future settlement sites now have a strict schema at `packages/schemas/world/settlement-site.schema.json`.
-- Future settlement sites now have an isolated pure validator helper at `tools/content-lint/settlement-sites.mjs`.
-- Focused in-memory settlement-site validation coverage exists at `tests/unit/settlement-site-validation.test.mjs`.
-- `packages/content/base/world/settlement_sites.json` remains absent.
+- Future settlement sites have a strict schema at `packages/schemas/world/settlement-site.schema.json`, an isolated pure validator at `tools/content-lint/settlement-sites.mjs`, and focused tests at `tests/unit/settlement-site-validation.test.mjs`.
 - `packages/content/base/world/settlement_districts.json` remains absent.
-- `tools/content-lint/index.mjs` does not register `settlement_sites.json` or `settlement_districts.json`.
-- Future site ids use `settlement_site.<settlement_slug>.<site_slug>` with `slug` as the lower-snake-case site slug only.
-- Required future site record fields are `id`, `slug`, `name`, `aliases`, `summary`, `parentSettlementId`, `parentDistrictId`, `siteType`, `functionalTags`, `placeRoleTags`, `status`, `sourceAuthorityNotes`, and `notes`.
-- Future lifecycle values are `planned`, `active`, and `retired`; empty `records` is valid until live content exists.
-- `parentDistrictId` is required but nullable. `parentDistrictId: null` validates without live district content.
-- Non-null `parentDistrictId` validates only against supplied in-memory district records in the current helper posture; no district inference or live district content dependency was added.
-- The validator resolves parent settlements against supplied current `world.settlements` records and rejects missing or inactive parents when a settlement lifecycle field is present.
-- Building/workplace, settlement economy, route/travel, map/visual, Knowledge, sacred-site/religious-hotspot, runtime, UI, storage, command, event, reward, and gameplay owners remain separate.
+- `packages/content/base/world/settlement_sites.json` remains absent.
+- `tools/content-lint/index.mjs` does not register `settlement_districts.json`, `settlement_sites.json`, `settlement-districts.mjs`, or `settlement-sites.mjs`.
+- Empty district/site `records` wrappers remain valid in isolated validation for the schema-only phase, but normal content lint remains unregistered until live content exists.
+- `docs/design/first-settlement-district-content-seed-plan.md` now owns the tiny future first district seed plan.
+- The selected future planned district candidates are `settlement_district.highcrown.archive_districts` and `settlement_district.highcrown.market_courts`.
+- Deferred district-like candidates include Aurelis palace roads/naval yards, Stonevein terrace-halls, Highcrown palace terraces, Sunspire Reach guild compounds/bridges, and generic guild-quarter boilerplate.
+- Building/workplace, settlement economy, route/travel, map/visual, Knowledge, sacred-site/religious-hotspot, runtime, UI, storage, command, event, reward, migration, save/account, and gameplay owners remain separate.
 
 ## Latest Result
 
 Latest completed:
 
-- `Version 0.5.256 - Settlement Site Schema And Validator`
+- `Version 0.5.257 - First Settlement District Content Seed Plan`
 
 Immediate next:
 
-- `Version 0.5.257 - First Settlement District Content Seed Plan`
+- `Version 0.5.258 - First Settlement District Content Seed`
 
 ## Implementation Result
 
-- Added `packages/schemas/world/settlement-site.schema.json`.
-- Added `tools/content-lint/settlement-sites.mjs`.
-- Added `tests/unit/settlement-site-validation.test.mjs`.
-- Added the new schema to `tests/unit/schema-files.test.mjs`.
-- Kept `packages/content/base/world/settlement_sites.json` absent.
+- Added `docs/design/first-settlement-district-content-seed-plan.md`.
+- Selected exactly two conditional future planned Highcrown district records for the next seed implementation.
+- Updated roadmap, sequence, backlog, GPT handoff, and Codex output docs.
 - Kept `packages/content/base/world/settlement_districts.json` absent.
-- Kept normal content lint unregistered for settlement sites.
+- Kept `packages/content/base/world/settlement_sites.json` absent.
+- Kept normal content lint unregistered for settlement districts and settlement sites.
+- Made no schema, validator, test, content JSON, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay changes.
 
 ## Validation Notes
 
-- `node --test tests\unit\settlement-site-validation.test.mjs` passed.
-- `npm.cmd run tool:content-lint` passed with 61 files checked.
-- `node --test tests\unit\schema-files.test.mjs` still fails on the unrelated pre-existing Knowledge subject vocabulary assertion around `sacred_site`; the new settlement-site schema parse check passed before that failure.
+- `git diff --check` passed with Git line-ending warnings on changed text files.
+- In-memory preview validation with `validateSettlementDistricts` passed for the two planned Highcrown district records.
+- Conflict-marker scan on changed files passed.
+- Trailing-whitespace scan on changed files passed.
+- Changed-path scope audit passed; changed paths are docs-only.
+- Lightweight path/lint audits passed: district/site content files remain absent; district/site schemas, validators, and focused tests exist; normal content lint does not register `settlement_districts.json` or `settlement_sites.json`.
+- No unit tests or normal content lint were run because this was a docs-only seed plan with no schema, validator, or live content changes.
 - Required hygiene checks are recorded in `docs/dev/current-codex-output.md`.
 
 ## Next Route Guardrail
 
-`Version 0.5.257 - First Settlement District Content Seed Plan` should remain docs-first unless a newer prompt explicitly scopes implementation. It should plan a tiny first settlement-district content seed from explicit authored evidence only, without creating live district content, site content, normal lint registration, runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior.
+`Version 0.5.258 - First Settlement District Content Seed` may create live district content only for the two Highcrown planned records if a fresh audit reconfirms the evidence. It must keep sites absent, avoid settlement edits, register only district content in normal lint if live content is created, and avoid runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior.
