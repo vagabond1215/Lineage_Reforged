@@ -292,15 +292,15 @@ test("rejects forbidden geometry, route, service, ownership, Knowledge, runtime,
   }
 });
 
-test("schema, validator, and focused test exist while live content and normal lint registration remain absent", async () => {
+test("schema, validator, focused test, live content, and normal lint registration match live seed posture", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
 
   assert.equal(existsSync(path.join(ROOT, SCHEMA_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, VALIDATOR_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, TEST_PATH)), true);
-  assert.equal(existsSync(path.join(ROOT, SETTLEMENT_DISTRICT_PATH)), false);
+  assert.equal(existsSync(path.join(ROOT, SETTLEMENT_DISTRICT_PATH)), true);
   assert.match(schemaTestSource, /packages\/schemas\/world\/settlement-district\.schema\.json/);
-  assert.doesNotMatch(contentLintSource, /settlement_districts\.json/);
-  assert.doesNotMatch(contentLintSource, /settlement-districts\.mjs/);
+  assert.match(contentLintSource, /settlement_districts\.json/);
+  assert.match(contentLintSource, /settlement-districts\.mjs/);
 });

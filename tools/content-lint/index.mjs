@@ -29,6 +29,7 @@ import {
 import { validateCraftingRecipes } from "./crafting-recipes.mjs";
 import { validatePolities } from "./polities.mjs";
 import { validateMapFeatures } from "./map-features.mjs";
+import { validateSettlementDistricts } from "./settlement-districts.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -472,6 +473,12 @@ const checks = [
   },
   {
     file: "packages/content/base/world/map_features.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/world/settlement_districts.json",
     requiredTopLevel: ["records"],
     requireSlug: true,
     forbidGeoQualifierInName: false
@@ -9647,6 +9654,23 @@ async function validateMapFeaturesAgainstDependencies() {
   });
 }
 
+async function validateSettlementDistrictsAgainstDependencies() {
+  const districtPath = path.join(ROOT, "packages/content/base/world/settlement_districts.json");
+  const districtSchemaPath = path.join(ROOT, "packages/schemas/world/settlement-district.schema.json");
+  const settlementsPath = path.join(ROOT, "packages/content/base/world/settlements.json");
+
+  const districtParsed = JSON.parse(await readFile(districtPath, "utf8"));
+  const districtSchemaParsed = JSON.parse(await readFile(districtSchemaPath, "utf8"));
+  const settlementsParsed = JSON.parse(await readFile(settlementsPath, "utf8"));
+
+  validateSettlementDistricts({
+    relativePath: "packages/content/base/world/settlement_districts.json",
+    wrapper: districtParsed,
+    schema: districtSchemaParsed,
+    settlements: settlementsParsed.records
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10246,6 +10270,7 @@ async function main() {
   await validateCraftingRecipesAgainstDependencies();
   await validatePolitiesAgainstDependencies();
   await validateMapFeaturesAgainstDependencies();
+  await validateSettlementDistrictsAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

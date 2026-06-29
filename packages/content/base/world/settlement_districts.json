@@ -1,0 +1,54 @@
+{
+  "records": [
+    {
+      "id": "settlement_district.highcrown.archive_districts",
+      "slug": "archive_districts",
+      "name": "Archive Districts",
+      "aliases": [],
+      "summary": "Planned civic record districts within Highcrown where imperial archives and recordkeeping institutions shape the capital's administrative identity.",
+      "parentSettlementId": "settlement.highcrown",
+      "districtType": "civic_quarter",
+      "functionalTags": [
+        "archives",
+        "recordkeeping",
+        "civic_administration"
+      ],
+      "placeRoleTags": [
+        "imperial_capital",
+        "administrative_core"
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Highcrown summary explicitly references archive districts."
+      ],
+      "notes": [
+        "Static district identity only; no archive service, Knowledge unlock, storage, NPC staffing, access rule, quest, UI, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.highcrown.market_courts",
+      "slug": "market_courts",
+      "name": "Market Courts",
+      "aliases": [],
+      "summary": "Planned market district within Highcrown centered on the capital's largest courts for inland river commerce and imperial trade administration.",
+      "parentSettlementId": "settlement.highcrown",
+      "districtType": "market_quarter",
+      "functionalTags": [
+        "market",
+        "trade",
+        "barge_commerce"
+      ],
+      "placeRoleTags": [
+        "imperial_capital",
+        "river_confluence"
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Highcrown siteContext explicitly references the empire's largest market courts."
+      ],
+      "notes": [
+        "Static district identity only; no prices, stock, vendors, services, taxes, ownership, route topology, UI, or gameplay behavior."
+      ]
+    }
+  ]
+}

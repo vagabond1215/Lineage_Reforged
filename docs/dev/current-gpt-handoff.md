@@ -1,54 +1,48 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.257 - First Settlement District Content Seed Plan
+Source version/run: Version 0.5.258 - First Settlement District Content Seed
 Date: 2026-06-29
-Status: first settlement district content seed plan completed; no live content or normal content-lint registration
+Status: first live settlement district content seed completed
 
 ## Current Settlement District And Site Posture
 
 - `world.settlements` remains the canonical settlement identity and broad place authority.
-- Future settlement districts have a strict schema at `packages/schemas/world/settlement-district.schema.json`, an isolated pure validator at `tools/content-lint/settlement-districts.mjs`, and focused tests at `tests/unit/settlement-district-validation.test.mjs`.
-- Future settlement sites have a strict schema at `packages/schemas/world/settlement-site.schema.json`, an isolated pure validator at `tools/content-lint/settlement-sites.mjs`, and focused tests at `tests/unit/settlement-site-validation.test.mjs`.
-- `packages/content/base/world/settlement_districts.json` remains absent.
+- `packages/content/base/world/settlement_districts.json` now exists with exactly two planned Highcrown district records.
+- Live district ids are `settlement_district.highcrown.archive_districts` and `settlement_district.highcrown.market_courts`.
+- `tools/content-lint/index.mjs` now registers `settlement_districts.json` and validates it through `validateSettlementDistricts`.
 - `packages/content/base/world/settlement_sites.json` remains absent.
-- `tools/content-lint/index.mjs` does not register `settlement_districts.json`, `settlement_sites.json`, `settlement-districts.mjs`, or `settlement-sites.mjs`.
-- Empty district/site `records` wrappers remain valid in isolated validation for the schema-only phase, but normal content lint remains unregistered until live content exists.
-- `docs/design/first-settlement-district-content-seed-plan.md` now owns the tiny future first district seed plan.
-- The selected future planned district candidates are `settlement_district.highcrown.archive_districts` and `settlement_district.highcrown.market_courts`.
-- Deferred district-like candidates include Aurelis palace roads/naval yards, Stonevein terrace-halls, Highcrown palace terraces, Sunspire Reach guild compounds/bridges, and generic guild-quarter boilerplate.
+- `tools/content-lint/index.mjs` does not register `settlement_sites.json` or `settlement-sites.mjs`.
+- District and site schemas, validators, and focused tests exist.
 - Building/workplace, settlement economy, route/travel, map/visual, Knowledge, sacred-site/religious-hotspot, runtime, UI, storage, command, event, reward, migration, save/account, and gameplay owners remain separate.
 
 ## Latest Result
 
 Latest completed:
 
-- `Version 0.5.257 - First Settlement District Content Seed Plan`
+- `Version 0.5.258 - First Settlement District Content Seed`
 
 Immediate next:
 
-- `Version 0.5.258 - First Settlement District Content Seed`
+- `Version 0.5.259 - First Settlement Site Content Seed Plan`
 
 ## Implementation Result
 
-- Added `docs/design/first-settlement-district-content-seed-plan.md`.
-- Selected exactly two conditional future planned Highcrown district records for the next seed implementation.
+- Added the first live `world.settlement_districts` content file with exactly the two approved Highcrown planned records.
+- Registered settlement district content in normal content lint.
+- Updated focused district/site test posture assertions for the new live district content phase.
 - Updated roadmap, sequence, backlog, GPT handoff, and Codex output docs.
-- Kept `packages/content/base/world/settlement_districts.json` absent.
 - Kept `packages/content/base/world/settlement_sites.json` absent.
-- Kept normal content lint unregistered for settlement districts and settlement sites.
-- Made no schema, validator, test, content JSON, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay changes.
+- Made no settlement, schema, validator, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, Knowledge, sacred-site/religious-hotspot, building/workplace/economy, or gameplay changes.
 
 ## Validation Notes
 
-- `git diff --check` passed with Git line-ending warnings on changed text files.
-- In-memory preview validation with `validateSettlementDistricts` passed for the two planned Highcrown district records.
-- Conflict-marker scan on changed files passed.
-- Trailing-whitespace scan on changed files passed.
-- Changed-path scope audit passed; changed paths are docs-only.
-- Lightweight path/lint audits passed: district/site content files remain absent; district/site schemas, validators, and focused tests exist; normal content lint does not register `settlement_districts.json` or `settlement_sites.json`.
-- No unit tests or normal content lint were run because this was a docs-only seed plan with no schema, validator, or live content changes.
+- `node --test tests\unit\settlement-district-validation.test.mjs` passed.
+- `node --test tests\unit\settlement-site-validation.test.mjs` passed.
+- `npm.cmd run tool:content-lint` passed with `content-lint: ok (62 files checked)`.
+- `node --test tests\unit\schema-files.test.mjs` still fails on the known unrelated Knowledge subject vocabulary assertion around `sacred_site`; settlement-district schema parsing passed before that failure.
+- Live content, site absence, normal lint registration, changed-path scope, conflict-marker, and trailing-whitespace audits passed.
 - Required hygiene checks are recorded in `docs/dev/current-codex-output.md`.
 
 ## Next Route Guardrail
 
-`Version 0.5.258 - First Settlement District Content Seed` may create live district content only for the two Highcrown planned records if a fresh audit reconfirms the evidence. It must keep sites absent, avoid settlement edits, register only district content in normal lint if live content is created, and avoid runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior.
+`Version 0.5.259 - First Settlement Site Content Seed Plan` should remain docs-first unless a newer prompt explicitly scopes live site implementation. It should plan only a tiny first settlement-site seed from explicit authored evidence, keep live site content absent, avoid settlement edits, and avoid runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior.
