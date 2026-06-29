@@ -1,0 +1,55 @@
+{
+  "records": [
+    {
+      "id": "settlement_site.highcrown.barge_quays",
+      "slug": "barge_quays",
+      "name": "Barge Quays",
+      "aliases": [],
+      "summary": "Planned river wharf site within Highcrown where the capital's barge quays anchor its inland river trade identity.",
+      "parentSettlementId": "settlement.highcrown",
+      "parentDistrictId": null,
+      "siteType": "wharf",
+      "functionalTags": [
+        "barge_traffic",
+        "cargo_landing",
+        "river_trade"
+      ],
+      "placeRoleTags": [
+        "imperial_capital",
+        "river_capital"
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Highcrown summary explicitly references barge quays."
+      ],
+      "notes": [
+        "Static placed-site identity only; no route topology, pathfinding, cargo inventory, storage, prices, vendors, services, ownership, UI, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.highcrown.palace_terraces",
+      "slug": "palace_terraces",
+      "name": "Palace Terraces",
+      "aliases": [],
+      "summary": "Planned palace landmark site within Highcrown where terraced palace grounds mark the capital's imperial bluff identity.",
+      "parentSettlementId": "settlement.highcrown",
+      "parentDistrictId": null,
+      "siteType": "palace",
+      "functionalTags": [
+        "palace_precinct",
+        "court_presence"
+      ],
+      "placeRoleTags": [
+        "imperial_capital",
+        "bluff_landmark"
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Highcrown siteContext explicitly references palace terraces."
+      ],
+      "notes": [
+        "Static placed-site identity only; no court service, access control, NPC staffing, ownership, law, UI, or gameplay behavior."
+      ]
+    }
+  ]
+}

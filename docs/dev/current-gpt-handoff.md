@@ -1,50 +1,51 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.259 - First Settlement Site Content Seed Plan
+Source version/run: Version 0.5.260 - First Settlement Site Content Seed
 Date: 2026-06-29
-Status: first settlement site content seed plan completed
+Status: first live settlement site content seed completed
 
 ## Current Settlement District And Site Posture
 
 - `world.settlements` remains the canonical settlement identity and broad place authority.
-- `packages/content/base/world/settlement_districts.json` now exists with exactly two planned Highcrown district records.
+- `packages/content/base/world/settlement_districts.json` exists with exactly two planned Highcrown district records.
 - Live district ids are `settlement_district.highcrown.archive_districts` and `settlement_district.highcrown.market_courts`.
-- `tools/content-lint/index.mjs` now registers `settlement_districts.json` and validates it through `validateSettlementDistricts`.
-- `packages/content/base/world/settlement_sites.json` remains absent.
-- `tools/content-lint/index.mjs` does not register `settlement_sites.json` or `settlement-sites.mjs`.
+- `tools/content-lint/index.mjs` registers `settlement_districts.json` and validates it through `validateSettlementDistricts`.
+- `packages/content/base/world/settlement_sites.json` now exists with exactly two planned Highcrown site records.
+- Live site ids are `settlement_site.highcrown.barge_quays` and `settlement_site.highcrown.palace_terraces`.
+- Both live site records use `parentDistrictId: null`.
+- `tools/content-lint/index.mjs` now registers `settlement_sites.json` and validates it through `validateSettlementSites`.
 - District and site schemas, validators, and focused tests exist.
-- `docs/design/first-settlement-site-content-seed-plan.md` now selects exactly two conditional future Highcrown site records:
-  - `settlement_site.highcrown.barge_quays`
-  - `settlement_site.highcrown.palace_terraces`
-- Both planned future site records should use `parentDistrictId: null` unless a later source proves a live district anchor.
 - Building/workplace, settlement economy, route/travel, map/visual, Knowledge, sacred-site/religious-hotspot, runtime, UI, storage, command, event, reward, migration, save/account, and gameplay owners remain separate.
 
 ## Latest Result
 
 Latest completed:
 
-- `Version 0.5.259 - First Settlement Site Content Seed Plan`
+- `Version 0.5.260 - First Settlement Site Content Seed`
 
 Immediate next:
 
-- `Version 0.5.260 - First Settlement Site Content Seed`
+- `Version 0.5.261 - Settlement District/Site Knowledge Subject Plan`
 
 ## Implementation Result
 
-- Added `docs/design/first-settlement-site-content-seed-plan.md`.
-- Selected exactly two conditional future planned Highcrown site records: Barge Quays and Palace Terraces.
-- Preserved `parentDistrictId: null` for both future records because current evidence does not tie either site to the live archive or market district records.
+- Added the first live `world.settlement_sites` content file with exactly the two approved Highcrown planned records.
+- Registered settlement site content in normal content lint.
+- Updated the focused site test posture assertion for the new live site content phase.
 - Updated roadmap, sequence, backlog, GPT handoff, and Codex output docs.
-- Kept `packages/content/base/world/settlement_sites.json` absent.
-- Made no settlement, district content, schema, validator, test, normal site lint registration, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, Knowledge, sacred-site/religious-hotspot, building/workplace/economy, or gameplay changes.
+- Kept `world.settlements` unchanged.
+- Kept `world.settlement_districts` unchanged.
+- Made no schema, validator, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, Knowledge, sacred-site/religious-hotspot, building/workplace/economy, or gameplay changes.
 
 ## Validation Notes
 
-- Focused in-memory preview validation through `validateSettlementSites` passed for the two planned future records.
-- `git diff --check` passed.
-- Site absence, district content posture, normal lint registration posture, changed-path scope, conflict-marker, and trailing-whitespace audits passed.
+- `node --test tests\unit\settlement-site-validation.test.mjs` passed.
+- `node --test tests\unit\settlement-district-validation.test.mjs` passed.
+- `npm.cmd run tool:content-lint` passed with `content-lint: ok (63 files checked)`.
+- `node --test tests\unit\schema-files.test.mjs` still fails on the known unrelated Knowledge subject vocabulary assertion around `sacred_site`; settlement-site schema parsing passed before that failure.
+- Live content, district stability, normal lint registration, changed-path scope, conflict-marker, and trailing-whitespace audits passed.
 - Required hygiene checks are recorded in `docs/dev/current-codex-output.md`.
 
 ## Next Route Guardrail
 
-`Version 0.5.260 - First Settlement Site Content Seed` may create the first live `world.settlement_sites` content file only if a fresh audit reconfirms the Highcrown Barge Quays and Palace Terraces evidence, validates the exact planned records, keeps `world.settlements` and `world.settlement_districts` unchanged, registers only site content in normal lint, and avoids runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior.
+`Version 0.5.261 - Settlement District/Site Knowledge Subject Plan` should remain documentation-only unless a newer prompt explicitly scopes implementation. It should decide whether settlement districts and settlement sites deserve direct Knowledge subject vocabulary, and it should avoid Knowledge schema edits, registry edits, snippets, runtime behavior, UI, storage, commands, events, rewards, migrations, or gameplay behavior unless separately approved.
