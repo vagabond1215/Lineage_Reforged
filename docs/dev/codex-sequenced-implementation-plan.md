@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-06-29
-Route: Codex local sequencing alignment after `Version 0.5.258 - First Settlement District Content Seed`
+Route: Codex local sequencing alignment after `Version 0.5.259 - First Settlement Site Content Seed Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.258 - First Settlement District Content Seed`
+- `Version 0.5.259 - First Settlement Site Content Seed Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.259 - First Settlement Site Content Seed Plan`
+- `Version 0.5.260 - First Settlement Site Content Seed`
 
 Versioning note:
 
@@ -110,7 +110,8 @@ Versioning note:
 - Settlement Site Schema And Validator landed in `0.5.256`: the strict future `world.settlement_sites` schema, isolated validator helper, focused in-memory tests, and schema-file parse coverage exist without live site content or normal lint registration.
 - First Settlement District Content Seed Plan landed in `0.5.257`: `docs/design/first-settlement-district-content-seed-plan.md` selects exactly two conditional future planned Highcrown district records without live content, normal lint registration, schema changes, validator changes, tests, or runtime behavior.
 - First Settlement District Content Seed landed in `0.5.258`: exactly two planned Highcrown district records are live in `packages/content/base/world/settlement_districts.json`, and normal content lint validates `world.settlement_districts` through the existing pure helper without site content or runtime behavior.
-- Do not roll from `0.5.258` to `0.6.0` without a dedicated runtime-readiness decision.
+- First Settlement Site Content Seed Plan landed in `0.5.259`: `docs/design/first-settlement-site-content-seed-plan.md` selects exactly two conditional future planned Highcrown site records without live content, normal lint registration, schema changes, validator changes, tests, or runtime behavior.
+- Do not roll from `0.5.259` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -295,19 +296,20 @@ Versioning note:
 | 177 | `0.5.256` | Settlement Site Schema And Validator | Codex 5.5 Local | `0.5.254` plan | schema + validator + tests | Completed | Added schema, isolated validator, and focused tests; no live content or normal lint registration. |
 | 178 | `0.5.257` | First Settlement District Content Seed Plan | Codex 5.5 Local docs-first | district schema + validator | seed plan | Completed | Selected two conditional planned Highcrown districts; no live content. |
 | 179 | `0.5.258` | First Settlement District Content Seed | Codex 5.5 Local | `0.5.257` plan | content + validation | Completed | Added two planned Highcrown district records and normal lint registration. |
-| 180 | `0.5.259` | First Settlement Site Content Seed Plan | Codex 5.5 Local docs-first | site schema + validator + district seed posture | seed plan | Deferred | No live site content. |
-| 181 | `0.5.260` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
-| 182 | `0.5.261` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
-| 183 | `0.5.262` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
-| 184 | `0.5.263` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
+| 180 | `0.5.259` | First Settlement Site Content Seed Plan | Codex 5.5 Local docs-first | site schema + validator + district seed posture | seed plan | Completed | Selected two conditional planned Highcrown sites; no live content. |
+| 181 | `0.5.260` | First Settlement Site Content Seed | Codex 5.5 Local | `0.5.259` plan | content + validation | Deferred | Add planned Highcrown site records and normal lint registration only if fresh audit passes. |
+| 182 | `0.5.261` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
+| 183 | `0.5.262` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 184 | `0.5.263` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
+| 185 | `0.5.264` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.259 - First Settlement Site Content Seed Plan`
+1. `0.5.260 - First Settlement Site Content Seed`
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are now complete; the first district content seed is live; the next pass is a docs-first settlement-site content seed plan.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are now complete; the first district content seed is live; the first site seed plan is complete; the next pass is the conditional first live settlement-site content seed.
 
 ## Default Prompt Pattern
 
@@ -323,7 +325,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.259 - First Settlement Site Content Seed Plan` as the immediate next recommended run.
+- Keep `Version 0.5.260 - First Settlement Site Content Seed` as the immediate next recommended run.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
