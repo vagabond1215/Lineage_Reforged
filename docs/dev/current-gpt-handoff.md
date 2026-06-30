@@ -1,24 +1,31 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.262 - Settlement District/Site Knowledge Subject Schema And Validator
+Source version/run: Version 0.5.263 - Settlement District/Site Status Activation Plan
 Date: 2026-06-30
-Status: direct settlement district/site Knowledge subject schema and validator support completed
+Status: docs-only district/site status activation decision completed
+
+## Current Activation Posture
+
+- `docs/design/settlement-district-site-status-activation-plan.md` selects exactly one record for future activation:
+  - `settlement_district.highcrown.archive_districts`
+- The same plan defers:
+  - `settlement_district.highcrown.market_courts`
+  - `settlement_site.highcrown.barge_quays`
+  - `settlement_site.highcrown.palace_terraces`
+- District activation should precede site activation.
+- The next implementation run should activate only `settlement_district.highcrown.archive_districts` unless a fresh local audit finds a blocker.
+- Activation must remain static place authority only and must not imply archive access, Knowledge unlocks, storage, NPC staff, services, access rules, quests, UI, rewards, or gameplay behavior.
+- `market_courts`, `barge_quays`, and `palace_terraces` remain planned because active status could imply unfinished market/economy, route/service, dock/cargo, palace/access, law/control, NPC, UI, or gameplay systems.
 
 ## Current Knowledge Subject Posture
 
-- `packages/schemas/player/knowledge_snippet.schema.json` now supports direct `subjectType` values:
+- Direct Knowledge subject support exists for:
   - `settlement_district`
   - `settlement_site`
-- `packages/schemas/player/knowledge-domain-registry.schema.json` mirrors those values in `canonicalSubjectTypes` because the registry schema owns the same vocabulary surface.
-- `tools/content-lint/knowledge-snippets.mjs` validates both subjects through explicit resolver-backed authority records.
-- `tools/content-lint/index.mjs` supplies live `world.settlement_districts` and `world.settlement_sites` records to the Knowledge snippet validator.
-- Public Knowledge snippet eligibility remains active-only for district and site subjects.
-- Planned and retired district/site records are rejected as live snippet subjects.
-- `settlement_site` snippets accept `parentDistrictId: null` when the site record itself is active.
-- Non-null site `parentDistrictId` values must resolve against supplied district authority, reference an active district, and share the same settlement slug.
-- The stale `schema-files.test.mjs` `sacred_site` assertion was aligned as part of this schema vocabulary pass.
-- No Knowledge snippets were added.
-- No live Knowledge registry/domain/trial-policy content was changed.
+- Knowledge snippet validation is resolver-backed and active-only for both subject types.
+- No live settlement district/site Knowledge snippets currently exist.
+- Current planned district/site records remain ineligible for live snippets.
+- Future activation of `settlement_district.highcrown.archive_districts` would make that one authority record eligible for a later snippet seed plan, but activation itself must not add snippets or create discovery/progress/runtime state.
 
 ## Current District/Site Content Posture
 
@@ -38,19 +45,18 @@ Status: direct settlement district/site Knowledge subject schema and validator s
 
 Latest completed:
 
-- `Version 0.5.262 - Settlement District/Site Knowledge Subject Schema And Validator`
+- `Version 0.5.263 - Settlement District/Site Status Activation Plan`
 
 Immediate next:
 
-- `Version 0.5.263 - Settlement District/Site Status Activation Plan`
+- `Version 0.5.264 - Settlement District/Site Status Activation`
 
 ## Implementation Result
 
-- Added direct district/site subject vocabulary to the Knowledge snippet schema and mirrored registry schema.
-- Added active-only resolver-backed Knowledge snippet validation for district and site subject ids.
-- Added focused in-memory tests for active fixture acceptance, malformed ids, unresolved ids, planned/retired rejection, null site district anchors, non-null active district anchors, missing/mismatched district anchors, parent-settlement slug mismatch, no parent-settlement inference, schema vocabulary acceptance, and no live snippet seeding.
-- Kept settlement, district, site, Knowledge snippet, Knowledge registry content, Knowledge domain, Knowledge trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, sacred-site/religious-hotspot, building/workplace/economy content, and gameplay files unchanged.
+- Added a docs-only activation decision at `docs/design/settlement-district-site-status-activation-plan.md`.
+- Updated roadmap, sequence, backlog, GPT handoff, and Codex output docs.
+- Made no settlement, district, site, Knowledge snippet, Knowledge registry/domain/trial-policy, Knowledge schema, Knowledge validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, sacred-site/religious-hotspot, building/workplace/economy content, or gameplay changes.
 
 ## Next Route Guardrail
 
-`Version 0.5.263 - Settlement District/Site Status Activation Plan` should be a narrow planning pass that decides whether any current planned district/site authority records are ready to become active for future Knowledge snippet seeding. It should not add snippets, change runtime behavior, or broaden into services, route/travel, UI, storage, command/event/reward, migration, save/account, building/workplace/economy, or gameplay work unless a newer prompt explicitly changes scope.
+`Version 0.5.264 - Settlement District/Site Status Activation` should be a narrow implementation pass that changes only `settlement_district.highcrown.archive_districts` from `planned` to `active`, plus workflow docs. It should not activate `market_courts`, `barge_quays`, or `palace_terraces`; add Knowledge snippets; edit Knowledge schemas/validators/registry content; or change runtime, UI, storage, command/event/reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay behavior unless a newer prompt explicitly changes scope.
