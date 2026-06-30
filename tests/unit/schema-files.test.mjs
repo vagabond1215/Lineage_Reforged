@@ -282,7 +282,7 @@ function validatesKnowledgeTrialPolicy(record) {
   );
 }
 
-test("knowledge subject schemas share direct religion, deity, and religious hotspot vocabulary", () => {
+test("knowledge subject schemas share direct place and religion vocabulary", () => {
   const snippetSubjectTypes = knowledgeSnippetSchema.properties.subjectType.enum;
   const registrySubjectTypes =
     knowledgeDomainRegistrySchema.properties.canonicalSubjectTypes.items.enum;
@@ -290,8 +290,10 @@ test("knowledge subject schemas share direct religion, deity, and religious hots
   assert.ok(snippetSubjectTypes.includes("religion"));
   assert.ok(snippetSubjectTypes.includes("deity"));
   assert.ok(snippetSubjectTypes.includes("religious_hotspot"));
+  assert.ok(snippetSubjectTypes.includes("sacred_site"));
+  assert.ok(snippetSubjectTypes.includes("settlement_district"));
+  assert.ok(snippetSubjectTypes.includes("settlement_site"));
   assert.equal(snippetSubjectTypes.includes("shrine"), false);
-  assert.equal(snippetSubjectTypes.includes("sacred_site"), false);
   assert.deepEqual(registrySubjectTypes, snippetSubjectTypes);
 });
 

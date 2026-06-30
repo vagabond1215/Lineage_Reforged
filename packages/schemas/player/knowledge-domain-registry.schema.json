@@ -94,6 +94,8 @@
           "deity",
           "religious_hotspot",
           "sacred_site",
+          "settlement_district",
+          "settlement_site",
           "spell",
           "item",
           "ruin",

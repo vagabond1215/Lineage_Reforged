@@ -38,6 +38,17 @@ const BLOCKED_SUBJECT_TYPES = new Set([
   "custom"
 ]);
 
+const ACTIVE_ONLY_SUBJECT_LABELS = new Map([
+  ["religious_hotspot", "hotspot"],
+  ["sacred_site", "sacred-site"],
+  ["settlement_district", "settlement district"],
+  ["settlement_site", "settlement site"]
+]);
+
+const SETTLEMENT_ID_PATTERN = /^settlement\.([a-z0-9]+(?:_[a-z0-9]+)*)$/;
+const SETTLEMENT_DISTRICT_ID_PATTERN = /^settlement_district\.([a-z0-9]+(?:_[a-z0-9]+)*)\.([a-z0-9]+(?:_[a-z0-9]+)*)$/;
+const SETTLEMENT_SITE_ID_PATTERN = /^settlement_site\.([a-z0-9]+(?:_[a-z0-9]+)*)\.([a-z0-9]+(?:_[a-z0-9]+)*)$/;
+
 function isObject(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -325,6 +336,93 @@ function authorityRecordMap(records, source) {
   return map;
 }
 
+function settlementSlugFromId(id, pattern) {
+  const match = typeof id === "string" ? id.match(pattern) : null;
+  return match ? match[1] : null;
+}
+
+function assertActiveSubject(subjectType, subjectId, subject, recordId, relativePath) {
+  const authorityLabel = ACTIVE_ONLY_SUBJECT_LABELS.get(subjectType);
+  if (authorityLabel === undefined || subject.status === "active") {
+    return;
+  }
+
+  throw new Error(
+    `${relativePath} ${subjectType} subjectId '${subjectId}' must reference an active ${authorityLabel} record on record ${recordId}`
+  );
+}
+
+function assertSettlementSiteParentDistrict({
+  subject,
+  subjectAuthority,
+  subjectId,
+  recordId,
+  relativePath
+}) {
+  if (subject.parentDistrictId === null || subject.parentDistrictId === undefined) {
+    return;
+  }
+
+  if (
+    typeof subject.parentDistrictId !== "string" ||
+    !SETTLEMENT_DISTRICT_ID_PATTERN.test(subject.parentDistrictId)
+  ) {
+    throw new Error(
+      `${relativePath} settlement_site subjectId '${subjectId}' parentDistrictId must be a settlement_district id on record ${recordId}`
+    );
+  }
+
+  const parentDistrictAuthority = subjectAuthority.parentDistrictAuthority;
+  if (!parentDistrictAuthority || !Array.isArray(parentDistrictAuthority.records)) {
+    throw new Error(
+      `${relativePath} settlement_site subjectId '${subjectId}' requires settlement_district authority for parentDistrictId '${subject.parentDistrictId}' on record ${recordId}`
+    );
+  }
+
+  const parentDistrictsById = authorityRecordMap(
+    parentDistrictAuthority.records,
+    "settlement_site parent district authority"
+  );
+  const parentDistrict = parentDistrictsById.get(subject.parentDistrictId);
+  if (!parentDistrict) {
+    throw new Error(
+      `${relativePath} settlement_site subjectId '${subjectId}' parentDistrictId '${subject.parentDistrictId}' is missing from world.settlement_districts on record ${recordId}`
+    );
+  }
+
+  if (parentDistrict.status !== "active") {
+    throw new Error(
+      `${relativePath} settlement_site subjectId '${subjectId}' parentDistrictId '${subject.parentDistrictId}' must reference an active settlement district record on record ${recordId}`
+    );
+  }
+
+  const siteSettlementSlug = settlementSlugFromId(subjectId, SETTLEMENT_SITE_ID_PATTERN);
+  const parentSettlementSlug = settlementSlugFromId(
+    subject.parentSettlementId,
+    SETTLEMENT_ID_PATTERN
+  );
+  const districtSettlementSlug = settlementSlugFromId(
+    subject.parentDistrictId,
+    SETTLEMENT_DISTRICT_ID_PATTERN
+  );
+
+  if (
+    parentSettlementSlug !== null &&
+    siteSettlementSlug !== null &&
+    parentSettlementSlug !== siteSettlementSlug
+  ) {
+    throw new Error(
+      `${relativePath} settlement_site subjectId '${subjectId}' parentSettlementId '${subject.parentSettlementId}' must share settlement slug '${siteSettlementSlug}' on record ${recordId}`
+    );
+  }
+
+  if (districtSettlementSlug !== siteSettlementSlug) {
+    throw new Error(
+      `${relativePath} settlement_site subjectId '${subjectId}' parentDistrictId '${subject.parentDistrictId}' must share settlement slug '${siteSettlementSlug}' on record ${recordId}`
+    );
+  }
+}
+
 function assertLocationScope(locationScope, locationAuthorities, recordId, relativePath) {
   if (locationScope === undefined) {
     return;
@@ -518,15 +616,21 @@ export function validateKnowledgeSnippets({
         `${relativePath} subjectId '${record.subjectId}' is missing from ${subjectAuthority.collectionId} on record ${recordId}`
       );
     }
-    if (
-      ["religious_hotspot", "sacred_site"].includes(record.subjectType) &&
-      subject.status !== "active"
-    ) {
-      const authorityLabel =
-        record.subjectType === "sacred_site" ? "sacred-site" : "hotspot";
-      throw new Error(
-        `${relativePath} ${record.subjectType} subjectId '${record.subjectId}' must reference an active ${authorityLabel} record on record ${recordId}`
-      );
+    assertActiveSubject(
+      record.subjectType,
+      record.subjectId,
+      subject,
+      recordId,
+      relativePath
+    );
+    if (record.subjectType === "settlement_site") {
+      assertSettlementSiteParentDistrict({
+        subject,
+        subjectAuthority,
+        subjectId: record.subjectId,
+        recordId,
+        relativePath
+      });
     }
     if (!domain.relatedContentCollections.includes(subjectAuthority.collectionId)) {
       throw new Error(

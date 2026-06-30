@@ -28,6 +28,12 @@ const religiousHotspotWrapper = await readJson(
 const sacredSiteWrapper = await readJson(
   "packages/content/base/world/sacred_sites.json"
 );
+const settlementDistrictWrapper = await readJson(
+  "packages/content/base/world/settlement_districts.json"
+);
+const settlementSiteWrapper = await readJson(
+  "packages/content/base/world/settlement_sites.json"
+);
 const regionWrapper = await readJson("packages/content/base/world/regions.json");
 const settlementWrapper = await readJson("packages/content/base/world/settlements.json");
 const deityRecords = religionWrapper.records.flatMap((religion) => religion.deities ?? []);
@@ -104,6 +110,21 @@ function makeInput() {
         idPattern: /^sacred_site\.[a-z0-9]+(?:_[a-z0-9]+)*\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
         records: structuredClone(sacredSiteWrapper.records)
       },
+      settlement_district: {
+        collectionId: "world.settlement_districts",
+        idPrefix: "settlement_district.",
+        idPattern: /^settlement_district\.[a-z0-9]+(?:_[a-z0-9]+)*\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
+        records: structuredClone(settlementDistrictWrapper.records)
+      },
+      settlement_site: {
+        collectionId: "world.settlement_sites",
+        idPrefix: "settlement_site.",
+        idPattern: /^settlement_site\.[a-z0-9]+(?:_[a-z0-9]+)*\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
+        records: structuredClone(settlementSiteWrapper.records),
+        parentDistrictAuthority: {
+          records: structuredClone(settlementDistrictWrapper.records)
+        }
+      },
       region: {
         collectionId: "world.regions",
         idPrefix: "region.",
@@ -122,6 +143,8 @@ function makeInput() {
       "world.religions",
       "world.religious_hotspots",
       "world.sacred_sites",
+      "world.settlement_districts",
+      "world.settlement_sites",
       "world.regions"
     ])
   };
@@ -144,6 +167,12 @@ function snippet(input, id = EXPECTED_SNIPPET_IDS[0]) {
 function religionDomain(input) {
   return input.registryRecords.find(
     (record) => record.id === "knowledge_domain.religion"
+  );
+}
+
+function generalLoreDomain(input) {
+  return input.registryRecords.find(
+    (record) => record.id === "knowledge_domain.general_lore"
   );
 }
 
@@ -186,6 +215,105 @@ function religionSnippet({
       "Religion snippets remain authored knowledge only and do not grant worship, favor, faction, magic, or runtime behavior."
     ]
   };
+}
+
+function settlementPlaceSnippet({
+  id = "knowledge_snippet.general_lore.highcrown_place.identification",
+  subjectType,
+  subjectId,
+  title = "Recognizing a Highcrown Place"
+}) {
+  return {
+    id,
+    domainId: "knowledge_domain.general_lore",
+    subjectType,
+    subjectId,
+    tier: 1,
+    category: "identification",
+    title,
+    summary: "This authored place knowledge identifies a validated Highcrown district or site without granting access, services, discovery state, rewards, or gameplay behavior.",
+    discoverySources: [
+      {
+        sourceType: "book_study",
+        sourceId: null
+      }
+    ],
+    progression: {
+      completionWeight: 1,
+      countsTowardTierCompletion: true,
+      trialUnlockWeight: 0
+    },
+    visibility: {
+      lockedUntilDiscovered: true,
+      revealsSubjectIdentity: true,
+      hiddenSummary: "An unidentified Highcrown place remains to be understood."
+    },
+    notes: [
+      "Settlement district and site snippets are authored knowledge only and do not create place authority, discovery, services, access, rewards, runtime behavior, or gameplay behavior."
+    ]
+  };
+}
+
+function addGeneralLorePlaceSubject(input, subjectType, collectionId) {
+  const domain = generalLoreDomain(input);
+  if (!domain.canonicalSubjectTypes.includes(subjectType)) {
+    domain.canonicalSubjectTypes.push(subjectType);
+  }
+  if (!domain.relatedContentCollections.includes(collectionId)) {
+    domain.relatedContentCollections.push(collectionId);
+  }
+}
+
+function prepareSettlementDistrictSnippet(
+  input,
+  districtId = "settlement_district.highcrown.archive_districts"
+) {
+  addGeneralLorePlaceSubject(
+    input,
+    "settlement_district",
+    "world.settlement_districts"
+  );
+  input.wrapper.records = [
+    settlementPlaceSnippet({
+      id: "knowledge_snippet.general_lore.highcrown_district.identification",
+      subjectType: "settlement_district",
+      subjectId: districtId,
+      title: "Recognizing a Highcrown District"
+    })
+  ];
+  return input.subjectAuthorities.settlement_district.records.find(
+    (record) => record.id === districtId
+  );
+}
+
+function prepareSettlementSiteSnippet(
+  input,
+  siteId = "settlement_site.highcrown.barge_quays"
+) {
+  addGeneralLorePlaceSubject(input, "settlement_site", "world.settlement_sites");
+  input.wrapper.records = [
+    settlementPlaceSnippet({
+      id: "knowledge_snippet.general_lore.highcrown_site.identification",
+      subjectType: "settlement_site",
+      subjectId: siteId,
+      title: "Recognizing a Highcrown Site"
+    })
+  ];
+  return input.subjectAuthorities.settlement_site.records.find(
+    (record) => record.id === siteId
+  );
+}
+
+function activateDistrict(input, districtId = "settlement_district.highcrown.archive_districts") {
+  const district = input.subjectAuthorities.settlement_district.records.find(
+    (record) => record.id === districtId
+  );
+  district.status = "active";
+  const parentDistrict = input.subjectAuthorities.settlement_site.parentDistrictAuthority.records.find(
+    (record) => record.id === districtId
+  );
+  parentDistrict.status = "active";
+  return district;
 }
 
 function prepareReligiousHotspotSnippet(
@@ -318,7 +446,261 @@ test("accepts the live Glasswake religious hotspot snippet only for the active s
 test("knowledge snippet schema includes direct religious hotspot vocabulary", () => {
   assert.ok(snippetSchema.properties.subjectType.enum.includes("religious_hotspot"));
   assert.ok(snippetSchema.properties.subjectType.enum.includes("sacred_site"));
+  assert.ok(snippetSchema.properties.subjectType.enum.includes("settlement_district"));
+  assert.ok(snippetSchema.properties.subjectType.enum.includes("settlement_site"));
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
+});
+
+test("does not add live settlement district or site Knowledge snippets while authorities are planned", () => {
+  const input = makeInput();
+
+  assert.equal(
+    input.wrapper.records.some(
+      (record) =>
+        record.subjectType === "settlement_district" ||
+        record.subjectType === "settlement_site"
+    ),
+    false
+  );
+  assert.ok(
+    input.subjectAuthorities.settlement_district.records.every(
+      (record) => record.status === "planned"
+    )
+  );
+  assert.ok(
+    input.subjectAuthorities.settlement_site.records.every(
+      (record) => record.status === "planned" && record.parentDistrictId === null
+    )
+  );
+  assert.equal(validate(input), true);
+});
+
+test("accepts active settlement district Knowledge fixtures", () => {
+  const input = makeInput();
+  const district = prepareSettlementDistrictSnippet(input);
+  district.status = "active";
+
+  assert.equal(validate(input), true);
+});
+
+test("accepts active settlement site Knowledge fixtures with null parentDistrictId", () => {
+  const input = makeInput();
+  const site = prepareSettlementSiteSnippet(input);
+  site.status = "active";
+  site.parentDistrictId = null;
+
+  assert.equal(validate(input), true);
+});
+
+test("accepts active settlement site Knowledge fixtures with an active district anchor", () => {
+  const input = makeInput();
+  const site = prepareSettlementSiteSnippet(input);
+  const district = activateDistrict(input);
+
+  site.status = "active";
+  site.parentDistrictId = district.id;
+
+  assert.equal(validate(input), true);
+});
+
+test("rejects malformed settlement district and site subject ids", async (t) => {
+  const cases = [
+    {
+      name: "district missing slug",
+      prepare(input) {
+        prepareSettlementDistrictSnippet(input, "settlement_district.highcrown");
+      },
+      expected: /is malformed for subjectType 'settlement_district'/
+    },
+    {
+      name: "district extra segment",
+      prepare(input) {
+        prepareSettlementDistrictSnippet(
+          input,
+          "settlement_district.highcrown.archive.districts"
+        );
+      },
+      expected: /is malformed for subjectType 'settlement_district'/
+    },
+    {
+      name: "site missing slug",
+      prepare(input) {
+        prepareSettlementSiteSnippet(input, "settlement_site.highcrown");
+      },
+      expected: /is malformed for subjectType 'settlement_site'/
+    },
+    {
+      name: "site extra segment",
+      prepare(input) {
+        prepareSettlementSiteSnippet(input, "settlement_site.highcrown.barge.quays");
+      },
+      expected: /is malformed for subjectType 'settlement_site'/
+    }
+  ];
+
+  for (const validationCase of cases) {
+    await t.test(validationCase.name, () => {
+      expectFailure(validationCase.prepare, validationCase.expected);
+    });
+  }
+});
+
+test("rejects unresolved settlement district and site subject ids", async (t) => {
+  const cases = [
+    {
+      name: "district",
+      prepare(input) {
+        prepareSettlementDistrictSnippet(
+          input,
+          "settlement_district.highcrown.missing_district"
+        );
+      },
+      expected: /subjectId 'settlement_district\.highcrown\.missing_district' is missing from world\.settlement_districts/
+    },
+    {
+      name: "site",
+      prepare(input) {
+        prepareSettlementSiteSnippet(input, "settlement_site.highcrown.missing_site");
+      },
+      expected: /subjectId 'settlement_site\.highcrown\.missing_site' is missing from world\.settlement_sites/
+    }
+  ];
+
+  for (const validationCase of cases) {
+    await t.test(validationCase.name, () => {
+      expectFailure(validationCase.prepare, validationCase.expected);
+    });
+  }
+});
+
+test("rejects planned and retired settlement district and site subjects", async (t) => {
+  const cases = [
+    {
+      name: "planned district",
+      prepare(input) {
+        prepareSettlementDistrictSnippet(input);
+      },
+      expected: /settlement_district subjectId '.+' must reference an active settlement district record/
+    },
+    {
+      name: "retired district",
+      prepare(input) {
+        const district = prepareSettlementDistrictSnippet(input);
+        district.status = "retired";
+      },
+      expected: /settlement_district subjectId '.+' must reference an active settlement district record/
+    },
+    {
+      name: "planned site",
+      prepare(input) {
+        prepareSettlementSiteSnippet(input);
+      },
+      expected: /settlement_site subjectId '.+' must reference an active settlement site record/
+    },
+    {
+      name: "retired site",
+      prepare(input) {
+        const site = prepareSettlementSiteSnippet(input);
+        site.status = "retired";
+      },
+      expected: /settlement_site subjectId '.+' must reference an active settlement site record/
+    }
+  ];
+
+  for (const validationCase of cases) {
+    await t.test(validationCase.name, () => {
+      expectFailure(validationCase.prepare, validationCase.expected);
+    });
+  }
+});
+
+test("rejects settlement site district anchors without valid active district authority", async (t) => {
+  const cases = [
+    {
+      name: "missing authority",
+      prepare(input) {
+        const site = prepareSettlementSiteSnippet(input);
+        site.status = "active";
+        site.parentDistrictId = "settlement_district.highcrown.archive_districts";
+        delete input.subjectAuthorities.settlement_site.parentDistrictAuthority;
+      },
+      expected: /requires settlement_district authority for parentDistrictId/
+    },
+    {
+      name: "unresolved district",
+      prepare(input) {
+        const site = prepareSettlementSiteSnippet(input);
+        site.status = "active";
+        site.parentDistrictId = "settlement_district.highcrown.missing_district";
+      },
+      expected: /parentDistrictId 'settlement_district\.highcrown\.missing_district' is missing from world\.settlement_districts/
+    },
+    {
+      name: "planned district",
+      prepare(input) {
+        const site = prepareSettlementSiteSnippet(input);
+        site.status = "active";
+        site.parentDistrictId = "settlement_district.highcrown.archive_districts";
+      },
+      expected: /parentDistrictId 'settlement_district\.highcrown\.archive_districts' must reference an active settlement district record/
+    },
+    {
+      name: "mismatched settlement slug",
+      prepare(input) {
+        const site = prepareSettlementSiteSnippet(input);
+        site.status = "active";
+        site.parentDistrictId = "settlement_district.glasswake.market_courts";
+        input.subjectAuthorities.settlement_site.parentDistrictAuthority.records.push({
+          ...structuredClone(input.subjectAuthorities.settlement_district.records[0]),
+          id: "settlement_district.glasswake.market_courts",
+          status: "active"
+        });
+      },
+      expected: /parentDistrictId 'settlement_district\.glasswake\.market_courts' must share settlement slug 'highcrown'/
+    },
+    {
+      name: "mismatched parent settlement",
+      prepare(input) {
+        const site = prepareSettlementSiteSnippet(input);
+        const district = activateDistrict(input);
+        site.status = "active";
+        site.parentDistrictId = district.id;
+        site.parentSettlementId = "settlement.glasswake_shrine";
+      },
+      expected: /parentSettlementId 'settlement\.glasswake_shrine' must share settlement slug 'highcrown'/
+    }
+  ];
+
+  for (const validationCase of cases) {
+    await t.test(validationCase.name, () => {
+      expectFailure(validationCase.prepare, validationCase.expected);
+    });
+  }
+});
+
+test("does not infer settlement district or site subjects from parent settlement ids", async (t) => {
+  const cases = [
+    {
+      name: "district",
+      prepare(input) {
+        prepareSettlementDistrictSnippet(input, "settlement.highcrown");
+      },
+      expected: /must use prefix 'settlement_district\.'/
+    },
+    {
+      name: "site",
+      prepare(input) {
+        prepareSettlementSiteSnippet(input, "settlement.highcrown");
+      },
+      expected: /must use prefix 'settlement_site\.'/
+    }
+  ];
+
+  for (const validationCase of cases) {
+    await t.test(validationCase.name, () => {
+      expectFailure(validationCase.prepare, validationCase.expected);
+    });
+  }
 });
 
 test("aligns live Religion with exactly one active sacred-site Knowledge snippet", () => {

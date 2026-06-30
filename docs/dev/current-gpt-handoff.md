@@ -1,51 +1,56 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.261 - Settlement District/Site Knowledge Subject Plan
-Date: 2026-06-29
-Status: docs-only settlement district/site Knowledge subject decision completed
+Source version/run: Version 0.5.262 - Settlement District/Site Knowledge Subject Schema And Validator
+Date: 2026-06-30
+Status: direct settlement district/site Knowledge subject schema and validator support completed
 
-## Current District/Site Knowledge Subject Posture
+## Current Knowledge Subject Posture
 
-- `docs/design/settlement-district-site-knowledge-subject-plan.md` approves future direct Knowledge subject vocabulary for both `settlement_district` and `settlement_site`.
-- Selected option: Option D, add both `settlement_district` and `settlement_site`.
-- Activation policy: active-only for public Knowledge snippet references.
-- Future district snippet subjects should use `subjectType: "settlement_district"` with ids shaped `settlement_district.<settlement_slug>.<district_slug>`.
-- Future site snippet subjects should use `subjectType: "settlement_site"` with ids shaped `settlement_site.<settlement_slug>.<site_slug>`.
-- Future Knowledge validation must resolve ids against live authority records and reject missing, malformed, or status-ineligible references.
-- Site subject validation must accept `parentDistrictId: null` when the site itself exists and passes status policy.
-- Non-null site district anchors, if added later, must resolve against live district authority and share the same settlement slug.
-- No Knowledge snippets should be seeded while current district/site records remain `planned`, unless a later prompt explicitly approves planned-status preview snippets.
-- Knowledge must not infer districts or sites from settlements, prose, routes, maps, buildings, workplaces, sacred sites, hotspots, or runtime state.
+- `packages/schemas/player/knowledge_snippet.schema.json` now supports direct `subjectType` values:
+  - `settlement_district`
+  - `settlement_site`
+- `packages/schemas/player/knowledge-domain-registry.schema.json` mirrors those values in `canonicalSubjectTypes` because the registry schema owns the same vocabulary surface.
+- `tools/content-lint/knowledge-snippets.mjs` validates both subjects through explicit resolver-backed authority records.
+- `tools/content-lint/index.mjs` supplies live `world.settlement_districts` and `world.settlement_sites` records to the Knowledge snippet validator.
+- Public Knowledge snippet eligibility remains active-only for district and site subjects.
+- Planned and retired district/site records are rejected as live snippet subjects.
+- `settlement_site` snippets accept `parentDistrictId: null` when the site record itself is active.
+- Non-null site `parentDistrictId` values must resolve against supplied district authority, reference an active district, and share the same settlement slug.
+- The stale `schema-files.test.mjs` `sacred_site` assertion was aligned as part of this schema vocabulary pass.
+- No Knowledge snippets were added.
+- No live Knowledge registry/domain/trial-policy content was changed.
 
-## Current Live District/Site Content Posture
+## Current District/Site Content Posture
 
 - `world.settlements` remains the canonical settlement identity and broad place authority.
-- `packages/content/base/world/settlement_districts.json` exists with exactly two planned Highcrown records:
+- `packages/content/base/world/settlement_districts.json` exists with exactly two Highcrown records:
   - `settlement_district.highcrown.archive_districts`
   - `settlement_district.highcrown.market_courts`
-- `packages/content/base/world/settlement_sites.json` exists with exactly two planned Highcrown records:
+- Both district records remain `status: "planned"`.
+- `packages/content/base/world/settlement_sites.json` exists with exactly two Highcrown records:
   - `settlement_site.highcrown.barge_quays`
   - `settlement_site.highcrown.palace_terraces`
-- Both live site records use `parentDistrictId: null`.
-- `tools/content-lint/index.mjs` registers both `settlement_districts.json` and `settlement_sites.json`.
-- Normal content lint should still report 63 checked files unless unrelated repo changes occur.
+- Both site records remain `status: "planned"` and `parentDistrictId: null`.
+- `tools/content-lint/index.mjs` still registers both `settlement_districts.json` and `settlement_sites.json`.
+- Normal content lint reports `content-lint: ok (63 files checked)`.
 
 ## Latest Result
 
 Latest completed:
 
-- `Version 0.5.261 - Settlement District/Site Knowledge Subject Plan`
+- `Version 0.5.262 - Settlement District/Site Knowledge Subject Schema And Validator`
 
 Immediate next:
 
-- `Version 0.5.262 - Settlement District/Site Knowledge Subject Schema And Validator`
+- `Version 0.5.263 - Settlement District/Site Status Activation Plan`
 
 ## Implementation Result
 
-- Added the docs-only decision plan at `docs/design/settlement-district-site-knowledge-subject-plan.md`.
-- Updated roadmap, sequence, backlog, GPT handoff, and Codex output docs.
-- Made no Knowledge schema, Knowledge registry/domain/trial-policy, Knowledge snippet, settlement/district/site content, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay changes.
+- Added direct district/site subject vocabulary to the Knowledge snippet schema and mirrored registry schema.
+- Added active-only resolver-backed Knowledge snippet validation for district and site subject ids.
+- Added focused in-memory tests for active fixture acceptance, malformed ids, unresolved ids, planned/retired rejection, null site district anchors, non-null active district anchors, missing/mismatched district anchors, parent-settlement slug mismatch, no parent-settlement inference, schema vocabulary acceptance, and no live snippet seeding.
+- Kept settlement, district, site, Knowledge snippet, Knowledge registry content, Knowledge domain, Knowledge trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, sacred-site/religious-hotspot, building/workplace/economy content, and gameplay files unchanged.
 
 ## Next Route Guardrail
 
-`Version 0.5.262 - Settlement District/Site Knowledge Subject Schema And Validator` should implement only direct subject vocabulary, resolver-backed active-only validation, focused tests, and workflow docs. It should not add snippets or edit settlement, district, site, Knowledge registry, Knowledge domain, trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay files unless a newer prompt explicitly changes scope.
+`Version 0.5.263 - Settlement District/Site Status Activation Plan` should be a narrow planning pass that decides whether any current planned district/site authority records are ready to become active for future Knowledge snippet seeding. It should not add snippets, change runtime behavior, or broaden into services, route/travel, UI, storage, command/event/reward, migration, save/account, building/workplace/economy, or gameplay work unless a newer prompt explicitly changes scope.
