@@ -49,6 +49,7 @@ const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.religion",
   "knowledge_domain.religion",
   "knowledge_domain.religion",
+  "knowledge_domain.general_lore",
   "knowledge_domain.general_lore"
 ];
 
@@ -63,7 +64,8 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.religion.light_lady.identification",
   "knowledge_snippet.religion.glasswake_shrine_lantern_gardens.identification",
   "knowledge_snippet.religion.glasswake_shrine_lantern_gardens_glasswake_shrine.identification",
-  "knowledge_snippet.general_lore.kaelvar.cultural_context"
+  "knowledge_snippet.general_lore.kaelvar.cultural_context",
+  "knowledge_snippet.general_lore.highcrown_archive_districts.identification"
 ];
 
 function makeInput() {
@@ -364,7 +366,7 @@ function prepareSacredSiteSnippet(
   );
 }
 
-test("accepts the current eleven-record snippet catalog", () => {
+test("accepts the current twelve-record snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.id),
@@ -397,7 +399,8 @@ test("accepts current canonical subject ids", () => {
       "deity.light_lady",
       "religious_hotspot.glasswake_shrine_lantern_gardens",
       "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine",
-      "region.kaelvar"
+      "region.kaelvar",
+      "settlement_district.highcrown.archive_districts"
     ]
   );
   assert.equal(validate(input), true);
@@ -451,15 +454,26 @@ test("knowledge snippet schema includes direct religious hotspot vocabulary", ()
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
 });
 
-test("does not add live settlement district or site Knowledge snippets after first district activation", () => {
+test("adds only the selected live settlement district Knowledge snippet", () => {
   const input = makeInput();
+  const districtSnippets = input.wrapper.records.filter(
+    (record) => record.subjectType === "settlement_district"
+  );
 
   assert.equal(
-    input.wrapper.records.some(
-      (record) =>
-        record.subjectType === "settlement_district" ||
-        record.subjectType === "settlement_site"
-    ),
+    districtSnippets.length,
+    1
+  );
+  assert.equal(
+    districtSnippets[0].id,
+    "knowledge_snippet.general_lore.highcrown_archive_districts.identification"
+  );
+  assert.equal(
+    districtSnippets[0].subjectId,
+    "settlement_district.highcrown.archive_districts"
+  );
+  assert.equal(
+    input.wrapper.records.some((record) => record.subjectType === "settlement_site"),
     false
   );
   assert.equal(
