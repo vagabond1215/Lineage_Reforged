@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-06-29
+Last reviewed: 2026-07-01
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.263 - Settlement District/Site Status Activation Plan`
-- Next recommended version: `Version 0.5.264 - Settlement District/Site Status Activation`
+- Latest completed version: `Version 0.5.264 - Settlement District/Site Status Activation`
+- Next recommended version: `Version 0.5.265 - Settlement District Knowledge Snippet Seed Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -113,7 +113,8 @@ Versioning rule:
 - `Version 0.5.261 - Settlement District/Site Knowledge Subject Plan` added `docs/design/settlement-district-site-knowledge-subject-plan.md`; approved future direct `settlement_district` and `settlement_site` Knowledge subjects with active-only public snippet references, resolver-backed authority requirements, null district-anchor handling for sites, and no schema, validator, content, snippet, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay changes.
 - `Version 0.5.262 - Settlement District/Site Knowledge Subject Schema And Validator` added direct `settlement_district` and `settlement_site` Knowledge subject schema vocabulary, resolver-backed active-only validation, live authority adapter wiring, and focused tests without adding snippets or changing settlement/district/site content, Knowledge registry content, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay behavior.
 - `Version 0.5.263 - Settlement District/Site Status Activation Plan` added `docs/design/settlement-district-site-status-activation-plan.md`; selected only `settlement_district.highcrown.archive_districts` for future activation; deferred `settlement_district.highcrown.market_courts`, `settlement_site.highcrown.barge_quays`, and `settlement_site.highcrown.palace_terraces`; and made no content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay changes.
-- Do not roll from `0.5.263` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.264 - Settlement District/Site Status Activation` changed only `settlement_district.highcrown.archive_districts` from planned to active; kept `market_courts`, `barge_quays`, and `palace_terraces` planned; added no Knowledge snippets; updated focused Knowledge test expectations for the new active/planned split; and made no Knowledge schema, validator, registry/domain/trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay changes.
+- Do not roll from `0.5.264` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -406,9 +407,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.264 - Settlement District/Site Status Activation`
+1. `0.5.265 - Settlement District Knowledge Snippet Seed Plan`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.266`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.269`.
 
 High-priority unresolved questions:
 

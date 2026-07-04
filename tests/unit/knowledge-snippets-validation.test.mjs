@@ -451,7 +451,7 @@ test("knowledge snippet schema includes direct religious hotspot vocabulary", ()
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
 });
 
-test("does not add live settlement district or site Knowledge snippets while authorities are planned", () => {
+test("does not add live settlement district or site Knowledge snippets after first district activation", () => {
   const input = makeInput();
 
   assert.equal(
@@ -462,10 +462,17 @@ test("does not add live settlement district or site Knowledge snippets while aut
     ),
     false
   );
-  assert.ok(
-    input.subjectAuthorities.settlement_district.records.every(
-      (record) => record.status === "planned"
-    )
+  assert.equal(
+    input.subjectAuthorities.settlement_district.records.find(
+      (record) => record.id === "settlement_district.highcrown.archive_districts"
+    )?.status,
+    "active"
+  );
+  assert.equal(
+    input.subjectAuthorities.settlement_district.records.find(
+      (record) => record.id === "settlement_district.highcrown.market_courts"
+    )?.status,
+    "planned"
   );
   assert.ok(
     input.subjectAuthorities.settlement_site.records.every(
@@ -578,7 +585,10 @@ test("rejects planned and retired settlement district and site subjects", async 
     {
       name: "planned district",
       prepare(input) {
-        prepareSettlementDistrictSnippet(input);
+        prepareSettlementDistrictSnippet(
+          input,
+          "settlement_district.highcrown.market_courts"
+        );
       },
       expected: /settlement_district subjectId '.+' must reference an active settlement district record/
     },
@@ -640,9 +650,9 @@ test("rejects settlement site district anchors without valid active district aut
       prepare(input) {
         const site = prepareSettlementSiteSnippet(input);
         site.status = "active";
-        site.parentDistrictId = "settlement_district.highcrown.archive_districts";
+        site.parentDistrictId = "settlement_district.highcrown.market_courts";
       },
-      expected: /parentDistrictId 'settlement_district\.highcrown\.archive_districts' must reference an active settlement district record/
+      expected: /parentDistrictId 'settlement_district\.highcrown\.market_courts' must reference an active settlement district record/
     },
     {
       name: "mismatched settlement slug",
