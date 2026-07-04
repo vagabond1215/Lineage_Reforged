@@ -5,7 +5,7 @@
       "slug": "archive_districts",
       "name": "Archive Districts",
       "aliases": [],
-      "summary": "Planned civic record districts within Highcrown where imperial archives and recordkeeping institutions shape the capital's administrative identity.",
+      "summary": "Civic record districts within Highcrown where imperial archives and recordkeeping institutions shape the capital's administrative identity.",
       "parentSettlementId": "settlement.highcrown",
       "districtType": "civic_quarter",
       "functionalTags": [

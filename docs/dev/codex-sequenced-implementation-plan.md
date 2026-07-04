@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-04
-Route: Codex local sequencing alignment after `Version 0.5.265 - Settlement District Knowledge Snippet Seed Plan`
+Route: Codex local sequencing alignment after `Version 0.5.266 - Archive District Wording Cleanup`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.265 - Settlement District Knowledge Snippet Seed Plan`
+- `Version 0.5.266 - Archive District Wording Cleanup`
 
 Immediate next Codex run:
 
-- `Version 0.5.266 - Archive District Wording Cleanup`
+- `Version 0.5.267 - Archive District Knowledge Snippet Seed`
 
 Versioning note:
 
@@ -117,7 +117,8 @@ Versioning note:
 - Settlement District/Site Status Activation Plan landed in `0.5.263`: only `settlement_district.highcrown.archive_districts` is selected for future activation, while `market_courts`, `barge_quays`, and `palace_terraces` remain planned.
 - Settlement District/Site Status Activation landed in `0.5.264`: only `settlement_district.highcrown.archive_districts` changed from planned to active, while `market_courts`, `barge_quays`, and `palace_terraces` remain planned; focused Knowledge test expectations were updated for the new active/planned split; and no snippets or behavior changes landed.
 - Settlement District Knowledge Snippet Seed Plan landed in `0.5.265`: one future General Lore identification snippet is selected for `settlement_district.highcrown.archive_districts`; General Lore must later advertise `settlement_district` and `world.settlement_districts`; and the active archive district summary should receive a tiny wording cleanup before snippet seeding because it still starts with "Planned...".
-- Do not roll from `0.5.265` to `0.6.0` without a dedicated runtime-readiness decision.
+- Archive District Wording Cleanup landed in `0.5.266`: only the active archive district summary changed from stale planned-status wording to static active wording; statuses, snippets, registry content, schemas, validators, tests, and behavior remained unchanged.
+- Do not roll from `0.5.266` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -309,7 +310,7 @@ Versioning note:
 | 184 | `0.5.263` | Settlement District/Site Status Activation Plan | Codex 5.5 Local docs-first | district + site active-only Knowledge support | activation plan | Completed | Selected only `settlement_district.highcrown.archive_districts` for future activation; deferred the other three records. |
 | 185 | `0.5.264` | Settlement District/Site Status Activation | Codex 5.5 Local | `0.5.263` plan | content status + validation | Completed | Activated only `settlement_district.highcrown.archive_districts` and updated focused Knowledge test expectations; no snippets or other status changes. |
 | 186 | `0.5.265` | Settlement District Knowledge Snippet Seed Plan | Codex 5.5 Local docs-first | active archive district authority | snippet seed plan | Completed | Selected one future General Lore archive district snippet, documented registry alignment requirements, and chose a separate wording cleanup before snippet seeding. |
-| 187 | `0.5.266` | Archive District Wording Cleanup | Codex 5.5 Local | `0.5.265` plan | content wording + validation | Deferred | Remove stale planned-status wording from the active archive district summary only; no snippets or registry changes. |
+| 187 | `0.5.266` | Archive District Wording Cleanup | Codex 5.5 Local | `0.5.265` plan | content wording + validation | Completed | Removed stale planned-status wording from the active archive district summary only; no snippets or registry changes. |
 | 188 | `0.5.267` | Archive District Knowledge Snippet Seed | Codex 5.5 Local | `0.5.265` plan + wording cleanup | registry + snippet content | Deferred | Align General Lore with `settlement_district` and `world.settlement_districts`, then add exactly one archive district snippet. |
 | 189 | `0.5.268` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
 | 190 | `0.5.269` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
@@ -320,9 +321,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.266 - Archive District Wording Cleanup`
+1. `0.5.267 - Archive District Knowledge Snippet Seed`
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; direct active-only Knowledge subject validation is complete; and the archive district snippet plan is complete. The next pass should remove stale planned-status wording from the active `settlement_district.highcrown.archive_districts` summary before registry alignment and snippet seeding.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; direct active-only Knowledge subject validation is complete; the archive district snippet plan is complete; and stale planned-status wording has been removed from the active district summary. The next pass may perform only the selected General Lore registry alignment and one archive district snippet seed.
 
 ## Default Prompt Pattern
 
@@ -338,8 +339,8 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.266 - Archive District Wording Cleanup` as the immediate next recommended run.
-- `0.5.265` selected exactly one future General Lore snippet for `settlement_district.highcrown.archive_districts`; it did not add snippets, edit registry/domain content, activate `market_courts`, activate site records, or change Knowledge schema/validator files, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, or gameplay behavior.
+- Keep `Version 0.5.267 - Archive District Knowledge Snippet Seed` as the immediate next recommended run.
+- `0.5.266` changed only the active archive district summary wording; it did not add snippets, edit registry/domain content, activate `market_courts`, activate site records, or change Knowledge schema/validator files, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, or gameplay behavior.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

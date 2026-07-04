@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.265 - Settlement District Knowledge Snippet Seed Plan`
-- Next recommended version: `Version 0.5.266 - Archive District Wording Cleanup`
+- Latest completed version: `Version 0.5.266 - Archive District Wording Cleanup`
+- Next recommended version: `Version 0.5.267 - Archive District Knowledge Snippet Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -115,7 +115,8 @@ Versioning rule:
 - `Version 0.5.263 - Settlement District/Site Status Activation Plan` added `docs/design/settlement-district-site-status-activation-plan.md`; selected only `settlement_district.highcrown.archive_districts` for future activation; deferred `settlement_district.highcrown.market_courts`, `settlement_site.highcrown.barge_quays`, and `settlement_site.highcrown.palace_terraces`; and made no content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay changes.
 - `Version 0.5.264 - Settlement District/Site Status Activation` changed only `settlement_district.highcrown.archive_districts` from planned to active; kept `market_courts`, `barge_quays`, and `palace_terraces` planned; added no Knowledge snippets; updated focused Knowledge test expectations for the new active/planned split; and made no Knowledge schema, validator, registry/domain/trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay changes.
 - `Version 0.5.265 - Settlement District Knowledge Snippet Seed Plan` added `docs/design/settlement-district-knowledge-snippet-seed-plan.md`; selected exactly one future General Lore identification snippet for `settlement_district.highcrown.archive_districts`; documented required `knowledge_domain.general_lore` registry alignment for `settlement_district` and `world.settlement_districts`; and recommended a separate tiny archive district summary wording cleanup before snippet seeding because the active summary still starts with "Planned...".
-- Do not roll from `0.5.265` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.266 - Archive District Wording Cleanup` changed only the active archive district summary from stale planned-status wording to static active wording; kept all statuses unchanged; added no Knowledge snippets; changed no Knowledge registry/domain/trial-policy, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay behavior.
+- Do not roll from `0.5.266` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -408,7 +409,7 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.266 - Archive District Wording Cleanup`
+1. `0.5.267 - Archive District Knowledge Snippet Seed`
 
 This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.271`.
 
