@@ -1,18 +1,28 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.268 - Settlement District Market Courts Activation Review
-Date: 2026-07-04
+Source version/run: Version 0.5.269 - Market Courts Boundary Clarification Plan
+Date: 2026-07-05
 Branch/status assumption: `master`; initial worktree was clean before edits. `git fetch origin` passed. `git pull --ff-only origin master` passed with "Already up to date."
 
 ## Result
 
-Completed a docs-only activation review for:
+Completed a docs-only boundary clarification plan for:
 
 - `settlement_district.highcrown.market_courts`
 
-Decision outcome: deferred.
+Decision outcome: future activation recommended, but not performed in this run.
 
-`market_courts` remains a valid planned Highcrown settlement district authority record, but it is not ready for active-status implementation. The current name, summary, and tags still risk implying unfinished market, vendor, stock, price, tax, market UI, trade execution, economy simulation, service, court/law, route logistics, cargo/storage, NPC staffing, access, quest, reward, runtime, UI, and gameplay behavior.
+Selected future summary wording:
+
+`Static market-court district within Highcrown where enclosed commercial yards, imperial trade recordkeeping, and river-confluence identity shape the capital's civic-commercial quarters.`
+
+Selected future note wording:
+
+`Static district identity only; no vendors, stock, prices, services, taxes, trade execution, law/court mechanics, cargo/storage, ownership, NPC staffing, access rules, route topology, quests, rewards, UI, runtime, or gameplay behavior.`
+
+Future activation route:
+
+- `Version 0.5.270 - Settlement District Market Courts Status Activation`
 
 No content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay files changed.
 
@@ -20,11 +30,11 @@ No Knowledge snippets were added. General Lore registry content was unchanged.
 
 ## Files Changed
 
-- `docs/design/settlement-district-market-courts-activation-review.md` - added the docs-only activation review and defer decision.
-- `docs/dev/current-codex-output.md` - recorded the `0.5.268` result.
+- `docs/design/market-courts-boundary-clarification-plan.md` - added the docs-only boundary clarification plan and future activation recommendation.
+- `docs/dev/current-codex-output.md` - recorded the `0.5.269` result.
 - `docs/dev/current-gpt-handoff.md` - updated the current handoff and next route guardrail.
 - `docs/dev/project-roadmap.md` - advanced the current anchor and near-term direction.
-- `docs/dev/codex-sequenced-implementation-plan.md` - marked `0.5.268` complete and inserted the boundary clarification route.
+- `docs/dev/codex-sequenced-implementation-plan.md` - marked `0.5.269` complete and inserted the `0.5.270` market courts activation route.
 - `docs/future_content_backlog.md` - added a concise run note and settlement authority update.
 
 ## Checks Run
@@ -58,15 +68,15 @@ No settlement, district, site, Knowledge snippet, Knowledge registry/domain/tria
 
 ## Risks / Follow-Up
 
-- Follow-up should clarify whether "Market Courts" can be constrained to static district identity before any activation run.
-- Any future activation would need a tiny summary wording cleanup because the current summary still begins with "Planned...".
-- Do not add a `market_courts` Knowledge snippet, site snippets, route/travel snippets, or building/workplace/economy snippets until a separate future snippet seed plan approves safe wording.
-- Keep `barge_quays` and `palace_terraces` planned with `parentDistrictId: null`.
+- Next run may activate only `settlement_district.highcrown.market_courts` and apply the selected summary plus optional note wording in `packages/content/base/world/settlement_districts.json`.
+- Future activation must keep `archive_districts` unchanged and keep both site records planned with `parentDistrictId: null`.
+- Activation alone must not add a `market_courts` Knowledge snippet. Any snippet needs a separate future seed plan.
+- Preserve the selected static-only interpretation: market/court/trade/barge terms are civic-place identity only, not executable systems.
 
 ## Next Recommended Version
 
-Version 0.5.269 - Market Courts Boundary Clarification Plan
+Version 0.5.270 - Settlement District Market Courts Status Activation
 
 ## Suggested Commit Message
 
-`docs(world): review market courts activation`
+`docs(world): clarify market courts boundary`

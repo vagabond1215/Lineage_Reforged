@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-04
+Last reviewed: 2026-07-05
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.268 - Settlement District Market Courts Activation Review`
-- Next recommended version: `Version 0.5.269 - Market Courts Boundary Clarification Plan`
+- Latest completed version: `Version 0.5.269 - Market Courts Boundary Clarification Plan`
+- Next recommended version: `Version 0.5.270 - Settlement District Market Courts Status Activation`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -118,7 +118,8 @@ Versioning rule:
 - `Version 0.5.266 - Archive District Wording Cleanup` changed only the active archive district summary from stale planned-status wording to static active wording; kept all statuses unchanged; added no Knowledge snippets; changed no Knowledge registry/domain/trial-policy, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay behavior.
 - `Version 0.5.267 - Archive District Knowledge Snippet Seed` aligned only General Lore with `settlement_district` and `world.settlement_districts`, added exactly one archive district identification snippet, kept `market_courts`, `barge_quays`, and `palace_terraces` planned, and made no settlement/district/site, Knowledge schema/validator, trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay behavior changes.
 - `Version 0.5.268 - Settlement District Market Courts Activation Review` deferred `settlement_district.highcrown.market_courts` activation because its current name, summary, and tags still risk implying unfinished market, vendor, price, stock, tax, trade, court/law, route, cargo/storage, service, NPC, UI, runtime, or gameplay behavior. The run added only `docs/design/settlement-district-market-courts-activation-review.md` plus workflow docs.
-- Do not roll from `0.5.268` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.269 - Market Courts Boundary Clarification Plan` selected a safe static-only interpretation for `settlement_district.highcrown.market_courts`, recommended later activation with a tiny summary and note cleanup, and changed only docs/workflow files.
+- Do not roll from `0.5.269` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -411,9 +412,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.269 - Market Courts Boundary Clarification Plan`
+1. `0.5.270 - Settlement District Market Courts Status Activation`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.273`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.274`.
 
 High-priority unresolved questions:
 
