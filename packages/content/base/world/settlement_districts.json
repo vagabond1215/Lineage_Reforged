@@ -30,7 +30,7 @@
       "slug": "market_courts",
       "name": "Market Courts",
       "aliases": [],
-      "summary": "Planned market district within Highcrown centered on the capital's largest courts for inland river commerce and imperial trade administration.",
+      "summary": "Static market-court district within Highcrown where enclosed commercial yards, imperial trade recordkeeping, and river-confluence identity shape the capital's civic-commercial quarters.",
       "parentSettlementId": "settlement.highcrown",
       "districtType": "market_quarter",
       "functionalTags": [
@@ -42,12 +42,12 @@
         "imperial_capital",
         "river_confluence"
       ],
-      "status": "planned",
+      "status": "active",
       "sourceAuthorityNotes": [
         "Highcrown siteContext explicitly references the empire's largest market courts."
       ],
       "notes": [
-        "Static district identity only; no prices, stock, vendors, services, taxes, ownership, route topology, UI, or gameplay behavior."
+        "Static district identity only; no vendors, stock, prices, services, taxes, trade execution, law/court mechanics, cargo/storage, ownership, NPC staffing, access rules, route topology, quests, rewards, UI, runtime, or gameplay behavior."
       ]
     }
   ]

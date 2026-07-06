@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.269 - Market Courts Boundary Clarification Plan`
-- Next recommended version: `Version 0.5.270 - Settlement District Market Courts Status Activation`
+- Latest completed version: `Version 0.5.270 - Settlement District Market Courts Status Activation`
+- Next recommended version: `Version 0.5.271 - Market Courts Knowledge Snippet Seed Review`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -119,7 +119,8 @@ Versioning rule:
 - `Version 0.5.267 - Archive District Knowledge Snippet Seed` aligned only General Lore with `settlement_district` and `world.settlement_districts`, added exactly one archive district identification snippet, kept `market_courts`, `barge_quays`, and `palace_terraces` planned, and made no settlement/district/site, Knowledge schema/validator, trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, sacred-site/religious-hotspot, or gameplay behavior changes.
 - `Version 0.5.268 - Settlement District Market Courts Activation Review` deferred `settlement_district.highcrown.market_courts` activation because its current name, summary, and tags still risk implying unfinished market, vendor, price, stock, tax, trade, court/law, route, cargo/storage, service, NPC, UI, runtime, or gameplay behavior. The run added only `docs/design/settlement-district-market-courts-activation-review.md` plus workflow docs.
 - `Version 0.5.269 - Market Courts Boundary Clarification Plan` selected a safe static-only interpretation for `settlement_district.highcrown.market_courts`, recommended later activation with a tiny summary and note cleanup, and changed only docs/workflow files.
-- Do not roll from `0.5.269` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.270 - Settlement District Market Courts Status Activation` changed only `settlement_district.highcrown.market_courts` status, summary, and note; kept both Highcrown districts active as static district identity; kept both current site records planned with `parentDistrictId: null`; added no Knowledge snippets; and made no Knowledge registry/domain/trial-policy, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, or gameplay behavior changes.
+- Do not roll from `0.5.270` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -412,9 +413,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.270 - Settlement District Market Courts Status Activation`
+1. `0.5.271 - Market Courts Knowledge Snippet Seed Review`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.274`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.275`.
 
 High-priority unresolved questions:
 

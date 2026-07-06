@@ -486,7 +486,7 @@ test("adds only the selected live settlement district Knowledge snippet", () => 
     input.subjectAuthorities.settlement_district.records.find(
       (record) => record.id === "settlement_district.highcrown.market_courts"
     )?.status,
-    "planned"
+    "active"
   );
   assert.ok(
     input.subjectAuthorities.settlement_site.records.every(
@@ -599,10 +599,16 @@ test("rejects planned and retired settlement district and site subjects", async 
     {
       name: "planned district",
       prepare(input) {
-        prepareSettlementDistrictSnippet(
-          input,
-          "settlement_district.highcrown.market_courts"
+        const plannedDistrict = structuredClone(
+          input.subjectAuthorities.settlement_district.records.find(
+            (record) => record.id === "settlement_district.highcrown.market_courts"
+          )
         );
+        plannedDistrict.id = "settlement_district.highcrown.planned_market_courts";
+        plannedDistrict.slug = "planned_market_courts";
+        plannedDistrict.status = "planned";
+        input.subjectAuthorities.settlement_district.records.push(plannedDistrict);
+        prepareSettlementDistrictSnippet(input, plannedDistrict.id);
       },
       expected: /settlement_district subjectId '.+' must reference an active settlement district record/
     },
@@ -663,10 +669,21 @@ test("rejects settlement site district anchors without valid active district aut
       name: "planned district",
       prepare(input) {
         const site = prepareSettlementSiteSnippet(input);
+        const plannedDistrict = structuredClone(
+          input.subjectAuthorities.settlement_site.parentDistrictAuthority.records.find(
+            (record) => record.id === "settlement_district.highcrown.market_courts"
+          )
+        );
+        plannedDistrict.id = "settlement_district.highcrown.planned_market_courts";
+        plannedDistrict.slug = "planned_market_courts";
+        plannedDistrict.status = "planned";
+        input.subjectAuthorities.settlement_site.parentDistrictAuthority.records.push(
+          plannedDistrict
+        );
         site.status = "active";
-        site.parentDistrictId = "settlement_district.highcrown.market_courts";
+        site.parentDistrictId = plannedDistrict.id;
       },
-      expected: /parentDistrictId 'settlement_district\.highcrown\.market_courts' must reference an active settlement district record/
+      expected: /parentDistrictId 'settlement_district\.highcrown\.planned_market_courts' must reference an active settlement district record/
     },
     {
       name: "mismatched settlement slug",
