@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan`
-- Next recommended version: `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review`
+- Latest completed version: `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review`
+- Next recommended version: `Version 0.5.276 - Highcrown Settlement Site Status Activation`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -124,6 +124,7 @@ Versioning rule:
 - `Version 0.5.272 - Market Courts Knowledge Snippet Seed` added exactly one General Lore identification snippet for `settlement_district.highcrown.market_courts`; kept the archive district snippet intact; added no site snippets; changed no Knowledge registry/domain/trial-policy content, schemas, validators, settlement/district/site content, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior.
 - `Version 0.5.273 - Highcrown Settlement Site District Anchor Review` added `docs/design/highcrown-settlement-site-district-anchor-review.md`; kept `settlement_site.highcrown.barge_quays` and `settlement_site.highcrown.palace_terraces` planned with `parentDistrictId: null`; selected no district-anchor implementation; added no site snippets; and made no content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
 - `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan` added `docs/design/highcrown-settlement-site-anchor-evidence-clarification-plan.md`; defined future district-anchor, site activation, and site Knowledge snippet evidence standards; kept both current Highcrown site records planned with `parentDistrictId: null`; selected no anchor implementation; and made no content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
+- `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review` added `docs/design/highcrown-settlement-site-activation-readiness-review.md`; selected both current Highcrown site records for a later tiny active-status implementation as static site identity while keeping `parentDistrictId: null`; added no site snippets; changed no content; and made no Knowledge registry/domain/trial-policy, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -417,9 +418,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.275 - Highcrown Settlement Site Activation Readiness Review`
+1. `0.5.276 - Highcrown Settlement Site Status Activation`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.279`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.280`.
 
 High-priority unresolved questions:
 
