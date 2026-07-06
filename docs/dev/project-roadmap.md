@@ -20,12 +20,17 @@ The current Codex handoff controls exact current version state. The current GPT 
 Current live anchor:
 
 - Latest completed version: `Version 0.5.276 - Highcrown Settlement Site Status Activation`
+- Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
 - Next recommended version: `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
 Versioning rule:
 
+- Three-segment versions such as `0.5.277` are planned primary roadmap versions.
+- Four-segment versions such as `0.5.276.1` are run-suffix support versions for audits, retries, repairs, validation, or other support work attached to the current three-segment anchor.
+- The fourth segment is a run count, not a roadmap milestone. Support suffixes do not consume the next primary slot or force roadmap renumbering unless they identify a real ordering error.
+- Roadmaps should pre-plan primary versions; suffix runs should be recorded in current handoffs, outputs, backlog notes, audit docs, and anchor notes as needed.
 - Patch numbers may exceed two digits inside the current band.
 - `Version 0.5.170 - Religion Knowledge Domain Seed` activated Religion and added the exact two planned Religion snippets while keeping policy refs null.
 - `Version 0.5.171 - Religious Hotspot Knowledge Snippet Plan` found hotspot snippets blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -126,6 +131,7 @@ Versioning rule:
 - `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan` added `docs/design/highcrown-settlement-site-anchor-evidence-clarification-plan.md`; defined future district-anchor, site activation, and site Knowledge snippet evidence standards; kept both current Highcrown site records planned with `parentDistrictId: null`; selected no anchor implementation; and made no content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
 - `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review` added `docs/design/highcrown-settlement-site-activation-readiness-review.md`; selected both current Highcrown site records for a later tiny active-status implementation as static site identity while keeping `parentDistrictId: null`; added no site snippets; changed no content; and made no Knowledge registry/domain/trial-policy, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
 - `Version 0.5.276 - Highcrown Settlement Site Status Activation` activated both current Highcrown site records as static site identity; changed only their `status`, `summary`, and `notes`; kept both `parentDistrictId` values as `null`; added no site snippets; changed no settlement or district content; and made no Knowledge registry/domain/trial-policy, schema, validator, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
+- `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit` clarified that four-segment labels are support-run suffixes attached to a primary anchor; it did not consume or renumber the next primary route, and it made no content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, Knowledge snippet, registry/domain/trial-policy, settlement, district, site, or gameplay behavior changes.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
