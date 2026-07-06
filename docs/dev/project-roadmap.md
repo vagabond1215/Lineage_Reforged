@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-05
+Last reviewed: 2026-07-06
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -19,8 +19,8 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.270 - Settlement District Market Courts Status Activation`
-- Next recommended version: `Version 0.5.271 - Market Courts Knowledge Snippet Seed Review`
+- Latest completed version: `Version 0.5.271 - Market Courts Knowledge Snippet Seed Review`
+- Next recommended version: `Version 0.5.272 - Market Courts Knowledge Snippet Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -120,7 +120,8 @@ Versioning rule:
 - `Version 0.5.268 - Settlement District Market Courts Activation Review` deferred `settlement_district.highcrown.market_courts` activation because its current name, summary, and tags still risk implying unfinished market, vendor, price, stock, tax, trade, court/law, route, cargo/storage, service, NPC, UI, runtime, or gameplay behavior. The run added only `docs/design/settlement-district-market-courts-activation-review.md` plus workflow docs.
 - `Version 0.5.269 - Market Courts Boundary Clarification Plan` selected a safe static-only interpretation for `settlement_district.highcrown.market_courts`, recommended later activation with a tiny summary and note cleanup, and changed only docs/workflow files.
 - `Version 0.5.270 - Settlement District Market Courts Status Activation` changed only `settlement_district.highcrown.market_courts` status, summary, and note; kept both Highcrown districts active as static district identity; kept both current site records planned with `parentDistrictId: null`; added no Knowledge snippets; and made no Knowledge registry/domain/trial-policy, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, or gameplay behavior changes.
-- Do not roll from `0.5.270` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
+- `Version 0.5.271 - Market Courts Knowledge Snippet Seed Review` added `docs/design/market-courts-knowledge-snippet-seed-review.md`; selected exactly one future General Lore identification snippet for `settlement_district.highcrown.market_courts`; confirmed no registry/domain/trial-policy alignment is required; and made no content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
+- Do not roll from `0.5.271` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
 
@@ -413,9 +414,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.271 - Market Courts Knowledge Snippet Seed Review`
+1. `0.5.272 - Market Courts Knowledge Snippet Seed`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.275`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.276`.
 
 High-priority unresolved questions:
 
