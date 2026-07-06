@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-06
-Route: Codex local sequencing alignment after `Version 0.5.273 - Highcrown Settlement Site District Anchor Review`
+Route: Codex local sequencing alignment after `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.273 - Highcrown Settlement Site District Anchor Review`
+- `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan`
 
 Immediate next Codex run:
 
-- `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan`
+- `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review`
 
 Versioning note:
 
@@ -125,7 +125,8 @@ Versioning note:
 - Market Courts Knowledge Snippet Seed Review landed in `0.5.271`: exactly one future General Lore identification snippet was selected for `settlement_district.highcrown.market_courts`, with no snippet, registry, schema, validator, content, test, runtime, UI, storage, or gameplay changes.
 - Market Courts Knowledge Snippet Seed landed in `0.5.272`: exactly one General Lore snippet was added for `settlement_district.highcrown.market_courts`; no site snippets, registry/domain/trial-policy changes, schema/validator changes, site activation, district anchoring, runtime, UI, storage, or gameplay changes landed.
 - Highcrown Settlement Site District Anchor Review landed in `0.5.273`: both current Highcrown site records remain planned with `parentDistrictId: null`; no district-anchor implementation was selected; no site snippets, content changes, schema/validator changes, runtime, UI, storage, or gameplay changes landed.
-- Do not roll from `0.5.273` to `0.6.0` without a dedicated runtime-readiness decision.
+- Highcrown Settlement Site Anchor Evidence Clarification Plan landed in `0.5.274`: future district-anchor, site activation, and site Knowledge snippet evidence standards were clarified; both current Highcrown site records remain planned with `parentDistrictId: null`; no anchor implementation, snippets, content changes, schema/validator changes, runtime, UI, storage, or gameplay changes landed.
+- Do not roll from `0.5.274` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -325,19 +326,20 @@ Versioning note:
 | 192 | `0.5.271` | Market Courts Knowledge Snippet Seed Review | Codex 5.5 Local docs-first | active `settlement_district.highcrown.market_courts` authority | snippet seed review | Completed | Selected exactly one future General Lore Market Courts snippet; no snippets, registry/schema/validator, content, or behavior changes. |
 | 193 | `0.5.272` | Market Courts Knowledge Snippet Seed | Codex 5.5 Local | `docs/design/market-courts-knowledge-snippet-seed-review.md` | snippet content | Completed | Added exactly one Market Courts General Lore snippet; no site snippets, registry/schema/validator, content, or behavior changes beyond the snippet. |
 | 194 | `0.5.273` | Highcrown Settlement Site District Anchor Review | Codex 5.5 Local docs-first | current active Highcrown districts + planned site records | anchor review | Completed | Kept both current Highcrown sites planned with `parentDistrictId: null`; no anchor implementation selected. |
-| 195 | `0.5.274` | Highcrown Settlement Site Anchor Evidence Clarification Plan | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-site-district-anchor-review.md` | evidence clarification | Deferred | Clarify evidence threshold only; do not activate sites, change anchors, add snippets, or change runtime behavior. |
-| 196 | `0.5.275` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
-| 197 | `0.5.276` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
-| 198 | `0.5.277` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
-| 199 | `0.5.278` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
+| 195 | `0.5.274` | Highcrown Settlement Site Anchor Evidence Clarification Plan | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-site-district-anchor-review.md` | evidence clarification | Completed | Clarified future anchor, activation, and site-snippet evidence standards; no anchor implementation selected. |
+| 196 | `0.5.275` | Highcrown Settlement Site Activation Readiness Review | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-site-anchor-evidence-clarification-plan.md` | activation readiness review | Deferred | Review only; do not activate sites, change anchors, add snippets, or change runtime behavior. |
+| 197 | `0.5.276` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
+| 198 | `0.5.277` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 199 | `0.5.278` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
+| 200 | `0.5.279` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan`
+1. `0.5.275 - Highcrown Settlement Site Activation Readiness Review`
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records remain planned with `parentDistrictId: null`; direct active-only Knowledge subject validation is complete; and both active Highcrown districts now have one General Lore identification snippet each. The next pass should clarify the authored evidence standard for any later site anchor implementation before content edits are attempted.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records remain planned with `parentDistrictId: null`; direct active-only Knowledge subject validation is complete; and both active Highcrown districts now have one General Lore identification snippet each. The next pass should review whether either planned Highcrown site can safely become active as static site identity while remaining unanchored.
 
 ## Default Prompt Pattern
 
@@ -353,8 +355,8 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan` as the immediate next recommended run.
-- `0.5.273` kept both planned Highcrown site records unanchored and selected no anchor implementation; the next run should be docs-first and must not activate sites, change `parentDistrictId`, add site snippets, change Knowledge registry/schema/validator content, or change tests/runtime/UI/storage/commands/events/rewards/migrations/save-account behavior unless a later focused implementation prompt explicitly scopes that work.
+- Keep `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review` as the immediate next recommended run.
+- `0.5.274` clarified the evidence standard for future site anchors, activation reviews, and site snippets while selecting no anchor implementation; the next run should be docs-first and must not activate sites, change `parentDistrictId`, add site snippets, change Knowledge registry/schema/validator content, or change tests/runtime/UI/storage/commands/events/rewards/migrations/save-account behavior unless a later focused implementation prompt explicitly scopes that work.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
