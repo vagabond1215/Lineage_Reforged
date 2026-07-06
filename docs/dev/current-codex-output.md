@@ -1,80 +1,93 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review
+Source version/run: Version 0.5.276 - Highcrown Settlement Site Status Activation
 Date: 2026-07-06
-Branch/status assumption: `master`; `git fetch origin` and `git pull --ff-only origin master` reported up to date before edits; worktree was clean before this docs-only patch.
+Branch/status assumption: `master`; `git fetch origin` and `git pull --ff-only origin master` reported up to date before edits; worktree was clean before this run.
 
 ## Result
 
-Completed the documentation-only Highcrown settlement site activation readiness review.
+Implemented the tiny Highcrown settlement site status activation selected by `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review`.
 
-Both reviewed sites are selected for a later tiny active-status implementation as static site identity while remaining unanchored:
+Activated exactly two site records as static authored site identity:
 
 - `settlement_site.highcrown.barge_quays`
 - `settlement_site.highcrown.palace_terraces`
 
-No site was activated in this run. Both live site records remain `status: "planned"` with `parentDistrictId: null`.
+Both records remain unanchored with `parentDistrictId: null`.
 
 ## Files Changed
 
-- `docs/design/highcrown-settlement-site-activation-readiness-review.md`
+- `packages/content/base/world/settlement_sites.json`
+- `tests/unit/knowledge-snippets-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/future_content_backlog.md`
 
-## Activation Readiness Decision
+## Site Content Confirmation
 
-`settlement_site.highcrown.barge_quays` is safe for later static active site identity if the later implementation changes only status, summary, and notes, keeps `parentDistrictId: null`, and adds no dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior.
+`settlement_site.highcrown.barge_quays` is now `status: "active"`.
 
-Future selected summary:
+Summary:
 
 `Static river-wharf site within Highcrown where the capital's barge quays mark its inland river trade identity.`
 
-Future selected note:
+Note:
 
 `Static site identity only; no dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior.`
 
-`settlement_site.highcrown.palace_terraces` is safe for later static active site identity if the later implementation changes only status, summary, and notes, keeps `parentDistrictId: null`, and adds no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior.
+`settlement_site.highcrown.palace_terraces` is now `status: "active"`.
 
-Future selected summary:
+Summary:
 
 `Static palace landmark site within Highcrown where terraced palace grounds mark the capital's imperial bluff identity.`
 
-Future selected note:
+Note:
 
 `Static site identity only; no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior.`
+
+Only the two selected records' `status`, `summary`, and `notes` fields changed. Their `id`, `slug`, `name`, `aliases`, `parentSettlementId`, `parentDistrictId`, `siteType`, `functionalTags`, `placeRoleTags`, and `sourceAuthorityNotes` were preserved.
 
 ## Checks Run
 
 - `git fetch origin`
 - `git pull --ff-only origin master`
 - `git status --short`
-- Focused Node audit of Highcrown settlement, district, site, Knowledge snippet, and General Lore registry records.
-- Focused `rg` audit for settlement district/site Knowledge support, active-only validation, and site null-parent posture.
-- `git diff --check`
-- Changed-path scope audit with `git diff --name-only`, `git ls-files --others --exclude-standard`, and `git status --short`
-- Conflict-marker scan on changed files
-- Trailing-whitespace scan on changed files
+- Focused Node audit of Highcrown settlement, district, site, Knowledge snippet, and General Lore registry records before edits.
+- Focused `rg` audit of settlement-site status assumptions in focused tests.
+- `node --test tests\unit\settlement-site-validation.test.mjs` (pass: 112)
+- `node --test tests\unit\settlement-district-validation.test.mjs` (pass: 95)
+- `node --test tests\unit\knowledge-snippets-validation.test.mjs` (pass: 115)
+- `node --test tests\unit\knowledge-domain-registry-validation.test.mjs` (pass: 51)
+- `node --test tests\unit\schema-files.test.mjs` (pass: 98)
 - `npm.cmd run tool:content-lint` (`content-lint: ok (63 files checked)`)
+- `git diff --check`
+- Site scope audit comparing `settlement_sites.json` against `HEAD`: only the selected records' `summary`, `status`, and `notes` changed.
+- Post-edit content/Knowledge audit: both sites active with null anchors; both districts active and unchanged; exactly two live settlement-district snippets; no live settlement-site snippets; General Lore still aligned only for current district snippets.
+- Changed-path scope audit with `git diff --name-only`, `git ls-files --others --exclude-standard`, and targeted forbidden-path diffs.
+- Conflict-marker scan on changed files.
+- Trailing-whitespace scan on changed files.
 
 ## Behavior / Runtime Confirmation
 
-Runtime, JSON content, schema, validator, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, and gameplay behavior did not change.
+Runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, and gameplay behavior did not change.
 
-This run added no Knowledge snippets and did not edit Knowledge registry/domain/trial-policy content.
+No site snippets were added. No Knowledge snippets were added or edited. Knowledge registry/domain/trial-policy content, Knowledge schemas, and Knowledge validators were unchanged.
+
+Settlement and district content were unchanged.
 
 ## Risks / Follow-Up
 
-- `Version 0.5.276 - Highcrown Settlement Site Status Activation` should make only the selected `packages/content/base/world/settlement_sites.json` status, summary, and notes edits if a fresh audit still matches this review.
-- The future activation must keep both `parentDistrictId` values as `null`.
-- Site Knowledge snippets remain deferred until a separate site-snippet review checks exact snippet text plus `settlement_site` and `world.settlement_sites` domain/registry alignment.
+- `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review` should remain docs-first.
+- The next review may evaluate whether one or both active Highcrown site records should receive future public Knowledge snippets.
+- Site snippet work still requires separate exact wording and domain/registry alignment review for `settlement_site` and `world.settlement_sites`.
+- The active site records must remain static place identity only; activation does not create discovery state, Knowledge progress, unlocks, UI state, runtime state, rewards, commands, services, access rules, storage behavior, economy behavior, court behavior, vendor behavior, route behavior, cargo behavior, or gameplay behavior.
 
 ## Next Recommended Version
 
-Version 0.5.276 - Highcrown Settlement Site Status Activation
+Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review
 
 ## Suggested Commit Message
 
-docs(world): review highcrown site activation
+feat(world): activate highcrown settlement sites

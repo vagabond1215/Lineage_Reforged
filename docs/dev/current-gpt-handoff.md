@@ -1,55 +1,53 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review
+Source version/run: Version 0.5.276 - Highcrown Settlement Site Status Activation
 Date: 2026-07-06
 
 ## Current Status
 
-`Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review` completed as documentation only.
-
-New review document:
-
-- `docs/design/highcrown-settlement-site-activation-readiness-review.md`
-
-The review selected both current planned Highcrown site records for a later tiny active-status implementation as static site identity:
+`Version 0.5.276 - Highcrown Settlement Site Status Activation` activated the two current Highcrown settlement site records as static authored site identity:
 
 - `settlement_site.highcrown.barge_quays`
 - `settlement_site.highcrown.palace_terraces`
 
-No content activation happened in 0.5.275. Both records remain `status: "planned"` with `parentDistrictId: null`.
+Both records remain unanchored with `parentDistrictId: null`.
 
-## Current Site Activation Planning Posture
+## Current Site Content Posture
 
-Future activation is safe only as static authored site identity.
+`settlement_site.highcrown.barge_quays` is active.
 
-For `settlement_site.highcrown.barge_quays`, the selected future summary is:
+Summary:
 
 `Static river-wharf site within Highcrown where the capital's barge quays mark its inland river trade identity.`
 
-The selected future note is:
+Note:
 
 `Static site identity only; no dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior.`
 
-For `settlement_site.highcrown.palace_terraces`, the selected future summary is:
+`settlement_site.highcrown.palace_terraces` is active.
+
+Summary:
 
 `Static palace landmark site within Highcrown where terraced palace grounds mark the capital's imperial bluff identity.`
 
-The selected future note is:
+Note:
 
 `Static site identity only; no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior.`
 
+Only the selected site records' `status`, `summary`, and `notes` changed in live content.
+
 ## Current Site Anchor Posture
 
-`Version 0.5.273 - Highcrown Settlement Site District Anchor Review` and `Version 0.5.274 - Highcrown Settlement Site Anchor Evidence Clarification Plan` still control district-anchor posture.
+Both active site records remain unanchored:
 
-- `settlement_site.highcrown.barge_quays` must keep `parentDistrictId: null`.
-- `settlement_site.highcrown.palace_terraces` must keep `parentDistrictId: null`.
+- `settlement_site.highcrown.barge_quays.parentDistrictId` is `null`.
+- `settlement_site.highcrown.palace_terraces.parentDistrictId` is `null`.
 
-Current evidence proves both as Highcrown-level sites, but does not place either inside `settlement_district.highcrown.archive_districts` or `settlement_district.highcrown.market_courts`.
+Prior anchor reviews still control district-anchor posture. Current evidence proves both as Highcrown-level sites, but does not place either inside `settlement_district.highcrown.archive_districts` or `settlement_district.highcrown.market_courts`.
 
 Semantic proximity is not enough for a district anchor. `court_presence` is not Market Courts placement and is not court/law mechanics.
 
-## Knowledge Posture
+## Current Knowledge Snippet Posture
 
 Exactly two live `settlement_district` snippets exist:
 
@@ -63,9 +61,9 @@ No snippet exists for:
 - `settlement_site.highcrown.barge_quays`
 - `settlement_site.highcrown.palace_terraces`
 
-Future site activation must not add snippets. A later active-site snippet requires a separate snippet plan.
+Activation did not add snippets.
 
-## Domain And Registry Posture
+## Current Knowledge Domain / Registry Posture
 
 Direct `settlement_district` and `settlement_site` Knowledge subject support exists and remains active-only.
 
@@ -74,52 +72,33 @@ Direct `settlement_district` and `settlement_site` Knowledge subject support exi
 - `settlement_district` in `canonicalSubjectTypes`
 - `world.settlement_districts` in `relatedContentCollections`
 
-General Lore does not need to advertise `settlement_site` or `world.settlement_sites` until a later site-snippet plan selects live site snippet content.
+General Lore was not changed to advertise `settlement_site` or `world.settlement_sites` in this run. Site snippet domain/registry alignment remains deferred until a separate site-snippet readiness review selects future snippet scope and wording.
 
-## District And Site Content Posture
+Knowledge registry/domain/trial-policy content, Knowledge schemas, and Knowledge validators were unchanged.
 
-Current district records:
+## Current District / Settlement Content Posture
+
+Settlement content was unchanged.
+
+Current district records were unchanged:
 
 - `settlement_district.highcrown.archive_districts` is active static district identity.
 - `settlement_district.highcrown.market_courts` is active static district identity.
-
-Current site records:
-
-- `settlement_site.highcrown.barge_quays` is planned and unanchored.
-- `settlement_site.highcrown.palace_terraces` is planned and unanchored.
 
 ## Latest And Next
 
 Latest completed:
 
-- `Version 0.5.275 - Highcrown Settlement Site Activation Readiness Review`
+- `Version 0.5.276 - Highcrown Settlement Site Status Activation`
 
 Immediate next:
 
-- `Version 0.5.276 - Highcrown Settlement Site Status Activation`
+- `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
 
-## Next Guardrail
+## Next Route Guardrail
 
-`Version 0.5.276 - Highcrown Settlement Site Status Activation` may edit only `packages/content/base/world/settlement_sites.json`.
+`Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review` should be docs-first.
 
-Allowed content edits:
+It may review whether one or both now-active Highcrown site records should receive future public Knowledge snippets.
 
-- change only the selected two site records' `status`, `summary`, and `notes`;
-- keep both `parentDistrictId` values as `null`.
-
-Forbidden:
-
-- site snippets;
-- district-anchor changes;
-- settlement content;
-- district content;
-- Knowledge registry/domain/trial-policy content;
-- Knowledge schemas or validators unless a focused test expectation update is required by the content status change;
-- runtime, UI, storage, commands, events, rewards, migrations, save/account behavior;
-- route/travel behavior;
-- building/workplace/economy behavior;
-- court/law behavior;
-- vendor/market behavior;
-- cargo/storage behavior;
-- sacred-site/religious-hotspot behavior;
-- gameplay behavior.
+It must not add snippets, edit Knowledge registry/domain/trial-policy content, edit Knowledge schemas or validators, change settlement/district/site content, change site district anchors, add route/travel/building/workplace/economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot content, or change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.

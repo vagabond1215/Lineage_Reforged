@@ -5,7 +5,7 @@
       "slug": "barge_quays",
       "name": "Barge Quays",
       "aliases": [],
-      "summary": "Planned river wharf site within Highcrown where the capital's barge quays anchor its inland river trade identity.",
+      "summary": "Static river-wharf site within Highcrown where the capital's barge quays mark its inland river trade identity.",
       "parentSettlementId": "settlement.highcrown",
       "parentDistrictId": null,
       "siteType": "wharf",
@@ -18,12 +18,12 @@
         "imperial_capital",
         "river_capital"
       ],
-      "status": "planned",
+      "status": "active",
       "sourceAuthorityNotes": [
         "Highcrown summary explicitly references barge quays."
       ],
       "notes": [
-        "Static placed-site identity only; no route topology, pathfinding, cargo inventory, storage, prices, vendors, services, ownership, UI, or gameplay behavior."
+        "Static site identity only; no dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior."
       ]
     },
     {
@@ -31,7 +31,7 @@
       "slug": "palace_terraces",
       "name": "Palace Terraces",
       "aliases": [],
-      "summary": "Planned palace landmark site within Highcrown where terraced palace grounds mark the capital's imperial bluff identity.",
+      "summary": "Static palace landmark site within Highcrown where terraced palace grounds mark the capital's imperial bluff identity.",
       "parentSettlementId": "settlement.highcrown",
       "parentDistrictId": null,
       "siteType": "palace",
@@ -43,12 +43,12 @@
         "imperial_capital",
         "bluff_landmark"
       ],
-      "status": "planned",
+      "status": "active",
       "sourceAuthorityNotes": [
         "Highcrown siteContext explicitly references palace terraces."
       ],
       "notes": [
-        "Static placed-site identity only; no court service, access control, NPC staffing, ownership, law, UI, or gameplay behavior."
+        "Static site identity only; no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior."
       ]
     }
   ]

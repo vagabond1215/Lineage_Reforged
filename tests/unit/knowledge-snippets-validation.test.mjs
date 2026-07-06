@@ -497,10 +497,24 @@ test("adds only the selected live settlement district Knowledge snippets", () =>
     )?.status,
     "active"
   );
-  assert.ok(
-    input.subjectAuthorities.settlement_site.records.every(
-      (record) => record.status === "planned" && record.parentDistrictId === null
-    )
+  assert.deepEqual(
+    input.subjectAuthorities.settlement_site.records.map((record) => ({
+      id: record.id,
+      status: record.status,
+      parentDistrictId: record.parentDistrictId
+    })),
+    [
+      {
+        id: "settlement_site.highcrown.barge_quays",
+        status: "active",
+        parentDistrictId: null
+      },
+      {
+        id: "settlement_site.highcrown.palace_terraces",
+        status: "active",
+        parentDistrictId: null
+      }
+    ]
   );
   assert.equal(validate(input), true);
 });
@@ -632,7 +646,16 @@ test("rejects planned and retired settlement district and site subjects", async 
     {
       name: "planned site",
       prepare(input) {
-        prepareSettlementSiteSnippet(input);
+        const plannedSite = structuredClone(
+          input.subjectAuthorities.settlement_site.records.find(
+            (record) => record.id === "settlement_site.highcrown.barge_quays"
+          )
+        );
+        plannedSite.id = "settlement_site.highcrown.planned_barge_quays";
+        plannedSite.slug = "planned_barge_quays";
+        plannedSite.status = "planned";
+        input.subjectAuthorities.settlement_site.records.push(plannedSite);
+        prepareSettlementSiteSnippet(input, plannedSite.id);
       },
       expected: /settlement_site subjectId '.+' must reference an active settlement site record/
     },
