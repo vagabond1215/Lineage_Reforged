@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-06
-Route: Codex local sequencing alignment after `Version 0.5.271 - Market Courts Knowledge Snippet Seed Review`
+Route: Codex local sequencing alignment after `Version 0.5.272 - Market Courts Knowledge Snippet Seed`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.271 - Market Courts Knowledge Snippet Seed Review`
+- `Version 0.5.272 - Market Courts Knowledge Snippet Seed`
 
 Immediate next Codex run:
 
-- `Version 0.5.272 - Market Courts Knowledge Snippet Seed`
+- `Version 0.5.273 - Highcrown Settlement Site District Anchor Review`
 
 Versioning note:
 
@@ -123,7 +123,8 @@ Versioning note:
 - Market Courts Boundary Clarification Plan landed in `0.5.269`: a safe static-only interpretation was selected for `market_courts`, with future activation limited to status, summary, and optional note cleanup in the district content file.
 - Settlement District Market Courts Status Activation landed in `0.5.270`: only `settlement_district.highcrown.market_courts` status, summary, and note changed; both districts are now active static identity records, both current site records remain planned with `parentDistrictId: null`, and no snippets or behavior changes landed.
 - Market Courts Knowledge Snippet Seed Review landed in `0.5.271`: exactly one future General Lore identification snippet was selected for `settlement_district.highcrown.market_courts`, with no snippet, registry, schema, validator, content, test, runtime, UI, storage, or gameplay changes.
-- Do not roll from `0.5.271` to `0.6.0` without a dedicated runtime-readiness decision.
+- Market Courts Knowledge Snippet Seed landed in `0.5.272`: exactly one General Lore snippet was added for `settlement_district.highcrown.market_courts`; no site snippets, registry/domain/trial-policy changes, schema/validator changes, site activation, district anchoring, runtime, UI, storage, or gameplay changes landed.
+- Do not roll from `0.5.272` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
 
@@ -321,19 +322,20 @@ Versioning note:
 | 190 | `0.5.269` | Market Courts Boundary Clarification Plan | Codex 5.5 Local docs-first | `docs/design/settlement-district-market-courts-activation-review.md` | boundary clarification | Completed | Selected safe static district wording and future note exclusions before activation. |
 | 191 | `0.5.270` | Settlement District Market Courts Status Activation | Codex 5.5 Local | `docs/design/market-courts-boundary-clarification-plan.md` | content status + wording | Completed | Changed only `market_courts` status, summary, and note; no snippets, site activation, registry/schema/validator, or behavior changes. |
 | 192 | `0.5.271` | Market Courts Knowledge Snippet Seed Review | Codex 5.5 Local docs-first | active `settlement_district.highcrown.market_courts` authority | snippet seed review | Completed | Selected exactly one future General Lore Market Courts snippet; no snippets, registry/schema/validator, content, or behavior changes. |
-| 193 | `0.5.272` | Market Courts Knowledge Snippet Seed | Codex 5.5 Local | `docs/design/market-courts-knowledge-snippet-seed-review.md` | snippet content | Deferred | May add exactly one Market Courts General Lore snippet; no other snippets or behavior changes. |
-| 194 | `0.5.273` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
-| 195 | `0.5.274` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
-| 196 | `0.5.275` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
-| 197 | `0.5.276` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
+| 193 | `0.5.272` | Market Courts Knowledge Snippet Seed | Codex 5.5 Local | `docs/design/market-courts-knowledge-snippet-seed-review.md` | snippet content | Completed | Added exactly one Market Courts General Lore snippet; no site snippets, registry/schema/validator, content, or behavior changes beyond the snippet. |
+| 194 | `0.5.273` | Highcrown Settlement Site District Anchor Review | Codex 5.5 Local docs-first | current active Highcrown districts + planned site records | anchor review | Deferred | Review only; do not activate sites, change anchors, add snippets, or change runtime behavior. |
+| 195 | `0.5.274` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
+| 196 | `0.5.275` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 197 | `0.5.276` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
+| 198 | `0.5.277` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.272 - Market Courts Knowledge Snippet Seed`
+1. `0.5.273 - Highcrown Settlement Site District Anchor Review`
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records remain planned; direct active-only Knowledge subject validation is complete; the first archive district snippet is live; and a docs-only review has selected one future Market Courts snippet. The next pass may add exactly that snippet if the live audit still matches the review.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records remain planned; direct active-only Knowledge subject validation is complete; and both active Highcrown districts now have one General Lore identification snippet each. The next pass should review whether either planned Highcrown site should remain unanchored or later receive a district anchor.
 
 ## Default Prompt Pattern
 
@@ -349,8 +351,8 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.272 - Market Courts Knowledge Snippet Seed` as the immediate next recommended run.
-- `0.5.271` selected exactly one future General Lore snippet for `market_courts`; the next run may add only `knowledge_snippet.general_lore.highcrown_market_courts.identification` and must not add other snippets, change Knowledge registry/schema/validator content, activate sites, change site anchors, or change tests/runtime/UI/storage/commands/events/rewards/migrations/save-account behavior unless a focused validation expectation truly requires it.
+- Keep `Version 0.5.273 - Highcrown Settlement Site District Anchor Review` as the immediate next recommended run.
+- `0.5.272` added the selected Market Courts snippet; the next run should be docs-first and must not activate sites, change `parentDistrictId`, add site snippets, change Knowledge registry/schema/validator content, or change tests/runtime/UI/storage/commands/events/rewards/migrations/save-account behavior unless a later focused implementation prompt explicitly scopes that work.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

@@ -371,6 +371,35 @@
       "notes": [
         "This snippet is authored place knowledge only and grants no archive access, record browsing, Knowledge unlock, storage, service, NPC staffing, quest hook, UI marker, reward, runtime behavior, or gameplay behavior."
       ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.highcrown_market_courts.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_district",
+      "subjectId": "settlement_district.highcrown.market_courts",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Highcrown's Market Courts",
+      "summary": "Highcrown's Market Courts are civic-commercial district quarters known for enclosed market yards, imperial trade recordkeeping, and river-confluence identity.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Highcrown market district remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored place knowledge only and grants no vendors, stock, prices, services, taxes, trade execution, law/court mechanics, cargo/storage, ownership, NPC staffing, access rules, route topology, quests, rewards, UI, runtime behavior, or gameplay behavior."
+      ]
     }
   ]
 }
