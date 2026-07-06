@@ -1,69 +1,103 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit
+Source version/run: Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review
 Date: 2026-07-06
 
 ## Status
 
-`Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit` completed as a documentation-only support run.
+`Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review` completed as a documentation-only primary run.
 
 Latest completed primary:
 
-- `Version 0.5.276 - Highcrown Settlement Site Status Activation`
+- `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
 
-Latest support/audit run:
+Latest completed support/audit run:
 
 - `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
 
-Immediate next primary:
+Immediate next primary route:
 
-- `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
+- `Version 0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan`
 
-## Versioning Convention
+## Versioning Posture
 
-Three-segment labels such as `0.5.277` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are run-suffix support versions attached to the current three-segment anchor.
+Three-segment labels such as `0.5.278` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
 
-The fourth segment is a run count for audit, retry, repair, validation, or support work. It is not a roadmap milestone, does not consume the next primary route, and does not force renumbering unless a real ordering error is found.
+`0.5.277` is complete as the next primary after `0.5.276`; it was not renumbered because of `0.5.276.1`.
 
-`0.5.276.1` is complete and does not replace or renumber `0.5.277`.
+## Site Snippet Readiness Posture
 
-## Highcrown Site Posture
+Both active Highcrown site records are selected for a later docs-first General Lore site Knowledge snippet seed plan:
+
+- `settlement_site.highcrown.barge_quays`
+- `settlement_site.highcrown.palace_terraces`
+
+No snippets were added. No Knowledge registry/domain/trial-policy content was changed. No schemas, validators, tests, settlement/district/site content, anchors, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changed.
+
+## Site Authority Posture
 
 `settlement_site.highcrown.barge_quays` is active.
 
 - `parentSettlementId`: `settlement.highcrown`
 - `parentDistrictId`: `null`
-- Static site identity only.
-- No dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior.
+- selected future snippet id: `knowledge_snippet.general_lore.highcrown_barge_quays.identification`
+- selected future title: `Recognizing Highcrown's Barge Quays`
+- static-only boundary: no dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior.
 
 `settlement_site.highcrown.palace_terraces` is active.
 
 - `parentSettlementId`: `settlement.highcrown`
 - `parentDistrictId`: `null`
-- Static site identity only.
-- No palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior.
+- selected future snippet id: `knowledge_snippet.general_lore.highcrown_palace_terraces.identification`
+- selected future title: `Recognizing Highcrown's Palace Terraces`
+- static-only boundary: no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior.
 
-Current evidence supports both as Highcrown-level sites. It does not prove placement inside `settlement_district.highcrown.archive_districts` or `settlement_district.highcrown.market_courts`.
+## Site Anchor Posture
 
-## Knowledge/Site Snippet Posture
+Both site records remain unanchored with `parentDistrictId: null`.
 
-Exactly two active `settlement_district` General Lore snippets exist:
+Current evidence supports Highcrown-level site identity, but not placement inside `settlement_district.highcrown.archive_districts` or `settlement_district.highcrown.market_courts`.
+
+Do not treat `barge_quays` as a Market Courts snippet. Do not treat `palace_terraces` as a Market Courts or Archive Districts snippet. Do not treat `court_presence` as law/court mechanics.
+
+## Knowledge Snippet Posture
+
+Exactly two live `settlement_district` General Lore snippets exist:
 
 - `knowledge_snippet.general_lore.highcrown_archive_districts.identification`
 - `knowledge_snippet.general_lore.highcrown_market_courts.identification`
 
-No active `settlement_site` snippets exist.
+No live `settlement_site` snippets exist.
 
-Direct `settlement_district` and `settlement_site` Knowledge subject validation exists and remains active-only. General Lore currently supports the district lane with `settlement_district` and `world.settlement_districts`; it has not been aligned for `settlement_site` or `world.settlement_sites`.
+No snippets exist for:
 
-## Next Guardrail
+- `settlement_site.highcrown.barge_quays`
+- `settlement_site.highcrown.palace_terraces`
 
-The next primary route remains:
+Direct `settlement_district` and `settlement_site` Knowledge subject validation exists and remains active-only.
 
-- `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
+## Knowledge Domain/Registry Posture
 
-That run should be docs-first. It may review whether active Highcrown site snippets are ready, but should not add snippets, align General Lore for site subjects, change district anchors, edit settlement/district/site content, change Knowledge schemas or validators, or touch runtime/UI/storage/commands/events/rewards/migrations/save-account/route-travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
+General Lore currently supports:
 
-Suggested next commit after this support run:
+- `settlement_district`
+- `world.settlement_districts`
+- `identification`
+- `book_study`
 
-`docs(dev): clarify pipeline run suffix versioning`
+General Lore does not yet advertise:
+
+- `settlement_site`
+- `world.settlement_sites`
+
+A later seed plan should decide the exact General Lore alignment needed for site snippets. This handoff does not authorize adding snippets or editing registry/domain/trial-policy content.
+
+## Next Route Guardrail
+
+`Version 0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan` should remain docs-first.
+
+It may select exact future snippet records and exact General Lore alignment for `settlement_site` and `world.settlement_sites`, but must not add snippets, edit Knowledge registry/domain/trial-policy content, edit schemas or validators, change settlement/district/site content, change anchors, or touch runtime/UI/storage/commands/events/rewards/migrations/save-account/route-travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
+
+Suggested next commit:
+
+`docs(knowledge): review highcrown site snippets`

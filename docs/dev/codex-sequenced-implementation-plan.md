@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-06
-Route: Codex local sequencing alignment after `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
+Route: Codex local sequencing alignment after `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.276 - Highcrown Settlement Site Status Activation`
+- `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
 
 Latest support/audit run:
 
@@ -29,13 +29,14 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
+- `Version 0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan`
 
 Versioning note:
 
 - Three-segment versions are primary roadmap versions. Four-segment versions are run-suffix support labels attached to the current primary anchor.
 - Suffix runs are for audits, retries, repairs, validation, and support work. They do not consume the next primary slot and should not be inserted as primary queue rows unless explicitly promoted by a roadmap correction.
-- `0.5.276.1` is a support run attached to `0.5.276`; the next primary remains `0.5.277`.
+- `0.5.276.1` was a support run attached to `0.5.276`; it preserved `0.5.277` as the next primary at that point and did not consume a primary slot.
+- `0.5.277` completed as a primary roadmap run and selected both active Highcrown site records for later docs-first General Lore site snippet seed planning.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -136,6 +137,7 @@ Versioning note:
 - Highcrown Settlement Site Activation Readiness Review landed in `0.5.275`: both current Highcrown site records were selected for a later tiny active-status implementation as static site identity while remaining unanchored; no site activation, anchor implementation, snippets, content changes, schema/validator changes, runtime, UI, storage, or gameplay changes landed.
 - Highcrown Settlement Site Status Activation landed in `0.5.276`: both current Highcrown site records are active static site identities with `parentDistrictId: null`; no site snippets, district anchors, Knowledge registry/domain/trial-policy, schema/validator, runtime, UI, storage, or gameplay changes landed.
 - Pipeline Versioning And Roadmap Drift Audit landed in `0.5.276.1`: fourth-segment labels are support-run suffixes attached to a primary anchor and do not renumber the primary queue; no content, schema/validator, test, runtime, UI, storage, Knowledge, settlement/district/site, or gameplay changes landed.
+- Highcrown Settlement Site Knowledge Snippet Readiness Review landed in `0.5.277`: both active Highcrown site records were selected for later docs-first General Lore `settlement_site` snippet seed planning; future General Lore alignment for `settlement_site` and `world.settlement_sites` is required; no snippets, registry/domain/trial-policy, schema/validator, content, runtime, UI, storage, or gameplay changes landed.
 - Do not roll from `0.5.274` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
@@ -339,21 +341,22 @@ Versioning note:
 | 195 | `0.5.274` | Highcrown Settlement Site Anchor Evidence Clarification Plan | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-site-district-anchor-review.md` | evidence clarification | Completed | Clarified future anchor, activation, and site-snippet evidence standards; no anchor implementation selected. |
 | 196 | `0.5.275` | Highcrown Settlement Site Activation Readiness Review | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-site-anchor-evidence-clarification-plan.md` | activation readiness review | Completed | Selected both current Highcrown sites for later static active status while keeping `parentDistrictId: null`; no content or behavior changes. |
 | 197 | `0.5.276` | Highcrown Settlement Site Status Activation | Codex 5.5 Local | `docs/design/highcrown-settlement-site-activation-readiness-review.md` | content status + wording | Completed | Activated both current Highcrown sites as static identity; changed only status, summary, and notes; kept anchors null; added no snippets or behavior. |
-| 198 | `0.5.277` | Highcrown Settlement Site Knowledge Snippet Readiness Review | Codex 5.5 Local docs-first | active Highcrown site records | snippet readiness review | Deferred | Review only; add no snippets, registry/domain edits, anchors, content, or behavior. |
-| 199 | `0.5.278` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
-| 200 | `0.5.279` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
-| 201 | `0.5.280` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
-| 202 | `0.5.281` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
+| 198 | `0.5.277` | Highcrown Settlement Site Knowledge Snippet Readiness Review | Codex 5.5 Local docs-first | active Highcrown site records | snippet readiness review | Completed | Selected both active Highcrown sites for later docs-first General Lore site snippet seed planning; no snippets, registry/domain edits, anchors, content, or behavior. |
+| 199 | `0.5.278` | Highcrown Settlement Site Knowledge Snippet Seed Plan | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-site-knowledge-snippet-readiness-review.md` | snippet seed plan | Deferred | Plan exact future site snippets and General Lore alignment only; add no snippets or registry edits. |
+| 200 | `0.5.279` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
+| 201 | `0.5.280` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 202 | `0.5.281` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
+| 203 | `0.5.282` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review`
+1. `0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; direct active-only Knowledge subject validation is complete; and both active Highcrown districts now have one General Lore identification snippet each. The next pass should review whether active site snippets are ready without adding them.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; direct active-only Knowledge subject validation is complete; both active Highcrown districts now have one General Lore identification snippet each; and both active Highcrown sites have been selected for later docs-first General Lore site snippet seed planning. The next pass should plan exact future site snippet records and exact General Lore alignment without adding snippets.
 
 ## Default Prompt Pattern
 
@@ -369,9 +372,9 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.277 - Highcrown Settlement Site Knowledge Snippet Readiness Review` as the immediate next recommended run.
-- `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the `0.5.277` primary route.
-- `0.5.276` activated both current Highcrown sites as static site identity while keeping `parentDistrictId: null`; the next run should be docs-first and must not add snippets, edit Knowledge registry/domain/trial-policy content, edit Knowledge schemas or validators, change settlement/district/site content, change site district anchors, or change tests/runtime/UI/storage/commands/events/rewards/migrations/save-account/route-travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
+- Keep `Version 0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan` as the immediate next recommended run.
+- `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
+- `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning; the next run should remain docs-first and must not add snippets, edit Knowledge registry/domain/trial-policy content, edit Knowledge schemas or validators, change settlement/district/site content, change site district anchors, or change tests/runtime/UI/storage/commands/events/rewards/migrations/save-account/route-travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
