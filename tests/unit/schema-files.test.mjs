@@ -291,6 +291,7 @@ test("knowledge subject schemas share direct place and religion vocabulary", () 
   assert.ok(snippetSubjectTypes.includes("deity"));
   assert.ok(snippetSubjectTypes.includes("religious_hotspot"));
   assert.ok(snippetSubjectTypes.includes("sacred_site"));
+  assert.ok(snippetSubjectTypes.includes("settlement"));
   assert.ok(snippetSubjectTypes.includes("settlement_district"));
   assert.ok(snippetSubjectTypes.includes("settlement_site"));
   assert.equal(snippetSubjectTypes.includes("shrine"), false);

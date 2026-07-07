@@ -118,6 +118,12 @@ function makeInput() {
         idPattern: /^sacred_site\.[a-z0-9]+(?:_[a-z0-9]+)*\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
         records: structuredClone(sacredSiteWrapper.records)
       },
+      settlement: {
+        collectionId: "world.settlements",
+        idPrefix: "settlement.",
+        idPattern: /^settlement\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
+        records: structuredClone(settlementWrapper.records)
+      },
       settlement_district: {
         collectionId: "world.settlement_districts",
         idPrefix: "settlement_district.",
@@ -151,6 +157,7 @@ function makeInput() {
       "world.religions",
       "world.religious_hotspots",
       "world.sacred_sites",
+      "world.settlements",
       "world.settlement_districts",
       "world.settlement_sites",
       "world.regions"
@@ -262,6 +269,40 @@ function settlementPlaceSnippet({
   };
 }
 
+function settlementSnippet({
+  subjectId = "settlement.highcrown"
+} = {}) {
+  return {
+    id: "knowledge_snippet.general_lore.highcrown.identification",
+    domainId: "knowledge_domain.general_lore",
+    subjectType: "settlement",
+    subjectId,
+    tier: 1,
+    category: "identification",
+    title: "Recognizing Highcrown",
+    summary: "Highcrown is Valtherion's imperial river capital, where crown roads, archive districts, barge quays, palace terraces, and market courts define static settlement identity without granting access, services, rewards, or gameplay behavior.",
+    discoverySources: [
+      {
+        sourceType: "book_study",
+        sourceId: null
+      }
+    ],
+    progression: {
+      completionWeight: 1,
+      countsTowardTierCompletion: true,
+      trialUnlockWeight: 0
+    },
+    visibility: {
+      lockedUntilDiscovered: true,
+      revealsSubjectIdentity: true,
+      hiddenSummary: "An unidentified imperial river capital remains to be understood."
+    },
+    notes: [
+      "This in-memory fixture is authored settlement identity knowledge only and grants no settlement access, services, vendors, prices, trade execution, travel routes, dock operation, cargo inventory, storage, palace access, court/law mechanics, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior."
+    ]
+  };
+}
+
 function addGeneralLorePlaceSubject(input, subjectType, collectionId) {
   const domain = generalLoreDomain(input);
   if (!domain.canonicalSubjectTypes.includes(subjectType)) {
@@ -270,6 +311,14 @@ function addGeneralLorePlaceSubject(input, subjectType, collectionId) {
   if (!domain.relatedContentCollections.includes(collectionId)) {
     domain.relatedContentCollections.push(collectionId);
   }
+}
+
+function prepareSettlementSnippet(input, settlementId = "settlement.highcrown") {
+  addGeneralLorePlaceSubject(input, "settlement", "world.settlements");
+  input.wrapper.records = [settlementSnippet({ subjectId: settlementId })];
+  return input.subjectAuthorities.settlement.records.find(
+    (record) => record.id === settlementId
+  );
 }
 
 function prepareSettlementDistrictSnippet(
@@ -458,6 +507,7 @@ test("accepts the live Glasswake religious hotspot snippet only for the active s
 test("knowledge snippet schema includes direct religious hotspot vocabulary", () => {
   assert.ok(snippetSchema.properties.subjectType.enum.includes("religious_hotspot"));
   assert.ok(snippetSchema.properties.subjectType.enum.includes("sacred_site"));
+  assert.ok(snippetSchema.properties.subjectType.enum.includes("settlement"));
   assert.ok(snippetSchema.properties.subjectType.enum.includes("settlement_district"));
   assert.ok(snippetSchema.properties.subjectType.enum.includes("settlement_site"));
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
@@ -601,6 +651,41 @@ test("adds only the selected live settlement district and site Knowledge snippet
     ]
   );
   assert.equal(validate(input), true);
+});
+
+test("accepts direct settlement Knowledge fixtures from live settlement authority", () => {
+  const input = makeInput();
+  const settlement = prepareSettlementSnippet(input);
+
+  assert.ok(settlement);
+  assert.equal(settlement.id, "settlement.highcrown");
+  assert.equal(Object.hasOwn(settlement, "status"), false);
+  assert.equal(validate(input), true);
+});
+
+test("rejects missing and malformed direct settlement subject ids", async (t) => {
+  const cases = [
+    {
+      name: "missing",
+      prepare(input) {
+        prepareSettlementSnippet(input, "settlement.missing_test_city");
+      },
+      expected: /subjectId 'settlement\.missing_test_city' is missing from world\.settlements/
+    },
+    {
+      name: "malformed",
+      prepare(input) {
+        prepareSettlementSnippet(input, "settlement.highcrown.extra_segment");
+      },
+      expected: /is malformed for subjectType 'settlement'/
+    }
+  ];
+
+  for (const validationCase of cases) {
+    await t.test(validationCase.name, () => {
+      expectFailure(validationCase.prepare, validationCase.expected);
+    });
+  }
 });
 
 test("accepts active settlement district Knowledge fixtures", () => {
@@ -1063,7 +1148,7 @@ test("rejects shortcut subjects for religious hotspot ids", async (t) => {
     ["shrine", /subjectType must be one of the schema enum values/],
     ["sacred_site", /subjectId '.+' must use prefix 'sacred_site\.'/],
     ["region", /subjectId '.+' must use prefix 'region\.'/],
-    ["settlement", /subjectType 'settlement' is blocked/]
+    ["settlement", /subjectId '.+' must use prefix 'settlement\.'/]
   ];
 
   for (const [subjectType, expected] of cases) {
@@ -1408,17 +1493,17 @@ test("rejects malformed religion and deity authority records without canonical i
   }
 });
 
-test("rejects blocked subject types without authority", () => {
+test("rejects still-blocked subject types without authority", () => {
   expectFailure(
     (input) => {
       const record = snippet(
         input,
         "knowledge_snippet.general_lore.kaelvar.cultural_context"
       );
-      record.subjectType = "settlement";
-      record.subjectId = "settlement.aurelis";
+      record.subjectType = "spell";
+      record.subjectId = "spell.firebolt";
     },
-    /subjectType 'settlement' is blocked in the first validator/
+    /subjectType 'spell' is blocked in the first validator/
   );
 });
 

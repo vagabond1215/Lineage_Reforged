@@ -28,7 +28,6 @@ const SUPPORTED_SCHEMA_TYPES = new Set([
 ]);
 
 const BLOCKED_SUBJECT_TYPES = new Set([
-  "settlement",
   "spell",
   "item",
   "culture",

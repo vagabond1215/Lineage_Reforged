@@ -9531,6 +9531,12 @@ async function validateKnowledgeSnippetsAgainstDependencies() {
         idPattern: /^sacred_site\.[a-z0-9]+(?:_[a-z0-9]+)*\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
         records: sacredSiteWrapper.records
       },
+      settlement: {
+        collectionId: "world.settlements",
+        idPrefix: "settlement.",
+        idPattern: /^settlement\.[a-z0-9]+(?:_[a-z0-9]+)*$/,
+        records: settlementWrapper.records
+      },
       settlement_district: {
         collectionId: "world.settlement_districts",
         idPrefix: "settlement_district.",
