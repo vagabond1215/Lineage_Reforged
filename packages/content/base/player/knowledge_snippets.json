@@ -344,6 +344,35 @@
       ]
     },
     {
+      "id": "knowledge_snippet.general_lore.highcrown.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement",
+      "subjectId": "settlement.highcrown",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Highcrown",
+      "summary": "Highcrown is Valtherion's imperial river capital, where crown roads, archive districts, barge quays, palace terraces, and market courts define the capital's administrative, river-trade, and civic identity.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified imperial river capital remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored settlement identity knowledge only and grants no settlement access, services, vendors, prices, trade execution, travel routes, dock operation, cargo inventory, storage, palace access, court/law mechanics, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior."
+      ]
+    },
+    {
       "id": "knowledge_snippet.general_lore.highcrown_archive_districts.identification",
       "domainId": "knowledge_domain.general_lore",
       "subjectType": "settlement_district",

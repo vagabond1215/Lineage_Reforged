@@ -53,6 +53,7 @@ const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.general_lore",
   "knowledge_domain.general_lore",
   "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
   "knowledge_domain.general_lore"
 ];
 
@@ -68,6 +69,7 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.religion.glasswake_shrine_lantern_gardens.identification",
   "knowledge_snippet.religion.glasswake_shrine_lantern_gardens_glasswake_shrine.identification",
   "knowledge_snippet.general_lore.kaelvar.cultural_context",
+  "knowledge_snippet.general_lore.highcrown.identification",
   "knowledge_snippet.general_lore.highcrown_archive_districts.identification",
   "knowledge_snippet.general_lore.highcrown_market_courts.identification",
   "knowledge_snippet.general_lore.highcrown_barge_quays.identification",
@@ -421,7 +423,7 @@ function prepareSacredSiteSnippet(
   );
 }
 
-test("accepts the current thirteen-record snippet catalog", () => {
+test("accepts the current snippet catalog", () => {
   const input = makeInput();
   assert.deepEqual(
     input.wrapper.records.map((record) => record.id),
@@ -455,6 +457,7 @@ test("accepts current canonical subject ids", () => {
       "religious_hotspot.glasswake_shrine_lantern_gardens",
       "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine",
       "region.kaelvar",
+      "settlement.highcrown",
       "settlement_district.highcrown.archive_districts",
       "settlement_district.highcrown.market_courts",
       "settlement_site.highcrown.barge_quays",
@@ -513,8 +516,11 @@ test("knowledge snippet schema includes direct religious hotspot vocabulary", ()
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
 });
 
-test("adds only the selected live settlement district and site Knowledge snippets", () => {
+test("adds only the selected live settlement, district, and site Knowledge snippets", () => {
   const input = makeInput();
+  const settlementSnippets = input.wrapper.records.filter(
+    (record) => record.subjectType === "settlement"
+  );
   const districtSnippets = input.wrapper.records.filter(
     (record) => record.subjectType === "settlement_district"
   );
@@ -522,6 +528,44 @@ test("adds only the selected live settlement district and site Knowledge snippet
     (record) => record.subjectType === "settlement_site"
   );
 
+  assert.equal(
+    settlementSnippets.length,
+    1
+  );
+  assert.deepEqual(
+    settlementSnippets.map((record) => ({
+      id: record.id,
+      domainId: record.domainId,
+      subjectId: record.subjectId,
+      title: record.title,
+      sourceType: record.discoverySources[0]?.sourceType,
+      sourceId: record.discoverySources[0]?.sourceId,
+      tier: record.tier,
+      category: record.category,
+      completionWeight: record.progression.completionWeight,
+      countsTowardTierCompletion: record.progression.countsTowardTierCompletion,
+      trialUnlockWeight: record.progression.trialUnlockWeight,
+      lockedUntilDiscovered: record.visibility.lockedUntilDiscovered,
+      revealsSubjectIdentity: record.visibility.revealsSubjectIdentity
+    })),
+    [
+      {
+        id: "knowledge_snippet.general_lore.highcrown.identification",
+        domainId: "knowledge_domain.general_lore",
+        subjectId: "settlement.highcrown",
+        title: "Recognizing Highcrown",
+        sourceType: "book_study",
+        sourceId: null,
+        tier: 1,
+        category: "identification",
+        completionWeight: 1,
+        countsTowardTierCompletion: true,
+        trialUnlockWeight: 0,
+        lockedUntilDiscovered: true,
+        revealsSubjectIdentity: true
+      }
+    ]
+  );
   assert.equal(
     districtSnippets.length,
     2
@@ -556,6 +600,23 @@ test("adds only the selected live settlement district and site Knowledge snippet
     [
       "settlement_site.highcrown.barge_quays",
       "settlement_site.highcrown.palace_terraces"
+    ]
+  );
+  assert.deepEqual(
+    settlementSnippets.map((snippet) => {
+      const subject = input.subjectAuthorities.settlement.records.find(
+        (record) => record.id === snippet.subjectId
+      );
+      return {
+        id: subject?.id,
+        hasStatus: Object.hasOwn(subject ?? {}, "status")
+      };
+    }),
+    [
+      {
+        id: "settlement.highcrown",
+        hasStatus: false
+      }
     ]
   );
   assert.deepEqual(
