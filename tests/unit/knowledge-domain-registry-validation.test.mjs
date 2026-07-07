@@ -109,10 +109,18 @@ test("accepts the exact active Flora trial policy reference", () => {
   assert.equal(validate(input), true);
 });
 
-test("accepts General Lore constrained custom support", () => {
+test("accepts General Lore constrained custom and settlement place support", () => {
   const input = makeInput();
   const generalLore = input.wrapper.records.find((record) => record.id === "knowledge_domain.general_lore");
+  assert.ok(generalLore.canonicalSubjectTypes.includes("settlement_district"));
+  assert.ok(generalLore.canonicalSubjectTypes.includes("settlement_site"));
   assert.ok(generalLore.canonicalSubjectTypes.includes("custom"));
+  assert.ok(
+    generalLore.relatedContentCollections.includes("world.settlement_districts")
+  );
+  assert.ok(
+    generalLore.relatedContentCollections.includes("world.settlement_sites")
+  );
   assert.equal(validate(input), true);
 });
 

@@ -51,6 +51,8 @@ const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.religion",
   "knowledge_domain.general_lore",
   "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
   "knowledge_domain.general_lore"
 ];
 
@@ -67,7 +69,9 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.religion.glasswake_shrine_lantern_gardens_glasswake_shrine.identification",
   "knowledge_snippet.general_lore.kaelvar.cultural_context",
   "knowledge_snippet.general_lore.highcrown_archive_districts.identification",
-  "knowledge_snippet.general_lore.highcrown_market_courts.identification"
+  "knowledge_snippet.general_lore.highcrown_market_courts.identification",
+  "knowledge_snippet.general_lore.highcrown_barge_quays.identification",
+  "knowledge_snippet.general_lore.highcrown_palace_terraces.identification"
 ];
 
 function makeInput() {
@@ -403,7 +407,9 @@ test("accepts current canonical subject ids", () => {
       "sacred_site.glasswake_shrine_lantern_gardens.glasswake_shrine",
       "region.kaelvar",
       "settlement_district.highcrown.archive_districts",
-      "settlement_district.highcrown.market_courts"
+      "settlement_district.highcrown.market_courts",
+      "settlement_site.highcrown.barge_quays",
+      "settlement_site.highcrown.palace_terraces"
     ]
   );
   assert.equal(validate(input), true);
@@ -457,10 +463,13 @@ test("knowledge snippet schema includes direct religious hotspot vocabulary", ()
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
 });
 
-test("adds only the selected live settlement district Knowledge snippets", () => {
+test("adds only the selected live settlement district and site Knowledge snippets", () => {
   const input = makeInput();
   const districtSnippets = input.wrapper.records.filter(
     (record) => record.subjectType === "settlement_district"
+  );
+  const siteSnippets = input.wrapper.records.filter(
+    (record) => record.subjectType === "settlement_site"
   );
 
   assert.equal(
@@ -482,8 +491,59 @@ test("adds only the selected live settlement district Knowledge snippets", () =>
     ]
   );
   assert.equal(
-    input.wrapper.records.some((record) => record.subjectType === "settlement_site"),
-    false
+    siteSnippets.length,
+    2
+  );
+  assert.deepEqual(
+    siteSnippets.map((record) => record.id),
+    [
+      "knowledge_snippet.general_lore.highcrown_barge_quays.identification",
+      "knowledge_snippet.general_lore.highcrown_palace_terraces.identification"
+    ]
+  );
+  assert.deepEqual(
+    siteSnippets.map((record) => record.subjectId),
+    [
+      "settlement_site.highcrown.barge_quays",
+      "settlement_site.highcrown.palace_terraces"
+    ]
+  );
+  assert.deepEqual(
+    siteSnippets.map((record) => ({
+      sourceType: record.discoverySources[0]?.sourceType,
+      sourceId: record.discoverySources[0]?.sourceId,
+      tier: record.tier,
+      category: record.category,
+      completionWeight: record.progression.completionWeight,
+      countsTowardTierCompletion: record.progression.countsTowardTierCompletion,
+      trialUnlockWeight: record.progression.trialUnlockWeight,
+      lockedUntilDiscovered: record.visibility.lockedUntilDiscovered,
+      revealsSubjectIdentity: record.visibility.revealsSubjectIdentity
+    })),
+    [
+      {
+        sourceType: "book_study",
+        sourceId: null,
+        tier: 1,
+        category: "identification",
+        completionWeight: 1,
+        countsTowardTierCompletion: true,
+        trialUnlockWeight: 0,
+        lockedUntilDiscovered: true,
+        revealsSubjectIdentity: true
+      },
+      {
+        sourceType: "book_study",
+        sourceId: null,
+        tier: 1,
+        category: "identification",
+        completionWeight: 1,
+        countsTowardTierCompletion: true,
+        trialUnlockWeight: 0,
+        lockedUntilDiscovered: true,
+        revealsSubjectIdentity: true
+      }
+    ]
   );
   assert.equal(
     input.subjectAuthorities.settlement_district.records.find(
@@ -503,6 +563,30 @@ test("adds only the selected live settlement district Knowledge snippets", () =>
       status: record.status,
       parentDistrictId: record.parentDistrictId
     })),
+    [
+      {
+        id: "settlement_site.highcrown.barge_quays",
+        status: "active",
+        parentDistrictId: null
+      },
+      {
+        id: "settlement_site.highcrown.palace_terraces",
+        status: "active",
+        parentDistrictId: null
+      }
+    ]
+  );
+  assert.deepEqual(
+    siteSnippets.map((snippet) => {
+      const subject = input.subjectAuthorities.settlement_site.records.find(
+        (record) => record.id === snippet.subjectId
+      );
+      return {
+        id: subject?.id,
+        status: subject?.status,
+        parentDistrictId: subject?.parentDistrictId
+      };
+    }),
     [
       {
         id: "settlement_site.highcrown.barge_quays",

@@ -560,6 +560,7 @@
       "canonicalSubjectTypes": [
         "settlement",
         "settlement_district",
+        "settlement_site",
         "region",
         "culture",
         "institution",
@@ -636,7 +637,8 @@
         "world.regions",
         "world.religions",
         "world.settlements",
-        "world.settlement_districts"
+        "world.settlement_districts",
+        "world.settlement_sites"
       ],
       "trialPolicyRef": null,
       "completionPolicyRef": null,

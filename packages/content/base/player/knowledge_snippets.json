@@ -400,6 +400,64 @@
       "notes": [
         "This snippet is authored place knowledge only and grants no vendors, stock, prices, services, taxes, trade execution, law/court mechanics, cargo/storage, ownership, NPC staffing, access rules, route topology, quests, rewards, UI, runtime behavior, or gameplay behavior."
       ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.highcrown_barge_quays.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_site",
+      "subjectId": "settlement_site.highcrown.barge_quays",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Highcrown's Barge Quays",
+      "summary": "Highcrown's Barge Quays are a river-wharf site where the imperial capital's inland river trade identity is marked by its named barge landing grounds.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Highcrown river-wharf site remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored place knowledge only and grants no dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.highcrown_palace_terraces.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_site",
+      "subjectId": "settlement_site.highcrown.palace_terraces",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Highcrown's Palace Terraces",
+      "summary": "Highcrown's Palace Terraces are a palace landmark site where terraced palace grounds mark the imperial capital's bluff identity.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Highcrown palace landmark remains to be understood."
+      },
+      "notes": [
+        "This snippet is authored place knowledge only and grants no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior."
+      ]
     }
   ]
 }

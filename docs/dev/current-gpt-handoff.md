@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan
+Source version/run: Version 0.5.279 - Highcrown Settlement Site Knowledge Snippet Seed
 Date: 2026-07-06
 
 ## Status
 
-`Version 0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan` completed as a documentation-only primary run.
+`Version 0.5.279 - Highcrown Settlement Site Knowledge Snippet Seed` completed as a narrow implementation run.
 
 Latest completed primary:
 
-- `Version 0.5.278 - Highcrown Settlement Site Knowledge Snippet Seed Plan`
+- `Version 0.5.279 - Highcrown Settlement Site Knowledge Snippet Seed`
 
 Latest completed support/audit run:
 
@@ -17,58 +17,44 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.279 - Highcrown Settlement Site Knowledge Snippet Seed`
+- `Version 0.5.280 - Highcrown Settlement Knowledge Snippet Coverage Review`
 
 ## Versioning Posture
 
-Three-segment labels such as `0.5.279` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
+Three-segment labels such as `0.5.280` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
 
-`0.5.278` completed as the next primary after `0.5.277`.
+`0.5.279` completed as the next primary after `0.5.278`.
 
-## Selected General Lore Alignment
+## Current General Lore Alignment
 
-The next implementation may update only `knowledge_domain.general_lore` in `packages/content/base/player/knowledge_domain_registry.json`:
+`knowledge_domain.general_lore` now supports:
 
-- add `settlement_site` to `canonicalSubjectTypes`
-- add `world.settlement_sites` to `relatedContentCollections`
+- `settlement_district`
+- `settlement_site`
+- `world.settlement_districts`
+- `world.settlement_sites`
+- `identification`
+- `book_study`
 
-Preserve all existing General Lore fields, categories, source types, policy refs, status, title, summary, and notes. Do not add categories, source types, trial policies, readiness policies, schemas, validators, or domain-definition changes.
+General Lore policy refs remain `null`. No new categories, discovery source types, trial policies, readiness policies, schemas, validators, or Knowledge domain-definition records were added.
 
-## Selected Future Snippets
+## Current Highcrown Settlement-Related Knowledge Snippet Posture
 
-Future Barge Quays snippet:
+Exactly four Highcrown settlement-related General Lore snippets exist:
 
-- id: `knowledge_snippet.general_lore.highcrown_barge_quays.identification`
-- domainId: `knowledge_domain.general_lore`
-- subjectType: `settlement_site`
-- subjectId: `settlement_site.highcrown.barge_quays`
-- tier: `1`
-- category: `identification`
-- title: `Recognizing Highcrown's Barge Quays`
-- summary: `Highcrown's Barge Quays are a river-wharf site where the imperial capital's inland river trade identity is marked by its named barge landing grounds.`
-- discovery source type: `book_study`
-- discovery source id: `null`
-- progression: `completionWeight: 1`, `countsTowardTierCompletion: true`, `trialUnlockWeight: 0`
-- visibility: `lockedUntilDiscovered: true`, `revealsSubjectIdentity: true`
-- hidden summary: `An unidentified Highcrown river-wharf site remains to be understood.`
-- note: `This snippet is authored place knowledge only and grants no dock operation, cargo inventory, storage, travel service, route topology, trade execution, vendors, prices, services, ownership, NPC staffing, access rules, UI, runtime, rewards, or gameplay behavior.`
+- `knowledge_snippet.general_lore.highcrown_archive_districts.identification`
+- `knowledge_snippet.general_lore.highcrown_market_courts.identification`
+- `knowledge_snippet.general_lore.highcrown_barge_quays.identification`
+- `knowledge_snippet.general_lore.highcrown_palace_terraces.identification`
 
-Future Palace Terraces snippet:
+The two `settlement_district` snippets remain unchanged.
 
-- id: `knowledge_snippet.general_lore.highcrown_palace_terraces.identification`
-- domainId: `knowledge_domain.general_lore`
-- subjectType: `settlement_site`
-- subjectId: `settlement_site.highcrown.palace_terraces`
-- tier: `1`
-- category: `identification`
-- title: `Recognizing Highcrown's Palace Terraces`
-- summary: `Highcrown's Palace Terraces are a palace landmark site where terraced palace grounds mark the imperial capital's bluff identity.`
-- discovery source type: `book_study`
-- discovery source id: `null`
-- progression: `completionWeight: 1`, `countsTowardTierCompletion: true`, `trialUnlockWeight: 0`
-- visibility: `lockedUntilDiscovered: true`, `revealsSubjectIdentity: true`
-- hidden summary: `An unidentified Highcrown palace landmark remains to be understood.`
-- note: `This snippet is authored place knowledge only and grants no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior.`
+The two `settlement_site` snippets are:
+
+- `knowledge_snippet.general_lore.highcrown_barge_quays.identification`, for `settlement_site.highcrown.barge_quays`
+- `knowledge_snippet.general_lore.highcrown_palace_terraces.identification`, for `settlement_site.highcrown.palace_terraces`
+
+Both site snippets use `book_study` with `sourceId: null`, Tier 1 `identification`, `completionWeight: 1`, `countsTowardTierCompletion: true`, `trialUnlockWeight: 0`, `lockedUntilDiscovered: true`, and `revealsSubjectIdentity: true`.
 
 ## Current Site Authority Posture
 
@@ -76,30 +62,34 @@ Future Palace Terraces snippet:
 
 `settlement_site.highcrown.palace_terraces` is active with `parentSettlementId: settlement.highcrown`, `parentDistrictId: null`, and `siteType: palace`.
 
-Both site records remain Highcrown-level site identity. Current evidence does not place either site inside `settlement_district.highcrown.archive_districts` or `settlement_district.highcrown.market_courts`.
+No settlement site content changed in `0.5.279`.
 
-## Current Knowledge Posture
+## Current Site Anchor Posture
 
-Exactly two live `settlement_district` General Lore snippets exist:
+Both site records remain unanchored with `parentDistrictId: null`.
 
-- `knowledge_snippet.general_lore.highcrown_archive_districts.identification`
-- `knowledge_snippet.general_lore.highcrown_market_courts.identification`
+Current evidence supports Highcrown-level site identity, but not placement inside `settlement_district.highcrown.archive_districts` or `settlement_district.highcrown.market_courts`.
 
-No live `settlement_site` snippets exist.
+Do not treat `barge_quays` as a Market Courts snippet. Do not treat `palace_terraces` as a Market Courts or Archive Districts snippet. Do not treat `court_presence` as law/court mechanics.
 
-No snippets exist for:
+## Current District And Settlement Content Posture
 
-- `settlement_site.highcrown.barge_quays`
-- `settlement_site.highcrown.palace_terraces`
+`settlement_district.highcrown.archive_districts` remains active and unchanged.
 
-Direct `settlement_district` and `settlement_site` Knowledge subject validation exists and remains active-only.
+`settlement_district.highcrown.market_courts` remains active and unchanged.
+
+`settlement.highcrown` remains unchanged.
+
+No settlement, district, or site anchors changed.
 
 ## Next Route Guardrail
 
-`Version 0.5.279 - Highcrown Settlement Site Knowledge Snippet Seed` may update General Lore registry alignment for `settlement_site` and `world.settlement_sites`, add exactly the two selected site snippets, and update focused tests/workflow docs as required.
+`Version 0.5.280 - Highcrown Settlement Knowledge Snippet Coverage Review` should be docs-first.
 
-It must not add other snippets, edit settlement/district/site content, change anchors, edit schemas or validators, edit trial policies, or touch runtime/UI/storage/commands/events/rewards/migrations/save-account/route-travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot/gameplay behavior.
+It may review whether current Highcrown settlement, district, and site Knowledge coverage is coherent after the district/site snippet seeds.
+
+It must not add snippets, edit Knowledge registry/domain/trial-policy content, edit schemas or validators, change settlement/district/site content, change anchors, add route/travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot content, or change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
 
 Suggested next commit:
 
-`docs(knowledge): plan highcrown site snippets`
+`feat(knowledge): seed highcrown site snippets`
