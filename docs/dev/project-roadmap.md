@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.287 - Service Authority Boundary Decision`
+- Latest completed version: `Version 0.5.288 - Resource And Commodity Schema Decision`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.288 - Resource And Commodity Schema Decision`
+- Next recommended version: `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -143,6 +143,7 @@ Versioning rule:
 - `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review` added `docs/design/highcrown-settlement-knowledge-lane-closure-review.md`; selected Option A to close the Highcrown settlement Knowledge lane after confirming the five-snippet parent/district/site posture; added no snippets; changed no Knowledge registry/domain/trial-policy content, schemas, validators, tests, settlement/district/site content, anchors, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, service/resource/combat content, sacred-site/religious-hotspot, or gameplay behavior.
 - `Version 0.5.286 - Service Resource Combat Boundary Queue Review` added `docs/design/service-resource-combat-boundary-queue-review.md`; selected `Version 0.5.287 - Service Authority Boundary Decision` as the next primary route; kept `0.5.288` resource/commodity, `0.5.289` combat status/injury, and `0.5.290` static authority validation deferred in order; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, sacred-site/religious-hotspot, service/resource/combat, or gameplay behavior.
 - `Version 0.5.287 - Service Authority Boundary Decision` added `docs/design/service-authority-boundary-decision.md`; selected a hybrid service model; kept current service-like data as descriptors on existing/future owners; justified a future narrow static service catalog in principle only for provider-independent identity/vocabulary; deferred implementation to a later schema decision and seed plan; selected `Version 0.5.288 - Resource And Commodity Schema Decision` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, sacred-site/religious-hotspot, Knowledge, service/resource/combat, or gameplay behavior.
+- `Version 0.5.288 - Resource And Commodity Schema Decision` added `docs/design/resource-commodity-schema-decision.md`; approved separate future static `world.resources` and `world.commodities` authorities in principle; kept implementation deferred to a later schema plan and seed plan; preserved `items.items` as canonical item-key identity; selected `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, sacred-site/religious-hotspot, Knowledge, service/resource/commodity/combat, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -436,9 +437,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.288 - Resource And Commodity Schema Decision`
+1. `0.5.289 - Combat Status Condition And Injury Boundary Decision`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.290`. The `0.5.287` service authority decision selected a hybrid service model, deferred any future service catalog to a later schema/seed route, and left resource/commodity as the next docs-first decision.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.290`. The `0.5.288` resource/commodity decision approved separate future static authorities in principle, deferred implementation to a later schema/seed route, and left combat status/injury as the next docs-first decision.
 
 High-priority unresolved questions:
 

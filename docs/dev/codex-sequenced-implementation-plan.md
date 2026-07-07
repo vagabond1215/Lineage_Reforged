@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-07
-Route: Codex local sequencing alignment after `Version 0.5.287 - Service Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.288 - Resource And Commodity Schema Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.287 - Service Authority Boundary Decision`
+- `Version 0.5.288 - Resource And Commodity Schema Decision`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.288 - Resource And Commodity Schema Decision`
+- `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision`
 
 Versioning note:
 
@@ -47,6 +47,7 @@ Versioning note:
 - `0.5.285` completed as a primary roadmap run and closed the Highcrown settlement Knowledge lane after confirming the five-snippet parent/district/site posture without content, schema/validator, test, runtime, UI, storage, or gameplay changes.
 - `0.5.286` completed as a primary roadmap run and selected the service/resource/combat boundary queue order with service authority next, resource/commodity second, combat status/injury third, and static authority validation consolidation fourth, without content, schema/validator, test, runtime, UI, storage, or gameplay changes.
 - `0.5.287` completed as a primary roadmap run and selected a hybrid service authority boundary: descriptors remain on current/future owners, a future narrow static service catalog is justified in principle only for provider-independent identity/vocabulary, and no content, schema/validator, test, runtime, UI, storage, or gameplay changes landed.
+- `0.5.288` completed as a primary roadmap run and approved separate future static `world.resources` and `world.commodities` authorities in principle, with implementation deferred to a later schema plan and seed plan; no content, schema/validator, test, runtime, UI, storage, or gameplay changes landed.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -158,6 +159,7 @@ Versioning note:
 - Highcrown Settlement Knowledge Lane Closure Review landed in `0.5.285`: the Highcrown settlement Knowledge lane is closed with exactly five General Lore snippets covering the parent settlement, two active districts, and two active sites; no content, schema/validator, test, runtime, UI, storage, or gameplay changes landed.
 - Service Resource Combat Boundary Queue Review landed in `0.5.286`: the current queue keeps service authority first, resource/commodity schema second, combat status/injury third, and static authority validation consolidation fourth; no content, schema/validator, test, runtime, UI, storage, or gameplay changes landed.
 - Service Authority Boundary Decision landed in `0.5.287`: current service-like data remains controlled descriptors on existing/future owners, a future narrow static service catalog is deferred to a separate schema decision and seed plan, and no content, schema/validator, test, runtime, UI, storage, or gameplay changes landed.
+- Resource And Commodity Schema Decision landed in `0.5.288`: separate future static `world.resources` and `world.commodities` authorities are approved in principle, item keys remain canonical, implementation is deferred to a later schema plan and seed plan, and no content, schema/validator, test, runtime, UI, storage, or gameplay changes landed.
 - Do not roll from `0.5.274` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
@@ -372,7 +374,7 @@ Versioning note:
 | 206 | `0.5.285` | Highcrown Settlement Knowledge Lane Closure Review | Codex 5.5 Local docs-first | live Highcrown settlement, district, and site snippets | closure review | Completed | Closed the Highcrown settlement Knowledge lane; no content or behavior changes. |
 | 207 | `0.5.286` | Service Resource Combat Boundary Queue Review | Codex 5.5 Local docs-first | service/resource/combat candidate queue | queue review | Completed | Selected service authority next, then resource/commodity, combat status/injury, and static validation consolidation; no content or behavior changes. |
 | 208 | `0.5.287` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Completed | Selected hybrid service boundary; deferred any service catalog implementation; no content or behavior changes. |
-| 209 | `0.5.288` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 209 | `0.5.288` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Completed | Approved separate future static resource and commodity authorities in principle; implementation deferred; no content or behavior changes. |
 | 210 | `0.5.289` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
 | 211 | `0.5.290` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
@@ -380,11 +382,11 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.288 - Resource And Commodity Schema Decision`
+1. `0.5.289 - Combat Status Condition And Injury Boundary Decision`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; and the service authority decision selected a hybrid static-vocabulary posture while leaving resource/commodity as the next docs-first route.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; and the resource/commodity decision approved separate future static authorities in principle while leaving combat status/injury as the next docs-first route.
 
 ## Default Prompt Pattern
 
@@ -400,7 +402,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.288 - Resource And Commodity Schema Decision` as the immediate next recommended run.
+- Keep `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -413,6 +415,7 @@ Each future Codex prompt should:
 - `0.5.285` closed the Highcrown settlement Knowledge lane and did not add snippets, edit Knowledge registry/domain/trial-policy content, edit schemas or validators, change settlement/district/site content, change anchors, add route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, service, resource, combat, sacred-site, or religious-hotspot content, or change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior.
 - `0.5.286` selected the service/resource/combat queue order and did not add content, edit schemas or validators, edit tests, change runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, add route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, service, resource, combat, sacred-site, or religious-hotspot content, or change gameplay behavior.
 - `0.5.287` selected a hybrid service boundary, kept service-like descriptors on their current/future owners, deferred any future static service catalog to a separate schema decision and seed plan, and did not add content, edit schemas or validators, edit tests, change runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, add route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, service, resource, combat, sacred-site, or religious-hotspot content, reopen Highcrown Knowledge, or change gameplay behavior.
+- `0.5.288` approved separate future static resource and commodity authorities in principle, deferred implementation to a later schema plan and seed plan, preserved canonical item-key ownership, and did not add content, edit schemas or validators, edit tests, change runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, add route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, service, resource, commodity, combat, sacred-site, or religious-hotspot content, reopen Highcrown Knowledge, or change gameplay behavior.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

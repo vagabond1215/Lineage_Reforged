@@ -1,27 +1,26 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.287 - Service Authority Boundary Decision
+Source version/run: Version 0.5.288 - Resource And Commodity Schema Decision
 Date: 2026-07-07
-Branch/status assumption: `master`, clean at start; `git fetch origin` succeeded and `git pull --ff-only origin master` reported already up to date.
+Branch/status assumption: `master`, clean at start; `git fetch origin` succeeded. `git pull --ff-only origin master` reported `fatal: Cannot fast-forward to multiple branches`, and the follow-up audit confirmed local `HEAD`, `origin/master`, and merge-base all matched `a7313a5ebe43cfd456c2914726c4e0c38e5b316c` with a clean worktree.
 
 ## Result
 
-Completed a docs-only service authority boundary decision.
+Completed a docs-only resource and commodity schema decision.
 
-Decision: select a hybrid service model. Current service-like data remains controlled descriptors on existing and future owners. A future narrow static service authority, likely `civilization.services`, is justified in principle only for provider-independent service identity/vocabulary, but no schema, content, validator, runtime, UI, or behavior work is implemented or authorized by this run.
+Decision: approve separate future static authorities for `world.resources` and `world.commodities` in principle, with implementation deferred. `items.items` remains canonical item identity; future resources may own natural/source material identity and ecology/geography compatibility; future commodities may own bulk trade/economic class identity. Both future authorities may relate to item keys but must not replace item keys or own prices, stock, item instances, cargo movement, storage contents, services, extraction, trading, crafting execution, runtime, UI, or gameplay behavior.
 
 The next primary route is:
 
-- `Version 0.5.288 - Resource And Commodity Schema Decision`
+- `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision`
 
 Deferred sequence remains:
 
-- `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision`
 - `Version 0.5.290 - Static Authority Validation Consolidation Audit`
 
 ## Files Changed
 
-- `docs/design/service-authority-boundary-decision.md`
+- `docs/design/resource-commodity-schema-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -32,11 +31,15 @@ Deferred sequence remains:
 
 - `git status --short --branch`
 - `git fetch origin`
-- `git pull --ff-only origin master`
-- Required handoff, roadmap, backlog, and prior queue-review read
-- Service/vendor/shop/storage/travel/access/civic/economy/NPC/item/crafting boundary review
-- Read-only service-like content descriptor scan
-- `node -e "...buildings descriptor summary..."`
+- `git pull --ff-only origin master` (reported multi-branch fast-forward ambiguity)
+- `git branch -vv`
+- `git rev-parse HEAD`
+- `git rev-parse origin/master`
+- `git merge-base HEAD origin/master`
+- Required handoff, roadmap, backlog, and prior service decision reads
+- Resource/commodity authority context review across economy, settlement-economy, item, crafting, production, geography, travel, settlement, and service decisions
+- Read-only resource/commodity-like content and schema scans
+- `node -e "...item/economy/production/recipe/settlement/ecology summary..."`
 - `git diff --check`
 - Conflict-marker scan on changed and untracked files
 - Trailing-whitespace scan on changed and untracked files
@@ -51,26 +54,28 @@ No package tests were run because this was a documentation-only boundary decisio
 
 Documentation changed only.
 
-No content JSON, schemas, validators, tests, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, route/travel behavior, building/workplace/economy behavior, court/law behavior, vendor/market behavior, cargo/storage behavior, settlement/district/site content, anchors, service content, resource content, combat content, sacred-site/religious-hotspot content, Knowledge snippets, Knowledge registry/domain/trial-policy content, or gameplay behavior changed.
+No content JSON, schemas, validators, tests, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, route/travel behavior, building/workplace/economy behavior, court/law behavior, vendor/market behavior, cargo/storage behavior, settlement/district/site content, anchors, service content, resource content, commodity content, combat content, sacred-site/religious-hotspot content, Knowledge snippets, Knowledge registry/domain/trial-policy content, or gameplay behavior changed.
 
 Confirmed current posture:
 
-- Services remain descriptors on current/future owners for now.
-- A future service catalog is deferred and may own only static provider-independent service vocabulary.
-- Provider identity, availability, access gates, prices, payment, stock, inventory mutation, training/healing/repair effects, lodging/storage/banking effects, travel execution, law/reputation gates, UI menus, and runtime execution remain outside static service authority.
+- `world.resources` and `world.commodities` are approved in principle only as future static authorities.
+- Implementation requires a later docs-first schema plan, fresh live-repo audit, and seed plan.
+- Item keys remain the current contract for item identity, recipes, production chains, market values, and any future mappings.
+- Settlement and ecology free-form goods/resource terms must not become implicit resource or commodity records.
+- Service authority remains deferred; resources/commodities do not own services.
 - The Highcrown settlement Knowledge lane remains closed.
 
 ## Risks / Follow-Up
 
-- Do not infer permission to implement `civilization.services` from this decision. A separate schema decision and seed plan are required.
-- Existing `civilization.buildings.serviceFunctions` and related descriptors remain current source-local descriptors; no migration or replacement was approved.
-- Resource/commodity work should use this service boundary to avoid conflating material/trade-class authority with vendor/shop/service behavior.
-- Combat status/injury remains deferred and high risk.
+- Do not infer permission to implement `world.resources` or `world.commodities` from this decision.
+- A future schema plan must resolve id patterns, wrappers, lifecycle, resource/commodity family vocabularies, item-key mapping cardinality, unresolved settlement/ecology terms, and forbidden-field validation.
+- Resource/commodity work must not create aliases for item keys or copy item values/prices.
+- Combat status/injury remains high risk and should stay docs-first.
 
 ## Next Recommended Version
 
-Version 0.5.288 - Resource And Commodity Schema Decision
+Version 0.5.289 - Combat Status Condition And Injury Boundary Decision
 
 ## Suggested Commit Message
 
-docs(roadmap): decide service authority boundary
+docs(roadmap): decide resource commodity schema boundary
