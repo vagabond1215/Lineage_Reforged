@@ -1,19 +1,17 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.284 - Highcrown Settlement Knowledge Snippet Seed
+Source version/run: Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review
 Date: 2026-07-07
 
 ## Status
 
-`Version 0.5.284 - Highcrown Settlement Knowledge Snippet Seed` completed.
+`Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review` completed as a docs-only review.
 
-Exactly one parent settlement General Lore snippet was added for `settlement.highcrown`:
-
-- `knowledge_snippet.general_lore.highcrown.identification`
+Closure decision: Option A, close the Highcrown settlement Knowledge lane.
 
 Latest completed primary:
 
-- `Version 0.5.284 - Highcrown Settlement Knowledge Snippet Seed`
+- `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`
 
 Latest completed support/audit run:
 
@@ -21,13 +19,13 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`
+- `Version 0.5.286 - Service Resource Combat Boundary Queue Review`
 
-## Versioning Posture
+## Current Versioning Posture
 
-Three-segment labels such as `0.5.284` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
+Three-segment labels such as `0.5.285` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
 
-`0.5.284` completed as the next primary after `0.5.283`.
+`0.5.285` completed as the next primary after `0.5.284`.
 
 ## Current General Lore Alignment
 
@@ -46,7 +44,7 @@ General Lore policy refs remain `null`.
 
 ## Current Highcrown Settlement-Related Knowledge Snippet Posture
 
-Exactly five Highcrown settlement-related General Lore snippets now exist:
+Exactly five Highcrown settlement-related General Lore snippets exist:
 
 - `knowledge_snippet.general_lore.highcrown.identification`
 - `knowledge_snippet.general_lore.highcrown_archive_districts.identification`
@@ -60,9 +58,19 @@ The split is:
 - two direct `settlement_district` snippets
 - two direct `settlement_site` snippets
 
-The parent snippet is titled `Recognizing Highcrown`, uses Tier 1 `identification` / `book_study`, and is static authored settlement identity knowledge only.
+All five are Tier 1 `identification` snippets using `book_study` with `sourceId: null`. The lane is closed; do not plan additional Highcrown settlement/district/site General Lore snippets unless a later owner decision reopens the lane.
 
-## Settlement Subject Validator Support Posture
+## Current Settlement/District/Site Authority Posture
+
+- `settlement.highcrown` exists, and settlement records still do not expose active/planned status semantics.
+- `settlement_district.highcrown.archive_districts` remains active.
+- `settlement_district.highcrown.market_courts` remains active.
+- `settlement_site.highcrown.barge_quays` remains active with `parentDistrictId: null`.
+- `settlement_site.highcrown.palace_terraces` remains active with `parentDistrictId: null`.
+
+The null site anchors remain intentional. Current evidence supports Highcrown-level site identity, not placement inside Archive Districts or Market Courts.
+
+## Direct Settlement Validator Support Posture
 
 Normal content lint passes direct `settlement` subject authority into `validateKnowledgeSnippets`:
 
@@ -71,16 +79,18 @@ Normal content lint passes direct `settlement` subject authority into `validateK
 - one-segment settlement id pattern
 - live `settlementWrapper.records`
 
-`settlement` remains outside the first-validator blocked subject set so explicit subject authority resolution validates it. Direct settlement references are existence-backed against `world.settlements`, not active-only. Current settlement records do not expose active/planned status semantics.
+`settlement` is not in the first-validator blocked subject set and is not active-only. Direct settlement references are existence-backed against `world.settlements`. `settlement_district` and `settlement_site` remain active-only.
 
-## Guardrails Preserved
+## Remaining Non-Knowledge Boundaries
 
-`0.5.284` did not edit Knowledge registry/domain/trial-policy content, schemas, validators, settlement/district/site content, anchors, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, route/travel systems, building/workplace/economy systems, court/law systems, vendor/market systems, cargo/storage systems, sacred-site/religious-hotspot content, or gameplay behavior.
+Closing the Highcrown Knowledge lane does not implement or authorize settlement access, services, vendors, prices, trade execution, route/travel behavior, dock operation, cargo inventory, storage, palace access, court/law mechanics, ownership, NPC staffing, access rules, UI, runtime behavior, rewards, unlocks, discovery state, Knowledge progress state, service content, resource content, combat content, or gameplay behavior.
 
 ## Next Route Guardrail
 
-`Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review` should be docs-first. It should review whether the Highcrown settlement/district/site General Lore lane is now closed before moving to the later service/resource/combat boundary queue.
+`Version 0.5.286 - Service Resource Combat Boundary Queue Review` should be docs-first. It may review and order later service/resource/combat boundary work after the Highcrown settlement Knowledge lane is closed.
+
+It must not add content, edit Knowledge registry/domain/trial-policy content, edit schemas or validators, change settlement/district/site content, change anchors, add route/travel-building-workplace-economy-court-law-vendor-market-cargo-storage-sacred-site-religious-hotspot content, or change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
 
 Suggested next commit:
 
-`content(knowledge): seed highcrown settlement snippet`
+`docs(knowledge): close highcrown settlement lane`
