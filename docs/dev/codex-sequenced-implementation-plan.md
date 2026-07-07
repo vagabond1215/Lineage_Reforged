@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-07
-Route: Codex local sequencing alignment after `Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan`
+Route: Codex local sequencing alignment after `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan`
+- `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan`
+- `Version 0.5.283 - Settlement Knowledge Subject Validator Support`
 
 Versioning note:
 
@@ -41,6 +41,7 @@ Versioning note:
 - `0.5.279` completed as a primary roadmap run and implemented exactly the planned General Lore site alignment and two Highcrown site snippets.
 - `0.5.280` completed as a primary roadmap run and selected a parent `settlement.highcrown` General Lore coverage gap for later docs-first planning.
 - `0.5.281` completed as a primary roadmap run and selected the exact future parent settlement snippet while requiring settlement-subject validator/test support before implementation.
+- `0.5.282` completed as a primary roadmap run and selected direct `settlement` subject authority wiring plus focused tests before any parent settlement snippet implementation.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -146,6 +147,7 @@ Versioning note:
 - Highcrown Settlement Site Knowledge Snippet Seed landed in `0.5.279`: General Lore now advertises `settlement_site` and `world.settlement_sites`, exactly two active Highcrown site snippets are live, the two district snippets remain live, anchors remain unchanged, and no settlement/district/site content, schema/validator, trial-policy, runtime, UI, storage, or gameplay changes landed.
 - Highcrown Settlement Knowledge Snippet Coverage Review landed in `0.5.280`: a parent `settlement.highcrown` General Lore coverage gap was selected for later docs-first planning; no snippets, registry/domain/trial-policy, schema/validator, test, settlement/district/site content, anchor, runtime, UI, storage, or gameplay changes landed.
 - Highcrown Settlement Knowledge Snippet Seed Plan landed in `0.5.281`: the exact parent `settlement.highcrown` General Lore snippet shape was selected, but direct `settlement` subject validator/test support was required before implementation; no snippets, registry/domain/trial-policy, schema/validator, test, settlement/district/site content, anchor, runtime, UI, storage, or gameplay changes landed.
+- Settlement Knowledge Subject Validator Support Plan landed in `0.5.282`: direct `settlement` subject authority wiring and focused tests were selected before parent snippet implementation; schema and General Lore support already exist; live settlement references should be existence-backed; no snippets, registry/domain/trial-policy, schema/validator, test, settlement/district/site content, anchor, runtime, UI, storage, or gameplay changes landed.
 - Do not roll from `0.5.274` to `0.6.0` without a dedicated runtime-readiness decision.
 
 ## Ordered Trajectory
@@ -354,21 +356,22 @@ Versioning note:
 | 200 | `0.5.279` | Highcrown Settlement Site Knowledge Snippet Seed | Codex 5.5 Local | `docs/design/highcrown-settlement-site-knowledge-snippet-seed-plan.md` | registry + snippet content | Completed | Added only General Lore `settlement_site`/`world.settlement_sites` alignment and exactly two selected site snippets. |
 | 201 | `0.5.280` | Highcrown Settlement Knowledge Snippet Coverage Review | Codex 5.5 Local docs-first | live Highcrown settlement, district, and site snippets | coverage review | Completed | Selected parent `settlement.highcrown` coverage gap; added no snippets or registry/content edits. |
 | 202 | `0.5.281` | Highcrown Settlement Knowledge Snippet Seed Plan | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-knowledge-snippet-coverage-review.md` | snippet seed plan | Completed | Selected exact parent settlement snippet shape and required validator/test support before implementation. |
-| 203 | `0.5.282` | Settlement Knowledge Subject Validator Support Plan | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-knowledge-snippet-seed-plan.md` | validator support plan | Deferred | Plan direct `settlement` subject authority wiring and focused tests only; add no snippets or registry/content/schema/validator edits. |
-| 204 | `0.5.283` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
-| 205 | `0.5.284` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
-| 206 | `0.5.285` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
-| 207 | `0.5.286` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
+| 203 | `0.5.282` | Settlement Knowledge Subject Validator Support Plan | Codex 5.5 Local docs-first | `docs/design/highcrown-settlement-knowledge-snippet-seed-plan.md` | validator support plan | Completed | Selected direct `settlement` authority wiring and focused tests only; added no snippets or registry/content/schema/validator edits. |
+| 204 | `0.5.283` | Settlement Knowledge Subject Validator Support | Codex 5.5 Local | `docs/design/settlement-knowledge-subject-validator-support-plan.md` | validator wiring + tests | Deferred | Wire direct `settlement` subject authority and focused tests only; add no snippets or registry/content/schema edits. |
+| 205 | `0.5.284` | Service Authority Boundary Decision | Codex 5.5 Local docs-first | focused service research | planning decision | Deferred | Research prerequisite. |
+| 206 | `0.5.285` | Resource And Commodity Schema Decision | Codex 5.5 Local docs-first | economy/crafting + focused research | schema decision | Deferred | Resource-node research prerequisite. |
+| 207 | `0.5.286` | Combat Status Condition And Injury Boundary Decision | Codex 5.5 Local docs-first | combat + focused health research | planning decision | Deferred | Health research prerequisite. |
+| 208 | `0.5.287` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Deferred | Read-only audit before further seeds. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.282 - Settlement Knowledge Subject Validator Support Plan`
+1. `0.5.283 - Settlement Knowledge Subject Validator Support`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; and the parent settlement snippet shape is selected. The next pass should plan direct `settlement` subject authority validation and focused tests without adding snippets or changing registry/content/schema/validator files.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; the parent settlement snippet shape is selected; and the settlement subject validator support plan is complete. The next pass should implement direct `settlement` subject authority validation and focused tests without adding snippets or changing registry/content/schema files.
 
 ## Default Prompt Pattern
 
@@ -384,13 +387,14 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan` as the immediate next recommended run.
+- Keep `Version 0.5.283 - Settlement Knowledge Subject Validator Support` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
 - `0.5.279` implemented the planned General Lore alignment and exactly two site snippets.
 - `0.5.280` selected a parent `settlement.highcrown` General Lore coverage gap.
-- `0.5.281` selected the exact parent settlement snippet shape and required validator/test support before implementation. The next run should be docs-first and must not add snippets, edit Knowledge registry/domain/trial-policy content, edit schemas or validators, change settlement/district/site content, change anchors, add route/travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot content, or change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
+- `0.5.281` selected the exact parent settlement snippet shape and required validator/test support before implementation.
+- `0.5.282` selected direct `settlement` subject authority wiring and focused tests as the next implementation. The next run should wire validator/test support only and must not add snippets, edit Knowledge registry/domain/trial-policy content, edit schemas unless a fresh audit proves the plan stale, change settlement/district/site content, change anchors, add route/travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot content, or change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan
+Source version/run: Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan
 Date: 2026-07-07
 
 ## Status
 
-`Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan` completed as a docs-only parent settlement Knowledge snippet seed plan.
+`Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan` completed as a docs-only validator support plan.
 
 Latest completed primary:
 
-- `Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan`
+- `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan`
 
 Latest completed support/audit run:
 
@@ -17,90 +17,73 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan`
+- `Version 0.5.283 - Settlement Knowledge Subject Validator Support`
 
 ## Versioning Posture
 
-Three-segment labels such as `0.5.282` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
+Three-segment labels such as `0.5.283` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
 
-`0.5.281` completed as the next primary after `0.5.280`.
+`0.5.282` completed as the next primary after `0.5.281`.
 
-## Current General Lore Alignment
+## Decision
 
-`knowledge_domain.general_lore` currently supports:
+Option A selected: implement focused direct `settlement` Knowledge snippet subject validator support and tests before adding the parent `settlement.highcrown` snippet.
 
-- `settlement`
-- `settlement_district`
-- `settlement_site`
-- `world.settlements`
-- `world.settlement_districts`
-- `world.settlement_sites`
-- `identification`
-- `book_study`
+Do not add `knowledge_snippet.general_lore.highcrown.identification` until direct `settlement` subject authority validation and focused tests land.
 
-General Lore policy refs remain `null`. No registry/domain/trial-policy content changed in `0.5.281`.
+## Current Evidence
 
-## Current Highcrown Settlement-Related Knowledge Snippet Posture
+Schema and domain support already exist:
 
-Exactly four Highcrown settlement-related General Lore snippets exist:
+- `knowledge_snippet.schema.json` includes `settlement`.
+- `knowledge-domain-registry.schema.json` includes `settlement`.
+- `knowledge_domain.general_lore` includes `settlement`.
+- `knowledge_domain.general_lore` includes `world.settlements`.
+- General Lore policy refs remain `null`.
 
-- `knowledge_snippet.general_lore.highcrown_archive_districts.identification`
-- `knowledge_snippet.general_lore.highcrown_market_courts.identification`
-- `knowledge_snippet.general_lore.highcrown_barge_quays.identification`
-- `knowledge_snippet.general_lore.highcrown_palace_terraces.identification`
+Live authority exists:
 
-No General Lore snippet currently exists for `settlement.highcrown`.
+- `settlement.highcrown` exists in `world.settlements`.
+- Current settlement records do not use active/planned status semantics.
 
-## Parent Settlement Snippet Candidate
+Validator gap:
 
-Selected future parent snippet, not implemented:
+- `tools/content-lint/index.mjs` loads `settlements.json`.
+- `settlements.json` is currently passed only to `locationAuthorities.settlements`.
+- Direct `subjectAuthorities` include `settlement_district` and `settlement_site`, but not `settlement`.
+- `tools/content-lint/knowledge-snippets.mjs` already requires `subjectAuthorities[record.subjectType]` and can consume a direct `settlement` authority generically.
 
-- id: `knowledge_snippet.general_lore.highcrown.identification`
-- domainId: `knowledge_domain.general_lore`
-- subjectType: `settlement`
-- subjectId: `settlement.highcrown`
-- tier: `1`
-- category: `identification`
-- title: `Recognizing Highcrown`
-- summary: `Highcrown is Valtherion's imperial river capital, where crown roads, archive districts, barge quays, palace terraces, and market courts define the capital's administrative, river-trade, and civic identity.`
-- source: `book_study` with `sourceId: null`
+Focused test gap:
 
-The future snippet must be static settlement identity only and must not imply settlement access, services, vendors, prices, trade execution, travel routes, dock operation, cargo inventory, storage, palace access, court/law mechanics, ownership, NPC staffing, access rules, UI, runtime, rewards, unlocks, discovery state, Knowledge progress state, or gameplay behavior.
+- `tests/unit/knowledge-snippets-validation.test.mjs` loads `settlements.json`.
+- The focused fixture does not currently add `settlement` to `subjectAuthorities`.
+- Existing tests cover direct `settlement_district` and `settlement_site` positives/negatives, but not direct `settlement` positives/negatives.
 
-## Validator/Test Prerequisite Decision
+## Next Implementation Guardrail
 
-Option A selected: validator/test prerequisite required before snippet implementation.
+`Version 0.5.283 - Settlement Knowledge Subject Validator Support` should be implementation-only for validator/test support.
 
-Current evidence:
+Allowed future implementation shape:
 
-- Schema and registry vocabulary include `settlement`.
-- General Lore advertises `settlement` and `world.settlements`.
-- `tools/content-lint/index.mjs` loads `settlements.json` for location-scope validation but does not pass a direct `settlement` entry in `subjectAuthorities` to `validateKnowledgeSnippets`.
-- `tools/content-lint/knowledge-snippets.mjs` requires each snippet subject type to resolve through `subjectAuthorities`.
-- Focused Knowledge snippet tests cover direct `settlement_district` and `settlement_site` subjects but not direct `settlement` snippets.
+- add direct `settlement` to the normal `subjectAuthorities` passed into `validateKnowledgeSnippets`
+- use `collectionId: "world.settlements"`
+- use `idPrefix: "settlement."`
+- use `idPattern: /^settlement\.[a-z0-9]+(?:_[a-z0-9]+)*$/`
+- use `records: settlementWrapper.records`
+- preserve `locationAuthorities.settlements`
+- add focused in-memory tests for accepted, missing, and malformed direct settlement subjects
+- keep direct settlement references existence-backed, not active-only
 
-Do not add `knowledge_snippet.general_lore.highcrown.identification` until direct settlement subject validation and tests are planned and implemented.
+Do not:
 
-## Current Settlement/District/Site Authority Posture
-
-`settlement.highcrown` exists as a city in `region.valtherion` / `region.sapphire_rivers`, with direct settlement identity evidence as Valtherion's imperial river capital and authored references to archive districts, barge quays, palace terraces, and market courts.
-
-`settlement_district.highcrown.archive_districts` remains active.
-
-`settlement_district.highcrown.market_courts` remains active.
-
-`settlement_site.highcrown.barge_quays` remains active with `parentDistrictId: null`.
-
-`settlement_site.highcrown.palace_terraces` remains active with `parentDistrictId: null`.
-
-No settlement, district, site, or anchor content changed in `0.5.281`.
-
-## Next Route Guardrail
-
-`Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan` should remain docs-first.
-
-It may plan the exact semantic validator and focused test alignment needed for direct `settlement` Knowledge snippet subjects. It must not add snippets, edit Knowledge registry/domain/trial-policy content, edit schemas or validators, change settlement/district/site content, change anchors, add route/travel/building-workplace-economy/court-law/vendor-market/cargo-storage/sacred-site/religious-hotspot content, or change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
+- add Knowledge snippets
+- edit Knowledge registry/domain/trial-policy content
+- edit schemas unless a fresh implementation audit proves the plan stale
+- edit settlement/district/site content
+- change anchors
+- add route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site, religious-hotspot, or service content
+- change runtime/UI/storage/commands/events/rewards/migrations/save-account/gameplay behavior
 
 Suggested next commit:
 
-`docs(knowledge): plan highcrown settlement snippet`
+`test(knowledge): support settlement subject validation`

@@ -1,29 +1,31 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan
+Source version/run: Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan
 Date: 2026-07-07
-Branch/status assumption: `master`, clean at start after `git fetch origin`; local `HEAD` matched `origin/master`. `git pull --ff-only origin master` reported `fatal: Cannot fast-forward to multiple branches`, but no fast-forward was needed because `HEAD`, `origin/master`, and merge-base were all `30c94a2f26905ce9fff5c0cd2eb43e1d53adf462`.
+Branch/status assumption: `master`, clean at start; local `HEAD` matched `origin/master` from the prior hash audit after `git pull --ff-only origin master` reported the known multiple-branch fast-forward ambiguity.
 
 ## Result
 
-Completed a docs-only parent settlement Knowledge snippet seed plan for `settlement.highcrown`.
+Completed a docs-only validator support plan for direct `settlement` Knowledge snippet subjects.
 
-Selected future parent snippet:
+Decision: Option A. Implement focused direct settlement subject authority wiring and tests before adding the future parent `settlement.highcrown` General Lore snippet.
 
-- id: `knowledge_snippet.general_lore.highcrown.identification`
-- domainId: `knowledge_domain.general_lore`
-- subjectType: `settlement`
-- subjectId: `settlement.highcrown`
-- category/source: `identification` / `book_study`
-- title: `Recognizing Highcrown`
+The audit confirmed:
 
-Validator/test prerequisite decision: Option A. Direct `settlement` subject semantic validator/test support is required before snippet implementation. Do not add the parent snippet until a focused validator support plan and later implementation land.
+- Schema vocabulary already includes `settlement`.
+- Registry schema vocabulary already includes `settlement`.
+- `knowledge_domain.general_lore` already advertises `settlement` and `world.settlements`.
+- `settlement.highcrown` exists as live settlement authority.
+- `tools/content-lint/index.mjs` loads `settlements.json`, but only passes it to `locationAuthorities.settlements`.
+- Direct snippet `subjectAuthorities` currently include `settlement_district` and `settlement_site`, but not `settlement`.
+- `tools/content-lint/knowledge-snippets.mjs` already has generic fail-closed subject authority handling that can consume a direct `settlement` authority.
+- Focused Knowledge snippet tests cover direct district/site subjects but not direct settlement subject cases.
 
-No snippets were added. Registry/domain/trial-policy content was unchanged. Settlement, district, site, schema, validator, and test files were unchanged.
+No snippets were added. No schema, validator, test, Knowledge registry/domain/trial-policy, settlement/district/site content, anchor, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changed.
 
 ## Files Changed
 
-- `docs/design/highcrown-settlement-knowledge-snippet-seed-plan.md`
+- `docs/design/settlement-knowledge-subject-validator-support-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -33,48 +35,37 @@ No snippets were added. Registry/domain/trial-policy content was unchanged. Sett
 ## Checks Run
 
 - `git status --short --branch`
-- `git fetch origin`
-- `git pull --ff-only origin master` (reported `fatal: Cannot fast-forward to multiple branches`; follow-up hash audit confirmed no fast-forward was needed)
-- `git branch -vv`
-- `git rev-parse HEAD`
-- `git rev-parse origin/master`
-- `git merge-base HEAD origin/master`
-- Required docs and live authority file review
-- Read-only Highcrown settlement/district/site/snippet/domain/schema/validator/test audits
-- BOM-safe Node read-only Highcrown coverage count audit
-- `npm.cmd run tool:content-lint` (`content-lint: ok (63 files checked)`)
+- Required README, current GPT handoff, current Codex output, backlog, roadmap, and sequenced-plan review
+- Read-only Highcrown settlement authority audit
+- Read-only Highcrown Knowledge snippet coverage audit
+- Read-only General Lore domain alignment audit
+- Read-only snippet schema and registry schema vocabulary audit
+- Read-only normal content-lint authority wiring audit
+- Read-only focused Knowledge snippet test posture audit
+- `npm.cmd run tool:content-lint`
 - `git diff --check`
-- Conflict-marker scan on changed files
-- Trailing-whitespace scan on changed files
+- Conflict-marker scan on changed and untracked files
+- Trailing-whitespace scan on changed and untracked files
 - Changed-path scope audit
+- `git status --short`
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. Runtime, JSON content, schemas, validators, tests, UI, storage, commands, events, rewards, migrations, save/account behavior, route/travel systems, building/workplace/economy systems, court/law systems, vendor/market systems, cargo/storage systems, sacred-site/religious-hotspot content, and gameplay behavior did not change.
+Documentation only.
 
-Confirmed posture:
-
-- `settlement.highcrown` exists and has direct static settlement identity evidence.
-- Exactly four Highcrown settlement-related General Lore snippets exist.
-- Exactly two Highcrown `settlement_district` snippets exist.
-- Exactly two Highcrown `settlement_site` snippets exist.
-- No `settlement.highcrown` General Lore snippet exists.
-- `knowledge_domain.general_lore` supports `settlement`, `settlement_district`, `settlement_site`, `world.settlements`, `world.settlement_districts`, `world.settlement_sites`, `identification`, and `book_study`.
-- General Lore policy refs remain `null`.
-- Schema vocabulary includes `settlement`, `settlement_district`, and `settlement_site`.
-- Current semantic snippet validation does not yet pass a direct `settlement` subject authority to `validateKnowledgeSnippets`.
-- Focused Knowledge snippet tests do not yet include direct positive/negative `settlement` subject cases.
+Runtime, JSON content, schemas, validators, tests, UI, storage, commands, events, rewards, migrations, save/account behavior, route/travel systems, building/workplace/economy systems, court/law systems, vendor/market systems, cargo/storage systems, sacred-site/religious-hotspot content, and gameplay behavior did not change.
 
 ## Risks / Follow-Up
 
-- `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan` should remain docs-first.
-- That plan should decide exact semantic validator and focused test alignment for direct `settlement` Knowledge snippet subjects.
-- The future parent settlement snippet must remain static identity only and must not imply settlement access, services, vendors, prices, trade execution, travel routes, dock operation, cargo inventory, storage, palace access, court/law mechanics, ownership, NPC staffing, access rules, UI, runtime, rewards, unlocks, discovery state, Knowledge progress state, or gameplay behavior.
+- `Version 0.5.283 - Settlement Knowledge Subject Validator Support` should wire direct `settlement` authority into normal Knowledge snippet validation and focused tests only.
+- The implementation should not add `knowledge_snippet.general_lore.highcrown.identification`.
+- Direct `settlement` subject validation should be existence-backed against `world.settlements`; current settlement records do not expose active/planned status semantics.
+- The future parent Highcrown snippet should remain static settlement identity only and remain a separate content run after validator support lands.
 
 ## Next Recommended Version
 
-Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan
+Version 0.5.283 - Settlement Knowledge Subject Validator Support
 
 ## Suggested Commit Message
 
-docs(knowledge): plan highcrown settlement snippet
+docs(knowledge): plan settlement subject validation

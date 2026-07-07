@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan`
+- Latest completed version: `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan`
+- Next recommended version: `Version 0.5.283 - Settlement Knowledge Subject Validator Support`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -137,6 +137,7 @@ Versioning rule:
 - `Version 0.5.279 - Highcrown Settlement Site Knowledge Snippet Seed` aligned General Lore with `settlement_site` and `world.settlement_sites`, added exactly two General Lore site identification snippets for active Highcrown sites, preserved the two district snippets, kept site anchors null, changed no settlement/district/site content, and made no schema, validator, trial-policy, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior changes.
 - `Version 0.5.280 - Highcrown Settlement Knowledge Snippet Coverage Review` added `docs/design/highcrown-settlement-knowledge-snippet-coverage-review.md`; selected a parent `settlement.highcrown` General Lore coverage gap for later docs-first planning; added no snippets; changed no Knowledge registry/domain/trial-policy content, schemas, validators, tests, settlement/district/site content, anchors, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior.
 - `Version 0.5.281 - Highcrown Settlement Knowledge Snippet Seed Plan` added `docs/design/highcrown-settlement-knowledge-snippet-seed-plan.md`; selected the exact future parent `settlement.highcrown` General Lore snippet; selected validator/test support as a prerequisite before implementation; added no snippets; changed no Knowledge registry/domain/trial-policy content, schemas, validators, tests, settlement/district/site content, anchors, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior.
+- `Version 0.5.282 - Settlement Knowledge Subject Validator Support Plan` added `docs/design/settlement-knowledge-subject-validator-support-plan.md`; selected direct `settlement` Knowledge subject validator/test support before the parent Highcrown snippet; confirmed schema and General Lore already support `settlement` and `world.settlements`; selected existence-backed live settlement authority; added no snippets; changed no Knowledge registry/domain/trial-policy content, schemas, validators, tests, settlement/district/site content, anchors, runtime, UI, storage, command, event, reward, migration, save/account, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, sacred-site/religious-hotspot, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -430,9 +431,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.282 - Settlement Knowledge Subject Validator Support Plan`
+1. `0.5.283 - Settlement Knowledge Subject Validator Support`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.286`.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.287`.
 
 High-priority unresolved questions:
 
