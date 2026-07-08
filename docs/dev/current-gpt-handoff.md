@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.296 - Service Authority Seed
+Source version/run: Version 0.5.297 - Service Authority Lint Registration Decision
 Date: 2026-07-08
 
 ## Status
 
-`Version 0.5.296 - Service Authority Seed` completed as a narrow live-content seed.
+`Version 0.5.297 - Service Authority Lint Registration Decision` completed as a docs-only decision.
 
 Latest completed primary:
 
-- `Version 0.5.296 - Service Authority Seed`
+- `Version 0.5.297 - Service Authority Lint Registration Decision`
 
 Latest completed support/audit run:
 
@@ -17,13 +17,13 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.297 - Service Authority Lint Registration Decision`
+- `Version 0.5.298 - Service Authority Lint Registration`
 
-## Service Seed Posture
+## Service Lint Registration Decision Posture
 
-Seed plan authority:
+Decision authority:
 
-- `docs/design/service-authority-seed-plan.md`
+- `docs/design/service-authority-lint-registration-decision.md`
 
 Current schema/validator/content support:
 
@@ -39,6 +39,14 @@ Live service content now exists:
 - Normal content-lint registration remains absent.
 - Existing `civilization.buildings.serviceFunctions` remain source-local descriptors and were not migrated.
 
+Decision result:
+
+- Normal content-lint registration is approved in principle for the live service seed.
+- Registration must happen in a separate narrow implementation run.
+- The existing `tools/content-lint/services.mjs` helper is compatible with normal lint orchestration as-is.
+- The future registration should load services, the service schema, and `civilization.buildings` and call `validateServicesContent(...)`.
+- The future registration should fail closed if `relatedBuildingServiceFunctions` values stop resolving to observed building descriptors.
+
 ## Exact Seeded Records
 
 The live seed contains exactly these five planned records:
@@ -53,13 +61,19 @@ The live seed contains exactly these five planned records:
 
 The `service.contract_board` record uses the neutral tag `charters` instead of the seed-plan candidate tag `guild` because the existing focused validator rejects any tag containing the forbidden `ui` fragment.
 
-No record defines `relationshipNotes`.
+No record defines `relationshipNotes`. No service record should change during registration.
 
-## Next Lint Decision Guardrails
+## Next Registration Guardrails
 
-`Version 0.5.297 - Service Authority Lint Registration Decision` should be docs-first unless the prompt explicitly scopes implementation.
+`Version 0.5.298 - Service Authority Lint Registration` should be a narrow implementation.
 
-The next run should decide whether and when to register `packages/content/base/civilization/services.json` in normal content lint, including expected validation command coverage and any risk from promoting focused validation into the standard lint surface.
+The next run should:
+
+- edit `tools/content-lint/index.mjs` to register `packages/content/base/civilization/services.json`;
+- import and call `validateServicesContent(...)`;
+- load `packages/schemas/civilization/service.schema.json`;
+- load `packages/content/base/civilization/buildings.json`;
+- run normal content lint and focused service validation.
 
 The next run must not:
 
@@ -83,8 +97,8 @@ Provider availability, schedules, access checks, prices, payment, stock, invento
 
 ## Next Route Guardrail
 
-`Version 0.5.297 - Service Authority Lint Registration Decision` is the immediate next primary route because the service vocabulary seed is now live but intentionally remains outside normal content lint.
+`Version 0.5.298 - Service Authority Lint Registration` is the immediate next primary route because the service vocabulary seed is live, focused validation passes, and this decision approved normal lint registration in a separate implementation run.
 
 Suggested next commit:
 
-`feat(content): seed service authority vocabulary`
+`docs(roadmap): decide service lint registration`
