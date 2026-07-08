@@ -18,6 +18,7 @@ async function readJson(relativePath) {
 
 const serviceSchema = await readJson(SCHEMA_PATH);
 const buildingsWrapper = await readJson("packages/content/base/civilization/buildings.json");
+const liveServicesWrapper = await readJson(SERVICE_CONTENT_PATH);
 
 function service(overrides = {}) {
   return {
@@ -248,7 +249,47 @@ test("rejects nested forbidden fields", () => {
   );
 });
 
-test("schema, validator, focused test, absent live content, and absent normal lint registration match posture", async () => {
+test("validates live service seed content with exactly selected planned records", () => {
+  assert.deepEqual(validateServicesContent({
+    relativePath: SERVICE_CONTENT_PATH,
+    wrapper: structuredClone(liveServicesWrapper),
+    schema: structuredClone(serviceSchema),
+    buildings: structuredClone(buildingsWrapper.records)
+  }), {
+    ok: true,
+    serviceIds: [
+      "service.archives",
+      "service.contract_board",
+      "service.lodging",
+      "service.market_exchange",
+      "service.storage_warehouse"
+    ]
+  });
+  assert.deepEqual(liveServicesWrapper.records.map((entry) => entry.id), [
+    "service.lodging",
+    "service.market_exchange",
+    "service.storage_warehouse",
+    "service.archives",
+    "service.contract_board"
+  ]);
+  assert.deepEqual(liveServicesWrapper.records.map((entry) => entry.status), [
+    "planned",
+    "planned",
+    "planned",
+    "planned",
+    "planned"
+  ]);
+  assert.deepEqual(liveServicesWrapper.records.map((entry) => entry.relatedBuildingServiceFunctions), [
+    ["lodging"],
+    ["market_exchange"],
+    ["storage.warehouse"],
+    ["archives"],
+    ["contract_board"]
+  ]);
+  assert.equal(liveServicesWrapper.records.some((entry) => Object.hasOwn(entry, "relationshipNotes")), false);
+});
+
+test("schema, validator, focused test, live content, and absent normal lint registration match posture", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
   const validatorSource = await readFile(path.join(ROOT, VALIDATOR_PATH), "utf8");
@@ -256,7 +297,7 @@ test("schema, validator, focused test, absent live content, and absent normal li
   assert.equal(existsSync(path.join(ROOT, SCHEMA_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, VALIDATOR_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, TEST_PATH)), true);
-  assert.equal(existsSync(path.join(ROOT, SERVICE_CONTENT_PATH)), false);
+  assert.equal(existsSync(path.join(ROOT, SERVICE_CONTENT_PATH)), true);
   assert.match(schemaTestSource, /packages\/schemas\/civilization\/service\.schema\.json/);
   assert.doesNotMatch(contentLintSource, /civilization\/services\.json/);
   assert.doesNotMatch(contentLintSource, /services\.mjs/);

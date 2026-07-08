@@ -1,0 +1,94 @@
+{
+  "records": [
+    {
+      "id": "service.lodging",
+      "slug": "lodging",
+      "name": "Lodging",
+      "status": "planned",
+      "family": "lodging",
+      "summary": "Provider-independent vocabulary for places or templates that identify lodging as an offered stay or room-and-board capability.",
+      "tags": ["lodging", "hospitality", "rooms", "rest"],
+      "publicPosture": "public",
+      "providerAnchorTypes": ["building_template", "settlement_site", "settlement_district", "workplace"],
+      "allowedOwnerTypes": ["civilization.buildings", "civilization.workplaces", "world.settlement_sites", "world.settlement_districts"],
+      "relatedBuildingServiceFunctions": ["lodging"],
+      "sourceAuthorityNotes": ["Observed current building serviceFunctions value on building.drinkhouse_cellar."],
+      "notes": [
+        "Static provider-independent service vocabulary only.",
+        "Does not define provider availability, access checks, prices, payment, stock, inventory, lodging effects, UI, runtime, save/account state, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "service.market_exchange",
+      "slug": "market_exchange",
+      "name": "Market Exchange",
+      "status": "planned",
+      "family": "market_exchange",
+      "summary": "Provider-independent vocabulary for exchange-facing service identity without prices, stock, vendors, or transaction behavior.",
+      "tags": ["market", "exchange", "commerce", "counter"],
+      "publicPosture": "public",
+      "providerAnchorTypes": ["building_template", "settlement_district", "settlement", "market_context", "guild"],
+      "allowedOwnerTypes": ["civilization.buildings", "world.settlements", "world.settlement_districts", "civilization.guilds"],
+      "relatedBuildingServiceFunctions": ["market_exchange"],
+      "sourceAuthorityNotes": ["Observed current building serviceFunctions value on building.warehouse_block."],
+      "notes": [
+        "Static provider-independent service vocabulary only.",
+        "Does not define provider availability, access checks, prices, payment, stock, inventory, vendor/shop behavior, market transactions, UI, runtime, save/account state, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "service.storage_warehouse",
+      "slug": "storage_warehouse",
+      "name": "Warehouse Storage",
+      "status": "planned",
+      "family": "storage_handling",
+      "summary": "Provider-independent vocabulary for warehouse-style storage and handling identity without contents, stock, or item movement.",
+      "tags": ["storage", "warehouse", "bulk_goods", "handling"],
+      "publicPosture": "limited",
+      "providerAnchorTypes": ["building_template", "settlement_site", "settlement_district", "workplace"],
+      "allowedOwnerTypes": ["civilization.buildings", "civilization.workplaces", "world.settlement_sites", "world.settlement_districts"],
+      "relatedBuildingServiceFunctions": ["storage.warehouse"],
+      "sourceAuthorityNotes": ["Observed current building serviceFunctions value on building.warehouse_block; schema id uses storage_warehouse because service ids require lower snake-case after service."],
+      "notes": [
+        "Static provider-independent service vocabulary only.",
+        "Does not define storage contents, provider availability, access checks, prices, payment, stock, inventory, item instances, cargo movement, UI, runtime, save/account state, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "service.archives",
+      "slug": "archives",
+      "name": "Archives",
+      "status": "planned",
+      "family": "archive_record",
+      "summary": "Provider-independent vocabulary for archive or record-service identity without record browsing, Knowledge unlocks, or access behavior.",
+      "tags": ["archives", "records", "civic", "reference"],
+      "publicPosture": "institutional",
+      "providerAnchorTypes": ["building_template", "settlement_district", "institution", "civic_authority"],
+      "allowedOwnerTypes": ["civilization.buildings", "world.settlement_districts", "future.institutions"],
+      "relatedBuildingServiceFunctions": ["archives"],
+      "sourceAuthorityNotes": ["Observed current building serviceFunctions value on building.scriptoria_quarter."],
+      "notes": [
+        "Static provider-independent service vocabulary only.",
+        "Does not define archive access, record browsing, Knowledge progress, provider availability, access checks, prices, payment, stock, inventory, effects, UI, runtime, save/account state, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "service.contract_board",
+      "slug": "contract_board",
+      "name": "Contract Board",
+      "status": "planned",
+      "family": "contract_brokerage",
+      "summary": "Provider-independent vocabulary for contract-board service identity without quest generation, offer state, rewards, or access behavior.",
+      "tags": ["contracts", "brokerage", "charters", "notices"],
+      "publicPosture": "regulated",
+      "providerAnchorTypes": ["building_template", "settlement_site", "settlement_district", "guild", "civic_authority"],
+      "allowedOwnerTypes": ["civilization.buildings", "civilization.guilds", "world.settlement_sites", "world.settlement_districts", "civilization.quest_templates", "civilization.quest_definitions"],
+      "relatedBuildingServiceFunctions": ["contract_board"],
+      "sourceAuthorityNotes": ["Observed current building serviceFunctions value on building.guildhall_row."],
+      "notes": [
+        "Static provider-independent service vocabulary only.",
+        "Does not define provider availability, access checks, prices, payment, stock, quest generation, offer state, rewards, effects, UI, runtime, save/account state, or gameplay behavior."
+      ]
+    }
+  ]
+}

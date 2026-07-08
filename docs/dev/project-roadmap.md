@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.295 - Service Authority Seed Plan`
+- Latest completed version: `Version 0.5.296 - Service Authority Seed`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.296 - Service Authority Seed`
+- Next recommended version: `Version 0.5.297 - Service Authority Lint Registration Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -151,6 +151,7 @@ Versioning rule:
 - `Version 0.5.293 - Service Authority Schema Plan` added `docs/design/service-authority-schema-plan.md`; defined the future `civilization.services` collection path, records-only wrapper, `service.<slug>` id pattern, required and optional fields, lifecycle/status vocabulary, first-pass family and public-posture vocabulary, provider-anchor and allowed-owner type posture, relationship to existing building `serviceFunctions`, forbidden fields, validation expectations, focused test expectations, and first seed prerequisites; selected `Version 0.5.294 - Service Authority Schema And Validator` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, provider availability, prices, stock, access checks, service effects, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, Knowledge, resource, commodity, combat health, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.294 - Service Authority Schema And Validator` added `packages/schemas/civilization/service.schema.json`, `tools/content-lint/services.mjs`, and `tests/unit/service-authority-validation.test.mjs`; added service schema parse coverage to `tests/unit/schema-files.test.mjs`; kept `packages/content/base/civilization/services.json` absent; kept normal content-lint registration absent; selected `Version 0.5.295 - Service Authority Seed Plan` next; and changed no live service content, runtime, UI, storage, command, event, reward, migration, save/account, provider availability, prices, stock, access checks, service effects, route/travel, legal/reputation behavior, Knowledge, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.295 - Service Authority Seed Plan` added `docs/design/service-authority-seed-plan.md`; selected exactly five future planned provider-independent service records, `service.lodging`, `service.market_exchange`, `service.storage_warehouse`, `service.archives`, and `service.contract_board`; kept `packages/content/base/civilization/services.json` absent; kept normal content-lint registration absent; selected `Version 0.5.296 - Service Authority Seed` next; and changed no live service content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, provider availability, prices, stock, access checks, service effects, route/travel, legal/reputation behavior, Knowledge, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior.
+- `Version 0.5.296 - Service Authority Seed` added `packages/content/base/civilization/services.json` with exactly five planned provider-independent service records, `service.lodging`, `service.market_exchange`, `service.storage_warehouse`, `service.archives`, and `service.contract_board`; updated `tests/unit/service-authority-validation.test.mjs` to validate the live seed through the focused service validator; kept normal content-lint registration absent; selected `Version 0.5.297 - Service Authority Lint Registration Decision` next; and changed no schemas, validators, building/workplace descriptors, settlement/district/site content, runtime, UI, storage, command, event, reward, migration, save/account, provider availability, prices, stock, access checks, service effects, route/travel, legal/reputation behavior, Knowledge, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -444,9 +445,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.296 - Service Authority Seed`
+1. `0.5.297 - Service Authority Lint Registration Decision`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.296`. The `0.5.295` service authority seed plan selected the exact five future planned records for the next live service seed while keeping live service content, normal content-lint registration, runtime, UI, save/account, and gameplay behavior deferred.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.297`. The `0.5.296` service authority seed added the exact five planned service records while keeping normal content-lint registration, runtime, UI, save/account, and gameplay behavior deferred.
 
 High-priority unresolved questions:
 

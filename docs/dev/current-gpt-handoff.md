@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.295 - Service Authority Seed Plan
+Source version/run: Version 0.5.296 - Service Authority Seed
 Date: 2026-07-08
 
 ## Status
 
-`Version 0.5.295 - Service Authority Seed Plan` completed as a documentation-only seed plan.
+`Version 0.5.296 - Service Authority Seed` completed as a narrow live-content seed.
 
 Latest completed primary:
 
-- `Version 0.5.295 - Service Authority Seed Plan`
+- `Version 0.5.296 - Service Authority Seed`
 
 Latest completed support/audit run:
 
@@ -17,30 +17,31 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.296 - Service Authority Seed`
+- `Version 0.5.297 - Service Authority Lint Registration Decision`
 
-## Service Seed Plan Posture
+## Service Seed Posture
 
 Seed plan authority:
 
 - `docs/design/service-authority-seed-plan.md`
 
-Current schema/validator support remains:
+Current schema/validator/content support:
 
 - Schema: `packages/schemas/civilization/service.schema.json`
 - Focused validator/helper: `tools/content-lint/services.mjs`
 - Focused tests: `tests/unit/service-authority-validation.test.mjs`
 - Schema parse coverage: `tests/unit/schema-files.test.mjs`
+- Live seed content: `packages/content/base/civilization/services.json`
 
-No live service content exists yet:
+Live service content now exists:
 
-- `packages/content/base/civilization/services.json` remains absent.
+- `packages/content/base/civilization/services.json` contains exactly five planned provider-independent service vocabulary records.
 - Normal content-lint registration remains absent.
 - Existing `civilization.buildings.serviceFunctions` remain source-local descriptors and were not migrated.
 
-## Exact Selected Candidates
+## Exact Seeded Records
 
-The next live seed should create exactly these five planned records:
+The live seed contains exactly these five planned records:
 
 | Future id | Status | Family | Related building descriptor |
 | --- | --- | --- | --- |
@@ -50,22 +51,17 @@ The next live seed should create exactly these five planned records:
 | `service.archives` | `planned` | `archive_record` | `archives` |
 | `service.contract_board` | `planned` | `contract_brokerage` | `contract_board` |
 
-Use the exact field values in `docs/design/service-authority-seed-plan.md`.
+The `service.contract_board` record uses the neutral tag `charters` instead of the seed-plan candidate tag `guild` because the existing focused validator rejects any tag containing the forbidden `ui` fragment.
 
-Do not add `relationshipNotes` in the first live seed. The plan intentionally omits that optional field for all selected records.
+No record defines `relationshipNotes`.
 
-## Live-Content Guardrails
+## Next Lint Decision Guardrails
 
-`Version 0.5.296 - Service Authority Seed` should be narrow:
+`Version 0.5.297 - Service Authority Lint Registration Decision` should be docs-first unless the prompt explicitly scopes implementation.
 
-- create `packages/content/base/civilization/services.json`;
-- add exactly the five selected planned records;
-- use the existing schema and focused validator;
-- add or update focused tests only if needed for live seed validation;
-- prove every `relatedBuildingServiceFunctions` value is observed in current building content;
-- keep normal content-lint registration deferred unless explicitly scoped by the prompt.
+The next run should decide whether and when to register `packages/content/base/civilization/services.json` in normal content lint, including expected validation command coverage and any risk from promoting focused validation into the standard lint surface.
 
-The live seed must not:
+The next run must not:
 
 - migrate or edit `civilization.buildings.serviceFunctions`;
 - edit building, workplace, settlement, district, site, route, travel, vendor, shop, market, cargo, or storage records;
@@ -87,8 +83,8 @@ Provider availability, schedules, access checks, prices, payment, stock, invento
 
 ## Next Route Guardrail
 
-`Version 0.5.296 - Service Authority Seed` is the immediate next primary route because `0.5.295` selected exact candidates and found no blocker requiring a readiness follow-up.
+`Version 0.5.297 - Service Authority Lint Registration Decision` is the immediate next primary route because the service vocabulary seed is now live but intentionally remains outside normal content lint.
 
 Suggested next commit:
 
-`docs(roadmap): plan service authority seed`
+`feat(content): seed service authority vocabulary`

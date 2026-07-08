@@ -1,14 +1,14 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.295 - Service Authority Seed Plan
+Source version/run: Version 0.5.296 - Service Authority Seed
 Date: 2026-07-08
 Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` succeeded and reported `Already up to date.`
 
 ## Result
 
-Added the docs-only service authority seed plan at `docs/design/service-authority-seed-plan.md`.
+Added the first live service authority seed at `packages/content/base/civilization/services.json`.
 
-The plan selects exactly five future provider-independent planned service vocabulary records for a later live seed:
+The seed contains exactly five planned provider-independent service vocabulary records:
 
 - `service.lodging`
 - `service.market_exchange`
@@ -16,13 +16,14 @@ The plan selects exactly five future provider-independent planned service vocabu
 - `service.archives`
 - `service.contract_board`
 
-All selected candidates are observed in current `civilization.buildings.serviceFunctions`. The plan defines exact future field values, status choices, related building descriptors, source notes, non-execution notes, rejected candidates, normal-lint posture, live seed instructions, validation expectations, and the next route.
+Focused validation now reads and validates the live seed through `validateServicesContent(...)`. Normal content-lint registration remains absent.
 
-No live service content was added. No schema, validator, test, runtime, UI, storage, save/account, gameplay, provider, building, workplace, settlement, route, vendor, market, cargo, storage, Knowledge, resource/commodity, combat-health, POI/discovery, map-feature, sacred-site, or religious-hotspot content was changed.
+One seed-plan tag was adjusted during implementation: `service.contract_board` uses `charters` instead of `guild` because the existing focused validator rejects any tag containing the forbidden `ui` fragment.
 
 ## Files Changed
 
-- `docs/design/service-authority-seed-plan.md`
+- `packages/content/base/civilization/services.json`
+- `tests/unit/service-authority-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -34,45 +35,40 @@ No live service content was added. No schema, validator, test, runtime, UI, stor
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master`
-- Required reads of `AGENTS.md`, `README.md`, active output, active handoff, sequence, roadmap, backlog, service schema plan, service boundary, static-authority audit, discovery/POI boundary, resource/commodity decision, combat-health boundary, Highcrown closure review, service schema, service validator, and focused service authority tests.
-- Structured extraction of current building `serviceFunctions`.
-- Structured extraction of building categories.
-- Structured extraction of hosted workplace ids.
-- Structured extraction of building storage profile types.
-- Targeted service-facing scans for market, vendor, stock, price, payment, inventory, access, lodging, clinic, ferry, port, storage, archive, contract, hygiene, laundering, runtime, UI, and travel language.
-- `Test-Path -LiteralPath 'packages\content\base\civilization\services.json'` before edits (returned `False`)
-- `rg -n 'civilization/services\.json|civilization\\services\.json|services\.mjs|validateServicesContent' tools\content-lint\index.mjs` before edits (no matches)
-- `git diff --name-only` (changed files are docs only)
-- `git diff --name-only -- packages\schemas tools\content-lint tests apps packages\engines packages\shared packages\content` (no output)
-- `git ls-files --others --exclude-standard` (only `docs/design/service-authority-seed-plan.md`)
+- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, service seed plan, service schema plan, service boundary decision, static-authority validation audit, discovery/POI boundary, resource/commodity decision, combat status/condition/injury boundary, Highcrown closure review, service schema, service validator, focused service authority tests, schema-files test, and current building descriptors.
+- `Select-String` verification that `lodging`, `market_exchange`, `storage.warehouse`, `archives`, and `contract_board` are observed in `packages/content/base/civilization/buildings.json`.
+- `node --test tests\unit\service-authority-validation.test.mjs` (passed; 53 tests)
+- `node --test tests\unit\schema-files.test.mjs` (passed; 99 tests)
 - `git diff --check` (passed; Git reported line-ending normalization warnings only)
-- conflict-marker scan across changed files (no matches)
-- trailing-whitespace scan across changed files (no findings)
-- ASCII scan across changed files (no findings)
-- stale next-version pointer scan across active docs (current pointers target `Version 0.5.296 - Service Authority Seed`)
-- accidental live service file and normal content-lint registration scan after edits (live file absent; no registration matches)
-- Highcrown/generic POI/deferred-behavior scan across changed docs (only guardrail language; no reopening or implementation language)
 - `git status --short --branch`
+- `git ls-files --others --exclude-standard` (only the new service seed file)
+- `rg -n 'civilization/services\.json|civilization\\services\.json|services\.mjs|validateServicesContent' tools\content-lint\index.mjs` (no matches)
+- Conflict-marker scan across changed files (no matches)
+- `git diff --name-only -- packages\schemas tools\content-lint` (no output)
+- `git diff --name-only -- packages\content\base\civilization\buildings.json packages\content\base\civilization\workplaces.json packages\content\base\world` (no output)
+- Recursive forbidden-key scan of `packages/content/base/civilization/services.json` (no forbidden JSON keys)
+- Stale next-version pointer scan across active docs (current pointers target `Version 0.5.297 - Service Authority Lint Registration Decision`)
+- Highcrown scan showed only existing historical/guardrail references; no Highcrown content changed.
 
 ## Behavior / Runtime Confirmation
 
-Documentation-only change.
+Static content and focused tests changed.
 
-No live service content, normal content-lint registration, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account behavior, provider availability, prices, payment, stock, inventory, access checks, service effects, route/travel behavior, legal/reputation behavior, Knowledge content, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior changed.
+No schema, validator, normal content-lint registration, building/workplace descriptor, settlement/district/site content, runtime, UI, storage, command, event, reward, migration, save/account behavior, provider availability, prices, payment, stock, inventory, access checks, service effects, route/travel behavior, legal/reputation behavior, Knowledge content, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The next live seed must use the exact selected records and field values from `docs/design/service-authority-seed-plan.md`.
-- Normal content-lint registration remains intentionally deferred unless the next prompt explicitly scopes it.
+- Normal content-lint registration remains intentionally deferred.
+- The next run should decide whether and when to register the live service seed in normal content lint.
+- The `charters` tag adjustment should be preserved unless the service tag validator is intentionally revised later.
 - `service.storage_warehouse` intentionally maps to observed building descriptor `storage.warehouse` because service ids require lower snake-case after `service.`.
-- Rejected candidates such as `clinic`, `ferry_berth`, and `port_handling` remain deferred because they risk implying healing, travel, cargo, access, price, stock, or runtime behavior too early.
 - A generic `world.pois` authority remains rejected by the current discovery/POI boundary decision.
 - The Highcrown settlement Knowledge lane remains closed and must not be reopened without a later owner decision.
 
 ## Next Recommended Version
 
-Version 0.5.296 - Service Authority Seed
+Version 0.5.297 - Service Authority Lint Registration Decision
 
 ## Suggested Commit Message
 
-docs(roadmap): plan service authority seed
+feat(content): seed service authority vocabulary
