@@ -1,17 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.291 - Discovery And POI Gate Intake Audit
+Source version/run: Version 0.5.292 - Discovery And POI Boundary Decision
 Date: 2026-07-08
 
 ## Status
 
-`Version 0.5.291 - Discovery And POI Gate Intake Audit` completed as a docs-only audit.
-
-The audit found no current generic canonical POI authority such as `world.pois`, `point_of_interest`, or `points_of_interest`. Current POI-like identity is distributed across specific owner collections: settlements, settlement districts, settlement sites, sacred sites, religious hotspots, semantic map features, and future family-specific authorities.
+`Version 0.5.292 - Discovery And POI Boundary Decision` completed as a docs-only decision.
 
 Latest completed primary:
 
-- `Version 0.5.291 - Discovery And POI Gate Intake Audit`
+- `Version 0.5.292 - Discovery And POI Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -19,21 +17,26 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.292 - Discovery And POI Boundary Decision`
+- `Version 0.5.293 - Service Authority Schema Plan`
 
-## Discovery And POI Intake Posture
+## Discovery And POI Boundary Posture
 
-`docs/design/discovery-poi-gate-intake-audit.md` is the current intake source for discovery/POI gate posture.
+`docs/design/discovery-poi-boundary-decision.md` is the current boundary source for discovery/POI ownership.
 
 Current posture:
 
-- POI-like authored identity remains descriptors and records on existing or future specific authority families.
-- A generic `world.pois` authority remains unapproved.
+- POI-like authored identity remains records and descriptors on specific owner families.
+- A generic `world.pois` authority remains rejected for the current roadmap posture.
+- Static records may describe broad public/hidden/secret/surveyable/rumored/locked/landmark-like posture only when their own authority explicitly allows it.
+- Known/discovered/visited/revealed/completed state, route visibility, map reveal, and player-specific marker visibility belong to future runtime/save/session/account owners.
 - Knowledge `discoverySources`, `travel_observation`, and `travel_event` remain possible evidence/source vocabulary only.
-- Actual known, discovered, visited, revealed, completed, and map-reveal state belongs to future runtime/save owners, not static world content.
-- Existing `knownLocations` and discovery Chronicle surfaces are limited contract/fixture surfaces and must not be treated as a full discovery/map-reveal implementation.
+- Knowledge discovery is evidence/progress/completion, not map reveal.
+- Quest/narrative discovery belongs to quest/event/Chronicle/runtime owners, not POI identity.
+- Encounter/spawn exposure is context and selection, not POI identity or reveal state.
+- UI marker eligibility is derived presentation, not authority.
+- Existing `knownLocations`, discovery Chronicle, geographic knowledge, achievement reveal, and UI discovery surfaces are limited current runtime/session/player/account surfaces, not a complete generic discovery/map-reveal implementation.
 
-## Deferred Authority Posture
+## Remaining Deferred Authority Guardrails
 
 The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`.
 
@@ -45,14 +48,16 @@ The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - H
 
 `Version 0.5.290 - Static Authority Validation Consolidation Audit` confirmed those recent static authority lanes remain coherent and deferred.
 
+`Version 0.5.291 - Discovery And POI Gate Intake Audit` found no approved generic POI authority and selected the now-completed boundary decision.
+
 ## Next Route Guardrail
 
-`Version 0.5.292 - Discovery And POI Boundary Decision` should be docs-first.
+`Version 0.5.293 - Service Authority Schema Plan` should be docs-first.
 
-Reason: the intake found no safe generic POI authority to implement, but it did find enough cross-surface ambiguity to clarify boundaries before any schema or seed route. The next run should define ownership for authored public/hidden/surveyable posture if any, known/discovered/visited/revealed/completed state, map reveal versus Knowledge discovery, route/hex/map-feature/place references, UI marker eligibility, and save/session/account persistence.
+Reason: discovery/POI now has a completed intake audit and boundary decision, and `world.pois` remains rejected for the current roadmap. The next backlog gate is services. Service authority was justified in principle in `0.5.287`, but a future `civilization.services` vocabulary still requires a separate schema plan, fresh live-repo audit, and seed plan before any implementation.
 
-It must not implement POI content, discovery state, map reveal, travel behavior, schemas, validators, tests, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, or gameplay.
+The next run must not implement service content, schemas, validators, tests, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, provider availability, prices, stock, access checks, effects, or gameplay.
 
 Suggested next commit:
 
-`docs(roadmap): audit discovery poi gate posture`
+`docs(roadmap): decide discovery poi boundary`

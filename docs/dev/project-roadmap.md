@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.291 - Discovery And POI Gate Intake Audit`
+- Latest completed version: `Version 0.5.292 - Discovery And POI Boundary Decision`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.292 - Discovery And POI Boundary Decision`
+- Next recommended version: `Version 0.5.293 - Service Authority Schema Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -147,6 +147,7 @@ Versioning rule:
 - `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision` added `docs/design/combat-status-condition-injury-boundary-decision.md`; selected a limited hybrid model; justified a future typed, non-executing static status/condition/injury vocabulary catalog in principle; kept active status instances, resource/body values, injuries, wounds, disease/poison exposure, death/defeat, recovery, treatment, save/account state, runtime, UI, and gameplay outside static authority; selected `Version 0.5.290 - Static Authority Validation Consolidation Audit` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, combat, health/resource, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, sacred-site/religious-hotspot, Knowledge, service/resource/commodity, or gameplay behavior.
 - `Version 0.5.290 - Static Authority Validation Consolidation Audit` added `docs/design/static-authority-validation-consolidation-audit.md`; confirmed recent static authority lanes remain coherent; confirmed service, resource, commodity, and combat status/condition/injury implementation remains deferred; preserved the closed Highcrown settlement Knowledge lane; selected `Version 0.5.291 - Discovery And POI Gate Intake Audit` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, combat, health/resource, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, sacred-site/religious-hotspot, Knowledge, service/resource/commodity, status/condition/injury, or gameplay behavior.
 - `Version 0.5.291 - Discovery And POI Gate Intake Audit` added `docs/design/discovery-poi-gate-intake-audit.md`; found no approved generic `world.pois`, `point_of_interest`, or equivalent canonical POI authority; kept POI-like authored identity on existing or future specific authority families; kept Knowledge discovery-source vocabulary separate from route, journey, POI, and map-reveal authority; selected `Version 0.5.292 - Discovery And POI Boundary Decision` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, travel/pathfinding, map reveal, quest state, Knowledge state, encounter/spawn behavior, service/resource/commodity, status/condition/injury, Highcrown Knowledge, or gameplay behavior.
+- `Version 0.5.292 - Discovery And POI Boundary Decision` added `docs/design/discovery-poi-boundary-decision.md`; selected Option A; rejected generic `world.pois` for the current roadmap posture; kept POI-like authored identity on specific owner families; kept known/discovered/visited/revealed/completed state, route visibility, map reveal, and player-specific marker visibility with future runtime/save/session/account owners; kept Knowledge discovery separate from map reveal; selected `Version 0.5.293 - Service Authority Schema Plan` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, travel/pathfinding, exploration, map reveal, quest state, Knowledge state, encounter/spawn behavior, service/resource/commodity, status/condition/injury, Highcrown Knowledge, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -440,9 +441,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.292 - Discovery And POI Boundary Decision`
+1. `0.5.293 - Service Authority Schema Plan`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.292`. The `0.5.291` audit found no approved generic POI authority, kept POI-like identity on specific owner families for now, and selected a conservative docs-first discovery/POI boundary decision before any schema, seed, validator, runtime, UI, save/account, or gameplay work.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.293`. The `0.5.292` boundary decision rejected generic `world.pois` for the current roadmap, kept POI-like identity on specific owner families, preserved runtime/save ownership of discovery and map reveal state, and selected a conservative docs-first service schema plan before any service implementation.
 
 High-priority unresolved questions:
 
