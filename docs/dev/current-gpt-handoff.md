@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.292 - Discovery And POI Boundary Decision
+Source version/run: Version 0.5.293 - Service Authority Schema Plan
 Date: 2026-07-08
 
 ## Status
 
-`Version 0.5.292 - Discovery And POI Boundary Decision` completed as a docs-only decision.
+`Version 0.5.293 - Service Authority Schema Plan` completed as a docs-only plan.
 
 Latest completed primary:
 
-- `Version 0.5.292 - Discovery And POI Boundary Decision`
+- `Version 0.5.293 - Service Authority Schema Plan`
 
 Latest completed support/audit run:
 
@@ -17,30 +17,34 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.293 - Service Authority Schema Plan`
+- `Version 0.5.294 - Service Authority Schema And Validator`
 
-## Discovery And POI Boundary Posture
+## Service Authority Schema Posture
 
-`docs/design/discovery-poi-boundary-decision.md` is the current boundary source for discovery/POI ownership.
+`docs/design/service-authority-schema-plan.md` is the current schema-plan source for future service vocabulary.
 
 Current posture:
 
-- POI-like authored identity remains records and descriptors on specific owner families.
-- A generic `world.pois` authority remains rejected for the current roadmap posture.
-- Static records may describe broad public/hidden/secret/surveyable/rumored/locked/landmark-like posture only when their own authority explicitly allows it.
-- Known/discovered/visited/revealed/completed state, route visibility, map reveal, and player-specific marker visibility belong to future runtime/save/session/account owners.
-- Knowledge `discoverySources`, `travel_observation`, and `travel_event` remain possible evidence/source vocabulary only.
-- Knowledge discovery is evidence/progress/completion, not map reveal.
-- Quest/narrative discovery belongs to quest/event/Chronicle/runtime owners, not POI identity.
-- Encounter/spawn exposure is context and selection, not POI identity or reveal state.
-- UI marker eligibility is derived presentation, not authority.
-- Existing `knownLocations`, discovery Chronicle, geographic knowledge, achievement reveal, and UI discovery surfaces are limited current runtime/session/player/account surfaces, not a complete generic discovery/map-reveal implementation.
+- A future `civilization.services` vocabulary is planned at `packages/content/base/civilization/services.json`.
+- The future schema path is `packages/schemas/civilization/service.schema.json`; the future focused validator path is `tools/content-lint/services.mjs`.
+- Planned service ids use `service.<slug>` and a records-only wrapper.
+- Required future fields are `id`, `slug`, `name`, `status`, `family`, `summary`, `tags`, `publicPosture`, `providerAnchorTypes`, `allowedOwnerTypes`, `sourceAuthorityNotes`, and `notes`.
+- Optional future fields are `relatedBuildingServiceFunctions` and `relationshipNotes`.
+- Status vocabulary is `planned`, `active`, and `retired`. Active service records may exist before canonical providers only when they remain pure vocabulary with no provider refs or execution/state fields.
+- Existing `civilization.buildings.serviceFunctions` remain source-local descriptors. `relatedBuildingServiceFunctions` may later bridge to observed descriptor strings but must not migrate building records.
+- `providerAnchorTypes` and `allowedOwnerTypes` are type vocabularies only. They must not contain concrete provider ids.
+- The plan rejects aliases, migration compatibility, provider refs, availability, schedules, access checks, prices, stock, item instances, storage contents, effects, UI, runtime, save/account state, and gameplay fields.
+- The first seed still requires a separate seed plan with a fresh live-repo audit and exact candidates.
+
+## Discovery And POI Boundary Posture
+
+`docs/design/discovery-poi-boundary-decision.md` remains the current boundary source for discovery/POI ownership. A generic `world.pois` authority remains rejected for the current roadmap posture. Known/discovered/visited/revealed/completed state, route visibility, map reveal, player-specific marker visibility, quest discovery, encounter/spawn exposure, UI markers, and save/session/account persistence remain outside static authored records.
 
 ## Remaining Deferred Authority Guardrails
 
 The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`.
 
-`Version 0.5.287 - Service Authority Boundary Decision` selected a hybrid service model. A future `civilization.services` catalog is justified only in principle for provider-independent identity/vocabulary. It must not own provider availability, access, prices, stock, storage contents, effects, UI, runtime, or gameplay.
+`Version 0.5.287 - Service Authority Boundary Decision` selected a hybrid service model. `Version 0.5.293 - Service Authority Schema Plan` now defines the future schema posture, but service implementation remains deferred until a focused schema/validator prompt.
 
 `Version 0.5.288 - Resource And Commodity Schema Decision` approved future separate static `world.resources` and `world.commodities` authorities in principle. They must not replace item keys or own prices, stock, item instances, cargo movement, storage contents, service execution, gathering/extraction, trading, crafting execution, runtime, UI, or gameplay.
 
@@ -52,12 +56,12 @@ The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - H
 
 ## Next Route Guardrail
 
-`Version 0.5.293 - Service Authority Schema Plan` should be docs-first.
+`Version 0.5.294 - Service Authority Schema And Validator` should be narrow implementation only.
 
-Reason: discovery/POI now has a completed intake audit and boundary decision, and `world.pois` remains rejected for the current roadmap. The next backlog gate is services. Service authority was justified in principle in `0.5.287`, but a future `civilization.services` vocabulary still requires a separate schema plan, fresh live-repo audit, and seed plan before any implementation.
+Reason: service authority was justified in principle in `0.5.287`, and `0.5.293` now resolves the future `civilization.services` schema posture, field list, provider-reference boundaries, forbidden fields, validation expectations, and seed prerequisites.
 
-The next run must not implement service content, schemas, validators, tests, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, provider availability, prices, stock, access checks, effects, or gameplay.
+The next run may implement only the schema, focused pure validator, and focused in-memory tests if explicitly requested. It must not add live service content, normal content-lint registration unless explicitly scoped, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, provider availability, prices, stock, access checks, effects, or gameplay.
 
 Suggested next commit:
 
-`docs(roadmap): decide discovery poi boundary`
+`docs(roadmap): plan service authority schema`

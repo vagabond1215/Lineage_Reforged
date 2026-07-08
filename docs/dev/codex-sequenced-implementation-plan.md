@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-08
-Route: Codex local sequencing alignment after `Version 0.5.292 - Discovery And POI Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.293 - Service Authority Schema Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.292 - Discovery And POI Boundary Decision`
+- `Version 0.5.293 - Service Authority Schema Plan`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.293 - Service Authority Schema Plan`
+- `Version 0.5.294 - Service Authority Schema And Validator`
 
 Versioning note:
 
@@ -52,6 +52,7 @@ Versioning note:
 - `0.5.290` completed as a primary roadmap run and audited static authority validation posture across the closed Highcrown Knowledge lane, service authority, resource/commodity authority, settlement/district/site static authority, and future combat status/condition/injury vocabulary; no content, schema/validator, test, runtime, UI, storage, or gameplay changes landed.
 - `0.5.291` completed as a primary roadmap run and audited discovery/POI gate intake posture; POI-like identity remains on existing or future specific authority families, a generic `world.pois` authority remains unapproved, and a focused discovery/POI boundary decision is next before any schema, seed, validator, runtime, UI, save/account, or gameplay work.
 - `0.5.292` completed as a primary roadmap run and selected the discovery/POI boundary posture: POI-like authored identity remains on specific owner families, generic `world.pois` remains rejected for the current roadmap, runtime/save owners retain known/discovered/visited/revealed/completed and map-reveal state, UI markers remain presentation, and service authority schema planning is next.
+- `0.5.293` completed as a primary roadmap run and defined the future `civilization.services` schema posture, paths, wrapper, `service.<slug>` id pattern, fields, lifecycle/status vocabulary, provider-reference boundaries, forbidden fields, validation expectations, and seed prerequisites without adding service content, schemas, validators, tests, runtime, UI, storage, commands, events, rewards, save/account behavior, provider availability, prices, stock, access checks, effects, or gameplay.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -383,17 +384,18 @@ Versioning note:
 | 211 | `0.5.290` | Static Authority Validation Consolidation Audit | Codex 5.5 Local docs-first | landed static lanes | audit | Completed | Confirmed current static authority decisions are coherent, implementation remains deferred, and discovery/POI intake should be next. |
 | 212 | `0.5.291` | Discovery And POI Gate Intake Audit | Codex 5.5 Local docs-first | backlog later-gate priority | intake audit | Completed | Found no approved generic POI authority; kept POI-like identity on specific owner families and selected a boundary decision next. |
 | 213 | `0.5.292` | Discovery And POI Boundary Decision | Codex 5.5 Local docs-first | `0.5.291` intake audit | boundary decision | Completed | Rejected generic `world.pois` for the current roadmap, kept POI-like identity on specific owners, and selected service schema planning next. |
-| 214 | `0.5.293` | Service Authority Schema Plan | Codex 5.5 Local docs-first | `0.5.287` service boundary + `0.5.292` next route | schema plan | Deferred | Define future `civilization.services` schema posture, paths, fields, provider-reference boundaries, forbidden fields, validation expectations, and seed prerequisites without implementation. |
+| 214 | `0.5.293` | Service Authority Schema Plan | Codex 5.5 Local docs-first | `0.5.287` service boundary + `0.5.292` next route | schema plan | Completed | Defined future `civilization.services` schema posture, provider-reference boundaries, forbidden fields, validation expectations, and seed prerequisites without implementation. |
+| 215 | `0.5.294` | Service Authority Schema And Validator | Codex 5.5 Local narrow implementation | `docs/design/service-authority-schema-plan.md` | schema and focused validator | Deferred | Add only the future service schema, pure focused validator, and focused tests; no live service content, normal lint registration unless explicitly scoped, runtime, UI, storage, save/account, or gameplay behavior. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.293 - Service Authority Schema Plan`
+1. `0.5.294 - Service Authority Schema And Validator`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; and the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap while selecting service schema planning as the next docs-first route.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap; and the service authority schema plan defined future `civilization.services` schema posture while selecting a narrow schema/validator run as the next route.
 
 ## Default Prompt Pattern
 
@@ -409,7 +411,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.293 - Service Authority Schema Plan` as the immediate next recommended run.
+- Keep `Version 0.5.294 - Service Authority Schema And Validator` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -427,7 +429,8 @@ Each future Codex prompt should:
 - `0.5.290` completed the static authority validation consolidation audit, confirmed no deferred service/resource/commodity/status/condition/injury implementation landed, preserved the closed Highcrown Knowledge lane, and did not add content, edit schemas or validators, edit tests, change runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, add route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, anchor, service, resource, commodity, combat status/condition/injury, sacred-site, religious-hotspot, Knowledge, or gameplay behavior.
 - `0.5.291` completed the docs-first discovery/POI gate intake audit, kept POI-like identity on specific authority families, kept a generic `world.pois` authority unapproved, selected `0.5.292` for a focused boundary decision, and did not add content, edit schemas or validators, edit tests, change runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, add discovery state, map reveal, route/travel behavior, Knowledge state, POI content, or gameplay behavior.
 - `0.5.292` completed the docs-first discovery/POI boundary decision, rejected generic `world.pois` for the current roadmap, kept POI-like authored identity on specific owner families, preserved runtime/save ownership for known/discovered/visited/revealed/completed and map-reveal state, kept UI markers presentation-only, selected `0.5.293` for service schema planning, and did not add content, edit schemas or validators, edit tests, change runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, add discovery state, map reveal, route/travel behavior, Knowledge state, POI content, service content, or gameplay behavior.
-- `0.5.293` should be a docs-first service authority schema plan. It must define future `civilization.services` schema posture before any service content, schema, validator, runtime, UI, storage, command, event, reward, save/account, or gameplay implementation is proposed.
+- `0.5.293` completed the docs-first service authority schema plan, defined the future `civilization.services` collection path, records-only wrapper, `service.<slug>` id pattern, required and optional fields, lifecycle/status vocabulary, provider-reference boundaries, forbidden fields, validation expectations, and first seed prerequisites, and did not add service content, schemas, validators, tests, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, provider availability, prices, stock, access checks, effects, or gameplay.
+- `0.5.294` should be a narrow service authority schema and validator run. It must not add live service content, normal content-lint registration unless explicitly scoped, runtime, UI, storage, command, event, reward, save/account, provider availability, prices, stock, access checks, effects, or gameplay implementation.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
