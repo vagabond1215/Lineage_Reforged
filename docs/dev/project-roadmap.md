@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.293 - Service Authority Schema Plan`
+- Latest completed version: `Version 0.5.294 - Service Authority Schema And Validator`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.294 - Service Authority Schema And Validator`
+- Next recommended version: `Version 0.5.295 - Service Authority Seed Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -149,6 +149,7 @@ Versioning rule:
 - `Version 0.5.291 - Discovery And POI Gate Intake Audit` added `docs/design/discovery-poi-gate-intake-audit.md`; found no approved generic `world.pois`, `point_of_interest`, or equivalent canonical POI authority; kept POI-like authored identity on existing or future specific authority families; kept Knowledge discovery-source vocabulary separate from route, journey, POI, and map-reveal authority; selected `Version 0.5.292 - Discovery And POI Boundary Decision` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, travel/pathfinding, map reveal, quest state, Knowledge state, encounter/spawn behavior, service/resource/commodity, status/condition/injury, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.292 - Discovery And POI Boundary Decision` added `docs/design/discovery-poi-boundary-decision.md`; selected Option A; rejected generic `world.pois` for the current roadmap posture; kept POI-like authored identity on specific owner families; kept known/discovered/visited/revealed/completed state, route visibility, map reveal, and player-specific marker visibility with future runtime/save/session/account owners; kept Knowledge discovery separate from map reveal; selected `Version 0.5.293 - Service Authority Schema Plan` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, travel/pathfinding, exploration, map reveal, quest state, Knowledge state, encounter/spawn behavior, service/resource/commodity, status/condition/injury, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.293 - Service Authority Schema Plan` added `docs/design/service-authority-schema-plan.md`; defined the future `civilization.services` collection path, records-only wrapper, `service.<slug>` id pattern, required and optional fields, lifecycle/status vocabulary, first-pass family and public-posture vocabulary, provider-anchor and allowed-owner type posture, relationship to existing building `serviceFunctions`, forbidden fields, validation expectations, focused test expectations, and first seed prerequisites; selected `Version 0.5.294 - Service Authority Schema And Validator` next; and changed no content, schemas, validators, tests, runtime, UI, storage, command, event, reward, migration, save/account, provider availability, prices, stock, access checks, service effects, route/travel, building/workplace/economy, court/law, vendor/market, cargo/storage, settlement/district/site, Knowledge, resource, commodity, combat health, Highcrown Knowledge, or gameplay behavior.
+- `Version 0.5.294 - Service Authority Schema And Validator` added `packages/schemas/civilization/service.schema.json`, `tools/content-lint/services.mjs`, and `tests/unit/service-authority-validation.test.mjs`; added service schema parse coverage to `tests/unit/schema-files.test.mjs`; kept `packages/content/base/civilization/services.json` absent; kept normal content-lint registration absent; selected `Version 0.5.295 - Service Authority Seed Plan` next; and changed no live service content, runtime, UI, storage, command, event, reward, migration, save/account, provider availability, prices, stock, access checks, service effects, route/travel, legal/reputation behavior, Knowledge, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -442,9 +443,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.294 - Service Authority Schema And Validator`
+1. `0.5.295 - Service Authority Seed Plan`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.294`. The `0.5.293` service authority schema plan defined the future `civilization.services` schema posture and selected a narrow schema/validator pass before any service content seed or runtime implementation.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.295`. The `0.5.294` service authority schema/validator run added the future service schema and focused validation support while keeping live service content deferred to a docs-first seed plan.
 
 High-priority unresolved questions:
 

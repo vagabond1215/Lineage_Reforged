@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ServiceCollection",
+  "description": "Schema for future provider-independent service vocabulary. Records are static descriptive authority only and do not define providers, availability, access checks, prices, stock, storage contents, effects, UI, runtime state, save/account state, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/serviceRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "serviceId": {
+      "type": "string",
+      "pattern": "^service\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "sourceAuthorityNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "tagList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" }
+    },
+    "buildingServiceFunctionList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:[._][a-z0-9]+)*$"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "retired"]
+    },
+    "family": {
+      "type": "string",
+      "enum": [
+        "lodging",
+        "market_exchange",
+        "storage_handling",
+        "travel_support",
+        "civic_administration",
+        "guild_institutional",
+        "archive_record",
+        "health_care",
+        "training",
+        "repair",
+        "religious_service",
+        "hygiene_laundry",
+        "contract_brokerage",
+        "draft_labor",
+        "security_support"
+      ]
+    },
+    "publicPosture": {
+      "type": "string",
+      "enum": ["public", "limited", "restricted", "institutional", "regulated"]
+    },
+    "providerAnchorType": {
+      "type": "string",
+      "enum": [
+        "building_template",
+        "settlement_site",
+        "settlement_district",
+        "settlement",
+        "workplace",
+        "guild",
+        "institution",
+        "person",
+        "npc",
+        "route_facility",
+        "market_context",
+        "civic_authority",
+        "religious_site"
+      ]
+    },
+    "allowedOwnerType": {
+      "type": "string",
+      "enum": [
+        "civilization.buildings",
+        "civilization.workplaces",
+        "civilization.guilds",
+        "world.settlements",
+        "world.settlement_districts",
+        "world.settlement_sites",
+        "world.travel_networks",
+        "world.sacred_sites",
+        "world.religious_hotspots",
+        "civilization.quest_definitions",
+        "civilization.quest_templates",
+        "future.people",
+        "future.npcs",
+        "future.institutions"
+      ]
+    },
+    "serviceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "status",
+        "family",
+        "summary",
+        "tags",
+        "publicPosture",
+        "providerAnchorTypes",
+        "allowedOwnerTypes",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/serviceId" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "$ref": "#/$defs/status" },
+        "family": { "$ref": "#/$defs/family" },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "tags": { "$ref": "#/$defs/tagList" },
+        "publicPosture": { "$ref": "#/$defs/publicPosture" },
+        "providerAnchorTypes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/providerAnchorType" }
+        },
+        "allowedOwnerTypes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/allowedOwnerType" }
+        },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/sourceAuthorityNotes" },
+        "notes": { "$ref": "#/$defs/noteList" },
+        "relatedBuildingServiceFunctions": { "$ref": "#/$defs/buildingServiceFunctionList" },
+        "relationshipNotes": { "$ref": "#/$defs/noteList" }
+      }
+    }
+  }
+}

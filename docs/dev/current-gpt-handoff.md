@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.293 - Service Authority Schema Plan
+Source version/run: Version 0.5.294 - Service Authority Schema And Validator
 Date: 2026-07-08
 
 ## Status
 
-`Version 0.5.293 - Service Authority Schema Plan` completed as a docs-only plan.
+`Version 0.5.294 - Service Authority Schema And Validator` completed as a narrow schema/validator/test implementation.
 
 Latest completed primary:
 
-- `Version 0.5.293 - Service Authority Schema Plan`
+- `Version 0.5.294 - Service Authority Schema And Validator`
 
 Latest completed support/audit run:
 
@@ -17,51 +17,60 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.294 - Service Authority Schema And Validator`
+- `Version 0.5.295 - Service Authority Seed Plan`
 
-## Service Authority Schema Posture
+## Service Schema / Validator Implementation Posture
 
-`docs/design/service-authority-schema-plan.md` is the current schema-plan source for future service vocabulary.
+Future service vocabulary now has schema and focused validator support:
 
-Current posture:
+- Schema: `packages/schemas/civilization/service.schema.json`
+- Focused validator/helper: `tools/content-lint/services.mjs`
+- Focused tests: `tests/unit/service-authority-validation.test.mjs`
+- Schema parse coverage: `tests/unit/schema-files.test.mjs`
 
-- A future `civilization.services` vocabulary is planned at `packages/content/base/civilization/services.json`.
-- The future schema path is `packages/schemas/civilization/service.schema.json`; the future focused validator path is `tools/content-lint/services.mjs`.
-- Planned service ids use `service.<slug>` and a records-only wrapper.
-- Required future fields are `id`, `slug`, `name`, `status`, `family`, `summary`, `tags`, `publicPosture`, `providerAnchorTypes`, `allowedOwnerTypes`, `sourceAuthorityNotes`, and `notes`.
-- Optional future fields are `relatedBuildingServiceFunctions` and `relationshipNotes`.
-- Status vocabulary is `planned`, `active`, and `retired`. Active service records may exist before canonical providers only when they remain pure vocabulary with no provider refs or execution/state fields.
-- Existing `civilization.buildings.serviceFunctions` remain source-local descriptors. `relatedBuildingServiceFunctions` may later bridge to observed descriptor strings but must not migrate building records.
-- `providerAnchorTypes` and `allowedOwnerTypes` are type vocabularies only. They must not contain concrete provider ids.
-- The plan rejects aliases, migration compatibility, provider refs, availability, schedules, access checks, prices, stock, item instances, storage contents, effects, UI, runtime, save/account state, and gameplay fields.
-- The first seed still requires a separate seed plan with a fresh live-repo audit and exact candidates.
+Implemented posture:
 
-## Discovery And POI Boundary Posture
+- `civilization.services` remains future provider-independent vocabulary only.
+- Service ids use `service.<slug>`.
+- The future content wrapper is records-only.
+- Required fields are `id`, `slug`, `name`, `status`, `family`, `summary`, `tags`, `publicPosture`, `providerAnchorTypes`, `allowedOwnerTypes`, `sourceAuthorityNotes`, and `notes`.
+- Optional fields are `relatedBuildingServiceFunctions` and `relationshipNotes`.
+- `aliases` are not allowed.
+- Status vocabulary is `planned`, `active`, and `retired`.
+- `providerAnchorTypes` and `allowedOwnerTypes` are type vocabularies only, not concrete provider references.
+- `relatedBuildingServiceFunctions` resolves only to observed current building `serviceFunctions` values or explicitly test-approved values supplied to the helper.
+- Tags use lower-snake descriptive strings plus validator guardrails against obvious forbidden tag intent; they are not a hard enum in this first schema.
+- The validator rejects obvious forbidden state/execution fields, including nested keys.
 
-`docs/design/discovery-poi-boundary-decision.md` remains the current boundary source for discovery/POI ownership. A generic `world.pois` authority remains rejected for the current roadmap posture. Known/discovered/visited/revealed/completed state, route visibility, map reveal, player-specific marker visibility, quest discovery, encounter/spawn exposure, UI markers, and save/session/account persistence remain outside static authored records.
+## Remaining Live-Content Guardrails
+
+No live service content exists yet:
+
+- `packages/content/base/civilization/services.json` remains absent.
+- Normal content-lint registration for `civilization.services` remains absent.
+- Existing `civilization.buildings.serviceFunctions` remain source-local descriptors and were not migrated.
+- First live service records require a separate seed plan with a fresh audit, exact candidates, status choices, field values, and explicit non-execution notes.
+
+The next run must not jump directly to live service content. It should plan the first tiny seed only.
 
 ## Remaining Deferred Authority Guardrails
 
 The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`.
 
-`Version 0.5.287 - Service Authority Boundary Decision` selected a hybrid service model. `Version 0.5.293 - Service Authority Schema Plan` now defines the future schema posture, but service implementation remains deferred until a focused schema/validator prompt.
+A generic `world.pois` authority remains rejected by `Version 0.5.292 - Discovery And POI Boundary Decision`.
 
-`Version 0.5.288 - Resource And Commodity Schema Decision` approved future separate static `world.resources` and `world.commodities` authorities in principle. They must not replace item keys or own prices, stock, item instances, cargo movement, storage contents, service execution, gathering/extraction, trading, crafting execution, runtime, UI, or gameplay.
+Future `world.resources`, `world.commodities`, and typed status/condition/injury catalog implementation remain deferred behind their own schema plans, fresh live-repo audits, seed plans, and focused implementation prompts.
 
-`Version 0.5.289 - Combat Status Condition And Injury Boundary Decision` approved a future typed, non-executing status/condition/injury vocabulary in principle. It must not own active status instances, stacks, magnitudes, actor references, timers, HP/MP/stamina changes, body-state math, wounds, injury instances, disease/poison exposure, treatment, recovery, scars, death, defeat, save/account state, commands, events, rewards, UI, storage, runtime, or gameplay.
-
-`Version 0.5.290 - Static Authority Validation Consolidation Audit` confirmed those recent static authority lanes remain coherent and deferred.
-
-`Version 0.5.291 - Discovery And POI Gate Intake Audit` found no approved generic POI authority and selected the now-completed boundary decision.
+Provider availability, schedules, access checks, prices, payment, stock, inventory, storage contents, training/healing/repair/lodging effects, route traversal, legal/reputation mutation, UI, runtime, commands, events, rewards, save/account state, and gameplay remain outside static service authority.
 
 ## Next Route Guardrail
 
-`Version 0.5.294 - Service Authority Schema And Validator` should be narrow implementation only.
+`Version 0.5.295 - Service Authority Seed Plan` should be docs-first.
 
-Reason: service authority was justified in principle in `0.5.287`, and `0.5.293` now resolves the future `civilization.services` schema posture, field list, provider-reference boundaries, forbidden fields, validation expectations, and seed prerequisites.
+Reason: service schema/validator/test support is now in place, but no live service candidates have been selected. The next safe step is to audit current service-like descriptors and choose a tiny provider-independent vocabulary seed before any content file is added.
 
-The next run may implement only the schema, focused pure validator, and focused in-memory tests if explicitly requested. It must not add live service content, normal content-lint registration unless explicitly scoped, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, provider availability, prices, stock, access checks, effects, or gameplay.
+The next run must not add live service content unless it is explicitly a seed-plan implementation run after this seed plan exists and is accepted.
 
 Suggested next commit:
 
-`docs(roadmap): plan service authority schema`
+`feat(content): add service authority schema validator`
