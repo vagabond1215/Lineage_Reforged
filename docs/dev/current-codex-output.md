@@ -1,25 +1,28 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.294 - Service Authority Schema And Validator
+Source version/run: Version 0.5.295 - Service Authority Seed Plan
 Date: 2026-07-08
-Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` returned `fatal: Cannot fast-forward to multiple branches`, but follow-up `git rev-parse HEAD` and `git rev-parse origin/master` both returned `f2dfa438581b29cfe0ef4e41d7b3659ae0821690`, confirming local `master` matched `origin/master`.
+Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` succeeded and reported `Already up to date.`
 
 ## Result
 
-Implemented the narrow future `civilization.services` schema/validator support approved by `Version 0.5.293`.
+Added the docs-only service authority seed plan at `docs/design/service-authority-seed-plan.md`.
 
-Added `packages/schemas/civilization/service.schema.json` with a records-only wrapper, required service identity/vocabulary fields, `service.<slug>` ids, lifecycle/status enum, first-pass family enum, descriptive public-posture enum, provider-anchor type enum, allowed-owner type enum, source authority notes, notes, and optional relationship fields. The schema does not include `aliases`.
+The plan selects exactly five future provider-independent planned service vocabulary records for a later live seed:
 
-Added `tools/content-lint/services.mjs` as a pure focused helper exporting `validateServicesContent(...)`. It validates strict wrapper/record shape, id/slug/name uniqueness, slug/id coherence, enum fields, unique arrays, lower-snake descriptive tags, forbidden state/execution keys including nested keys, and `relatedBuildingServiceFunctions` against observed or explicitly approved building `serviceFunctions`.
+- `service.lodging`
+- `service.market_exchange`
+- `service.storage_warehouse`
+- `service.archives`
+- `service.contract_board`
 
-Added focused in-memory tests in `tests/unit/service-authority-validation.test.mjs`, and registered the new schema in the explicit schema parse test list. No live `packages/content/base/civilization/services.json` file was added, and normal content-lint registration remains absent.
+All selected candidates are observed in current `civilization.buildings.serviceFunctions`. The plan defines exact future field values, status choices, related building descriptors, source notes, non-execution notes, rejected candidates, normal-lint posture, live seed instructions, validation expectations, and the next route.
+
+No live service content was added. No schema, validator, test, runtime, UI, storage, save/account, gameplay, provider, building, workplace, settlement, route, vendor, market, cargo, storage, Knowledge, resource/commodity, combat-health, POI/discovery, map-feature, sacred-site, or religious-hotspot content was changed.
 
 ## Files Changed
 
-- `packages/schemas/civilization/service.schema.json`
-- `tools/content-lint/services.mjs`
-- `tests/unit/service-authority-validation.test.mjs`
-- `tests/unit/schema-files.test.mjs`
+- `docs/design/service-authority-seed-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -30,43 +33,46 @@ Added focused in-memory tests in `tests/unit/service-authority-validation.test.m
 
 - `git status --short --branch`
 - `git fetch origin`
-- `git pull --ff-only origin master` (failed with `fatal: Cannot fast-forward to multiple branches`; follow-up HEAD/origin checks confirmed no divergence)
-- `git rev-parse HEAD`
-- `git rev-parse origin/master`
-- required read-only inspections of active handoff, roadmap, backlog, sequence, service schema plan, service boundary, static-authority audit, discovery/POI decision, resource/commodity decision, combat-health boundary decision, and Highcrown closure docs
-- pattern inspections of nearby schemas, validators, focused validator tests, schema-file tests, content-lint registration, and building `serviceFunctions`
-- `node --test tests\unit\service-authority-validation.test.mjs` (failed once on an overbroad meta-test import scan; fixed and reran)
-- `node --test tests\unit\service-authority-validation.test.mjs` (passed)
-- `node --test tests\unit\schema-files.test.mjs` (passed)
-- `node --test tests\unit\service-authority-validation.test.mjs tests\unit\schema-files.test.mjs` (passed)
+- `git pull --ff-only origin master`
+- Required reads of `AGENTS.md`, `README.md`, active output, active handoff, sequence, roadmap, backlog, service schema plan, service boundary, static-authority audit, discovery/POI boundary, resource/commodity decision, combat-health boundary, Highcrown closure review, service schema, service validator, and focused service authority tests.
+- Structured extraction of current building `serviceFunctions`.
+- Structured extraction of building categories.
+- Structured extraction of hosted workplace ids.
+- Structured extraction of building storage profile types.
+- Targeted service-facing scans for market, vendor, stock, price, payment, inventory, access, lodging, clinic, ferry, port, storage, archive, contract, hygiene, laundering, runtime, UI, and travel language.
+- `Test-Path -LiteralPath 'packages\content\base\civilization\services.json'` before edits (returned `False`)
+- `rg -n 'civilization/services\.json|civilization\\services\.json|services\.mjs|validateServicesContent' tools\content-lint\index.mjs` before edits (no matches)
+- `git diff --name-only` (changed files are docs only)
+- `git diff --name-only -- packages\schemas tools\content-lint tests apps packages\engines packages\shared packages\content` (no output)
+- `git ls-files --others --exclude-standard` (only `docs/design/service-authority-seed-plan.md`)
 - `git diff --check` (passed; Git reported line-ending normalization warnings only)
-- `Test-Path -LiteralPath 'packages\content\base\civilization\services.json'` (returned `False`)
-- `rg -n 'civilization/services\.json|civilization\\services\.json|services\.mjs|validateServicesContent' tools\content-lint\index.mjs` (no matches)
 - conflict-marker scan across changed files (no matches)
 - trailing-whitespace scan across changed files (no findings)
 - ASCII scan across changed files (no findings)
-- next-version pointer scan across active docs (all current pointers target `Version 0.5.295 - Service Authority Seed Plan`)
-- Highcrown reopen scan across changed implementation/test/output files (no implementation/content findings; output file only preserves the closed-lane warning)
+- stale next-version pointer scan across active docs (current pointers target `Version 0.5.296 - Service Authority Seed`)
+- accidental live service file and normal content-lint registration scan after edits (live file absent; no registration matches)
+- Highcrown/generic POI/deferred-behavior scan across changed docs (only guardrail language; no reopening or implementation language)
+- `git status --short --branch`
 
 ## Behavior / Runtime Confirmation
 
-No live service content, normal content-lint registration, runtime, UI, storage, command, event, reward, migration, save/account behavior, provider availability, prices, payment, stock, inventory, access checks, service effects, route/travel behavior, legal/reputation behavior, Knowledge content, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior changed.
+Documentation-only change.
 
-The service tag schema uses lower-snake descriptive strings plus validator guardrails against obvious forbidden tag intent, instead of a hard tag enum. This matches nearby static descriptor/tag schema posture while keeping service tags non-prose and non-executing.
+No live service content, normal content-lint registration, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account behavior, provider availability, prices, payment, stock, inventory, access checks, service effects, route/travel behavior, legal/reputation behavior, Knowledge content, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- First live service content still requires `Version 0.5.295 - Service Authority Seed Plan` with a fresh audit and exact tiny candidate list.
-- Normal content-lint registration remains intentionally deferred until live service content is approved or a later prompt explicitly accepts future-content registration without records.
-- Existing `civilization.buildings.serviceFunctions` remain source-local descriptors; this run did not migrate building records.
-- The focused validator rejects obvious forbidden keys and nested keys by field-name intent; it does not attempt semantic NLP over prose.
+- The next live seed must use the exact selected records and field values from `docs/design/service-authority-seed-plan.md`.
+- Normal content-lint registration remains intentionally deferred unless the next prompt explicitly scopes it.
+- `service.storage_warehouse` intentionally maps to observed building descriptor `storage.warehouse` because service ids require lower snake-case after `service.`.
+- Rejected candidates such as `clinic`, `ferry_berth`, and `port_handling` remain deferred because they risk implying healing, travel, cargo, access, price, stock, or runtime behavior too early.
 - A generic `world.pois` authority remains rejected by the current discovery/POI boundary decision.
 - The Highcrown settlement Knowledge lane remains closed and must not be reopened without a later owner decision.
 
 ## Next Recommended Version
 
-Version 0.5.295 - Service Authority Seed Plan
+Version 0.5.296 - Service Authority Seed
 
 ## Suggested Commit Message
 
-feat(content): add service authority schema validator
+docs(roadmap): plan service authority seed

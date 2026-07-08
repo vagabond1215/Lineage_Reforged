@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.294 - Service Authority Schema And Validator
+Source version/run: Version 0.5.295 - Service Authority Seed Plan
 Date: 2026-07-08
 
 ## Status
 
-`Version 0.5.294 - Service Authority Schema And Validator` completed as a narrow schema/validator/test implementation.
+`Version 0.5.295 - Service Authority Seed Plan` completed as a documentation-only seed plan.
 
 Latest completed primary:
 
-- `Version 0.5.294 - Service Authority Schema And Validator`
+- `Version 0.5.295 - Service Authority Seed Plan`
 
 Latest completed support/audit run:
 
@@ -17,41 +17,63 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.295 - Service Authority Seed Plan`
+- `Version 0.5.296 - Service Authority Seed`
 
-## Service Schema / Validator Implementation Posture
+## Service Seed Plan Posture
 
-Future service vocabulary now has schema and focused validator support:
+Seed plan authority:
+
+- `docs/design/service-authority-seed-plan.md`
+
+Current schema/validator support remains:
 
 - Schema: `packages/schemas/civilization/service.schema.json`
 - Focused validator/helper: `tools/content-lint/services.mjs`
 - Focused tests: `tests/unit/service-authority-validation.test.mjs`
 - Schema parse coverage: `tests/unit/schema-files.test.mjs`
 
-Implemented posture:
-
-- `civilization.services` remains future provider-independent vocabulary only.
-- Service ids use `service.<slug>`.
-- The future content wrapper is records-only.
-- Required fields are `id`, `slug`, `name`, `status`, `family`, `summary`, `tags`, `publicPosture`, `providerAnchorTypes`, `allowedOwnerTypes`, `sourceAuthorityNotes`, and `notes`.
-- Optional fields are `relatedBuildingServiceFunctions` and `relationshipNotes`.
-- `aliases` are not allowed.
-- Status vocabulary is `planned`, `active`, and `retired`.
-- `providerAnchorTypes` and `allowedOwnerTypes` are type vocabularies only, not concrete provider references.
-- `relatedBuildingServiceFunctions` resolves only to observed current building `serviceFunctions` values or explicitly test-approved values supplied to the helper.
-- Tags use lower-snake descriptive strings plus validator guardrails against obvious forbidden tag intent; they are not a hard enum in this first schema.
-- The validator rejects obvious forbidden state/execution fields, including nested keys.
-
-## Remaining Live-Content Guardrails
-
 No live service content exists yet:
 
 - `packages/content/base/civilization/services.json` remains absent.
-- Normal content-lint registration for `civilization.services` remains absent.
+- Normal content-lint registration remains absent.
 - Existing `civilization.buildings.serviceFunctions` remain source-local descriptors and were not migrated.
-- First live service records require a separate seed plan with a fresh audit, exact candidates, status choices, field values, and explicit non-execution notes.
 
-The next run must not jump directly to live service content. It should plan the first tiny seed only.
+## Exact Selected Candidates
+
+The next live seed should create exactly these five planned records:
+
+| Future id | Status | Family | Related building descriptor |
+| --- | --- | --- | --- |
+| `service.lodging` | `planned` | `lodging` | `lodging` |
+| `service.market_exchange` | `planned` | `market_exchange` | `market_exchange` |
+| `service.storage_warehouse` | `planned` | `storage_handling` | `storage.warehouse` |
+| `service.archives` | `planned` | `archive_record` | `archives` |
+| `service.contract_board` | `planned` | `contract_brokerage` | `contract_board` |
+
+Use the exact field values in `docs/design/service-authority-seed-plan.md`.
+
+Do not add `relationshipNotes` in the first live seed. The plan intentionally omits that optional field for all selected records.
+
+## Live-Content Guardrails
+
+`Version 0.5.296 - Service Authority Seed` should be narrow:
+
+- create `packages/content/base/civilization/services.json`;
+- add exactly the five selected planned records;
+- use the existing schema and focused validator;
+- add or update focused tests only if needed for live seed validation;
+- prove every `relatedBuildingServiceFunctions` value is observed in current building content;
+- keep normal content-lint registration deferred unless explicitly scoped by the prompt.
+
+The live seed must not:
+
+- migrate or edit `civilization.buildings.serviceFunctions`;
+- edit building, workplace, settlement, district, site, route, travel, vendor, shop, market, cargo, or storage records;
+- add provider records;
+- add provider availability, schedules, access checks, prices, payment, stock, inventory, storage contents, effects, UI, runtime, save/account state, events, rewards, legal/reputation behavior, route/travel behavior, or gameplay;
+- reopen Highcrown Knowledge;
+- implement generic `world.pois`;
+- implement resources, commodities, or combat status/condition/injury vocabulary.
 
 ## Remaining Deferred Authority Guardrails
 
@@ -65,12 +87,8 @@ Provider availability, schedules, access checks, prices, payment, stock, invento
 
 ## Next Route Guardrail
 
-`Version 0.5.295 - Service Authority Seed Plan` should be docs-first.
-
-Reason: service schema/validator/test support is now in place, but no live service candidates have been selected. The next safe step is to audit current service-like descriptors and choose a tiny provider-independent vocabulary seed before any content file is added.
-
-The next run must not add live service content unless it is explicitly a seed-plan implementation run after this seed plan exists and is accepted.
+`Version 0.5.296 - Service Authority Seed` is the immediate next primary route because `0.5.295` selected exact candidates and found no blocker requiring a readiness follow-up.
 
 Suggested next commit:
 
-`feat(content): add service authority schema validator`
+`docs(roadmap): plan service authority seed`
