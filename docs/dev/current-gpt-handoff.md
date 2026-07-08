@@ -1,19 +1,17 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.289 - Combat Status Condition And Injury Boundary Decision
-Date: 2026-07-07
+Source version/run: Version 0.5.290 - Static Authority Validation Consolidation Audit
+Date: 2026-07-08
 
 ## Status
 
-`Version 0.5.289 - Combat Status Condition And Injury Boundary Decision` completed as a docs-only decision.
+`Version 0.5.290 - Static Authority Validation Consolidation Audit` completed as a docs-only audit.
 
-Decision: select a limited hybrid combat status/condition/injury boundary. A future typed, non-executing static vocabulary/catalog is justified in principle, with records distinguished as status, condition, or injury. Implementation is deferred to a later schema plan and seed plan.
-
-Static vocabulary may describe identity, family, tags, source domains, persistence posture, and non-executing semantics only. Active status instances, stacks, magnitudes, source/target actors, timers, HP/MP/stamina changes, body-state math, wounds, injury instances, disease/poison exposure, treatment, recovery, scars, death, defeat, save/account state, runtime, UI, commands, events, rewards, and gameplay remain outside static authority.
+The audit confirmed that the recent static authority decisions are coherent and that no deferred service, resource, commodity, combat status, condition, or injury authority has been implemented.
 
 Latest completed primary:
 
-- `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision`
+- `Version 0.5.290 - Static Authority Validation Consolidation Audit`
 
 Latest completed support/audit run:
 
@@ -21,53 +19,36 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.290 - Static Authority Validation Consolidation Audit`
+- `Version 0.5.291 - Discovery And POI Gate Intake Audit`
 
-## Current Versioning Posture
+## Static Authority Validation Posture
 
-Three-segment labels such as `0.5.289` are primary roadmap versions. Four-segment labels such as `0.5.276.1` are support-run suffixes and do not consume planned primary roadmap slots.
+`docs/design/static-authority-validation-consolidation-audit.md` is the current consolidation source for recent static authority lanes.
 
-`0.5.289` completed as the next primary after `0.5.288`.
+Validation posture:
 
-## Highcrown Knowledge Lane Posture
+- existing settlement, district, site, Knowledge subject, item, recipe, production, market-value, monster, encounter, spawn, role, and tactic validations remain with their current owners;
+- future `civilization.services`, `world.resources`, `world.commodities`, and typed status/condition/injury catalog validation remains documentation-only;
+- each deferred authority still requires a separate schema plan, fresh live-repo audit, and seed plan before implementation, validator wiring, normal lint registration, or content.
+
+## Deferred Authority Posture
 
 The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`.
 
-Do not plan additional Highcrown settlement/district/site General Lore snippets unless a later owner decision explicitly reopens that lane.
+`Version 0.5.287 - Service Authority Boundary Decision` selected a hybrid service model. A future `civilization.services` catalog is justified only in principle for provider-independent identity/vocabulary. It must not own provider availability, access, prices, stock, storage contents, effects, UI, runtime, or gameplay.
 
-## Service Boundary Posture
+`Version 0.5.288 - Resource And Commodity Schema Decision` approved future separate static `world.resources` and `world.commodities` authorities in principle. They must not replace item keys or own prices, stock, item instances, cargo movement, storage contents, service execution, gathering/extraction, trading, crafting execution, runtime, UI, or gameplay.
 
-`Version 0.5.287 - Service Authority Boundary Decision` selected a hybrid service model.
-
-Current service-like descriptors remain on existing and future owner records. A future narrow static service catalog, likely `civilization.services`, is justified in principle only for provider-independent identity/vocabulary and requires a separate schema decision, fresh live-repo audit, and seed plan before implementation.
-
-Services do not own status, condition, or injury execution. Healing, treatment, repair, lodging/rest effects, access checks, provider availability, prices, stock, transactions, storage contents, UI, runtime, and gameplay remain outside static service authority.
-
-## Resource / Commodity Posture
-
-`Version 0.5.288 - Resource And Commodity Schema Decision` approved separate future static `world.resources` and `world.commodities` authorities in principle.
-
-Resources identify source materials and environmental compatibility. Commodities identify bulk trade or economic classes. `items.items` continues to own individual inventory item identity and canonical item keys. Implementation remains deferred until a separate schema plan and seed plan.
-
-Static resource/commodity authority must not own prices, stock, item instances, cargo movement, storage contents, services, extraction, trading, crafting execution, runtime, UI, or gameplay behavior.
-
-## Combat Status / Condition / Injury Posture
-
-The new combat boundary preserves existing owners:
-
-- `CombatStatusEffectState` remains runtime instance state, not a static catalog.
-- Player `resources`, `resourceRuntime`, `bodyState`, and `activeEffects` remain player/runtime/save state.
-- `world.monsters`, `world.encounter_templates`, `world.spawn_profiles`, `game.combat_roles`, and `game.tactics_presets` keep their current static combat-adjacent authority without status/condition/injury expansion.
-- Spell, item, ability, and skill hooks may remain source metadata or runtime inputs; they do not define active applied status or injury state.
-
-Any future static status/condition/injury schema must reject active stacks, source actors, target actors, magnitudes on actors, start/expiry ticks, resource deltas, body-state math, wound instances, treatment progress, recovery timers, death/defeat state, save/account state, commands, events, rewards, UI, storage, and gameplay behavior.
+`Version 0.5.289 - Combat Status Condition And Injury Boundary Decision` approved a future typed, non-executing status/condition/injury vocabulary in principle. It must not own active status instances, stacks, magnitudes, actor references, timers, HP/MP/stamina changes, body-state math, wounds, injury instances, disease/poison exposure, treatment, recovery, scars, death, defeat, save/account state, commands, events, rewards, UI, storage, runtime, or gameplay.
 
 ## Next Route Guardrail
 
-`Version 0.5.290 - Static Authority Validation Consolidation Audit` should be docs-first and audit settled static authority lanes before further seeds.
+`Version 0.5.291 - Discovery And POI Gate Intake Audit` should be docs-first.
 
-It must not add content, schemas, validators, tests, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, combat status/injury behavior, resource/commodity/service implementation, Knowledge snippets, Knowledge registry/domain/trial-policy content, settlement/district/site content, sacred-site/religious-hotspot content, or gameplay behavior unless a later focused implementation prompt explicitly scopes that work.
+Reason: the service/resource/combat boundary queue has ended, and the backlog identifies discovery/POIs as the first of the next ten later gates. The next run should inspect current travel, map-feature, Knowledge, quest, settlement/site, discovery, and runtime boundaries before deciding whether any future schema or seed route is justified.
+
+It must not implement POI content, discovery state, map reveal, travel behavior, schemas, validators, tests, runtime/UI/storage/commands/events/rewards/migrations/save-account behavior, or gameplay.
 
 Suggested next commit:
 
-`docs(roadmap): decide combat status injury boundary`
+`docs(roadmap): audit static authority validation posture`
