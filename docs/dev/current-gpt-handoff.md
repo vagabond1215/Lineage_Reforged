@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.306 - Resource And Commodity Post-Registration Audit
+Source version/run: Version 0.5.307 - Resource And Commodity Next Expansion Gate
 Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.306 - Resource And Commodity Post-Registration Audit` completed a docs-only audit of the accepted resource/commodity normal-lint registration.
+`Version 0.5.307 - Resource And Commodity Next Expansion Gate` completed a docs-only gate after the accepted resource/commodity post-registration audit.
 
 Latest completed primary:
 
-- `Version 0.5.306 - Resource And Commodity Post-Registration Audit`
+- `Version 0.5.307 - Resource And Commodity Next Expansion Gate`
 
 Latest completed support/audit run:
 
@@ -17,16 +17,18 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.307 - Resource And Commodity Next Expansion Gate`
+- `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
 
-## Post-Registration Posture
+## Resource / Commodity Gate Posture
 
-Normal content lint is stable for the existing live seed:
+Resource/commodity normal content-lint registration is stable.
+
+Normal content lint still registers:
 
 - `packages/content/base/world/resources.json`
 - `packages/content/base/world/commodities.json`
 
-`tools/content-lint/index.mjs` imports both focused validators exactly once, includes both files in the normal `checks` list exactly once, loads resource/commodity content and schemas, loads `items.items` and `civilization.market_item_values`, and validates both peer wrappers together.
+`tools/content-lint/index.mjs` still imports both focused validators exactly once, includes both files in the normal `checks` list exactly once, loads resource/commodity content and schemas, loads `items.items` and `civilization.market_item_values`, and validates both peer wrappers together.
 
 `npm.cmd run tool:content-lint` passes and reports `content-lint: ok (66 files checked)`.
 
@@ -41,17 +43,29 @@ Live content remains unchanged and planned-only:
 | `world.commodities` | `commodity.iron_ore_lots` | `iron_ore` | `resource.iron_ore` |
 | `world.commodities` | `commodity.grain_bundles` | `grain_bundle` | `resource.grain` |
 
-Focused validation proves exact live ids, planned statuses, item-key resolution through `items.items`, non-market-only selected item keys, peer references, absent deferred refs, absent forbidden ownership/runtime keys, and exact-once normal lint registration.
+Focused validation still proves exact live ids, planned statuses, item-key resolution through `items.items`, non-market-only selected item keys, peer references, absent deferred refs, absent forbidden ownership/runtime keys, and exact-once normal lint registration.
 
-## Next Route Guardrail
+## Selected Next-Route Rationale
 
-`Version 0.5.307 - Resource And Commodity Next Expansion Gate` should be docs-first.
+Resource/commodity expansion should pause now.
 
-It should decide whether to pause the resource/commodity lane, plan a tiny second seed, wait for `GPT-DR.resources.gathering-extraction`, or choose another authority lane. It should not add records, change schemas, broaden validators, integrate production/recipe/ecology/geography, normalize settlement goods, add prices/stock/cargo/storage execution, or add runtime/UI/save-account/gameplay behavior.
+The lane has completed schema, focused validators, live seed, normal-lint registration, post-registration audit, and next-expansion gate. No compelling low-risk second seed candidate set was proven, and broad resource work would require Deep Research.
+
+`Version 0.5.308 - Combat Status Condition Injury Schema Plan` is selected because typed combat status/condition/injury vocabulary remains an already-deferred authority lane with an accepted boundary decision. The next run should remain docs-first and should not implement status/condition/injury content, schemas, validators, tests, runtime, UI, save/account behavior, or gameplay unless a later focused implementation prompt explicitly authorizes it.
+
+## Deep Research / Question / Support-Suffix Posture
+
+Do not run `GPT-DR.resources.gathering-extraction` now.
+
+Run it later before any resource step involving resource-node modeling, gathering, extraction, agriculture, mining, foraging, broad resource expansion, resource-production policy, settlement resource supply modeling, material availability simulation, or externally grounded production/recipe/ecology/geography/settlement-goods integration.
+
+No nonstandard support-suffix run is needed before `Version 0.5.308 - Combat Status Condition Injury Schema Plan`.
+
+No explicit user question is required before the next numbered route if the user accepts this gate result.
 
 ## Remaining Deferred Authority Guardrails
 
-Do not treat normal lint registration as permission to add:
+Do not treat the resource/commodity gate as permission to add:
 
 - resource or commodity expansion beyond the four selected records;
 - settlement goods normalization;
@@ -67,16 +81,6 @@ The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - H
 
 A generic `world.pois` authority remains rejected by `Version 0.5.292 - Discovery And POI Boundary Decision`.
 
-Typed status/condition/injury catalog implementation remains deferred behind its own schema plan, fresh live-repo audit, seed plan, and focused implementation prompt.
-
-## Deep Research / Question / Support-Suffix Posture
-
-No nonstandard support-suffix run is needed before `Version 0.5.307 - Resource And Commodity Next Expansion Gate`.
-
-No explicit user question is required before the next numbered route if the user accepts the audit result.
-
-`GPT-DR.resources.gathering-extraction` remains the relevant future Deep Research gate for resource-node, gathering, extraction, agriculture, or broad resource expansion work. It is not required before the immediate next docs-first gate because the current live seed is descriptive, tiny, planned-only, item-key-backed, peer-validated, and normal-lint registered.
-
 Suggested next commit:
 
-`docs(content): audit resource commodity registration`
+`docs(content): gate resource commodity expansion`
