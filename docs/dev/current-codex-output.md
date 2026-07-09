@@ -1,18 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.308 - Combat Status Condition Injury Schema Plan
+Source version/run: Version 0.5.309 - Combat Status Condition Injury Evidence Audit
 Date: 2026-07-09
-Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported the known multi-branch fast-forward ambiguity; `HEAD`, `origin/master`, and merge-base all resolved to `c924eb8ca1d06b1da670f3b2ff5c49725ff46a39`.
+Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Completed the documentation-only combat status/condition/injury schema plan.
+Completed the documentation-only combat status/condition/injury evidence audit.
 
-The plan selects one future combined typed `combat_health_vocabulary` catalog, with records classified by `kind` as `status`, `condition`, or `injury`. It keeps schemas, validators, tests, live content, normal lint registration, runtime behavior, UI, save/account behavior, combat execution, and gameplay deferred.
+The audit confirms no canonical combat health vocabulary content, schema, focused validator, focused test, or normal content-lint registration exists yet. Current hook strings, ability target-condition strings, item use profiles, monster action packages, encounter/spawn/tactics evidence, and runtime/type surfaces are evidence only.
+
+The accepted combined `combat_health_vocabulary` posture remains valid. Relationship fields should remain absent from the first schema/validator implementation and first seed. Deep Research is not required before schema/validator implementation.
 
 ## Files Changed
 
-- `docs/design/combat-status-condition-injury-schema-plan.md`
+- `docs/design/combat-status-condition-injury-evidence-audit.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -23,20 +25,16 @@ The plan selects one future combined typed `combat_health_vocabulary` catalog, w
 
 - `git status --short --branch`
 - `git fetch origin`
-- `git pull --ff-only origin master` (known ambiguity)
-- `git rev-parse HEAD`
-- `git rev-parse origin/master`
-- `git merge-base HEAD origin/master`
-- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, resource/commodity gate docs, combat boundary decision, static authority validation audit, pipeline consolidation decision, and GPT Deep Research prompt-pack decision.
-- Read relevant combat, spell, ability, skill-effect, item-use, monster, encounter, spawn, combat role, tactics, hook, magic metadata, schema-file, and focused test surfaces.
-- Structured evidence scan for current content counts, status-like hooks, ability target-condition strings, and item use profile count.
+- `git pull --ff-only origin master`
+- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, schema plan, boundary decision, static authority validation audit, resource/commodity gate, pipeline consolidation decision, GPT Deep Research prompt-pack decision, relevant runtime/type files, content-lint hook support, magic metadata support, required content files, and relevant tests.
+- Structured evidence scans for file absence, normal-lint registration absence, status-like hooks, ability target-condition strings, item use profile count, monster/encounter/spawn/tactics evidence, and candidate safety.
 - `npm.cmd run tool:content-lint` (passed; `content-lint: ok (66 files checked)`)
 - `node --test tests/unit/schema-files.test.mjs` (passed; 101 tests)
 - `git diff --check` (passed with line-ending normalization warnings only)
 - Conflict-marker scan across changed docs (no matches)
 - Trailing-whitespace scan across changed docs (no matches)
 - Changed-file audit confirmed only approved docs changed and no package, tool, test, app, runtime, schema, validator, or content files changed.
-- Current-route scan confirmed the active next route points to `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`; older `0.5.308` references are historical.
+- Current-route scan confirmed active next-route pointers use `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`; older `0.5.309` references are historical.
 - Highcrown and `world.pois` scans found only closed-lane, rejection, or no-change language.
 
 ## Behavior / Runtime Confirmation
@@ -47,15 +45,15 @@ No combat status/condition/injury content, schemas, validators, tests, normal co
 
 ## Risks / Follow-Up
 
-- The plan intentionally follows the accepted boundary decision and chooses one combined typed catalog rather than three first-pass standalone authorities.
-- A later evidence audit should inspect live hook strings, target-condition strings, body/resource runtime, monster/encounter/spawn/tactics evidence, and candidate safety before schema/validator implementation.
-- `GPT-DR.health.injury-recovery` is not required for this schema plan, but remains prudent before broader health, injury, recovery, disease, poison, treatment, medicine, death/defeat, or healing-service work.
-- Normal content-lint registration remains deferred until live content exists and a separate registration decision approves it.
+- `combat_status.stagger` and `combat_status.bind` are the strongest future status candidates, but no live records were created.
+- Condition candidates remain deferred, especially burn, slow, blind, curse, and poison, because they imply runtime behavior or broader health/poison rules.
+- No injury candidate should be selected without stronger direct evidence or later `GPT-DR.health.injury-recovery`.
+- The next route should keep live content, relationship fields, and normal content-lint registration absent.
 
 ## Next Recommended Version
 
-Version 0.5.309 - Combat Status Condition Injury Evidence Audit
+Version 0.5.310 - Combat Status Condition Injury Schema And Validator
 
 ## Suggested Commit Message
 
-docs(combat): plan status condition injury schemas
+docs(combat): audit status condition injury evidence
