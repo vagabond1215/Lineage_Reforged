@@ -1,22 +1,21 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.297 - Service Authority Lint Registration Decision
-Date: 2026-07-08
-Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported the known multi-branch fast-forward ambiguity; `git rev-parse HEAD`, `git rev-parse origin/master`, and `git merge-base HEAD origin/master` all returned `ba544b0e1608514a234dce9bb45c2b164129b1d6`, confirming local/remote alignment.
+Source version/run: Version 0.5.298 - Service Authority Lint Registration
+Date: 2026-07-09
+Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Added the docs-only service authority lint registration decision at `docs/design/service-authority-lint-registration-decision.md`.
+Registered the existing live `civilization.services` seed in normal content lint.
 
-Decision: approve normal content-lint registration in principle for the existing live `civilization.services` seed, but only in a separate narrow implementation run.
+`tools/content-lint/index.mjs` now checks `packages/content/base/civilization/services.json`, imports `validateServicesContent(...)`, loads the service schema and current building descriptors, and validates the live service wrapper through the existing focused service helper. Normal content lint now reports `64 files checked`.
 
-The decision found that `tools/content-lint/services.mjs` is compatible with normal lint orchestration as-is. The future implementation should register `packages/content/base/civilization/services.json` in `tools/content-lint/index.mjs`, load the service schema and current building descriptors, and call `validateServicesContent(...)`.
-
-No registration was implemented in this run.
+No service records, service schema, service validator, building records, or building `serviceFunctions` descriptors were changed.
 
 ## Files Changed
 
-- `docs/design/service-authority-lint-registration-decision.md`
+- `tools/content-lint/index.mjs`
+- `tests/unit/service-authority-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -27,42 +26,38 @@ No registration was implemented in this run.
 
 - `git status --short --branch`
 - `git fetch origin`
-- `git pull --ff-only origin master` (reported known multi-branch fast-forward ambiguity)
-- `git rev-parse HEAD`
-- `git rev-parse origin/master`
-- `git merge-base HEAD origin/master`
-- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, service seed plan, service schema plan, service boundary decision, static-authority validation audit, discovery/POI boundary decision, resource/commodity decision, combat status/condition/injury boundary decision, Highcrown closure review, live service content, service schema, service validator, normal content-lint index, focused service tests, schema-files test, and nearby normal-lint validator patterns.
-- Reads of nearby validators: `settlement-districts.mjs`, `settlement-sites.mjs`, `sacred-sites.mjs`, and `religious-hotspots.mjs`.
-- `node --test tests\unit\service-authority-validation.test.mjs` (passed; 53 tests)
-- `git diff --name-only`
-- `git diff --name-only -- packages tools tests apps` (no output)
+- `git pull --ff-only origin master`
+- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, service lint registration decision, service seed plan, service schema plan, service boundary decision, static-authority validation audit, discovery/POI boundary decision, resource/commodity decision, combat status/condition/injury boundary decision, Highcrown closure review, live service content, building content, service schema, service validator, normal content-lint index, focused service tests, and schema-files test.
+- Targeted normal content-lint registration pattern reads for religious hotspots, sacred sites, settlement districts, settlement sites, crafting recipes, and Knowledge trial policies.
+- `node --test tests/unit/service-authority-validation.test.mjs` (passed; 53 tests)
+- `npm.cmd run tool:content-lint` (passed; `content-lint: ok (64 files checked)`)
+- `node --test tests/unit/schema-files.test.mjs` was not run because schema parse coverage was not touched.
 - `git diff --check` (passed; Git reported line-ending normalization warnings only)
+- `git diff --name-only -- packages/content/base/civilization/services.json packages/schemas/civilization/service.schema.json tools/content-lint/services.mjs packages/content/base/civilization/buildings.json packages/content/base/civilization/workplaces.json packages/content/base/world/settlements.json packages/content/base/world/settlement_districts.json packages/content/base/world/settlement_sites.json packages/content/base/player/knowledge_snippets.json packages/content/base/player/knowledge_domain_registry.json packages/content/base/player/knowledge_domains.json packages/content/base/player/knowledge_trial_policies.json` (no output)
+- Conflict-marker scan across changed files (no matches)
+- Trailing-whitespace scan across changed files (no matches)
+- Registration scan confirmed `tools/content-lint/index.mjs` includes the service file, imports `validateServicesContent(...)`, loads `packages/content/base/civilization/buildings.json`, and passes `buildingsWrapper.records`.
+- Deferred-boundary scan confirmed changed docs preserve Highcrown closure, rejected generic `world.pois`, deferred resources/commodities, deferred typed status/condition/injury content, and no-runtime/no-UI/no-gameplay guardrails.
 - `git status --short --branch`
-- Conflict-marker scan across changed docs (no matches)
-- Stale active next-version pointer scan across changed docs (no matches)
-- Accidental normal content-lint registration scan in `tools/content-lint/index.mjs` (no matches)
-- Accidental service content/schema/validator/test/building/workplace/world/player content diff scan (no output)
-- Trailing-whitespace scan across changed docs (no matches)
 
 ## Behavior / Runtime Confirmation
 
-Documentation-only change.
+Validation behavior changed only by registering the existing live service content in normal content lint.
 
-No service content, service schema, service validator, normal content-lint registration, tests, building/workplace descriptor, settlement/district/site content, runtime, UI, storage, command, event, reward, migration, save/account behavior, provider availability, prices, payment, stock, inventory, access checks, service effects, route/travel behavior, legal/reputation behavior, Knowledge content, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior changed.
+Runtime, UI, save/account, gameplay, service execution, provider availability, prices, payment, stock, inventory, schedules, access checks, storage contents, service effects, route/travel behavior, legal/reputation behavior, commands, events, rewards, migrations, Knowledge content, resource/commodity content, combat health content, POI/discovery content, and Highcrown Knowledge behavior did not change.
 
 ## Risks / Follow-Up
 
-- The next run should implement only normal content-lint registration for the existing service seed.
-- Future registration should load `packages/content/base/civilization/buildings.json` and fail closed if `relatedBuildingServiceFunctions` values no longer resolve.
-- Future registration should not edit `packages/content/base/civilization/services.json` or `packages/schemas/civilization/service.schema.json`.
-- Keep the live `service.contract_board` tag `charters` unless a later validator revision intentionally changes service tag policy.
-- A generic `world.pois` authority remains rejected.
-- The Highcrown settlement Knowledge lane remains closed and must not be reopened without a later owner decision.
+- Normal content lint now fails closed if service records drift from `packages/schemas/civilization/service.schema.json` or if `relatedBuildingServiceFunctions` stops resolving against current building descriptors.
+- Keep existing `civilization.buildings.serviceFunctions` as source-local descriptors unless a later dedicated migration decision scopes otherwise.
+- The next run should be docs-first and verify the service authority lane remains stable before choosing more service work or returning to another deferred authority lane.
+- Service content expansion, providers, provider availability, schedules, access checks, prices, payment, stock, inventory, storage contents, service effects, runtime, UI, save/account, route/travel, legal/reputation, commands, events, rewards, gameplay, `world.resources`, `world.commodities`, typed combat status/condition/injury vocabulary, and generic `world.pois` remain deferred.
+- The Highcrown settlement Knowledge lane remains closed.
 
 ## Next Recommended Version
 
-Version 0.5.298 - Service Authority Lint Registration
+Version 0.5.299 - Service Authority Post-Registration Audit
 
 ## Suggested Commit Message
 
-docs(roadmap): decide service lint registration
+feat(content-lint): register service authority

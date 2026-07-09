@@ -31,6 +31,7 @@ import { validatePolities } from "./polities.mjs";
 import { validateMapFeatures } from "./map-features.mjs";
 import { validateSettlementDistricts } from "./settlement-districts.mjs";
 import { validateSettlementSites } from "./settlement-sites.mjs";
+import { validateServicesContent } from "./services.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -524,6 +525,12 @@ const checks = [
     requireSlug: true,
     forbidGeoQualifierInName: false,
     validateBuildings: true
+  },
+  {
+    file: "packages/content/base/civilization/services.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
   },
   {
     file: "packages/content/base/civilization/infrastructure.json",
@@ -9723,6 +9730,24 @@ async function validateSettlementSitesAgainstDependencies() {
   });
 }
 
+async function validateServicesAgainstDependencies() {
+  const relativePath = "packages/content/base/civilization/services.json";
+  const servicesPath = path.join(ROOT, relativePath);
+  const serviceSchemaPath = path.join(ROOT, "packages/schemas/civilization/service.schema.json");
+  const buildingsPath = path.join(ROOT, "packages/content/base/civilization/buildings.json");
+
+  const servicesWrapper = JSON.parse(await readFile(servicesPath, "utf8"));
+  const serviceSchema = JSON.parse(await readFile(serviceSchemaPath, "utf8"));
+  const buildingsWrapper = JSON.parse(await readFile(buildingsPath, "utf8"));
+
+  validateServicesContent({
+    relativePath,
+    wrapper: servicesWrapper,
+    schema: serviceSchema,
+    buildings: buildingsWrapper.records
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10324,6 +10349,7 @@ async function main() {
   await validateMapFeaturesAgainstDependencies();
   await validateSettlementDistrictsAgainstDependencies();
   await validateSettlementSitesAgainstDependencies();
+  await validateServicesAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.297 - Service Authority Lint Registration Decision
-Date: 2026-07-08
+Source version/run: Version 0.5.298 - Service Authority Lint Registration
+Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.297 - Service Authority Lint Registration Decision` completed as a docs-only decision.
+`Version 0.5.298 - Service Authority Lint Registration` completed as a narrow implementation.
 
 Latest completed primary:
 
-- `Version 0.5.297 - Service Authority Lint Registration Decision`
+- `Version 0.5.298 - Service Authority Lint Registration`
 
 Latest completed support/audit run:
 
@@ -17,41 +17,31 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.298 - Service Authority Lint Registration`
+- `Version 0.5.299 - Service Authority Post-Registration Audit`
 
-## Service Lint Registration Decision Posture
+## Service Normal-Lint Registration Posture
 
-Decision authority:
+Normal content lint now registers the live service seed:
 
-- `docs/design/service-authority-lint-registration-decision.md`
-
-Current schema/validator/content support:
-
+- Live content: `packages/content/base/civilization/services.json`
 - Schema: `packages/schemas/civilization/service.schema.json`
 - Focused validator/helper: `tools/content-lint/services.mjs`
+- Normal registration: `tools/content-lint/index.mjs`
 - Focused tests: `tests/unit/service-authority-validation.test.mjs`
-- Schema parse coverage: `tests/unit/schema-files.test.mjs`
-- Live seed content: `packages/content/base/civilization/services.json`
 
-Live service content now exists:
+Registration details:
 
-- `packages/content/base/civilization/services.json` contains exactly five planned provider-independent service vocabulary records.
-- Normal content-lint registration remains absent.
-- Existing `civilization.buildings.serviceFunctions` remain source-local descriptors and were not migrated.
+- `tools/content-lint/index.mjs` imports `validateServicesContent(...)`.
+- The normal `checks` array includes `packages/content/base/civilization/services.json`.
+- `validateServicesAgainstDependencies()` loads services, the service schema, and `packages/content/base/civilization/buildings.json`.
+- The dependency validator passes `buildingsWrapper.records` into `validateServicesContent(...)`.
+- Normal content lint now reports `content-lint: ok (64 files checked)`.
 
-Decision result:
+## Live Service Seed Guardrails
 
-- Normal content-lint registration is approved in principle for the live service seed.
-- Registration must happen in a separate narrow implementation run.
-- The existing `tools/content-lint/services.mjs` helper is compatible with normal lint orchestration as-is.
-- The future registration should load services, the service schema, and `civilization.buildings` and call `validateServicesContent(...)`.
-- The future registration should fail closed if `relatedBuildingServiceFunctions` values stop resolving to observed building descriptors.
+The live seed still contains exactly five planned provider-independent service vocabulary records:
 
-## Exact Seeded Records
-
-The live seed contains exactly these five planned records:
-
-| Future id | Status | Family | Related building descriptor |
+| Service id | Status | Family | Related building descriptor |
 | --- | --- | --- | --- |
 | `service.lodging` | `planned` | `lodging` | `lodging` |
 | `service.market_exchange` | `planned` | `market_exchange` | `market_exchange` |
@@ -59,33 +49,24 @@ The live seed contains exactly these five planned records:
 | `service.archives` | `planned` | `archive_record` | `archives` |
 | `service.contract_board` | `planned` | `contract_brokerage` | `contract_board` |
 
-The `service.contract_board` record uses the neutral tag `charters` instead of the seed-plan candidate tag `guild` because the existing focused validator rejects any tag containing the forbidden `ui` fragment.
+No service records changed during registration. No service schema or service validator behavior changed.
 
-No record defines `relationshipNotes`. No service record should change during registration.
+Existing `civilization.buildings.serviceFunctions` remain source-local descriptors and were not migrated. The registration intentionally fails closed if a service `relatedBuildingServiceFunctions` value no longer resolves to an observed building descriptor.
 
-## Next Registration Guardrails
-
-`Version 0.5.298 - Service Authority Lint Registration` should be a narrow implementation.
-
-The next run should:
-
-- edit `tools/content-lint/index.mjs` to register `packages/content/base/civilization/services.json`;
-- import and call `validateServicesContent(...)`;
-- load `packages/schemas/civilization/service.schema.json`;
-- load `packages/content/base/civilization/buildings.json`;
-- run normal content lint and focused service validation.
-
-The next run must not:
-
-- migrate or edit `civilization.buildings.serviceFunctions`;
-- edit building, workplace, settlement, district, site, route, travel, vendor, shop, market, cargo, or storage records;
-- add provider records;
-- add provider availability, schedules, access checks, prices, payment, stock, inventory, storage contents, effects, UI, runtime, save/account state, events, rewards, legal/reputation behavior, route/travel behavior, or gameplay;
-- reopen Highcrown Knowledge;
-- implement generic `world.pois`;
-- implement resources, commodities, or combat status/condition/injury vocabulary.
+The `service.contract_board` record still uses the neutral tag `charters` instead of the original seed-plan candidate tag `guild` because the focused validator rejects tags containing the forbidden `ui` fragment.
 
 ## Remaining Deferred Authority Guardrails
+
+Do not use the registration as permission to add:
+
+- service content expansion;
+- provider records;
+- provider availability, schedules, access checks, prices, payment, stock, inventory, storage contents, effects, UI, runtime, save/account state, commands, events, rewards, route/travel behavior, legal/reputation behavior, or gameplay;
+- building descriptor migration;
+- `world.resources`;
+- `world.commodities`;
+- typed status/condition/injury catalog content;
+- generic `world.pois`.
 
 The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`.
 
@@ -93,12 +74,12 @@ A generic `world.pois` authority remains rejected by `Version 0.5.292 - Discover
 
 Future `world.resources`, `world.commodities`, and typed status/condition/injury catalog implementation remain deferred behind their own schema plans, fresh live-repo audits, seed plans, and focused implementation prompts.
 
-Provider availability, schedules, access checks, prices, payment, stock, inventory, storage contents, training/healing/repair/lodging effects, route traversal, legal/reputation mutation, UI, runtime, commands, events, rewards, save/account state, and gameplay remain outside static service authority.
-
 ## Next Route Guardrail
 
-`Version 0.5.298 - Service Authority Lint Registration` is the immediate next primary route because the service vocabulary seed is live, focused validation passes, and this decision approved normal lint registration in a separate implementation run.
+`Version 0.5.299 - Service Authority Post-Registration Audit` is the immediate next primary route.
+
+That next run should be docs-first and should verify that service authority registration is stable before choosing whether to continue service-adjacent planning or return to the next deferred authority lane.
 
 Suggested next commit:
 
-`docs(roadmap): decide service lint registration`
+`feat(content-lint): register service authority`

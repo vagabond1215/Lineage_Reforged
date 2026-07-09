@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-07-08
-Route: Codex local sequencing alignment after `Version 0.5.297 - Service Authority Lint Registration Decision`
+Date: 2026-07-09
+Route: Codex local sequencing alignment after `Version 0.5.298 - Service Authority Lint Registration`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.297 - Service Authority Lint Registration Decision`
+- `Version 0.5.298 - Service Authority Lint Registration`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.298 - Service Authority Lint Registration`
+- `Version 0.5.299 - Service Authority Post-Registration Audit`
 
 Versioning note:
 
@@ -57,6 +57,7 @@ Versioning note:
 - `0.5.295` completed as a primary roadmap run and added `docs/design/service-authority-seed-plan.md`, selecting exactly five future planned provider-independent service vocabulary records: `service.lodging`, `service.market_exchange`, `service.storage_warehouse`, `service.archives`, and `service.contract_board`; no live service content, normal lint registration, schema, validator, test, runtime, UI, storage, save/account, or gameplay behavior changed.
 - `0.5.296` completed as a primary roadmap run and created `packages/content/base/civilization/services.json` with exactly five planned provider-independent service vocabulary records, updated focused validation to cover the live seed, kept normal content-lint registration absent, and changed no building/workplace descriptors, providers, availability, pricing, stock, access, effects, runtime, UI, save/account, or gameplay behavior.
 - `0.5.297` completed as a primary roadmap run and added `docs/design/service-authority-lint-registration-decision.md`, approving normal content-lint registration in principle for the live service seed, but only in a separate narrow implementation run; no registration, content, schema, validator, test, runtime, UI, save/account, or gameplay behavior changed.
+- `0.5.298` completed as a primary roadmap run and registered the existing live service seed in normal content lint through the existing service schema, focused validator, and current building descriptor dependency; normal lint now reports 64 checked files, and no service content, service schema, service validator, building descriptors, runtime, UI, save/account, or gameplay behavior changed.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -393,17 +394,18 @@ Versioning note:
 | 216 | `0.5.295` | Service Authority Seed Plan | Codex 5.5 Local docs-first | service schema/validator + current building descriptors | seed plan | Completed | Added `docs/design/service-authority-seed-plan.md` and selected exactly five future planned records before any live service content seed. |
 | 217 | `0.5.296` | Service Authority Seed | Codex 5.5 Local narrow implementation | `docs/design/service-authority-seed-plan.md` | content seed | Completed | Created `packages/content/base/civilization/services.json` with exactly the five selected planned service records, updated focused live-content validation, and kept normal lint registration deferred. |
 | 218 | `0.5.297` | Service Authority Lint Registration Decision | Codex 5.5 Local docs-first | live service seed + focused validator | lint registration decision | Completed | Approved normal content-lint registration in principle for the live service seed, but only in a separate narrow implementation run. |
-| 219 | `0.5.298` | Service Authority Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/service-authority-lint-registration-decision.md` | normal lint registration | Deferred | Register the existing live service content in normal content lint using the existing schema, focused validator, and building descriptor dependency; do not change service records or behavior. |
+| 219 | `0.5.298` | Service Authority Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/service-authority-lint-registration-decision.md` | normal lint registration | Completed | Registered the existing live service content in normal content lint using the existing schema, focused validator, and building descriptor dependency without changing service records or behavior. |
+| 220 | `0.5.299` | Service Authority Post-Registration Audit | Codex 5.5 Local docs-first | service normal-lint registration | stability audit | Deferred | Verify the service authority lane is stable after normal registration before choosing whether to continue services or return to another deferred authority lane. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.298 - Service Authority Lint Registration`
+1. `0.5.299 - Service Authority Post-Registration Audit`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap; the service authority schema plan defined future `civilization.services` schema posture; the service authority schema/validator run added schema and focused validation support; the service authority seed plan selected exactly five future planned service records; the service authority seed is now live; and the service authority lint registration decision approved normal content-lint registration for the existing seed in the next narrow implementation.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap; the service authority schema plan defined future `civilization.services` schema posture; the service authority schema/validator run added schema and focused validation support; the service authority seed plan selected exactly five future planned service records; the service authority seed is now live; the service authority lint registration decision approved normal content-lint registration for the existing seed; and service authority normal lint registration is now complete.
 
 ## Default Prompt Pattern
 
@@ -419,7 +421,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.298 - Service Authority Lint Registration` as the immediate next recommended run.
+- Keep `Version 0.5.299 - Service Authority Post-Registration Audit` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -442,7 +444,8 @@ Each future Codex prompt should:
 - `0.5.295` completed the docs-first service authority seed plan, selecting exactly `service.lodging`, `service.market_exchange`, `service.storage_warehouse`, `service.archives`, and `service.contract_board` for a later planned-status live seed without adding service content, normal content-lint registration, runtime, UI, save/account, provider availability, access, pricing, stock, effects, or gameplay behavior.
 - `0.5.296` completed the narrow service authority seed implementation, creating `packages/content/base/civilization/services.json` with exactly five selected planned records, updating focused validation for live content, keeping normal lint registration deferred, and not migrating building descriptors, adding provider records, or adding provider availability, access, pricing, stock, effects, runtime, UI, save/account, route/travel, legal/reputation, or gameplay behavior.
 - `0.5.297` completed the docs-first service authority normal lint registration decision, approving registration in principle for the live service seed in a separate narrow implementation run and not expanding service content, migrating descriptors, adding providers, or adding provider availability, access, pricing, stock, effects, runtime, UI, save/account, route/travel, legal/reputation, or gameplay behavior.
-- `0.5.298` should register the existing live service seed in normal content lint only. It should not edit service records, edit service schema, migrate descriptors, add providers, or add provider availability, access, pricing, stock, effects, runtime, UI, save/account, route/travel, legal/reputation, or gameplay behavior.
+- `0.5.298` completed normal content-lint registration for the existing live service seed only. It did not edit service records, edit service schema, migrate descriptors, add providers, or add provider availability, access, pricing, stock, effects, runtime, UI, save/account, route/travel, legal/reputation, or gameplay behavior.
+- `0.5.299` should be a docs-first post-registration audit that verifies service authority stability before any further service-adjacent work.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

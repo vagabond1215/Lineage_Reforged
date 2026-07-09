@@ -289,17 +289,27 @@ test("validates live service seed content with exactly selected planned records"
   assert.equal(liveServicesWrapper.records.some((entry) => Object.hasOwn(entry, "relationshipNotes")), false);
 });
 
-test("schema, validator, focused test, live content, and absent normal lint registration match posture", async () => {
+test("schema, validator, focused test, live content, and normal lint registration match posture", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
   const validatorSource = await readFile(path.join(ROOT, VALIDATOR_PATH), "utf8");
+  const checksStart = contentLintSource.indexOf("const checks = [");
+  const checksEnd = contentLintSource.indexOf("\n];", checksStart);
+  const checksSource = contentLintSource.slice(checksStart, checksEnd);
 
   assert.equal(existsSync(path.join(ROOT, SCHEMA_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, VALIDATOR_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, TEST_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, SERVICE_CONTENT_PATH)), true);
   assert.match(schemaTestSource, /packages\/schemas\/civilization\/service\.schema\.json/);
-  assert.doesNotMatch(contentLintSource, /civilization\/services\.json/);
-  assert.doesNotMatch(contentLintSource, /services\.mjs/);
+  assert.ok(checksStart >= 0);
+  assert.ok(checksEnd > checksStart);
+  assert.equal(
+    checksSource.match(/packages\/content\/base\/civilization\/services\.json/g)
+      ?.length,
+    1
+  );
+  assert.match(contentLintSource, /from "\.\/services\.mjs"/);
+  assert.match(contentLintSource, /validateServicesContent\(\{/);
   assert.doesNotMatch(validatorSource, /^import .*from ["'][^"']*(?:apps\/rpg-ui|runtime|game-shell)/m);
 });
