@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.307 - Resource And Commodity Next Expansion Gate
+Source version/run: Version 0.5.308 - Combat Status Condition Injury Schema Plan
 Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.307 - Resource And Commodity Next Expansion Gate` completed a docs-only gate after the accepted resource/commodity post-registration audit.
+`Version 0.5.308 - Combat Status Condition Injury Schema Plan` completed a docs-only schema plan for the future static combat health vocabulary lane.
 
 Latest completed primary:
 
-- `Version 0.5.307 - Resource And Commodity Next Expansion Gate`
+- `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
 
 Latest completed support/audit run:
 
@@ -17,70 +17,64 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
+- `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`
 
-## Resource / Commodity Gate Posture
+## Combat Status / Condition / Injury Schema-Plan Posture
 
-Resource/commodity normal content-lint registration is stable.
+The accepted future authority posture is one combined typed catalog for first implementation:
 
-Normal content lint still registers:
+- future content: `packages/content/base/game/combat_health_vocabulary.json`
+- future schema: `packages/schemas/game/combat-health-vocabulary.schema.json`
+- future validator: `tools/content-lint/combat-health-vocabulary.mjs`
+- future focused tests: `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`
 
-- `packages/content/base/world/resources.json`
-- `packages/content/base/world/commodities.json`
+Records should carry `kind: "status"`, `kind: "condition"`, or `kind: "injury"` and use ids shaped as:
 
-`tools/content-lint/index.mjs` still imports both focused validators exactly once, includes both files in the normal `checks` list exactly once, loads resource/commodity content and schemas, loads `items.items` and `civilization.market_item_values`, and validates both peer wrappers together.
+- `combat_status.<slug>`
+- `combat_condition.<slug>`
+- `combat_injury.<slug>`
 
-`npm.cmd run tool:content-lint` passes and reports `content-lint: ok (66 files checked)`.
+This combined-catalog decision follows `Version 0.5.289 - Combat Status Condition And Injury Boundary Decision`, which preferred one typed vocabulary/catalog planned as a unit over three immediate standalone authorities.
 
-## Exact Live Seed Summary
+## Forbidden Behavior Posture
 
-Live content remains unchanged and planned-only:
+Future static records may define stable names, families/classes, descriptive summaries, tags, owner posture, source notes, and seed-approved static relationship hints.
 
-| Authority | Live id | Related item key | Peer ref |
-| --- | --- | --- | --- |
-| `world.resources` | `resource.iron_ore` | `iron_ore` | `commodity.iron_ore_lots` |
-| `world.resources` | `resource.grain` | `grain_bundle` | `commodity.grain_bundles` |
-| `world.commodities` | `commodity.iron_ore_lots` | `iron_ore` | `resource.iron_ore` |
-| `world.commodities` | `commodity.grain_bundles` | `grain_bundle` | `resource.grain` |
+Future static records must not own:
 
-Focused validation still proves exact live ids, planned statuses, item-key resolution through `items.items`, non-market-only selected item keys, peer references, absent deferred refs, absent forbidden ownership/runtime keys, and exact-once normal lint registration.
+- active status instances, stacks, magnitudes, source actors, target actors, start ticks, expiry ticks, or current owners;
+- HP/MP/stamina deltas, resource modifiers, body-state math, fatigue/hydration/intoxication/starvation values, recovery values, wounds, injury instances, disease or poison exposure, treatment, scars, death, defeat, or persistence;
+- damage formulas, healing formulas, cure rules, duration/tick/stack behavior, immunity/resistance/vulnerability execution, combat roll modifiers, hit chance, crit chance, AI behavior, targeting, player commands, events, rewards, item grants, runtime state, save/account state, UI rendering, or gameplay effects.
 
-## Selected Next-Route Rationale
+Normal content-lint registration remains deferred until live content exists and a separate registration decision approves it.
 
-Resource/commodity expansion should pause now.
+## Evidence Posture For Next Run
 
-The lane has completed schema, focused validators, live seed, normal-lint registration, post-registration audit, and next-expansion gate. No compelling low-risk second seed candidate set was proven, and broad resource work would require Deep Research.
+The next docs-first run should audit current live evidence before any schema/validator implementation.
 
-`Version 0.5.308 - Combat Status Condition Injury Schema Plan` is selected because typed combat status/condition/injury vocabulary remains an already-deferred authority lane with an accepted boundary decision. The next run should remain docs-first and should not implement status/condition/injury content, schemas, validators, tests, runtime, UI, save/account behavior, or gameplay unless a later focused implementation prompt explicitly authorizes it.
+Inspect:
+
+- `status.*`, `buff.*`, and `debuff.*` hooks in abilities, spells, skill effects, and item use profiles;
+- ability `targetConditionsAny` strings;
+- combat hook support, spell hook support, magic metadata, player body-state/resource-runtime contracts;
+- monsters, encounters, spawn profiles, combat roles, tactics presets, and safe item-key evidence.
+
+The evidence audit should decide exact first-pass vocabulary candidates and whether relationship fields should remain absent.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Do not run `GPT-DR.resources.gathering-extraction` now.
+Do not run `GPT-DR.health.injury-recovery` before the evidence audit by default. It remains useful later before broad health, injury, disease, poison, treatment, recovery, medicine, death/defeat, or healing-service work.
 
-Run it later before any resource step involving resource-node modeling, gathering, extraction, agriculture, mining, foraging, broad resource expansion, resource-production policy, settlement resource supply modeling, material availability simulation, or externally grounded production/recipe/ecology/geography/settlement-goods integration.
+No nonstandard support-suffix run is needed.
 
-No nonstandard support-suffix run is needed before `Version 0.5.308 - Combat Status Condition Injury Schema Plan`.
-
-No explicit user question is required before the next numbered route if the user accepts this gate result.
+No explicit user question is required before `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`.
 
 ## Remaining Deferred Authority Guardrails
 
-Do not treat the resource/commodity gate as permission to add:
+Do not implement status/condition/injury schemas, validators, tests, live content, normal lint registration, runtime behavior, UI, save/account behavior, combat execution, damage/healing formulas, duration/tick/stack behavior, cure behavior, immunity/resistance/vulnerability execution, events, rewards, commands, migrations, or gameplay without a later focused implementation prompt.
 
-- resource or commodity expansion beyond the four selected records;
-- settlement goods normalization;
-- item or market migrations;
-- ecology integration;
-- production/crafting integration;
-- service content or service behavior;
-- resource-node modeling;
-- gathering or extraction mechanics;
-- prices, stock, cargo, storage, runtime, UI, save/account state, commands, events, rewards, migrations, or gameplay.
-
-The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`.
-
-A generic `world.pois` authority remains rejected by `Version 0.5.292 - Discovery And POI Boundary Decision`.
+Resource/commodity expansion remains paused. Service authority remains stable. Generic `world.pois` remains rejected. The Highcrown settlement Knowledge lane remains closed.
 
 Suggested next commit:
 
-`docs(content): gate resource commodity expansion`
+`docs(combat): plan status condition injury schemas`

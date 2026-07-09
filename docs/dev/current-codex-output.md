@@ -1,20 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.307 - Resource And Commodity Next Expansion Gate
+Source version/run: Version 0.5.308 - Combat Status Condition Injury Schema Plan
 Date: 2026-07-09
-Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported the known multi-branch fast-forward ambiguity; `HEAD`, `origin/master`, and merge-base all resolved to `05f20544fa956853ba535c6a3de0e14ff0da82e6`.
+Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported the known multi-branch fast-forward ambiguity; `HEAD`, `origin/master`, and merge-base all resolved to `c924eb8ca1d06b1da670f3b2ff5c49725ff46a39`.
 
 ## Result
 
-Completed the documentation-only resource/commodity next-expansion gate.
+Completed the documentation-only combat status/condition/injury schema plan.
 
-The gate confirms resource/commodity normal content-lint registration is stable, normal lint still reports `content-lint: ok (66 files checked)`, focused validation still passes, and the live seed remains exactly two planned resource records plus two planned commodity records.
-
-No immediate resource/commodity expansion is authorized. Deep Research is not selected now. The resource/commodity lane should pause and route to the next safer deferred authority lane.
+The plan selects one future combined typed `combat_health_vocabulary` catalog, with records classified by `kind` as `status`, `condition`, or `injury`. It keeps schemas, validators, tests, live content, normal lint registration, runtime behavior, UI, save/account behavior, combat execution, and gameplay deferred.
 
 ## Files Changed
 
-- `docs/design/resource-commodity-next-expansion-gate.md`
+- `docs/design/combat-status-condition-injury-schema-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -29,39 +27,35 @@ No immediate resource/commodity expansion is authorized. Deep Research is not se
 - `git rev-parse HEAD`
 - `git rev-parse origin/master`
 - `git merge-base HEAD origin/master`
-- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, resource/commodity post-registration audit, lint-registration decision, seed plan, authority schema plan, schema decision, static authority validation audit, pipeline consolidation decision, GPT Deep Research prompt-pack decision, live resource/commodity seed files, schemas, validators, normal lint index, focused tests, schema-file tests, `items.items`, and `civilization.market_item_values`.
-- Read `docs/design/combat-status-condition-injury-boundary-decision.md` before selecting the alternate lane.
-- Structured item/market evidence scan for selected item keys.
-- Exact resource and commodity record-count/id/status scan.
-- Normal resource/commodity registration/import exactly-once scan.
-- Forbidden/deferred field scan of live resource/commodity seed files; matches are denial notes only.
-- Highcrown and `world.pois` scan; no new implementation found.
-- `node --test tests/unit/resource-commodity-authority-validation.test.mjs` (passed; 127 tests)
+- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, resource/commodity gate docs, combat boundary decision, static authority validation audit, pipeline consolidation decision, and GPT Deep Research prompt-pack decision.
+- Read relevant combat, spell, ability, skill-effect, item-use, monster, encounter, spawn, combat role, tactics, hook, magic metadata, schema-file, and focused test surfaces.
+- Structured evidence scan for current content counts, status-like hooks, ability target-condition strings, and item use profile count.
+- `npm.cmd run tool:content-lint` (passed; `content-lint: ok (66 files checked)`)
 - `node --test tests/unit/schema-files.test.mjs` (passed; 101 tests)
-- `npm.cmd run tool:content-lint` (passed; 66 files checked)
-- `git diff --check` (passed; line-ending normalization warnings only)
+- `git diff --check` (passed with line-ending normalization warnings only)
 - Conflict-marker scan across changed docs (no matches)
 - Trailing-whitespace scan across changed docs (no matches)
-- Stale next-route pointer scan across active coordination docs; current route points to `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
-- Changed-file audit using `git diff --name-only`, `git ls-files --others --exclude-standard`, and `git status --short --branch`; only approved docs changed
+- Changed-file audit confirmed only approved docs changed and no package, tool, test, app, runtime, schema, validator, or content files changed.
+- Current-route scan confirmed the active next route points to `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`; older `0.5.308` references are historical.
+- Highcrown and `world.pois` scans found only closed-lane, rejection, or no-change language.
 
 ## Behavior / Runtime Confirmation
 
 Documentation changed only.
 
-No live resource/commodity content, schemas, focused validators, normal lint code, tests, item content, market value content, crafting content, recipe content, production-chain content, settlement/economy content, service content, building/workplace descriptors, geography/ecology content, route/travel content, Knowledge content, combat status/condition/injury content, POI/discovery content, Highcrown content, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, prices, stock, cargo, gathering, trading, crafting execution, service execution, or gameplay behavior changed.
+No combat status/condition/injury content, schemas, validators, tests, normal content-lint code, combat role content, tactics content, encounter content, monster content, spawn profile content, player ability content, player spell content, player skill content, skill effect content, item content, resource/commodity content, service content, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, damage formulas, healing formulas, duration/tick/stack behavior, cure behavior, immunity/resistance/vulnerability execution, `world.pois`, Highcrown Knowledge, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Resource/commodity expansion is paused, not abandoned. A later tiny second seed plan remains possible if a fresh candidate audit proves strict planned-only, item-key-backed, no-integration scope.
-- Broad resource/commodity expansion, resource nodes, gathering/extraction, agriculture, mining, foraging, resource-production policy, settlement resource supply modeling, and material availability simulation should wait for `GPT-DR.resources.gathering-extraction`.
-- Production/recipe/ecology/geography/settlement-goods integration needs a separate docs-first integration plan before implementation.
-- The next route is docs-first combat status/condition/injury schema planning only, not implementation.
+- The plan intentionally follows the accepted boundary decision and chooses one combined typed catalog rather than three first-pass standalone authorities.
+- A later evidence audit should inspect live hook strings, target-condition strings, body/resource runtime, monster/encounter/spawn/tactics evidence, and candidate safety before schema/validator implementation.
+- `GPT-DR.health.injury-recovery` is not required for this schema plan, but remains prudent before broader health, injury, recovery, disease, poison, treatment, medicine, death/defeat, or healing-service work.
+- Normal content-lint registration remains deferred until live content exists and a separate registration decision approves it.
 
 ## Next Recommended Version
 
-Version 0.5.308 - Combat Status Condition Injury Schema Plan
+Version 0.5.309 - Combat Status Condition Injury Evidence Audit
 
 ## Suggested Commit Message
 
-docs(content): gate resource commodity expansion
+docs(combat): plan status condition injury schemas

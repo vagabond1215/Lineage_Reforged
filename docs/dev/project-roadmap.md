@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.307 - Resource And Commodity Next Expansion Gate`
+- Latest completed version: `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
+- Next recommended version: `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -163,6 +163,7 @@ Versioning rule:
 - `Version 0.5.305 - Resource And Commodity Lint Registration` registered the existing live resource/commodity seed in normal content lint through `tools/content-lint/index.mjs`, the existing resource/commodity schemas, the existing focused validators, `items.items`, `civilization.market_item_values`, and peer wrappers; normal content lint now reports 66 checked files; selected `Version 0.5.306 - Resource And Commodity Post-Registration Audit` next; and changed no live resource/commodity content, schemas, validators, item/market/crafting/recipe/production/settlement/economy/service/geography/ecology content, runtime, UI, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.306 - Resource And Commodity Post-Registration Audit` added `docs/design/resource-commodity-post-registration-audit.md`; confirmed normal content-lint registration is stable, exact-once, and still validates the four planned live records with item/market and peer-wrapper evidence; selected docs-first `Version 0.5.307 - Resource And Commodity Next Expansion Gate`; and changed no content, schemas, validators, tests, normal-lint code, runtime, UI, save/account, prices, stock, cargo, storage, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.307 - Resource And Commodity Next Expansion Gate` added `docs/design/resource-commodity-next-expansion-gate.md`; confirmed resource/commodity registration remains stable at 66 checked files; paused immediate resource/commodity expansion; rejected immediate Deep Research and second-seed planning for now; selected docs-first `Version 0.5.308 - Combat Status Condition Injury Schema Plan`; and changed no content, schemas, validators, tests, normal-lint code, runtime, UI, save/account, prices, stock, cargo, storage, gathering, trading, crafting execution, service execution, Knowledge, POI/discovery, Highcrown Knowledge, or gameplay behavior.
+- `Version 0.5.308 - Combat Status Condition Injury Schema Plan` added `docs/design/combat-status-condition-injury-schema-plan.md`; selected one future combined typed `combat_health_vocabulary` catalog for static status/condition/injury vocabulary; kept normal content-lint registration deferred until live content and a separate registration decision; selected docs-first `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`; and changed no content, schemas, validators, tests, normal-lint code, runtime, UI, save/account, combat execution, damage/healing formulas, duration/tick/stack behavior, cure behavior, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -456,9 +457,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.308 - Combat Status Condition Injury Schema Plan`
+1. `0.5.309 - Combat Status Condition Injury Evidence Audit`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.308`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, tests, a tiny paired live seed, normal content-lint registration, post-registration audit, and next-expansion gate are in place; resource/commodity expansion and integration remain deferred while the next route returns to the deferred combat status/condition/injury schema lane.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.309`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, tests, a tiny paired live seed, normal content-lint registration, post-registration audit, and next-expansion gate are in place; resource/commodity expansion and integration remain deferred. Combat status/condition/injury now has a docs-only schema plan for a future combined typed `combat_health_vocabulary` catalog; the next route should audit live evidence before any schema/validator implementation or seed planning.
 
 High-priority unresolved questions:
 

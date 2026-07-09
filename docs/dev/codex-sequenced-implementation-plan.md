@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-09
-Route: Codex local sequencing alignment after `Version 0.5.307 - Resource And Commodity Next Expansion Gate`
+Route: Codex local sequencing alignment after `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.307 - Resource And Commodity Next Expansion Gate`
+- `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.308 - Combat Status Condition Injury Schema Plan`
+- `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`
 
 Versioning note:
 
@@ -67,6 +67,7 @@ Versioning note:
 - `0.5.305` completed as a primary roadmap run and registered the existing live resource/commodity seed in normal content lint through the existing schemas, focused validators, item and market-value dependencies, and peer wrappers; normal lint now reports 66 checked files without content, schema, validator, runtime, UI, save/account, or gameplay changes.
 - `0.5.306` completed as a primary roadmap run and audited the accepted resource/commodity normal-lint registration as stable; no expansion is authorized, no registration follow-up is needed, and the next route is a docs-first expansion gate before any new resource/commodity records or integrations.
 - `0.5.307` completed as a primary roadmap run and selected a resource/commodity lane pause after confirming registration stability, no immediate expansion authorization, no Deep Research need now, and `0.5.308 - Combat Status Condition Injury Schema Plan` as the next docs-first route.
+- `0.5.308` completed as a primary roadmap run and planned one future combined typed `combat_health_vocabulary` catalog for static status/condition/injury vocabulary without implementing content, schemas, validators, tests, normal lint registration, runtime, UI, save/account, or gameplay behavior.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -413,13 +414,14 @@ Versioning note:
 | 226 | `0.5.305` | Resource And Commodity Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/resource-commodity-lint-registration-decision.md` | normal lint registration | Completed | Registered the existing live resources and commodities together in normal content lint using the existing schemas, focused validators, items, market values, and peer wrappers without changing content or behavior. |
 | 227 | `0.5.306` | Resource And Commodity Post-Registration Audit | Codex 5.5 Local docs-first | resource/commodity normal-lint registration | stability audit | Completed | Confirmed resource/commodity normal-lint registration is stable, live seed remains exactly four planned records, and no expansion is authorized. |
 | 228 | `0.5.307` | Resource And Commodity Next Expansion Gate | Codex 5.5 Local docs-first | `docs/design/resource-commodity-post-registration-audit.md` | next-lane decision | Completed | Paused resource/commodity expansion, rejected immediate second seed and Deep Research for now, and routed to combat status/condition/injury schema planning. |
-| 229 | `0.5.308` | Combat Status Condition Injury Schema Plan | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-boundary-decision.md` | schema plan | Deferred | Plan the future typed non-executing static combat health vocabulary/catalog without implementing content, schemas, validators, runtime, UI, save/account, or gameplay. |
+| 229 | `0.5.308` | Combat Status Condition Injury Schema Plan | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-boundary-decision.md` | schema plan | Completed | Planned one future combined typed `combat_health_vocabulary` catalog and kept implementation, live content, and normal lint registration deferred. |
+| 230 | `0.5.309` | Combat Status Condition Injury Evidence Audit | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-schema-plan.md` | evidence audit | Deferred | Audit live hook, condition-string, body/resource, monster, encounter, spawn, tactics, and item-key evidence before schema/validator implementation or seed planning. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.308 - Combat Status Condition Injury Schema Plan`
+1. `0.5.309 - Combat Status Condition Injury Evidence Audit`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
@@ -439,7 +441,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.308 - Combat Status Condition Injury Schema Plan` as the immediate next recommended run.
+- Keep `Version 0.5.309 - Combat Status Condition Injury Evidence Audit` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -472,7 +474,8 @@ Each future Codex prompt should:
 - `0.5.305` registered the existing live resources and commodities together in normal content lint using the existing schemas, focused validators, items, market values, and peer wrappers; normal lint reports 66 files checked and live content remains unchanged.
 - `0.5.306` audited the resource/commodity registration stability, found no registration follow-up needed, and did not authorize expansion.
 - `0.5.307` paused resource/commodity expansion and selected the combat status/condition/injury schema plan as the next docs-first route.
-- `0.5.308` should remain docs-first and plan the future typed non-executing status/condition/injury vocabulary/catalog without implementing content, schemas, validators, tests, runtime, UI, save/account, or gameplay.
+- `0.5.308` planned the future combined typed non-executing `combat_health_vocabulary` catalog without implementing content, schemas, validators, tests, runtime, UI, save/account, or gameplay.
+- `0.5.309` should remain docs-first and audit current live hook, condition-string, body/resource, monster, encounter, spawn, tactics, and item-key evidence before any schema/validator implementation or seed planning.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
