@@ -14,6 +14,8 @@ const COMMODITY_SCHEMA_PATH = "packages/schemas/world/commodity.schema.json";
 const RESOURCE_VALIDATOR_PATH = "tools/content-lint/resources.mjs";
 const COMMODITY_VALIDATOR_PATH = "tools/content-lint/commodities.mjs";
 const TEST_PATH = "tests/unit/resource-commodity-authority-validation.test.mjs";
+const ITEM_CONTENT_PATH = "packages/content/base/items/items.json";
+const MARKET_ITEM_VALUES_PATH = "packages/content/base/civilization/market_item_values.json";
 
 async function readJson(relativePath) {
   const raw = await readFile(path.join(ROOT, relativePath), "utf8");
@@ -119,6 +121,30 @@ function resourceRecord(input) {
 
 function commodityRecord(input) {
   return input.wrapper.records[0];
+}
+
+function ids(records) {
+  return records.map((record) => record.id).sort();
+}
+
+function recordById(records, id) {
+  const record = records.find((candidate) => candidate.id === id);
+  assert.ok(record, `expected record ${id}`);
+  return record;
+}
+
+function assertNoKeyDeep(value, forbiddenKeys, valuePath = "record") {
+  if (Array.isArray(value)) {
+    value.forEach((entry, index) => assertNoKeyDeep(entry, forbiddenKeys, `${valuePath}[${index}]`));
+    return;
+  }
+  if (typeof value !== "object" || value === null) {
+    return;
+  }
+  for (const [key, child] of Object.entries(value)) {
+    assert.equal(forbiddenKeys.includes(key), false, `${valuePath}.${key} must be absent`);
+    assertNoKeyDeep(child, forbiddenKeys, `${valuePath}.${key}`);
+  }
 }
 
 function expectResourceFailure(mutate, expected) {
@@ -505,26 +531,134 @@ test("rejects forbidden commodity fields recursively", async (t) => {
   });
 });
 
-test("schema, validator, content absence, and normal lint posture match 0.5.301 scope", async () => {
+test("live resource and commodity seed matches 0.5.303 scope", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
   const resourceValidatorSource = await readFile(path.join(ROOT, RESOURCE_VALIDATOR_PATH), "utf8");
   const commodityValidatorSource = await readFile(path.join(ROOT, COMMODITY_VALIDATOR_PATH), "utf8");
+  const resourcesWrapper = await readJson(RESOURCE_CONTENT_PATH);
+  const commoditiesWrapper = await readJson(COMMODITY_CONTENT_PATH);
+  const itemsWrapper = await readJson(ITEM_CONTENT_PATH);
+  const marketItemValuesWrapper = await readJson(MARKET_ITEM_VALUES_PATH);
   const checksStart = contentLintSource.indexOf("const checks = [");
   const checksEnd = contentLintSource.indexOf("\n];", checksStart);
   const checksSource = contentLintSource.slice(checksStart, checksEnd);
+  const itemKeys = new Set(itemsWrapper.records.map((record) => record.itemKey));
+  const marketOnlyKeys = new Set(
+    marketItemValuesWrapper.records
+      .map((record) => record.itemKey)
+      .filter((itemKey) => typeof itemKey === "string" && !itemKeys.has(itemKey))
+  );
+  const forbiddenRuntimeFields = [
+    "baseValue",
+    "currencyId",
+    "valueUnit",
+    "valueProfile",
+    "pricingProfile",
+    "pricingMode",
+    "price",
+    "prices",
+    "stock",
+    "inventory",
+    "vendorInventory",
+    "shopInventory",
+    "cargo",
+    "cargoMovement",
+    "cargoContents",
+    "storage",
+    "storageContents",
+    "extraction",
+    "extractionRate",
+    "execution",
+    "runtime",
+    "runtimeState",
+    "UI",
+    "ui",
+    "uiState",
+    "save",
+    "saveState",
+    "account",
+    "accountState",
+    "gameplay",
+    "gameplayEffects"
+  ];
 
   assert.equal(existsSync(path.join(ROOT, RESOURCE_SCHEMA_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, COMMODITY_SCHEMA_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, RESOURCE_VALIDATOR_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, COMMODITY_VALIDATOR_PATH)), true);
   assert.equal(existsSync(path.join(ROOT, TEST_PATH)), true);
-  assert.equal(existsSync(path.join(ROOT, RESOURCE_CONTENT_PATH)), false);
-  assert.equal(existsSync(path.join(ROOT, COMMODITY_CONTENT_PATH)), false);
+  assert.equal(existsSync(path.join(ROOT, RESOURCE_CONTENT_PATH)), true);
+  assert.equal(existsSync(path.join(ROOT, COMMODITY_CONTENT_PATH)), true);
   assert.match(schemaTestSource, /packages\/schemas\/world\/resource\.schema\.json/);
   assert.match(schemaTestSource, /packages\/schemas\/world\/commodity\.schema\.json/);
   assert.ok(checksStart >= 0);
   assert.ok(checksEnd > checksStart);
+
+  assert.deepEqual(validateResourcesContent({
+    relativePath: RESOURCE_CONTENT_PATH,
+    wrapper: resourcesWrapper,
+    schema: resourceSchema,
+    items: itemsWrapper,
+    marketItemValues: marketItemValuesWrapper,
+    commodities: commoditiesWrapper
+  }), {
+    ok: true,
+    resourceIds: ["resource.grain", "resource.iron_ore"]
+  });
+  assert.deepEqual(validateCommoditiesContent({
+    relativePath: COMMODITY_CONTENT_PATH,
+    wrapper: commoditiesWrapper,
+    schema: commoditySchema,
+    items: itemsWrapper,
+    marketItemValues: marketItemValuesWrapper,
+    resources: resourcesWrapper
+  }), {
+    ok: true,
+    commodityIds: ["commodity.grain_bundles", "commodity.iron_ore_lots"]
+  });
+
+  assert.deepEqual(ids(resourcesWrapper.records), ["resource.grain", "resource.iron_ore"]);
+  assert.deepEqual(ids(commoditiesWrapper.records), ["commodity.grain_bundles", "commodity.iron_ore_lots"]);
+  assert.deepEqual(resourcesWrapper.records.map((record) => record.status), ["planned", "planned"]);
+  assert.deepEqual(commoditiesWrapper.records.map((record) => record.status), ["planned", "planned"]);
+
+  assert.deepEqual(recordById(resourcesWrapper.records, "resource.iron_ore").relatedItemKeys, ["iron_ore"]);
+  assert.deepEqual(recordById(resourcesWrapper.records, "resource.iron_ore").relatedCommodityIds, ["commodity.iron_ore_lots"]);
+  assert.deepEqual(recordById(resourcesWrapper.records, "resource.grain").relatedItemKeys, ["grain_bundle"]);
+  assert.deepEqual(recordById(resourcesWrapper.records, "resource.grain").relatedCommodityIds, ["commodity.grain_bundles"]);
+  assert.deepEqual(recordById(commoditiesWrapper.records, "commodity.iron_ore_lots").relatedItemKeys, ["iron_ore"]);
+  assert.deepEqual(recordById(commoditiesWrapper.records, "commodity.iron_ore_lots").relatedResourceIds, ["resource.iron_ore"]);
+  assert.deepEqual(recordById(commoditiesWrapper.records, "commodity.grain_bundles").relatedItemKeys, ["grain_bundle"]);
+  assert.deepEqual(recordById(commoditiesWrapper.records, "commodity.grain_bundles").relatedResourceIds, ["resource.grain"]);
+
+  for (const itemKey of resourcesWrapper.records.flatMap((record) => record.relatedItemKeys)) {
+    assert.equal(itemKeys.has(itemKey), true);
+    assert.equal(marketOnlyKeys.has(itemKey), false);
+  }
+  for (const itemKey of commoditiesWrapper.records.flatMap((record) => record.relatedItemKeys)) {
+    assert.equal(itemKeys.has(itemKey), true);
+    assert.equal(marketOnlyKeys.has(itemKey), false);
+  }
+
+  for (const record of resourcesWrapper.records) {
+    assert.equal(Object.hasOwn(record, "relatedProductionStageRefs"), false);
+    assert.equal(Object.hasOwn(record, "relatedFloraIds"), false);
+    assert.equal(Object.hasOwn(record, "relatedFaunaIds"), false);
+    assert.equal(Object.hasOwn(record, "relatedBiomeIds"), false);
+    assert.equal(Object.hasOwn(record, "relatedHabitatIds"), false);
+    assert.equal(Object.hasOwn(record, "relatedRegionIds"), false);
+    assert.equal(Object.hasOwn(record, "relatedMapFeatureIds"), false);
+    assert.equal(Object.hasOwn(record, "observedSettlementGoodsTerms"), false);
+    assertNoKeyDeep(record, forbiddenRuntimeFields, record.id);
+  }
+  for (const record of commoditiesWrapper.records) {
+    assert.equal(Object.hasOwn(record, "relatedProductionChainIds"), false);
+    assert.equal(Object.hasOwn(record, "relatedRecipeIds"), false);
+    assert.equal(Object.hasOwn(record, "observedSettlementGoodsTerms"), false);
+    assertNoKeyDeep(record, forbiddenRuntimeFields, record.id);
+  }
+
   assert.doesNotMatch(checksSource, /packages\/content\/base\/world\/resources\.json/);
   assert.doesNotMatch(checksSource, /packages\/content\/base\/world\/commodities\.json/);
   assert.doesNotMatch(contentLintSource, /from "\.\/resources\.mjs"/);

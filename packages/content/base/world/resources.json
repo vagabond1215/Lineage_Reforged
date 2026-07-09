@@ -1,0 +1,48 @@
+{
+  "records": [
+    {
+      "id": "resource.iron_ore",
+      "slug": "iron_ore",
+      "name": "Iron Ore",
+      "status": "planned",
+      "family": "mineral",
+      "summary": "Static source-material identity for iron-bearing ore before it is refined or represented as a bulk trade good.",
+      "sourceDomains": ["mined"],
+      "allowedOwnerTypes": ["item", "production_chain", "settlement_descriptor"],
+      "tags": ["ore", "metal"],
+      "sourceAuthorityNotes": [
+        "The canonical item key `iron_ore` resolves to `item.iron_ore` in `items.items`.",
+        "`iron_ore` has market-value coverage in `civilization.market_item_values`; values and pricing remain economy-owned.",
+        "The paired commodity candidate is `commodity.iron_ore_lots`."
+      ],
+      "notes": [
+        "Planned descriptive resource identity only.",
+        "No prices, stock, resource nodes, extraction behavior, cargo, storage, runtime, UI, save/account, or gameplay behavior."
+      ],
+      "relatedItemKeys": ["iron_ore"],
+      "relatedCommodityIds": ["commodity.iron_ore_lots"]
+    },
+    {
+      "id": "resource.grain",
+      "slug": "grain",
+      "name": "Grain",
+      "status": "planned",
+      "family": "food_crop",
+      "summary": "Static source-material identity for harvested grain before milling, cooking, or bulk market handling.",
+      "sourceDomains": ["cultivated"],
+      "allowedOwnerTypes": ["item", "production_chain", "settlement_descriptor"],
+      "tags": ["grain", "crop"],
+      "sourceAuthorityNotes": [
+        "The canonical item key `grain_bundle` resolves to `item.grain_bundle` in `items.items`.",
+        "`grain_bundle` has market-value coverage in `civilization.market_item_values`; values and pricing remain economy-owned.",
+        "The paired commodity candidate is `commodity.grain_bundles`."
+      ],
+      "notes": [
+        "Planned descriptive resource identity only.",
+        "No harvest mechanics, stock, storage, recipe execution, cargo, runtime, UI, save/account, or gameplay behavior."
+      ],
+      "relatedItemKeys": ["grain_bundle"],
+      "relatedCommodityIds": ["commodity.grain_bundles"]
+    }
+  ]
+}

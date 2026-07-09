@@ -1,0 +1,50 @@
+{
+  "records": [
+    {
+      "id": "commodity.iron_ore_lots",
+      "slug": "iron_ore_lots",
+      "name": "Iron Ore Lots",
+      "status": "planned",
+      "family": "raw_bulk",
+      "tradeCategory": "raw_material",
+      "summary": "Static bulk-trade class for lots of iron ore represented by canonical item keys and paired to the iron ore resource.",
+      "handlingTags": ["bulky", "dry"],
+      "allowedOwnerTypes": ["item", "resource", "settlement_descriptor", "market_profile"],
+      "tags": ["ore", "metal", "bulk"],
+      "sourceAuthorityNotes": [
+        "The canonical item key `iron_ore` resolves to `item.iron_ore` in `items.items`.",
+        "`iron_ore` has market-value coverage in `civilization.market_item_values`; values and pricing remain economy-owned.",
+        "The paired resource candidate is `resource.iron_ore`."
+      ],
+      "notes": [
+        "Planned descriptive commodity identity only.",
+        "No prices, stock, vendor inventory, cargo movement, storage contents, trading execution, runtime, UI, save/account, or gameplay behavior."
+      ],
+      "relatedItemKeys": ["iron_ore"],
+      "relatedResourceIds": ["resource.iron_ore"]
+    },
+    {
+      "id": "commodity.grain_bundles",
+      "slug": "grain_bundles",
+      "name": "Grain Bundles",
+      "status": "planned",
+      "family": "staple_food",
+      "tradeCategory": "foodstuff",
+      "summary": "Static bulk foodstuff class for grain bundles represented by canonical item keys and paired to the grain resource.",
+      "handlingTags": ["dry", "perishable", "staple"],
+      "allowedOwnerTypes": ["item", "resource", "settlement_descriptor", "market_profile"],
+      "tags": ["grain", "staple", "bulk"],
+      "sourceAuthorityNotes": [
+        "The canonical item key `grain_bundle` resolves to `item.grain_bundle` in `items.items`.",
+        "`grain_bundle` has market-value coverage in `civilization.market_item_values`; values and pricing remain economy-owned.",
+        "The paired resource candidate is `resource.grain`."
+      ],
+      "notes": [
+        "Planned descriptive commodity identity only.",
+        "No prices, stock, cargo movement, storage contents, trading execution, recipe execution, runtime, UI, save/account, or gameplay behavior."
+      ],
+      "relatedItemKeys": ["grain_bundle"],
+      "relatedResourceIds": ["resource.grain"]
+    }
+  ]
+}
