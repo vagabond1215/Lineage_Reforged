@@ -21,6 +21,8 @@ const schemaFiles = [
   "packages/schemas/world/religious-hotspot.schema.json",
   "packages/schemas/world/sacred-site.schema.json",
   "packages/schemas/world/polity.schema.json",
+  "packages/schemas/world/resource.schema.json",
+  "packages/schemas/world/commodity.schema.json",
   "packages/schemas/world/settlement-economy.schema.json",
   "packages/schemas/world/settlement-district.schema.json",
   "packages/schemas/world/settlement-site.schema.json",

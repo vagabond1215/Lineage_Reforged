@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResourceCollection",
+  "description": "Schema for future static source-material resource authority. Records are descriptive-only resource identity and compatibility vocabulary and do not define prices, stock, cargo, storage contents, node quantities, gathering execution, runtime state, UI, save/account state, commands, events, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/resourceRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "resourceId": {
+      "type": "string",
+      "pattern": "^resource\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "commodityId": {
+      "type": "string",
+      "pattern": "^commodity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "itemKey": {
+      "type": "string",
+      "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
+    },
+    "authorityId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*(?:\\.[a-z0-9]+(?:_[a-z0-9]+)*)+$"
+    },
+    "productionStageRef": {
+      "type": "string",
+      "pattern": "^(?:workplace|extract)\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "requiredNoteList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "tagList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" }
+    },
+    "itemKeyList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/itemKey" }
+    },
+    "authorityIdList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/authorityId" }
+    },
+    "commodityIdList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/commodityId" }
+    },
+    "productionStageRefList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/productionStageRef" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "retired"]
+    },
+    "family": {
+      "type": "string",
+      "enum": [
+        "animal_product",
+        "clay",
+        "dye_material",
+        "fiber",
+        "fishery",
+        "food_crop",
+        "fuel",
+        "herb",
+        "luxury_natural",
+        "magical_natural",
+        "mineral",
+        "reagent",
+        "salt",
+        "stone",
+        "wood"
+      ]
+    },
+    "sourceDomain": {
+      "type": "string",
+      "enum": [
+        "cultivated",
+        "fished",
+        "foraged",
+        "gathered",
+        "husbanded",
+        "mined",
+        "quarried",
+        "salvaged",
+        "wild"
+      ]
+    },
+    "allowedOwnerType": {
+      "type": "string",
+      "enum": [
+        "item",
+        "flora",
+        "fauna",
+        "biome",
+        "habitat",
+        "region",
+        "map_feature",
+        "production_chain",
+        "settlement_descriptor"
+      ]
+    },
+    "resourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "status",
+        "family",
+        "summary",
+        "sourceDomains",
+        "allowedOwnerTypes",
+        "tags",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/resourceId" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "$ref": "#/$defs/status" },
+        "family": { "$ref": "#/$defs/family" },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "sourceDomains": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/sourceDomain" }
+        },
+        "allowedOwnerTypes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/allowedOwnerType" }
+        },
+        "tags": { "$ref": "#/$defs/tagList" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/requiredNoteList" },
+        "notes": { "$ref": "#/$defs/noteList" },
+        "relatedItemKeys": { "$ref": "#/$defs/itemKeyList" },
+        "relatedCommodityIds": { "$ref": "#/$defs/commodityIdList" },
+        "relatedFloraIds": { "$ref": "#/$defs/authorityIdList" },
+        "relatedFaunaIds": { "$ref": "#/$defs/authorityIdList" },
+        "relatedBiomeIds": { "$ref": "#/$defs/authorityIdList" },
+        "relatedHabitatIds": { "$ref": "#/$defs/authorityIdList" },
+        "relatedRegionIds": { "$ref": "#/$defs/authorityIdList" },
+        "relatedMapFeatureIds": { "$ref": "#/$defs/authorityIdList" },
+        "relatedProductionStageRefs": { "$ref": "#/$defs/productionStageRefList" },
+        "observedSettlementGoodsTerms": { "$ref": "#/$defs/tagList" }
+      }
+    }
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CommodityCollection",
+  "description": "Schema for future static bulk-trade and economic-class commodity authority. Records are descriptive-only commodity identity and handling vocabulary and do not define prices, stock, inventories, cargo movement, storage contents, trading execution, crafting execution, service execution, runtime state, UI, save/account state, commands, events, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/commodityRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "commodityId": {
+      "type": "string",
+      "pattern": "^commodity\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "resourceId": {
+      "type": "string",
+      "pattern": "^resource\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "itemKey": {
+      "type": "string",
+      "pattern": "^(?:[a-z0-9]+(?:_[a-z0-9]+)*|[a-z]+\\.[a-z0-9]+(?:_[a-z0-9]+)*)$"
+    },
+    "productionChainId": {
+      "type": "string",
+      "pattern": "^chain\\.[a-z0-9]+(?:[._][a-z0-9]+)*$"
+    },
+    "recipeId": {
+      "type": "string",
+      "pattern": "^recipe\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "noteList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "requiredNoteList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "tagList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" }
+    },
+    "itemKeyList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/itemKey" }
+    },
+    "resourceIdList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/resourceId" }
+    },
+    "productionChainIdList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/productionChainId" }
+    },
+    "recipeIdList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/recipeId" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "retired"]
+    },
+    "family": {
+      "type": "string",
+      "enum": [
+        "construction_material",
+        "fuel",
+        "livestock",
+        "luxury_good",
+        "manufactured_good",
+        "maritime_good",
+        "metal",
+        "preserved_food",
+        "raw_bulk",
+        "refined_material",
+        "reagent_class",
+        "staple_food",
+        "stone",
+        "textile"
+      ]
+    },
+    "tradeCategory": {
+      "type": "string",
+      "enum": [
+        "bulk_good",
+        "crafted_good",
+        "foodstuff",
+        "industrial_input",
+        "luxury",
+        "raw_material",
+        "strategic_material"
+      ]
+    },
+    "handlingTag": {
+      "type": "string",
+      "enum": [
+        "bulky",
+        "dry",
+        "fragile",
+        "hazardous",
+        "live",
+        "perishable",
+        "prestige",
+        "regulated",
+        "seasonal",
+        "secured",
+        "staple"
+      ]
+    },
+    "allowedOwnerType": {
+      "type": "string",
+      "enum": [
+        "item",
+        "resource",
+        "production_chain",
+        "recipe",
+        "settlement_descriptor",
+        "settlement_economy",
+        "market_profile",
+        "vendor_profile",
+        "cargo_profile",
+        "storage_profile"
+      ]
+    },
+    "commodityRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "status",
+        "family",
+        "tradeCategory",
+        "summary",
+        "handlingTags",
+        "allowedOwnerTypes",
+        "tags",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/commodityId" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "$ref": "#/$defs/status" },
+        "family": { "$ref": "#/$defs/family" },
+        "tradeCategory": { "$ref": "#/$defs/tradeCategory" },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "handlingTags": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/handlingTag" }
+        },
+        "allowedOwnerTypes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/allowedOwnerType" }
+        },
+        "tags": { "$ref": "#/$defs/tagList" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/requiredNoteList" },
+        "notes": { "$ref": "#/$defs/noteList" },
+        "relatedItemKeys": { "$ref": "#/$defs/itemKeyList" },
+        "relatedResourceIds": { "$ref": "#/$defs/resourceIdList" },
+        "relatedProductionChainIds": { "$ref": "#/$defs/productionChainIdList" },
+        "relatedRecipeIds": { "$ref": "#/$defs/recipeIdList" },
+        "observedSettlementGoodsTerms": { "$ref": "#/$defs/tagList" }
+      }
+    }
+  }
+}
