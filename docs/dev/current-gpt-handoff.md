@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.299 - Service Authority Post-Registration Audit
+Source version/run: Version 0.5.300 - Resource And Commodity Authority Schema Plan
 Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.299 - Service Authority Post-Registration Audit` completed as a documentation-only stability audit.
+`Version 0.5.300 - Resource And Commodity Authority Schema Plan` completed as a documentation-only schema plan.
 
 Latest completed primary:
 
-- `Version 0.5.299 - Service Authority Post-Registration Audit`
+- `Version 0.5.300 - Resource And Commodity Authority Schema Plan`
 
 Latest completed support/audit run:
 
@@ -17,7 +17,48 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.300 - Resource And Commodity Authority Schema Plan`
+- `Version 0.5.301 - Resource And Commodity Schema And Validator`
+
+## Resource And Commodity Plan Posture
+
+The resource/commodity schema plan lives at:
+
+- `docs/design/resource-commodity-authority-schema-plan.md`
+
+The plan selects separate future static authorities:
+
+- `world.resources`
+- `world.commodities`
+
+Future content paths:
+
+- `packages/content/base/world/resources.json`
+- `packages/content/base/world/commodities.json`
+
+Future schema paths:
+
+- `packages/schemas/world/resource.schema.json`
+- `packages/schemas/world/commodity.schema.json`
+
+Future focused validator paths:
+
+- `tools/content-lint/resources.mjs`
+- `tools/content-lint/commodities.mjs`
+
+The first implementation should be `Version 0.5.301 - Resource And Commodity Schema And Validator`, limited to schemas, pure focused validators, focused tests, and schema-file parse coverage. It should not add live `resources.json` or `commodities.json` content and should not register normal content lint.
+
+Key boundaries:
+
+- `items.items` remains canonical item-key authority.
+- Resource/commodity `relatedItemKeys` must resolve to `items.items`, not market-only keys.
+- `civilization.market_item_values` remains value/pricing owner.
+- Resources describe source-material identity and environmental/source compatibility vocabulary.
+- Commodities describe bulk trade/economic-class identity.
+- Settlement goods, domestic resource descriptors, world hex resource-affinity tags, production `extract.*` refs, ecology descriptors, service vocabulary, markets, vendors, cargo, storage, and runtime economy state remain with their current or future owner layers.
+
+Forbidden for resource/commodity records:
+
+- prices, base values, value profiles, pricing profiles, demand bands, stock, supply, demand, pressure, vendor/shop inventory, cargo contents, storage contents, item instances, quantities, ownership, depletion, respawn, harvest rolls, extraction rates, skill/tool checks, access checks, effects, commands, events, rewards, UI, runtime, save/account state, and gameplay.
 
 ## Service Authority Posture
 
@@ -72,20 +113,20 @@ Typed status/condition/injury catalog implementation remains deferred behind its
 
 ## Next Route Guardrail
 
-`Version 0.5.300 - Resource And Commodity Authority Schema Plan` is the immediate next primary route.
+`Version 0.5.301 - Resource And Commodity Schema And Validator` is the immediate next primary route.
 
-That run should be docs-first. It should define schema posture for separate future `world.resources` and `world.commodities` authorities based on the approved `Version 0.5.288 - Resource And Commodity Schema Decision`.
+That run should implement only the future `world.resources` and `world.commodities` schemas, pure focused validators, focused tests, and schema-file parse coverage described in `docs/design/resource-commodity-authority-schema-plan.md`.
 
-It should not implement resource or commodity content, schemas, validators, tests, normal lint registration, runtime, UI, save/account behavior, storage, commands, events, rewards, migrations, prices, stock, cargo, gathering, trading, crafting execution, service execution, or gameplay.
+It should not implement resource or commodity live content, normal lint registration, runtime, UI, save/account behavior, storage, commands, events, rewards, migrations, prices, stock, cargo, gathering, trading, crafting execution, service execution, or gameplay.
 
 ## Deep Research And Support-Suffix Posture
 
-No nonstandard support-suffix run is needed before `Version 0.5.300 - Resource And Commodity Authority Schema Plan`.
+No nonstandard support-suffix run is needed before `Version 0.5.301 - Resource And Commodity Schema And Validator`.
 
-`GPT-DR.resources.gathering-extraction` is the relevant future Deep Research gate for deeper resource/gathering/extraction work. It does not need to run before the next numbered docs-first schema plan because `Version 0.5.288 - Resource And Commodity Schema Decision` is sufficient for one planning pass. If a later run selects that gate, use ChatGPT Deep Research, artifact pattern `docs/dev/tmp-resources-gathering-extraction-research-YYYY-MM-DD.md`, and a named Codex integration consumer.
+`GPT-DR.resources.gathering-extraction` is the relevant future Deep Research gate for deeper resource/gathering/extraction work. It does not need to run before `0.5.301` because the 0.5.300 schema plan is sufficient for a schema/validator-only pass. If a later run selects that gate, use ChatGPT Deep Research, artifact pattern `docs/dev/tmp-resources-gathering-extraction-research-YYYY-MM-DD.md`, and a named Codex integration consumer.
 
 No explicit user question is required before proceeding to the selected next numbered route.
 
 Suggested next commit:
 
-`docs(roadmap): audit service authority registration`
+`docs(roadmap): plan resource commodity authority schemas`
