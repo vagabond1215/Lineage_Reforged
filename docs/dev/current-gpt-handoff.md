@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.303 - Resource And Commodity Seed
+Source version/run: Version 0.5.304 - Resource And Commodity Lint Registration Decision
 Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.303 - Resource And Commodity Seed` completed the first live planned resource/commodity authority seed.
+`Version 0.5.304 - Resource And Commodity Lint Registration Decision` completed a docs-only decision for the live resource/commodity seed.
 
 Latest completed primary:
 
-- `Version 0.5.303 - Resource And Commodity Seed`
+- `Version 0.5.304 - Resource And Commodity Lint Registration Decision`
 
 Latest completed support/audit run:
 
@@ -17,11 +17,24 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.304 - Resource And Commodity Lint Registration Decision`
+- `Version 0.5.305 - Resource And Commodity Lint Registration`
+
+## Decision Posture
+
+Normal content-lint registration is approved in principle for the existing live resource/commodity seed, but implementation remains deferred to the next narrow Codex run.
+
+The implementation should register resources and commodities together because the live seed has peer cross-references:
+
+| Authority | Live id | Related item key | Peer ref |
+| --- | --- | --- | --- |
+| `world.resources` | `resource.iron_ore` | `iron_ore` | `commodity.iron_ore_lots` |
+| `world.resources` | `resource.grain` | `grain_bundle` | `commodity.grain_bundles` |
+| `world.commodities` | `commodity.iron_ore_lots` | `iron_ore` | `resource.iron_ore` |
+| `world.commodities` | `commodity.grain_bundles` | `grain_bundle` | `resource.grain` |
 
 ## Live Resource And Commodity Seed Posture
 
-Live content now exists:
+Live content exists and must remain unchanged unless a future prompt explicitly scopes content work:
 
 - `packages/content/base/world/resources.json`
 - `packages/content/base/world/commodities.json`
@@ -34,22 +47,6 @@ Implemented support:
 - Commodity validator: `tools/content-lint/commodities.mjs`
 - Focused live-seed test: `tests/unit/resource-commodity-authority-validation.test.mjs`
 - Schema parse coverage: `tests/unit/schema-files.test.mjs`
-
-Normal content-lint registration remains intentionally absent:
-
-- `tools/content-lint/index.mjs` does not import or register resource/commodity validators.
-- The live resource/commodity files are not in the normal `checks` list.
-
-## Exact Live Record Summary
-
-The live seed contains exactly four planned records:
-
-| Authority | Live id | Related item key | Peer ref |
-| --- | --- | --- | --- |
-| `world.resources` | `resource.iron_ore` | `iron_ore` | `commodity.iron_ore_lots` |
-| `world.resources` | `resource.grain` | `grain_bundle` | `commodity.grain_bundles` |
-| `world.commodities` | `commodity.iron_ore_lots` | `iron_ore` | `resource.iron_ore` |
-| `world.commodities` | `commodity.grain_bundles` | `grain_bundle` | `resource.grain` |
 
 Focused validation proves:
 
@@ -65,13 +62,22 @@ Focused validation proves:
 
 ## Next Route Guardrail
 
-`Version 0.5.304 - Resource And Commodity Lint Registration Decision` should be docs-first.
+`Version 0.5.305 - Resource And Commodity Lint Registration` should be a narrow implementation.
 
-It should decide whether the accepted live resource/commodity seed should be registered in normal content lint. It should not register normal content lint itself unless the next prompt explicitly scopes implementation.
+Expected implementation scope:
 
-Do not route directly to:
+- edit `tools/content-lint/index.mjs` only if possible;
+- import `validateResourcesContent` and `validateCommoditiesContent`;
+- load `packages/content/base/world/resources.json`;
+- load `packages/content/base/world/commodities.json`;
+- load `packages/schemas/world/resource.schema.json`;
+- load `packages/schemas/world/commodity.schema.json`;
+- supply `items.items`, `civilization.market_item_values`, and peer wrappers to the validators;
+- run normal content lint and report the new checked-file count;
+- keep live resource/commodity content, schemas, validators, and focused tests unchanged unless a narrow proof issue requires otherwise.
 
-- normal content-lint registration without a decision;
+Do not route to:
+
 - broad resource/commodity expansion;
 - resource-node modeling;
 - gathering/extraction mechanics;
@@ -81,10 +87,9 @@ Do not route directly to:
 
 ## Remaining Deferred Authority Guardrails
 
-Do not treat the live seed as permission to add:
+Do not treat normal lint approval as permission to add:
 
 - resource or commodity expansion beyond the four selected records;
-- normal content-lint registration without the next decision;
 - settlement goods normalization;
 - item or market migrations;
 - ecology integration;
@@ -102,12 +107,12 @@ Typed status/condition/injury catalog implementation remains deferred behind its
 
 ## Deep Research / Question / Support-Suffix Posture
 
-No nonstandard support-suffix run is needed before `Version 0.5.304 - Resource And Commodity Lint Registration Decision`.
+No nonstandard support-suffix run is needed before `Version 0.5.305 - Resource And Commodity Lint Registration`.
 
-No explicit user question is required before the next numbered route if the user accepts the live seed.
+No explicit user question is required before the next numbered route if the user accepts the decision.
 
-`GPT-DR.resources.gathering-extraction` remains the relevant future Deep Research gate for resource-node, gathering, extraction, agriculture, or broad resource expansion work. It is not required before the immediate lint-registration decision because the current live seed is descriptive, tiny, planned-only, and item-key-backed.
+`GPT-DR.resources.gathering-extraction` remains the relevant future Deep Research gate for resource-node, gathering, extraction, agriculture, or broad resource expansion work. It is not required before the immediate lint-registration implementation because the current live seed is descriptive, tiny, planned-only, item-key-backed, and already covered by focused validation.
 
 Suggested next commit:
 
-`feat(content): seed resource commodity authority`
+`docs(content): decide resource commodity lint registration`
