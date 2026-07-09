@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.304 - Resource And Commodity Lint Registration Decision`
+- Latest completed version: `Version 0.5.305 - Resource And Commodity Lint Registration`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.305 - Resource And Commodity Lint Registration`
+- Next recommended version: `Version 0.5.306 - Resource And Commodity Post-Registration Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -160,6 +160,7 @@ Versioning rule:
 - `Version 0.5.302 - Resource And Commodity Seed Plan` added `docs/design/resource-commodity-seed-plan.md`; selected exactly two future planned resource records, `resource.iron_ore` and `resource.grain`, plus exactly two paired future planned commodity records, `commodity.iron_ore_lots` and `commodity.grain_bundles`; kept live resource/commodity content and normal content-lint registration absent; selected `Version 0.5.303 - Resource And Commodity Seed` next; and changed no content, schemas, validators, tests, normal lint registration, runtime, UI, storage, command, event, reward, migration, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.303 - Resource And Commodity Seed` created `packages/content/base/world/resources.json` with exactly `resource.iron_ore` and `resource.grain`, created `packages/content/base/world/commodities.json` with exactly `commodity.iron_ore_lots` and `commodity.grain_bundles`, updated focused validation to prove the live planned-only seed and normal lint deferral, selected `Version 0.5.304 - Resource And Commodity Lint Registration Decision` next, and changed no schemas, validators, normal lint registration, item/market/crafting/recipe/production/settlement/economy/service/geography/ecology content, runtime, UI, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.304 - Resource And Commodity Lint Registration Decision` added `docs/design/resource-commodity-lint-registration-decision.md`; approved normal content-lint registration in principle for the existing live resource/commodity seed, but only in a separate narrow implementation run; selected `Version 0.5.305 - Resource And Commodity Lint Registration` next; and changed no normal content-lint registration, content, schemas, validators, tests, item/market/crafting/recipe/production/settlement/economy/service/geography/ecology content, runtime, UI, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
+- `Version 0.5.305 - Resource And Commodity Lint Registration` registered the existing live resource/commodity seed in normal content lint through `tools/content-lint/index.mjs`, the existing resource/commodity schemas, the existing focused validators, `items.items`, `civilization.market_item_values`, and peer wrappers; normal content lint now reports 66 checked files; selected `Version 0.5.306 - Resource And Commodity Post-Registration Audit` next; and changed no live resource/commodity content, schemas, validators, item/market/crafting/recipe/production/settlement/economy/service/geography/ecology content, runtime, UI, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -453,9 +454,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.305 - Resource And Commodity Lint Registration`
+1. `0.5.306 - Resource And Commodity Post-Registration Audit`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.305`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, tests, and a tiny paired live seed are in place; resource/commodity normal lint registration is approved in principle and remains deferred to the next narrow implementation run.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.306`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, tests, a tiny paired live seed, and normal content-lint registration are in place; resource/commodity expansion and integration remain deferred until after a post-registration audit.
 
 High-priority unresolved questions:
 

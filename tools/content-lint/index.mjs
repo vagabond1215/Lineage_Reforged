@@ -32,6 +32,8 @@ import { validateMapFeatures } from "./map-features.mjs";
 import { validateSettlementDistricts } from "./settlement-districts.mjs";
 import { validateSettlementSites } from "./settlement-sites.mjs";
 import { validateServicesContent } from "./services.mjs";
+import { validateResourcesContent } from "./resources.mjs";
+import { validateCommoditiesContent } from "./commodities.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -466,6 +468,18 @@ const checks = [
     requiredTopLevel: ["records"],
     requireSlug: true,
     forbidGeoQualifierInName: true
+  },
+  {
+    file: "packages/content/base/world/resources.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/world/commodities.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
   },
   {
     file: "packages/content/base/world/polities.json",
@@ -9748,6 +9762,41 @@ async function validateServicesAgainstDependencies() {
   });
 }
 
+async function validateResourcesAndCommoditiesAgainstDependencies() {
+  const resourcesRelativePath = "packages/content/base/world/resources.json";
+  const commoditiesRelativePath = "packages/content/base/world/commodities.json";
+  const resourcesPath = path.join(ROOT, resourcesRelativePath);
+  const commoditiesPath = path.join(ROOT, commoditiesRelativePath);
+  const resourceSchemaPath = path.join(ROOT, "packages/schemas/world/resource.schema.json");
+  const commoditySchemaPath = path.join(ROOT, "packages/schemas/world/commodity.schema.json");
+  const itemsPath = path.join(ROOT, "packages/content/base/items/items.json");
+  const marketItemValuesPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
+
+  const resourcesWrapper = JSON.parse(await readFile(resourcesPath, "utf8"));
+  const commoditiesWrapper = JSON.parse(await readFile(commoditiesPath, "utf8"));
+  const resourceSchema = JSON.parse(await readFile(resourceSchemaPath, "utf8"));
+  const commoditySchema = JSON.parse(await readFile(commoditySchemaPath, "utf8"));
+  const itemsWrapper = JSON.parse(await readFile(itemsPath, "utf8"));
+  const marketItemValuesWrapper = JSON.parse(await readFile(marketItemValuesPath, "utf8"));
+
+  validateResourcesContent({
+    relativePath: resourcesRelativePath,
+    wrapper: resourcesWrapper,
+    schema: resourceSchema,
+    items: itemsWrapper,
+    marketItemValues: marketItemValuesWrapper,
+    commodities: commoditiesWrapper
+  });
+  validateCommoditiesContent({
+    relativePath: commoditiesRelativePath,
+    wrapper: commoditiesWrapper,
+    schema: commoditySchema,
+    items: itemsWrapper,
+    marketItemValues: marketItemValuesWrapper,
+    resources: resourcesWrapper
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10350,6 +10399,7 @@ async function main() {
   await validateSettlementDistrictsAgainstDependencies();
   await validateSettlementSitesAgainstDependencies();
   await validateServicesAgainstDependencies();
+  await validateResourcesAndCommoditiesAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

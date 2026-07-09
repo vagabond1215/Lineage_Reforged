@@ -531,7 +531,7 @@ test("rejects forbidden commodity fields recursively", async (t) => {
   });
 });
 
-test("live resource and commodity seed matches 0.5.303 scope", async () => {
+test("live resource and commodity seed is registered in normal content lint", async () => {
   const schemaTestSource = await readFile(path.join(ROOT, "tests/unit/schema-files.test.mjs"), "utf8");
   const contentLintSource = await readFile(path.join(ROOT, "tools/content-lint/index.mjs"), "utf8");
   const resourceValidatorSource = await readFile(path.join(ROOT, RESOURCE_VALIDATOR_PATH), "utf8");
@@ -659,10 +659,16 @@ test("live resource and commodity seed matches 0.5.303 scope", async () => {
     assertNoKeyDeep(record, forbiddenRuntimeFields, record.id);
   }
 
-  assert.doesNotMatch(checksSource, /packages\/content\/base\/world\/resources\.json/);
-  assert.doesNotMatch(checksSource, /packages\/content\/base\/world\/commodities\.json/);
-  assert.doesNotMatch(contentLintSource, /from "\.\/resources\.mjs"/);
-  assert.doesNotMatch(contentLintSource, /from "\.\/commodities\.mjs"/);
+  assert.equal(
+    checksSource.match(/packages\/content\/base\/world\/resources\.json/g)?.length,
+    1
+  );
+  assert.equal(
+    checksSource.match(/packages\/content\/base\/world\/commodities\.json/g)?.length,
+    1
+  );
+  assert.equal(contentLintSource.match(/from "\.\/resources\.mjs"/g)?.length, 1);
+  assert.equal(contentLintSource.match(/from "\.\/commodities\.mjs"/g)?.length, 1);
   assert.doesNotMatch(resourceValidatorSource, /^import .*from ["'][^"']*(?:apps\/rpg-ui|runtime|game-shell|save|account)/m);
   assert.doesNotMatch(commodityValidatorSource, /^import .*from ["'][^"']*(?:apps\/rpg-ui|runtime|game-shell|save|account)/m);
 });

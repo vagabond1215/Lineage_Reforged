@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-09
-Route: Codex local sequencing alignment after `Version 0.5.304 - Resource And Commodity Lint Registration Decision`
+Route: Codex local sequencing alignment after `Version 0.5.305 - Resource And Commodity Lint Registration`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.304 - Resource And Commodity Lint Registration Decision`
+- `Version 0.5.305 - Resource And Commodity Lint Registration`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.305 - Resource And Commodity Lint Registration`
+- `Version 0.5.306 - Resource And Commodity Post-Registration Audit`
 
 Versioning note:
 
@@ -64,6 +64,7 @@ Versioning note:
 - `0.5.302` completed as a primary roadmap run and added `docs/design/resource-commodity-seed-plan.md`, selecting exactly two future planned resource records and two paired future planned commodity records without live content, normal content-lint registration, schema, validator, test, runtime, UI, save/account, or gameplay changes.
 - `0.5.303` completed as a primary roadmap run and created the first live planned resource and commodity seed with exactly two resource records and two paired commodity records, updated focused validation for the live seed, and kept normal content-lint registration deferred without schema, validator, runtime, UI, save/account, or gameplay changes.
 - `0.5.304` completed as a primary roadmap run and added `docs/design/resource-commodity-lint-registration-decision.md`, approving normal content-lint registration in principle for the existing live resource/commodity seed while deferring implementation to `0.5.305`; no content, schema, validator, test, runtime, UI, save/account, or gameplay changes landed.
+- `0.5.305` completed as a primary roadmap run and registered the existing live resource/commodity seed in normal content lint through the existing schemas, focused validators, item and market-value dependencies, and peer wrappers; normal lint now reports 66 checked files without content, schema, validator, runtime, UI, save/account, or gameplay changes.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -407,17 +408,18 @@ Versioning note:
 | 223 | `0.5.302` | Resource And Commodity Seed Plan | Codex 5.5 Local docs-first | resource/commodity schemas + validators | seed plan | Completed | Added `docs/design/resource-commodity-seed-plan.md`, selecting `resource.iron_ore`, `resource.grain`, `commodity.iron_ore_lots`, and `commodity.grain_bundles` for a later planned-only seed without live content or normal lint registration. |
 | 224 | `0.5.303` | Resource And Commodity Seed | Codex 5.5 Local narrow implementation | `docs/design/resource-commodity-seed-plan.md` | content seed + focused validation | Completed | Created only `packages/content/base/world/resources.json` and `packages/content/base/world/commodities.json` with the exact four planned records selected by `0.5.302`; updated focused live-seed validation; kept normal lint registration deferred. |
 | 225 | `0.5.304` | Resource And Commodity Lint Registration Decision | Codex 5.5 Local docs-first | live resource/commodity seed + focused validation | registration decision | Completed | Approved normal content-lint registration in principle for the existing live resource/commodity seed, but only in a separate narrow implementation run. |
-| 226 | `0.5.305` | Resource And Commodity Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/resource-commodity-lint-registration-decision.md` | normal lint registration | Deferred | Register the existing live resources and commodities together in normal content lint using the existing schemas, focused validators, items, market values, and peer wrappers without changing content or behavior. |
+| 226 | `0.5.305` | Resource And Commodity Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/resource-commodity-lint-registration-decision.md` | normal lint registration | Completed | Registered the existing live resources and commodities together in normal content lint using the existing schemas, focused validators, items, market values, and peer wrappers without changing content or behavior. |
+| 227 | `0.5.306` | Resource And Commodity Post-Registration Audit | Codex 5.5 Local docs-first | resource/commodity normal-lint registration | stability audit | Deferred | Verify the resource/commodity normal-lint registration is stable before any expansion or integration work. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.305 - Resource And Commodity Lint Registration`
+1. `0.5.306 - Resource And Commodity Post-Registration Audit`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap; the service authority schema plan defined future `civilization.services` schema posture; the service authority schema/validator run added schema and focused validation support; the service authority seed plan selected exactly five future planned service records; the service authority seed is now live; the service authority lint registration decision approved normal content-lint registration for the existing seed; service authority normal lint registration is complete; the post-registration audit confirmed no immediate service follow-up is needed; the resource/commodity authority schema plan defined future `world.resources` and `world.commodities` schema/validator posture; the resource/commodity schema/validator implementation added schemas, focused validators, and tests; the resource/commodity seed plan selected a tiny paired planned-only first seed; the resource/commodity seed is now live; and the resource/commodity lint registration decision approved normal registration in principle while deferring implementation to `0.5.305`.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap; the service authority schema plan defined future `civilization.services` schema posture; the service authority schema/validator run added schema and focused validation support; the service authority seed plan selected exactly five future planned service records; the service authority seed is now live; the service authority lint registration decision approved normal content-lint registration for the existing seed; service authority normal lint registration is complete; the post-registration audit confirmed no immediate service follow-up is needed; the resource/commodity authority schema plan defined future `world.resources` and `world.commodities` schema/validator posture; the resource/commodity schema/validator implementation added schemas, focused validators, and tests; the resource/commodity seed plan selected a tiny paired planned-only first seed; the resource/commodity seed is now live; the resource/commodity lint registration decision approved normal registration in principle; and resource/commodity normal lint registration is complete.
 
 ## Default Prompt Pattern
 
@@ -433,7 +435,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.305 - Resource And Commodity Lint Registration` as the immediate next recommended run.
+- Keep `Version 0.5.306 - Resource And Commodity Post-Registration Audit` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -463,7 +465,8 @@ Each future Codex prompt should:
 - `0.5.302` completed the docs-first seed plan. It selected exactly `resource.iron_ore`, `resource.grain`, `commodity.iron_ore_lots`, and `commodity.grain_bundles` for a later planned-only live seed, omitted production/recipe/ecology/geography refs, and kept live content plus normal content-lint registration deferred.
 - `0.5.303` created only the two live resource/commodity content files with the exact four planned records selected by `docs/design/resource-commodity-seed-plan.md`, updated focused validation, and kept normal content-lint registration deferred.
 - `0.5.304` approved normal content-lint registration in principle for the accepted live resource/commodity seed, but deferred implementation to `0.5.305` and did not register normal lint.
-- `0.5.305` should register the existing live resources and commodities together in normal content lint using the existing schemas, focused validators, items, market values, and peer wrappers, without changing live content or behavior.
+- `0.5.305` registered the existing live resources and commodities together in normal content lint using the existing schemas, focused validators, items, market values, and peer wrappers; normal lint reports 66 files checked and live content remains unchanged.
+- `0.5.306` should be docs-first and audit resource/commodity registration stability before any resource/commodity expansion or integration work.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

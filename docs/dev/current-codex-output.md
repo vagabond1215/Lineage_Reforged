@@ -1,18 +1,21 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.304 - Resource And Commodity Lint Registration Decision
+Source version/run: Version 0.5.305 - Resource And Commodity Lint Registration
 Date: 2026-07-09
-Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported the known multi-branch fast-forward ambiguity; `HEAD`, `origin/master`, and their merge-base all matched `88c9638e982017fab5544d6ec8c063ea9ee85234`.
+Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported already up to date. `HEAD` was `3b7c0e597cc833f3cd8252218cacfefaf48bb17c`.
 
 ## Result
 
-Added the docs-only resource/commodity normal content-lint registration decision.
+Registered the existing live `world.resources` and `world.commodities` seed in normal content lint.
 
-The decision approves normal content-lint registration in principle for the existing live `world.resources` and `world.commodities` seed, but defers implementation to `Version 0.5.305 - Resource And Commodity Lint Registration`. It also records that resources and commodities should be registered together because the live seed has paired peer cross-references.
+Normal lint now includes `packages/content/base/world/resources.json` and `packages/content/base/world/commodities.json`, imports the existing focused validators, loads the existing resource/commodity schemas, and validates both wrappers together with `items.items`, `civilization.market_item_values`, and peer resource/commodity references.
+
+Normal content lint reports `content-lint: ok (66 files checked)`.
 
 ## Files Changed
 
-- `docs/design/resource-commodity-lint-registration-decision.md`
+- `tools/content-lint/index.mjs`
+- `tests/unit/resource-commodity-authority-validation.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -23,43 +26,36 @@ The decision approves normal content-lint registration in principle for the exis
 
 - `git status --short --branch`
 - `git fetch origin`
-- `git pull --ff-only origin master` (reported known multi-branch fast-forward ambiguity)
+- `git pull --ff-only origin master`
 - `git rev-parse HEAD`
-- `git rev-parse origin/master`
-- `git merge-base HEAD origin/master`
-- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, resource/commodity seed plan, resource/commodity schema plan and decision docs, static-authority consolidation audit, pipeline consolidation decision, GPT Deep Research prompt-pack decision, live resource/commodity seed files, resource/commodity schemas, resource/commodity validators, focused tests, `items.items`, and `civilization.market_item_values`.
+- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, resource/commodity lint-registration decision, seed plan, authority schema plan, schema decision, static-authority consolidation audit, pipeline consolidation decision, GPT Deep Research prompt-pack decision, live resource/commodity seed files, resource/commodity schemas, resource/commodity validators, normal lint index, focused tests, `items.items`, and `civilization.market_item_values`.
 - Live item/market evidence scan for `iron_ore`, `grain_bundle`, and market-only `fauna.abalone`.
 - `node --test tests/unit/resource-commodity-authority-validation.test.mjs` (passed; 127 tests)
 - `node --test tests/unit/schema-files.test.mjs` (passed; 101 tests)
+- `npm.cmd run tool:content-lint` (passed; 66 files checked)
 - `git diff --check`
-- Conflict-marker and trailing-whitespace scans across changed docs
-- Accidental live resource/commodity content edit scan
-- Accidental schema, validator, and focused-test edit scans
-- Accidental normal content-lint registration scan
-- Protected content edit scan
-- Runtime/UI/save-account/gameplay edit scan
-- Live resource/commodity forbidden-field and deferred-ref scan
-- Highcrown and generic `world.pois` scan
-- Stale next-version pointer scan
+- Conflict-marker and trailing-whitespace scans
+- Exact resource and commodity record-count/id/status scan
+- Normal resource/commodity registration exactly-once scan
+- Accidental content, schema, validator, runtime/UI/save-account/gameplay, forbidden-field, deferred-ref, Highcrown, generic `world.pois`, and stale-pointer scans
 - `git status --short --branch`
 
 ## Behavior / Runtime Confirmation
 
-Documentation changed only.
+Validation behavior changed only for normal content lint: it now checks the two existing live resource/commodity seed files.
 
-No live resource/commodity content, schemas, validators, tests, normal content-lint registration, item content, market value content, crafting content, recipe content, production-chain content, settlement/economy content, service content, geography/ecology content, Knowledge content, POI/discovery content, Highcrown content, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, prices, stock, cargo, gathering, trading, crafting execution, service execution, or gameplay behavior changed.
+No live resource/commodity content, schemas, focused validators, item content, market value content, crafting content, recipe content, production-chain content, settlement/economy content, service content, building/workplace descriptors, geography/ecology content, route/travel content, Knowledge content, combat status/condition/injury content, POI/discovery content, Highcrown content, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, prices, stock, cargo, gathering, trading, crafting execution, service execution, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Normal content-lint registration remains deferred until `Version 0.5.305 - Resource And Commodity Lint Registration`.
-- The implementation should edit only `tools/content-lint/index.mjs` unless a narrow proof issue requires otherwise.
-- Register resources and commodities together so peer cross-reference validation remains strict.
-- After clean registration, run `Version 0.5.306 - Resource And Commodity Post-Registration Audit`.
+- The live resource/commodity seed remains planned-only and intentionally tiny.
+- Broad resource/commodity expansion, resource nodes, gathering/extraction, production/recipe/ecology/geography integration, settlement goods normalization, prices, stock, cargo/storage execution, runtime, UI, save/account, and gameplay remain deferred.
+- Run `Version 0.5.306 - Resource And Commodity Post-Registration Audit` next to verify registration stability before any expansion.
 
 ## Next Recommended Version
 
-Version 0.5.305 - Resource And Commodity Lint Registration
+Version 0.5.306 - Resource And Commodity Post-Registration Audit
 
 ## Suggested Commit Message
 
-docs(content): decide resource commodity lint registration
+feat(content): register resource commodity lint

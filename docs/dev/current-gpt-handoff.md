@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.304 - Resource And Commodity Lint Registration Decision
+Source version/run: Version 0.5.305 - Resource And Commodity Lint Registration
 Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.304 - Resource And Commodity Lint Registration Decision` completed a docs-only decision for the live resource/commodity seed.
+`Version 0.5.305 - Resource And Commodity Lint Registration` registered the existing live resource/commodity seed in normal content lint.
 
 Latest completed primary:
 
-- `Version 0.5.304 - Resource And Commodity Lint Registration Decision`
+- `Version 0.5.305 - Resource And Commodity Lint Registration`
 
 Latest completed support/audit run:
 
@@ -17,13 +17,33 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.305 - Resource And Commodity Lint Registration`
+- `Version 0.5.306 - Resource And Commodity Post-Registration Audit`
 
-## Decision Posture
+## Normal-Lint Registration Posture
 
-Normal content-lint registration is approved in principle for the existing live resource/commodity seed, but implementation remains deferred to the next narrow Codex run.
+Normal content lint now includes:
 
-The implementation should register resources and commodities together because the live seed has peer cross-references:
+- `packages/content/base/world/resources.json`
+- `packages/content/base/world/commodities.json`
+
+`tools/content-lint/index.mjs` imports:
+
+- `validateResourcesContent` from `./resources.mjs`
+- `validateCommoditiesContent` from `./commodities.mjs`
+
+The normal lint dependency helper loads:
+
+- resource content and schema;
+- commodity content and schema;
+- `packages/content/base/items/items.json`;
+- `packages/content/base/civilization/market_item_values.json`;
+- both peer wrappers for cross-reference validation.
+
+`npm.cmd run tool:content-lint` passes and reports `content-lint: ok (66 files checked)`.
+
+## Exact Live Seed Summary
+
+Live content remains unchanged and planned-only:
 
 | Authority | Live id | Related item key | Peer ref |
 | --- | --- | --- | --- |
@@ -32,23 +52,9 @@ The implementation should register resources and commodities together because th
 | `world.commodities` | `commodity.iron_ore_lots` | `iron_ore` | `resource.iron_ore` |
 | `world.commodities` | `commodity.grain_bundles` | `grain_bundle` | `resource.grain` |
 
-## Live Resource And Commodity Seed Posture
+## Focused Validation Posture
 
-Live content exists and must remain unchanged unless a future prompt explicitly scopes content work:
-
-- `packages/content/base/world/resources.json`
-- `packages/content/base/world/commodities.json`
-
-Implemented support:
-
-- Resource schema: `packages/schemas/world/resource.schema.json`
-- Commodity schema: `packages/schemas/world/commodity.schema.json`
-- Resource validator: `tools/content-lint/resources.mjs`
-- Commodity validator: `tools/content-lint/commodities.mjs`
-- Focused live-seed test: `tests/unit/resource-commodity-authority-validation.test.mjs`
-- Schema parse coverage: `tests/unit/schema-files.test.mjs`
-
-Focused validation proves:
+Focused validation now proves registration presence instead of registration absence:
 
 - both live wrappers validate through `validateResourcesContent(...)` and `validateCommoditiesContent(...)`;
 - live resource ids are exactly `resource.grain` and `resource.iron_ore`;
@@ -58,36 +64,18 @@ Focused validation proves:
 - selected item keys are not market-only;
 - peer resource/commodity cross-refs resolve;
 - production-chain, recipe, ecology/geography, and `observedSettlementGoodsTerms` refs remain absent;
-- price/value/stock/inventory/cargo/storage/extraction/execution/runtime/UI/save/account/gameplay ownership fields remain absent.
+- price/value/stock/inventory/cargo/storage/extraction/execution/runtime/UI/save/account/gameplay ownership fields remain absent;
+- resource/commodity focused validators still do not import runtime/UI/app/game-shell/save/account code.
 
 ## Next Route Guardrail
 
-`Version 0.5.305 - Resource And Commodity Lint Registration` should be a narrow implementation.
+`Version 0.5.306 - Resource And Commodity Post-Registration Audit` should be docs-first.
 
-Expected implementation scope:
-
-- edit `tools/content-lint/index.mjs` only if possible;
-- import `validateResourcesContent` and `validateCommoditiesContent`;
-- load `packages/content/base/world/resources.json`;
-- load `packages/content/base/world/commodities.json`;
-- load `packages/schemas/world/resource.schema.json`;
-- load `packages/schemas/world/commodity.schema.json`;
-- supply `items.items`, `civilization.market_item_values`, and peer wrappers to the validators;
-- run normal content lint and report the new checked-file count;
-- keep live resource/commodity content, schemas, validators, and focused tests unchanged unless a narrow proof issue requires otherwise.
-
-Do not route to:
-
-- broad resource/commodity expansion;
-- resource-node modeling;
-- gathering/extraction mechanics;
-- production/recipe/ecology/geography integration;
-- settlement goods normalization;
-- prices, stock, cargo/storage execution, trading, crafting execution, service execution, runtime, UI, save/account, or gameplay.
+It should verify the normal lint registration is stable before any resource/commodity expansion. It should not add records, change schemas, broaden validators, integrate production/recipe/ecology/geography, normalize settlement goods, add prices/stock/cargo/storage execution, or add runtime/UI/save-account/gameplay behavior.
 
 ## Remaining Deferred Authority Guardrails
 
-Do not treat normal lint approval as permission to add:
+Do not treat normal lint registration as permission to add:
 
 - resource or commodity expansion beyond the four selected records;
 - settlement goods normalization;
@@ -107,12 +95,12 @@ Typed status/condition/injury catalog implementation remains deferred behind its
 
 ## Deep Research / Question / Support-Suffix Posture
 
-No nonstandard support-suffix run is needed before `Version 0.5.305 - Resource And Commodity Lint Registration`.
+No nonstandard support-suffix run is needed before `Version 0.5.306 - Resource And Commodity Post-Registration Audit`.
 
-No explicit user question is required before the next numbered route if the user accepts the decision.
+No explicit user question is required before the next numbered route if the user accepts the registration result.
 
-`GPT-DR.resources.gathering-extraction` remains the relevant future Deep Research gate for resource-node, gathering, extraction, agriculture, or broad resource expansion work. It is not required before the immediate lint-registration implementation because the current live seed is descriptive, tiny, planned-only, item-key-backed, and already covered by focused validation.
+`GPT-DR.resources.gathering-extraction` remains the relevant future Deep Research gate for resource-node, gathering, extraction, agriculture, or broad resource expansion work. It is not required before the immediate post-registration audit because the current live seed is descriptive, tiny, planned-only, item-key-backed, and normal-lint validated.
 
 Suggested next commit:
 
-`docs(content): decide resource commodity lint registration`
+`feat(content): register resource commodity lint`
