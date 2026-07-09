@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.301 - Resource And Commodity Schema And Validator`
+- Latest completed version: `Version 0.5.302 - Resource And Commodity Seed Plan`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.302 - Resource And Commodity Seed Plan`
+- Next recommended version: `Version 0.5.303 - Resource And Commodity Seed`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -157,6 +157,7 @@ Versioning rule:
 - `Version 0.5.299 - Service Authority Post-Registration Audit` added `docs/design/service-authority-post-registration-audit.md`; confirmed the live `civilization.services` seed remains exactly five planned provider-independent records; confirmed normal lint includes the service file exactly once, loads the service schema and buildings, and validates through `validateServicesContent(...)` with `buildingsWrapper.records`; selected `Version 0.5.300 - Resource And Commodity Authority Schema Plan` next; and changed no content, schemas, validators, tests, building/workplace descriptors, settlement/district/site content, runtime, UI, storage, command, event, reward, migration, save/account, provider availability, prices, stock, access checks, service effects, route/travel, legal/reputation behavior, Knowledge, resource/commodity content, combat health content, POI/discovery content, map-feature content, sacred-site/religious-hotspot content, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.300 - Resource And Commodity Authority Schema Plan` added `docs/design/resource-commodity-authority-schema-plan.md`; defined future separate `world.resources` and `world.commodities` paths, records-only wrappers, id patterns, lifecycle vocabulary, resource and commodity field posture, first-pass vocabularies, allowed-owner semantics, item-key and market-value boundaries, crafting/production/ecology/settlement/service relationships, forbidden fields, validator expectations, seed prerequisites, and Deep Research posture; selected `Version 0.5.301 - Resource And Commodity Schema And Validator` next; and changed no content, schemas, validators, tests, normal lint registration, runtime, UI, storage, command, event, reward, migration, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.301 - Resource And Commodity Schema And Validator` added strict future `world.resources` and `world.commodities` schemas, pure focused validators, focused tests, and schema-file parse coverage; kept live resource/commodity content and normal content-lint registration absent; selected `Version 0.5.302 - Resource And Commodity Seed Plan` next; and changed no live content, normal lint registration, runtime, UI, storage, command, event, reward, migration, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
+- `Version 0.5.302 - Resource And Commodity Seed Plan` added `docs/design/resource-commodity-seed-plan.md`; selected exactly two future planned resource records, `resource.iron_ore` and `resource.grain`, plus exactly two paired future planned commodity records, `commodity.iron_ore_lots` and `commodity.grain_bundles`; kept live resource/commodity content and normal content-lint registration absent; selected `Version 0.5.303 - Resource And Commodity Seed` next; and changed no content, schemas, validators, tests, normal lint registration, runtime, UI, storage, command, event, reward, migration, save/account, prices, stock, cargo, gathering, trading, crafting execution, service execution, Knowledge, combat health, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -450,9 +451,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.302 - Resource And Commodity Seed Plan`
+1. `0.5.303 - Resource And Commodity Seed`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.302`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, and tests are in place; resource/commodity live content and normal lint registration remain deferred until after a seed plan and later scoped implementation.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and schema-plan decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.303`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, tests, and a tiny paired seed plan are in place; resource/commodity normal lint registration remains deferred until after live content lands and a separate registration decision approves it.
 
 High-priority unresolved questions:
 

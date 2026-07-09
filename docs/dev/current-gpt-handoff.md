@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.301 - Resource And Commodity Schema And Validator
+Source version/run: Version 0.5.302 - Resource And Commodity Seed Plan
 Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.301 - Resource And Commodity Schema And Validator` completed as a schema/validator/test implementation only.
+`Version 0.5.302 - Resource And Commodity Seed Plan` completed as a documentation-only seed plan.
 
 Latest completed primary:
 
-- `Version 0.5.301 - Resource And Commodity Schema And Validator`
+- `Version 0.5.302 - Resource And Commodity Seed Plan`
 
 Latest completed support/audit run:
 
@@ -17,31 +17,22 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.302 - Resource And Commodity Seed Plan`
+- `Version 0.5.303 - Resource And Commodity Seed`
 
-## Resource And Commodity Implementation Posture
+## Resource And Commodity Seed-Plan Posture
 
-The resource/commodity authority plan remains:
+Seed plan:
 
-- `docs/design/resource-commodity-authority-schema-plan.md`
+- `docs/design/resource-commodity-seed-plan.md`
 
-Implemented future schema paths:
+Implemented support already exists:
 
-- `packages/schemas/world/resource.schema.json`
-- `packages/schemas/world/commodity.schema.json`
-
-Implemented focused validator paths:
-
-- `tools/content-lint/resources.mjs`
-- `tools/content-lint/commodities.mjs`
-
-Implemented focused test path:
-
-- `tests/unit/resource-commodity-authority-validation.test.mjs`
-
-Schema-file parse coverage now includes both new schema paths in:
-
-- `tests/unit/schema-files.test.mjs`
+- Resource schema: `packages/schemas/world/resource.schema.json`
+- Commodity schema: `packages/schemas/world/commodity.schema.json`
+- Resource validator: `tools/content-lint/resources.mjs`
+- Commodity validator: `tools/content-lint/commodities.mjs`
+- Focused test: `tests/unit/resource-commodity-authority-validation.test.mjs`
+- Schema parse coverage: `tests/unit/schema-files.test.mjs`
 
 Live content remains intentionally absent:
 
@@ -50,48 +41,55 @@ Live content remains intentionally absent:
 
 Normal content-lint registration remains intentionally absent:
 
-- `tools/content-lint/index.mjs` does not import or register the resource/commodity validators.
+- `tools/content-lint/index.mjs` should not import or register resource/commodity validators in the next seed run.
 
-Validator posture:
+## Selected Candidate Summary
 
-- Records-only wrappers with strict wrapper-key checks.
-- Strict record schemas with `resource.<slug>` and `commodity.<slug>` identity patterns.
-- Duplicate id, slug, and name rejection.
-- Id/slug coherence checks.
-- Lifecycle, family, source-domain, trade-category, handling-tag, and allowed-owner vocabularies.
-- Recursive forbidden-field rejection for prices, values, stock, cargo, storage, runtime, UI, save/account, commands, events, rewards, migrations, and gameplay state.
-- Descriptive tag validation with generic-tag rejection and forbidden-intent guardrails.
-- `relatedItemKeys` resolution against canonical `items.items` records.
-- Market-only key rejection when market value records are supplied.
-- Peer resource/commodity relationship resolution when peer authority records are supplied.
-- Optional resource ecology/geography/production-stage reference checks when those relationship fields are populated.
-- Optional commodity production-chain and recipe reference checks when those relationship fields are populated.
+The seed plan selects exactly four future planned records:
 
-Key boundaries remain:
+| Authority | Future id | Related item key | Peer ref |
+| --- | --- | --- | --- |
+| `world.resources` | `resource.iron_ore` | `iron_ore` | `commodity.iron_ore_lots` |
+| `world.resources` | `resource.grain` | `grain_bundle` | `commodity.grain_bundles` |
+| `world.commodities` | `commodity.iron_ore_lots` | `iron_ore` | `resource.iron_ore` |
+| `world.commodities` | `commodity.grain_bundles` | `grain_bundle` | `resource.grain` |
 
-- `items.items` is canonical item-key authority.
-- `civilization.market_item_values` remains value/pricing owner.
-- Resources describe source-material identity and source/environment compatibility.
-- Commodities describe bulk trade and economic-class identity.
-- Settlement goods, domestic resource descriptors, world hex resource-affinity tags, production `extract.*` refs, ecology descriptors, service vocabulary, markets, vendors, cargo, storage, and runtime economy state remain with their current or future owner layers.
+Evidence posture:
 
-## Service Authority Posture
+- `iron_ore` resolves to `item.iron_ore` and has `market.item.iron_ore`.
+- `grain_bundle` resolves to `item.grain_bundle` and has `market.item.grain_bundle`.
+- Selected keys are not market-only.
+- Market-only keys remain rejected for `relatedItemKeys`.
+- Production-chain and recipe refs are intentionally omitted from the first seed.
+- Ecology/geography refs are intentionally omitted from the first seed.
+- Settlement goods terms are evidence only and intentionally omitted from the exact first records.
 
-The live `civilization.services` lane remains stable after normal content-lint registration.
+## Next Route Guardrail
 
-No immediate service follow-up is needed. Do not expand service content, providers, descriptors, availability, access checks, prices, payment, stock, effects, runtime, UI, save/account behavior, route/travel behavior, legal/reputation behavior, or gameplay unless a later prompt explicitly scopes it.
+`Version 0.5.303 - Resource And Commodity Seed` should:
+
+- create only `packages/content/base/world/resources.json`;
+- create only `packages/content/base/world/commodities.json`;
+- use exactly the record shapes selected in `docs/design/resource-commodity-seed-plan.md`;
+- keep every record `planned`;
+- update focused validation to read the live seed if appropriate;
+- keep normal content-lint registration deferred;
+- avoid adding production/recipe/ecology/geography refs, extra records, prices, stock, cargo, storage, gathering, trading, crafting execution, service execution, runtime, UI, save/account, or gameplay behavior.
 
 ## Remaining Deferred Authority Guardrails
 
-Do not treat the new resource/commodity schemas and validators as permission to add:
+Do not treat the seed plan as permission to add:
 
-- live resource or commodity content;
 - normal content-lint registration;
+- resource or commodity expansion beyond the four selected records;
 - settlement goods normalization;
 - item or market migrations;
 - ecology integration;
 - production/crafting integration;
-- prices, stock, cargo, storage, gathering, trading, crafting execution, service execution, runtime, UI, save/account state, commands, events, rewards, migrations, or gameplay.
+- service content or service behavior;
+- resource-node modeling;
+- gathering or extraction mechanics;
+- prices, stock, cargo, storage, runtime, UI, save/account state, commands, events, rewards, migrations, or gameplay.
 
 The Highcrown settlement Knowledge lane remains closed from `Version 0.5.285 - Highcrown Settlement Knowledge Lane Closure Review`.
 
@@ -99,18 +97,14 @@ A generic `world.pois` authority remains rejected by `Version 0.5.292 - Discover
 
 Typed status/condition/injury catalog implementation remains deferred behind its own schema plan, fresh live-repo audit, seed plan, and focused implementation prompt.
 
-## Next Route Guardrail
+## Deep Research / Question / Support-Suffix Posture
 
-`Version 0.5.302 - Resource And Commodity Seed Plan` is the immediate next primary route.
+No nonstandard support-suffix run is needed before `Version 0.5.303 - Resource And Commodity Seed`.
 
-That run should be docs-first. It should select only a tiny future resource/commodity seed candidate set, prove each selected candidate against current authority records, and keep live content plus normal lint registration deferred unless a later implementation prompt explicitly scopes them.
+No explicit user question is required before the next numbered route if the user accepts the seed plan.
 
-## Deep Research And Support-Suffix Posture
-
-No nonstandard support-suffix run is needed before `Version 0.5.302 - Resource And Commodity Seed Plan`.
-
-`GPT-DR.resources.gathering-extraction` remains the relevant future Deep Research gate for deeper gathering/extraction or resource-node work. It does not need to run before the immediate seed-plan route unless the seed plan intentionally broadens into resource-node, gathering, extraction, or simulation policy.
+`GPT-DR.resources.gathering-extraction` remains the relevant future Deep Research gate for resource-node, gathering, extraction, agriculture, or broad resource expansion work. It is not required before the immediate seed implementation because the planned seed is descriptive, tiny, and item-key-backed.
 
 Suggested next commit:
 
-`feat(content): add resource commodity schemas`
+`docs(content): plan resource commodity seed`
