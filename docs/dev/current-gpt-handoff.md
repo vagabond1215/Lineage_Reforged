@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.309 - Combat Status Condition Injury Evidence Audit
+Source version/run: Version 0.5.310 - Combat Status Condition Injury Schema And Validator
 Date: 2026-07-09
 
 ## Status
 
-`Version 0.5.309 - Combat Status Condition Injury Evidence Audit` completed a docs-only evidence audit for the future static combat health vocabulary lane.
+`Version 0.5.310 - Combat Status Condition Injury Schema And Validator` completed the narrow schema/validator implementation for the future static combat health vocabulary lane.
 
 Latest completed primary:
 
-- `Version 0.5.309 - Combat Status Condition Injury Evidence Audit`
+- `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`
 
 Latest completed support/audit run:
 
@@ -17,91 +17,64 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`
+- `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
 
-## Combat Status / Condition / Injury Evidence-Audit Posture
+## Combat Health Vocabulary Implementation Posture
 
-No canonical static combat health vocabulary exists yet:
+Implemented:
 
-- no `packages/content/base/game/combat_health_vocabulary.json`
-- no `packages/schemas/game/combat-health-vocabulary.schema.json`
-- no `tools/content-lint/combat-health-vocabulary.mjs`
-- no `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`
-- no normal content-lint registration in `tools/content-lint/index.mjs`
+- `packages/schemas/game/combat-health-vocabulary.schema.json`
+- `tools/content-lint/combat-health-vocabulary.mjs`
+- `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`
+- schema-file parse coverage in `tests/unit/schema-files.test.mjs`
 
-The accepted future authority posture remains one combined typed catalog:
+Still absent by design:
 
-- future content: `packages/content/base/game/combat_health_vocabulary.json`
-- future schema: `packages/schemas/game/combat-health-vocabulary.schema.json`
-- future validator: `tools/content-lint/combat-health-vocabulary.mjs`
-- future focused tests: `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`
+- `packages/content/base/game/combat_health_vocabulary.json`
+- normal content-lint registration in `tools/content-lint/index.mjs`
 
-Records should carry `kind: "status"`, `kind: "condition"`, or `kind: "injury"` and use ids shaped as:
+The implemented authority is one combined typed catalog for future records:
 
-- `combat_status.<slug>`
-- `combat_condition.<slug>`
-- `combat_injury.<slug>`
+- `kind: "status"` with ids shaped as `combat_status.<slug>`
+- `kind: "condition"` with ids shaped as `combat_condition.<slug>`
+- `kind: "injury"` with ids shaped as `combat_injury.<slug>`
 
-## Candidate Evidence Summary
+The validator is pure and in-memory only. It validates strict records-only wrapper shape, required fields, duplicate ids/slugs/names, kind-specific id prefixes, slug/id coherence, lifecycle status, family vocabulary, owner vocabulary, non-empty string notes, non-empty unique lower-snake tags, forbidden intent tags, and recursive forbidden fields.
 
-Strong first-pass evidence exists for status vocabulary only:
+## Guardrails For Next Route
 
-- `combat_status.stagger` from abilities, spells, skill effects, item use profiles, combat hook support, and engine runtime support.
-- `combat_status.bind` from spells, skill effects, spell hook support, combat hook support, and engine runtime support.
+`Version 0.5.311 - Combat Status Condition Injury Seed Plan` should be docs-first.
 
-Possible later status evidence exists for:
+It should select only a tiny planned-only future seed, likely status-first from the strongest existing evidence:
 
-- `combat_status.stun`
-- `combat_status.prone`
-- `combat_status.pinned`
-- `combat_status.hamstrung`
-- `combat_status.protect`
-- `combat_status.ward`
-- `combat_status.grappled`
+- `combat_status.stagger`
+- possibly `combat_status.bind`
 
-Condition evidence is deferred:
+Keep deferred unless the seed plan proves otherwise:
 
-- `combat_condition.blind`
-- `combat_condition.slow`
-- `combat_condition.burn`
-- `combat_condition.curse`
-- `combat_condition.poison`
+- condition records such as burn, slow, blind, curse, and poison
+- all injury records
+- relationship fields
+- normal content-lint registration
+- live content implementation
+- runtime/UI/save/account/gameplay behavior
 
-No injury record should be selected from current evidence without stronger direct evidence or later `GPT-DR.health.injury-recovery`.
+Relationship fields remain absent from the first schema/validator and should remain absent from the first seed unless a later seed plan explicitly proves exact safe references.
 
-## Rejected / Deferred Evidence Summary
+## Deep Research / Question Posture
 
-Current strings remain evidence only:
+Deep Research is not required before a tiny status-first seed plan.
 
-- `incapacitated`, `helpless`, and `parry_window` are unsafe first-seed vocabulary because they imply runtime combatant state, execution predicates, or reaction timing.
-- `debuff.disabled` and `status.sleep` are deferred despite runtime support because they are close to capability locking or lack direct authored evidence in the required content surfaces.
-- Deferred spell hooks such as `buff.regeneration`, `restore.mp`, `restore.stamina`, `status.burn`, `status.slow`, `debuff.blind`, and `debuff.curse` must not be seeded as behavior-bearing records.
-- Item use profiles, monster action packages, encounter templates, spawn profiles, combat roles, and tactics presets remain evidence-only and should stay untouched.
+Run `GPT-DR.health.injury-recovery` before any seed plan that selects broad health, injury, treatment, recovery, disease/poison, poison exposure, medicine, death/defeat, healing-service, or long-term injury vocabulary.
 
-## Relationship-Field Posture
-
-Relationship fields should remain absent from the first schema/validator implementation and first live seed.
-
-Do not validate `relatedAbilityIds`, `relatedSpellIds`, `relatedSkillEffectIds`, `relatedItemKeys`, `relatedMonsterIds`, or cross-kind relationship fields in the first schema/validator run. Reconsider them only in a later seed plan after exact records are selected.
-
-## Deep Research / Question / Support-Suffix Posture
-
-`GPT-DR.health.injury-recovery` is not required before `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`.
-
-Run Deep Research before a later seed plan only if that plan selects broad health, injury, treatment, recovery, disease/poison, poison exposure, medicine, death/defeat, healing-service, or long-term injury vocabulary.
-
-No nonstandard support-suffix run is needed.
-
-No explicit user question is needed before proceeding to `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`.
+No explicit user question is needed before proceeding to `Version 0.5.311 - Combat Status Condition Injury Seed Plan`.
 
 ## Remaining Deferred Authority Guardrails
 
-The next route should implement only the schema, pure focused validator, focused tests, and schema-file parse coverage for the combined static `combat_health_vocabulary` authority.
-
-Do not create live content, register normal content lint, add relationship fields, edit existing combat/player/item/monster/tactics content, or add runtime behavior, UI, save/account behavior, damage/healing formulas, duration/tick/stack behavior, cure behavior, resistance/vulnerability execution, commands, events, rewards, migrations, or gameplay.
+Do not create live combat health content, register normal content lint, add relationship fields, edit existing combat/player/item/monster/tactics content, or add runtime behavior, UI, save/account behavior, damage/healing formulas, duration/tick/stack behavior, cure behavior, resistance/vulnerability execution, commands, events, rewards, migrations, or gameplay unless a later prompt explicitly scopes that work.
 
 Resource/commodity expansion remains paused. Service authority remains stable. Generic `world.pois` remains rejected. The Highcrown settlement Knowledge lane remains closed.
 
 Suggested next commit:
 
-`docs(combat): audit status condition injury evidence`
+`feat(combat): add combat health vocabulary schema`

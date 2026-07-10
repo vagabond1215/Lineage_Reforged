@@ -74,6 +74,7 @@ const schemaFiles = [
   "packages/schemas/player/trial.schema.json",
   "packages/schemas/player/resource.schema.json",
   "packages/schemas/game/combat-role.schema.json",
+  "packages/schemas/game/combat-health-vocabulary.schema.json",
   "packages/schemas/game/tactics-preset.schema.json",
   "packages/schemas/game/global-rule.schema.json",
   "packages/schemas/world/encounter-template.schema.json",

@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CombatHealthVocabularyCollection",
+  "description": "Schema for future static combat health vocabulary. Records are descriptive-only status, condition, and injury identity vocabulary and do not define runtime state, damage or healing formulas, duration or stack rules, UI, save/account state, commands, events, rewards, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/combatHealthVocabularyRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["status", "condition", "injury"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "retired"]
+    },
+    "family": {
+      "type": "string",
+      "enum": [
+        "control",
+        "mobility",
+        "perception",
+        "morale",
+        "buff",
+        "debuff",
+        "protection",
+        "body",
+        "fatigue",
+        "hydration",
+        "nutrition",
+        "intoxication",
+        "exposure",
+        "disease",
+        "poison",
+        "environmental",
+        "recovery",
+        "cut",
+        "bruise",
+        "burn",
+        "fracture",
+        "sprain",
+        "puncture",
+        "concussion",
+        "trauma",
+        "blood_loss",
+        "scar",
+        "impairment",
+        "maiming"
+      ]
+    },
+    "allowedOwnerType": {
+      "type": "string",
+      "enum": [
+        "combat_runtime",
+        "player_state",
+        "npc_state",
+        "monster",
+        "ability",
+        "spell",
+        "skill_effect",
+        "item_use_profile",
+        "body_state",
+        "future_health_runtime"
+      ]
+    },
+    "allowedOwnerTypes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/allowedOwnerType" }
+    },
+    "tag": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$",
+      "not": {
+        "enum": [
+          "runtime",
+          "ui",
+          "save",
+          "damage_formula",
+          "healing_formula",
+          "duration_rule",
+          "stack_rule",
+          "gameplay"
+        ]
+      }
+    },
+    "tagList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/tag" }
+    },
+    "combatHealthVocabularyRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "kind",
+        "status",
+        "family",
+        "summary",
+        "allowedOwnerTypes",
+        "tags",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "kind": { "$ref": "#/$defs/kind" },
+        "status": { "$ref": "#/$defs/status" },
+        "family": { "$ref": "#/$defs/family" },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "allowedOwnerTypes": { "$ref": "#/$defs/allowedOwnerTypes" },
+        "tags": { "$ref": "#/$defs/tagList" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/nonEmptyString" },
+        "notes": { "$ref": "#/$defs/nonEmptyString" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": { "const": "status" }
+            },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "pattern": "^combat_status\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": { "const": "condition" }
+            },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "pattern": "^combat_condition\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": { "const": "injury" }
+            },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "id": {
+                "pattern": "^combat_injury\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
