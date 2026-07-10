@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-10
-Route: Codex local sequencing alignment after `Version 0.5.315 - Combat Status Condition Injury Post-Registration Audit`
+Route: Codex local sequencing alignment after `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.315 - Combat Status Condition Injury Post-Registration Audit`
+- `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`
+- `Version 0.5.317 - Roadmap Next Authority Selection`
 
 Versioning note:
 
@@ -75,6 +75,7 @@ Versioning note:
 - `0.5.313` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-lint-registration-decision.md`, approving normal content-lint registration in principle for the existing live two-status seed while deferring implementation to narrow `0.5.314`; no content, schema, validator, test, normal-lint code, runtime, UI, save/account, or gameplay behavior changed.
 - `0.5.314` completed as a primary roadmap run and registered the existing live combat health vocabulary seed in normal content lint with exact-once import, checks entry, helper call, and `main()` invocation; focused validation now proves registration and the unchanged two planned status records; normal lint reports 67 checked files.
 - `0.5.315` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-post-registration-audit.md`, confirming stable exact-once registration, unchanged live seed, passing validation at 67 normal-lint files, no registration follow-up, and no immediate expansion authorization; selected docs-first `0.5.316` next-expansion gate.
+- `0.5.316` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-next-expansion-gate.md`, pausing combat health with the stable registered two-status seed, rejecting immediate expansion/planning and Deep Research now, and selecting docs-first `0.5.317 - Roadmap Next Authority Selection`.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -429,13 +430,14 @@ Versioning note:
 | 234 | `0.5.313` | Combat Status Condition Injury Lint Registration Decision | Codex 5.5 Local docs-first | live combat health vocabulary seed + focused validation | registration decision | Completed | Approved registration in principle for the existing live seed and deferred exact-once normal lint wiring to `0.5.314`; changed documentation only. |
 | 235 | `0.5.314` | Combat Status Condition Injury Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/combat-status-condition-injury-lint-registration-decision.md` | normal lint registration + focused exact-once proof | Completed | Registered the existing live wrapper through the existing schema and validator exactly once; normal lint reports 67 checked files and the seed remains unchanged. |
 | 236 | `0.5.315` | Combat Status Condition Injury Post-Registration Audit | Codex 5.5 Local docs-first | accepted combat health lint registration | stability audit + lane gate | Completed | Confirmed stable exact-once registration, unchanged seed, 67-file normal lint, no registration follow-up, and no immediate expansion authorization. |
-| 237 | `0.5.316` | Combat Status Condition Injury Next Expansion Gate | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-post-registration-audit.md` | pause/expansion/research/route decision | Deferred | Decide whether the lane pauses, plans a tiny later status-only step, needs health/injury research, or routes elsewhere; do not implement expansion. |
+| 237 | `0.5.316` | Combat Status Condition Injury Next Expansion Gate | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-post-registration-audit.md` | pause/expansion/research/route decision | Completed | Paused combat health, kept the registered two-status seed unchanged, rejected immediate expansion and research, and routed to general authority selection. |
+| 238 | `0.5.317` | Roadmap Next Authority Selection | Codex 5.5 Local docs-first | completed service/resource/combat health lane gates + current roadmap/backlog | authority lane selection | Deferred | Compare deferred authority lanes and select one next docs-first route without implementing content, runtime, UI, save/account, or gameplay. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.316 - Combat Status Condition Injury Next Expansion Gate`
+1. `0.5.317 - Roadmap Next Authority Selection`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
@@ -455,7 +457,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate` as the immediate next recommended run.
+- Keep `Version 0.5.317 - Roadmap Next Authority Selection` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -496,6 +498,7 @@ Each future Codex prompt should:
 - `0.5.313` approved normal content-lint registration in principle for the existing live two-status seed without implementing it. The next run should narrowly register the one live wrapper through the existing schema and focused validator, add exact-once registration proof, and keep content, schema, validator behavior, runtime, UI, save/account, and gameplay unchanged.
 - `0.5.314` registered the existing live wrapper through the existing schema and focused validator exactly once. Normal lint now reports 67 checked files. The next run should be a docs-only post-registration audit, not status/condition/injury expansion or runtime work.
 - `0.5.315` confirmed registration stability, exact-once wiring, the unchanged two-record planned status seed, and no immediate expansion need. The next run should be a docs-first expansion gate that explicitly considers a lane pause, tiny later status-only planning, health/injury research, or routing elsewhere.
+- `0.5.316` paused combat health after confirming the stable registered two-status seed and no justified immediate expansion, plan, or research need. The next run should select the next authority lane from the roadmap without implementing content.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
