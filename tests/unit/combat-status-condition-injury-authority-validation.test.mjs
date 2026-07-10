@@ -155,7 +155,7 @@ function assertNoKeyDeep(value, forbiddenKeys, valuePath = "schema") {
   }
 }
 
-test("validates live combat health vocabulary seed while normal lint remains unregistered", async () => {
+test("validates live combat health vocabulary seed and exact-once normal lint registration", async () => {
   assert.equal(existsSync(path.join(ROOT, CONTENT_PATH)), true);
 
   const liveWrapper = await readJson(CONTENT_PATH);
@@ -185,9 +185,43 @@ test("validates live combat health vocabulary seed while normal lint remains unr
   assertNoKeyDeep(liveWrapper, FORBIDDEN_RUNTIME_FIELDS, "liveWrapper");
 
   const indexSource = await readText(INDEX_PATH);
-  assert.doesNotMatch(indexSource, /combat-health-vocabulary\.mjs/);
-  assert.doesNotMatch(indexSource, /combat_health_vocabulary\.json/);
-  assert.doesNotMatch(indexSource, /validateCombatHealthVocabularyContent/);
+  const checksStart = indexSource.indexOf("const checks = [");
+  const checksEnd = indexSource.indexOf("\n];", checksStart);
+  const checksSource = indexSource.slice(checksStart, checksEnd);
+  const helperStart = indexSource.indexOf("async function validateCombatHealthVocabularyAgainstDependencies()");
+  const helperEnd = indexSource.indexOf("\n}\n\n", helperStart) + 2;
+  const helperSource = indexSource.slice(helperStart, helperEnd);
+
+  assert.ok(checksStart >= 0);
+  assert.ok(checksEnd > checksStart);
+  assert.ok(helperStart >= 0);
+  assert.ok(helperEnd > helperStart + 1);
+  assert.equal(
+    indexSource.match(/import \{ validateCombatHealthVocabularyContent \} from "\.\/combat-health-vocabulary\.mjs";/g)?.length,
+    1
+  );
+  assert.equal(
+    checksSource.match(/packages\/content\/base\/game\/combat_health_vocabulary\.json/g)?.length,
+    1
+  );
+  assert.equal(indexSource.match(/validateCombatHealthVocabularyContent\(\{/g)?.length, 1);
+  assert.equal(
+    indexSource.match(/await validateCombatHealthVocabularyAgainstDependencies\(\);/g)?.length,
+    1
+  );
+  assert.equal(
+    helperSource.match(/packages\/content\/base\/game\/combat_health_vocabulary\.json/g)?.length,
+    1
+  );
+  assert.equal(
+    helperSource.match(/packages\/schemas\/game\/combat-health-vocabulary\.schema\.json/g)?.length,
+    1
+  );
+  assert.doesNotMatch(
+    helperSource,
+    /packages\/(?:engines|apps)|apps\/|game-engine|rpg-ui|save|account|items|market|resources|commodities|services|spells|abilities|skill_effects|monsters|tactics/i
+  );
+  assert.doesNotMatch(helperSource, /\b(?:import|require)\b/);
 });
 
 test("defines strict combined schema shape without relationship or class fields", () => {

@@ -34,6 +34,7 @@ import { validateSettlementSites } from "./settlement-sites.mjs";
 import { validateServicesContent } from "./services.mjs";
 import { validateResourcesContent } from "./resources.mjs";
 import { validateCommoditiesContent } from "./commodities.mjs";
+import { validateCombatHealthVocabularyContent } from "./combat-health-vocabulary.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -728,6 +729,12 @@ const checks = [
     requireSlug: false,
     forbidGeoQualifierInName: false,
     validateCombatRoles: true
+  },
+  {
+    file: "packages/content/base/game/combat_health_vocabulary.json",
+    requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
   },
   {
     file: "packages/content/base/game/tactics_presets.json",
@@ -9797,6 +9804,21 @@ async function validateResourcesAndCommoditiesAgainstDependencies() {
   });
 }
 
+async function validateCombatHealthVocabularyAgainstDependencies() {
+  const relativePath = "packages/content/base/game/combat_health_vocabulary.json";
+  const vocabularyPath = path.join(ROOT, relativePath);
+  const schemaPath = path.join(ROOT, "packages/schemas/game/combat-health-vocabulary.schema.json");
+
+  const wrapper = JSON.parse(await readFile(vocabularyPath, "utf8"));
+  const schema = JSON.parse(await readFile(schemaPath, "utf8"));
+
+  validateCombatHealthVocabularyContent({
+    relativePath,
+    wrapper,
+    schema
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10400,6 +10422,7 @@ async function main() {
   await validateSettlementSitesAgainstDependencies();
   await validateServicesAgainstDependencies();
   await validateResourcesAndCommoditiesAgainstDependencies();
+  await validateCombatHealthVocabularyAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

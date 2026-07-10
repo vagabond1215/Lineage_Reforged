@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision
+Source version/run: Version 0.5.314 - Combat Status Condition Injury Lint Registration
 Date: 2026-07-10
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision`
+- `Version 0.5.314 - Combat Status Condition Injury Lint Registration`
 
 Latest completed support/audit run:
 
@@ -15,58 +15,46 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.314 - Combat Status Condition Injury Lint Registration`
+- `Version 0.5.315 - Combat Status Condition Injury Post-Registration Audit`
 
-## Registration Decision Posture
+## Normal-Lint Registration Posture
 
-Normal content-lint registration is approved in principle for the live combat health vocabulary seed. Implementation was intentionally deferred because `0.5.313` was docs-only.
+`packages/content/base/game/combat_health_vocabulary.json` is now registered in normal content lint through:
 
-The next run should narrowly register the existing live file in `tools/content-lint/index.mjs` through the existing schema and `validateCombatHealthVocabularyContent(...)`. It should add exact-once focused assertions and keep normal content lint passing.
+- `packages/schemas/game/combat-health-vocabulary.schema.json`;
+- `validateCombatHealthVocabularyContent(...)` from `tools/content-lint/combat-health-vocabulary.mjs`.
 
-## Live Seed Summary
+`tools/content-lint/index.mjs` contains exactly one validator import, one normal checks entry, one validator helper call, and one `main()` invocation. The helper loads only the live wrapper and its schema.
 
-`packages/content/base/game/combat_health_vocabulary.json` contains exactly:
+## Exact Live Seed Summary
+
+The live wrapper remains exactly two planned status records:
 
 - `combat_status.stagger`
 - `combat_status.bind`
 
-Both records are planned statuses. Conditions, injuries, relationships, class/severity/phase fields, active records, runtime/UI/save/account/gameplay fields, and execution semantics remain absent.
+Both remain `kind: "status"`, `status: "planned"`, and `family: "control"`. Conditions, injuries, relationships, class/severity/phase fields, active records, runtime/UI/save/account/gameplay fields, and execution semantics remain absent.
 
 ## Validation Posture
 
-- Focused validator: `tools/content-lint/combat-health-vocabulary.mjs`
-- Schema: `packages/schemas/game/combat-health-vocabulary.schema.json`
 - Focused tests: 90 passing
 - Schema-file tests: 102 passing
-- Normal content lint: passing at 66 checked files without combat health registration
-- Registration markers in `tools/content-lint/index.mjs`: all absent today
-
-## Approved Future Registration Implementation
-
-The next run should:
-
-- import `validateCombatHealthVocabularyContent` exactly once;
-- add `packages/content/base/game/combat_health_vocabulary.json` to `checks` exactly once;
-- load only the live wrapper and combat health schema;
-- call `validateCombatHealthVocabularyContent({ relativePath, wrapper, schema })` exactly once through a local helper;
-- invoke that helper once from `main()`;
-- update focused tests to prove exact-once registration;
-- preserve the live seed unchanged and keep normal content lint passing.
-
-No item, market, resource, commodity, service, spell, ability, runtime, UI, save/account, or game-engine dependency is needed.
+- Normal content lint: passing at 67 checked files
+- Exact-once registration assertions: passing
+- Live seed exact-value and forbidden-field assertions: passing
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required before registration. No explicit user question or support-suffix run is required before `Version 0.5.314`.
+Deep Research is not required before the docs-only post-registration audit. No explicit user question or support-suffix run is required before `Version 0.5.315`.
 
 Reserve `GPT-DR.health.injury-recovery` for later broad health, injury, treatment, recovery, disease/poison, medicine, death/defeat, healing-service, or long-term injury work.
 
 ## Remaining Deferred Authority Guardrails
 
-Do not add statuses, conditions, injuries, relationships, class/severity/phase fields, active records, damage/healing formulas, duration/tick/stack behavior, cures, resistance/vulnerability execution, runtime, UI, save/account behavior, commands, events, rewards, migrations, or gameplay.
+The next run should audit registration stability only. Do not expand statuses, add conditions or injuries, add relationships, class/severity/phase fields, active records, damage/healing formulas, duration/tick/stack behavior, cures, resistance/vulnerability execution, runtime, UI, save/account behavior, commands, events, rewards, migrations, or gameplay.
 
 Do not edit existing combat/player/item/monster/tactics/resource/commodity/service content. Resource/commodity expansion remains paused. Service authority remains stable. Generic `world.pois` remains rejected. The Highcrown settlement Knowledge lane remains closed.
 
 Suggested next commit:
 
-`docs(combat): decide combat health lint registration`
+`feat(combat): register combat health lint`
