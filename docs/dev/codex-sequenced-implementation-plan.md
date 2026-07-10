@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-07-09
-Route: Codex local sequencing alignment after `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`
+Date: 2026-07-10
+Route: Codex local sequencing alignment after `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`
+- `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
+- `Version 0.5.312 - Combat Status Condition Injury Seed`
 
 Versioning note:
 
@@ -70,6 +70,7 @@ Versioning note:
 - `0.5.308` completed as a primary roadmap run and planned one future combined typed `combat_health_vocabulary` catalog for static status/condition/injury vocabulary without implementing content, schemas, validators, tests, normal lint registration, runtime, UI, save/account, or gameplay behavior.
 - `0.5.309` completed as a primary roadmap run and audited live hook, target-condition, runtime/type, item-use, monster, encounter, spawn, combat role, and tactics evidence for the future static combat health vocabulary lane. It confirmed the combined catalog path remains valid, relationship fields should remain absent for the first schema/validator and first seed, Deep Research is not required before schema/validator implementation, and `0.5.310 - Combat Status Condition Injury Schema And Validator` is the next route.
 - `0.5.310` completed as a primary roadmap run and added the strict future combined combat health vocabulary schema, pure focused validator, focused tests, and schema-file parse coverage without creating live content or normal content-lint registration. It kept relationship fields, class/severity/phase fields, runtime/UI/save/account/gameplay fields, and execution semantics rejected, and selected `0.5.311 - Combat Status Condition Injury Seed Plan` next.
+- `0.5.311` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-seed-plan.md`, selecting exactly two future planned-only status records, `combat_status.stagger` and `combat_status.bind`, for a later live seed while keeping conditions, injuries, relationships, normal lint registration, runtime, UI, save/account, and gameplay deferred.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -419,17 +420,18 @@ Versioning note:
 | 229 | `0.5.308` | Combat Status Condition Injury Schema Plan | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-boundary-decision.md` | schema plan | Completed | Planned one future combined typed `combat_health_vocabulary` catalog and kept implementation, live content, and normal lint registration deferred. |
 | 230 | `0.5.309` | Combat Status Condition Injury Evidence Audit | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-schema-plan.md` | evidence audit | Completed | Added `docs/design/combat-status-condition-injury-evidence-audit.md`; confirmed no content/schema/validator/test/normal-lint registration exists; selected schema/validator implementation next with relationships deferred. |
 | 231 | `0.5.310` | Combat Status Condition Injury Schema And Validator | Codex 5.5 Local narrow implementation | `docs/design/combat-status-condition-injury-evidence-audit.md` | schema + focused validator + tests | Completed | Added the combined static schema, pure focused validator, focused tests, and schema-file parse coverage; added no live content or normal lint registration. |
-| 232 | `0.5.311` | Combat Status Condition Injury Seed Plan | Codex 5.5 Local docs-first | combat health schema + focused validator | seed plan | Deferred | Select a tiny planned-only future seed, likely status-first, while keeping live content, normal lint registration, relationship fields, runtime, UI, save/account, and gameplay deferred. |
+| 232 | `0.5.311` | Combat Status Condition Injury Seed Plan | Codex 5.5 Local docs-first | combat health schema + focused validator | seed plan | Completed | Added the docs-only seed plan selecting exactly `combat_status.stagger` and `combat_status.bind` for a later planned-only live seed. |
+| 233 | `0.5.312` | Combat Status Condition Injury Seed | Codex 5.5 Local narrow implementation | `docs/design/combat-status-condition-injury-seed-plan.md` | content seed + focused validation | Deferred | Create only `packages/content/base/game/combat_health_vocabulary.json` with the two selected planned status records; keep normal lint registration deferred. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.311 - Combat Status Condition Injury Seed Plan`
+1. `0.5.312 - Combat Status Condition Injury Seed`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap; the service authority schema plan defined future `civilization.services` schema posture; the service authority schema/validator run added schema and focused validation support; the service authority seed plan selected exactly five future planned service records; the service authority seed is now live; the service authority lint registration decision approved normal content-lint registration for the existing seed; service authority normal lint registration is complete; the post-registration audit confirmed no immediate service follow-up is needed; the resource/commodity authority schema plan defined future `world.resources` and `world.commodities` schema/validator posture; the resource/commodity schema/validator implementation added schemas, focused validators, and tests; the resource/commodity seed plan selected a tiny paired planned-only first seed; the resource/commodity seed is now live; the resource/commodity lint registration decision approved normal registration in principle; resource/commodity normal lint registration is complete; the post-registration audit confirmed no registration follow-up or expansion authorization; the next-expansion gate paused resource/commodity expansion while routing to combat status/condition/injury schema planning; the combat evidence audit confirmed the combined catalog, no relationship fields, and no Deep Research blocker before schema/validator implementation; the combat health schema/validator implementation added only the future schema, focused validator, focused tests, and schema-file parse coverage. A docs-first seed plan is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; the service authority decision selected a hybrid static-vocabulary posture; the resource/commodity decision approved separate future static authorities in principle; the combat status/condition/injury decision approved a future typed static vocabulary in principle; the static authority validation consolidation audit confirmed those lanes remain coherent; the discovery/POI gate intake audit found no approved generic POI authority; the discovery/POI boundary decision rejected generic `world.pois` for the current roadmap; the service authority schema plan defined future `civilization.services` schema posture; the service authority schema/validator run added schema and focused validation support; the service authority seed plan selected exactly five future planned service records; the service authority seed is now live; the service authority lint registration decision approved normal content-lint registration for the existing seed; service authority normal lint registration is complete; the post-registration audit confirmed no immediate service follow-up is needed; the resource/commodity authority schema plan defined future `world.resources` and `world.commodities` schema/validator posture; the resource/commodity schema/validator implementation added schemas, focused validators, and tests; the resource/commodity seed plan selected a tiny paired planned-only first seed; the resource/commodity seed is now live; the resource/commodity lint registration decision approved normal registration in principle; resource/commodity normal lint registration is complete; the post-registration audit confirmed no registration follow-up or expansion authorization; the next-expansion gate paused resource/commodity expansion while routing to combat status/condition/injury schema planning; the combat evidence audit confirmed the combined catalog, no relationship fields, and no Deep Research blocker before schema/validator implementation; the combat health schema/validator implementation added only the future schema, focused validator, focused tests, and schema-file parse coverage; the combat health seed plan selected exactly two future planned status records. A narrow seed implementation is next.
 
 ## Default Prompt Pattern
 
@@ -445,7 +447,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.311 - Combat Status Condition Injury Seed Plan` as the immediate next recommended run.
+- Keep `Version 0.5.312 - Combat Status Condition Injury Seed` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -481,6 +483,7 @@ Each future Codex prompt should:
 - `0.5.308` planned the future combined typed non-executing `combat_health_vocabulary` catalog without implementing content, schemas, validators, tests, runtime, UI, save/account, or gameplay.
 - `0.5.309` completed the docs-first evidence audit and selected narrow `0.5.310` schema/validator implementation. The next run should add only the combined static schema, pure focused validator, focused tests, and schema-file parse coverage; it should not create live content, relationship fields, normal content-lint registration, runtime, UI, save/account, or gameplay.
 - `0.5.310` added the future combined static schema, pure focused validator, focused tests, and schema-file parse coverage without live content or normal content-lint registration. The next run should be docs-first `0.5.311 - Combat Status Condition Injury Seed Plan`, selecting a tiny planned-only future seed while keeping relationship fields, runtime, UI, save/account, and gameplay deferred.
+- `0.5.311` added the docs-only seed plan selecting exactly `combat_status.stagger` and `combat_status.bind` for a later live seed. The next run should create only `packages/content/base/game/combat_health_vocabulary.json` with those planned records and should keep normal content-lint registration deferred.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

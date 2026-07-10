@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.310 - Combat Status Condition Injury Schema And Validator
-Date: 2026-07-09
+Source version/run: Version 0.5.311 - Combat Status Condition Injury Seed Plan
+Date: 2026-07-10
 
 ## Status
 
-`Version 0.5.310 - Combat Status Condition Injury Schema And Validator` completed the narrow schema/validator implementation for the future static combat health vocabulary lane.
+`Version 0.5.311 - Combat Status Condition Injury Seed Plan` completed the docs-only seed plan for the future static combat health vocabulary lane.
 
 Latest completed primary:
 
-- `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`
+- `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
 
 Latest completed support/audit run:
 
@@ -17,64 +17,90 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
+- `Version 0.5.312 - Combat Status Condition Injury Seed`
 
-## Combat Health Vocabulary Implementation Posture
+## Seed-Plan Posture
 
-Implemented:
+The new plan lives at:
 
-- `packages/schemas/game/combat-health-vocabulary.schema.json`
-- `tools/content-lint/combat-health-vocabulary.mjs`
-- `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`
-- schema-file parse coverage in `tests/unit/schema-files.test.mjs`
+- `docs/design/combat-status-condition-injury-seed-plan.md`
 
-Still absent by design:
-
-- `packages/content/base/game/combat_health_vocabulary.json`
-- normal content-lint registration in `tools/content-lint/index.mjs`
-
-The implemented authority is one combined typed catalog for future records:
-
-- `kind: "status"` with ids shaped as `combat_status.<slug>`
-- `kind: "condition"` with ids shaped as `combat_condition.<slug>`
-- `kind: "injury"` with ids shaped as `combat_injury.<slug>`
-
-The validator is pure and in-memory only. It validates strict records-only wrapper shape, required fields, duplicate ids/slugs/names, kind-specific id prefixes, slug/id coherence, lifecycle status, family vocabulary, owner vocabulary, non-empty string notes, non-empty unique lower-snake tags, forbidden intent tags, and recursive forbidden fields.
-
-## Guardrails For Next Route
-
-`Version 0.5.311 - Combat Status Condition Injury Seed Plan` should be docs-first.
-
-It should select only a tiny planned-only future seed, likely status-first from the strongest existing evidence:
+The plan selects exactly two future planned-only status records for a later live seed:
 
 - `combat_status.stagger`
-- possibly `combat_status.bind`
+- `combat_status.bind`
 
-Keep deferred unless the seed plan proves otherwise:
+No live content was created in this run. `packages/content/base/game/combat_health_vocabulary.json` remains absent.
 
-- condition records such as burn, slow, blind, curse, and poison
-- all injury records
-- relationship fields
-- normal content-lint registration
-- live content implementation
-- runtime/UI/save/account/gameplay behavior
+Normal content-lint registration remains absent. `tools/content-lint/index.mjs` should stay untouched until live content exists and a later registration decision approves normal lint wiring.
 
-Relationship fields remain absent from the first schema/validator and should remain absent from the first seed unless a later seed plan explicitly proves exact safe references.
+## Exact Future Selected Records
 
-## Deep Research / Question Posture
+Future `packages/content/base/game/combat_health_vocabulary.json` should contain exactly two records unless a fresh implementation audit finds a blocker:
 
-Deep Research is not required before a tiny status-first seed plan.
+- `combat_status.stagger`
+  - `slug`: `stagger`
+  - `name`: `Stagger`
+  - `kind`: `status`
+  - `status`: `planned`
+  - `family`: `control`
+  - `allowedOwnerTypes`: `combat_runtime`, `ability`, `spell`, `skill_effect`, `item_use_profile`
+  - `tags`: `control`, `disruption`
+- `combat_status.bind`
+  - `slug`: `bind`
+  - `name`: `Bind`
+  - `kind`: `status`
+  - `status`: `planned`
+  - `family`: `control`
+  - `allowedOwnerTypes`: `combat_runtime`, `spell`, `skill_effect`
+  - `tags`: `control`, `restraint`
+
+Use the exact summaries, source authority notes, and notes from `docs/design/combat-status-condition-injury-seed-plan.md`.
+
+## Deferred Status / Condition / Injury Posture
+
+Defer these possible later status records:
+
+- `combat_status.stun`
+- `combat_status.prone`
+- `combat_status.pinned`
+- `combat_status.hamstrung`
+- `combat_status.protect`
+- `combat_status.ward`
+- `combat_status.grappled`
+
+Defer these condition records:
+
+- `combat_condition.blind`
+- `combat_condition.slow`
+- `combat_condition.burn`
+- `combat_condition.curse`
+- `combat_condition.poison`
+
+Defer all `combat_injury.*` records.
+
+No relationship fields, condition/class/severity/phase fields, active status values, runtime behavior, UI, save/account behavior, or gameplay should be added in the next seed.
+
+## Deep Research / Question / Support-Suffix Posture
+
+Deep Research is not required before the tiny two-status seed.
 
 Run `GPT-DR.health.injury-recovery` before any seed plan that selects broad health, injury, treatment, recovery, disease/poison, poison exposure, medicine, death/defeat, healing-service, or long-term injury vocabulary.
 
-No explicit user question is needed before proceeding to `Version 0.5.311 - Combat Status Condition Injury Seed Plan`.
+No explicit user question or support-suffix run is needed before proceeding to `Version 0.5.312 - Combat Status Condition Injury Seed`, assuming the implementation prompt remains narrow.
 
 ## Remaining Deferred Authority Guardrails
 
-Do not create live combat health content, register normal content lint, add relationship fields, edit existing combat/player/item/monster/tactics content, or add runtime behavior, UI, save/account behavior, damage/healing formulas, duration/tick/stack behavior, cure behavior, resistance/vulnerability execution, commands, events, rewards, migrations, or gameplay unless a later prompt explicitly scopes that work.
+The next route should create only:
+
+- `packages/content/base/game/combat_health_vocabulary.json`
+
+with exactly the two planned status records selected in the seed plan. It may update focused tests for live seed validation if needed.
+
+Do not register normal content lint, add relationship fields, expand status catalog breadth, add condition or injury records, edit existing combat/player/item/monster/tactics/resource/commodity/service content, or add runtime behavior, UI, save/account behavior, damage/healing formulas, duration/tick/stack behavior, cure behavior, resistance/vulnerability execution, commands, events, rewards, migrations, or gameplay.
 
 Resource/commodity expansion remains paused. Service authority remains stable. Generic `world.pois` remains rejected. The Highcrown settlement Knowledge lane remains closed.
 
 Suggested next commit:
 
-`feat(combat): add combat health vocabulary schema`
+`docs(combat): plan combat health vocabulary seed`

@@ -1,23 +1,23 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.310 - Combat Status Condition Injury Schema And Validator
-Date: 2026-07-09
+Source version/run: Version 0.5.311 - Combat Status Condition Injury Seed Plan
+Date: 2026-07-10
 Branch/status assumption: `master`; worktree clean at start. `git fetch origin` succeeded. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Implemented the narrow schema/validator pass for the future combined static `combat_health_vocabulary` authority.
+Created the docs-only seed plan for the future static `combat_health_vocabulary` content.
 
-Added a strict schema, pure focused validator, focused in-memory test coverage, and schema-file parse coverage. The new validator accepts empty wrappers for the schema-validator-only phase, validates kind-specific ids for status/condition/injury records, enforces required descriptive-only fields, rejects relationship/class/severity/phase fields, rejects runtime/UI/save/account/gameplay fields recursively, and returns sorted `recordIds`.
+The plan selects exactly two future planned-only status records for a later implementation:
 
-No live combat health vocabulary content was created. Normal content-lint registration remains absent.
+- `combat_status.stagger`
+- `combat_status.bind`
+
+No live content was created. Normal content-lint registration remains absent. Condition records, injury records, relationship fields, class/severity/phase fields, active records, Deep Research, runtime behavior, UI, save/account behavior, and gameplay remain deferred.
 
 ## Files Changed
 
-- `packages/schemas/game/combat-health-vocabulary.schema.json`
-- `tools/content-lint/combat-health-vocabulary.mjs`
-- `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`
-- `tests/unit/schema-files.test.mjs`
+- `docs/design/combat-status-condition-injury-seed-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -29,37 +29,38 @@ No live combat health vocabulary content was created. Normal content-lint regist
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master`
-- Required reads of `README.md`, current output, current handoff, sequence, roadmap, backlog, schema plan, boundary decision, evidence audit, static authority audit, resource/commodity gate, relevant schema/validator/test examples, normal content-lint index, and runtime/type evidence scans.
+- Required reads of `AGENTS.md`, `README.md`, current output, current handoff, sequence, roadmap, backlog, evidence audit, schema plan, boundary decision, static authority audit, resource/commodity gate, pipeline consolidation decision, GPT Deep Research prompt-pack decision, combat health schema, focused validator, focused tests, schema-file parse coverage, normal content-lint index, and current evidence surfaces.
+- Fresh evidence scan for selected and deferred status/condition strings across combat hook support, spell hook support, abilities, spells, skill effects, and items.
 - `node --test tests/unit/combat-status-condition-injury-authority-validation.test.mjs` (passed; 90 tests)
 - `node --test tests/unit/schema-files.test.mjs` (passed; 102 tests)
 - `npm.cmd run tool:content-lint` (passed; `content-lint: ok (66 files checked)`)
 - `git diff --check` (passed with line-ending normalization warnings only)
-- Conflict-marker scan across changed files (no matches)
-- Trailing-whitespace scan across changed files (no matches)
+- Conflict-marker scan across changed docs (no matches)
+- Trailing-whitespace scan across changed docs (no matches)
 - Accidental live-content scan confirmed `packages/content/base/game/combat_health_vocabulary.json` remains absent.
-- Normal-lint registration scan confirmed `tools/content-lint/index.mjs` was not changed and has no combat health vocabulary import or check.
-- Changed-file scope audit confirmed no existing content, runtime, UI, save/account, package runtime/type, or normal-lint index edits.
-- Relationship/class/severity/phase scan found expected negative-test/forbidden-list references only, and no schema record properties for those fields.
-- Deep Research, Highcrown, and `world.pois` scans found no reopened or newly created artifacts.
+- Scope audit confirmed no schema, validator, focused test, schema-file test, normal-lint index, existing content, runtime, UI, save/account, or gameplay files changed.
+- Relationship/class/severity/phase scan found only explicit doc examples or historical backlog text.
+- Deep Research, Highcrown, and `world.pois` scans found no created artifacts or reopened lanes.
+- Stale next-version pointer scan confirmed active handoff, roadmap, sequence, backlog, and current output route to `Version 0.5.312 - Combat Status Condition Injury Seed`; older `0.5.311` references are historical.
 - `git status --short --branch`
 
 ## Behavior / Runtime Confirmation
 
-Schema, focused validator, focused tests, schema parse coverage, and coordination docs changed.
+Documentation changed only.
 
-No live combat status/condition/injury content, normal content-lint registration, existing combat/player/item/monster/tactics content, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, combat execution, damage formulas, healing formulas, duration/tick/stack behavior, cure behavior, immunity/resistance/vulnerability execution, `world.pois`, Highcrown Knowledge, resource/commodity content, service content, or gameplay behavior changed.
+No live combat health vocabulary content, schemas, validators, tests, normal content-lint code, existing combat role content, tactics content, encounter content, monster content, spawn profile content, player ability content, player spell content, player skill content, skill effect content, item content, resource/commodity content, service content, runtime, UI, storage, commands, events, rewards, migrations, save/account behavior, damage formulas, healing formulas, duration/tick/stack behavior, cure behavior, immunity/resistance/vulnerability execution, `world.pois`, Highcrown Knowledge, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The next run should be docs-first `Version 0.5.311 - Combat Status Condition Injury Seed Plan`.
-- First seed planning should prefer a tiny planned-only status-first candidate set, likely `combat_status.stagger` and possibly `combat_status.bind`, unless fresh evidence blocks it.
-- Condition records, injury records, relationship fields, normal content-lint registration, live content implementation, and runtime behavior remain deferred.
-- Run `GPT-DR.health.injury-recovery` only before broad health, injury, treatment, recovery, disease/poison, medicine, death/defeat, healing-service, or long-term injury vocabulary.
+- The next run should be narrow `Version 0.5.312 - Combat Status Condition Injury Seed`.
+- That run should create only `packages/content/base/game/combat_health_vocabulary.json` with exactly the two planned status records selected in `docs/design/combat-status-condition-injury-seed-plan.md`.
+- Focused tests may need live-seed validation coverage in the implementation run.
+- Normal content-lint registration should remain deferred until after live content exists and a later registration decision approves it.
 
 ## Next Recommended Version
 
-Version 0.5.311 - Combat Status Condition Injury Seed Plan
+Version 0.5.312 - Combat Status Condition Injury Seed
 
 ## Suggested Commit Message
 
-feat(combat): add combat health vocabulary schema
+docs(combat): plan combat health vocabulary seed
