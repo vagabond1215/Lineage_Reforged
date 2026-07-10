@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-10
-Route: Codex local sequencing alignment after `Version 0.5.312 - Combat Status Condition Injury Seed`
+Route: Codex local sequencing alignment after `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.312 - Combat Status Condition Injury Seed`
+- `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision`
+- `Version 0.5.314 - Combat Status Condition Injury Lint Registration`
 
 Versioning note:
 
@@ -72,6 +72,7 @@ Versioning note:
 - `0.5.310` completed as a primary roadmap run and added the strict future combined combat health vocabulary schema, pure focused validator, focused tests, and schema-file parse coverage without creating live content or normal content-lint registration. It kept relationship fields, class/severity/phase fields, runtime/UI/save/account/gameplay fields, and execution semantics rejected, and selected `0.5.311 - Combat Status Condition Injury Seed Plan` next.
 - `0.5.311` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-seed-plan.md`, selecting exactly two future planned-only status records, `combat_status.stagger` and `combat_status.bind`, for a later live seed while keeping conditions, injuries, relationships, normal lint registration, runtime, UI, save/account, and gameplay deferred.
 - `0.5.312` completed as a primary roadmap run and created `packages/content/base/game/combat_health_vocabulary.json` with exactly the two selected planned status records, updated focused live-seed validation, and kept normal content-lint registration deferred.
+- `0.5.313` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-lint-registration-decision.md`, approving normal content-lint registration in principle for the existing live two-status seed while deferring implementation to narrow `0.5.314`; no content, schema, validator, test, normal-lint code, runtime, UI, save/account, or gameplay behavior changed.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -423,13 +424,14 @@ Versioning note:
 | 231 | `0.5.310` | Combat Status Condition Injury Schema And Validator | Codex 5.5 Local narrow implementation | `docs/design/combat-status-condition-injury-evidence-audit.md` | schema + focused validator + tests | Completed | Added the combined static schema, pure focused validator, focused tests, and schema-file parse coverage; added no live content or normal lint registration. |
 | 232 | `0.5.311` | Combat Status Condition Injury Seed Plan | Codex 5.5 Local docs-first | combat health schema + focused validator | seed plan | Completed | Added the docs-only seed plan selecting exactly `combat_status.stagger` and `combat_status.bind` for a later planned-only live seed. |
 | 233 | `0.5.312` | Combat Status Condition Injury Seed | Codex 5.5 Local narrow implementation | `docs/design/combat-status-condition-injury-seed-plan.md` | content seed + focused validation | Completed | Created only `packages/content/base/game/combat_health_vocabulary.json` with the two selected planned status records; kept normal lint registration deferred. |
-| 234 | `0.5.313` | Combat Status Condition Injury Lint Registration Decision | Codex 5.5 Local docs-first | live combat health vocabulary seed + focused validation | registration decision | Deferred | Decide whether to register the live combat health vocabulary seed in normal content lint; do not implement registration in the decision run. |
+| 234 | `0.5.313` | Combat Status Condition Injury Lint Registration Decision | Codex 5.5 Local docs-first | live combat health vocabulary seed + focused validation | registration decision | Completed | Approved registration in principle for the existing live seed and deferred exact-once normal lint wiring to `0.5.314`; changed documentation only. |
+| 235 | `0.5.314` | Combat Status Condition Injury Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/combat-status-condition-injury-lint-registration-decision.md` | normal lint registration + focused exact-once proof | Deferred | Register the existing live wrapper through the existing schema and validator exactly once; keep the seed and authority boundary unchanged. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.313 - Combat Status Condition Injury Lint Registration Decision`
+1. `0.5.314 - Combat Status Condition Injury Lint Registration`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
@@ -449,7 +451,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision` as the immediate next recommended run.
+- Keep `Version 0.5.314 - Combat Status Condition Injury Lint Registration` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -487,6 +489,7 @@ Each future Codex prompt should:
 - `0.5.310` added the future combined static schema, pure focused validator, focused tests, and schema-file parse coverage without live content or normal content-lint registration. The next run should be docs-first `0.5.311 - Combat Status Condition Injury Seed Plan`, selecting a tiny planned-only future seed while keeping relationship fields, runtime, UI, save/account, and gameplay deferred.
 - `0.5.311` added the docs-only seed plan selecting exactly `combat_status.stagger` and `combat_status.bind` for a later live seed. The next run should create only `packages/content/base/game/combat_health_vocabulary.json` with those planned records and should keep normal content-lint registration deferred.
 - `0.5.312` created only `packages/content/base/game/combat_health_vocabulary.json` with exactly `combat_status.stagger` and `combat_status.bind`, both planned status records, updated focused validation, and kept normal content-lint registration deferred. The next run should be docs-only `0.5.313 - Combat Status Condition Injury Lint Registration Decision`.
+- `0.5.313` approved normal content-lint registration in principle for the existing live two-status seed without implementing it. The next run should narrowly register the one live wrapper through the existing schema and focused validator, add exact-once registration proof, and keep content, schema, validator behavior, runtime, UI, save/account, and gameplay unchanged.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
