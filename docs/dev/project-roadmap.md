@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-09
+Last reviewed: 2026-07-10
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
+- Latest completed version: `Version 0.5.312 - Combat Status Condition Injury Seed`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.312 - Combat Status Condition Injury Seed`
+- Next recommended version: `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -167,6 +167,7 @@ Versioning rule:
 - `Version 0.5.309 - Combat Status Condition Injury Evidence Audit` added `docs/design/combat-status-condition-injury-evidence-audit.md`; confirmed no canonical combat health vocabulary content, schema, validator, focused test, or normal content-lint registration exists; classified current hook and target-condition evidence; kept relationship fields absent for the first schema/validator and first seed; confirmed Deep Research is not needed before schema/validator implementation; selected `Version 0.5.310 - Combat Status Condition Injury Schema And Validator`; and changed no content, schemas, validators, tests, normal-lint code, runtime, UI, save/account, combat execution, damage/healing formulas, duration/tick/stack behavior, cure behavior, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.310 - Combat Status Condition Injury Schema And Validator` added `packages/schemas/game/combat-health-vocabulary.schema.json`, `tools/content-lint/combat-health-vocabulary.mjs`, and `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`; added schema-file parse coverage to `tests/unit/schema-files.test.mjs`; kept `packages/content/base/game/combat_health_vocabulary.json` absent; kept normal content-lint registration absent; selected `Version 0.5.311 - Combat Status Condition Injury Seed Plan` next; and changed no live combat health content, normal-lint code, runtime, UI, save/account, combat execution, damage/healing formulas, duration/tick/stack behavior, cure behavior, relationship fields, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.311 - Combat Status Condition Injury Seed Plan` added `docs/design/combat-status-condition-injury-seed-plan.md`; selected exactly two future planned-only static status records, `combat_status.stagger` and `combat_status.bind`; kept condition records, injury records, relationship fields, class/severity/phase fields, active status, normal content-lint registration, Deep Research, runtime, UI, save/account, combat execution, damage/healing formulas, duration/tick/stack behavior, cure behavior, resource/commodity, service, POI/discovery, Highcrown Knowledge, and gameplay deferred; and selected `Version 0.5.312 - Combat Status Condition Injury Seed` next.
+- `Version 0.5.312 - Combat Status Condition Injury Seed` created `packages/content/base/game/combat_health_vocabulary.json` with exactly `combat_status.stagger` and `combat_status.bind` as planned-only static status records; updated focused validation to prove exact live values, ids, planned-only status, status-only kind, absent conditions/injuries, absent relationship/class/severity/phase fields, absent forbidden runtime/UI/save/account/gameplay fields, and absent normal content-lint registration; kept schemas, validators, schema-file tests, normal-lint index, runtime, UI, save/account, combat execution, damage/healing formulas, duration/tick/stack behavior, cure behavior, resource/commodity, service, POI/discovery, Highcrown Knowledge, and gameplay unchanged; and selected `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision` next.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -460,9 +461,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.312 - Combat Status Condition Injury Seed`
+1. `0.5.313 - Combat Status Condition Injury Lint Registration Decision`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and combat health evidence decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.312`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, tests, a tiny paired live seed, normal content-lint registration, post-registration audit, and next-expansion gate are in place; resource/commodity expansion and integration remain deferred. Combat status/condition/injury now has a strict future combined `combat_health_vocabulary` schema, pure focused validator, focused tests, schema-file parse coverage, and a docs-only seed plan selecting exactly `combat_status.stagger` and `combat_status.bind`; the next route should create only the planned live content seed, without normal content-lint registration.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and combat health evidence decisions plus the sequenced implementation plan extend the active near-term queue through `0.5.313`. Service authority normal content-lint registration is complete for the existing live seed, the post-registration audit found no immediate service follow-up, and service content expansion, runtime, UI, save/account, and gameplay behavior remain deferred. Resource/commodity schemas, focused validators, tests, a tiny paired live seed, normal content-lint registration, post-registration audit, and next-expansion gate are in place; resource/commodity expansion and integration remain deferred. Combat status/condition/injury now has a strict future combined `combat_health_vocabulary` schema, pure focused validator, focused tests, schema-file parse coverage, a docs-only seed plan, and a live planned-only two-status seed containing exactly `combat_status.stagger` and `combat_status.bind`; the next route should decide whether to register the live seed in normal content lint, without implementing registration in that decision run.
 
 High-priority unresolved questions:
 

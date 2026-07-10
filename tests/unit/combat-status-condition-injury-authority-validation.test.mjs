@@ -73,6 +73,35 @@ async function readJson(relativePath) {
 
 const schema = await readJson(SCHEMA_PATH);
 
+const SELECTED_SEED_RECORDS = [
+  {
+    id: "combat_status.stagger",
+    slug: "stagger",
+    name: "Stagger",
+    kind: "status",
+    status: "planned",
+    family: "control",
+    summary: "Static vocabulary for the stagger combat status, used as a descriptive label for brief disruption or loss of footing without defining duration, stacks, damage, or recovery behavior.",
+    allowedOwnerTypes: ["combat_runtime", "ability", "spell", "skill_effect", "item_use_profile"],
+    tags: ["control", "disruption"],
+    sourceAuthorityNotes: "Selected because status.stagger or stagger appears across abilities, spells, skill effects, item use profiles, combat hook support, and existing engine runtime support.",
+    notes: "Descriptive vocabulary only. Runtime systems remain responsible for applying, expiring, stacking, magnitudes, targeting, actor references, and gameplay effects."
+  },
+  {
+    id: "combat_status.bind",
+    slug: "bind",
+    name: "Bind",
+    kind: "status",
+    status: "planned",
+    family: "control",
+    summary: "Static vocabulary for the bind combat status, used as a descriptive label for restrained or bound combat state without defining movement rules, duration, stacks, damage, cure, or escape behavior.",
+    allowedOwnerTypes: ["combat_runtime", "spell", "skill_effect"],
+    tags: ["control", "restraint"],
+    sourceAuthorityNotes: "Selected because status.bind appears in spells, skill effects, spell hook support, combat hook support, and existing engine runtime support.",
+    notes: "Descriptive vocabulary only. Runtime systems remain responsible for applying, expiring, stacking, magnitudes, movement constraints, actor references, escape rules, and gameplay effects."
+  }
+];
+
 function record(overrides = {}) {
   return {
     id: "combat_status.stagger",
@@ -126,8 +155,34 @@ function assertNoKeyDeep(value, forbiddenKeys, valuePath = "schema") {
   }
 }
 
-test("keeps combat health vocabulary content absent and unregistered from normal lint", async () => {
-  assert.equal(existsSync(path.join(ROOT, CONTENT_PATH)), false);
+test("validates live combat health vocabulary seed while normal lint remains unregistered", async () => {
+  assert.equal(existsSync(path.join(ROOT, CONTENT_PATH)), true);
+
+  const liveWrapper = await readJson(CONTENT_PATH);
+  assert.deepEqual(liveWrapper.records, SELECTED_SEED_RECORDS);
+  assert.deepEqual(validateCombatHealthVocabularyContent({
+    relativePath: CONTENT_PATH,
+    wrapper: structuredClone(liveWrapper),
+    schema: structuredClone(schema)
+  }), {
+    ok: true,
+    recordIds: [
+      "combat_status.bind",
+      "combat_status.stagger"
+    ]
+  });
+
+  assert.equal(liveWrapper.records.length, 2);
+  assert.deepEqual(liveWrapper.records.map((record) => record.id).sort(), [
+    "combat_status.bind",
+    "combat_status.stagger"
+  ]);
+  assert.equal(liveWrapper.records.every((record) => record.kind === "status"), true);
+  assert.equal(liveWrapper.records.every((record) => record.status === "planned"), true);
+  assert.equal(liveWrapper.records.some((record) => record.kind === "condition"), false);
+  assert.equal(liveWrapper.records.some((record) => record.kind === "injury"), false);
+  assertNoKeyDeep(liveWrapper, RELATIONSHIP_AND_DEFERRED_FIELDS, "liveWrapper");
+  assertNoKeyDeep(liveWrapper, FORBIDDEN_RUNTIME_FIELDS, "liveWrapper");
 
   const indexSource = await readText(INDEX_PATH);
   assert.doesNotMatch(indexSource, /combat-health-vocabulary\.mjs/);

@@ -1,0 +1,30 @@
+{
+  "records": [
+    {
+      "id": "combat_status.stagger",
+      "slug": "stagger",
+      "name": "Stagger",
+      "kind": "status",
+      "status": "planned",
+      "family": "control",
+      "summary": "Static vocabulary for the stagger combat status, used as a descriptive label for brief disruption or loss of footing without defining duration, stacks, damage, or recovery behavior.",
+      "allowedOwnerTypes": ["combat_runtime", "ability", "spell", "skill_effect", "item_use_profile"],
+      "tags": ["control", "disruption"],
+      "sourceAuthorityNotes": "Selected because status.stagger or stagger appears across abilities, spells, skill effects, item use profiles, combat hook support, and existing engine runtime support.",
+      "notes": "Descriptive vocabulary only. Runtime systems remain responsible for applying, expiring, stacking, magnitudes, targeting, actor references, and gameplay effects."
+    },
+    {
+      "id": "combat_status.bind",
+      "slug": "bind",
+      "name": "Bind",
+      "kind": "status",
+      "status": "planned",
+      "family": "control",
+      "summary": "Static vocabulary for the bind combat status, used as a descriptive label for restrained or bound combat state without defining movement rules, duration, stacks, damage, cure, or escape behavior.",
+      "allowedOwnerTypes": ["combat_runtime", "spell", "skill_effect"],
+      "tags": ["control", "restraint"],
+      "sourceAuthorityNotes": "Selected because status.bind appears in spells, skill effects, spell hook support, combat hook support, and existing engine runtime support.",
+      "notes": "Descriptive vocabulary only. Runtime systems remain responsible for applying, expiring, stacking, magnitudes, movement constraints, actor references, escape rules, and gameplay effects."
+    }
+  ]
+}

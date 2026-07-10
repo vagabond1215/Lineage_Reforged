@@ -1,15 +1,15 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.311 - Combat Status Condition Injury Seed Plan
+Source version/run: Version 0.5.312 - Combat Status Condition Injury Seed
 Date: 2026-07-10
 
 ## Status
 
-`Version 0.5.311 - Combat Status Condition Injury Seed Plan` completed the docs-only seed plan for the future static combat health vocabulary lane.
+`Version 0.5.312 - Combat Status Condition Injury Seed` created the first live static combat health vocabulary seed.
 
 Latest completed primary:
 
-- `Version 0.5.311 - Combat Status Condition Injury Seed Plan`
+- `Version 0.5.312 - Combat Status Condition Injury Seed`
 
 Latest completed support/audit run:
 
@@ -17,26 +17,26 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.312 - Combat Status Condition Injury Seed`
+- `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision`
 
-## Seed-Plan Posture
+## Live Seed Posture
 
-The new plan lives at:
+The live seed now exists at:
 
-- `docs/design/combat-status-condition-injury-seed-plan.md`
+- `packages/content/base/game/combat_health_vocabulary.json`
 
-The plan selects exactly two future planned-only status records for a later live seed:
+It contains exactly two planned-only status records:
 
 - `combat_status.stagger`
 - `combat_status.bind`
 
-No live content was created in this run. `packages/content/base/game/combat_health_vocabulary.json` remains absent.
+No condition records, injury records, active records, relationship fields, class/severity/phase fields, runtime fields, UI fields, save/account fields, or gameplay fields were added.
 
-Normal content-lint registration remains absent. `tools/content-lint/index.mjs` should stay untouched until live content exists and a later registration decision approves normal lint wiring.
+Normal content-lint registration remains absent. `tools/content-lint/index.mjs` has no `combat-health-vocabulary.mjs`, `combat_health_vocabulary.json`, or `validateCombatHealthVocabularyContent` reference.
 
-## Exact Future Selected Records
+## Exact Live Records
 
-Future `packages/content/base/game/combat_health_vocabulary.json` should contain exactly two records unless a fresh implementation audit finds a blocker:
+`packages/content/base/game/combat_health_vocabulary.json` contains exactly:
 
 - `combat_status.stagger`
   - `slug`: `stagger`
@@ -55,7 +55,7 @@ Future `packages/content/base/game/combat_health_vocabulary.json` should contain
   - `allowedOwnerTypes`: `combat_runtime`, `spell`, `skill_effect`
   - `tags`: `control`, `restraint`
 
-Use the exact summaries, source authority notes, and notes from `docs/design/combat-status-condition-injury-seed-plan.md`.
+The exact summaries, source authority notes, and notes match `docs/design/combat-status-condition-injury-seed-plan.md`.
 
 ## Deferred Status / Condition / Injury Posture
 
@@ -81,26 +81,26 @@ Defer all `combat_injury.*` records.
 
 No relationship fields, condition/class/severity/phase fields, active status values, runtime behavior, UI, save/account behavior, or gameplay should be added in the next seed.
 
+## Focused Validation Posture
+
+`tests/unit/combat-status-condition-injury-authority-validation.test.mjs` now validates the live seed through `validateCombatHealthVocabularyContent(...)`, proves the exact two ids, exact record values, planned-only status, status-only kind, absence of conditions/injuries, absence of relationship/class/severity/phase fields, absence of forbidden runtime/UI/save/account/gameplay fields, and continued normal-lint registration absence.
+
 ## Deep Research / Question / Support-Suffix Posture
 
 Deep Research is not required before the tiny two-status seed.
 
-Run `GPT-DR.health.injury-recovery` before any seed plan that selects broad health, injury, treatment, recovery, disease/poison, poison exposure, medicine, death/defeat, healing-service, or long-term injury vocabulary.
+Run `GPT-DR.health.injury-recovery` before any later seed plan that selects broad health, injury, treatment, recovery, disease/poison, poison exposure, medicine, death/defeat, healing-service, or long-term injury vocabulary.
 
-No explicit user question or support-suffix run is needed before proceeding to `Version 0.5.312 - Combat Status Condition Injury Seed`, assuming the implementation prompt remains narrow.
+No explicit user question or support-suffix run is needed before proceeding to `Version 0.5.313 - Combat Status Condition Injury Lint Registration Decision`, assuming that run remains docs-only.
 
 ## Remaining Deferred Authority Guardrails
 
-The next route should create only:
+The next route should decide, in documentation only, whether the new live `combat_health_vocabulary` seed should be registered in normal content lint.
 
-- `packages/content/base/game/combat_health_vocabulary.json`
-
-with exactly the two planned status records selected in the seed plan. It may update focused tests for live seed validation if needed.
-
-Do not register normal content lint, add relationship fields, expand status catalog breadth, add condition or injury records, edit existing combat/player/item/monster/tactics/resource/commodity/service content, or add runtime behavior, UI, save/account behavior, damage/healing formulas, duration/tick/stack behavior, cure behavior, resistance/vulnerability execution, commands, events, rewards, migrations, or gameplay.
+Do not directly implement normal content-lint registration in the decision run. Do not add relationship fields, expand status catalog breadth, add condition or injury records, edit existing combat/player/item/monster/tactics/resource/commodity/service content, or add runtime behavior, UI, save/account behavior, damage/healing formulas, duration/tick/stack behavior, cure behavior, resistance/vulnerability execution, commands, events, rewards, migrations, or gameplay.
 
 Resource/commodity expansion remains paused. Service authority remains stable. Generic `world.pois` remains rejected. The Highcrown settlement Knowledge lane remains closed.
 
 Suggested next commit:
 
-`docs(combat): plan combat health vocabulary seed`
+`feat(combat): seed combat health vocabulary`
