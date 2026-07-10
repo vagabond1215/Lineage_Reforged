@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate
+Source version/run: Version 0.5.317 - Roadmap Next Authority Selection
 Date: 2026-07-10
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`
+- `Version 0.5.317 - Roadmap Next Authority Selection`
 
 Latest completed support/audit run:
 
@@ -15,48 +15,30 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.317 - Roadmap Next Authority Selection`
+- `Version 0.5.318 - People NPC Authority Evidence Audit`
 
-## Next-Expansion Gate Posture
+## Selection Posture
 
-The combat health lane is paused. Registration is stable, no follow-up is needed, and no immediate status, condition, or injury expansion or planning is authorized.
+People/NPC is selected for a fresh docs-only evidence audit. Service, resource/commodity, and combat health remain stable and paused. Generic `world.pois` remains rejected, and Highcrown settlement Knowledge remains closed.
 
-The next run should compare current deferred authority lanes and select the next docs-first route without implementing content.
+## Selected Lane And Rationale
 
-## Exact Live Seed Summary
+People/NPC already has boundary/schema decisions, separate schemas, a pure validator, focused tests, and a prior people-first seed plan. However, live `people.json` and `npcs.json`, normal lint registration, and an approved canonical named-person seed list are absent. The prior seed implementation deferred rather than infer canon.
 
-`packages/content/base/game/combat_health_vocabulary.json` remains exactly:
-
-- `combat_status.stagger`
-- `combat_status.bind`
-
-Both remain planned control-family statuses. Conditions, injuries, relationships, class/severity/phase fields, active records, runtime/UI/save/account/gameplay fields, and execution semantics remain absent.
-
-## Exact-Once Registration Summary
-
-Normal content-lint registration still contains exactly one validator import, one checks entry, one validator helper call, and one `main()` helper invocation.
-
-The helper loads only the live wrapper and combat health schema. Adjacent authority, runtime, UI, save/account, app, and game-engine dependencies remain absent.
-
-## Validation Posture
-
-- Focused tests: 90 passing
-- Schema-file tests: 102 passing
-- Normal content lint: passing at 67 checked files
-- Exact seed, forbidden-field, exact-once, and helper-isolation assertions: passing
+The next run should audit current canonical identity evidence and decide whether any later tiny people-only seed plan is justified. A no-safe-candidate result remains acceptable.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required before `Version 0.5.317`. No explicit user question or support-suffix run is required.
-
-`GPT-DR.health.injury-recovery` remains required before later broad health, injury, treatment, recovery, disease/poison, medicine, death/defeat, healing-service, or long-term injury work.
+Deep Research is not required before the evidence audit because canonical identity must come from repo evidence or explicit user-authored canon. No explicit user question or support-suffix run is required before `Version 0.5.318`.
 
 ## Remaining Deferred Authority Guardrails
 
-Do not reopen combat health during roadmap selection without fresh evidence and an explicit route. Do not add statuses, conditions, injuries, relationships, class/severity/phase fields, active records, runtime, UI, save/account behavior, or gameplay.
+Do not create people or NPC records in the evidence audit. Do not infer canon from quest contacts, `npc.*` strings, generated operators, combatants, player/account identities, roles, titles, workplaces, Knowledge vocabulary, deities, organizations, or prose alone.
 
-Resource/commodity expansion remains paused. Service authority remains stable. Generic `world.pois` remains rejected. The Highcrown settlement Knowledge lane remains closed.
+Do not add NPC overlays, generated people, roles, affiliations, relationships, schedules, dialogue, services, companions, AI, inventory, combat profiles, runtime, UI, save/account behavior, or gameplay.
+
+Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
 
 Suggested next commit:
 
-`docs(combat): gate combat health expansion`
+`docs(roadmap): select next authority lane`

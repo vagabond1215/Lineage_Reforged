@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`
+- Latest completed version: `Version 0.5.317 - Roadmap Next Authority Selection`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.317 - Roadmap Next Authority Selection`
+- Next recommended version: `Version 0.5.318 - People NPC Authority Evidence Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -172,6 +172,7 @@ Versioning rule:
 - `Version 0.5.314 - Combat Status Condition Injury Lint Registration` registered `packages/content/base/game/combat_health_vocabulary.json` in normal content lint through the existing schema and pure focused validator; added exact-once focused assertions for the import, checks entry, helper call, and `main()` invocation; kept the exact two planned status records unchanged; normal lint reports 67 checked files; and changed no content, schema, focused validator, schema-file test, adjacent authority content, runtime, UI, save/account, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.315 - Combat Status Condition Injury Post-Registration Audit` added `docs/design/combat-status-condition-injury-post-registration-audit.md`; confirmed exact-once registration, helper dependency isolation, the unchanged two-record planned status seed, 90 focused tests, 102 schema-file tests, and normal lint at 67 checked files; found no registration follow-up or immediate expansion need; selected docs-first `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`; and changed no registration, content, schema, validator, test, runtime, UI, save/account, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate` added `docs/design/combat-status-condition-injury-next-expansion-gate.md`; confirmed the stable registered two-status seed and passing validation at 67 normal-lint files; paused combat health; rejected registration follow-up, immediate status expansion, tiny status planning, condition/injury planning, and Deep Research now; selected docs-first `Version 0.5.317 - Roadmap Next Authority Selection`; and changed no registration, content, schema, validator, test, runtime, UI, save/account, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
+- `Version 0.5.317 - Roadmap Next Authority Selection` added `docs/design/roadmap-next-authority-selection.md`; compared paused service, resource/commodity, and combat-health lanes with rejected/closed POI and Highcrown lanes plus People/NPC, organization/faction/guild, location, and other deferred candidates; selected docs-first `Version 0.5.318 - People NPC Authority Evidence Audit` because People/NPC schemas, validator, tests, and prior seed plan exist but live files and an approved canonical named-person list do not; and changed no content, schema, validator, test, normal-lint index, runtime, UI, save/account, or gameplay behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -465,9 +466,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.317 - Roadmap Next Authority Selection`
+1. `0.5.318 - People NPC Authority Evidence Audit`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer district/site authority and static authority lanes plus the sequenced implementation plan extend the active near-term queue through `0.5.317`. Service authority is stable, resource/commodity expansion is paused, and combat health is now paused with its stable registered two-status seed. Generic `world.pois` remains rejected and Highcrown settlement Knowledge remains closed. The next route should compare remaining deferred authority lanes and select one docs-first route without implementing content.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.318`. Service, resource/commodity, and combat health remain stable and paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. People/NPC is selected for a fresh evidence audit because schemas, validation, and a prior seed plan exist while live files and an approved canonical named-person list remain absent.
 
 High-priority unresolved questions:
 

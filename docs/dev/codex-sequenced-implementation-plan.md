@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-10
-Route: Codex local sequencing alignment after `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`
+Route: Codex local sequencing alignment after `Version 0.5.317 - Roadmap Next Authority Selection`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`
+- `Version 0.5.317 - Roadmap Next Authority Selection`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.317 - Roadmap Next Authority Selection`
+- `Version 0.5.318 - People NPC Authority Evidence Audit`
 
 Versioning note:
 
@@ -76,6 +76,7 @@ Versioning note:
 - `0.5.314` completed as a primary roadmap run and registered the existing live combat health vocabulary seed in normal content lint with exact-once import, checks entry, helper call, and `main()` invocation; focused validation now proves registration and the unchanged two planned status records; normal lint reports 67 checked files.
 - `0.5.315` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-post-registration-audit.md`, confirming stable exact-once registration, unchanged live seed, passing validation at 67 normal-lint files, no registration follow-up, and no immediate expansion authorization; selected docs-first `0.5.316` next-expansion gate.
 - `0.5.316` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-next-expansion-gate.md`, pausing combat health with the stable registered two-status seed, rejecting immediate expansion/planning and Deep Research now, and selecting docs-first `0.5.317 - Roadmap Next Authority Selection`.
+- `0.5.317` completed as a primary roadmap run and added `docs/design/roadmap-next-authority-selection.md`, selecting People/NPC for a fresh docs-only evidence audit while keeping live content blocked by the absence of safe canonical named-person evidence or an approved seed list.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -431,13 +432,14 @@ Versioning note:
 | 235 | `0.5.314` | Combat Status Condition Injury Lint Registration | Codex 5.5 Local narrow implementation | `docs/design/combat-status-condition-injury-lint-registration-decision.md` | normal lint registration + focused exact-once proof | Completed | Registered the existing live wrapper through the existing schema and validator exactly once; normal lint reports 67 checked files and the seed remains unchanged. |
 | 236 | `0.5.315` | Combat Status Condition Injury Post-Registration Audit | Codex 5.5 Local docs-first | accepted combat health lint registration | stability audit + lane gate | Completed | Confirmed stable exact-once registration, unchanged seed, 67-file normal lint, no registration follow-up, and no immediate expansion authorization. |
 | 237 | `0.5.316` | Combat Status Condition Injury Next Expansion Gate | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-post-registration-audit.md` | pause/expansion/research/route decision | Completed | Paused combat health, kept the registered two-status seed unchanged, rejected immediate expansion and research, and routed to general authority selection. |
-| 238 | `0.5.317` | Roadmap Next Authority Selection | Codex 5.5 Local docs-first | completed service/resource/combat health lane gates + current roadmap/backlog | authority lane selection | Deferred | Compare deferred authority lanes and select one next docs-first route without implementing content, runtime, UI, save/account, or gameplay. |
+| 238 | `0.5.317` | Roadmap Next Authority Selection | Codex 5.5 Local docs-first | completed service/resource/combat health lane gates + current roadmap/backlog | authority lane selection | Completed | Selected People/NPC for a fresh evidence audit; approved no live seed list or implementation. |
+| 239 | `0.5.318` | People NPC Authority Evidence Audit | Codex 5.5 Local docs-first | People/NPC boundary, schemas, validator, tests, prior seed plan, current authored evidence | canon evidence audit | Deferred | Audit canonical named-person evidence and decide whether a later people-only seed plan is safe; do not create people or NPC content. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.317 - Roadmap Next Authority Selection`
+1. `0.5.318 - People NPC Authority Evidence Audit`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
@@ -457,7 +459,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.317 - Roadmap Next Authority Selection` as the immediate next recommended run.
+- Keep `Version 0.5.318 - People NPC Authority Evidence Audit` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -499,6 +501,7 @@ Each future Codex prompt should:
 - `0.5.314` registered the existing live wrapper through the existing schema and focused validator exactly once. Normal lint now reports 67 checked files. The next run should be a docs-only post-registration audit, not status/condition/injury expansion or runtime work.
 - `0.5.315` confirmed registration stability, exact-once wiring, the unchanged two-record planned status seed, and no immediate expansion need. The next run should be a docs-first expansion gate that explicitly considers a lane pause, tiny later status-only planning, health/injury research, or routing elsewhere.
 - `0.5.316` paused combat health after confirming the stable registered two-status seed and no justified immediate expansion, plan, or research need. The next run should select the next authority lane from the roadmap without implementing content.
+- `0.5.317` selected People/NPC as the next docs-first authority lane because validation scaffolding exists but live content remains blocked by missing canonical named-person evidence. The next run should audit evidence only and must not create records.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

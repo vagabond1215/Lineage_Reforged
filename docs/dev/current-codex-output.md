@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate
+Source version/run: Version 0.5.317 - Roadmap Next Authority Selection
 Date: 2026-07-10
 Branch/status assumption: `master`; worktree clean at start. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Added the docs-only combat health next-expansion gate.
+Added the docs-only roadmap next-authority selection.
 
-The gate pauses combat health after confirming the unchanged two-status seed, stable exact-once registration, isolated helper dependencies, and passing validation at 67 normal-lint files. No registration follow-up, expansion plan, implementation, or Deep Research is authorized now.
+Selected People/NPC for a fresh evidence audit because its boundaries, schemas, pure validator, focused tests, and prior seed-plan history exist, while live files, normal lint registration, and an approved canonical named-person seed list remain absent. Service, resource/commodity, and combat health stay paused; generic `world.pois` remains rejected; Highcrown Knowledge remains closed.
 
 ## Files Changed
 
-- `docs/design/combat-status-condition-injury-next-expansion-gate.md`
+- `docs/design/roadmap-next-authority-selection.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -24,34 +24,34 @@ The gate pauses combat health after confirming the unchanged two-status seed, st
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master` (`Already up to date.`)
-- Required repository reads and roadmap candidate scans.
+- Required roadmap, backlog, candidate-lane, and People/NPC authority reads.
+- Verified all listed documents exist under the requested filenames.
+- Verified People/NPC schemas, pure validator, and focused tests exist; live `people.json`, `npcs.json`, and normal-lint registration remain absent.
+- Verified the prior seed plan approved no exact candidate list and the prior content run deferred for lack of safe canonical named-person evidence.
 - `node --test tests/unit/combat-status-condition-injury-authority-validation.test.mjs` (passed; 90 tests)
 - `node --test tests/unit/schema-files.test.mjs` (passed; 102 tests)
 - `npm.cmd run tool:content-lint` (passed; `content-lint: ok (67 files checked)`)
-- Exact-once scan confirmed one validator import, one normal checks entry, one validator helper call, and one `main()` helper invocation.
-- Helper scan confirmed only live wrapper and schema dependencies.
-- Live seed scan confirmed exactly 2 planned control-family status records, exact sorted ids, and no conditions, injuries, relationships, class/severity/phase fields, or forbidden runtime/UI/save/account/gameplay keys.
-- Scope scan confirmed no index, content, schema, validator, focused test, schema-file test, adjacent content, runtime, UI, save/account, or gameplay files changed.
-- Deep Research, Highcrown Knowledge, and generic `world.pois` scans found no created artifacts, reopened lanes, or implementation.
+- Scope scan confirmed no content, schema, validator, test, normal-lint index, runtime, UI, save/account, gameplay, people/NPC, organization/faction/guild, location/POI, service/resource/commodity, or combat-health implementation files changed.
+- Deep Research, generic `world.pois`, and Highcrown Knowledge scans found no created artifacts, implementation, or reopened lanes.
 - `git diff --check` (passed with line-ending normalization warnings only)
 - Conflict-marker and trailing-whitespace scans across changed docs found no matches.
-- Stale next-version pointer scan confirmed active handoff, roadmap, sequence, backlog, and current output route to `Version 0.5.317 - Roadmap Next Authority Selection`; older `0.5.316` references are historical.
-- Final `git status --short --branch` confirmed only the new gate and five approved coordination docs are changed.
+- Stale next-version pointer scan confirmed active handoff, roadmap, sequence, backlog, and current output route to `Version 0.5.318 - People NPC Authority Evidence Audit`; older `0.5.317` references are historical.
+- Final `git status --short --branch` confirmed only the new selection and five approved coordination docs are changed.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No normal content-lint registration, JSON content, schema, validator, test, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay behavior changed.
+Documentation only. No content, schema, validator, test, normal content-lint registration, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Combat health is paused with the live two-status seed stable and registered.
-- `Version 0.5.317` should select the next roadmap authority lane in documentation only; it should not implement content.
-- Broad later health/injury/recovery work remains gated by `GPT-DR.health.injury-recovery`.
+- `Version 0.5.318` should audit canonical named-person evidence and may validly conclude no seed plan is safe.
+- No live people/NPC content is authorized without explicit canonical identity evidence or an approved authored seed list.
+- NPC overlays, generated people, roles, relationships, schedules, dialogue, services, companions, runtime, UI, save/account, and gameplay remain deferred.
 
 ## Next Recommended Version
 
-Version 0.5.317 - Roadmap Next Authority Selection
+Version 0.5.318 - People NPC Authority Evidence Audit
 
 ## Suggested Commit Message
 
-docs(combat): gate combat health expansion
+docs(roadmap): select next authority lane
