@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.327 - Roadmap Post-Faction Deferral Selection
+Source version/run: Version 0.5.328 - Institution Office Authority Boundary Decision
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
+- `Version 0.5.328 - Institution Office Authority Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -15,26 +15,26 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.328 - Institution Office Authority Boundary Decision`
+- `Version 0.5.329 - Institution Authority Schema Plan`
 
-## Post-Faction Roadmap Selection Posture
+## Institution / Office Boundary Posture
 
-Institution/office is the selected next docs-first lane. Existing institutional evidence is sufficient for a narrow owner-boundary decision, and the prior organization decision explicitly requires that boundary before schema planning.
+Institution and office are separate. Institution is approved for a content-free schema plan as durable named body identity with strict exclusions. Office remains deferred and not schema-ready because position, administrative unit, department, force, role, facility, and quest-anchor semantics overlap.
 
 ## Selected Option And Rationale
 
-Institution/office is narrower and more ready than government/jurisdiction/law/force, business/company, provider, membership, local reputation, property/construction, or other broad lanes. It has no authored-input or Deep Research blocker and can fail closed without implementation.
+Institution has a narrow static identity boundary and future fail-closed Knowledge/Magic Study consumers. A schema can be planned without content, candidates, references, or consumer enablement. Office cannot yet support a stable contract.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required. No explicit user question or support-suffix run is needed before `0.5.328`.
+Deep Research is not required. No explicit user question or support-suffix run is needed before `0.5.329`.
 
 ## Remaining Deferred Authority Guardrails
 
-Preserve all existing specific owners. Do not infer institutions/offices from quest anchors, Knowledge vocabulary, demos, generated ids, or derived profiles. Keep institution separate from office/government/facility/guild/order/business/provider/person unless the boundary proves otherwise. Exclude members, office-holders, services, access, reputation, law, runtime, UI, save/account, and gameplay.
+No institution/office candidate id is approved. Quest office anchors, Knowledge vocabulary, demo/prose, generic buildings, and derived institution profiles are not canon. Preserve government/jurisdiction/law/force, guild, faction, religion/order, business, family, place/facility, service/provider, profession/role, People/NPC, membership/employment/office-holder, reputation/access, and runtime owners.
 
-Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed. Do not transition to `0.6.0`.
+Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
 
 Suggested next commit:
 
-`docs(roadmap): select post-faction deferral route`
+`docs(civ): decide institution office boundaries`

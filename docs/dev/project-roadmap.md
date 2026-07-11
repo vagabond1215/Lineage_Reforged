@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
+- Latest completed version: `Version 0.5.328 - Institution Office Authority Boundary Decision`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.328 - Institution Office Authority Boundary Decision`
+- Next recommended version: `Version 0.5.329 - Institution Authority Schema Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -183,6 +183,7 @@ Versioning rule:
 - `Version 0.5.325 - Faction Authority Seed Evidence Audit` added `docs/design/faction-authority-seed-evidence-audit.md`; found no durable canonical candidate meeting the complete gate; classified hooks, quest/pirate prose, UI/demo, tests/examples, existing owners, and derived state; carried forward zero ids; and selected `Version 0.5.326 - Faction Authority Seed Evidence Deferral`.
 - `Version 0.5.326 - Faction Authority Seed Evidence Deferral` added `docs/design/faction-authority-seed-evidence-deferral.md`; fixed the explicit user-authored-list/new-durable-source reopening gate; prohibited repeated weak-source scans; carried forward zero ids; preserved absent content/registration; and selected `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`.
 - `Version 0.5.327 - Roadmap Post-Faction Deferral Selection` added `docs/design/roadmap-post-faction-deferral-selection.md`; compared blocked, paused, rejected, closed, research-gated, and eligible lanes; selected institution/office as the clearest narrow unresolved owner boundary; and selected `Version 0.5.328 - Institution Office Authority Boundary Decision`.
+- `Version 0.5.328 - Institution Office Authority Boundary Decision` added `docs/design/institution-office-authority-boundary-decision.md`; separated institution body identity from office position/unit identity; kept government, facility, service, people/link, and runtime owners distinct; selected institution for one content-free schema plan; kept office not schema-ready; and selected `Version 0.5.329 - Institution Authority Schema Plan`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -476,9 +477,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.328 - Institution Office Authority Boundary Decision`
+1. `0.5.329 - Institution Authority Schema Plan`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.328`. Faction and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should decide institution/office ownership only and implement nothing.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.329`. Faction and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should plan institution schema/validation posture only and implement nothing.
 
 High-priority unresolved questions:
 

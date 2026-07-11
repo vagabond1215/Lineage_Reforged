@@ -4,29 +4,25 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Implement the next docs-first boundary decision:
+Implement the next docs-first schema plan:
 
-`Version 0.5.328 - Institution Office Authority Boundary Decision`
+`Version 0.5.329 - Institution Authority Schema Plan`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
+- Latest completed primary: `Version 0.5.328 - Institution Office Authority Boundary Decision`
 - Latest completed support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Immediate next primary route: `Version 0.5.328 - Institution Office Authority Boundary Decision`
-- The existing institutional evidence audit already identifies Knowledge institution vocabulary, two quest `office.*` anchors, derived settlement institution profiles, protected guild/religion/polity/place/service owners, and missing institution/office authority.
-- A general organization umbrella remains rejected.
-- Faction and People/NPC are authored-input blocked.
-- Service, resource/commodity, and combat health remain paused.
-- Generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed.
-- No Deep Research or explicit user question is required before this boundary decision.
+- Immediate next primary route: `Version 0.5.329 - Institution Authority Schema Plan`
+- Institution is approved conceptually as narrow static identity for durable named civic, administrative, judicial, scholarly, charitable, educational, archival, medical, or similar bodies not better owned elsewhere.
+- Office remains separate and not schema-ready because position/unit/department/force/role/facility meanings remain unresolved.
+- No institution or office collection/schema exists and no candidate id is approved.
+- Knowledge and Magic Study contain fail-closed institution consumer vocabulary; it is not identity canon and must not be enabled by this plan.
+- Quest office anchors and derived institution profiles remain presentation/synthetic only.
+- No Deep Research or explicit user question is required.
 
 ## Purpose
 
-Create a docs-only institution/office authority boundary decision.
-
-Decide whether `institution` and `office` should be separate static identity owners, what each may own, how they remain distinct from existing/future specific authorities, and whether either is ready for one later schema/evidence route.
-
-This run must not implement content, schemas, validators, tests, normal registration, runtime, UI, save/account, or gameplay.
+Create a docs-only institution authority schema plan. Define a future strict `civilization.institutions` static identity contract and staged schema/validator/test/content/registration posture without implementing any file or candidate.
 
 ## Required first steps
 
@@ -42,87 +38,76 @@ Read at minimum:
 
 - `AGENTS.md`
 - `README.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/current-codex-prompt.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-roadmap.md`
-- `docs/future_content_backlog.md`
-- `docs/design/roadmap-post-faction-deferral-selection.md`
-- `docs/design/organization-faction-guild-authority-evidence-audit.md`
-- `docs/design/organization-faction-guild-boundary-decision.md`
-- `docs/design/civic-authority-boundary-decision.md`
-- `docs/design/economy-authority-boundary-decision.md`
-- `docs/design/npc-social-authority-boundary-decision.md`
-- `docs/design/people-npc-seed-evidence-deferral.md`
-- current guild, polity, religion, service, place, quest, Knowledge, family/household, economy/account, and settlement-institution projection surfaces relevant to the boundary.
+- current output, handoff, active prompt, sequence, roadmap, and backlog;
+- `docs/design/institution-office-authority-boundary-decision.md`;
+- `docs/design/organization-faction-guild-authority-evidence-audit.md`;
+- `docs/design/organization-faction-guild-boundary-decision.md`;
+- `docs/design/faction-authority-schema-plan.md` as a nearby strict static-identity planning pattern;
+- civic, economy, NPC/social, People deferral, service, Knowledge, and Magic Study boundaries relevant to institutions;
+- nearby schemas, pure validators, focused tests, schema parse coverage, and `tools/content-lint/index.mjs` conventions.
 
-Use the existing evidence inventory. Do not repeat broad discovery unless a named source materially changed.
+Do not repeat broad evidence discovery or infer candidates.
 
 ## Expected output
 
 Add:
 
-- `docs/design/institution-office-authority-boundary-decision.md`
+- `docs/design/institution-authority-schema-plan.md`
 
-## Required boundary decisions
+## Required plan decisions
 
 Decide at minimum:
 
-- whether `institution` is a distinct possible static owner for durable civic, administrative, judicial, scholarly, charitable, educational, or similar bodies not better owned elsewhere;
-- whether `office` is a distinct possible static owner for a durable position, office, or administrative unit rather than a person/office-holder;
-- whether institution and office must remain separate from each other;
-- boundaries against polity, government, jurisdiction, law, force, guild, faction, religion/order, business/company, family/house, profession, facility/site, service/provider, school/academy, person/NPC, quest anchor, Knowledge vocabulary, and runtime projection;
-- whether government departments/agencies belong to institution, office, government, or remain deferred;
-- whether office-holder, membership, employment, rank, leadership, affiliation, and relationships belong to later link authorities;
-- whether services, access, jurisdiction, law, enforcement, territory, finance, schedules, runtime, UI, save/account, and gameplay remain excluded;
-- whether any current quest `office.*`, Knowledge institution label, demo string, generated id, or derived institution profile is canonical evidence;
-- whether either institution or office is ready for one later schema plan, evidence audit, or preservation gate;
-- at most one immediate next route.
+- authority name and future paths, likely:
+  - `civilization.institutions`;
+  - `packages/content/base/civilization/institutions.json`;
+  - `packages/schemas/civilization/institution.schema.json`;
+  - `tools/content-lint/institutions.mjs`;
+  - `tests/unit/institution-validation.test.mjs`;
+- strict records-only wrapper and absent empty live wrapper posture;
+- `institution.<lower_snake_slug>` id/slug coherence;
+- minimum required static identity fields;
+- lifecycle vocabulary aligned with nearby authorities;
+- narrow descriptive category and public-posture vocabularies;
+- whether any optional reference is safe; prefer no first-pass references unless a non-implicating need is proven;
+- explicit rejection of office, government, jurisdiction, law, force, guild, faction, religion/order, business, family, place/facility, service/provider, profession/role, person/NPC, membership, employment, leadership, reputation, access, finance, schedule, Knowledge/Magic mutation, runtime, UI, save/account, and gameplay fields;
+- pure in-memory validator behavior and focused tests;
+- schema parse coverage;
+- normal content-lint registration deferral until approved live content exists;
+- seed evidence gate and explicit no-candidate posture;
+- whether a schema/validator implementation is the next safe route.
 
 ## Required questions
 
 Answer:
 
-1. Does a canonical institution collection exist?
-2. Does a canonical office collection exist?
-3. Is institution distinct from office?
-4. What may institution own?
-5. What may office own?
-6. What must remain owned by government/jurisdiction/law/force?
-7. What must remain owned by guild/religion/faction/business/family/place/service authorities?
-8. Are quest office anchors canonical?
-9. Is Knowledge institution vocabulary canonical identity?
-10. Are derived institution profiles or generated ids canonical?
-11. Are members, office-holders, leaders, ranks, employment, or affiliation in scope?
-12. Are services, access, reputation, law, territory, runtime, or gameplay in scope?
-13. Is institution schema-ready?
-14. Is office schema-ready?
-15. Is any candidate id approved?
-16. Is implementation authorized?
-17. Is Deep Research required before the next route?
-18. Is a support-suffix run needed?
-19. Is an explicit user question needed?
-20. What exact next route is selected?
+1. Is live institution content present?
+2. Is an institution schema/validator/test present?
+3. Is normal institution registration present?
+4. What exact future paths should be used?
+5. What wrapper and required fields should be planned?
+6. What id/slug/lifecycle rules should apply?
+7. What category/public-posture vocabulary should apply?
+8. Are any first-pass references allowed?
+9. Which fields and inference sources must be forbidden?
+10. What must the validator enforce?
+11. What must focused tests cover?
+12. Should normal registration accompany schema/validator implementation?
+13. Is any live seed or candidate id approved?
+14. Does the plan enable Knowledge or Magic Study institution refs?
+15. Is office work reopened?
+16. Is Deep Research required?
+17. Is a support-suffix run needed?
+18. Is an explicit user question needed?
+19. What exact next route is selected?
 
-## Selection guidance
+## Guardrails
 
-Possible outcomes:
-
-- an institution authority schema plan, only if the boundary is narrow and decision-complete;
-- an office authority schema plan, only if office is clearer and independent;
-- a focused evidence audit, only if a named unresolved repository source must be classified;
-- an institution/office preservation gate if neither owner is schema-ready.
-
-Do not select both schema plans concurrently. Do not route to content, registration, providers, membership, reputation, government/law behavior, runtime, UI, save/account, gameplay, or `0.6.0`.
-
-## Hard guardrails
-
-Docs only. Do not create/edit content, schemas, validators, tests, normal lint, runtime, UI, save/account, or gameplay. Do not infer identity from quest anchors, Knowledge vocabulary, demos, generated ids, or derived projections. Do not move or duplicate guilds, religious orders, polities, factions, businesses, families, services, or places. Do not reopen paused/blocked/rejected/closed lanes. Do not run Deep Research.
+Docs only. Do not create/edit content, schemas, validators, tests, normal lint, consumers, runtime, UI, save/account, or gameplay. Do not approve candidates. Do not enable institution references in Knowledge/Magic Study. Do not reopen office, government, provider, membership, reputation, faction, People/NPC, service, resource/commodity, combat health, generic POI, or Highcrown Knowledge lanes. Do not run Deep Research.
 
 ## Allowed changes
 
-- `docs/design/institution-office-authority-boundary-decision.md`
+- `docs/design/institution-authority-schema-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -141,8 +126,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, no Deep Research artifacts, no conflict markers/trailing whitespace, and aligned next-version pointers. Update the active prompt to the selected next runnable route.
+Verify docs-only scope, absent institution content/schema/validator/registration/candidates, no consumer enablement, no Deep Research artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the next runnable route.
 
 ## Suggested commit message
 
-`docs(civ): decide institution office boundaries`
+`docs(civ): plan institution authority schema`
