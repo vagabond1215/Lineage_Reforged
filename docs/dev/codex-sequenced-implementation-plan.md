@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.318 - People NPC Authority Evidence Audit`
+Route: Codex local sequencing alignment after `Version 0.5.319 - People NPC Seed Evidence Deferral`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.318 - People NPC Authority Evidence Audit`
+- `Version 0.5.319 - People NPC Seed Evidence Deferral`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.319 - People NPC Seed Evidence Deferral`
+- `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection`
 
 Versioning note:
 
@@ -78,6 +78,7 @@ Versioning note:
 - `0.5.316` completed as a primary roadmap run and added `docs/design/combat-status-condition-injury-next-expansion-gate.md`, pausing combat health with the stable registered two-status seed, rejecting immediate expansion/planning and Deep Research now, and selecting docs-first `0.5.317 - Roadmap Next Authority Selection`.
 - `0.5.317` completed as a primary roadmap run and added `docs/design/roadmap-next-authority-selection.md`, selecting People/NPC for a fresh docs-only evidence audit while keeping live content blocked by the absence of safe canonical named-person evidence or an approved seed list.
 - `0.5.318` completed as a primary roadmap run and added `docs/design/people-npc-authority-evidence-audit.md`; the fresh audit found no strong canonical named-person candidate, carried forward no exact ids, kept NPC overlays/live content/normal lint deferred, and selected docs-only `0.5.319 - People NPC Seed Evidence Deferral`.
+- `0.5.319` completed as a primary roadmap run and added `docs/design/people-npc-seed-evidence-deferral.md`; it paused People/NPC until a new durable authored input exists, defined separate People/NPC/registration gates, prohibited repeated weak-source audits, and selected docs-first `0.5.320 - Roadmap Post-People-NPC Deferral Selection`.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -435,17 +436,18 @@ Versioning note:
 | 237 | `0.5.316` | Combat Status Condition Injury Next Expansion Gate | Codex 5.5 Local docs-first | `docs/design/combat-status-condition-injury-post-registration-audit.md` | pause/expansion/research/route decision | Completed | Paused combat health, kept the registered two-status seed unchanged, rejected immediate expansion and research, and routed to general authority selection. |
 | 238 | `0.5.317` | Roadmap Next Authority Selection | Codex 5.5 Local docs-first | completed service/resource/combat health lane gates + current roadmap/backlog | authority lane selection | Completed | Selected People/NPC for a fresh evidence audit; approved no live seed list or implementation. |
 | 239 | `0.5.318` | People NPC Authority Evidence Audit | Codex 5.5 Local docs-first | People/NPC boundary, schemas, validator, tests, prior seed plan, current authored evidence | canon evidence audit | Completed | Found no strong canonical named-person candidate; carried forward no exact ids and kept live content/registration deferred. |
-| 240 | `0.5.319` | People NPC Seed Evidence Deferral | Codex 5.5 Local docs-first | `docs/design/people-npc-authority-evidence-audit.md` | evidence gate / deferral | Deferred | Record the explicit authored evidence or seed-list prerequisite before live People/NPC content. |
+| 240 | `0.5.319` | People NPC Seed Evidence Deferral | Codex 5.5 Local docs-first | `docs/design/people-npc-authority-evidence-audit.md` | evidence gate / deferral | Completed | Paused People/NPC until a new durable authored input exists and defined separate People/NPC/registration gates. |
+| 241 | `0.5.320` | Roadmap Post-People-NPC Deferral Selection | Codex 5.5 Local docs-first | current roadmap/backlog + People/NPC deferral | authority lane selection | Deferred | Select another docs-first authority lane while preserving all current pauses, rejections, and closures. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.319 - People NPC Seed Evidence Deferral`
+1. `0.5.320 - Roadmap Post-People-NPC Deferral Selection`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; service, resource/commodity, and combat health are stable and paused; generic `world.pois` remains rejected. The People/NPC evidence audit found no strong canonical named-person candidate, so docs-only `0.5.319 - People NPC Seed Evidence Deferral` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus the newer district/site boundary and schema plan decisions. The settlement district and site schema/validator passes are complete; the first district and site content seeds are live; both current district records are active static identities; both current site records are active static identities with `parentDistrictId: null`; both active Highcrown districts and both active Highcrown sites now have one General Lore identification snippet each; direct `settlement` subject validation support is complete; the parent Highcrown settlement snippet is live; the Highcrown settlement Knowledge lane is closed; service, resource/commodity, and combat health are stable and paused; generic `world.pois` remains rejected; People/NPC is paused behind a new-authored-input gate. Docs-first `0.5.320 - Roadmap Post-People-NPC Deferral Selection` is next.
 
 ## Default Prompt Pattern
 
@@ -461,7 +463,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.319 - People NPC Seed Evidence Deferral` as the immediate next recommended run.
+- Keep `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -505,6 +507,7 @@ Each future Codex prompt should:
 - `0.5.316` paused combat health after confirming the stable registered two-status seed and no justified immediate expansion, plan, or research need. The next run should select the next authority lane from the roadmap without implementing content.
 - `0.5.317` selected People/NPC as the next docs-first authority lane because validation scaffolding exists but live content remains blocked by missing canonical named-person evidence. The next run should audit evidence only and must not create records.
 - `0.5.318` found no strong canonical named-person candidate after a fresh audit. The next run should record a docs-only evidence deferral and explicit authored-input gate; it must not create records, register absent files, or infer canon.
+- `0.5.319` paused People/NPC behind an explicit new-authored-input gate. Do not repeat evidence scanning or seed planning until that gate is met; the next run should select another docs-first roadmap lane.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.
