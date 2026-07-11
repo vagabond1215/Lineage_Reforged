@@ -49,6 +49,14 @@ git fetch origin
 git pull --ff-only origin master
 ```
 
+If `git pull --ff-only origin master` reports the known multi-branch fast-forward ambiguity, verify local/remote alignment with:
+
+```bash
+git rev-parse HEAD
+git rev-parse origin/master
+git merge-base HEAD origin/master
+```
+
 Then read at minimum:
 
 - `AGENTS.md`
@@ -62,19 +70,39 @@ Then read at minimum:
 - `docs/design/faction-authority-seed-evidence-audit.md`
 - `docs/design/faction-authority-schema-plan.md`
 - `docs/design/organization-faction-guild-boundary-decision.md`
+- `docs/design/organization-faction-guild-authority-evidence-audit.md`
+- `docs/design/civic-authority-boundary-decision.md`
+- `docs/design/economy-authority-boundary-decision.md`
 - `docs/design/people-npc-seed-evidence-deferral.md`
+- `docs/design/static-authority-validation-consolidation-audit.md`
+- `docs/design/pipeline-roadmap-consolidation-decision.md`
 - `packages/schemas/civilization/faction.schema.json`
 - `tools/content-lint/factions.mjs`
 - `tests/unit/faction-validation.test.mjs`
+- `tests/unit/schema-files.test.mjs`
 - `tools/content-lint/index.mjs`
 
 Do not repeat broad evidence discovery unless repository state has materially changed. Confirm only the accepted absence and gate posture needed for this deferral.
 
 ## Expected output
 
-Add:
+Add one new docs-only deferral document:
 
-- `docs/design/faction-authority-seed-evidence-deferral.md`
+`docs/design/faction-authority-seed-evidence-deferral.md`
+
+## Deferral goals
+
+The new document should:
+
+- record that zero faction candidate ids are carried forward;
+- preserve the completed faction schema/validator/focused-test posture;
+- preserve absent live faction content;
+- preserve absent normal faction registration;
+- define exact future reopening inputs;
+- prohibit repeated weak-source scans without new authored evidence;
+- prohibit inference from existing owners, hooks, prose, tests, examples, demos, and runtime state;
+- state that schema/validator readiness does not create seed readiness;
+- route away from faction seed planning to the next eligible roadmap lane.
 
 ## Required deferral decisions
 
@@ -92,9 +120,9 @@ The document must state:
 - any future seed candidate must satisfy every field and boundary requirement in `docs/design/faction-authority-schema-plan.md` and `docs/design/faction-authority-seed-evidence-audit.md` without invention;
 - normal registration may occur only after live content exists and a separate exact-once registration decision approves it.
 
-## Required questions
+## Required deferral questions
 
-Answer:
+Answer all of the following:
 
 1. Is the faction schema/validator complete?
 2. Is live faction content present?
@@ -112,15 +140,52 @@ Answer:
 14. Is an explicit user question needed before routing elsewhere?
 15. What immediate next route is selected?
 
+## Required sections
+
+The new deferral doc should include:
+
+1. Source version/run and date.
+2. Deferral summary.
+3. Current completed-state posture.
+4. Faction contract readiness versus seed readiness.
+5. Candidate carry-forward decision.
+6. Reopening gate.
+7. Prohibited weak sources and inference boundaries.
+8. Registration posture.
+9. Deep Research posture.
+10. Support-suffix / explicit-question posture.
+11. Options considered:
+   - seed plan now;
+   - live implementation;
+   - normal registration;
+   - repeat evidence audit;
+   - request user-authored faction list now;
+   - deferral and route elsewhere.
+12. Selected option and rationale.
+13. Explicit non-goals.
+14. Deferral question answers.
+15. Checks run.
+16. Next recommended version.
+
 ## Next-route guidance
 
 Normally select:
 
 `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
 
-That route should compare remaining roadmap lanes while preserving the faction gate. Do not reopen People/NPC, service, resource/commodity, combat health, generic `world.pois`, or Highcrown Knowledge unless their explicit prerequisites have changed.
+Use that route if the faction lane is properly deferred and no explicit user-authored faction list exists now.
 
-Do not route directly to faction seed planning, live content, registration, runtime faction behavior, UI, save/account, gameplay, or `0.6.0`.
+That next route should be docs-first and should compare eligible roadmap/backlog lanes while preserving all current pauses and closures.
+
+Do not select:
+
+- faction seed plan;
+- faction content implementation;
+- normal faction registration;
+- another broad faction evidence scan;
+- Deep Research;
+- runtime/UI/save/account/gameplay;
+- `0.6.0`.
 
 ## Hard guardrails
 
@@ -128,15 +193,28 @@ This run must be docs-only.
 
 Do not:
 
-- create `packages/content/base/civilization/factions.json`;
-- add or approve faction ids;
-- repeat broad weak-source evidence scanning;
-- edit faction schema, validator, tests, or normal-lint index;
-- edit live content;
-- add references, resolvers, membership, affiliation, leadership, ranks, relationships, standing, reputation, favorability, services, law, territory, runtime, UI, save/account, or gameplay behavior;
-- infer factions from any source rejected by the audit;
-- reopen generic `world.pois`, Highcrown Knowledge, People/NPC, service, resource/commodity, or combat health;
-- run Deep Research or create temporary research artifacts.
+- create `packages/content/base/civilization/factions.json`
+- add faction records
+- add candidate faction ids
+- approve faction seed candidates
+- edit schemas
+- edit validators
+- edit tests
+- edit `tools/content-lint/index.mjs`
+- register factions in normal content lint
+- edit live guild, polity, religion, settlement/district/site, quest, Knowledge, service/resource/commodity, combat health, People/NPC, economy, account, reputation, runtime, UI, save/account, or gameplay files
+- add cross-authority references
+- add resolver logic
+- add memberships, affiliations, leaders, relationships, ranks, offices, reputation, standing, favorability, providers, services, law, jurisdiction, diplomacy, conflict, territory, AI, dialogue, schedules, effects, runtime, UI, save/account, or gameplay behavior
+- infer factions from guilds, religious orders, polities, governments, businesses, families/houses, quest anchors, backstory hooks, settlement prose, pirate/raider descriptors, movement/ideology labels, shadow networks, runtime groups, or standing/reputation
+- infer people/NPCs from institutions
+- duplicate polities/religions/guilds/services/places into faction or organization authorities
+- reopen generic `world.pois`
+- reopen Highcrown Knowledge
+- reopen People/NPC without a new authored input
+- resume service/resource/commodity/combat-health lanes
+- run Deep Research
+- create temporary Deep Research artifacts
 
 ## Allowed changes
 
@@ -153,7 +231,11 @@ Allowed coordination docs:
 - `docs/dev/project-roadmap.md`
 - `docs/future_content_backlog.md`
 
-## Required checks
+Only update other docs if the current handoff would otherwise become misleading, and explain why in `docs/dev/current-codex-output.md`.
+
+## Validation expectations
+
+Because this run is docs-only, implementation tests are not required. Do not invent test results.
 
 Run:
 
@@ -165,13 +247,66 @@ git diff --check
 git status --short --branch
 ```
 
-Also confirm absent live faction content, absent normal registration, zero content `faction.*` ids, docs-only scope, no Deep Research artifacts, no conflict markers or trailing whitespace, and aligned next-version pointers.
+If your shell environment does not support `npm.cmd`, use the repo's platform-appropriate npm command and report the exact command used.
+
+Also run lightweight scans for:
+
+- no live `packages/content/base/civilization/factions.json`;
+- no normal faction content-lint registration;
+- no content `faction.*` record id;
+- no candidate ids carried forward;
+- no accidental content edits;
+- no schema edits;
+- no validator edits;
+- no test edits;
+- no normal-lint index edits;
+- no runtime/UI/save/account/gameplay edits;
+- no Deep Research artifacts;
+- no generic `world.pois` implementation;
+- no Highcrown Knowledge reopening;
+- no People/NPC reopening without new authored input;
+- no service/resource/commodity/combat health expansion;
+- conflict markers;
+- trailing whitespace;
+- stale next-version pointers.
 
 ## Expected final posture
+
+After successful deferral, mark:
 
 - latest completed primary: `Version 0.5.326 - Faction Authority Seed Evidence Deferral`
 - latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
 - immediate next route: `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
+
+If an explicit user-authored faction seed list or new durable canonical source is unexpectedly present, stop and document why the route changed. Do not infer candidates.
+
+## Final output requirements
+
+Update `docs/dev/current-codex-output.md` with:
+
+- source version/run;
+- result;
+- changed files;
+- checks run;
+- behavior/runtime confirmation;
+- risks/follow-up;
+- next recommended version;
+- suggested commit message.
+
+Update `docs/dev/current-gpt-handoff.md` with:
+
+- latest completed primary;
+- latest support/audit run;
+- immediate next primary route;
+- faction deferral posture;
+- reopening gate;
+- live content and normal registration posture;
+- Deep Research / question / support-suffix posture;
+- remaining deferred authority guardrails.
+
+Update roadmap/backlog/sequence docs consistently.
+
+Update `docs/dev/current-codex-prompt.md` so it points at the newly selected next route after this run.
 
 ## Suggested commit message
 
