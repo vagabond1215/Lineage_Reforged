@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.322 - Organization Faction Guild Boundary Decision
+Source version/run: Version 0.5.323 - Faction Authority Schema Plan
 Date: 2026-07-11
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Added the docs-only organization/faction/guild boundary decision. The decision protects existing guild, polity, religion/religious-order, service, place, economy, account, reputation, People/NPC, Knowledge, and runtime owners; rejects a general organization umbrella; and keeps institution/office, government/jurisdiction/law, business/company, provider, membership/affiliation, and local-reputation authorities separate and deferred.
+Added the docs-only faction authority schema plan. It defines a strict future `civilization.factions` identity contract using the repository-standard records-only wrapper, nine required static identity/provenance fields, controlled lifecycle/category/public-posture vocabularies, no first-pass cross-authority references, pure fixture-driven validation, focused tests, separate seed and normal-registration gates, and explicit behavioral/state exclusions.
 
-Faction is selected as the one distinct future static identity owner ready for a docs-only schema plan. Selected `Version 0.5.323 - Faction Authority Schema Plan` next. No schema, content, candidate list, link/state, or implementation is authorized.
+Selected `Version 0.5.324 - Faction Authority Schema And Validator` next. No live content or candidate ids are approved.
 
 ## Files Changed
 
-- `docs/design/organization-faction-guild-boundary-decision.md`
+- `docs/design/faction-authority-schema-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -24,16 +24,16 @@ Faction is selected as the one distinct future static identity owner ready for a
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master` (`Already up to date.`)
-- Required authority audit, selection, civic/economy/social, pause/gate, roadmap, sequence, backlog, consolidation, and Deep Research decision reads.
-- Fresh live checks confirmed exactly 18 guild records; unchanged guild schema presence; absent general organization/faction content and schemas; preserved guild normal-lint/schema-test posture; religion-owned nested orders; faction/institution-shaped future hooks; and existing player/runtime boundaries.
+- Required handoff, roadmap, sequence, backlog, authority-boundary, evidence-audit, pause/gate, consolidation, Deep Research policy, guild/polity/religion/settlement/quest, schema, normal-lint, and schema-test reads.
+- Fresh absence scans confirmed no faction content, schema, validator, focused test, normal-lint registration, live candidate, or approved `faction.*` id.
 - `node --test tests/unit/schema-files.test.mjs` (passed; 102 tests)
 - `npm.cmd run tool:content-lint` (passed; `content-lint: ok (67 files checked)`)
-- Scope scan confirmed only the new decision and five approved coordination docs changed; no content, schema, validator, test, normal-lint index, runtime, UI, save/account, gameplay, organization/faction/guild implementation, People/NPC reopening, generic `world.pois`, Highcrown Knowledge, service, resource/commodity, or combat-health implementation paths changed.
+- Scope scan confirmed only the new plan and five authorized coordination docs changed; no content, schema, validator, test, normal-lint index, runtime, UI, save/account, gameplay, generic `world.pois`, Highcrown Knowledge, People/NPC, service, resource/commodity, or combat-health path changed.
 - Deep Research artifact scan found no created artifact.
 - Conflict-marker and trailing-whitespace scans found no matches.
-- Active route scan confirms current handoff, sequence, roadmap, backlog, decision, and output route to `Version 0.5.323 - Faction Authority Schema Plan`; older `0.5.322` next-route references are historical run records.
+- Active route scan confirms current handoff, sequence, roadmap, backlog, plan, and output route to `Version 0.5.324 - Faction Authority Schema And Validator`; older `0.5.323` next-route references are historical run records.
 - `git diff --check` (passed with line-ending normalization warnings only)
-- Final `git status --short --branch` confirmed only the new decision and five approved coordination docs are changed.
+- Final `git status --short --branch` confirmed only the new plan and five authorized coordination docs are changed.
 
 ## Behavior / Runtime Confirmation
 
@@ -41,15 +41,15 @@ Documentation only. No JSON content, schema, validator, test, normal content-lin
 
 ## Risks / Follow-Up
 
-- `0.5.323` must define faction as narrow static identity and reject use as a generic organization bucket.
-- The schema plan must preserve all existing owners and reject inference from guilds, religious orders, polities, governments, businesses, families/houses, quests, backstory hooks, settlements, derived networks, runtime groups, and reputation/standing.
-- Membership, affiliation, rank, office holding, reputation, standing, favorability, services, access, relationships, diplomacy, conflict, law, runtime, UI, save/account, and gameplay must stay outside the faction identity contract.
-- A later faction seed still requires explicit durable canonical evidence; current hooks do not approve candidates.
+- `0.5.324` must implement only the schema, pure validator, focused tests, and schema parse coverage; the live wrapper and normal registration must remain absent.
+- The first contract intentionally has no cross-authority references. Later relationship fields require their own semantics, owner resolver, named consumer, and explicit decision.
+- A later seed still requires explicit durable canonical faction evidence. Current hooks, prose, existing authorities, and runtime state approve no candidates.
+- Existing guild, polity, religion/order, service, place, People/NPC, Knowledge, economy, account, reputation, quest, and runtime owners remain protected.
 
 ## Next Recommended Version
 
-Version 0.5.323 - Faction Authority Schema Plan
+Version 0.5.324 - Faction Authority Schema And Validator
 
 ## Suggested Commit Message
 
-docs(civ): decide organization faction guild boundaries
+docs(civ): plan faction authority schema

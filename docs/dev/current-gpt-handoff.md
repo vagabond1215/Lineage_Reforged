@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.322 - Organization Faction Guild Boundary Decision
+Source version/run: Version 0.5.323 - Faction Authority Schema Plan
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.322 - Organization Faction Guild Boundary Decision`
+- `Version 0.5.323 - Faction Authority Schema Plan`
 
 Latest completed support/audit run:
 
@@ -15,30 +15,32 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.323 - Faction Authority Schema Plan`
+- `Version 0.5.324 - Faction Authority Schema And Validator`
 
-## Organization/Faction/Guild Boundary Posture
+## Faction Schema-Plan Posture
 
-Existing guild, polity, religion/religious-order, service, place, economy, account, reputation, and runtime owners are protected. A general organization umbrella is rejected for now. Institution/office, business/company, provider, membership/affiliation, and local-reputation authorities remain deferred behind separate decisions.
+`docs/design/faction-authority-schema-plan.md` defines future `civilization.factions` as strict static identity authority only. Planned paths are `packages/content/base/civilization/factions.json`, `packages/schemas/civilization/faction.schema.json`, `tools/content-lint/factions.mjs`, and `tests/unit/faction-validation.test.mjs`.
+
+Use the established `{ "records": [...] }` wrapper, not `schemaVersion` plus `factions`. Require `id`, `slug`, `name`, `status`, `category`, `publicPosture`, `summary`, `sourceAuthorityNotes`, and `notes`. Allow no cross-authority references in the first contract. Live content, candidates, and normal content-lint registration remain absent and unauthorized.
 
 ## Selected Option And Rationale
 
-Faction is selected as the one distinct unresolved static identity family ready for a docs-only schema plan. It must remain separate from guilds, polities, governments, religions/orders, businesses, families/noble houses, parties, forces, movements/ideologies, derived projections, and runtime standing.
+Schema/validator implementation is selected next because the boundary, strict record shape, enum vocabulary, validator behavior, and focused-test posture are decision-complete without live faction evidence. Excluding first-pass references prevents accidental affiliation, control, membership, or relationship semantics.
 
-`0.5.323` should define a fail-closed future faction identity contract only. It must not create a schema, validator, content, candidate list, registration, membership links, reputation, runtime behavior, or a generic organization umbrella.
+`0.5.324` may add only the schema, pure in-memory validator, focused tests, and schema-file parse coverage. It must not create the live wrapper or edit normal content-lint registration.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required before the faction schema plan. No explicit user question or support-suffix run is required before `0.5.323`.
+Deep Research is not required before `0.5.324`. No explicit user question or support-suffix run is needed. Explicit user authorship or a new durable canonical source remains required before a later seed can approve records.
 
 ## Remaining Deferred Authority Guardrails
 
-`Version 0.5.323` must remain docs-only. Preserve existing owners and reject faction inference from guilds, religious orders, polities, governments, businesses, families/houses, quest anchors, backstory hooks, settlement prose, shadow networks, runtime groups, or standing/reputation state.
+No faction seed or `faction.*` id is approved. Reject inference from guilds, religious orders, polities, governments, businesses, families/houses, quests, backstory hooks, settlements, movement/ideology labels, shadow networks, runtime groups, or standing/reputation.
 
-Do not add NPC overlays, generated people, roles, affiliations, relationships, schedules, dialogue, services, companions, AI, inventory, combat profiles, runtime, UI, save/account behavior, or gameplay.
+Keep organization/institution/office, government/jurisdiction/law/force, business/company, provider, membership/affiliation/rank, relationships, and local reputation/standing/favorability separate and deferred. Do not add People/NPCs, services/access, territory, diplomacy/conflict, runtime, UI, save/account, or gameplay.
 
-Service, resource/commodity, and combat health remain stable and paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed. Organization/faction/guild and location lanes are not reopened.
+Service, resource/commodity, combat health, and People/NPC remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
 
 Suggested next commit:
 
-`docs(civ): decide organization faction guild boundaries`
+`docs(civ): plan faction authority schema`
