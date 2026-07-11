@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-10
+Last reviewed: 2026-07-11
 
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.317 - Roadmap Next Authority Selection`
+- Latest completed version: `Version 0.5.318 - People NPC Authority Evidence Audit`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.318 - People NPC Authority Evidence Audit`
+- Next recommended version: `Version 0.5.319 - People NPC Seed Evidence Deferral`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -173,6 +173,7 @@ Versioning rule:
 - `Version 0.5.315 - Combat Status Condition Injury Post-Registration Audit` added `docs/design/combat-status-condition-injury-post-registration-audit.md`; confirmed exact-once registration, helper dependency isolation, the unchanged two-record planned status seed, 90 focused tests, 102 schema-file tests, and normal lint at 67 checked files; found no registration follow-up or immediate expansion need; selected docs-first `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate`; and changed no registration, content, schema, validator, test, runtime, UI, save/account, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.316 - Combat Status Condition Injury Next Expansion Gate` added `docs/design/combat-status-condition-injury-next-expansion-gate.md`; confirmed the stable registered two-status seed and passing validation at 67 normal-lint files; paused combat health; rejected registration follow-up, immediate status expansion, tiny status planning, condition/injury planning, and Deep Research now; selected docs-first `Version 0.5.317 - Roadmap Next Authority Selection`; and changed no registration, content, schema, validator, test, runtime, UI, save/account, resource/commodity, service, POI/discovery, Highcrown Knowledge, or gameplay behavior.
 - `Version 0.5.317 - Roadmap Next Authority Selection` added `docs/design/roadmap-next-authority-selection.md`; compared paused service, resource/commodity, and combat-health lanes with rejected/closed POI and Highcrown lanes plus People/NPC, organization/faction/guild, location, and other deferred candidates; selected docs-first `Version 0.5.318 - People NPC Authority Evidence Audit` because People/NPC schemas, validator, tests, and prior seed plan exist but live files and an approved canonical named-person list do not; and changed no content, schema, validator, test, normal-lint index, runtime, UI, save/account, or gameplay behavior.
+- `Version 0.5.318 - People NPC Authority Evidence Audit` added `docs/design/people-npc-authority-evidence-audit.md`; confirmed both live files and normal-lint registration remain absent while schemas, validator, and focused tests exist; found no strong canonical named-person candidate; carried forward no exact people/NPC ids; kept NPC overlays, live content, and registration deferred; and selected docs-first `Version 0.5.319 - People NPC Seed Evidence Deferral`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -466,9 +467,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.318 - People NPC Authority Evidence Audit`
+1. `0.5.319 - People NPC Seed Evidence Deferral`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.318`. Service, resource/commodity, and combat health remain stable and paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. People/NPC is selected for a fresh evidence audit because schemas, validation, and a prior seed plan exist while live files and an approved canonical named-person list remain absent.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.319`. Service, resource/commodity, and combat health remain stable and paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The People/NPC evidence audit found no strong canonical named-person candidate, so the next docs-only route records the explicit authored evidence gate before any seed planning or implementation.
 
 High-priority unresolved questions:
 
