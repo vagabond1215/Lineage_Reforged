@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FactionCollection",
+  "description": "Schema for future authored static faction identity. Records are descriptive identity authority only and do not define membership, affiliation, leadership, relationships, reputation, services, law, territory, runtime state, UI, save/account state, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/factionRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "factionId": {
+      "type": "string",
+      "pattern": "^faction\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceAuthorityNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "retired"]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "political",
+        "social",
+        "ideological",
+        "criminal",
+        "rebel",
+        "resistance",
+        "advocacy",
+        "pressure_group",
+        "other"
+      ]
+    },
+    "publicPosture": {
+      "type": "string",
+      "enum": ["public", "semi_public", "secret", "unknown"]
+    },
+    "factionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "status",
+        "category",
+        "publicPosture",
+        "summary",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/factionId" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "$ref": "#/$defs/status" },
+        "category": { "$ref": "#/$defs/category" },
+        "publicPosture": { "$ref": "#/$defs/publicPosture" },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/sourceAuthorityNotes" },
+        "notes": { "$ref": "#/$defs/notes" }
+      }
+    }
+  }
+}

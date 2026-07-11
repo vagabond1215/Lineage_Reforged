@@ -1,18 +1,23 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.323 - Faction Authority Schema Plan
+Source version/run: Version 0.5.324 - Faction Authority Schema And Validator
 Date: 2026-07-11
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Added the docs-only faction authority schema plan. It defines a strict future `civilization.factions` identity contract using the repository-standard records-only wrapper, nine required static identity/provenance fields, controlled lifecycle/category/public-posture vocabularies, no first-pass cross-authority references, pure fixture-driven validation, focused tests, separate seed and normal-registration gates, and explicit behavioral/state exclusions.
+Implemented the strict future `civilization.factions` validation scaffold: records-only JSON Schema, pure in-memory validator returning human-readable issue strings, 102 focused tests, and schema-file parse coverage.
 
-Selected `Version 0.5.324 - Faction Authority Schema And Validator` next. No live content or candidate ids are approved.
+The contract enforces exact wrapper/record shapes, required static identity fields, id/slug coherence and uniqueness, lifecycle/category/public-posture vocabularies, trimmed provenance/notes, and rejection of every unplanned reference, behavioral, mutable-state, runtime, UI, save/account, and gameplay field.
+
+Selected docs-only `Version 0.5.325 - Faction Authority Seed Evidence Audit` next. Live faction content, candidate ids, resolver logic, and normal content-lint registration remain absent.
 
 ## Files Changed
 
-- `docs/design/faction-authority-schema-plan.md`
+- `packages/schemas/civilization/faction.schema.json`
+- `tools/content-lint/factions.mjs`
+- `tests/unit/faction-validation.test.mjs`
+- `tests/unit/schema-files.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -24,32 +29,34 @@ Selected `Version 0.5.324 - Faction Authority Schema And Validator` next. No liv
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master` (`Already up to date.`)
-- Required handoff, roadmap, sequence, backlog, authority-boundary, evidence-audit, pause/gate, consolidation, Deep Research policy, guild/polity/religion/settlement/quest, schema, normal-lint, and schema-test reads.
-- Fresh absence scans confirmed no faction content, schema, validator, focused test, normal-lint registration, live candidate, or approved `faction.*` id.
-- `node --test tests/unit/schema-files.test.mjs` (passed; 102 tests)
+- Required schema-plan, boundary, evidence, civic/economy, People/NPC, validation-consolidation, roadmap, sequence, backlog, nearby schema/validator/test, normal-lint, and schema-test reads.
+- `node --test tests/unit/faction-validation.test.mjs` (passed; 102 tests)
+- `node --test tests/unit/schema-files.test.mjs` (passed; 103 tests)
 - `npm.cmd run tool:content-lint` (passed; `content-lint: ok (67 files checked)`)
-- Scope scan confirmed only the new plan and five authorized coordination docs changed; no content, schema, validator, test, normal-lint index, runtime, UI, save/account, gameplay, generic `world.pois`, Highcrown Knowledge, People/NPC, service, resource/commodity, or combat-health path changed.
+- `node --check tools/content-lint/factions.mjs` (passed)
+- Scope scan confirmed exactly the four authorized implementation/test files and five coordination docs changed; no live content, normal-lint index, runtime, UI, save/account, gameplay, generic `world.pois`, Highcrown Knowledge, People/NPC, service, resource/commodity, or combat-health path changed.
+- Absence scans confirmed no live faction wrapper, no normal faction registration, and no `faction.*` record id in repository content.
 - Deep Research artifact scan found no created artifact.
 - Conflict-marker and trailing-whitespace scans found no matches.
-- Active route scan confirms current handoff, sequence, roadmap, backlog, plan, and output route to `Version 0.5.324 - Faction Authority Schema And Validator`; older `0.5.323` next-route references are historical run records.
+- Active route scan confirms current handoff, sequence, roadmap, backlog, and output route to `Version 0.5.325 - Faction Authority Seed Evidence Audit`; older `0.5.324` next-route references are historical run records.
 - `git diff --check` (passed with line-ending normalization warnings only)
-- Final `git status --short --branch` confirmed only the new plan and five authorized coordination docs are changed.
+- Final `git status --short --branch` confirmed exactly the nine authorized files are changed.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No JSON content, schema, validator, test, normal content-lint registration, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay behavior changed.
+Validation scaffolding only. No live JSON content, normal content-lint registration, resolver, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- `0.5.324` must implement only the schema, pure validator, focused tests, and schema parse coverage; the live wrapper and normal registration must remain absent.
-- The first contract intentionally has no cross-authority references. Later relationship fields require their own semantics, owner resolver, named consumer, and explicit decision.
-- A later seed still requires explicit durable canonical faction evidence. Current hooks, prose, existing authorities, and runtime state approve no candidates.
-- Existing guild, polity, religion/order, service, place, People/NPC, Knowledge, economy, account, reputation, quest, and runtime owners remain protected.
+- `0.5.325` must audit durable canonical faction evidence only; it must not create content, approve weak candidates, or register normal lint.
+- Current hooks, prose, guilds, polities, religious orders, quest anchors, settlements, shadow networks, runtime groups, and standing/reputation state remain insufficient by default.
+- The first contract intentionally has no cross-authority references. Any later link requires separate semantics, a stable owner, a named consumer, and resolver validation.
+- Normal content-lint registration remains blocked until live content exists and a separate registration decision approves exact-once wiring.
 
 ## Next Recommended Version
 
-Version 0.5.324 - Faction Authority Schema And Validator
+Version 0.5.325 - Faction Authority Seed Evidence Audit
 
 ## Suggested Commit Message
 
-docs(civ): plan faction authority schema
+docs(civ): add faction authority schema validation

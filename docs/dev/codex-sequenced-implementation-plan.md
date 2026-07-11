@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.323 - Faction Authority Schema Plan`
+Route: Codex local sequencing alignment after `Version 0.5.324 - Faction Authority Schema And Validator`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.323 - Faction Authority Schema Plan`
+- `Version 0.5.324 - Faction Authority Schema And Validator`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.324 - Faction Authority Schema And Validator`
+- `Version 0.5.325 - Faction Authority Seed Evidence Audit`
 
 Versioning note:
 
@@ -83,6 +83,7 @@ Versioning note:
 - `0.5.321` completed as a primary roadmap run and added `docs/design/organization-faction-guild-authority-evidence-audit.md`; it preserved existing guild/polity/religion owners, classified local/presentation/derived references, confirmed unresolved general institutional owners, and selected docs-only `0.5.322 - Organization Faction Guild Boundary Decision`.
 - `0.5.322` completed as a primary roadmap run and added `docs/design/organization-faction-guild-boundary-decision.md`; it protected existing specific owners, rejected a general organization umbrella, selected faction as the one distinct future schema-plan candidate, and kept institutional links/state/behavior deferred.
 - `0.5.323` completed as a primary roadmap run and added `docs/design/faction-authority-schema-plan.md`; it selected a strict records-only static identity contract, no first-pass references, pure validation, focused tests, and separate content/registration gates.
+- `0.5.324` completed as a primary roadmap run and added the strict faction schema, pure issue-returning validator, 102 focused tests, and schema parse coverage while keeping live content and normal registration absent.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -445,17 +446,18 @@ Versioning note:
 | 242 | `0.5.321` | Organization Faction Guild Authority Evidence Audit | Codex 5.5 Local docs-first | civic/economy boundaries + live guild/institutional references | repository authority evidence audit | Completed | Preserved existing owners, classified weak/derived references, and confirmed a cross-owner boundary decision is needed. |
 | 243 | `0.5.322` | Organization Faction Guild Boundary Decision | Codex 5.5 Local docs-first | `docs/design/organization-faction-guild-authority-evidence-audit.md` | cross-owner boundary decision | Completed | Protected existing owners, rejected a generic umbrella, and selected faction as the only later schema-plan candidate. |
 | 244 | `0.5.323` | Faction Authority Schema Plan | Codex 5.5 Local docs-first | `docs/design/organization-faction-guild-boundary-decision.md` | future schema contract plan | Completed | Planned a strict records-only static faction contract with no first-pass references, live content, candidates, or registration. |
-| 245 | `0.5.324` | Faction Authority Schema And Validator | Codex 5.5 Local narrow implementation | `docs/design/faction-authority-schema-plan.md` | strict schema + pure validator + focused tests + schema parse coverage | Deferred | Implement validation scaffolding only; keep live content and normal registration absent. |
+| 245 | `0.5.324` | Faction Authority Schema And Validator | Codex 5.5 Local narrow implementation | `docs/design/faction-authority-schema-plan.md` | strict schema + pure validator + focused tests + schema parse coverage | Completed | Added strict validation scaffolding; live content, candidates, references, and normal registration remain absent. |
+| 246 | `0.5.325` | Faction Authority Seed Evidence Audit | Codex 5.5 Local docs-first | faction schema/validator + accepted seed gate + current authored evidence | canon evidence audit | Deferred | Audit durable canonical evidence only; do not create content or approve weak inferred candidates. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.324 - Faction Authority Schema And Validator`
+1. `0.5.325 - Faction Authority Seed Evidence Audit`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, and People/NPC are paused; generic `world.pois` remains rejected. The faction schema plan defines a strict records-only contract with no first-pass references. Narrow `0.5.324 - Faction Authority Schema And Validator` is next; live content and normal registration remain deferred.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, and People/NPC are paused; generic `world.pois` remains rejected. Faction validation scaffolding is complete with live content and normal registration absent. Docs-only `0.5.325 - Faction Authority Seed Evidence Audit` is next.
 
 ## Default Prompt Pattern
 
@@ -471,7 +473,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.324 - Faction Authority Schema And Validator` as the immediate next recommended run.
+- Keep `Version 0.5.325 - Faction Authority Seed Evidence Audit` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -520,6 +522,7 @@ Each future Codex prompt should:
 - `0.5.321` confirmed unresolved cross-owner institutional boundaries while preserving existing guild and religion-owned order authority. The next run should decide boundaries only and must not presume a schema or content implementation.
 - `0.5.322` rejected a general organization umbrella and selected faction as a distinct future static identity owner. The next run should plan only the faction schema contract and keep implementation/candidates/links/state deferred.
 - `0.5.323` completed the strict faction schema plan. The next run should implement only the schema, pure validator, focused tests, and schema parse coverage; live content and normal registration must remain absent.
+- `0.5.324` completed strict faction validation scaffolding without content or registration. The next run should audit canonical seed evidence only and must not create records or infer candidates from weak hooks/prose.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

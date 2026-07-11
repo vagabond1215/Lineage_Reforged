@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.323 - Faction Authority Schema Plan
+Source version/run: Version 0.5.324 - Faction Authority Schema And Validator
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.323 - Faction Authority Schema Plan`
+- `Version 0.5.324 - Faction Authority Schema And Validator`
 
 Latest completed support/audit run:
 
@@ -15,32 +15,32 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.324 - Faction Authority Schema And Validator`
+- `Version 0.5.325 - Faction Authority Seed Evidence Audit`
 
-## Faction Schema-Plan Posture
+## Faction Schema / Validator Posture
 
-`docs/design/faction-authority-schema-plan.md` defines future `civilization.factions` as strict static identity authority only. Planned paths are `packages/content/base/civilization/factions.json`, `packages/schemas/civilization/faction.schema.json`, `tools/content-lint/factions.mjs`, and `tests/unit/faction-validation.test.mjs`.
+`packages/schemas/civilization/faction.schema.json` now defines strict records-only `civilization.factions` static identity. `tools/content-lint/factions.mjs` exports pure `validateFactions(wrapper, options)` validation that returns human-readable issue strings without filesystem or owner dependencies. `tests/unit/faction-validation.test.mjs` covers the full contract and absence gates; schema parse coverage is active.
 
-Use the established `{ "records": [...] }` wrapper, not `schemaVersion` plus `factions`. Require `id`, `slug`, `name`, `status`, `category`, `publicPosture`, `summary`, `sourceAuthorityNotes`, and `notes`. Allow no cross-authority references in the first contract. Live content, candidates, and normal content-lint registration remain absent and unauthorized.
+The contract requires `id`, `slug`, `name`, `status`, `category`, `publicPosture`, `summary`, `sourceAuthorityNotes`, and `notes`. It allows no cross-authority references and rejects all unknown fields.
 
-## Selected Option And Rationale
+## Live Content / Normal Registration Posture
 
-Schema/validator implementation is selected next because the boundary, strict record shape, enum vocabulary, validator behavior, and focused-test posture are decision-complete without live faction evidence. Excluding first-pass references prevents accidental affiliation, control, membership, or relationship semantics.
+`packages/content/base/civilization/factions.json` remains absent. No live faction candidate id is approved or present in content. `tools/content-lint/index.mjs` remains unchanged and contains no faction import, path/check, helper call, or invocation.
 
-`0.5.324` may add only the schema, pure in-memory validator, focused tests, and schema-file parse coverage. It must not create the live wrapper or edit normal content-lint registration.
+Normal registration remains deferred until live content exists and a separate decision approves exact-once wiring.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required before `0.5.324`. No explicit user question or support-suffix run is needed. Explicit user authorship or a new durable canonical source remains required before a later seed can approve records.
+Deep Research is not required before `0.5.325`. No explicit user question or support-suffix run is needed for the repository evidence audit. External research cannot manufacture project canon.
 
 ## Remaining Deferred Authority Guardrails
 
-No faction seed or `faction.*` id is approved. Reject inference from guilds, religious orders, polities, governments, businesses, families/houses, quests, backstory hooks, settlements, movement/ideology labels, shadow networks, runtime groups, or standing/reputation.
+`0.5.325` should audit only durable canonical faction evidence against the accepted seed gate. Do not infer candidates from guilds, religious orders, polities, governments, businesses, families/houses, quests, backstory hooks, settlements, movement/ideology labels, shadow networks, runtime groups, or standing/reputation.
 
-Keep organization/institution/office, government/jurisdiction/law/force, business/company, provider, membership/affiliation/rank, relationships, and local reputation/standing/favorability separate and deferred. Do not add People/NPCs, services/access, territory, diplomacy/conflict, runtime, UI, save/account, or gameplay.
+Keep organization/institution/office, government/jurisdiction/law/force, business/company, provider, membership/affiliation/rank, relationships, and local reputation/standing/favorability separate and deferred. Do not add content, registration, People/NPCs, services/access, territory, diplomacy/conflict, runtime, UI, save/account, or gameplay.
 
 Service, resource/commodity, combat health, and People/NPC remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
 
 Suggested next commit:
 
-`docs(civ): plan faction authority schema`
+`docs(civ): add faction authority schema validation`
