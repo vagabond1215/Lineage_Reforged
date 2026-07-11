@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.328 - Institution Office Authority Boundary Decision
+Source version/run: Version 0.5.329 - Institution Authority Schema Plan
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.328 - Institution Office Authority Boundary Decision`
+- `Version 0.5.329 - Institution Authority Schema Plan`
 
 Latest completed support/audit run:
 
@@ -15,26 +15,32 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.329 - Institution Authority Schema Plan`
+- `Version 0.5.330 - Institution Authority Schema And Validator`
 
-## Institution / Office Boundary Posture
+## Accepted Institution Contract
 
-Institution and office are separate. Institution is approved for a content-free schema plan as durable named body identity with strict exclusions. Office remains deferred and not schema-ready because position, administrative unit, department, force, role, facility, and quest-anchor semantics overlap.
+- Authority: `civilization.institutions`.
+- Future content path: `packages/content/base/civilization/institutions.json` (must remain absent in `0.5.330`).
+- Schema: `packages/schemas/civilization/institution.schema.json`.
+- Pure validator: `tools/content-lint/institutions.mjs`.
+- Focused tests: `tests/unit/institution-validation.test.mjs`.
+- Strict records-only wrapper; exact fields `id`, `slug`, `name`, `status`, `category`, `publicPosture`, `summary`, `sourceAuthorityNotes`, and `notes`.
+- Identity is `institution.<lower_snake_slug>` with exact id/slug coherence.
+- Lifecycle is `planned|active|retired`.
+- Category is `civic|administrative|judicial|scholarly|charitable|educational|archival|medical|other`.
+- Public posture is descriptive visibility only: `public|semi_public|secret|unknown`.
+- No first-pass references or resolver logic.
 
-## Selected Option And Rationale
+## Guardrails
 
-Institution has a narrow static identity boundary and future fail-closed Knowledge/Magic Study consumers. A schema can be planned without content, candidates, references, or consumer enablement. Office cannot yet support a stable contract.
+No live wrapper, candidate id, normal content-lint registration, office work, consumer enablement, or behavior is authorized. Knowledge/Magic Study, backstory, service-provider, quest, derived/runtime, UI, and prose institution vocabulary is not canon and remains fail closed.
 
-## Deep Research / Question / Support-Suffix Posture
+Preserve government/jurisdiction/law/force, guild, faction, religion/order, business, family, place/facility, service/provider, profession/role, People/NPC, membership/employment/office-holder, reputation/access, Knowledge/magic, and runtime owners.
 
-Deep Research is not required. No explicit user question or support-suffix run is needed before `0.5.329`.
+Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed. Office remains not schema-ready.
 
-## Remaining Deferred Authority Guardrails
-
-No institution/office candidate id is approved. Quest office anchors, Knowledge vocabulary, demo/prose, generic buildings, and derived institution profiles are not canon. Preserve government/jurisdiction/law/force, guild, faction, religion/order, business, family, place/facility, service/provider, profession/role, People/NPC, membership/employment/office-holder, reputation/access, and runtime owners.
-
-Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
+No Deep Research, support-suffix run, or explicit user question is required before `0.5.330`.
 
 Suggested next commit:
 
-`docs(civ): decide institution office boundaries`
+`docs(civ): plan institution authority schema`

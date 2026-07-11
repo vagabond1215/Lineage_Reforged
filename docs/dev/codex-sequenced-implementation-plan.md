@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.328 - Institution Office Authority Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.329 - Institution Authority Schema Plan`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.328 - Institution Office Authority Boundary Decision`
+- `Version 0.5.329 - Institution Authority Schema Plan`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.329 - Institution Authority Schema Plan`
+- `Version 0.5.330 - Institution Authority Schema And Validator`
 
 Versioning note:
 
@@ -88,6 +88,7 @@ Versioning note:
 - `0.5.326` completed as a primary roadmap run and added `docs/design/faction-authority-seed-evidence-deferral.md`; it fixed the authored-input reopening gate, prohibited repeated weak-source scans, carried forward zero ids, and routed to roadmap selection.
 - `0.5.327` completed as a primary roadmap run and added `docs/design/roadmap-post-faction-deferral-selection.md`; it compared eligible lanes and selected institution/office for one narrow owner-boundary decision.
 - `0.5.328` completed as a primary roadmap run and added `docs/design/institution-office-authority-boundary-decision.md`; it separated institution body identity from office position/unit identity, selected institution schema planning, and kept office deferred.
+- `0.5.329` completed as a primary roadmap run and added `docs/design/institution-authority-schema-plan.md`; it selected a strict records-only institution contract, controlled vocabularies, no first-pass references, pure validation, focused tests, and separate content/registration gates.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -455,17 +456,18 @@ Versioning note:
 | 247 | `0.5.326` | Faction Authority Seed Evidence Deferral | Codex 5.5 Local docs-first | `docs/design/faction-authority-seed-evidence-audit.md` | fail-closed authored-input gate | Completed | Fixed the reopening gate, carried zero ids, prohibited repeated scans, and routed elsewhere. |
 | 248 | `0.5.327` | Roadmap Post-Faction Deferral Selection | Codex 5.5 Local docs-first | current roadmap/backlog + faction/People deferrals + paused-lane gates | authority lane selection | Completed | Selected institution/office for the smallest safe owner-boundary decision. |
 | 249 | `0.5.328` | Institution Office Authority Boundary Decision | Codex 5.5 Local docs-first | institutional evidence audit + organization/civic/economy boundaries | specific owner-boundary decision | Completed | Separated institution from office, selected institution schema planning, and deferred office. |
-| 250 | `0.5.329` | Institution Authority Schema Plan | Codex 5.5 Local docs-first | `docs/design/institution-office-authority-boundary-decision.md` | future strict static identity contract | Deferred | Plan schema/validator/test/seed/registration posture without content, candidates, refs, or consumer enablement. |
+| 250 | `0.5.329` | Institution Authority Schema Plan | Codex 5.5 Local docs-first | `docs/design/institution-office-authority-boundary-decision.md` | future strict static identity contract | Completed | Planned schema/validator/test/seed/registration posture without content, candidates, refs, or consumer enablement. |
+| 251 | `0.5.330` | Institution Authority Schema And Validator | Codex 5.5 Local narrow implementation | `docs/design/institution-authority-schema-plan.md` | strict schema + pure validator + focused tests + schema parse coverage | Deferred | Add validation scaffolding only; keep content, registration, candidates, refs, and consumers absent. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.329 - Institution Authority Schema Plan`
+1. `0.5.330 - Institution Authority Schema And Validator`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, faction, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.329 - Institution Authority Schema Plan` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, faction, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Narrow `0.5.330 - Institution Authority Schema And Validator` is next.
 
 ## Default Prompt Pattern
 
@@ -481,7 +483,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.329 - Institution Authority Schema Plan` as the immediate next recommended run.
+- Keep `Version 0.5.330 - Institution Authority Schema And Validator` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
