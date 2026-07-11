@@ -1,20 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.326 - Faction Authority Seed Evidence Deferral
+Source version/run: Version 0.5.327 - Roadmap Post-Faction Deferral Selection
 Date: 2026-07-11
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Added the docs-only faction seed evidence deferral. It carries forward zero candidate ids, preserves the completed schema/validator/test scaffold, keeps live content and normal registration absent, and prohibits repeated weak-source scans without new authored evidence.
+Added the docs-only post-faction roadmap selection. It compared all required paused, blocked, rejected, closed, research-gated, and eligible lanes and selected one narrow next route:
 
-Faction seed planning may reopen only for an explicit user-authored canonical faction list or a new durable repository lore/content source that supplies every accepted static identity fact without invention.
+- `Version 0.5.328 - Institution Office Authority Boundary Decision`
 
-Selected `Version 0.5.327 - Roadmap Post-Faction Deferral Selection` next.
+Institution/office has current repository evidence, an explicitly unresolved owner boundary, and no Deep Research or authored-input blocker. It is narrower and more prerequisite-ready than broader civic, business/company, provider, membership, reputation, property, social, or research-gated lanes.
 
 ## Files Changed
 
-- `docs/design/faction-authority-seed-evidence-deferral.md`
+- `docs/design/roadmap-post-faction-deferral-selection.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -27,16 +27,14 @@ Selected `Version 0.5.327 - Roadmap Post-Faction Deferral Selection` next.
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master` (`Already up to date.`)
-- Required handoff, active prompt, roadmap, sequence, backlog, faction audit/plan/boundary, People/NPC deferral, validation consolidation, pipeline, schema, validator, focused-test, schema-test, and normal-lint reads.
-- Narrow reconfirmation found no live faction wrapper, no content `faction.*` id, and no normal registration.
-- `node --test tests/unit/faction-validation.test.mjs` (passed; 102 tests)
+- Required handoff, active prompt, sequence, roadmap, backlog, faction/People deferrals, service/resource/combat gates, civic/economy/institutional boundaries, validation consolidation, pipeline, and Deep Research policy reads.
+- Narrow candidate-prerequisite comparison; no completed evidence audit was repeated.
 - `node --test tests/unit/schema-files.test.mjs` (passed; 103 tests)
 - `npm.cmd run tool:content-lint` (passed; `content-lint: ok (67 files checked)`)
-- Scope scan confirmed exactly the new deferral and six authorized coordination docs changed; no content, schema, validator, test, normal-lint index, runtime, UI, save/account, gameplay, generic `world.pois`, Highcrown Knowledge, People/NPC, service, resource/commodity, or combat-health path changed.
-- Absence scans confirmed no live faction wrapper, no normal faction registration, and no content `faction.*` record id.
+- Scope scan confirmed exactly the new selection and six authorized coordination docs changed; no content, schema, validator, test, normal-lint index, runtime, UI, save/account, gameplay, or paused/rejected/closed-lane implementation path changed.
 - Deep Research artifact scan found no created artifact.
 - Conflict-marker and trailing-whitespace scans found no matches.
-- Active route scan confirms the deferral, handoff, sequence, roadmap, backlog, and output route to `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`; `docs/dev/current-codex-prompt.md` now contains that next runnable prompt.
+- Active route scan confirms the selection, handoff, sequence, roadmap, backlog, and output route to `Version 0.5.328 - Institution Office Authority Boundary Decision`; `docs/dev/current-codex-prompt.md` now contains that next runnable prompt.
 - `git diff --check` (passed with line-ending normalization warnings only)
 - Final `git status --short --branch` confirmed exactly the seven authorized documentation files are changed.
 
@@ -46,14 +44,14 @@ Documentation only. No content, schema, validator, test, normal content-lint reg
 
 ## Risks / Follow-Up
 
-- Do not repeat faction evidence scanning or seed planning until the exact authored-input gate is met.
-- The next roadmap selection must preserve faction, People/NPC, service, resource/commodity, combat-health, POI, and Highcrown constraints.
-- Any selected lane should begin with the smallest docs-first owner/evidence decision still required.
+- `0.5.328` must distinguish institution from office, government, facility/site, guild, religion/order, business, provider, person, and runtime projection.
+- Quest anchors, Knowledge vocabulary, and derived institution profiles must not be promoted to canon.
+- The decision should select at most one later schema/evidence route and may preserve/defer both owners.
 
 ## Next Recommended Version
 
-Version 0.5.327 - Roadmap Post-Faction Deferral Selection
+Version 0.5.328 - Institution Office Authority Boundary Decision
 
 ## Suggested Commit Message
 
-docs(civ): defer faction seed evidence
+docs(roadmap): select post-faction deferral route

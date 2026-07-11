@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.326 - Faction Authority Seed Evidence Deferral`
+Route: Codex local sequencing alignment after `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.326 - Faction Authority Seed Evidence Deferral`
+- `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
+- `Version 0.5.328 - Institution Office Authority Boundary Decision`
 
 Versioning note:
 
@@ -86,6 +86,7 @@ Versioning note:
 - `0.5.324` completed as a primary roadmap run and added the strict faction schema, pure issue-returning validator, 102 focused tests, and schema parse coverage while keeping live content and normal registration absent.
 - `0.5.325` completed as a primary roadmap run and added `docs/design/faction-authority-seed-evidence-audit.md`; it found no strong canonical faction candidate, carried forward zero ids, and selected a fail-closed evidence deferral.
 - `0.5.326` completed as a primary roadmap run and added `docs/design/faction-authority-seed-evidence-deferral.md`; it fixed the authored-input reopening gate, prohibited repeated weak-source scans, carried forward zero ids, and routed to roadmap selection.
+- `0.5.327` completed as a primary roadmap run and added `docs/design/roadmap-post-faction-deferral-selection.md`; it compared eligible lanes and selected institution/office for one narrow owner-boundary decision.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -451,17 +452,18 @@ Versioning note:
 | 245 | `0.5.324` | Faction Authority Schema And Validator | Codex 5.5 Local narrow implementation | `docs/design/faction-authority-schema-plan.md` | strict schema + pure validator + focused tests + schema parse coverage | Completed | Added strict validation scaffolding; live content, candidates, references, and normal registration remain absent. |
 | 246 | `0.5.325` | Faction Authority Seed Evidence Audit | Codex 5.5 Local docs-first | faction schema/validator + accepted seed gate + current authored evidence | canon evidence audit | Completed | Found no strong candidate, carried forward zero ids, and kept content/registration absent. |
 | 247 | `0.5.326` | Faction Authority Seed Evidence Deferral | Codex 5.5 Local docs-first | `docs/design/faction-authority-seed-evidence-audit.md` | fail-closed authored-input gate | Completed | Fixed the reopening gate, carried zero ids, prohibited repeated scans, and routed elsewhere. |
-| 248 | `0.5.327` | Roadmap Post-Faction Deferral Selection | Codex 5.5 Local docs-first | current roadmap/backlog + faction/People deferrals + paused-lane gates | authority lane selection | Deferred | Compare eligible lanes and select exactly one smallest safe docs-first route. |
+| 248 | `0.5.327` | Roadmap Post-Faction Deferral Selection | Codex 5.5 Local docs-first | current roadmap/backlog + faction/People deferrals + paused-lane gates | authority lane selection | Completed | Selected institution/office for the smallest safe owner-boundary decision. |
+| 249 | `0.5.328` | Institution Office Authority Boundary Decision | Codex 5.5 Local docs-first | institutional evidence audit + organization/civic/economy boundaries | specific owner-boundary decision | Deferred | Separate institution and office from specific owners/projections and select at most one later route. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.327 - Roadmap Post-Faction Deferral Selection`
+1. `0.5.328 - Institution Office Authority Boundary Decision`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, and People/NPC are paused; generic `world.pois` remains rejected. Faction is now authored-input gated. Docs-only `0.5.327 - Roadmap Post-Faction Deferral Selection` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, faction, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.328 - Institution Office Authority Boundary Decision` is next.
 
 ## Default Prompt Pattern
 
@@ -477,7 +479,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.327 - Roadmap Post-Faction Deferral Selection` as the immediate next recommended run.
+- Keep `Version 0.5.328 - Institution Office Authority Boundary Decision` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -529,6 +531,7 @@ Each future Codex prompt should:
 - `0.5.324` completed strict faction validation scaffolding without content or registration. The next run should audit canonical seed evidence only and must not create records or infer candidates from weak hooks/prose.
 - `0.5.325` found zero safe faction candidates. The next run should record the authored-input reopening gate, prohibit repeated weak-source scans, and route elsewhere without content or registration.
 - `0.5.326` deferred faction seed work behind a durable authored-input gate. The next run should compare remaining eligible lanes and select exactly one docs-first route without reopening paused/closed/rejected lanes.
+- `0.5.327` selected institution/office as the clearest eligible boundary. The next run should decide ownership only, reject anchors/projections as canon, and select at most one later route.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.326 - Faction Authority Seed Evidence Deferral
+Source version/run: Version 0.5.327 - Roadmap Post-Faction Deferral Selection
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.326 - Faction Authority Seed Evidence Deferral`
+- `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
 
 Latest completed support/audit run:
 
@@ -15,32 +15,26 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
+- `Version 0.5.328 - Institution Office Authority Boundary Decision`
 
-## Faction Deferral Posture
+## Post-Faction Roadmap Selection Posture
 
-Faction schema/validator/test scaffolding is complete, but seed readiness is deferred. Zero candidate ids are carried forward. Live content and normal registration remain absent and unauthorized.
+Institution/office is the selected next docs-first lane. Existing institutional evidence is sufficient for a narrow owner-boundary decision, and the prior organization decision explicitly requires that boundary before schema planning.
 
-Do not repeat broad evidence scans. Reopen only for an explicit user-authored canonical faction list or a new durable repository source supplying every accepted record fact and boundary proof without invention.
+## Selected Option And Rationale
 
-## Reopening Gate
-
-Any future candidate must satisfy `docs/design/faction-authority-schema-plan.md`, `docs/design/faction-authority-seed-evidence-audit.md`, and `docs/design/faction-authority-seed-evidence-deferral.md`. Hooks, prose, UI/demo data, tests/examples, existing owners, pirate/raider labels, derived projections, and standing/reputation remain prohibited inference sources.
-
-## Live Content / Normal Registration Posture
-
-`packages/content/base/civilization/factions.json` is absent; no content `faction.*` id exists; `tools/content-lint/index.mjs` has no faction registration. Registration can follow only approved live content plus a separate exact-once decision.
+Institution/office is narrower and more ready than government/jurisdiction/law/force, business/company, provider, membership, local reputation, property/construction, or other broad lanes. It has no authored-input or Deep Research blocker and can fail closed without implementation.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required. No support-suffix run or explicit user question is needed before routing elsewhere.
+Deep Research is not required. No explicit user question or support-suffix run is needed before `0.5.328`.
 
 ## Remaining Deferred Authority Guardrails
 
-People/NPC remains authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed. A general organization umbrella remains rejected. Institution/office, business/company, provider, membership/affiliation, local reputation, and civic/legal/force layers retain separate future decisions.
+Preserve all existing specific owners. Do not infer institutions/offices from quest anchors, Knowledge vocabulary, demos, generated ids, or derived profiles. Keep institution separate from office/government/facility/guild/order/business/provider/person unless the boundary proves otherwise. Exclude members, office-holders, services, access, reputation, law, runtime, UI, save/account, and gameplay.
 
-`0.5.327` should select exactly one eligible docs-first roadmap lane without reopening these gates or transitioning to runtime/UI/save/account/gameplay.
+Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed. Do not transition to `0.6.0`.
 
 Suggested next commit:
 
-`docs(civ): defer faction seed evidence`
+`docs(roadmap): select post-faction deferral route`
