@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.319 - People NPC Seed Evidence Deferral`
+- Latest completed version: `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection`
+- Next recommended version: `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -175,6 +175,7 @@ Versioning rule:
 - `Version 0.5.317 - Roadmap Next Authority Selection` added `docs/design/roadmap-next-authority-selection.md`; compared paused service, resource/commodity, and combat-health lanes with rejected/closed POI and Highcrown lanes plus People/NPC, organization/faction/guild, location, and other deferred candidates; selected docs-first `Version 0.5.318 - People NPC Authority Evidence Audit` because People/NPC schemas, validator, tests, and prior seed plan exist but live files and an approved canonical named-person list do not; and changed no content, schema, validator, test, normal-lint index, runtime, UI, save/account, or gameplay behavior.
 - `Version 0.5.318 - People NPC Authority Evidence Audit` added `docs/design/people-npc-authority-evidence-audit.md`; confirmed both live files and normal-lint registration remain absent while schemas, validator, and focused tests exist; found no strong canonical named-person candidate; carried forward no exact people/NPC ids; kept NPC overlays, live content, and registration deferred; and selected docs-first `Version 0.5.319 - People NPC Seed Evidence Deferral`.
 - `Version 0.5.319 - People NPC Seed Evidence Deferral` added `docs/design/people-npc-seed-evidence-deferral.md`; paused People/NPC until an explicit user-authored seed list or new durable repository person-authority source exists; defined minimum People, NPC overlay, and normal-lint registration gates; prohibited repeated weak-source audits; and selected docs-first `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection`.
+- `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection` added `docs/design/roadmap-post-people-npc-deferral-selection.md`; compared current paused, rejected, closed, dependency-gated, and research-gated lanes; selected docs-first `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit` because live guild authority and adjacent institutional references exist while broader organization/faction ownership remains unresolved; and changed no implementation behavior.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -468,9 +469,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.320 - Roadmap Post-People-NPC Deferral Selection`
+1. `0.5.321 - Organization Faction Guild Authority Evidence Audit`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.320`. Service, resource/commodity, and combat health remain stable and paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed; People/NPC is paused until a new durable authored input exists. The next docs-first route should select another eligible authority lane without reopening those postures by default.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.321`. Service, resource/commodity, combat health, and People/NPC remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. Organization/faction/guild is selected only for a repository evidence audit, not content or schema implementation.
 
 High-priority unresolved questions:
 

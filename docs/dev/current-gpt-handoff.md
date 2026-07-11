@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.319 - People NPC Seed Evidence Deferral
+Source version/run: Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.319 - People NPC Seed Evidence Deferral`
+- `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection`
 
 Latest completed support/audit run:
 
@@ -15,29 +15,25 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection`
+- `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit`
 
-## People/NPC Deferral Posture
+## Selection Posture
 
-People/NPC is paused. No further evidence audit, seed plan, or implementation should run until a genuinely new authored input exists. No exact `person.*` or `npc.*` candidate is carried forward.
+Organization/faction/guild authority is selected for a docs-only repository evidence audit. People/NPC, service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed.
 
-## Accepted Future Evidence Gates
+## Selected Lane And Rationale
 
-People seed planning may reopen only for an explicit user-authored canonical seed list, a new durable repository lore/content source that clearly owns named people, or another later repository source meeting the same person-authority standard. A complete candidate must provide unambiguous canonical identity, person status, non-invented summary, life/record posture, provenance, notes, and non-implication boundaries.
+The repository has 18 live broad guild records and a strict guild schema, separate live polity and religion owners, local settlement guild-presence descriptors, organization-like quest/magic references, and derived institution projections. General organization and faction collections/schemas are absent. The permanent civic decision requires factions, guilds, and institutions to remain distinct.
 
-NPC overlays additionally require an approved/resolving person plus explicit stable presence and interaction posture. Normal lint requires a live validated wrapper, a separate registration decision, and a later narrow registration implementation.
-
-## Live-Surface / Registration Posture
-
-Person and NPC schemas, the pure validator, focused tests, and schema-file parse coverage still exist. Live `packages/content/base/civilization/people.json` and `packages/content/base/civilization/npcs.json` remain absent, and normal content-lint registration remains absent and unauthorized.
+`0.5.321` should audit current owners and evidence, distinguish canonical from descriptive/synthetic/presentation references, and decide whether any later single-authority boundary or schema route is justified. It must not create organization, faction, guild, institution, or people records.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required and cannot manufacture repository canon. No explicit question or support-suffix run is required before `0.5.320`. If People/NPC is later reopened without a durable repository source, an explicit user-authored canonical seed list is required.
+Deep Research is not required before the repository evidence audit. No explicit user question or support-suffix run is required before `0.5.321`.
 
 ## Remaining Deferred Authority Guardrails
 
-`Version 0.5.320` should remain docs-first, preserve the People/NPC pause, and select another eligible authority lane from the current roadmap/backlog. Do not repeat the weak-source audit unless a new durable authored source is named first. Do not infer canon from quest contacts, `npc.*` strings, generated operators, combatants, player/account identities, roles, titles, workplaces, Knowledge vocabulary, deities, organizations, prose, or tests/examples.
+`Version 0.5.321` must remain docs-only. Preserve existing guild, polity, religion, settlement, service, resource/commodity, combat-health, People/NPC, Knowledge, and runtime owners. Do not infer people from organizations or create general authorities from quest anchors, Knowledge vocabulary, settlement presence, or derived runtime projections.
 
 Do not add NPC overlays, generated people, roles, affiliations, relationships, schedules, dialogue, services, companions, AI, inventory, combat profiles, runtime, UI, save/account behavior, or gameplay.
 
@@ -45,4 +41,4 @@ Service, resource/commodity, and combat health remain stable and paused. Generic
 
 Suggested next commit:
 
-`docs(npc): defer people npc seed evidence`
+`docs(roadmap): select post people npc authority lane`
