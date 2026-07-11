@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.325 - Faction Authority Seed Evidence Audit`
+- Latest completed version: `Version 0.5.326 - Faction Authority Seed Evidence Deferral`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.326 - Faction Authority Seed Evidence Deferral`
+- Next recommended version: `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -181,6 +181,7 @@ Versioning rule:
 - `Version 0.5.323 - Faction Authority Schema Plan` added `docs/design/faction-authority-schema-plan.md`; planned strict records-only `civilization.factions` identity with controlled lifecycle/category/public-posture vocabulary, no first-pass references, pure validation, focused tests, and separate seed/registration gates; approved no live content or candidate ids; and selected `Version 0.5.324 - Faction Authority Schema And Validator`.
 - `Version 0.5.324 - Faction Authority Schema And Validator` added the strict records-only faction schema, pure issue-returning validator, 102 focused tests, and schema parse coverage; kept live content, candidate ids, cross-authority references, resolver logic, and normal content-lint registration absent; and selected docs-only `Version 0.5.325 - Faction Authority Seed Evidence Audit`.
 - `Version 0.5.325 - Faction Authority Seed Evidence Audit` added `docs/design/faction-authority-seed-evidence-audit.md`; found no durable canonical candidate meeting the complete gate; classified hooks, quest/pirate prose, UI/demo, tests/examples, existing owners, and derived state; carried forward zero ids; and selected `Version 0.5.326 - Faction Authority Seed Evidence Deferral`.
+- `Version 0.5.326 - Faction Authority Seed Evidence Deferral` added `docs/design/faction-authority-seed-evidence-deferral.md`; fixed the explicit user-authored-list/new-durable-source reopening gate; prohibited repeated weak-source scans; carried forward zero ids; preserved absent content/registration; and selected `Version 0.5.327 - Roadmap Post-Faction Deferral Selection`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -474,9 +475,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.326 - Faction Authority Seed Evidence Deferral`
+1. `0.5.327 - Roadmap Post-Faction Deferral Selection`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.326`. Service, resource/commodity, combat health, and People/NPC remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should record the faction authored-input gate, prohibit repeated weak-source scans, carry forward zero ids, and route elsewhere.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.327`. Faction and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should select exactly one eligible docs-first lane without reopening those gates.
 
 High-priority unresolved questions:
 
