@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.324 - Faction Authority Schema And Validator
+Source version/run: Version 0.5.325 - Faction Authority Seed Evidence Audit
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.324 - Faction Authority Schema And Validator`
+- `Version 0.5.325 - Faction Authority Seed Evidence Audit`
 
 Latest completed support/audit run:
 
@@ -15,32 +15,32 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.325 - Faction Authority Seed Evidence Audit`
+- `Version 0.5.326 - Faction Authority Seed Evidence Deferral`
 
-## Faction Schema / Validator Posture
+## Faction Seed Evidence Posture
 
-`packages/schemas/civilization/faction.schema.json` now defines strict records-only `civilization.factions` static identity. `tools/content-lint/factions.mjs` exports pure `validateFactions(wrapper, options)` validation that returns human-readable issue strings without filesystem or owner dependencies. `tests/unit/faction-validation.test.mjs` covers the full contract and absence gates; schema parse coverage is active.
+`docs/design/faction-authority-seed-evidence-audit.md` found no strong canonical faction candidate. Zero ids are carried forward. Generic runtime hooks, quest prose, pirate/raider descriptors, UI/demo data, tests/examples, and planning language do not supply complete authored identity facts.
 
-The contract requires `id`, `slug`, `name`, `status`, `category`, `publicPosture`, `summary`, `sourceAuthorityNotes`, and `notes`. It allows no cross-authority references and rejects all unknown fields.
+Guilds, polities, religious orders, services, places, family/lineage, economy/account, Knowledge, quests, People/NPC gates, and runtime state retain their own authority. Shadow networks and institution profiles remain derived.
+
+## Selected Option And Rationale
+
+Select a docs-only seed evidence deferral. The faction contract is valid and complete, but project canon does not currently supply a seed. `0.5.326` should define the exact reopening gate, prohibit repeated weak-source scans, carry forward no ids, and route elsewhere.
 
 ## Live Content / Normal Registration Posture
 
-`packages/content/base/civilization/factions.json` remains absent. No live faction candidate id is approved or present in content. `tools/content-lint/index.mjs` remains unchanged and contains no faction import, path/check, helper call, or invocation.
-
-Normal registration remains deferred until live content exists and a separate decision approves exact-once wiring.
+`packages/content/base/civilization/factions.json` remains absent. No content `faction.*` id exists. `tools/content-lint/index.mjs` contains no faction registration. Neither content nor registration is authorized.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required before `0.5.325`. No explicit user question or support-suffix run is needed for the repository evidence audit. External research cannot manufacture project canon.
+Deep Research is not required. No support-suffix run or explicit question is needed before the deferral. Later seed planning requires explicit user-authored faction canon or a new durable repository source.
 
 ## Remaining Deferred Authority Guardrails
 
-`0.5.325` should audit only durable canonical faction evidence against the accepted seed gate. Do not infer candidates from guilds, religious orders, polities, governments, businesses, families/houses, quests, backstory hooks, settlements, movement/ideology labels, shadow networks, runtime groups, or standing/reputation.
+Do not infer candidates from guilds, religious orders, polities, governments, businesses, families/houses, quests, backstory hooks, settlements, pirate/raider labels, movement/ideology labels, UI/demo data, tests/examples, shadow networks, runtime groups, or standing/reputation.
 
-Keep organization/institution/office, government/jurisdiction/law/force, business/company, provider, membership/affiliation/rank, relationships, and local reputation/standing/favorability separate and deferred. Do not add content, registration, People/NPCs, services/access, territory, diplomacy/conflict, runtime, UI, save/account, or gameplay.
-
-Service, resource/commodity, combat health, and People/NPC remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
+Keep organization/institution/office, government/jurisdiction/law/force, business/company, provider, membership/affiliation/rank, relationships, and local reputation/standing/favorability separate and deferred. Service, resource/commodity, combat health, and People/NPC remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
 
 Suggested next commit:
 
-`docs(civ): add faction authority schema validation`
+`docs(civ): audit faction seed evidence`
