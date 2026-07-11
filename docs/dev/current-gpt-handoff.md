@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.321 - Organization Faction Guild Authority Evidence Audit
+Source version/run: Version 0.5.322 - Organization Faction Guild Boundary Decision
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit`
+- `Version 0.5.322 - Organization Faction Guild Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -15,25 +15,25 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.322 - Organization Faction Guild Boundary Decision`
+- `Version 0.5.323 - Faction Authority Schema Plan`
 
-## Organization/Faction/Guild Evidence Posture
+## Organization/Faction/Guild Boundary Posture
 
-The audit found protected existing owners plus unresolved institutional gaps. Broad guilds (18 records), polities, religions and six nested religious orders, services, and places have canonical owners. General organization and faction collections/schemas are absent. Civic offices/governments, businesses, general institutions, membership/affiliation, and institution-local reputation lack a settled authored owner.
+Existing guild, polity, religion/religious-order, service, place, economy, account, reputation, and runtime owners are protected. A general organization umbrella is rejected for now. Institution/office, business/company, provider, membership/affiliation, and local-reputation authorities remain deferred behind separate decisions.
 
 ## Selected Option And Rationale
 
-Select a docs-only organization/faction/guild boundary decision. Multiple protected owners and unresolved gaps overlap, so neither an organization-only nor faction-only schema plan is ready. Existing guild and religion-owned religious-order authority must remain unchanged.
+Faction is selected as the one distinct unresolved static identity family ready for a docs-only schema plan. It must remain separate from guilds, polities, governments, religions/orders, businesses, families/noble houses, parties, forces, movements/ideologies, derived projections, and runtime standing.
 
-`0.5.322` should distinguish guild, faction, organization, institution, office, government, jurisdiction, religious order, and business/company identities; separate identity from membership/affiliation/rank/office/reputation; and decide whether any one later schema plan is justified. A preserve-and-pause result remains valid.
+`0.5.323` should define a fail-closed future faction identity contract only. It must not create a schema, validator, content, candidate list, registration, membership links, reputation, runtime behavior, or a generic organization umbrella.
 
 ## Deep Research / Question / Support-Suffix Posture
 
-Deep Research is not required before the boundary decision. No explicit user question or support-suffix run is required before `0.5.322`.
+Deep Research is not required before the faction schema plan. No explicit user question or support-suffix run is required before `0.5.323`.
 
 ## Remaining Deferred Authority Guardrails
 
-`Version 0.5.322` must remain docs-only. Preserve existing guild, polity, religion/religious-order, settlement, service, economy, People/NPC, Knowledge, account, reputation, and runtime owners. Do not promote quest anchors, Knowledge vocabulary, settlement presence, generated businesses, or derived institution profiles into authored canon.
+`Version 0.5.323` must remain docs-only. Preserve existing owners and reject faction inference from guilds, religious orders, polities, governments, businesses, families/houses, quest anchors, backstory hooks, settlement prose, shadow networks, runtime groups, or standing/reputation state.
 
 Do not add NPC overlays, generated people, roles, affiliations, relationships, schedules, dialogue, services, companions, AI, inventory, combat profiles, runtime, UI, save/account behavior, or gameplay.
 
@@ -41,4 +41,4 @@ Service, resource/commodity, and combat health remain stable and paused. Generic
 
 Suggested next commit:
 
-`docs(civ): audit organization faction guild evidence`
+`docs(civ): decide organization faction guild boundaries`

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit`
+Route: Codex local sequencing alignment after `Version 0.5.322 - Organization Faction Guild Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit`
+- `Version 0.5.322 - Organization Faction Guild Boundary Decision`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.322 - Organization Faction Guild Boundary Decision`
+- `Version 0.5.323 - Faction Authority Schema Plan`
 
 Versioning note:
 
@@ -81,6 +81,7 @@ Versioning note:
 - `0.5.319` completed as a primary roadmap run and added `docs/design/people-npc-seed-evidence-deferral.md`; it paused People/NPC until a new durable authored input exists, defined separate People/NPC/registration gates, prohibited repeated weak-source audits, and selected docs-first `0.5.320 - Roadmap Post-People-NPC Deferral Selection`.
 - `0.5.320` completed as a primary roadmap run and added `docs/design/roadmap-post-people-npc-deferral-selection.md`; it preserved all current pauses/closures, selected organization/faction/guild for a docs-only repository evidence audit, and authorized no content or implementation.
 - `0.5.321` completed as a primary roadmap run and added `docs/design/organization-faction-guild-authority-evidence-audit.md`; it preserved existing guild/polity/religion owners, classified local/presentation/derived references, confirmed unresolved general institutional owners, and selected docs-only `0.5.322 - Organization Faction Guild Boundary Decision`.
+- `0.5.322` completed as a primary roadmap run and added `docs/design/organization-faction-guild-boundary-decision.md`; it protected existing specific owners, rejected a general organization umbrella, selected faction as the one distinct future schema-plan candidate, and kept institutional links/state/behavior deferred.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -441,17 +442,18 @@ Versioning note:
 | 240 | `0.5.319` | People NPC Seed Evidence Deferral | Codex 5.5 Local docs-first | `docs/design/people-npc-authority-evidence-audit.md` | evidence gate / deferral | Completed | Paused People/NPC until a new durable authored input exists and defined separate People/NPC/registration gates. |
 | 241 | `0.5.320` | Roadmap Post-People-NPC Deferral Selection | Codex 5.5 Local docs-first | current roadmap/backlog + People/NPC deferral | authority lane selection | Completed | Selected organization/faction/guild for a docs-only evidence audit while preserving current pauses and closures. |
 | 242 | `0.5.321` | Organization Faction Guild Authority Evidence Audit | Codex 5.5 Local docs-first | civic/economy boundaries + live guild/institutional references | repository authority evidence audit | Completed | Preserved existing owners, classified weak/derived references, and confirmed a cross-owner boundary decision is needed. |
-| 243 | `0.5.322` | Organization Faction Guild Boundary Decision | Codex 5.5 Local docs-first | `docs/design/organization-faction-guild-authority-evidence-audit.md` | cross-owner boundary decision | Deferred | Separate organization/faction/guild/institution/office/government/religious-order/business owners and choose at most one later schema candidate. |
+| 243 | `0.5.322` | Organization Faction Guild Boundary Decision | Codex 5.5 Local docs-first | `docs/design/organization-faction-guild-authority-evidence-audit.md` | cross-owner boundary decision | Completed | Protected existing owners, rejected a generic umbrella, and selected faction as the only later schema-plan candidate. |
+| 244 | `0.5.323` | Faction Authority Schema Plan | Codex 5.5 Local docs-first | `docs/design/organization-faction-guild-boundary-decision.md` | future schema contract plan | Deferred | Plan strict static faction identity without schema/content implementation or membership/reputation behavior. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.322 - Organization Faction Guild Boundary Decision`
+1. `0.5.323 - Faction Authority Schema Plan`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, and People/NPC are paused; generic `world.pois` remains rejected. The institutional evidence audit preserved existing guild/polity/religion owners and found unresolved organization/faction/institution/office/business boundaries. Docs-first `0.5.322 - Organization Faction Guild Boundary Decision` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, and People/NPC are paused; generic `world.pois` remains rejected. The institutional boundary decision protected existing owners, rejected a generic organization umbrella, and selected faction as the only next schema-plan candidate. Docs-first `0.5.323 - Faction Authority Schema Plan` is next.
 
 ## Default Prompt Pattern
 
@@ -467,7 +469,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.322 - Organization Faction Guild Boundary Decision` as the immediate next recommended run.
+- Keep `Version 0.5.323 - Faction Authority Schema Plan` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
@@ -514,6 +516,7 @@ Each future Codex prompt should:
 - `0.5.319` paused People/NPC behind an explicit new-authored-input gate. Do not repeat evidence scanning or seed planning until that gate is met; the next run should select another docs-first roadmap lane.
 - `0.5.320` selected organization/faction/guild for a repository evidence audit. The next run must preserve existing guild/polity/religion owners, classify organization-like references, and avoid content or implementation.
 - `0.5.321` confirmed unresolved cross-owner institutional boundaries while preserving existing guild and religion-owned order authority. The next run should decide boundaries only and must not presume a schema or content implementation.
+- `0.5.322` rejected a general organization umbrella and selected faction as a distinct future static identity owner. The next run should plan only the faction schema contract and keep implementation/candidates/links/state deferred.
 - Keep first live people/NPC content deferred until explicit canonical named-person evidence or an approved authored seed list exists.
 - Treat all older unlanded labels as historical aliases; use the consolidated `0.5.218`-`0.5.230` near-term numbers.
 - Treat the completed registry alignment as content-lint authority only; it does not make Knowledge trials runnable.

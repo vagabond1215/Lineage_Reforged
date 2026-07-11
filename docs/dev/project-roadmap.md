@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit`
+- Latest completed version: `Version 0.5.322 - Organization Faction Guild Boundary Decision`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.322 - Organization Faction Guild Boundary Decision`
+- Next recommended version: `Version 0.5.323 - Faction Authority Schema Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -177,6 +177,7 @@ Versioning rule:
 - `Version 0.5.319 - People NPC Seed Evidence Deferral` added `docs/design/people-npc-seed-evidence-deferral.md`; paused People/NPC until an explicit user-authored seed list or new durable repository person-authority source exists; defined minimum People, NPC overlay, and normal-lint registration gates; prohibited repeated weak-source audits; and selected docs-first `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection`.
 - `Version 0.5.320 - Roadmap Post-People-NPC Deferral Selection` added `docs/design/roadmap-post-people-npc-deferral-selection.md`; compared current paused, rejected, closed, dependency-gated, and research-gated lanes; selected docs-first `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit` because live guild authority and adjacent institutional references exist while broader organization/faction ownership remains unresolved; and changed no implementation behavior.
 - `Version 0.5.321 - Organization Faction Guild Authority Evidence Audit` added `docs/design/organization-faction-guild-authority-evidence-audit.md`; confirmed 18 live guild records and protected polity/religion/religious-order/service/place owners; classified settlement presence, quest/Knowledge metadata, and runtime projections; identified unresolved general organization, faction, institution/office/government, business, membership/affiliation, and local-reputation owners; and selected docs-first `Version 0.5.322 - Organization Faction Guild Boundary Decision`.
+- `Version 0.5.322 - Organization Faction Guild Boundary Decision` added `docs/design/organization-faction-guild-boundary-decision.md`; protected existing guild, polity, religion/religious-order, service, place, economy, account, reputation, and runtime owners; rejected a general organization umbrella; kept institution/office, business/company, provider, membership/affiliation, and local-reputation work deferred; selected faction as the one distinct future schema-plan candidate; and selected docs-first `Version 0.5.323 - Faction Authority Schema Plan`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -470,9 +471,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.322 - Organization Faction Guild Boundary Decision`
+1. `0.5.323 - Faction Authority Schema Plan`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.322`. Service, resource/commodity, combat health, and People/NPC remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next institutional run is a boundary decision only and must preserve existing guild, polity, religion/religious-order, service, and place owners.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.323`. Service, resource/commodity, combat health, and People/NPC remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run may plan only a future static faction identity contract and must not implement a schema, content, membership, reputation, or runtime behavior.
 
 High-priority unresolved questions:
 
