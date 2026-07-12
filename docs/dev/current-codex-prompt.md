@@ -4,24 +4,24 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the civic authored-input deferral:
+Run the post-civic-deferral roadmap selection:
 
-`Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
+`Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
+- Latest completed primary: `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
 - Latest completed support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Immediate next primary route: `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
-- Government organization and jurisdiction applicability are separate future owners.
-- Exactly zero government ids and zero jurisdiction ids carry forward.
-- Neither owner is schema-ready because each requires unproven relationship/cardinality/temporal semantics.
-- Law remains downstream of jurisdiction; force/enforcement remains separate.
-- Quest `office.*` anchors and synthetic `authority.*` ids remain non-canonical.
+- Immediate next primary route: `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
+- Government/jurisdiction, business, faction, institution, and People/NPC are gated on materially new inputs.
+- Service, resource/commodity, and combat health remain stable and paused.
+- Generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed; office remains not schema-ready.
+- Law remains downstream of jurisdiction; force/public order and enforcement remain separate.
+- Runtime ownership transition remains a `0.6.x` maturity milestone.
 
 ## Purpose
 
-Formalize the fail-closed government/jurisdiction deferral. Fix exact reopening inputs, prohibit unchanged-source rescans, preserve separate future gates and every current owner, and route back to roadmap selection. Do not implement or schema-plan either authority.
+Compare remaining eligible documentation, authority, stabilization, research, and runtime-readiness lanes after the civic deferral. Select exactly one smallest safe next primary route without reopening gated, paused, rejected, or closed work by default. Do not implement the selected route.
 
 ## Required first steps
 
@@ -37,38 +37,38 @@ Read at minimum:
 
 - `AGENTS.md` and `README.md`;
 - current output, handoff, prompt, sequence, roadmap, and backlog;
-- `docs/design/government-jurisdiction-authority-boundary-decision.md`;
-- `docs/design/government-jurisdiction-authority-evidence-audit.md`;
-- prior faction, institution, business, and People/NPC authored-input deferrals only as needed for structure;
-- civic/polity/institution-office boundaries and live posture only as needed to verify preservation.
+- `docs/design/government-jurisdiction-authority-evidence-deferral.md`;
+- current business, faction, institution, and People/NPC deferrals;
+- service, resource/commodity, and combat-health pause decisions;
+- generic POI rejection and Highcrown Knowledge closure;
+- current force/public-order, office, provider, membership/reputation, place/property/construction, family/household continuation, social, agriculture, maritime, temporal, progression, Knowledge/magic, stabilization, and runtime-transition boundaries/gates only as needed for current eligibility.
 
-Do not repeat civic evidence discovery.
+Do not repeat completed evidence audits or broad source discovery.
 
 ## Expected output
 
 Add:
 
-- `docs/design/government-jurisdiction-authority-evidence-deferral.md`
+- `docs/design/roadmap-post-government-jurisdiction-deferral-selection.md`
 
-## Required deferral decisions
+## Required selection decisions
 
-- carry forward exactly zero `government.*` and zero `jurisdiction.*` ids;
-- declare the `0.5.341` evidence audit and `0.5.342` boundary decision complete;
-- prohibit rerunning unchanged-source scans or schema planning without a qualifying input;
-- define qualifying reopening inputs: explicit user-authored/approved canon with relationship and temporal facts, a materially new canonical repository source, an authorized civic-content authorship pass, or a concrete ready consumer proving one minimal static contract with stable referenced owners;
-- define non-qualifying inputs: consumer vocabulary alone, quest anchors, generated ids, settlement descriptors, polity form/place anchors, property/legal/access/runtime state, tests/demos/UI, external research, genre convention, or fact recombination;
-- preserve separate future seed/content, schema, registration, reference, and consumer gates;
-- preserve law after jurisdiction and force/enforcement as separate;
-- decide explicit-user-question timing, Deep Research, support-suffix, and exact next route;
-- keep temporary civic research retired.
+- inventory serious remaining candidate lanes and current prerequisites;
+- preserve every authored-input/ready-consumer gate, pause, rejection, and closure;
+- keep law blocked behind jurisdiction and enforcement/runtime separate from static force identity;
+- distinguish docs-only owner/boundary work from research-gated, dependency-blocked, runtime-adjacent, and maturity-gated work;
+- identify whether a concrete stabilization defect justifies a support suffix instead of a primary route;
+- decide Deep Research, explicit-user-question, support-suffix, and version-band posture;
+- select exactly one smallest safe next primary route with explicit non-goals;
+- do not implement or pre-author the selected lane's content/candidates.
 
 ## Guardrails
 
-Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent candidates or reference semantics, promote current strings, add references, normalize prefixes, enable consumers, or plan law/force/runtime behavior. Do not reopen authored-input-gated, paused, rejected, or closed lanes. Do not run Deep Research.
+Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not reopen gated or paused lanes without a materially new qualifying input. Do not restore generic `world.pois`, reopen Highcrown Knowledge, invent candidates, normalize prefixes, add references, or advance to `0.6.0` without a dedicated readiness decision. Do not perform Deep Research in this run; record an exact research gate and consumer if one becomes the selected prerequisite.
 
 ## Allowed changes
 
-- `docs/design/government-jurisdiction-authority-evidence-deferral.md`
+- `docs/design/roadmap-post-government-jurisdiction-deferral-selection.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -89,8 +89,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, unchanged polity/institution/current-owner surfaces, zero candidate ids, absent government/jurisdiction/law/force content/schema/reference/consumer changes, no repeated evidence scan, no gated-lane reopening, retired temporary civic research, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`.
+Verify docs-only scope, unchanged code/content/scaffolds/current owners, no gated-lane reopening, no candidates/references/migrations/consumer changes, no repeated evidence scan, retired temporary civic research, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the selected next route.
 
 ## Suggested commit message
 
-`docs(civic): defer government jurisdiction authority`
+`docs(roadmap): select post-civic deferral route`

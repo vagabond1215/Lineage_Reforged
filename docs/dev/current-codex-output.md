@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.342 - Government Jurisdiction Authority Boundary Decision
+Source version/run: Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral
 Date: 2026-07-12
-Branch/status assumption: `master`; worktree initially contained the expected uncommitted `0.5.341` documentation changes. They became the externally created baseline commit `d2404f6b` during this run. The approved fetch/pull retry succeeded and `git pull --ff-only origin master` reported `Already up to date.`
+Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. Initial sandboxed fetch/pull could not write `.git/FETCH_HEAD`; the approved retry succeeded and `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Defined government organization and jurisdiction applicability as separate future authorities. Neither is schema-ready.
+Formalized the fail-closed government/jurisdiction deferral. Exactly zero government ids and zero jurisdiction ids carry forward; unchanged-source rescans and schema planning are prohibited.
 
-Government is inherently linked to a governed polity/authority and temporal arrangement. Jurisdiction is inherently linked to a competent authority and explicit applicability scope. Current evidence proves neither reference/cardinality/validity contract, so both reference-free and guessed-reference schemas are rejected. Exactly zero government and zero jurisdiction ids carry forward. Selected `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral` next.
+Reopening requires explicit approved canon with relationship/temporal facts, a materially new canonical repository source, an authorized civic-content authorship pass, or a concrete ready consumer that proves one minimal static contract with stable referenced owners. Selected `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection` next.
 
 ## Files Changed
 
-- `docs/design/government-jurisdiction-authority-boundary-decision.md`
+- `docs/design/government-jurisdiction-authority-evidence-deferral.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -23,13 +23,13 @@ Government is inherently linked to a governed polity/authority and temporal arra
 ## Checks Run
 
 - Required branch status, fetch, and fast-forward pull.
-- Required evidence audit, civic/polity/institution-office decisions, current live/scaffold posture, coordination docs, roadmap, and backlog reads.
-- Narrow already-audited surface confirmation only; no repeated evidence discovery.
+- Required audit/boundary, prior deferral patterns, civic/polity/institution-office, coordination, roadmap, and backlog reads.
+- No repeated civic evidence discovery.
 - `node --test tests/unit/polity-validation.test.mjs` (passed: 83 tests).
 - `node --test tests/unit/institution-validation.test.mjs` (passed: 120 tests).
 - `node --test tests/unit/schema-files.test.mjs` (passed: 105 tests).
 - `npm.cmd run tool:content-lint` (passed: 67 files checked).
-- Current-run docs-only scope, unchanged owners/scaffolds, zero-candidate, absent authority content/schema/reference/migration/consumer changes, gated-lane, retired-temp-doc, artifact, conflict-marker, whitespace, and route-pointer checks (passed; exactly the seven allowed documentation files changed after the concurrent baseline commit).
+- Docs-only scope, unchanged current owners/scaffolds, zero-candidate, absent government/jurisdiction/law/force content/schema/reference/migration/consumer changes, gated-lane, retired-temp-doc, artifact, conflict-marker, whitespace, and route-pointer checks (passed; exactly the seven allowed documentation files changed).
 - `git diff --check` (passed; Git reported only expected LF-to-CRLF working-copy notices).
 - `git status --short --branch` (exactly the seven allowed files are modified or untracked on `master`).
 
@@ -39,13 +39,13 @@ Documentation only. No runtime, JSON, schema, validator, test, normal-lint, ques
 
 ## Risks / Follow-Up
 
-- Do not create either schema until materially new canon or a ready consumer proves the minimum relationship and temporal contract.
-- Law remains downstream of jurisdiction; force/enforcement remains separate.
+- Do not reopen either owner without naming and mapping a materially new qualifying input.
+- The next run should select another eligible lane without weakening existing gates.
 
 ## Next Recommended Version
 
-Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral
+Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection
 
 ## Suggested Commit Message
 
-docs(civic): decide government jurisdiction boundary
+docs(civic): defer government jurisdiction authority

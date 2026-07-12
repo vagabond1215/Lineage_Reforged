@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
+- Latest completed version: `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
+- Next recommended version: `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -198,6 +198,7 @@ Versioning rule:
 - `Version 0.5.340 - Roadmap Post-Business Deferral Selection` added `docs/design/roadmap-post-business-deferral-selection.md`; preserved all authored-input gates, pauses, rejections, closures, and runtime maturity boundaries; selected government/jurisdiction as the strongest eligible docs-first lane; kept law downstream and force/enforcement separate; and selected `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`.
 - `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit` added `docs/design/government-jurisdiction-authority-evidence-audit.md`; classified polity/place, settlement administration, two quest office anchors, synthetic authority/property projections, legal/access/runtime vocabulary, consumers, and guardrails; found exactly zero government and zero jurisdiction ids; kept law and force separate; and selected `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`.
 - `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision` added `docs/design/government-jurisdiction-authority-boundary-decision.md`; separated government organization from jurisdiction applicability; rejected a combined owner, reference-free schemas, and guessed-reference schemas; found neither owner schema-ready; preserved zero ids, law sequencing, force separation, and current owners; and selected `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`.
+- `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral` added `docs/design/government-jurisdiction-authority-evidence-deferral.md`; fixed explicit authored-canon, new-source, authorized-authorship, and ready-consumer reopening inputs; prohibited unchanged-source rescans and schema planning; preserved zero ids plus separate schema/content/registration/reference/consumer gates; and selected `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -491,9 +492,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.343 - Government Jurisdiction Authority Evidence Deferral`
+1. `0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.343`. Business, faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should formalize the zero-id government/jurisdiction reopening gate without schema planning or implementation.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.344`. Government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should select one remaining eligible lane without weakening current gates.
 
 High-priority unresolved questions:
 

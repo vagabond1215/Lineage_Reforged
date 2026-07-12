@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.342 - Government Jurisdiction Authority Boundary Decision
+Source version/run: Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
+- `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
 
 Latest completed support/audit run:
 
@@ -15,22 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
+- `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
 
-## Boundary Result
+## Deferral Result
 
-Government and jurisdiction are separate, and neither is schema-ready.
+Exactly zero government ids and zero jurisdiction ids carry forward. The evidence audit and boundary decision are complete. Unchanged-source rescans and schema planning are prohibited.
 
-Government owns a governing arrangement/organization separate from polity, institution, office, force, settlement administration, people/rulers, and runtime. Jurisdiction owns applicability separate from place, polity, claim/control, government, law, courts, force coverage, property legal labels, access, citizenship/legal standing, and runtime.
-
-A government record inherently requires a governed authority and temporal posture. A jurisdiction record inherently requires a competent authority and scope. Current canon proves neither minimum reference/cardinality/validity contract. Reference-free schemas would be incoherent; guessed-reference schemas are prohibited.
+Reopening requires explicit approved canon with relationship/temporal facts, a materially new canonical repository source, an authorized civic-content authorship pass, or a concrete ready consumer proving one minimal static contract with stable referenced owners. Vocabulary, quest anchors, generated ids, place/polity descriptors, property/legal/access/runtime state, tests/demos/UI, external research, genre convention, and fact recombination do not qualify.
 
 ## Remaining Guardrails
 
-Exactly zero government ids and zero jurisdiction ids carry forward. Quest `office.*` anchors and synthetic `authority.*` ids remain non-canonical. Law remains downstream of jurisdiction; force/enforcement remains separate. No schema plan, content, reference, consumer, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
+Government and jurisdiction remain separate, relational owners; government is additionally temporal. Law remains downstream of jurisdiction. Force/enforcement remains separate. Schema, seed/content, registration, reference, and consumer gates remain separate. Temporary civic research remains retired.
 
-`0.5.343` should formalize materially new reopening inputs, prohibit unchanged-source rescans, preserve separate future content/schema/registration/consumer gates, and route back to roadmap selection.
+`0.5.344` should compare remaining eligible documentation, authority, stabilization, research, and runtime-readiness lanes without reopening government/jurisdiction, business, faction, institution, People/NPC, paused service/resource/combat, rejected POI, or closed Highcrown Knowledge by default. Select exactly one narrow next route.
 
 Suggested next commit:
 
-`docs(civic): decide government jurisdiction boundary`
+`docs(civic): defer government jurisdiction authority`
