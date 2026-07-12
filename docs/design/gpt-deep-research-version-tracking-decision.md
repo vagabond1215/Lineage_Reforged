@@ -17,10 +17,11 @@ Examples:
 - `GPT-DR.services.vendor-service-access`
 - `GPT-DR.resources.gathering-extraction`
 - `GPT-DR.health.injury-recovery`
+- `GPT-DR.chronicle.living-character-manuscript`
 
 A GPT Deep Research pass should produce one temporary artifact under `docs/dev/tmp-*-research-YYYY-MM-DD.md` before its associated Codex lane starts. The follow-up Codex pass must then either consume and retain the artifact with one named next consumer, or promote the useful guidance into permanent design docs and retire the artifact.
 
-This update changes version tracking only. It does not move the immediate Codex queue: `Version 0.5.218 - Settlement Identity Schema Decision` remains the next numbered Codex pass.
+This update changes version tracking only. It does not move the immediate Codex queue that existed when this decision landed.
 
 ## 2. Tracking Rules
 
@@ -32,10 +33,12 @@ This update changes version tracking only. It does not move the immediate Codex 
 6. The first Codex pass after a Deep Research artifact must name the artifact as planning input and correct any stale or unverified repo-state claims through live repo inspection.
 7. Deep Research gates should be narrow and tied to one future authority question; do not use catch-all reports to bypass the consolidated roadmap.
 8. Deep Research gates may be run on GPT Light when credits require it, provided uncertainty is labeled.
+9. A completed research gate may be consumed through a four-segment support route when integration should not displace or renumber the next primary roadmap version.
+10. Research completion does not authorize implementation. Durable promotion, ownership reconciliation, and a separate implementation decision remain required.
 
-## 3. Immediate Codex Queue Unchanged
+## 3. Immediate Codex Queue At Original Decision
 
-No new Deep Research blocks the ready docs-only schema-decision queue:
+No new Deep Research blocked the ready docs-only schema-decision queue at the time this decision landed:
 
 | Codex version | Pass | Deep Research requirement |
 | --- | --- | --- |
@@ -51,6 +54,8 @@ No new Deep Research blocks the ready docs-only schema-decision queue:
 | `0.5.227` | Settlement Economy Schema Decision | Existing economy artifact already committed and consumed by economy boundary decision. |
 | `0.5.228` | World Map Feature Authority Schema Decision | Existing world-map artifact already committed and consumed by geography boundary decision. |
 | `0.5.229` | Hazard And Route Security Boundary Decision | Existing travel artifact already committed and consumed by travel boundary decision. |
+
+This section is historical context. Current routing is controlled by the current handoff, prompt, roadmap, and sequence files.
 
 ## 4. Research Gates Before Later Content Lanes
 
@@ -71,6 +76,7 @@ The following GPT Deep Research gates should be tracked before their associated 
 | `GPT-DR.companions.party-followers-loyalty` | Companions, party management, followers, hirelings, recruitment, loyalty | Before companion/party authority after people/NPC and relationship boundaries. |
 | `GPT-DR.dialogue.rumors-social-memory` | Dialogue, rumors, social memory, conversations, recognition, reputation runtime | Before dialogue/rumor/social-memory authority after people/NPC schema. |
 | `GPT-DR.procedural.authored-generated-strategy` | Procedural generation and authored-vs-generated strategy | Before procedural content generation policies after canonical schemas and first seeds. |
+| `GPT-DR.chronicle.living-character-manuscript` | Living character manuscript, event selection, grind compression, narrative memory, prose quality, canon/inference, editability, storage, and presentation boundaries | Before any Story/Chronicle manuscript authority, historical-retention, generation, storage, editability, UI, or runtime lane. |
 | `GPT-DR.save.runtime-persistence` | Save-state architecture and runtime persistence boundaries | Before any `0.6` runtime-readiness transition. |
 | `GPT-DR.ui.information-architecture` | UI/UX information architecture | Before broad UI integration after stable static contracts and command/state ownership. |
 
@@ -92,6 +98,14 @@ Version 0.5.xxx - Service Authority Boundary Decision
 
 This keeps the numbered Codex stream monotonic while making GPT-side research visible and ordered.
 
+When a completed research artifact needs immediate reconciliation but should not consume the next primary route, use a support suffix:
+
+```text
+GPT-DR.<lane>.<topic> - <Research Title> [completed]
+Version 0.5.xxx.1 - <Research Integration>
+Version 0.5.yyy - <Existing next primary route>
+```
+
 ## 6. Non-Goals
 
 - no schema changes;
@@ -103,12 +117,40 @@ This keeps the numbered Codex stream monotonic while making GPT-side research vi
 - no storage/save-state changes;
 - no gameplay changes;
 - no migrations;
-- no temporary artifact deletion;
-- no renumbering of the immediate ready Codex queue;
+- no automatic temporary artifact deletion;
+- no implementation authorization from research alone;
 - no transition to `0.6.0`.
 
-## 7. Next Recommended Version
+## 7. Original Next Recommended Version
+
+At the time this decision landed, the next numbered Codex pass remained:
 
 `Version 0.5.218 - Settlement Identity Schema Decision`
 
-The next numbered Codex pass remains unchanged. It should remain documentation-only and should not run new Deep Research first because the associated settlement research artifact already exists and has a named retirement trigger.
+That historical route is complete and is not current pipeline authority.
+
+## 8. Current Addendum: Living Character Manuscript Research
+
+The following gate completed on 2026-07-12:
+
+- `GPT-DR.chronicle.living-character-manuscript - Living Character Manuscript / Narrative Chronicle System`
+
+Temporary artifact:
+
+- `docs/dev/tmp-living-character-manuscript-research-2026-07-12.md`
+
+Intake route:
+
+- `docs/design/living-character-manuscript-research-intake-route.md`
+
+The artifact is non-canonical and must be reconciled against live Chronicle, quest, account-history, discovery, event, runtime, UI, and persistence owners before durable promotion.
+
+The selected immediate support route is:
+
+- `Version 0.5.344.1 - Living Character Manuscript Research Integration`
+
+This support route must remain documentation-only, promote durable guidance into a permanent design boundary, update the central coordination files as warranted, and delete the temporary artifact if it is fully consumed. It does not authorize a manuscript implementation.
+
+The research intake originally targeted `Version 0.5.345 - Force Public Order Authority Evidence Audit` as the resumed primary route. That route completed on the local primary sequence before the intake commits were merged. After the support integration, resume the now-current primary route:
+
+- `Version 0.5.346 - Force Public Order Authority Boundary Decision`
