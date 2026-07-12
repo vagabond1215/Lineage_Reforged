@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.330 - Institution Authority Schema And Validator
+Source version/run: Version 0.5.331 - Institution Authority Seed Evidence Audit
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.330 - Institution Authority Schema And Validator`
+- `Version 0.5.331 - Institution Authority Seed Evidence Audit`
 
 Latest completed support/audit run:
 
@@ -15,27 +15,30 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.331 - Institution Authority Seed Evidence Audit`
+- `Version 0.5.332 - Institution Authority Seed Evidence Deferral`
 
-## Implemented Institution Scaffold
+## Audit Result
 
-- `packages/schemas/civilization/institution.schema.json`
-- `tools/content-lint/institutions.mjs`
-- `tests/unit/institution-validation.test.mjs`
-- institution entry in `tests/unit/schema-files.test.mjs`
+No current source meets the complete institution seed gate. Exactly zero ids carry forward.
 
-The strict contract uses records-only static identity, exact `institution.<slug>` coherence, lifecycle `planned|active|retired`, the approved category/public-posture vocabularies, trimmed provenance/notes, and no references. The pure validator does not read files or import normal lint.
+- Archive Districts and Market Courts are canonical districts, not institutions.
+- Generic archive/court/hospice/school/academy/facility terms are partial place/prose evidence.
+- Guilds and religious orders retain their existing owners.
+- Quest office/archive anchors are presentation metadata.
+- Knowledge, Magic Study, backstory, and service institution fields are fail-closed consumer vocabulary.
+- Settlement institution profiles and runtime indexes are derived projections.
+- Demo/UI/test/design examples are non-canonical.
 
-Focused validation passes 120 tests; schema smoke passes 104 tests; normal content lint remains 67 files.
+## Required Deferral Posture
 
-## Remaining Guardrails
+`0.5.332` should fix the reopening gate to an explicit user-authored institution list or a new durable canonical source that supplies all seed facts. It should prohibit repeated scans without new canon and route back to roadmap selection.
 
-No `packages/content/base/civilization/institutions.json`, normal registration, candidate id, reference, resolver, adapter, or consumer enablement exists. Knowledge/Magic Study, backstory, service provider, quest, prose, derived/runtime, demo, and UI institution vocabulary remains non-canonical and fail closed.
+Keep live content, normal registration, candidates, references, resolvers, consumers, and office work closed. The accepted schema/validator/test scaffold remains unchanged.
 
-`0.5.331` must perform a narrow repository evidence audit against the exact seed gate. It may approve zero candidates and must not infer records from generic nouns or existing specific owners. Office remains not schema-ready.
+No Deep Research, support-suffix run, or immediate explicit user question is needed.
 
 Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
 
 Suggested next commit:
 
-`feat(civ): add institution authority validation`
+`docs(civ): audit institution seed evidence`

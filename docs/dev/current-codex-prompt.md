@@ -4,22 +4,23 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the next docs-only evidence gate:
+Formalize the fail-closed seed gate:
 
-`Version 0.5.331 - Institution Authority Seed Evidence Audit`
+`Version 0.5.332 - Institution Authority Seed Evidence Deferral`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.330 - Institution Authority Schema And Validator`
+- Latest completed primary: `Version 0.5.331 - Institution Authority Seed Evidence Audit`
 - Latest completed support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Immediate next primary route: `Version 0.5.331 - Institution Authority Seed Evidence Audit`
-- Strict institution schema, pure validator, focused tests, and schema parse coverage exist.
-- Live institution content, normal registration, candidate ids, references, resolvers, and consumer enablement remain absent.
+- Immediate next primary route: `Version 0.5.332 - Institution Authority Seed Evidence Deferral`
+- The institution schema/validator/test scaffold exists and remains content-independent.
+- The audit found no complete canonical candidate and carries forward exactly zero ids.
+- Live content, normal registration, references, resolvers, and consumers remain absent.
 - Office remains separate and not schema-ready.
 
 ## Purpose
 
-Audit current durable authored repository evidence against the exact institution seed gate. Decide whether any strong canonical institution candidate exists, carrying forward zero ids unless every required fact is supported. Do not implement content.
+Create a docs-only institution seed evidence deferral. Fix the exact reopening gate, prohibit repeated weak-source scans without new canon, preserve zero ids, and route back to roadmap selection without implementation.
 
 ## Required first steps
 
@@ -36,39 +37,39 @@ Read at minimum:
 - `AGENTS.md`
 - `README.md`
 - current output, handoff, prompt, sequence, roadmap, and backlog;
+- `docs/design/institution-authority-seed-evidence-audit.md`;
 - `docs/design/institution-authority-schema-plan.md`;
 - `docs/design/institution-office-authority-boundary-decision.md`;
-- the institution schema, validator, and focused tests;
-- organization/faction/guild evidence and boundary docs;
-- relevant civic, settlement/district/site, guild, religion/order, service, Knowledge, Magic Study, backstory, quest, and runtime sources needed to classify candidate evidence.
+- the faction and People/NPC evidence-deferral patterns;
+- the institution schema, validator, and focused tests only to confirm preserved scaffold posture.
 
-Do not repeat broad unrelated discovery.
+Do not repeat the evidence search.
 
 ## Expected output
 
 Add:
 
-- `docs/design/institution-authority-seed-evidence-audit.md`
+- `docs/design/institution-authority-seed-evidence-deferral.md`
 
-## Required audit decisions
+## Required decisions
 
-- restate the exact complete seed gate;
-- classify every plausible current institution-shaped source as strong canonical evidence, partial evidence, another owner's canon, consumer vocabulary, presentation/prose, synthetic/derived/runtime, or hypothetical;
-- require exact canonical name, unambiguous institution identity, safe id/slug authority, non-invented summary, category, public posture, lifecycle, durable provenance, and non-implication notes;
-- reject inference from office anchors, generic building/workplace nouns, school/academy/archive/hospital/court/charity labels, Knowledge/Magic Study/backstory/service hooks, guilds, factions, religious orders, polities, businesses, places/facilities, generated companies, derived institution profiles, runtime indexes, demos, UI, tests, or design examples;
-- list exact candidate ids only if the complete gate is met;
-- otherwise carry forward zero ids and select a fail-closed evidence deferral;
-- keep live content, normal registration, references, consumers, office, and behavior closed;
-- decide Deep Research, support-suffix, and explicit-user-question posture;
-- select the exact next route.
+- carry forward exactly zero candidate ids;
+- state that the current evidence audit is complete and must not be rerun against unchanged sources;
+- define qualifying new durable inputs: an explicit user-authored institution list with complete facts, a new canonical source intentionally naming institution bodies, or an explicitly authorized institution-content authorship pass;
+- state that new consumer code, generic prose, additional hooks, external research, generated/derived state, or another broad scan does not reopen the gate;
+- preserve the exact complete seed gate and strict no-reference contract;
+- keep live content, normal registration, Knowledge/Magic Study and other consumers, runtime, and office work closed;
+- decide whether an explicit user question should be asked now or only when institution content is intentionally prioritized;
+- decide Deep Research and support-suffix posture;
+- select the exact next roadmap-selection route.
 
 ## Guardrails
 
-Docs only. Do not add/edit institution content, schema, validator, tests, schema coverage, normal lint, references, consumers, runtime, UI, save/account, or gameplay. Do not weaken the contract or invent candidates. Do not reopen office or any paused/blocked/rejected/closed lane. Do not run Deep Research unless the audit first identifies a precise external question with a direct repository consumer; external research cannot create canon.
+Docs only. Do not add/edit institution content, schema, validator, tests, schema coverage, normal lint, references, consumers, runtime, UI, save/account, or gameplay. Do not invent or carry forward ids. Do not repeat weak-source discovery. Do not reopen office or any paused/blocked/rejected/closed lane. Do not run Deep Research.
 
 ## Allowed changes
 
-- `docs/design/institution-authority-seed-evidence-audit.md`
+- `docs/design/institution-authority-seed-evidence-deferral.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -88,8 +89,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, unchanged institution scaffold, absent live content/normal registration/candidates/references/consumer changes, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the next runnable route.
+Verify docs-only scope, unchanged scaffold, zero ids, absent content/registration/references/consumer changes, no repeated evidence artifact, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the selected roadmap-selection route.
 
 ## Suggested commit message
 
-`docs(civ): audit institution seed evidence`
+`docs(civ): defer institution seed evidence`
