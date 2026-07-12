@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.338 - Business Authority Seed Evidence Audit
+Source version/run: Version 0.5.339 - Business Authority Seed Evidence Deferral
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.338 - Business Authority Seed Evidence Audit`
+- `Version 0.5.339 - Business Authority Seed Evidence Deferral`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.339 - Business Authority Seed Evidence Deferral`
+- `Version 0.5.340 - Roadmap Post-Business Deferral Selection`
 
-## Audit Result
+## Business Deferral
 
-Exactly zero business ids passed the complete record gate. Ironwheel remains partial quest-owned evidence: its display name and limited provenance/form signal are real, but enduring-body identity, canonical slug authority, static summary, lifecycle, public posture, and reference-free coherence are not proven. The `coppergate` suffix remains branch/core-identity ambiguous.
+Exactly zero business ids carry forward. The `0.5.338` evidence audit is complete and must not be repeated against unchanged sources.
 
-Gannet, generated `company.*` ids, account assets, templates, settlement simulation, quest behavior, UI/demo/tests, and other runtime surfaces remain non-canonical or separately owned.
+Business seed planning may reopen only for an explicit user-authored/approved canonical list, a materially new intentional canonical repository source, or an explicitly authorized focused business-content authorship pass. Consumer demand, generated/runtime/account/template/demo/test evidence, external research, genre convention, and fact recombination do not qualify.
 
 ## Remaining Guardrails
 
-No live business wrapper, normal registration, candidate id, reference, resolver, migration, adapter, or consumer enablement exists. The schema/validator/test scaffold remains unchanged.
+The strict business schema/validator/test scaffold remains unchanged. Live content, normal registration, references, migrations, and consumers remain absent. Ironwheel, Gannet, generated company ids, account assets, template vocabulary, settlement simulation, quest behavior, runtime/UI, demos, tests, and current prefixes retain their existing owners.
 
-`0.5.339` should formalize a fail-closed authored-input deferral, preserve the full gate, prohibit repeated scans of unchanged evidence, define exact reopening inputs, and route back to roadmap selection. Do not implement content or ask a broad user question.
+`0.5.340` should compare remaining eligible docs-first authority, stabilization, and runtime-readiness lanes without reopening business, faction, institution, People/NPC, paused service/resource/combat, rejected generic POI, or closed Highcrown Knowledge work by default. It should select exactly one narrow next route and remain in `v0.5.x` unless a dedicated readiness decision proves otherwise.
 
 Suggested next commit:
 
-`docs(economy): audit business seed evidence`
+`docs(economy): defer business seed authority`

@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.338 - Business Authority Seed Evidence Audit
+Source version/run: Version 0.5.339 - Business Authority Seed Evidence Deferral
 Date: 2026-07-11
-Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. `git pull --ff-only origin master` reported `Already up to date.`
+Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. Initial sandboxed fetch/pull could not write `.git/FETCH_HEAD`; the approved retry succeeded and `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Applied the exact implemented business record gate to the already-classified durable evidence. Ironwheel Haulage Company has a quest-facing name and partial form/provenance evidence, but lacks proven enduring-body identity, canonical slug authority, a non-quest static summary, lifecycle, public posture, and reference-free coherence. The Coppergate suffix also remains branch/core-identity ambiguous.
+Formalized the fail-closed business authored-input deferral. Exactly zero `business.*` ids carry forward, the `0.5.338` evidence audit is complete, and unchanged-source rescans are prohibited.
 
-Exactly zero business ids carry forward. Live content, normal registration, references, migrations, consumers, and current owners remain unchanged. Selected `Version 0.5.339 - Business Authority Seed Evidence Deferral` next.
+Reopening now requires an explicit user-authored/approved canonical list, a materially new canonical repository source, or an explicitly authorized focused business-content authorship pass. Live content, normal registration, references, consumers, current owners, and prefixes remain unchanged. Selected `Version 0.5.340 - Roadmap Post-Business Deferral Selection` next.
 
 ## Files Changed
 
-- `docs/design/business-authority-seed-evidence-audit.md`
+- `docs/design/business-authority-seed-evidence-deferral.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -23,7 +23,8 @@ Exactly zero business ids carry forward. Live content, normal registration, refe
 ## Checks Run
 
 - Required branch status, fetch, and fast-forward pull.
-- Required authority decisions, scaffold, focused tests, Ironwheel record, classified owner surfaces, coordination docs, roadmap, and backlog reads.
+- Required business audit/plan/scaffold, prior authored-input deferral patterns, coordination docs, roadmap, and backlog reads.
+- No repeated business evidence discovery.
 - `node --test tests/unit/business-validation.test.mjs` (passed: 149 tests).
 - `node --test tests/unit/institution-validation.test.mjs` (passed: 120 tests).
 - `node --test tests/unit/schema-files.test.mjs` (passed: 105 tests).
@@ -38,13 +39,13 @@ Documentation only. No runtime, JSON, schema, validator, test, normal-lint, ques
 
 ## Risks / Follow-Up
 
-- Do not promote Ironwheel from its quest-facing anchor or choose between the full and shortened slug without new durable canon.
-- The next run should formalize the authored-input reopening gate and prohibit unchanged-source rescans.
+- Do not reopen business seed work without naming a materially new durable authored input.
+- The next run should compare eligible roadmap lanes without reopening gated, paused, rejected, or closed work by default.
 
 ## Next Recommended Version
 
-Version 0.5.339 - Business Authority Seed Evidence Deferral
+Version 0.5.340 - Roadmap Post-Business Deferral Selection
 
 ## Suggested Commit Message
 
-docs(economy): audit business seed evidence
+docs(economy): defer business seed authority
