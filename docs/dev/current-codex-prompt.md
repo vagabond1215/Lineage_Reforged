@@ -4,24 +4,23 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the post-civic-deferral roadmap selection:
+Run the focused force/public-order evidence audit:
 
-`Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
+`Version 0.5.345 - Force Public Order Authority Evidence Audit`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
+- Latest completed primary: `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
 - Latest completed support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Immediate next primary route: `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
-- Government/jurisdiction, business, faction, institution, and People/NPC are gated on materially new inputs.
-- Service, resource/commodity, and combat health remain stable and paused.
-- Generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed; office remains not schema-ready.
-- Law remains downstream of jurisdiction; force/public order and enforcement remain separate.
-- Runtime ownership transition remains a `0.6.x` maturity milestone.
+- Immediate next primary route: `Version 0.5.345 - Force Public Order Authority Evidence Audit`
+- No dedicated force/public-order collection, schema, validator, test, or registration is approved.
+- Current signals span quest presentation, settlement/place descriptors, route-security posture, synthetic authority projections, combat vocabulary, prose, UI, and runtime.
+- Static force identity remains separate from government, jurisdiction, law, institution, office, place, and enforcement/runtime.
+- All current authored-input gates, pauses, rejections, closures, and runtime maturity boundaries remain in force.
 
 ## Purpose
 
-Compare remaining eligible documentation, authority, stabilization, research, and runtime-readiness lanes after the civic deferral. Select exactly one smallest safe next primary route without reopening gated, paused, rejected, or closed work by default. Do not implement the selected route.
+Audit current repository evidence for a future static force/public-order identity owner. Classify exact authored, presentation, place, route-security, derived, combat, prose, UI/demo/test, and runtime signals without promoting them. Decide whether one force family, multiple separate families, or a zero-candidate deferral/boundary route is justified. Do not implement anything.
 
 ## Required first steps
 
@@ -37,38 +36,42 @@ Read at minimum:
 
 - `AGENTS.md` and `README.md`;
 - current output, handoff, prompt, sequence, roadmap, and backlog;
-- `docs/design/government-jurisdiction-authority-evidence-deferral.md`;
-- current business, faction, institution, and People/NPC deferrals;
-- service, resource/commodity, and combat-health pause decisions;
-- generic POI rejection and Highcrown Knowledge closure;
-- current force/public-order, office, provider, membership/reputation, place/property/construction, family/household continuation, social, agriculture, maritime, temporal, progression, Knowledge/magic, stabilization, and runtime-transition boundaries/gates only as needed for current eligibility.
+- `docs/design/roadmap-post-government-jurisdiction-deferral-selection.md`;
+- `docs/design/civic-authority-boundary-decision.md`;
+- government/jurisdiction and institution/office boundaries/deferrals;
+- exact Aurelis Civic Watch quest evidence;
+- exact settlement fort/watch/garrison descriptors and relevant building/infrastructure/place vocabulary;
+- exact route-security/hazard authority posture;
+- exact synthetic `military_authority` and `authority.*.garrison*` projections;
+- combat guard/role/tactics/encounter/spawn vocabulary, backstory prose, reputation targets, UI/demo/tests, and runtime surfaces only as needed to classify ownership.
 
-Do not repeat completed evidence audits or broad source discovery.
+Keep searches targeted. Do not repeat unrelated authority audits or broad discovery.
 
 ## Expected output
 
 Add:
 
-- `docs/design/roadmap-post-government-jurisdiction-deferral-selection.md`
+- `docs/design/force-public-order-authority-evidence-audit.md`
 
-## Required selection decisions
+## Required audit decisions
 
-- inventory serious remaining candidate lanes and current prerequisites;
-- preserve every authored-input/ready-consumer gate, pause, rejection, and closure;
-- keep law blocked behind jurisdiction and enforcement/runtime separate from static force identity;
-- distinguish docs-only owner/boundary work from research-gated, dependency-blocked, runtime-adjacent, and maturity-gated work;
-- identify whether a concrete stabilization defect justifies a support suffix instead of a primary route;
-- decide Deep Research, explicit-user-question, support-suffix, and version-band posture;
-- select exactly one smallest safe next primary route with explicit non-goals;
-- do not implement or pre-author the selected lane's content/candidates.
+- inventory exact force/public-order-like authored, presentation, place, route-security, derived, combat, prose, consumer, test, and hypothetical signals;
+- distinguish enduring named force identity from government, jurisdiction, law, institution, office, guild/order/faction, place/facility, profession/role, combat unit/actor, route-security overlay, quest giver, reputation target, and synthetic projection;
+- distinguish static identity from affiliation, mandate, coverage, headquarters, readiness, membership, rank, office-holders, roster, schedule, patrol, spawn, encounter, AI, arrest, enforcement, cases, law, access, reputation, runtime, UI, save/account, and gameplay;
+- decide whether guard/watch, militia, garrison, military force/order, route-security body, and other public-order concepts belong to one future family or require separate later owners;
+- identify exact candidate ids only if durable canonical identity and complete owner placement are supported; otherwise carry forward zero ids;
+- decide whether a later boundary decision, schema plan, authored-input deferral, or another route is justified;
+- protect every current owner and reject prefix normalization, aliases, migrations, references, and consumer enablement;
+- decide Deep Research, explicit-user-question, support-suffix, and exact next-route posture;
+- make an explicit temporary-guardrail cleanup decision.
 
 ## Guardrails
 
-Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not reopen gated or paused lanes without a materially new qualifying input. Do not restore generic `world.pois`, reopen Highcrown Knowledge, invent candidates, normalize prefixes, add references, or advance to `0.6.0` without a dedicated readiness decision. Do not perform Deep Research in this run; record an exact research gate and consumer if one becomes the selected prerequisite.
+Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent force names or candidates, infer identity from place/prose/generated strings, create government/jurisdiction/law/office candidates, add references, normalize prefixes, enable consumers, or plan enforcement/runtime behavior. Do not reopen authored-input-gated, paused, rejected, or closed lanes. Do not run Deep Research.
 
 ## Allowed changes
 
-- `docs/design/roadmap-post-government-jurisdiction-deferral-selection.md`
+- `docs/design/force-public-order-authority-evidence-audit.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -89,8 +92,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, unchanged code/content/scaffolds/current owners, no gated-lane reopening, no candidates/references/migrations/consumer changes, no repeated evidence scan, retired temporary civic research, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the selected next route.
+Verify docs-only scope, unchanged code/content/scaffolds/current owners, no force/public-order/government/jurisdiction/law/office content or schema changes, no candidates/references/migrations/consumer changes unless explicitly proven in the audit document only, no gated-lane reopening, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the selected next route.
 
 ## Suggested commit message
 
-`docs(roadmap): select post-civic deferral route`
+`docs(civic): audit force public-order evidence`

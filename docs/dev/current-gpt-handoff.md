@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral
+Source version/run: Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
+- `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
+- `Version 0.5.345 - Force Public Order Authority Evidence Audit`
 
-## Deferral Result
+## Selection Result
 
-Exactly zero government ids and zero jurisdiction ids carry forward. The evidence audit and boundary decision are complete. Unchanged-source rescans and schema planning are prohibited.
+Force/public-order identity is the smallest eligible unresolved docs-first lane. Current signals include Aurelis Civic Watch quest presentation, settlement fort/watch/garrison descriptors, route-security posture, synthetic military-authority/garrison projections, combat vocabulary, and prose/UI/runtime consumers.
 
-Reopening requires explicit approved canon with relationship/temporal facts, a materially new canonical repository source, an authorized civic-content authorship pass, or a concrete ready consumer proving one minimal static contract with stable referenced owners. Vocabulary, quest anchors, generated ids, place/polity descriptors, property/legal/access/runtime state, tests/demos/UI, external research, genre convention, and fact recombination do not qualify.
+The next audit must classify these sources without promoting them. It must keep polity, government, jurisdiction, law, institution, office, place, route-security, combat, quest, reputation, and runtime owners separate. It may carry forward zero ids.
 
 ## Remaining Guardrails
 
-Government and jurisdiction remain separate, relational owners; government is additionally temporal. Law remains downstream of jurisdiction. Force/enforcement remains separate. Schema, seed/content, registration, reference, and consumer gates remain separate. Temporary civic research remains retired.
+Government/jurisdiction, business, faction, institution, and People/NPC remain gated. Service, resource/commodity, and combat health remain paused. Generic POI remains rejected; Highcrown Knowledge remains closed; office remains not schema-ready. Enforcement, patrols, AI, spawning, encounters, arrests, cases, law, access, reputation, UI, save/account, and gameplay remain outside static force identity.
 
-`0.5.344` should compare remaining eligible documentation, authority, stabilization, research, and runtime-readiness lanes without reopening government/jurisdiction, business, faction, institution, People/NPC, paused service/resource/combat, rejected POI, or closed Highcrown Knowledge by default. Select exactly one narrow next route.
+No Deep Research, explicit user question, support suffix, candidate id, schema, content, reference, migration, consumer, or `0.6.0` transition is approved.
 
 Suggested next commit:
 
-`docs(civic): defer government jurisdiction authority`
+`docs(roadmap): select post-civic deferral route`
