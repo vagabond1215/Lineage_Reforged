@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.334 - Business Company Authority Evidence Audit`
+Route: Codex local sequencing alignment after `Version 0.5.335 - Business Company Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.334 - Business Company Authority Evidence Audit`
+- `Version 0.5.335 - Business Company Authority Boundary Decision`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.335 - Business Company Authority Boundary Decision`
+- `Version 0.5.336 - Business Authority Schema Plan`
 
 Versioning note:
 
@@ -94,6 +94,7 @@ Versioning note:
 - `0.5.332` completed as a primary roadmap run and added `docs/design/institution-authority-seed-evidence-deferral.md`; it fixed the authored-input reopening gate, prohibited unchanged-source rescans, carried forward zero ids, and routed back to roadmap selection.
 - `0.5.333` completed as a primary roadmap run and added `docs/design/roadmap-post-institution-deferral-selection.md`; it compared gated, paused, rejected, closed, research-gated, and eligible lanes and selected business/company for a focused evidence audit.
 - `0.5.334` completed as a primary roadmap run and added `docs/design/business-company-authority-evidence-audit.md`; it classified authored, template, account, derived, runtime/UI, demo, and test signals, carried forward zero ids, and selected an owner-boundary decision.
+- `0.5.335` completed as a primary roadmap run and added `docs/design/business-company-authority-boundary-decision.md`; it selected one future broad business identity family, treated company as a possible form, carried forward zero ids, and selected a content-free schema plan.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -467,17 +468,18 @@ Versioning note:
 | 253 | `0.5.332` | Institution Authority Seed Evidence Deferral | Codex 5.5 Local docs-first | `docs/design/institution-authority-seed-evidence-audit.md` | fail-closed authored-input gate | Completed | Fixed the reopening gate, prohibited repeated unchanged-source scans, and routed back to roadmap selection. |
 | 254 | `0.5.333` | Roadmap Post-Institution Deferral Selection | Codex 5.5 Local docs-first | current roadmap/backlog + institution/faction/People deferrals + paused-lane gates | authority lane selection | Completed | Compared remaining lanes and selected business/company for a focused evidence audit. |
 | 255 | `0.5.334` | Business Company Authority Evidence Audit | Codex 5.5 Local docs-first | quest/business descriptors + derived company/account/UI surfaces + economy/owner boundaries | repository authority evidence audit | Completed | Classified mixed signals, carried forward zero ids, and selected an owner-boundary decision. |
-| 256 | `0.5.335` | Business Company Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/business-company-authority-evidence-audit.md` | commercial identity owner-boundary decision | Deferred | Decide business/company terminology, static identity scope, protected owners, schema readiness, and next route without candidates or implementation. |
+| 256 | `0.5.335` | Business Company Authority Boundary Decision | Codex 5.5 Local docs-first | `docs/design/business-company-authority-evidence-audit.md` | commercial identity owner-boundary decision | Completed | Selected one future business identity family, protected all non-identity owners, carried zero ids, and selected schema planning. |
+| 257 | `0.5.336` | Business Authority Schema Plan | Codex 5.5 Local docs-first | `docs/design/business-company-authority-boundary-decision.md` | future strict static identity contract | Deferred | Plan schema/validator/test/seed/registration posture without content, candidates, refs, prefix migration, or consumer enablement. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.335 - Business Company Authority Boundary Decision`
+1. `0.5.336 - Business Authority Schema Plan`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.335 - Business Company Authority Boundary Decision` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.336 - Business Authority Schema Plan` is next.
 
 ## Default Prompt Pattern
 
@@ -493,7 +495,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.335 - Business Company Authority Boundary Decision` as the immediate next recommended run.
+- Keep `Version 0.5.336 - Business Authority Schema Plan` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

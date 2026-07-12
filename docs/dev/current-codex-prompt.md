@@ -4,22 +4,23 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Decide the commercial identity owner boundary:
+Plan the future strict business identity contract:
 
-`Version 0.5.335 - Business Company Authority Boundary Decision`
+`Version 0.5.336 - Business Authority Schema Plan`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.334 - Business Company Authority Evidence Audit`
+- Latest completed primary: `Version 0.5.335 - Business Company Authority Boundary Decision`
 - Latest completed support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Immediate next primary route: `Version 0.5.335 - Business Company Authority Boundary Decision`
-- The evidence audit carries forward exactly zero candidate ids.
-- No dedicated business/company content, schema, validator, registration, or canonical prefix exists.
-- `business` and `company` are unresolved across quest, templates, account state, derived simulation, UI/demo, and tests.
+- Immediate next primary route: `Version 0.5.336 - Business Authority Schema Plan`
+- One future `civilization.businesses` static identity family is approved in principle.
+- Business is the broad identity family; company is a possible descriptive form, not a separate owner.
+- Exactly zero candidates are approved.
+- No business content, schema, validator, focused test, or normal registration exists.
 
 ## Purpose
 
-Create a docs-only business/company authority boundary decision. Decide whether one narrow static commercial-body identity owner is justified, whether business/company are synonyms or distinct layers, what the owner may contain, and what remains with existing template/property/account/runtime owners. Do not design a schema or implement content.
+Create a docs-only business authority schema plan. Define a strict content-independent static identity contract, paths, fields, vocabularies, validation/test posture, and separate seed/registration gates without implementing files or promoting current strings.
 
 ## Required first steps
 
@@ -36,42 +37,48 @@ Read at minimum:
 - `AGENTS.md`
 - `README.md`
 - current output, handoff, prompt, sequence, roadmap, and backlog;
+- `docs/design/business-company-authority-boundary-decision.md`;
 - `docs/design/business-company-authority-evidence-audit.md`;
-- `docs/design/roadmap-post-institution-deferral-selection.md`;
-- organization/faction/guild and institution/office boundary patterns;
-- economy, settlement/place, service/provider, family/estate, People/NPC/social, civic, quest, account estate, and runtime ownership boundaries;
-- exact current business/company surfaces classified by the audit.
+- nearby institution and faction schema plans, schemas, validators, and focused tests;
+- building/workplace, settlement/place, service/provider, account estate, quest, and runtime boundaries needed to define forbidden fields;
+- `tests/unit/schema-files.test.mjs` and `tools/content-lint/index.mjs` conventions.
 
-Do not repeat broad evidence discovery.
+Do not repeat evidence discovery or infer candidates.
 
 ## Expected output
 
 Add:
 
-- `docs/design/business-company-authority-boundary-decision.md`
+- `docs/design/business-authority-schema-plan.md`
 
-## Required boundary decisions
+## Required plan decisions
 
-- decide whether a dedicated static commercial-body identity authority is justified;
-- decide whether `business` and `company` are synonyms, subtype/supertype vocabulary, or distinct identity/state layers;
-- decide the conceptual authority name only if safe; do not implement paths or a schema;
-- define exactly what stable descriptive identity may be owned;
-- keep building/workplace templates, places/facilities, services/providers, property/ownership, account estate, workforce, stock/inventory, prices, contracts, finance, upgrades, reputation, quests, runtime ledgers, UI, and save/account state separate;
-- preserve guild, institution, faction, polity, religion/order, family/household, People/NPC, profession/role, and civic owners;
-- decide whether branches, brands, ventures, sole traders, partnerships, companies, merchant houses, and generated operators belong in the first boundary or remain deferred;
-- decide prefix posture without renaming or migrating current `business.*`/`company.*` strings;
-- keep Ironwheel Haulage Company and Gannet Cutter unapproved unless a later seed gate is explicitly selected;
-- decide whether the owner is schema-ready for one docs-only schema plan, requires a narrower evidence/authorship gate, or should be preserved/deferred;
-- decide Deep Research, user-question, and support-suffix posture;
-- select the exact next route.
+- decide exact future paths, likely:
+  - `packages/content/base/civilization/businesses.json`;
+  - `packages/schemas/civilization/business.schema.json`;
+  - `tools/content-lint/businesses.mjs`;
+  - `tests/unit/business-validation.test.mjs`;
+- strict records-only wrapper and absent empty live wrapper posture;
+- `business.<lower_snake_slug>` id/slug coherence and uniqueness;
+- minimum required static identity fields;
+- lifecycle vocabulary aligned with nearby authorities;
+- narrow descriptive category/form and public-posture vocabularies only if safe;
+- no first-pass references unless one non-implicating need is proven; prefer none;
+- explicit rejection of owners/people, organizations, places/facilities, services/providers, property/account estate, workforce, schedules, production, inventory/stock, prices, contracts, finance, upgrades, reputation/access, quests, runtime ledgers, UI, save/account, and gameplay fields;
+- pure issue-returning in-memory validator behavior;
+- focused tests and schema-file parse coverage;
+- normal content-lint registration deferral until approved live content exists;
+- seed evidence gate and zero-candidate posture;
+- Ironwheel/Gannet/generated-company non-promotion posture;
+- whether schema/validator implementation is the next safe route.
 
 ## Guardrails
 
-Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, quests, runtime, UI, account estate, save/account, or gameplay. Do not normalize prefixes, migrate anchors, approve candidate ids, or authorize provider/property/ledger behavior. Do not reopen gated/paused/rejected/closed lanes. Do not run Deep Research.
+Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, quests, runtime, UI, account estate, save/account, or gameplay. Do not approve candidates, normalize/migrate prefixes, add aliases, or enable consumers. Do not reopen gated/paused/rejected/closed lanes. Do not run Deep Research.
 
 ## Allowed changes
 
-- `docs/design/business-company-authority-boundary-decision.md`
+- `docs/design/business-authority-schema-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -91,8 +98,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, unchanged content/contracts/runtime/UI/account/quest state, zero candidate ids, no prefix migration, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the selected next route.
+Verify docs-only scope, unchanged content/contracts/runtime/UI/account/quest state, zero candidates, no prefix migration or consumer enablement, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the selected next route.
 
 ## Suggested commit message
 
-`docs(economy): decide business company boundary`
+`docs(economy): plan business authority schema`
