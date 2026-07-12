@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BusinessCollection",
+  "description": "Schema for future authored static business identity. Records are descriptive identity authority only and do not define owners, people, organizations, places, providers, property, account estate, workforce, production, inventory, prices, contracts, finance, reputation, quests, runtime ledgers, UI, save/account state, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/businessRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "businessId": {
+      "type": "string",
+      "pattern": "^business\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceAuthorityNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "retired"]
+    },
+    "form": {
+      "type": "string",
+      "enum": ["company", "partnership", "cooperative", "other", "unknown"]
+    },
+    "publicPosture": {
+      "type": "string",
+      "enum": ["public", "semi_public", "secret", "unknown"]
+    },
+    "businessRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "status",
+        "form",
+        "publicPosture",
+        "summary",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/businessId" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "$ref": "#/$defs/status" },
+        "form": { "$ref": "#/$defs/form" },
+        "publicPosture": { "$ref": "#/$defs/publicPosture" },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/sourceAuthorityNotes" },
+        "notes": { "$ref": "#/$defs/notes" }
+      }
+    }
+  }
+}

@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.336 - Business Authority Schema Plan
+Source version/run: Version 0.5.337 - Business Authority Schema And Validator
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.336 - Business Authority Schema Plan`
+- `Version 0.5.337 - Business Authority Schema And Validator`
 
 Latest completed support/audit run:
 
@@ -15,32 +15,27 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.337 - Business Authority Schema And Validator`
+- `Version 0.5.338 - Business Authority Seed Evidence Audit`
 
-## Accepted Contract
+## Implemented Business Scaffold
 
-- Authority: `civilization.businesses`.
-- Future content: `packages/content/base/civilization/businesses.json` (must remain absent in `0.5.337`).
-- Schema: `packages/schemas/civilization/business.schema.json`.
-- Pure validator: `tools/content-lint/businesses.mjs`.
-- Focused tests: `tests/unit/business-validation.test.mjs`.
-- Exact fields: `id`, `slug`, `name`, `status`, `form`, `publicPosture`, `summary`, `sourceAuthorityNotes`, `notes`.
-- Identity: `business.<lower_snake_slug>` with exact coherence and uniqueness.
-- Lifecycle: `planned|active|retired`.
-- Form: `company|partnership|cooperative|other|unknown`.
-- Public posture: `public|semi_public|secret|unknown` as visibility only.
-- No category/industry/businessType/businessScale and no first-pass references.
+- `packages/schemas/civilization/business.schema.json`
+- `tools/content-lint/businesses.mjs`
+- `tests/unit/business-validation.test.mjs`
+- business entry in `tests/unit/schema-files.test.mjs`
 
-## Guardrails
+The strict contract uses records-only `business.<slug>` identity, lifecycle `planned|active|retired`, form `company|partnership|cooperative|other|unknown`, public visibility posture, provenance/notes, and no references or behavior fields.
 
-Implement schema, pure validator, focused tests, and schema parse coverage only. Do not create live content or edit normal content lint.
+Focused business validation passes 149 tests; institution regression passes 120 tests; schema smoke passes 105 tests; normal content lint remains 67 files.
 
-Exactly zero candidates carry forward. Ironwheel, Gannet Cutter, generated `company.*`, account assets, quest anchors, building/workplace vocabulary, settlement businesses, UI, demo, and tests remain unpromoted and separately owned.
+## Remaining Guardrails
 
-Reject people/owner/organization, place/facility/branch, service/provider/access, workforce/production, inventory/economy/finance, property/account, narrative/social, runtime/storage, and deferred-commercial fields.
+No live business wrapper, normal registration, candidate id, reference, resolver, migration, adapter, or consumer enablement exists.
 
-No Deep Research, explicit user question, or support-suffix run is required before `0.5.337`.
+Ironwheel remains partial quest-owned evidence. Gannet Cutter remains demo/test/account fixture. Generated `company.*` remains synthetic. Account assets, building/workplace vocabulary, settlement businesses, quests, runtime/UI, and current tests remain separately owned and unpromoted.
+
+`0.5.338` should apply the exact complete seed gate to the already-classified evidence. Do not repeat broad discovery. It may carry forward zero ids and select a fail-closed deferral if no source supplies every required fact.
 
 Suggested next commit:
 
-`docs(economy): plan business authority schema`
+`feat(economy): add business authority validation`
