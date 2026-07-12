@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.333 - Roadmap Post-Institution Deferral Selection
+Source version/run: Version 0.5.334 - Business Company Authority Evidence Audit
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.333 - Roadmap Post-Institution Deferral Selection`
+- `Version 0.5.334 - Business Company Authority Evidence Audit`
 
 Latest completed support/audit run:
 
@@ -15,22 +15,28 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.334 - Business Company Authority Evidence Audit`
+- `Version 0.5.335 - Business Company Authority Boundary Decision`
 
-## Selection Rationale
+## Evidence Result
 
-Business/company is the smallest eligible unresolved owner lane. It has one exact authored quest anchor plus reusable economy descriptors, generated company ids, account estate classification, runtime/UI expectations, and demo state. These surfaces mix static identity, presentation, templates, mutable ownership, and derived behavior, so the next run must be an evidence audit—not a boundary, schema, content, or runtime pass.
+Exactly zero candidate ids carry forward.
 
-## Guardrails
+- Ironwheel Haulage Company is partial authored evidence embedded in quest giver presentation.
+- `triggerBusinessTypes` and `businessScale` are building/workplace template vocabulary.
+- Generated `company.*` ids and settlement businesses are derived runtime state.
+- Account estate `business.*` assets are mutable persisted ownership state.
+- Business UI is a future ledger consumer.
+- `business.gannet_cutter` is demo/test-only.
+- Current usage does not prove whether business/company are synonyms, subtypes, or separate layers.
 
-Preserve workplaces, buildings, places, services, guilds, institutions, factions, polities, religions/orders, families, People/NPC, account estate, property/ownership, contracts, finance, workforce, providers, reputation, quests, runtime ledgers, UI, and save/account state as separate owners.
+## Boundary Guardrails
 
-Do not approve `civilization.businesses`, `civilization.companies`, any candidate id, migration, or adapter during the audit. Treat generated `company.*` and demo `business.*` ids as non-canonical unless durable evidence proves otherwise.
+The next run may decide only whether a narrow static commercial-body owner is justified and how business/company terminology should be separated. It must preserve workplaces, buildings, places, services, providers, guilds, institutions, factions, polities, religions/orders, families, People/NPC, account estate, property/ownership, quests, finance, workforce, reputation, runtime ledgers, UI, and save/account state.
 
-Institution, faction, and People/NPC remain authored-input gated. Service, resource/commodity, and combat health remain paused. Generic POI remains rejected. Highcrown Knowledge remains closed. Office remains not schema-ready. Runtime ownership remains `0.6.x` maturity-gated.
+Do not approve a collection, schema, prefix migration, Ironwheel/Gannet candidate, content, provider association, or runtime behavior automatically.
 
-No Deep Research, explicit user question, or support-suffix run is required before `0.5.334`.
+No Deep Research, explicit user question, or support-suffix run is required before `0.5.335`.
 
 Suggested next commit:
 
-`docs(roadmap): select post-institution lane`
+`docs(economy): audit business company authority`
