@@ -1,7 +1,5 @@
 # Current Codex Prompt
 
-Codex 5.6 Sol Local High.
-
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
 Run the focused diplomacy/conflict authority evidence audit:
@@ -41,7 +39,7 @@ Read at minimum:
 - polity schema/seed boundaries and current live polity posture;
 - exact current map conflict-zone, region/settlement, quest, design, consumer, and runtime surfaces only as needed to classify diplomacy/conflict evidence.
 
-Keep discovery targeted. Do not audit claims/borders/control, political simulation, war runtime, or every use of generic combat/conflict language.
+Keep discovery targeted. Search for exact evidence before opening large files, use line-ranged reads when practical, and do not audit claims/borders/control, political simulation, war runtime, or every use of generic combat/conflict language.
 
 ## Expected output
 
