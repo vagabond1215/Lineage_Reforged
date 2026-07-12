@@ -4,23 +4,22 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Implement the narrow schema/validator slice:
+Run the next docs-only evidence gate:
 
-`Version 0.5.330 - Institution Authority Schema And Validator`
+`Version 0.5.331 - Institution Authority Seed Evidence Audit`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.329 - Institution Authority Schema Plan`
+- Latest completed primary: `Version 0.5.330 - Institution Authority Schema And Validator`
 - Latest completed support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Immediate next primary route: `Version 0.5.330 - Institution Authority Schema And Validator`
-- The exact strict contract is defined in `docs/design/institution-authority-schema-plan.md`.
-- No live institution content, candidate id, normal registration, reference, resolver, or consumer enablement is approved.
+- Immediate next primary route: `Version 0.5.331 - Institution Authority Seed Evidence Audit`
+- Strict institution schema, pure validator, focused tests, and schema parse coverage exist.
+- Live institution content, normal registration, candidate ids, references, resolvers, and consumer enablement remain absent.
 - Office remains separate and not schema-ready.
-- No Deep Research or explicit user question is required.
 
 ## Purpose
 
-Implement only the planned strict institution schema, pure in-memory validator, focused tests, and schema-file parse coverage. Keep live content and normal content-lint registration absent.
+Audit current durable authored repository evidence against the exact institution seed gate. Decide whether any strong canonical institution candidate exists, carrying forward zero ids unless every required fact is supported. Do not implement content.
 
 ## Required first steps
 
@@ -36,50 +35,40 @@ Read at minimum:
 
 - `AGENTS.md`
 - `README.md`
-- current output, handoff, active prompt, sequence, roadmap, and backlog;
+- current output, handoff, prompt, sequence, roadmap, and backlog;
 - `docs/design/institution-authority-schema-plan.md`;
 - `docs/design/institution-office-authority-boundary-decision.md`;
-- nearby faction schema, validator, focused tests, and plan;
-- `tests/unit/schema-files.test.mjs` and `tools/content-lint/index.mjs` conventions;
-- relevant Knowledge, Magic Study, service, backstory, quest, and runtime institution hooks only to verify they remain unchanged and fail closed.
+- the institution schema, validator, and focused tests;
+- organization/faction/guild evidence and boundary docs;
+- relevant civic, settlement/district/site, guild, religion/order, service, Knowledge, Magic Study, backstory, quest, and runtime sources needed to classify candidate evidence.
 
-## Required implementation
+Do not repeat broad unrelated discovery.
+
+## Expected output
 
 Add:
 
-- `packages/schemas/civilization/institution.schema.json`
-- `tools/content-lint/institutions.mjs`
-- `tests/unit/institution-validation.test.mjs`
+- `docs/design/institution-authority-seed-evidence-audit.md`
 
-Update schema-file parse coverage only as needed.
+## Required audit decisions
 
-Implement the exact planned contract:
-
-- strict `{ "records": [...] }` wrapper;
-- exact required fields: `id`, `slug`, `name`, `status`, `category`, `publicPosture`, `summary`, `sourceAuthorityNotes`, `notes`;
-- `institution.<lower_snake_slug>` identity and exact id/slug coherence;
-- unique ids/slugs;
-- `planned|active|retired` lifecycle;
-- category `civic|administrative|judicial|scholarly|charitable|educational|archival|medical|other`;
-- public posture `public|semi_public|secret|unknown` as descriptive visibility only;
-- trimmed non-empty name/summary/provenance entries, at least one provenance note, unique provenance/notes;
-- no reference fields or resolver logic;
-- strict unknown-field rejection.
-
-The validator must be pure, issue-returning, and fixture-driven. It must not read the filesystem or import normal content lint.
-
-Focused tests must prove valid/empty fixture acceptance, wrapper/required-field/identity/duplicate/text/enum/note failures, representative forbidden-field rejection, absent live content, absent normal registration, and no candidate ids.
+- restate the exact complete seed gate;
+- classify every plausible current institution-shaped source as strong canonical evidence, partial evidence, another owner's canon, consumer vocabulary, presentation/prose, synthetic/derived/runtime, or hypothetical;
+- require exact canonical name, unambiguous institution identity, safe id/slug authority, non-invented summary, category, public posture, lifecycle, durable provenance, and non-implication notes;
+- reject inference from office anchors, generic building/workplace nouns, school/academy/archive/hospital/court/charity labels, Knowledge/Magic Study/backstory/service hooks, guilds, factions, religious orders, polities, businesses, places/facilities, generated companies, derived institution profiles, runtime indexes, demos, UI, tests, or design examples;
+- list exact candidate ids only if the complete gate is met;
+- otherwise carry forward zero ids and select a fail-closed evidence deferral;
+- keep live content, normal registration, references, consumers, office, and behavior closed;
+- decide Deep Research, support-suffix, and explicit-user-question posture;
+- select the exact next route.
 
 ## Guardrails
 
-Do not create `packages/content/base/civilization/institutions.json`. Do not edit `tools/content-lint/index.mjs` or register institutions in normal lint. Do not add candidates, references, resolvers, aliases, migrations, adapters, or consumer enablement. Do not edit Knowledge, Magic Study, backstory, service, quest, runtime, UI, save/account, or gameplay surfaces. Do not reopen office or any paused/blocked/rejected/closed lane. Do not run Deep Research.
+Docs only. Do not add/edit institution content, schema, validator, tests, schema coverage, normal lint, references, consumers, runtime, UI, save/account, or gameplay. Do not weaken the contract or invent candidates. Do not reopen office or any paused/blocked/rejected/closed lane. Do not run Deep Research unless the audit first identifies a precise external question with a direct repository consumer; external research cannot create canon.
 
 ## Allowed changes
 
-- `packages/schemas/civilization/institution.schema.json`
-- `tools/content-lint/institutions.mjs`
-- `tests/unit/institution-validation.test.mjs`
-- `tests/unit/schema-files.test.mjs` only for schema parse coverage
+- `docs/design/institution-authority-seed-evidence-audit.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -99,8 +88,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify exact allowed scope, absent live content/normal registration/candidates/references/resolvers/consumer changes, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the next runnable route.
+Verify docs-only scope, unchanged institution scaffold, absent live content/normal registration/candidates/references/consumer changes, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the next runnable route.
 
 ## Suggested commit message
 
-`feat(civ): add institution authority validation`
+`docs(civ): audit institution seed evidence`

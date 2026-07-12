@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.329 - Institution Authority Schema Plan
+Source version/run: Version 0.5.330 - Institution Authority Schema And Validator
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.329 - Institution Authority Schema Plan`
+- `Version 0.5.330 - Institution Authority Schema And Validator`
 
 Latest completed support/audit run:
 
@@ -15,32 +15,27 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.330 - Institution Authority Schema And Validator`
+- `Version 0.5.331 - Institution Authority Seed Evidence Audit`
 
-## Accepted Institution Contract
+## Implemented Institution Scaffold
 
-- Authority: `civilization.institutions`.
-- Future content path: `packages/content/base/civilization/institutions.json` (must remain absent in `0.5.330`).
-- Schema: `packages/schemas/civilization/institution.schema.json`.
-- Pure validator: `tools/content-lint/institutions.mjs`.
-- Focused tests: `tests/unit/institution-validation.test.mjs`.
-- Strict records-only wrapper; exact fields `id`, `slug`, `name`, `status`, `category`, `publicPosture`, `summary`, `sourceAuthorityNotes`, and `notes`.
-- Identity is `institution.<lower_snake_slug>` with exact id/slug coherence.
-- Lifecycle is `planned|active|retired`.
-- Category is `civic|administrative|judicial|scholarly|charitable|educational|archival|medical|other`.
-- Public posture is descriptive visibility only: `public|semi_public|secret|unknown`.
-- No first-pass references or resolver logic.
+- `packages/schemas/civilization/institution.schema.json`
+- `tools/content-lint/institutions.mjs`
+- `tests/unit/institution-validation.test.mjs`
+- institution entry in `tests/unit/schema-files.test.mjs`
 
-## Guardrails
+The strict contract uses records-only static identity, exact `institution.<slug>` coherence, lifecycle `planned|active|retired`, the approved category/public-posture vocabularies, trimmed provenance/notes, and no references. The pure validator does not read files or import normal lint.
 
-No live wrapper, candidate id, normal content-lint registration, office work, consumer enablement, or behavior is authorized. Knowledge/Magic Study, backstory, service-provider, quest, derived/runtime, UI, and prose institution vocabulary is not canon and remains fail closed.
+Focused validation passes 120 tests; schema smoke passes 104 tests; normal content lint remains 67 files.
 
-Preserve government/jurisdiction/law/force, guild, faction, religion/order, business, family, place/facility, service/provider, profession/role, People/NPC, membership/employment/office-holder, reputation/access, Knowledge/magic, and runtime owners.
+## Remaining Guardrails
 
-Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed. Office remains not schema-ready.
+No `packages/content/base/civilization/institutions.json`, normal registration, candidate id, reference, resolver, adapter, or consumer enablement exists. Knowledge/Magic Study, backstory, service provider, quest, prose, derived/runtime, demo, and UI institution vocabulary remains non-canonical and fail closed.
 
-No Deep Research, support-suffix run, or explicit user question is required before `0.5.330`.
+`0.5.331` must perform a narrow repository evidence audit against the exact seed gate. It may approve zero candidates and must not infer records from generic nouns or existing specific owners. Office remains not schema-ready.
+
+Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
 
 Suggested next commit:
 
-`docs(civ): plan institution authority schema`
+`feat(civ): add institution authority validation`

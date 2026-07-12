@@ -1,18 +1,26 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.329 - Institution Authority Schema Plan
+Source version/run: Version 0.5.330 - Institution Authority Schema And Validator
 Date: 2026-07-11
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Added the docs-only institution schema plan. It defines a future strict records-only `civilization.institutions` static identity contract with exact identity/lifecycle/category/public-posture vocabulary, no first-pass references, pure validation, focused tests, absent live content, separate seed and registration gates, and no consumer enablement.
+Implemented the strict future institution validation scaffold:
 
-Selected `Version 0.5.330 - Institution Authority Schema And Validator` next. No institution candidate, live wrapper, normal registration, Knowledge/Magic Study enablement, office work, or runtime behavior is authorized.
+- added the records-only institution schema;
+- added a pure issue-returning, fixture-driven validator;
+- added focused structural, semantic, forbidden-field, purity, absence, and no-candidate tests;
+- added institution schema-file parse coverage.
+
+Live institution content, normal content-lint registration, candidate ids, references, resolver logic, and consumer enablement remain absent. Selected `Version 0.5.331 - Institution Authority Seed Evidence Audit` next.
 
 ## Files Changed
 
-- `docs/design/institution-authority-schema-plan.md`
+- `packages/schemas/civilization/institution.schema.json`
+- `tools/content-lint/institutions.mjs`
+- `tests/unit/institution-validation.test.mjs`
+- `tests/unit/schema-files.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -25,29 +33,29 @@ Selected `Version 0.5.330 - Institution Authority Schema And Validator` next. No
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master` (`Already up to date.`)
-- Required authority, boundary, nearby schema-plan, schema/validator/test, coordination, Knowledge/Magic Study, and consumer reads.
-- Fresh absence and registration scans.
-- `node --test tests/unit/schema-files.test.mjs` (passed: 103 tests).
+- Required schema plan, boundary, nearby faction implementation, schema-test, coordination, and institution-consumer reads.
+- `node --test tests/unit/institution-validation.test.mjs` (passed: 120 tests).
+- `node --test tests/unit/schema-files.test.mjs` (passed: 104 tests).
 - `npm.cmd run tool:content-lint` (passed: 67 files checked).
-- Docs-only scope, forbidden-path, artifact, consumer-enablement, conflict-marker, trailing-whitespace, and route-pointer scans (passed; only the seven allowed documentation files changed).
+- Allowed-scope, absent-content, absent-registration, no-live-candidate, no-reference/resolver, consumer, artifact, conflict-marker, trailing-whitespace, and route-pointer scans (passed; exactly the ten allowed files changed).
 - `git diff --check` (passed; Git reported only expected LF-to-CRLF working-copy notices).
-- `git status --short --branch` (only the seven allowed documentation files are modified or untracked on `master`).
+- `git status --short --branch` (exactly the ten allowed files are modified or untracked on `master`).
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No content, schema, validator, test, normal content-lint registration, resolver, consumer, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay behavior changed.
+Schema and validation scaffolding changed. No live JSON content, normal content-lint path, consumer, runtime, UI, storage, command, event, reward, migration, save/account, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- `0.5.330` must implement only schema/validator/test scaffolding and schema parse coverage.
-- Live institution content, candidates, normal registration, and all references remain absent.
-- Knowledge/Magic Study and other institution-shaped consumers remain fail closed.
-- Office remains not schema-ready.
+- The validator is intentionally not registered in normal lint while live content is absent.
+- The schema intentionally rejects all reference and behavior fields.
+- `0.5.331` must audit only durable authored institution evidence and may carry forward zero candidates.
+- Knowledge/Magic Study and all other institution consumers remain fail closed; office remains not schema-ready.
 
 ## Next Recommended Version
 
-Version 0.5.330 - Institution Authority Schema And Validator
+Version 0.5.331 - Institution Authority Seed Evidence Audit
 
 ## Suggested Commit Message
 
-docs(civ): plan institution authority schema
+feat(civ): add institution authority validation

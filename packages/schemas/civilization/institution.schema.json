@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InstitutionCollection",
+  "description": "Schema for future authored static institution identity. Records are descriptive identity authority only and do not define offices, government, facilities, people, membership, services, access, finance, Knowledge or magic behavior, runtime state, UI, save/account state, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/institutionRecord" }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "institutionId": {
+      "type": "string",
+      "pattern": "^institution\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceAuthorityNotes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "notes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/nonEmptyString" }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "retired"]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "civic",
+        "administrative",
+        "judicial",
+        "scholarly",
+        "charitable",
+        "educational",
+        "archival",
+        "medical",
+        "other"
+      ]
+    },
+    "publicPosture": {
+      "type": "string",
+      "enum": ["public", "semi_public", "secret", "unknown"]
+    },
+    "institutionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "status",
+        "category",
+        "publicPosture",
+        "summary",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/institutionId" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "status": { "$ref": "#/$defs/status" },
+        "category": { "$ref": "#/$defs/category" },
+        "publicPosture": { "$ref": "#/$defs/publicPosture" },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/sourceAuthorityNotes" },
+        "notes": { "$ref": "#/$defs/notes" }
+      }
+    }
+  }
+}
