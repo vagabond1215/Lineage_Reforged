@@ -4,24 +4,23 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the focused force/public-order owner decision:
+Run the focused force/public-order evidence deferral:
 
-`Version 0.5.346 - Force Public Order Authority Boundary Decision`
+`Version 0.5.347 - Force Public Order Authority Evidence Deferral`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.345 - Force Public Order Authority Evidence Audit`
+- Latest completed primary: `Version 0.5.346 - Force Public Order Authority Boundary Decision`
 - Latest completed support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Immediate next primary route: `Version 0.5.346 - Force Public Order Authority Boundary Decision`
-- Exactly zero canonical force ids passed the evidence audit.
-- Aurelis Civic Watch remains partial quest presentation under an `office.*` anchor.
-- Settlement force-like signals remain place descriptors; route-security watch ids are test-only; synthetic garrison/military ids remain derived.
-- Static force identity remains separate from enforcement/runtime.
-- Living Character Manuscript research is integrated under `docs/design/living-character-manuscript-design-boundary.md`; its implementation remains gated and does not alter this route.
+- Immediate next primary route: `Version 0.5.347 - Force Public Order Authority Evidence Deferral`
+- One broad future static force identity family is selected for enduring civic-watch, militia, garrison, military-force, and route-security organizations.
+- Exactly zero `force.*` ids carry forward.
+- Affiliation, mandate, coverage, and headquarters relationships are intrinsic but unproven.
+- Force authority is boundary-ready but not schema-ready; a reference-free schema plan is rejected.
 
 ## Purpose
 
-Decide whether civic guard/watch, militia, garrison, military force/order, route-security body, and other public-order identities belong to one broad future static authority family or require narrower owners. Define exact exclusions, carry forward zero ids, and select at most one later schema-planning or fail-closed deferral route. Do not implement anything.
+Fail closed on force/public-order evidence. Define the exact authored-input or ready-consumer conditions that may reopen schema planning or seed work, prohibit repeated scans of unchanged weak sources, preserve separate future gates, and return to roadmap selection. Do not implement anything.
 
 ## Required first steps
 
@@ -38,31 +37,27 @@ Read at minimum:
 - `AGENTS.md` and `README.md`;
 - current output, handoff, prompt, sequence, roadmap, and backlog;
 - `docs/design/force-public-order-authority-evidence-audit.md`;
-- `docs/design/civic-authority-boundary-decision.md`;
-- government/jurisdiction and institution/office boundaries/deferrals;
-- route-security schema/validator posture;
-- exact already-audited quest, place, derived, combat, prose, consumer, test, and runtime surfaces only as needed to confirm the boundary.
+- `docs/design/force-public-order-authority-boundary-decision.md`;
+- government/jurisdiction, institution, faction, business, and People/NPC evidence-deferral patterns only as needed to align reopening gates.
 
-Do not repeat the evidence audit or broaden discovery.
+Do not repeat the force evidence audit or broaden discovery.
 
 ## Expected output
 
 Add:
 
-- `docs/design/force-public-order-authority-boundary-decision.md`
+- `docs/design/force-public-order-authority-evidence-deferral.md`
 
-## Required boundary decisions
+## Required deferral decisions
 
-- decide one broad force family versus separate civic-watch, militia, garrison, military-force/order, route-security-body, or other owners;
-- define what static force identity may own and what remains descriptive relationship/state;
-- separate force from polity, government, jurisdiction, law, institution, office, guild/religious order/faction, place/facility, profession/role, combat actor/unit/party, route-security overlay, quest/reputation, and runtime;
-- define boundaries for affiliation, mandate, coverage, headquarters, public posture, readiness, membership, rank, office-holders, roster, schedule, patrol, spawn, encounter, AI, arrest, enforcement, cases, access, reputation, runtime, UI, save/account, and gameplay;
-- classify Aurelis Civic Watch, settlement descriptors, route-security fixtures, and synthetic garrison ids as non-canonical;
-- carry forward exactly zero `force.*` ids;
-- decide whether a reference-free first-pass contract could be coherent or references are intrinsic and unproven;
-- select at most one later schema-planning route, or a fail-closed authored-input/ready-consumer deferral;
-- decide Deep Research, explicit-user-question, support-suffix, and exact next-route posture;
-- make an explicit temporary-guardrail cleanup decision.
+- preserve one broad future force family and exactly zero `force.*` ids;
+- define materially new authored canon, an approved exact seed list, an authorized civic authorship pass, and a ready-consumer contract as possible reopening inputs;
+- specify the minimum force identity plus affiliation, mandate, coverage, and headquarters evidence required before schema planning or a seed can proceed;
+- reject unchanged quest presentation, place prose/tags/names, route-security posture/fixtures, synthetic authority ids, combat/backstory/UI/reputation/test/runtime strings, and unsupported user-facing labels as reopening evidence;
+- keep schema, validator, content, registration, references, migrations, consumers, and runtime as separate future gates;
+- preserve all adjacent identity, place, route-security, law, enforcement, combat, runtime, UI, and save/account owners;
+- decide explicit-user-question timing, Deep Research, support-suffix, and temporary-guardrail posture;
+- select `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection` next without reopening another gated lane in this run.
 
 ## Guardrails
 
@@ -70,7 +65,7 @@ Docs only. Do not add/edit content, schemas, validators, tests, normal lint, con
 
 ## Allowed changes
 
-- `docs/design/force-public-order-authority-boundary-decision.md`
+- `docs/design/force-public-order-authority-evidence-deferral.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -91,8 +86,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, unchanged code/content/scaffolds/current owners, zero candidate ids, no force/public-order/government/jurisdiction/law/office content or schema changes, no references/migrations/consumer changes, no gated-lane reopening, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers. Update this prompt to the selected next route.
+Verify docs-only scope, unchanged code/content/scaffolds/current owners, zero candidate ids, no force/public-order/government/jurisdiction/law/office content or schema changes, no references/migrations/consumer changes, no gated-lane reopening, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers.
 
 ## Suggested commit message
 
-`docs(civic): decide force public-order boundary`
+`docs(civic): defer force public-order evidence`

@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.344.1 - Living Character Manuscript Research Integration
+Source version/run: Version 0.5.346 - Force Public Order Authority Boundary Decision
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.345 - Force Public Order Authority Evidence Audit`
+- `Version 0.5.346 - Force Public Order Authority Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -15,24 +15,22 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.346 - Force Public Order Authority Boundary Decision`
+- `Version 0.5.347 - Force Public Order Authority Evidence Deferral`
 
-## Integration Result
+## Boundary Result
 
-The Living Character Manuscript research is durably integrated at `docs/design/living-character-manuscript-design-boundary.md`. The live repository has useful authored quest, current quest/journal, discovery, emitted-event, save, account run-history, run-end projection, and UI sources, but no complete durable event history. The capped session Chronicle and UI-ready prose are not canonical event logs. Generated prose and player edits remain presentation-only. The fully consumed temporary research artifact was deleted.
+Select one broad future static force identity family for enduring organized bodies whose primary identity is civic protection, militia service, garrison duty, standing military service, or route protection. Do not create separate watch, militia, garrison, military-force, or route-security-body collections.
 
-No manuscript schema, retention, generation, UI, save/account, runtime, or gameplay work is authorized. Future manuscript work remains gated on stable event/history retention, provenance, player-knowledge/spoiler policy, persistence/revision ownership, deterministic fallback, and quality evaluation.
+Religious orders, guilds, institutions, factions, businesses, offices, places/facilities, professions/roles, combat units/parties, route-security posture, quest/reputation state, law/enforcement, and runtime remain separately owned. Mixed organizations require one primary identity owner and must not be duplicated as force records.
 
-## Force Audit Result
+Exactly zero `force.*` ids carry forward. Aurelis Civic Watch remains ambiguous quest presentation; settlement signals remain place descriptors; route-security watch ids remain fixtures; synthetic authority/garrison ids remain derived.
 
-Exactly zero force ids carry forward. Aurelis Civic Watch remains partial quest presentation under an `office.*` anchor. Settlement fort/watch/garrison signals remain place descriptors. Route-security watch ids are fixture-only and route security remains a separate posture overlay. Synthetic military/civil authority and garrison ids remain derived. Combat, backstory, UI, reputation, and runtime signals remain separately owned.
+## Readiness And Guardrails
 
-## Remaining Guardrails
+Affiliation, mandate, coverage, and headquarters are intrinsic to distinguishing a force from a generic organization, but current evidence proves no canonical candidate or decision-complete relationship contract. A reference-free identity shell is therefore semantically unsafe. Force authority is boundary-ready but not schema-ready.
 
-The next decision should determine whether civic guard/watch, militia, garrison, military force/order, route-security body, and other public-order identities can share one future family or require narrower owners. It must preserve polity, government, jurisdiction, law, institution, office, guild/order/faction, place, route-security, combat, quest, reputation, and runtime boundaries.
-
-No candidate, collection/prefix, schema plan, content, reference, migration, consumer, enforcement, patrol, AI, spawn, arrest, case, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
+The next pass must fix exact authored-input/ready-consumer reopening conditions and prohibit rescanning unchanged quest, place, route-security, derived, combat, backstory, UI, test, and runtime evidence. No schema, content, registration, references, migrations, consumers, enforcement, patrol, AI, spawn, arrest, case, runtime, UI, save/account, gameplay, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
 
 Suggested next commit:
 
-`docs(civic): decide force public-order boundary`
+`docs(civic): defer force public-order evidence`

@@ -1,24 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.344.1 - Living Character Manuscript Research Integration
+Source version/run: Version 0.5.346 - Force Public Order Authority Boundary Decision
 Date: 2026-07-12
-Branch/status assumption: `master`; worktree began mid-merge with local `0.5.345` one commit ahead and the incoming manuscript research intake five commits behind the merge base. Resolved the two coordination-document conflicts chronologically, completed merge commit `bc6f8c4f`, and pushed it to `origin/master` before this support run.
+Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`; required fetch and fast-forward pull reported `Already up to date.`
 
 ## Result
 
-Integrated the Living Character Manuscript research as a documentation-only support route without displacing completed primary `0.5.345` or next primary `0.5.346`.
+Selected one broad future static force identity family for enduring organized civic-watch, militia, garrison, standing military-force, and route-security bodies. Kept religious orders, guilds, institutions, factions, businesses, offices, places/facilities, professions/roles, combat units, route-security posture, law/enforcement, quest/reputation, and runtime under their separate owners.
 
-Added a permanent, repository-corrected design boundary. It preserves current quest, journal, discovery, session Chronicle, emitted-event, save, account run-history, run-end projection, and UI owners; identifies the capped 48-entry session Chronicle and UI prose as non-canonical presentation rather than a durable event log; keeps generated and player-edited prose non-canonical; defines eligibility, treatment, compression, memory, provenance, editorial, editability, storage, and readiness boundaries; and authorizes no implementation.
+Carried forward exactly zero `force.*` ids. Aurelis Civic Watch remains ambiguous quest presentation; settlement force-like signals remain place descriptors; route-security watch ids remain fixtures; synthetic military/civil authority and garrison ids remain derived.
 
-The temporary research artifact was fully consumed and deleted. The active prompt is restored to `Version 0.5.346 - Force Public Order Authority Boundary Decision`.
+Rejected schema planning because affiliation, mandate, coverage, and headquarters are intrinsic relationship concepts and current evidence proves neither a canonical seed nor a decision-complete reference contract. Selected fail-closed `Version 0.5.347 - Force Public Order Authority Evidence Deferral` next.
 
 ## Files Changed
 
-- `docs/design/living-character-manuscript-design-boundary.md`
-- `docs/design/future-system-design-ledger.md`
-- `docs/design/gpt-deep-research-version-tracking-decision.md`
-- `docs/design/living-character-manuscript-research-intake-route.md`
-- deleted `docs/dev/tmp-living-character-manuscript-research-2026-07-12.md`
+- `docs/design/force-public-order-authority-boundary-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -28,28 +24,30 @@ The temporary research artifact was fully consumed and deleted. The active promp
 
 ## Checks Run
 
-- Required repository, README, handoff, prompt, sequence, roadmap, backlog, research, intake, pipeline, Chronicle boundary, run-end audit/plan, and design-ledger reads.
-- Targeted live quest, session Chronicle, discovery Chronicle, shared-event, save-snapshot, account run-history, run-end projection, and Chronicle UI source inspection.
+- Required branch status, fetch, and fast-forward pull.
+- Required README, current coordination, completed evidence audit, civic, government/jurisdiction, institution/office, and route-security boundary/schema reads.
+- `node --test tests/unit/polity-validation.test.mjs`.
+- `node --test tests/unit/institution-validation.test.mjs`.
+- `node --test tests/unit/schema-files.test.mjs`.
 - `npm.cmd run tool:content-lint`.
-- Documentation-only scope, owner preservation, canonical/presentation separation, no invented canon, no implementation permission, completed-primary preservation, temporary-artifact retirement, conflict-marker, whitespace, and route-pointer checks.
+- Docs-only scope, unchanged code/content/scaffolds/current owners, zero-candidate, absent force/government/jurisdiction/law/office content/schema/reference/migration/consumer changes, gated-lane, artifact, conflict-marker, whitespace, and route-pointer checks.
 - `git diff --check`.
 - `git status --short --branch`.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No runtime, JSON/content, schema, validator, test, normal-lint registration, contract, event retention, Chronicle, journal, quest, discovery, UI, storage, save/account, generation, networking, or gameplay behavior changed.
+Documentation only. No runtime, JSON/content, schema, validator, test, normal-lint registration, contract, quest, place, route-security, combat, reputation, UI, save/account, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- A future manuscript cannot safely ingest the current session Chronicle as a canonical history: it is capped, mutable, and presentation-oriented.
-- Shared emitted events are not yet a durable general history, and current snapshots cannot prove historical transitions or causality.
-- Future work remains gated on source-specific history retention, stable provenance, knowledge/spoiler policy, revision/persistence ownership, deterministic fallback, and measurable quality thresholds.
-- The next primary route remains the unrelated force/public-order boundary decision; manuscript implementation must not reopen through that work.
+- The broad family boundary does not make force authority schema-ready. A reference-free shell would not safely distinguish a force from adjacent organizations or runtime groups.
+- The next pass must require materially new authored canon or a ready consumer and prohibit unchanged-source rescans.
+- Schema, content, registration, relationships, consumers, and runtime remain separate future gates.
 
 ## Next Recommended Version
 
-Version 0.5.346 - Force Public Order Authority Boundary Decision
+Version 0.5.347 - Force Public Order Authority Evidence Deferral
 
 ## Suggested Commit Message
 
-docs(chronicle): integrate living manuscript research
+docs(civic): decide force public-order boundary
