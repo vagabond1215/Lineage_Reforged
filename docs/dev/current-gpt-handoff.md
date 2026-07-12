@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection
+Source version/run: Version 0.5.345 - Force Public Order Authority Evidence Audit
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
+- `Version 0.5.345 - Force Public Order Authority Evidence Audit`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,18 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.345 - Force Public Order Authority Evidence Audit`
+- `Version 0.5.346 - Force Public Order Authority Boundary Decision`
 
-## Selection Result
+## Audit Result
 
-Force/public-order identity is the smallest eligible unresolved docs-first lane. Current signals include Aurelis Civic Watch quest presentation, settlement fort/watch/garrison descriptors, route-security posture, synthetic military-authority/garrison projections, combat vocabulary, and prose/UI/runtime consumers.
-
-The next audit must classify these sources without promoting them. It must keep polity, government, jurisdiction, law, institution, office, place, route-security, combat, quest, reputation, and runtime owners separate. It may carry forward zero ids.
+Exactly zero force ids carry forward. Aurelis Civic Watch remains partial quest presentation under an `office.*` anchor. Settlement fort/watch/garrison signals remain place descriptors. Route-security watch ids are fixture-only and route security remains a separate posture overlay. Synthetic military/civil authority and garrison ids remain derived. Combat, backstory, UI, reputation, and runtime signals remain separately owned.
 
 ## Remaining Guardrails
 
-Government/jurisdiction, business, faction, institution, and People/NPC remain gated. Service, resource/commodity, and combat health remain paused. Generic POI remains rejected; Highcrown Knowledge remains closed; office remains not schema-ready. Enforcement, patrols, AI, spawning, encounters, arrests, cases, law, access, reputation, UI, save/account, and gameplay remain outside static force identity.
+The next decision should determine whether civic guard/watch, militia, garrison, military force/order, route-security body, and other public-order identities can share one future family or require narrower owners. It must preserve polity, government, jurisdiction, law, institution, office, guild/order/faction, place, route-security, combat, quest, reputation, and runtime boundaries.
 
-No Deep Research, explicit user question, support suffix, candidate id, schema, content, reference, migration, consumer, or `0.6.0` transition is approved.
+No candidate, collection/prefix, schema plan, content, reference, migration, consumer, enforcement, patrol, AI, spawn, arrest, case, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
 
 Suggested next commit:
 
-`docs(roadmap): select post-civic deferral route`
+`docs(civic): audit force public-order evidence`

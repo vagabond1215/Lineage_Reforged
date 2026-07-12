@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
+Route: Codex local sequencing alignment after `Version 0.5.345 - Force Public Order Authority Evidence Audit`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection`
+- `Version 0.5.345 - Force Public Order Authority Evidence Audit`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.345 - Force Public Order Authority Evidence Audit`
+- `Version 0.5.346 - Force Public Order Authority Boundary Decision`
 
 Versioning note:
 
@@ -104,6 +104,7 @@ Versioning note:
 - `0.5.342` completed as a primary roadmap run and separated government organization from jurisdiction applicability; it found both inherently relational, government additionally temporal, neither schema-ready, and selected a fail-closed evidence deferral with zero ids.
 - `0.5.343` completed as a primary roadmap run and fixed the government/jurisdiction authored-input/ready-consumer reopening gate, prohibited unchanged-source rescans and schema planning, preserved zero ids and separate future gates, and routed back to roadmap selection.
 - `0.5.344` completed as a primary roadmap run and compared remaining eligible lanes; it selected a focused force/public-order evidence audit while preserving all current gates and keeping enforcement/runtime separate.
+- `0.5.345` completed as a primary roadmap run and classified quest, place, route-security, derived, combat, prose, consumer, test, and runtime signals; exactly zero force ids passed, and a focused family-boundary decision was selected.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -487,17 +488,18 @@ Versioning note:
 | 263 | `0.5.342` | Government Jurisdiction Authority Boundary Decision | Codex 5.5 Local docs-first | completed evidence audit + permanent civic boundaries | owner separation and at most one later route | Completed | Separated both owners; rejected incoherent reference-free and guessed-reference schemas; selected deferral with zero ids. |
 | 264 | `0.5.343` | Government Jurisdiction Authority Evidence Deferral | Codex 5.5 Local docs-first | completed zero-id audit and boundary decision | authored-input/ready-consumer reopening gate | Completed | Fixed reopening inputs, prohibited unchanged-source rescans/schema planning, preserved zero ids, and routed back to roadmap selection. |
 | 265 | `0.5.344` | Roadmap Post-Government-Jurisdiction Deferral Selection | Codex 5.5 Local docs-first | current deferrals, pauses, closures, gates, and roadmap | one smallest safe next route | Completed | Selected force/public-order evidence auditing while preserving all gates and enforcement/runtime separation. |
-| 266 | `0.5.345` | Force Public Order Authority Evidence Audit | Codex 5.5 Local docs-first | civic boundaries + targeted quest/place/route-security/derived/combat evidence | classified force/public-order evidence and next gate | Deferred | Separate enduring force identity from places, overlays, projections, combat vocabulary, consumers, and runtime behavior. |
+| 266 | `0.5.345` | Force Public Order Authority Evidence Audit | Codex 5.5 Local docs-first | civic boundaries + targeted quest/place/route-security/derived/combat evidence | classified force/public-order evidence and next gate | Completed | Found zero ids; protected current owners and selected a broad-versus-narrow force family decision. |
+| 267 | `0.5.346` | Force Public Order Authority Boundary Decision | Codex 5.5 Local docs-first | completed evidence audit + civic/office/route-security boundaries | force family ownership and at most one later route | Deferred | Decide one broad family versus narrower owners, exact exclusions, and schema/deferral readiness. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.345 - Force Public Order Authority Evidence Audit`
+1. `0.5.346 - Force Public Order Authority Boundary Decision`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.345 - Force Public Order Authority Evidence Audit` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.346 - Force Public Order Authority Boundary Decision` is next.
 
 ## Default Prompt Pattern
 
@@ -513,7 +515,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.345 - Force Public Order Authority Evidence Audit` as the immediate next recommended run.
+- Keep `Version 0.5.346 - Force Public Order Authority Boundary Decision` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
