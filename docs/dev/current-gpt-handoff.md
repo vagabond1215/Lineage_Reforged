@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.339 - Business Authority Seed Evidence Deferral
-Date: 2026-07-11
+Source version/run: Version 0.5.340 - Roadmap Post-Business Deferral Selection
+Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.339 - Business Authority Seed Evidence Deferral`
+- `Version 0.5.340 - Roadmap Post-Business Deferral Selection`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.340 - Roadmap Post-Business Deferral Selection`
+- `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`
 
-## Business Deferral
+## Selection Result
 
-Exactly zero business ids carry forward. The `0.5.338` evidence audit is complete and must not be repeated against unchanged sources.
+Government/jurisdiction is the smallest eligible unresolved docs-first lane. Two planned polity records are live and normally validated; polity, government, jurisdiction, law, force, and mutable state are permanently separated; institution/office separation is complete.
 
-Business seed planning may reopen only for an explicit user-authored/approved canonical list, a materially new intentional canonical repository source, or an explicitly authorized focused business-content authorship pass. Consumer demand, generated/runtime/account/template/demo/test evidence, external research, genre convention, and fact recombination do not qualify.
+The next audit should classify exact current government-organization and jurisdiction-applicability evidence separately. It must protect polity/place, institution/office, quest, derived operator, property/legal-label, runtime, and prose owners; law must remain downstream of jurisdiction; force/enforcement must remain separate. It may carry forward zero candidates.
 
 ## Remaining Guardrails
 
-The strict business schema/validator/test scaffold remains unchanged. Live content, normal registration, references, migrations, and consumers remain absent. Ironwheel, Gannet, generated company ids, account assets, template vocabulary, settlement simulation, quest behavior, runtime/UI, demos, tests, and current prefixes retain their existing owners.
+Business, faction, institution, and People/NPC remain authored-input gated. Service, resource/commodity, and combat health remain paused. Generic POI remains rejected; Highcrown settlement Knowledge remains closed; office remains not schema-ready. Provider, membership, reputation, property/construction, social, agriculture, maritime, temporal, progression, magic, and runtime-transition lanes retain their existing prerequisites.
 
-`0.5.340` should compare remaining eligible docs-first authority, stabilization, and runtime-readiness lanes without reopening business, faction, institution, People/NPC, paused service/resource/combat, rejected generic POI, or closed Highcrown Knowledge work by default. It should select exactly one narrow next route and remain in `v0.5.x` unless a dedicated readiness decision proves otherwise.
+No Deep Research, explicit user question, support suffix, candidate id, schema, content, reference, migration, consumer, or `0.6.0` transition is approved.
 
 Suggested next commit:
 
-`docs(economy): defer business seed authority`
+`docs(roadmap): select post-business deferral route`
