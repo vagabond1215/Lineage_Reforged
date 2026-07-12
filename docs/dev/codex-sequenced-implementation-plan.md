@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`
+Route: Codex local sequencing alignment after `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`
+- `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
 
 Latest support/audit run:
 
@@ -29,7 +29,7 @@ Latest support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
+- `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
 
 Versioning note:
 
@@ -101,6 +101,7 @@ Versioning note:
 - `0.5.339` completed as a primary roadmap run and formalized the business authored-input reopening gate, prohibited unchanged-source rescans, preserved exactly zero ids and all current owners, and routed back to roadmap selection.
 - `0.5.340` completed as a primary roadmap run and compared remaining gates and eligible lanes; it selected a focused government/jurisdiction evidence audit after confirming stable polity identity and permanent civic-layer separation.
 - `0.5.341` completed as a primary roadmap run and classified polity/place, quest presentation, settlement administration, synthetic authority/property, legal/access/runtime, consumer, and guardrail evidence; exactly zero government and zero jurisdiction ids passed, and a focused boundary decision was selected.
+- `0.5.342` completed as a primary roadmap run and separated government organization from jurisdiction applicability; it found both inherently relational, government additionally temporal, neither schema-ready, and selected a fail-closed evidence deferral with zero ids.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -481,17 +482,18 @@ Versioning note:
 | 260 | `0.5.339` | Business Authority Seed Evidence Deferral | Codex 5.5 Local docs-first | completed zero-candidate audit + prior deferral patterns | authored-input reopening gate | Completed | Fixed the reopening gate, prohibited unchanged-source rescans, preserved zero ids, and routed back to roadmap selection. |
 | 261 | `0.5.340` | Roadmap Post-Business Deferral Selection | Codex 5.5 Local docs-first | current deferrals, pauses, closures, gates, and roadmap | one smallest safe next route | Completed | Selected government/jurisdiction evidence auditing while preserving all current gates and separate law/force/runtime owners. |
 | 262 | `0.5.341` | Government Jurisdiction Authority Evidence Audit | Codex 5.5 Local docs-first | civic/polity/institution-office boundaries + targeted current evidence | classified government/jurisdiction evidence and next gate | Completed | Found zero ids; preserved all owners and selected a focused government-versus-jurisdiction boundary decision. |
-| 263 | `0.5.342` | Government Jurisdiction Authority Boundary Decision | Codex 5.5 Local docs-first | completed evidence audit + permanent civic boundaries | owner separation and at most one later route | Deferred | Define government organization versus jurisdiction applicability and decide whether either is schema-plan ready. |
+| 263 | `0.5.342` | Government Jurisdiction Authority Boundary Decision | Codex 5.5 Local docs-first | completed evidence audit + permanent civic boundaries | owner separation and at most one later route | Completed | Separated both owners; rejected incoherent reference-free and guessed-reference schemas; selected deferral with zero ids. |
+| 264 | `0.5.343` | Government Jurisdiction Authority Evidence Deferral | Codex 5.5 Local docs-first | completed zero-id audit and boundary decision | authored-input/ready-consumer reopening gate | Deferred | Fix exact reopening inputs, prohibit unchanged-source rescans, and route back to roadmap selection. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.342 - Government Jurisdiction Authority Boundary Decision`
+1. `0.5.343 - Government Jurisdiction Authority Evidence Deferral`
 
 Support suffix `0.5.276.1` is complete and is not a primary queue entry.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.342 - Government Jurisdiction Authority Boundary Decision` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.343 - Government Jurisdiction Authority Evidence Deferral` is next.
 
 ## Default Prompt Pattern
 
@@ -507,7 +509,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision` as the immediate next recommended run.
+- Keep `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

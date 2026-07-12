@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.341 - Government Jurisdiction Authority Evidence Audit
+Source version/run: Version 0.5.342 - Government Jurisdiction Authority Boundary Decision
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`
+- `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,22 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
+- `Version 0.5.343 - Government Jurisdiction Authority Evidence Deferral`
 
-## Audit Result
+## Boundary Result
 
-Exactly zero canonical government ids and zero canonical jurisdiction ids carry forward.
+Government and jurisdiction are separate, and neither is schema-ready.
 
-The two quest `office.*` anchors are presentation-only and government/office/institution/force ambiguous. Settlement `administrativeRole` remains place-owned. Polity form and place anchors remain political identity only. Synthetic `authority.*` ids, property `LegalStatus`, start `lawfulStanding`, access requirements, reputation targets, UI/demo/tests, and validator vocabulary remain derived, mutable, consumer, or guardrail surfaces.
+Government owns a governing arrangement/organization separate from polity, institution, office, force, settlement administration, people/rulers, and runtime. Jurisdiction owns applicability separate from place, polity, claim/control, government, law, courts, force coverage, property legal labels, access, citizenship/legal standing, and runtime.
+
+A government record inherently requires a governed authority and temporal posture. A jurisdiction record inherently requires a competent authority and scope. Current canon proves neither minimum reference/cardinality/validity contract. Reference-free schemas would be incoherent; guessed-reference schemas are prohibited.
 
 ## Remaining Guardrails
 
-The next decision should formalize government organization versus polity/institution/office/force/settlement/runtime and jurisdiction applicability versus place/polity/claim/government/law/access/property/runtime. It should decide whether either layer is ready for one later content-independent schema plan, carry forward zero ids, and authorize no implementation.
+Exactly zero government ids and zero jurisdiction ids carry forward. Quest `office.*` anchors and synthetic `authority.*` ids remain non-canonical. Law remains downstream of jurisdiction; force/enforcement remains separate. No schema plan, content, reference, consumer, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
 
-Law remains downstream of jurisdiction. Force/public order and enforcement remain separate. All authored-input gates, pauses, rejections, closures, and runtime maturity boundaries remain unchanged. Deep Research, a user question, support suffix, references, migrations, consumers, and `0.6.0` are not approved.
+`0.5.343` should formalize materially new reopening inputs, prohibit unchanged-source rescans, preserve separate future content/schema/registration/consumer gates, and route back to roadmap selection.
 
 Suggested next commit:
 
-`docs(civic): audit government jurisdiction evidence`
+`docs(civic): decide government jurisdiction boundary`
