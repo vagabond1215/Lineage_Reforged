@@ -129,13 +129,13 @@ At the time this decision landed, the next numbered Codex pass remained:
 
 That historical route is complete and is not current pipeline authority.
 
-## 8. Current Addendum: Living Character Manuscript Research
+## 8. Consumed Addendum: Living Character Manuscript Research
 
 The following gate completed on 2026-07-12:
 
 - `GPT-DR.chronicle.living-character-manuscript - Living Character Manuscript / Narrative Chronicle System`
 
-Temporary artifact:
+Temporary artifact, deleted after durable promotion in `0.5.344.1`:
 
 - `docs/dev/tmp-living-character-manuscript-research-2026-07-12.md`
 
@@ -143,13 +143,13 @@ Intake route:
 
 - `docs/design/living-character-manuscript-research-intake-route.md`
 
-The artifact is non-canonical and must be reconciled against live Chronicle, quest, account-history, discovery, event, runtime, UI, and persistence owners before durable promotion.
+The artifact was non-canonical planning input. `Version 0.5.344.1` reconciled it against live Chronicle, quest, account-history, discovery, event, runtime, UI, and persistence owners and promoted durable guidance into `docs/design/living-character-manuscript-design-boundary.md`.
 
 The selected immediate support route is:
 
 - `Version 0.5.344.1 - Living Character Manuscript Research Integration`
 
-This support route must remain documentation-only, promote durable guidance into a permanent design boundary, update the central coordination files as warranted, and delete the temporary artifact if it is fully consumed. It does not authorize a manuscript implementation.
+This support route completed documentation-only, promoted durable guidance into the permanent design boundary, updated central coordination, and deleted the fully consumed temporary artifact. It does not authorize a manuscript implementation.
 
 The research intake originally targeted `Version 0.5.345 - Force Public Order Authority Evidence Audit` as the resumed primary route. That route completed on the local primary sequence before the intake commits were merged. After the support integration, resume the now-current primary route:
 

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-07-11
-Route: Codex local sequencing alignment after `Version 0.5.345 - Force Public Order Authority Evidence Audit`
+Date: 2026-07-12
+Route: Codex local sequencing alignment after `Version 0.5.344.1 - Living Character Manuscript Research Integration`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -23,9 +23,9 @@ Latest landed foundation slice:
 
 - `Version 0.5.345 - Force Public Order Authority Evidence Audit`
 
-Latest support/audit run:
+Latest completed support/audit run:
 
-- `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
+- `Version 0.5.344.1 - Living Character Manuscript Research Integration`
 
 Immediate next primary Codex run:
 
@@ -105,6 +105,7 @@ Versioning note:
 - `0.5.343` completed as a primary roadmap run and fixed the government/jurisdiction authored-input/ready-consumer reopening gate, prohibited unchanged-source rescans and schema planning, preserved zero ids and separate future gates, and routed back to roadmap selection.
 - `0.5.344` completed as a primary roadmap run and compared remaining eligible lanes; it selected a focused force/public-order evidence audit while preserving all current gates and keeping enforcement/runtime separate.
 - `0.5.345` completed as a primary roadmap run and classified quest, place, route-security, derived, combat, prose, consumer, test, and runtime signals; exactly zero force ids passed, and a focused family-boundary decision was selected.
+- `0.5.344.1` completed as a support run after `0.5.345` landed; it integrated the Living Character Manuscript research into a permanent owner-aware design boundary, retired the temporary artifact, and preserved `0.5.346` as the next primary route.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
 - The hotspot snippet plan landed in `0.5.171`: live hotspot snippets are blocked by missing place/religion affiliation authority, dominant/tolerated faith, hotspot intensity, mismatch/public posture, and supported place/hotspot subjects.
@@ -497,9 +498,9 @@ This is recommended ordering, not implementation lock-in:
 
 1. `0.5.346 - Force Public Order Authority Boundary Decision`
 
-Support suffix `0.5.276.1` is complete and is not a primary queue entry.
+Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.346 - Force Public Order Authority Boundary Decision` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.346 - Force Public Order Authority Boundary Decision` is next.
 
 ## Default Prompt Pattern
 

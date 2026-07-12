@@ -2,11 +2,11 @@
 
 Source route: `GPT-DR.chronicle.living-character-manuscript`
 Date: 2026-07-12
-Status: approved documentation-only research intake; no implementation permission
+Status: consumed by `Version 0.5.344.1`; temporary artifact deleted; no implementation permission
 
 ## 1. Intake Decision
 
-The completed Deep Research report is committed as:
+The completed Deep Research report was committed temporarily as:
 
 - `docs/dev/tmp-living-character-manuscript-research-2026-07-12.md`
 
@@ -14,7 +14,7 @@ Its pipeline label is:
 
 - `GPT-DR.chronicle.living-character-manuscript - Living Character Manuscript / Narrative Chronicle System`
 
-The report is non-canonical planning input. It does not override current repository authorities, does not establish Lineage canon, and does not authorize schemas, content, validators, tests, runtime, UI, save/account, storage, generation, or gameplay behavior.
+The report was non-canonical planning input. `Version 0.5.344.1` promoted its durable, repository-corrected guidance into `docs/design/living-character-manuscript-design-boundary.md` and deleted the temporary artifact. It did not override current repository authorities, establish Lineage canon, or authorize schemas, content, validators, tests, runtime, UI, save/account, storage, generation, or gameplay behavior.
 
 Select one immediate support route:
 
@@ -115,11 +115,11 @@ The integration pass must make an explicit cleanup decision for:
 
 - `docs/dev/tmp-living-character-manuscript-research-2026-07-12.md`
 
-Preferred result:
+Completed result:
 
-- delete the temporary artifact after all useful guidance is promoted into the permanent design boundary and coordination files.
-
-It may remain only if the integration names one concrete next consumer and an exact removal condition. It must never become a parallel permanent authority.
+- all useful guidance was promoted into the permanent design boundary and coordination files;
+- the temporary artifact was deleted in `Version 0.5.344.1`;
+- this intake file remains only as the compact historical route and consumption record.
 
 ## 8. Explicit Non-Goals
 

@@ -238,6 +238,23 @@ Chronicle should own:
 - global preparation capacity
 - broad milestones
 
+### Living Character Manuscript Criteria
+
+The future player-facing **Living Character Manuscript** is an event-sourced narrative projection inside the broader Chronicle product family. It does not replace session Chronicle, discovery Chronicle, account run history, run-end projections, quest/journal state, or their authoritative sources.
+
+Durable rules:
+
+- canonical gameplay facts remain owned by authored content, retained events, and authoritative state;
+- generated prose, chapter titles, transitions, compression, voice, variants, and player prose edits are replaceable presentation;
+- current UI strings, the capped session Chronicle feed, generated offers, and snapshots without transition history are not a general historical event source;
+- every factual manuscript claim must be source-traceable, preserve uncertainty and player knowledge, and avoid unsupported motive, emotion, dialogue, relationship, causality, or hidden information;
+- narrative memory is a derived source-linked editorial index, never a replacement for character, relationship, world, quest, or gameplay state;
+- routine activity should be clustered, compressed, or omitted unless supported cumulative consequence makes it meaningful;
+- manuscript generation and editing are one-way projections and must never grant, resolve, unlock, mutate, reward, punish, or persist gameplay outcomes;
+- runtime work remains gated on durable event/history retention, provenance, spoiler/knowledge policy, persistence/revision ownership, deterministic fallback, and quality evaluation.
+
+Detailed authority: `docs/design/living-character-manuscript-design-boundary.md`.
+
 Bloodlines should own:
 
 - family list
