@@ -33,12 +33,13 @@
   - ChatGPT via GitHub Connector
   - ChatGPT Deep Research
   - ChatGPT Agent Mode
-  - Codex 5.5 Plan Mode
-  - Codex 5.5 Local
-  - Codex 5.5 Cloud, only when justified by larger multi-file work
+  - Codex 5.6 Sol Plan Mode
+  - Codex 5.6 Sol Local, with reasoning level selected according to task complexity
+  - Codex 5.6 Sol Cloud, only when justified by larger multi-file work
+- Do not default every task to the same execution mode or reasoning level. Use High for broad evidence synthesis, risky multi-owner decisions, and substantial multi-file work; use a lighter supported level for trivial narrow edits when quality is preserved.
 - Codex Plan Mode is non-mutating: do not write files, update [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md), stage changes, untrack files, clean up artifacts, or otherwise implement work while still in Plan Mode.
 - If an implementation or cleanup request arrives while still in Codex Plan Mode, return a decision-complete proposed plan instead of editing files.
-- Prefer ChatGPT via GitHub Connector for small repo-aware docs, handoff, audit, or tiny GitHub file edits when quality will not be sacrificed.
+- Prefer ChatGPT via GitHub Connector for small repo-aware docs, handoff, audit, prompt-file, or tiny GitHub file edits when quality will not be sacrificed.
 - Use Codex for local validation, multi-file code/content changes, commands, tests, or edits that need the local working tree.
 - Each detailed Codex output written to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) must state:
   - source version/run
@@ -54,6 +55,9 @@
 
 - Copy-paste prompts should not include the platform/tool label inside the prompt body.
 - State the platform/tool label outside and before the copy-paste prompt.
+- [docs/dev/current-codex-prompt.md](docs/dev/current-codex-prompt.md) stores the authoritative active prompt body and should not include the platform/tool/mode line.
+- When GPT generates, advances, or revises the next Codex prompt, it must update `docs/dev/current-codex-prompt.md`, fetch the file to verify the write, and give the selected platform/tool/mode line directly in chat.
+- For the active `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`, the chat mode line is `Codex 5.6 Sol Local High.`
 - Do not include phrases like "I have included necessary files" unless the user must manually attach, move, upload, or provide files for that run.
 - Tell the user explicitly when they should include files, move files, upload files, pull/sync/push, or otherwise change files manually before running a prompt.
 - If no manual file action is needed, omit file-inclusion language entirely.
