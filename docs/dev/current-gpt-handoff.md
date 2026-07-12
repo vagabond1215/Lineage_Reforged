@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection
+Source version/run: Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`
+- `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
+- `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
 
-## Selection Result
+## Audit Result
 
-Diplomacy/conflict is the smallest eligible unresolved static authority lane. Two planned polity identities are live and normally validated, and the permanent civic boundary already separates diplomatic relations, conflicts, claims/borders/control, government, jurisdiction, law, force, places, and runtime.
+Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward. No collection path or diplomatic-relation prefix is approved.
 
-The next audit should classify targeted polity, map conflict-zone, place, quest, design, consumer, and runtime signals. Existing map `conflictZones` remain map descriptors and must not become canonical conflicts. The audit must distinguish a diplomatic relation from conflict identity/history, claims/control, current war state, runtime hostility, battles, armies, occupation, treaties, negotiation, reputation, and gameplay.
+The two planned polities provide actor identity only and have no authored relation. Four world-map conflict zones are valid map summaries with names, prose, and region ids, but no stable ids, canonical participants, dates, lifecycle/effective status, causes, outcomes, or provenance. Region/settlement/quest raid and border language remains place/security/quest context. UI/creator diplomacy/warfare prose, combat allies, spawn hostility, reputation `wartime`, validators, tests, and design vocabulary remain presentation, combat, mutable, guardrail, or hypothetical evidence.
 
-The audit may carry forward zero ids and select at most one later boundary or fail-closed deferral route. No collection/prefix, schema, content, reference, migration, consumer, diplomacy/war runtime, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
+## Remaining Guardrails
 
-## Preserved Guardrails
+Diplomacy and conflict require separate future owners. Diplomacy is an actor relationship; conflict is a dispute/war/rebellion/occupation-struggle identity/history. Claims, borders, control, occupation state, government, jurisdiction, law, force, factions/institutions, places, battles, current hostility, negotiation, treaties, war simulation, runtime, UI, and save/account remain separate.
 
-Force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated. Service, resource/commodity, and combat health remain paused. Generic POI remains rejected; Highcrown Knowledge remains closed; office remains not schema-ready. Claims/borders/control remain separate. Property, construction, agriculture, maritime, temporal, progression, manuscript, magic runtime, save/account, and runtime ownership transition remain research/dependency/maturity gated.
+Neither owner is schema-ready. The next decision must address actor/participant references, direction/cardinality, lifecycle versus effective temporal validity, historical versus current state, identity criteria, overlap, and schema/deferral readiness. It must keep zero ids unless new canon exists and authorize no content, schema, references, migrations, consumers, political runtime, Deep Research, user question, support suffix, or `0.6.0` transition.
 
 Suggested next commit:
 
-`docs(civic): audit diplomacy conflict evidence`
+`docs(civic): decide diplomacy conflict boundary`

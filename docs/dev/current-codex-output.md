@@ -1,20 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection
+Source version/run: Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit
 Date: 2026-07-12
-Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`; required fetch and fast-forward pull reported `Already up to date.`
+Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`; verified the expected active prompt after four newer GPT workflow/prompt-packaging commits and required fetch/fast-forward pull reported `Already up to date.`
 
 ## Result
 
-Reviewed current gates, pauses, rejections, closures, research dependencies, maturity boundaries, and remaining eligible docs-first lanes. Preserved force/public order, government/jurisdiction, business, faction, institution, and People/NPC gates; service, resource/commodity, and combat-health pauses; POI rejection; Highcrown Knowledge closure; office, manuscript, magic, save/account, and runtime guardrails.
+Audited targeted diplomacy/conflict evidence. Found exactly zero diplomatic-relation ids and zero `conflict.*` ids.
 
-Selected `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit` as the smallest safe next route. Two planned polity identities and the permanent civic separation make repository-local evidence classification dependency-correct. Existing map conflict zones remain descriptors, not canonical conflicts. Claims/borders/control and political runtime remain separate.
+Confirmed the two planned polities supply actor identity only. Classified four world-map conflict zones as display/reference summaries: their schema provides only name, summary, and region ids, with no stable conflict id, canonical participants, dates, status, cause, outcome, or provenance. Region/settlement/quest raid and border wording remains place/security/quest context. UI/creator diplomacy and warfare prose, combat allies, spawn hostility, reputation `wartime`, validation, tests, and design vocabulary remain presentation, combat, mutable, guardrail, or hypothetical evidence.
 
-Authorized no candidates, content, schema, references, migrations, consumers, Deep Research, runtime, UI, save/account, or gameplay.
+Selected `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision` next. Diplomacy and conflict require separate future owners; claims/borders/control/occupation and political runtime remain separate. No schema plan is approved.
 
 ## Files Changed
 
-- `docs/design/roadmap-post-force-public-order-deferral-selection.md`
+- `docs/design/diplomacy-conflict-authority-evidence-audit.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -24,30 +24,32 @@ Authorized no candidates, content, schema, references, migrations, consumers, De
 
 ## Checks Run
 
-- Required branch status, fetch, and fast-forward pull.
-- Required README, current coordination, force deferral, prior roadmap selections, pipeline/roadmap/backlog, future-system ledger, civic boundary, polity posture, and targeted conflict-zone eligibility reads.
+- Required branch status, active-prompt verification, fetch, and fast-forward pull.
+- Required current workflow instructions, README, coordination, roadmap-selection, civic, polity schema/seed, sequence, roadmap, and backlog reads.
+- Targeted authority-path, exact-id, polity, map conflict-zone, region/settlement, quest, schema/validator, test, design, UI/creator, combat/encounter/spawn, reputation, consumer, and runtime scans.
 - `node --test tests/unit/polity-validation.test.mjs`.
 - `node --test tests/unit/institution-validation.test.mjs`.
 - `node --test tests/unit/schema-files.test.mjs`.
 - `npm.cmd run tool:content-lint`.
-- Docs-only scope, unchanged code/content/scaffolds/current owners, no-candidate, absent content/schema/reference/migration/consumer/runtime changes, gate/pause/rejection/closure, artifact, conflict-marker, whitespace, and route-pointer checks.
+- Docs-only scope, unchanged code/content/scaffolds/current owners, zero-candidate, absent diplomacy/conflict/claim/control content/schema/reference/migration/consumer/runtime changes, gated-lane, artifact, conflict-marker, whitespace, and route-pointer checks.
 - `git diff --check`.
 - `git status --short --branch`.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No runtime, JSON/content, schema, validator, test, normal-lint registration, contract, polity, map, quest, combat, UI, save/account, or gameplay behavior changed.
+Documentation only. No runtime, JSON/content, schema, validator, test, normal-lint registration, contract, polity, map, region, settlement, quest, combat, reputation, UI, save/account, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The selected audit must not convert map conflict-zone summaries or political prose into canonical conflicts.
-- Diplomacy, conflict, claims/borders/control, and current political/war runtime must remain distinct.
-- The audit may safely carry zero ids and fail closed.
+- Map conflict-zone summaries must not be normalized into conflict ids.
+- Actor/participant references, direction/cardinality, temporal validity/history, and current-versus-static state remain unresolved.
+- The next boundary decision may safely fail closed and select an authored-input/ready-consumer deferral.
+- `AGENTS.md` still names the completed `0.5.349` chat mode line; updating that workflow-only pointer was outside this prompt's allowed files. The next prompt body itself is correctly packaged without a platform/mode line.
 
 ## Next Recommended Version
 
-Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit
+Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision
 
 ## Suggested Commit Message
 
-docs(roadmap): select post-force deferral route
+docs(civic): audit diplomacy conflict evidence
