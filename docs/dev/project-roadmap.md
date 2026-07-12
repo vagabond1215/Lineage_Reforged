@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.331 - Institution Authority Seed Evidence Audit`
+- Latest completed version: `Version 0.5.332 - Institution Authority Seed Evidence Deferral`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.332 - Institution Authority Seed Evidence Deferral`
+- Next recommended version: `Version 0.5.333 - Roadmap Post-Institution Deferral Selection`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -187,6 +187,7 @@ Versioning rule:
 - `Version 0.5.329 - Institution Authority Schema Plan` added `docs/design/institution-authority-schema-plan.md`; defined a strict records-only institution identity contract, controlled lifecycle/category/public-posture vocabulary, no first-pass references, pure validation and focused tests, separate content/registration gates, and selected `Version 0.5.330 - Institution Authority Schema And Validator`.
 - `Version 0.5.330 - Institution Authority Schema And Validator` added the strict institution schema, pure issue-returning validator, 120 focused tests, and schema-file parse coverage; kept live content, normal registration, candidates, references, resolver logic, and consumers absent; and selected `Version 0.5.331 - Institution Authority Seed Evidence Audit`.
 - `Version 0.5.331 - Institution Authority Seed Evidence Audit` added `docs/design/institution-authority-seed-evidence-audit.md`; found no complete durable canonical candidate across place, guild/order, presentation, consumer, prose, derived/runtime, demo, test, or hypothetical sources; carried forward exactly zero ids; and selected `Version 0.5.332 - Institution Authority Seed Evidence Deferral`.
+- `Version 0.5.332 - Institution Authority Seed Evidence Deferral` added `docs/design/institution-authority-seed-evidence-deferral.md`; fixed reopening to explicit user-authored canon, a new intentional canonical source, or an authorized authorship pass; prohibited unchanged-source rescans; preserved zero ids and separate content/registration/consumer gates; and selected `Version 0.5.333 - Roadmap Post-Institution Deferral Selection`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -480,9 +481,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.332 - Institution Authority Seed Evidence Deferral`
+1. `0.5.333 - Roadmap Post-Institution Deferral Selection`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.332`. Faction and People/NPC are authored-input gated; institution now also has zero approved seed ids; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should formalize institution seed deferral and route back to roadmap selection.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.333`. Faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should compare remaining eligible lanes and select exactly one smallest safe docs-first route.
 
 High-priority unresolved questions:
 

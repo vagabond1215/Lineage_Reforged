@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.331 - Institution Authority Seed Evidence Audit
+Source version/run: Version 0.5.332 - Institution Authority Seed Evidence Deferral
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.331 - Institution Authority Seed Evidence Audit`
+- `Version 0.5.332 - Institution Authority Seed Evidence Deferral`
 
 Latest completed support/audit run:
 
@@ -15,30 +15,28 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.332 - Institution Authority Seed Evidence Deferral`
+- `Version 0.5.333 - Roadmap Post-Institution Deferral Selection`
 
-## Audit Result
+## Institution Deferral Posture
 
-No current source meets the complete institution seed gate. Exactly zero ids carry forward.
+Exactly zero institution ids carry forward. Do not rerun the completed evidence audit against unchanged sources.
 
-- Archive Districts and Market Courts are canonical districts, not institutions.
-- Generic archive/court/hospice/school/academy/facility terms are partial place/prose evidence.
-- Guilds and religious orders retain their existing owners.
-- Quest office/archive anchors are presentation metadata.
-- Knowledge, Magic Study, backstory, and service institution fields are fail-closed consumer vocabulary.
-- Settlement institution profiles and runtime indexes are derived projections.
-- Demo/UI/test/design examples are non-canonical.
+Reopening requires one materially new input:
 
-## Required Deferral Posture
+- an explicit user-authored canonical institution list with complete seed facts;
+- a new canonical source intentionally naming enduring institution bodies; or
+- an explicitly authorized institution-content authorship pass.
 
-`0.5.332` should fix the reopening gate to an explicit user-authored institution list or a new durable canonical source that supplies all seed facts. It should prohibit repeated scans without new canon and route back to roadmap selection.
+Consumer code, generic prose, hooks, external research, generated/derived state, tests, or another broad scan do not reopen the gate.
 
-Keep live content, normal registration, candidates, references, resolvers, consumers, and office work closed. The accepted schema/validator/test scaffold remains unchanged.
+Keep live content, normal registration, references, Knowledge/Magic Study and other consumers, runtime, and office work closed. The strict schema/validator/test scaffold remains unchanged.
 
-No Deep Research, support-suffix run, or immediate explicit user question is needed.
+## Roadmap Selection Guardrails
 
-Faction and People/NPC remain authored-input blocked. Service, resource/commodity, and combat health remain paused. Generic `world.pois` remains rejected. Highcrown Knowledge remains closed.
+`0.5.333` should compare remaining eligible lanes without reopening institution, faction, People/NPC, service, resource/commodity, combat health, generic POI, Highcrown Knowledge, or office by default. It should select one smallest safe docs-first route, or an explicit question/research/support gate only if genuinely necessary.
+
+No Deep Research, support-suffix run, or institution user question is currently required.
 
 Suggested next commit:
 
-`docs(civ): audit institution seed evidence`
+`docs(civ): defer institution seed evidence`
