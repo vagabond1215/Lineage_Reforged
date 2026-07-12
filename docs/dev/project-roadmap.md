@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.346 - Force Public Order Authority Boundary Decision`
+- Latest completed version: `Version 0.5.347 - Force Public Order Authority Evidence Deferral`
 - Latest support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Next recommended version: `Version 0.5.347 - Force Public Order Authority Evidence Deferral`
+- Next recommended version: `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -202,6 +202,7 @@ Versioning rule:
 - `Version 0.5.344 - Roadmap Post-Government-Jurisdiction Deferral Selection` added `docs/design/roadmap-post-government-jurisdiction-deferral-selection.md`; preserved all gates, pauses, rejections, closures, law sequencing, and runtime maturity boundaries; selected force/public order as the strongest eligible docs-first lane; kept enforcement/runtime separate; and selected `Version 0.5.345 - Force Public Order Authority Evidence Audit`.
 - `Version 0.5.345 - Force Public Order Authority Evidence Audit` added `docs/design/force-public-order-authority-evidence-audit.md`; classified Aurelis Civic Watch, 28 broad settlement descriptor matches, route-security scaffolding/fixtures, synthetic authority/garrison ids, combat, backstory, UI, reputation, test, and runtime signals; found exactly zero force ids; and selected `Version 0.5.346 - Force Public Order Authority Boundary Decision`.
 - `Version 0.5.346 - Force Public Order Authority Boundary Decision` added `docs/design/force-public-order-authority-boundary-decision.md`; selected one broad future static force identity family for enduring civic-watch, militia, garrison, military-force, and route-security organizations; protected every adjacent identity, relationship, overlay, combat, enforcement, and runtime owner; carried forward zero ids; rejected a semantically unsafe reference-free schema plan; and selected `Version 0.5.347 - Force Public Order Authority Evidence Deferral`.
+- `Version 0.5.347 - Force Public Order Authority Evidence Deferral` added `docs/design/force-public-order-authority-evidence-deferral.md`; fixed explicit force-canon, new-source, authorized-authorship, and ready-consumer reopening inputs; prohibited unchanged-source rescans and schema planning; preserved one broad family, exactly zero ids, intrinsic relationship requirements, and separate future gates; and selected `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`.
 - `Version 0.5.344.1 - Living Character Manuscript Research Integration` completed as a support route after `0.5.345` landed; added `docs/design/living-character-manuscript-design-boundary.md`, reconciled current quest, session Chronicle, discovery, emitted-event, save, account run-history, run-end projection, and UI owners, kept generated prose presentation-only, retired the temporary research artifact, gated all implementation, and preserved `Version 0.5.346 - Force Public Order Authority Boundary Decision` as the next primary route.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
@@ -496,9 +497,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.347 - Force Public Order Authority Evidence Deferral`
+1. `0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.347`. Living Character Manuscript implementation remains gated behind historical retention, provenance, knowledge/spoiler, persistence/revision, fallback, and quality readiness. Government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should fix the force/public-order authored-input/ready-consumer reopening gate with zero ids and no implementation.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.348`. Living Character Manuscript implementation remains gated behind historical retention, provenance, knowledge/spoiler, persistence/revision, fallback, and quality readiness. Force/public order, government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should select one smallest safe remaining docs-first route without reopening gated work.
 
 High-priority unresolved questions:
 

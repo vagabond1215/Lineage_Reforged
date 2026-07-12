@@ -1,20 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.346 - Force Public Order Authority Boundary Decision
+Source version/run: Version 0.5.347 - Force Public Order Authority Evidence Deferral
 Date: 2026-07-12
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`; required fetch and fast-forward pull reported `Already up to date.`
 
 ## Result
 
-Selected one broad future static force identity family for enduring organized civic-watch, militia, garrison, standing military-force, and route-security bodies. Kept religious orders, guilds, institutions, factions, businesses, offices, places/facilities, professions/roles, combat units, route-security posture, law/enforcement, quest/reputation, and runtime under their separate owners.
+Paused force/public-order schema planning, seed planning, content, references, consumers, and integration. Preserved one broad future static force identity family and exactly zero `force.*` ids.
 
-Carried forward exactly zero `force.*` ids. Aurelis Civic Watch remains ambiguous quest presentation; settlement force-like signals remain place descriptors; route-security watch ids remain fixtures; synthetic military/civil authority and garrison ids remain derived.
+Fixed reopening to explicit approved force canon, a materially new canonical source, an authorized civic-content authorship pass, or a ready consumer proving the smallest coherent identity-plus-relationship contract. A ready consumer may reopen schema review but cannot mint canon or authorize a seed.
 
-Rejected schema planning because affiliation, mandate, coverage, and headquarters are intrinsic relationship concepts and current evidence proves neither a canonical seed nor a decision-complete reference contract. Selected fail-closed `Version 0.5.347 - Force Public Order Authority Evidence Deferral` next.
+Required complete identity, primary-owner, form, affiliation, mandate, coverage, headquarters, lifecycle, public-posture, provenance, validation, and non-implication evidence. Prohibited unchanged-source rescans and kept readiness, schema plan, schema/validator, seed plan, content, registration, reference, consumer, and runtime as separate future gates. Selected `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection` next.
 
 ## Files Changed
 
-- `docs/design/force-public-order-authority-boundary-decision.md`
+- `docs/design/force-public-order-authority-evidence-deferral.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -25,7 +25,8 @@ Rejected schema planning because affiliation, mandate, coverage, and headquarter
 ## Checks Run
 
 - Required branch status, fetch, and fast-forward pull.
-- Required README, current coordination, completed evidence audit, civic, government/jurisdiction, institution/office, and route-security boundary/schema reads.
+- Required README, current coordination, force audit/boundary, and prior government/jurisdiction, institution, faction, business, and People/NPC deferral-pattern reads.
+- No repeated force/public-order evidence discovery was performed.
 - `node --test tests/unit/polity-validation.test.mjs`.
 - `node --test tests/unit/institution-validation.test.mjs`.
 - `node --test tests/unit/schema-files.test.mjs`.
@@ -40,14 +41,14 @@ Documentation only. No runtime, JSON/content, schema, validator, test, normal-li
 
 ## Risks / Follow-Up
 
-- The broad family boundary does not make force authority schema-ready. A reference-free shell would not safely distinguish a force from adjacent organizations or runtime groups.
-- The next pass must require materially new authored canon or a ready consumer and prohibit unchanged-source rescans.
-- Schema, content, registration, relationships, consumers, and runtime remain separate future gates.
+- Future prompts must name a materially new qualifying input before revisiting force schema or seed readiness.
+- Consumer demand alone cannot create force canon.
+- The next roadmap selection must preserve every current gate, pause, rejection, closure, and maturity boundary.
 
 ## Next Recommended Version
 
-Version 0.5.347 - Force Public Order Authority Evidence Deferral
+Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection
 
 ## Suggested Commit Message
 
-docs(civic): decide force public-order boundary
+docs(civic): defer force public-order evidence

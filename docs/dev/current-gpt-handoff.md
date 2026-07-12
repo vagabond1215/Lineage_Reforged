@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.346 - Force Public Order Authority Boundary Decision
+Source version/run: Version 0.5.347 - Force Public Order Authority Evidence Deferral
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.346 - Force Public Order Authority Boundary Decision`
+- `Version 0.5.347 - Force Public Order Authority Evidence Deferral`
 
 Latest completed support/audit run:
 
@@ -15,22 +15,22 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.347 - Force Public Order Authority Evidence Deferral`
+- `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`
 
-## Boundary Result
+## Deferral Result
 
-Select one broad future static force identity family for enduring organized bodies whose primary identity is civic protection, militia service, garrison duty, standing military service, or route protection. Do not create separate watch, militia, garrison, military-force, or route-security-body collections.
+Force/public order is paused with one broad future static family and exactly zero `force.*` ids. The completed audit and boundary decision must not be rerun against unchanged quest, place, route-security, synthetic, combat, backstory, UI, reputation, test, or runtime sources.
 
-Religious orders, guilds, institutions, factions, businesses, offices, places/facilities, professions/roles, combat units/parties, route-security posture, quest/reputation state, law/enforcement, and runtime remain separately owned. Mixed organizations require one primary identity owner and must not be duplicated as force records.
+Reopening requires explicit approved force canon, a materially new canonical repository source, an authorized civic-content authorship pass, or a ready consumer that proves the smallest coherent identity-plus-relationship contract. A ready consumer may reopen schema review but cannot mint canon or authorize a seed.
 
-Exactly zero `force.*` ids carry forward. Aurelis Civic Watch remains ambiguous quest presentation; settlement signals remain place descriptors; route-security watch ids remain fixtures; synthetic authority/garrison ids remain derived.
+The future gate requires exact identity, primary-owner, form, affiliation, mandate, coverage, headquarters, lifecycle, public-posture, provenance, validation, and non-implication facts. Schema plan, schema/validator, seed plan, content, registration, references, consumers, and runtime remain separate gates.
 
-## Readiness And Guardrails
+## Remaining Guardrails
 
-Affiliation, mandate, coverage, and headquarters are intrinsic to distinguishing a force from a generic organization, but current evidence proves no canonical candidate or decision-complete relationship contract. A reference-free identity shell is therefore semantically unsafe. Force authority is boundary-ready but not schema-ready.
+Force/public order joins government/jurisdiction, business, faction, institution, and People/NPC as gated. Service, resource/commodity, and combat health remain paused. Generic POI remains rejected; Highcrown Knowledge remains closed; office is not schema-ready; Living Character Manuscript and runtime ownership transition remain maturity-gated.
 
-The next pass must fix exact authored-input/ready-consumer reopening conditions and prohibit rescanning unchanged quest, place, route-security, derived, combat, backstory, UI, test, and runtime evidence. No schema, content, registration, references, migrations, consumers, enforcement, patrol, AI, spawn, arrest, case, runtime, UI, save/account, gameplay, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
+The next run should select exactly one smallest safe docs-first route without reopening gated, paused, rejected, or closed lanes. No force candidate, collection/prefix, schema, content, reference, migration, consumer, enforcement, patrol, combat/runtime, user question, Deep Research, support suffix, or `0.6.0` transition is approved.
 
 Suggested next commit:
 
-`docs(civic): defer force public-order evidence`
+`docs(roadmap): select post-force deferral route`
