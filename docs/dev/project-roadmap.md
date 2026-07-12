@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.340 - Roadmap Post-Business Deferral Selection`
+- Latest completed version: `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`
+- Next recommended version: `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -196,6 +196,7 @@ Versioning rule:
 - `Version 0.5.338 - Business Authority Seed Evidence Audit` added `docs/design/business-authority-seed-evidence-audit.md`; applied the complete record gate to Ironwheel and other already-classified evidence; found no complete canonical candidate; carried forward exactly zero ids; and selected `Version 0.5.339 - Business Authority Seed Evidence Deferral`.
 - `Version 0.5.339 - Business Authority Seed Evidence Deferral` added `docs/design/business-authority-seed-evidence-deferral.md`; fixed the exact authored-input reopening gate; prohibited unchanged-source rescans; preserved zero ids, the reference-free scaffold, separate content/registration/consumer gates, current owners, and prefixes; and selected `Version 0.5.340 - Roadmap Post-Business Deferral Selection`.
 - `Version 0.5.340 - Roadmap Post-Business Deferral Selection` added `docs/design/roadmap-post-business-deferral-selection.md`; preserved all authored-input gates, pauses, rejections, closures, and runtime maturity boundaries; selected government/jurisdiction as the strongest eligible docs-first lane; kept law downstream and force/enforcement separate; and selected `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit`.
+- `Version 0.5.341 - Government Jurisdiction Authority Evidence Audit` added `docs/design/government-jurisdiction-authority-evidence-audit.md`; classified polity/place, settlement administration, two quest office anchors, synthetic authority/property projections, legal/access/runtime vocabulary, consumers, and guardrails; found exactly zero government and zero jurisdiction ids; kept law and force separate; and selected `Version 0.5.342 - Government Jurisdiction Authority Boundary Decision`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -489,9 +490,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.341 - Government Jurisdiction Authority Evidence Audit`
+1. `0.5.342 - Government Jurisdiction Authority Boundary Decision`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.341`. Business, faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should audit government and jurisdiction evidence without inferring authority or implementing content.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.342`. Business, faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should decide the government/jurisdiction owner boundary with zero ids and no implementation.
 
 High-priority unresolved questions:
 
