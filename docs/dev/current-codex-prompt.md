@@ -4,24 +4,23 @@ Codex 5.6 Sol Local High.
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the focused post-force/public-order roadmap selection:
+Run the focused diplomacy/conflict authority evidence audit:
 
-`Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`
+`Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.347 - Force Public Order Authority Evidence Deferral`
+- Latest completed primary: `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`
 - Latest completed support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Immediate next primary route: `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection`
-- Force/public order is authored-input/ready-consumer gated with one broad future family and exactly zero ids.
-- Government/jurisdiction, business, faction, institution, and People/NPC remain gated.
-- Service, resource/commodity, and combat health remain paused.
-- Generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed; office remains not schema-ready.
-- Living Character Manuscript implementation and runtime ownership transition remain maturity-gated.
+- Immediate next primary route: `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
+- Exactly two planned polity identities are live and normally validated.
+- Diplomatic relations, conflicts, claims/borders/control, government, jurisdiction, law, force, places, and runtime are separate owners.
+- Existing map `conflictZones` are descriptors, not canonical conflicts.
+- No diplomacy/conflict collection, schema, validator, content, registration, or runtime authority is approved.
 
 ## Purpose
 
-Review the current permanent roadmap, sequence, backlog, completed boundaries, pauses, closures, and readiness gates. Select exactly one smallest safe next docs-first route without reopening force/public order or any other gated, paused, rejected, or closed lane. Do not implement anything.
+Classify current repository evidence for static diplomatic relations and conflict identities/history. Determine whether any canonical candidates exist, preserve separate claims/borders/control and runtime owners, and select at most one later boundary decision or fail-closed deferral. Do not implement anything.
 
 ## Required first steps
 
@@ -37,36 +36,39 @@ Read at minimum:
 
 - `AGENTS.md` and `README.md`;
 - current output, handoff, prompt, sequence, roadmap, and backlog;
-- `docs/design/force-public-order-authority-evidence-deferral.md`;
-- the latest permanent deferral, pause, rejection, closure, pipeline, and roadmap-selection authorities needed to classify remaining lanes;
-- `docs/design/future-system-design-ledger.md` only for durable unresolved criteria, not as implementation permission.
+- `docs/design/roadmap-post-force-public-order-deferral-selection.md`;
+- `docs/design/civic-authority-boundary-decision.md`;
+- polity schema/seed boundaries and current live polity posture;
+- exact current map conflict-zone, region/settlement, quest, design, consumer, and runtime surfaces only as needed to classify diplomacy/conflict evidence.
 
-Keep inspection roadmap-focused. Do not repeat completed evidence audits or broaden into content/runtime discovery.
+Keep discovery targeted. Do not audit claims/borders/control, political simulation, war runtime, or every use of generic combat/conflict language.
 
 ## Expected output
 
 Add:
 
-- `docs/design/roadmap-post-force-public-order-deferral-selection.md`
+- `docs/design/diplomacy-conflict-authority-evidence-audit.md`
 
-## Required selection decisions
+## Required audit decisions
 
-- inventory current gated, paused, rejected, closed, completed, and genuinely eligible lanes;
-- preserve exact reopening conditions for force/public order, government/jurisdiction, business, faction, institution, and People/NPC;
-- preserve service, resource/commodity, combat-health, POI, Highcrown Knowledge, office, manuscript, magic-runtime, save/account, and runtime-maturity guardrails;
-- compare only currently eligible documentation, authority-boundary, stabilization, research-readiness, or runtime-readiness planning routes;
-- select exactly one smallest safe next primary version/run and explain why it is eligible and dependency-correct;
-- authorize no schema, content, candidates, references, migrations, consumers, runtime, UI, save/account, or gameplay in this selection pass;
-- decide Deep Research, explicit-user-question, support-suffix, and temporary-guardrail posture;
-- remain in `0.5.x` unless a dedicated runtime-readiness decision already proves the `0.6.x` transition, which it currently does not.
+- confirm whether dedicated diplomacy/conflict authorities, schemas, validators, focused tests, content, and normal registration exist;
+- inventory and classify exact polity, map conflict-zone, place, quest, derived, design, consumer, test, and runtime signals;
+- distinguish a diplomatic relation from polity identity, recognition/vassalage/claim/control, faction reputation, current hostility, negotiation, treaty execution, and runtime state;
+- distinguish a conflict identity/history from map zone, place prose, quest/combat event, battle/encounter, current war state, occupation/control, and simulation;
+- keep claims, borders, control, occupation, government, jurisdiction, law, force, faction, institution, places, combat, events, runtime, UI, and save/account separately owned;
+- reject map `conflictZones`, prose, synthetic ids, fixtures, UI, and runtime labels as canon unless a durable authority is explicit;
+- carry forward exact candidate ids only if complete canonical identity and relationship/history evidence exists; otherwise carry zero;
+- decide whether diplomacy and conflict require separate future owners and whether a focused boundary decision is justified;
+- select at most one next docs-only boundary or evidence-deferral route;
+- decide Deep Research, explicit-user-question, support-suffix, and temporary-guardrail posture.
 
 ## Guardrails
 
-Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent candidates, author canon, promote current strings, add references, normalize prefixes, enable consumers, or plan enforcement/patrol/combat/magic runtime behavior. Do not reopen gated, paused, rejected, or closed lanes. Do not run Deep Research.
+Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent diplomatic pairs, conflicts, participants, causes, dates, outcomes, claims, borders, treaties, alliances, wars, ids, or canon. Do not add references, normalize prefixes, enable consumers, or plan diplomacy/war/combat runtime. Do not reopen gated, paused, rejected, or closed lanes. Do not run Deep Research.
 
 ## Allowed changes
 
-- `docs/design/roadmap-post-force-public-order-deferral-selection.md`
+- `docs/design/diplomacy-conflict-authority-evidence-audit.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -87,8 +89,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, unchanged code/content/scaffolds/current owners, no candidate ids, no content/schema/reference/migration/consumer changes, no gated-lane reopening, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers.
+Verify docs-only scope, unchanged code/content/scaffolds/current owners, no invented candidate ids, no diplomacy/conflict/claim/control content or schema changes, no references/migrations/consumer/runtime changes, no gated-lane reopening, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers.
 
 ## Suggested commit message
 
-`docs(roadmap): select post-force deferral route`
+`docs(civic): audit diplomacy conflict evidence`

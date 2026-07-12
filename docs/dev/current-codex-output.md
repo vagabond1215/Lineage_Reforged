@@ -1,20 +1,20 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.347 - Force Public Order Authority Evidence Deferral
+Source version/run: Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection
 Date: 2026-07-12
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`; required fetch and fast-forward pull reported `Already up to date.`
 
 ## Result
 
-Paused force/public-order schema planning, seed planning, content, references, consumers, and integration. Preserved one broad future static force identity family and exactly zero `force.*` ids.
+Reviewed current gates, pauses, rejections, closures, research dependencies, maturity boundaries, and remaining eligible docs-first lanes. Preserved force/public order, government/jurisdiction, business, faction, institution, and People/NPC gates; service, resource/commodity, and combat-health pauses; POI rejection; Highcrown Knowledge closure; office, manuscript, magic, save/account, and runtime guardrails.
 
-Fixed reopening to explicit approved force canon, a materially new canonical source, an authorized civic-content authorship pass, or a ready consumer proving the smallest coherent identity-plus-relationship contract. A ready consumer may reopen schema review but cannot mint canon or authorize a seed.
+Selected `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit` as the smallest safe next route. Two planned polity identities and the permanent civic separation make repository-local evidence classification dependency-correct. Existing map conflict zones remain descriptors, not canonical conflicts. Claims/borders/control and political runtime remain separate.
 
-Required complete identity, primary-owner, form, affiliation, mandate, coverage, headquarters, lifecycle, public-posture, provenance, validation, and non-implication evidence. Prohibited unchanged-source rescans and kept readiness, schema plan, schema/validator, seed plan, content, registration, reference, consumer, and runtime as separate future gates. Selected `Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection` next.
+Authorized no candidates, content, schema, references, migrations, consumers, Deep Research, runtime, UI, save/account, or gameplay.
 
 ## Files Changed
 
-- `docs/design/force-public-order-authority-evidence-deferral.md`
+- `docs/design/roadmap-post-force-public-order-deferral-selection.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -25,30 +25,29 @@ Required complete identity, primary-owner, form, affiliation, mandate, coverage,
 ## Checks Run
 
 - Required branch status, fetch, and fast-forward pull.
-- Required README, current coordination, force audit/boundary, and prior government/jurisdiction, institution, faction, business, and People/NPC deferral-pattern reads.
-- No repeated force/public-order evidence discovery was performed.
+- Required README, current coordination, force deferral, prior roadmap selections, pipeline/roadmap/backlog, future-system ledger, civic boundary, polity posture, and targeted conflict-zone eligibility reads.
 - `node --test tests/unit/polity-validation.test.mjs`.
 - `node --test tests/unit/institution-validation.test.mjs`.
 - `node --test tests/unit/schema-files.test.mjs`.
 - `npm.cmd run tool:content-lint`.
-- Docs-only scope, unchanged code/content/scaffolds/current owners, zero-candidate, absent force/government/jurisdiction/law/office content/schema/reference/migration/consumer changes, gated-lane, artifact, conflict-marker, whitespace, and route-pointer checks.
+- Docs-only scope, unchanged code/content/scaffolds/current owners, no-candidate, absent content/schema/reference/migration/consumer/runtime changes, gate/pause/rejection/closure, artifact, conflict-marker, whitespace, and route-pointer checks.
 - `git diff --check`.
 - `git status --short --branch`.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No runtime, JSON/content, schema, validator, test, normal-lint registration, contract, quest, place, route-security, combat, reputation, UI, save/account, or gameplay behavior changed.
+Documentation only. No runtime, JSON/content, schema, validator, test, normal-lint registration, contract, polity, map, quest, combat, UI, save/account, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Future prompts must name a materially new qualifying input before revisiting force schema or seed readiness.
-- Consumer demand alone cannot create force canon.
-- The next roadmap selection must preserve every current gate, pause, rejection, closure, and maturity boundary.
+- The selected audit must not convert map conflict-zone summaries or political prose into canonical conflicts.
+- Diplomacy, conflict, claims/borders/control, and current political/war runtime must remain distinct.
+- The audit may safely carry zero ids and fail closed.
 
 ## Next Recommended Version
 
-Version 0.5.348 - Roadmap Post-Force-Public-Order Deferral Selection
+Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit
 
 ## Suggested Commit Message
 
-docs(civic): defer force public-order evidence
+docs(roadmap): select post-force deferral route
