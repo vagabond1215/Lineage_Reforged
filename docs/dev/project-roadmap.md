@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.335 - Business Company Authority Boundary Decision`
+- Latest completed version: `Version 0.5.336 - Business Authority Schema Plan`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.336 - Business Authority Schema Plan`
+- Next recommended version: `Version 0.5.337 - Business Authority Schema And Validator`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -191,6 +191,7 @@ Versioning rule:
 - `Version 0.5.333 - Roadmap Post-Institution Deferral Selection` added `docs/design/roadmap-post-institution-deferral-selection.md`; classified remaining authority, research, ownership, progression, and runtime lanes; preserved all current gates; selected business/company as the one eligible focused evidence-audit lane; and selected `Version 0.5.334 - Business Company Authority Evidence Audit`.
 - `Version 0.5.334 - Business Company Authority Evidence Audit` added `docs/design/business-company-authority-evidence-audit.md`; classified Ironwheel as partial quest-owned authored evidence, business fields as template/account/UI vocabulary, company ids as synthetic derived state, and Gannet Cutter as demo/test-only; carried forward zero ids; and selected `Version 0.5.335 - Business Company Authority Boundary Decision`.
 - `Version 0.5.335 - Business Company Authority Boundary Decision` added `docs/design/business-company-authority-boundary-decision.md`; selected one future `civilization.businesses` static identity family with company as a possible descriptive form; protected template, place, provider, person/organization, property/account, economy/runtime, quest, UI, and save owners; carried forward zero ids; and selected `Version 0.5.336 - Business Authority Schema Plan`.
+- `Version 0.5.336 - Business Authority Schema Plan` added `docs/design/business-authority-schema-plan.md`; defined exact future paths, strict records-only fields, lifecycle/form/public-posture vocabularies, no first-pass references, pure validation and focused tests, absent live wrapper, separate seed/registration gates, zero candidates, and selected `Version 0.5.337 - Business Authority Schema And Validator`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -484,9 +485,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.336 - Business Authority Schema Plan`
+1. `0.5.337 - Business Authority Schema And Validator`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.336`. Faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should plan a strict content-free business identity schema/validation posture only and approve no content, candidates, references, prefix migration, providers, property, ledgers, or runtime work.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.337`. Faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should add business schema/validator/test scaffolding only and keep content, registration, candidates, references, migrations, and consumers absent.
 
 High-priority unresolved questions:
 

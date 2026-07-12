@@ -1,25 +1,26 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.335 - Business Company Authority Boundary Decision
+Source version/run: Version 0.5.336 - Business Authority Schema Plan
 Date: 2026-07-11
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`. `git pull --ff-only origin master` reported `Already up to date.`
 
 ## Result
 
-Added the docs-only business/company boundary decision. It:
+Added the docs-only business schema plan. It defines:
 
-- approves one future narrow `civilization.businesses` static commercial-body identity family in principle;
-- treats company as a possible descriptive business form, not a separate first-pass owner;
-- conceptually reserves `business.<lower_snake_slug>` without promoting or migrating current strings;
-- keeps templates, places, services/providers, people/organizations, property/account, economy/runtime, quest, UI, and save state separate;
-- defers branches, brands, ventures, sole traders, merchant houses, and generated operators;
-- carries forward exactly zero candidate ids.
+- exact future content/schema/validator/test paths;
+- a strict records-only static identity contract;
+- required `id`, `slug`, `name`, `status`, `form`, `publicPosture`, `summary`, provenance, and notes;
+- exact `business.<slug>` coherence and uniqueness;
+- controlled lifecycle, form, and visibility vocabularies;
+- no category/industry/type/scale field and no first-pass references;
+- pure fixture-driven validation, focused tests, schema parse coverage, absent live content, and separate seed/registration gates.
 
-Selected `Version 0.5.336 - Business Authority Schema Plan` next.
+Exactly zero candidates remain approved. Selected `Version 0.5.337 - Business Authority Schema And Validator` next.
 
 ## Files Changed
 
-- `docs/design/business-company-authority-boundary-decision.md`
+- `docs/design/business-authority-schema-plan.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -32,12 +33,12 @@ Selected `Version 0.5.336 - Business Authority Schema Plan` next.
 - `git status --short --branch`
 - `git fetch origin`
 - `git pull --ff-only origin master` (`Already up to date.`)
-- Required evidence audit, roadmap selection, nearby boundary/schema-plan patterns, economy/settlement/service/family/social boundaries, current-string, coordination, roadmap, and backlog reads.
-- No broad evidence discovery repeated.
+- Required boundary/audit, nearby schema plans/scaffolds, schema-test/normal-lint conventions, exact current-string, coordination, roadmap, and backlog reads.
+- No candidate evidence discovery repeated.
 - `node --test tests/unit/institution-validation.test.mjs` (passed: 120 tests).
 - `node --test tests/unit/schema-files.test.mjs` (passed: 104 tests).
 - `npm.cmd run tool:content-lint` (passed: 67 files checked).
-- Docs-only scope, unchanged content/contracts/runtime/UI/account/quest state, zero ids, no prefix migration, artifact, conflict-marker, trailing-whitespace, and route-pointer scans (passed; only the seven allowed documentation files changed).
+- Docs-only scope, unchanged content/contracts/runtime/UI/account/quest state, zero candidates, no prefix migration/consumer enablement, artifact, conflict-marker, trailing-whitespace, and route-pointer scans (passed; only the seven allowed documentation files changed).
 - `git diff --check` (passed; Git reported only expected LF-to-CRLF working-copy notices).
 - `git status --short --branch` (only the seven allowed documentation files are modified or untracked on `master`).
 
@@ -47,14 +48,14 @@ Documentation only. No content, schema, validator, test, normal content-lint reg
 
 ## Risks / Follow-Up
 
-- `0.5.336` must remain content-free and prefer a strict no-reference first contract.
-- Existing quest/account/demo `business.*` strings are not canonical records; generated `company.*` remains derived.
-- Ironwheel and Gannet Cutter remain unapproved candidates.
+- `0.5.337` must add validation scaffolding only and keep the live wrapper and normal registration absent.
+- The first schema must reject all references, commercial behavior, and mutable account/runtime fields.
+- Ironwheel, Gannet Cutter, generated company ids, and current consumer/template strings remain unpromoted.
 
 ## Next Recommended Version
 
-Version 0.5.336 - Business Authority Schema Plan
+Version 0.5.337 - Business Authority Schema And Validator
 
 ## Suggested Commit Message
 
-docs(economy): decide business company boundary
+docs(economy): plan business authority schema

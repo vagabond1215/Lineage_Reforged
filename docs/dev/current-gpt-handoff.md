@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.335 - Business Company Authority Boundary Decision
+Source version/run: Version 0.5.336 - Business Authority Schema Plan
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.335 - Business Company Authority Boundary Decision`
+- `Version 0.5.336 - Business Authority Schema Plan`
 
 Latest completed support/audit run:
 
@@ -15,27 +15,32 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.336 - Business Authority Schema Plan`
+- `Version 0.5.337 - Business Authority Schema And Validator`
 
-## Accepted Boundary
+## Accepted Contract
 
-- Future conceptual authority: `civilization.businesses`.
-- Future conceptual identity: `business.<lower_snake_slug>`.
-- Business is the broad static commercial-body family.
-- Company is a possible descriptive form, not a separate owner.
-- Static identity is limited to canonical descriptive identity, lifecycle, narrow classification/posture if safe, summary, provenance, and notes.
-- No first-pass owner, person, place, provider, property, account, economy, quest, or runtime fields.
+- Authority: `civilization.businesses`.
+- Future content: `packages/content/base/civilization/businesses.json` (must remain absent in `0.5.337`).
+- Schema: `packages/schemas/civilization/business.schema.json`.
+- Pure validator: `tools/content-lint/businesses.mjs`.
+- Focused tests: `tests/unit/business-validation.test.mjs`.
+- Exact fields: `id`, `slug`, `name`, `status`, `form`, `publicPosture`, `summary`, `sourceAuthorityNotes`, `notes`.
+- Identity: `business.<lower_snake_slug>` with exact coherence and uniqueness.
+- Lifecycle: `planned|active|retired`.
+- Form: `company|partnership|cooperative|other|unknown`.
+- Public posture: `public|semi_public|secret|unknown` as visibility only.
+- No category/industry/businessType/businessScale and no first-pass references.
 
 ## Guardrails
 
-Exactly zero candidates carry forward. Ironwheel remains partial quest-owned evidence; Gannet Cutter remains demo/test/account fixture; generated `company.*` remains synthetic. Existing prefixes are not renamed, migrated, aliased, or promoted.
+Implement schema, pure validator, focused tests, and schema parse coverage only. Do not create live content or edit normal content lint.
 
-Keep buildings/workplaces, places/facilities, services/providers, guilds/institutions/factions/polities/religions/families/People, property/account estate, workforce, stock/prices/contracts/finance, reputation, quests, runtime ledgers, UI, and save/account state separate.
+Exactly zero candidates carry forward. Ironwheel, Gannet Cutter, generated `company.*`, account assets, quest anchors, building/workplace vocabulary, settlement businesses, UI, demo, and tests remain unpromoted and separately owned.
 
-Branches, brands, ventures, sole traders, merchant houses, and generated operators remain deferred. Companies/partnerships may qualify only after explicit canon and the later seed gate.
+Reject people/owner/organization, place/facility/branch, service/provider/access, workforce/production, inventory/economy/finance, property/account, narrative/social, runtime/storage, and deferred-commercial fields.
 
-No Deep Research, explicit user question, or support-suffix run is required before `0.5.336`.
+No Deep Research, explicit user question, or support-suffix run is required before `0.5.337`.
 
 Suggested next commit:
 
-`docs(economy): decide business company boundary`
+`docs(economy): plan business authority schema`
