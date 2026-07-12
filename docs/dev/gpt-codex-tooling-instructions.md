@@ -1,345 +1,282 @@
-# GPT and Codex Tooling Instructions
+# GPT And Codex Tooling Instructions
 
-Date: 2026-06-21
+Date: 2026-07-12
 Status: active GPT/Codex operating guide for Lineage Reforged
-Audience: GPT threads, Codex prompt authors, and the user when choosing tools, skills, modes, and prompt shapes
+Audience: GPT threads, Codex prompt authors, and users choosing tools, modes, functions, and prompt packaging
 
 ## 1. Purpose
 
-This document standardizes how GPT should assist the user with Lineage Reforged across threads, especially when choosing among ChatGPT/GPT, Codex, Deep Research, GitHub connector tools, Codex skills, local repo workflows, artifact tools, prompt formats, and version tracking.
+This guide standardizes how Lineage Reforged work should be routed among GPT, the GitHub connector, Codex, Deep Research, web search, CI/review workflows, and specialized asset or game skills.
 
-Use this guide to:
+The goal is not to default to one tool or maximum reasoning for every task. Select the least expensive route that still preserves repository accuracy, scope control, validation quality, and user intent.
 
-- choose the best tool or skill for the task;
-- keep prompt formats consistent across threads;
-- preserve the `0.5.x` roadmap and versioning policy;
-- avoid using Deep Research when a standard Codex prompt is better;
-- avoid using game/UI/asset skills during docs/schema/content authority work unless they are truly relevant;
-- maintain clear separation between GPT reasoning, Deep Research reports, and Codex repo edits.
+Repository continuation, roadmap inspection, next-route selection, and prompt generation are GPT/Codex workflow tasks. Prior settlement-image or asset-prompt context must not override this workflow unless the user explicitly asks for visual production.
 
-This guide is operational guidance. It does not replace project authority decisions, schemas, content, validators, tests, or current handoff files.
+This guide is operational guidance. It does not replace current output, handoff, prompt, roadmap, permanent design decisions, schemas, validators, content, tests, or explicit user instructions.
 
-## 2. Always Check The Current Project State
+## 2. Current-State Authority
 
-At the start of any repo-related response, GPT should prefer live repo state over memory.
+At the start of repository work, prefer live repository state over memory.
 
-Authoritative coordination files:
+Use these sources in order:
 
-1. `docs/dev/current-codex-output.md` - exact latest run/result/status/checks.
-2. `docs/dev/current-gpt-handoff.md` - immediate GPT-side guardrails and next route.
-3. `docs/design/pipeline-roadmap-consolidation-decision.md` - durable post-`0.5.217` sequence, dependencies, artifact retirement, and research gates.
-4. `docs/design/gpt-deep-research-version-tracking-decision.md` - GPT Deep Research gate labels and tracking policy.
-5. `docs/dev/codex-sequenced-implementation-plan.md` - ordered near-term Codex queue.
-6. `docs/dev/project-roadmap.md` - long-term roadmap and maturity posture.
-7. `docs/future_content_backlog.md` - deferred work and historical notes.
+1. Latest commit and current `master` state.
+2. `docs/dev/current-codex-output.md`.
+3. `docs/dev/current-gpt-handoff.md`.
+4. `docs/dev/current-codex-prompt.md`.
+5. The active lane-specific decision, audit, deferral, pause, closure, or selection document.
+6. `docs/dev/codex-sequenced-implementation-plan.md`.
+7. `docs/dev/project-roadmap.md`.
+8. `docs/future_content_backlog.md`.
+9. `docs/design/pipeline-roadmap-consolidation-decision.md` and other durable coordination decisions.
+10. `docs/dev/gpt-repository-operating-instructions.md` for GPT command behavior and prompt persistence.
 
-When the user says `inspect last`, use the GitHub compare pattern:
+When sources conflict, prefer the newer and more specific source and report the mismatch.
 
-```text
-compare master~1..master
-```
+## 3. Routing Decision
 
-Then fetch the new/updated decision document and `docs/dev/current-codex-output.md` before giving a verdict.
+Before choosing a tool, classify the task:
 
-## 3. Tool And Mode Selection
+- **Repo inspection or next-route reasoning:** GPT plus GitHub connector.
+- **Prompt drafting or revision:** GPT plus GitHub connector; persist the prompt to the active prompt file.
+- **Narrow requested repo-doc write:** GPT plus GitHub connector when direct editing is sufficient.
+- **Local multi-file edit, command execution, tests, lint, or implementation:** Codex Local.
+- **Non-mutating implementation plan:** Codex Plan mode.
+- **Broad external research with citations:** Deep Research or web research, only when justified.
+- **Failing checks or CI logs:** CI Debug / GitHub Fix CI workflow.
+- **Review comments:** Review Follow-up workflow.
+- **Commit, push, or PR creation:** Publish Changes workflow when explicitly requested.
+- **Visual assets, mood boards, environment scenes, or image prompts:** image/creative tools only when explicitly requested.
+- **Browser UI, gameplay architecture, or playtesting:** game/browser skills only when the active task requires them.
 
-### 3.1 GPT / ChatGPT
+Do not use a visual or asset skill merely because earlier conversation context discussed settlement images.
 
-Use GPT for:
+## 4. GPT And GitHub Connector
 
-- reasoning over strategy;
-- choosing the next task;
-- writing or revising Codex prompts;
-- summarizing inspected repo state;
-- generating Deep Research prompts;
-- deciding whether a task needs Deep Research, Codex, or a specialized skill;
-- producing human-readable explanations and options.
+Use GPT for reasoning, route selection, prompt authorship, acceptance review, and concise explanation.
 
-Preferred project-facing model label when asked:
+Use the GitHub connector for repository evidence and narrow writes.
 
-```text
-GPT-5.5 Thinking
-```
+### 4.1 Function Selection
 
-### 3.2 Codex
+Choose connector functions deliberately:
 
-Use Codex for repo work that should inspect, edit, test, validate, or commit files.
+- `compare_commits` with `base: master~1` and `head: master` for `inspect last`.
+- `fetch_file` for known paths; pass `ref: master` for current-state reads.
+- `fetch_file` with `start_line` and `end_line` for long documents when only one section is needed.
+- repository-scoped `search` for exact terms, symbols, paths, ids, or evidence before opening large files.
+- `fetch_commit_workflow_runs` or status functions only when workflow status is relevant.
+- `update_file` for an existing file only after fetching its current SHA.
+- `create_file` only when the path is confirmed absent and the route authorizes a new file.
+- sequential updates for the same path; never issue competing writes in parallel.
 
-Preferred implementation/planning mode label:
+Avoid broad unscoped searches, repeated full-file reads, and large catalog fetches when a targeted query or line range will answer the question.
 
-```text
-Codex 5.5 Local - High
-```
+### 4.2 Direct Connector Writes
 
-Use Codex for:
+Direct GPT connector writes are appropriate for:
 
-- docs-only design decisions;
-- schema decisions;
-- schema/validator/focused-test implementation;
-- content seed plans;
-- narrow content seeds;
-- CI/test/lint fixes;
-- repository cleanup;
-- coordinated docs updates;
-- commit-ready changes.
+- user-requested operating-guide changes;
+- active prompt-file updates;
+- narrow documentation corrections;
+- small handoff or coordination edits when explicitly requested.
 
-Do not use Codex for broad external research unless the task is repo-only and does not require current external sources.
+Use Codex instead when local validation, multiple interdependent edits, code/content changes, or tests are required.
 
-### 3.3 Deep Research
+After a connector write:
 
-Use Deep Research for broad domain research where outside comparisons, citations, and system-design exploration are useful.
+1. record the returned commit SHA;
+2. fetch the changed file again;
+3. verify the intended text and path;
+4. cite the changed lines in the response.
 
-Preferred Deep Research mode line:
+## 5. Codex Mode Selection
 
-```text
-Deep Research - Light is acceptable; use High only if available.
-```
+Select the current supported Codex model, execution environment, and reasoning level according to the task. Do not use one fixed setting for every request.
 
-Use Deep Research for:
+### 5.1 Codex 5.6 Sol Local High
 
-- new domain research before an authority lane;
-- external comparison across RPG/MMO/CRPG/city-builder/tabletop/worldbuilding patterns;
-- long planning reports that will later become temporary repo artifacts;
-- topics listed as `GPT-DR.*` gates.
+Use **Codex 5.6 Sol Local High** when the task involves:
+
+- cross-repository evidence classification;
+- complex docs-only authority decisions with many owner boundaries;
+- multi-file code, schema, validator, content, or test changes;
+- risky edits requiring careful scope control;
+- substantial validation and reconciliation of coordination files.
+
+The active `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit` should use this mode.
+
+### 5.2 Lighter Local Reasoning
+
+Use a lighter supported local reasoning level for a trivial, tightly bounded task when:
+
+- the changed path is obvious;
+- no broad evidence classification is needed;
+- validation is narrow;
+- using High would add cost without improving confidence.
+
+The prompt should still state exact scope, allowed paths, and validation.
+
+### 5.3 Plan Mode
+
+Use Codex Plan mode when the result should be a decision-complete plan and repository mutation is not authorized.
+
+Plan mode must not write files, run cleanup, update output files, stage changes, or claim implementation.
+
+### 5.4 Cloud
+
+Use Cloud only when the task is materially larger than a normal local run and the benefit is clear. Do not select it merely because it is available.
+
+## 6. Deep Research And Web Research
+
+### 6.1 Deep Research
+
+Use Deep Research for broad external comparison, domain research, or system-design exploration when:
+
+- the active roadmap selects a named `GPT-DR.*` gate;
+- the user explicitly requests research;
+- repo-local evidence is insufficient and external sources are necessary.
+
+Use Light when adequate. Use High only when source breadth, ambiguity, or consequence justifies it.
 
 Do not use Deep Research for:
 
-- immediate schema-decision passes already supported by existing temp artifacts;
-- simple repo inspection;
-- ordinary docs-only integration prompts;
-- validator/test implementation;
+- ordinary repo inspection;
+- current prompt generation;
+- docs-only integration already supported by repository evidence;
+- schema/validator/test implementation;
 - CI fixes;
-- formatting/documentation cleanup.
+- formatting cleanup.
 
-### 3.4 GitHub Connector / Repo Tools
+Deep Research output is non-canonical until a later repository integration pass promotes repo-corrected guidance.
 
-Use GitHub connector tools for:
+### 6.2 Web Search
 
-- `inspect last` / commit comparison;
-- fetching files from the repo;
-- creating/updating/deleting repo docs when directly requested;
-- checking PRs/issues/changed files when relevant.
+Use web search for current external facts, current OpenAI product behavior, laws, schedules, APIs, prices, or external sources. Use official OpenAI sources for OpenAI-product questions.
 
-Important behavior:
+Do not use web search for internal repository facts available through GitHub.
 
-- After creating/updating files directly through the connector, cite fetched file lines in the final response when possible.
-- Do not invent `sandbox:/mnt/data` links for connector files. Use repo paths and file citations.
-- Prefer `fetch_file` for exact repo content and line citations.
+## 7. Specialized Skills
 
-### 3.5 Web Search
+Use specialized skills only when the task matches them.
 
-Use web search when facts may have changed or when the user asks about current OpenAI/Codex/ChatGPT behavior, current APIs, current prices, current docs, laws, schedules, or other unstable information.
-
-For OpenAI product behavior, use official OpenAI sources when available. If official sources cannot be found, say what could not be verified.
-
-Do not use web search for purely internal repo facts that can be inspected from GitHub.
-
-### 3.6 Uploaded Files / File Search
-
-Use uploaded files as user-provided context. If the user uploads a Deep Research report or prompt and asks to add it to the repo, treat the attachment as the source.
-
-Use file citations for uploaded-file claims when responding from uploaded content.
-
-## 4. Codex Skill Selection
-
-Skill availability may vary by environment. Use the user's currently visible skill list when choosing skills.
-
-### 4.1 High-value skills for the current Lineage Reforged pipeline
-
-Use or recommend these most often:
-
-| Skill | Best use |
+| Task | Preferred route |
 | --- | --- |
-| GitHub | Repo inspection, PR/issue flows, source browsing, publish-aware work. |
-| Publish Changes | Commit/push/open PR flows after review; use cautiously. |
-| Review Follow-up | Address review findings and cleanup issues after a run. |
-| CI Debug / GitHub Fix CI | Debug failing tests, lint, GitHub Actions, validation failures. |
-| OpenAI Docs | Verify current OpenAI/Codex behavior or API/product docs. |
-| Documents / Word Docs | Create/review formal docs when a docx-style artifact is needed. |
-| PDF | Read/create/verify PDFs when explicitly needed. |
-| Spreadsheets | Content matrices, cross-reference audits, schema inventories, item/settlement/monster tables. |
+| Inspect latest commit | GPT + GitHub connector |
+| Inspect current repository | GPT + GitHub connector |
+| Generate or revise next prompt | GPT + GitHub connector, then update prompt file |
+| Docs-only authority audit | Codex Local; High when evidence breadth warrants it |
+| Schema/validator/test implementation | Codex Local with focused validation |
+| CI failure | CI Debug / GitHub Fix CI |
+| Review feedback | Review Follow-up |
+| Commit/push/PR | Publish Changes when explicitly requested |
+| External domain research | Deep Research with named gate or explicit request |
+| Browser UI or playtest | Relevant game/browser skill |
+| Visual concept or settlement asset | Image/creative skill only on explicit visual request |
+| Matrix or large tabular audit | Spreadsheet skill when it improves analysis |
 
-### 4.2 Useful later for browser/game work
+Asset-generation tools are not part of the default repository-continuation path.
 
-Use only when the task involves game-client architecture, UI, playtesting, or browser behavior:
+## 8. Prompt Persistence
 
-| Skill | Best use |
-| --- | --- |
-| Web Game Foundations | Browser-game architecture, state flow, runtime boundaries, game-loop planning. |
-| Game UI Frontend | HUDs, menus, overlays, inventory, settlement screens, character sheet, quest/map UI. |
-| Browser / Chrome: Control Chrome | Browser QA, local UI inspection, console errors, screenshots. |
-| Game Playtest | Browser-game playtests and QA once a playable path exists. |
-| Game Studio | Routing ambiguous browser-game work to UI, playtest, engine, or asset paths. |
-| Three WebGL Game / React Three Fiber Game / Phaser 2D Game | Only after a rendering/game-engine direction is chosen. |
+`docs/dev/current-codex-prompt.md` is the authoritative active prompt body.
 
-For the current audit/docs/schema/content-authority phase, Web Game Foundations and Game Studio are usually unnecessary unless the prompt touches browser runtime architecture or game-client integration.
+When GPT generates, advances, or revises the next Codex prompt, it must:
 
-### 4.3 Visual and asset skills
+1. inspect current output, handoff, prompt, sequence, roadmap, and active lane evidence as needed;
+2. draft the exact next prompt body;
+3. update `docs/dev/current-codex-prompt.md` through the GitHub connector;
+4. fetch the updated file to verify it;
+5. provide the selected mode line directly in chat;
+6. report the path and commit SHA.
 
-Use for visual direction or production assets, not for current schema/content authority work:
+Do not only paste the new prompt in chat when the user asked to generate or update the repository's next prompt.
 
-| Skill | Best use |
-| --- | --- |
-| Image Gen / Generative Polish | Concept art, UI mood, item/settlement/monster visual references. |
-| Mood Board Explorer | Art direction, visual territories, setting mood. |
-| Scene Explorer / Shot Explorer | Scene composition, trailers, environment shots. |
-| Sprite Pipeline | 2D sprite normalization/animation. |
-| Web 3D Asset Pipeline | Browser-game 3D asset optimization. |
-| Sora Video Generation Skill | Trailer/motion concepts. |
-| Speech Generation Skill | Narration/prototype voiceover. |
+### 8.1 Mode Line Packaging
 
-### 4.4 Low-priority or conditional skills
+The platform/tool/mode line belongs in chat, outside the prompt file.
 
-Defer unless the task explicitly calls for them:
-
-| Skill | Defer unless... |
-| --- | --- |
-| ASP.NET Core | The project moves into ASP.NET/.NET web app work. |
-| WinUI App | The project needs native Windows UI. |
-| Android Performance / Emulator QA | The project targets Android. |
-| Plugin Creator / Skill Creator / Skill Installer | The task is about creating, editing, or installing Codex skills. |
-| Ads Explorer / Offer Explorer / Positioning Explorer / Logo Explorer | The user is working on marketing, product positioning, ads, or identity. |
-| Computer Use | The user explicitly needs GUI automation. |
-
-## 5. Prompt Formatting Standards
-
-### 5.1 Codex prompt skeleton
-
-Use this structure for most Codex prompts:
+For the active route, give:
 
 ```text
-Codex 5.5 Local - High
-
-Task:
-<one clear task>
-
-Version:
-`Version 0.5.xxx - <Title>`
-
-Purpose:
-<why this pass exists>
-
-This pass is <docs-only/schema-only/content-only/etc.>. Do not <forbidden scope>.
-
-Before starting, update the local workspace:
-
-```bash
-git fetch origin
-git pull --ff-only origin master
+Codex 5.6 Sol Local High.
 ```
 
-Primary sources:
-- <key docs>
+Do not store that mode line inside `docs/dev/current-codex-prompt.md`.
 
-Also inspect:
-- <repo files/directories>
+### 8.2 Prompt File Shape
 
-Create:
-- <new doc/file if any>
-
-Update:
-- <coordination docs if any>
-
-Required decisions / implementation requirements:
-1. ...
-2. ...
-
-Required sections / expected outputs:
-1. ...
-2. ...
-
-Non-goals:
-- no ...
-
-Validation:
-- `git diff --check`
-- conflict-marker scan on changed files
-- trailing-whitespace scan on changed files
-- changed-path scope audit
-- required-section audit when docs-only
-- implementation-scope audit
-- focused tests only if implementation changed
-
-Suggested commit message:
-`<conventional commit>`
-```
-
-### 5.2 Deep Research prompt skeleton
-
-Use this structure for Deep Research:
+The prompt file should begin:
 
 ```text
-Deep Research - Light is acceptable; use High only if available.
+# Current Codex Prompt
 
-Research topic:
-<topic>
-
-Repository:
-Lineage_Reforged
-
-Purpose:
-<what to learn and why>
-
-Important scope control:
-<what not to drift into>
-
-Primary repo areas to inspect:
-- ...
-
-Recent design docs to inspect and respect:
-- ...
-
-External research targets:
-- ...
-
-Core questions to answer:
-1. ...
-2. ...
-
-Output format:
-Produce a structured research report with these sections:
-1. Executive Summary
-2. Current Repo State
-...
-
-Important constraints:
-- Do not implement code.
-- Clearly separate repo facts, external research, and recommendations.
-- Cite external sources.
+You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 ```
 
-### 5.3 Inspect-last response pattern
+A prompt should normally contain:
 
-When the user says `inspect last`:
+- route/version;
+- current accepted state;
+- purpose;
+- required first steps;
+- focused source reads;
+- expected outputs;
+- required decisions or implementation requirements;
+- guardrails and non-goals;
+- allowed changes;
+- validation;
+- suggested commit message.
 
-1. Compare `master~1..master`.
-2. State changed paths and scope.
-3. Fetch the new/updated decision document and `current-codex-output.md`.
-4. Give a verdict:
-   - Acceptable / acceptable with follow-up / blocker.
-5. Summarize what landed.
-6. Identify risks/follow-up.
-7. State the next recommended version.
-8. Cite repo file lines.
+### 8.3 Displaying The Current Prompt
 
-### 5.4 Add-Deep-Research-to-repo pattern
+When the user asks for the current prompt without requesting a change:
 
-When the user asks to add a Deep Research report to the repo:
+1. fetch the file fresh;
+2. give the selected mode line in chat;
+3. reproduce the exact prompt body;
+4. do not silently edit or summarize it.
 
-1. Confirm the report content is present in the conversation/upload.
-2. Create a temporary artifact under:
+## 9. Token And Work-Quality Optimization
+
+Optimize cost and quality together.
+
+### 9.1 Repository Reads
+
+- Search first when the relevant path or occurrence is unknown.
+- Fetch exact known coordination files directly.
+- Use line ranges for long docs.
+- Avoid repeatedly fetching unchanged files in the same thread.
+- Batch independent small reads when it reduces round trips.
+- Do not fetch huge JSON catalogs unless the active evidence question requires them.
+
+### 9.2 Prompt Scope
+
+- Name the smallest sufficient source set.
+- Require targeted discovery rather than full-repository scans.
+- Preserve all critical owner boundaries and anti-canon rules.
+- Avoid copying unrelated durable background into every prompt.
+- Include exact allowed paths and validations.
+- Use focused tests for changed areas; use normal content lint only when required by the active route.
+
+### 9.3 Reasoning Level
+
+- Use High for difficult evidence synthesis, risky multi-owner decisions, and substantial implementation.
+- Use lighter reasoning for obvious, narrow edits.
+- Use Plan mode when mutation is forbidden.
+- Use Deep Research Light before High when Light can answer the external question.
+
+Never reduce cost by omitting necessary validation, owner separation, source verification, or scope control.
+
+## 10. Versioning And Research Gates
+
+Codex primary passes use monotonic three-segment labels:
 
 ```text
-docs/dev/tmp-<topic>-research-YYYY-MM-DD.md
+Version 0.5.xxx - Title
 ```
 
-3. Mark it temporary, non-canonical, and for one named future consumer.
-4. Provide a follow-up Codex integration prompt.
-5. The integration prompt should create a permanent design decision and either retain or retire the temp artifact.
-
-## 6. Versioning And GPT Deep Research Gates
-
-Codex passes use monotonic `Version 0.5.x - <Title>` labels.
+Support runs may use a fourth segment and do not consume the next primary slot unless explicitly promoted.
 
 GPT Deep Research gates use unnumbered labels:
 
@@ -347,91 +284,64 @@ GPT Deep Research gates use unnumbered labels:
 GPT-DR.<lane>.<topic>
 ```
 
-They do not consume Codex version numbers.
+Research gates do not consume Codex version numbers.
 
-If a Deep Research pass is required before a later lane, display it like:
+Do not roll to `0.6.0` because the patch number is large. Runtime ownership transition requires a dedicated readiness decision.
 
-```text
-GPT-DR.<lane>.<topic> - <Research Title> [GPT Deep Research prerequisite]
-Version 0.5.xxx - <Associated Codex Pass>
-```
+## 11. Project Guardrails
 
-The consolidated schema-decision queue through `0.5.229` does not require new Deep Research; consult the current handoffs for the first remaining numbered item.
+During the current `0.5.x` foundation phase:
 
-### 6.1 GPT-DR Prompt-Pack Routing
+- prefer evidence audits and boundary decisions before implementation;
+- prefer schema decisions before schemas;
+- prefer schema/validator/focused tests before content;
+- prefer seed plans before content seeds;
+- keep runtime, UI, save-state, mutation, transaction, service execution, combat execution, crafting execution, property state, NPC scheduling, and broad gameplay outside scope unless explicitly approved;
+- do not invent canon, ids, candidates, relations, or historical facts;
+- do not treat visual prompts or external research as canonical evidence;
+- do not reopen gated, paused, rejected, or closed lanes without qualifying input;
+- retire temporary research artifacts when their named consumer has fully promoted the useful guidance.
 
-Use `docs/design/gpt-deep-research-prompt-pack-decision.md` as the permanent source for the next prioritized ten later GPT-DR gates, their dependency order, recommended modes, and temporary artifact names.
+## 12. Standard Command Handling
 
-Do not maintain copied long-form prompt bodies in this guide. When a later gate becomes timely:
+### `inspect last`
 
-1. inspect current handoffs and relevant permanent decisions;
-2. recheck the gate's dependencies and priority;
-3. generate one current copy-paste prompt from the Deep Research skeleton above;
-4. run only that gate using its recommended mode;
-5. create its exact `docs/dev/tmp-*-research-YYYY-MM-DD.md` artifact;
-6. schedule one documentation integration pass that promotes durable guidance and deletes the artifact, or retains it with one named consumer and removal condition.
+- compare `master~1..master`;
+- inspect changed paths and principal changed documents;
+- compare the result against the active prompt;
+- check reported validations and workflow status when available;
+- give an acceptance verdict and next route.
 
-`GPT-DR.discovery.poi-map-reveal` is the default first later gate, after the immediate numbered queue and relevant map-feature decision. Current handoffs, not this stable guide, determine the next numbered Codex run.
+### `inspect repo`
 
-## 7. Project-Specific Guardrails
+- inspect latest commit, output, handoff, and prompt;
+- inspect sequence, roadmap, backlog, and lane-specific docs only as needed;
+- report active route, pipeline integrity, gates, risks, and next action.
 
-For the current `0.5.x` foundation phase:
+### `prompt please`
 
-- Prefer docs-only decisions before implementation.
-- Prefer schema decisions before schemas.
-- Prefer schema/validator/focused tests before content seeds.
-- Prefer content seed plans before content seeds.
-- Keep runtime, UI, save-state, mutation, transactions, service execution, combat execution, crafting execution, property state, NPC schedule execution, pathfinding, and broad gameplay out of scope unless explicitly approved by a later readiness decision.
-- Do not roll to `0.6.0` merely because version numbers are high.
-- Never treat a temporary Deep Research artifact as canon.
-- When a temp artifact is consumed, either delete it or name one remaining consumer and removal condition.
-- Do not silently renumber old proposed versions; update coordination docs when a run lands or is displaced.
+- fetch the current prompt fresh;
+- give the selected mode line in chat;
+- reproduce the exact prompt body.
 
-## 8. Recommended Skill Stack By Task Type
+### `generate the next prompt`
 
-| Task type | Preferred GPT/Codex path | Useful skills/tools |
-| --- | --- | --- |
-| Inspect last push | GPT + GitHub connector | GitHub |
-| Draft next Codex prompt | GPT | GitHub if repo state needed |
-| Docs-only authority decision | Codex 5.5 Local - High | GitHub, Documents |
-| Schema decision | Codex 5.5 Local - High | GitHub, Documents |
-| Schema/validator/test implementation | Codex 5.5 Local - High | GitHub, CI Debug/GitHub Fix CI, Review Follow-up |
-| Content matrix/audit | GPT/Codex depending on edit need | Spreadsheets, GitHub |
-| Broad new domain research | Deep Research | GitHub connector, web research |
-| Browser UI/game architecture | Codex with game skill only when relevant | Web Game Foundations, Game UI Frontend, Browser |
-| Browser QA/playtest | Codex/browser workflow | Browser, Chrome Control, Game Playtest |
-| Visual concepts/assets | GPT/image workflow | Image Gen, Mood Board Explorer, Scene Explorer |
-| PR/CI cleanup | Codex | Review Follow-up, CI Debug, GitHub Fix CI |
+- inspect current coordination state;
+- determine the exact next route;
+- update `docs/dev/current-codex-prompt.md`;
+- verify the write;
+- give the selected mode line and commit confirmation in chat.
 
-## 9. Consistent Cross-Thread Opening Prompt
-
-When starting a new GPT thread for Lineage Reforged, the user can paste:
-
-```text
-You are assisting with the Lineage Reforged repo. Before giving repo guidance, use the current repository state and these coordination docs as authority:
-
-- docs/dev/current-codex-output.md
-- docs/dev/current-gpt-handoff.md
-- docs/design/pipeline-roadmap-consolidation-decision.md
-- docs/design/gpt-deep-research-version-tracking-decision.md
-- docs/dev/gpt-codex-tooling-instructions.md
-
-Follow the established workflow:
-- inspect live repo state when needed;
-- use Codex 5.5 Local - High for repo edits and implementation prompts;
-- use Deep Research only for named GPT-DR research gates;
-- keep 0.5.x static authority/schema/content work separate from 0.6+ runtime/UI/save-state work;
-- preserve prompt formatting and version tracking rules.
-```
-
-## 10. Maintenance
+## 13. Maintenance
 
 Update this guide when:
 
-- the visible Codex skill list changes materially;
+- supported Codex models or modes change materially;
+- connector capabilities or preferred function patterns change;
+- the prompt persistence workflow changes;
 - a new project workflow becomes standard;
-- GPT-DR labels or Codex versioning policy changes;
-- `0.6` readiness changes the runtime/UI/save-state policy;
-- the user identifies a better skill or prompt pattern.
+- GPT-DR tracking changes;
+- runtime-readiness policy changes;
+- the user identifies a better cost/quality routing pattern.
 
-Do not update this guide for every normal Codex pass. Use it for stable workflow policy, not run-by-run handoff.
+Do not update it for every normal Codex pass. Run-specific state belongs in current output, handoff, prompt, sequence, roadmap, and backlog.
