@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.337 - Business Authority Schema And Validator
+Source version/run: Version 0.5.338 - Business Authority Seed Evidence Audit
 Date: 2026-07-11
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.337 - Business Authority Schema And Validator`
+- `Version 0.5.338 - Business Authority Seed Evidence Audit`
 
 Latest completed support/audit run:
 
@@ -15,27 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.338 - Business Authority Seed Evidence Audit`
+- `Version 0.5.339 - Business Authority Seed Evidence Deferral`
 
-## Implemented Business Scaffold
+## Audit Result
 
-- `packages/schemas/civilization/business.schema.json`
-- `tools/content-lint/businesses.mjs`
-- `tests/unit/business-validation.test.mjs`
-- business entry in `tests/unit/schema-files.test.mjs`
+Exactly zero business ids passed the complete record gate. Ironwheel remains partial quest-owned evidence: its display name and limited provenance/form signal are real, but enduring-body identity, canonical slug authority, static summary, lifecycle, public posture, and reference-free coherence are not proven. The `coppergate` suffix remains branch/core-identity ambiguous.
 
-The strict contract uses records-only `business.<slug>` identity, lifecycle `planned|active|retired`, form `company|partnership|cooperative|other|unknown`, public visibility posture, provenance/notes, and no references or behavior fields.
-
-Focused business validation passes 149 tests; institution regression passes 120 tests; schema smoke passes 105 tests; normal content lint remains 67 files.
+Gannet, generated `company.*` ids, account assets, templates, settlement simulation, quest behavior, UI/demo/tests, and other runtime surfaces remain non-canonical or separately owned.
 
 ## Remaining Guardrails
 
-No live business wrapper, normal registration, candidate id, reference, resolver, migration, adapter, or consumer enablement exists.
+No live business wrapper, normal registration, candidate id, reference, resolver, migration, adapter, or consumer enablement exists. The schema/validator/test scaffold remains unchanged.
 
-Ironwheel remains partial quest-owned evidence. Gannet Cutter remains demo/test/account fixture. Generated `company.*` remains synthetic. Account assets, building/workplace vocabulary, settlement businesses, quests, runtime/UI, and current tests remain separately owned and unpromoted.
-
-`0.5.338` should apply the exact complete seed gate to the already-classified evidence. Do not repeat broad discovery. It may carry forward zero ids and select a fail-closed deferral if no source supplies every required fact.
+`0.5.339` should formalize a fail-closed authored-input deferral, preserve the full gate, prohibit repeated scans of unchanged evidence, define exact reopening inputs, and route back to roadmap selection. Do not implement content or ask a broad user question.
 
 Suggested next commit:
 
-`feat(economy): add business authority validation`
+`docs(economy): audit business seed evidence`

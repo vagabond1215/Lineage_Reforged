@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.337 - Business Authority Schema And Validator`
+- Latest completed version: `Version 0.5.338 - Business Authority Seed Evidence Audit`
 - Latest support/audit run: `Version 0.5.276.1 - Pipeline Versioning And Roadmap Drift Audit`
-- Next recommended version: `Version 0.5.338 - Business Authority Seed Evidence Audit`
+- Next recommended version: `Version 0.5.339 - Business Authority Seed Evidence Deferral`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -193,6 +193,7 @@ Versioning rule:
 - `Version 0.5.335 - Business Company Authority Boundary Decision` added `docs/design/business-company-authority-boundary-decision.md`; selected one future `civilization.businesses` static identity family with company as a possible descriptive form; protected template, place, provider, person/organization, property/account, economy/runtime, quest, UI, and save owners; carried forward zero ids; and selected `Version 0.5.336 - Business Authority Schema Plan`.
 - `Version 0.5.336 - Business Authority Schema Plan` added `docs/design/business-authority-schema-plan.md`; defined exact future paths, strict records-only fields, lifecycle/form/public-posture vocabularies, no first-pass references, pure validation and focused tests, absent live wrapper, separate seed/registration gates, zero candidates, and selected `Version 0.5.337 - Business Authority Schema And Validator`.
 - `Version 0.5.337 - Business Authority Schema And Validator` added the strict business schema, pure issue-returning validator, 149 focused tests, and schema-file parse coverage; kept live content, normal registration, candidates, references, migrations, adapters, and consumers absent; preserved current business/company strings in their existing owners; and selected `Version 0.5.338 - Business Authority Seed Evidence Audit`.
+- `Version 0.5.338 - Business Authority Seed Evidence Audit` added `docs/design/business-authority-seed-evidence-audit.md`; applied the complete record gate to Ironwheel and other already-classified evidence; found no complete canonical candidate; carried forward exactly zero ids; and selected `Version 0.5.339 - Business Authority Seed Evidence Deferral`.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
 Current repo reality:
@@ -486,9 +487,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.338 - Business Authority Seed Evidence Audit`
+1. `0.5.339 - Business Authority Seed Evidence Deferral`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.338`. Faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should apply the exact business seed gate to already-classified evidence without repeating broad discovery or implementing content.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.339`. Faction, institution, and People/NPC are authored-input gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should formalize the zero-candidate business authored-input deferral without repeating evidence discovery or implementing content.
 
 High-priority unresolved questions:
 
