@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral
+Source version/run: Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
+- `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`
 
 Latest completed support/audit run:
 
@@ -15,22 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`
+- `Version 0.5.353 - Validation Source Map`
 
-## Deferral Result
+## Selection Result
 
-Diplomatic relations and conflict identity/history remain separate future owners. Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward. No collection path, relation prefix, schema plan, seed, or implementation is approved.
+All unresolved authority, content-expansion, link/state, research, manuscript, magic, save/account, and runtime lanes remain gated, paused, rejected, closed, or maturity-gated. No qualifying new input exists to reopen them. Claims/borders/control still lacks the stronger evidence or named consumer required for a focused boundary.
 
-Reopening requires materially new approved canon, a new intentional canonical source, an authorized political-content authorship pass, or a ready consumer proving the applicable complete minimal static contract. A ready consumer may reopen schema review only; it cannot mint canon or authorize seeds. Unchanged-source rescans are prohibited.
+Selected one eligible stabilization route: a docs-only source map of current validation commands, scripts, focused tests, normal content lint, broad typecheck posture, generated-output boundaries, and known environment/tooling blockers.
 
 ## Remaining Guardrails
 
-Diplomacy needs complete actor/reference, direction/symmetry, cardinality, relation-kind, visibility, lifecycle, effective-validity, provenance, and non-implication evidence. Conflict needs complete identity, participant/role, kind, temporal-history, lifecycle, provenance, uncertainty, and non-implication evidence.
+The next pass must inspect and classify current repository-local validation surfaces only. It must not fix or add scripts, commands, tests, validators, dependencies, configuration, source, content, schemas, generated output, runtime, UI, or save/account behavior.
 
-Claims, borders, territory, control, occupation, government, jurisdiction, law, force, identity, place/map, event, reputation, combat, runtime, UI, and save/account owners remain separate. Readiness, schema plan, schema/validator, seed plan, content, registration, references, migrations, consumers, and runtime remain separate gates.
-
-The next pass must compare all current gates, pauses, rejections, closures, and maturity boundaries and select exactly one smallest safe docs-first route. It must not reopen any gated lane by default or prejudge implementation.
+It may recommend at most one later docs-first validation planning route or no immediate follow-up. No user question, Deep Research, support suffix, temporary artifact, gated-lane reopening, or `0.6.0` transition is approved.
 
 Suggested next commit:
 
-`docs(roadmap): select post-diplomacy deferral route`
+`docs(validation): map validation command surfaces`
