@@ -4,75 +4,98 @@ You are working in the `vagabond1215/Lineage_Reforged` repository on branch `mas
 
 Run:
 
-`Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
+`Version 0.6.3 - Engine-Owned Activity Selection Command`
 
 ## Accepted State
 
-- `Version 0.6.2 - Engine-Owned Quest Tracking Command` moved track/untrack behind one engine resolver, deterministic transient command, atomic synchronized result, and typed accepted event.
-- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit` found one defect: the accepted event leaked display `title` despite the no-presentation-prose boundary.
-- `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair` removed only that event member and construction expression, added an exact six-key/no-title regression guard, preserved result/notice title facts and exact behavior hashes, and passed 35/35 focused tests.
+- Player travel, quest acceptance, and repaired quest tracking are engine-owned and have passed their post-transition audits.
+- `setCurrentActivityFromRecord(...)` in `apps/rpg-ui/src/game-shell/gameplayLoop.ts` is the selected next consumer.
+- Current selection behavior is one activity-record lookup, replacement of `sessionState.currentActivity`, one capped notification, existing snapshot synchronization, and one notice. Missing record rejects with the original snapshot.
+- Activity advancement/preview, rest/preview, quest turn-in, and every other `currentActivity` writer remain separate.
+- The read-only selection fixture `job.harbor_surveyor` currently produces complete snapshot SHA-256 `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40` and notice SHA-256 `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`.
+- Missing fixture `activity.missing` preserves original snapshot identity/content and produces notice SHA-256 `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77`.
 - No Deep Research or user decision is required.
 
 ## Purpose
 
-Perform one read-only post-repair audit. Decide whether the repaired quest-tracking transition is accepted or whether one further smallest repair is required.
+Move only activity selection behind one browser-safe engine resolver, deterministic transient command, atomic synchronized result, and typed accepted event while preserving exact current behavior.
 
-Do not modify runtime, UI, shared contracts, events, tests, content, schemas, saves, dependencies, or generated output in this run.
+Do not broaden this run into generic activity ownership, advancement, preview, rest, turn-in, notification infrastructure, command infrastructure, or event dispatch.
 
 ## Required First Steps
 
 1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
-2. Read `AGENTS.md`, README, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, runtime-ownership readiness, player-travel clarification, and backlog.
-3. Inspect the committed `0.6.2.2` diff, tracking resolver/command/result/event, JS peer and public exports, shared event registration, snapshot synchronizer, UI bridge/application site, characterization/command tests, persistence contracts, and accepted travel/quest-acceptance patterns.
+2. Read `AGENTS.md`, README, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, runtime-readiness and travel-clarification sources, and backlog.
+3. Inspect `setCurrentActivityFromRecord(...)`, `ActivityPanel.tsx`, `PanelRecordState`/`CurrentActivityState`, demo activity records, notification helpers/caps/time labels, snapshot synchronization, persistence, shared events, accepted travel/quest command patterns, every `currentActivity` writer, and focused tests.
+4. Before changing ownership, add characterization coverage locking the complete success and missing-record snapshots/notices, including the hashes above.
 
-## Audit Gates
+## Required Boundary
 
-### Repair exactness
+### Resolver
 
-- Confirm the repair changed only `player-quest-tracking.ts`, the focused command test, and coordination docs.
-- Confirm production changes are exactly removal of the event payload `title` member and construction expression.
-- Confirm the accepted event payload contains exactly `commandId`, `playerId`, `questId`, `previousTrackedQuestId`, `nextTrackedQuestId`, and `tracked`.
-- Confirm no presentation prose or snapshot internals remain in the event.
-- Confirm `PlayerQuestTrackingFacts.title` and `noticeFacts.questTitle` remain available only for result/adapter presentation.
+Create one pure engine-owned resolver for lookup in `snapshot.sessionState.activityRecords` and current selection facts. Return stable plan codes and presentation-safe facts for record id, label, derived category, detail, previous activity id, and selected activity id.
 
-### Authority and behavior
+Preserve category derivation exactly from the final `sectionId` segment with underscore/hyphen title-casing and `Unknown` fallback. Do not extract or refactor unrelated UI helpers.
 
-- Reconfirm the engine resolver is authoritative for tracking lookup/eligibility and UI `canTrack` projection.
-- Reconfirm the tracking UI bridge contains no direct mutation and `QuestsPanel.tsx` applies returned snapshots only when accepted while displaying all notices.
-- Re-run exact complete track/untrack snapshot and notice hashes and confirm toggle semantics, synchronization result, input immutability, and completed/failed/missing rejection parity.
-- Classify every remaining production `trackedQuestId` assignment; existing acceptance, turn-in fallback, and synchronization cleanup owners are allowed and must not be changed.
+### Command and identity
 
-### Identity, atomicity, persistence, and browser safety
+Create one narrow `player.activity.select` transient command with player id, activity record id, deterministic sequence, expected tick, snapshot version, full snapshot revision, and collision-safe deterministic command id. Follow the accepted travel/quest identity pattern and persist no command correlation.
 
-- Reconfirm command shape, deterministic sequence, tick/version/full-revision freshness, repeatability, and collision-safe same-tick identity.
-- Reconfirm malformed, wrong-player, stale, incoherent, missing, completed, failed, and injected-failure rejection preserves original snapshot identity/content and emits zero events.
-- Reconfirm accepted clone identity, exactly one typed event, notification/Chronicle non-mutation, current-data serialization roundtrip, and absence of persisted command correlation.
-- Reconfirm browser-safe imports, intentional TS/JS peer alignment, public exports, and unchanged shared event registration.
+### Atomic execution
 
-### Scope and hygiene
+Validate command shape/identity, player, coherent tick state, tick/version/revision freshness, and current resolver eligibility before mutation. On success:
 
-- Confirm no unrelated quest lifecycle, activity, rest, reward, UI-layout, Home/shell, linked-record/search, combat-presentation, tactics, content, schema, save, dependency, generated/vendor, or compatibility work entered the repair.
-- Confirm no conflict markers, temporary artifacts, trailing whitespace, or unrelated edits.
-- Run `git show --check`, `git diff --check`, and inspect the complete changed-path set.
+1. clone the snapshot;
+2. replace only `sessionState.currentActivity` with the resolved id/label/category/detail;
+3. append the exact existing `Current activity set` notification, preserving id, detail, time label, tone, newest-first order, and cap of eight;
+4. synchronize through `synchronizeGameplaySnapshot(...)`;
+5. construct the accepted result and event.
+
+Missing, malformed, wrong-player, stale, incoherent, or unexpected failure must return the original snapshot identity/content and emit zero events. Setting the already-selected record must preserve current successful behavior, including another notification.
+
+### Event and result
+
+Register and emit exactly one typed `player.activity.selected` event after success. Its payload must contain identifiers/state only: command id, player id, record id, previous activity id, and selected activity id. Do not include label, category, detail, notification text, notice text, or snapshot internals. Add an exact payload-key/no-prose regression assertion.
+
+Return stable accepted/rejected codes, applied tick, presentation-safe result/notice facts, emitted events, and the accepted next snapshot or original rejected snapshot.
+
+### UI adapter
+
+Keep `gameplayLoop.ts` as a narrow command/notice bridge and preserve exact notice tone/title/detail:
+
+- success: `accent`, `Current Activity Updated`, `<record title> is now set as the active process.`
+- missing: `warning`, `Activity Missing`, `That activity record is not available in the current session.`
+
+Use narrow stable fallback notices for stale/general command rejection without changing existing reachable behavior. Remove direct selection mutation/notification creation from the UI-owned path. In `ActivityPanel.tsx`, apply the returned snapshot only when accepted and always display the notice.
 
 ## Required Tests
 
-Run:
+Cover at minimum:
 
-`node --test tests/unit/player-quest-tracking-command.test.mjs tests/unit/player-quest-tracking-characterization.test.mjs tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
+- pre/post-extraction complete success and missing snapshot/notice parity using the accepted hashes;
+- exact selected `currentActivity` id/label/category/detail;
+- exact notification id/title/detail/time/tone, newest-first order, cap behavior, and Chronicle non-mutation;
+- already-selected record still accepted with another notification;
+- input immutability and new accepted snapshot identity;
+- missing, malformed, wrong-player, stale tick/version/revision, incoherent, and injected-failure rejection;
+- original identity/content and zero events on every rejection;
+- deterministic repeated fixtures and collision-safe distinct same-tick record selections;
+- exactly one typed success event with the exact five-key identifier/state payload and no presentation prose;
+- current-data serialization roundtrip with transient command correlation absent;
+- browser-safe import graph and intentional TS/JS peer alignment;
+- no direct activity-selection mutation or notification append in the UI bridge;
+- accepted-only `ActivityPanel` snapshot application and notice display.
 
-Do not run the full suite, DB build, UI build, package installation, servers, or generated-output refresh. Run typecheck only if it materially clarifies a direct touched-boundary diagnostic.
+Run the new selection command/characterization tests plus quest tracking, quest acceptance, player travel, gameplay-loop skill-gating, save/load roundtrip, and deterministic scenario tests. Run typecheck only if it materially clarifies a touched-boundary diagnostic. Do not run the full suite, DB/UI build, package installation, servers, or generated-output refresh.
 
-## Decision Rule
+## Explicit Non-Goals
 
-- If every gate passes, accept the repaired `0.6.2` transition, compare activity selection, activity advancement, rest, and quest turn-in from current source evidence, and select exactly one `Version 0.6.3 - ...` bounded consumer. Write its implementation prompt but do not implement it.
-- If any material defect remains, select `Version 0.6.2.4 - Engine-Owned Quest Tracking Repair`, define only the smallest coherent repair, and do not select another consumer.
-- Do not implement a repair or next consumer during this read-only audit.
+Do not change activity advancement or preview, rest or preview, quest turn-in, travel, quest acceptance/tracking, other `currentActivity` writers, clock/body/resources, skills, discoveries, flags, operations, rewards, inventory, reputation, standing, notification/Chronicle product behavior, activity records/content, schemas, save fields/versions, migrations, compatibility, generic notification helpers, command bus, replay/idempotency, event dispatch, UI layout, Home/shell, linked records/search, combat presentation, tactics, dependencies, or generated output.
 
 ## Documentation And Handoff
 
-Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and overwrite this file with the exact accepted next implementation or smallest repair prompt. Record source/run/date, starting status, files inspected, checks, gate evidence, acceptance decision, consumer comparison if allowed, risks, next version, and suggested commit.
+Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and write the exact `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit` prompt. Record source/run/date, starting status, exact files changed, checks, parity, identity, atomicity, notification/event/persistence/browser/UI confirmation, risks, next version, and suggested commit.
 
 Suggested commit message:
 
-`docs(audit): accept repaired quest tracking transition`
+`feat(runtime): move activity selection into engine ownership`
