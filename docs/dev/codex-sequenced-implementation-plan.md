@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-13
-Route: Codex local sequencing alignment after `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
+Route: Codex local sequencing alignment after `Version 0.6.1.2 - UI Information Architecture Research Integration`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -25,7 +25,7 @@ Latest completed primary:
 
 Latest completed support/audit run:
 
-- `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
+- `Version 0.6.1.2 - UI Information Architecture Research Integration`
 
 Immediate next primary Codex run:
 
@@ -41,7 +41,9 @@ Immediate next primary Codex run:
 - `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit` is complete and accepted. It reconfirmed the repaired authority, behavior, persistence/browser, TS/JS, adapter, and hygiene boundaries at 17/17 tests.
 - `Version 0.6.1 - Engine-Owned Quest Acceptance Command` is complete. It moved only acceptance behind one engine resolver/command/event boundary, preserved exact characterized output, added accepted-only UI application, and passed 26/26 focused tests.
 - `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit` is complete and accepted. It reconfirmed sole engine acceptance authority, deterministic transient identity, atomic rejection, exact parity, typed event behavior, persistence/browser safety, accepted-only UI application, and clean extraction hygiene at 26/26 focused tests.
+- `Version 0.6.1.2 - UI Information Architecture Research Integration` is complete as documentation-only support work. It promoted durable owner-aware shell, Home, linked-record, Codex, text-first combat, tactics, accessibility, component, and anti-clutter guidance into `docs/design/ui-information-architecture-boundary.md`, deleted the consumed temporary artifact, and preserved `0.6.2` unchanged.
 - `Version 0.6.2 - Engine-Owned Quest Tracking Command` is the next primary route. Move only `toggleTrackedQuest(...)` behind one engine-owned resolver/command/result/event boundary while preserving its current toggle semantics, synchronization result, notices, and `QuestsPanel` behavior.
+- Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
 - Activity selection/advancement, rest, and quest turn-in remain later consumers. Do not bundle them into quest tracking or resume repeated unchanged-source authority audits or generic roadmap-selection passes.
 

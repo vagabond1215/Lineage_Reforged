@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-13 after `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`.
+Updated 2026-07-13 after `Version 0.6.1.2 - UI Information Architecture Research Integration`.
 
 ## Purpose
 
@@ -15,6 +15,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/dev/codex-sequenced-implementation-plan.md` owns the detailed ordered Codex queue and historical sequencing record.
 - `docs/design/runtime-ownership-transition-readiness-consolidation.md` selects player travel as the first engine-owned consumer and owns the base `0.6.0` boundary.
 - `docs/design/player-travel-boundary-clarification.md` controls `0.6.0` collision-safe identity, shared preview/execution resolution, and full post-travel synchronization parity.
+- `docs/design/ui-information-architecture-boundary.md` controls the future six-domain shell, Home/re-entry, linked-record routing, Codex/knowledge presentation, text-first combat, tactics/gambit-style UX limits, accessibility, and anti-clutter boundaries.
 - `docs/design/magic-runtime-boundary-plan.md` owns the cast-readiness helper boundary and later runtime guardrails.
 - `docs/design/known-spell-acquisition-event-plan.md` owns the training-event acquisition helper boundary and later acquisition mutation constraints.
 - `docs/design/magic-command-contract-plan.md` owns the future active magic command/intention boundary.
@@ -38,7 +39,7 @@ Latest completed primary:
 
 Latest support/audit run:
 
-- `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
+- `Version 0.6.1.2 - UI Information Architecture Research Integration`
 
 Next recommended primary version:
 
@@ -104,6 +105,7 @@ Every major system should answer at least one of these questions:
 | `0.6.0.3` | Engine-Owned Player Travel Post-Repair Audit | Complete and accepted. | Reconfirmed repaired authority, behavior, persistence/browser, adapter, and hygiene boundaries. |
 | `0.6.1` | Engine-Owned Quest Acceptance Command | Complete. Moved acceptance behind one resolver/command/event boundary with exact characterized parity. | Acceptance only; 26/26 focused tests passed. |
 | `0.6.1.1` | Engine-Owned Quest Acceptance Post-Transition Audit | Complete and accepted at 26/26 focused tests. | Reconfirmed sole authority, parity, atomic rejection, event, persistence/browser, UI-adapter, and hygiene boundaries. |
+| `0.6.1.2` | UI Information Architecture Research Integration | Complete. Promoted durable shell, Home, linked-record, Codex, combat, tactics, accessibility, and anti-clutter guidance and retired the temporary artifact. | Documentation only; preserved `0.6.2` and authorized no UI/runtime implementation. |
 | `0.6.2` | Engine-Owned Quest Tracking Command | Next primary run. | Tracking toggle only; preserve current behavior and do not bundle quest lifecycle or activity work. |
 | later `0.6.x` | Later Engine-Owned Consumers | Activity selection/advancement, rest, and turn-in remain deferred. | One coherent consumer per package; no generic command bus. |
 

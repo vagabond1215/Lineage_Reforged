@@ -154,3 +154,19 @@ This support route completed documentation-only, promoted durable guidance into 
 The research intake originally targeted `Version 0.5.345 - Force Public Order Authority Evidence Audit` as the resumed primary route. That route completed on the local primary sequence before the intake commits were merged. After the support integration, resume the now-current primary route:
 
 - `Version 0.5.346 - Force Public Order Authority Boundary Decision`
+
+## 9. Consumed Addendum: UI Information Architecture Research
+
+The following gate completed on 2026-07-13:
+
+- `GPT-DR.ui.information-architecture - UI/UX and Information Architecture`
+
+Temporary artifact, deleted after durable promotion in `0.6.1.2`:
+
+- `docs/dev/tmp-ui-information-architecture-research-2026-07-13.md`
+
+`Version 0.6.1.2 - UI Information Architecture Research Integration` reconciled the report against the live six-domain shell, current view-model and snapshot owners, runtime command transition, combat timing/action contracts, tactics scoring/preferences, persistence, and UI implementation. Durable guidance now lives in `docs/design/ui-information-architecture-boundary.md`.
+
+The integration preserved a text-first shell, rejected universal Codex ownership, a new canonical Speed/ATB model, rendered-battlefield requirements, fixed party size, and implicit ordered-gambit runtime authority. It made no runtime, UI, schema, content, save, test, or asset change and resumes the unchanged primary route:
+
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command`

@@ -619,6 +619,8 @@ Rules:
 
 UI should make systems legible before making them flashy.
 
+`docs/design/ui-information-architecture-boundary.md` is the permanent owner-aware UI information-architecture boundary. It preserves the six-domain shell, defines the dedicated Home/re-entry affordance, linked-record routing, text-first combat, tactics/gambit-style presentation limits, accessibility, and anti-clutter gates without authorizing implementation.
+
 Rules:
 
 - View-model first for complex account surfaces.

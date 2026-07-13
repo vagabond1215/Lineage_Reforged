@@ -13,6 +13,7 @@ Run:
 - Current tracking behavior is one persisted toggle of `sessionState.trackedQuestId` followed by existing snapshot synchronization and notice projection.
 - Missing quests and completed or failed quests reject without mutation.
 - Quest acceptance, quest turn-in, activity selection/advancement, rest, and rewards remain separate.
+- `docs/design/ui-information-architecture-boundary.md` is now the durable future presentation boundary; this runtime package must not begin its Home, shell, search, combat-presentation, or tactics prototype routes.
 - No user decision or Deep Research is required.
 
 ## Purpose
@@ -71,7 +72,7 @@ Run the new focused tests plus quest acceptance, player travel, gameplay-loop sk
 
 ## Explicit Non-Goals
 
-Do not change quest acceptance, turn-in, objectives, activity selection/advancement, rest, rewards, inventory, reputation, standing, progression, notifications, Chronicle, quest content, schemas, save fields/versions, migrations, compatibility behavior, command bus, replay ledger, event dispatch, UI layout, generated output, or dependencies.
+Do not change quest acceptance, turn-in, objectives, activity selection/advancement, rest, rewards, inventory, reputation, standing, progression, notifications, Chronicle, quest content, schemas, save fields/versions, migrations, compatibility behavior, command bus, replay ledger, event dispatch, UI layout, Home, linked-record/search behavior, combat presentation, tactics UI, generated output, or dependencies.
 
 ## Documentation And Handoff
 

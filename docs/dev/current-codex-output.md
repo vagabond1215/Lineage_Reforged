@@ -1,51 +1,63 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit
+Source version/run: Version 0.6.1.2 - UI Information Architecture Research Integration
 Date: 2026-07-13
-Branch/status assumption: `master`; starting commit `3ba937b0`; clean worktree; fetch and fast-forward pull confirmed alignment with `origin/master`. The starting commit added only the temporary UI information-architecture research artifact and did not alter the quest-acceptance transition.
+Branch/status assumption: `master`; starting commit `12c1f39` after the committed `0.6.1.1` audit; clean worktree; branch one commit ahead of `origin/master`; fetch and fast-forward pull reported no remote update. Final worktree contains only the intended documentation integration and temporary-artifact deletion.
 
 ## Result
 
-Accepted the engine-owned quest-acceptance transition without a repair. The engine is the sole acceptance authority; deterministic identity and stale guards are coherent; accepted mutation is clone-based, synchronized, atomic, and parity-locked; rejection returns the original snapshot with no event; the accepted event and command correlation are transient; persistence/browser/TS-JS boundaries are safe; and the UI applies accepted state only.
+Integrated `GPT-DR.ui.information-architecture` as documentation-only support work. The research was useful but required repository correction before promotion. Created `docs/design/ui-information-architecture-boundary.md` as the permanent owner-aware authority and deleted the fully consumed temporary artifact.
 
-Selected `Version 0.6.2 - Engine-Owned Quest Tracking Command` as the next primary consumer. Tracking is the smallest remaining bounded seam: one quest lookup, two rejection categories, one persisted `trackedQuestId` toggle, one synchronization call, and one `QuestsPanel` call site.
+The boundary preserves the text-first identity and six-domain shell; selects a dedicated Home/re-entry affordance; limits the persistent frame to top band, left navigation, and one main pane; defines federated linked records/search; protects Codex, Character, World, Quests, Chronicle, Activity, combat, persistence, and asset ownership; defines text-first per-tick combat and current-contract gambit-style tactics UX; and establishes accessibility, component, responsive, asset, prototype, readiness, and anti-clutter gates.
+
+`Version 0.6.2 - Engine-Owned Quest Tracking Command` remains the exact next primary route.
 
 ## Files Changed
 
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/current-codex-prompt.md`
+- `docs/design/ui-information-architecture-boundary.md` (created)
+- `docs/design/future-system-design-ledger.md`
+- `docs/design/gpt-deep-research-version-tracking-decision.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-codex-prompt.md`
+- `docs/dev/tmp-ui-information-architecture-research-2026-07-13.md` (deleted after full promotion)
 
 ## Checks Run
 
-- Inspected repository rules, current coordination sources, runtime-readiness consolidation, player-travel clarification, the complete landed `0.6.1` diff, quest-acceptance TS/JS/export/event/UI/test surfaces, snapshot synchronization, adjacent travel tests, skill-gating tests, save/load roundtrip, and deterministic scenario coverage.
-- Required focused command: 26 passed, 0 failed.
-- Confirmed locked snapshot SHA-256 `44c15faaf28b238323cdb3cd67746482fea8128fd66bea05dddc20b09dadff04` and notice SHA-256 `2e0341fb706ec430a27a84151c916de0e251158fd2d3556d79c3a923a1886a90` through the passing characterization test.
-- Direct resolver/command/event identity, acceptance mutation, UI application, export/import, helper-reference, persistence-correlation, changed-path, temporary-artifact, conflict-marker, whitespace, and final-status inspections.
-- Full suite, DB build, UI build, typecheck, package installation, servers, and generated-output refresh intentionally omitted.
+- Inspected required coordination, research-policy, shell-planning, Knowledge, Chronicle, quest, discovery, map/travel, runtime-ownership, and durable design sources.
+- Inspected the current shell/layout/navigation/top-band/view-model and all six domain panels.
+- Inspected current combat/tactics contracts, engine state/tick/action/queue/interrupt/manual-override behavior, focused combat presentation tests, persistence owners, font tokens, and asset rules.
+- Mapped shell, domain, combat, notification, persistence, asset, search/history, and notes ownership.
+- Classified major recommendations as Adopt, Adapt, Defer, or Reject in the permanent boundary.
+- Confirmed all required and newly referenced repository paths exist.
+- Verified the changed-path set is documentation-only and contains no runtime, UI source, test, content, schema, package, save, migration, generated, or asset file.
+- Searched for stale UI gameplay-authority claims, canonical Speed/parallel ATB claims, fixed party-size claims, rendered-battlefield requirements, ordered-gambit runtime authority, class/job gates, universal Codex ownership, conflict markers, and trailing whitespace.
+- Verified the six-domain shell and unchanged `0.6.2` primary route in final coordination files.
+- Verified temporary-artifact deletion, `git diff --check`, final prompt content, and final status.
+- Full suite, UI build, DB build, typecheck, package installation, servers, and generated-output refresh intentionally omitted.
 
 ## Behavior / Runtime Confirmation
 
-No runtime, UI source, shared contract, test, content, schema, save, migration, dependency, generated, or asset behavior changed during this audit.
+No runtime, React/UI source, CSS/theme, shared contract, combat/tactics behavior, content JSON, schema/validator, save field/version, migration, compatibility behavior, test, dependency, generated output, or asset changed.
 
-Authority: `resolvePlayerQuestAcceptancePlan(...)` alone owns lookup, contracts-only eligibility, stable plan codes, and acceptance facts; `getQuestCommandState(...)` consumes it; the UI contains no direct acceptance mutation.
+Research reconciliation:
 
-Identity and atomicity: command identity covers player, quest, sequence, tick, snapshot version, and full revision; default sequence is derived from active plus completed quest-id counts plus one. Full revision prevents stale same-tick state, distinct quest/sequence inputs avoid same-tick collisions, all validation precedes clone mutation, synchronization completes before result/event construction, and failure returns the original snapshot identity/content with zero events.
-
-Parity and event: acceptance advances no tick and preserves the full characterized quest, tracked state, activity, notification, Chronicle, records, Codex, body/runtime, progression, ordering, text, ids, and caps. Exactly one `player.quest.accepted` event follows success; its payload contains immutable presentation-safe facts and no snapshot internals. No command/event state is persisted or dispatched.
-
-Persistence/browser/UI: post-acceptance current-data serialization roundtrips exactly; no save version or storage contract changed; the `.js` peer intentionally re-exports the TypeScript authority; the UI import graph has no Node-only dependency; `QuestsPanel` applies the returned snapshot and active-section change only when accepted.
+- Adopted the compact three-region shell, one primary context, text-first presentation, predictable browser-game workflows, concise logs/queues, selective art, progressive disclosure, accessibility baseline, and anti-clutter test.
+- Adapted Home into a dedicated re-entry affordance/default surface; linked records into owner-routed projections; Codex into a living but non-universal reference interface; gambit-style controls into readable projections over current tactics fields; and responsive behavior into desktop-first without desktop-only assumptions.
+- Deferred search/history/pins ownership, player notes, production Home/compact shell, Codex certainty states not yet owned, combat presentation/view model, tactics editor, and literal ordered gambit contracts/runtime.
+- Rejected universal Codex ownership, new canonical Speed/UI ATB, fixed party size, required rendered battlefield, legacy browser-game timer/table pressure, monetization urgency, and class/job gates.
 
 ## Risks / Follow-Up
 
-- Default acceptance sequence is snapshot-derived rather than dispatcher-issued. Command identity is collision-safe for current direct invocation, but external delivery idempotency remains deferred until a dispatcher exists.
-- Quest tracking was selected over activity selection because tracking has no notification/Chronicle mutation and one direct call site. Activity advancement, rest, and turn-in remain higher-risk because they coordinate clock/body, rewards, inventory, skills, standing/reputation, operations, flags, and quest lifecycle behavior.
-- Activity selection is also bounded but mutates both current activity and notifications; retain it for a later owner-specific package.
-- Deep Research is not required for quest tracking.
+- Current pin toggling is direct snapshot mutation in `InGameShell.tsx`; do not expand it into search/bookmark history until UI-state and persistence ownership are decided.
+- Current panels expose some source-reference/debug-style standards; a future presentation audit should separate developer diagnostics from normal player-facing text.
+- A combat UI needs a read-only encounter presentation model and accessible event/log policy before implementation.
+- Tactics editing must map exactly to current roles, biases, spell preferences, target weights, focus directives, presets, control mode, and manual overrides. Ordered condition/action rules remain a separate authority question.
+- Home and compact navigation should wait until remaining UI-owned gameplay mutations are extracted and a narrow prototype validates re-entry and minimum viewport behavior.
 
 ## Next Recommended Version
 
@@ -53,4 +65,4 @@ Version 0.6.2 - Engine-Owned Quest Tracking Command
 
 ## Suggested Commit Message
 
-docs(audit): verify engine-owned quest acceptance transition
+docs(design): integrate UI information architecture research
