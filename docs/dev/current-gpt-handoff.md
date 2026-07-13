@@ -1,70 +1,42 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.357.1 - Player Travel Boundary Clarification
+Source version/run: Version 0.6.0 - Engine-Owned Player Travel Command
 Date: 2026-07-13
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`
+- `Version 0.6.0 - Engine-Owned Player Travel Command`
 
 Latest completed support clarification:
 
 - `Version 0.5.357.1 - Player Travel Boundary Clarification`
 
-Immediate next primary route:
+Immediate next support route:
 
-- `Version 0.6.0 - Engine-Owned Player Travel Command`
+- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
 
-`docs/dev/current-codex-output.md` remains the exact latest Codex result for `0.5.357`; this connector-side support clarification did not modify it.
+## Result
 
-## Decision
+Player travel preview and execution now share one engine-owned resolver. Execution uses a deterministic transient command with a full-snapshot revision fingerprint, clone/resolve/commit atomicity, stable rejection codes, collision-safe command identity, and exactly one typed collision-safe completion event on acceptance.
 
-Player travel/movement remains the first engine-owned consumer. `docs/design/runtime-ownership-transition-readiness-consolidation.md` owns the base command, state, event/result, persistence, UI-adapter, validation, rollback, and stop boundaries.
+The engine preserves the characterized current travel snapshots, including timing, body/resource and attribute-load behavior, location and geographic Knowledge, arrival activity, both quest-arrival hooks, notifications, Chronicle, quest/record/Codex projections, active/completed quest ids, Echo/body synchronization, tracked-quest cleanup, and serialization behavior.
 
-`docs/design/player-travel-boundary-clarification.md` is the controlling addendum for `0.6.0` where the two documents differ. It adds three required protections:
+`gameplayLoop.ts` retains only the narrow preview/result-to-notice bridge and uses the engine-owned synchronization path. `WorldPanel.tsx` applies accepted next snapshots only. The UI no longer contains the travel-rule catalog or direct travel mutation.
 
-1. deterministic collision-safe command and completion-event identities, including accepted same-completion-tick coverage;
-2. one pure engine-owned travel resolver shared by preview and execution, with no duplicate UI travel-rule catalog;
-3. full parity with the current post-travel `syncSnapshot(...)` result, including derived quest, record, Codex, body, progression, and tracked-quest synchronization.
+## Validation And Risk
 
-No user decision or Deep Research is required.
+- Exact travel characterization and command tests pass, including all required rejections, original identity/content preservation, unexpected-failure containment, deterministic repetition, same-completion-tick identity/event uniqueness, zero-tick travel, both quest-arrival hooks, post-travel serialization, engine exports, and UI authority searches.
+- Adjacent gameplay-loop skill-gating, save/load roundtrip, and deterministic scenario tests pass.
+- The broad UI typecheck remains non-green on accepted unrelated debt; no touched travel module reports a new diagnostic.
+- No save field, schema, migration, content JSON, dependency, generated output, or compatibility behavior changed.
 
-## Required `0.6.0` Shape
+## Next Route
 
-Land one coherent implementation package containing:
+Run a narrow read-only `0.6.0.1` post-transition audit before selecting the next engine-owned quest or activity consumer. Use a support repair only if contradictory focused evidence appears. Do not return to generic authority-selection loops.
 
-- a narrow transient travel command and result contract;
-- a deterministic command factory/correlation identity;
-- one engine-owned travel-plan resolver used by preview and execution;
-- atomic engine-owned execution with stable rejection codes;
-- one collision-safe completion event per accepted command;
-- current notification and Chronicle projections derived from accepted engine facts;
-- complete current-result characterization and parity coverage;
-- deterministic, rejection, no-partial-mutation, same-tick identity, event, export, and post-travel roundtrip tests;
-- a narrow `WorldPanel` adapter migration;
-- removal of direct UI travel mutation and duplicate UI travel rules.
-
-Preserve all current destinations, values, ids, text, costs, timing, body/resource behavior, Knowledge, arrival hooks, record projections, and persistence behavior.
-
-## Guardrails
-
-- No new canon, route/place content, schema authority, save field, migration, compatibility behavior, pathfinding, encounter, survival, caravan/economy transport, map reveal, account behavior, or broad shell rewrite.
-- UI sends player, destination, expected tick/revision, and state/context intention only. It must not author timing, costs, validation, state mutation, Chronicle facts, or travel-rule identity.
-- Preview is read-only and must not be trusted as execution authorization; execution revalidates current state.
-- Rejection preserves original snapshot identity/content and emits no event or session projection.
-- Do not solve the travel event requirement through an unrelated repository-wide event redesign.
-- Treat only new or changed failures in touched travel modules and exact focused tests as blockers. The accepted unrelated full-suite and broad typecheck debt remains excluded.
-- Stop if current parity requires new canon, a persistence-contract change, quest/Chronicle redesign, or broad cleanup.
-
-## Coordination
-
-The active prompt is `docs/dev/current-codex-prompt.md`.
-
-Older immediate-route text that omits `0.5.357.1` is superseded for execution by this handoff and the clarification document. Historical chronology remains valid.
-
-The temporary Deep Research intake remains consumed but retained through `0.6.0` acceptance for provenance. The `0.6.0` run must decide whether its retirement trigger has been met.
+The consumed temporary Deep Research intake was retired after `0.6.0` acceptance because its useful rules are durable in the streamlined-pipeline/readiness decisions and its speculative rejected examples no longer need live-repo provenance.
 
 Suggested next commit:
 

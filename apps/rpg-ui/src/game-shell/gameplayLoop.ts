@@ -19,16 +19,25 @@ import {
   type SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
 import {
+  createPlayerTravelCommand,
+  executePlayerTravelCommand,
+  type PlayerTravelResult
+} from '../../../../packages/engines/game-engine/src/player-travel.js';
+import {
+  getCurrentPlayerTravelLocationId,
+  getCurrentPlayerTravelLocationLabel,
+  getPlayerTravelDestinationFacts,
+  resolvePlayerTravelPlan
+} from '../../../../packages/engines/game-engine/src/player-travel-rules.js';
+import { synchronizeGameplaySnapshot } from '../../../../packages/engines/game-engine/src/gameplay-snapshot-sync.js';
+import {
   applyReputationAward,
   applyActionAttributeLoad,
   applyAttributeTensionToActionProfile,
   advancePlayerBodyState,
   convertPlayerStatGrowthOnRecovery,
-  grantSettlementGeographicKnowledge,
   loadBodyStateBalanceRule,
-  resolvePlayerEchoProgression,
   resolveSkillRankGainPolicy,
-  syncPlayerBodyState,
   syncPlayerRuntimeState
 } from '../../../../packages/engines/player-engine/src/index.js';
 import type { GameShellNotice } from './state.js';
@@ -58,23 +67,6 @@ type QuestCommandState = {
   canTurnIn: boolean;
   canTrack: boolean;
   nextStep: string;
-};
-
-type LocationTemplate = {
-  id: string;
-  name: string;
-  regionId: string;
-  regionLabel: string;
-  settlementId: string;
-  siteLabel: string;
-  worldMapId: string;
-  travelTicks: number;
-  staminaCost: number;
-  hpCost: number;
-  mpCost: number;
-  metabolicProfile: ActionMetabolicProfileState;
-  attributeLoadProfile: ActionAttributeLoadProfileState | null;
-  arrivalActivity: CurrentActivityState;
 };
 
 const WATCH_LABELS: Record<number, string> = {
@@ -169,138 +161,12 @@ const PROCUREMENT_SHIFT_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
   meaningfulInteraction: true
 };
 
-const TRAVEL_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
-  intensity: 'moderate',
-  sourceTag: 'travel',
-  weights: {
-    AGI: 0.7,
-    CON: 0.6,
-    VIT: 0.4,
-    WIS: 0.3
-  },
-  meaningfulInteraction: true
-};
-
 const SETTLEMENT_REST_RECOVERY: RecoveryContextState = {
   sleepUnits: 1,
   campTier: 'secure_indoor',
   safetyTier: 'secure',
   mealSupport: 1,
   waterSupport: 1
-};
-
-const LOCATION_TEMPLATES: Record<string, LocationTemplate> = {
-  'location.saltmere': {
-    id: 'location.saltmere',
-    name: 'Aurelis',
-    regionId: 'region.verdant_thalos',
-    regionLabel: 'Verdant Thalos',
-    settlementId: 'settlement.aurelis',
-    siteLabel: 'Harbor Quarter',
-    worldMapId: 'world_map.first_world',
-    travelTicks: 0,
-    staminaCost: 0,
-    hpCost: 0,
-    mpCost: 0,
-    metabolicProfile: {
-      intensity: 'low',
-      fatigueGain: 0,
-      energyDemand: 0,
-      hydrationDemand: 0,
-      highIntensityLoad: 0
-    },
-    attributeLoadProfile: null,
-    arrivalActivity: {
-      id: 'activity.arrival.saltmere',
-      label: 'Back In Saltmere',
-      category: 'Arrival',
-      detail: 'Harbor offices, guild clerks, and market rumors are within easy reach.'
-    }
-  },
-  'location.westreach': {
-    id: 'location.westreach',
-    name: 'Stonevein',
-    regionId: 'region.auric_marches',
-    regionLabel: 'The Auric Marches',
-    settlementId: 'settlement.stonevein',
-    siteLabel: 'Market Ward',
-    worldMapId: 'world_map.first_world',
-    travelTicks: 6,
-    staminaCost: 12,
-    hpCost: 0,
-    mpCost: 0,
-    metabolicProfile: {
-      intensity: 'moderate',
-      fatigueGain: 12,
-      energyDemand: 16,
-      hydrationDemand: 12,
-      highIntensityLoad: 1
-    },
-    attributeLoadProfile: TRAVEL_ATTRIBUTE_PROFILE,
-    arrivalActivity: {
-      id: 'activity.arrival.westreach',
-      label: 'Arriving In Westreach',
-      category: 'Travel',
-      detail: 'Ore yards, assay clerks, and caravan labor brokers crowd the market road.'
-    }
-  },
-  'location.ashen_reef': {
-    id: 'location.ashen_reef',
-    name: 'Starfall Port',
-    regionId: 'region.starfall_isle',
-    regionLabel: 'Starfall Isle',
-    settlementId: 'settlement.starfall_port',
-    siteLabel: 'Survey Anchorage',
-    worldMapId: 'world_map.first_world',
-    travelTicks: 4,
-    staminaCost: 18,
-    hpCost: 2,
-    mpCost: 3,
-    metabolicProfile: {
-      intensity: 'high',
-      fatigueGain: 16,
-      energyDemand: 18,
-      hydrationDemand: 14,
-      highIntensityLoad: 2
-    },
-    attributeLoadProfile: {
-      ...TRAVEL_ATTRIBUTE_PROFILE,
-      intensity: 'high'
-    },
-    arrivalActivity: {
-      id: 'activity.survey.ashen_reef',
-      label: 'Surveying Ashen Reef',
-      category: 'Exploration',
-      detail: 'The crew is ready to chart sectors, mark hazards, and log ruin positions.'
-    }
-  },
-  'location.crown_bastion': {
-    id: 'location.crown_bastion',
-    name: 'Sunspire Reach',
-    regionId: 'region.silver_valleys',
-    regionLabel: 'Silver Valleys',
-    settlementId: 'settlement.sunspire_reach',
-    siteLabel: 'Gate Muster',
-    worldMapId: 'world_map.first_world',
-    travelTicks: 8,
-    staminaCost: 15,
-    hpCost: 0,
-    mpCost: 0,
-    metabolicProfile: {
-      intensity: 'moderate',
-      fatigueGain: 14,
-      energyDemand: 18,
-      hydrationDemand: 13,
-      highIntensityLoad: 1
-    },
-    attributeLoadProfile: TRAVEL_ATTRIBUTE_PROFILE,
-    arrivalActivity: {
-      id: 'activity.arrival.crown_bastion',
-      label: 'Reporting At Crown Bastion',
-      category: 'Travel',
-      detail: 'Banner captains, quartermasters, and pass clerks are rotating the watch.'
-    }
-  }
 };
 
 function cloneSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
@@ -327,39 +193,11 @@ function formatTickTime(snapshot: SaveSnapshot): string {
 }
 
 function getCurrentLocationId(snapshot: SaveSnapshot): string | null {
-  const settlementId = snapshot.playerState.location.settlementId;
-
-  if (settlementId === 'settlement.aurelis') {
-    return 'location.saltmere';
-  }
-
-  if (settlementId === 'settlement.stonevein') {
-    return 'location.westreach';
-  }
-
-  if (settlementId === 'settlement.starfall_port') {
-    return 'location.ashen_reef';
-  }
-
-  if (settlementId === 'settlement.sunspire_reach') {
-    return 'location.crown_bastion';
-  }
-
-  return null;
+  return getCurrentPlayerTravelLocationId(snapshot);
 }
 
 function getCurrentLocationName(snapshot: SaveSnapshot): string {
-  const locationId = getCurrentLocationId(snapshot);
-
-  if (!locationId) {
-    return snapshot.playerState.location.siteLabel ?? 'Current location';
-  }
-
-  return LOCATION_TEMPLATES[locationId]?.name ?? humanizeId(locationId);
-}
-
-function getKnownLocation(snapshot: SaveSnapshot, locationId: string) {
-  return snapshot.sessionState.knownLocations.find((entry) => entry.id === locationId);
+  return getCurrentPlayerTravelLocationLabel(snapshot);
 }
 
 function hasFlag(snapshot: SaveSnapshot, flag: string): boolean {
@@ -1163,31 +1001,7 @@ function syncQuestIds(snapshot: SaveSnapshot) {
 }
 
 function syncSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
-  const nextSnapshot = cloneSnapshot(snapshot);
-
-  nextSnapshot.sessionState.questJournal = syncQuestJournal(nextSnapshot);
-  nextSnapshot.sessionState.worldRecords = syncWorldRecords(nextSnapshot);
-  nextSnapshot.sessionState.activityRecords = syncActivityRecords(nextSnapshot);
-  nextSnapshot.sessionState.codexEntries = syncCodexEntries(nextSnapshot);
-  syncQuestIds(nextSnapshot);
-  syncPlayerBodyState(
-    nextSnapshot.playerState,
-    nextSnapshot.clock.tick,
-    nextSnapshot.clock.day,
-    nextSnapshot.gameState.runDifficulty
-  );
-  nextSnapshot.playerState.progression = resolvePlayerEchoProgression(nextSnapshot.playerState);
-
-  if (
-    nextSnapshot.sessionState.trackedQuestId &&
-    !nextSnapshot.sessionState.questJournal.some(
-      (entry) => entry.id === nextSnapshot.sessionState.trackedQuestId && entry.category !== 'failed'
-    )
-  ) {
-    nextSnapshot.sessionState.trackedQuestId = null;
-  }
-
-  return nextSnapshot;
+  return synchronizeGameplaySnapshot(snapshot);
 }
 
 function addDiscoveryEntry(snapshot: SaveSnapshot) {
@@ -1343,37 +1157,23 @@ export function previewTravelToKnownLocation(
   snapshot: SaveSnapshot,
   locationId: string
 ): GameplayBodyStatePreview {
-  const target = LOCATION_TEMPLATES[locationId];
-
-  if (!target) {
+  const plan = resolvePlayerTravelPlan(snapshot, locationId);
+  if (!plan.accepted) {
     return {
       available: false,
-      reason: 'Unknown destination.',
+      reason: plan.reason,
       tickCount: 0,
       projectedBodyState: null,
       timeline: []
     };
   }
 
-  if (locationId === getCurrentLocationId(snapshot)) {
-    return {
-      available: false,
-      reason: 'Already at this destination.',
-      tickCount: 0,
-      projectedBodyState: null,
-      timeline: []
-    };
-  }
-
-  return previewSnapshotClock(snapshot, target.travelTicks, {
-    metabolicProfile: mitigateActionProfile(
-      snapshot,
-      target.metabolicProfile,
-      target.attributeLoadProfile?.sourceTag ?? 'travel',
-      ['AGI', 'CON', 'VIT', 'WIS'],
-      ['skill.knowledge.general_lore']
-    )
-  });
+  return {
+    available: true,
+    tickCount: plan.facts.travelTicks,
+    projectedBodyState: plan.projectedBodyState,
+    timeline: plan.timeline
+  };
 }
 
 export function acceptQuest(snapshot: SaveSnapshot, questId: string): GameplayActionResult {
@@ -1490,128 +1290,38 @@ export function setCurrentActivityFromRecord(
   };
 }
 
+function createPlayerTravelNotice(result: PlayerTravelResult): GameShellNotice {
+  if (result.accepted) {
+    return createNotice('success', 'Travel Complete', `${result.noticeFacts.destinationName} is now the active location.`);
+  }
+
+  if (result.code === 'unknown_destination') {
+    return createNotice('warning', 'Travel Target Unknown', 'That destination does not yet have travel rules wired into the current vertical slice.');
+  }
+  if (result.code === 'destination_not_known') {
+    return createNotice('warning', 'Destination Unknown', 'That location is not yet discovered in the current session.');
+  }
+  if (result.code === 'already_at_destination') {
+    return createNotice('warning', 'Already There', `${result.noticeFacts.destinationName ?? 'That location'} is already the current destination.`);
+  }
+  if (result.code === 'stale_snapshot' || result.code === 'stale_origin') {
+    return createNotice('warning', 'Travel State Changed', 'The travel outlook is stale. Review the current location and try again.');
+  }
+  return createNotice('warning', 'Travel Blocked', 'Travel could not be applied to the current session state.');
+}
+
 export function travelToKnownLocation(
   snapshot: SaveSnapshot,
   locationId: string
-): GameplayActionResult {
-  const target = LOCATION_TEMPLATES[locationId];
-  const knownLocation = getKnownLocation(snapshot, locationId);
-
-  if (!target) {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Travel Target Unknown', 'That destination does not yet have travel rules wired into the current vertical slice.')
-    };
-  }
-
-  if (!knownLocation?.known) {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Destination Unknown', 'That location is not yet discovered in the current session.')
-    };
-  }
-
-  const currentLocationId = getCurrentLocationId(snapshot);
-
-  if (currentLocationId === locationId) {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Already There', `${target.name} is already the current destination.`)
-    };
-  }
-
-  const nextSnapshot = cloneSnapshot(snapshot);
-  const travelProfile = mitigateActionProfile(
+): GameplayActionResult & { accepted: boolean } {
+  const result = executePlayerTravelCommand(
     snapshot,
-    target.metabolicProfile,
-    target.attributeLoadProfile?.sourceTag ?? 'travel',
-    ['AGI', 'CON', 'VIT'],
-    ['skill.knowledge.general_lore']
+    createPlayerTravelCommand(snapshot, locationId)
   );
-  advanceSnapshotClock(nextSnapshot, target.travelTicks, {
-    metabolicProfile: travelProfile,
-    attributeProfile: target.attributeLoadProfile
-  });
-  applyResourceDelta(nextSnapshot, {
-    hp: -target.hpCost,
-    mp: -target.mpCost,
-    stamina: -target.staminaCost
-  });
-  nextSnapshot.playerState.regionId = target.regionId;
-  nextSnapshot.playerState.geographicKnowledge = grantSettlementGeographicKnowledge(
-    nextSnapshot.playerState.geographicKnowledge,
-    target.settlementId,
-    1
-  );
-  nextSnapshot.playerState.location = {
-    settlementId: target.settlementId,
-    siteLabel: target.siteLabel,
-    worldMapId: target.worldMapId
-  };
-  nextSnapshot.sessionState.currentActivity = target.arrivalActivity;
-  nextSnapshot.sessionState.knownLocations = nextSnapshot.sessionState.knownLocations.map((entry) =>
-    entry.id === locationId ? { ...entry, known: true } : entry
-  );
-
-  if (
-    nextSnapshot.sessionState.trackedQuestId === 'quest.ashen_reef_survey' &&
-    locationId === 'location.ashen_reef'
-  ) {
-    nextSnapshot.sessionState.operations = upsertOperation(
-      nextSnapshot.sessionState.operations,
-      buildSurveyOperation(nextSnapshot)
-    );
-    nextSnapshot.sessionState.currentActivity = {
-      id: 'activity.survey.ashen_reef',
-      label: 'Surveying Ashen Reef',
-      category: 'Exploration',
-      detail: 'The charter vessel is in position to begin charting reef sectors.'
-    };
-  }
-
-  if (
-    nextSnapshot.sessionState.trackedQuestId === 'quest.rivet_shortfall_relief' &&
-    locationId === 'location.westreach'
-  ) {
-    nextSnapshot.sessionState.operations = upsertOperation(
-      nextSnapshot.sessionState.operations,
-      buildPorterOperation(nextSnapshot)
-    );
-    nextSnapshot.sessionState.currentActivity = {
-      id: 'activity.procure.rivets',
-      label: 'Securing Rivet Crates',
-      category: 'Trade',
-      detail: 'Westreach brokers are preparing deepiron stock for the emergency Saltmere order.'
-    };
-  }
-
-  appendNotification(
-    nextSnapshot,
-    'Travel complete',
-    `${nextSnapshot.playerState.coreData.playerName} reached ${target.name}.`,
-    'accent'
-  );
-  appendChronicle(
-    nextSnapshot,
-    makeChronicleEntry(
-      nextSnapshot,
-      'travel',
-      `${nextSnapshot.playerState.coreData.playerName} reached ${target.name}`,
-      `${target.name} is now the active location after ${target.travelTicks} tick(s) of travel.`,
-      target.travelTicks > 0 ? `${target.travelTicks} ticks` : undefined,
-      [nextSnapshot.playerState.coreData.playerName, target.name],
-      ['Travel leg completed'],
-      [
-        target.staminaCost > 0 ? `Stamina ${-target.staminaCost}` : 'No stamina cost',
-        target.hpCost > 0 ? `HP ${-target.hpCost}` : 'No HP loss'
-      ],
-      ['Travel', target.regionLabel]
-    )
-  );
-
   return {
-    snapshot: syncSnapshot(nextSnapshot),
-    notice: createNotice('success', 'Travel Complete', `${target.name} is now the active location.`)
+    accepted: result.accepted,
+    snapshot: result.snapshot,
+    notice: createPlayerTravelNotice(result)
   };
 }
 
@@ -1972,8 +1682,9 @@ export function previewRestAtCurrentSettlement(snapshot: SaveSnapshot): Gameplay
 
 export function restAtCurrentSettlement(snapshot: SaveSnapshot): GameplayActionResult {
   const locationId = getCurrentLocationId(snapshot);
+  const location = locationId ? getPlayerTravelDestinationFacts(locationId) : null;
 
-  if (!locationId) {
+  if (!locationId || !location) {
     return {
       snapshot,
       notice: createNotice('warning', 'Rest Unavailable', 'A proper rest stop is only available inside a settlement for this first playable loop.')
@@ -1999,14 +1710,14 @@ export function restAtCurrentSettlement(snapshot: SaveSnapshot): GameplayActionR
   nextSnapshot.playerState.saveMeta.lastRestAtTick = nextSnapshot.clock.tick;
   nextSnapshot.sessionState.currentActivity = {
     id: 'activity.rest',
-    label: `Resting In ${LOCATION_TEMPLATES[locationId]!.name}`,
+    label: `Resting In ${location.name}`,
     category: 'Recovery',
     detail: 'Resources, nerves, and field notes are being restored before the next contract.'
   };
   appendNotification(
     nextSnapshot,
     'Rest complete',
-    `A settled rest in ${LOCATION_TEMPLATES[locationId]!.name} restored current resources.`,
+    `A settled rest in ${location.name} restored current resources.`,
     'success'
   );
   appendChronicle(
@@ -2014,19 +1725,19 @@ export function restAtCurrentSettlement(snapshot: SaveSnapshot): GameplayActionR
     makeChronicleEntry(
       nextSnapshot,
       'social',
-      `${nextSnapshot.playerState.coreData.playerName} rested in ${LOCATION_TEMPLATES[locationId]!.name}`,
+      `${nextSnapshot.playerState.coreData.playerName} rested in ${location.name}`,
       'A proper bunk, meal, and dry roof restored the current reserves.',
       '-4 silver',
-      [nextSnapshot.playerState.coreData.playerName, LOCATION_TEMPLATES[locationId]!.name],
+      [nextSnapshot.playerState.coreData.playerName, location.name],
       ['All resources restored'],
       ['Silver -4', 'HP to full', 'MP to full', 'Stamina to full'],
-      ['Recovery', LOCATION_TEMPLATES[locationId]!.regionLabel]
+      ['Recovery', location.regionLabel]
     )
   );
 
   return {
     snapshot: syncSnapshot(nextSnapshot),
-    notice: createNotice('success', 'Recovered', `Resources were restored after resting in ${LOCATION_TEMPLATES[locationId]!.name}.`)
+    notice: createNotice('success', 'Recovered', `Resources were restored after resting in ${location.name}.`)
   };
 }
 

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-07-12
-Route: Codex local sequencing alignment after `Version 0.5.356 - Tool Surface Test Boundary Repair`
+Date: 2026-07-13
+Route: Codex local sequencing alignment after `Version 0.6.0 - Engine-Owned Player Travel Command`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -19,24 +19,26 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 ## Current Anchor
 
-Latest landed foundation slice:
+Latest completed primary:
 
-- `Version 0.5.356 - Tool Surface Test Boundary Repair`
+- `Version 0.6.0 - Engine-Owned Player Travel Command`
 
 Latest completed support/audit run:
 
-- `Version 0.5.344.1 - Living Character Manuscript Research Integration`
+- `Version 0.5.357.1 - Player Travel Boundary Clarification`
 
-Immediate next primary Codex run:
+Immediate next support Codex run:
 
-- `Version 0.6.0 - Engine-Owned Player Travel Command`
+- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
 
 ## Current Queue Override
 
 - `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation` is complete and supersedes the older primary post-repair-audit pointer.
-- Player travel/movement is the selected first engine-owned consumer. `Version 0.6.0` should land one coherent command/result, atomic state transition, event, roundtrip, focused-test, and `WorldPanel` adapter package while preserving current behavior and canon.
+- `Version 0.5.357.1 - Player Travel Boundary Clarification` is complete and controls collision-safe identity, shared preview/execution resolution, and synchronization parity for the landed transition.
+- `Version 0.6.0 - Engine-Owned Player Travel Command` is complete. It landed one engine-owned resolver, deterministic transient command/revision identity, atomic transition, typed completion event, shared snapshot synchronization, focused parity/rejection/roundtrip tests, and the narrow `WorldPanel` adapter migration.
+- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit` is the next support route. It should remain read-only unless contradictory focused evidence requires a narrow repair, then select the next engine-owned quest or activity consumer from actual dependency evidence.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- After `0.6.0`, choose the next engine-owned quest or activity consumer from actual dependency evidence. Do not resume repeated unchanged-source authority audits or generic roadmap-selection passes.
+- After the travel audit, choose the next engine-owned quest or activity consumer from actual dependency evidence. Do not resume repeated unchanged-source authority audits or generic roadmap-selection passes.
 
 Versioning note:
 

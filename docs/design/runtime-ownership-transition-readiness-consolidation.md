@@ -255,9 +255,7 @@ Historical route chronology remains historical and is not rewritten. Any older p
 
 ## 10. Temporary Artifact And Planning Pointer Disposition
 
-`docs/dev/tmp-deep-research-streamlined-pipeline-review-2026-07-12.md` is consumed but retained temporarily. Its useful milestone, named-consumer, support-suffix, validation, and research rules are now durable in the streamlined pipeline decision and this readiness decision. Its rejected speculative examples remain useful provenance through the first implementation.
-
-Retirement trigger: after `Version 0.6.0` is accepted, confirm that no unique useful or rejected-assumption context remains outside durable decisions, then delete the temporary intake in that implementation run or a narrow support cleanup. It must not be used as runtime or canon authority.
+The temporary streamlined-pipeline Deep Research intake was retired in `Version 0.6.0` after acceptance confirmed that its useful milestone, named-consumer, support-suffix, validation, and research rules were durable in the streamlined pipeline decision and this readiness decision. Its rejected speculative examples were not promoted into canon or runtime authority.
 
 The primary post-repair audit pointer is superseded. Repeated unchanged-source authority audits and generic roadmap-selection passes are not current queue items. Zero-id lanes retain their existing reopening gates.
 

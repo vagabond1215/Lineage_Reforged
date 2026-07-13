@@ -12,6 +12,32 @@ import {
   createEmptyPartyRuntimeState
 } from "./combat/state.js";
 export { createEmptySessionState, createSaveSnapshotFromGameContext } from "./save-snapshot.js";
+export { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
+export {
+  getCurrentPlayerTravelLocationId,
+  getCurrentPlayerTravelLocationLabel,
+  getPlayerTravelDestinationFacts,
+  resolvePlayerTravelPlan,
+  type AcceptedPlayerTravelPlan,
+  type PlayerTravelDestinationFacts,
+  type PlayerTravelPlan,
+  type PlayerTravelPlanRejectionCode,
+  type RejectedPlayerTravelPlan
+} from "./player-travel-rules.js";
+export {
+  PLAYER_TRAVEL_COMPLETED_EVENT_TYPE,
+  createPlayerTravelCommand,
+  executePlayerTravelCommand,
+  resolveNextPlayerTravelCommandSequence,
+  type AcceptedPlayerTravelResult,
+  type PlayerTravelCommand,
+  type PlayerTravelCommandRejectionCode,
+  type PlayerTravelCompletedEvent,
+  type PlayerTravelCompletedEventPayload,
+  type PlayerTravelNoticeFacts,
+  type PlayerTravelResult,
+  type RejectedPlayerTravelResult
+} from "./player-travel.js";
 export {
   createDefaultAccountAchievementsState,
   createDefaultAccountHistoryState,

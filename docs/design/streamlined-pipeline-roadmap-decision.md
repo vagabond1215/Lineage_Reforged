@@ -281,7 +281,7 @@ Commission Deep Research only when:
 
 Do not commission broad catch-all research or use research to create Lineage canon.
 
-The temporary intake at `docs/dev/tmp-deep-research-streamlined-pipeline-review-2026-07-12.md` must be retired after its accepted material is fully promoted and its rejected assumptions are no longer needed for provenance.
+The temporary intake was retired in `Version 0.6.0` after its accepted material was fully promoted and its rejected assumptions were no longer needed for live-repo provenance.
 
 ## 10. Current Lane Decisions
 

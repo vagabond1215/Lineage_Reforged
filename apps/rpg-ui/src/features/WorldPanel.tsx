@@ -215,7 +215,9 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                       }
 
                       const result = travelToKnownLocation(snapshot, selectedWorldLocation.id);
-                      updateSnapshot(result.snapshot);
+                      if (result.accepted) {
+                        updateSnapshot(result.snapshot);
+                      }
                       setPanelNotice(result.notice);
                     }}
                   />

@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-13 after `Version 0.5.357.1 - Player Travel Boundary Clarification` landed.
+Updated 2026-07-13 after `Version 0.6.0 - Engine-Owned Player Travel Command` landed.
 
 ## Purpose
 
@@ -32,17 +32,17 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 ## Current Repo Anchor
 
-Latest exact Codex handoff:
+Latest completed primary:
 
-- `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`
+- `Version 0.6.0 - Engine-Owned Player Travel Command`
 
 Latest connector-side support clarification:
 
 - `Version 0.5.357.1 - Player Travel Boundary Clarification`
 
-Next recommended version:
+Next recommended support version:
 
-- `Version 0.6.0 - Engine-Owned Player Travel Command`
+- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
 
 Current sequence source:
 
@@ -50,7 +50,7 @@ Current sequence source:
 
 Current phase:
 
-- transition from `v0.5.x` foundation stabilization / ownership hardening into the first bounded `v0.6.x` runtime-ownership implementation
+- the first bounded `v0.6.x` runtime-ownership implementation is landed; audit it before selecting another engine-owned consumer
 
 Current transition decisions:
 
@@ -59,9 +59,9 @@ Current transition decisions:
 
 ## Current Implementation Reality
 
-- Player travel preview and execution remain UI-owned in `apps/rpg-ui/src/game-shell/gameplayLoop.ts`; `WorldPanel.tsx` invokes both.
-- Current travel mutates clock, body/resources, player location and geographic Knowledge, session activity, quest-arrival operations, notifications, and Chronicle, then applies broad derived snapshot synchronization.
-- `Version 0.6.0` must migrate that complete behavior behind engine ownership without leaving a duplicate UI rule catalog or direct UI mutation.
+- Player travel preview and execution are engine-owned through one resolver and one transient command in `packages/engines/game-engine/src/`; `gameplayLoop.ts` is now a notice/application bridge and `WorldPanel.tsx` commits accepted snapshots only.
+- Accepted travel atomically mutates the cloned clock, body/resources, player location and geographic Knowledge, session activity, quest-arrival operations, notifications, and Chronicle, then applies the shared engine-owned derived snapshot synchronization path.
+- Rejected or exceptional travel returns the original snapshot identity/content and emits no completion event. No travel catalog or direct travel mutation remains in the UI bridge.
 - Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, command contract planning, first narrow runtime cast resolver planning, resolver-readiness helpers, planned output-envelope policy, inert resolver envelope helpers, spell-hook support expansion planning, spell-hook classification auditing, and spell-hook constants cleanup have landed.
 - `buildMagicCastReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
 - `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` are pure, deterministic, read-only, and exported through the game-engine boundary.
@@ -97,7 +97,8 @@ Every major system should answer at least one of these questions:
 | --- | --- | --- | --- |
 | `0.5.357` | Runtime Ownership Transition Readiness Consolidation | Landed. Selected player travel/movement as the first engine-owned consumer and fixed the base command/state/event/persistence/UI boundary. | Documentation only; no runtime behavior changed. |
 | `0.5.357.1` | Player Travel Boundary Clarification | Landed. Added collision-safe identity, shared preview/execution resolver, and full post-travel synchronization parity requirements. | Support clarification only; does not consume the next primary slot. |
-| `0.6.0` | Engine-Owned Player Travel Command | Next. Move the complete current travel transition behind one engine-owned command and shared resolver. | Preserve current behavior and canon; no new travel mechanics, save fields, quest redesign, or broad UI rewrite. |
+| `0.6.0` | Engine-Owned Player Travel Command | Landed. Moved the complete current travel transition behind one engine-owned command and shared resolver with atomic rejection safety and typed completion events. | Preserved current behavior and canon; added no travel mechanics, save fields, quest redesign, or broad UI rewrite. |
+| `0.6.0.1` | Engine-Owned Player Travel Post-Transition Audit | Next support run. Audit parity, authority removal, deterministic identity, event uniqueness, persistence, and focused regression evidence. | Read-only unless contradictory evidence proves a narrow repair is required. |
 | later `0.6.x` | Next Engine-Owned Consumer | Select after travel acceptance from actual dependency evidence. | One coherent consumer; no return to generic authority-selection loops. |
 
 For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
