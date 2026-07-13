@@ -1,54 +1,52 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.356 - Tool Surface Test Boundary Repair
+Source version/run: Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation
 Date: 2026-07-12
-Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`; required fetch and fast-forward pull reported `Already up to date.`
+Branch/status assumption: `master`; worktree clean before required sync; fetch and fast-forward pull updated local `master` from `50924584` to `2905ccc8`; documentation edits then applied on the synced tree.
 
 ## Result
 
-Repaired the generic tool-surface integration test exactly as approved. It now executes only side-effect-free content lint, requires status zero with stderr diagnostics, and validates an anchored positive-count success summary without hardcoding the current total.
+Selected player travel/movement as the first engine-owned consumer and fixed its exact command, atomic state, event/result, persistence, UI-adapter, validation, failure, rollback, and stop boundaries. Selected one milestone-sized next route: `Version 0.6.0 - Engine-Owned Player Travel Command`.
 
-Removed DB-build execution from automatic test discovery and removed duplicate scenario-runner execution from generic smoke. The existing deterministic scenario test remains the scenario owner. Selected docs-only `Version 0.5.357 - Tool Surface Test Post-Repair Audit` next.
+No user decision or Deep Research is required. The optional tool post-repair audit remains support-only as `0.5.356.1` if contradictory focused evidence appears.
 
 ## Files Changed
 
-- `tests/integration/tool-surfaces.test.mjs`
+- `docs/design/runtime-ownership-transition-readiness-consolidation.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
+- `docs/dev/tmp-deep-research-streamlined-pipeline-review-2026-07-12.md`
 
 ## Checks Run
 
 - Required branch status, fetch, and fast-forward pull.
-- Required README, coordination, validation source-map/matrix/boundary, integration/scenario tests, and three tool entrypoint reads.
-- `node --test tests/integration/tool-surfaces.test.mjs`.
-- `node --test tests/simulation/deterministic-scenario.test.mjs`.
-- `node --test tests/unit/polity-validation.test.mjs`.
-- `node --test tests/unit/institution-validation.test.mjs`.
-- `node --test tests/unit/schema-files.test.mjs`.
-- `npm.cmd run tool:content-lint`.
-- Full suite, DB build, broad typechecks, UI build, package installation, and network-dependent commands were intentionally not run.
-- Changed-test no-DB/no-scenario/no-exact-count, unchanged tool/script/config/dependency/content/schema/validator/generated-output, unrelated-failure, scope, conflict-marker, whitespace, and route-pointer checks.
-- `git diff --check`.
-- `git status --short --branch`.
+- Required repository, coordination, pipeline/research, runtime ownership, command/event, save/persistence, UI orchestration, engine, state-contract, and validation reads/searches.
+- `node --test tests/unit/gameplay-loop-skill-gating.test.mjs` (5 passed).
+- `node --test tests/simulation/save-load-roundtrip.test.mjs` (2 passed).
+- `node --test tests/simulation/deterministic-scenario.test.mjs` (1 passed).
+- Final changed-path, route-pointer, temporary-artifact-reference, conflict-marker, whitespace, `git diff --check`, and branch-status checks.
+- Full suite, DB build, UI build, broad typechecks, package installation, servers, and generated-output refresh intentionally not run.
 
 ## Behavior / Runtime Confirmation
 
-Validation behavior changed only: generic tool smoke no longer executes DB build or duplicates scenario execution, and its content-lint assertion no longer drifts with the registered-file count. No production tool, script, config, dependency, content, schema, validator, generated output, runtime, UI, save/account, or gameplay behavior changed.
+Documentation and active workflow routing changed. No production source, test, schema, validator, content, config, dependency, generated output, runtime, UI, account, save contract, command, event, reward, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The other 14 accepted full-suite failures and broad typecheck debt remain outside this repair.
-- DB build now has no automatic generic smoke; it remains an explicit side-effectful generator pending any separately approved isolated test design.
-- `AGENTS.md` still names the completed `0.5.349` chat mode line; changing that workflow pointer remains outside this prompt's allowed files. The `0.5.357` prompt body correctly omits an embedded platform/mode line.
+- `0.6.0` must preserve current hardcoded travel rules and quest-arrival hooks while removing direct UI mutation; dual authority is not an acceptable end state.
+- Direct travel tests do not yet exist. The implementation must add deterministic acceptance/rejection/no-partial-mutation and post-travel roundtrip coverage.
+- The fourteen accepted full-suite failures and unrelated broad typecheck debt are excluded. Civilization caravan failures do not own player travel.
+- The consumed temporary Deep Research intake remains until `0.6.0` acceptance confirms all useful and rejected-assumption provenance is durable elsewhere.
 
 ## Next Recommended Version
 
-Version 0.5.357 - Tool Surface Test Post-Repair Audit
+Version 0.6.0 - Engine-Owned Player Travel Command
 
 ## Suggested Commit Message
 
-test(tools): isolate side-effect-free tool smoke
+docs(planning): consolidate runtime ownership readiness

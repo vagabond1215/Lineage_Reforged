@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source route: ChatGPT via GitHub Connector after Deep Research review
+Source version/run: Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.356 - Tool Surface Test Boundary Repair`
+- `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`
 
 Latest completed support/audit run:
 
@@ -15,54 +15,27 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`
+- `Version 0.6.0 - Engine-Owned Player Travel Command`
 
-Optional support route only if local focused verification contradicts the current handoff:
+## Decision
 
-- `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit`
+Player travel/movement is the first engine-owned consumer. The live UI-owned `gameplayLoop.ts` seam already validates travel, advances clock/body/resources, mutates player location and geographic Knowledge, updates session/quest-operation state, and writes Chronicle/notifications. Existing engine/shared boundaries already provide the required helpers, state, event envelope, snapshot, serialization, and deterministic validation surfaces.
 
-## Pipeline Decision
+`Version 0.6.0` should be one coherent implementation package: narrow command/result contract, atomic handler, current-behavior event/session projections, post-travel roundtrip and deterministic/rejection tests, and `WorldPanel` adapter migration. Preserve all current values, ids, text, costs, timing, and quest arrival behavior.
 
-`docs/design/streamlined-pipeline-roadmap-decision.md` controls immediate sequencing where older roadmap, sequence, prompt, or output pointers still name the superseded primary `0.5.357` post-repair audit.
+## Guardrails
 
-The tool-surface lane is treated as complete from the landed source shape and the focused validation recorded in `docs/dev/current-codex-output.md`. Do not spend a primary version repeating that evidence. Reopen only for a reproduced focused failure, changed tool behavior, or renewed generated-output mutation.
+- No new canon, route/place content, schema authority, save field, migration, pathfinding, encounter, survival, caravan/economy transport, map reveal, or broad shell rewrite.
+- UI supplies destination intention only; it must not supply costs, timing, rewards, state mutations, or Chronicle facts.
+- Rejection must return the original snapshot unchanged and emit no completion event.
+- Account state and civilization transport remain separate.
+- Treat only new/changed compiler failures in touched travel modules as direct blockers; the fourteen accepted full-suite failures and unrelated broad typecheck debt remain excluded.
+- Stop if preserving current behavior requires a product decision, new canon, persistence contract change, or broad cleanup.
 
-Adopt milestone-and-consumer-first routing:
+## Research Artifact
 
-- require a named consumer or active-milestone dependency before new schema/content expansion;
-- reuse existing decisions instead of repeating unchanged-source audits;
-- use support suffixes for narrow audits, repairs, retries, validation follow-ups, and coordination-only alignment;
-- keep primary routes for coherent capability, owner-readiness, blocker-removal, dependency, or maturity transitions;
-- keep authored-input, ready-consumer, dependency, research, maturity, rejection, closure, and owner boundaries fail-closed.
-
-## Research Intake
-
-The reviewed Deep Research result is preserved temporarily at:
-
-- `docs/dev/tmp-deep-research-streamlined-pipeline-review-2026-07-12.md`
-
-It separates useful process guidance from invented sample quests, NPCs, monsters, currencies, combat choices, save scope, UI form, and incorrect version-band assumptions. It is not canon or implementation permission. Retire it only after all useful guidance is promoted and its rejected assumptions no longer need provenance.
-
-## Next Route Purpose
-
-`Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation` is documentation-only. It should:
-
-- map current UI/demo orchestration, engine helpers/commands, state owners, results/events, save/load, deterministic simulation, and candidate consumer seams;
-- compare only evidence-backed first-consumer candidates;
-- select exactly one first engine-owned path or return one decision-ready blocker card;
-- define exact `v0.6.x` entry, persistence, validation, UI-adapter, and stop conditions;
-- identify only the full-suite/typecheck failures that directly affect the selected path;
-- preserve zero-id authority gates and avoid invented canon;
-- produce a milestone-sized follow-up, not another chain of open-ended authority-selection routes.
-
-No code, content, schema, tests, tools, configs, dependencies, runtime, UI, save/account, generated output, or gameplay changes are approved in this route.
-
-## Coordination Note
-
-`docs/dev/current-codex-output.md` remains the exact latest implementation handoff and should not be edited by this connector-side planning pass. Its old next-route recommendation is superseded only for sequencing by the newer pipeline decision.
-
-The next local docs run should reconcile `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/current-codex-prompt.md`, and `docs/future_content_backlog.md` without deleting historical route data.
+The Deep Research intake is consumed but retained at `docs/dev/tmp-deep-research-streamlined-pipeline-review-2026-07-12.md` through `0.6.0` acceptance for rejected-assumption provenance. Retire it after confirming the durable pipeline and readiness decisions contain every useful finding.
 
 Suggested next commit:
 
-`docs(planning): consolidate runtime transition readiness`
+`feat(runtime): move player travel into engine ownership`

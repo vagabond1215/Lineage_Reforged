@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-06-16 after `Version 0.5.173 - Documentation Authority Consolidation And Gap Audit Integration` landed.
+Updated 2026-07-12 after `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation` landed.
 
 ## Purpose
 
@@ -31,11 +31,11 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest exact Codex handoff:
 
-- `Version 0.5.173 - Documentation Authority Consolidation And Gap Audit Integration`
+- `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`
 
 Next recommended version:
 
-- `Version 0.5.174 - Religious Hotspot Content Authority Schema Plan`
+- `Version 0.6.0 - Engine-Owned Player Travel Command`
 
 Current sequence source:
 
@@ -44,6 +44,10 @@ Current sequence source:
 Current phase:
 
 - `v0.5.x` foundation stabilization / ownership hardening
+
+Current transition decision:
+
+- `docs/design/runtime-ownership-transition-readiness-consolidation.md` selects player travel/movement as the first engine-owned consumer and fixes the `0.6.0` package boundary.
 
 ## Current Implementation Reality
 

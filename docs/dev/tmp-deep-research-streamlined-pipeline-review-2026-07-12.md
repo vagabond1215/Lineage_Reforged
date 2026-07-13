@@ -2,8 +2,8 @@
 
 Source: ChatGPT Deep Research result requested 2026-07-12
 Review date: 2026-07-12
-Status: temporary planning intake; not canon, runtime authority, implementation permission, or a replacement for repository-local decisions
-Retirement trigger: delete only after every accepted recommendation is promoted into durable roadmap/pipeline authorities and every rejected or uncertain claim is recorded or no longer useful
+Status: consumed by `Version 0.5.357`; retained temporarily for provenance; not canon, runtime authority, implementation permission, or a replacement for repository-local decisions
+Retirement trigger: after `Version 0.6.0` acceptance, delete when the durable streamlined-pipeline and runtime-readiness decisions preserve every useful finding and rejected assumptions no longer need separate provenance
 
 ## Purpose
 

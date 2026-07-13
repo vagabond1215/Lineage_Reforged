@@ -29,7 +29,14 @@ Latest completed support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.357 - Tool Surface Test Post-Repair Audit`
+- `Version 0.6.0 - Engine-Owned Player Travel Command`
+
+## Current Queue Override
+
+- `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation` is complete and supersedes the older primary post-repair-audit pointer.
+- Player travel/movement is the selected first engine-owned consumer. `Version 0.6.0` should land one coherent command/result, atomic state transition, event, roundtrip, focused-test, and `WorldPanel` adapter package while preserving current behavior and canon.
+- `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
+- After `0.6.0`, choose the next engine-owned quest or activity consumer from actual dependency evidence. Do not resume repeated unchanged-source authority audits or generic roadmap-selection passes.
 
 Versioning note:
 
@@ -522,7 +529,7 @@ This is recommended ordering, not implementation lock-in:
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.357 - Tool Surface Test Post-Repair Audit` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. `0.5.357` selected player travel/movement, and milestone-sized `0.6.0 - Engine-Owned Player Travel Command` is next.
 
 ## Default Prompt Pattern
 
@@ -538,7 +545,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.357 - Tool Surface Test Post-Repair Audit` as the immediate next recommended run.
+- Keep `Version 0.6.0 - Engine-Owned Player Travel Command` as the immediate next recommended run; the post-repair audit is support-only as `0.5.356.1` if contradictory evidence appears.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

@@ -2,6 +2,15 @@
 
 Last reviewed: 2026-07-12
 
+## Current Runtime Transition Override
+
+- Latest completed primary: `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`.
+- Next primary: `Version 0.6.0 - Engine-Owned Player Travel Command`.
+- Player travel/movement is the first engine-owned consumer. The package combines the narrow command/result contract, atomic current-behavior state transition, completion event, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
+- No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
+- The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
+- Milestone-and-consumer-first routing now controls the active queue; historical completed-route chronology below remains unchanged.
+
 This roadmap is a repo-readable planning document for long-term version direction, playability checkpoints, lightweight audit/planning passes, and major deferred systems. It complements:
 
 - `AGENTS.md` for repository rules, version-label discipline, and tool routing.
@@ -19,11 +28,11 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.356 - Tool Surface Test Boundary Repair`
+- Latest completed version: `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`
 - Latest support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Next recommended version: `Version 0.5.357 - Tool Surface Test Post-Repair Audit`
+- Next recommended version: `Version 0.6.0 - Engine-Owned Player Travel Command`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: `v0.5.x` foundation stabilization / ownership hardening
+- Current phase: transition from completed `v0.5.x` ownership readiness into the first bounded `v0.6.x` runtime-ownership package
 
 Versioning rule:
 
