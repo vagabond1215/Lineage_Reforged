@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-13
-Route: Codex local sequencing alignment after `Version 0.6.0 - Engine-Owned Player Travel Command`
+Route: Codex local sequencing alignment after `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -25,20 +25,21 @@ Latest completed primary:
 
 Latest completed support/audit run:
 
-- `Version 0.5.357.1 - Player Travel Boundary Clarification`
+- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
 
 Immediate next support Codex run:
 
-- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
+- `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`
 
 ## Current Queue Override
 
 - `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation` is complete and supersedes the older primary post-repair-audit pointer.
 - `Version 0.5.357.1 - Player Travel Boundary Clarification` is complete and controls collision-safe identity, shared preview/execution resolution, and synchronization parity for the landed transition.
 - `Version 0.6.0 - Engine-Owned Player Travel Command` is complete. It landed one engine-owned resolver, deterministic transient command/revision identity, atomic transition, typed completion event, shared snapshot synchronization, focused parity/rejection/roundtrip tests, and the narrow `WorldPanel` adapter migration.
-- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit` is the next support route. It should remain read-only unless contradictory focused evidence requires a narrow repair, then select the next engine-owned quest or activity consumer from actual dependency evidence.
+- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit` is complete. Focused behavior passed, but five dead synchronization implementations remain in `gameplayLoop.ts` as duplicate UI gameplay authority.
+- `Version 0.6.0.2 - Residual UI Snapshot Authority Repair` is the next support route. Remove only the five dead UI helper copies and newly obsolete imports, preserve the live engine-delegating wrapper, and add a focused source guard.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- After the travel audit, choose the next engine-owned quest or activity consumer from actual dependency evidence. Do not resume repeated unchanged-source authority audits or generic roadmap-selection passes.
+- After a green `0.6.0.3` post-repair audit, choose the next engine-owned quest or activity consumer from actual dependency evidence. Do not resume repeated unchanged-source authority audits or generic roadmap-selection passes.
 
 Versioning note:
 
