@@ -12,7 +12,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 - `docs/dev/current-gpt-handoff.md` owns current connector-side guardrails and immediate prompt direction.
 - `docs/dev/current-codex-prompt.md` owns the active copy-paste Codex prompt body.
 - `docs/dev/project-roadmap.md` owns version order, version-band maturity, and active pipeline direction.
-- `docs/dev/codex-sequenced-implementation-plan.md` owns the ordered near-term Codex queue.
+- `docs/dev/codex-sequenced-implementation-plan.md` owns the detailed ordered Codex queue and historical sequencing record.
 - `docs/design/runtime-ownership-transition-readiness-consolidation.md` selects player travel as the first engine-owned consumer and owns the base `0.6.0` boundary.
 - `docs/design/player-travel-boundary-clarification.md` controls `0.6.0` collision-safe identity, shared preview/execution resolution, and full post-travel synchronization parity.
 - `docs/design/magic-runtime-boundary-plan.md` owns the cast-readiness helper boundary and later runtime guardrails.
@@ -46,7 +46,7 @@ Next recommended version:
 
 Current sequence source:
 
-- `docs/dev/codex-sequenced-implementation-plan.md`, with immediate execution guardrails in `docs/dev/current-gpt-handoff.md`
+- `docs/dev/codex-sequenced-implementation-plan.md`, with immediate execution guardrails in `docs/dev/current-gpt-handoff.md` and the active prompt in `docs/dev/current-codex-prompt.md`
 
 Current phase:
 
@@ -72,7 +72,7 @@ Current transition decisions:
 - `packages/shared/types/src/spell-hook-support.ts` is now the browser-safe authored authority consumed by lint, UI presentation, and focused readiness tests.
 - `buildMagicHookSupportProjection(...)` now projects six-class policy provenance and blocker detail while keeping every hook explicitly non-executable.
 - The temporary classification audit was consumed; unresolved legacy combat findings were promoted into `docs/design/legacy-combat-spell-runtime-ownership-plan.md`.
-- Runtime casting, command handling, acquisition mutation, save/account changes, broader ownership routes, broader acquisition routes, target resolution, effect application, resource payment, catalyst behavior, Chronicle/Renown hooks, skill trial runtime behavior, magic study event runtime behavior, and knowledge snippet runtime behavior remain deferred.
+- Runtime casting, command handling outside the selected travel slice, acquisition mutation, save/account changes, broader ownership routes, broader acquisition routes, target resolution, effect application, resource payment, catalyst behavior, Chronicle/Renown expansion, skill trial runtime behavior, magic study event runtime behavior, and knowledge snippet runtime behavior remain deferred.
 - Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
 - The project is entering the first runtime-ownership transition; broad runtime expansion remains out of scope.
 - Religion is active with exactly two live Religion Knowledge snippets, and hotspot content remains blocked until `world.religious_hotspots` schema, validator, seed authority, and direct snippet subject support exist.
@@ -89,3 +89,83 @@ Every major system should answer at least one of these questions:
 - Which family owns it?
 - Where is it recognized?
 - What can be carried forward?
+- What remains dangerous, limited, or uncertain despite inheritance?
+
+## Active Pipeline
+
+| Version | Name | Intent | Key Guardrail |
+| --- | --- | --- | --- |
+| `0.5.357` | Runtime Ownership Transition Readiness Consolidation | Landed. Selected player travel/movement as the first engine-owned consumer and fixed the base command/state/event/persistence/UI boundary. | Documentation only; no runtime behavior changed. |
+| `0.5.357.1` | Player Travel Boundary Clarification | Landed. Added collision-safe identity, shared preview/execution resolver, and full post-travel synchronization parity requirements. | Support clarification only; does not consume the next primary slot. |
+| `0.6.0` | Engine-Owned Player Travel Command | Next. Move the complete current travel transition behind one engine-owned command and shared resolver. | Preserve current behavior and canon; no new travel mechanics, save fields, quest redesign, or broad UI rewrite. |
+| later `0.6.x` | Next Engine-Owned Consumer | Select after travel acceptance from actual dependency evidence. | One coherent consumer; no return to generic authority-selection loops. |
+
+For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
+
+## Core Development Rules
+
+- Use current branch reality only.
+- Prefer the smallest coherent patch that advances the current pipeline.
+- Do not weaken validation unless the validator is demonstrably stale or wrong.
+- Do not add old-save or old-account compatibility unless explicitly requested.
+- Keep current data direct and validated.
+- Minor-band advancement reflects maturity: `v0.6.x` is now justified by the selected bounded runtime-ownership transition, not by patch-number rollover.
+- For complex systems, prefer design criteria, runtime shape, pure helpers, validation, view model, read-only UI, then mutating behavior.
+
+## New Thread Starter
+
+```text
+I am continuing development of Lineage: Reforged.
+
+Repo: vagabond1215/Lineage_Reforged
+Default branch: master
+Primary repo instruction file: AGENTS.md
+Latest Codex handoff: docs/dev/current-codex-output.md
+Current GPT handoff: docs/dev/current-gpt-handoff.md
+Current Codex prompt: docs/dev/current-codex-prompt.md
+Roadmap: docs/dev/project-roadmap.md
+Sequenced Codex plan: docs/dev/codex-sequenced-implementation-plan.md
+Runtime ownership readiness: docs/design/runtime-ownership-transition-readiness-consolidation.md
+Player travel boundary clarification: docs/design/player-travel-boundary-clarification.md
+Magic runtime boundary plan: docs/design/magic-runtime-boundary-plan.md
+Known-spell acquisition event plan: docs/design/known-spell-acquisition-event-plan.md
+Magic command contract plan: docs/design/magic-command-contract-plan.md
+First narrow runtime cast resolver plan: docs/design/first-narrow-runtime-cast-resolver-plan.md
+Magic resolver planned output envelope plan: docs/design/magic-resolver-planned-output-envelope-plan.md
+Spell hook support expansion plan: docs/design/spell-hook-support-expansion-plan.md
+Legacy combat spell runtime ownership plan: docs/design/legacy-combat-spell-runtime-ownership-plan.md
+Future system design ledger: docs/design/future-system-design-ledger.md
+Survival/builder/RPG/MMO gap audit: docs/design/survival-builder-rpg-mmo-content-gap-audit.md
+Strategic continuity brief: docs/dev/project-vision-and-continuity-brief.md
+Backlog: docs/future_content_backlog.md
+
+Read current-codex-output first for exact implementation state.
+Read current-gpt-handoff second for current connector-side guardrails.
+Read current-codex-prompt for the active implementation task.
+Use the roadmap for version order and playability checkpoints.
+Use the sequenced Codex plan for detailed queue history and current override context.
+Use the runtime ownership readiness decision for the base travel-command boundary.
+Use the player travel clarification for collision-safe identity, shared preview/execution resolution, and complete synchronization parity.
+Use the magic runtime boundary plan for cast-readiness helper and later runtime guardrails.
+Use the known-spell acquisition event plan for training-event acquisition helper history and later acquisition mutation constraints.
+Use the magic command contract plan for active magic command/intention constraints.
+Use the first narrow runtime cast resolver plan for resolver-readiness and later resolver constraints.
+Use the magic resolver planned output envelope plan for inert envelope constraints.
+Use the spell hook support expansion plan for hook classification, readiness, executable-owner, and sequencing constraints.
+Use the design ledger for durable conceptual criteria and vocabulary.
+Use the survival/builder/RPG/MMO gap audit as broad future roadmap context only, not as implementation permission.
+Use the continuity brief for north-star direction and source map.
+Use the backlog for deferred work and historical run notes.
+
+When I ask "inspect the push," read docs/dev/current-codex-output.md first, then inspect changed/important files as needed.
+
+When I ask "prompt please," use docs/dev/current-codex-prompt.md as the authoritative body and provide the platform/model recommendation separately.
+```
+
+## Maintenance Rules
+
+- Keep this brief short.
+- Move durable conceptual rules to `docs/design/future-system-design-ledger.md`.
+- Move version sequencing to `docs/dev/project-roadmap.md` and `docs/dev/codex-sequenced-implementation-plan.md`.
+- Move current connector findings to `docs/dev/current-gpt-handoff.md`.
+- Move deferred chronological notes to `docs/future_content_backlog.md`.
