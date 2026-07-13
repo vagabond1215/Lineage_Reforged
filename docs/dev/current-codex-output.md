@@ -1,27 +1,17 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.1 - Engine-Owned Quest Acceptance Command
+Source version/run: Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit
 Date: 2026-07-13
-Branch/status assumption: `master`; starting commit `d57e649f`; worktree contained only the seven intended uncommitted `0.6.0.3` audit/next-prompt coordination edits; escalated fetch plus `git pull --ff-only` confirmed `HEAD` and `origin/master` had zero divergence and were already current before implementation.
+Branch/status assumption: `master`; starting commit `3ba937b0`; clean worktree; fetch and fast-forward pull confirmed alignment with `origin/master`. The starting commit added only the temporary UI information-architecture research artifact and did not alter the quest-acceptance transition.
 
 ## Result
 
-Moved only quest acceptance behind engine ownership while preserving the complete characterized accepted snapshot and notice.
+Accepted the engine-owned quest-acceptance transition without a repair. The engine is the sole acceptance authority; deterministic identity and stale guards are coherent; accepted mutation is clone-based, synchronized, atomic, and parity-locked; rejection returns the original snapshot with no event; the accepted event and command correlation are transient; persistence/browser/TS-JS boundaries are safe; and the UI applies accepted state only.
 
-`resolvePlayerQuestAcceptancePlan(...)` now owns current quest lookup, contracts-only eligibility, stable rejection codes, and presentation-safe acceptance facts. `createPlayerQuestAcceptanceCommand(...)` builds a deterministic transient command with player, quest, sequence, tick, snapshot version, and full-snapshot revision identity. `executePlayerQuestAcceptanceCommand(...)` revalidates, clones, applies the exact current acceptance mutations, synchronizes once through `synchronizeGameplaySnapshot(...)`, commits atomically, and emits one typed collision-safe `player.quest.accepted` event after success.
-
-The gameplay-loop bridge now delegates acceptance and notice projection. `QuestsPanel.tsx` updates the snapshot and switches to the active section only on acceptance. Tracking, turn-in, activity, rest, rewards, inventory, reputation, command-bus, event-dispatch, and replay behavior remain unchanged.
+Selected `Version 0.6.2 - Engine-Owned Quest Tracking Command` as the next primary consumer. Tracking is the smallest remaining bounded seam: one quest lookup, two rejection categories, one persisted `trackedQuestId` toggle, one synchronization call, and one `QuestsPanel` call site.
 
 ## Files Changed
 
-- `packages/engines/game-engine/src/player-quest-acceptance.ts`
-- `packages/engines/game-engine/src/player-quest-acceptance.js`
-- `packages/engines/game-engine/src/index.ts`
-- `packages/shared/events/src/index.ts`
-- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
-- `apps/rpg-ui/src/features/QuestsPanel.tsx`
-- `tests/unit/player-quest-acceptance-characterization.test.mjs`
-- `tests/unit/player-quest-acceptance-command.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -32,33 +22,35 @@ The gameplay-loop bridge now delegates acceptance and notice projection. `Quests
 
 ## Checks Run
 
-- Required branch status, fetch, divergence, fast-forward pull, dirty-path, and coordination/source authority inspection.
-- Pre-extraction characterization: `node --test tests/unit/player-quest-acceptance-characterization.test.mjs` (1 passed). Locked accepted snapshot SHA-256 `44c15faaf28b238323cdb3cd67746482fea8128fd66bea05dddc20b09dadff04` and notice SHA-256 `2e0341fb706ec430a27a84151c916de0e251158fd2d3556d79c3a923a1886a90`.
-- Post-extraction quest-acceptance group: `node --test tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs` (9 passed, 0 failed).
-- Required final group: `node --test tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs` (26 passed, 0 failed).
-- Direct acceptance authority/mutation, resolver/command/event, export/import, TS/JS peer, Node-only import, persistence-correlation, UI application, changed-path, conflict-marker, temporary-artifact, and `git diff --check` searches.
-- Full suite, DB build, UI build, typecheck, package installation, servers, generated-output refresh, and unrelated cleanup intentionally omitted.
+- Inspected repository rules, current coordination sources, runtime-readiness consolidation, player-travel clarification, the complete landed `0.6.1` diff, quest-acceptance TS/JS/export/event/UI/test surfaces, snapshot synchronization, adjacent travel tests, skill-gating tests, save/load roundtrip, and deterministic scenario coverage.
+- Required focused command: 26 passed, 0 failed.
+- Confirmed locked snapshot SHA-256 `44c15faaf28b238323cdb3cd67746482fea8128fd66bea05dddc20b09dadff04` and notice SHA-256 `2e0341fb706ec430a27a84151c916de0e251158fd2d3556d79c3a923a1886a90` through the passing characterization test.
+- Direct resolver/command/event identity, acceptance mutation, UI application, export/import, helper-reference, persistence-correlation, changed-path, temporary-artifact, conflict-marker, whitespace, and final-status inspections.
+- Full suite, DB build, UI build, typecheck, package installation, servers, and generated-output refresh intentionally omitted.
 
 ## Behavior / Runtime Confirmation
 
-Ownership changed; characterized gameplay output did not. The accepted snapshot and notice hashes remain exact after extraction, including the final synchronized `Tracked - Procurement active` quest projection, objectives, active quest ids, tracked quest, preparation activity, notification, Chronicle entry, records, Codex, body/runtime, progression, ordering, ids, text, and caps.
+No runtime, UI source, shared contract, test, content, schema, save, migration, dependency, generated, or asset behavior changed during this audit.
 
-Accepted commands leave the input unchanged, return a new synchronized snapshot, and emit exactly one typed event. Missing, active, completed, failed, malformed, wrong-player, stale, incoherent, and injected-failure paths return the original snapshot identity/content and emit zero events. Deterministic repetition, distinct same-tick command/event identity, post-acceptance roundtrip, and non-persistence of command correlation are covered.
+Authority: `resolvePlayerQuestAcceptancePlan(...)` alone owns lookup, contracts-only eligibility, stable plan codes, and acceptance facts; `getQuestCommandState(...)` consumes it; the UI contains no direct acceptance mutation.
 
-No content JSON, schema, save field/version, migration, compatibility behavior, dependency, generated output, reward, inventory, reputation, tracking, turn-in, activity, rest, travel, or account behavior changed.
+Identity and atomicity: command identity covers player, quest, sequence, tick, snapshot version, and full revision; default sequence is derived from active plus completed quest-id counts plus one. Full revision prevents stale same-tick state, distinct quest/sequence inputs avoid same-tick collisions, all validation precedes clone mutation, synchronization completes before result/event construction, and failure returns the original snapshot identity/content with zero events.
+
+Parity and event: acceptance advances no tick and preserves the full characterized quest, tracked state, activity, notification, Chronicle, records, Codex, body/runtime, progression, ordering, text, ids, and caps. Exactly one `player.quest.accepted` event follows success; its payload contains immutable presentation-safe facts and no snapshot internals. No command/event state is persisted or dispatched.
+
+Persistence/browser/UI: post-acceptance current-data serialization roundtrips exactly; no save version or storage contract changed; the `.js` peer intentionally re-exports the TypeScript authority; the UI import graph has no Node-only dependency; `QuestsPanel` applies the returned snapshot and active-section change only when accepted.
 
 ## Risks / Follow-Up
 
-- Run the narrow read-only `0.6.1.1` post-transition audit before selecting another quest/activity consumer.
-- Default acceptance sequence derives from current active/completed quest-id counts; quest id and full revision also participate in identity. Revisit delivery idempotency only when an external dispatcher exists.
-- `gameplayLoop.ts` intentionally retains notification, Chronicle, quest tracking/turn-in, activity, rest, and synchronization bridges used by other live actions; do not classify those as acceptance residue without call evidence.
-- Accepted unrelated full-suite/typecheck debt was not revisited.
-- Deep Research is not required.
+- Default acceptance sequence is snapshot-derived rather than dispatcher-issued. Command identity is collision-safe for current direct invocation, but external delivery idempotency remains deferred until a dispatcher exists.
+- Quest tracking was selected over activity selection because tracking has no notification/Chronicle mutation and one direct call site. Activity advancement, rest, and turn-in remain higher-risk because they coordinate clock/body, rewards, inventory, skills, standing/reputation, operations, flags, and quest lifecycle behavior.
+- Activity selection is also bounded but mutates both current activity and notifications; retain it for a later owner-specific package.
+- Deep Research is not required for quest tracking.
 
 ## Next Recommended Version
 
-Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit
+Version 0.6.2 - Engine-Owned Quest Tracking Command
 
 ## Suggested Commit Message
 
-feat(runtime): move quest acceptance into engine ownership
+docs(audit): verify engine-owned quest acceptance transition

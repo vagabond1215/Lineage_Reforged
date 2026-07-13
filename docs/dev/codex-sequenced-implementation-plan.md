@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-13
-Route: Codex local sequencing alignment after `Version 0.6.1 - Engine-Owned Quest Acceptance Command`
+Route: Codex local sequencing alignment after `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -25,11 +25,11 @@ Latest completed primary:
 
 Latest completed support/audit run:
 
-- `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
-
-Immediate next support Codex run:
-
 - `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
+
+Immediate next primary Codex run:
+
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
 
 ## Current Queue Override
 
@@ -40,9 +40,10 @@ Immediate next support Codex run:
 - `Version 0.6.0.2 - Residual UI Snapshot Authority Repair` is complete. It removed only the five dead UI synchronization copies and newly obsolete imports, preserved the live engine-delegating wrapper, and added a focused source guard with 17/17 tests green.
 - `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit` is complete and accepted. It reconfirmed the repaired authority, behavior, persistence/browser, TS/JS, adapter, and hygiene boundaries at 17/17 tests.
 - `Version 0.6.1 - Engine-Owned Quest Acceptance Command` is complete. It moved only acceptance behind one engine resolver/command/event boundary, preserved exact characterized output, added accepted-only UI application, and passed 26/26 focused tests.
-- `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit` is the next support route. Audit the landed boundary read-only, then select one next consumer only if accepted.
+- `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit` is complete and accepted. It reconfirmed sole engine acceptance authority, deterministic transient identity, atomic rejection, exact parity, typed event behavior, persistence/browser safety, accepted-only UI application, and clean extraction hygiene at 26/26 focused tests.
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command` is the next primary route. Move only `toggleTrackedQuest(...)` behind one engine-owned resolver/command/result/event boundary while preserving its current toggle semantics, synchronization result, notices, and `QuestsPanel` behavior.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Quest tracking, activity selection/advancement, rest, and quest turn-in remain later consumers. Do not resume repeated unchanged-source authority audits or generic roadmap-selection passes.
+- Activity selection/advancement, rest, and quest turn-in remain later consumers. Do not bundle them into quest tracking or resume repeated unchanged-source authority audits or generic roadmap-selection passes.
 
 Versioning note:
 

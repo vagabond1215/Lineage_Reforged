@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.6.1 - Engine-Owned Quest Acceptance Command
+Source version/run: Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit
 Date: 2026-07-13
 
 ## Status
@@ -11,26 +11,24 @@ Latest completed primary:
 
 Latest completed support/audit run:
 
-- `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
-
-Immediate next support route:
-
 - `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
 
-## Result
+Immediate next primary route:
 
-Quest acceptance now uses one engine-owned resolver and one deterministic transient command. Acceptance revalidates player/tick/version/revision and current contracts-only eligibility, clones and applies the exact current quest/tracked/activity/notification/Chronicle mutations, synchronizes through the existing engine owner, commits atomically, and emits one collision-safe typed `player.quest.accepted` event.
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
 
-The complete accepted snapshot and notice hashes remain unchanged. Rejection and injected failure preserve original identity/content and emit no event. Same-tick identities, caps, roundtrip, browser-safe imports, engine exports, TS/JS peer alignment, and accepted-only `QuestsPanel` application are covered. The full focused group passes 26/26.
+## Audit Result
+
+Quest acceptance is accepted as the second engine-owned runtime consumer. One engine resolver owns lookup and contracts-only eligibility; one deterministic transient command owns validation, stale protection, clone/mutate/synchronize/commit, stable rejection, and one accepted-only typed event. Locked accepted snapshot and notice hashes remain exact, rejection exposes no partial clone, command correlation remains transient, and the UI bridge contains no direct acceptance mutation.
+
+The required focused group passed 26/26. No repair route is required.
 
 ## Next Route
 
-Run one read-only post-transition audit. Reconfirm resolver/command/event authority, deterministic identity, stale protection, atomicity, complete characterized parity, persistence/browser safety, UI adapter behavior, and no residual direct acceptance mutation or dead extraction residue.
+Move only `toggleTrackedQuest(...)` behind an engine-owned resolver and deterministic transient command. Preserve missing/completed/failed rejection behavior, toggle-on/toggle-off semantics, the synchronized snapshot, current notices, and the existing `QuestsPanel` application path. Add focused characterization, atomic rejection, identity/event, browser-import, and current-data roundtrip coverage.
 
-If accepted, compare quest tracking and activity selection first, while retaining advancement, rest, and turn-in as higher-risk later consumers. Select exactly one next consumer from current evidence. If contradictory evidence appears, package the smallest support repair instead.
-
-Do not add command-bus, event delivery, replay ledger, save fields, content, schema, tracking, turn-in, rewards, inventory, reputation, activity, rest, or unrelated cleanup. Deep Research is not required.
+Do not bundle acceptance, turn-in, activity selection/advancement, rest, rewards, inventory, reputation, command bus, replay ledger, event dispatch, save fields, schemas, content, migrations, compatibility behavior, or UI redesign. Deep Research is not required.
 
 Suggested next commit:
 
-`feat(runtime): move quest acceptance into engine ownership`
+`feat(runtime): move quest tracking into engine ownership`

@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-13 after `Version 0.6.1 - Engine-Owned Quest Acceptance Command`.
+Updated 2026-07-13 after `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`.
 
 ## Purpose
 
@@ -38,11 +38,11 @@ Latest completed primary:
 
 Latest support/audit run:
 
-- `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
-
-Next recommended support version:
-
 - `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
+
+Next recommended primary version:
+
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
 
 Current sequence source:
 
@@ -103,8 +103,9 @@ Every major system should answer at least one of these questions:
 | `0.6.0.2` | Residual UI Snapshot Authority Repair | Complete. Removed only the five dead UI helper copies and newly unused imports; added a focused source guard. | Preserved live engine delegation and all current behavior; 17/17 focused tests passed. |
 | `0.6.0.3` | Engine-Owned Player Travel Post-Repair Audit | Complete and accepted. | Reconfirmed repaired authority, behavior, persistence/browser, adapter, and hygiene boundaries. |
 | `0.6.1` | Engine-Owned Quest Acceptance Command | Complete. Moved acceptance behind one resolver/command/event boundary with exact characterized parity. | Acceptance only; 26/26 focused tests passed. |
-| `0.6.1.1` | Engine-Owned Quest Acceptance Post-Transition Audit | Next support run. | Reconfirm the second ownership transition before selecting another consumer. |
-| later `0.6.x` | Later Engine-Owned Consumers | Tracking, activity selection/advancement, rest, and turn-in remain deferred. | One coherent consumer per package; no generic command bus. |
+| `0.6.1.1` | Engine-Owned Quest Acceptance Post-Transition Audit | Complete and accepted at 26/26 focused tests. | Reconfirmed sole authority, parity, atomic rejection, event, persistence/browser, UI-adapter, and hygiene boundaries. |
+| `0.6.2` | Engine-Owned Quest Tracking Command | Next primary run. | Tracking toggle only; preserve current behavior and do not bundle quest lifecycle or activity work. |
+| later `0.6.x` | Later Engine-Owned Consumers | Activity selection/advancement, rest, and turn-in remain deferred. | One coherent consumer per package; no generic command bus. |
 
 For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
 
