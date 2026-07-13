@@ -2,24 +2,23 @@
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the narrow validation repair:
+Run the focused validation audit:
 
-`Version 0.5.356 - Tool Surface Test Boundary Repair`
+`Version 0.5.357 - Tool Surface Test Post-Repair Audit`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.355 - Tool Surface Test Boundary Decision`
+- Latest completed primary: `Version 0.5.356 - Tool Surface Test Boundary Repair`
 - Latest completed support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Immediate next primary route: `Version 0.5.356 - Tool Surface Test Boundary Repair`
-- Standalone content lint is green at 67 files.
-- Generic tool smoke should own only side-effect-free content-lint execution and stable success-output shape.
-- DB build is an explicit side-effectful generator and must leave automatic discovery.
-- Scenario execution/determinism is owned by `tests/simulation/deterministic-scenario.test.mjs`.
+- Immediate next primary route: `Version 0.5.357 - Tool Surface Test Post-Repair Audit`
+- Generic tool smoke executes only content lint and asserts an anchored positive-count success summary.
+- DB build no longer runs through the integration test.
+- Scenario runner remains owned by the deterministic simulation test.
 - The other 14 full-suite failures and broad typecheck debt remain outside scope.
 
 ## Purpose
 
-Implement the exact one-test-file boundary from `0.5.355`: make generic tool smoke side-effect-free, remove stale count drift, and preserve scenario ownership. Do not change tools or production behavior.
+Audit the completed one-test-file repair for exact boundary compliance, green focused validation, and absence of tool/generated-output changes. Decide whether another tool-surface follow-up is needed and select at most one later route. Do not implement anything.
 
 ## Required first steps
 
@@ -40,33 +39,41 @@ Read at minimum:
 - `docs/design/tool-surface-test-boundary-decision.md`;
 - `tests/integration/tool-surfaces.test.mjs`;
 - `tests/simulation/deterministic-scenario.test.mjs`;
-- content-lint, DB-build, and scenario entrypoints only as needed to reconfirm the approved boundary.
+- content-lint, DB-build, and scenario entrypoints only as needed to verify non-change and ownership.
 
-## Required implementation
+Do not run full suite, DB build, broad typechecks, UI build, package installation, or network-dependent commands.
 
-Edit only `tests/integration/tool-surfaces.test.mjs` among test/source files:
+## Expected output
 
-- remove DB-build execution;
-- remove scenario-runner execution;
-- keep one clearly named content-lint process smoke;
-- require exit status zero and include stderr in failure diagnostics;
-- assert one anchored success line matching `content-lint: ok (<positive integer> files checked)`;
-- do not hardcode `67` or any exact total;
-- do not add helpers, dependencies, package scripts, cleanup logic, temp output, or generated-output behavior.
+Add:
+
+- `docs/design/tool-surface-test-post-repair-audit.md`
+
+## Required decisions
+
+- confirm generic tool smoke contains only content-lint execution;
+- confirm status/stderr and anchored positive-count output-shape assertions;
+- confirm no hardcoded checked-file total;
+- confirm DB build cannot run through this integration test;
+- confirm scenario execution/determinism remains owned and passing in its simulation test;
+- confirm tools, scripts, configs, dependencies, content, schemas, validators, and generated output remain unchanged;
+- decide whether the tool-surface lane is stable and can close;
+- keep the other 14 failures and broad typecheck debt separate;
+- select at most one later narrow route or return to roadmap selection.
+
+## Guardrails
+
+Docs only. Do not add/edit scripts, tools, dependencies, configs, source, content, schemas, validators, tests, normal-lint registration, generated/vendor files, runtime, UI, account state, save/account, or gameplay. Do not run full suite, DB build, broad typechecks, UI build, package installation, network-dependent commands, or Deep Research. Do not triage unrelated failures, reopen gated lanes, or transition to `0.6.0`.
 
 ## Allowed changes
 
-- `tests/integration/tool-surfaces.test.mjs`
+- `docs/design/tool-surface-test-post-repair-audit.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/future_content_backlog.md`
-
-## Guardrails
-
-Do not edit content-lint, DB-build, scenario-runner, package scripts, dependencies, configs, content, schemas, validators, generated/vendor files, runtime, UI, account state, save/account, or gameplay. Do not triage/fix the other 14 failures or broad typecheck debt. Do not run full suite, DB build, broad typechecks, UI build, package installation, network-dependent commands, or Deep Research. Do not reopen gated lanes or transition to `0.6.0`.
 
 ## Validation
 
@@ -83,8 +90,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify the changed integration test contains no DB-build or scenario-runner entry, does not hardcode `56` or `67`, and cannot write generated output. Verify unchanged tools/scripts/config/dependencies/source/content/schemas/validators/generated output, no unrelated failure changes, no conflict markers/trailing whitespace, and aligned route pointers.
+Verify docs-only scope, unchanged test/tool/script/config/dependency/source/content/schema/validator/generated output, no unrelated failure triage, no conflict markers/trailing whitespace, and aligned route pointers.
 
 Suggested commit message:
 
-`test(tools): isolate side-effect-free tool smoke`
+`docs(validation): audit tool surface repair`

@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.355 - Tool Surface Test Boundary Decision
+Source version/run: Version 0.5.356 - Tool Surface Test Boundary Repair
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.355 - Tool Surface Test Boundary Decision`
+- `Version 0.5.356 - Tool Surface Test Boundary Repair`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.356 - Tool Surface Test Boundary Repair`
+- `Version 0.5.357 - Tool Surface Test Post-Repair Audit`
 
-## Boundary Result
+## Repair Result
 
-Generic automatic smoke should execute only side-effect-free content lint and assert a stable success line with a positive file count. The total `67` is diagnostic, not a hardcoded generic-smoke invariant.
+`tests/integration/tool-surfaces.test.mjs` now owns only side-effect-free content-lint process smoke. It requires status zero with stderr diagnostics and an anchored positive-count success line without hardcoding `56`, `67`, or another total.
 
-DB build must leave automatic/default test discovery because it writes timestamped ignored output. Scenario runner should leave generic smoke because the existing deterministic simulation test already owns execution and repeatability.
+DB build no longer runs through generic/default test discovery. Scenario-runner execution remains covered by the existing deterministic simulation test and is no longer duplicated.
 
 ## Remaining Guardrails
 
-The next implementation may edit only `tests/integration/tool-surfaces.test.mjs` among source/test files. Remove DB build and scenario runner, keep one content-lint smoke, and replace the stale exact count with an anchored positive-count output-shape assertion.
+The next pass should audit this exact repair only: test source shape, focused integration/scenario results, standalone content lint, unchanged tools/scripts, and generated-output non-mutation. It must not run the full suite or triage the other 14 failures.
 
-Do not edit tools, scripts, generated output, content, schemas, runtime, UI, save/account, or the other 14 failing test families. Do not run full suite, DB build, broad typechecks, UI build, installation, or network-dependent commands.
+No tool, package script, generated output, content, schema, runtime, UI, save/account, or gameplay change is approved. Broad typecheck debt and all feature gates remain intact.
 
 Suggested next commit:
 
-`test(tools): isolate side-effect-free tool smoke`
+`docs(validation): audit tool surface repair`

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-12
-Route: Codex local sequencing alignment after `Version 0.5.355 - Tool Surface Test Boundary Decision`
+Route: Codex local sequencing alignment after `Version 0.5.356 - Tool Surface Test Boundary Repair`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.355 - Tool Surface Test Boundary Decision`
+- `Version 0.5.356 - Tool Surface Test Boundary Repair`
 
 Latest completed support/audit run:
 
@@ -29,7 +29,7 @@ Latest completed support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.356 - Tool Surface Test Boundary Repair`
+- `Version 0.5.357 - Tool Surface Test Post-Repair Audit`
 
 Versioning note:
 
@@ -115,6 +115,7 @@ Versioning note:
 - `0.5.353` completed as a primary roadmap run and mapped current validation commands, focused tests, normal content lint, typechecks, generated-output boundaries, and environment blockers; it found the full suite non-green and side-effectful, preserved the green focused path, and selected a docs-only command matrix plan.
 - `0.5.354` completed as a primary roadmap run and defined green gates, known-failing audits, side-effectful commands, change-class routing, baseline/reporting rules, and full-suite constraints; it selected one docs-only tool-surface test boundary decision without fixing tooling.
 - `0.5.355` completed as a primary roadmap run and separated content-lint smoke, exact inventory count, DB generator side effects, and scenario determinism; it selected a one-test-file repair and kept all other failures separate.
+- `0.5.356` completed as a primary roadmap run and repaired one integration test; generic smoke now runs only content lint with a positive-count output-shape assertion, DB build leaves automatic discovery, and scenario determinism retains its simulation owner.
 - `0.5.344.1` completed as a support run after `0.5.345` landed; it integrated the Living Character Manuscript research into a permanent owner-aware design boundary, retired the temporary artifact, and preserved `0.5.346` as the next primary route.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
@@ -510,17 +511,18 @@ Versioning note:
 | 274 | `0.5.353` | Validation Source Map | Codex 5.6 Sol Local docs-first | repository scripts, configs, lint/test entrypoints, blocker prep | durable current validation command/source map | Completed | Mapped green focused checks, non-green full/typecheck surfaces, side effects, and routing gaps without fixes. |
 | 275 | `0.5.354` | Validation Command Matrix Plan | Codex 5.6 Sol Local docs-first | completed validation source map + current scripts/guardrails | exact command matrix by change class | Completed | Defined command classes, change routing, baselines, reporting, side effects, and selected one boundary decision. |
 | 276 | `0.5.355` | Tool Surface Test Boundary Decision | Codex 5.6 Sol Local docs-first | command matrix + tool-surface test/entrypoints | exact future test ownership and repair boundary | Completed | Kept only content lint in generic smoke, moved DB build opt-in, preserved scenario simulation ownership, and selected one test repair. |
-| 277 | `0.5.356` | Tool Surface Test Boundary Repair | Codex 5.6 Sol Local | completed tool-surface boundary + one integration test | side-effect-free content-lint smoke | Planned | Edit one test file; remove DB/scenario execution and stale exact count without tool changes. |
+| 277 | `0.5.356` | Tool Surface Test Boundary Repair | Codex 5.6 Sol Local | completed tool-surface boundary + one integration test | side-effect-free content-lint smoke | Completed | Removed DB/scenario execution, replaced exact count with output shape, and changed no tools. |
+| 278 | `0.5.357` | Tool Surface Test Post-Repair Audit | Codex 5.6 Sol Local docs-first | completed repair + boundary/matrix | stability confirmation and next route | Planned | Confirm no side effects or drift, close the lane if stable, and select at most one later route. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.356 - Tool Surface Test Boundary Repair`
+1. `0.5.357 - Tool Surface Test Post-Repair Audit`
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Narrow test-only `0.5.356 - Tool Surface Test Boundary Repair` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.357 - Tool Surface Test Post-Repair Audit` is next.
 
 ## Default Prompt Pattern
 
@@ -536,7 +538,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.356 - Tool Surface Test Boundary Repair` as the immediate next recommended run.
+- Keep `Version 0.5.357 - Tool Surface Test Post-Repair Audit` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.355 - Tool Surface Test Boundary Decision`
+- Latest completed version: `Version 0.5.356 - Tool Surface Test Boundary Repair`
 - Latest support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Next recommended version: `Version 0.5.356 - Tool Surface Test Boundary Repair`
+- Next recommended version: `Version 0.5.357 - Tool Surface Test Post-Repair Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -211,6 +211,7 @@ Versioning rule:
 - `Version 0.5.353 - Validation Source Map` added `docs/design/validation-source-map.md`; mapped root/app scripts, 107 test files, 67-file normal content lint, schema and focused-test paths, broad typecheck debt, generated-output boundaries, and environment distinctions; observed a 3,456/3,471 non-green full suite with a DB-build side effect; and selected docs-only `Version 0.5.354 - Validation Command Matrix Plan` without fixing tooling.
 - `Version 0.5.354 - Validation Command Matrix Plan` added `docs/design/validation-command-matrix-plan.md`; defined green gates, known-failing audits, side-effectful/interactive/environment commands, exact change-class routing, focused-test selection, baseline/reporting rules, schema/content-lint/typecheck/full-suite timing, and generated-output policy; selected docs-only `Version 0.5.355 - Tool Surface Test Boundary Decision` without fixing tooling.
 - `Version 0.5.355 - Tool Surface Test Boundary Decision` added `docs/design/tool-surface-test-boundary-decision.md`; kept side-effect-free content lint as generic smoke with output-shape rather than exact-count ownership; moved DB build out of automatic discovery; preserved scenario execution/determinism under its simulation test; and selected one-test-file `Version 0.5.356 - Tool Surface Test Boundary Repair` without changing tests or tools.
+- `Version 0.5.356 - Tool Surface Test Boundary Repair` changed only `tests/integration/tool-surfaces.test.mjs` among source/test files; generic smoke now executes only content lint, requires status zero with stderr diagnostics, and validates a positive-count success shape; DB build leaves automatic discovery and scenario determinism remains in its simulation owner; selected docs-only `Version 0.5.357 - Tool Surface Test Post-Repair Audit`.
 - `Version 0.5.344.1 - Living Character Manuscript Research Integration` completed as a support route after `0.5.345` landed; added `docs/design/living-character-manuscript-design-boundary.md`, reconciled current quest, session Chronicle, discovery, emitted-event, save, account run-history, run-end projection, and UI owners, kept generated prose presentation-only, retired the temporary research artifact, gated all implementation, and preserved `Version 0.5.346 - Force Public Order Authority Boundary Decision` as the next primary route.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
@@ -505,9 +506,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.356 - Tool Surface Test Boundary Repair`
+1. `0.5.357 - Tool Surface Test Post-Repair Audit`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.356`. Living Character Manuscript implementation remains gated behind historical retention, provenance, knowledge/spoiler, persistence/revision, fallback, and quality readiness. Diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should implement the approved one-test-file side-effect boundary.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.357`. Living Character Manuscript implementation remains gated behind historical retention, provenance, knowledge/spoiler, persistence/revision, fallback, and quality readiness. Diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should audit the completed tool-surface repair and close the lane if stable.
 
 High-priority unresolved questions:
 

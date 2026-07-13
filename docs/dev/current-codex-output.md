@@ -1,18 +1,18 @@
 # Current Codex Output
 
-Source version/run: Version 0.5.355 - Tool Surface Test Boundary Decision
+Source version/run: Version 0.5.356 - Tool Surface Test Boundary Repair
 Date: 2026-07-12
 Branch/status assumption: `master`; worktree clean at start and aligned with `origin/master`; required fetch and fast-forward pull reported `Already up to date.`
 
 ## Result
 
-Separated generic tool smoke, content-lint count ownership, DB generated-output execution, and scenario determinism.
+Repaired the generic tool-surface integration test exactly as approved. It now executes only side-effect-free content lint, requires status zero with stderr diagnostics, and validates an anchored positive-count success summary without hardcoding the current total.
 
-Selected a one-test-file future repair: keep content lint as side-effect-free smoke with a stable success-shape assertion; remove DB build from automatic discovery; rely on the existing deterministic simulation test for scenario runner. Selected `Version 0.5.356 - Tool Surface Test Boundary Repair` next. No test or tool changed.
+Removed DB-build execution from automatic test discovery and removed duplicate scenario-runner execution from generic smoke. The existing deterministic scenario test remains the scenario owner. Selected docs-only `Version 0.5.357 - Tool Surface Test Post-Repair Audit` next.
 
 ## Files Changed
 
-- `docs/design/tool-surface-test-boundary-decision.md`
+- `tests/integration/tool-surfaces.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -23,31 +23,32 @@ Selected a one-test-file future repair: keep content lint as side-effect-free sm
 ## Checks Run
 
 - Required branch status, fetch, and fast-forward pull.
-- Required README, coordination, validation source-map/matrix, tool-surface test, package script, content-lint/DB-build/scenario entrypoint, scenario test, ignore/generated-output, roadmap, and backlog reads.
-- Full suite, broad typechecks, UI build, DB build, package installation, and network-dependent commands were intentionally not run.
+- Required README, coordination, validation source-map/matrix/boundary, integration/scenario tests, and three tool entrypoint reads.
+- `node --test tests/integration/tool-surfaces.test.mjs`.
+- `node --test tests/simulation/deterministic-scenario.test.mjs`.
 - `node --test tests/unit/polity-validation.test.mjs`.
 - `node --test tests/unit/institution-validation.test.mjs`.
 - `node --test tests/unit/schema-files.test.mjs`.
 - `npm.cmd run tool:content-lint`.
-- Docs-only scope, unchanged scripts/tools/config/dependencies/source/content/schemas/validators/tests/generated output, unrelated-failure, gate, artifact, conflict-marker, whitespace, and route-pointer checks.
+- Full suite, DB build, broad typechecks, UI build, package installation, and network-dependent commands were intentionally not run.
+- Changed-test no-DB/no-scenario/no-exact-count, unchanged tool/script/config/dependency/content/schema/validator/generated-output, unrelated-failure, scope, conflict-marker, whitespace, and route-pointer checks.
 - `git diff --check`.
 - `git status --short --branch`.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No script, tool, config, dependency, source, content, schema, validator, test, normal-lint registration, generated output, runtime, UI, save/account, or gameplay behavior changed.
+Validation behavior changed only: generic tool smoke no longer executes DB build or duplicates scenario execution, and its content-lint assertion no longer drifts with the registered-file count. No production tool, script, config, dependency, content, schema, validator, generated output, runtime, UI, save/account, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- Until `0.5.356` lands, the stale `56` expectation and silent DB-build execution remain in the integration test.
-- Exact registered-file count is diagnostic output, not a generic smoke invariant; focused registrations remain separately owned.
-- The other 14 full-suite failures and broad typecheck debt remain outside this route.
-- `AGENTS.md` still names the completed `0.5.349` chat mode line; changing that workflow pointer remains outside this prompt's allowed files. The `0.5.356` prompt body correctly omits an embedded platform/mode line.
+- The other 14 accepted full-suite failures and broad typecheck debt remain outside this repair.
+- DB build now has no automatic generic smoke; it remains an explicit side-effectful generator pending any separately approved isolated test design.
+- `AGENTS.md` still names the completed `0.5.349` chat mode line; changing that workflow pointer remains outside this prompt's allowed files. The `0.5.357` prompt body correctly omits an embedded platform/mode line.
 
 ## Next Recommended Version
 
-Version 0.5.356 - Tool Surface Test Boundary Repair
+Version 0.5.357 - Tool Surface Test Post-Repair Audit
 
 ## Suggested Commit Message
 
-docs(validation): decide tool surface test boundary
+test(tools): isolate side-effect-free tool smoke
