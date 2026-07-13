@@ -2,275 +2,252 @@
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Implement:
+Run:
 
-`Version 0.6.0 - Engine-Owned Player Travel Command`
+`Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
 
 ## Accepted State
 
-- Latest completed primary: `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation`.
+- Latest completed primary: `Version 0.6.0 - Engine-Owned Player Travel Command`.
 - Latest completed support clarification: `Version 0.5.357.1 - Player Travel Boundary Clarification`.
-- Player travel/movement is the selected first engine-owned consumer.
-- `docs/design/runtime-ownership-transition-readiness-consolidation.md` owns the base implementation boundary.
-- `docs/design/player-travel-boundary-clarification.md` is the controlling addendum wherever the two documents differ.
-- Current execution and preview are UI-owned in `apps/rpg-ui/src/game-shell/gameplayLoop.ts` and invoked by `apps/rpg-ui/src/features/WorldPanel.tsx`.
-- Existing shared, game-engine, player-engine, snapshot, persistence, and deterministic-test surfaces are the required foundation.
-
-No user decision or Deep Research is required.
+- The landed `0.6.0` implementation is commit `ce61cbc8ac7c5a0cb7c550b279ed7051f69b2757` unless branch sync shows a newer superseding commit.
+- Player travel is the first completed engine-owned runtime consumer.
+- `resolvePlayerTravelPlan(...)` is intended to be the single preview/execution rule owner.
+- `executePlayerTravelCommand(...)` is intended to own validation, atomic mutation, result construction, and completion-event emission.
+- `synchronizeGameplaySnapshot(...)` is intended to preserve the former broad `syncSnapshot(...)` behavior behind engine ownership.
+- `WorldPanel.tsx` is intended to remain a narrow selection, confirmation, accepted-snapshot application, and notice-rendering adapter.
+- No user decision or Deep Research is required for this audit.
 
 ## Purpose
 
-Move the complete existing player-travel transition behind one engine-owned command without changing current behavior or canon.
+Perform one narrow evidence-based post-transition audit after the first cross-owner runtime migration.
 
-Land one coherent reviewable package containing:
+Verify that the landed travel boundary is coherent, deterministic, browser-safe, persistence-safe, and free of residual UI gameplay authority. Then select exactly one next bounded engine-owned quest or activity consumer from current dependency and call-graph evidence.
 
-- a narrow transient command/result contract;
-- deterministic collision-safe command identity;
-- one pure engine-owned travel-plan resolver shared by preview and execution;
-- atomic engine-owned execution;
-- one collision-safe completion event for each accepted command;
-- current notification and Chronicle projections derived from accepted engine facts;
-- full current-result characterization and parity coverage;
-- focused deterministic, rejection, no-partial-mutation, same-tick identity, event, export, and roundtrip tests;
-- a narrow `WorldPanel` adapter migration;
-- removal of direct UI travel mutation and duplicate UI travel-rule authority.
+This is a read-only production audit. Do not edit runtime, UI, shared contracts, tests, content, schemas, persistence, generated files, or package configuration during this run.
+
+Documentation and active coordination files may be updated. If contradictory focused evidence identifies a real defect, document the smallest separate support repair and stop; do not silently repair production code inside this audit.
 
 ## Required First Steps
 
-1. Run branch status, fetch, and fast-forward pull. Record whether the tree is dirty and preserve unrelated changes.
+1. Run branch status, fetch, and fast-forward pull. Record the starting commit and whether the tree is dirty. Preserve all unrelated changes.
 2. Read:
    - `AGENTS.md` and `README.md`;
    - `docs/dev/current-codex-output.md`;
    - `docs/dev/current-gpt-handoff.md`;
    - `docs/dev/current-codex-prompt.md`;
+   - `docs/dev/codex-sequenced-implementation-plan.md`;
+   - `docs/dev/project-roadmap.md`;
+   - `docs/dev/project-vision-and-continuity-brief.md`;
    - `docs/design/runtime-ownership-transition-readiness-consolidation.md`;
    - `docs/design/player-travel-boundary-clarification.md`;
    - `docs/design/streamlined-pipeline-roadmap-decision.md`;
-   - the validation source map and command matrix;
-   - the relevant shared event/type exports, game-engine and player-engine exports, save snapshot and persistence owners;
+   - `docs/future_content_backlog.md`.
+3. Inspect the complete landed `0.6.0` diff and current versions of:
+   - `packages/engines/game-engine/src/player-travel.ts` and `.js`;
+   - `packages/engines/game-engine/src/player-travel-rules.ts` and `.js`;
+   - `packages/engines/game-engine/src/gameplay-snapshot-sync.ts` and `.js`;
+   - `packages/engines/game-engine/src/index.ts`;
+   - `packages/shared/events/src/index.ts`;
    - `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
    - `apps/rpg-ui/src/features/WorldPanel.tsx`;
-   - `apps/rpg-ui/src/runtime/GameSessionContext.tsx` and relevant UI projection/state files;
-   - focused gameplay-loop, event/export, deterministic, and save/load tests.
-3. Before editing, map the exact current travel call graph, preview rule path, execution mutation path, `syncSnapshot(...)` effects, notification/Chronicle construction, and event-id behavior.
-4. Add or establish characterization fixtures for the current accepted travel result before removing or relocating authority.
+   - `tests/unit/player-travel-command.test.mjs`;
+   - `tests/unit/player-travel-characterization.test.mjs`;
+   - adjacent deterministic and save/load tests.
+4. Map the current preview call graph, command-construction boundary, execution call graph, synchronization path, accepted-snapshot commit path, rejection path, completion-event path, and notice projection path before drawing conclusions.
 
-## Required Architecture
+## Audit Questions
 
-### One engine-owned resolver
+Answer each question with exact file/function/test evidence.
 
-Create one pure engine-owned resolver, such as `resolvePlayerTravelPlan(...)`, used by both preview and execution.
+### 1. Single rule authority
 
-It owns:
+Confirm that one engine-owned resolver controls:
 
-- implemented destination lookup;
-- current-location and known-location validation;
-- current travel ticks and HP/MP/stamina costs;
-- current metabolic and attribute-load profiles;
-- destination region, settlement, site, world-map, and arrival facts;
-- deterministic projected body-state data needed by the existing travel outlook;
-- stable accepted/rejected plan codes and presentation-safe facts.
+- destination lookup and authored travel facts;
+- current/known/implemented destination validation;
+- timing, HP/MP/stamina costs, metabolic profiles, and attribute-load profiles;
+- projected body-state/timeline facts used by preview;
+- destination region, settlement, site, map, and arrival facts.
 
-The UI must not retain a duplicate `LOCATION_TEMPLATES` travel-rule catalog or independently calculate timing, costs, availability, metabolic load, destination state, or travel validation.
+Confirm there is no surviving UI-owned travel-rule catalog, duplicated timing/cost table, or independently calculated preview/execution rule path.
 
-Preview remains read-only and uses this resolver. Execution revalidates current player, expected tick/revision, origin, destination, known status, and required state. A stale preview is not authorization.
+### 2. Command boundary and stale-state protection
 
-### Command identity
+Confirm the transient command validates the intended player, expected tick, snapshot version/revision fingerprint, origin, destination, known status, current-location status, and coherent required state.
 
-Use a deterministic transient `commandId` or equivalent correlation id produced by an engine-owned command factory or adapter boundary.
+Confirm command identity is deterministic, collision-safe for accepted same-tick commands, independent of wall-clock/random/React state/presentation prose, and not persisted.
 
-It must distinguish accepted commands at the same snapshot/completion tick using stable command facts and sequence/correlation context. It must not depend on wall-clock time, random UUID generation, React state, or presentation prose. Do not add a save field.
+Identify whether caller sequence ownership is explicit and stable at the adapter boundary. Flag any realistic duplicate-command or stale-command acceptance path.
 
-### Completion event identity
+### 3. Atomicity and rejection behavior
 
-Emit exactly one typed travel-completed event after a successful atomic transition.
+Confirm accepted travel uses clone/resolve/synchronize/commit or an equivalent atomic transition.
 
-The event id must incorporate the command identity or another equally collision-safe deterministic discriminator. Do not rely on `type + domain + tick` as the complete travel-event identity.
+Confirm every rejection and unexpected-failure path:
 
-Use the smallest safe implementation: a narrow travel-event constructor is preferred over a repository-wide event refactor unless an existing compatible extension is clearly smaller and fully covered.
+- returns the original snapshot identity and content;
+- emits no completion event;
+- adds no notification or Chronicle entry;
+- changes no operation, activity, quest, body, resource, location, Knowledge, record, Codex, or progression state;
+- exposes no partial clone.
 
-Rejected commands emit no completion event.
+### 4. Accepted-state parity
 
-### Atomic state transition
+Confirm characterized parity for all current destinations and the zero-tick Saltmere return, including:
 
-Preserve current behavior now performed by `travelToKnownLocation(...)` and its final `syncSnapshot(...)` call.
-
-On acceptance, preserve at least:
-
-- clock and `capturedAtTick`;
-- total play ticks;
+- clock, captured tick, and total play ticks;
 - body-state advancement and synchronization;
-- attribute-load application;
-- current HP, MP, and stamina costs;
-- player region and location;
-- settlement geographic Knowledge;
-- current activity and known-location state;
-- both existing quest-arrival operation/activity hooks;
-- notifications and Chronicle records;
-- quest-journal derived status and objectives;
-- world-record projections;
-- activity-record projections;
-- Codex projections;
-- active and completed quest-id synchronization;
-- Echo/progression projection;
-- tracked-quest validity cleanup;
-- all current ids, labels, text, ordering, caps, and values affected by travel.
+- HP, MP, stamina, metabolic, and attribute-load behavior;
+- region, location, geographic Knowledge, current activity, and known locations;
+- both quest-arrival operation/activity hooks;
+- notifications and Chronicle text, ids, ordering, and caps;
+- quest journal, world records, activity records, Codex entries, active/completed quest ids, Echo/progression, and tracked-quest cleanup.
 
-The accepted final travel state must not depend on UI-authored mutation. Relocate or reuse the required pure synchronization path behind engine ownership without redesigning general quest semantics.
+Check the intentionally preserved preview/execution mitigation attribute-set difference. Treat it as accepted legacy behavior, not an audit repair target, unless current tests or implementation contradict the recorded parity decision.
 
-Use clone/resolve/commit or an equivalent pure transition. Commit only after every owner check succeeds.
+### 5. Event contract
 
-### Result and UI adapter
+Confirm exactly one typed `player.travel.completed` event is emitted only after successful acceptance.
 
-Return a discriminated engine result with stable accepted/rejected codes, command identity, applied tick, resolved travel facts, emitted events, presentation-safe notice facts, and accepted next snapshot.
+Confirm the event id incorporates collision-safe command identity rather than relying only on type/domain/tick. Recheck the same-completion-tick case and zero-tick return case.
 
-On rejection, preserve the original snapshot identity and content.
+Confirm payload facts are deterministic, presentation-safe, and sufficient for current consumers without exposing mutable snapshot internals.
 
-`WorldPanel.tsx` remains responsible for selection, confirmation, disabled state, and notice rendering. Its adapter:
+### 6. Persistence and browser safety
 
-- calls the engine-owned preview resolver;
-- constructs/invokes the engine command;
-- applies the accepted next snapshot only;
-- derives the existing notice tone/title/detail from stable facts/codes;
-- leaves state untouched on rejection;
-- performs no gameplay validation or mutation.
+Confirm no save field, snapshot version, schema, migration, compatibility behavior, or storage contract changed.
 
-Do not leave dual authority in `gameplayLoop.ts`.
+Confirm post-travel serialization/deserialization preserves every changed persisted state surface.
 
-## Required Behavior Preservation
+Confirm game-engine travel exports and their import graph remain browser-safe and do not pull Node-only modules into the UI path.
 
-Preserve all current:
+Confirm checked-in TypeScript/JavaScript peer files are semantically aligned where both are intentionally maintained.
 
-- destination ids and authored location facts;
-- travel timing and costs;
-- clock, body, resource, attribute-load, and progression behavior;
-- region/location and geographic Knowledge behavior;
-- arrival activities and the two quest-arrival hooks;
-- notification and Chronicle text and ordering;
-- quest, record, Codex, active/completed-id, and tracked-quest derived behavior;
-- preview projection and risky-confirmation behavior;
-- serialization and browser persistence behavior.
+### 7. UI adapter boundary
 
-Do not add new travel mechanics or improve content during this extraction.
+Confirm `WorldPanel.tsx` and the gameplay-loop bridge:
 
-## Required Rejections
+- use engine preview facts;
+- construct/invoke the engine command;
+- apply only accepted next snapshots;
+- leave state untouched on rejection;
+- preserve risky-travel confirmation and current notice behavior;
+- perform no direct travel validation or gameplay mutation.
 
-Reject with no mutation for at least:
+### 8. Scope and hygiene
 
-- malformed command;
-- wrong player;
-- stale expected tick/revision;
-- incoherent required state;
-- unknown/unimplemented destination;
-- destination not known in the session;
-- already-current destination;
-- stale or mismatched resolved plan if a plan is passed to execution.
+Confirm `0.6.0` did not introduce unrelated content, route, location, encounter, hazard, survival, pathfinding, map-reveal, economy-transport, account, schema, dependency, generated-output, broad event-system, or UI-shell work.
 
-Resolver and command rejection codes must be compatible. Rejection must produce no event, notification, Chronicle entry, operation change, derived synchronization, or partial clone exposure.
+Check for dead travel helpers, obsolete imports, duplicate authority, temporary artifacts, conflict markers, trailing whitespace, and stale active-anchor metadata.
 
-## Focused Tests
+## Required Validation
 
-Add exact focused tests for:
+Run the focused final group at least once from the synced branch:
 
-1. accepted travel covering the distinct current timing/cost profiles needed for parity;
-2. every required rejection;
-3. original snapshot identity/content preserved on rejection;
-4. unexpected failure cannot expose partial mutation;
-5. repeated identical fixtures are deterministic;
-6. preview and execution resolve from the same rule authority;
-7. no duplicate UI travel-rule catalog remains;
-8. current implementation versus engine implementation accepted snapshot characterization, including all `syncSnapshot(...)`-derived surfaces;
-9. two accepted travel commands that complete at the same tick have distinct deterministic command ids and distinct completion-event ids;
-10. rejected commands emit no completion event;
-11. exactly one completion event is emitted on acceptance;
-12. post-travel serialization/deserialization preserves every changed persisted state surface;
-13. relevant shared/game-engine exports remain browser-safe and focused import tests pass;
-14. `WorldPanel` uses the engine preview/command adapter and no direct UI travel mutation remains.
+`node --test tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
 
-Run existing adjacent gameplay-loop skill-gating, deterministic scenario, save/load roundtrip, and relevant event/export tests where they directly protect the touched boundary.
+Also run:
 
-## Scope
-
-Allowed production changes are limited to the smallest coherent set under:
-
-- shared command/result/event types or helpers if required;
-- game-engine/player-engine travel resolver, handler, projection helper, and exports;
-- the existing UI gameplay-loop bridge and `WorldPanel` adapter;
-- exact focused tests;
-- required coordination, output, roadmap/sequence override, and backlog files.
-
-Do not add dependencies, content JSON, schemas, save fields, migrations, compatibility aliases, routes, locations, travel modes, encounters, hazards, survival, pathfinding, map reveal, caravan/economy transport, new quest behavior, account behavior, or a broad UI rewrite.
-
-Do not perform an unrelated generic event-system refactor.
-
-## Stop Conditions
-
-Stop rather than broaden if:
-
-- preserving parity requires new canon or a persisted-field/snapshot-version change;
-- collision-safe travel identity requires a repository-wide event redesign;
-- one resolver cannot serve preview and execution without changing current behavior;
-- current `syncSnapshot(...)` parity requires redesigning quest or Chronicle ownership rather than relocating/reusing pure behavior;
-- focused compiler/test failures require broad UI/workspace, full-suite, or unrelated typecheck cleanup;
-- the patch expands into adjacent runtime systems.
-
-Record the blocker precisely in `docs/dev/current-codex-output.md` instead of guessing.
-
-## Validation
-
-Run:
-
-- exact new travel tests;
-- current-versus-engine characterization tests;
-- same-completion-tick identity/event tests;
-- adjacent gameplay-loop skill-gating tests;
-- post-travel save roundtrip coverage;
-- deterministic scenario coverage;
-- relevant focused event/export/browser-import tests;
+- focused deterministic repetition or the exact same-completion-tick test independently when useful for diagnosis;
+- direct searches for `LOCATION_TEMPLATES`, direct travel mutation, duplicate destination rule values, `player.travel.completed`, command-id construction, and UI imports;
+- focused browser/import/export checks already present in the travel tests;
 - `git diff --check`;
-- changed-path, conflict-marker, and direct-authority searches.
+- conflict-marker, changed-path, temporary-artifact, and branch-status checks.
 
-Use UI/workspace typecheck only as a baseline audit when it materially clarifies touched-module risk. Treat only new or changed errors in touched modules as direct blockers.
+Run `npm.cmd run typecheck` only as a read-only baseline audit if it materially clarifies browser/import or touched-module risk. Separate accepted unrelated workspace debt from diagnostics in the landed travel boundary.
 
-Do not run the full suite, DB build, package installation, generated-output refresh, or unrelated broad typechecks unless separately authorized.
+Do not run the full suite, DB build, package installation, servers, generated-output refresh, broad cleanup, or unrelated typechecks.
 
-Verify:
+## Decision Rules
 
-- no behavior drift;
-- no duplicate command/event id at the same completion tick;
-- no direct UI travel mutation or UI-owned travel rules remain;
-- no partial mutation on rejection;
-- no new persistence fields;
-- no unrelated changed paths;
-- no conflict markers or trailing whitespace.
+### Audit accepted
 
-## Coordination And Handoff
+Accept the transition only if focused evidence confirms:
 
-Update the active coordination files so they agree that:
+- one engine-owned rule authority;
+- deterministic collision-safe command and event identity;
+- atomic acceptance and no-mutation rejection;
+- full characterized state parity;
+- persistence and browser safety;
+- no residual UI gameplay authority;
+- no material new touched-boundary diagnostics.
 
-- `0.5.357` is the latest completed primary;
-- `0.5.357.1` is the completed support clarification;
-- `0.6.0` is the active primary implementation;
-- the clarification document controls collision-safe identity, shared preview/execution resolution, and full synchronization parity;
-- historical chronology remains unchanged.
+Minor naming/style preferences or accepted unrelated typecheck debt are not repair triggers.
 
-Correct compact stale current-anchor metadata in the sequenced plan and roadmap where safely editable without rewriting historical chronology.
+### Repair required
 
-Overwrite `docs/dev/current-codex-output.md` with:
+If contradictory focused evidence shows a real behavior, authority, atomicity, identity, persistence, event, browser-safety, or adapter defect:
+
+- do not edit production files in this run;
+- record exact reproduction evidence and affected paths;
+- select the smallest `Version 0.6.0.2 - ... Repair` support route;
+- make that repair the next active prompt;
+- do not select a second engine-owned consumer yet.
+
+## Next Consumer Selection
+
+Only after accepting the travel transition, inspect current UI-authored quest and activity mutation paths and select exactly one next engine-owned consumer.
+
+Evaluate candidates using actual source/test evidence for:
+
+- a bounded existing user action with clear input and result;
+- one identifiable current mutation owner and UI call site;
+- stable current behavior that can be characterized before extraction;
+- reuse of the landed command/result/event/snapshot patterns;
+- no new content, schema, save field, migration, compatibility behavior, or broad redesign;
+- focused deterministic and rejection coverage that can be added without unrelated cleanup;
+- meaningful runtime-ownership value while remaining smaller or comparable to the travel slice.
+
+Prefer a single quest or activity command such as one current acceptance, tracking, activation, or selection transition only when the source evidence supports that exact boundary. Do not bundle quest lifecycle, activity scheduling, rewards, combat, inventory, or generic command-bus work.
+
+Record:
+
+- candidates inspected;
+- exact call sites and mutation surfaces;
+- dependencies and blockers;
+- why the selected candidate is safer and more valuable than alternatives;
+- exact proposed next primary version label;
+- preliminary allowed scope, exclusions, stop conditions, and required tests.
+
+Do not implement the selected consumer in this audit.
+
+## Documentation And Handoff
+
+Update only the smallest necessary documentation set:
+
+- overwrite `docs/dev/current-codex-output.md` with the audit result;
+- replace/prune `docs/dev/current-gpt-handoff.md` so it contains the accepted audit state, any residual risk, and the selected next consumer or repair route;
+- update `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-roadmap.md`, and `docs/dev/project-vision-and-continuity-brief.md` only where current anchors or the selected next route require alignment;
+- update `docs/future_content_backlog.md` only for a newly deferred concrete system/blocker or to close a directly relevant existing entry;
+- overwrite `docs/dev/current-codex-prompt.md` with a decision-complete prompt for the selected next primary consumer, or with the narrow `0.6.0.2` repair prompt if the audit fails.
+
+Do not rewrite historical chronology.
+
+Do not create a new temporary audit/design document unless the evidence cannot be represented clearly in the current output and handoff. If one is created, state its retirement trigger.
+
+## Current Codex Output Requirements
+
+Record:
 
 - source version/run and date;
-- branch/status assumption;
-- files changed;
-- checks run and intentionally omitted;
-- behavior/runtime confirmation;
-- command/event identity result;
-- preview/execution authority result;
-- synchronization-parity result;
-- direct blockers and excluded debt;
-- temporary Deep Research intake retirement decision;
+- starting commit, branch, and status assumption;
+- audit verdict;
+- files inspected and documentation files changed;
+- checks run, outcomes, and intentionally omitted checks;
+- rule-authority verdict;
+- command/revision identity verdict;
+- atomicity/rejection verdict;
+- state-parity verdict;
+- event-contract verdict;
+- persistence/browser/TS-JS parity verdict;
+- UI-adapter verdict;
+- residual risks and accepted unrelated debt;
+- candidate comparison and exact next selected consumer or repair route;
+- Deep Research decision;
 - next recommended version/run;
 - suggested commit message.
 
-Suggested commit message:
+Suggested commit message when the audit is accepted:
 
-`feat(runtime): move player travel into engine ownership`
+`docs(audit): verify engine-owned player travel transition`
