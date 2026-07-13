@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit
+Source version/run: Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
+- `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,22 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
+- `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
 
-## Audit Result
+## Boundary Result
 
-Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward. No collection path or diplomatic-relation prefix is approved.
+Diplomatic relations and conflict identity/history are separate future owners. No generic political-state umbrella or combined schema is approved.
 
-The two planned polities provide actor identity only and have no authored relation. Four world-map conflict zones are valid map summaries with names, prose, and region ids, but no stable ids, canonical participants, dates, lifecycle/effective status, causes, outcomes, or provenance. Region/settlement/quest raid and border language remains place/security/quest context. UI/creator diplomacy/warfare prose, combat allies, spawn hostility, reputation `wartime`, validators, tests, and design vocabulary remain presentation, combat, mutable, guardrail, or hypothetical evidence.
+A diplomatic relation is an authored relationship among canonical actors and intrinsically requires actor types/references, direction or symmetry, cardinality, relation semantics, visibility, lifecycle, and effective temporal validity. A conflict is a distinguishable authored dispute/war/rebellion/occupation-struggle identity/history and intrinsically requires canonical participants/roles, identity threshold, conflict semantics, temporal history, lifecycle, provenance, and uncertainty posture.
+
+Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward. Reference-free contracts are incoherent for both owners. Neither is schema-ready.
 
 ## Remaining Guardrails
 
-Diplomacy and conflict require separate future owners. Diplomacy is an actor relationship; conflict is a dispute/war/rebellion/occupation-struggle identity/history. Claims, borders, control, occupation state, government, jurisdiction, law, force, factions/institutions, places, battles, current hostility, negotiation, treaties, war simulation, runtime, UI, and save/account remain separate.
+Claims, borders, territory, control, occupation state, government, jurisdiction, law, courts, force, faction/institution, places/maps, route security, quest/event/Chronicle, Knowledge, reputation, combat, runtime, UI, and save/account remain separate. No automatic derivation between diplomacy, conflict, claims, treaties, war, peace, alliance, rivalry, recognition, vassalage, or current state is allowed.
 
-Neither owner is schema-ready. The next decision must address actor/participant references, direction/cardinality, lifecycle versus effective temporal validity, historical versus current state, identity criteria, overlap, and schema/deferral readiness. It must keep zero ids unless new canon exists and authorize no content, schema, references, migrations, consumers, political runtime, Deep Research, user question, support suffix, or `0.6.0` transition.
+The next pass must fix exact authored-input/ready-consumer reopening conditions and prohibit unchanged-source rescans. No candidate, collection/prefix, schema plan, content, reference, migration, consumer, political runtime, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
 
 Suggested next commit:
 
-`docs(civic): decide diplomacy conflict boundary`
+`docs(civic): defer diplomacy conflict evidence`

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-12
-Route: Codex local sequencing alignment after `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
+Route: Codex local sequencing alignment after `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest landed foundation slice:
 
-- `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
+- `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -29,7 +29,7 @@ Latest completed support/audit run:
 
 Immediate next primary Codex run:
 
-- `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
+- `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
 
 Versioning note:
 
@@ -109,6 +109,7 @@ Versioning note:
 - `0.5.347` completed as a primary roadmap run and fixed the force/public-order authored-input/ready-consumer reopening gate, prohibited unchanged-source rescans and schema planning, preserved one broad future family and zero ids, and routed back to roadmap selection.
 - `0.5.348` completed as a primary roadmap run and compared remaining gates and eligible lanes; it selected a focused diplomacy/conflict evidence audit while preserving claims/borders/control separation and every current gate, pause, rejection, closure, and maturity boundary.
 - `0.5.349` completed as a primary roadmap run and classified polity, map, place, quest, validator/test, presentation, combat, reputation, consumer, and runtime evidence; it carried forward zero diplomacy/conflict ids, kept claims/control and runtime separate, and selected a focused owner-boundary decision.
+- `0.5.350` completed as a primary roadmap run and separated diplomatic relations from conflict identity/history; it rejected reference-free and combined schemas, carried forward zero ids, kept claims/control and runtime separate, and selected a fail-closed evidence deferral.
 - `0.5.344.1` completed as a support run after `0.5.345` landed; it integrated the Living Character Manuscript research into a permanent owner-aware design boundary, retired the temporary artifact, and preserved `0.5.346` as the next primary route.
 - Patch numbers may exceed two digits inside the active band.
 - The Religion seed landed in `0.5.170`: Religion is active and exactly two Religion snippets are live.
@@ -498,17 +499,18 @@ Versioning note:
 | 268 | `0.5.347` | Force Public Order Authority Evidence Deferral | Codex 5.5 Local docs-first | zero-id audit + completed force owner boundary | authored-input/ready-consumer reopening gate | Completed | Fixed reopening inputs, prohibited unchanged-source rescans/schema planning, preserved zero ids, and routed to roadmap selection. |
 | 269 | `0.5.348` | Roadmap Post-Force-Public-Order Deferral Selection | Codex 5.5 Local docs-first | current gates, pauses, rejections, closures, and roadmap | one smallest safe next route | Completed | Selected diplomacy/conflict evidence auditing while preserving all current gates and runtime separation. |
 | 270 | `0.5.349` | Diplomacy Conflict Authority Evidence Audit | Codex 5.6 Sol Local docs-first | polity/civic boundaries + targeted map/place/quest/runtime evidence | classified diplomacy/conflict evidence and next gate | Completed | Found zero ids; protected map/place/combat/runtime owners and selected a diplomacy-versus-conflict boundary decision. |
-| 271 | `0.5.350` | Diplomacy Conflict Authority Boundary Decision | Codex 5.6 Sol Local docs-first | completed evidence audit + civic/polity boundaries | separate owner contracts and at most one later route | Deferred | Decide relation/conflict identity, references, temporal boundaries, and schema/deferral readiness. |
+| 271 | `0.5.350` | Diplomacy Conflict Authority Boundary Decision | Codex 5.6 Sol Local docs-first | completed evidence audit + civic/polity boundaries | separate owner contracts and at most one later route | Completed | Separated owners, rejected unsafe schemas, carried zero ids, and selected fail-closed deferral. |
+| 272 | `0.5.351` | Diplomacy Conflict Authority Evidence Deferral | Codex 5.6 Sol Local docs-first | zero-id audit + completed diplomacy/conflict boundary | authored-input/ready-consumer reopening gate | Deferred | Fix exact reopening inputs and prohibit unchanged-source rescans or schema planning. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.350 - Diplomacy Conflict Authority Boundary Decision`
+1. `0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.350 - Diplomacy Conflict Authority Boundary Decision` is next.
+The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. Docs-only `0.5.351 - Diplomacy Conflict Authority Evidence Deferral` is next.
 
 ## Default Prompt Pattern
 
@@ -524,7 +526,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision` as the immediate next recommended run.
+- Keep `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral` as the immediate next recommended run.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

@@ -2,23 +2,23 @@
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the focused diplomacy/conflict owner decision:
+Run the focused diplomacy/conflict evidence deferral:
 
-`Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
+`Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit`
+- Latest completed primary: `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
 - Latest completed support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Immediate next primary route: `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
-- Exactly zero diplomatic-relation ids and zero `conflict.*` ids passed the evidence audit.
-- Two planned polities provide static actor identity only and have no authored relation.
-- Four map conflict zones remain display/reference summaries, not conflict records.
-- Diplomacy, conflict, claims/borders/control/occupation, government, jurisdiction, law, force, places, combat, and runtime remain separate.
+- Immediate next primary route: `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
+- Diplomatic relations and conflict identity/history are separate future owners.
+- Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward.
+- Actor/participant references, direction/cardinality, and effective temporal/history semantics are intrinsic but unproven.
+- Neither owner is schema-ready; reference-free and combined schemas are rejected.
 
 ## Purpose
 
-Define separate future owner boundaries for diplomatic relations and conflict identity/history. Decide exact exclusions, actor/participant and temporal requirements, reference-free coherence, and at most one later schema-planning or fail-closed deferral route. Do not implement anything.
+Fail closed on diplomacy/conflict evidence. Define the exact authored-input or ready-consumer conditions that may reopen schema planning or seed work, prohibit repeated scans of unchanged weak sources, preserve separate future gates and owners, and return to roadmap selection. Do not implement anything.
 
 ## Required first steps
 
@@ -35,37 +35,36 @@ Read at minimum:
 - `AGENTS.md` and `README.md`;
 - current output, handoff, prompt, sequence, roadmap, and backlog;
 - `docs/design/diplomacy-conflict-authority-evidence-audit.md`;
-- `docs/design/civic-authority-boundary-decision.md`;
-- polity, government/jurisdiction, force/public-order, faction/institution, map, event/Chronicle, and runtime boundaries only as needed to confirm ownership.
+- `docs/design/diplomacy-conflict-authority-boundary-decision.md`;
+- government/jurisdiction and force/public-order evidence-deferral patterns only as needed to align reopening gates.
 
-Do not repeat the evidence audit or broaden discovery.
+Do not repeat the diplomacy/conflict evidence audit or broaden discovery.
 
 ## Expected output
 
 Add:
 
-- `docs/design/diplomacy-conflict-authority-boundary-decision.md`
+- `docs/design/diplomacy-conflict-authority-evidence-deferral.md`
 
-## Required boundary decisions
+## Required deferral decisions
 
-- preserve diplomacy and conflict as separate future owners or explain any narrower alternative without creating a generic political-state umbrella;
-- define what a static diplomatic relation may own, including actor references, direction/symmetry, relation kind, public posture, lifecycle, effective temporal validity, provenance, and non-implication boundaries;
-- define what a conflict identity/history record may own, including identity criteria, participant references/roles, conflict kind, temporal posture/history, lifecycle, provenance, and non-implication boundaries;
-- decide how diplomatic relations and conflicts may reference one another without deriving peace, alliance, rivalry, recognition, war, or outcomes automatically;
-- keep claims, borders, territory, control, occupation state, government, jurisdiction, law, courts, force, faction/institution, places, route security, quest/event/Chronicle, reputation, combat, runtime, UI, and save/account separate;
-- classify the four map conflict zones, polity identities, place/quest prose, UI/creator vocabulary, combat allies/hostility, reputation `wartime`, validators, and tests as non-canonical relation/conflict evidence;
-- carry forward exactly zero candidate ids;
-- decide whether reference-free first-pass contracts are coherent or actor/participant references and temporal semantics are intrinsic and unproven;
-- select at most one later schema-planning route or a fail-closed authored-input/ready-consumer deferral;
-- decide Deep Research, explicit-user-question, support-suffix, and temporary-guardrail posture.
+- preserve separate diplomacy and conflict owners and exactly zero candidate ids;
+- define materially new authored canon, an approved exact relation/conflict list, an authorized political-content authorship pass, and a ready-consumer contract as possible reopening inputs;
+- specify the minimum diplomatic actor/reference, direction/symmetry, cardinality, relation-kind, visibility, lifecycle, and effective-validity evidence required before schema planning or a seed;
+- specify the minimum conflict identity, participant/role, kind, temporal-history, lifecycle, provenance, uncertainty, and non-implication evidence required before schema planning or a seed;
+- reject unchanged map conflict zones, polity identities, place/quest prose, UI/creator vocabulary, combat allies/hostility, reputation `wartime`, validators/tests, design examples, external research, and runtime labels as reopening evidence;
+- keep readiness, schema plan, schema/validator, seed plan, content, registration, references, migrations, consumers, and runtime as separate future gates;
+- preserve claims/borders/territory/control/occupation and all adjacent identity, place, event, combat, runtime, UI, and save/account owners;
+- decide explicit-user-question timing, Deep Research, support-suffix, and temporary-guardrail posture;
+- select `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection` next without reopening another gated lane.
 
 ## Guardrails
 
-Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent actors, diplomatic pairs, conflicts, participants, roles, causes, dates, outcomes, claims, borders, treaties, alliances, wars, ids, or canon. Do not add references, normalize prefixes, enable consumers, or plan diplomacy/war/combat runtime. Do not reopen gated, paused, rejected, or closed lanes. Do not run Deep Research.
+Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent actors, pairs, relations, conflicts, participants, roles, causes, dates, outcomes, claims, borders, treaties, alliances, wars, ids, or canon. Do not add references, normalize prefixes, enable consumers, or plan diplomacy/war/combat runtime. Do not reopen gated, paused, rejected, or closed lanes. Do not run Deep Research.
 
 ## Allowed changes
 
-- `docs/design/diplomacy-conflict-authority-boundary-decision.md`
+- `docs/design/diplomacy-conflict-authority-evidence-deferral.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -90,4 +89,4 @@ Verify docs-only scope, unchanged code/content/scaffolds/current owners, zero ca
 
 ## Suggested commit message
 
-`docs(civic): decide diplomacy conflict boundary`
+`docs(civic): defer diplomacy conflict evidence`
