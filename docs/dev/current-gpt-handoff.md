@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.6.2 - Engine-Owned Quest Tracking Command
+Source version/run: Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit
 Date: 2026-07-13
 
 ## Status
@@ -11,24 +11,24 @@ Latest completed primary:
 
 Latest completed support/audit run:
 
-- `Version 0.6.1.2 - UI Information Architecture Research Integration`
+- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
 
 Immediate next route:
 
-- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
+- `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`
 
-## Implementation Result
+## Audit Decision
 
-Quest track/untrack now runs through `player-quest-tracking.ts`: one resolver owns lookup and eligibility; one deterministic transient command carries player/quest identity, sequence, tick, snapshot version, and full revision; execution validates freshness, clones and toggles only `trackedQuestId`, synchronizes through the engine helper, and emits exactly one typed accepted event. Rejection and unexpected failure preserve the original snapshot identity/content and emit zero events.
+The transition is not yet accepted. The prescribed focused group passed at 35/35, and authority, exact snapshot/notice parity, resolver-owned UI eligibility, deterministic identity, atomic rejection, notification/Chronicle isolation, persistence/browser safety, TS/JS alignment, accepted-only UI application, and hygiene all passed.
 
-Exact complete snapshot and notice hashes remained stable for both track and untrack. Notification/Chronicle state and save roundtrip are unchanged, command correlation is transient, the import graph is browser-safe, the TS/JS peer is aligned, and 35/35 focused tests passed.
+One contract defect remains: the typed accepted event payload includes `title: facts.title`, which is presentation prose explicitly forbidden by the `0.6.2` event boundary. Existing tests verify selected event fields but do not constrain the complete payload shape.
 
-`gameplayLoop.ts` now delegates tracking and derives notices; `makeQuestState(...)` consumes the engine resolver for `canTrack`; `QuestsPanel.tsx` applies snapshots only on accepted results. The other `trackedQuestId` assignment in that helper is existing quest turn-in cleanup and remains outside this package.
+## Repair Boundary
 
-## Next Route
+Remove only the `title` member from `PlayerQuestTrackingChangedEventPayload` and from `createTrackingChangedEvent(...)`. Keep `PlayerQuestTrackingFacts.title` and `noticeFacts.questTitle` unchanged because the UI adapter owns notice projection. Add an exact accepted-event payload-key assertion, rerun the same 35-test group, and preserve locked snapshot/notice hashes.
 
-Run the read-only `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit` prompt. Do not edit runtime/UI/contracts/tests during that audit. If accepted, compare activity selection, activity advancement, rest, and quest turn-in and select exactly one next bounded engine-owned consumer. Do not begin Home/shell, linked-record/search, combat-presentation, tactics-editor, generic quest lifecycle, command bus, replay, or event-dispatch work.
+Do not change resolver eligibility, command identity, rejection behavior, synchronization, event type/id, result/notice facts, UI code, persistence, saves, or any adjacent gameplay consumer. After repair, route to a read-only post-repair audit before selecting activity selection/advancement, rest, or turn-in.
 
 Suggested next commit:
 
-`docs(audit): verify engine-owned quest tracking transition`
+`fix(runtime): remove presentation text from quest tracking event`

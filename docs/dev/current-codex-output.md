@@ -1,25 +1,19 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.2 - Engine-Owned Quest Tracking Command
+Source version/run: Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit
 Date: 2026-07-13
-Branch/status assumption: `master`; starting commit `ea37abd0`; clean worktree; `origin/master` aligned after fetch and fast-forward pull. Final worktree contains only the intended runtime extraction, focused tests, and coordination updates.
+Branch/status assumption: `master`; starting commit `3e607d02`; clean worktree; `origin/master` aligned after fetch and fast-forward pull. The committed `0.6.2` transition was audited without production, UI, contract, event, test, content, schema, save, dependency, or generated-output edits.
 
 ## Result
 
-Moved only quest track/untrack ownership from the UI helper into a browser-safe game-engine resolver, deterministic transient command, atomic synchronized result, and typed accepted event. Exact pre-extraction track/untrack snapshot and notice hashes remain unchanged.
+The quest-tracking transition is not yet accepted. Authority, exact behavior parity, deterministic identity, atomicity, persistence/browser safety, UI adaptation, and extraction hygiene passed, and the prescribed focused group remains green at 35/35 tests.
 
-The engine resolver now owns quest lookup and tracking eligibility, including the UI `canTrack` projection. `gameplayLoop.ts` is a command/notice bridge, and `QuestsPanel.tsx` applies the returned snapshot only when accepted.
+One narrow contract defect remains: `PlayerQuestTrackingChangedEventPayload` and `createTrackingChangedEvent(...)` include the quest display `title`. The `0.6.2` boundary explicitly requires accepted events to contain identifiers and resulting tracking state without presentation prose. Current tests assert selected fields but do not prohibit this extra presentation field.
+
+Route only to `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`. Do not select another gameplay consumer yet.
 
 ## Files Changed
 
-- `packages/engines/game-engine/src/player-quest-tracking.ts` (created)
-- `packages/engines/game-engine/src/player-quest-tracking.js` (created)
-- `packages/engines/game-engine/src/index.ts`
-- `packages/shared/events/src/index.ts`
-- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
-- `apps/rpg-ui/src/features/QuestsPanel.tsx`
-- `tests/unit/player-quest-tracking-characterization.test.mjs` (created)
-- `tests/unit/player-quest-tracking-command.test.mjs` (created)
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
@@ -28,35 +22,53 @@ The engine resolver now owns quest lookup and tracking eligibility, including th
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-codex-prompt.md`
 
+## Files Inspected
+
+- Committed `3e607d02` changed-path set and exact source diff
+- `packages/engines/game-engine/src/player-quest-tracking.ts`
+- `packages/engines/game-engine/src/player-quest-tracking.js`
+- `packages/engines/game-engine/src/index.ts`
+- `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`
+- `packages/engines/game-engine/src/player-quest-acceptance.ts`
+- `packages/engines/game-engine/src/player-travel.ts`
+- `packages/shared/events/src/index.ts`
+- `packages/shared/persistence/src/index.ts`
+- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
+- `apps/rpg-ui/src/features/QuestsPanel.tsx`
+- Tracking characterization/command tests and the prescribed adjacent tests
+- Required README, handoff, sequencing, roadmap, continuity, runtime-readiness, travel-clarification, and backlog sources
+
 ## Checks Run
 
-- Ran branch status, fetch, and fast-forward pull; remote and local `master` were aligned.
-- Added the characterization test before extraction and locked complete track/untrack snapshot and notice SHA-256 hashes.
-- Ran the new command/characterization tests plus quest acceptance, player travel, gameplay-loop skill gating, save/load roundtrip, and deterministic scenario coverage: 35/35 passed.
-- Verified accepted toggle-on/off behavior, input immutability, fresh accepted identity, resolver-owned eligibility, deterministic command shape, distinct same-tick identities, exactly one typed accepted event, and unchanged notification/Chronicle state.
-- Verified missing, completed, failed, malformed, wrong-player, stale, incoherent, and injected-failure rejection returns the original snapshot identity/content and zero events.
-- Verified current-data serialization roundtrip and absence of persisted command correlation.
-- Verified browser-safe imports, intentional TS/JS peer alignment, accepted-only UI application, and no direct mutation in the tracking bridge.
-- Verified the remaining UI-helper `trackedQuestId` assignment belongs to existing quest turn-in cleanup and was not changed.
-- Ran conflict-marker search and `git diff --check`; no errors found. Line-ending conversion warnings remain informational.
-- Full suite, DB/UI build, typecheck, dependency installation, servers, and generated-output refresh were intentionally omitted per scope.
+- Fetch and fast-forward pull: remote and local `master` aligned.
+- Prescribed tracking, acceptance, travel, skill-gating, save/load, and deterministic scenario group: 35/35 passed.
+- Confirmed locked complete track/untrack snapshot and notice hashes, toggle semantics, synchronization output, and input immutability.
+- Confirmed resolver-owned lookup/eligibility and UI `canTrack` projection for active, contract, completed, failed, and missing quests.
+- Confirmed deterministic command shape/revision identity, repeatability, distinct same-tick identities, accepted clone identity, and one typed event.
+- Confirmed malformed, wrong-player, stale, incoherent, missing, completed, failed, and injected-failure paths preserve original snapshot identity/content and emit zero events.
+- Confirmed notification/Chronicle non-mutation, current-data serialization roundtrip, transient correlation, browser-safe imports, public exports, and intentional TS/JS peer alignment.
+- Confirmed `gameplayLoop.ts` has no direct mutation in the tracking bridge and `QuestsPanel.tsx` applies state only on acceptance while displaying all notices.
+- Classified remaining production assignments: tracking command owns toggle; quest acceptance owns initial tracking; quest turn-in owns post-completion fallback; snapshot synchronization owns invalid-reference cleanup. Travel only reads tracked state. Test assignments are fixture setup.
+- Inspected the full 15-file commit scope; no unrelated runtime expansion, dependency/generated/vendor change, conflict marker, or temporary artifact was found.
+- `git show --check`, `git diff --check`, and final status checks passed.
 
 ## Behavior / Runtime Confirmation
 
-Quest tracking runtime behavior changed ownership but not player-visible output. Toggle-on and toggle-off produce the exact characterized synchronized snapshots and notices. Success emits one transient `player.quest.tracking.changed` event containing command/player/quest identifiers and resulting tracking state. Rejections mutate nothing and emit nothing.
+No runtime, UI, event, contract, test, content, schema, save, migration, compatibility, dependency, generated-output, or asset behavior changed during this read-only audit.
 
-No quest acceptance, turn-in, objective, activity, rest, reward, inventory, reputation, progression, notification, Chronicle, content, schema, save field/version, migration, compatibility, event-dispatch, UI-layout, Home/shell, combat-presentation, tactics, dependency, or generated-output behavior changed.
+The committed runtime remains behaviorally stable, but its accepted event contract leaks one presentation value and therefore does not satisfy the explicit extraction boundary.
 
 ## Risks / Follow-Up
 
-- Command sequence defaults to the deterministic quest-journal-count convention used for this narrow transient command; durable delivery idempotency and replay remain intentionally deferred.
-- Quest turn-in still owns its existing tracked-quest cleanup. It must be handled only with a future turn-in ownership package, not folded into tracking.
-- Run the read-only post-transition audit before selecting activity selection/advancement, rest, or turn-in as the next consumer.
+- Remove only `title` from `PlayerQuestTrackingChangedEventPayload` and the accepted event construction. Preserve `facts.title` and `noticeFacts.questTitle`; the UI notice bridge still needs them.
+- Add an exact event-payload key assertion so presentation fields cannot re-enter unnoticed. Preserve all track/untrack snapshot and notice hashes.
+- The committed `0.6.2` subject says “engine-owned acceptance” although the patch is quest tracking. This is historical metadata ambiguity, not runtime scope drift; do not rewrite history without explicit instruction.
+- After the repair, run a read-only post-repair audit before comparing later consumers.
 
 ## Next Recommended Version
 
-Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit
+Version 0.6.2.2 - Engine-Owned Quest Tracking Repair
 
 ## Suggested Commit Message
 
-feat(runtime): move quest tracking into engine ownership
+docs(audit): verify engine-owned quest tracking transition
