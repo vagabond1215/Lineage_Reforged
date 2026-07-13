@@ -273,6 +273,19 @@ test("UI travel bridge contains no travel catalog or direct travel mutation", as
   );
 
   assert.equal(gameplayLoop.includes("LOCATION_TEMPLATES"), false);
+  for (const helperName of [
+    "syncQuestJournal",
+    "syncWorldRecords",
+    "syncActivityRecords",
+    "syncCodexEntries",
+    "syncQuestIds"
+  ]) {
+    assert.equal(
+      gameplayLoop.includes(`function ${helperName}(`),
+      false,
+      `${helperName} must remain engine-owned`
+    );
+  }
   assert.match(gameplayLoop, /executePlayerTravelCommand/);
   assert.doesNotMatch(gameplayLoop, /function travelToKnownLocation[\s\S]*?playerState\.location\s*=/);
   assert.match(worldPanel, /if \(result\.accepted\)\s*{\s*updateSnapshot\(result\.snapshot\)/);

@@ -1,14 +1,12 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit
+Source version/run: Version 0.6.0.2 - Residual UI Snapshot Authority Repair
 Date: 2026-07-13
-Branch/status assumption: `master`; worktree clean before required sync; fetch and fast-forward pull updated local `master` from `ce61cbc8` to `51fd575b`; production remained read-only during the audit.
+Branch/status assumption: `master`; worktree clean at starting commit `de9d6be1`; initial sandboxed fetch/pull could not write `.git/FETCH_HEAD`, then the required escalated fetch and fast-forward pull succeeded with the branch already current.
 
 ## Result
 
-Audit verdict: **repair required**.
-
-The landed travel behavior, command boundary, event contract, persistence path, and active UI adapter all pass focused review. The audit nevertheless found one material ownership defect: `apps/rpg-ui/src/game-shell/gameplayLoop.ts` still contains dead copies of the five synchronization helpers now owned by `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`:
+Removed the five dead UI synchronization implementations that remained after engine extraction:
 
 - `syncQuestJournal(...)`
 - `syncWorldRecords(...)`
@@ -16,10 +14,14 @@ The landed travel behavior, command boundary, event contract, persistence path, 
 - `syncCodexEntries(...)`
 - `syncQuestIds(...)`
 
-Repository searches show each UI copy has only its declaration and no caller. Current behavior is therefore not corrupted, but the duplicate implementations remain residual UI gameplay authority and fail the explicit `0.6.0.1` acceptance rule. No production fix was applied inside this read-only audit. The next route is the smallest separate support repair.
+Removed only their newly unused `CodexEntryState` and `PanelRecordState` imports. Preserved `QuestJournalEntryState` for `findQuest(...)` and preserved the live `syncSnapshot(...)` wrapper that delegates all nine current quest/activity call sites to engine-owned `synchronizeGameplaySnapshot(...)`.
+
+Extended the existing travel UI-authority test with negative guards for all five removed declarations. No travel, quest, activity, synchronization, persistence, event, or UI behavior changed.
 
 ## Files Changed
 
+- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
+- `tests/unit/player-travel-command.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -28,43 +30,35 @@ Repository searches show each UI copy has only its declaration and no caller. Cu
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
 
-No runtime, UI, shared contract, test, content, schema, persistence, package, generated, or dependency file changed.
-
 ## Checks Run
 
-- Required branch status, fetch, and fast-forward pull.
-- Read the required repository, transition, clarification, pipeline, coordination, roadmap, vision, backlog, implementation, UI, event, test, persistence, and adjacent validation authorities.
-- Inspected the complete landed `ce61cbc8` changed-path set and current travel/synchronization sources, exports, UI call sites, characterization tests, and adjacent deterministic/save-load tests.
+- Required branch status, fetch, and fast-forward pull; branch current at `de9d6be1` before edits.
+- Required repository, handoff, prompt, sequencing, roadmap, vision, runtime-readiness, travel-clarification, backlog, source, engine-owner, and focused-test inspection.
+- Pre-edit searches proved the five UI helpers had declarations only while the engine counterparts remained live and called.
 - Focused final group: `node --test tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs` (17 passed, 0 failed).
-- Direct source searches for destination facts, `LOCATION_TEMPLATES`, direct UI travel mutation, command/event identity construction, deterministic-source hazards, exports, sequence call sites, snapshot-sync call sites, dead helper references, Node-only imports, conflict markers, and temporary artifacts.
-- Read-only zero-tick execution probe confirmed one event, unchanged tick/play-tick counters, zero resource costs, and the expected Saltmere location/activity result.
-- Read-only exact-command replay probe confirmed deterministic identical command/event ids and identical replacement snapshots.
-- `git diff --check ce61cbc8^ ce61cbc8` and the final documentation diff check passed; final status showed only the seven intended coordination files.
-- Full suite, DB build, UI build, typecheck, package installation, servers, generated-output refresh, and unrelated cleanup intentionally omitted.
+- Post-edit searches confirmed zero named helper declarations and no `LOCATION_TEMPLATES` in the UI bridge; the engine owns and calls all five helpers; `syncSnapshot(...)` still delegates to `synchronizeGameplaySnapshot(...)`; nine current callers remain.
+- Direct travel-rule and `WorldPanel` mutation searches found no duplicate UI destination catalog or direct travel state mutation.
+- Final `git diff --check`, conflict-marker, temporary-artifact, stale-anchor, changed-path, prompt-verification, and status checks passed with only the nine intended files changed.
+- Full suite, DB build, UI build, typecheck, package installation, servers, generated-output refresh, command-bus work, and unrelated cleanup intentionally omitted.
 
 ## Behavior / Runtime Confirmation
 
-- **Rule authority:** Pass. `resolvePlayerTravelPlan(...)` is the sole destination/rule/projection owner. No UI travel catalog or duplicate timing/cost table remains.
-- **Command/revision identity:** Pass. Player, tick, version, full snapshot revision, origin, destination, known/current/coherent state, and command shape/id are revalidated. Identity is deterministic, transient, and independent of wall-clock, randomness, React, or presentation prose. The engine factory owns the default sequence; exact replay remains the same deterministic command and replacement state. A future external event dispatcher should make replay/idempotency policy explicit before treating repeated delivery as a new command.
-- **Atomicity/rejection:** Pass. Resolve precedes clone mutation; synchronization and result construction occur on the clone; every tested rejection and unexpected failure returns the original snapshot identity/content with zero events and no partial state.
-- **State parity:** Pass on current evidence. Full hashes remain stable for Westreach, Ashen Reef, and Crown Bastion; zero-tick Saltmere retains the copied legacy facts and focused behavior; clock/body/resources/location/Knowledge/activity/hooks/notification/Chronicle and broad derived quest/record/Codex/progression surfaces remain on the engine synchronization path. The intentional preview/execution mitigation attribute-set difference remains preserved.
-- **Event contract:** Pass. Acceptance emits exactly one typed `player.travel.completed` event after commit; rejection emits none. Event ids incorporate the command identity and applied tick. Same-completion-tick and zero-tick cases are deterministic and collision-safe for distinct commands.
-- **Persistence/browser/TS-JS parity:** Pass. No save/schema/version/migration/storage field changed; roundtrip coverage passes; the travel import graph contains no Node-only imports; `.js` peers intentionally re-export their `.ts` authority.
-- **UI adapter:** Active path passes. `WorldPanel.tsx` selects/confirms, calls the bridge, commits only accepted snapshots, and renders notices. The bridge delegates preview and execution to the engine and performs no direct travel mutation.
-- **Scope/hygiene:** Fail only on the five dead duplicate synchronization helpers in `gameplayLoop.ts`. No conflict marker, temp artifact, generated output, unrelated mechanic, dependency, schema, content, or broad UI/event change was found.
+Runtime ownership was clarified; runtime output did not change. Only unreachable duplicate UI functions and their unused type imports were removed. The live synchronization implementation remains unchanged in `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`, and every existing UI-owned quest/activity action continues through the same engine-delegating wrapper.
+
+The focused characterization, rejection, deterministic identity, same-completion-tick event, zero-tick travel, quest-arrival hook, serialization, skill-gating, save/load, and deterministic scenario evidence remains green. No JSON, schema, save field/version, migration, compatibility behavior, content, dependency, generated output, command/event identity, or gameplay rule changed.
 
 ## Risks / Follow-Up
 
-- Remove only the five dead UI synchronization implementations and imports made obsolete by their removal. Preserve the live `syncSnapshot(...)` delegation to `synchronizeGameplaySnapshot(...)`; other UI-authored quest/activity actions still call that narrow bridge.
-- Add a focused source guard so those helper declarations cannot silently return to the UI module.
-- Do not combine the repair with quest/activity extraction, command-bus work, replay-ledger design, broader UI cleanup, or accepted unrelated typecheck debt.
-- Candidate comparison and next-consumer selection were intentionally stopped by the audit decision rule. Resume them only after the repair passes a narrow post-repair audit.
-- Deep Research is not needed; the defect and repair surface are fully local and exact.
+- Run the narrow read-only `0.6.0.3` post-repair audit before selecting another engine-owned consumer.
+- The source guard intentionally checks exact function declarations in the UI module; engine ownership remains verified separately through direct searches and focused behavior tests.
+- Exact command replay/idempotency policy remains deferred until an external event consumer or dispatcher exists; do not mix that future decision into this cleanup.
+- Accepted unrelated broad typecheck/full-suite debt was not revisited.
+- Deep Research is not required.
 
 ## Next Recommended Version
 
-Version 0.6.0.2 - Residual UI Snapshot Authority Repair
+Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit
 
 ## Suggested Commit Message
 
-docs(audit): flag residual UI snapshot authority
+fix(runtime): remove residual UI snapshot authority

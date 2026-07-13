@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit
+Source version/run: Version 0.6.0.2 - Residual UI Snapshot Authority Repair
 Date: 2026-07-13
 
 ## Status
@@ -9,36 +9,25 @@ Latest completed primary:
 
 - `Version 0.6.0 - Engine-Owned Player Travel Command`
 
-Latest completed support/audit run:
-
-- `Version 0.6.0.1 - Engine-Owned Player Travel Post-Transition Audit`
-
-Immediate next support route:
+Latest completed support run:
 
 - `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`
 
-## Audit Result
+Immediate next support route:
 
-Focused travel behavior is green: one engine resolver owns preview/execution facts; command/revision validation is deterministic and stale-safe; acceptance is atomic; rejection preserves original snapshot identity/content; one collision-safe typed event follows acceptance; current destination characterization, zero-tick behavior, persistence roundtrip, browser imports, TS/JS peers, and the active `WorldPanel` adapter are coherent.
+- `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
 
-The audit cannot accept the transition because `apps/rpg-ui/src/game-shell/gameplayLoop.ts` retains dead copies of `syncQuestJournal(...)`, `syncWorldRecords(...)`, `syncActivityRecords(...)`, `syncCodexEntries(...)`, and `syncQuestIds(...)`. Each has zero call sites, but each duplicates live engine-owned synchronization logic and therefore remains residual UI gameplay authority.
+## Result
 
-## Repair Boundary
+The five dead UI copies of engine-owned snapshot synchronization helpers were removed from `gameplayLoop.ts`, along with only the two type imports made unused by that deletion. The live `syncSnapshot(...)` wrapper remains and delegates all nine current quest/activity callers to `synchronizeGameplaySnapshot(...)`.
 
-The next run should:
+The existing travel UI-authority test now guards against reintroducing any of the five helper declarations. The exact focused group passes 17/17, direct searches confirm the engine implementations remain live, and no runtime behavior or contract changed.
 
-- remove exactly those five dead helper definitions from `gameplayLoop.ts`;
-- remove only imports made unused by that deletion;
-- preserve the live `syncSnapshot(...)` wrapper that delegates to `synchronizeGameplaySnapshot(...)` because current quest/activity actions still use it;
-- add a focused source guard against reintroducing the five UI helper declarations;
-- run the exact travel/adjacent focused group and hygiene checks;
-- change no travel behavior, quest/activity behavior, command/event identity, save contract, content, schema, dependency, or broader UI structure.
+## Next Route
 
-After a green repair, run a narrow `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit` before selecting the next engine-owned quest or activity consumer.
+Run one read-only post-repair audit. Reconfirm the exact authority boundary, focused regression evidence, persistence/browser posture, and repository hygiene. If accepted, inspect current UI-authored quest/activity actions and select exactly one bounded next engine-owned consumer with a decision-complete primary prompt. If contradictory evidence remains, select the smallest support repair instead.
 
-The engine factory currently owns default travel command sequencing. Exact fixture replay intentionally produces the same deterministic command/event and identical replacement snapshot. Do not add replay-ledger or command-bus work to this repair; revisit explicit delivery idempotency only when an external event consumer exists.
-
-Deep Research is not required.
+Do not reopen command replay/idempotency design, generic command-bus work, broad UI cleanup, or unrelated typecheck/full-suite debt. Deep Research is not required.
 
 Suggested next commit:
 
