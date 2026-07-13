@@ -98,8 +98,10 @@ export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Que
                     }
 
                     const result = acceptQuest(snapshot, selectedItem.id);
-                    updateSnapshot(result.snapshot);
-                    setActiveSection('active');
+                    if (result.accepted) {
+                      updateSnapshot(result.snapshot);
+                      setActiveSection('active');
+                    }
                     setPanelNotice(result.notice);
                   }}
                 />

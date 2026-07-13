@@ -4,9 +4,9 @@ Last reviewed: 2026-07-13
 
 ## Current Runtime Transition Override
 
-- Latest completed primary: `Version 0.6.0 - Engine-Owned Player Travel Command`.
-- Latest completed support run: `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`.
-- Next support route: `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`.
+- Latest completed primary: `Version 0.6.1 - Engine-Owned Quest Acceptance Command`.
+- Latest completed support/audit run: `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`.
+- Next support route: `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -29,11 +29,11 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.6.0 - Engine-Owned Player Travel Command`
-- Latest support/audit run: `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`
-- Next recommended version: `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
+- Latest completed version: `Version 0.6.1 - Engine-Owned Quest Acceptance Command`
+- Latest support/audit run: `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
+- Next recommended version: `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: first bounded `v0.6.x` runtime-ownership package landed and residual UI synchronization authority was removed; one read-only post-repair audit remains before selecting another consumer
+- Current phase: player travel and quest acceptance are engine-owned; audit the second transition before selecting another consumer
 
 Versioning rule:
 

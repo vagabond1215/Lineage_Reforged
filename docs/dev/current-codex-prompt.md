@@ -4,99 +4,111 @@ You are working in the `vagabond1215/Lineage_Reforged` repository on branch `mas
 
 Run:
 
-`Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
+`Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
 
 ## Accepted State
 
-- Latest completed primary: `Version 0.6.0 - Engine-Owned Player Travel Command`.
-- Latest completed support run: `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`.
-- The repair removed exactly the five dead UI copies of engine-owned snapshot synchronization helpers, removed only newly unused imports, preserved the live engine-delegating `syncSnapshot(...)` wrapper and its nine current callers, and added focused source guards.
-- The repair's exact focused group passed 17/17.
+- Latest completed primary: `Version 0.6.1 - Engine-Owned Quest Acceptance Command`.
+- Latest completed support/audit run: `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`.
+- Quest acceptance is intended to be the second completed engine-owned runtime consumer.
+- `resolvePlayerQuestAcceptancePlan(...)` is intended to own acceptance lookup, eligibility, stable plan codes, and acceptance facts.
+- `executePlayerQuestAcceptanceCommand(...)` is intended to own validation, atomic mutation, synchronization, result construction, and accepted-event emission.
+- The accepted snapshot and notice characterization hashes remained unchanged during extraction.
 - No user decision or Deep Research is required.
 
 ## Purpose
 
-Perform one narrow read-only post-repair audit. Confirm the residual-authority repair is complete, behavior-preserving, browser/persistence-safe, and free of new hygiene defects. If accepted, inspect current UI-authored quest and activity mutation paths and select exactly one bounded next engine-owned consumer.
+Perform one narrow read-only post-transition audit of the landed quest-acceptance boundary. Verify authority, determinism, stale protection, atomicity, complete current-behavior parity, event contract, persistence/browser safety, UI adapter behavior, and repository hygiene.
 
-Do not edit runtime, UI, shared contracts, tests, content, schemas, persistence, package files, or generated output during this audit. If contradictory evidence identifies a real defect, package the smallest separate support repair and stop without selecting another consumer.
+If accepted, inspect the remaining bounded quest/activity seams and select exactly one next engine-owned consumer. If contradictory evidence identifies a real defect, package the smallest separate support repair and stop without selecting another consumer.
+
+Do not edit runtime, UI, shared contracts, tests, content, schemas, persistence, package files, or generated output during this audit.
 
 ## Required First Steps
 
-1. Run branch status, fetch, and fast-forward pull. Record the starting commit and dirty/clean state; preserve unrelated work.
-2. Read:
-   - `AGENTS.md` and `README.md`;
-   - `docs/dev/current-codex-output.md`;
-   - `docs/dev/current-gpt-handoff.md`;
-   - `docs/dev/current-codex-prompt.md`;
-   - `docs/dev/codex-sequenced-implementation-plan.md`;
-   - `docs/dev/project-roadmap.md`;
-   - `docs/dev/project-vision-and-continuity-brief.md`;
-   - `docs/design/runtime-ownership-transition-readiness-consolidation.md`;
-   - `docs/design/player-travel-boundary-clarification.md`;
-   - `docs/future_content_backlog.md`.
-3. Inspect the complete `0.6.0.2` diff and current versions of `gameplayLoop.ts`, `gameplay-snapshot-sync.ts`, `player-travel.ts`, `player-travel-rules.ts`, `WorldPanel.tsx`, and `player-travel-command.test.mjs`.
-4. Map the live preview, command, execution, synchronization, accepted-commit, rejection, event, and notice paths before deciding.
+1. Run branch status, fetch, and fast-forward pull. Record starting commit and dirty/clean state; preserve unrelated work.
+2. Read `AGENTS.md`, `README.md`, the current output/handoff/prompt, sequencing plan, roadmap, continuity brief, runtime-readiness consolidation, player-travel clarification as the accepted command-pattern authority, and backlog.
+3. Inspect the complete landed `0.6.1` diff and current versions of:
+   - `packages/engines/game-engine/src/player-quest-acceptance.ts` and `.js`;
+   - `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`;
+   - `packages/engines/game-engine/src/index.ts`;
+   - `packages/shared/events/src/index.ts`;
+   - `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
+   - `apps/rpg-ui/src/features/QuestsPanel.tsx`;
+   - both quest-acceptance focused tests;
+   - adjacent travel, skill-gating, deterministic, and save/load tests.
+4. Map resolver, UI eligibility, command construction, execution, synchronization, accepted application, rejection, event, and notice paths before deciding.
 
-## Repair Audit
+## Audit Questions
 
-Confirm with exact source/test evidence:
+### Authority and eligibility
 
-- `gameplayLoop.ts` declares none of `syncQuestJournal(...)`, `syncWorldRecords(...)`, `syncActivityRecords(...)`, `syncCodexEntries(...)`, or `syncQuestIds(...)`;
-- the corresponding engine implementations remain live and are called by `synchronizeGameplaySnapshot(...)`;
-- `syncSnapshot(...)` remains a narrow delegate and all current callers still reach the engine path;
-- no needed import or helper was removed and no obsolete repair-only import remains;
-- the focused source guard covers all five names while retaining existing no-catalog, no-direct-mutation, engine-command, and accepted-only UI checks;
-- travel rules, command/revision identity, atomic rejection, accepted snapshot parity, event emission, persistence roundtrip, browser import graph, TS/JS peers, risky confirmation, and notice behavior remain unchanged;
-- no content, schema, save field/version, migration, compatibility behavior, dependency, generated output, command bus, replay ledger, or unrelated cleanup entered the repair;
-- no conflict marker, trailing whitespace, temporary artifact, stale active anchor, or unexpected changed path remains.
+Confirm one engine resolver owns quest lookup, contracts-only eligibility, stable plan codes, and acceptance facts. Confirm `getQuestCommandState(...)` consumes that resolver for acceptance while tracking and turn-in remain unchanged. Confirm no direct acceptance mutation survives in the UI.
+
+### Command and stale protection
+
+Confirm command shape/id, player, quest, sequence, tick, snapshot version, full revision, and coherent tick state are validated. Confirm deterministic same-fixture identity, distinct same-tick quest identities, transient correlation, and no realistic stale acceptance path. Record the exact default sequence owner and any replay/idempotency residual risk.
+
+### Atomicity and rejections
+
+Confirm all validation precedes mutation, accepted work occurs on a persistence-safe clone, synchronization completes before result/event construction, and unexpected failure exposes no partial clone. Confirm malformed, wrong-player, stale, incoherent, missing, active, completed, and failed paths return original identity/content with zero events and no state changes.
+
+### Complete accepted parity
+
+Confirm the locked accepted snapshot and notice hashes, input immutability, final quest category/status/objectives/tracked state, active/completed ids, preparation activity, notification, Chronicle, records, Codex, body/runtime, progression, ordering, ids, text, and caps. Confirm acceptance advances no tick and applies no reward, inventory, reputation, turn-in, tracking-toggle, activity-advance, rest, travel, or account behavior.
+
+### Event contract
+
+Confirm exactly one typed `player.quest.accepted` event follows acceptance only; its deterministic id incorporates command identity; same-tick distinct commands remain distinct; payload is presentation-safe and exposes no mutable snapshot internals; event/correlation state is not persisted or dispatched.
+
+### Persistence, browser, and TS/JS
+
+Confirm no save field/version, schema, migration, compatibility behavior, or storage contract changed. Confirm post-acceptance roundtrip preserves all changed state. Confirm the UI import graph has no Node-only dependency and the `.js` peer intentionally re-exports the `.ts` authority.
+
+### UI adapter and hygiene
+
+Confirm the gameplay-loop bridge constructs/invokes the command and projects notices without direct mutation. Confirm `QuestsPanel.tsx` updates snapshot/active section only when accepted and always renders the notice. Check for dead extraction helpers/imports, duplicate acceptance authority, unexpected changed paths, conflict markers, whitespace, temporary artifacts, and stale active anchors. Do not misclassify helpers still called by tracking, turn-in, activity, or rest.
 
 ## Required Validation
 
 Run:
 
-`node --test tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
+`node --test tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
 
-Also run direct helper-ownership, delegation/caller, travel-catalog/value, direct-mutation, event/export/import, changed-path, conflict-marker, temporary-artifact, `git diff --check`, and final status searches.
+Also run direct acceptance-authority/mutation, resolver/command/event identity, export/import, persistence-correlation, UI application, helper-reference, changed-path, conflict-marker, temporary-artifact, `git diff --check`, and final status checks.
 
-Run typecheck only if it materially clarifies a touched-boundary diagnostic. Do not run the full suite, DB build, UI build, package installation, servers, generated-output refresh, or broad cleanup.
+Run typecheck only if it materially clarifies a touched-boundary diagnostic. Do not run the full suite, DB build, UI build, package installation, servers, generated-output refresh, or unrelated cleanup.
 
 ## Decision Rules
 
-Accept only if the duplicate UI authority is gone, the engine synchronization path remains live, focused behavior is green, and no material touched-boundary defect appears.
+Accept only if the engine is the sole acceptance authority, all focused behavior remains exact, rejection is atomic, event/correlation is safe and transient, persistence/browser/UI boundaries are coherent, and no material hygiene defect remains.
 
-If repair is still required, select the smallest `Version 0.6.0.4 - ... Repair` support route and do not select a next consumer.
+If repair is required, select the smallest `Version 0.6.1.2 - ... Repair` support route and do not select another consumer.
 
 ## Next Consumer Selection
 
-Only after accepting the repair, inspect current UI-authored quest/activity actions such as quest acceptance, quest tracking, activity selection, activity advancement, rest, and quest turn-in.
+Only after accepting the transition, compare at least:
 
-Select exactly one action using actual source and test evidence for:
+- quest tracking (`toggleTrackedQuest(...)`);
+- activity selection (`setCurrentActivityFromRecord(...)`);
+- activity advancement;
+- rest;
+- quest turn-in.
 
-- one clear input/result boundary and identifiable UI call site;
-- stable current behavior that can be characterized before extraction;
-- bounded mutation and rejection surfaces comparable to or smaller than travel;
-- reuse of the landed command/result/event/snapshot pattern;
-- no new content, schema, save field, migration, compatibility behavior, broad quest lifecycle, rewards redesign, inventory redesign, combat, or generic command-bus work;
-- meaningful runtime-ownership value and focused deterministic/rejection coverage.
+Select exactly one using current call sites, mutation surfaces, existing characterization/test evidence, integration value, dependencies, rejection complexity, persistence impact, and scope risk. Prefer a single bounded action; do not bundle lifecycle work or add generic command infrastructure.
 
-Record candidates inspected, exact mutation/call surfaces, dependencies/blockers, comparative risk/value, selected version label, allowed scope, exclusions, stop conditions, and required tests. Do not implement the consumer during this audit.
+Record candidates, exact call/mutation surfaces, comparative risk/value, selected label, allowed scope, exclusions, stop conditions, and required tests. Do not implement the selected consumer in this audit.
 
 ## Documentation And Handoff
 
-Update only the smallest necessary coordination set:
+Overwrite the current output; replace/prune the current handoff; update only current anchors in the sequencing plan, roadmap, continuity brief, and backlog; and overwrite the current prompt with the selected next primary consumer or narrow repair.
 
-- overwrite `docs/dev/current-codex-output.md`;
-- replace/prune `docs/dev/current-gpt-handoff.md`;
-- update current anchors in the sequenced plan, roadmap, and continuity brief only as needed;
-- update `docs/future_content_backlog.md` only for the completed audit and concrete next deferral;
-- overwrite `docs/dev/current-codex-prompt.md` with a decision-complete prompt for the selected next primary consumer, or the narrow `0.6.0.4` repair if the audit fails.
-
-Do not create a new design or temporary audit document.
+Do not create a new design or temporary audit document unless an unrepresentable blocker requires one.
 
 ## Current Codex Output Requirements
 
-Record source/run/date, starting commit/status, audit verdict, files inspected and documentation changed, checks/outcomes/omissions, authority and behavior verdicts, persistence/browser/TS-JS verdict, residual risks/debt, candidate comparison and selected route or repair, Deep Research decision, next version, and suggested commit message.
+Record source/run/date, starting commit/status, audit verdict, files inspected and documentation changed, checks/outcomes/omissions, authority/identity/atomicity/parity/event/persistence/browser/TS-JS/UI/hygiene verdicts, residual risks/debt, candidate comparison and selected route or repair, Deep Research decision, next version, and suggested commit message.
 
 Suggested commit message when accepted:
 
-`docs(audit): verify repaired player travel boundary`
+`docs(audit): verify engine-owned quest acceptance transition`

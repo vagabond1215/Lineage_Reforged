@@ -1,27 +1,27 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.0.2 - Residual UI Snapshot Authority Repair
+Source version/run: Version 0.6.1 - Engine-Owned Quest Acceptance Command
 Date: 2026-07-13
-Branch/status assumption: `master`; worktree clean at starting commit `de9d6be1`; initial sandboxed fetch/pull could not write `.git/FETCH_HEAD`, then the required escalated fetch and fast-forward pull succeeded with the branch already current.
+Branch/status assumption: `master`; starting commit `d57e649f`; worktree contained only the seven intended uncommitted `0.6.0.3` audit/next-prompt coordination edits; escalated fetch plus `git pull --ff-only` confirmed `HEAD` and `origin/master` had zero divergence and were already current before implementation.
 
 ## Result
 
-Removed the five dead UI synchronization implementations that remained after engine extraction:
+Moved only quest acceptance behind engine ownership while preserving the complete characterized accepted snapshot and notice.
 
-- `syncQuestJournal(...)`
-- `syncWorldRecords(...)`
-- `syncActivityRecords(...)`
-- `syncCodexEntries(...)`
-- `syncQuestIds(...)`
+`resolvePlayerQuestAcceptancePlan(...)` now owns current quest lookup, contracts-only eligibility, stable rejection codes, and presentation-safe acceptance facts. `createPlayerQuestAcceptanceCommand(...)` builds a deterministic transient command with player, quest, sequence, tick, snapshot version, and full-snapshot revision identity. `executePlayerQuestAcceptanceCommand(...)` revalidates, clones, applies the exact current acceptance mutations, synchronizes once through `synchronizeGameplaySnapshot(...)`, commits atomically, and emits one typed collision-safe `player.quest.accepted` event after success.
 
-Removed only their newly unused `CodexEntryState` and `PanelRecordState` imports. Preserved `QuestJournalEntryState` for `findQuest(...)` and preserved the live `syncSnapshot(...)` wrapper that delegates all nine current quest/activity call sites to engine-owned `synchronizeGameplaySnapshot(...)`.
-
-Extended the existing travel UI-authority test with negative guards for all five removed declarations. No travel, quest, activity, synchronization, persistence, event, or UI behavior changed.
+The gameplay-loop bridge now delegates acceptance and notice projection. `QuestsPanel.tsx` updates the snapshot and switches to the active section only on acceptance. Tracking, turn-in, activity, rest, rewards, inventory, reputation, command-bus, event-dispatch, and replay behavior remain unchanged.
 
 ## Files Changed
 
+- `packages/engines/game-engine/src/player-quest-acceptance.ts`
+- `packages/engines/game-engine/src/player-quest-acceptance.js`
+- `packages/engines/game-engine/src/index.ts`
+- `packages/shared/events/src/index.ts`
 - `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
-- `tests/unit/player-travel-command.test.mjs`
+- `apps/rpg-ui/src/features/QuestsPanel.tsx`
+- `tests/unit/player-quest-acceptance-characterization.test.mjs`
+- `tests/unit/player-quest-acceptance-command.test.mjs`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -32,33 +32,33 @@ Extended the existing travel UI-authority test with negative guards for all five
 
 ## Checks Run
 
-- Required branch status, fetch, and fast-forward pull; branch current at `de9d6be1` before edits.
-- Required repository, handoff, prompt, sequencing, roadmap, vision, runtime-readiness, travel-clarification, backlog, source, engine-owner, and focused-test inspection.
-- Pre-edit searches proved the five UI helpers had declarations only while the engine counterparts remained live and called.
-- Focused final group: `node --test tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs` (17 passed, 0 failed).
-- Post-edit searches confirmed zero named helper declarations and no `LOCATION_TEMPLATES` in the UI bridge; the engine owns and calls all five helpers; `syncSnapshot(...)` still delegates to `synchronizeGameplaySnapshot(...)`; nine current callers remain.
-- Direct travel-rule and `WorldPanel` mutation searches found no duplicate UI destination catalog or direct travel state mutation.
-- Final `git diff --check`, conflict-marker, temporary-artifact, stale-anchor, changed-path, prompt-verification, and status checks passed with only the nine intended files changed.
-- Full suite, DB build, UI build, typecheck, package installation, servers, generated-output refresh, command-bus work, and unrelated cleanup intentionally omitted.
+- Required branch status, fetch, divergence, fast-forward pull, dirty-path, and coordination/source authority inspection.
+- Pre-extraction characterization: `node --test tests/unit/player-quest-acceptance-characterization.test.mjs` (1 passed). Locked accepted snapshot SHA-256 `44c15faaf28b238323cdb3cd67746482fea8128fd66bea05dddc20b09dadff04` and notice SHA-256 `2e0341fb706ec430a27a84151c916de0e251158fd2d3556d79c3a923a1886a90`.
+- Post-extraction quest-acceptance group: `node --test tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs` (9 passed, 0 failed).
+- Required final group: `node --test tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs` (26 passed, 0 failed).
+- Direct acceptance authority/mutation, resolver/command/event, export/import, TS/JS peer, Node-only import, persistence-correlation, UI application, changed-path, conflict-marker, temporary-artifact, and `git diff --check` searches.
+- Full suite, DB build, UI build, typecheck, package installation, servers, generated-output refresh, and unrelated cleanup intentionally omitted.
 
 ## Behavior / Runtime Confirmation
 
-Runtime ownership was clarified; runtime output did not change. Only unreachable duplicate UI functions and their unused type imports were removed. The live synchronization implementation remains unchanged in `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`, and every existing UI-owned quest/activity action continues through the same engine-delegating wrapper.
+Ownership changed; characterized gameplay output did not. The accepted snapshot and notice hashes remain exact after extraction, including the final synchronized `Tracked - Procurement active` quest projection, objectives, active quest ids, tracked quest, preparation activity, notification, Chronicle entry, records, Codex, body/runtime, progression, ordering, ids, text, and caps.
 
-The focused characterization, rejection, deterministic identity, same-completion-tick event, zero-tick travel, quest-arrival hook, serialization, skill-gating, save/load, and deterministic scenario evidence remains green. No JSON, schema, save field/version, migration, compatibility behavior, content, dependency, generated output, command/event identity, or gameplay rule changed.
+Accepted commands leave the input unchanged, return a new synchronized snapshot, and emit exactly one typed event. Missing, active, completed, failed, malformed, wrong-player, stale, incoherent, and injected-failure paths return the original snapshot identity/content and emit zero events. Deterministic repetition, distinct same-tick command/event identity, post-acceptance roundtrip, and non-persistence of command correlation are covered.
+
+No content JSON, schema, save field/version, migration, compatibility behavior, dependency, generated output, reward, inventory, reputation, tracking, turn-in, activity, rest, travel, or account behavior changed.
 
 ## Risks / Follow-Up
 
-- Run the narrow read-only `0.6.0.3` post-repair audit before selecting another engine-owned consumer.
-- The source guard intentionally checks exact function declarations in the UI module; engine ownership remains verified separately through direct searches and focused behavior tests.
-- Exact command replay/idempotency policy remains deferred until an external event consumer or dispatcher exists; do not mix that future decision into this cleanup.
-- Accepted unrelated broad typecheck/full-suite debt was not revisited.
+- Run the narrow read-only `0.6.1.1` post-transition audit before selecting another quest/activity consumer.
+- Default acceptance sequence derives from current active/completed quest-id counts; quest id and full revision also participate in identity. Revisit delivery idempotency only when an external dispatcher exists.
+- `gameplayLoop.ts` intentionally retains notification, Chronicle, quest tracking/turn-in, activity, rest, and synchronization bridges used by other live actions; do not classify those as acceptance residue without call evidence.
+- Accepted unrelated full-suite/typecheck debt was not revisited.
 - Deep Research is not required.
 
 ## Next Recommended Version
 
-Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit
+Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit
 
 ## Suggested Commit Message
 
-fix(runtime): remove residual UI snapshot authority
+feat(runtime): move quest acceptance into engine ownership

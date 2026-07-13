@@ -22,6 +22,12 @@ import {
   type PlayerTravelResult
 } from '../../../../packages/engines/game-engine/src/player-travel.js';
 import {
+  createPlayerQuestAcceptanceCommand,
+  executePlayerQuestAcceptanceCommand,
+  resolvePlayerQuestAcceptancePlan,
+  type PlayerQuestAcceptanceResult
+} from '../../../../packages/engines/game-engine/src/player-quest-acceptance.js';
+import {
   getCurrentPlayerTravelLocationId,
   getCurrentPlayerTravelLocationLabel,
   getPlayerTravelDestinationFacts,
@@ -805,6 +811,7 @@ function addDiscoveryEntry(snapshot: SaveSnapshot) {
 }
 
 function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandState {
+  const acceptancePlan = resolvePlayerQuestAcceptancePlan(snapshot, questId);
   const quest = findQuest(snapshot, questId);
 
   if (!quest) {
@@ -816,7 +823,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
     };
   }
 
-  if (quest.category === 'contracts') {
+  if (acceptancePlan.accepted) {
     return {
       canAccept: true,
       canTurnIn: false,
@@ -945,59 +952,38 @@ export function previewTravelToKnownLocation(
   };
 }
 
-export function acceptQuest(snapshot: SaveSnapshot, questId: string): GameplayActionResult {
-  const quest = findQuest(snapshot, questId);
-
-  if (!quest) {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Quest Missing', 'That quest could not be found in the current session.')
-    };
+function createPlayerQuestAcceptanceNotice(result: PlayerQuestAcceptanceResult): GameShellNotice {
+  if (result.accepted) {
+    return createNotice('success', 'Contract Accepted', `${result.noticeFacts.questTitle} is now active and tracked.`);
   }
-
-  if (quest.category !== 'contracts') {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Contract Already Active', `${quest.title} is already in the active ledger.`)
-    };
+  if (result.code === 'quest_missing') {
+    return createNotice('warning', 'Quest Missing', 'That quest could not be found in the current session.');
   }
+  if (result.code === 'quest_not_available') {
+    return createNotice(
+      'warning',
+      'Contract Already Active',
+      `${result.noticeFacts.questTitle ?? 'That quest'} is already in the active ledger.`
+    );
+  }
+  if (result.code === 'stale_snapshot') {
+    return createNotice('warning', 'Quest State Changed', 'The quest ledger changed. Review the contract and try again.');
+  }
+  return createNotice('warning', 'Quest Acceptance Blocked', 'The contract could not be accepted from the current session state.');
+}
 
-  const nextSnapshot = cloneSnapshot(snapshot);
-  nextSnapshot.sessionState.questJournal = nextSnapshot.sessionState.questJournal.map((entry) =>
-    entry.id === questId
-      ? {
-          ...entry,
-          category: 'active',
-          statusLabel: 'Accepted'
-        }
-      : entry
+export function acceptQuest(
+  snapshot: SaveSnapshot,
+  questId: string
+): GameplayActionResult & { accepted: boolean } {
+  const result = executePlayerQuestAcceptanceCommand(
+    snapshot,
+    createPlayerQuestAcceptanceCommand(snapshot, questId)
   );
-  nextSnapshot.sessionState.trackedQuestId = questId;
-  nextSnapshot.sessionState.currentActivity = {
-    id: `activity.prepare.${questId}`,
-    label: `Preparing ${quest.title}`,
-    category: 'Contract',
-    detail: quest.summary
-  };
-  appendNotification(nextSnapshot, 'Contract accepted', `${quest.title} moved into the active quest ledger.`, 'accent');
-  appendChronicle(
-    nextSnapshot,
-    makeChronicleEntry(
-      nextSnapshot,
-      'social',
-      `${nextSnapshot.playerState.coreData.playerName} accepted ${quest.title}`,
-      `The contract board cleared ${quest.title} into the active ledger.`,
-      'Accepted',
-      [nextSnapshot.playerState.coreData.playerName, quest.title],
-      ['Quest moved to active'],
-      ['Tracked quest updated'],
-      ['Contract', quest.regionLabel]
-    )
-  );
-
   return {
-    snapshot: syncSnapshot(nextSnapshot),
-    notice: createNotice('success', 'Contract Accepted', `${quest.title} is now active and tracked.`)
+    accepted: result.accepted,
+    snapshot: result.snapshot,
+    notice: createPlayerQuestAcceptanceNotice(result)
   };
 }
 

@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-13 after `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`.
+Updated 2026-07-13 after `Version 0.6.1 - Engine-Owned Quest Acceptance Command`.
 
 ## Purpose
 
@@ -34,15 +34,15 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest completed primary:
 
-- `Version 0.6.0 - Engine-Owned Player Travel Command`
+- `Version 0.6.1 - Engine-Owned Quest Acceptance Command`
 
 Latest support/audit run:
 
-- `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`
+- `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
 
 Next recommended support version:
 
-- `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
+- `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
 
 Current sequence source:
 
@@ -50,7 +50,7 @@ Current sequence source:
 
 Current phase:
 
-- the first bounded `v0.6.x` runtime-ownership implementation is landed and residual dead UI synchronization authority is removed; one read-only post-repair audit remains before selecting another engine-owned consumer
+- player travel and quest acceptance are engine-owned; audit the second transition before selecting another bounded consumer
 
 Current transition decisions:
 
@@ -60,6 +60,7 @@ Current transition decisions:
 ## Current Implementation Reality
 
 - Player travel preview and execution are engine-owned through one resolver and one transient command in `packages/engines/game-engine/src/`; the active `gameplayLoop.ts` path is a notice/application bridge and `WorldPanel.tsx` commits accepted snapshots only.
+- Quest acceptance is engine-owned through `player-quest-acceptance.ts`; the gameplay-loop bridge projects eligibility/notices and `QuestsPanel.tsx` applies accepted snapshots and section changes only on success.
 - Accepted travel atomically mutates the cloned clock, body/resources, player location and geographic Knowledge, session activity, quest-arrival operations, notifications, and Chronicle, then applies the shared engine-owned derived snapshot synchronization path.
 - Rejected or exceptional travel returns the original snapshot identity/content and emits no completion event. No travel catalog, direct travel mutation, or duplicate snapshot synchronization helper remains in the UI bridge.
 - Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, command contract planning, first narrow runtime cast resolver planning, resolver-readiness helpers, planned output-envelope policy, inert resolver envelope helpers, spell-hook support expansion planning, spell-hook classification auditing, and spell-hook constants cleanup have landed.
@@ -100,8 +101,10 @@ Every major system should answer at least one of these questions:
 | `0.6.0` | Engine-Owned Player Travel Command | Landed. Moved the complete current travel transition behind one engine-owned command and shared resolver with atomic rejection safety and typed completion events. | Preserved current behavior and canon; added no travel mechanics, save fields, quest redesign, or broad UI rewrite. |
 | `0.6.0.1` | Engine-Owned Player Travel Post-Transition Audit | Complete. Focused behavior passed; five dead UI synchronization helper copies failed the no-residual-authority gate. | Read-only audit; no production files changed. |
 | `0.6.0.2` | Residual UI Snapshot Authority Repair | Complete. Removed only the five dead UI helper copies and newly unused imports; added a focused source guard. | Preserved live engine delegation and all current behavior; 17/17 focused tests passed. |
-| `0.6.0.3` | Engine-Owned Player Travel Post-Repair Audit | Next support run. | Reconfirm the authority boundary before selecting another consumer. |
-| later `0.6.x` | Next Engine-Owned Consumer | Select after post-repair travel acceptance from actual dependency evidence. | One coherent consumer; no return to generic authority-selection loops. |
+| `0.6.0.3` | Engine-Owned Player Travel Post-Repair Audit | Complete and accepted. | Reconfirmed repaired authority, behavior, persistence/browser, adapter, and hygiene boundaries. |
+| `0.6.1` | Engine-Owned Quest Acceptance Command | Complete. Moved acceptance behind one resolver/command/event boundary with exact characterized parity. | Acceptance only; 26/26 focused tests passed. |
+| `0.6.1.1` | Engine-Owned Quest Acceptance Post-Transition Audit | Next support run. | Reconfirm the second ownership transition before selecting another consumer. |
+| later `0.6.x` | Later Engine-Owned Consumers | Tracking, activity selection/advancement, rest, and turn-in remain deferred. | One coherent consumer per package; no generic command bus. |
 
 For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
 

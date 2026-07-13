@@ -1,34 +1,36 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.6.0.2 - Residual UI Snapshot Authority Repair
+Source version/run: Version 0.6.1 - Engine-Owned Quest Acceptance Command
 Date: 2026-07-13
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.6.0 - Engine-Owned Player Travel Command`
+- `Version 0.6.1 - Engine-Owned Quest Acceptance Command`
 
-Latest completed support run:
-
-- `Version 0.6.0.2 - Residual UI Snapshot Authority Repair`
-
-Immediate next support route:
+Latest completed support/audit run:
 
 - `Version 0.6.0.3 - Engine-Owned Player Travel Post-Repair Audit`
 
+Immediate next support route:
+
+- `Version 0.6.1.1 - Engine-Owned Quest Acceptance Post-Transition Audit`
+
 ## Result
 
-The five dead UI copies of engine-owned snapshot synchronization helpers were removed from `gameplayLoop.ts`, along with only the two type imports made unused by that deletion. The live `syncSnapshot(...)` wrapper remains and delegates all nine current quest/activity callers to `synchronizeGameplaySnapshot(...)`.
+Quest acceptance now uses one engine-owned resolver and one deterministic transient command. Acceptance revalidates player/tick/version/revision and current contracts-only eligibility, clones and applies the exact current quest/tracked/activity/notification/Chronicle mutations, synchronizes through the existing engine owner, commits atomically, and emits one collision-safe typed `player.quest.accepted` event.
 
-The existing travel UI-authority test now guards against reintroducing any of the five helper declarations. The exact focused group passes 17/17, direct searches confirm the engine implementations remain live, and no runtime behavior or contract changed.
+The complete accepted snapshot and notice hashes remain unchanged. Rejection and injected failure preserve original identity/content and emit no event. Same-tick identities, caps, roundtrip, browser-safe imports, engine exports, TS/JS peer alignment, and accepted-only `QuestsPanel` application are covered. The full focused group passes 26/26.
 
 ## Next Route
 
-Run one read-only post-repair audit. Reconfirm the exact authority boundary, focused regression evidence, persistence/browser posture, and repository hygiene. If accepted, inspect current UI-authored quest/activity actions and select exactly one bounded next engine-owned consumer with a decision-complete primary prompt. If contradictory evidence remains, select the smallest support repair instead.
+Run one read-only post-transition audit. Reconfirm resolver/command/event authority, deterministic identity, stale protection, atomicity, complete characterized parity, persistence/browser safety, UI adapter behavior, and no residual direct acceptance mutation or dead extraction residue.
 
-Do not reopen command replay/idempotency design, generic command-bus work, broad UI cleanup, or unrelated typecheck/full-suite debt. Deep Research is not required.
+If accepted, compare quest tracking and activity selection first, while retaining advancement, rest, and turn-in as higher-risk later consumers. Select exactly one next consumer from current evidence. If contradictory evidence appears, package the smallest support repair instead.
+
+Do not add command-bus, event delivery, replay ledger, save fields, content, schema, tracking, turn-in, rewards, inventory, reputation, activity, rest, or unrelated cleanup. Deep Research is not required.
 
 Suggested next commit:
 
-`fix(runtime): remove residual UI snapshot authority`
+`feat(runtime): move quest acceptance into engine ownership`
