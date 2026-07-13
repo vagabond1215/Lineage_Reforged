@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision
+Source version/run: Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
+- `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
 
 Latest completed support/audit run:
 
@@ -15,22 +15,22 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
+- `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`
 
-## Boundary Result
+## Deferral Result
 
-Diplomatic relations and conflict identity/history are separate future owners. No generic political-state umbrella or combined schema is approved.
+Diplomatic relations and conflict identity/history remain separate future owners. Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward. No collection path, relation prefix, schema plan, seed, or implementation is approved.
 
-A diplomatic relation is an authored relationship among canonical actors and intrinsically requires actor types/references, direction or symmetry, cardinality, relation semantics, visibility, lifecycle, and effective temporal validity. A conflict is a distinguishable authored dispute/war/rebellion/occupation-struggle identity/history and intrinsically requires canonical participants/roles, identity threshold, conflict semantics, temporal history, lifecycle, provenance, and uncertainty posture.
-
-Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward. Reference-free contracts are incoherent for both owners. Neither is schema-ready.
+Reopening requires materially new approved canon, a new intentional canonical source, an authorized political-content authorship pass, or a ready consumer proving the applicable complete minimal static contract. A ready consumer may reopen schema review only; it cannot mint canon or authorize seeds. Unchanged-source rescans are prohibited.
 
 ## Remaining Guardrails
 
-Claims, borders, territory, control, occupation state, government, jurisdiction, law, courts, force, faction/institution, places/maps, route security, quest/event/Chronicle, Knowledge, reputation, combat, runtime, UI, and save/account remain separate. No automatic derivation between diplomacy, conflict, claims, treaties, war, peace, alliance, rivalry, recognition, vassalage, or current state is allowed.
+Diplomacy needs complete actor/reference, direction/symmetry, cardinality, relation-kind, visibility, lifecycle, effective-validity, provenance, and non-implication evidence. Conflict needs complete identity, participant/role, kind, temporal-history, lifecycle, provenance, uncertainty, and non-implication evidence.
 
-The next pass must fix exact authored-input/ready-consumer reopening conditions and prohibit unchanged-source rescans. No candidate, collection/prefix, schema plan, content, reference, migration, consumer, political runtime, Deep Research, user question, support suffix, or `0.6.0` transition is approved.
+Claims, borders, territory, control, occupation, government, jurisdiction, law, force, identity, place/map, event, reputation, combat, runtime, UI, and save/account owners remain separate. Readiness, schema plan, schema/validator, seed plan, content, registration, references, migrations, consumers, and runtime remain separate gates.
+
+The next pass must compare all current gates, pauses, rejections, closures, and maturity boundaries and select exactly one smallest safe docs-first route. It must not reopen any gated lane by default or prejudge implementation.
 
 Suggested next commit:
 
-`docs(civic): defer diplomacy conflict evidence`
+`docs(roadmap): select post-diplomacy deferral route`

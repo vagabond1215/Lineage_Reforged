@@ -2,23 +2,23 @@
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run the focused diplomacy/conflict evidence deferral:
+Run the focused roadmap selection:
 
-`Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
+`Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`
 
 ## Current accepted repo state
 
-- Latest completed primary: `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision`
+- Latest completed primary: `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
 - Latest completed support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Immediate next primary route: `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`
-- Diplomatic relations and conflict identity/history are separate future owners.
-- Exactly zero diplomatic-relation ids and zero `conflict.*` ids carry forward.
-- Actor/participant references, direction/cardinality, and effective temporal/history semantics are intrinsic but unproven.
-- Neither owner is schema-ready; reference-free and combined schemas are rejected.
+- Immediate next primary route: `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`
+- Diplomacy/conflict is gated behind separate materially-new-authored-input or ready-consumer contracts with exactly zero ids.
+- Force/public order, government/jurisdiction, business, faction, institution, and People/NPC are gated.
+- Service, resource/commodity, and combat health are paused; generic `world.pois` is rejected; Highcrown settlement Knowledge is closed.
+- Office is not schema-ready; Living Character Manuscript implementation and runtime ownership transition remain maturity-gated.
 
 ## Purpose
 
-Fail closed on diplomacy/conflict evidence. Define the exact authored-input or ready-consumer conditions that may reopen schema planning or seed work, prohibit repeated scans of unchanged weak sources, preserve separate future gates and owners, and return to roadmap selection. Do not implement anything.
+Compare the current gated, paused, rejected, closed, research-gated, maturity-gated, and genuinely eligible lanes. Select exactly one smallest safe documentation-first next route without reopening a gated lane by default or implementing anything.
 
 ## Required first steps
 
@@ -34,37 +34,34 @@ Read at minimum:
 
 - `AGENTS.md` and `README.md`;
 - current output, handoff, prompt, sequence, roadmap, and backlog;
-- `docs/design/diplomacy-conflict-authority-evidence-audit.md`;
-- `docs/design/diplomacy-conflict-authority-boundary-decision.md`;
-- government/jurisdiction and force/public-order evidence-deferral patterns only as needed to align reopening gates.
+- the current deferral/closure documents for diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, People/NPC, service, resource/commodity, combat health, generic POI, Highcrown settlement Knowledge, and office;
+- Living Character Manuscript and runtime-readiness guardrails only as needed to classify their gates.
 
-Do not repeat the diplomacy/conflict evidence audit or broaden discovery.
+Use existing decisions. Do not repeat broad evidence discovery.
 
 ## Expected output
 
 Add:
 
-- `docs/design/diplomacy-conflict-authority-evidence-deferral.md`
+- `docs/design/roadmap-post-diplomacy-conflict-deferral-selection.md`
 
-## Required deferral decisions
+## Required decisions
 
-- preserve separate diplomacy and conflict owners and exactly zero candidate ids;
-- define materially new authored canon, an approved exact relation/conflict list, an authorized political-content authorship pass, and a ready-consumer contract as possible reopening inputs;
-- specify the minimum diplomatic actor/reference, direction/symmetry, cardinality, relation-kind, visibility, lifecycle, and effective-validity evidence required before schema planning or a seed;
-- specify the minimum conflict identity, participant/role, kind, temporal-history, lifecycle, provenance, uncertainty, and non-implication evidence required before schema planning or a seed;
-- reject unchanged map conflict zones, polity identities, place/quest prose, UI/creator vocabulary, combat allies/hostility, reputation `wartime`, validators/tests, design examples, external research, and runtime labels as reopening evidence;
-- keep readiness, schema plan, schema/validator, seed plan, content, registration, references, migrations, consumers, and runtime as separate future gates;
-- preserve claims/borders/territory/control/occupation and all adjacent identity, place, event, combat, runtime, UI, and save/account owners;
-- decide explicit-user-question timing, Deep Research, support-suffix, and temporary-guardrail posture;
-- select `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection` next without reopening another gated lane.
+- inventory the current lanes by exact posture: gated, paused, rejected, closed, research-gated, maturity-gated, or eligible;
+- preserve every existing owner boundary, zero-id result, reopening condition, pause, rejection, closure, and runtime/magic/save/manuscript guardrail;
+- identify the smallest coherent eligible docs-first route based on current repository need and evidence, not novelty;
+- select exactly one next primary version and define its narrow inputs, outputs, non-goals, validation, and stop conditions;
+- do not select implementation merely because a schema or seed exists;
+- do not reopen diplomacy/conflict or another gated lane without a named qualifying new input;
+- decide whether any explicit user question, Deep Research, support suffix, or temporary guardrail is required before the selected route.
 
 ## Guardrails
 
-Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent actors, pairs, relations, conflicts, participants, roles, causes, dates, outcomes, claims, borders, treaties, alliances, wars, ids, or canon. Do not add references, normalize prefixes, enable consumers, or plan diplomacy/war/combat runtime. Do not reopen gated, paused, rejected, or closed lanes. Do not run Deep Research.
+Docs only. Do not add/edit content, schemas, validators, tests, normal lint, contracts, runtime, UI, account state, save/account, or gameplay. Do not invent canon or ids. Do not reopen gated, paused, rejected, closed, research-gated, or maturity-gated work without satisfying its existing gate. Do not transition to `0.6.0`. Do not run Deep Research unless the comparison proves a specific eligible research need and the final selection documents why local evidence is insufficient.
 
 ## Allowed changes
 
-- `docs/design/diplomacy-conflict-authority-evidence-deferral.md`
+- `docs/design/roadmap-post-diplomacy-conflict-deferral-selection.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
@@ -85,8 +82,8 @@ git diff --check
 git status --short --branch
 ```
 
-Verify docs-only scope, unchanged code/content/scaffolds/current owners, zero candidate ids, no diplomacy/conflict/claim/control content or schema changes, no references/migrations/consumer/runtime changes, no gated-lane reopening, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers.
+Verify docs-only scope, unchanged code/content/scaffolds/current owners, no candidate ids or gated-lane reopening, no implementation permission, no temporary artifacts, no conflict markers/trailing whitespace, and aligned route pointers.
 
-## Suggested commit message
+Suggested commit message:
 
-`docs(civic): defer diplomacy conflict evidence`
+`docs(roadmap): select post-diplomacy deferral route`
