@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-13
-Route: Codex local sequencing alignment after `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
+Route: Codex local sequencing alignment after `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -23,13 +23,13 @@ Latest completed primary:
 
 - `Version 0.6.2 - Engine-Owned Quest Tracking Command`
 
-Latest completed support/audit run:
-
-- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
-
-Immediate next support/repair Codex run:
+Latest completed support/repair run:
 
 - `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`
+
+Immediate next support/audit Codex run:
+
+- `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
 
 ## Current Queue Override
 
@@ -44,7 +44,8 @@ Immediate next support/repair Codex run:
 - `Version 0.6.1.2 - UI Information Architecture Research Integration` is complete as documentation-only support work. It promoted durable owner-aware shell, Home, linked-record, Codex, text-first combat, tactics, accessibility, component, and anti-clutter guidance into `docs/design/ui-information-architecture-boundary.md`, deleted the consumed temporary artifact, and preserved `0.6.2` unchanged.
 - `Version 0.6.2 - Engine-Owned Quest Tracking Command` is complete. It moved only `toggleTrackedQuest(...)` behind one engine-owned resolver/command/result/event boundary, preserved exact characterized track/untrack snapshots and notices, made the resolver authoritative for UI tracking eligibility, and passed 35/35 focused tests.
 - `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit` is complete but did not accept the transition. Authority, parity, identity, atomicity, persistence/browser, UI-adapter, and hygiene gates passed at 35/35 focused tests, but the accepted event payload violates the no-presentation-prose boundary by including the quest display `title`.
-- `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair` is the immediate narrow route. Remove only `title` from the typed accepted event payload and its construction, add an exact payload-shape regression assertion, and preserve result/notice facts and all behavior hashes.
+- `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair` is complete. It removed only the event payload `title`, added an exact six-key/no-title regression guard, preserved result/notice title facts and exact behavior hashes, and passed 35/35 focused tests.
+- `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit` is the immediate read-only route. Reconfirm the repaired event contract plus all previously passing transition gates before selecting one later consumer.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
 - Activity selection/advancement, rest, and quest turn-in remain later consumers. Do not select or bundle one until the repair and post-repair audit accept the tracking transition.

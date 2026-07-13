@@ -4,72 +4,75 @@ You are working in the `vagabond1215/Lineage_Reforged` repository on branch `mas
 
 Run:
 
-`Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`
+`Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
 
 ## Accepted State
 
-- `Version 0.6.2 - Engine-Owned Quest Tracking Command` moved quest track/untrack behind one engine resolver, deterministic transient command, atomic synchronized result, and typed accepted event.
-- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit` passed authority, exact behavior parity, identity, atomicity, persistence/browser, UI-adapter, and hygiene gates at 35/35 focused tests.
-- The audit did not accept the transition because `PlayerQuestTrackingChangedEventPayload` and `createTrackingChangedEvent(...)` include the quest display `title`, violating the explicit no-presentation-prose event boundary.
-- `PlayerQuestTrackingFacts.title` and `noticeFacts.questTitle` are valid presentation-safe result facts used by the UI notice adapter and must remain.
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command` moved track/untrack behind one engine resolver, deterministic transient command, atomic synchronized result, and typed accepted event.
+- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit` found one defect: the accepted event leaked display `title` despite the no-presentation-prose boundary.
+- `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair` removed only that event member and construction expression, added an exact six-key/no-title regression guard, preserved result/notice title facts and exact behavior hashes, and passed 35/35 focused tests.
 - No Deep Research or user decision is required.
 
 ## Purpose
 
-Apply only the smallest coherent event-contract repair: remove the display title from the typed accepted tracking event and add an exact payload-shape regression guard.
+Perform one read-only post-repair audit. Decide whether the repaired quest-tracking transition is accepted or whether one further smallest repair is required.
 
-Do not broaden this run into resolver, command identity, synchronization, UI, persistence, quest lifecycle, another consumer, or generic event infrastructure work.
+Do not modify runtime, UI, shared contracts, events, tests, content, schemas, saves, dependencies, or generated output in this run.
 
 ## Required First Steps
 
 1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
-2. Read `AGENTS.md`, README, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, and backlog.
-3. Inspect `player-quest-tracking.ts`, its JS peer/export, the tracking command and characterization tests, shared event registration, the gameplay-loop notice bridge, and `QuestsPanel.tsx`.
+2. Read `AGENTS.md`, README, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, runtime-ownership readiness, player-travel clarification, and backlog.
+3. Inspect the committed `0.6.2.2` diff, tracking resolver/command/result/event, JS peer and public exports, shared event registration, snapshot synchronizer, UI bridge/application site, characterization/command tests, persistence contracts, and accepted travel/quest-acceptance patterns.
 
-## Required Repair
+## Audit Gates
 
-In `packages/engines/game-engine/src/player-quest-tracking.ts`:
+### Repair exactness
 
-- Remove only `title` from `PlayerQuestTrackingChangedEventPayload`.
-- Remove only `title: facts.title` from `createTrackingChangedEvent(...)`.
-- Preserve event type, domain, id, tick, command/player/quest identifiers, previous/next tracked quest ids, and resulting `tracked` state.
-- Preserve `PlayerQuestTrackingFacts.title`, `PlayerQuestTrackingNoticeFacts`, result facts, resolver facts, and all notice behavior.
+- Confirm the repair changed only `player-quest-tracking.ts`, the focused command test, and coordination docs.
+- Confirm production changes are exactly removal of the event payload `title` member and construction expression.
+- Confirm the accepted event payload contains exactly `commandId`, `playerId`, `questId`, `previousTrackedQuestId`, `nextTrackedQuestId`, and `tracked`.
+- Confirm no presentation prose or snapshot internals remain in the event.
+- Confirm `PlayerQuestTrackingFacts.title` and `noticeFacts.questTitle` remain available only for result/adapter presentation.
 
-In `tests/unit/player-quest-tracking-command.test.mjs`:
+### Authority and behavior
 
-- Add an exact accepted-event payload-key assertion covering only `commandId`, `playerId`, `questId`, `previousTrackedQuestId`, `nextTrackedQuestId`, and `tracked`.
-- Explicitly confirm no `title` member is present.
-- Preserve all existing identity, rejection, atomicity, serialization, browser, JS-peer, and UI-adapter coverage.
+- Reconfirm the engine resolver is authoritative for tracking lookup/eligibility and UI `canTrack` projection.
+- Reconfirm the tracking UI bridge contains no direct mutation and `QuestsPanel.tsx` applies returned snapshots only when accepted while displaying all notices.
+- Re-run exact complete track/untrack snapshot and notice hashes and confirm toggle semantics, synchronization result, input immutability, and completed/failed/missing rejection parity.
+- Classify every remaining production `trackedQuestId` assignment; existing acceptance, turn-in fallback, and synchronization cleanup owners are allowed and must not be changed.
 
-Do not edit `gameplayLoop.ts`, `QuestsPanel.tsx`, shared event registration, snapshot synchronization, persistence, the JS re-export peer, content, schemas, saves, migrations, dependencies, or generated output unless a direct compile diagnostic proves the exact two-file repair cannot stand alone. If that occurs, stop and report rather than broadening speculatively.
+### Identity, atomicity, persistence, and browser safety
 
-## Required Validation
+- Reconfirm command shape, deterministic sequence, tick/version/full-revision freshness, repeatability, and collision-safe same-tick identity.
+- Reconfirm malformed, wrong-player, stale, incoherent, missing, completed, failed, and injected-failure rejection preserves original snapshot identity/content and emits zero events.
+- Reconfirm accepted clone identity, exactly one typed event, notification/Chronicle non-mutation, current-data serialization roundtrip, and absence of persisted command correlation.
+- Reconfirm browser-safe imports, intentional TS/JS peer alignment, public exports, and unchanged shared event registration.
+
+### Scope and hygiene
+
+- Confirm no unrelated quest lifecycle, activity, rest, reward, UI-layout, Home/shell, linked-record/search, combat-presentation, tactics, content, schema, save, dependency, generated/vendor, or compatibility work entered the repair.
+- Confirm no conflict markers, temporary artifacts, trailing whitespace, or unrelated edits.
+- Run `git show --check`, `git diff --check`, and inspect the complete changed-path set.
+
+## Required Tests
 
 Run:
 
 `node --test tests/unit/player-quest-tracking-command.test.mjs tests/unit/player-quest-tracking-characterization.test.mjs tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
 
-Also verify:
+Do not run the full suite, DB build, UI build, package installation, servers, or generated-output refresh. Run typecheck only if it materially clarifies a direct touched-boundary diagnostic.
 
-- the exact track/untrack snapshot and notice hashes remain unchanged;
-- the accepted event payload contains exactly the six allowed keys and no presentation prose;
-- the result and UI notice facts still retain the quest title;
-- no runtime/UI/persistence behavior changes beyond the event payload subtraction;
-- browser-safe imports and the intentional TS/JS peer remain aligned;
-- the complete changed-path set contains only the engine TypeScript module, focused command test, and required coordination docs;
-- no conflict markers, temporary artifacts, generated/vendor changes, trailing whitespace, or unrelated edits exist;
-- `git diff --check` passes.
+## Decision Rule
 
-Do not run the full suite, DB build, UI build, package installation, servers, or generated-output refresh. Run typecheck only if it materially clarifies a direct touched-file diagnostic.
-
-## Explicit Non-Goals
-
-Do not change resolver eligibility, toggle semantics, command shape/sequence/revision/id, rejection codes, atomic execution, snapshot synchronization, event type/id/delivery, result/notice facts, UI notice wording, accepted-only UI application, quest acceptance, turn-in, objectives, activity, rest, rewards, notifications, Chronicle, save contracts, command bus, replay/idempotency, Home/shell, linked records/search, combat presentation, or tactics.
+- If every gate passes, accept the repaired `0.6.2` transition, compare activity selection, activity advancement, rest, and quest turn-in from current source evidence, and select exactly one `Version 0.6.3 - ...` bounded consumer. Write its implementation prompt but do not implement it.
+- If any material defect remains, select `Version 0.6.2.4 - Engine-Owned Quest Tracking Repair`, define only the smallest coherent repair, and do not select another consumer.
+- Do not implement a repair or next consumer during this read-only audit.
 
 ## Documentation And Handoff
 
-Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and write the exact `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit` prompt. Record source/run/date, starting status, exact files changed, checks, payload-shape confirmation, parity, risks, next version, and suggested commit.
+Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and overwrite this file with the exact accepted next implementation or smallest repair prompt. Record source/run/date, starting status, files inspected, checks, gate evidence, acceptance decision, consumer comparison if allowed, risks, next version, and suggested commit.
 
 Suggested commit message:
 
-`fix(runtime): remove presentation text from quest tracking event`
+`docs(audit): accept repaired quest tracking transition`

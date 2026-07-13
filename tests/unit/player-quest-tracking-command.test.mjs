@@ -58,6 +58,17 @@ test("accepted tracking toggles on and off atomically and emits one typed event"
   assert.equal(tracked.emittedEvents[0].type, EVENT_TYPES.PLAYER_QUEST_TRACKING_CHANGED);
   assert.equal(tracked.emittedEvents[0].payload.commandId, tracked.commandId);
   assert.equal(tracked.emittedEvents[0].payload.tracked, true);
+  assert.deepEqual(Object.keys(tracked.emittedEvents[0].payload), [
+    "commandId",
+    "playerId",
+    "questId",
+    "previousTrackedQuestId",
+    "nextTrackedQuestId",
+    "tracked"
+  ]);
+  assert.equal(Object.hasOwn(tracked.emittedEvents[0].payload, "title"), false);
+  assert.equal(tracked.facts.title, "Rivet Shortfall Relief");
+  assert.equal(tracked.noticeFacts.questTitle, "Rivet Shortfall Relief");
   assert.deepEqual(tracked.snapshot.sessionState.notifications, notificationsBefore);
   assert.deepEqual(tracked.snapshot.sessionState.chronicle, chronicleBefore);
 

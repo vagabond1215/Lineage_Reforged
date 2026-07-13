@@ -55,7 +55,6 @@ export interface PlayerQuestTrackingChangedEventPayload {
   commandId: string;
   playerId: string;
   questId: string;
-  title: string;
   previousTrackedQuestId: string | null;
   nextTrackedQuestId: string | null;
   tracked: boolean;
@@ -177,7 +176,6 @@ function createTrackingChangedEvent(
       commandId: command.commandId,
       playerId: command.playerId,
       questId: facts.questId,
-      title: facts.title,
       previousTrackedQuestId: facts.previousTrackedQuestId,
       nextTrackedQuestId: facts.nextTrackedQuestId,
       tracked: facts.tracked

@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-13 after `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`.
+Updated 2026-07-13 after `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`.
 
 ## Purpose
 
@@ -37,13 +37,13 @@ Latest completed primary:
 
 - `Version 0.6.2 - Engine-Owned Quest Tracking Command`
 
-Latest support/audit run:
+Latest support/repair run:
 
-- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
+- `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`
 
 Next recommended support/audit version:
 
-- `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`
+- `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
 
 Current sequence source:
 
@@ -51,7 +51,7 @@ Current sequence source:
 
 Current phase:
 
-- player travel and quest acceptance are engine-owned; repair the quest-tracking event payload before selecting another bounded consumer
+- player travel and quest acceptance are engine-owned; audit the repaired quest-tracking event before selecting another bounded consumer
 
 Current transition decisions:
 
@@ -108,7 +108,8 @@ Every major system should answer at least one of these questions:
 | `0.6.1.2` | UI Information Architecture Research Integration | Complete. Promoted durable shell, Home, linked-record, Codex, combat, tactics, accessibility, and anti-clutter guidance and retired the temporary artifact. | Documentation only; preserved `0.6.2` and authorized no UI/runtime implementation. |
 | `0.6.2` | Engine-Owned Quest Tracking Command | Complete. Moved tracking behind one resolver/command/event boundary with exact characterized parity. | Tracking toggle only; 35/35 focused tests passed. |
 | `0.6.2.1` | Engine-Owned Quest Tracking Post-Transition Audit | Complete; transition not yet accepted. | All focused gates passed except the accepted event included presentation `title`; 35/35 tests still passed. |
-| `0.6.2.2` | Engine-Owned Quest Tracking Repair | Next narrow repair. | Remove only event `title`, add an exact payload guard, and preserve result/notice facts and hashes. |
+| `0.6.2.2` | Engine-Owned Quest Tracking Repair | Complete. Removed only event `title` and added an exact payload guard. | Result/notice title facts and hashes preserved; 35/35 focused tests passed. |
+| `0.6.2.3` | Engine-Owned Quest Tracking Post-Repair Audit | Next read-only run. | Reconfirm repaired contract and transition gates before selecting another consumer. |
 | later `0.6.x` | Later Engine-Owned Consumers | Activity selection/advancement, rest, and turn-in remain deferred. | One coherent consumer per package; no generic command bus. |
 
 For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
