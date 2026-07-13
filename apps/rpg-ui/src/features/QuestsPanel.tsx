@@ -114,7 +114,9 @@ export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Que
                     }
 
                     const result = toggleTrackedQuest(snapshot, selectedItem.id);
-                    updateSnapshot(result.snapshot);
+                    if (result.accepted) {
+                      updateSnapshot(result.snapshot);
+                    }
                     setPanelNotice(result.notice);
                   }}
                 />

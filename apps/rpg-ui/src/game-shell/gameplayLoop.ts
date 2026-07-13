@@ -28,6 +28,12 @@ import {
   type PlayerQuestAcceptanceResult
 } from '../../../../packages/engines/game-engine/src/player-quest-acceptance.js';
 import {
+  createPlayerQuestTrackingCommand,
+  executePlayerQuestTrackingCommand,
+  resolvePlayerQuestTrackingPlan,
+  type PlayerQuestTrackingResult
+} from '../../../../packages/engines/game-engine/src/player-quest-tracking.js';
+import {
   getCurrentPlayerTravelLocationId,
   getCurrentPlayerTravelLocationLabel,
   getPlayerTravelDestinationFacts,
@@ -812,13 +818,14 @@ function addDiscoveryEntry(snapshot: SaveSnapshot) {
 
 function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandState {
   const acceptancePlan = resolvePlayerQuestAcceptancePlan(snapshot, questId);
+  const trackingPlan = resolvePlayerQuestTrackingPlan(snapshot, questId);
   const quest = findQuest(snapshot, questId);
 
   if (!quest) {
     return {
       canAccept: false,
       canTurnIn: false,
-      canTrack: false,
+      canTrack: trackingPlan.accepted,
       nextStep: 'This quest is not available in the current session.'
     };
   }
@@ -827,7 +834,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
     return {
       canAccept: true,
       canTurnIn: false,
-      canTrack: true,
+      canTrack: trackingPlan.accepted,
       nextStep: 'Accept this contract to move it into the active quest ledger.'
     };
   }
@@ -836,7 +843,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
     return {
       canAccept: false,
       canTurnIn: false,
-      canTrack: false,
+      canTrack: trackingPlan.accepted,
       nextStep: 'This contract has already been resolved.'
     };
   }
@@ -845,7 +852,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
     return {
       canAccept: false,
       canTurnIn: false,
-      canTrack: false,
+      canTrack: trackingPlan.accepted,
       nextStep: 'This contract is no longer actionable.'
     };
   }
@@ -857,7 +864,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
       return {
         canAccept: false,
         canTurnIn: false,
-        canTrack: true,
+        canTrack: trackingPlan.accepted,
         nextStep: 'Travel from Saltmere to Ashen Reef, then advance a work shift to begin charting.'
       };
     }
@@ -866,7 +873,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
       return {
         canAccept: false,
         canTurnIn: false,
-        canTrack: true,
+        canTrack: trackingPlan.accepted,
         nextStep:
           getCurrentLocationId(snapshot) === 'location.ashen_reef'
             ? 'Advance work shifts at Ashen Reef until all three sectors and ruin markers are logged.'
@@ -877,7 +884,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
     return {
       canAccept: false,
       canTurnIn: isQuestReadyToTurnIn(snapshot, questId),
-      canTrack: true,
+      canTrack: trackingPlan.accepted,
       nextStep:
         getCurrentLocationId(snapshot) === 'location.saltmere'
           ? 'Turn the chart packet in at Saltmere Harbor Office for payout and discovery credit.'
@@ -890,7 +897,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
       return {
         canAccept: false,
         canTurnIn: false,
-        canTrack: true,
+        canTrack: trackingPlan.accepted,
         nextStep:
           getCurrentLocationId(snapshot) === 'location.westreach'
             ? 'Advance a work shift in Westreach to secure the emergency rivet crates.'
@@ -901,7 +908,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
     return {
       canAccept: false,
       canTurnIn: isQuestReadyToTurnIn(snapshot, questId),
-      canTrack: true,
+      canTrack: trackingPlan.accepted,
       nextStep:
         getCurrentLocationId(snapshot) === 'location.saltmere'
           ? 'Turn the cargo in at Saltmere Drydock for payment and standing.'
@@ -912,7 +919,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
   return {
     canAccept: false,
     canTurnIn: false,
-    canTrack: true,
+    canTrack: trackingPlan.accepted,
     nextStep: 'Track this quest and review its objectives from the quest detail panel.'
   };
 }
@@ -987,33 +994,49 @@ export function acceptQuest(
   };
 }
 
-export function toggleTrackedQuest(snapshot: SaveSnapshot, questId: string): GameplayActionResult {
-  const quest = findQuest(snapshot, questId);
-
-  if (!quest) {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Quest Missing', 'That quest could not be found in the current session.')
-    };
+function createPlayerQuestTrackingNotice(result: PlayerQuestTrackingResult): GameShellNotice {
+  if (result.accepted && result.noticeFacts.tracked) {
+    return createNotice(
+      'accent',
+      'Quest Tracked',
+      `${result.noticeFacts.questTitle} now anchors the top-bar objective display.`
+    );
   }
-
-  if (quest.category === 'completed' || quest.category === 'failed') {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Quest Cannot Be Tracked', `${quest.title} is no longer an active objective.`)
-    };
+  if (result.accepted) {
+    return createNotice(
+      'neutral',
+      'Quest Untracked',
+      `${result.noticeFacts.questTitle} was removed from the tracked objective slot.`
+    );
   }
+  if (result.code === 'quest_missing') {
+    return createNotice('warning', 'Quest Missing', 'That quest could not be found in the current session.');
+  }
+  if (result.code === 'quest_not_trackable') {
+    return createNotice(
+      'warning',
+      'Quest Cannot Be Tracked',
+      `${result.noticeFacts.questTitle ?? 'That quest'} is no longer an active objective.`
+    );
+  }
+  if (result.code === 'stale_snapshot') {
+    return createNotice('warning', 'Quest State Changed', 'The quest ledger changed. Review the quest and try again.');
+  }
+  return createNotice('warning', 'Quest Tracking Blocked', 'The quest could not be tracked from the current session state.');
+}
 
-  const nextSnapshot = cloneSnapshot(snapshot);
-  nextSnapshot.sessionState.trackedQuestId =
-    nextSnapshot.sessionState.trackedQuestId === questId ? null : questId;
-
+export function toggleTrackedQuest(
+  snapshot: SaveSnapshot,
+  questId: string
+): GameplayActionResult & { accepted: boolean } {
+  const result = executePlayerQuestTrackingCommand(
+    snapshot,
+    createPlayerQuestTrackingCommand(snapshot, questId)
+  );
   return {
-    snapshot: syncSnapshot(nextSnapshot),
-    notice:
-      nextSnapshot.sessionState.trackedQuestId === questId
-        ? createNotice('accent', 'Quest Tracked', `${quest.title} now anchors the top-bar objective display.`)
-        : createNotice('neutral', 'Quest Untracked', `${quest.title} was removed from the tracked objective slot.`)
+    accepted: result.accepted,
+    snapshot: result.snapshot,
+    notice: createPlayerQuestTrackingNotice(result)
   };
 }
 

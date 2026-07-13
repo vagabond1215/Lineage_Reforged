@@ -4,9 +4,9 @@ Last reviewed: 2026-07-13
 
 ## Current Runtime Transition Override
 
-- Latest completed primary: `Version 0.6.1 - Engine-Owned Quest Acceptance Command`.
+- Latest completed primary: `Version 0.6.2 - Engine-Owned Quest Tracking Command`.
 - Latest completed support/audit run: `Version 0.6.1.2 - UI Information Architecture Research Integration`.
-- Next primary route: `Version 0.6.2 - Engine-Owned Quest Tracking Command`.
+- Next support/audit route: `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -30,11 +30,11 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.6.1 - Engine-Owned Quest Acceptance Command`
+- Latest completed version: `Version 0.6.2 - Engine-Owned Quest Tracking Command`
 - Latest support/audit run: `Version 0.6.1.2 - UI Information Architecture Research Integration`
-- Next recommended version: `Version 0.6.2 - Engine-Owned Quest Tracking Command`
+- Next recommended version: `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel and quest acceptance are engine-owned and audited; UI information architecture is durably bounded; quest tracking remains the selected next bounded consumer
+- Current phase: player travel and quest acceptance are engine-owned and audited; quest tracking is engine-owned and awaiting its post-transition audit; UI information architecture is durably bounded
 
 Versioning rule:
 

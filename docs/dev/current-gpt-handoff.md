@@ -1,34 +1,34 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.6.1.2 - UI Information Architecture Research Integration
+Source version/run: Version 0.6.2 - Engine-Owned Quest Tracking Command
 Date: 2026-07-13
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.6.1 - Engine-Owned Quest Acceptance Command`
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
 
 Latest completed support/audit run:
 
 - `Version 0.6.1.2 - UI Information Architecture Research Integration`
 
-Immediate next primary route:
+Immediate next route:
 
-- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
+- `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
 
-## Support Result
+## Implementation Result
 
-The UI Deep Research gate is fully consumed. Durable guidance now lives in `docs/design/ui-information-architecture-boundary.md`; the temporary artifact was deleted.
+Quest track/untrack now runs through `player-quest-tracking.ts`: one resolver owns lookup and eligibility; one deterministic transient command carries player/quest identity, sequence, tick, snapshot version, and full revision; execution validates freshness, clones and toggles only `trackedQuestId`, synchronizes through the engine helper, and emits exactly one typed accepted event. Rejection and unexpected failure preserve the original snapshot identity/content and emit zero events.
 
-The permanent boundary preserves the six-domain shell, selects a dedicated Home/re-entry affordance rather than a seventh equal domain, keeps cross-record navigation federated by owner, defines Codex certainty/provenance limits, projects combat from existing per-tick action/timing contracts, and translates current tactics preferences into gambit-like sentences without authorizing an ordered interpreter. It also fixes accessibility, component, responsive, asset, and anti-clutter gates.
+Exact complete snapshot and notice hashes remained stable for both track and untrack. Notification/Chronicle state and save roundtrip are unchanged, command correlation is transient, the import graph is browser-safe, the TS/JS peer is aligned, and 35/35 focused tests passed.
 
-No runtime, UI, schema, content, save, test, or asset behavior changed.
+`gameplayLoop.ts` now delegates tracking and derives notices; `makeQuestState(...)` consumes the engine resolver for `canTrack`; `QuestsPanel.tsx` applies snapshots only on accepted results. The other `trackedQuestId` assignment in that helper is existing quest turn-in cleanup and remains outside this package.
 
 ## Next Route
 
-Run the existing `Version 0.6.2 - Engine-Owned Quest Tracking Command` prompt exactly. Move only `toggleTrackedQuest(...)` behind an engine resolver/command/result/event boundary. Do not begin Home, shell, linked-record/search, combat-presentation, or tactics-editor implementation.
+Run the read-only `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit` prompt. Do not edit runtime/UI/contracts/tests during that audit. If accepted, compare activity selection, activity advancement, rest, and quest turn-in and select exactly one next bounded engine-owned consumer. Do not begin Home/shell, linked-record/search, combat-presentation, tactics-editor, generic quest lifecycle, command bus, replay, or event-dispatch work.
 
 Suggested next commit:
 
-`feat(runtime): move quest tracking into engine ownership`
+`docs(audit): verify engine-owned quest tracking transition`

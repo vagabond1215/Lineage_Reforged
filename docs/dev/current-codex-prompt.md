@@ -4,80 +4,81 @@ You are working in the `vagabond1215/Lineage_Reforged` repository on branch `mas
 
 Run:
 
-`Version 0.6.2 - Engine-Owned Quest Tracking Command`
+`Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit`
 
 ## Accepted State
 
-- Player travel and quest acceptance are engine-owned and have passed their post-transition audits.
-- `toggleTrackedQuest(...)` in `apps/rpg-ui/src/game-shell/gameplayLoop.ts` is the selected next consumer.
-- Current tracking behavior is one persisted toggle of `sessionState.trackedQuestId` followed by existing snapshot synchronization and notice projection.
-- Missing quests and completed or failed quests reject without mutation.
-- Quest acceptance, quest turn-in, activity selection/advancement, rest, and rewards remain separate.
-- `docs/design/ui-information-architecture-boundary.md` is now the durable future presentation boundary; this runtime package must not begin its Home, shell, search, combat-presentation, or tactics prototype routes.
-- No user decision or Deep Research is required.
+- `Version 0.6.2 - Engine-Owned Quest Tracking Command` moved only quest track/untrack behind one engine resolver, deterministic transient command, atomic synchronized result, and typed accepted event.
+- Exact characterized track/untrack snapshots and notices passed, along with 35/35 focused tests.
+- `makeQuestState(...)` now consumes the engine resolver for `canTrack`; `gameplayLoop.ts` is the command/notice bridge; `QuestsPanel.tsx` applies accepted snapshots only.
+- Existing quest turn-in cleanup may still clear `trackedQuestId`; it is outside the tracking command and must not be changed in this audit.
+- No Deep Research or user decision is required.
 
 ## Purpose
 
-Move only quest tracking behind one engine-owned resolver, deterministic transient command, atomic result, and typed accepted event while preserving exact current behavior.
+Perform one read-only post-transition audit of engine-owned quest tracking. Decide whether the extraction is accepted or whether one smallest repair run is required.
 
-Do not broaden this run into generic quest lifecycle ownership, command infrastructure, event dispatch, or another gameplay consumer.
+Do not modify runtime, UI, shared contracts, events, tests, content, schemas, saves, dependencies, or generated output in this run.
 
 ## Required First Steps
 
 1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
 2. Read `AGENTS.md`, `README.md`, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, runtime-ownership readiness, player-travel clarification, and backlog.
-3. Inspect the current tracking function, `makeQuestState(...)`, `QuestsPanel.tsx`, snapshot synchronization, quest-acceptance and travel command patterns, shared event types, persistence contracts, and focused tests.
-4. Add a pre-extraction characterization test locking the complete tracked and untracked snapshots plus current notices before changing ownership.
+3. Inspect the tracking resolver/command/result/event, shared event registration and exports, snapshot synchronizer, UI bridge and application site, characterization/command tests, persistence contracts, and the accepted travel/quest-acceptance patterns.
 
-## Required Boundary
+## Audit Gates
 
-### Resolver
+### Authority and scope
 
-Create one engine-owned resolver for quest lookup and tracking eligibility. It must return stable plan codes and presentation-safe facts. Preserve current missing, completed, and failed rejection semantics and allow the same currently trackable categories.
+- Confirm the engine resolver is the sole owner of tracking lookup and eligibility for both execution and UI `canTrack` projection.
+- Confirm the tracking UI bridge contains no direct `trackedQuestId` mutation and only derives notices.
+- Classify every remaining `trackedQuestId` assignment by owner. Existing quest turn-in cleanup is allowed; duplicated tracking ownership is not.
+- Confirm no unrelated quest lifecycle, activity, rest, reward, notification, Chronicle, UI-layout, or future presentation work entered the patch.
 
-### Command and identity
+### Behavior parity
 
-Create one narrow `player.quest.track` or equivalently precise transient command with player id, quest id, deterministic sequence, expected tick, snapshot version, full revision, and collision-safe command id. Follow the accepted travel/acceptance identity pattern; do not persist command correlation.
+- Re-run the locked complete track/untrack snapshot and notice hashes.
+- Confirm toggle-on/off semantics, synchronization result, notice tone/title/detail, and input immutability are exact.
+- Confirm completed, failed, and missing quests remain unavailable in both resolver and UI projection.
 
-### Atomic execution
+### Command identity and atomicity
 
-Validate command shape, identity, player, coherent tick state, tick/version/revision freshness, and current resolver eligibility before mutation. Clone, toggle only `sessionState.trackedQuestId`, synchronize through the engine-owned snapshot synchronizer, then construct the result/event. Rejection or unexpected failure must return the original snapshot identity/content and emit zero events.
+- Confirm command shape includes player id, quest id, deterministic sequence, expected tick, snapshot version, full revision, and collision-safe deterministic identity.
+- Confirm identical fixtures repeat exactly and distinct same-tick intents cannot collide.
+- Confirm malformed, wrong-player, stale, incoherent, missing, completed, failed, and injected-failure paths return the original snapshot identity/content and emit zero events.
+- Confirm accepted execution clones, changes only tracking state before existing synchronization, and cannot expose a partial clone.
 
-### Event and result
+### Event, persistence, and browser boundary
 
-Emit exactly one typed tracking-changed event after success. Include command/player/quest identifiers and the resulting tracked state, but no snapshot internals or presentation prose. Return stable accepted/rejected codes, applied tick, presentation-safe facts, emitted events, and the accepted next snapshot or original rejected snapshot.
+- Confirm exactly one typed accepted event with command/player/quest identity and resulting tracked state, without presentation prose or snapshot internals.
+- Confirm notification and Chronicle state do not change.
+- Confirm current-data serialization roundtrip preserves accepted state and persists no command correlation.
+- Confirm browser-safe imports, intentional TS/JS peer alignment, event registration, and public exports.
 
-### UI adapter
+### UI adapter and hygiene
 
-Keep `gameplayLoop.ts` as a narrow command/notice bridge and `QuestsPanel.tsx` as presentation. Apply the result snapshot only on accepted tracking changes and preserve current notice tone/title/detail exactly. Remove direct tracking mutation from the UI-owned path.
+- Confirm `QuestsPanel.tsx` applies returned snapshots only on accepted results and still displays every rejection notice.
+- Confirm no conflict markers, temporary artifacts, accidental generated/vendor edits, unrelated refactors, or dependency changes.
+- Run `git diff --check` and inspect the complete changed-path set.
 
 ## Required Tests
 
-Cover at minimum:
+Run:
 
-- pre/post-extraction complete snapshot and notice parity for track and untrack;
-- accepted toggle-on and toggle-off behavior;
-- input immutability and new accepted snapshot identity;
-- missing, completed, failed, malformed, wrong-player, stale, incoherent, and injected-failure rejection;
-- original identity/content and zero events on every rejection;
-- deterministic repeated fixtures and collision-safe same-tick identities;
-- exactly one typed success event with the resulting tracked state;
-- notification/Chronicle non-mutation;
-- current-data serialization roundtrip with transient correlation absent;
-- browser-safe import graph and intentional TS/JS peer alignment;
-- no direct tracking mutation in the UI bridge;
-- accepted-only UI application.
+`node --test tests/unit/player-quest-tracking-command.test.mjs tests/unit/player-quest-tracking-characterization.test.mjs tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
 
-Run the new focused tests plus quest acceptance, player travel, gameplay-loop skill-gating, save/load roundtrip, and deterministic scenario tests. Run typecheck only if it materially clarifies a touched-boundary diagnostic. Do not run the full suite, DB build, UI build, package installation, servers, or generated-output refresh.
+Do not run the full suite, DB build, UI build, package installation, servers, or generated-output refresh. Run typecheck only if it materially clarifies a touched-boundary diagnostic.
 
-## Explicit Non-Goals
+## Decision Rule
 
-Do not change quest acceptance, turn-in, objectives, activity selection/advancement, rest, rewards, inventory, reputation, standing, progression, notifications, Chronicle, quest content, schemas, save fields/versions, migrations, compatibility behavior, command bus, replay ledger, event dispatch, UI layout, Home, linked-record/search behavior, combat presentation, tactics UI, generated output, or dependencies.
+- If all gates pass, accept `0.6.2`, compare activity selection, activity advancement, rest, and quest turn-in using current source evidence, and select exactly one next bounded consumer. Write its implementation prompt.
+- If a material defect exists, select `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair`, define only the smallest coherent repair, and do not select another consumer.
+- Do not implement a repair during this read-only audit.
 
 ## Documentation And Handoff
 
-Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and write the exact next audit or smallest repair prompt. Record source/run/date, starting status, files changed, checks, parity, identity, atomicity, event, persistence/browser/UI confirmation, risks, next version, and suggested commit.
+Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and overwrite this file with the exact accepted next implementation or smallest repair prompt. Record source/run/date, starting status, files inspected, checks, gate evidence, decision, risks, next version, and suggested commit.
 
 Suggested commit message:
 
-`feat(runtime): move quest tracking into engine ownership`
+`docs(audit): verify engine-owned quest tracking transition`

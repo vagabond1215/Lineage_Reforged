@@ -11,6 +11,7 @@ export const EVENT_TYPES = {
   PLAYER_RESOURCE_MODIFIER_REMOVED: "player.resource.modifier.removed",
   PLAYER_TRAVEL_COMPLETED: "player.travel.completed",
   PLAYER_QUEST_ACCEPTED: "player.quest.accepted",
+  PLAYER_QUEST_TRACKING_CHANGED: "player.quest.tracking.changed",
   COMBAT_ENCOUNTER_STARTED: "combat.encounter.started",
   COMBAT_ACTION_QUEUED: "combat.action.queued",
   COMBAT_ACTION_RESOLVED: "combat.action.resolved",
