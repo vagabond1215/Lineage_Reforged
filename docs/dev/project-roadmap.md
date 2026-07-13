@@ -19,9 +19,9 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`
+- Latest completed version: `Version 0.5.353 - Validation Source Map`
 - Latest support/audit run: `Version 0.5.344.1 - Living Character Manuscript Research Integration`
-- Next recommended version: `Version 0.5.353 - Validation Source Map`
+- Next recommended version: `Version 0.5.354 - Validation Command Matrix Plan`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: `v0.5.x` foundation stabilization / ownership hardening
 
@@ -208,6 +208,7 @@ Versioning rule:
 - `Version 0.5.350 - Diplomacy Conflict Authority Boundary Decision` added `docs/design/diplomacy-conflict-authority-boundary-decision.md`; separated diplomatic relations from conflict identity/history; kept claims/borders/territory/control/occupation and all current owners separate; carried forward zero ids; rejected reference-free and combined schemas because actor/participant and temporal semantics are intrinsic; and selected `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral`.
 - `Version 0.5.351 - Diplomacy Conflict Authority Evidence Deferral` added `docs/design/diplomacy-conflict-authority-evidence-deferral.md`; fixed separate materially-new-authored-input and ready-consumer reopening gates; defined complete diplomacy and conflict readiness evidence; prohibited unchanged-source rescans; preserved zero ids, adjacent owners, and separate future gates; and selected `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`.
 - `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection` added `docs/design/roadmap-post-diplomacy-conflict-deferral-selection.md`; preserved all current gates, pauses, rejections, closures, research and maturity boundaries; declined to reopen claims/borders/control without stronger evidence or a named consumer; and selected docs-only `Version 0.5.353 - Validation Source Map` without cleanup permission.
+- `Version 0.5.353 - Validation Source Map` added `docs/design/validation-source-map.md`; mapped root/app scripts, 107 test files, 67-file normal content lint, schema and focused-test paths, broad typecheck debt, generated-output boundaries, and environment distinctions; observed a 3,456/3,471 non-green full suite with a DB-build side effect; and selected docs-only `Version 0.5.354 - Validation Command Matrix Plan` without fixing tooling.
 - `Version 0.5.344.1 - Living Character Manuscript Research Integration` completed as a support route after `0.5.345` landed; added `docs/design/living-character-manuscript-design-boundary.md`, reconciled current quest, session Chronicle, discovery, emitted-event, save, account run-history, run-end projection, and UI owners, kept generated prose presentation-only, retired the temporary research artifact, gated all implementation, and preserved `Version 0.5.346 - Force Public Order Authority Boundary Decision` as the next primary route.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
@@ -502,9 +503,9 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.353 - Validation Source Map`
+1. `0.5.354 - Validation Command Matrix Plan`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.353`. Living Character Manuscript implementation remains gated behind historical retention, provenance, knowledge/spoiler, persistence/revision, fallback, and quality readiness. Diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should map current validation surfaces without fixing or changing them.
+This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.354`. Living Character Manuscript implementation remains gated behind historical retention, provenance, knowledge/spoiler, persistence/revision, fallback, and quality readiness. Diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should define validation command routing without fixing or changing tooling.
 
 High-priority unresolved questions:
 

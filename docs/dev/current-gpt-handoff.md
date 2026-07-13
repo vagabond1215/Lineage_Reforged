@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection
+Source version/run: Version 0.5.353 - Validation Source Map
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.352 - Roadmap Post-Diplomacy-Conflict Deferral Selection`
+- `Version 0.5.353 - Validation Source Map`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.353 - Validation Source Map`
+- `Version 0.5.354 - Validation Command Matrix Plan`
 
-## Selection Result
+## Source Map Result
 
-All unresolved authority, content-expansion, link/state, research, manuscript, magic, save/account, and runtime lanes remain gated, paused, rejected, closed, or maturity-gated. No qualifying new input exists to reopen them. Claims/borders/control still lacks the stronger evidence or named consumer required for a focused boundary.
+Focused tests and standalone content lint are the current green confidence path. Normal content lint passes with 67 files. The schema suite passes with 105 tests.
 
-Selected one eligible stabilization route: a docs-only source map of current validation commands, scripts, focused tests, normal content lint, broad typecheck posture, generated-output boundaries, and known environment/tooling blockers.
+The observed full suite passed 3,456 of 3,471 tests and failed 15 across tool-surface drift, Backstory draft assertions, settlement/transport, route security, region-first world, Renown, and BOM parsing. It also executes DB build through integration coverage, so it is not strictly read-only. Both default/UI and workspace typechecks exit 1 on established broad debt.
 
 ## Remaining Guardrails
 
-The next pass must inspect and classify current repository-local validation surfaces only. It must not fix or add scripts, commands, tests, validators, dependencies, configuration, source, content, schemas, generated output, runtime, UI, or save/account behavior.
+The next pass must define a docs-only command matrix by change class: minimum/conditional/prohibited commands, green versus known-failing semantics, focused-test selection, side-effect labels, generated-output policy, and environment-versus-repository reporting.
 
-It may recommend at most one later docs-first validation planning route or no immediate follow-up. No user question, Deep Research, support suffix, temporary artifact, gated-lane reopening, or `0.6.0` transition is approved.
+It must not fix the stale content-lint expectation or any other failure, and must not edit scripts, tests, configs, dependencies, source, schemas, content, generated output, runtime, UI, or save/account behavior. All prior roadmap gates remain intact.
 
 Suggested next commit:
 
-`docs(validation): map validation command surfaces`
+`docs(validation): define validation command matrix`
