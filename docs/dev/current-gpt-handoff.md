@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.5.354 - Validation Command Matrix Plan
+Source version/run: Version 0.5.355 - Tool Surface Test Boundary Decision
 Date: 2026-07-12
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.5.354 - Validation Command Matrix Plan`
+- `Version 0.5.355 - Tool Surface Test Boundary Decision`
 
 Latest completed support/audit run:
 
@@ -15,20 +15,20 @@ Latest completed support/audit run:
 
 Immediate next primary route:
 
-- `Version 0.5.355 - Tool Surface Test Boundary Decision`
+- `Version 0.5.356 - Tool Surface Test Boundary Repair`
 
-## Matrix Result
+## Boundary Result
 
-Focused tests, standalone content lint, schema suite, and Git hygiene are green gates when applicable. Full suite and broad typechecks are known-failing audits. Full suite, DB/UI builds, and Node-config typecheck have side effects requiring explicit scope.
+Generic automatic smoke should execute only side-effect-free content lint and assert a stable success line with a positive file count. The total `67` is diagnostic, not a hardcoded generic-smoke invariant.
 
-The current matrix defines command selection, baseline comparison, failure reporting, schema/content-lint timing, typecheck timing, full-suite authorization, and generated-output rules by change class.
+DB build must leave automatic/default test discovery because it writes timestamped ignored output. Scenario runner should leave generic smoke because the existing deterministic simulation test already owns execution and repeatability.
 
 ## Remaining Guardrails
 
-The next pass must decide only the future test boundary for `tests/integration/tool-surfaces.test.mjs`: stale content-lint count assertion, DB-build side effect, scenario smoke, output contracts, and exact later repair scope. It must not edit the test or tools.
+The next implementation may edit only `tests/integration/tool-surfaces.test.mjs` among source/test files. Remove DB build and scenario runner, keep one content-lint smoke, and replace the stale exact count with an anchored positive-count output-shape assertion.
 
-The other 14 full-suite failures and broad typecheck debt remain separate. No user question, Deep Research, support suffix, temporary artifact, gated-lane reopening, or `0.6.0` transition is approved.
+Do not edit tools, scripts, generated output, content, schemas, runtime, UI, save/account, or the other 14 failing test families. Do not run full suite, DB build, broad typechecks, UI build, installation, or network-dependent commands.
 
 Suggested next commit:
 
-`docs(validation): decide tool surface test boundary`
+`test(tools): isolate side-effect-free tool smoke`
