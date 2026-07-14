@@ -6,8 +6,9 @@ Last reviewed: 2026-07-14
 
 - Latest completed primary: `Version 0.6.3 - Engine-Owned Activity Selection Command`.
 - Latest completed support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`.
-- Next support route: unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`.
-- Activity selection is accepted. `0.6.4` remains reserved for world and settlement static expansion only after the active combined maintenance pass completes its historical, inventory, readiness, and roadmap gates.
+- Completed support route: unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`.
+- Next primary: `Version 0.6.4 - World And Settlement Static Content Expansion`.
+- Activity selection remains accepted. The static program now runs `0.6.4` world/settlement, `0.6.5` item/material/recipe, `0.6.6` monster/ecology/loot, and `0.6.7` cross-content audit before another runtime consumer.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -21,6 +22,8 @@ This roadmap is a repo-readable planning document for long-term version directio
 - `docs/dev/current-gpt-handoff.md` for current connector-side audits, immediate risks, and prompt guardrails.
 - `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue after the current handoff.
 - `docs/design/future-system-design-ledger.md` for durable future-system criteria, vocabulary, boundaries, and open conceptual questions.
+- `docs/design/static-content-expansion-program.md` for live catalog readiness, the static/runtime boundary, and the `0.6.4`-`0.6.7` milestone.
+- `docs/dev/historical-version-and-deferred-route-register.md` for canonical aliases, suffixes, historical conflicts, deferred classifications, and reopening triggers.
 - `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` for broad survival/builder/RPG/MMO gap context after the current narrow Religion/hotspot lane.
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic north star and source map.
 - `docs/future_content_backlog.md` for deferred content and historical run notes.
@@ -33,9 +36,9 @@ Current live anchor:
 
 - Latest completed version: `Version 0.6.3 - Engine-Owned Activity Selection Command`
 - Latest support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
-- Next recommended run: unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`
+- Next recommended run: `Version 0.6.4 - World And Settlement Static Content Expansion`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; combined historical cleanup/content-expansion integration is active before the reserved `0.6.4`; UI information architecture is durably bounded
+- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the documentation gates passed and the four-package static content milestone is active; UI information architecture remains durably bounded
 
 Versioning rule:
 
@@ -223,7 +226,7 @@ Versioning rule:
 - `Version 0.5.353 - Validation Source Map` added `docs/design/validation-source-map.md`; mapped root/app scripts, 107 test files, 67-file normal content lint, schema and focused-test paths, broad typecheck debt, generated-output boundaries, and environment distinctions; observed a 3,456/3,471 non-green full suite with a DB-build side effect; and selected docs-only `Version 0.5.354 - Validation Command Matrix Plan` without fixing tooling.
 - `Version 0.5.354 - Validation Command Matrix Plan` added `docs/design/validation-command-matrix-plan.md`; defined green gates, known-failing audits, side-effectful/interactive/environment commands, exact change-class routing, focused-test selection, baseline/reporting rules, schema/content-lint/typecheck/full-suite timing, and generated-output policy; selected docs-only `Version 0.5.355 - Tool Surface Test Boundary Decision` without fixing tooling.
 - `Version 0.5.355 - Tool Surface Test Boundary Decision` added `docs/design/tool-surface-test-boundary-decision.md`; kept side-effect-free content lint as generic smoke with output-shape rather than exact-count ownership; moved DB build out of automatic discovery; preserved scenario execution/determinism under its simulation test; and selected one-test-file `Version 0.5.356 - Tool Surface Test Boundary Repair` without changing tests or tools.
-- `Version 0.5.356 - Tool Surface Test Boundary Repair` changed only `tests/integration/tool-surfaces.test.mjs` among source/test files; generic smoke now executes only content lint, requires status zero with stderr diagnostics, and validates a positive-count success shape; DB build leaves automatic discovery and scenario determinism remains in its simulation owner; selected docs-only `Version 0.5.357 - Tool Surface Test Post-Repair Audit`.
+- `Version 0.5.356 - Tool Surface Test Boundary Repair` changed only `tests/integration/tool-surfaces.test.mjs` among source/test files; generic smoke now executes only content lint, requires status zero with stderr diagnostics, and validates a positive-count success shape; DB build leaves automatic discovery and scenario determinism remains in its simulation owner. Its then-proposed audit is superseded and survives only as conditional support `0.5.356.1`; canonical `0.5.357` is Runtime Ownership Transition Readiness Consolidation.
 - `Version 0.5.344.1 - Living Character Manuscript Research Integration` completed as a support route after `0.5.345` landed; added `docs/design/living-character-manuscript-design-boundary.md`, reconciled current quest, session Chronicle, discovery, emitted-event, save, account run-history, run-end projection, and UI owners, kept generated prose presentation-only, retired the temporary research artifact, gated all implementation, and preserved `Version 0.5.346 - Force Public Order Authority Boundary Decision` as the next primary route.
 - Do not roll from `0.5.274` to `0.6.0` unless a dedicated runtime-readiness decision confirms the actual `0.6.x` ownership milestone.
 
@@ -518,9 +521,12 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.5.357 - Tool Surface Test Post-Repair Audit`
+1. `0.6.4 - World And Settlement Static Content Expansion`
+2. `0.6.5 - Item, Material, And Recipe Static Content Expansion`
+3. `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+4. `0.6.7 - Cross-Content Coherence And Coverage Audit`
 
-This ordering is directional, not implementation lock-in. Each candidate still requires a focused prompt, owner review, and scope check. The original conditional sequence through `0.5.257` remains documented in `docs/design/pipeline-roadmap-consolidation-decision.md`; the newer static authority selections plus the sequenced implementation plan extend the active near-term queue through `0.5.357`. Living Character Manuscript implementation remains gated behind historical retention, provenance, knowledge/spoiler, persistence/revision, fallback, and quality readiness. Diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC are gated; service, resource/commodity, and combat health remain paused; generic `world.pois` remains rejected; Highcrown settlement Knowledge remains closed. The next run should audit the completed tool-surface repair and close the lane if stable.
+The content sequence is intentional and controlled by `docs/design/static-content-expansion-program.md`; each package still requires its exact prompt, owner review, dependency closure, and focused validation. The canonical deferred classifications and reopening triggers are in `docs/dev/historical-version-and-deferred-route-register.md`. Living Character Manuscript, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, People/NPC, services, resources/commodities, and combat health retain their existing gates; generic `world.pois` remains rejected and Highcrown settlement Knowledge remains closed. After `0.6.7`, compare current activity advancement, rest, and quest turn-in owners and select exactly one bounded runtime consumer.
 
 High-priority unresolved questions:
 

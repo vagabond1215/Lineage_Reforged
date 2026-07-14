@@ -1,0 +1,77 @@
+# Historical Version And Deferred Route Register
+
+Date: 2026-07-14
+Status: durable coordination authority; documentation only
+
+## Purpose And Precedence
+
+This register is the compact query surface for historical version identity and deferred-route posture. It does not replace the detailed chronology in `docs/dev/codex-sequenced-implementation-plan.md`, the current state in `docs/dev/current-codex-output.md`, or focused design decisions. When an older roadmap row conflicts with this register, use this register for route identity and the newer focused decision for implementation boundaries.
+
+## Historical Version Register
+
+| Canonical version | Alias or suffix | Route | Status | Final disposition | Primary source |
+| --- | --- | --- | --- | --- | --- |
+| `0.1.x`-`0.5.197` | none unless a focused handoff says otherwise | Foundation, authority, validation, and first content foundations | Historical completed range | Retained as chronology; exact per-run evidence remains in git and the sequenced plan. | `docs/dev/codex-sequenced-implementation-plan.md` |
+| `0.5.198` | none | Economy Authority Boundary Decision | Complete | Durable economy ownership boundary. | `docs/design/economy-authority-boundary-decision.md` |
+| `0.5.199` | historical alias for `0.5.227` | Settlement Economy Schema Decision | Remapped; no implementation under alias | Completed at `0.5.227`; never present `0.5.199` as pending. | `docs/design/settlement-economy-schema-decision.md` |
+| `0.5.200`-`0.5.201` | none | Family and civic authority boundary decisions | Complete | Durable planning foundations. | `docs/dev/codex-sequenced-implementation-plan.md` |
+| `0.5.202` | historical alias for `0.5.225` | Polity Schema Decision | Remapped; no implementation under alias | Completed at `0.5.225`. | `docs/design/pipeline-roadmap-consolidation-decision.md` |
+| `0.5.203`-`0.5.204` | none | Travel and magic-study authority boundary decisions | Complete | Durable planning foundations. | `docs/dev/codex-sequenced-implementation-plan.md` |
+| `0.5.205` | historical alias for `0.5.224` | Magic Study Source Schema Decision | Remapped; no implementation under alias | Completed at `0.5.224`. | `docs/design/pipeline-roadmap-consolidation-decision.md` |
+| `0.5.206` | none | NPC And Social Authority Boundary Decision | Complete | Durable planning foundation. | `docs/design/npc-social-authority-boundary-decision.md` |
+| `0.5.207` | historical alias for `0.5.223` | Person vs NPC Schema Decision | Remapped; no implementation under alias | Completed at `0.5.223`. | `docs/design/pipeline-roadmap-consolidation-decision.md` |
+| `0.5.208`-`0.5.209` | none | Quest/event/Chronicle and item/equipment authority decisions | Complete | Durable planning foundations. | `docs/dev/codex-sequenced-implementation-plan.md` |
+| `0.5.210` | historical alias for `0.5.221` | Weapon And Armor Profile Schema Decision | Remapped; no implementation under alias | Completed at `0.5.221`. | `docs/design/weapon-and-armor-profile-schema-decision.md` |
+| `0.5.211` | none | No route assigned | Unused numbering gap | Commit and documentation evidence move directly from `0.5.209` planning to `0.5.212`; no proposal, implementation, reservation, or missing work was found. Do not invent one. | git history around commits `16921e5e` and `79fed273` |
+| `0.5.212` | none | Combat Authority Boundary Decision | Complete | Durable combat ownership boundary. | `docs/design/combat-authority-boundary-decision.md` |
+| `0.5.213` | historical alias for `0.5.220` | Monster Record Schema Decision | Remapped; no implementation under alias | Completed at `0.5.220`. | `docs/design/monster-record-schema-decision.md` |
+| `0.5.214` | none | Crafting Authority Boundary Decision | Complete | Durable crafting ownership boundary. | `docs/design/crafting-authority-boundary-decision.md` |
+| `0.5.215` | historical alias for `0.5.219` | Recipe And Production Schema Decision | Remapped; no implementation under alias | Completed at `0.5.219`. | `docs/design/recipe-and-production-schema-decision.md` |
+| `0.5.216`-`0.5.355` | consolidated labels control any displaced proposal | Authority decisions, schemas, seeds, validation, audits, and stabilization | Historical completed range | Use the sequenced plan for exact routes; a planned row is not implementation evidence. | `docs/dev/codex-sequenced-implementation-plan.md` |
+| `0.5.356` | none | Tool Surface Test Boundary Repair | Complete | Accepted repair; no automatic audit required. | `docs/future_content_backlog.md` |
+| `0.5.356.1` | support suffix only | Tool Surface Test Post-Repair Audit | Conditional support | Run only if fresh focused evidence contradicts the accepted repair; it is not a primary or current recommendation. | `docs/design/streamlined-pipeline-roadmap-decision.md` |
+| `0.5.357` | supersedes the stale tool-surface audit identity | Runtime Ownership Transition Readiness Consolidation | Complete | Canonical `0.5.357`; selected player travel as the first runtime consumer. | `docs/design/runtime-ownership-transition-readiness-consolidation.md` |
+| `0.5.357.1` | support suffix | Player Travel Boundary Clarification | Complete | Support clarification; did not consume a primary label. | `docs/design/player-travel-boundary-clarification.md` |
+| `0.6.0`-`0.6.3` | `.1`/`.2`/`.3` audit or repair suffixes | Engine-owned travel, quest acceptance, quest tracking, and activity selection | Complete and accepted | Runtime ownership accomplishments remain authoritative. | `docs/dev/current-codex-output.md` |
+| unversioned 2026-07-14 maintenance | none | Historical Route Cleanup And Static Content Expansion Pipeline Integration | Complete | Installed the static expansion milestone and exact `0.6.4` prompt without changing content or runtime behavior. | `docs/design/static-content-expansion-program.md` |
+| `0.6.4`-`0.6.7` | future repair suffix only when evidence requires | Static content expansion packages and cross-content audit | Active planned sequence | World/settlement, item/material/recipe, monster/ecology/loot, then coherence audit. | `docs/design/static-content-expansion-program.md` |
+
+## Identity Rules
+
+- Three-segment labels are primary roadmap versions. Four-segment labels are support runs attached to their primary and never silently become primaries.
+- A historical proposed label is an alias only when a durable consolidation source maps it to a completed canonical label.
+- An absent number is not evidence of missing work. `0.5.211` is an evidenced unused gap.
+- Stale planned rows are historical chronology, not current recommendations. `0.5.357` means Runtime Ownership Transition Readiness Consolidation.
+
+## Deferred Route Register
+
+| Lane | Classification | Completed foundation | Missing layer | Reopening trigger | Near-term posture | Primary source |
+| --- | --- | --- | --- | --- | --- | --- |
+| Static world and settlement content | consumer-ready | Strict settlement/region/locality/district/site/map authorities and lint | Coherent authored breadth | `0.6.4` prompt acceptance | Active next | `docs/design/static-content-expansion-program.md` |
+| Static item, material, and recipe content | consumer-ready with precondition | Large item/value catalog, recipes, schemas, validators | Dependency-closed authored families; live equipment-profile collections if used | `0.6.4` acceptance and exact `0.6.5` prompt | Planned second | `docs/design/static-content-expansion-program.md` |
+| Static monster, ecology, and loot content | consumer-ready | Monster/fauna/ecology/role/tactics authorities and source-local loot validation | Region-aware authored breadth | `0.6.5` acceptance and exact `0.6.6` prompt | Planned third | `docs/design/static-content-expansion-program.md` |
+| Cross-content coherence | maturity gate | Normal content lint and focused validators | Audit of the complete three-package expansion | `0.6.6` acceptance | Planned fourth as `0.6.7` | `docs/design/static-content-expansion-program.md` |
+| Activity advancement/preview | consumer gate | Activity selection is engine-owned and accepted | Shared preview/execution ownership and bounded command transition | `0.6.7` acceptance, then current-source comparison | Deferred; candidate after content program | `docs/dev/current-codex-output.md` |
+| Rest/preview | consumer gate | Travel and activity selection patterns accepted | Preview/execution, coin, clock/body recovery, notification, and Chronicle boundary | `0.6.7` acceptance, then current-source comparison | Deferred; candidate after content program | `docs/future_content_backlog.md` |
+| Quest turn-in | consumer gate | Acceptance and tracking are engine-owned | Bounded completion, inventory, payout, standing, activity, tracking, notification, and Chronicle owner | `0.6.7` acceptance, then current-source comparison | Deferred; candidate after content program | `docs/future_content_backlog.md` |
+| Generic command delivery/replay | maturity gate | Four bounded engine-owned command patterns | Delivery, replay/idempotency, and dispatch requirements | Repeated concrete consumer evidence | Do not pre-build | `docs/future_content_backlog.md` |
+| Services | paused | Five planned records, schema, validator, and normal lint | Fresh provider-independent vocabulary need | Specific static owner demonstrates a missing reusable service identity | Reuse existing records; no expansion in `0.6.4` | `docs/design/service-authority-post-registration-audit.md` |
+| Resources and commodities | research gate; paused | Two planned resources and two paired commodities with schema/validator/lint | Broader gathering/extraction evidence and seed decision | Complete `GPT-DR.resources.gathering-extraction` or approve a fresh docs-first candidate | Existing references only during `0.6.4`-`0.6.7` | `docs/design/resource-commodity-post-registration-audit.md` |
+| Combat status/condition/injury vocabulary | research gate; paused | Hybrid descriptive boundary selected | Authoritative typed catalog and execution-owner separation | Fresh focused combat-health evidence | Omit from monster expansion | `docs/design/combat-status-condition-injury-boundary-decision.md` |
+| Generic `world.pois` | rejected | Specific owner-family policy | Nothing; generic authority is intentionally unapproved | Explicit new boundary decision with evidence that specific owners cannot work | Never add by inference | `docs/design/discovery-poi-boundary-decision.md` |
+| Highcrown settlement Knowledge | closed | Parent, district, and site coverage accepted | None | New concrete canon or quality defect | Do not reopen for filler | `docs/future_content_backlog.md` |
+| Magic runtime and acquisition mutation | maturity gate | Readiness, acquisition, command, resolver, and hook-support plans/helpers | Explicit executable hook owners, payment/effect/event/persistence boundaries | Dedicated approved runtime prompt | Static content work grants no permission | `docs/design/magic-runtime-boundary-plan.md` |
+| People/NPC, social roles, schedules, companions | authored-input gate | Boundary and schema decisions | Authored people input and runtime consumer ownership | Named research/content source plus focused prompt | Deferred | `docs/design/npc-social-authority-boundary-decision.md` |
+| Diplomacy/conflict, force/public order, government/jurisdiction | authored-input gate | Static boundaries and decisions | Canonical authored inputs and later simulation owners | Lane-specific evidence and prompt | Deferred | `docs/design/future-system-design-ledger.md` |
+| Business, faction, and institution expansion | authored-input gate | Ownership boundaries exist | Canonical authored catalogs and consumers | Lane-specific research or selected content source | Deferred | `docs/design/future-system-design-ledger.md` |
+| Inventory/storage, crafting execution, dynamic vendors/economy | consumer gate | Static identities and selected runtime owners | Instance state, reservations/capacity, execution, stock/pricing/transaction behavior | Dedicated post-`0.6.7` owner-specific prompt | Static catalogs only now | `docs/design/static-content-expansion-program.md` |
+| Encounter/spawn simulation, dynamic loot, runtime ecology | consumer gate | Static monster, encounter, spawn, fauna, ecology, and loot descriptors | Selection, population, migration, rolls, ownership, and consequence owners | Dedicated post-`0.6.7` runtime prompt | Static descriptors only now | `docs/design/static-content-expansion-program.md` |
+| Settlement population, construction, property, taxation, law enforcement | consumer gate | Static settlement and civic descriptions | Mutable population, ownership, construction, fiscal, and enforcement systems | Dedicated owner-specific runtime design and prompt | Prohibited from `0.6.4` | `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` |
+| Magical books/tomes and scrolls | authored-input gate | Spell database and magic metadata foundations | Established spell database plus acquisition/item owner | Spell database acceptance and dedicated approval | Deferred | `docs/future_content_backlog.md` |
+| Enchanter-authored arcane documents | authored-input gate | Enchanter ownership selected | Spell/document source contract | Spell database and enchanter content prompt | Preferred future owning path | `docs/future_content_backlog.md` |
+| Region-based maps | authored-input gate | Region and world-map authorities | Region definitions plus cartography data | Approved cartography source and map prompt | Deferred | `docs/future_content_backlog.md` |
+| Tool-surface post-repair audit | conditional support | `0.5.356` repair accepted | Contradictory focused evidence only | A new focused failure | Do not schedule otherwise | `docs/design/streamlined-pipeline-roadmap-decision.md` |
+
+## Maintenance Rule
+
+Update this register only when a route identity, gate classification, reopening trigger, or near-term posture materially changes. Historical design documents should remain intact unless they contain a false live pointer that still controls execution.

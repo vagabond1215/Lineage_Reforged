@@ -1,18 +1,16 @@
-# Queued Static Content Expansion Integration Prompt
+# Current Codex Prompt
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-This is a queued documentation-maintenance prompt. It must not displace an active runtime repair or audit.
-
 ## Run Identity
 
-Run an **unversioned combined maintenance pass** named:
+Run:
 
-`Historical Route Cleanup And Static Content Expansion Pipeline Integration`
+`Version 0.6.4 - World And Settlement Static Content Expansion`
 
 Suggested commit message:
 
-`docs(roadmap): integrate static content expansion program`
+`content(world): expand settlement districts sites and features`
 
 ## Execution Gate
 
@@ -23,355 +21,169 @@ Suggested commit message:
    - `docs/dev/current-codex-output.md`
    - `docs/dev/current-gpt-handoff.md`
    - `docs/dev/current-codex-prompt.md`
+   - `docs/design/static-content-expansion-program.md`
+   - `docs/dev/historical-version-and-deferred-route-register.md`
    - `docs/dev/codex-sequenced-implementation-plan.md`
    - `docs/dev/project-roadmap.md`
-   - `docs/dev/project-vision-and-continuity-brief.md`
-   - `docs/dev/queued-codex-cleanup-prompt.md`
-   - `docs/dev/historical-audit-doc-index.md`
    - `docs/future_content_backlog.md`
-   - `docs/design/future-system-design-ledger.md`
-   - `docs/design/survival-builder-rpg-mmo-content-gap-audit.md`
-   - all focused settlement, district/site, item/equipment, crafting, resource/commodity, monster, ecology, Knowledge, and validation sources needed to verify live authority.
-3. Confirm `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit` has accepted the activity-selection transition.
-4. If `0.6.3.3` has not accepted the transition, do not run this maintenance pass and do not change the active prompt.
-5. If the repository has advanced beyond this plan, preserve the actual live anchors and remap only unused future primary labels. Never rewind a newer accepted route.
-6. This run is documentation-only. Do not modify content JSON, runtime, UI, tests, schemas, validators, saves, migrations, dependencies, package metadata, generated output, or assets.
+   - focused settlement, district/site, semantic map-feature, Knowledge, schema, validator, and test sources required by the target batch.
+3. Confirm the unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration` is complete and this exact `0.6.4` prompt is installed.
+4. If the repository has advanced beyond this prompt, preserve the live anchor and stop for remapping. Never rewind a newer accepted route.
+5. This is a content implementation run. Do not modify runtime, UI, saves, migrations, dependencies, package metadata, generated output, or assets.
 
 ## Purpose
 
-Combine the already queued historical/deferred-route cleanup with a substantial static authored-content expansion integration pass.
+Implement one substantial, coherent expansion of existing world and settlement canon using current strict owner families. Enrich nine existing settlements across three geographic clusters with districts, named settlement sites, semantic map features, and descriptive General Lore coverage.
 
-The repository has many completed authority decisions, schemas, validators, and small content seeds, but the live catalogs remain too sparse for the intended world scale. Integrate a deliberate content program before the next owner-specific runtime consumer.
+Do not add generic `world.pois`, visual map geometry, simulation, or gameplay behavior.
 
-The maintenance pass must:
-
-- reconcile the `0.5.x` history and deferred routes into one trustworthy register;
-- inventory the live content authorities and their actual readiness;
-- distinguish static authored expansion from integrated gameplay behavior;
-- insert a multi-package static content expansion milestone into the active roadmap;
-- preserve later inventory, crafting execution, encounter/spawn, NPC, settlement-simulation, and economy work;
-- install the first exact content implementation prompt only after the documentation gates pass.
+## Mandatory Pre-Authoring Inventory
 
-## Part A — Historical And Deferred-Route Reconciliation
+Before editing, reproduce and report at least:
 
-Consume the intent of `docs/dev/queued-codex-cleanup-prompt.md` within this same maintenance pass.
+- settlements: 88;
+- settlement districts: 2 active;
+- settlement sites: 2 active;
+- regions: 41;
+- region localities: 47;
+- semantic map features: 2 planned;
+- visual world-map aggregates: 1;
+- Knowledge registry: 7 domains, 6 active and 1 planned;
+- Knowledge snippets: 16;
+- services: 5 planned;
+- resources: 2 planned;
+- commodities: 2 planned.
 
-At minimum:
+If the live counts differ, inspect the change and revise the matrix only when required by actual newer canon. Record the evidence; do not force stale counts.
 
-- reconcile the conflicting historical `0.5.357` identities;
-- classify `0.5.356.1` as conditional support only;
-- explain the absent `0.5.211` from evidence without inventing an implementation;
-- confirm the historical remaps for `0.5.199`, `0.5.202`, `0.5.205`, `0.5.207`, `0.5.210`, `0.5.213`, and `0.5.215`;
-- detect duplicate version identities, stale planned rows, suffix runs treated as primaries, and completed work still described as pending;
-- preserve authored-input, consumer, research, maturity, paused, conditional-support, rejected, and closed gates.
+Search every proposed id, slug, name, alias, parent, subject, and geographic anchor before authoring. Review existing settlement economy, survival, infrastructure, culture, religion, terrain, trade, guild, visual-map, region, locality, and hex descriptions for all target parents.
 
-Create or update:
+## Geographic Coverage Matrix And Exact Target
 
-`docs/dev/historical-version-and-deferred-route-register.md`
-
-The register must contain:
-
-1. a compact historical version table with canonical version, alias/suffix, route, status, final disposition, and source;
-2. a deferred-route table with lane, classification, completed foundation, missing layer, reopening trigger, near-term posture, and primary source.
-
-Do not rewrite historical design decisions merely to modernize their language. Correct false current pointers, ambiguous identities, stale statuses, and direction-bearing duplication.
-
-## Part B — Live Static-Content Inventory
-
-Produce a reproducible inventory from live files rather than relying only on roadmap prose.
+Use these existing parents and purposes:
 
-For each relevant authority, record:
+| Cluster | Existing parent settlements | Coverage purpose | Exact additions |
+| --- | --- | --- | --- |
+| Verdant Thalos | `settlement.aurelis`, `settlement.vinecross`, `settlement.redcliff_quay` | continental city, inland market, and harbor relationships around the Thalos Run | 4 districts, 6 sites, 2 semantic map features, 4 General Lore snippets |
+| Heart Basin | `settlement.riverthrone`, `settlement.granary_crown`, `settlement.millrun` | river capital, granary city, and production-market differentiation | 4 districts, 6 sites, 2 semantic map features, 4 General Lore snippets |
+| Stormcap Coast | `settlement.breaksail`, `settlement.stormwatch_citadel`, `settlement.cliffsalt_priory` | harbor, defensive citadel, and religious coastal identity | 4 districts, 6 sites, 2 semantic map features, 4 General Lore snippets |
 
-- content path;
-- schema path;
-- validator path;
-- normal content-lint registration status;
-- current record count;
-- lifecycle/status counts where applicable;
-- critical reference dependencies;
-- current runtime consumer, if any;
-- static expansion readiness;
-- exact blockers.
-
-At minimum inspect:
+Implement exactly:
 
-- settlements;
-- settlement districts;
-- settlement sites;
-- regions, places, and semantic map features;
-- resources and commodities;
-- items and market values;
-- weapon and armor profiles;
-- crafting recipes;
-- monsters;
-- fauna/ecology authorities;
-- combat roles and tactics presets;
-- loot references;
-- Knowledge domains and snippets;
-- static services where relevant to descriptive settlement coverage.
+- 12 new settlement district records;
+- 18 new settlement site records;
+- 6 new semantic map-feature records;
+- 12 new `knowledge_domain.general_lore` snippets covering the new/existing cluster canon.
 
-Classify each authority as exactly one of:
+Do not add settlement, region, locality, visual world-map geometry, service, resource, or commodity records. If a required reference cannot close without one, stop and report the blocker instead of broadening scope.
 
-- `ready-for-large-static-expansion`
-- `ready-with-reference-constraints`
-- `requires-small-schema-or-validator-precondition`
-- `authored-input-gated`
-- `runtime-gated`
-- `paused`
-- `rejected`
+## Authoring Rules
 
-For every non-ready authority, state the smallest enabling action and whether it belongs before, during, or after the first content program.
+### Districts and sites
 
-## Part C — Static Versus Integrated Content Boundary
+- Use `packages/content/base/world/settlement_districts.json` and `packages/content/base/world/settlement_sites.json` only.
+- Make major settlements structurally distinct through scale-appropriate civic, market, production, harbor, defensive, religious, residential, or archival functions supported by parent canon.
+- Do not force districts onto settlements whose scale supports only named sites; distribute the exact matrix deliberately among the three parents in each cluster.
+- Every record needs a unique id, slug, name, summary, valid parent, supported type/tags, honest lifecycle, and source-authority note.
+- A site may reference a new district only when the physical/functional relationship is explicit. Otherwise attach it directly to the parent settlement.
+- New records intended for Knowledge subjects must be `active`. Active means authored canonical availability, not simulation, discovery, staffing, services, or gameplay.
+- Avoid duplicated functions, interchangeable prose, adjective-only variants, and claims that require NPC schedules, vendors, construction, property, taxation, law enforcement, dynamic economy, or runtime state.
 
-### Static authored expansion may include
+### Semantic map features
 
-- identities and names;
-- descriptions and classifications;
-- regions, locations, districts, and sites;
-- static infrastructure descriptions;
-- item, material, ingredient, tool, clothing, weapon, armor, food, drink, and consumable identities;
-- recipe input/output/tool/workplace relationships supported by current authority;
-- monster archetypes, habitats, lineages, roles, tactics references, and authored loot descriptors;
-- Knowledge subjects and snippets;
-- lifecycle/status changes that do not imply unavailable gameplay behavior.
+- Use `packages/content/base/world/map_features.json` only.
+- Add named rivers, ridges, bays, headlands, passes, marshes, or comparable geographic identities justified by current region/settlement canon.
+- Close every place anchor and visual reference under the current schema and validator.
+- Keep these records semantic and descriptive. Do not edit `world_map_features.json`, invent pixel geometry, add map images, or create a generic POI authority.
+- Use the lifecycle status that honestly reflects current authored/reference readiness; do not mark a feature active merely to suggest unavailable gameplay.
 
-### Integrated gameplay expansion remains deferred until its owner exists
+### Knowledge
 
-- item instances, provenance, ownership, and storage mutation;
-- inventory capacity and reservations;
-- durability, quality, damage, and spoilage mutation;
-- crafting execution and dynamic availability;
-- dynamic vendors, prices, stock, access, and services;
-- encounter generation and spawn simulation;
-- dynamic loot generation and ownership;
-- NPC population simulation, schedules, and worker assignment;
-- construction, property, settlement growth, taxation, and law enforcement;
-- runtime ecology, migration, economy, reputation, reward, or faction consequences.
+- Use the active `knowledge_domain.general_lore` authority and `packages/content/base/player/knowledge_snippets.json`.
+- Add exactly 12 snippets total: four per cluster. Collectively cover parent settlement and new district/site subjects; do not create snippets for unsupported map-feature subjects.
+- Every subject must exist and be active, and every subject/source type must be declared by the live registry.
+- Keep snippets concise, descriptive, source-traceable, and non-spoiler. They must not grant discovery, skill, travel access, rewards, reputation, services, magic, or state changes.
+- Do not change domain activation, policies, trial readiness, or Arcane Lore.
 
-Do not describe integrated behavior as implemented merely because static content exists.
+### Existing paused authorities
 
-## Part D — Required Durable Program Document
+- Services, resources, and commodities remain paused. Existing records may inform descriptions, but do not add or activate them and do not claim provider availability, extraction, production, stock, prices, or trade simulation.
+- Do not modify settlements, regions, localities, hexes, visual map aggregates, economy/runtime content, or other catalog families to make the batch easier.
 
-Create:
+## Allowed Files
 
-`docs/design/static-content-expansion-program.md`
+Production content changes are limited to:
 
-It must include:
+- `packages/content/base/world/settlement_districts.json`
+- `packages/content/base/world/settlement_sites.json`
+- `packages/content/base/world/map_features.json`
+- `packages/content/base/player/knowledge_snippets.json`
 
-1. current live content inventory;
-2. readiness classifications;
-3. authority and runtime boundaries;
-4. geographic and thematic coverage strategy;
-5. new-canon authoring rules;
-6. settlement/district/site expansion strategy;
-7. item/material/recipe dependency-closure strategy;
-8. monster/ecology/loot dependency-closure strategy;
-9. Knowledge integration posture;
-10. batch-size and review policy;
-11. exact primary sequence;
-12. acceptance criteria for each package;
-13. cross-content audit criteria;
-14. deferred integrated-gameplay layer;
-15. runtime-ownership resumption rule.
+Focused tests may be changed only when the new records expose a real existing coverage gap in the current authority test, not to weaken assertions or accommodate invalid content.
 
-## Required Primary Sequence
+Coordination documentation may be updated only where required:
 
-Use these labels if they remain the next unused primary versions. If the branch has advanced, use the next available primary labels while preserving this order and intent.
-
-### Version 0.6.4 — World And Settlement Static Content Expansion
-
-Plan a substantial coherent world-content batch using current authorities.
-
-May include:
-
-- settlement identities;
-- regional/place/map references;
-- districts and settlement sites;
-- descriptive infrastructure;
-- static service/resource associations supported by current contracts;
-- climate, geography, culture, and economy descriptions;
-- Knowledge coverage;
-- safe lifecycle/status activation.
-
-Requirements:
-
-- expand by coherent geographic clusters, not isolated records;
-- include multiple settlement types and scales;
-- make major settlements structurally distinct through districts/sites where supported;
-- preserve specific owner families and the rejection of generic `world.pois`;
-- prohibit population simulation, vendors, stock, construction, property, taxation, law enforcement, dynamic economy, runtime, UI, save, or gameplay changes.
-
-### Version 0.6.5 — Item, Material, And Recipe Static Content Expansion
-
-Plan a substantial dependency-closed catalog.
-
-May include:
-
-- raw and refined materials;
-- ingredients;
-- tools and static container identities;
-- food, drink, consumables, and clothing;
-- weapons and armor;
-- current static weapon/armor profiles;
-- coherent recipe families;
-- market-value and resource/commodity references;
-- Knowledge coverage.
-
-Requirements:
-
-- build recipe families rather than disconnected recipes;
-- resolve every input, output, tool, station/workplace, item, resource, commodity, and value reference;
-- prohibit item-instance state, durability/quality/spoilage mutation, reservations, storage ownership, inventory capacity, crafting execution, dynamic availability, runtime, UI, save, or gameplay changes.
-
-### Version 0.6.6 — Monster, Ecology, And Loot Static Content Expansion
-
-Plan a substantial region-aware creature catalog.
-
-May include:
-
-- monster and creature identities;
-- habitats and ecology associations;
-- regional variants supported by current authority;
-- lineage, role, tactics, preset, and combat-profile references;
-- static loot descriptors with valid item/value references;
-- danger, behavior, and encounter-context descriptions;
-- monster/ecology Knowledge coverage.
-
-Requirements:
-
-- organize by biome, region, role, and threat niche;
-- avoid adjective-only duplicates;
-- resolve all loot, item, market-value, fauna, lineage, role, and tactics references;
-- prohibit encounter generation, spawn simulation, population mutation, dynamic loot, migration, new combat mechanics, status execution, runtime, UI, save, or gameplay changes.
-
-### Version 0.6.7 — Cross-Content Coherence And Coverage Audit
-
-Audit the complete expansion program.
-
-At minimum verify:
-
-- schema compliance and normal content lint;
-- semantic validators;
-- duplicate ids/slugs;
-- orphan references;
-- settlement/district/site/map/region anchoring;
-- item/resource/commodity/value closure;
-- recipe input/output/tool/workplace closure;
-- weapon/armor profile closure;
-- monster/loot/fauna/lineage/role/tactics closure;
-- Knowledge authority closure;
-- active/planned status coherence;
-- no accidental runtime claims;
-- no prohibited generic authority;
-- formatting and generated-output hygiene.
-
-If defects exist, select the smallest repair suffix attached to the affected content primary. Do not weaken validators to hide defects.
-
-After acceptance, resume owner-specific runtime work. Compare activity advancement, rest, and quest turn-in from current source and select exactly one bounded consumer. Do not bundle them.
-
-## Batch-Size Policy
-
-The larger token and execution budget permits substantial runs.
-
-Do not impose an arbitrary one-record or two-record seed posture.
-
-For each content implementation package, select the largest batch that remains:
-
-- one coherent authority package;
-- reviewable;
-- dependency-closed;
-- validator-backed;
-- internally consistent;
-- free of runtime behavior changes.
-
-A package may span multiple related content files when they form one dependency-closed catalog. Do not combine all world, item/recipe, and monster expansion into one implementation commit.
-
-## Content Quality Rules
-
-Every new record must serve at least one clear purpose:
-
-- geographic coverage;
-- settlement identity;
-- economic or material-chain coverage;
-- recipe-chain closure;
-- equipment-role coverage;
-- ecology/biome coverage;
-- encounter-role coverage;
-- Knowledge coverage;
-- vertical-slice playability.
-
-Avoid filler, unsupported runtime claims, invented dangling references, inconsistent naming, duplicate functional recipes, missing loot items, and monsters that require unimplemented mechanics merely to exist.
-
-## Roadmap And Handoff Updates
-
-Update only where necessary:
-
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/dev/historical-audit-doc-index.md`
-- `docs/future_content_backlog.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-prompt.md`
+- `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/dev/project-roadmap.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
+- `docs/future_content_backlog.md`
+- `docs/design/static-content-expansion-program.md` only if live evidence requires a factual correction.
 
-Required outcome:
+Do not change schemas or validators unless the current valid contract cannot express one of the already approved record types. If that occurs, stop and report the exact blocker; do not combine contract redesign with this content batch.
 
-- historical cleanup is complete and queryable;
-- the content expansion program is an intentional milestone before the next runtime consumer;
-- later integrated gameplay work remains visible and deferred;
-- no live direction-bearing document says `0.6.4` must automatically be activity advancement, rest, or quest turn-in;
-- the current runtime ownership achievements remain accepted and unchanged.
+## Prohibited Scope
 
-## Next Prompt
+Do not add or change:
 
-If every documentation gate passes, overwrite `docs/dev/current-codex-prompt.md` with an exact implementation prompt for:
-
-`Version 0.6.4 - World And Settlement Static Content Expansion`
-
-That prompt must:
-
-- inventory live world and settlement counts before authoring;
-- define an explicit geographic coverage matrix and target batch;
-- authorize substantial intentional new static canon;
-- use current schemas, validators, and owner families;
-- require reference closure and normal content lint;
-- prohibit runtime, UI, saves, migrations, population simulation, vendors, construction, property, dynamic economy, and gameplay behavior;
-- require focused authority tests and complete changed-path review;
-- write the exact `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` prompt after successful completion.
-
-Do not select or implement a gameplay consumer during this maintenance pass.
+- runtime, UI, commands, events, saves, migrations, dependencies, package metadata, generated output, or assets;
+- population simulation, NPC schedules/workers, vendors, stock, prices, services, construction, property, settlement growth, taxation, law enforcement, dynamic economy, reputation, rewards, discovery state, travel behavior, encounters, spawns, loot, or gameplay;
+- generic `world.pois` or any parallel place authority;
+- world-map image geometry or cartography;
+- backwards-compatibility aliases or migration behavior;
+- unrelated cleanup, renames, formatting, content, or tests.
 
 ## Validation
 
-1. Re-run the historical version inventory and confirm no live identity conflicts remain.
-2. Re-run the deferred-route inventory and confirm every open lane has a classification and reopening trigger.
-3. Reproduce all reported live content counts.
-4. Search all direction-bearing documents for current/next version conflicts.
-5. Search specifically for `0.6.4`, activity advancement, rest, quest turn-in, content expansion, and queued cleanup references.
-6. Confirm all linked paths exist.
-7. Run conflict-marker and trailing-whitespace searches.
-8. Run `git diff --check`.
-9. Inspect the complete changed-path set and confirm it is documentation-only.
+Run the smallest complete checks for this package:
 
-Do not run the full suite, builds, typechecks, package installation, servers, generators, or content implementation. Use side-effect-free inventory or lint commands only when needed to verify a documentation claim.
+1. Reproduce final counts and the three-cluster matrix.
+2. Run normal content lint: `npm.cmd run tool:content-lint`.
+3. Run the focused settlement district/site, map-feature, Knowledge registry/snippet, and schema-file tests that own these paths. Discover exact test filenames from the live checkout; do not guess or run the full suite.
+4. Search for duplicate ids, slugs, names, aliases, missing parents, unsupported subject/source types, and orphan geographic references.
+5. Confirm no generic `world.pois`, visual geometry, paused-authority, runtime, UI, save, migration, dependency, generated-output, or asset path changed.
+6. Run conflict-marker and trailing-whitespace searches.
+7. Run `git diff --check`.
+8. Inspect the complete changed-path set and diff.
+
+Do not run builds, typechecks, package installation, servers, generators, or the full test suite.
+
+## Documentation And Next Prompt
+
+On success:
+
+- overwrite `docs/dev/current-codex-output.md` with the exact run result, counts, files, checks, behavior confirmation, risks, and suggested commit;
+- update the current handoff and roadmap anchors so `0.6.4` is complete and `0.6.5` is next;
+- update `docs/future_content_backlog.md` because this run adds canon and advances the program;
+- overwrite `docs/dev/current-codex-prompt.md` with an exact implementation prompt for `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+
+The installed `0.6.5` prompt must require a fresh item/value/profile/recipe/resource/commodity/workplace/tool/skill inventory; define a dependency-closed set of recipe families and exact target batch; preserve paused resource/commodity expansion unless its reopening trigger has separately passed; add the narrow live collection/lint precondition before weapon or armor profiles if profiles are included; require item/value/input/output/tool/workplace/skill/profile closure, normal content lint, focused authority tests, and complete changed-path review; prohibit item-instance state, durability/quality/spoilage mutation, reservations, storage ownership, inventory capacity, crafting execution, dynamic availability, runtime, UI, saves, migrations, and gameplay; and require the exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt after successful completion.
+
+Do not select a runtime consumer during this run.
 
 ## Completion Report
 
 Record:
 
 - starting commit and branch state;
-- accepted runtime anchor;
-- files inspected and changed;
-- historical conflicts corrected;
-- classification of `0.5.211`, `0.5.356.1`, and `0.5.357`;
-- live content counts and readiness classifications;
-- omitted authorities and blockers;
-- exact inserted primary sequence;
-- new-canon and batch-size policy;
-- validation results;
-- whether the `0.6.4` prompt was installed;
-- remaining uncertainties;
+- pre- and post-authoring counts;
+- completed coverage matrix and dependency closure;
+- exact new canon by owner family;
+- files changed;
+- checks run and results;
+- confirmation that no integrated gameplay behavior changed;
+- any skipped target and evidence-backed blocker;
+- whether the exact `0.6.5` prompt was installed;
 - suggested commit message.

@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-14
-Route: Codex local sequencing alignment after `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
+Route: Codex local sequencing alignment after the unversioned static-content pipeline integration
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -27,9 +27,9 @@ Latest completed support/audit run:
 
 - `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
 
-Immediate next support maintenance run:
+Immediate next primary:
 
-- Unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`
+- `Version 0.6.4 - World And Settlement Static Content Expansion`
 
 ## Current Queue Override
 
@@ -50,8 +50,9 @@ Immediate next support maintenance run:
 - `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit` is complete but did not accept the transition. Runtime collision safety was proven by a same-snapshot, equal-sequence probe and every other gate passed at 45/45 focused tests, but the committed regression test compares sequences `31` and `32` and therefore does not permanently prove record-id discrimination.
 - `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair` is complete. It changed only the existing command test among source/test files, now holds tick, sequence, player, snapshot version, and full revision constant across different record ids, proves distinct command/event ids, and passes 45/45 focused tests without production changes.
 - `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit` is complete and accepted. It confirmed the exact test-only repair, permanent equal-sequence record-id discrimination, all authority/behavior/atomicity/event/persistence/browser/UI/hygiene gates, expected queued-file Git blobs, and 45/45 focused tests.
-- Unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration` is the immediate documentation-only route. It consumes the queued historical cleanup intent, builds the canonical historical/deferred register and static-content program, and decides readiness for the reserved `Version 0.6.4 - World And Settlement Static Content Expansion`.
-- `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain preserved source prompts. The combined prompt is now active; no runtime consumer may displace it, and `0.6.4` must not start before its documentation gates pass.
+- Unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration` is complete. It created `docs/dev/historical-version-and-deferred-route-register.md`, created `docs/design/static-content-expansion-program.md`, reconciled historical/deferred routing, and installed the exact `0.6.4` prompt.
+- The active primary sequence is `0.6.4` world/settlement static expansion, `0.6.5` item/material/recipe static expansion, `0.6.6` monster/ecology/loot static expansion, then `0.6.7` cross-content coherence audit.
+- `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
 - Activity advancement, rest, and quest turn-in remain later consumers. Do not bundle them into activity selection; advancement and rest also require their preview/execution boundaries to be reconciled.
@@ -537,17 +538,20 @@ Versioning note:
 | 275 | `0.5.354` | Validation Command Matrix Plan | Codex 5.6 Sol Local docs-first | completed validation source map + current scripts/guardrails | exact command matrix by change class | Completed | Defined command classes, change routing, baselines, reporting, side effects, and selected one boundary decision. |
 | 276 | `0.5.355` | Tool Surface Test Boundary Decision | Codex 5.6 Sol Local docs-first | command matrix + tool-surface test/entrypoints | exact future test ownership and repair boundary | Completed | Kept only content lint in generic smoke, moved DB build opt-in, preserved scenario simulation ownership, and selected one test repair. |
 | 277 | `0.5.356` | Tool Surface Test Boundary Repair | Codex 5.6 Sol Local | completed tool-surface boundary + one integration test | side-effect-free content-lint smoke | Completed | Removed DB/scenario execution, replaced exact count with output shape, and changed no tools. |
-| 278 | `0.5.357` | Tool Surface Test Post-Repair Audit | Codex 5.6 Sol Local docs-first | completed repair + boundary/matrix | stability confirmation and next route | Planned | Confirm no side effects or drift, close the lane if stable, and select at most one later route. |
+| 278 | `0.5.356.1` | Tool Surface Test Post-Repair Audit | Codex 5.6 Sol Local docs-first | contradictory focused evidence only | conditional stability confirmation | Conditional support | Never a primary; do not run without fresh evidence contradicting the accepted `0.5.356` repair. |
 
 ## Recommended Roadmap Direction
 
 This is recommended ordering, not implementation lock-in:
 
-1. `0.5.357 - Tool Surface Test Post-Repair Audit`
+1. `0.6.4 - World And Settlement Static Content Expansion`
+2. `0.6.5 - Item, Material, And Recipe Static Content Expansion`
+3. `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+4. `0.6.7 - Cross-Content Coherence And Coverage Audit`
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The full conditional sequence, research gates, and artifact retirement rules are defined in `docs/design/pipeline-roadmap-consolidation-decision.md` plus newer authority decisions. The Living Character Manuscript research is durably integrated but its implementation remains gated. Highcrown settlement Knowledge is closed; service, resource/commodity, combat health, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, and People/NPC remain gated or paused; generic `world.pois` remains rejected. `0.5.357` selected player travel/movement, and milestone-sized `0.6.0 - Engine-Owned Player Travel Command` is next.
+The full deferred classification and reopening triggers now live in `docs/dev/historical-version-and-deferred-route-register.md`. `docs/design/static-content-expansion-program.md` controls the four-package static milestone. Accepted engine-owned travel, quest acceptance, quest tracking, and activity selection remain unchanged. Activity advancement, rest, and quest turn-in resume as candidates only after `0.6.7` acceptance.
 
 ## Default Prompt Pattern
 
@@ -563,7 +567,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.6.0 - Engine-Owned Player Travel Command` as the immediate next recommended run; the post-repair audit is support-only as `0.5.356.1` if contradictory evidence appears.
+- Keep `Version 0.6.4 - World And Settlement Static Content Expansion` as the immediate next run. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

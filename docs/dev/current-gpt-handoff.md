@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit
+Source version/run: Unversioned - Historical Route Cleanup And Static Content Expansion Pipeline Integration
 Date: 2026-07-14
 
 ## Status
@@ -9,33 +9,46 @@ Latest completed primary:
 
 - `Version 0.6.3 - Engine-Owned Activity Selection Command`
 
-Latest completed support/audit run:
+Latest completed support/audit:
 
 - `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
 
-Immediate next support route:
+Completed maintenance:
 
 - Unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`
 
-## Acceptance Decision
+Immediate next primary:
 
-Activity selection is accepted. Exact repair commit `cc5704282affec4b387f3451d6dcff6431458353` changed only the existing activity-selection command test among source/test files. The committed test now holds tick, sequence, player, snapshot version, and full revision constant across different record ids and proves distinct command and event identities.
+- `Version 0.6.4 - World And Settlement Static Content Expansion`
 
-All prior authority, locked parity, notification/Chronicle, atomic rejection, event, persistence/browser, UI-adapter, writer-classification, and hygiene gates pass at 45/45 focused tests. No production behavior changed.
+## Durable Authorities
 
-## Active Maintenance Handoff
+- `docs/dev/historical-version-and-deferred-route-register.md` is the canonical query surface for historical aliases, suffixes, identity conflicts, deferred classifications, and reopening triggers.
+- `docs/design/static-content-expansion-program.md` owns the live inventory, readiness decisions, static/runtime boundary, batch policy, `0.6.4`-`0.6.7` sequence, and runtime-resumption rule.
+- `docs/dev/current-codex-prompt.md` contains the exact `0.6.4` implementation prompt.
 
-The exact contents of `docs/dev/queued-static-content-expansion-integration-prompt.md` are now installed as the active prompt. Run its unversioned combined historical-route cleanup and static-content expansion pipeline integration pass next.
+## Historical Resolution
 
-That maintenance pass must preserve accepted runtime ownership, consume the historical cleanup intent, build the canonical historical/deferred register and durable static-content expansion program, reproduce live authority counts/readiness, and decide whether the reserved `Version 0.6.4 - World And Settlement Static Content Expansion` prompt can be installed.
+- `0.5.211` is an evidenced unused numbering gap; no proposal, implementation, or reservation exists.
+- `0.5.356.1 - Tool Surface Test Post-Repair Audit` is conditional support only if fresh focused evidence contradicts the accepted repair.
+- `0.5.357` canonically means Runtime Ownership Transition Readiness Consolidation. The older tool-surface audit identity is superseded.
+- Historical proposed labels `0.5.199`, `0.5.202`, `0.5.205`, `0.5.207`, `0.5.210`, `0.5.213`, and `0.5.215` completed at `0.5.227`, `0.5.225`, `0.5.224`, `0.5.223`, `0.5.221`, `0.5.220`, and `0.5.219` respectively.
 
-Do not skip directly to `0.6.4`, implement content during maintenance, or select activity advancement, rest, or quest turn-in.
+## Static Program Boundary
 
-Queued source blobs remain:
+Run the exact primary sequence:
 
-- cleanup: `bbd124911e54d44da20864ab0722c6b6b3569a63`
-- combined content integration: `5c49981365ec4d94818b2153906c46c86f4214a8`
+1. `0.6.4` - world and settlement static content.
+2. `0.6.5` - item, material, and recipe static content.
+3. `0.6.6` - monster, ecology, and loot static content.
+4. `0.6.7` - cross-content coherence and coverage audit.
+
+Static content may add validated identities, prose, classifications, references, and honest lifecycle states. It must not imply item instances, inventory/storage mutation, crafting execution, dynamic vendors/economy/services, encounter/spawn simulation, dynamic loot, NPC population/schedules, construction/property/taxation/law enforcement, runtime ecology, or gameplay behavior.
+
+Services and resource/commodity expansion remain paused. Weapon/armor profiles require live collections and normal-lint registration before content. Generic `world.pois` remains rejected.
+
+After `0.6.7` acceptance, re-read current source and select exactly one of activity advancement, rest, or quest turn-in. Do not bundle them or preassign the next version.
 
 Suggested next commit:
 
-`docs(roadmap): integrate static content expansion program`
+`content(world): expand settlement districts sites and features`

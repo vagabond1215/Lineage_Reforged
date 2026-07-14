@@ -1,8 +1,8 @@
 # Historical Audit Doc Index
 
-Date: 2026-06-04
-Route: ChatGPT via GitHub Connector
-Status: connector-only documentation index; no source/UI/content changes
+Date: 2026-07-14
+Route: Historical Route Cleanup And Static Content Expansion Pipeline Integration
+Status: supporting historical-document index; no source/UI/content changes
 
 ## Purpose
 
@@ -10,6 +10,7 @@ Provide one compact reference for older audit, scoping, triage, and prompt-guida
 
 This index does not replace:
 
+- `docs/dev/historical-version-and-deferred-route-register.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/project-roadmap.md`
@@ -26,11 +27,7 @@ This index does not replace:
 
 ## Current Active Boundary
 
-The active implementation path remains:
-
-- `Version 0.5.100 - Runtime Cast Resolver Readiness Helper`
-
-This index is outside that path and should not change active sequencing.
+`docs/dev/historical-version-and-deferred-route-register.md` now owns historical version identity, aliases, suffixes, and deferred reopening triggers. The active implementation path is `Version 0.6.4 - World And Settlement Static Content Expansion`; this supporting document index must not change that sequencing.
 
 ## Index
 
@@ -69,15 +66,15 @@ This index is outside that path and should not change active sequencing.
 4. Never delete active source docs while the current implementation path depends on them.
 5. Do not update version sequencing as part of historical-doc cleanup unless correcting a real inconsistency.
 
-## Recommended Next Connector Pass
+## Later Cleanup Candidate
 
-Run a fold-ready candidate pass on the clearest candidates only:
+After the `0.6.4`-`0.6.7` content program, a fold-ready pass may review:
 
 - `docs/design/economy-clarity-audit.md`
 - `docs/dev/economy-runtime-test-failure-triage-plan.md`
 - `docs/design/chronicle-run-end-summary-source-audit.md`
 
-Output should be a proposal, not deletion:
+That later output should be a proposal, not deletion:
 
 - facts worth folding
 - destination doc
