@@ -487,6 +487,354 @@
       "notes": [
         "This snippet is authored place knowledge only and grants no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior."
       ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.aurelis.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement",
+      "subjectId": "settlement.aurelis",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Aurelis",
+      "summary": "Aurelis is Kaelvar's southern royal capital, a deep-water port where palace roads, terraced vineyards, naval yards, and crown markets bind the peninsula's farms, mines, and island harbors.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified southern royal capital remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from Aurelis's current settlement authority and grants no settlement access, service, vendor, price, trade, travel, shipbuilding, court, staffing, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.vinecross_caskhouse_crossing.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_district",
+      "subjectId": "settlement_district.vinecross.caskhouse_crossing",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Vinecross's Caskhouse Crossing",
+      "summary": "Caskhouse Crossing is Vinecross's craft and exchange quarter, where cask houses and olive presses gather around the four roads serving the inland wine market.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Vinecross district remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Caskhouse Crossing authority and grants no production, inventory, market, contract, route, staffing, ownership, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.redcliff_quay_beacon_towers.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_site",
+      "subjectId": "settlement_site.redcliff_quay.beacon_towers",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Redcliff Beacon Towers",
+      "summary": "The Redcliff Beacon Towers are a coastal watch landmark on the ochre cliffs above the timber port's sheltered roadstead and western approach.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Redcliff coastal landmark remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Redcliff Beacon Towers authority and grants no signal, patrol, navigation, route-control, access, staffing, combat, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.aurelis_royal_hull_yards.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_site",
+      "subjectId": "settlement_site.aurelis.royal_hull_yards",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Royal Hull Yards",
+      "summary": "Aurelis's Royal Hull Yards are a shipbuilding landmark on Crown Harbor, associated with the royal port's naval-yard and hull-work identity.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Aurelis shipbuilding landmark remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Royal Hull Yards authority and grants no ship construction, dock operation, contract, inventory, staffing, ownership, access, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.riverthrone.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement",
+      "subjectId": "settlement.riverthrone",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Riverthrone",
+      "summary": "Riverthrone is Draemor's political and commercial throne city, spanning the Heart Basin's grand confluence with levees, stone bridges, civic quays, and river markets.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified river capital remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from Riverthrone's current settlement authority and grants no civic power, river movement, market, storage, service, trade, travel, staffing, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.granary_crown_granary_courts.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_district",
+      "subjectId": "settlement_district.granary_crown.granary_courts",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Granary Crown's Granary Courts",
+      "summary": "The Granary Courts are Granary Crown's storehouse and threshing quarter on the high ground above the irrigated plains, marking the city's bulk-food identity.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Granary Crown district remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Granary Courts authority and grants no taxation, storage mutation, grain allocation, production, market, staffing, ownership, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.millrun_wheelrace_mills.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_site",
+      "subjectId": "settlement_site.millrun.wheelrace_mills",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Millrun's Wheelrace Mills",
+      "summary": "The Wheelrace Mills are a named mill cluster along Millrun's fast branch channel, expressing the town's flour, millstone, and processing identity.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Millrun mill site remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Wheelrace Mills authority and grants no milling, recipe, production, inventory, maintenance, staffing, ownership, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.riverthrone_confluence_quays.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_district",
+      "subjectId": "settlement_district.riverthrone.confluence_quays",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Riverthrone's Confluence Quays",
+      "summary": "The Confluence Quays are Riverthrone's riverfront quarter of civic landings, levee roads, and barge frontage at the Heart Basin's grand confluence.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Riverthrone riverfront district remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Confluence Quays authority and grants no barge movement, cargo, storage, trade, route, flood, staffing, ownership, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.breaksail.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement",
+      "subjectId": "settlement.breaksail",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Breaksail",
+      "summary": "Breaksail is a storm-tested harbor town inside a rugged cove, where breakwaters, smokehouses, rope lofts, salt, and fish define Draemor's southern coastal resupply port.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified storm-coast harbor remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from Breaksail's current settlement authority and grants no fishing, salt extraction, dock operation, convoy service, stock, prices, staffing, travel, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.stormwatch_citadel_signal_ward.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_district",
+      "subjectId": "settlement_district.stormwatch_citadel.signal_ward",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing Stormwatch's Signal Ward",
+      "summary": "The Signal Ward is Stormwatch Citadel's compact fortified quarter of signal fires, black-stone watch positions, and stormbreak towers above the sea.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Stormwatch ward remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Signal Ward authority and grants no signal, patrol, defense, access control, inventory, staffing, command, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.cliffsalt_priory_storm_journal_script_house.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_site",
+      "subjectId": "settlement_site.cliffsalt_priory.storm_journal_script_house",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Storm Journal Script House",
+      "summary": "Cliffsalt Priory's Storm Journal Script House is a narrow archival landmark known for copied records and journals of the southern coast's weather.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Cliffsalt record house remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Storm Journal Script House authority and grants no archive service, document access, weather prediction, Knowledge completion, staffing, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "knowledge_snippet.general_lore.breaksail_stormbreak_quays.identification",
+      "domainId": "knowledge_domain.general_lore",
+      "subjectType": "settlement_site",
+      "subjectId": "settlement_site.breaksail.stormbreak_quays",
+      "tier": 1,
+      "category": "identification",
+      "title": "Recognizing the Stormbreak Quays",
+      "summary": "The Stormbreak Quays are Breaksail's sheltered wharf landmark behind the harbor breakwaters, associated with rope lofts and coastal resupply frontage.",
+      "discoverySources": [
+        {
+          "sourceType": "book_study",
+          "sourceId": null
+        }
+      ],
+      "progression": {
+        "completionWeight": 1,
+        "countsTowardTierCompletion": true,
+        "trialUnlockWeight": 0
+      },
+      "visibility": {
+        "lockedUntilDiscovered": true,
+        "revealsSubjectIdentity": true,
+        "hiddenSummary": "An unidentified Breaksail wharf remains to be understood."
+      },
+      "notes": [
+        "This snippet derives from the active Stormbreak Quays authority and grants no dock operation, cargo, stock, price, ship service, staffing, ownership, travel, reward, runtime, or gameplay behavior."
+      ]
     }
   ]
 }

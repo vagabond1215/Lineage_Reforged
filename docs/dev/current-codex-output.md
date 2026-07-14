@@ -1,55 +1,58 @@
 # Current Codex Output
 
-Source version/run: Unversioned - Historical Route Cleanup And Static Content Expansion Pipeline Integration
+Source version/run: `Version 0.6.4 - World And Settlement Static Content Expansion`
 Date: 2026-07-14
-Branch/status assumption: `master`; starting commit `bafdf5c7`; worktree clean; local and `origin/master` aligned after `git fetch --prune`.
+Branch/status assumption: `master`; started clean and aligned with `origin/master` at `1e62aaeb4a7a23c5514eb7ffb49f26d20f9a6070`; final changes remain uncommitted.
 
 ## Result
 
-Completed the documentation-only historical cleanup and static-content pipeline integration. Created one canonical route/deferred register and one durable static expansion program, preserved all accepted runtime ownership, inserted `0.6.4`-`0.6.7` before the next runtime consumer, and installed the exact `Version 0.6.4 - World And Settlement Static Content Expansion` prompt.
+Completed the exact three-cluster static-content matrix. Added 12 active settlement districts, 18 active settlement sites, 6 planned semantic map features, and 12 General Lore snippets. Final totals are 14 districts, 20 sites, 8 semantic map features, and 28 Knowledge snippets, including 18 General Lore snippets.
 
-The active source prompt matched queued Git blob `5c49981365ec4d94818b2153906c46c86f4214a8`. Its stale “Queued” heading was cosmetic and is superseded by the correctly headed `0.6.4` prompt.
+Each of Verdant Thalos, Heart Basin, and Stormcap Coast received exactly 4 districts, 6 sites, 2 semantic features, and 4 General Lore snippets. All new records use existing parent, geography, visual-reference, domain, and subject authorities.
 
 ## Files Changed
 
-- `docs/dev/historical-version-and-deferred-route-register.md`
+- `packages/content/base/world/settlement_districts.json`
+- `packages/content/base/world/settlement_sites.json`
+- `packages/content/base/world/map_features.json`
+- `packages/content/base/player/knowledge_snippets.json`
+- `tests/unit/map-feature-validation.test.mjs`
+- `tests/unit/knowledge-snippets-validation.test.mjs`
 - `docs/design/static-content-expansion-program.md`
-- `docs/dev/historical-audit-doc-index.md`
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/current-codex-prompt.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-codex-prompt.md`
 
 ## Checks Run
 
-- Confirmed accepted `Version 0.6.3.3` activity-selection transition and clean/aligned starting state.
-- Confirmed active and queued static-integration prompt Git blobs both equaled `5c49981365ec4d94818b2153906c46c86f4214a8` before replacement.
-- Reproduced live counts from JSON `records` arrays and inspected schemas, focused validators, normal-lint registration, references, consumers, and readiness.
-- `npm.cmd run tool:content-lint` - passed, 67 files checked.
-- Historical evidence search confirmed `0.5.211` is an unused numbering gap; `0.5.356.1` is conditional support; canonical `0.5.357` is Runtime Ownership Transition Readiness Consolidation; seven displaced labels are recorded as remapped aliases.
-- Direction-bearing version, queued-route, and runtime-consumer searches; linked-path audit; conflict-marker search; trailing-whitespace search; `git diff --check`; and complete changed-path scope review - passed.
-- Full suite, builds, typechecks, package installation, servers, generators, and content implementation were intentionally omitted.
+- Initial `git status`, `git fetch`, and fast-forward pull review: clean/aligned at the recorded starting commit.
+- JSON parse and exact-count audit: passed.
+- Three-cluster matrix, duplicate identity, parent, subject, geographic-anchor, and visual-reference closure audit: passed.
+- `npm.cmd run tool:content-lint`: passed, `content-lint: ok (67 files checked)`.
+- `node --test tests/unit/settlement-district-validation.test.mjs tests/unit/settlement-site-validation.test.mjs tests/unit/map-feature-validation.test.mjs tests/unit/knowledge-domain-registry-validation.test.mjs tests/unit/knowledge-snippets-validation.test.mjs tests/unit/schema-files.test.mjs`: passed, 592/592.
+- Conflict-marker and trailing-whitespace searches: passed.
+- `git diff --check`: passed; line-ending normalization warnings only.
+- Complete changed-path and diff review: passed.
 
 ## Behavior / Runtime Confirmation
 
-Documentation only. No runtime, UI, content JSON, schema, validator, test, save, migration, dependency, package metadata, generated output, asset, canon, or gameplay behavior changed.
-
-Live inventory anchor: 88 settlements; 2 active districts; 2 active sites; 41 regions; 47 region localities; 2 planned semantic map features; 1 visual map aggregate; 2 planned resources; 2 planned commodities; 1,372 items; 1,617 market values; 9 consumable profiles; no live weapon/armor profile collections; 12 planned recipes; 24 monsters with 49 drop and 20 loot entries; 132 fauna; 9 regional ecology profiles; 9 combat roles; 9 tactics presets; 7 Knowledge domains (6 active, 1 planned); 16 Knowledge snippets; and 5 planned services.
+Static JSON canon and exact focused live-catalog expectations changed. No schema, validator, runtime, command, event, UI, save, migration, dependency, generated-output, asset, service, resource, commodity, visual geometry, generic POI, or gameplay behavior changed. Active district/site status denotes authored canonical availability only; semantic features remain planned and descriptive.
 
 ## Risks / Follow-Up
 
-- `0.6.4` deliberately enriches nine existing settlements rather than adding to an already broad 88-settlement catalog. It targets 12 districts, 18 sites, 6 semantic map features, and 12 General Lore snippets across Verdant Thalos, Heart Basin, and Stormcap Coast.
-- Weapon/armor profile schemas and focused validators exist, but live collections and normal-lint registration do not. `0.6.5` must satisfy that narrow precondition before profile content.
-- Resource/commodity and service catalogs remain paused. Static descriptions may reuse current records but may not imply extraction, providers, stock, prices, trade, or other behavior.
-- Activity advancement, rest, and quest turn-in remain deferred until the `0.6.7` cross-content audit is accepted; then current source must select exactly one bounded consumer.
+- The six new map features remain non-executing semantic identities; visual references are non-authoritative pointers and no geometry was added.
+- Services, resources, and commodities remain paused. Generic POIs and region-map geometry remain deferred.
+- The installed `0.6.5` prompt deliberately reuses the existing item/material/value catalog and excludes consumable-profile and weapon/armor-profile changes.
+- No blocker remains for the next package.
 
 ## Next Recommended Version
 
-Version 0.6.4 - World And Settlement Static Content Expansion
+`Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 
 ## Suggested Commit Message
 
-docs(roadmap): integrate static content expansion program
+`content(world): expand settlement districts sites and features`

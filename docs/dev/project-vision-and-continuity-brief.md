@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-14 after the unversioned Historical Route Cleanup And Static Content Expansion Pipeline Integration.
+Updated 2026-07-14 after `Version 0.6.4 - World And Settlement Static Content Expansion`.
 
 ## Purpose
 
@@ -37,7 +37,7 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest completed primary:
 
-- `Version 0.6.3 - Engine-Owned Activity Selection Command`
+- `Version 0.6.4 - World And Settlement Static Content Expansion`
 
 Latest support/audit run:
 
@@ -45,7 +45,7 @@ Latest support/audit run:
 
 Next recommended primary:
 
-- `Version 0.6.4 - World And Settlement Static Content Expansion`
+- `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 
 Current sequence source:
 
@@ -53,7 +53,7 @@ Current sequence source:
 
 Current phase:
 
-- player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the static content milestone is active from `0.6.4` through `0.6.7` before one later bounded runtime consumer
+- player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; `0.6.4` static world content is complete and the milestone continues from `0.6.5` through `0.6.7` before one later bounded runtime consumer
 
 Current transition decisions:
 
@@ -117,8 +117,8 @@ Every major system should answer at least one of these questions:
 | `0.6.3.2` | Engine-Owned Activity Selection Collision Regression Repair | Complete. Corrected only the existing collision test and passed 45/45 focused tests. | Equal tick, sequence, player, version, and revision now prove record-id command/event discrimination. |
 | `0.6.3.3` | Engine-Owned Activity Selection Post-Repair Audit | Complete and accepted at 45/45 focused tests. | Reconfirmed exact test-only repair, permanent equal-sequence identity coverage, and every transition gate. |
 | unversioned maintenance | Historical Route Cleanup And Static Content Expansion Pipeline Integration | Complete. Added the canonical historical/deferred register and durable static program. | Documentation only; accepted runtime anchors unchanged. |
-| `0.6.4` | World And Settlement Static Content Expansion | Active next. Enrich existing geographic clusters with districts, sites, semantic features, and Knowledge. | Static canon only; no simulation, generic POIs, visual geometry, runtime, UI, saves, or gameplay. |
-| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Planned second static package. | Dependency-closed catalogs; preserve paused resource/commodity gates and equipment-profile preconditions. |
+| `0.6.4` | World And Settlement Static Content Expansion | Complete. Added the exact three-cluster district, site, semantic-feature, and General Lore batch. | 592/592 focused tests and 67-file lint passed; static canon only. |
+| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Active next. Add exactly 18 dependency-closed planned recipes using existing authorities. | Preserve paused resource/commodity gates and equipment-profile preconditions. |
 | `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Planned third static package. | Region/biome/role/threat closure; static source-local loot only. |
 | `0.6.7` | Cross-Content Coherence And Coverage Audit | Planned program audit. | Validate all references/statuses and repair narrowly before runtime resumes. |
 | later `0.6.x` | Later Engine-Owned Consumer | Compare activity advancement, rest, and turn-in after `0.6.7`. | Select exactly one coherent consumer; no generic command bus. |

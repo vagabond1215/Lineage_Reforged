@@ -549,6 +549,12 @@ test("live semantic map-feature seed validates through the focused helper", () =
     {
       ok: true,
       mapFeatureIds: [
+        "map_feature.aurelis_bay",
+        "map_feature.breaksail_cove",
+        "map_feature.heartwater",
+        "map_feature.ochre_cliffs",
+        "map_feature.southlock_branch",
+        "map_feature.stormcap_rim",
         "map_feature.thalos_run",
         "map_feature.windward_spine"
       ]
@@ -562,6 +568,12 @@ test("live semantic map-feature seed remains planned and descriptive only", () =
   assert.deepEqual(
     liveSeed.records.map((liveRecord) => liveRecord.id).sort(),
     [
+      "map_feature.aurelis_bay",
+      "map_feature.breaksail_cove",
+      "map_feature.heartwater",
+      "map_feature.ochre_cliffs",
+      "map_feature.southlock_branch",
+      "map_feature.stormcap_rim",
       "map_feature.thalos_run",
       "map_feature.windward_spine"
     ]

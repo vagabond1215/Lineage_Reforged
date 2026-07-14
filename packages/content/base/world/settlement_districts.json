@@ -49,6 +49,324 @@
       "notes": [
         "Static district identity only; no vendors, stock, prices, services, taxes, trade execution, law/court mechanics, cargo/storage, ownership, NPC staffing, access rules, route topology, quests, rewards, UI, runtime, or gameplay behavior."
       ]
+    },
+    {
+      "id": "settlement_district.aurelis.crown_harbor",
+      "slug": "crown_harbor",
+      "name": "Crown Harbor",
+      "aliases": [],
+      "summary": "Aurelis's deep-water harbor ward where royal quays, naval yards, and shipbuilding frontage express the capital's maritime identity.",
+      "parentSettlementId": "settlement.aurelis",
+      "districtType": "harbor_ward",
+      "functionalTags": [
+        "deep_water_quays",
+        "naval_yards",
+        "shipbuilding"
+      ],
+      "placeRoleTags": [
+        "royal_port",
+        "coastal_city",
+        "trade_hub"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Aurelis is a royal deep-water port whose site context explicitly names naval yards around a sheltered southern bay.",
+        "Aurelis's current purpose and infrastructure profiles establish shipbuilding, maritime trade, and harbor-tier-four frontage."
+      ],
+      "notes": [
+        "Static district identity only; no dock operation, ship construction, fleet control, cargo inventory, vendor stock, prices, staffing, ownership, access, travel, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.aurelis.palace_roads",
+      "slug": "palace_roads",
+      "name": "Palace Roads",
+      "aliases": [],
+      "summary": "Aurelis's civic quarter of terraced approaches, charter halls, and record houses linking the royal capital's palace roads to its crown market.",
+      "parentSettlementId": "settlement.aurelis",
+      "districtType": "civic_quarter",
+      "functionalTags": [
+        "civic_administration",
+        "recordkeeping",
+        "palace_approaches"
+      ],
+      "placeRoleTags": [
+        "continental_capital",
+        "royal_capital"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Aurelis's site context explicitly places palace roads between its terraced vineyards and naval yards.",
+        "Aurelis's administrative role and Scribes and Factors Hall establish a civic-recordkeeping identity without defining court or service behavior."
+      ],
+      "notes": [
+        "Static district identity only; no palace access, court or law mechanics, taxes, record service, staffing, ownership, quests, rewards, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.vinecross.caskhouse_crossing",
+      "slug": "caskhouse_crossing",
+      "name": "Caskhouse Crossing",
+      "aliases": [],
+      "summary": "Vinecross's craft and exchange district where cask houses, olive presses, and the town's four converging roads mark its inland wine-market identity.",
+      "parentSettlementId": "settlement.vinecross",
+      "districtType": "craft_district",
+      "functionalTags": [
+        "cask_making",
+        "wine_exchange",
+        "olive_pressing"
+      ],
+      "placeRoleTags": [
+        "market_town",
+        "agricultural_center",
+        "road_crossing"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Vinecross's site context explicitly places cask houses at a four-road crossing among orchard slopes.",
+        "Its current economy identifies viticulture, olive pressing, casks, and regional trade as defining functions."
+      ],
+      "notes": [
+        "Static district identity only; no production execution, inventory, vendor stock, prices, contracts, staffing, ownership, travel routing, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.redcliff_quay.cedar_quays",
+      "slug": "cedar_quays",
+      "name": "Cedar Quays",
+      "aliases": [],
+      "summary": "Redcliff Quay's harbor ward where ship timber, tar, rope, and salted fish gather beneath the ochre cliffs of the western roadstead.",
+      "parentSettlementId": "settlement.redcliff_quay",
+      "districtType": "harbor_ward",
+      "functionalTags": [
+        "ship_timber",
+        "coastal_trade",
+        "ropework"
+      ],
+      "placeRoleTags": [
+        "timber_port",
+        "strait_guard",
+        "fortified_harbor"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Redcliff Quay's current site context places the settlement below ochre cliffs and managed cedar slopes beside a sheltered roadstead.",
+        "Its economy, guilds, and trade flows establish ship timber, tar, rope, fish, and coastal trade as the harbor's static identity."
+      ],
+      "notes": [
+        "Static district identity only; no timber extraction, cargo inventory, dock operation, route control, prices, staffing, ownership, patrol behavior, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.riverthrone.confluence_quays",
+      "slug": "confluence_quays",
+      "name": "Confluence Quays",
+      "aliases": [],
+      "summary": "Riverthrone's riverfront district of civic quays, barge landings, and levee roads at the grand confluence commanding Heart Basin grain traffic.",
+      "parentSettlementId": "settlement.riverthrone",
+      "districtType": "riverfront_district",
+      "functionalTags": [
+        "barge_landings",
+        "river_logistics",
+        "grain_trade"
+      ],
+      "placeRoleTags": [
+        "continental_capital",
+        "river_capital",
+        "confluence_city"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Riverthrone's site context explicitly names a grand confluence, levees, stone bridges, and civic quays built around inland grain traffic.",
+        "Its current economy and guild presence establish grain trade, river logistics, barge crews, and market warehousing."
+      ],
+      "notes": [
+        "Static district identity only; no barge movement, cargo inventory, storage, trade execution, prices, staffing, route topology, flood simulation, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.riverthrone.ledger_crown",
+      "slug": "ledger_crown",
+      "name": "Ledger Crown",
+      "aliases": [],
+      "summary": "Riverthrone's civic core of charter rooms, factor halls, and administrative courts overlooking the breadbasket capital's river markets.",
+      "parentSettlementId": "settlement.riverthrone",
+      "districtType": "civic_quarter",
+      "functionalTags": [
+        "civic_administration",
+        "recordkeeping",
+        "trade_ledgers"
+      ],
+      "placeRoleTags": [
+        "continental_capital",
+        "civic_core"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Riverthrone is Draemor's political and commercial throne city with continental administrative authority.",
+        "Its Scribes and Factors Hall and Merchants Exchange establish charter, ledger, banking, warehousing, and contract-brokering context."
+      ],
+      "notes": [
+        "Static district identity only; no court, law, tax, banking, contract, service, staffing, ownership, access, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.granary_crown.granary_courts",
+      "slug": "granary_courts",
+      "name": "Granary Courts",
+      "aliases": [],
+      "summary": "Granary Crown's market quarter of storehouse lanes, threshing courts, and bulk-food yards on the high ground above the irrigated plains.",
+      "parentSettlementId": "settlement.granary_crown",
+      "districtType": "market_quarter",
+      "functionalTags": [
+        "grain_storage",
+        "bulk_trade",
+        "threshing"
+      ],
+      "placeRoleTags": [
+        "granary_city",
+        "agricultural_capital",
+        "storehouse_center"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Granary Crown's summary explicitly names storehouses, threshing courts, and tax granaries.",
+        "Its site context and economy establish safe high-ground concentration of grain, flour, beer, vegetables, and fodder."
+      ],
+      "notes": [
+        "Static district identity only; no tax collection, inventory, storage mutation, production, market execution, prices, staffing, ownership, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.millrun.wheelwater_ward",
+      "slug": "wheelwater_ward",
+      "name": "Wheelwater Ward",
+      "aliases": [],
+      "summary": "Millrun's craft district along the fast branch channel, where mill wheels, bakeries, and towpath frontage define the town's processing identity.",
+      "parentSettlementId": "settlement.millrun",
+      "districtType": "craft_district",
+      "functionalTags": [
+        "milling",
+        "baking",
+        "river_transport"
+      ],
+      "placeRoleTags": [
+        "mill_town",
+        "processing_center",
+        "river_market"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Millrun's current site context explicitly lines a fast branch channel with mills, bakeries, and towpaths.",
+        "Its economy identifies flour, bread, milling parts, millstones, and river-barge service as defining static outputs."
+      ],
+      "notes": [
+        "Static district identity only; no milling or baking execution, cargo movement, inventory, prices, staffing, ownership, route topology, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.breaksail.breakwater_ward",
+      "slug": "breakwater_ward",
+      "name": "Breakwater Ward",
+      "aliases": [],
+      "summary": "Breaksail's harbor ward of storm-facing breakwaters, quays, and rope lofts inside the rugged cove of the Stormcap Coast.",
+      "parentSettlementId": "settlement.breaksail",
+      "districtType": "harbor_ward",
+      "functionalTags": [
+        "breakwaters",
+        "coastal_resupply",
+        "storm_harbor"
+      ],
+      "placeRoleTags": [
+        "storm_coast_port",
+        "harbor_town"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Breaksail's site context explicitly places breakwaters and rope lofts inside a rugged cove facing heavy surf.",
+        "Its current harbor, economy, and trade profiles establish coastal resupply and convoy service as static identity."
+      ],
+      "notes": [
+        "Static district identity only; no dock operation, convoy service execution, cargo inventory, stock, prices, staffing, ownership, travel, storm simulation, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.breaksail.smokehouse_rows",
+      "slug": "smokehouse_rows",
+      "name": "Smokehouse Rows",
+      "aliases": [],
+      "summary": "Breaksail's craft district of smokehouses and curing sheds where fish, sea salt, pitch, and rope define the harbor town's working coast.",
+      "parentSettlementId": "settlement.breaksail",
+      "districtType": "craft_district",
+      "functionalTags": [
+        "fish_smoking",
+        "salt_curing",
+        "ropework"
+      ],
+      "placeRoleTags": [
+        "salt_fish_center",
+        "processing_quarter"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Breaksail's site context explicitly names smokehouses and rope lofts.",
+        "Its supply strengths include sea salt, salted fish, smoked fish, rope, pitch, and ship timber."
+      ],
+      "notes": [
+        "Static district identity only; no fishing, curing, production, inventory, stock, price, labor, ownership, service, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.breaksail.salt_courts",
+      "slug": "salt_courts",
+      "name": "Salt Courts",
+      "aliases": [],
+      "summary": "Breaksail's market quarter where salt-house yards, catch-auction frontage, and convoy stores mark its subregional coastal exchange identity.",
+      "parentSettlementId": "settlement.breaksail",
+      "districtType": "market_quarter",
+      "functionalTags": [
+        "salt_trade",
+        "catch_auctions",
+        "convoy_supply"
+      ],
+      "placeRoleTags": [
+        "subregional_market",
+        "coastal_trade_node"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Breaksail is a subregional salt-and-fish harbor whose Fishers Hall owns authored catch-auction and salting-room descriptors.",
+        "Its current exports and trade flows establish coastal exchange in salt, fish, rope, and resupply goods."
+      ],
+      "notes": [
+        "Static district identity only; no auctions, vendors, stock, prices, cargo inventory, convoy provisioning, staffing, ownership, trade execution, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_district.stormwatch_citadel.signal_ward",
+      "slug": "signal_ward",
+      "name": "Signal Ward",
+      "aliases": [],
+      "summary": "Stormwatch Citadel's compact fortified ward of signal fires, stormbreak towers, and sea-facing watch positions cut into black coastal stone.",
+      "parentSettlementId": "settlement.stormwatch_citadel",
+      "districtType": "citadel_ward",
+      "functionalTags": [
+        "signal_fires",
+        "coastal_watch",
+        "patrol_support"
+      ],
+      "placeRoleTags": [
+        "cliff_fortress",
+        "naval_watch"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Stormwatch Citadel's site context explicitly names signal fires and stormbreak towers built into black coastal stone.",
+        "Its current purpose and exports establish coastal defense, signal watch, piracy deterrence, and patrol support as static identity."
+      ],
+      "notes": [
+        "Static district identity only; no signal execution, patrol behavior, combat, access control, magazines, inventory, staffing, command, runtime, or gameplay behavior."
+      ]
     }
   ]
 }

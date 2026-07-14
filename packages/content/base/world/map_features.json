@@ -78,6 +78,232 @@
       "notes": [
         "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
       ]
+    },
+    {
+      "id": "map_feature.aurelis_bay",
+      "slug": "aurelis_bay",
+      "name": "Aurelis Bay",
+      "aliases": [],
+      "summary": "A planned static semantic identity for the sheltered deep-water bay around which Aurelis's royal port is built.",
+      "featureType": "natural_harbor",
+      "extentKind": "area_like",
+      "placeAnchors": [
+        {
+          "placeType": "region_locality",
+          "placeId": "region_locality.verdant_thalos_coastal_bays",
+          "anchorRole": "contains_feature"
+        },
+        {
+          "placeType": "settlement",
+          "placeId": "settlement.aurelis",
+          "anchorRole": "named_context"
+        }
+      ],
+      "descriptiveTags": [
+        "deep_water",
+        "sheltered_bay",
+        "royal_port"
+      ],
+      "visualReferences": [],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Aurelis's current summary and site context establish a deep-water royal port rising around a sheltered southern bay.",
+        "The current Thalos Run visual authority names Aurelis Bay as the receiving coastal context, but no discrete compatible bay geometry exists to reference."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "map_feature.ochre_cliffs",
+      "slug": "ochre_cliffs",
+      "name": "The Ochre Cliffs",
+      "aliases": [],
+      "summary": "A planned static semantic identity for the ochre coastal cliffs overlooking Redcliff Quay's sheltered roadstead.",
+      "featureType": "cliff",
+      "extentKind": "linear",
+      "placeAnchors": [
+        {
+          "placeType": "region_locality",
+          "placeId": "region_locality.verdant_thalos_coastal_bays",
+          "anchorRole": "contains_feature"
+        },
+        {
+          "placeType": "settlement",
+          "placeId": "settlement.redcliff_quay",
+          "anchorRole": "feature_near"
+        }
+      ],
+      "descriptiveTags": [
+        "coastal_height",
+        "ochre_cliffs",
+        "roadstead_overlook"
+      ],
+      "visualReferences": [],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Redcliff Quay's current site context explicitly places the settlement below ochre cliffs with beacon towers overlooking a sheltered roadstead.",
+        "No current compatible named visual feature isolates these cliffs, so visualReferences remains empty rather than inventing geometry."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "map_feature.heartwater",
+      "slug": "heartwater",
+      "name": "Heartwater",
+      "aliases": [],
+      "summary": "A planned static semantic identity for the named river crossing Draemor's Heart Basin breadbasket.",
+      "featureType": "river",
+      "extentKind": "linear",
+      "placeAnchors": [
+        {
+          "placeType": "region",
+          "placeId": "region.heart_basin",
+          "anchorRole": "feature_crosses"
+        },
+        {
+          "placeType": "region_locality",
+          "placeId": "region_locality.heart_basin_river_capitals",
+          "anchorRole": "feature_crosses"
+        }
+      ],
+      "descriptiveTags": [
+        "breadbasket_river",
+        "freshwater",
+        "river"
+      ],
+      "visualReferences": [
+        {
+          "visualAggregateId": "world_map_feature.first_world",
+          "visualFeatureId": "feature.river_heartwater",
+          "relationship": "reference_only",
+          "notes": "Non-authoritative pointer to current Heartwater visual geometry only; geometry is not copied."
+        }
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Current visual authority names feature.river_heartwater as Heartwater and associates it with region.heart_basin.",
+        "Current Heart Basin and River Capital Belt authorities establish the region and locality context without making the visual geometry semantic authority."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "map_feature.southlock_branch",
+      "slug": "southlock_branch",
+      "name": "Southlock Branch",
+      "aliases": [],
+      "summary": "A planned static semantic identity for the named branch river within the Heart Basin.",
+      "featureType": "river",
+      "extentKind": "linear",
+      "placeAnchors": [
+        {
+          "placeType": "region",
+          "placeId": "region.heart_basin",
+          "anchorRole": "feature_crosses"
+        }
+      ],
+      "descriptiveTags": [
+        "branch_channel",
+        "freshwater",
+        "river"
+      ],
+      "visualReferences": [
+        {
+          "visualAggregateId": "world_map_feature.first_world",
+          "visualFeatureId": "feature.river_southlock_branch",
+          "relationship": "reference_only",
+          "notes": "Non-authoritative pointer to current Southlock Branch visual geometry only; geometry is not copied."
+        }
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Current visual authority names feature.river_southlock_branch as Southlock Branch and associates it with region.heart_basin.",
+        "This record deliberately stops at the proved regional anchor rather than inferring a specific settlement, route, or locality relationship."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "map_feature.stormcap_rim",
+      "slug": "stormcap_rim",
+      "name": "Stormcap Rim",
+      "aliases": [],
+      "summary": "A planned static semantic identity for the named broken coastal heights along Draemor's southern Stormcap Coast.",
+      "featureType": "mountain_range",
+      "extentKind": "linear",
+      "placeAnchors": [
+        {
+          "placeType": "region",
+          "placeId": "region.stormcap_coast",
+          "anchorRole": "contains_feature"
+        },
+        {
+          "placeType": "region_locality",
+          "placeId": "region_locality.stormcap_coast_watch_citadels",
+          "anchorRole": "feature_near"
+        }
+      ],
+      "descriptiveTags": [
+        "coastal_heights",
+        "rugged",
+        "stormbound"
+      ],
+      "visualReferences": [
+        {
+          "visualAggregateId": "world_map_feature.first_world",
+          "visualFeatureId": "feature.mountains_stormcap_rim",
+          "relationship": "reference_only",
+          "notes": "Non-authoritative pointer to current Stormcap Rim visual geometry only; geometry is not copied."
+        }
+      ],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Current visual authority names feature.mountains_stormcap_rim as Stormcap Rim and associates it with region.stormcap_coast.",
+        "Current Stormcap Coast and Watch Citadels authorities describe rugged coastal heights, bluffs, and defended watch positions."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "map_feature.breaksail_cove",
+      "slug": "breaksail_cove",
+      "name": "Breaksail Cove",
+      "aliases": [],
+      "summary": "A planned static semantic identity for the rugged natural harbor sheltering Breaksail beneath the Stormcap Coast.",
+      "featureType": "natural_harbor",
+      "extentKind": "area_like",
+      "placeAnchors": [
+        {
+          "placeType": "region_locality",
+          "placeId": "region_locality.stormcap_coast_storm_harbors",
+          "anchorRole": "contains_feature"
+        },
+        {
+          "placeType": "settlement",
+          "placeId": "settlement.breaksail",
+          "anchorRole": "named_context"
+        }
+      ],
+      "descriptiveTags": [
+        "heavy_surf",
+        "rugged_cove",
+        "storm_harbor"
+      ],
+      "visualReferences": [],
+      "status": "planned",
+      "sourceAuthorityNotes": [
+        "Breaksail's current site context explicitly places the harbor town inside a rugged cove beneath the Stormcap Coast.",
+        "No current compatible named visual feature isolates the cove, so visualReferences remains empty rather than inventing geometry."
+      ],
+      "notes": [
+        "Static semantic feature identity only; this record does not define geometry, coordinates, route topology, pathfinding, ecology execution, POI placement, Knowledge, runtime, UI, storage, command, event, reward, or gameplay behavior."
+      ]
     }
   ]
 }

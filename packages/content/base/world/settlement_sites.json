@@ -50,6 +50,474 @@
       "notes": [
         "Static site identity only; no palace access, court/law mechanics, court services, ownership, NPC staffing, access rules, quests, rewards, UI, runtime, or gameplay behavior."
       ]
+    },
+    {
+      "id": "settlement_site.aurelis.royal_hull_yards",
+      "slug": "royal_hull_yards",
+      "name": "Royal Hull Yards",
+      "aliases": [],
+      "summary": "A named shipbuilding yard cluster on Aurelis's Crown Harbor frontage, associated with the royal port's hull work and naval-yard identity.",
+      "parentSettlementId": "settlement.aurelis",
+      "parentDistrictId": "settlement_district.aurelis.crown_harbor",
+      "siteType": "workshop_cluster",
+      "functionalTags": [
+        "hull_work",
+        "shipbuilding",
+        "timber_allotment"
+      ],
+      "placeRoleTags": [
+        "royal_port",
+        "naval_yard_landmark"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Aurelis's site context explicitly names naval yards, and its purpose and Shipwrights Guildhouse establish shipbuilding and hull-contract context."
+      ],
+      "notes": [
+        "Static site identity only; no ship construction, dock operation, timber allocation, contract execution, inventory, staffing, ownership, access, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.aurelis.scribes_and_factors_hall",
+      "slug": "scribes_and_factors_hall",
+      "name": "Aurelis Scribes and Factors Hall",
+      "aliases": [],
+      "summary": "A civic guildhall on the Palace Roads associated with the ledgers, charters, and copied records behind Aurelis's crown administration and trade.",
+      "parentSettlementId": "settlement.aurelis",
+      "parentDistrictId": "settlement_district.aurelis.palace_roads",
+      "siteType": "guildhall",
+      "functionalTags": [
+        "ledgerkeeping",
+        "charters",
+        "record_copying"
+      ],
+      "placeRoleTags": [
+        "continental_capital",
+        "civic_record_hall"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Aurelis's current guild presence explicitly names the Scribes and Factors Hall and its ledgerkeeping, charter, and record-copying functions."
+      ],
+      "notes": [
+        "Static site identity only; no guild membership, record service, contract, tax, court, staffing, access, Knowledge grant, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.vinecross.four_roads_market",
+      "slug": "four_roads_market",
+      "name": "Four Roads Market",
+      "aliases": [],
+      "summary": "Vinecross's named crossing market where vineyard, orchard, olive, and drover roads meet among the town's cask houses.",
+      "parentSettlementId": "settlement.vinecross",
+      "parentDistrictId": "settlement_district.vinecross.caskhouse_crossing",
+      "siteType": "market",
+      "functionalTags": [
+        "wine_exchange",
+        "orchard_trade",
+        "road_crossing"
+      ],
+      "placeRoleTags": [
+        "market_town",
+        "inland_trade_node"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Vinecross's site context explicitly places its inland exchange at a four-road crossing among orchard slopes and cask houses."
+      ],
+      "notes": [
+        "Static site identity only; no vendor availability, stock, prices, auctions, trade execution, route topology, staffing, ownership, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.vinecross.drovers_hall",
+      "slug": "drovers_hall",
+      "name": "Vinecross Drovers Hall",
+      "aliases": [],
+      "summary": "A guildhall at Caskhouse Crossing associated with Vinecross's herd brokering, stockyard sales, and pasture-contract identity.",
+      "parentSettlementId": "settlement.vinecross",
+      "parentDistrictId": "settlement_district.vinecross.caskhouse_crossing",
+      "siteType": "guildhall",
+      "functionalTags": [
+        "herd_brokering",
+        "stockyard_sales",
+        "pasture_contracts"
+      ],
+      "placeRoleTags": [
+        "agricultural_center",
+        "drover_landmark"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Vinecross's current guild presence explicitly names Drovers Hall and its herd-brokering, stockyard-sale, and pasture-contract functions."
+      ],
+      "notes": [
+        "Static site identity only; no livestock ownership, sale, contract, vendor, stock, price, staffing, service, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.redcliff_quay.beacon_towers",
+      "slug": "beacon_towers",
+      "name": "Redcliff Beacon Towers",
+      "aliases": [],
+      "summary": "A named coastal watch site on the ochre cliffs above Redcliff Quay's sheltered roadstead and western harbor approach.",
+      "parentSettlementId": "settlement.redcliff_quay",
+      "parentDistrictId": null,
+      "siteType": "watch_post",
+      "functionalTags": [
+        "signal_watch",
+        "strait_guard",
+        "coastal_navigation"
+      ],
+      "placeRoleTags": [
+        "fortified_harbor",
+        "clifftop_landmark"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Redcliff Quay's site context explicitly names beacon towers looking over its sheltered roadstead."
+      ],
+      "notes": [
+        "Static site identity only; no signal execution, patrol behavior, route control, navigation effect, staffing, access, combat, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.redcliff_quay.timber_roadstead",
+      "slug": "timber_roadstead",
+      "name": "Timber Roadstead",
+      "aliases": [],
+      "summary": "A sheltered wharf site at the Cedar Quays associated with landing and loading the managed peninsula timber that defines Redcliff's port.",
+      "parentSettlementId": "settlement.redcliff_quay",
+      "parentDistrictId": "settlement_district.redcliff_quay.cedar_quays",
+      "siteType": "wharf",
+      "functionalTags": [
+        "ship_timber_landing",
+        "sheltered_roadstead",
+        "coastal_trade"
+      ],
+      "placeRoleTags": [
+        "timber_port",
+        "western_approach"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Redcliff Quay's current site, economy, and trade descriptions establish a sheltered roadstead loading ship timber from managed cedar slopes."
+      ],
+      "notes": [
+        "Static site identity only; no timber extraction, cargo loading, inventory, dock operation, stock, prices, staffing, ownership, route behavior, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.riverthrone.civic_quays",
+      "slug": "civic_quays",
+      "name": "Riverthrone Civic Quays",
+      "aliases": [],
+      "summary": "A named wharf complex on the Confluence Quays marking Riverthrone's civic command of inland grain and barge traffic.",
+      "parentSettlementId": "settlement.riverthrone",
+      "parentDistrictId": "settlement_district.riverthrone.confluence_quays",
+      "siteType": "wharf",
+      "functionalTags": [
+        "barge_landings",
+        "grain_traffic",
+        "river_logistics"
+      ],
+      "placeRoleTags": [
+        "river_capital",
+        "civic_waterfront"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Riverthrone's site context explicitly names civic quays built to command inland grain traffic at the grand confluence."
+      ],
+      "notes": [
+        "Static site identity only; no dock operation, barge movement, cargo inventory, storage, trade execution, prices, staffing, ownership, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.riverthrone.grand_confluence_bridge",
+      "slug": "grand_confluence_bridge",
+      "name": "Grand Confluence Bridge",
+      "aliases": [],
+      "summary": "A stone bridgehead landmark spanning Riverthrone's grand confluence and joining the capital's levee roads and riverfront quarters.",
+      "parentSettlementId": "settlement.riverthrone",
+      "parentDistrictId": null,
+      "siteType": "bridgehead",
+      "functionalTags": [
+        "stone_bridge",
+        "levee_connection",
+        "river_crossing"
+      ],
+      "placeRoleTags": [
+        "continental_capital",
+        "confluence_landmark"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Riverthrone's site context explicitly states that the city spans the grand confluence on levees and stone bridges."
+      ],
+      "notes": [
+        "Static site identity only; no crossing service, toll, pathfinding, route topology, flood behavior, staffing, access, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.granary_crown.tax_granaries",
+      "slug": "tax_granaries",
+      "name": "Crown Tax Granaries",
+      "aliases": [],
+      "summary": "A named storehouse complex within the Granary Courts marking the city's role as Draemor's inland concentration point for bulk food.",
+      "parentSettlementId": "settlement.granary_crown",
+      "parentDistrictId": "settlement_district.granary_crown.granary_courts",
+      "siteType": "warehouse",
+      "functionalTags": [
+        "grain_storehouses",
+        "bulk_food",
+        "civic_granaries"
+      ],
+      "placeRoleTags": [
+        "granary_city",
+        "storehouse_center"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Granary Crown's summary explicitly names the tax granaries around which the city is built, while its site context establishes high-ground bulk-food concentration."
+      ],
+      "notes": [
+        "Static site identity only; no taxation, inventory, storage mutation, allocation, stock, pricing, staffing, ownership, access, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.granary_crown.threshing_courts",
+      "slug": "threshing_courts",
+      "name": "Threshing Courts",
+      "aliases": [],
+      "summary": "A landmark court complex in Granary Crown where broad working yards express the city's grain-processing and agricultural-capital identity.",
+      "parentSettlementId": "settlement.granary_crown",
+      "parentDistrictId": "settlement_district.granary_crown.granary_courts",
+      "siteType": "landmark_plaza",
+      "functionalTags": [
+        "threshing_yards",
+        "grain_processing",
+        "harvest_landmark"
+      ],
+      "placeRoleTags": [
+        "agricultural_capital",
+        "granary_city"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Granary Crown's summary explicitly names threshing courts as a defining component of the city."
+      ],
+      "notes": [
+        "Static site identity only; no threshing execution, harvest intake, inventory, labor assignment, stock, price, tax, staffing, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.millrun.wheelrace_mills",
+      "slug": "wheelrace_mills",
+      "name": "Wheelrace Mills",
+      "aliases": [],
+      "summary": "A named mill cluster in Wheelwater Ward set along Millrun's fast branch channel and associated with the town's flour and milling-parts identity.",
+      "parentSettlementId": "settlement.millrun",
+      "parentDistrictId": "settlement_district.millrun.wheelwater_ward",
+      "siteType": "mill",
+      "functionalTags": [
+        "water_mills",
+        "flour_milling",
+        "milling_parts"
+      ],
+      "placeRoleTags": [
+        "mill_town",
+        "processing_center"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Millrun's site context explicitly places mills along a fast branch channel, and its economy identifies flour, millstones, and milling parts."
+      ],
+      "notes": [
+        "Static site identity only; no milling execution, recipe behavior, inventory, production, maintenance, staffing, ownership, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.millrun.towpath_landing",
+      "slug": "towpath_landing",
+      "name": "Towpath Landing",
+      "aliases": [],
+      "summary": "A wharf site in Wheelwater Ward where Millrun's towpaths meet its branch-channel frontage and river-market identity.",
+      "parentSettlementId": "settlement.millrun",
+      "parentDistrictId": "settlement_district.millrun.wheelwater_ward",
+      "siteType": "wharf",
+      "functionalTags": [
+        "towpath_frontage",
+        "barge_landing",
+        "river_transport"
+      ],
+      "placeRoleTags": [
+        "river_market",
+        "processing_center"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Millrun's site context explicitly names towpaths linking its mills and bakeries to lower-river grain depots."
+      ],
+      "notes": [
+        "Static site identity only; no barge movement, cargo loading, route topology, inventory, storage, staffing, ownership, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.breaksail.stormbreak_quays",
+      "slug": "stormbreak_quays",
+      "name": "Stormbreak Quays",
+      "aliases": [],
+      "summary": "A named wharf site behind Breaksail's breakwaters, marking the heavy-surf harbor's coastal resupply and rope-loft frontage.",
+      "parentSettlementId": "settlement.breaksail",
+      "parentDistrictId": "settlement_district.breaksail.breakwater_ward",
+      "siteType": "wharf",
+      "functionalTags": [
+        "storm_harbor",
+        "coastal_resupply",
+        "rope_lofts"
+      ],
+      "placeRoleTags": [
+        "storm_coast_port",
+        "breakwater_landmark"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Breaksail's site context explicitly places breakwaters and rope lofts inside a rugged cove facing heavy surf."
+      ],
+      "notes": [
+        "Static site identity only; no dock operation, ship service, cargo inventory, stock, prices, staffing, ownership, travel, storm simulation, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.breaksail.saltshield_hall",
+      "slug": "saltshield_hall",
+      "name": "Breaksail Saltshield Hall",
+      "aliases": [],
+      "summary": "A guildhall in Breaksail's Salt Courts associated with escort contracts, coastal patrols, and salvage-recovery records.",
+      "parentSettlementId": "settlement.breaksail",
+      "parentDistrictId": "settlement_district.breaksail.salt_courts",
+      "siteType": "guildhall",
+      "functionalTags": [
+        "escort_contracts",
+        "coastal_patrols",
+        "salvage_records"
+      ],
+      "placeRoleTags": [
+        "subregional_harbor",
+        "coastal_contract_hall"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Breaksail's current guild presence explicitly names Breaksail Saltshield Hall and its escort-contract, coastal-patrol, and salvage-recovery functions."
+      ],
+      "notes": [
+        "Static site identity only; no contract generation, patrol execution, salvage ownership, reward, staffing, access, service, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.stormwatch_citadel.blackstone_signal_towers",
+      "slug": "blackstone_signal_towers",
+      "name": "Blackstone Signal Towers",
+      "aliases": [],
+      "summary": "A sea-facing watch site in Stormwatch's Signal Ward where stormbreak towers rise from the citadel's black coastal stone.",
+      "parentSettlementId": "settlement.stormwatch_citadel",
+      "parentDistrictId": "settlement_district.stormwatch_citadel.signal_ward",
+      "siteType": "watch_post",
+      "functionalTags": [
+        "signal_fires",
+        "coastal_watch",
+        "stormbreak_towers"
+      ],
+      "placeRoleTags": [
+        "cliff_fortress",
+        "naval_watch"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Stormwatch Citadel's site context explicitly names signal fires and stormbreak towers built into black coastal stone."
+      ],
+      "notes": [
+        "Static site identity only; no signal execution, patrol behavior, navigation effect, combat, staffing, access, command, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.stormwatch_citadel.blackstone_magazines",
+      "slug": "blackstone_magazines",
+      "name": "Blackstone Magazines",
+      "aliases": [],
+      "summary": "A fortified warehouse landmark cut into Stormwatch's black coastal stone and associated with the magazines named in the citadel's static site identity.",
+      "parentSettlementId": "settlement.stormwatch_citadel",
+      "parentDistrictId": "settlement_district.stormwatch_citadel.signal_ward",
+      "siteType": "warehouse",
+      "functionalTags": [
+        "fortified_storehouses",
+        "blackstone_vaults",
+        "citadel_support"
+      ],
+      "placeRoleTags": [
+        "cliff_fortress",
+        "fortified_landmark"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Stormwatch Citadel's site context explicitly names magazines within its black-stone fortifications."
+      ],
+      "notes": [
+        "Static site identity only; no weapons, ammunition, inventory, storage mutation, supply, staffing, ownership, access control, combat, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.cliffsalt_priory.storm_journal_script_house",
+      "slug": "storm_journal_script_house",
+      "name": "Storm Journal Script House",
+      "aliases": [],
+      "summary": "Cliffsalt Priory's narrow script house, known for the copied records and storm journals that define the cliff monastery's archival identity.",
+      "parentSettlementId": "settlement.cliffsalt_priory",
+      "parentDistrictId": null,
+      "siteType": "other_landmark",
+      "functionalTags": [
+        "storm_journals",
+        "record_copying",
+        "script_house"
+      ],
+      "placeRoleTags": [
+        "cliff_priory",
+        "monastic_archive"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Cliffsalt Priory's summary and site context explicitly name storm journals, copied records, and a narrow script house."
+      ],
+      "notes": [
+        "Static site identity only; no archive service, document access, Knowledge grant, staffing, ownership, quest, reward, runtime, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "settlement_site.cliffsalt_priory.medicinal_terraces",
+      "slug": "medicinal_terraces",
+      "name": "Medicinal Terraces",
+      "aliases": [],
+      "summary": "Stone garden terraces clinging to the sea cliffs at Cliffsalt Priory and expressing its medicinal-herb and traveler-relief identity.",
+      "parentSettlementId": "settlement.cliffsalt_priory",
+      "parentDistrictId": null,
+      "siteType": "other_landmark",
+      "functionalTags": [
+        "medicinal_gardens",
+        "herb_cultivation",
+        "stone_terraces"
+      ],
+      "placeRoleTags": [
+        "cliff_priory",
+        "storm_refuge"
+      ],
+      "status": "active",
+      "sourceAuthorityNotes": [
+        "Cliffsalt Priory's summary and site context explicitly name medicinal gardens and stone terraces clinging to the sea cliffs."
+      ],
+      "notes": [
+        "Static site identity only; no herb production, gathering, treatment, traveler service, inventory, staffing, access, runtime, or gameplay behavior."
+      ]
     }
   ]
 }

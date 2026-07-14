@@ -54,6 +54,18 @@ const ACTIVE_DOMAIN_IDS = [
   "knowledge_domain.general_lore",
   "knowledge_domain.general_lore",
   "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
+  "knowledge_domain.general_lore",
   "knowledge_domain.general_lore"
 ];
 
@@ -73,7 +85,19 @@ const EXPECTED_SNIPPET_IDS = [
   "knowledge_snippet.general_lore.highcrown_archive_districts.identification",
   "knowledge_snippet.general_lore.highcrown_market_courts.identification",
   "knowledge_snippet.general_lore.highcrown_barge_quays.identification",
-  "knowledge_snippet.general_lore.highcrown_palace_terraces.identification"
+  "knowledge_snippet.general_lore.highcrown_palace_terraces.identification",
+  "knowledge_snippet.general_lore.aurelis.identification",
+  "knowledge_snippet.general_lore.vinecross_caskhouse_crossing.identification",
+  "knowledge_snippet.general_lore.redcliff_quay_beacon_towers.identification",
+  "knowledge_snippet.general_lore.aurelis_royal_hull_yards.identification",
+  "knowledge_snippet.general_lore.riverthrone.identification",
+  "knowledge_snippet.general_lore.granary_crown_granary_courts.identification",
+  "knowledge_snippet.general_lore.millrun_wheelrace_mills.identification",
+  "knowledge_snippet.general_lore.riverthrone_confluence_quays.identification",
+  "knowledge_snippet.general_lore.breaksail.identification",
+  "knowledge_snippet.general_lore.stormwatch_citadel_signal_ward.identification",
+  "knowledge_snippet.general_lore.cliffsalt_priory_storm_journal_script_house.identification",
+  "knowledge_snippet.general_lore.breaksail_stormbreak_quays.identification"
 ];
 
 function makeInput() {
@@ -461,7 +485,19 @@ test("accepts current canonical subject ids", () => {
       "settlement_district.highcrown.archive_districts",
       "settlement_district.highcrown.market_courts",
       "settlement_site.highcrown.barge_quays",
-      "settlement_site.highcrown.palace_terraces"
+      "settlement_site.highcrown.palace_terraces",
+      "settlement.aurelis",
+      "settlement_district.vinecross.caskhouse_crossing",
+      "settlement_site.redcliff_quay.beacon_towers",
+      "settlement_site.aurelis.royal_hull_yards",
+      "settlement.riverthrone",
+      "settlement_district.granary_crown.granary_courts",
+      "settlement_site.millrun.wheelrace_mills",
+      "settlement_district.riverthrone.confluence_quays",
+      "settlement.breaksail",
+      "settlement_district.stormwatch_citadel.signal_ward",
+      "settlement_site.cliffsalt_priory.storm_journal_script_house",
+      "settlement_site.breaksail.stormbreak_quays"
     ]
   );
   assert.equal(validate(input), true);
@@ -516,164 +552,124 @@ test("knowledge snippet schema includes direct religious hotspot vocabulary", ()
   assert.equal(snippetSchema.properties.subjectType.enum.includes("shrine"), false);
 });
 
-test("adds only the selected live settlement, district, and site Knowledge snippets", () => {
+test("contains exactly the selected live settlement, district, and site Knowledge snippets", () => {
   const input = makeInput();
-  const settlementSnippets = input.wrapper.records.filter(
-    (record) => record.subjectType === "settlement"
-  );
-  const districtSnippets = input.wrapper.records.filter(
-    (record) => record.subjectType === "settlement_district"
-  );
-  const siteSnippets = input.wrapper.records.filter(
-    (record) => record.subjectType === "settlement_site"
+  const placeSnippets = input.wrapper.records.filter((record) =>
+    ["settlement", "settlement_district", "settlement_site"].includes(record.subjectType)
   );
 
-  assert.equal(
-    settlementSnippets.length,
-    1
-  );
   assert.deepEqual(
-    settlementSnippets.map((record) => ({
+    placeSnippets.map((record) => ({
       id: record.id,
-      domainId: record.domainId,
-      subjectId: record.subjectId,
-      title: record.title,
-      sourceType: record.discoverySources[0]?.sourceType,
-      sourceId: record.discoverySources[0]?.sourceId,
-      tier: record.tier,
-      category: record.category,
-      completionWeight: record.progression.completionWeight,
-      countsTowardTierCompletion: record.progression.countsTowardTierCompletion,
-      trialUnlockWeight: record.progression.trialUnlockWeight,
-      lockedUntilDiscovered: record.visibility.lockedUntilDiscovered,
-      revealsSubjectIdentity: record.visibility.revealsSubjectIdentity
+      subjectType: record.subjectType,
+      subjectId: record.subjectId
     })),
     [
       {
         id: "knowledge_snippet.general_lore.highcrown.identification",
-        domainId: "knowledge_domain.general_lore",
-        subjectId: "settlement.highcrown",
-        title: "Recognizing Highcrown",
-        sourceType: "book_study",
-        sourceId: null,
-        tier: 1,
-        category: "identification",
-        completionWeight: 1,
-        countsTowardTierCompletion: true,
-        trialUnlockWeight: 0,
-        lockedUntilDiscovered: true,
-        revealsSubjectIdentity: true
-      }
-    ]
-  );
-  assert.equal(
-    districtSnippets.length,
-    2
-  );
-  assert.deepEqual(
-    districtSnippets.map((record) => record.id),
-    [
-      "knowledge_snippet.general_lore.highcrown_archive_districts.identification",
-      "knowledge_snippet.general_lore.highcrown_market_courts.identification"
-    ]
-  );
-  assert.deepEqual(
-    districtSnippets.map((record) => record.subjectId),
-    [
-      "settlement_district.highcrown.archive_districts",
-      "settlement_district.highcrown.market_courts"
-    ]
-  );
-  assert.equal(
-    siteSnippets.length,
-    2
-  );
-  assert.deepEqual(
-    siteSnippets.map((record) => record.id),
-    [
-      "knowledge_snippet.general_lore.highcrown_barge_quays.identification",
-      "knowledge_snippet.general_lore.highcrown_palace_terraces.identification"
-    ]
-  );
-  assert.deepEqual(
-    siteSnippets.map((record) => record.subjectId),
-    [
-      "settlement_site.highcrown.barge_quays",
-      "settlement_site.highcrown.palace_terraces"
-    ]
-  );
-  assert.deepEqual(
-    settlementSnippets.map((snippet) => {
-      const subject = input.subjectAuthorities.settlement.records.find(
-        (record) => record.id === snippet.subjectId
-      );
-      return {
-        id: subject?.id,
-        hasStatus: Object.hasOwn(subject ?? {}, "status")
-      };
-    }),
-    [
-      {
-        id: "settlement.highcrown",
-        hasStatus: false
-      }
-    ]
-  );
-  assert.deepEqual(
-    siteSnippets.map((record) => ({
-      sourceType: record.discoverySources[0]?.sourceType,
-      sourceId: record.discoverySources[0]?.sourceId,
-      tier: record.tier,
-      category: record.category,
-      completionWeight: record.progression.completionWeight,
-      countsTowardTierCompletion: record.progression.countsTowardTierCompletion,
-      trialUnlockWeight: record.progression.trialUnlockWeight,
-      lockedUntilDiscovered: record.visibility.lockedUntilDiscovered,
-      revealsSubjectIdentity: record.visibility.revealsSubjectIdentity
-    })),
-    [
-      {
-        sourceType: "book_study",
-        sourceId: null,
-        tier: 1,
-        category: "identification",
-        completionWeight: 1,
-        countsTowardTierCompletion: true,
-        trialUnlockWeight: 0,
-        lockedUntilDiscovered: true,
-        revealsSubjectIdentity: true
+        subjectType: "settlement",
+        subjectId: "settlement.highcrown"
       },
       {
-        sourceType: "book_study",
-        sourceId: null,
-        tier: 1,
-        category: "identification",
-        completionWeight: 1,
-        countsTowardTierCompletion: true,
-        trialUnlockWeight: 0,
-        lockedUntilDiscovered: true,
-        revealsSubjectIdentity: true
+        id: "knowledge_snippet.general_lore.highcrown_archive_districts.identification",
+        subjectType: "settlement_district",
+        subjectId: "settlement_district.highcrown.archive_districts"
+      },
+      {
+        id: "knowledge_snippet.general_lore.highcrown_market_courts.identification",
+        subjectType: "settlement_district",
+        subjectId: "settlement_district.highcrown.market_courts"
+      },
+      {
+        id: "knowledge_snippet.general_lore.highcrown_barge_quays.identification",
+        subjectType: "settlement_site",
+        subjectId: "settlement_site.highcrown.barge_quays"
+      },
+      {
+        id: "knowledge_snippet.general_lore.highcrown_palace_terraces.identification",
+        subjectType: "settlement_site",
+        subjectId: "settlement_site.highcrown.palace_terraces"
+      },
+      {
+        id: "knowledge_snippet.general_lore.aurelis.identification",
+        subjectType: "settlement",
+        subjectId: "settlement.aurelis"
+      },
+      {
+        id: "knowledge_snippet.general_lore.vinecross_caskhouse_crossing.identification",
+        subjectType: "settlement_district",
+        subjectId: "settlement_district.vinecross.caskhouse_crossing"
+      },
+      {
+        id: "knowledge_snippet.general_lore.redcliff_quay_beacon_towers.identification",
+        subjectType: "settlement_site",
+        subjectId: "settlement_site.redcliff_quay.beacon_towers"
+      },
+      {
+        id: "knowledge_snippet.general_lore.aurelis_royal_hull_yards.identification",
+        subjectType: "settlement_site",
+        subjectId: "settlement_site.aurelis.royal_hull_yards"
+      },
+      {
+        id: "knowledge_snippet.general_lore.riverthrone.identification",
+        subjectType: "settlement",
+        subjectId: "settlement.riverthrone"
+      },
+      {
+        id: "knowledge_snippet.general_lore.granary_crown_granary_courts.identification",
+        subjectType: "settlement_district",
+        subjectId: "settlement_district.granary_crown.granary_courts"
+      },
+      {
+        id: "knowledge_snippet.general_lore.millrun_wheelrace_mills.identification",
+        subjectType: "settlement_site",
+        subjectId: "settlement_site.millrun.wheelrace_mills"
+      },
+      {
+        id: "knowledge_snippet.general_lore.riverthrone_confluence_quays.identification",
+        subjectType: "settlement_district",
+        subjectId: "settlement_district.riverthrone.confluence_quays"
+      },
+      {
+        id: "knowledge_snippet.general_lore.breaksail.identification",
+        subjectType: "settlement",
+        subjectId: "settlement.breaksail"
+      },
+      {
+        id: "knowledge_snippet.general_lore.stormwatch_citadel_signal_ward.identification",
+        subjectType: "settlement_district",
+        subjectId: "settlement_district.stormwatch_citadel.signal_ward"
+      },
+      {
+        id: "knowledge_snippet.general_lore.cliffsalt_priory_storm_journal_script_house.identification",
+        subjectType: "settlement_site",
+        subjectId: "settlement_site.cliffsalt_priory.storm_journal_script_house"
+      },
+      {
+        id: "knowledge_snippet.general_lore.breaksail_stormbreak_quays.identification",
+        subjectType: "settlement_site",
+        subjectId: "settlement_site.breaksail.stormbreak_quays"
       }
     ]
   );
+
   assert.equal(
-    input.subjectAuthorities.settlement_district.records.find(
-      (record) => record.id === "settlement_district.highcrown.archive_districts"
-    )?.status,
-    "active"
-  );
-  assert.equal(
-    input.subjectAuthorities.settlement_district.records.find(
-      (record) => record.id === "settlement_district.highcrown.market_courts"
-    )?.status,
-    "active"
+    placeSnippets.find(
+      (record) => record.id === "knowledge_snippet.general_lore.highcrown.identification"
+    )?.title,
+    "Recognizing Highcrown"
   );
   assert.deepEqual(
-    input.subjectAuthorities.settlement_site.records.map((record) => ({
-      id: record.id,
-      status: record.status,
-      parentDistrictId: record.parentDistrictId
-    })),
+    input.subjectAuthorities.settlement_site.records
+      .filter((record) => [
+        "settlement_site.highcrown.barge_quays",
+        "settlement_site.highcrown.palace_terraces"
+      ].includes(record.id))
+      .map((record) => ({
+        id: record.id,
+        status: record.status,
+        parentDistrictId: record.parentDistrictId
+      })),
     [
       {
         id: "settlement_site.highcrown.barge_quays",
@@ -687,30 +683,44 @@ test("adds only the selected live settlement, district, and site Knowledge snipp
       }
     ]
   );
-  assert.deepEqual(
-    siteSnippets.map((snippet) => {
-      const subject = input.subjectAuthorities.settlement_site.records.find(
-        (record) => record.id === snippet.subjectId
-      );
-      return {
-        id: subject?.id,
-        status: subject?.status,
-        parentDistrictId: subject?.parentDistrictId
-      };
-    }),
-    [
+
+  for (const snippetRecord of placeSnippets) {
+    assert.equal(snippetRecord.domainId, "knowledge_domain.general_lore");
+    assert.deepEqual(snippetRecord.discoverySources, [
       {
-        id: "settlement_site.highcrown.barge_quays",
-        status: "active",
-        parentDistrictId: null
-      },
-      {
-        id: "settlement_site.highcrown.palace_terraces",
-        status: "active",
-        parentDistrictId: null
+        sourceType: "book_study",
+        sourceId: null
       }
-    ]
-  );
+    ]);
+    assert.equal(snippetRecord.tier, 1);
+    assert.equal(snippetRecord.category, "identification");
+    assert.deepEqual(snippetRecord.progression, {
+      completionWeight: 1,
+      countsTowardTierCompletion: true,
+      trialUnlockWeight: 0
+    });
+    assert.equal(snippetRecord.visibility.lockedUntilDiscovered, true);
+    assert.equal(snippetRecord.visibility.revealsSubjectIdentity, true);
+
+    const subject = input.subjectAuthorities[snippetRecord.subjectType].records.find(
+      (record) => record.id === snippetRecord.subjectId
+    );
+    assert.ok(subject);
+    if (snippetRecord.subjectType === "settlement") {
+      assert.equal(Object.hasOwn(subject, "status"), false);
+    } else {
+      assert.equal(subject.status, "active");
+    }
+
+    if (snippetRecord.subjectType === "settlement_site" && subject.parentDistrictId !== null) {
+      const parentDistrict = input.subjectAuthorities.settlement_district.records.find(
+        (record) => record.id === subject.parentDistrictId
+      );
+      assert.equal(parentDistrict?.status, "active");
+      assert.equal(parentDistrict?.parentSettlementId, subject.parentSettlementId);
+    }
+  }
+
   assert.equal(validate(input), true);
 });
 

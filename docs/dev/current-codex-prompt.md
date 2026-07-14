@@ -1,128 +1,100 @@
 # Current Codex Prompt
 
-You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
-
 ## Run Identity
 
-Run:
+`Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 
-`Version 0.6.4 - World And Settlement Static Content Expansion`
-
-Suggested commit message:
-
-`content(world): expand settlement districts sites and features`
+Run this as one narrow static-content implementation package. Preserve accepted engine-owned runtime behavior and do not broaden the task into crafting execution, inventory, economy, equipment-profile infrastructure, or cleanup.
 
 ## Execution Gate
 
-1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
-2. Read:
-   - `AGENTS.md`
-   - `README.md`
-   - `docs/dev/current-codex-output.md`
-   - `docs/dev/current-gpt-handoff.md`
-   - `docs/dev/current-codex-prompt.md`
-   - `docs/design/static-content-expansion-program.md`
-   - `docs/dev/historical-version-and-deferred-route-register.md`
-   - `docs/dev/codex-sequenced-implementation-plan.md`
-   - `docs/dev/project-roadmap.md`
-   - `docs/future_content_backlog.md`
-   - focused settlement, district/site, semantic map-feature, Knowledge, schema, validator, and test sources required by the target batch.
-3. Confirm the unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration` is complete and this exact `0.6.4` prompt is installed.
-4. If the repository has advanced beyond this prompt, preserve the live anchor and stop for remapping. Never rewind a newer accepted route.
-5. This is a content implementation run. Do not modify runtime, UI, saves, migrations, dependencies, package metadata, generated output, or assets.
+1. Read `AGENTS.md`, `README.md`, `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-roadmap.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`.
+2. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
+3. Confirm `Version 0.6.4 - World And Settlement Static Content Expansion` is accepted: 14 active districts, 20 active sites, 8 planned semantic map features, 28 Knowledge snippets, 592/592 focused tests, and `content-lint: ok (67 files checked)`.
+4. Confirm this exact `0.6.5` prompt is installed before editing.
+5. If newer canon changes a dependency or invalidates an exact row below, stop and report the conflict. Do not silently substitute records or broaden owner scope.
 
 ## Purpose
 
-Implement one substantial, coherent expansion of existing world and settlement canon using current strict owner families. Enrich nine existing settlements across three geographic clusters with districts, named settlement sites, semantic map features, and descriptive General Lore coverage.
+Expand the current planned crafting authority with one substantial, coherent, dependency-closed set of standard recipes. Use existing item/material identities, static values, tools, workplaces, skills, and production chains rather than inventing duplicate catalog records.
 
-Do not add generic `world.pois`, visual map geometry, simulation, or gameplay behavior.
+This package adds recipe relationships only. It does not make recipes executable, discoverable, available, craftable, buyable, ownable, or visible in UI.
 
 ## Mandatory Pre-Authoring Inventory
 
 Before editing, reproduce and report at least:
 
-- settlements: 88;
-- settlement districts: 2 active;
-- settlement sites: 2 active;
-- regions: 41;
-- region localities: 47;
-- semantic map features: 2 planned;
-- visual world-map aggregates: 1;
-- Knowledge registry: 7 domains, 6 active and 1 planned;
-- Knowledge snippets: 16;
-- services: 5 planned;
+- items: 1,372;
+- item-class `tool` records: 131;
+- market item values: 1,617;
+- consumable profiles: 9;
+- weapon profiles: no live collection, 0;
+- armor profiles: no live collection, 0;
+- crafting recipes: 12 planned records across 8 recipe families, all `standard` subtype;
+- workplaces: 58;
+- production chains: 121;
+- skills: 121;
 - resources: 2 planned;
-- commodities: 2 planned.
+- commodities: 2 planned;
+- normal content lint: 67 checked files.
 
-If the live counts differ, inspect the change and revise the matrix only when required by actual newer canon. Record the evidence; do not force stale counts.
+Confirm there is no separate material registry: material identity is represented by canonical commodity records in `items.items`. Search every proposed recipe id, slug, name, input, output, tool, workplace, skill, and production-chain reference before authoring.
 
-Search every proposed id, slug, name, alias, parent, subject, and geographic anchor before authoring. Review existing settlement economy, survival, infrastructure, culture, religion, terrain, trade, guild, visual-map, region, locality, and hex descriptions for all target parents.
+If any count differs, inspect and record the newer evidence. Revise this package only when a current committed authority makes an exact row impossible; otherwise preserve the target.
 
-## Geographic Coverage Matrix And Exact Target
+## Exact Target
 
-Use these existing parents and purposes:
+Add exactly 18 new records to `packages/content/base/crafting/recipes.json`, increasing recipes from 12 to 30 and represented recipe families from 8 to 10 by adding `cooperage` and `forging` to the existing family set.
 
-| Cluster | Existing parent settlements | Coverage purpose | Exact additions |
-| --- | --- | --- | --- |
-| Verdant Thalos | `settlement.aurelis`, `settlement.vinecross`, `settlement.redcliff_quay` | continental city, inland market, and harbor relationships around the Thalos Run | 4 districts, 6 sites, 2 semantic map features, 4 General Lore snippets |
-| Heart Basin | `settlement.riverthrone`, `settlement.granary_crown`, `settlement.millrun` | river capital, granary city, and production-market differentiation | 4 districts, 6 sites, 2 semantic map features, 4 General Lore snippets |
-| Stormcap Coast | `settlement.breaksail`, `settlement.stormwatch_citadel`, `settlement.cliffsalt_priory` | harbor, defensive citadel, and religious coastal identity | 4 districts, 6 sites, 2 semantic map features, 4 General Lore snippets |
+Every new record must use `status: "planned"` and `recipeSubtype: "standard"`.
 
-Implement exactly:
+| Recipe id | Family | Existing inputs -> existing outputs | Existing workplace | Existing tools | Existing skill | Existing production chain |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipe.flax_bundle_to_linen_thread` | `tailoring` | `flax_bundle` -> `linen_thread` | `workplace.loomhouse` | `spindle` | `skill.crafting.weaving` | `chain.textile.linen` |
+| `recipe.wool_fleece_to_yarn` | `tailoring` | `wool_fleece` -> `yarn` | `workplace.loomhouse` | `spindle` | `skill.crafting.weaving` | `chain.textile.components` |
+| `recipe.yarn_to_wool_cloth` | `tailoring` | `yarn` -> `wool_cloth` | `workplace.loomhouse` | `weaving_shuttle` | `skill.crafting.weaving` | `chain.textile.wool` |
+| `recipe.linen_thread_to_fine_cloth` | `tailoring` | `linen_thread` -> `fine_cloth` | `workplace.loomhouse` | `weaving_shuttle` | `skill.crafting.weaving` | `chain.textile.cloth_grades` |
+| `recipe.flour_to_bread_dough` | `baking` | `flour` -> `bread_dough` | `workplace.bakery` | `mixing_spoon` | `skill.crafting.cooking` | `chain.food.bread` |
+| `recipe.flour_to_pastry_dough` | `baking` | `flour` -> `pastry_dough` | `workplace.bakery` | `mixing_spoon` | `skill.crafting.cooking` | `chain.food.bakery_specials` |
+| `recipe.pastry_dough_and_smoked_meat_to_savory_meat_pie` | `baking` | `pastry_dough` + `smoked_meat` -> `savory_meat_pie` | `workplace.bakehouse` | `oven_peel` | `skill.crafting.cooking` | `chain.food.bakery_specials` |
+| `recipe.fish_raw_and_salt_crystal_to_smoked_fish` | `preserving` | `fish_raw` + `salt_crystal` -> `smoked_fish` | `workplace.smokehouse` | `smoking_rack` | `skill.crafting.cooking` | `chain.food.preserved_fish` |
+| `recipe.plank_to_barrel_stave` | `cooperage` | `plank` -> `barrel_stave` | `workplace.coopers_shop` | `cooper_adze` | `skill.crafting.carpentry` | `chain.cooperage.components` |
+| `recipe.barrel_stave_metal_ring_and_resin_pitch_to_cask` | `cooperage` | `barrel_stave` + `metal_ring` + `resin_pitch` -> `cask` | `workplace.coopers_shop` | `cooper_adze`, `hoop_anvil` | `skill.crafting.carpentry` | `chain.cooperage.cask` |
+| `recipe.copper_ore_to_copper_ingot` | `forging` | `copper_ore` -> `copper_ingot` | `workplace.smelter_hall` | `crucible_tongs` | `skill.crafting.smelting` | `chain.metal.copper_ingot` |
+| `recipe.copper_ore_and_tin_ore_to_bronze_ingot` | `forging` | `copper_ore` + `tin_ore` -> `bronze_ingot` | `workplace.smelter_hall` | `crucible_tongs` | `skill.crafting.smelting` | `chain.metal.bronze_ingot` |
+| `recipe.iron_ingot_to_metal_plate` | `metalsmithing` | `iron_ingot` -> `metal_plate` | `workplace.armorers_forge` | `blacksmith_hammer` | `skill.crafting.blacksmithing` | `chain.metal.components` |
+| `recipe.iron_ingot_to_blade_blank` | `metalsmithing` | `iron_ingot` -> `blade_blank` | `workplace.weaponsmith_forge` | `blacksmith_hammer` | `skill.crafting.blacksmithing` | `chain.metal.components` |
+| `recipe.blade_blank_tool_handle_and_leather_strap_to_arming_sword` | `assembly` | `blade_blank` + `tool_handle` + `leather_strap` -> `arming_sword` | `workplace.weaponsmith_forge` | `blacksmith_hammer` | `skill.crafting.blacksmithing` | `chain.warfare.weapons` |
+| `recipe.cured_leather_to_leather_strap` | `leatherworking` | `cured_leather` -> `leather_strap` | `workplace.tannery` | `tanning_scraper` | `skill.crafting.leatherworking` | `chain.leather.components` |
+| `recipe.cured_leather_to_hardened_leather_panel` | `leatherworking` | `cured_leather` -> `hardened_leather_panel` | `workplace.tannery` | `tanning_scraper` | `skill.crafting.leatherworking` | `chain.leather.components` |
+| `recipe.metal_ring_and_leather_strap_to_mail_coif` | `assembly` | `metal_ring` + `leather_strap` -> `mail_coif` | `workplace.armorers_forge` | `blacksmith_hammer` | `skill.crafting.armoring` | `chain.warfare.armor` |
 
-- 12 new settlement district records;
-- 18 new settlement site records;
-- 6 new semantic map-feature records;
-- 12 new `knowledge_domain.general_lore` snippets providing representative coverage of the new and existing cluster canon.
-
-Do not add settlement, region, locality, visual world-map geometry, service, resource, or commodity records. If a required reference cannot close without one, stop and report the blocker instead of broadening scope.
+Add no item, market-value, consumable-profile, weapon-profile, armor-profile, resource, commodity, workplace, tool, skill, production-chain, Knowledge, schema, validator, or lint-registration record.
 
 ## Authoring Rules
 
-### Districts and sites
-
-- Use `packages/content/base/world/settlement_districts.json` and `packages/content/base/world/settlement_sites.json` only.
-- Make major settlements structurally distinct through scale-appropriate civic, market, production, harbor, defensive, religious, residential, or archival functions supported by parent canon.
-- Do not force districts onto settlements whose scale supports only named sites; distribute the exact matrix deliberately among the three parents in each cluster.
-- Every record needs a unique id, slug, name, summary, valid parent, supported type/tags, honest lifecycle, and source-authority note.
-- A site may reference a new district only when the physical/functional relationship is explicit. Otherwise attach it directly to the parent settlement.
-- New records intended for Knowledge subjects must be `active`. Active means authored canonical availability, not simulation, discovery, staffing, services, or gameplay.
-- Avoid duplicated functions, interchangeable prose, adjective-only variants, and claims that require NPC schedules, vendors, construction, property, taxation, law enforcement, dynamic economy, or runtime state.
-
-### Semantic map features
-
-- Use `packages/content/base/world/map_features.json` only.
-- Add named rivers, ridges, bays, headlands, passes, marshes, or comparable geographic identities justified by current region/settlement canon.
-- Close every place anchor and visual reference under the current schema and validator.
-- Keep these records semantic and descriptive. Do not edit `world_map_features.json`, invent pixel geometry, add map images, or create a generic POI authority.
-- Use the lifecycle status that honestly reflects current authored/reference readiness; do not mark a feature active merely to suggest unavailable gameplay.
-
-### Knowledge
-
-- Use the active `knowledge_domain.general_lore` authority and `packages/content/base/player/knowledge_snippets.json`.
-- Add exactly 12 snippets total: four per cluster. Each snippet must have exactly one `subjectType` and one `subjectId`, as required by the live schema.
-- Within each cluster, include at least one snippet whose subject is an existing parent settlement, at least one whose subject is a new district, and at least one whose subject is a new site. The fourth snippet may use another parent settlement, new district, or new site that best expresses the cluster's distinct canon.
-- This is representative Knowledge coverage, not exhaustive one-snippet-per-record coverage. Do not exceed 12 snippets and do not require every new district or site to receive a snippet.
-- Do not create snippets for unsupported map-feature subjects.
-- Every subject must exist and be active, and every subject/source type must be declared by the live registry.
-- Keep snippets concise, descriptive, source-traceable, and non-spoiler. They must not grant discovery, skill, travel access, rewards, reputation, services, magic, or state changes.
-- Do not change domain activation, policies, trial readiness, or Arcane Lore.
-
-### Existing paused authorities
-
-- Services, resources, and commodities remain paused. Existing records may inform descriptions, but do not add or activate them and do not claim provider availability, extraction, production, stock, prices, or trade simulation.
-- Do not modify settlements, regions, localities, hexes, visual map aggregates, economy/runtime content, or other catalog families to make the batch easier.
+- Use the current strict recipe schema and semantic validator without weakening either.
+- Derive exact quantities and input/output roles from the matching current production-chain `recipeProfile` and current item evidence. Each recipe must have exactly one `primary` output. If a listed chain does not contain a compatible exact transformation, stop and report the row rather than inventing quantities.
+- Keep production-chain references non-inheriting and descriptive. Do not copy macro production behavior or imply execution.
+- Use only the exact workplace, tool, skill, and chain references listed above. Confirm every reference resolves and every workplace input/output tag contract accepts the recipe items.
+- Confirm every marketable input, output, and tool has current static value closure. `bread_dough` and `pastry_dough` are intentionally nonmarketable intermediates and do not require new values.
+- Keep summaries and notes concise and explicit that the records are static planned transformations only.
+- Omit prerequisite refs. Do not add Knowledge, guild, trial, unlock, availability, or progression claims.
+- Do not alter existing recipes unless a focused validation defect introduced by this batch proves a minimal expectation update is necessary.
+- Do not add weapon or armor profile content. Those families still lack live collections and normal-lint registration; profile work requires a separately approved narrow precondition before any content.
+- Preserve the paused resource and commodity catalogs exactly. Existing references may inform item identity, but this package does not reopen gathering, extraction, trade, or commodity expansion.
 
 ## Allowed Files
 
 Production content changes are limited to:
 
-- `packages/content/base/world/settlement_districts.json`
-- `packages/content/base/world/settlement_sites.json`
-- `packages/content/base/world/map_features.json`
-- `packages/content/base/player/knowledge_snippets.json`
+- `packages/content/base/crafting/recipes.json`
 
-Focused tests may be changed only when the new records expose a real existing coverage gap in the current authority test, not to weaken assertions or accommodate invalid content.
+Focused test changes are limited to:
+
+- `tests/unit/crafting-recipes-validation.test.mjs`
+
+Update the focused live-catalog expectations from 12 to 30 recipes and assert the exact 18 new ids and exact family coverage. Do not weaken existing assertions.
 
 Coordination documentation may be updated only where required:
 
@@ -133,60 +105,60 @@ Coordination documentation may be updated only where required:
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
-- `docs/design/static-content-expansion-program.md` only if live evidence requires a factual correction.
+- `docs/design/static-content-expansion-program.md` only for factual live-inventory/status updates.
 
-Do not change schemas or validators unless the current valid contract cannot express one of the already approved record types. If that occurs, stop and report the exact blocker; do not combine contract redesign with this content batch.
+If the current contract cannot express one of these already approved standard records, stop and report the exact blocker. Do not combine schema, validator, live-collection, or lint-registration redesign with this batch.
 
 ## Prohibited Scope
 
 Do not add or change:
 
-- runtime, UI, commands, events, saves, migrations, dependencies, package metadata, generated output, or assets;
-- population simulation, NPC schedules/workers, vendors, stock, prices, services, construction, property, settlement growth, taxation, law enforcement, dynamic economy, reputation, rewards, discovery state, travel behavior, encounters, spawns, loot, or gameplay;
-- generic `world.pois` or any parallel place authority;
-- world-map image geometry or cartography;
-- backwards-compatibility aliases or migration behavior;
-- unrelated cleanup, renames, formatting, content, or tests.
+- item-instance state, provenance, ownership, reservations, storage contents, inventory capacity, durability, quality, spoilage, repair, salvage, affixes, or stack mutation;
+- crafting execution, availability, unlocks, orders, timers, queues, success rolls, output creation, input consumption, labor, fuel, workers, or production simulation;
+- dynamic prices, vendors, stock, transactions, gathering, extraction, cargo, trade, services, or economy behavior;
+- weapon/armor profile collections or registration, consumable behavior, combat behavior, magic, alchemy, enchanting, or equipment effects;
+- runtime, UI, commands, events, saves, migrations, dependencies, package metadata, generated output, assets, or gameplay;
+- backwards-compatibility aliases, retired-id preservation, unrelated cleanup, renames, formatting, content, or tests.
 
 ## Validation
 
 Run the smallest complete checks for this package:
 
-1. Reproduce final counts and the three-cluster matrix.
+1. Reproduce final counts: 1,372 items, 1,617 market values, 9 consumable profiles, 0/0 live weapon/armor profile collections, 30 planned recipes across 10 families, 58 workplaces, 131 tools, 121 skills, 121 production chains, 2 planned resources, and 2 planned commodities.
 2. Run normal content lint: `npm.cmd run tool:content-lint`.
-3. Run the focused settlement district/site, map-feature, Knowledge registry/snippet, and schema-file tests that own these paths. Discover exact test filenames from the live checkout; do not guess or run the full suite.
-4. Search for duplicate ids, slugs, names, aliases, missing parents, unsupported subject/source types, and orphan geographic references.
-5. Confirm no generic `world.pois`, visual geometry, paused-authority, runtime, UI, save, migration, dependency, generated-output, or asset path changed.
+3. Run exactly:
+
+   `node --test tests/unit/crafting-recipes-validation.test.mjs tests/unit/equipment-profiles-validation.test.mjs tests/unit/resource-commodity-authority-validation.test.mjs tests/unit/schema-files.test.mjs`
+
+4. Audit duplicate recipe ids/slugs, no-op transformations, duplicate input/output keys, exactly one primary output, and item/value/tool/workplace/skill/production-chain closure.
+5. Confirm no item, value, profile, resource, commodity, workplace, skill, production-chain, schema, validator, lint-index, runtime, UI, save, migration, dependency, generated-output, or asset path changed.
 6. Run conflict-marker and trailing-whitespace searches.
 7. Run `git diff --check`.
-8. Inspect the complete changed-path set and diff.
+8. Inspect the complete changed-path set and full diff.
 
 Do not run builds, typechecks, package installation, servers, generators, or the full test suite.
 
 ## Documentation And Next Prompt
 
-On success:
+After successful validation:
 
 - overwrite `docs/dev/current-codex-output.md` with the exact run result, counts, files, checks, behavior confirmation, risks, and suggested commit;
-- update the current handoff and roadmap anchors so `0.6.4` is complete and `0.6.5` is next;
-- update `docs/future_content_backlog.md` because this run adds canon and advances the program;
-- overwrite `docs/dev/current-codex-prompt.md` with an exact implementation prompt for `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+- advance the current GPT handoff, sequence, roadmap, continuity brief, backlog, and static-program factual inventory only where the completed package changes current direction;
+- overwrite `docs/dev/current-codex-prompt.md` with an exact implementation prompt for `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
 
-The installed `0.6.5` prompt must require a fresh item/value/profile/recipe/resource/commodity/workplace/tool/skill inventory; define a dependency-closed set of recipe families and exact target batch; preserve paused resource/commodity expansion unless its reopening trigger has separately passed; add the narrow live collection/lint precondition before weapon or armor profiles if profiles are included; require item/value/input/output/tool/workplace/skill/profile closure, normal content lint, focused authority tests, and complete changed-path review; prohibit item-instance state, durability/quality/spoilage mutation, reservations, storage ownership, inventory capacity, crafting execution, dynamic availability, runtime, UI, saves, migrations, and gameplay; and require the exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt after successful completion.
-
-Do not select a runtime consumer during this run.
+The installed `0.6.6` prompt must require a fresh monster/fauna/ecology/region/biome/combat-role/tactics/item/value/loot inventory; define an exact region/biome/role/threat matrix and exact batch; use only current executable combat/action vocabulary; close monster, fauna lineage if used, regional ecology, role, tactics, item, market-value, and source-local loot references; prohibit new combat mechanics, generic loot tables, spawn rules, encounter execution, dynamic rolls, population/migration/harvest simulation, runtime, UI, saves, migrations, and gameplay; require normal content lint, focused authority tests, closure/hygiene checks, full changed-path review; and require the exact `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` prompt after successful completion.
 
 ## Completion Report
 
-Record:
+Report:
 
-- starting commit and branch state;
-- pre- and post-authoring counts;
-- completed coverage matrix and dependency closure;
-- exact new canon by owner family;
+- starting commit and initial worktree state;
+- reproduced baseline and final counts;
+- exact 18 new recipe records and family distribution;
+- item/value/tool/workplace/skill/chain closure;
 - files changed;
 - checks run and results;
-- confirmation that no integrated gameplay behavior changed;
-- any skipped target and evidence-backed blocker;
-- whether the exact `0.6.5` prompt was installed;
+- confirmation that behavior/runtime/UI/save/economy state did not change;
+- risks or deferred anomalies;
+- whether the exact `0.6.6` prompt was installed;
 - suggested commit message.

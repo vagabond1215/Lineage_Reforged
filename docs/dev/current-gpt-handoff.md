@@ -1,13 +1,13 @@
 # Current GPT Handoff
 
-Source version/run: Unversioned - Historical Route Cleanup And Static Content Expansion Pipeline Integration
+Source version/run: `Version 0.6.4 - World And Settlement Static Content Expansion`
 Date: 2026-07-14
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.6.3 - Engine-Owned Activity Selection Command`
+- `Version 0.6.4 - World And Settlement Static Content Expansion`
 
 Latest completed support/audit:
 
@@ -19,13 +19,21 @@ Completed maintenance:
 
 Immediate next primary:
 
-- `Version 0.6.4 - World And Settlement Static Content Expansion`
+- `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
+
+## Completed Package Evidence
+
+- `0.6.4` added exactly 12 active districts, 18 active sites, 6 planned semantic map features, and 12 General Lore snippets across Verdant Thalos, Heart Basin, and Stormcap Coast.
+- Live totals are 14 districts, 20 sites, 8 semantic map features, and 28 Knowledge snippets, including 18 General Lore snippets.
+- The exact cluster matrix is 4 districts, 6 sites, 2 semantic features, and 4 General Lore snippets per cluster.
+- All identity, parent, subject, geographic, and visual references close; 592/592 focused tests and normal content lint at 67 files pass.
+- No schema, validator, generic POI, visual geometry, paused authority, runtime, UI, save, migration, dependency, asset, or gameplay behavior changed.
 
 ## Durable Authorities
 
 - `docs/dev/historical-version-and-deferred-route-register.md` is the canonical query surface for historical aliases, suffixes, identity conflicts, deferred classifications, and reopening triggers.
-- `docs/design/static-content-expansion-program.md` owns the live inventory, readiness decisions, static/runtime boundary, batch policy, `0.6.4`-`0.6.7` sequence, and runtime-resumption rule.
-- `docs/dev/current-codex-prompt.md` contains the exact `0.6.4` implementation prompt.
+- `docs/design/static-content-expansion-program.md` owns live inventory, readiness decisions, the static/runtime boundary, batch policy, the `0.6.4`-`0.6.7` sequence, and the runtime-resumption rule.
+- `docs/dev/current-codex-prompt.md` contains the exact `0.6.5` implementation prompt.
 
 ## Historical Resolution
 
@@ -36,19 +44,20 @@ Immediate next primary:
 
 ## Static Program Boundary
 
-Run the exact primary sequence:
+`0.6.4` is complete. Continue the exact remaining sequence:
 
-1. `0.6.4` - world and settlement static content.
-2. `0.6.5` - item, material, and recipe static content.
-3. `0.6.6` - monster, ecology, and loot static content.
-4. `0.6.7` - cross-content coherence and coverage audit.
+1. `0.6.5` - item, material, and recipe static content.
+2. `0.6.6` - monster, ecology, and loot static content.
+3. `0.6.7` - cross-content coherence and coverage audit.
 
-Static content may add validated identities, prose, classifications, references, and honest lifecycle states. It must not imply item instances, inventory/storage mutation, crafting execution, dynamic vendors/economy/services, encounter/spawn simulation, dynamic loot, NPC population/schedules, construction/property/taxation/law enforcement, runtime ecology, or gameplay behavior.
+The exact `0.6.5` target adds 18 planned standard recipes using existing item/material identities, values, tools, workplaces, skills, and production chains. It adds no item, value, profile, resource, commodity, workplace, tool, skill, chain, schema, validator, or lint-registration record.
 
-Services and resource/commodity expansion remain paused. Weapon/armor profiles require live collections and normal-lint registration before content. Generic `world.pois` remains rejected.
+Services and resource/commodity expansion remain paused. Weapon/armor profiles still require live collections and normal-lint registration before content. Consumable-profile anomalies remain out of scope. Generic `world.pois` remains rejected.
+
+Static content must not imply item instances, inventory/storage mutation, crafting execution, dynamic vendors/economy/services, encounter/spawn simulation, dynamic loot, NPC population/schedules, construction/property/taxation/law enforcement, runtime ecology, or gameplay behavior.
 
 After `0.6.7` acceptance, re-read current source and select exactly one of activity advancement, rest, or quest turn-in. Do not bundle them or preassign the next version.
 
 Suggested next commit:
 
-`content(world): expand settlement districts sites and features`
+`content(crafting): expand dependency-closed recipe families`

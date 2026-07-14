@@ -4,11 +4,11 @@ Last reviewed: 2026-07-14
 
 ## Current Runtime Transition Override
 
-- Latest completed primary: `Version 0.6.3 - Engine-Owned Activity Selection Command`.
+- Latest completed primary: `Version 0.6.4 - World And Settlement Static Content Expansion`.
 - Latest completed support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`.
 - Completed support route: unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`.
-- Next primary: `Version 0.6.4 - World And Settlement Static Content Expansion`.
-- Activity selection remains accepted. The static program now runs `0.6.4` world/settlement, `0.6.5` item/material/recipe, `0.6.6` monster/ecology/loot, and `0.6.7` cross-content audit before another runtime consumer.
+- Next primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+- Activity selection remains accepted. `0.6.4` world/settlement content is complete; the static program continues through `0.6.5` item/material/recipe, `0.6.6` monster/ecology/loot, and `0.6.7` cross-content audit before another runtime consumer.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -34,11 +34,11 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.6.3 - Engine-Owned Activity Selection Command`
+- Latest completed version: `Version 0.6.4 - World And Settlement Static Content Expansion`
 - Latest support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
-- Next recommended run: `Version 0.6.4 - World And Settlement Static Content Expansion`
+- Next recommended run: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the documentation gates passed and the four-package static content milestone is active; UI information architecture remains durably bounded
+- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the first static package is complete and the remaining `0.6.5`-`0.6.7` milestone is active; UI information architecture remains durably bounded
 
 Versioning rule:
 
@@ -521,10 +521,11 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-1. `0.6.4 - World And Settlement Static Content Expansion`
-2. `0.6.5 - Item, Material, And Recipe Static Content Expansion`
-3. `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-4. `0.6.7 - Cross-Content Coherence And Coverage Audit`
+Completed: `0.6.4 - World And Settlement Static Content Expansion`.
+
+1. `0.6.5 - Item, Material, And Recipe Static Content Expansion`
+2. `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+3. `0.6.7 - Cross-Content Coherence And Coverage Audit`
 
 The content sequence is intentional and controlled by `docs/design/static-content-expansion-program.md`; each package still requires its exact prompt, owner review, dependency closure, and focused validation. The canonical deferred classifications and reopening triggers are in `docs/dev/historical-version-and-deferred-route-register.md`. Living Character Manuscript, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, People/NPC, services, resources/commodities, and combat health retain their existing gates; generic `world.pois` remains rejected and Highcrown settlement Knowledge remains closed. After `0.6.7`, compare current activity advancement, rest, and quest turn-in owners and select exactly one bounded runtime consumer.
 
