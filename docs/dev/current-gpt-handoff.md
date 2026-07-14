@@ -27,6 +27,10 @@ Immediate route after accepted `0.6.5`:
 - unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`;
 - revised `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` only after research integration accepts.
 
+Current execution status:
+
+- Blocked at the `0.6.5` pre-authoring gate. All named identities resolve, but the named production-chain profiles do not supply the exact transformations and quantity ratios required to author the 18-row target without invention.
+
 ## Completed Package Evidence
 
 - `0.6.4` is committed as `44dfb0a79bdd9941ca45e39d83b125b3ced6d9ca`, with parent `1e62aaeb4a7a23c5514eb7ffb49f26d20f9a6070`.
@@ -86,7 +90,7 @@ Immediate route after accepted `0.6.5`:
 
 The exact `0.6.5` target adds 18 planned standard recipes using existing item/material identities, values, tools, workplaces, skills, and production chains. It adds no item, value, profile, resource, commodity, workplace, tool, skill, chain, schema, validator, or lint-registration record.
 
-All 18 proposed recipe ids remain available, and every referenced item key, tool, workplace, skill, and production-chain id resolves in the live catalogs. The prompt remains fail-closed: if a named chain does not provide a compatible exact transformation, implementation must stop on that row instead of inventing quantities.
+All 18 proposed recipe ids remain available, and every referenced item key, tool, workplace, skill, and production-chain id resolves in the live catalogs. The prompt's fail-closed gate triggered: 15 rows use inputs absent from the named chain profile, the pastry-dough row omits required `honeycomb`, the meat-pie row lacks an exact step consuming `smoked_meat`, and the only exact step shape still has no authoritative quantity ratio. Do not implement partial rows or invent quantities. Reconcile the `0.6.5` target against current production-chain authority before recipe authoring.
 
 Services and resource/commodity expansion remain paused. Weapon/armor profiles still require live collections and normal-lint registration before content. Consumable-profile anomalies remain out of scope. Generic `world.pois` remains rejected.
 
@@ -94,4 +98,4 @@ Static content and research must not imply item instances, inventory/storage mut
 
 Suggested next commit:
 
-`content(crafting): expand dependency-closed recipe families`
+`docs(crafting): record 0.6.5 chain authority blocker`
