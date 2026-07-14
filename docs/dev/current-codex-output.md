@@ -1,53 +1,75 @@
 # Current Codex Output
 
-Source version/run: Unversioned - GPT Update And 0.6.5 Blocker Reconciliation
+Source route: connector-side `0.6.5 Research Prerequisite And Recipe Authority Reconciliation`
 Date: 2026-07-14
-Branch/status assumption: `master`; local blocker commit `79035524` and remote GPT head `bd18fc5d` diverged from common commit `e40f9497`; the blocker was rebased as `aa0d7cd0` on top of the six remote GPT commits before this reconciliation.
 
 ## Result
 
-Reconciled the GPT-authored cross-domain research bridge with the existing `0.6.5` pre-authoring blocker without losing either route.
+Corrected the sequencing deadlock created by placing the cross-domain research program after an `0.6.5` implementation that had already stopped for missing transformation and quantity authority.
 
-- Preserved the seven-gate `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Program` and its unversioned integration immediately after eventual `0.6.5` acceptance.
-- Preserved `0.6.6` as reserved until that research and integration are accepted.
-- Preserved the fail-closed `0.6.5` finding: 15 proposed rows use inputs absent from their named chain profile, the pastry-dough row omits required `honeycomb`, the meat-pie row lacks an exact step consuming `smoked_meat`, and the only exact step shape lacks an authoritative quantity ratio.
-- Kept the active `0.6.5` prompt installed. It still requires target reconciliation and correctly prohibits partial authoring or invented quantities.
-- Preserved the post-`0.6.7` Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
+The repository now routes:
 
-No content, tests, runtime, schema, validator, research execution, or gameplay implementation changed.
+1. seven GPT Deep Research gates;
+2. unversioned cross-domain research integration;
+3. revised `0.6.5` recipe implementation;
+4. `0.6.6` monster/ecology/loot;
+5. `0.6.7` coherence audit;
+6. Geography and location-recognition contract planning.
 
-## Files Changed
+The failed `0.6.5` implementation prompt is no longer active. `docs/dev/current-codex-prompt.md` now contains the exact research-integration hold and targets a revised `0.6.5`, not `0.6.6`.
 
-- `docs/design/static-content-expansion-program.md`
-- `docs/dev/current-codex-output.md`
+## Preserved Blocker
+
+The pre-authoring stop remains accepted evidence:
+
+- live recipes remain 12 planned standard records across 8 families;
+- all 18 proposed ids and named identity references resolved;
+- 15 rows used inputs absent from their named production-chain profile;
+- pastry dough omitted profile-declared `honeycomb`;
+- savory meat pie lacked an exact step consuming `smoked_meat`;
+- the only exact step shape lacked an authoritative quantity ratio;
+- no recipe, test, schema, validator, runtime, UI, save, dependency, asset, or gameplay file changed.
+
+Do not rerun that target, partially author it, or assume `1:1` quantities.
+
+## Files Changed By The Correction
+
+- `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`
+- `docs/dev/queued-cross-domain-production-research-integration-prompt.md`
+- `docs/dev/current-codex-prompt.md`
 - `docs/dev/current-gpt-handoff.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
-- `docs/future_content_backlog.md`
+- `docs/dev/current-codex-output.md`
+- additional route authorities may be aligned in the same connector correction series.
 
-## Checks Run
+## Authority Decision
 
-- Fetched remote updates and inspected all six GPT commit subjects and changed paths.
-- Compared local commit `79035524` with remote head `bd18fc5d` before integration.
-- Rebased the blocker report onto `origin/master`; resolved content conflicts in the current handoff and historical/deferred route register.
-- Reviewed the complete reconciled diff and direction-bearing route terms.
-- Confirmed no unresolved conflict markers or trailing whitespace.
-- Ran `git diff --check` across the GPT-update and reconciliation range.
-- Ran normal content lint: `content-lint: ok (67 files checked)`.
+The focused reconciliation decision establishes the default integration posture:
 
-## Behavior / Runtime Confirmation
+- recipes own bounded explicit static batch transformations;
+- production chains own macro stages and process context;
+- chain references remain descriptive and non-inheriting;
+- research informs materials, intermediates, order, losses, byproducts, and plausible relative scale;
+- exact integer quantities are authored game-scale batch units and require confidence labels;
+- material chain defects route separately when current authority is materially wrong.
 
-Documentation only. No content JSON, tests, runtime, UI, save, migration, schema, validator, lint registration, dependency, generated output, asset, economy, Knowledge/recognition state, research artifact, or gameplay behavior changed.
+The integration pass must confirm or correct this posture from live evidence before installing revised `0.6.5`.
 
-## Risks / Follow-Up
+## Next Work
 
-- The GPT updates add a post-acceptance research route; they do not resolve the current recipe transformation or quantity-authority blocker.
-- Do not run the research program, activate its integration prompt, or advance to `0.6.6` before `0.6.5` is reconciled, implemented, validated, committed, and accepted.
-- The next safe work is a docs-first exact-target reconciliation or a separately approved production-chain authority change. Do not combine those alternatives silently.
+Next executable work is GPT Deep Research:
 
-## Next Recommended Version
+`GPT-DR.resources.gathering-extraction`
 
-Blocked `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` target reconciliation.
+Expected first artifact:
 
-## Suggested Commit Message
+`docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md`
 
-`docs(coordination): reconcile 0.6.5 blocker with research route`
+Do not run the current Codex integration prompt until all seven required research artifacts are committed.
+
+## Behavior Confirmation
+
+Documentation only. No content JSON, recipes, production chains, schemas, validators, tests, lint code, runtime, UI, saves, migrations, dependencies, assets, generated output, research artifacts, or gameplay behavior changed.
+
+## Suggested Next Commit
+
+The next repository commit should be the first cited Deep Research artifact, not a recipe implementation commit.
