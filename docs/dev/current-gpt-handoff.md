@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: `0.6.5 Research Prerequisite And Recipe Authority Reconciliation`
+Source route: `GPT-DR.resources.gathering-extraction` acceptance and research-route advancement
 Date: 2026-07-14
 
 ## Status
@@ -18,9 +18,16 @@ Blocked primary:
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 - The pre-authoring gate stopped correctly before recipe or test edits.
 
+Completed research gates:
+
+1. `GPT-DR.resources.gathering-extraction`
+   - artifact: `docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md`
+   - commit: `780513115686ce9c9f5f3828229cd9e2e4a78d09`
+   - status: accepted temporary cited research input; non-canonical until cross-domain integration
+
 Immediate next executable work:
 
-- `GPT-DR.resources.gathering-extraction`
+- `GPT-DR.ecology.flora-fauna-byproducts`
 - Continue the seven-gate research program one cited artifact at a time.
 
 Next Codex run:
@@ -31,8 +38,8 @@ Next Codex run:
 
 ## Corrected Sequence
 
-1. `GPT-DR.resources.gathering-extraction`
-2. `GPT-DR.ecology.flora-fauna-byproducts`
+1. `GPT-DR.resources.gathering-extraction` — complete
+2. `GPT-DR.ecology.flora-fauna-byproducts` — next
 3. `GPT-DR.agriculture.land-food-livestock`
 4. `GPT-DR.materials.refinement-processing`
 5. `GPT-DR.food.processing-preservation`
@@ -46,6 +53,17 @@ Next Codex run:
 13. Re-read runtime ownership and select exactly one later consumer
 
 This sequence supersedes older rows that place research after accepted `0.6.5`.
+
+## Accepted Gate 1 Findings
+
+The gathering/extraction artifact establishes research input for later integration, not implementation permission. Preserve these findings for the synthesis:
+
+- resource identity, biological/geological source, placed source site, inventory output, market commodity, process chain, and runtime extraction action are separate concepts;
+- the civilization engine already derives spatial flora/fauna/mineral availability and settlement supply capability, but no general gathering or extraction execution owner exists;
+- ordinary technology remains the baseline, with magic limited to bounded assistance, explicit specialties, or rare institutional infrastructure;
+- source-to-output, source-to-method, method-to-workplace/tool/skill, environment, access, initial preparation, and residue relationships are stronger static candidates than automatic node or item expansion;
+- exact yields, depletion, regrowth, calendars, labor, fuel, time, quality, hazards, item creation, and persistence remain blocked;
+- two adjacent value discrepancies involving gold ore and handcart values were observed but remain outside this gate and must not be silently corrected during research.
 
 ## 0.6.5 Blocker Evidence
 
@@ -100,4 +118,4 @@ Do not implement recipes, production chains, resources, gathering, agriculture, 
 
 Next artifact:
 
-`docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md`
+`docs/dev/tmp-ecology-flora-fauna-byproducts-research-2026-07-14.md`
