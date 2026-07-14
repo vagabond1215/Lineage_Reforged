@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-13
-Route: Codex local sequencing alignment after `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
+Route: Codex local sequencing alignment after `Version 0.6.3 - Engine-Owned Activity Selection Command`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,15 +21,15 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest completed primary:
 
-- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
+- `Version 0.6.3 - Engine-Owned Activity Selection Command`
 
 Latest completed support/audit run:
 
 - `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
 
-Immediate next primary Codex run:
+Immediate next support/audit Codex run:
 
-- `Version 0.6.3 - Engine-Owned Activity Selection Command`
+- `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
 
 ## Current Queue Override
 
@@ -46,7 +46,9 @@ Immediate next primary Codex run:
 - `Version 0.6.2.1 - Engine-Owned Quest Tracking Post-Transition Audit` is complete but did not accept the transition. Authority, parity, identity, atomicity, persistence/browser, UI-adapter, and hygiene gates passed at 35/35 focused tests, but the accepted event payload violates the no-presentation-prose boundary by including the quest display `title`.
 - `Version 0.6.2.2 - Engine-Owned Quest Tracking Repair` is complete. It removed only the event payload `title`, added an exact six-key/no-title regression guard, preserved result/notice title facts and exact behavior hashes, and passed 35/35 focused tests.
 - `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit` is complete and accepted. It reconfirmed the exact two-deletion repair, six-key no-prose event contract, authority, parity, identity, atomicity, persistence/browser, UI-adapter, and hygiene gates at 35/35 focused tests.
-- `Version 0.6.3 - Engine-Owned Activity Selection Command` is the immediate primary route. Move only `setCurrentActivityFromRecord(...)` behind one engine resolver/command/result/event boundary while preserving the exact selected activity, notification, synchronized snapshot, notice, and missing-record rejection.
+- `Version 0.6.3 - Engine-Owned Activity Selection Command` is complete. It moved only `setCurrentActivityFromRecord(...)` behind one engine resolver/command/result/event boundary, preserved exact selected/missing snapshot and notice hashes, notification behavior, synchronization, and accepted-only UI application, and passed 45/45 focused tests.
+- `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit` is the immediate read-only route. Reconfirm selection authority, parity, identity, atomicity, notification/event, persistence/browser, UI-adapter, and hygiene gates before selecting one later consumer.
+- `docs/dev/queued-codex-cleanup-prompt.md` remains queued documentation maintenance only and does not displace the active `0.6.3.1` audit.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
 - Activity advancement, rest, and quest turn-in remain later consumers. Do not bundle them into activity selection; advancement and rest also require their preview/execution boundaries to be reconciled.

@@ -14,6 +14,26 @@ import {
 export { createEmptySessionState, createSaveSnapshotFromGameContext } from "./save-snapshot.js";
 export { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 export {
+  PLAYER_ACTIVITY_SELECTED_EVENT_TYPE,
+  createPlayerActivitySelectionCommand,
+  executePlayerActivitySelectionCommand,
+  resolveNextPlayerActivitySelectionCommandSequence,
+  resolvePlayerActivitySelectionPlan,
+  type AcceptedPlayerActivitySelectionPlan,
+  type AcceptedPlayerActivitySelectionResult,
+  type PlayerActivitySelectedEvent,
+  type PlayerActivitySelectedEventPayload,
+  type PlayerActivitySelectionCommand,
+  type PlayerActivitySelectionCommandRejectionCode,
+  type PlayerActivitySelectionFacts,
+  type PlayerActivitySelectionNoticeFacts,
+  type PlayerActivitySelectionPlan,
+  type PlayerActivitySelectionPlanRejectionCode,
+  type PlayerActivitySelectionResult,
+  type RejectedPlayerActivitySelectionPlan,
+  type RejectedPlayerActivitySelectionResult
+} from "./player-activity-selection.js";
+export {
   PLAYER_QUEST_ACCEPTED_EVENT_TYPE,
   createPlayerQuestAcceptanceCommand,
   executePlayerQuestAcceptanceCommand,

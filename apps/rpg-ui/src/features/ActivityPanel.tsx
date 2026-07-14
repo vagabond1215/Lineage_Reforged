@@ -170,7 +170,9 @@ export function ActivityPanel({
                       }
 
                       const result = setCurrentActivityFromRecord(snapshot, selectedItem.id);
-                      updateSnapshot(result.snapshot);
+                      if (result.accepted) {
+                        updateSnapshot(result.snapshot);
+                      }
                       setPanelNotice(result.notice);
                     }}
                     disabled={!selectedItem}

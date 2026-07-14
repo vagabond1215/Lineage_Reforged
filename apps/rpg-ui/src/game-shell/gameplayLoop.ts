@@ -17,6 +17,11 @@ import {
   type SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
 import {
+  createPlayerActivitySelectionCommand,
+  executePlayerActivitySelectionCommand,
+  type PlayerActivitySelectionResult
+} from '../../../../packages/engines/game-engine/src/player-activity-selection.js';
+import {
   createPlayerTravelCommand,
   executePlayerTravelCommand,
   type PlayerTravelResult
@@ -181,21 +186,6 @@ const SETTLEMENT_REST_RECOVERY: RecoveryContextState = {
 
 function cloneSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
   return deserializeSnapshot(serializeSnapshot(snapshot));
-}
-
-function humanizeId(value: string | null | undefined): string {
-  if (!value) {
-    return 'Unknown';
-  }
-
-  const segments = value.split('.');
-  const lastSegment = segments[segments.length - 1] ?? value;
-
-  return lastSegment
-    .split(/[_-]/)
-    .filter((part) => part.length > 0)
-    .map((part) => part[0]!.toUpperCase() + part.slice(1))
-    .join(' ');
 }
 
 function formatTickTime(snapshot: SaveSnapshot): string {
@@ -1040,31 +1030,35 @@ export function toggleTrackedQuest(
   };
 }
 
+function createPlayerActivitySelectionNotice(result: PlayerActivitySelectionResult): GameShellNotice {
+  if (result.accepted) {
+    return createNotice(
+      'accent',
+      'Current Activity Updated',
+      `${result.noticeFacts.recordLabel} is now set as the active process.`
+    );
+  }
+  if (result.code === 'activity_missing') {
+    return createNotice('warning', 'Activity Missing', 'That activity record is not available in the current session.');
+  }
+  if (result.code === 'stale_snapshot') {
+    return createNotice('warning', 'Activity State Changed', 'The activity records changed. Review the selection and try again.');
+  }
+  return createNotice('warning', 'Activity Selection Blocked', 'That activity could not be selected from the current session state.');
+}
+
 export function setCurrentActivityFromRecord(
   snapshot: SaveSnapshot,
   recordId: string
-): GameplayActionResult {
-  const record = snapshot.sessionState.activityRecords.find((entry) => entry.id === recordId);
-
-  if (!record) {
-    return {
-      snapshot,
-      notice: createNotice('warning', 'Activity Missing', 'That activity record is not available in the current session.')
-    };
-  }
-
-  const nextSnapshot = cloneSnapshot(snapshot);
-  nextSnapshot.sessionState.currentActivity = {
-    id: record.id,
-    label: record.title,
-    category: humanizeId(record.sectionId),
-    detail: record.summary
-  };
-  appendNotification(nextSnapshot, 'Current activity set', `${record.title} is now the focus of the current shift.`, 'accent');
-
+): GameplayActionResult & { accepted: boolean } {
+  const result = executePlayerActivitySelectionCommand(
+    snapshot,
+    createPlayerActivitySelectionCommand(snapshot, recordId)
+  );
   return {
-    snapshot: syncSnapshot(nextSnapshot),
-    notice: createNotice('accent', 'Current Activity Updated', `${record.title} is now set as the active process.`)
+    accepted: result.accepted,
+    snapshot: result.snapshot,
+    notice: createPlayerActivitySelectionNotice(result)
   };
 }
 

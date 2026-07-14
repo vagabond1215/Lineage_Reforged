@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-13 after `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`.
+Updated 2026-07-13 after `Version 0.6.3 - Engine-Owned Activity Selection Command`.
 
 ## Purpose
 
@@ -35,15 +35,15 @@ This brief is the strategic north-star and source map for Lineage: Reforged. Kee
 
 Latest completed primary:
 
-- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
+- `Version 0.6.3 - Engine-Owned Activity Selection Command`
 
 Latest support/audit run:
 
 - `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
 
-Next recommended primary version:
+Next recommended support/audit version:
 
-- `Version 0.6.3 - Engine-Owned Activity Selection Command`
+- `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
 
 Current sequence source:
 
@@ -51,7 +51,7 @@ Current sequence source:
 
 Current phase:
 
-- player travel, quest acceptance, and repaired quest tracking are engine-owned and audited; extract only activity selection next
+- player travel, quest acceptance, and repaired quest tracking are engine-owned and audited; activity selection is engine-owned and must be audited before another consumer
 
 Current transition decisions:
 
@@ -110,7 +110,8 @@ Every major system should answer at least one of these questions:
 | `0.6.2.1` | Engine-Owned Quest Tracking Post-Transition Audit | Complete; transition not yet accepted. | All focused gates passed except the accepted event included presentation `title`; 35/35 tests still passed. |
 | `0.6.2.2` | Engine-Owned Quest Tracking Repair | Complete. Removed only event `title` and added an exact payload guard. | Result/notice title facts and hashes preserved; 35/35 focused tests passed. |
 | `0.6.2.3` | Engine-Owned Quest Tracking Post-Repair Audit | Complete and accepted. | Reconfirmed repaired contract and all transition gates at 35/35 focused tests. |
-| `0.6.3` | Engine-Owned Activity Selection Command | Next primary run. | Selection only; preserve exact activity, notification, synchronization, notice, and missing rejection. |
+| `0.6.3` | Engine-Owned Activity Selection Command | Complete. Moved selection behind one resolver/command/event boundary with exact parity. | Selection only; 45/45 focused tests passed. |
+| `0.6.3.1` | Engine-Owned Activity Selection Post-Transition Audit | Next read-only run. | Reconfirm selection ownership and extraction quality before selecting another consumer. |
 | later `0.6.x` | Later Engine-Owned Consumers | Activity advancement, rest, and turn-in remain deferred. | One coherent consumer per package; no generic command bus. |
 
 For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.

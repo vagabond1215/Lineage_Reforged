@@ -1,36 +1,41 @@
 # Current GPT Handoff
 
-Source version/run: Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit
+Source version/run: Version 0.6.3 - Engine-Owned Activity Selection Command
 Date: 2026-07-13
 
 ## Status
 
 Latest completed primary:
 
-- `Version 0.6.2 - Engine-Owned Quest Tracking Command`
+- `Version 0.6.3 - Engine-Owned Activity Selection Command`
 
 Latest completed support/audit run:
 
 - `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
 
-Immediate next primary route:
+Immediate next support/audit route:
 
-- `Version 0.6.3 - Engine-Owned Activity Selection Command`
+- `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
 
-## Audit Decision
+## Implementation Result
 
-The repaired quest-tracking transition is accepted. The repair commit contains exactly two production deletions removing event `title`, the event payload is locked to six identifier/state fields, and all authority, exact parity, identity, atomicity, persistence/browser, UI-adapter, and hygiene gates pass at 35/35 focused tests.
+Activity-record selection now has one browser-safe engine resolver, deterministic transient command with expected tick/version/full snapshot revision, atomic synchronized result, and typed `player.activity.selected` event. The UI gameplay-loop adapter projects notices but no longer performs record lookup, category derivation, selection mutation, or notification append. `ActivityPanel.tsx` applies snapshots only on acceptance and still displays every returned notice.
 
-## Consumer Selection
+Exact success and missing-record behavior remained stable across extraction. The locked success snapshot hash is `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40`, success notice hash is `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`, and missing-record notice hash is `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77`. Selection tests pass 10/10 and the prescribed focused group passes 45/45.
 
-Activity selection is next because `setCurrentActivityFromRecord(...)` has one UI call site and one bounded behavior: record lookup, replacement of `sessionState.currentActivity`, one capped notification, existing snapshot synchronization, and one notice. Missing record is its only current rejection.
+## Preserved Boundaries
 
-Activity advancement remains deferred because preview and execution duplicate rules across several quest-specific and generic time/resource/progression branches. Rest remains deferred because preview/execution share settlement/cost/recovery rules and execution mutates currency, time/body state, resources, rest metadata, activity, notification, and Chronicle. Turn-in remains deferred because it owns the broadest quest/reward/inventory/reputation/operation/tracking consequences.
+- Accepted events contain only `commandId`, `playerId`, `recordId`, `previousActivityId`, and `selectedActivityId`; presentation facts remain in result/notice projection.
+- Selection preserves the exact capped notification and synchronization behavior, repeated-selection acceptance, Chronicle state, serialization roundtrip, and atomic rejection.
+- Activity advancement/preview, rest/preview, quest turn-in, and every other owner-specific `currentActivity` writer remain untouched.
+- No save/schema/content/dependency/compatibility/generic command-bus/event-dispatch/replay behavior was added.
 
 ## Next Route
 
-Run `Version 0.6.3 - Engine-Owned Activity Selection Command`. Extract selection only behind one browser-safe engine resolver, deterministic transient command, atomic synchronized result, and typed no-prose event. Preserve exact selected snapshot/notice and missing-record rejection; keep every other `currentActivity` writer and activity advancement/rest/turn-in behavior unchanged.
+Run the read-only `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`. Reconfirm authority, exact hashes, command identity, atomicity, notification/event boundaries, persistence/browser safety, UI adaptation, and hygiene. If accepted, compare advancement, rest, and turn-in from current evidence and select exactly one bounded `0.6.4` consumer; otherwise choose the smallest `0.6.3.2` repair.
+
+The remotely added `docs/dev/queued-codex-cleanup-prompt.md` remains untouched and queued as documentation maintenance; it did not replace the active runtime audit route.
 
 Suggested next commit:
 
-`feat(runtime): move activity selection into engine ownership`
+`docs(audit): verify engine-owned activity selection transition`

@@ -1,19 +1,25 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit
+Source version/run: Version 0.6.3 - Engine-Owned Activity Selection Command
 Date: 2026-07-13
-Branch/status assumption: `master`; starting commit `bf6b516e`; clean worktree; `origin/master` aligned after fetch and fast-forward pull. The audit was read-only for runtime/UI/contracts/events/tests/content/schemas/saves/dependencies/generated output; final changes are coordination docs only.
+Branch/status assumption: `master`; starting commit `f3fc9769`; clean worktree after fetch and fast-forward pull; `origin/master` aligned. The remote-only `docs/dev/queued-codex-cleanup-prompt.md` was preserved untouched and did not displace the active runtime sequence.
 
 ## Result
 
-Accepted the repaired `0.6.2` quest-tracking transition. The `0.6.2.2` commit changed exactly the engine TypeScript module, focused command test, and coordination docs; its production diff is exactly two deletions removing display `title` from the event payload type and construction.
+Moved only activity-record selection behind an engine-owned resolver, deterministic transient command, atomic synchronized result, and typed accepted event. The gameplay-loop bridge no longer owns record lookup, category derivation, state mutation, or notification append, and `ActivityPanel.tsx` applies returned snapshots only when accepted.
 
-The accepted event now contains exactly the six allowed keys and no presentation prose. All prior authority, behavior, identity, atomicity, persistence/browser, UI-adapter, and hygiene gates pass at 35/35 focused tests.
-
-Selected `Version 0.6.3 - Engine-Owned Activity Selection Command` as the next bounded consumer.
+Exact pre-extraction success and missing-record behavior remains locked. The selection tests pass 10/10 and the prescribed focused transition group passes 45/45.
 
 ## Files Changed
 
+- `apps/rpg-ui/src/features/ActivityPanel.tsx`
+- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
+- `packages/engines/game-engine/src/index.ts`
+- `packages/engines/game-engine/src/player-activity-selection.ts` (created)
+- `packages/engines/game-engine/src/player-activity-selection.js` (created)
+- `packages/shared/events/src/index.ts`
+- `tests/unit/player-activity-selection-characterization.test.mjs` (created)
+- `tests/unit/player-activity-selection-command.test.mjs` (created)
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
@@ -22,54 +28,36 @@ Selected `Version 0.6.3 - Engine-Owned Activity Selection Command` as the next b
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-codex-prompt.md`
 
-## Files Inspected
-
-- Committed `bf6b516e` changed-path set and exact repair diff
-- Tracking resolver, command, result, event, JS peer, exports, shared event registration, synchronizer, persistence, UI bridge/application, and focused tests
-- Accepted quest-acceptance and travel patterns
-- All production `trackedQuestId` assignments
-- Activity selection, activity advancement/preview, rest/preview, quest turn-in, their UI call sites, current activity contracts, demo records, and focused adjacent tests
-- Required README, handoff, sequencing, roadmap, continuity, runtime-readiness, travel-clarification, and backlog sources
-
 ## Checks Run
 
-- Fetch and fast-forward pull: remote and local `master` aligned.
-- Prescribed tracking, acceptance, travel, skill-gating, save/load, and deterministic scenario group: 35/35 passed.
-- Confirmed exact six-key accepted event payload and explicit absence of `title`; result and notice facts retain title only for adapter presentation.
-- Confirmed locked complete track/untrack snapshot and notice hashes, toggle/rejection semantics, input immutability, resolver-owned eligibility, deterministic identities, atomic rejection, one typed event, notification/Chronicle isolation, serialization roundtrip, and transient correlation.
-- Confirmed browser-safe imports, intentional TS/JS peer, public exports, shared event registration, direct-mutation-free tracking bridge, and accepted-only `QuestsPanel` application.
-- Classified remaining production tracking assignments as accepted quest initialization, tracking toggle, turn-in fallback, and synchronizer cleanup; travel only reads tracking state.
-- `git show --check`, `git diff --check`, conflict-marker search, repair changed-path inspection, and clean pre-doc status passed.
-- Read-only characterization of activity selection confirmed `job.harbor_surveyor` preserves input, creates a new synchronized snapshot, appends one notification, and produces snapshot hash `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40` plus notice hash `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`.
-- Read-only missing-record characterization confirmed original snapshot identity/content and notice hash `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77`.
+- Fetch and fast-forward pull: local and remote `master` aligned at starting commit `f3fc9769`.
+- Pre-extraction characterization: 1/1 passed; success snapshot hash `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40`, success notice hash `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`, and missing notice hash `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77`.
+- Post-extraction activity-selection command and characterization tests: 10/10 passed with all locked hashes unchanged.
+- Prescribed selection, tracking, acceptance, travel, skill-gating, save/load, and deterministic scenario group: 45/45 passed.
+- Confirmed exact id/label/category/detail derivation, notification text/time/tone/newest-first order/eight-entry cap, repeated-selection behavior, Chronicle non-mutation, and input immutability.
+- Confirmed deterministic collision-safe command identity, expected tick/version/full revision guards, atomic malformed/wrong-player/stale/incoherent/missing/injected-failure rejection, and one exact five-key no-prose event.
+- Confirmed current-data roundtrip, no persisted command correlation, browser-safe imports, TS/JS peer, public exports, shared event registration, accepted-only UI application, and no duplicate selection mutation in the bridge.
+- Classified all remaining `currentActivity` writers as pre-existing travel, acceptance, advancement, rest, turn-in, or synchronization owners.
+- `git diff --check`, conflict-marker search, browser-import search, and changed-path review passed. Informational LF-to-CRLF conversion warnings were emitted by Git.
 - Full suite, DB/UI build, typecheck, dependency installation, servers, and generated-output refresh were intentionally omitted.
-
-## Consumer Comparison
-
-| Candidate | Current mutation/coupling | Decision |
-| --- | --- | --- |
-| Activity selection | One record lookup, `currentActivity` replacement, one capped notification, one synchronization pass, one notice, one UI call site, missing-record rejection | Selected; smallest coherent persisted command boundary |
-| Activity advancement | Preview/execution rule duplication plus quest-specific location, clock/body/resource, skill, flags, operations, discovery, notification, Chronicle, and generic-shift branches | Deferred; needs its own resolver and broader characterization |
-| Rest | Preview/execution rule duplication plus settlement/coin validation, clock/body recovery, resources, pending changes, last-rest metadata, activity, notification, and Chronicle | Deferred; broader than selection |
-| Quest turn-in | Quest readiness/completion plus inventory, currency, skills, standing, reputation, operations, flags, activity, tracking fallback, notification, Chronicle, and two reward branches | Deferred; highest consequence/risk |
 
 ## Behavior / Runtime Confirmation
 
-No runtime, UI, event, contract, test, content, schema, save, migration, compatibility, dependency, generated-output, or asset behavior changed during this audit.
+Activity-record selection ownership changed from the UI gameplay loop to the game engine. Accepted selection still changes only `currentActivity`, appends the exact existing capped notification, and applies existing synchronization before return. Missing and stale/error paths preserve original snapshot identity/content and emit no event.
 
-The repaired quest-tracking boundary is accepted as authoritative, parity-locked, deterministic, atomic, persistence/browser-safe, and correctly adapted by the UI.
+The accepted event is transient and contains exactly `commandId`, `playerId`, `recordId`, `previousActivityId`, and `selectedActivityId`. No save fields, schemas, migrations, compatibility behavior, content, dependencies, advancement, preview, rest, turn-in, reward, or unrelated UI behavior changed.
 
 ## Risks / Follow-Up
 
-- Activity selection must preserve the exact persisted notification and synchronized snapshot, not merely `currentActivity`.
-- Move selection category derivation (`humanizeId(record.sectionId)`) into the engine resolver without extracting unrelated UI helpers or refactoring generic notifications.
-- Event payloads must contain identifiers/state only; keep record label/category/detail in result/notice facts, not the event.
-- Other `currentActivity` assignments belong to travel, acceptance, advancement, rest, and turn-in and must remain untouched.
+- The default sequence follows the established transient-command convention using activity-record count; durable delivery, replay, and idempotency remain deferred.
+- Other owner-specific `currentActivity` writers intentionally remain and require separate characterization before extraction.
+- `Version 0.6.3.1` must perform the required read-only post-transition audit before another consumer is selected.
+- `docs/dev/queued-codex-cleanup-prompt.md` remains queued documentation maintenance for a later appropriate run.
 
 ## Next Recommended Version
 
-Version 0.6.3 - Engine-Owned Activity Selection Command
+Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit
 
 ## Suggested Commit Message
 
-docs(audit): accept repaired quest tracking transition
+feat(runtime): move activity selection into engine ownership
