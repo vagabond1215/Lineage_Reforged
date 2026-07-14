@@ -2,7 +2,7 @@
 
 Date: 2026-07-14
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4` world/settlement package complete; `0.6.5` item/material/recipe package next; cross-domain research bridge queued before `0.6.6`
+Status: `0.6.4` world/settlement package complete; `0.6.5` item/material/recipe package remains next but is blocked at exact-target reconciliation; cross-domain research bridge queued after accepted `0.6.5` and before `0.6.6`
 
 ## 1. Purpose
 
@@ -131,7 +131,7 @@ Deep Research uses one named gate and one temporary artifact at a time. Do not m
 | Route | Package | Acceptance criteria |
 | --- | --- | --- |
 | `0.6.4` | World And Settlement Static Content Expansion | Complete. Target matrix, reference closure, 592 focused tests, and 67-file normal lint passed; no generic POI, geometry fabrication, paused-catalog expansion, or runtime claim. |
-| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Coherent recipe families; all item/value/input/output/tool/workplace/skill references close; paused resource/commodity gate preserved; focused tests and normal lint pass; exact research integration prompt activated afterward. |
+| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Currently blocked until the exact recipe target has production-chain transformation and quantity authority. On later acceptance: coherent recipe families; all item/value/input/output/tool/workplace/skill references close; paused resource/commodity gate preserved; focused tests and normal lint pass; exact research integration prompt activated afterward. |
 | GPT-DR program | Seven cross-domain research gates | One cited artifact per gate; live repo baseline; technology, ecology, material, food, crafting, and magitech findings; explicit uncertainty and owner classification; no implementation. |
 | unversioned integration | Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration | All seven artifacts reconciled; durable synthesis created; temporary artifacts dispositioned; `0.6.5` repair decision made; exact revised `0.6.6` prompt installed. |
 | `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Research-informed region/biome/role/threat matrix; monster/fauna/ecology/role/tactics/item/value/loot closure; no adjective-only duplicates or unimplemented mechanics; focused tests and normal lint pass. |

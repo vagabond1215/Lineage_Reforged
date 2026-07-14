@@ -98,4 +98,4 @@ Static content and research must not imply item instances, inventory/storage mut
 
 Suggested next commit:
 
-`docs(crafting): record 0.6.5 chain authority blocker`
+`docs(crafting): reconcile 0.6.5 exact recipe target`
