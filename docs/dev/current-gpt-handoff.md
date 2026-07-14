@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: `GPT-DR.resources.gathering-extraction` acceptance and research-route advancement
+Source route: `GPT-DR.ecology.flora-fauna-byproducts` Deep Research Light continuity review
 Date: 2026-07-14
 
 ## Status
@@ -25,21 +25,29 @@ Completed research gates:
    - commit: `780513115686ce9c9f5f3828229cd9e2e4a78d09`
    - status: accepted temporary cited research input; non-canonical until cross-domain integration
 
+Rejected research attempts:
+
+1. ChatGPT Deep Research Light attempt for `GPT-DR.ecology.flora-fauna-byproducts`
+   - status: rejected before repository commit
+   - no temporary Gate 2 artifact was added
+   - Gate 2 remains incomplete and must be rerun
+
 Immediate next executable work:
 
 - `GPT-DR.ecology.flora-fauna-byproducts`
-- Continue the seven-gate research program one cited artifact at a time.
+- Prefer Codex Sol Ultra for the final gate artifact, or use a new Deep Research pass only as external-source reconnaissance before Codex verification.
+- Continue the seven-gate research program one accepted cited artifact at a time.
 
 Next Codex run:
 
 - unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
-- Run only after all seven research artifacts are committed.
-- `docs/dev/current-codex-prompt.md` is the exact integration hold and must stop without edits while artifacts are missing.
+- Run only after all seven accepted research artifacts are committed.
+- `docs/dev/current-codex-prompt.md` remains the exact integration hold and must stop without edits while accepted artifacts are missing.
 
 ## Corrected Sequence
 
 1. `GPT-DR.resources.gathering-extraction` — complete
-2. `GPT-DR.ecology.flora-fauna-byproducts` — next
+2. `GPT-DR.ecology.flora-fauna-byproducts` — incomplete; rerun required
 3. `GPT-DR.agriculture.land-food-livestock`
 4. `GPT-DR.materials.refinement-processing`
 5. `GPT-DR.food.processing-preservation`
@@ -53,6 +61,40 @@ Next Codex run:
 13. Re-read runtime ownership and select exactly one later consumer
 
 This sequence supersedes older rows that place research after accepted `0.6.5`.
+
+## Gate 2 Rejection Findings
+
+The Deep Research Light report was not compatible with the shared artifact contract or the accepted Gate 1 standard.
+
+Blocking defects:
+
+- It did not access or verify the live repository and substituted speculative owner names, counts, schemas, items, monsters, loot, workplaces, and process state.
+- It did not reproduce the live baseline or distinguish verified repository facts from guesses with enough precision for later integration.
+- Its source register was materially incomplete for the breadth claimed and relied on weak secondary surfaces, including Wikipedia and a ResearchGate snippet, while many substantive claims had no cited source.
+- It introduced non-canonical fantasy examples such as dragons, hydras, griffons, elves, golems, and elementals instead of using repository canon as the controlling authority.
+- It introduced unsupported technological and biological assumptions, including crops, industries, chemicals, whaling, gunpowder, steam capability, and modern processing concepts without repository or source justification.
+- Its candidate matrix directly recommended creating new records and asserted schema compatibility despite the gate prohibiting new ids, schemas, validators, implementation permission, and unverified repository assumptions.
+- It collapsed research findings into implementation dispositions such as `accept: create new records` instead of leaving identities and relationships conditional on collision audits, live consumers, authority, and later integration.
+- Its process diagrams included recipe-like transformations and invented monster outputs rather than repository-grounded relationship maps.
+- It did not provide the required complete, diverse source basis across all mandatory biological lanes.
+
+The report may be treated only as discarded exploratory notes. Do not cite, integrate, commit, or use it as Gate 2 evidence.
+
+## Gate 2 Acceptance Standard
+
+A replacement artifact must:
+
+- inspect the live repository at the current head;
+- reproduce verified flora, fauna, monster, habitat, biome, regional-ecology, item, value, chain, recipe, workplace, skill, loot, spatial-resource, and magic-owner baselines;
+- use repository canon for all species, monsters, magical materials, regions, and authority claims;
+- use broad authoritative and peer-reviewed sources with complete citations and transferability limits;
+- distinguish repository fact, external evidence, design inference, integration candidate, and runtime reservation;
+- avoid creating or pre-authorizing ids, drops, recipes, schemas, validators, runtime, or gameplay behavior;
+- collision-audit existing identities before proposing any conditional static identity;
+- preserve source, anatomical part, raw output, stabilized material, ingredient, finished product, loot possibility, loot instance, and runtime-state separation;
+- classify every substantial candidate by authority, gameplay value, confidence, dependencies, and blockers;
+- keep ordinary technology primary and magic bounded, finite, maintained, non-universal, and repository-canon dependent;
+- satisfy every section of the shared artifact contract before commitment.
 
 ## Accepted Gate 1 Findings
 
@@ -116,6 +158,6 @@ Existing `Recognizing ...` snippets remain authored lore, not implemented recogn
 
 Do not implement recipes, production chains, resources, gathering, agriculture, food systems, ecology, magitech, schemas, validators, tests, crafting execution, inventory mutation, labor, fuel, time, quality, spoilage, economy behavior, spell casting, enchanting, runtime, UI, saves, or gameplay during research or integration.
 
-Next artifact:
+Next accepted artifact must be:
 
 `docs/dev/tmp-ecology-flora-fauna-byproducts-research-2026-07-14.md`
