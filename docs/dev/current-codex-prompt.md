@@ -73,7 +73,7 @@ Implement exactly:
 - 12 new settlement district records;
 - 18 new settlement site records;
 - 6 new semantic map-feature records;
-- 12 new `knowledge_domain.general_lore` snippets covering the new/existing cluster canon.
+- 12 new `knowledge_domain.general_lore` snippets providing representative coverage of the new and existing cluster canon.
 
 Do not add settlement, region, locality, visual world-map geometry, service, resource, or commodity records. If a required reference cannot close without one, stop and report the blocker instead of broadening scope.
 
@@ -100,7 +100,10 @@ Do not add settlement, region, locality, visual world-map geometry, service, res
 ### Knowledge
 
 - Use the active `knowledge_domain.general_lore` authority and `packages/content/base/player/knowledge_snippets.json`.
-- Add exactly 12 snippets total: four per cluster. Collectively cover parent settlement and new district/site subjects; do not create snippets for unsupported map-feature subjects.
+- Add exactly 12 snippets total: four per cluster. Each snippet must have exactly one `subjectType` and one `subjectId`, as required by the live schema.
+- Within each cluster, include at least one snippet whose subject is an existing parent settlement, at least one whose subject is a new district, and at least one whose subject is a new site. The fourth snippet may use another parent settlement, new district, or new site that best expresses the cluster's distinct canon.
+- This is representative Knowledge coverage, not exhaustive one-snippet-per-record coverage. Do not exceed 12 snippets and do not require every new district or site to receive a snippet.
+- Do not create snippets for unsupported map-feature subjects.
 - Every subject must exist and be active, and every subject/source type must be declared by the live registry.
 - Keep snippets concise, descriptive, source-traceable, and non-spoiler. They must not grant discovery, skill, travel access, rewards, reputation, services, magic, or state changes.
 - Do not change domain activation, policies, trial readiness, or Arcane Lore.
