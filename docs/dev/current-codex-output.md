@@ -37,7 +37,7 @@ Expected accepted artifact:
 
 Suggested accepted-artifact commit:
 
-`docs/research): add agriculture gate findings`
+`docs(research): add agriculture gate findings`
 
 Suggested coordination commit after acceptance:
 
