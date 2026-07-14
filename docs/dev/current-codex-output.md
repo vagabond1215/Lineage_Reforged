@@ -1,24 +1,46 @@
 # Current Codex Output
 
-Source route: connector-side `0.6.5 Research Prerequisite And Recipe Authority Reconciliation`
+Source route: connector-side acceptance of `GPT-DR.resources.gathering-extraction`
 Date: 2026-07-14
 
 ## Result
 
-Corrected the sequencing deadlock created by placing the cross-domain research program after an `0.6.5` implementation that had already stopped for missing transformation and quantity authority.
+Accepted the first temporary cited artifact in the seven-gate cross-domain production research program:
 
-The repository now routes:
+- gate: `GPT-DR.resources.gathering-extraction`
+- artifact: `docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md`
+- artifact commit: `780513115686ce9c9f5f3828229cd9e2e4a78d09`
 
-1. seven GPT Deep Research gates;
-2. unversioned cross-domain research integration;
-3. revised `0.6.5` recipe implementation;
-4. `0.6.6` monster/ecology/loot;
-5. `0.6.7` coherence audit;
-6. Geography and location-recognition contract planning.
+The artifact remains non-canonical until the unversioned cross-domain integration promotes, revises, defers, or rejects its findings against live repository authority.
 
-The failed `0.6.5` implementation prompt is no longer active. `docs/dev/current-codex-prompt.md` now contains the exact research-integration hold and targets a revised `0.6.5`, not `0.6.6`.
+The active sequence is now:
 
-## Preserved Blocker
+1. `GPT-DR.resources.gathering-extraction` — complete;
+2. `GPT-DR.ecology.flora-fauna-byproducts` — next;
+3. `GPT-DR.agriculture.land-food-livestock`;
+4. `GPT-DR.materials.refinement-processing`;
+5. `GPT-DR.food.processing-preservation`;
+6. `GPT-DR.crafting.tools-workplaces-production`;
+7. `GPT-DR.magitech.production-infrastructure-substitution`;
+8. unversioned cross-domain research integration;
+9. revised `0.6.5` recipe implementation;
+10. `0.6.6` monster/ecology/loot;
+11. `0.6.7` coherence audit;
+12. Geography and location-recognition contract planning.
+
+## Accepted Gate 1 Findings
+
+The first artifact provides strong later-integration evidence that:
+
+- resource identity, source entity, placed source site, harvested item, prepared material, commodity, process chain, and runtime extraction state require separate authority;
+- `packages/engines/civilization-engine/src/spatial-world.ts` already derives spatial flora/fauna/mineral access and settlement supply capability, but does not implement gathering or extraction execution;
+- relationship-first static work is preferable to automatic node, resource, commodity, intermediate, or residue proliferation;
+- technology should be evaluated through source conditions, tools, workplaces, transport, water, fuel, maintenance, scale, and institutions rather than a single century label;
+- ordinary extraction remains the baseline, while magical assistance remains bounded, finite, maintained, non-universal, and subject to the later magitech gate;
+- exact yields, depletion, regrowth, calendars, labor, fuel, time, quality, hazards, item creation, inventory mutation, and persistence remain unauthorized;
+- gold-ore and handcart value discrepancies were observed as adjacent nonblocking evidence and remain outside research authority.
+
+## Preserved 0.6.5 Blocker
 
 The pre-authoring stop remains accepted evidence:
 
@@ -32,44 +54,24 @@ The pre-authoring stop remains accepted evidence:
 
 Do not rerun that target, partially author it, or assume `1:1` quantities.
 
-## Files Changed By The Correction
+## Current Codex State
 
-- `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`
-- `docs/dev/queued-cross-domain-production-research-integration-prompt.md`
-- `docs/dev/current-codex-prompt.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/current-codex-output.md`
-- additional route authorities may be aligned in the same connector correction series.
+`docs/dev/current-codex-prompt.md` remains the exact cross-domain integration hold. It must not run until all seven temporary cited research artifacts are committed and satisfy the shared artifact contract.
 
-## Authority Decision
-
-The focused reconciliation decision establishes the default integration posture:
-
-- recipes own bounded explicit static batch transformations;
-- production chains own macro stages and process context;
-- chain references remain descriptive and non-inheriting;
-- research informs materials, intermediates, order, losses, byproducts, and plausible relative scale;
-- exact integer quantities are authored game-scale batch units and require confidence labels;
-- material chain defects route separately when current authority is materially wrong.
-
-The integration pass must confirm or correct this posture from live evidence before installing revised `0.6.5`.
+No change was made to the active Codex prompt, queued integration prompt, content, recipes, production chains, schemas, validators, tests, lint code, runtime, UI, saves, migrations, dependencies, assets, or gameplay behavior.
 
 ## Next Work
 
 Next executable work is GPT Deep Research:
 
-`GPT-DR.resources.gathering-extraction`
+`GPT-DR.ecology.flora-fauna-byproducts`
 
-Expected first artifact:
+Expected next artifact:
 
-`docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md`
+`docs/dev/tmp-ecology-flora-fauna-byproducts-research-2026-07-14.md`
 
-Do not run the current Codex integration prompt until all seven required research artifacts are committed.
-
-## Behavior Confirmation
-
-Documentation only. No content JSON, recipes, production chains, schemas, validators, tests, lint code, runtime, UI, saves, migrations, dependencies, assets, generated output, research artifacts, or gameplay behavior changed.
+The next Codex run remains the unversioned cross-domain integration, but only after all seven artifacts exist.
 
 ## Suggested Next Commit
 
-The next repository commit should be the first cited Deep Research artifact, not a recipe implementation commit.
+The next repository commit should add the cited ecology/flora/fauna/byproducts research artifact, not implement recipes or run the integration hold.
