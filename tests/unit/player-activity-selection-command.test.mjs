@@ -270,14 +270,24 @@ test("unexpected activity selection failure cannot expose a partial clone", () =
   assert.deepEqual(snapshot, before);
 });
 
-test("identical fixtures are deterministic and distinct same-tick selections remain distinct", () => {
+test("identical fixtures are deterministic and different records remain distinct at equal sequence", () => {
   const first = execute(cloneDemoSnapshot(), RECORD_ID, 30);
   const repeated = execute(cloneDemoSnapshot(), RECORD_ID, 30);
   assert.deepEqual(repeated, first);
 
   const sameTickFixture = cloneDemoSnapshot();
-  const resultA = execute(structuredClone(sameTickFixture), RECORD_ID, 31);
-  const resultB = execute(structuredClone(sameTickFixture), SECOND_RECORD_ID, 32);
+  const commandA = createPlayerActivitySelectionCommand(sameTickFixture, RECORD_ID, 31);
+  const commandB = createPlayerActivitySelectionCommand(sameTickFixture, SECOND_RECORD_ID, 31);
+  assert.equal(commandA.expectedTick, commandB.expectedTick);
+  assert.equal(commandA.commandSequence, commandB.commandSequence);
+  assert.equal(commandA.playerId, commandB.playerId);
+  assert.equal(commandA.expectedSnapshotVersion, commandB.expectedSnapshotVersion);
+  assert.equal(commandA.expectedRevision, commandB.expectedRevision);
+  assert.notEqual(commandA.recordId, commandB.recordId);
+  assert.notEqual(commandA.commandId, commandB.commandId);
+
+  const resultA = executePlayerActivitySelectionCommand(structuredClone(sameTickFixture), commandA);
+  const resultB = executePlayerActivitySelectionCommand(structuredClone(sameTickFixture), commandB);
   assert.equal(resultA.accepted, true);
   assert.equal(resultB.accepted, true);
   assert.equal(resultA.appliedTick, resultB.appliedTick);

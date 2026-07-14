@@ -4,100 +4,87 @@ You are working in the `vagabond1215/Lineage_Reforged` repository on branch `mas
 
 Run:
 
-`Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`
+`Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
 
 ## Accepted State
 
 - Player travel, quest acceptance, and repaired quest tracking are engine-owned and accepted.
-- `Version 0.6.3 - Engine-Owned Activity Selection Command` moved only activity-record selection behind one browser-safe engine resolver, deterministic transient command, atomic synchronized result, and typed accepted event.
-- `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit` confirmed every runtime, authority, behavior, atomicity, event, persistence/browser, UI-adapter, scope, and hygiene gate at 45/45 focused tests.
-- A read-only probe proved runtime collision safety when two different record ids use the same snapshot and explicit sequence.
-- The transition is not accepted because the committed collision test uses different sequences (`31` and `32`) and therefore lacks permanent equal-sequence regression coverage.
-- `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` are queued documentation maintenance. Preserve both unchanged during this repair.
+- `Version 0.6.3 - Engine-Owned Activity Selection Command` is runtime-correct and passed every transition gate except permanent equal-sequence collision coverage.
+- `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair` is expected to change only the existing activity-selection command test among source/test files.
+- The repaired test must hold tick, command sequence, player id, snapshot version, and full snapshot revision constant across different record ids while proving distinct command and event identities.
+- `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` are queued documentation maintenance. Preserve both unchanged during this audit.
 - No Deep Research or user decision is required.
 
 ## Purpose
 
-Make the smallest test-only correction that permanently proves activity record identity prevents command and event collisions when every non-record identity input is equal.
+Perform one read-only post-repair audit. Decide whether the activity-selection transition is accepted or whether one further smallest repair suffix is required.
 
-Do not change production runtime, UI, shared contracts, events, characterization hashes, content, schemas, saves, dependencies, or generated output.
+Do not modify runtime, UI, shared contracts, events, tests, content, schemas, saves, dependencies, queued prompt files, or generated output in this run.
 
 ## Required First Steps
 
 1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
 2. Read `AGENTS.md`, README, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, backlog, and both queued maintenance prompts.
-3. Inspect `tests/unit/player-activity-selection-command.test.mjs`, especially `identical fixtures are deterministic and distinct same-tick selections remain distinct`, plus command/event identity construction in `packages/engines/game-engine/src/player-activity-selection.ts`.
-4. Confirm the current test creates the different-record commands with sequences `31` and `32` before editing.
+3. Inspect the exact committed `0.6.3.2` changed-path set and diff.
+4. Inspect `tests/unit/player-activity-selection-command.test.mjs` and command/event identity construction in `packages/engines/game-engine/src/player-activity-selection.ts`.
+5. Reinspect the activity-selection resolver/result/event, JS peer and exports, shared event registration, synchronizer, persistence boundary, gameplay-loop bridge, `ActivityPanel.tsx`, characterization coverage, all production `currentActivity` writers, and accepted travel/quest command patterns.
 
-## Required Repair
+## Repair Audit Gates
 
-Edit only `tests/unit/player-activity-selection-command.test.mjs` among source/test files.
+### Exact repair and scope
 
-In the existing deterministic/collision test:
+- Confirm only `tests/unit/player-activity-selection-command.test.mjs` changed among source/test files.
+- Confirm no production, UI, contract, event, characterization, content, schema, save, dependency, generated-output, or asset file changed in the repair.
+- Confirm the existing deterministic/collision test was corrected rather than adding a duplicate test file.
+- Confirm identical-fixture deterministic coverage remains present.
 
-- Preserve the identical-fixture deterministic assertion.
-- Create two commands from the same unchanged snapshot for `job.harbor_surveyor` and `business.gannet_cutter` using the same explicit command sequence.
-- Inspect the command objects before execution and assert their tick, sequence, player id, snapshot version, and full snapshot revision are equal.
-- Assert the record ids differ and the command ids differ.
-- Execute both commands against equivalent clones of that same source snapshot.
-- Assert both results are accepted, both applied ticks are equal, result command ids remain distinct, and emitted event ids are distinct.
-- Keep the test deterministic and independent of wall-clock time or random identity.
+### Permanent equal-sequence coverage
 
-Do not alter command construction, event construction, resolver behavior, result types, notification behavior, UI code, exports, or the characterization test. Do not add a new test file when the existing collision test can express the required property directly.
+- Confirm two commands are created from the same unchanged snapshot for `job.harbor_surveyor` and `business.gannet_cutter`.
+- Confirm the explicit command sequence is equal across both commands.
+- Confirm expected tick, player id, snapshot version, and full snapshot revision are asserted equal.
+- Confirm record ids are asserted different and command ids are asserted different before execution.
+- Confirm both commands execute against equivalent clones of the same source snapshot.
+- Confirm both results are accepted at the same applied tick, result command ids remain distinct, and event ids remain distinct.
+- Confirm command identity still includes `recordId` and event identity still incorporates the command id.
 
-## Pipeline Preservation After Repair
+### Complete transition gates
 
-This repair must not choose the next gameplay consumer and must not implement or plan content inside the repair itself.
+- Reconfirm the locked success snapshot hash `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40`, success notice hash `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`, and missing notice hash `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77`.
+- Reconfirm sole engine selection authority, exact id/label/category/detail derivation, notification id/text/time/tone/order/eight-entry cap, repeated-selection behavior, Chronicle non-mutation, missing-record identity/content, and input immutability.
+- Reconfirm malformed, wrong-player, stale tick/version/revision, incoherent, missing-record, and injected-failure atomic rejection with zero events.
+- Reconfirm exactly one typed five-key no-prose accepted event, current-data roundtrip, no persisted command correlation, browser-safe imports, TS/JS peer, public exports, shared registration, accepted-only UI application, and visible rejection notices.
+- Classify every remaining production `currentActivity` assignment and confirm no duplicate activity-record selection owner.
+- Confirm no conflict markers, temporary artifacts, accidental generated/vendor edits, dependency changes, or broad formatting churn.
 
-The exact `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit` prompt written by this run must require the audit to:
-
-- inspect the exact committed repair diff and changed-path set;
-- confirm only `tests/unit/player-activity-selection-command.test.mjs` changed among source/test files;
-- confirm the committed test now holds tick, sequence, player id, snapshot version, and full revision constant across two different record ids;
-- confirm command ids and event ids remain distinct because the record ids differ;
-- rerun the complete focused group and all previously passing authority, behavior, atomicity, event, persistence/browser, UI-adapter, scope, and hygiene gates;
-- accept the activity-selection transition only if the permanent equal-sequence regression coverage is present and every gate passes;
-- select the smallest further repair suffix if any gate fails;
-- **not** compare or select activity advancement, rest, or quest turn-in as the next primary during this audit;
-- preserve both queued maintenance prompt files;
-- on acceptance, install the contents of `docs/dev/queued-static-content-expansion-integration-prompt.md` as `docs/dev/current-codex-prompt.md` for the immediate unversioned combined maintenance pass `Historical Route Cleanup And Static Content Expansion Pipeline Integration`;
-- reserve `Version 0.6.4` for `World And Settlement Static Content Expansion` only after that combined maintenance pass verifies readiness and integrates the content program into the roadmap.
-
-Do not allow `0.6.3.3` to skip directly from activity-selection acceptance to another runtime consumer.
-
-## Required Validation
+## Required Tests
 
 Run:
 
 `node --test tests/unit/player-activity-selection-command.test.mjs tests/unit/player-activity-selection-characterization.test.mjs tests/unit/player-quest-tracking-command.test.mjs tests/unit/player-quest-tracking-characterization.test.mjs tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
 
-Also run `git diff --check`, inspect the complete changed-path set, and confirm no production file changed.
+Also run `git show --check` for the repair commit, `git diff --check`, conflict-marker checks, and complete changed-path review.
 
-Confirm both queued maintenance prompt files remain byte-for-byte unchanged.
+Verify both queued files remain byte-for-byte unchanged. Their expected SHA-256 hashes are:
 
-Do not run the full suite, DB build, UI build, package installation, servers, generated-output refresh, or typecheck unless an unexpected focused failure materially requires diagnosis.
+- `docs/dev/queued-codex-cleanup-prompt.md`: `365548975A20FC72BA95C92387C7ED1A8A2C45B8EE275F42B230750DD8A91883`
+- `docs/dev/queued-static-content-expansion-integration-prompt.md`: `CA3E8B5DB0DC75DECCCD391BF64F63A56C0FE9BEC0E6DE28B7C6175CEF3D2C59`
 
-## Acceptance
+Do not run the full suite, builds, typechecks, package installation, servers, generators, content lint, or generated-output refresh.
 
-Accept this repair only if:
+## Decision Rule
 
-- the focused group passes;
-- the edited committed test holds sequence and every non-record identity input constant;
-- command ids and event ids remain distinct because record ids differ;
-- only the one focused command test changes among source/test files;
-- no runtime or player-visible behavior changes;
-- the required post-repair audit and content-program handoff are recorded exactly.
-
-If an unexpected defect requires production changes, stop and report it instead of broadening this repair.
+- If every gate passes, accept the activity-selection transition.
+- Do not compare or select activity advancement, rest, or quest turn-in during this audit.
+- On acceptance, preserve both queued files and overwrite `docs/dev/current-codex-prompt.md` with the exact contents of `docs/dev/queued-static-content-expansion-integration-prompt.md` for the immediate unversioned combined maintenance pass `Historical Route Cleanup And Static Content Expansion Pipeline Integration`.
+- The combined maintenance pass, not this audit, decides whether readiness permits installing `Version 0.6.4 - World And Settlement Static Content Expansion`.
+- If any material gate fails, select the smallest further `0.6.3.x` repair, preserve both queued files, and do not install the maintenance prompt.
+- Do not implement a repair, maintenance work, content, or another runtime consumer during this read-only audit.
 
 ## Documentation And Handoff
 
-Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and overwrite this file with an exact read-only `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit` prompt containing the pipeline-preservation decision rule above.
-
-Record source/run/date, starting status, exact test correction, checks, changed paths, behavior confirmation, preservation of both queued maintenance prompts, risks, next version, and suggested commit.
-
-Do not select `0.6.4` during this repair. Activity advancement/preview, rest/preview, quest turn-in, generic delivery/replay, and content implementation remain deferred until the post-repair audit accepts the transition and the combined historical-cleanup/content-expansion integration pass completes.
+Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and update this file according to the decision rule. Record source/run/date, starting status, exact committed repair diff, files inspected, all checks, equal-sequence evidence, behavior confirmation, queue-file hashes, acceptance decision, risks, next route, and suggested commit.
 
 Suggested commit message:
 
-`test(runtime): lock equal-sequence activity selection identity`
+`docs(audit): accept activity selection collision repair`

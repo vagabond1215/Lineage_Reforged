@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-14
-Route: Codex local sequencing alignment after `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
+Route: Codex local sequencing alignment after `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -25,11 +25,11 @@ Latest completed primary:
 
 Latest completed support/audit run:
 
-- `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
-
-Immediate next repair Codex run:
-
 - `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`
+
+Immediate next audit Codex run:
+
+- `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
 
 ## Current Queue Override
 
@@ -48,8 +48,9 @@ Immediate next repair Codex run:
 - `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit` is complete and accepted. It reconfirmed the exact two-deletion repair, six-key no-prose event contract, authority, parity, identity, atomicity, persistence/browser, UI-adapter, and hygiene gates at 35/35 focused tests.
 - `Version 0.6.3 - Engine-Owned Activity Selection Command` is complete. It moved only `setCurrentActivityFromRecord(...)` behind one engine resolver/command/result/event boundary, preserved exact selected/missing snapshot and notice hashes, notification behavior, synchronization, and accepted-only UI application, and passed 45/45 focused tests.
 - `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit` is complete but did not accept the transition. Runtime collision safety was proven by a same-snapshot, equal-sequence probe and every other gate passed at 45/45 focused tests, but the committed regression test compares sequences `31` and `32` and therefore does not permanently prove record-id discrimination.
-- `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair` is the immediate test-only route. Hold sequence constant across two different record ids, assert equal non-record identity inputs plus distinct command/event ids, rerun the focused group, and change no production behavior.
-- `docs/dev/queued-codex-cleanup-prompt.md` remains queued documentation maintenance only and does not displace the active `0.6.3.2` repair.
+- `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair` is complete. It changed only the existing command test among source/test files, now holds tick, sequence, player, snapshot version, and full revision constant across different record ids, proves distinct command/event ids, and passes 45/45 focused tests without production changes.
+- `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit` is the immediate read-only route. Reconfirm the exact test-only repair and every accepted transition gate before installing queued maintenance.
+- `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain queued documentation maintenance and do not displace the active `0.6.3.3` audit. On acceptance, install the combined static-content integration prompt; reserve `0.6.4` for world and settlement static expansion only after that maintenance passes.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
 - Activity advancement, rest, and quest turn-in remain later consumers. Do not bundle them into activity selection; advancement and rest also require their preview/execution boundaries to be reconciled.

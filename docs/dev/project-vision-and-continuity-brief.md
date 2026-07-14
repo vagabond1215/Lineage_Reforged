@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-14 after `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`.
+Updated 2026-07-14 after `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`.
 
 ## Purpose
 
@@ -39,11 +39,11 @@ Latest completed primary:
 
 Latest support/audit run:
 
-- `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
-
-Next recommended support/repair version:
-
 - `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`
+
+Next recommended support/audit version:
+
+- `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
 
 Current sequence source:
 
@@ -51,7 +51,7 @@ Current sequence source:
 
 Current phase:
 
-- player travel, quest acceptance, and repaired quest tracking are engine-owned and audited; activity selection is runtime-correct but requires permanent equal-sequence collision coverage before acceptance or another consumer
+- player travel, quest acceptance, and repaired quest tracking are engine-owned and audited; activity selection now has permanent equal-sequence collision coverage and awaits post-repair acceptance; combined historical cleanup/content-expansion integration remains queued before the reserved `0.6.4` world/settlement expansion
 
 Current transition decisions:
 
@@ -112,7 +112,9 @@ Every major system should answer at least one of these questions:
 | `0.6.2.3` | Engine-Owned Quest Tracking Post-Repair Audit | Complete and accepted. | Reconfirmed repaired contract and all transition gates at 35/35 focused tests. |
 | `0.6.3` | Engine-Owned Activity Selection Command | Complete. Moved selection behind one resolver/command/event boundary with exact parity. | Selection only; 45/45 focused tests passed. |
 | `0.6.3.1` | Engine-Owned Activity Selection Post-Transition Audit | Complete; transition not yet accepted. | All runtime gates passed, but committed collision coverage varies sequence as well as record id. |
-| `0.6.3.2` | Engine-Owned Activity Selection Collision Regression Repair | Next test-only run. | Hold sequence and all non-record identity inputs constant; assert distinct command and event ids. |
+| `0.6.3.2` | Engine-Owned Activity Selection Collision Regression Repair | Complete. Corrected only the existing collision test and passed 45/45 focused tests. | Equal tick, sequence, player, version, and revision now prove record-id command/event discrimination. |
+| `0.6.3.3` | Engine-Owned Activity Selection Post-Repair Audit | Next read-only run. | Accept only after reconfirming the exact test-only repair and every transition gate. |
+| queued maintenance | Historical Route Cleanup And Static Content Expansion Pipeline Integration | Run only after `0.6.3.3` acceptance. | Preserve runtime anchors; reserve `0.6.4` for world/settlement static expansion after maintenance readiness passes. |
 | later `0.6.x` | Later Engine-Owned Consumers | Activity advancement, rest, and turn-in remain deferred. | One coherent consumer per package; no generic command bus. |
 
 For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
