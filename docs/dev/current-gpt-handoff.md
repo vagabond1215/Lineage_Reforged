@@ -21,6 +21,12 @@ Immediate next primary:
 
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 
+Immediate route after accepted `0.6.5`:
+
+- seven-gate `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Program`;
+- unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`;
+- revised `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` only after research integration accepts.
+
 ## Completed Package Evidence
 
 - `0.6.4` is committed as `44dfb0a79bdd9941ca45e39d83b125b3ced6d9ca`, with parent `1e62aaeb4a7a23c5514eb7ffb49f26d20f9a6070`.
@@ -34,9 +40,11 @@ Immediate next primary:
 ## Durable Authorities
 
 - `docs/dev/historical-version-and-deferred-route-register.md` is the canonical query surface for historical aliases, suffixes, identity conflicts, deferred classifications, and reopening triggers.
-- `docs/design/static-content-expansion-program.md` owns live inventory, readiness decisions, the static/runtime boundary, batch policy, the `0.6.4`-`0.6.7` sequence, and the runtime-resumption rule.
+- `docs/design/static-content-expansion-program.md` owns live inventory, readiness decisions, the static/runtime boundary, batch policy, the static sequence, and the runtime-resumption rule.
 - `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` owns the user-directed location-recognition criteria, character-facing Geography bracket/facets, and polity/border Knowledge boundary.
-- `docs/dev/current-codex-prompt.md` contains the exact `0.6.5` implementation prompt.
+- `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` owns the user-directed broad research scope, seven gate sequence, mundane-technology baseline, useful-but-non-universal magic posture, and integration requirements.
+- `docs/dev/queued-cross-domain-production-research-integration-prompt.md` is the exact Codex integration prompt to activate after successful `0.6.5`.
+- `docs/dev/current-codex-prompt.md` contains the exact `0.6.5` implementation prompt and must activate that queued integration prompt after success.
 
 ## Historical Resolution
 
@@ -53,13 +61,28 @@ Immediate next primary:
 - Kingdoms, empires, city-states, and similar realms remain `polity.*` identities. Borders, claims, control, jurisdiction, and historical territorial changes require separate overlays; physical regions and map features remain distinct owners.
 - Preserve the docs-first post-`0.6.7` support route `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`. Do not silently drop it when generating later prompts or handoffs.
 
+## Cross-Domain Production And Magitech Research Boundary
+
+- The research is broader than the 30 recipes expected after `0.6.5`. It covers flora, fungi, fauna, aquatic sources, monster-adjacent byproducts, minerals, ingredients, material states, refinement, food preservation, crafting processes, tools, workplaces, infrastructure, technology level, and magical substitution.
+- Run seven named GPT Deep Research gates, one cited temporary artifact per gate. Do not merge them into one catch-all report.
+- Research ordinary technology first. Magic may assist or replace modern-like functions in bounded specialist or institutional cases, but it is not the default household or settlement baseline.
+- Magic must account for affinity, vessel tier/capacity, efficiency, stability, attunement, recharge, ambient conditions, target size/throughput, material conductivity/retention, skill, installation, maintenance, failure, scarcity, and cost.
+- Preserve useful player-facing magical paths. Do not make magic merely decorative or so rare that meaningful magical production and infrastructure progression is absent.
+- The Ice-conditioned-container example is a required case study. Relative shard/crystal/cluster recommendations may be researched, but exact size, temperature, duration, and balance formulas remain deferred.
+- External research remains non-canonical until the unversioned integration reconciles it against live repository authority.
+- `0.6.6` remains reserved until the integration either accepts `0.6.5` as-is or routes the smallest necessary `0.6.5.x` repair.
+
 ## Static Program Boundary
 
-`0.6.4` is complete. Continue the exact remaining sequence:
+`0.6.4` is complete. Continue the exact route:
 
 1. `0.6.5` - item, material, and recipe static content.
-2. `0.6.6` - monster, ecology, and loot static content.
-3. `0.6.7` - cross-content coherence and coverage audit.
+2. Seven GPT-DR gates for resources, ecology/byproducts, agriculture, material refinement, food processing, crafting production, and magitech substitution.
+3. Unversioned cross-domain research integration.
+4. Revised `0.6.6` - monster, ecology, and loot static content.
+5. `0.6.7` - cross-content coherence and coverage audit.
+6. Docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
+7. Re-read current source and select exactly one of activity advancement, rest, or quest turn-in.
 
 The exact `0.6.5` target adds 18 planned standard recipes using existing item/material identities, values, tools, workplaces, skills, and production chains. It adds no item, value, profile, resource, commodity, workplace, tool, skill, chain, schema, validator, or lint-registration record.
 
@@ -67,9 +90,7 @@ All 18 proposed recipe ids remain available, and every referenced item key, tool
 
 Services and resource/commodity expansion remain paused. Weapon/armor profiles still require live collections and normal-lint registration before content. Consumable-profile anomalies remain out of scope. Generic `world.pois` remains rejected.
 
-Static content must not imply item instances, inventory/storage mutation, crafting execution, dynamic vendors/economy/services, encounter/spawn simulation, dynamic loot, NPC population/schedules, construction/property/taxation/law enforcement, runtime ecology, or gameplay behavior.
-
-After `0.6.7` acceptance, run the docs-first `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`. After that support pass explicitly completes or dispositions the recognition/geography lane, re-read current source and select exactly one of activity advancement, rest, or quest turn-in. Do not bundle them or preassign the next primary version.
+Static content and research must not imply item instances, inventory/storage mutation, crafting execution, dynamic vendors/economy/services, encounter/spawn simulation, dynamic loot, NPC population/schedules, construction/property/taxation/law enforcement, runtime ecology, spell casting, enchanting execution, or gameplay behavior.
 
 Suggested next commit:
 
