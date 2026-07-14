@@ -4,16 +4,17 @@
 
 `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 
-Run this as one narrow static-content implementation package. Preserve accepted engine-owned runtime behavior and do not broaden the task into crafting execution, inventory, economy, equipment-profile infrastructure, or cleanup.
+Run this as one narrow static-content implementation package. Preserve accepted engine-owned runtime behavior and do not broaden the task into crafting execution, inventory, economy, equipment-profile infrastructure, research execution, or cleanup.
 
 ## Execution Gate
 
-1. Read `AGENTS.md`, `README.md`, `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/historical-version-and-deferred-route-register.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-roadmap.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, `docs/design/static-content-expansion-program.md`, and `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`.
+1. Read `AGENTS.md`, `README.md`, `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/historical-version-and-deferred-route-register.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-roadmap.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, `docs/dev/gpt-codex-tooling-instructions.md`, `docs/design/static-content-expansion-program.md`, `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`, `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md`, and `docs/dev/queued-cross-domain-production-research-integration-prompt.md`.
 2. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
 3. Confirm `Version 0.6.4 - World And Settlement Static Content Expansion` is accepted: 14 active districts, 20 active sites, 8 planned semantic map features, 28 Knowledge snippets, 592/592 focused tests, and `content-lint: ok (67 files checked)`.
 4. Confirm this exact `0.6.5` prompt is installed before editing.
-5. Confirm the user-directed docs-first `Geographic Knowledge Taxonomy And Location Recognition Contract Plan` remains queued after `0.6.7`. Existing location snippets titled `Recognizing ...` remain structural authored lore and must not be described as implemented recognition criteria.
-6. If newer canon changes a dependency or invalidates an exact row below, stop and report the conflict. Do not silently substitute records or broaden owner scope.
+5. Confirm the user-directed Geographic Knowledge Taxonomy And Location Recognition Contract Plan remains queued after `0.6.7`. Existing location snippets titled `Recognizing ...` remain structural authored lore and must not be described as implemented recognition criteria.
+6. Confirm the cross-domain natural resources, materials, production, and magitech research program is queued immediately after accepted `0.6.5` and before `0.6.6`. The research program is one-gate/one-artifact and does not authorize implementation.
+7. If newer canon changes a dependency or invalidates an exact row below, stop and report the conflict. Do not silently substitute records or broaden owner scope.
 
 ## Purpose
 
@@ -70,7 +71,7 @@ Every new record must use `status: "planned"` and `recipeSubtype: "standard"`.
 | `recipe.cured_leather_to_hardened_leather_panel` | `leatherworking` | `cured_leather` -> `hardened_leather_panel` | `workplace.tannery` | `tanning_scraper` | `skill.crafting.leatherworking` | `chain.leather.components` |
 | `recipe.metal_ring_and_leather_strap_to_mail_coif` | `assembly` | `metal_ring` + `leather_strap` -> `mail_coif` | `workplace.armorers_forge` | `blacksmith_hammer` | `skill.crafting.armoring` | `chain.warfare.armor` |
 
-Add no item, market-value, consumable-profile, weapon-profile, armor-profile, resource, commodity, workplace, tool, skill, production-chain, Knowledge, recognition-profile, geography-taxonomy, schema, validator, or lint-registration record.
+Add no item, market-value, consumable-profile, weapon-profile, armor-profile, resource, commodity, workplace, tool, skill, production-chain, Knowledge, recognition-profile, geography-taxonomy, research artifact, schema, validator, or lint-registration record.
 
 ## Authoring Rules
 
@@ -84,7 +85,8 @@ Add no item, market-value, consumable-profile, weapon-profile, armor-profile, re
 - Do not alter existing recipes unless a focused validation defect introduced by this batch proves a minimal expectation update is necessary.
 - Do not add weapon or armor profile content. Those families still lack live collections and normal-lint registration; profile work requires a separately approved narrow precondition before any content.
 - Preserve the paused resource and commodity catalogs exactly. Existing references may inform item identity, but this package does not reopen gathering, extraction, trade, or commodity expansion.
-- Preserve `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` as the durable user-intent boundary. Do not reinterpret, implement, or dilute it during this crafting package.
+- Preserve `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` as the durable user-intent boundary.
+- Preserve `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` and its queued integration prompt. Do not run research, pre-author findings, or dilute the mundane-baseline/magic-specialization rule during this implementation.
 
 ## Allowed Files
 
@@ -109,9 +111,11 @@ Coordination documentation may be updated only where required:
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
 - `docs/design/static-content-expansion-program.md` only for factual live-inventory/status updates;
-- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` only if current repository evidence proves a factual error, never to weaken the user-directed intent.
+- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` only if current repository evidence proves a factual error, never to weaken the user-directed intent;
+- `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` only for factual route/status correction, never to narrow its scope;
+- `docs/dev/queued-cross-domain-production-research-integration-prompt.md` only if current repository evidence proves a factual execution-gate error.
 
-If the current contract cannot express one of these already approved standard records, stop and report the exact blocker. Do not combine schema, validator, live-collection, lint-registration, Knowledge taxonomy, or recognition-contract redesign with this batch.
+If the current contract cannot express one of these already approved standard records, stop and report the exact blocker. Do not combine schema, validator, live-collection, lint-registration, Knowledge taxonomy, recognition-contract, research, resource, ecology, or magitech redesign with this batch.
 
 ## Prohibited Scope
 
@@ -121,6 +125,7 @@ Do not add or change:
 - crafting execution, availability, unlocks, orders, timers, queues, success rolls, output creation, input consumption, labor, fuel, workers, or production simulation;
 - dynamic prices, vendors, stock, transactions, gathering, extraction, cargo, trade, services, or economy behavior;
 - weapon/armor profile collections or registration, consumable behavior, combat behavior, magic, alchemy, enchanting, or equipment effects;
+- flora/fauna/byproduct expansion, material/refinement research, food-system expansion, magitech substitution, crystal changes, or research artifacts;
 - location-recognition profiles, clues, observation criteria, Geography domains or brackets, political-border/claim records, Knowledge evidence/progress/completion behavior, or recognition UI;
 - runtime, UI, commands, events, saves, migrations, dependencies, package metadata, generated output, assets, or gameplay;
 - backwards-compatibility aliases, retired-id preservation, unrelated cleanup, renames, formatting, content, or tests.
@@ -136,13 +141,14 @@ Run the smallest complete checks for this package:
    `node --test tests/unit/crafting-recipes-validation.test.mjs tests/unit/equipment-profiles-validation.test.mjs tests/unit/resource-commodity-authority-validation.test.mjs tests/unit/schema-files.test.mjs`
 
 4. Audit duplicate recipe ids/slugs, no-op transformations, duplicate input/output keys, exactly one primary output, and item/value/tool/workplace/skill/production-chain closure.
-5. Confirm no item, value, profile, resource, commodity, workplace, skill, production-chain, Knowledge, recognition, geography-taxonomy, schema, validator, lint-index, runtime, UI, save, migration, dependency, generated-output, or asset path changed.
-6. Confirm the current handoff, deferred-route register, and generated next prompt preserve `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` and the post-`0.6.7` support route.
-7. Run conflict-marker and trailing-whitespace searches.
-8. Run `git diff --check`.
-9. Inspect the complete changed-path set and full diff.
+5. Confirm no item, value, profile, resource, commodity, workplace, skill, production-chain, Knowledge, recognition, geography-taxonomy, research-artifact, schema, validator, lint-index, runtime, UI, save, migration, dependency, generated-output, or asset path changed.
+6. Confirm the current handoff, static program, deferred-route register, and generated next prompt preserve both durable user-intent decisions and place the cross-domain research program after accepted `0.6.5` and before `0.6.6`.
+7. Verify `docs/dev/queued-cross-domain-production-research-integration-prompt.md` remains byte-for-byte unchanged unless a current factual error required a documented correction.
+8. Run conflict-marker and trailing-whitespace searches.
+9. Run `git diff --check`.
+10. Inspect the complete changed-path set and full diff.
 
-Do not run builds, typechecks, package installation, servers, generators, or the full test suite.
+Do not run builds, typechecks, package installation, servers, generators, Deep Research, web research, or the full test suite.
 
 ## Documentation And Next Prompt
 
@@ -151,11 +157,12 @@ After successful validation:
 - overwrite `docs/dev/current-codex-output.md` with the exact run result, counts, files, checks, behavior confirmation, risks, and suggested commit;
 - advance the current GPT handoff, sequence, roadmap, continuity brief, backlog, static-program factual inventory, and deferred-route register only where the completed package changes current direction;
 - preserve the user-directed Geography/recognition decision and its post-`0.6.7` support route in every changed coordination document;
-- overwrite `docs/dev/current-codex-prompt.md` with an exact implementation prompt for `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
+- mark the seven-gate cross-domain research program as the immediate next non-Codex sequence and keep `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` reserved behind its integration;
+- overwrite `docs/dev/current-codex-prompt.md` with the exact contents of `docs/dev/queued-cross-domain-production-research-integration-prompt.md`.
 
-The installed `0.6.6` prompt must require a fresh monster/fauna/ecology/region/biome/combat-role/tactics/item/value/loot inventory; define an exact region/biome/role/threat matrix and exact batch; use only current executable combat/action vocabulary; close monster, fauna lineage if used, regional ecology, role, tactics, item, market-value, and source-local loot references; prohibit new combat mechanics, generic loot tables, spawn rules, encounter execution, dynamic rolls, population/migration/harvest simulation, runtime, UI, saves, migrations, and gameplay; require normal content lint, focused authority tests, closure/hygiene checks, full changed-path review; and require the exact `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` prompt after successful completion.
+Do not install or execute an active `0.6.6` prompt during this run. The research integration pass must generate the revised exact `0.6.6` prompt after all seven cited research artifacts are reconciled against live repository authority.
 
-The installed `0.6.6` prompt and its generated `0.6.7` prompt must read and preserve `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`. The `0.6.7` audit must treat current `Recognizing ...` snippets as structural authored lore, not as implemented clue or recognition criteria, and must preserve the docs-first `Geographic Knowledge Taxonomy And Location Recognition Contract Plan` immediately after the static-content audit.
+The activated integration prompt must preserve the one-gate/one-artifact rule, the mundane-technology baseline, useful but non-universal magic, the Ice-conditioned-container case study, the classification framework, and the post-`0.6.7` Geography/recognition route.
 
 ## Completion Report
 
@@ -167,8 +174,9 @@ Report:
 - item/value/tool/workplace/skill/chain closure;
 - files changed;
 - checks run and results;
-- confirmation that behavior/runtime/UI/save/economy/Knowledge-recognition state did not change;
-- confirmation that the user-directed Geography/recognition decision and queued support route remain intact;
+- confirmation that behavior/runtime/UI/save/economy/Knowledge-recognition/research state did not change;
+- confirmation that the Geography/recognition decision and cross-domain research program remain intact;
 - risks or deferred anomalies;
-- whether the exact `0.6.6` prompt was installed;
+- whether the exact queued cross-domain research integration prompt was activated;
+- confirmation that `0.6.6` remains reserved;
 - suggested commit message.
