@@ -1,202 +1,159 @@
-# Queued Cross-Domain Production Research Integration Prompt
+# Cross-Domain Production Research Integration Prompt
 
 ## Run Identity
 
 Unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
 
-Run this only after `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is accepted and all seven required GPT Deep Research artifacts are committed. This is one documentation-only integration and route-selection pass. It does not consume a `0.6.x` primary version.
+This is the next Codex run **after** all seven required GPT Deep Research artifacts are committed. Until then, this file is a hold: stop without editing when any artifact is absent.
+
+This pass is documentation-only and does not consume a `0.6.x` primary version.
 
 Suggested commit:
 
-`docs(research): integrate production and magitech findings`
+`docs(research): integrate production findings and revise 0.6.5`
+
+## Corrected Route
+
+The accepted `0.6.5` pre-authoring blocker moved research before recipe implementation. Use this sequence:
+
+1. seven GPT Deep Research gates;
+2. this unversioned integration;
+3. revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
+4. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
+5. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
+6. Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
+
+Do not require an accepted `0.6.5` implementation before this integration. Current recipe count remains 12 until the revised `0.6.5` package lands.
 
 ## Execution Gate
 
-1. Read `AGENTS.md`, `README.md`, `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/current-codex-prompt.md`, `docs/dev/historical-version-and-deferred-route-register.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-roadmap.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, `docs/dev/gpt-codex-tooling-instructions.md`, `docs/design/static-content-expansion-program.md`, `docs/design/gpt-deep-research-version-tracking-decision.md`, `docs/design/gpt-deep-research-prompt-pack-decision.md`, `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md`, `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`, `docs/design/resource-commodity-post-registration-audit.md`, `docs/design/magic-runtime-boundary-plan.md`, `docs/simulation-rules/elemental_combat_and_enchanting.md`, and the live magic/crystal, ecology, item, recipe, workplace, tool, skill, production-chain, resource, commodity, and Knowledge authorities required to correct research claims.
-2. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
-3. Confirm `0.6.5` is committed and accepted. Reproduce its final recipe count, families, focused validation, and content-lint result from current evidence rather than relying on the research reports.
-4. Confirm all seven temporary artifacts exist with current date-bearing filenames and one named gate each:
-   - `tmp-resources-gathering-extraction-research-*.md`
-   - `tmp-ecology-flora-fauna-byproducts-research-*.md`
-   - `tmp-agriculture-land-food-livestock-research-*.md`
-   - `tmp-materials-refinement-processing-research-*.md`
-   - `tmp-food-processing-preservation-research-*.md`
-   - `tmp-crafting-tools-workplaces-production-research-*.md`
-   - `tmp-magitech-production-infrastructure-substitution-research-*.md`
-5. Stop without integration if any artifact is missing, uncited, obviously incomplete, combines multiple gate labels, or lacks the shared output sections required by the permanent program decision.
-6. Confirm `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` has not been implemented. It remains reserved until this integration accepts and installs an exact revised prompt.
+1. Read `AGENTS.md`, `README.md`, current output/handoff/prompt, roadmap, sequenced plan, backlog, historical/deferred register, static-content program, Deep Research tracking decisions, `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`, `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md`, `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`, resource/commodity decisions, crafting/recipe/production-chain authorities, magic/crystal decisions, ecology authorities, and all live catalogs needed to correct research claims.
+2. Run branch status, fetch, and fast-forward pull. Record starting commit and worktree state. Preserve unrelated work.
+3. Confirm the failed `0.6.5` implementation did not change recipe content or tests and that the live baseline still contains 12 planned standard recipes across 8 families unless newer committed evidence says otherwise.
+4. Confirm all seven date-bearing artifacts exist, one named gate per artifact:
+   - `docs/dev/tmp-resources-gathering-extraction-research-*.md`
+   - `docs/dev/tmp-ecology-flora-fauna-byproducts-research-*.md`
+   - `docs/dev/tmp-agriculture-land-food-livestock-research-*.md`
+   - `docs/dev/tmp-materials-refinement-processing-research-*.md`
+   - `docs/dev/tmp-food-processing-preservation-research-*.md`
+   - `docs/dev/tmp-crafting-tools-workplaces-production-research-*.md`
+   - `docs/dev/tmp-magitech-production-infrastructure-substitution-research-*.md`
+5. Stop without edits if any artifact is missing, uncited, materially incomplete, combines gate labels, or lacks the permanent program's shared output sections.
+6. Confirm `0.6.6` has not been implemented and remains reserved behind revised `0.6.5`.
 
 ## Purpose
 
-Reconcile the seven non-canonical research artifacts against live repository authority, promote durable and source-backed guidance, classify proposed content and system work, determine whether `0.6.5` needs a narrow repair, and install a research-informed `0.6.6` prompt without implementing any content or behavior.
+Reconcile the seven non-canonical research artifacts against live repository authority, promote durable sourced guidance, resolve the recipe-versus-production-chain authority mismatch, define a dependency-closed revised `0.6.5` target, and install the exact revised `0.6.5` implementation prompt.
 
-## Mandatory Live Repository Inventory
+Do not implement recipes, production chains, items, resources, ecology, magic, schemas, validators, tests, runtime, UI, saves, migrations, dependencies, assets, or gameplay.
 
-Before promoting findings, reproduce and report at least:
+## Mandatory Live Inventory
 
-- items by item class;
-- market item values;
-- recipes and represented families after `0.6.5`;
+Reproduce and report current counts and owners for:
+
+- items by class and static market values;
+- recipes and represented families;
 - tools, workplaces, skills, and production chains;
-- flora, fauna, monsters, habitats, biomes, regional ecology profiles, minerals, and source-local loot;
-- resources and commodities, including lifecycle and paused status;
-- Knowledge domains and snippets relevant to natural sources, materials, processing, ecology, and magic;
-- crystal-catalog records by element and tier;
-- spell compatibility statuses;
-- conduit- and catalyst-profiled items;
-- magic infrastructure and enchanter foundations;
-- schemas, validators, lint registrations, and current consumers for each relevant authority.
+- recipe schema, semantic validator, lint registration, and focused tests;
+- flora, fauna, monsters, habitats, biomes, regional ecology, minerals, and source-local loot;
+- resources and commodities, including paused lifecycle posture;
+- relevant Knowledge domains and snippets;
+- crystal records by element and tier;
+- spell compatibility, conduit, catalyst, enchanter, magical-material, and infrastructure foundations;
+- current and missing runtime consumers.
 
-Correct every stale count or repository claim in the research artifacts through current evidence. External research may inform design, but live repo facts and durable decisions remain authoritative.
+Correct every stale repository claim through live evidence. External research informs design but cannot override repository facts or durable ownership decisions.
 
 ## Required Permanent Output
 
-Create:
+Create `docs/design/cross-domain-production-research-synthesis.md` with:
 
-`docs/design/cross-domain-production-research-synthesis.md`
+1. technology-capability baseline by household, village/town, urban specialist, institutional, elite/strategic, and rare/exceptional access;
+2. natural-source and byproduct taxonomy;
+3. ingredient and material-state taxonomy;
+4. transformation/process taxonomy;
+5. tools, workplaces, energy, environmental needs, losses, residues, salvage, and maintenance;
+6. regional and cultural variation without rename-only variants;
+7. mundane-baseline and useful-but-non-universal magic framework;
+8. Ice-conditioned-container case study with relative vessel guidance only;
+9. candidate matrix with authority, dependency, priority, confidence, and source classification;
+10. temporary-artifact disposition;
+11. exact revised `0.6.5` target and any prerequisite correction;
+12. implications reserved for later `0.6.6` and future packages.
 
-The synthesis must contain:
+## Recipe And Production-Chain Reconciliation
 
-1. **Technology capability baseline**
-   - avoid assigning one simplistic historical century;
-   - classify capabilities by household, village/town, urban specialist, institutional, elite/strategic, and rare/exceptional availability;
-   - distinguish demonstrated repo canon from research recommendation.
+Apply `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`.
 
-2. **Natural-source taxonomy**
-   - flora, fungi, fauna, aquatic life, domestic animals, monster-adjacent biology, minerals, ores, stone, clay, salts, fuels, water, and magical sources;
-   - primary products, coproducts, byproducts, waste, hazards, and culturally restricted uses.
+Default posture unless live evidence disproves it:
 
-3. **Ingredient and material-state taxonomy**
-   - raw, cleaned, sorted, graded, preserved, prepared, refined, intermediate, component, finished, damaged, scrap, residue, and recoverable states;
-   - identify distinctions worth modeling versus rejected catalog noise.
+- recipe records own explicit bounded static batch transformations;
+- production chains own macro process context and related stages;
+- `relatedProductionChainId` remains descriptive and non-inheriting;
+- chain profiles do not automatically supply exact recipe ratios;
+- research identifies necessary inputs, useful intermediates, process order, losses, and byproducts;
+- exact integer quantities are authored game-scale batch units, not claims of universal historical yield;
+- every quantity receives a confidence classification: `source_backed`, `bounded_design_inference`, `balance_placeholder`, or `authored_input_blocked`.
 
-4. **Transformation and process taxonomy**
-   - gathering/extraction, initial preparation, preservation, refinement, food processing, manufacturing, assembly, finishing, maintenance, repair, salvage, and recycling;
-   - representative dependency-closed chains with tools, workplaces, energy, environmental needs, and byproducts.
+Determine whether current production-chain records are materially wrong or merely broader than recipe authority. Select a separate narrow chain correction only when multiple recipes require a factual relationship that the current chain should own. Do not edit chains in this integration.
 
-5. **Regional and cultural variation**
-   - climate, ecology, settlement scale, trade access, institutions, local materials, customs, terminology, and substitutions;
-   - no rename-only variants.
+## Revised 0.6.5 Target
 
-6. **Technology and magic coexistence framework**
-   - mundane baseline first;
-   - magic as attractive player-facing specialization without universal adoption;
-   - substitution classes from the permanent program decision;
-   - affinity, vessel tier/capacity, efficiency, stability, attunement, recharge, ambient conditions, size/throughput, conductivity, retention, skill, installation, maintenance, failure, scarcity, and cost requirements;
-   - separate temporary spell use, rechargeable infrastructure, permanent enchantment, consumptive magic, and rare artifacts.
+The integration must install an exact revised `0.6.5` prompt that:
 
-7. **Ice-conditioned container case study**
-   - compare mundane preservation and magical alternatives;
-   - provide relative shard/crystal/cluster recommendations only when sources and repo canon support them;
-   - leave exact temperatures, volume, duration, and balance formulas deferred;
-   - preserve `cold_soak`, vessel consumption, material, ambient, maintenance, and availability constraints.
+- starts from the live 12-recipe baseline;
+- selects the largest coherent, reviewable, dependency-closed batch supported by the synthesis;
+- lists every exact recipe id, family, input/output item and quantity, role, workplace, tool, skill, and optional production-chain reference;
+- states the evidence and quantity-confidence classification for each row;
+- removes or corrects the failed pastry and meat-pie assumptions;
+- does not preserve an arbitrary count of 18 if evidence supports a different coherent batch;
+- does not invent missing item identities silently;
+- routes any necessary item, workplace, tool, skill, value, schema, validator, or production-chain precondition separately;
+- keeps recipe content static and planned-only;
+- prohibits crafting execution, availability, unlocks, labor, fuel, time, quality, spoilage, inventory mutation, economy behavior, magic execution, runtime, UI, saves, and gameplay;
+- requires normal content lint, focused authority tests, reference closure, hygiene checks, and complete changed-path review;
+- after acceptance, installs the exact research-informed `0.6.6` prompt.
 
-8. **Candidate matrix**
-   For every accepted recommendation, record:
-   - candidate name or concept;
-   - source domain;
-   - process stage;
-   - current or future owning authority;
-   - current dependency closure;
-   - classification: factual correction, missing static identity, missing static relationship, schema/validator precondition, authored input, runtime owner, lore only, optional depth, rejected complexity, or canon conflict;
-   - likely implementation package;
-   - priority and confidence;
-   - research sources.
+## Research And Magic Rules
 
-9. **0.6.5 disposition**
-   - identify any materially false transformation, impossible dependency, misleading item state, or incorrect tool/workplace/chain association;
-   - if none, state that no `0.6.5.x` repair is justified;
-   - if defects exist, select the smallest repair suffix and do not install `0.6.6` until that repair and a post-repair audit accept.
-
-10. **0.6.6 implications**
-    - identify research-supported flora/fauna/monster byproducts, ecological associations, region/biome constraints, and source-local loot candidates relevant to the existing `0.6.6` static scope;
-    - reject generic loot tables, harvest simulation, body-part execution, dynamic rolls, population simulation, crafting execution, and magic runtime;
-    - distinguish ordinary biological materials from magical or elemental materials.
-
-11. **Future package sequence**
-    - recommend dependency-closed later packages for resources, agriculture, material identities, processing relationships, food/cooking, tools/workplaces, magitech infrastructure, and runtime consumers;
-    - do not preassign primary version numbers beyond the active sequence;
-    - preserve the post-`0.6.7` Geography/recognition support route unless the user explicitly changes it.
-
-12. **Artifact disposition**
-    - delete each temporary artifact when fully promoted;
-    - otherwise retain it with exactly one named consumer and a concrete removal condition;
-    - no orphan temporary research files.
-
-## Research Reconciliation Rules
-
-- External research is non-canonical until promoted here.
-- Prefer scholarly, archaeological, museum, university, government, historical-primary-source, ethnobotanical, zoological, agricultural, food-science, materials-science, and conservation evidence.
-- Label modern analogues and design inference explicitly.
-- Do not copy unsafe procedural instructions into durable game design; retain process-level information sufficient for content and systems planning.
-- Do not infer setting canon from one historical culture, one time period, or one external fantasy setting.
-- Do not allow magic to erase labor, material, infrastructure, scarcity, maintenance, environmental, or skill constraints.
-- Do not make magic inaccessible or merely decorative; retain meaningful magical alternatives and progression opportunities.
-- Do not create duplicate identities when current items, tools, workplaces, skills, chains, crystals, spells, or world records already express the concept.
+- Prefer archaeological, museum, university, government, peer-reviewed, historical-primary-source, ethnobotanical, zoological, agricultural, food-science, materials-science, and conservation evidence.
+- Label modern analogues and design inference.
+- Do not copy hazardous procedural instructions; retain process-level design information.
+- Research ordinary technology before magic.
+- Magic may assist or substitute in bounded specialist or institutional cases, but must account for affinity, vessel tier/capacity, efficiency, stability, attunement, recharge, ambient conditions, scale/throughput, material conductivity/retention, skill, installation, maintenance, failure, scarcity, security, and cost.
+- Preserve attractive player-facing magical production paths without making them the universal baseline.
 - Do not weaken schemas or validators to fit research suggestions.
 
-## Required Route Decision
+## Artifact Disposition
 
-On successful integration with no blocking `0.6.5` defect:
-
-1. mark the research program and integration complete in current coordination docs;
-2. preserve the permanent program and synthesis as durable authorities;
-3. update `docs/design/static-content-expansion-program.md` so the research bridge is complete;
-4. update the deferred-route register and backlog with classified future lanes;
-5. overwrite `docs/dev/current-codex-prompt.md` with an exact revised prompt for `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-6. keep `0.6.6` limited to static monster/ecology/loot content, but require it to read and use the synthesis;
-7. require the exact `0.6.7 - Cross-Content Coherence And Coverage Audit` prompt after `0.6.6`;
-8. preserve the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan after `0.6.7`.
-
-If research proves a blocking `0.6.5` defect, install the smallest exact repair prompt instead and preserve `0.6.6` as reserved.
+Delete an artifact only when fully promoted. Otherwise retain it with exactly one named consumer and a concrete removal condition. No orphan temporary artifacts.
 
 ## Allowed Changes
 
-Documentation only. Expected paths include:
+Documentation only, including:
 
 - `docs/design/cross-domain-production-research-synthesis.md`;
-- the seven temporary research artifacts, only for deletion after full promotion or narrowly documented retention;
-- `docs/dev/current-codex-output.md`;
-- `docs/dev/current-gpt-handoff.md`;
-- `docs/dev/current-codex-prompt.md`;
-- `docs/dev/historical-version-and-deferred-route-register.md`;
-- `docs/dev/codex-sequenced-implementation-plan.md`;
-- `docs/dev/project-roadmap.md`;
-- `docs/dev/project-vision-and-continuity-brief.md`;
-- `docs/future_content_backlog.md`;
-- `docs/design/static-content-expansion-program.md`;
-- `docs/design/gpt-deep-research-version-tracking-decision.md` only for completed-gate tracking;
-- `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` only for factual correction or completion status.
+- temporary artifacts only for explicit deletion or retention notes;
+- current output, handoff, and prompt;
+- historical/deferred register;
+- roadmap, sequenced plan, continuity brief, backlog, and static program;
+- Deep Research tracking only for completed-gate status;
+- research program and reconciliation decision only for factual status correction.
 
 Do not change content JSON, schemas, validators, tests, lint code, runtime, UI, saves, migrations, packages, dependencies, assets, generated output, or gameplay.
 
 ## Validation
 
 - Verify every promoted repository claim against live files.
-- Verify every durable external claim has an appropriate citation in the source artifacts or synthesis.
-- Verify candidate classifications are complete and no recommendation silently becomes implementation permission.
-- Verify no duplicate or contradictory route state across current handoff, prompt, roadmap, sequence, backlog, static program, research program, and deferred-route register.
-- Verify all temporary artifacts have an explicit final disposition.
-- Run conflict-marker and trailing-whitespace checks.
-- Run `git diff --check`.
+- Verify every durable external claim has an appropriate citation.
+- Verify classifications and quantity-confidence labels are complete.
+- Verify no route contradiction remains across current handoff, output, prompt, roadmap, sequence, backlog, static program, research program, and deferred register.
+- Verify the generated prompt targets revised `0.6.5`, not `0.6.6`.
+- Verify all temporary artifacts have an explicit disposition.
+- Run conflict-marker, trailing-whitespace, and `git diff --check` checks.
 - Inspect the complete changed-path set and full diff.
-- Do not run builds, typechecks, content lint, tests, package installation, servers, or generators unless a repository-fact check cannot be completed without one; document any exception.
+- Do not run builds, typechecks, content lint, tests, package installation, servers, or generators unless a repository-fact check strictly requires one; document any exception.
 
 ## Completion Report
 
-Report:
-
-- starting commit and worktree state;
-- accepted `0.6.5` evidence;
-- seven artifact paths and gate labels;
-- live inventories reproduced;
-- major accepted, rejected, and deferred findings;
-- technology and magic adoption decision;
-- `0.6.5` repair disposition;
-- synthesis path;
-- temporary artifact disposition;
-- files changed;
-- checks run;
-- exact next prompt installed;
-- confirmation that no content, schema, validator, test, runtime, UI, save, migration, dependency, asset, generated-output, or gameplay behavior changed;
-- suggested commit message.
+Report starting commit/state, seven artifact paths and labels, live inventories, accepted/rejected/deferred findings, recipe/chain authority decision, technology/magic framework, synthesis path, artifact disposition, exact revised `0.6.5` prompt installed, files changed, checks run, and confirmation that no implementation behavior changed.
