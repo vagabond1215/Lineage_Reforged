@@ -28,8 +28,11 @@ Both artifacts are accepted temporary cited research inputs. They remain non-can
 Immediate next executable work:
 
 - gate: `GPT-DR.agriculture.land-food-livestock`
-- recommended route: Codex Sol Ultra
+- research route: ChatGPT Deep Research with the GitHub connector explicitly enabled for `vagabond1215/Lineage_Reforged` and public web research enabled
+- final authority route: Codex Sol Ultra verifies repository claims, repairs weak or stale findings, creates the accepted artifact, and commits coordination updates
 - expected artifact: `docs/dev/tmp-agriculture-land-food-livestock-research-2026-07-14.md`
+
+The Deep Research pass is not independently authoritative. If it cannot read the live private repository, treat its output only as external-source reconnaissance and require Codex to reconstruct all repository baseline and ownership sections before acceptance.
 
 ## Gate 2 Acceptance And Cleanup
 
