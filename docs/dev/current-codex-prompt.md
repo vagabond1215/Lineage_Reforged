@@ -10,7 +10,8 @@ Run:
 
 - Player travel, quest acceptance, and repaired quest tracking are engine-owned and accepted.
 - `Version 0.6.3 - Engine-Owned Activity Selection Command` is runtime-correct and passed every transition gate except permanent equal-sequence collision coverage.
-- `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair` is expected to change only the existing activity-selection command test among source/test files.
+- `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair` landed in exact commit `cc5704282affec4b387f3451d6dcff6431458353` with parent `d147aff7ddee4d10d6378522d81db735342afa01`.
+- The repair is expected to change only the existing activity-selection command test among source/test files.
 - The repaired test must hold tick, command sequence, player id, snapshot version, and full snapshot revision constant across different record ids while proving distinct command and event identities.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` are queued documentation maintenance. Preserve both unchanged during this audit.
 - No Deep Research or user decision is required.
@@ -25,15 +26,15 @@ Do not modify runtime, UI, shared contracts, events, tests, content, schemas, sa
 
 1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
 2. Read `AGENTS.md`, README, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, backlog, and both queued maintenance prompts.
-3. Inspect the exact committed `0.6.3.2` changed-path set and diff.
-4. Inspect `tests/unit/player-activity-selection-command.test.mjs` and command/event identity construction in `packages/engines/game-engine/src/player-activity-selection.ts`.
+3. Inspect the exact repair range `d147aff7ddee4d10d6378522d81db735342afa01..cc5704282affec4b387f3451d6dcff6431458353`. Do not infer the repair diff from current `HEAD` if later documentation commits exist.
+4. Inspect `tests/unit/player-activity-selection-command.test.mjs` at repair commit `cc5704282affec4b387f3451d6dcff6431458353` and command/event identity construction in `packages/engines/game-engine/src/player-activity-selection.ts`.
 5. Reinspect the activity-selection resolver/result/event, JS peer and exports, shared event registration, synchronizer, persistence boundary, gameplay-loop bridge, `ActivityPanel.tsx`, characterization coverage, all production `currentActivity` writers, and accepted travel/quest command patterns.
 
 ## Repair Audit Gates
 
 ### Exact repair and scope
 
-- Confirm only `tests/unit/player-activity-selection-command.test.mjs` changed among source/test files.
+- Confirm the exact repair range contains only `tests/unit/player-activity-selection-command.test.mjs` among source/test files.
 - Confirm no production, UI, contract, event, characterization, content, schema, save, dependency, generated-output, or asset file changed in the repair.
 - Confirm the existing deterministic/collision test was corrected rather than adding a duplicate test file.
 - Confirm identical-fixture deterministic coverage remains present.
@@ -63,12 +64,28 @@ Run:
 
 `node --test tests/unit/player-activity-selection-command.test.mjs tests/unit/player-activity-selection-characterization.test.mjs tests/unit/player-quest-tracking-command.test.mjs tests/unit/player-quest-tracking-characterization.test.mjs tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
 
-Also run `git show --check` for the repair commit, `git diff --check`, conflict-marker checks, and complete changed-path review.
+Run the exact repair checks:
 
-Verify both queued files remain byte-for-byte unchanged. Their expected SHA-256 hashes are:
+- `git show --check cc5704282affec4b387f3451d6dcff6431458353`
+- `git diff --check d147aff7ddee4d10d6378522d81db735342afa01 cc5704282affec4b387f3451d6dcff6431458353`
+- inspect the complete changed-path set for `d147aff7ddee4d10d6378522d81db735342afa01..cc5704282affec4b387f3451d6dcff6431458353`
+- run conflict-marker checks against the repaired tree.
 
-- `docs/dev/queued-codex-cleanup-prompt.md`: `365548975A20FC72BA95C92387C7ED1A8A2C45B8EE275F42B230750DD8A91883`
-- `docs/dev/queued-static-content-expansion-integration-prompt.md`: `CA3E8B5DB0DC75DECCCD391BF64F63A56C0FE9BEC0E6DE28B7C6175CEF3D2C59`
+Verify both queued files remain unchanged using Git object identity as the primary, line-ending-independent gate:
+
+- `docs/dev/queued-codex-cleanup-prompt.md` expected blob: `bbd124911e54d44da20864ab0722c6b6b3569a63`
+- `docs/dev/queued-static-content-expansion-integration-prompt.md` expected blob: `5c49981365ec4d94818b2153906c46c86f4214a8`
+
+Resolve the current blobs with `git rev-parse HEAD:<path>` or equivalent, and confirm the repair commit did not alter either queued path with:
+
+`git diff --exit-code d147aff7ddee4d10d6378522d81db735342afa01 cc5704282affec4b387f3451d6dcff6431458353 -- docs/dev/queued-codex-cleanup-prompt.md docs/dev/queued-static-content-expansion-integration-prompt.md`
+
+The previously recorded worktree SHA-256 values may be reported as supplemental evidence:
+
+- cleanup prompt: `365548975A20FC72BA95C92387C7ED1A8A2C45B8EE275F42B230750DD8A91883`
+- static-content integration prompt: `CA3E8B5DB0DC75DECCCD391BF64F63A56C0FE9BEC0E6DE28B7C6175CEF3D2C59`
+
+Do not fail the audit solely because checkout line-ending conversion changes a worktree SHA-256 value when the expected Git blob ids and path diff prove the committed files are unchanged.
 
 Do not run the full suite, builds, typechecks, package installation, servers, generators, content lint, or generated-output refresh.
 
@@ -83,7 +100,7 @@ Do not run the full suite, builds, typechecks, package installation, servers, ge
 
 ## Documentation And Handoff
 
-Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and update this file according to the decision rule. Record source/run/date, starting status, exact committed repair diff, files inspected, all checks, equal-sequence evidence, behavior confirmation, queue-file hashes, acceptance decision, risks, next route, and suggested commit.
+Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and update this file according to the decision rule. Record source/run/date, starting status, exact repair commit and parent range, exact committed repair diff, files inspected, all checks, equal-sequence evidence, behavior confirmation, queued-file blob ids, supplemental hashes if used, acceptance decision, risks, next route, and suggested commit.
 
 Suggested commit message:
 
