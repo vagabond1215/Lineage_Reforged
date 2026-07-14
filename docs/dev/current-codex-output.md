@@ -28,10 +28,10 @@ The report verifies current biological owners and catalog counts, separates sour
 ## Files Changed
 
 - `docs/dev/tmp-ecology-flora-fauna-byproducts-research-2026-07-14.md` - accepted Gate 2 artifact, committed separately.
-- `docs/dev/current-gpt-handoff.md` - replaced stale Gate 2 rejection state with accepted Gate 2 findings, unresolved issues, cleanup disposition, and Gate 3 route.
-- `docs/dev/current-codex-output.md` - current run result and validation record.
+- `docs/dev/current-gpt-handoff.md` - accepted Gate 2 findings, unresolved issues, cleanup disposition, and Gate 3 route.
+- `docs/dev/current-codex-output.md` - current run result, validation record, and corrected Gate 3 execution route.
 
-No other path changed in the required two-commit range.
+No content, schema, validator, test, runtime, UI, save, migration, dependency, asset, economy, loot, population, harvesting, magic, or gameplay path changed.
 
 ## Checks Run
 
@@ -58,16 +58,26 @@ Documentation only. No content JSON, recipe, production chain, schema, validator
 - The integration hold is unchanged. `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` remains blocked until all seven gates and the cross-domain integration are accepted.
 - The rejected Gate 2 attempt was not used as evidence. No failed report remnant existed; nothing was assimilated, removed, or renamed.
 
-## Next Recommended Version
+## Next Recommended Gate
 
 `GPT-DR.agriculture.land-food-livestock`
 
-Recommended route: Codex Sol Ultra
+Research route:
+
+- ChatGPT Deep Research with the GitHub connector explicitly enabled for `vagabond1215/Lineage_Reforged`;
+- public web research enabled for external agricultural, husbandry, soil, water, storage, and historical evidence;
+- Codex Sol Ultra afterward to verify every repository claim, repair or reject weak findings, create the accepted artifact, and commit the coordination update.
+
+If Deep Research cannot read the live private repository, its report is reconnaissance only and cannot be accepted as the Gate 3 artifact without Codex reconstruction.
 
 Expected artifact:
 
 `docs/dev/tmp-agriculture-land-food-livestock-research-2026-07-14.md`
 
-## Suggested Commit Message
+Suggested accepted-artifact commit:
 
-`docs(coordination): advance production research to agriculture gate`
+`docs(research): add agriculture gate findings`
+
+Suggested coordination commit after acceptance:
+
+`docs(coordination): advance production research to materials gate`
