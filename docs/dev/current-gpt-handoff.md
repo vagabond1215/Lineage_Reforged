@@ -35,6 +35,7 @@ Immediate next primary:
 
 - `docs/dev/historical-version-and-deferred-route-register.md` is the canonical query surface for historical aliases, suffixes, identity conflicts, deferred classifications, and reopening triggers.
 - `docs/design/static-content-expansion-program.md` owns live inventory, readiness decisions, the static/runtime boundary, batch policy, the `0.6.4`-`0.6.7` sequence, and the runtime-resumption rule.
+- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` owns the user-directed location-recognition criteria, character-facing Geography bracket/facets, and polity/border Knowledge boundary.
 - `docs/dev/current-codex-prompt.md` contains the exact `0.6.5` implementation prompt.
 
 ## Historical Resolution
@@ -43,6 +44,14 @@ Immediate next primary:
 - `0.5.356.1 - Tool Surface Test Post-Repair Audit` is conditional support only if fresh focused evidence contradicts the accepted repair.
 - `0.5.357` canonically means Runtime Ownership Transition Readiness Consolidation. The older tool-surface audit identity is superseded.
 - Historical proposed labels `0.5.199`, `0.5.202`, `0.5.205`, `0.5.207`, `0.5.210`, `0.5.213`, and `0.5.215` completed at `0.5.227`, `0.5.225`, `0.5.224`, `0.5.223`, `0.5.221`, `0.5.220`, and `0.5.219` respectively.
+
+## Recognition And Geographic Knowledge Boundary
+
+- Existing location snippets titled `Recognizing ...` are structural authored lore. They do not yet define the clues or criteria by which a character recognizes a place.
+- Future recognition must compare learned clues with perceptible observed clues and account for literacy, language, emblems, practical understanding, viewpoint, sensory conditions, contextual distinctiveness, contradictions, and confirmation.
+- Character-facing knowledge should project `Knowledge -> Geography` with parallel Physical Geography, Settlements And Places, Political Geography, and Cartography And Navigation facets. Do not force every subject into one exclusive continent-to-region-to-city tree.
+- Kingdoms, empires, city-states, and similar realms remain `polity.*` identities. Borders, claims, control, jurisdiction, and historical territorial changes require separate overlays; physical regions and map features remain distinct owners.
+- Preserve the docs-first post-`0.6.7` support route `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`. Do not silently drop it when generating later prompts or handoffs.
 
 ## Static Program Boundary
 
@@ -60,7 +69,7 @@ Services and resource/commodity expansion remain paused. Weapon/armor profiles s
 
 Static content must not imply item instances, inventory/storage mutation, crafting execution, dynamic vendors/economy/services, encounter/spawn simulation, dynamic loot, NPC population/schedules, construction/property/taxation/law enforcement, runtime ecology, or gameplay behavior.
 
-After `0.6.7` acceptance, re-read current source and select exactly one of activity advancement, rest, or quest turn-in. Do not bundle them or preassign the next version.
+After `0.6.7` acceptance, run the docs-first `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`. After that support pass explicitly completes or dispositions the recognition/geography lane, re-read current source and select exactly one of activity advancement, rest, or quest turn-in. Do not bundle them or preassign the next primary version.
 
 Suggested next commit:
 
