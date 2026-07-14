@@ -27,7 +27,7 @@ This index does not replace:
 
 ## Current Active Boundary
 
-`docs/dev/historical-version-and-deferred-route-register.md` now owns historical version identity, aliases, suffixes, and deferred reopening triggers. The active implementation path is `Version 0.6.4 - World And Settlement Static Content Expansion`; this supporting document index must not change that sequencing.
+`docs/dev/historical-version-and-deferred-route-register.md` now owns historical version identity, aliases, suffixes, and deferred reopening triggers. `Version 0.6.4 - World And Settlement Static Content Expansion` is complete and accepted; the active implementation path is `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`. This supporting document index must not change that sequencing.
 
 ## Index
 

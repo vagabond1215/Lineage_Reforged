@@ -23,6 +23,8 @@ Immediate next primary:
 
 ## Completed Package Evidence
 
+- `0.6.4` is committed as `44dfb0a79bdd9941ca45e39d83b125b3ced6d9ca`, with parent `1e62aaeb4a7a23c5514eb7ffb49f26d20f9a6070`.
+- The committed subject, `Harden diplomacy conflict authority evidence flow`, is historically inaccurate. The accepted diff is the canonical `Version 0.6.4 - World And Settlement Static Content Expansion` package; its intended subject was `content(world): expand settlement districts sites and features`. Shared history must not be rewritten.
 - `0.6.4` added exactly 12 active districts, 18 active sites, 6 planned semantic map features, and 12 General Lore snippets across Verdant Thalos, Heart Basin, and Stormcap Coast.
 - Live totals are 14 districts, 20 sites, 8 semantic map features, and 28 Knowledge snippets, including 18 General Lore snippets.
 - The exact cluster matrix is 4 districts, 6 sites, 2 semantic features, and 4 General Lore snippets per cluster.
@@ -51,6 +53,8 @@ Immediate next primary:
 3. `0.6.7` - cross-content coherence and coverage audit.
 
 The exact `0.6.5` target adds 18 planned standard recipes using existing item/material identities, values, tools, workplaces, skills, and production chains. It adds no item, value, profile, resource, commodity, workplace, tool, skill, chain, schema, validator, or lint-registration record.
+
+All 18 proposed recipe ids remain available, and every referenced item key, tool, workplace, skill, and production-chain id resolves in the live catalogs. The prompt remains fail-closed: if a named chain does not provide a compatible exact transformation, implementation must stop on that row instead of inventing quantities.
 
 Services and resource/commodity expansion remain paused. Weapon/armor profiles still require live collections and normal-lint registration before content. Consumable-profile anomalies remain out of scope. Generic `world.pois` remains rejected.
 
