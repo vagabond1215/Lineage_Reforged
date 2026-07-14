@@ -5,9 +5,9 @@ Last reviewed: 2026-07-14
 ## Current Runtime Transition Override
 
 - Latest completed primary: `Version 0.6.3 - Engine-Owned Activity Selection Command`.
-- Latest completed support/repair run: `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`.
-- Next support/audit route: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`.
-- Historical-route cleanup and static-content expansion integration remain queued after activity-selection acceptance; `0.6.4` is reserved for world and settlement static expansion only after that combined maintenance passes.
+- Latest completed support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`.
+- Next support route: unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`.
+- Activity selection is accepted. `0.6.4` remains reserved for world and settlement static expansion only after the active combined maintenance pass completes its historical, inventory, readiness, and roadmap gates.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -32,10 +32,10 @@ The current Codex handoff controls exact current version state. The current GPT 
 Current live anchor:
 
 - Latest completed version: `Version 0.6.3 - Engine-Owned Activity Selection Command`
-- Latest support/repair run: `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`
-- Next recommended version: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
+- Latest support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
+- Next recommended run: unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, and repaired quest tracking are engine-owned and audited; activity selection has its test-only collision repair and awaits post-repair acceptance; combined historical cleanup/content-expansion integration remains queued before `0.6.4`; UI information architecture is durably bounded
+- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; combined historical cleanup/content-expansion integration is active before the reserved `0.6.4`; UI information architecture is durably bounded
 
 Versioning rule:
 

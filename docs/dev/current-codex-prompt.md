@@ -1,107 +1,377 @@
-# Current Codex Prompt
+# Queued Static Content Expansion Integration Prompt
 
 You are working in the `vagabond1215/Lineage_Reforged` repository on branch `master`.
 
-Run:
+This is a queued documentation-maintenance prompt. It must not displace an active runtime repair or audit.
 
-`Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
+## Run Identity
 
-## Accepted State
+Run an **unversioned combined maintenance pass** named:
 
-- Player travel, quest acceptance, and repaired quest tracking are engine-owned and accepted.
-- `Version 0.6.3 - Engine-Owned Activity Selection Command` is runtime-correct and passed every transition gate except permanent equal-sequence collision coverage.
-- `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair` landed in exact commit `cc5704282affec4b387f3451d6dcff6431458353` with parent `d147aff7ddee4d10d6378522d81db735342afa01`.
-- The repair is expected to change only the existing activity-selection command test among source/test files.
-- The repaired test must hold tick, command sequence, player id, snapshot version, and full snapshot revision constant across different record ids while proving distinct command and event identities.
-- `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` are queued documentation maintenance. Preserve both unchanged during this audit.
-- No Deep Research or user decision is required.
-
-## Purpose
-
-Perform one read-only post-repair audit. Decide whether the activity-selection transition is accepted or whether one further smallest repair suffix is required.
-
-Do not modify runtime, UI, shared contracts, events, tests, content, schemas, saves, dependencies, queued prompt files, or generated output in this run.
-
-## Required First Steps
-
-1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
-2. Read `AGENTS.md`, README, current output/handoff/prompt, sequencing plan, roadmap, continuity brief, backlog, and both queued maintenance prompts.
-3. Inspect the exact repair range `d147aff7ddee4d10d6378522d81db735342afa01..cc5704282affec4b387f3451d6dcff6431458353`. Do not infer the repair diff from current `HEAD` if later documentation commits exist.
-4. Inspect `tests/unit/player-activity-selection-command.test.mjs` at repair commit `cc5704282affec4b387f3451d6dcff6431458353` and command/event identity construction in `packages/engines/game-engine/src/player-activity-selection.ts`.
-5. Reinspect the activity-selection resolver/result/event, JS peer and exports, shared event registration, synchronizer, persistence boundary, gameplay-loop bridge, `ActivityPanel.tsx`, characterization coverage, all production `currentActivity` writers, and accepted travel/quest command patterns.
-
-## Repair Audit Gates
-
-### Exact repair and scope
-
-- Confirm the exact repair range contains only `tests/unit/player-activity-selection-command.test.mjs` among source/test files.
-- Confirm no production, UI, contract, event, characterization, content, schema, save, dependency, generated-output, or asset file changed in the repair.
-- Confirm the existing deterministic/collision test was corrected rather than adding a duplicate test file.
-- Confirm identical-fixture deterministic coverage remains present.
-
-### Permanent equal-sequence coverage
-
-- Confirm two commands are created from the same unchanged snapshot for `job.harbor_surveyor` and `business.gannet_cutter`.
-- Confirm the explicit command sequence is equal across both commands.
-- Confirm expected tick, player id, snapshot version, and full snapshot revision are asserted equal.
-- Confirm record ids are asserted different and command ids are asserted different before execution.
-- Confirm both commands execute against equivalent clones of the same source snapshot.
-- Confirm both results are accepted at the same applied tick, result command ids remain distinct, and event ids remain distinct.
-- Confirm command identity still includes `recordId` and event identity still incorporates the command id.
-
-### Complete transition gates
-
-- Reconfirm the locked success snapshot hash `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40`, success notice hash `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`, and missing notice hash `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77`.
-- Reconfirm sole engine selection authority, exact id/label/category/detail derivation, notification id/text/time/tone/order/eight-entry cap, repeated-selection behavior, Chronicle non-mutation, missing-record identity/content, and input immutability.
-- Reconfirm malformed, wrong-player, stale tick/version/revision, incoherent, missing-record, and injected-failure atomic rejection with zero events.
-- Reconfirm exactly one typed five-key no-prose accepted event, current-data roundtrip, no persisted command correlation, browser-safe imports, TS/JS peer, public exports, shared registration, accepted-only UI application, and visible rejection notices.
-- Classify every remaining production `currentActivity` assignment and confirm no duplicate activity-record selection owner.
-- Confirm no conflict markers, temporary artifacts, accidental generated/vendor edits, dependency changes, or broad formatting churn.
-
-## Required Tests
-
-Run:
-
-`node --test tests/unit/player-activity-selection-command.test.mjs tests/unit/player-activity-selection-characterization.test.mjs tests/unit/player-quest-tracking-command.test.mjs tests/unit/player-quest-tracking-characterization.test.mjs tests/unit/player-quest-acceptance-command.test.mjs tests/unit/player-quest-acceptance-characterization.test.mjs tests/unit/player-travel-command.test.mjs tests/unit/player-travel-characterization.test.mjs tests/unit/gameplay-loop-skill-gating.test.mjs tests/simulation/save-load-roundtrip.test.mjs tests/simulation/deterministic-scenario.test.mjs`
-
-Run the exact repair checks:
-
-- `git show --check cc5704282affec4b387f3451d6dcff6431458353`
-- `git diff --check d147aff7ddee4d10d6378522d81db735342afa01 cc5704282affec4b387f3451d6dcff6431458353`
-- inspect the complete changed-path set for `d147aff7ddee4d10d6378522d81db735342afa01..cc5704282affec4b387f3451d6dcff6431458353`
-- run conflict-marker checks against the repaired tree.
-
-Verify both queued files remain unchanged using Git object identity as the primary, line-ending-independent gate:
-
-- `docs/dev/queued-codex-cleanup-prompt.md` expected blob: `bbd124911e54d44da20864ab0722c6b6b3569a63`
-- `docs/dev/queued-static-content-expansion-integration-prompt.md` expected blob: `5c49981365ec4d94818b2153906c46c86f4214a8`
-
-Resolve the current blobs with `git rev-parse HEAD:<path>` or equivalent, and confirm the repair commit did not alter either queued path with:
-
-`git diff --exit-code d147aff7ddee4d10d6378522d81db735342afa01 cc5704282affec4b387f3451d6dcff6431458353 -- docs/dev/queued-codex-cleanup-prompt.md docs/dev/queued-static-content-expansion-integration-prompt.md`
-
-The previously recorded worktree SHA-256 values may be reported as supplemental evidence:
-
-- cleanup prompt: `365548975A20FC72BA95C92387C7ED1A8A2C45B8EE275F42B230750DD8A91883`
-- static-content integration prompt: `CA3E8B5DB0DC75DECCCD391BF64F63A56C0FE9BEC0E6DE28B7C6175CEF3D2C59`
-
-Do not fail the audit solely because checkout line-ending conversion changes a worktree SHA-256 value when the expected Git blob ids and path diff prove the committed files are unchanged.
-
-Do not run the full suite, builds, typechecks, package installation, servers, generators, content lint, or generated-output refresh.
-
-## Decision Rule
-
-- If every gate passes, accept the activity-selection transition.
-- Do not compare or select activity advancement, rest, or quest turn-in during this audit.
-- On acceptance, preserve both queued files and overwrite `docs/dev/current-codex-prompt.md` with the exact contents of `docs/dev/queued-static-content-expansion-integration-prompt.md` for the immediate unversioned combined maintenance pass `Historical Route Cleanup And Static Content Expansion Pipeline Integration`.
-- The combined maintenance pass, not this audit, decides whether readiness permits installing `Version 0.6.4 - World And Settlement Static Content Expansion`.
-- If any material gate fails, select the smallest further `0.6.3.x` repair, preserve both queued files, and do not install the maintenance prompt.
-- Do not implement a repair, maintenance work, content, or another runtime consumer during this read-only audit.
-
-## Documentation And Handoff
-
-Overwrite current output and handoff; update only current sequencing/roadmap/continuity/backlog anchors; and update this file according to the decision rule. Record source/run/date, starting status, exact repair commit and parent range, exact committed repair diff, files inspected, all checks, equal-sequence evidence, behavior confirmation, queued-file blob ids, supplemental hashes if used, acceptance decision, risks, next route, and suggested commit.
+`Historical Route Cleanup And Static Content Expansion Pipeline Integration`
 
 Suggested commit message:
 
-`docs(audit): accept activity selection collision repair`
+`docs(roadmap): integrate static content expansion program`
+
+## Execution Gate
+
+1. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
+2. Read:
+   - `AGENTS.md`
+   - `README.md`
+   - `docs/dev/current-codex-output.md`
+   - `docs/dev/current-gpt-handoff.md`
+   - `docs/dev/current-codex-prompt.md`
+   - `docs/dev/codex-sequenced-implementation-plan.md`
+   - `docs/dev/project-roadmap.md`
+   - `docs/dev/project-vision-and-continuity-brief.md`
+   - `docs/dev/queued-codex-cleanup-prompt.md`
+   - `docs/dev/historical-audit-doc-index.md`
+   - `docs/future_content_backlog.md`
+   - `docs/design/future-system-design-ledger.md`
+   - `docs/design/survival-builder-rpg-mmo-content-gap-audit.md`
+   - all focused settlement, district/site, item/equipment, crafting, resource/commodity, monster, ecology, Knowledge, and validation sources needed to verify live authority.
+3. Confirm `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit` has accepted the activity-selection transition.
+4. If `0.6.3.3` has not accepted the transition, do not run this maintenance pass and do not change the active prompt.
+5. If the repository has advanced beyond this plan, preserve the actual live anchors and remap only unused future primary labels. Never rewind a newer accepted route.
+6. This run is documentation-only. Do not modify content JSON, runtime, UI, tests, schemas, validators, saves, migrations, dependencies, package metadata, generated output, or assets.
+
+## Purpose
+
+Combine the already queued historical/deferred-route cleanup with a substantial static authored-content expansion integration pass.
+
+The repository has many completed authority decisions, schemas, validators, and small content seeds, but the live catalogs remain too sparse for the intended world scale. Integrate a deliberate content program before the next owner-specific runtime consumer.
+
+The maintenance pass must:
+
+- reconcile the `0.5.x` history and deferred routes into one trustworthy register;
+- inventory the live content authorities and their actual readiness;
+- distinguish static authored expansion from integrated gameplay behavior;
+- insert a multi-package static content expansion milestone into the active roadmap;
+- preserve later inventory, crafting execution, encounter/spawn, NPC, settlement-simulation, and economy work;
+- install the first exact content implementation prompt only after the documentation gates pass.
+
+## Part A — Historical And Deferred-Route Reconciliation
+
+Consume the intent of `docs/dev/queued-codex-cleanup-prompt.md` within this same maintenance pass.
+
+At minimum:
+
+- reconcile the conflicting historical `0.5.357` identities;
+- classify `0.5.356.1` as conditional support only;
+- explain the absent `0.5.211` from evidence without inventing an implementation;
+- confirm the historical remaps for `0.5.199`, `0.5.202`, `0.5.205`, `0.5.207`, `0.5.210`, `0.5.213`, and `0.5.215`;
+- detect duplicate version identities, stale planned rows, suffix runs treated as primaries, and completed work still described as pending;
+- preserve authored-input, consumer, research, maturity, paused, conditional-support, rejected, and closed gates.
+
+Create or update:
+
+`docs/dev/historical-version-and-deferred-route-register.md`
+
+The register must contain:
+
+1. a compact historical version table with canonical version, alias/suffix, route, status, final disposition, and source;
+2. a deferred-route table with lane, classification, completed foundation, missing layer, reopening trigger, near-term posture, and primary source.
+
+Do not rewrite historical design decisions merely to modernize their language. Correct false current pointers, ambiguous identities, stale statuses, and direction-bearing duplication.
+
+## Part B — Live Static-Content Inventory
+
+Produce a reproducible inventory from live files rather than relying only on roadmap prose.
+
+For each relevant authority, record:
+
+- content path;
+- schema path;
+- validator path;
+- normal content-lint registration status;
+- current record count;
+- lifecycle/status counts where applicable;
+- critical reference dependencies;
+- current runtime consumer, if any;
+- static expansion readiness;
+- exact blockers.
+
+At minimum inspect:
+
+- settlements;
+- settlement districts;
+- settlement sites;
+- regions, places, and semantic map features;
+- resources and commodities;
+- items and market values;
+- weapon and armor profiles;
+- crafting recipes;
+- monsters;
+- fauna/ecology authorities;
+- combat roles and tactics presets;
+- loot references;
+- Knowledge domains and snippets;
+- static services where relevant to descriptive settlement coverage.
+
+Classify each authority as exactly one of:
+
+- `ready-for-large-static-expansion`
+- `ready-with-reference-constraints`
+- `requires-small-schema-or-validator-precondition`
+- `authored-input-gated`
+- `runtime-gated`
+- `paused`
+- `rejected`
+
+For every non-ready authority, state the smallest enabling action and whether it belongs before, during, or after the first content program.
+
+## Part C — Static Versus Integrated Content Boundary
+
+### Static authored expansion may include
+
+- identities and names;
+- descriptions and classifications;
+- regions, locations, districts, and sites;
+- static infrastructure descriptions;
+- item, material, ingredient, tool, clothing, weapon, armor, food, drink, and consumable identities;
+- recipe input/output/tool/workplace relationships supported by current authority;
+- monster archetypes, habitats, lineages, roles, tactics references, and authored loot descriptors;
+- Knowledge subjects and snippets;
+- lifecycle/status changes that do not imply unavailable gameplay behavior.
+
+### Integrated gameplay expansion remains deferred until its owner exists
+
+- item instances, provenance, ownership, and storage mutation;
+- inventory capacity and reservations;
+- durability, quality, damage, and spoilage mutation;
+- crafting execution and dynamic availability;
+- dynamic vendors, prices, stock, access, and services;
+- encounter generation and spawn simulation;
+- dynamic loot generation and ownership;
+- NPC population simulation, schedules, and worker assignment;
+- construction, property, settlement growth, taxation, and law enforcement;
+- runtime ecology, migration, economy, reputation, reward, or faction consequences.
+
+Do not describe integrated behavior as implemented merely because static content exists.
+
+## Part D — Required Durable Program Document
+
+Create:
+
+`docs/design/static-content-expansion-program.md`
+
+It must include:
+
+1. current live content inventory;
+2. readiness classifications;
+3. authority and runtime boundaries;
+4. geographic and thematic coverage strategy;
+5. new-canon authoring rules;
+6. settlement/district/site expansion strategy;
+7. item/material/recipe dependency-closure strategy;
+8. monster/ecology/loot dependency-closure strategy;
+9. Knowledge integration posture;
+10. batch-size and review policy;
+11. exact primary sequence;
+12. acceptance criteria for each package;
+13. cross-content audit criteria;
+14. deferred integrated-gameplay layer;
+15. runtime-ownership resumption rule.
+
+## Required Primary Sequence
+
+Use these labels if they remain the next unused primary versions. If the branch has advanced, use the next available primary labels while preserving this order and intent.
+
+### Version 0.6.4 — World And Settlement Static Content Expansion
+
+Plan a substantial coherent world-content batch using current authorities.
+
+May include:
+
+- settlement identities;
+- regional/place/map references;
+- districts and settlement sites;
+- descriptive infrastructure;
+- static service/resource associations supported by current contracts;
+- climate, geography, culture, and economy descriptions;
+- Knowledge coverage;
+- safe lifecycle/status activation.
+
+Requirements:
+
+- expand by coherent geographic clusters, not isolated records;
+- include multiple settlement types and scales;
+- make major settlements structurally distinct through districts/sites where supported;
+- preserve specific owner families and the rejection of generic `world.pois`;
+- prohibit population simulation, vendors, stock, construction, property, taxation, law enforcement, dynamic economy, runtime, UI, save, or gameplay changes.
+
+### Version 0.6.5 — Item, Material, And Recipe Static Content Expansion
+
+Plan a substantial dependency-closed catalog.
+
+May include:
+
+- raw and refined materials;
+- ingredients;
+- tools and static container identities;
+- food, drink, consumables, and clothing;
+- weapons and armor;
+- current static weapon/armor profiles;
+- coherent recipe families;
+- market-value and resource/commodity references;
+- Knowledge coverage.
+
+Requirements:
+
+- build recipe families rather than disconnected recipes;
+- resolve every input, output, tool, station/workplace, item, resource, commodity, and value reference;
+- prohibit item-instance state, durability/quality/spoilage mutation, reservations, storage ownership, inventory capacity, crafting execution, dynamic availability, runtime, UI, save, or gameplay changes.
+
+### Version 0.6.6 — Monster, Ecology, And Loot Static Content Expansion
+
+Plan a substantial region-aware creature catalog.
+
+May include:
+
+- monster and creature identities;
+- habitats and ecology associations;
+- regional variants supported by current authority;
+- lineage, role, tactics, preset, and combat-profile references;
+- static loot descriptors with valid item/value references;
+- danger, behavior, and encounter-context descriptions;
+- monster/ecology Knowledge coverage.
+
+Requirements:
+
+- organize by biome, region, role, and threat niche;
+- avoid adjective-only duplicates;
+- resolve all loot, item, market-value, fauna, lineage, role, and tactics references;
+- prohibit encounter generation, spawn simulation, population mutation, dynamic loot, migration, new combat mechanics, status execution, runtime, UI, save, or gameplay changes.
+
+### Version 0.6.7 — Cross-Content Coherence And Coverage Audit
+
+Audit the complete expansion program.
+
+At minimum verify:
+
+- schema compliance and normal content lint;
+- semantic validators;
+- duplicate ids/slugs;
+- orphan references;
+- settlement/district/site/map/region anchoring;
+- item/resource/commodity/value closure;
+- recipe input/output/tool/workplace closure;
+- weapon/armor profile closure;
+- monster/loot/fauna/lineage/role/tactics closure;
+- Knowledge authority closure;
+- active/planned status coherence;
+- no accidental runtime claims;
+- no prohibited generic authority;
+- formatting and generated-output hygiene.
+
+If defects exist, select the smallest repair suffix attached to the affected content primary. Do not weaken validators to hide defects.
+
+After acceptance, resume owner-specific runtime work. Compare activity advancement, rest, and quest turn-in from current source and select exactly one bounded consumer. Do not bundle them.
+
+## Batch-Size Policy
+
+The larger token and execution budget permits substantial runs.
+
+Do not impose an arbitrary one-record or two-record seed posture.
+
+For each content implementation package, select the largest batch that remains:
+
+- one coherent authority package;
+- reviewable;
+- dependency-closed;
+- validator-backed;
+- internally consistent;
+- free of runtime behavior changes.
+
+A package may span multiple related content files when they form one dependency-closed catalog. Do not combine all world, item/recipe, and monster expansion into one implementation commit.
+
+## Content Quality Rules
+
+Every new record must serve at least one clear purpose:
+
+- geographic coverage;
+- settlement identity;
+- economic or material-chain coverage;
+- recipe-chain closure;
+- equipment-role coverage;
+- ecology/biome coverage;
+- encounter-role coverage;
+- Knowledge coverage;
+- vertical-slice playability.
+
+Avoid filler, unsupported runtime claims, invented dangling references, inconsistent naming, duplicate functional recipes, missing loot items, and monsters that require unimplemented mechanics merely to exist.
+
+## Roadmap And Handoff Updates
+
+Update only where necessary:
+
+- `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/dev/project-roadmap.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
+- `docs/dev/historical-audit-doc-index.md`
+- `docs/future_content_backlog.md`
+- `docs/dev/historical-version-and-deferred-route-register.md`
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/current-codex-prompt.md`
+
+Required outcome:
+
+- historical cleanup is complete and queryable;
+- the content expansion program is an intentional milestone before the next runtime consumer;
+- later integrated gameplay work remains visible and deferred;
+- no live direction-bearing document says `0.6.4` must automatically be activity advancement, rest, or quest turn-in;
+- the current runtime ownership achievements remain accepted and unchanged.
+
+## Next Prompt
+
+If every documentation gate passes, overwrite `docs/dev/current-codex-prompt.md` with an exact implementation prompt for:
+
+`Version 0.6.4 - World And Settlement Static Content Expansion`
+
+That prompt must:
+
+- inventory live world and settlement counts before authoring;
+- define an explicit geographic coverage matrix and target batch;
+- authorize substantial intentional new static canon;
+- use current schemas, validators, and owner families;
+- require reference closure and normal content lint;
+- prohibit runtime, UI, saves, migrations, population simulation, vendors, construction, property, dynamic economy, and gameplay behavior;
+- require focused authority tests and complete changed-path review;
+- write the exact `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` prompt after successful completion.
+
+Do not select or implement a gameplay consumer during this maintenance pass.
+
+## Validation
+
+1. Re-run the historical version inventory and confirm no live identity conflicts remain.
+2. Re-run the deferred-route inventory and confirm every open lane has a classification and reopening trigger.
+3. Reproduce all reported live content counts.
+4. Search all direction-bearing documents for current/next version conflicts.
+5. Search specifically for `0.6.4`, activity advancement, rest, quest turn-in, content expansion, and queued cleanup references.
+6. Confirm all linked paths exist.
+7. Run conflict-marker and trailing-whitespace searches.
+8. Run `git diff --check`.
+9. Inspect the complete changed-path set and confirm it is documentation-only.
+
+Do not run the full suite, builds, typechecks, package installation, servers, generators, or content implementation. Use side-effect-free inventory or lint commands only when needed to verify a documentation claim.
+
+## Completion Report
+
+Record:
+
+- starting commit and branch state;
+- accepted runtime anchor;
+- files inspected and changed;
+- historical conflicts corrected;
+- classification of `0.5.211`, `0.5.356.1`, and `0.5.357`;
+- live content counts and readiness classifications;
+- omitted authorities and blockers;
+- exact inserted primary sequence;
+- new-canon and batch-size policy;
+- validation results;
+- whether the `0.6.4` prompt was installed;
+- remaining uncertainties;
+- suggested commit message.

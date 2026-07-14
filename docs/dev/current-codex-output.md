@@ -1,18 +1,17 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair
+Source version/run: Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit
 Date: 2026-07-14
-Branch/status assumption: `master`; starting commit `d147aff7`; clean worktree; `origin/master` aligned after fetch. The user-added queued historical cleanup and static-content expansion integration prompts were inspected and preserved unchanged.
+Branch/status assumption: `master`; starting commit `05df7df6`; clean worktree; `origin/master` aligned after fetch. Exact repair audited: parent `d147aff7ddee4d10d6378522d81db735342afa01`, commit `cc5704282affec4b387f3451d6dcff6431458353`.
 
 ## Result
 
-Completed the smallest test-only collision regression repair. The existing activity-selection deterministic test now holds tick, command sequence, player id, snapshot version, and full snapshot revision constant across two different record ids before proving distinct command and event identities.
+Accepted the engine-owned activity-selection transition. The repair commit changed only the existing activity-selection command test among source/test files, permanently proves equal-sequence record-id discrimination for command and event identities, and introduced no production behavior change.
 
-No production behavior changed. Activity-selection tests pass 10/10 and the prescribed focused transition group passes 45/45.
+Every repair and transition gate passes at 45/45 focused tests. Activated the queued unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration` prompt; `Version 0.6.4` remains reserved until that maintenance pass completes its readiness gates.
 
 ## Files Changed
 
-- `tests/unit/player-activity-selection-command.test.mjs`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
@@ -21,34 +20,44 @@ No production behavior changed. Activity-selection tests pass 10/10 and the pres
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-codex-prompt.md`
 
+## Files Inspected
+
+- Exact repair range `d147aff7ddee4d10d6378522d81db735342afa01..cc5704282affec4b387f3451d6dcff6431458353`, commit metadata, changed paths, and full test diff
+- Repaired command test at the repair commit and current tree
+- Activity-selection resolver, command/result/event identities, JS peer, exports, shared event registration, synchronizer, and persistence boundary
+- Gameplay-loop bridge, `ActivityPanel.tsx`, characterization coverage, all production `currentActivity` writers, and accepted travel/quest command patterns
+- Required README, output/handoff/prompt, sequencing, roadmap, continuity, backlog, and both queued maintenance prompts
+
 ## Checks Run
 
-- Fetch and branch check: clean `master` at `d147aff7`; local and `origin/master` aligned.
-- Pre-edit inspection confirmed the committed different-record comparison used explicit sequences `31` and `32`.
-- Post-edit activity-selection command and characterization tests: 10/10 passed.
+- Fetch and branch check: clean `master` at `05df7df6`; local and `origin/master` aligned.
+- Exact repair changed-path review: seven coordination docs plus `tests/unit/player-activity-selection-command.test.mjs`; no other source/test path and no production, UI, contract, event, characterization, content, schema, save, dependency, generated-output, or asset path changed.
+- Confirmed the existing deterministic test was corrected in place and retains identical-fixture repeatability.
+- Confirmed same unchanged snapshot, different record ids, equal explicit sequence `31`, equal tick/player/snapshot-version/full-revision assertions, distinct pre-execution command ids, accepted equivalent-clone execution, equal applied tick, distinct result command ids, and distinct event ids.
+- Confirmed `recordId` remains encoded in command identity and event identity incorporates command id.
 - Prescribed selection, tracking, acceptance, travel, skill-gating, save/load, and deterministic scenario group: 45/45 passed.
-- Confirmed the repaired test uses one source snapshot, explicit sequence `31` for both record ids, and equal expected tick, player id, snapshot version, and full revision.
-- Confirmed record ids and command ids differ before execution; both results are accepted at the same applied tick; result command ids and emitted event ids differ.
-- Complete changed-path review confirms only `tests/unit/player-activity-selection-command.test.mjs` changed among source/test files and no production file changed.
-- `git diff --check` passed with informational LF-to-CRLF conversion warnings.
-- Queued maintenance files remained byte-for-byte unchanged: `docs/dev/queued-codex-cleanup-prompt.md` SHA-256 `365548975A20FC72BA95C92387C7ED1A8A2C45B8EE275F42B230750DD8A91883`; `docs/dev/queued-static-content-expansion-integration-prompt.md` SHA-256 `CA3E8B5DB0DC75DECCCD391BF64F63A56C0FE9BEC0E6DE28B7C6175CEF3D2C59`.
+- Locked success snapshot hash `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40`, success notice hash `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`, and missing notice hash `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77` passed.
+- Reconfirmed sole engine selection authority, exact selection and notification behavior, repeated selection, Chronicle non-mutation, input immutability, complete atomic rejection matrix, exact five-key no-prose event, current-data roundtrip, no persisted correlation, browser/TS-JS/export/registration boundaries, accepted-only UI application, and visible rejection notices.
+- Classified remaining `currentActivity` writers as travel arrival/hooks, quest-acceptance preparation, activity advancement/quest branches, rest, and turn-in; no duplicate record-selection owner exists.
+- `git show --check cc5704282affec4b387f3451d6dcff6431458353`, exact-range `git diff --check`, conflict-marker search, repair-scope guards, clean pre-doc status, and queued-path no-diff check passed.
+- Queued Git blobs match exactly: cleanup `bbd124911e54d44da20864ab0722c6b6b3569a63`; combined content integration `5c49981365ec4d94818b2153906c46c86f4214a8`. Supplemental worktree SHA-256 values also match the recorded values.
 - Full suite, builds, typechecks, package installation, servers, generators, content lint, and generated-output refresh were intentionally omitted.
 
 ## Behavior / Runtime Confirmation
 
-No runtime, UI, shared contract, event, characterization hash, content, schema, save, migration, dependency, generated-output, or player-visible behavior changed. Only permanent collision-regression coverage changed among source/test files.
+No runtime, UI, contract, event, test, content, schema, save, migration, dependency, generated-output, asset, or player-visible behavior changed during this audit. Activity selection is accepted as engine-owned, deterministic, atomic, parity-locked, persistence/browser-safe, and correctly adapted by the UI.
 
 ## Risks / Follow-Up
 
-- `Version 0.6.3.3` must inspect the committed repair diff and rerun all transition gates before accepting activity selection.
-- The post-repair audit must not select activity advancement, rest, or quest turn-in.
-- On acceptance, install the queued combined historical-route cleanup/static-content expansion integration prompt; do not start `0.6.4` until that documentation-maintenance pass completes its readiness work.
-- The attached future content-expansion intent is stored in `docs/dev/queued-static-content-expansion-integration-prompt.md` and remains subordinate to the active audit.
+- The active combined maintenance pass is documentation-only and must not implement content or runtime behavior.
+- It must reconcile historical/deferred routes, reproduce live content inventories, classify authority readiness, and create the durable static-content expansion program before installing `0.6.4`.
+- Activity advancement/preview, rest/preview, quest turn-in, generic delivery/replay, and integrated gameplay content remain deferred.
+- Both queued prompt files remain preserved as source evidence while the combined prompt is active.
 
 ## Next Recommended Version
 
-Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit
+Unversioned support maintenance - Historical Route Cleanup And Static Content Expansion Pipeline Integration
 
 ## Suggested Commit Message
 
-test(runtime): lock equal-sequence activity selection identity
+docs(audit): accept activity selection collision repair
