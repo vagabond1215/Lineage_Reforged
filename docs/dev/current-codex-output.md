@@ -1,25 +1,17 @@
 # Current Codex Output
 
-Source version/run: Version 0.6.3 - Engine-Owned Activity Selection Command
-Date: 2026-07-13
-Branch/status assumption: `master`; starting commit `f3fc9769`; clean worktree after fetch and fast-forward pull; `origin/master` aligned. The remote-only `docs/dev/queued-codex-cleanup-prompt.md` was preserved untouched and did not displace the active runtime sequence.
+Source version/run: Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit
+Date: 2026-07-14
+Branch/status assumption: `master`; clean worktree; starting commit `8f87e443` after fetch and fast-forward pull. Runtime transition commit audited: `1834a294`. The audit was read-only for runtime, UI, contracts, events, tests, content, schemas, saves, dependencies, and generated output; final changes are coordination docs only.
 
 ## Result
 
-Moved only activity-record selection behind an engine-owned resolver, deterministic transient command, atomic synchronized result, and typed accepted event. The gameplay-loop bridge no longer owns record lookup, category derivation, state mutation, or notification append, and `ActivityPanel.tsx` applies returned snapshots only when accepted.
+The activity-selection runtime is correct, but the transition is not yet accepted. Authority, exact behavior, command construction, atomicity, event shape, persistence/browser boundaries, UI adaptation, scope, and hygiene all pass at 45/45 focused tests.
 
-Exact pre-extraction success and missing-record behavior remains locked. The selection tests pass 10/10 and the prescribed focused transition group passes 45/45.
+A direct equal-sequence probe confirms that `recordId` makes command and event identities distinct. However, the committed regression test uses sequences `31` and `32`, so permanent equal-sequence collision coverage is absent. Selected the smallest test-only repair: `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`.
 
 ## Files Changed
 
-- `apps/rpg-ui/src/features/ActivityPanel.tsx`
-- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
-- `packages/engines/game-engine/src/index.ts`
-- `packages/engines/game-engine/src/player-activity-selection.ts` (created)
-- `packages/engines/game-engine/src/player-activity-selection.js` (created)
-- `packages/shared/events/src/index.ts`
-- `tests/unit/player-activity-selection-characterization.test.mjs` (created)
-- `tests/unit/player-activity-selection-command.test.mjs` (created)
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
@@ -28,36 +20,48 @@ Exact pre-extraction success and missing-record behavior remains locked. The sel
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-codex-prompt.md`
 
+## Files Inspected
+
+- Commit `1834a294` metadata, complete changed-path set, and exact production/test diff
+- Activity-selection resolver, command, result, event, JS peer, exports, and shared event registration
+- Gameplay snapshot synchronizer, persistence helpers/contracts, gameplay-loop bridge, and `ActivityPanel.tsx`
+- Activity-selection command and characterization tests, including the actual collision-test inputs
+- All production `currentActivity` assignments and accepted travel, quest-acceptance, and quest-tracking command patterns
+- Required README, output/handoff/prompt, sequencing, roadmap, continuity, runtime-readiness, travel-clarification, historical-index, queued-cleanup, and backlog sources
+
 ## Checks Run
 
-- Fetch and fast-forward pull: local and remote `master` aligned at starting commit `f3fc9769`.
-- Pre-extraction characterization: 1/1 passed; success snapshot hash `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40`, success notice hash `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`, and missing notice hash `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77`.
-- Post-extraction activity-selection command and characterization tests: 10/10 passed with all locked hashes unchanged.
+- Fetch and fast-forward pull: clean `master` advanced from `1834a294` to prompt-only commit `8f87e443`; local and `origin/master` aligned.
 - Prescribed selection, tracking, acceptance, travel, skill-gating, save/load, and deterministic scenario group: 45/45 passed.
-- Confirmed exact id/label/category/detail derivation, notification text/time/tone/newest-first order/eight-entry cap, repeated-selection behavior, Chronicle non-mutation, and input immutability.
-- Confirmed deterministic collision-safe command identity, expected tick/version/full revision guards, atomic malformed/wrong-player/stale/incoherent/missing/injected-failure rejection, and one exact five-key no-prose event.
-- Confirmed current-data roundtrip, no persisted command correlation, browser-safe imports, TS/JS peer, public exports, shared event registration, accepted-only UI application, and no duplicate selection mutation in the bridge.
-- Classified all remaining `currentActivity` writers as pre-existing travel, acceptance, advancement, rest, turn-in, or synchronization owners.
-- `git diff --check`, conflict-marker search, browser-import search, and changed-path review passed. Informational LF-to-CRLF conversion warnings were emitted by Git.
+- Locked success snapshot hash `1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40`, success notice hash `ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee`, and missing notice hash `31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77` passed through the characterization test.
+- Confirmed exact selected id/label/category/detail, notification id/title/detail/time/tone/order/eight-entry cap, repeated-selection acceptance, Chronicle non-mutation, missing original identity/content, and input immutability.
+- Confirmed resolver authority, accepted-only UI application with all notices displayed, no direct selection mutation/notification append/category helper in the UI bridge, browser-safe imports, TS/JS peer, public exports, and event registration.
+- Confirmed malformed, wrong-player, stale tick/version/revision, incoherent, missing-record, and injected-failure paths return original snapshot identity/content and emit zero events.
+- Confirmed accepted execution clones before mutation, synchronizes after the exact selection/notification changes, emits one exact five-key no-prose event, roundtrips current data, and persists no command correlation.
+- Equal-sequence one-off probe: both commands used tick `1438`, sequence `77`, player `player.arden_voss`, snapshot revision `snapshot.73d7a57f`, and the same snapshot version. `job.harbor_surveyor` and `business.gannet_cutter` produced distinct command ids and distinct event ids; both were accepted at applied tick `1438`.
+- Source inspection confirms `recordId` is encoded directly into `buildCommandId(...)`, and the event id incorporates the command id.
+- Permanent coverage gate failed: the committed test compares record ids using sequences `31` and `32`, not one equal sequence.
+- Classified remaining `currentActivity` assignments as travel arrival/hooks, quest-acceptance preparation, activity advancement/quest branches, rest, and quest turn-in; no duplicate activity-record selection owner remains.
+- `git show --check 1834a294`, `git diff --check`, changed-path review, dependency/generated/vendor path review, and clean status passed. `docs/dev/queued-codex-cleanup-prompt.md` remains untouched and subordinate.
 - Full suite, DB/UI build, typecheck, dependency installation, servers, and generated-output refresh were intentionally omitted.
 
 ## Behavior / Runtime Confirmation
 
-Activity-record selection ownership changed from the UI gameplay loop to the game engine. Accepted selection still changes only `currentActivity`, appends the exact existing capped notification, and applies existing synchronization before return. Missing and stale/error paths preserve original snapshot identity/content and emit no event.
+No runtime, UI, event, contract, test, content, schema, save, migration, compatibility, dependency, generated-output, or asset behavior changed during this audit.
 
-The accepted event is transient and contains exactly `commandId`, `playerId`, `recordId`, `previousActivityId`, and `selectedActivityId`. No save fields, schemas, migrations, compatibility behavior, content, dependencies, advancement, preview, rest, turn-in, reward, or unrelated UI behavior changed.
+The engine-owned activity-selection implementation is runtime-collision-safe and passes every behavioral gate. Acceptance is withheld only because permanent committed equal-sequence regression coverage is required.
 
 ## Risks / Follow-Up
 
-- The default sequence follows the established transient-command convention using activity-record count; durable delivery, replay, and idempotency remain deferred.
-- Other owner-specific `currentActivity` writers intentionally remain and require separate characterization before extraction.
-- `Version 0.6.3.1` must perform the required read-only post-transition audit before another consumer is selected.
-- `docs/dev/queued-codex-cleanup-prompt.md` remains queued documentation maintenance for a later appropriate run.
+- Repair only `tests/unit/player-activity-selection-command.test.mjs`: hold sequence and every non-record identity input constant across two record ids, then assert distinct command and event ids.
+- Do not change production identity construction; the direct probe already proves it is correct.
+- Do not select `0.6.4` until the test-only repair lands and a post-repair audit accepts the transition.
+- Activity advancement/preview, rest/preview, quest turn-in, generic delivery/replay, and queued documentation maintenance remain deferred.
 
 ## Next Recommended Version
 
-Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit
+Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair
 
 ## Suggested Commit Message
 
-feat(runtime): move activity selection into engine ownership
+docs(audit): require equal-sequence activity collision coverage

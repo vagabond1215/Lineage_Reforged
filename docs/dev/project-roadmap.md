@@ -1,12 +1,12 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-13
+Last reviewed: 2026-07-14
 
 ## Current Runtime Transition Override
 
 - Latest completed primary: `Version 0.6.3 - Engine-Owned Activity Selection Command`.
-- Latest completed support/audit run: `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`.
-- Next support/audit route: `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`.
+- Latest completed support/audit run: `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`.
+- Next support/repair route: `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -31,10 +31,10 @@ The current Codex handoff controls exact current version state. The current GPT 
 Current live anchor:
 
 - Latest completed version: `Version 0.6.3 - Engine-Owned Activity Selection Command`
-- Latest support/audit run: `Version 0.6.2.3 - Engine-Owned Quest Tracking Post-Repair Audit`
-- Next recommended version: `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
+- Latest support/audit run: `Version 0.6.3.1 - Engine-Owned Activity Selection Post-Transition Audit`
+- Next recommended version: `Version 0.6.3.2 - Engine-Owned Activity Selection Collision Regression Repair`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, and repaired quest tracking are engine-owned and audited; activity selection is engine-owned and awaiting its post-transition audit; UI information architecture is durably bounded
+- Current phase: player travel, quest acceptance, and repaired quest tracking are engine-owned and audited; activity selection is runtime-correct but awaits one test-only collision-regression repair and post-repair acceptance; UI information architecture is durably bounded
 
 Versioning rule:
 
