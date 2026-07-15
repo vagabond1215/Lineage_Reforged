@@ -61,6 +61,84 @@ Interim connector passes must not:
 
 Any preparatory notes must remain explicitly non-accepted and must be reverified against the live head during the eventual full Gate 7 run.
 
+## Workplace, Job, Service, And Guild Consolidation Rule
+
+Connector-first workplace review is **consolidation first, gameplay value second, new records last**. Historical or fantasy plausibility alone is not sufficient reason to add a workplace, job, guild, service, building, chain, item, skill, or tool.
+
+Use this placement order for every candidate function:
+
+1. reuse an existing job in its current workplace;
+2. add or clarify a non-duplicative job inside an existing workplace;
+3. reuse an existing workplace profile, progression profile, upgrade, service, facility, or building relationship;
+4. add a provider-independent service to an existing workplace, building, guild, district, site, or institution;
+5. use an existing building template that currently has no hosted workplace;
+6. add one new workplace inside an existing compatible building template;
+7. add a new building template only when the function requires a genuinely distinct physical, environmental, security, storage, infrastructure, or settlement-placement package.
+
+A new workplace should normally require repeated consumers plus at least two material distinctions such as:
+
+- a distinct input/output or repair flow;
+- specialized equipment, workholding, fixtures, or consumable tooling;
+- incompatible heat, water, ventilation, drainage, cleanliness, hazard, or security needs;
+- distinct storage, scale, site, or power requirements;
+- repeated chain, recipe, service, quest, regional, military, or institutional use;
+- a specialization that cannot be represented clearly as a job, upgrade, service, or facility inside an existing workplace.
+
+Before proposing additions, the next workplace pass must reconcile and reuse current underused authority, including:
+
+- all 58 workplace records and 110 unique job IDs;
+- the nine workplaces identified by Gate 6 as absent from production-chain stages;
+- 21 progression profiles and 25 upgrade profiles containing 116 currently inactive upgrades;
+- 22 building templates, especially templates with service capacity but no hosted workplace;
+- current service records and building `serviceFunctions`;
+- guild activity, contract, facility, and service vocabulary;
+- 121 production chains, 12 planned recipes, 131 tool items, 121 skills, settlement business tags, districts, sites, and regional identities;
+- unused, mismatched, duplicated, or placeholder job, tool-tag, service, facility, and upgrade vocabulary.
+
+The known consolidation anchors include:
+
+- `building.guildhall_row`, which already exposes guild-hall, contract-board, and merchant-exchange functions without hosting a workplace;
+- `building.warehouse_block`, which already exposes warehouse storage, market exchange, and reserve-stock functions without hosting a workplace;
+- `building.barracks_depot`, which already exposes garrison, military storage, and escort staging without hosting a workplace;
+- `building.harbor_quay`, which already exposes port handling, ferry berths, dry storage, and shipyard/ropery business context without hosting a workplace;
+- the existing forge, cartwright/cooper, tannery, food-market, drinkhouse, kiln/glass, scriptoria, alchemical, bath-house, inn, tavern, and guild assets;
+- the existing `magic_service.utility_enchantment` and `magic_service.affinity_binding` authorities, which must be reused before inventing parallel elemental shops.
+
+### Gambling posture
+
+Gambling is not automatically a production workplace or a generic `casino` building.
+
+Legal gambling should first be evaluated as a provider-independent licensed service hosted by an existing tavern, inn, guildhall, market court, festival site, or other suitable venue. Merchant-guild or civic authority may provide chartering, money-changing, credit, accounting, dispute, tax, or inspection context when repository canon supports that relationship. The venue, regulator, financier, and game operator must remain separate roles.
+
+Illicit gambling should first be evaluated as a hidden activity or restricted service relationship attached to an existing venue, site, faction, or informal network. It should not create a public workplace, public service listing, or automatic thieves' guild. Its later implementation would require explicit ownership for secrecy, access, enforcement, debt, cheating, reputation, crime, and discovery.
+
+Legal and illicit gambling may reuse the same mundane game equipment and operator skills while differing in charter, access, finance, enforcement, visibility, and consequences.
+
+### Consolidation examples
+
+- General toolmaking and repair should reuse the existing forge block and jobs/upgrades where possible; add one general smithy only when the weaponsmith, armorer, smelter, and bloomery records cannot represent repeated civilian repair and ironwork demand. Do not add one smithy per metal.
+- Carpentry and joinery should reuse the timber, cartwright, cooper, and fletcher assets before creating a separate shop; a new carpenter/joiner workplace belongs inside an existing woodworking building, not a duplicate building block.
+- Finished leather goods, saddlery, footwear, and repair should reuse the tannery block and existing leather jobs before creating a separate leatherworking building.
+- Rope, rigging, sail, ship, dock, and maritime-repair functions should first reuse `building.harbor_quay` and existing harbor districts before creating another harbor building.
+- Training, watch, quartermaster, armory-support, and combat-service roles should first reuse `building.barracks_depot`, the Adventurers Guild, and existing military service vocabulary.
+- Legal gaming, brokerage, appraisal, money-changing, contracts, and regulated exchange should first reuse guildhall, tavern, inn, market, and merchant-guild authority.
+- Lapidary, focus setting, vessel preparation, and affinity binding should reuse gemcutter-guild, forge, scriptoria, alchemical, utility-enchantment, and affinity-binding authority. Prefer one dependency-closed provider package over separate elemental enchanter workplaces.
+- Soapmaking, fulling, dairy work, oil pressing, entertainment, healing, lodging, and food service should begin as jobs, services, upgrades, or extensions unless repeated consumers and distinct facility requirements justify promotion.
+
+The next connector pass must produce an exact collision-and-reuse matrix. Each candidate should be classified as:
+
+- `reuse_existing`;
+- `extend_job_set`;
+- `extend_service_or_upgrade`;
+- `attach_to_unhosted_building`;
+- `merge_or_rename`;
+- `new_workplace_in_existing_building`;
+- `new_building_required`;
+- `defer_pending_consumer`;
+- `reject_duplicate_or_low_value`.
+
+No candidate may be promoted solely because it appears in a medieval occupation list, tabletop class list, fantasy game, or external setting.
+
 ## Gate 7 Acceptance Boundary
 
 A complete Gate 7 run must still cover:
