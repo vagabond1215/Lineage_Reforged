@@ -2,7 +2,7 @@
 
 Source version/run: `GPT-DR.food.processing-preservation`
 Date: 2026-07-14
-Branch/status assumption: Gate 5 started from clean, remote-aligned `master` at `2264bbd5ac96b99b56dd5fe174cabe4a0d8e646d`. The accepted artifact is committed at `c9b8834bbbf5737b41915d4b94528aa9da51a57f`; this file and the current GPT handoff are the required coordination payload for `docs(coordination): advance production research to crafting gate`.
+Branch/status record: Gate 5 started from clean, remote-aligned `master` at `2264bbd5ac96b99b56dd5fe174cabe4a0d8e646d`; the accepted artifact landed at `c9b8834bbbf5737b41915d4b94528aa9da51a57f`; coordination advanced the route at `81c750f54638a9f463f944d2ceab0cc4b893413d`; subsequent documentation-only readiness clarification prepares the Gate 6 audit decision.
 
 ## Result
 
@@ -16,7 +16,7 @@ Artifact commit:
 
 The report covers every required food-processing, preservation, storage, safety, byproduct, regional, technology, workplace, recipe, runtime, and bounded-magic lane. It preserves food/material/feed/medicine/poison separation, records substantial post-Gate-6 audit evidence, grants no implementation authority, and leaves the final trigger decision to Gate 6.
 
-## Files Changed
+## Files Changed For Gate 5
 
 - `docs/dev/tmp-food-processing-preservation-research-2026-07-14.md` - accepted Gate 5 research artifact.
 - `docs/dev/current-gpt-handoff.md` - Gates 1-5 acceptance, Gate 5 findings, Gate 6 route, audit evidence, and preserved integration hold.
@@ -61,6 +61,35 @@ No active/queued prompt, permanent decision, backlog, content, recipe, chain, wo
 
 Gate 6 must make the final audit-trigger decision. Gate 5 does not authorize a correction.
 
+## Gate 6 Launch Contract
+
+Next run:
+
+`GPT-DR.crafting.tools-workplaces-production`
+
+Expected artifact:
+
+`docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md`
+
+Route:
+
+Codex Sol Ultra with direct local repository access and public web research.
+
+Gate 6 must:
+
+- inspect all 121 production chains and every live chain/workplace consumer;
+- treat the Gate 5 41-chain food-core predicate as an analytical subset, not an exhaustive boundary;
+- reconcile tools, jobs, tiers, upgrades, workplaces, infrastructure, skills, fuel, power, heat, water, ventilation, maintenance, repair, scale, process order, byproducts, waste, and bounded recipe authority;
+- apply every trigger in `docs/design/production-chain-workplace-runtime-authority-audit-trigger.md` to the complete Gates 3-6 evidence set;
+- record an audit skip only when it affirmatively proves that every relevant resolver ambiguity is separable from revised `0.6.5` recipe and static-content authority;
+- otherwise accept and route `CODEX-AUDIT.production-chain-workplace-runtime-authority` before Gate 7;
+- avoid declaring Gate 7 active until the trigger decision is committed.
+
+Suggested Gate 6 commits:
+
+1. `docs(research): add crafting production gate findings`
+2. `docs(coordination): resolve production authority audit trigger`
+
 ## Behavior / Runtime Confirmation
 
 Documentation and research only. No JSON, schema, validator, test, lint, runtime, UI, save, migration, dependency, asset, economy, crafting, food, storage, magic, or gameplay behavior changed.
@@ -76,23 +105,4 @@ The report audits live behavior; it neither fixes nor authorizes it.
 - Integration owns identity/relationship promotion, food-grade/feed authority, catalog collisions, profile corrections, regional/cultural authorship, storage/validation posture, backlog, and revised `0.6.5` scope.
 - Exact recipes, yields, ratios, rates, temperatures, capacities, regional placements, cultural practices, mutable state, inventory mutation, and magical effects remain unauthorized.
 
-## Next Recommended Version
-
-Unversioned research run: `GPT-DR.crafting.tools-workplaces-production`
-
-Route: Codex Sol Ultra with direct local repository access and public web research.
-
-Expected artifact:
-
-`docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md`
-
-Gate 6 owns the audit-trigger decision. Do not state that Gate 7 is active next until Gate 6 records that decision. The active and queued integration prompts remain on hold.
-
-Suggested Gate 6 commits:
-
-1. `docs(research): add crafting production gate findings`
-2. `docs(coordination): resolve production authority audit trigger`
-
-## Suggested Commit Message
-
-`docs(coordination): advance production research to crafting gate`
+The active and queued integration prompts remain on hold.
