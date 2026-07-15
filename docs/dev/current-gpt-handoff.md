@@ -34,8 +34,30 @@ Immediate next executable work:
 - route: run the full Gate 4 research prompt directly through Codex Sol Ultra with local repository access and public web research
 - expected artifact: `docs/dev/tmp-materials-refinement-processing-research-2026-07-14.md`
 - preserve the same two-commit pattern: accepted artifact first, then current coordination
+- treat live production-chain and workplace consumption as a mandatory authority lane rather than assuming those records are inert descriptions
+- preserve the rule that production-chain profiles do not automatically supply exact bounded recipe quantities
+- distinguish explicitly authored material outputs from fallback-derived outputs and identify any multi-consumer chain defect without fixing it during research
 
 Do not run `docs/dev/current-codex-prompt.md`; it remains the later cross-domain integration hold. Gate 4 is a separate direct Codex research task.
+
+## Conditional Production-Authority Audit
+
+`docs/design/production-chain-workplace-runtime-authority-audit-trigger.md` installs a mandatory trigger review after Gate 6 and before Gate 7.
+
+The program still has seven external research gates. When Gate 6 cannot prove that revised `0.6.5` recipe authority is separable from every unresolved production-chain and workplace resolver semantic, run:
+
+`CODEX-AUDIT.production-chain-workplace-runtime-authority`
+
+Expected temporary artifact when triggered:
+
+`docs/dev/tmp-production-chain-workplace-runtime-authority-audit-YYYY-MM-DD.md`
+
+Gate 6 must either:
+
+- record an evidence-backed audit skip; or
+- produce and accept the audit artifact before Gate 7.
+
+Do not edit the active or queued integration prompts merely to add a speculative eighth artifact. Update both byte-identical holds only if Gate 6 triggers the audit.
 
 ## Gate 3 Acceptance
 
@@ -61,7 +83,7 @@ Do not run `docs/dev/current-codex-prompt.md`; it remains the later cross-domain
 - Preserve the accepted `0.6.5` rule that production-chain profiles do not supply exact bounded recipe quantities or automatic recipe inheritance. Correct only the broader stale claim that no runtime consumes the chains.
 - `chain.farming.mixed_crop` currently resolves economic outputs, time, and cost, but does not create or mutate physical fields, crops, soil, herds, farm lots, or inventory.
 - Focused verification reproduced three live integration risks: its empty gather step falls back to requested `crop_bundle`; it uses `skill.crafting.cooking` rather than the existing Agriculture skill; and Farmstead tool checks aggregate required tags across every job rather than the active job/tier, allowing unrelated advanced tool requirements to affect a basic resolution.
-- No runtime fix was authorized or made. Gate 4-6 synthesis and later integration must preserve the live consumer, decide intended semantics, and add focused regression coverage before any chain/workplace edit.
+- No runtime fix was authorized or made. Gates 4-6 must preserve the live consumer, decide intended authority boundaries, and provide the evidence used by the post-Gate-6 audit trigger.
 - Transport/trade already validate configured animal-harness-vehicle relationships and execute abstract route/cargo movement. The missing owner is agricultural field traction plus fauna-level eligibility, training, feed, rest, condition, and work state—not generic transport or harness validation.
 
 ## Gate 3 Issues Requiring Later Verification
@@ -81,15 +103,18 @@ Do not run `docs/dev/current-codex-prompt.md`; it remains the later cross-domain
 4. `GPT-DR.materials.refinement-processing` - active next
 5. `GPT-DR.food.processing-preservation`
 6. `GPT-DR.crafting.tools-workplaces-production`
+6a. mandatory production-authority audit-trigger review
+6b. `CODEX-AUDIT.production-chain-workplace-runtime-authority` when triggered
 7. `GPT-DR.magitech.production-infrastructure-substitution`
 8. Unversioned cross-domain research integration
-9. Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
-10. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-11. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`
-12. Geographic Knowledge Taxonomy And Location Recognition Contract Plan
-13. Re-read runtime ownership and select exactly one later consumer
+9. Any separately authorized narrow production-chain/workplace correction required by integration
+10. Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
+11. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+12. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`
+13. Geographic Knowledge Taxonomy And Location Recognition Contract Plan
+14. Re-read runtime ownership and select exactly one later consumer
 
-`docs/dev/current-codex-prompt.md` and `docs/dev/queued-cross-domain-production-research-integration-prompt.md` remain byte-identical at Git blob `9ce61594efe498c78b0b6d0d08fdafccf7cc0c54`. Do not run the integration until all seven accepted temporary cited research artifacts exist. Gate 3 does not unblock `0.6.5` by itself.
+`docs/dev/current-codex-prompt.md` and `docs/dev/queued-cross-domain-production-research-integration-prompt.md` remain byte-identical at Git blob `9ce61594efe498c78b0b6d0d08fdafccf7cc0c54`. Do not run the integration until all seven accepted temporary cited research artifacts exist and any Gate-6-triggered audit has been accepted. Gate 3 does not unblock `0.6.5` by itself.
 
 ## Preserved 0.6.5 Blocker
 
@@ -104,5 +129,6 @@ Do not run `docs/dev/current-codex-prompt.md`; it remains the later cross-domain
 ## Durable Boundaries
 
 - `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md` owns the sequence correction and bounded recipe/chain posture.
-- `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` owns research breadth, gate structure, mundane baseline, and magic constraints.
+- `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` owns research breadth, the seven named research gates, mundane baseline, and magic constraints.
+- `docs/design/production-chain-workplace-runtime-authority-audit-trigger.md` owns the post-Gate-6 conditional audit checkpoint and remaining-gate resolver requirements.
 - Research artifacts supply evidence, not implementation permission. Remaining gates must not change content, recipes, chains, schemas, validators, tests, lint code, runtime, UI, saves, migrations, dependencies, assets, or gameplay.
