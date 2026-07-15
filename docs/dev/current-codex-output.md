@@ -4,11 +4,11 @@ Source version/run: `CODEX-AUDIT.production-chain-workplace-runtime-authority`
 
 Date: 2026-07-15
 
-Branch/status assumption: `master`; audit started clean and remote-aligned at `19107302631791c17e1a4320e723d88609b8f65f`; accepted artifact commit is `acfac740396e44160bf47d1f4b16a4e572d554d9`.
+Status: the production-authority audit is accepted; Gate 7 remains the next research gate, but large-scale execution is temporarily paused in favor of connector-first preparation.
 
-## Result
+## Accepted Result
 
-Accepted the complete documentation-only production-chain/workplace runtime-authority audit:
+Accepted artifact:
 
 `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md`
 
@@ -20,9 +20,11 @@ Decision:
 
 `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5`
 
-The decision is conditional on strict recipe non-inheritance and complete quarantine of disputed resolver behavior. Revised `0.6.5` remains blocked behind Gate 7 and cross-domain integration.
+The decision remains conditional on strict recipe non-inheritance and complete quarantine of disputed resolver behavior. Revised `0.6.5` remains blocked behind Gate 7 and cross-domain integration.
 
-Gate 7 is now active next:
+## Current Route
+
+Next research gate:
 
 `GPT-DR.magitech.production-infrastructure-substitution`
 
@@ -30,93 +32,78 @@ Expected artifact:
 
 `docs/dev/tmp-magitech-production-infrastructure-substitution-research-2026-07-14.md`
 
-## Files Changed
+Gate 7 is still the next route, but it must not be represented as started, completed, or accepted through a partial low-budget pass.
 
-Commit 1:
+## Temporary Connector-First Posture
 
-- Added `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md`.
+Until sufficient high-capacity model budget is available for the complete Gate 7 contract, use connector-first passes for bounded preparation and verification.
 
-Commit 2 coordination payload:
+Allowed interim work:
 
-- Replaced `docs/dev/current-gpt-handoff.md` with the accepted audit state and Gate 7 route.
-- Replaced `docs/dev/current-codex-output.md` with this result.
+- inspect live repository commits, changed paths, current coordination, and prompt-hold hashes;
+- verify exact magic, crystal, affinity, service, infrastructure, workplace, regional, and lore owners;
+- inventory canonical IDs, field shapes, consumers, validators, tests, and unresolved relationships;
+- check Gate 6's 43 physical-demand categories, 11 multi-affinity questions, nine affinities, and 11 contexts against live repository authority;
+- identify source and citation lanes that the later Gate 7 research must cover;
+- refine the Gate 7 execution prompt and divide its evidence collection into bounded work packages;
+- perform narrow discrepancy checks and coordination-only documentation updates when necessary.
 
-No other path changed. The active and queued integration holds remain byte-identical at Git blob `bf960cab858a8499874ed1dc0e33fb4ee98bd1dc`.
+Interim connector passes must not:
 
-## Checks Run
+- create or accept a partial Gate 7 artifact;
+- make affinity capabilities canonical;
+- infer matter creation, unlimited energy, universal infrastructure, or automatic substitution;
+- select shard, crystal, or cluster capacities;
+- define recharge, throughput, duration, range, or balance values;
+- edit content, schemas, validators, tests, runtime, economy, UI, saves, dependencies, assets, or gameplay;
+- run the cross-domain integration hold;
+- edit either integration-hold prompt merely to record this temporary execution posture.
 
-- Confirmed repository, `master`, starting head, clean start, remote alignment, accepted Gates 1-6, Gate 6 `AUDIT_TRIGGERED`, absent prior audit artifact, blocked Gate 7/revised `0.6.5`, and byte-identical integration holds.
-- Inspected every one of 121 production chains, 58 workplaces, and 12 live recipes.
-- Exhaustively probed chain, target, variant, input/output fallback, stage/carry, quantity/quality, skill, tool, fuel, candidate, value, and market behavior.
-- Verified 916 candidate entries across 435 keys and identified the exact shadowed path, 48 unreachable candidate targets, and all 12 recipe/resolver differences.
-- Mandatory focused group: 136/136 passed.
-- Schema-file checks: 105/105 passed.
-- Normal content lint: `content-lint: ok (67 files checked)`.
-- Trade/institution runtime tests: 4/4 passed.
-- Transport/settlement group: 3/8 passed. Four pre-existing transport failures remain; Stonevein settlement simulation remains 0/1.
-- Verified all 26 required artifact sections, 29 discrepancy rows, approved vocabularies, one allowed decision token, exact heading order, consistent Markdown table columns, and no conflict markers, trailing whitespace, encoding corruption, or unresolved placeholders.
-- Ran cached `git diff --check`, complete changed-path review, artifact/index hash comparison, prompt-hold hash checks, and temporary-file review.
-- Removed the audit probe. Preserved the unrelated ignored `.tmp-rpg-ui-node.tsbuildinfo`, which predates the run.
+Any preparatory notes must remain explicitly non-accepted and must be reverified against the live head during the eventual full Gate 7 run.
 
-## Authority Findings
+## Gate 7 Acceptance Boundary
 
-- Production chains and workplaces are live macro-economic inputs, not inert lore and not bounded physical recipes.
-- Current recipes are complete, explicit, planned, non-executing, and non-inheriting. The civilization engine does not load them.
-- Effective input order is flagged selected-variant input replacement, otherwise explicit input, otherwise workplace heuristic, otherwise chain fallback.
-- Only the last processing step supplies final public outputs; stages are not iterated and `carriesForward` carries no state.
-- Chain quantities do not exist. Runtime assumes one unit per selected input occurrence and ignores workplace per-cycle quantities.
-- Jobs, tiers, progression, upgrades, facility state, power modes, and physical capacity are inactive. Tool tags union across every job; first-primary `no_output` computes and discards blocked state.
-- Skill/tool/fuel/quantity/quality/waste values are macro cost estimates only. No inventory, item, batch, worker, fuel item, waste item, or persistent quality state changes.
-- Candidate role is ignored by item-value selection; first-candidate skill can differ from the cheapest value winner.
-- Value effects propagate to local market prices, transport repricing, and trade. Settlement/institution projections currently use stock/storage context rather than chain-derived prices.
-- Loader types, strict schema posture, semantic validation, focused tests, and economy documentation require later narrow reconciliation.
+A complete Gate 7 run must still cover:
 
-## Discrepancy And Coverage Summary
+- all nine canonical affinities: neutral, light, water, wind, ice, darkness, fire, stone/earth, and thunder;
+- all 43 inherited physical-demand categories;
+- all 11 required multi-affinity questions;
+- all 11 required contexts: production, agriculture, food, storage, transport, civic infrastructure, expedition support, combat-adjacent use, medicine, communication, and security;
+- creation, extraction, movement, concentration, conversion, transfer, storage, release, stabilization, measurement, warning, and containment as separate postures;
+- shard, crystal, cluster, conduit, catalyst, vessel, service, ward, and infrastructure routes where repository canon supports them;
+- finite capacity, recharge, mundane housing, transmission, maintenance, observable failure, scarcity, institutional access, and ordinary fallback;
+- competition among combat, expedition, civic, workshop, medical, security, and institutional uses.
 
-The audit records 29 discrepancy rows.
+Current workplace power modes, fuel flags, output quantities, and settlement infrastructure modifiers are demand/context evidence only. They do not prove a magical capability or an active energy system.
 
-Non-exclusive classification counts:
+## Preserved Audit Findings
 
-- intentional abstraction 7
-- factual content defect 1
-- documentation defect 11
-- schema/validator precondition 6
-- focused-test gap 19
-- runtime implementation defect 8
-- authored-input requirement 10
-- non-blocking optional depth 1
-- blocked pending later runtime ownership 3
+- Production chains and workplaces are live macro-economic inputs, not bounded physical recipes.
+- Current recipes are complete, explicit, planned, non-executing, and non-inheriting.
+- Resolver fallback, output, candidate, value, tool, job, tier, skill, fuel, and quantity behavior remains disputed and quarantined from revised recipe authoring.
+- Value effects can propagate to local market prices, transport repricing, and trade without proving physical production.
+- The audit records 29 discrepancies and a 48-row branch matrix with one covered, 10 partially covered, and 37 uncovered behaviors.
+- Four pre-existing transport failures and the Stonevein settlement-building failure remain separate scopes.
 
-Severity: 0 critical, 17 high, 11 medium, 1 low.
+## Integration Holds
 
-Disposition: preserve 1, document 3, quarantine from revised `0.6.5` 9, defer to integration 13, defer to Gate 7 1, defer to later runtime 1, reject as scope 1, correct before revised `0.6.5` 0.
+`docs/dev/current-codex-prompt.md` and `docs/dev/queued-cross-domain-production-research-integration-prompt.md` remain byte-identical at Git blob:
 
-The 48-row branch matrix has one covered, 10 partially covered, and 37 uncovered behaviors. Before any later resolver correction, add focused coverage for candidate/tie/source/role behavior; variant selection; every input/output branch; stage/final/carry closure; tools/jobs/blocking; skill fallback/dimensions; fuel; quantity/quality/byproduct value; downstream propagation; and recipe non-inheritance comparisons.
+`bf960cab858a8499874ed1dc0e33fb4ee98bd1dc`
 
-## Behavior / Runtime Confirmation
+They already require all seven accepted research artifacts plus the accepted production-authority audit. Do not run them until Gate 7 is accepted.
 
-Documentation only. No content JSON, recipe, production chain, workplace, item, tool, skill, schema, validator, lint, test, loader, type, runtime, economy, market, transport, inventory, UI, save, migration, dependency, asset, generated output, or gameplay behavior changed.
+## Resume Conditions
 
-## Risks / Follow-Up
+Launch the full Gate 7 run only when:
 
-- The no-prerequisite decision is valid only while revised `0.6.5` uses recipe-owned explicit fields and does not depend on chain/workplace resolver, value, market, candidate, quantity, tool-tag, or fallback behavior.
-- Integration must reverse the decision and route the smallest prerequisite correction if it introduces such a dependency.
-- The historical 18-row target still has 15 chain-input gaps plus the bread-dough ratio, pastry/honeycomb, and savory-pie/smoked-meat questions.
-- Stonevein has a verified placed-building defect, but the canonical subterranean-city content correction is unresolved and reserved for integration.
-- Four transport tests remain red for harness/diagnostic/grain-stock issues and require a separate transport scope.
-- Gate 7 must preserve the complete 43-demand, 11-combination, nine-affinity, 11-context handoff and must not infer active power or free matter/energy from workplace metadata.
+1. sufficient model budget is available to complete the gate without intentionally truncating its evidence contract;
+2. the live head and all newer commits have been reconciled;
+3. Gates 1-6 and the audit remain accepted;
+4. the integration holds remain byte-identical;
+5. the run can complete repository analysis, public-source research, citation validation, artifact validation, and the two-commit coordination sequence.
 
-## Next Recommended Version
+## Future Gate 7 Commits
 
-Unversioned research gate:
-
-`GPT-DR.magitech.production-infrastructure-substitution`
-
-Suggested Gate 7 commits:
-
-1. `docs/research): add magitech substitution gate findings`
+1. `docs(research): add magitech substitution gate findings`
 2. `docs(coordination): advance production research to integration`
-
-## Suggested Commit Message
-
-`docs(coordination): advance production research to magitech gate`
