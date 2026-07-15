@@ -42,6 +42,9 @@ All five artifacts are accepted temporary cited research inputs. They remain non
 - Gate 6 owns the final production-authority audit-trigger decision
 - commit the accepted Gate 6 artifact first, then update coordination in a separate commit
 - preserve Gates 1-5 authority, the ordinary-production baseline, and every source/food/material/recipe/runtime separation
+- inspect all 121 production chains and every live consumer; the Gate 5 41-chain food-core predicate is an analytical subset, not an exhaustive production boundary
+- a skip of `CODEX-AUDIT.production-chain-workplace-runtime-authority` is acceptable only when Gate 6 proves every relevant resolver ambiguity is separable from revised `0.6.5` recipe and static-content authority
+- otherwise Gate 6 must trigger the audit before Gate 7 and must not advance the route directly to magitech
 
 Suggested Gate 6 commits:
 
@@ -77,7 +80,7 @@ Do not run `docs/dev/current-codex-prompt.md`. It remains the later cross-domain
 
 ## Production-Chain, Recipe, Workplace, And Resolver Findings
 
-- A reproducible eight-namespace predicate selects 41 core food-source/processing chains and all 19 explicitly authored processing-step input arrays.
+- A reproducible eight-namespace predicate selects 41 core food-source/processing chains and all 19 explicitly authored processing-step input arrays. This is a food-core analytical set only; Gate 6 must scan every chain namespace and live consumer for cross-domain collisions and production dependencies.
 - Those chains have 81 steps: 19 explicit and 62 empty input arrays; 52 explicit and 29 empty output arrays. All 29 empty outputs receive runtime-derived results.
 - Twenty-four core chains have 154 variants. Six default food steps replace nonempty authored inputs with variant inputs.
 - Seventeen declared stage occurrences across six food chains have no processing step.
@@ -103,11 +106,11 @@ Gate 5 adds substantial evidence relevant to `docs/design/production-chain-workp
 - job/tier/upgrade/fuel semantics are incomplete;
 - current runtime-economy tests do not isolate food fallback, variants, blocking, or dependency closure.
 
-Gate 5 does not make the trigger decision or authorize a correction. Gate 6 must record an evidence-backed audit skip or accept `CODEX-AUDIT.production-chain-workplace-runtime-authority` before Gate 7.
+Gate 5 does not make the trigger decision or authorize a correction. Gate 6 must apply the trigger decision to the complete all-chain and all-consumer evidence set. An audit skip requires affirmative proof that revised `0.6.5` can proceed without relying on unresolved resolver semantics; absence of additional defects is not sufficient by itself. Otherwise Gate 6 must accept `CODEX-AUDIT.production-chain-workplace-runtime-authority` before Gate 7.
 
 ## Unresolved Food Issues By Owner
 
-- Gate 6: final audit trigger; recipe/chain/runtime precedence; explicit/variant/fallback I/O; requested outputs; stage closure; byproduct carry-forward; job/tool/tier/upgrade semantics; skills; fuel/energy; quantities; workplace availability; focused regression coverage; and the boundary of any later production correction.
+- Gate 6: final audit trigger; all-chain and cross-namespace consumer scan; recipe/chain/runtime precedence; explicit/variant/fallback I/O; requested outputs; stage closure; byproduct carry-forward; job/tool/tier/upgrade semantics; skills; fuel/energy; quantities; workplace availability; focused regression coverage; and the boundary of any later production correction.
 - Gate 7: bounded mundane-for-magic substitution, preservation-service compatibility, ice affinity, vessels, finite capacity, recharge, housing, insulation, drainage, ventilation, maintenance, failure, scarcity, security, and institutional access.
 - Integration: identity/relationship promotion, food-grade and feed authority, consumable/spoilage profile corrections, catalog collisions, regional/cultural authorship, validation posture, storage reconciliation, backlog disposition, and exact revised `0.6.5` scope.
 - Later runtime: cooking/recipe execution, lot/batch state, freshness, temperature, contamination, spoilage, disease, storage mutation, inventory mutation, consumption command ownership, persistence, and effects.
