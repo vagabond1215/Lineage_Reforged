@@ -4,7 +4,7 @@
 
 Unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
 
-This is the next Codex run **after** all seven required GPT Deep Research artifacts are committed. Until then, this file is a hold: stop without editing when any artifact is absent.
+This is the next Codex run **after** all seven required GPT Deep Research artifacts are committed and the Gate-6-triggered production-authority audit has been accepted. Until then, this file is a hold: stop without editing when any research artifact or the accepted audit artifact is absent.
 
 This pass is documentation-only and does not consume a `0.6.x` primary version.
 
@@ -17,11 +17,12 @@ Suggested commit:
 The accepted `0.6.5` pre-authoring blocker moved research before recipe implementation. Use this sequence:
 
 1. seven GPT Deep Research gates;
-2. this unversioned integration;
-3. revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
-4. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-5. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
-6. Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
+2. accepted `CODEX-AUDIT.production-chain-workplace-runtime-authority`;
+3. this unversioned integration;
+4. revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
+5. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
+6. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
+7. Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
 
 Do not require an accepted `0.6.5` implementation before this integration. Current recipe count remains 12 until the revised `0.6.5` package lands.
 
@@ -38,12 +39,13 @@ Do not require an accepted `0.6.5` implementation before this integration. Curre
    - `docs/dev/tmp-food-processing-preservation-research-*.md`
    - `docs/dev/tmp-crafting-tools-workplaces-production-research-*.md`
    - `docs/dev/tmp-magitech-production-infrastructure-substitution-research-*.md`
-5. Stop without edits if any artifact is missing, uncited, materially incomplete, combines gate labels, or lacks the permanent program's shared output sections.
-6. Confirm `0.6.6` has not been implemented and remains reserved behind revised `0.6.5`.
+5. Confirm the accepted audit artifact exists at `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md`, records the completed `CODEX-AUDIT.production-chain-workplace-runtime-authority`, and resolves or explicitly quarantines the Gate 6 field, fallback, output, job, tier, tool, fuel, value, documentation, and focused-test findings.
+6. Stop without edits if any research artifact or the audit artifact is missing, uncited, materially incomplete, combines gate labels, lacks its required output structure, or is not accepted in current coordination.
+7. Confirm `0.6.6` has not been implemented and remains reserved behind revised `0.6.5`.
 
 ## Purpose
 
-Reconcile the seven non-canonical research artifacts against live repository authority, promote durable sourced guidance, resolve the recipe-versus-production-chain authority mismatch, define a dependency-closed revised `0.6.5` target, and install the exact revised `0.6.5` implementation prompt.
+Reconcile the seven non-canonical research artifacts and the accepted production-authority audit against live repository authority, promote durable sourced guidance, resolve the recipe-versus-production-chain authority mismatch, define a dependency-closed revised `0.6.5` target, and install the exact revised `0.6.5` implementation prompt.
 
 Do not implement recipes, production chains, items, resources, ecology, magic, schemas, validators, tests, runtime, UI, saves, migrations, dependencies, assets, or gameplay.
 
@@ -146,6 +148,7 @@ Do not change content JSON, schemas, validators, tests, lint code, runtime, UI, 
 
 - Verify every promoted repository claim against live files.
 - Verify every durable external claim has an appropriate citation.
+- Verify every Gate 6 audit finding is resolved, corrected, or explicitly quarantined by the accepted audit before integration dispositions it.
 - Verify classifications and quantity-confidence labels are complete.
 - Verify no route contradiction remains across current handoff, output, prompt, roadmap, sequence, backlog, static program, research program, and deferred register.
 - Verify the generated prompt targets revised `0.6.5`, not `0.6.6`.
@@ -156,4 +159,4 @@ Do not change content JSON, schemas, validators, tests, lint code, runtime, UI, 
 
 ## Completion Report
 
-Report starting commit/state, seven artifact paths and labels, live inventories, accepted/rejected/deferred findings, recipe/chain authority decision, technology/magic framework, synthesis path, artifact disposition, exact revised `0.6.5` prompt installed, files changed, checks run, and confirmation that no implementation behavior changed.
+Report starting commit/state, seven research artifact paths and labels, the accepted production-authority audit artifact, live inventories, accepted/rejected/deferred findings, recipe/chain authority decision, technology/magic framework, synthesis path, artifact disposition, exact revised `0.6.5` prompt installed, files changed, checks run, and confirmation that no implementation behavior changed.
