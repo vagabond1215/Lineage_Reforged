@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Source route: `GPT-DR.materials.refinement-processing`
+Source route: `GPT-DR.food.processing-preservation`
 Date: 2026-07-14
 
 ## Status
@@ -14,7 +14,7 @@ Blocked primary:
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 - The accepted pre-authoring gate remains authoritative. Do not author partial recipes, inherit production-chain quantities, or guess missing ratios.
 
-Accepted research gates:
+Accepted temporary research gates:
 
 1. `GPT-DR.resources.gathering-extraction`
    - artifact: `docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md`
@@ -28,65 +28,89 @@ Accepted research gates:
 4. `GPT-DR.materials.refinement-processing`
    - artifact: `docs/dev/tmp-materials-refinement-processing-research-2026-07-14.md`
    - commit: `1efd9a3ff430fe6dfde00ff436c71457c3911ea5`
+5. `GPT-DR.food.processing-preservation`
+   - artifact: `docs/dev/tmp-food-processing-preservation-research-2026-07-14.md`
+   - commit: `c9b8834bbbf5737b41915d4b94528aa9da51a57f`
 
-All four artifacts are accepted temporary cited research inputs. They remain non-canonical until the cross-domain integration dispositions them against live repository authority.
+All five artifacts are accepted temporary cited research inputs. They remain non-canonical until cross-domain integration dispositions them against live repository authority.
 
 ## Immediate Next Executable Work
 
-- gate: `GPT-DR.food.processing-preservation`
+- gate: `GPT-DR.crafting.tools-workplaces-production`
 - route: Codex Sol Ultra with direct local repository access and public web research
-- expected artifact: `docs/dev/tmp-food-processing-preservation-research-2026-07-14.md`
-- commit the accepted artifact first, then update current coordination in a separate commit
-- preserve Gates 1-4 authority, exact food/material boundary separation, and the conditional post-Gate-6 production-authority audit
+- expected artifact: `docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md`
+- Gate 6 owns the final production-authority audit-trigger decision
+- commit the accepted Gate 6 artifact first, then update coordination in a separate commit
+- preserve Gates 1-5 authority, the ordinary-production baseline, and every source/food/material/recipe/runtime separation
+
+Suggested Gate 6 commits:
+
+1. `docs(research): add crafting production gate findings`
+2. `docs(coordination): resolve production authority audit trigger`
 
 Do not run `docs/dev/current-codex-prompt.md`. It remains the later cross-domain integration hold.
 
-## Gate 4 Acceptance
+## Gate 5 Acceptance
 
-- The accepted report has all 24 required sections and 36 complete candidate/authority rows. It grants no implementation permission.
-- It uses 61 external works across 61 distinct URLs: 11 A2, 30 B1, and 20 B2, with no A1 or C source. Body citations and the source register have exact external URL parity.
-- All 38 relied-on repository URLs also have exact body/register parity.
-- Repository counts, cited IDs, resolver behavior, candidate vocabulary, material lanes, dependency closure, safety limits, and later-gate boundaries passed independent final review.
-- `node --test tests/unit/civilization-runtime-economy.test.mjs` passed 5/5.
+- The accepted report has all 28 required sections and 31 complete candidate/authority rows. It grants no implementation permission.
+- It uses 68 external works across 68 direct URLs: 25 A1, 11 A2, 28 B1, and 4 B2. Every registered external source is cited inline with exact body/register URL parity.
+- All 32 directly cited repository URLs also have exact body/register parity.
+- Repository counts, cited IDs, chain probes, candidate vocabulary, regional coverage, food/material/feed/medicine/poison boundaries, magic classes, dependency closure, and safety exclusions passed final review.
+- Focused recipe, runtime-economy, and body-state tests passed 54/54.
 
-## Accepted Gate 4 Findings
+## Accepted Gate 5 Findings
 
-- Source, raw output, stabilized stock, prepared material, refined material, intermediate, component, finished good, process aid, fuel, salvage, residue, waste, market identity, chain output, bounded recipe output, and runtime item instance must remain separate.
-- The live catalog has 1,372 items and 1,617 market values, but only 409 items carry the four-stage/six-role layer; 963 remain unstaged. Existing coverage is broad enough that later work should prefer missing relationships and targeted preconditions over indiscriminate identity growth.
-- Canonical biological, mineral, crystal, regional, and magic sources control identity. External evidence establishes process distinctions and dependencies, not repository availability, exact recipes, regional placement, or implementation permission.
-- Ordinary material technology remains the baseline. Any later magical assistance must be canon-routed, finite, housed, maintained, scarce, failure-aware, non-universal, and unable to bypass matter, fuel, tools, skill, infrastructure, ownership, or waste.
-- Material candidates remain conditional on canonical source, collision audit, repeated consumers, item/value coverage, stage/role compatibility, chain and recipe ownership, capability closure, regional support, later gates, and integration disposition.
+- Living source, carcass/catch, anatomical part, raw edible and non-edible output, cleaned/trimmed food, stabilized stock, preserved food, milled food, fermenting substrate, active ferment, ingredient, process aid, intermediate, dish/drink, feed, coproduct, recoverable material, contamination, spoilage, waste, market identity, chain output, recipe output, and runtime instance require separate authority.
+- Canonical biological source does not establish edibility. Food grade must also be explicit for oils, fats, salts, brines, acids, smoke inputs, containers, cookware, and recovered animal/aquatic streams.
+- Feed is not the default destination for bran, spent mash, pomace, husks, press cake, trimmings, or other biologically sourced residues.
+- Culinary, medicinal, toxic, alchemical, ritual, material, and lore-only destinations remain separate.
+- Catalog growth must pass canonical-source, repeated-consumer, value, state/role, regional, collision, safety, and gameplay-value tests. Missing relationships and runtime reservations should not become exhaustive item catalogs.
 
-## Production-Chain And Workplace Authority Findings
+## Food, Consumption, Storage, And Runtime Owners
 
-- All 121 chains are indexed and directly craft-resolvable. Current source-derived/first-candidate rules allow 120 to be consulted by item-value/market paths; `chain.forage.wild_harvest.hut` is shadowed.
-- The 121 chains contain 311 processing steps. Only 19 steps have explicit input arrays, all in food chains; 292 are fallback-capable.
-- There are 179 empty output arrays: 97 workplace and 82 extraction. All receive runtime-derived output explanations.
-- Final resolution omits 62 declared output occurrences across 17 non-variant chains. Explicit requests for the generic primary fail in 11 variant chains.
-- Material examples reproduce unrelated smelter ores, glass without sand, mixed linen/wool loom inputs, a no-input final tannery step, finished-target extraction outputs, and broad stationery/chandlery workplace fallback.
-- Runtime unions tool tags across all workplace jobs, selects the penalty mode from the first primary job, can report `blocked`, but does not consume that flag before emitting outputs.
-- Workplace tiers, upgrades, authored IO quantities, and job selection are unused. Fuel is a boolean surcharge rather than an item, stock, compatibility, consumption, or residue relationship. Only the final step's outputs are returned.
-- Production chains and workplaces therefore affect live economic calculations, but do not provide bounded recipe quantities, recipe inheritance, inventory generation, or physical production state.
+- Live catalogs include 1,372 items, 1,617 market values, 121 production chains, 58 workplaces, 12 planned recipes, 131 tool items, 121 skills, 117 flora, 132 fauna, 24 monsters, 22 buildings, 9 regional ecology profiles, 41 regions, 88 settlements, 28 Knowledge snippets, 4 magic services, and 27 crystals.
+- Nine consumable profiles exist; only five items link to them. Three links are semantic mismatches and four profiles are orphaned.
+- The body-state engine applies real energy, nutrient, hydration, intoxication, fatigue, and starvation-related effects. The UI currently decrements inventory and invokes that owner.
+- Inventory stacks have item id, item key, and quantity only. No lot, freshness, spoilage, contamination, disease, temperature, food-grade, or storage-condition owner exists.
+- Settlement storage is real aggregate capacity/load/utilization for all 88 settlements, but not perishable lot storage.
+- `cream` and `fresh_cheese` reference `spoilage.dairy_fresh`; no spoilage-profile catalog or runtime owns it.
 
-## Potential Production-Authority Audit Evidence
+## Production-Chain, Recipe, Workplace, And Resolver Findings
 
-Gate 4 found evidence that may satisfy several triggers in `docs/design/production-chain-workplace-runtime-authority-audit-trigger.md`:
+- A reproducible eight-namespace predicate selects 41 core food-source/processing chains and all 19 explicitly authored processing-step input arrays.
+- Those chains have 81 steps: 19 explicit and 62 empty input arrays; 52 explicit and 29 empty output arrays. All 29 empty outputs receive runtime-derived results.
+- Twenty-four core chains have 154 variants. Six default food steps replace nonempty authored inputs with variant inputs.
+- Seventeen declared stage occurrences across six food chains have no processing step.
+- Nine core variant chains fail to return a requested generic primary under default resolution.
+- The bread chain omits declared `bran` because final results use only last-step outputs.
+- Fallback can reverse the fresh-cheese dependency, omit source crops, consume a container without source material, select broad workplace inputs, and emit finished drinks at extraction.
+- Twelve planned recipes across eight families remain static and non-executing. The three food recipes are non-inheriting and materially diverge from live defaults in flour and preservation lanes.
+- Resolver tool requirements aggregate every workplace job; the returned `blocked` flag is not consumed. Jobs, tiers, upgrades, and authored I/O quantities are not selected; fuel remains boolean.
+- Chains/workplaces affect live cost, value, market, transport, quantity, quality, time, labor, waste, outputs, and explanations, but do not create inventory or supply bounded recipe inheritance.
 
-- broad fallback supplies materially important inputs and outputs;
-- exact requested-output behavior can disagree with variant selection;
-- live value/market consumption exceeds a purely descriptive chain posture;
-- all-job tool aggregation couples unrelated job roles;
-- `no_output` blocking is ineffective in the craft loop;
-- focused tests do not isolate these behaviors across material lanes.
+## Production-Authority Audit Evidence
 
-Gate 4 does not make the final trigger decision or authorize a correction. Gate 6 must either record an evidence-backed audit skip or accept `CODEX-AUDIT.production-chain-workplace-runtime-authority` before Gate 7.
+Gate 5 adds substantial evidence relevant to `docs/design/production-chain-workplace-runtime-authority-audit-trigger.md`:
 
-## Unresolved Material Issues By Owner
+- explicit inputs are overridden by variants;
+- important inputs and outputs remain fallback-derived;
+- declared stages are skipped;
+- generic targets disagree with variants;
+- last-step selection omits declared output;
+- planned recipes diverge from live chain semantics;
+- broad workplace fallback can produce implausible dependencies;
+- critical-tool blocking is ineffective;
+- job/tier/upgrade/fuel semantics are incomplete;
+- current runtime-economy tests do not isolate food fallback, variants, blocking, or dependency closure.
 
-- Gate 5: edible versus industrial oils/fats/salts/alcohols, milling, baking, brewing, dairy, preservation, perishability, contamination, storage, byproducts, and food/feed safety.
-- Gate 6: source/material closure, production-chain/recipe/runtime precedence, requested outputs, job/tool/tier semantics, skill mapping, fuel/energy, quantities, byproducts, workplace availability, and focused regression coverage.
-- Gate 7: bounded mundane-for-magic substitution, affinities, vessels, conduits, catalysts, housing, finite capacity, recharge, failure, scarcity, security, and institutional access.
-- Integration: identity promotion, relationship/schema/validator posture, regional and cultural authorship, value coverage, catalog collisions, and the exact revised `0.6.5` target.
+Gate 5 does not make the trigger decision or authorize a correction. Gate 6 must record an evidence-backed audit skip or accept `CODEX-AUDIT.production-chain-workplace-runtime-authority` before Gate 7.
+
+## Unresolved Food Issues By Owner
+
+- Gate 6: final audit trigger; recipe/chain/runtime precedence; explicit/variant/fallback I/O; requested outputs; stage closure; byproduct carry-forward; job/tool/tier/upgrade semantics; skills; fuel/energy; quantities; workplace availability; focused regression coverage; and the boundary of any later production correction.
+- Gate 7: bounded mundane-for-magic substitution, preservation-service compatibility, ice affinity, vessels, finite capacity, recharge, housing, insulation, drainage, ventilation, maintenance, failure, scarcity, security, and institutional access.
+- Integration: identity/relationship promotion, food-grade and feed authority, consumable/spoilage profile corrections, catalog collisions, regional/cultural authorship, validation posture, storage reconciliation, backlog disposition, and exact revised `0.6.5` scope.
+- Later runtime: cooking/recipe execution, lot/batch state, freshness, temperature, contamination, spoilage, disease, storage mutation, inventory mutation, consumption command ownership, persistence, and effects.
 
 ## Research Sequence And Integration Hold
 
@@ -94,8 +118,8 @@ Gate 4 does not make the final trigger decision or authorize a correction. Gate 
 2. `GPT-DR.ecology.flora-fauna-byproducts` - complete
 3. `GPT-DR.agriculture.land-food-livestock` - complete
 4. `GPT-DR.materials.refinement-processing` - complete
-5. `GPT-DR.food.processing-preservation` - active next
-6. `GPT-DR.crafting.tools-workplaces-production`
+5. `GPT-DR.food.processing-preservation` - complete
+6. `GPT-DR.crafting.tools-workplaces-production` - active next
 6a. mandatory production-authority audit-trigger review
 6b. `CODEX-AUDIT.production-chain-workplace-runtime-authority` when triggered
 7. `GPT-DR.magitech.production-infrastructure-substitution`
@@ -107,7 +131,7 @@ Gate 4 does not make the final trigger decision or authorize a correction. Gate 
 13. Geographic Knowledge Taxonomy And Location Recognition Contract Plan
 14. Re-read runtime ownership and select exactly one later consumer
 
-`docs/dev/current-codex-prompt.md` and `docs/dev/queued-cross-domain-production-research-integration-prompt.md` remain byte-identical at Git blob `9ce61594efe498c78b0b6d0d08fdafccf7cc0c54`. Do not run the integration until all seven accepted temporary cited research artifacts exist and any Gate-6-triggered audit has been accepted. Gate 4 does not unblock `0.6.5`.
+`docs/dev/current-codex-prompt.md` and `docs/dev/queued-cross-domain-production-research-integration-prompt.md` remain byte-identical at Git blob `9ce61594efe498c78b0b6d0d08fdafccf7cc0c54`. Do not run integration until all seven accepted artifacts exist and any Gate-6-triggered audit has been accepted. Gate 5 does not unblock `0.6.5`.
 
 ## Preserved 0.6.5 Blocker
 
@@ -122,6 +146,6 @@ Gate 4 does not make the final trigger decision or authorize a correction. Gate 
 ## Durable Boundaries
 
 - `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md` owns the sequence correction and bounded recipe/chain posture.
-- `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` owns research breadth, the seven named research gates, mundane baseline, and magic constraints.
+- `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` owns research breadth, the seven gates, mundane baseline, and magic constraints.
 - `docs/design/production-chain-workplace-runtime-authority-audit-trigger.md` owns the post-Gate-6 conditional audit checkpoint.
-- Research artifacts supply evidence, not implementation permission. Remaining gates must not change content, recipes, chains, schemas, validators, tests, lint code, runtime, UI, saves, migrations, dependencies, assets, or gameplay.
+- Research artifacts supply evidence, not implementation permission. Remaining gates must not change content, recipes, chains, schemas, validators, tests, lint, runtime, UI, saves, migrations, dependencies, assets, or gameplay.
