@@ -1,162 +1,163 @@
-# Cross-Domain Production Research Integration Prompt
+# Current Codex Prompt
 
 ## Run Identity
 
-Unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
+`Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 
-This is the next Codex run **after** all seven required GPT Deep Research artifacts are committed and the Gate-6-triggered production-authority audit has been accepted. Until then, this file is a hold: stop without editing when any research artifact or the accepted audit artifact is absent.
-
-This pass is documentation-only and does not consume a `0.6.x` primary version.
+Run this as one narrow static-content implementation package. The accepted research integration is complete. Preserve accepted engine-owned behavior and do not broaden into crafting execution, production-chain correction, inventory, economy, equipment-profile work, magic, or cleanup.
 
 Suggested commit:
 
-`docs(research): integrate production findings and revise 0.6.5`
-
-## Corrected Route
-
-The accepted `0.6.5` pre-authoring blocker moved research before recipe implementation. Use this sequence:
-
-1. seven GPT Deep Research gates;
-2. accepted `CODEX-AUDIT.production-chain-workplace-runtime-authority`;
-3. this unversioned integration;
-4. revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
-5. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-6. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
-7. Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
-
-Do not require an accepted `0.6.5` implementation before this integration. Current recipe count remains 12 until the revised `0.6.5` package lands.
+`content(crafting): add research-informed planned recipes`
 
 ## Execution Gate
 
-1. Read `AGENTS.md`, `README.md`, current output/handoff/prompt, roadmap, sequenced plan, backlog, historical/deferred register, static-content program, Deep Research tracking decisions, `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`, `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md`, `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`, resource/commodity decisions, crafting/recipe/production-chain authorities, magic/crystal decisions, ecology authorities, and all live catalogs needed to correct research claims.
-2. Run branch status, fetch, and fast-forward pull. Record starting commit and worktree state. Preserve unrelated work.
-3. Confirm the failed `0.6.5` implementation did not change recipe content or tests and that the live baseline still contains 12 planned standard recipes across 8 families unless newer committed evidence says otherwise.
-4. Confirm all seven date-bearing artifacts exist, one named gate per artifact:
-   - `docs/dev/tmp-resources-gathering-extraction-research-*.md`
-   - `docs/dev/tmp-ecology-flora-fauna-byproducts-research-*.md`
-   - `docs/dev/tmp-agriculture-land-food-livestock-research-*.md`
-   - `docs/dev/tmp-materials-refinement-processing-research-*.md`
-   - `docs/dev/tmp-food-processing-preservation-research-*.md`
-   - `docs/dev/tmp-crafting-tools-workplaces-production-research-*.md`
-   - `docs/dev/tmp-magitech-production-infrastructure-substitution-research-*.md`
-5. Confirm the accepted audit artifact exists at `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md`, records the completed `CODEX-AUDIT.production-chain-workplace-runtime-authority`, and resolves or explicitly quarantines the Gate 6 field, fallback, output, job, tier, tool, fuel, value, documentation, and focused-test findings.
-6. Stop without edits if any research artifact or the audit artifact is missing, uncited, materially incomplete, combines gate labels, lacks its required output structure, or is not accepted in current coordination.
-7. Confirm `0.6.6` has not been implemented and remains reserved behind revised `0.6.5`.
+1. Read `AGENTS.md`, `README.md`, current output/handoff/prompt, roadmap, sequenced plan, continuity brief, backlog, historical/deferred register, `docs/design/static-content-expansion-program.md`, `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`, `docs/design/cross-domain-production-research-synthesis.md`, `docs/design/recipe-and-production-schema-decision.md`, `docs/design/crafting-authority-boundary-decision.md`, and `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`.
+2. Read the retained Gate 6 artifact and production audit because this run is their sole named consumer:
+   - `docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md`;
+   - `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md`.
+3. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
+4. Confirm the unversioned integration is accepted, `docs/design/cross-domain-production-research-synthesis.md` exists, the live baseline remains 12 planned standard recipes across 8 families, and the audit decision remains `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5`.
+5. Confirm no recipe/test content changed during the failed earlier `0.6.5` attempt or the documentation-only research/integration sequence.
+6. Confirm `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` has not been implemented and remains reserved after this run.
+7. Confirm the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan remains queued immediately after `0.6.7`; current `Recognizing ...` snippets remain structural lore, not executable recognition criteria.
+8. Stop without editing if newer committed authority invalidates an exact row, if any selected canonical reference is missing, or if implementation would consume a quarantined chain/workplace resolver field.
 
 ## Purpose
 
-Reconcile the seven non-canonical research artifacts and the accepted production-authority audit against live repository authority, promote durable sourced guidance, resolve the recipe-versus-production-chain authority mismatch, define a dependency-closed revised `0.6.5` target, and install the exact revised `0.6.5` implementation prompt.
+Add the exact research-informed, dependency-closed batch of 16 planned standard recipes defined by the accepted synthesis. Increase the live catalog from 12 to 28 records and from 8 to 10 represented families by adding `cooperage` and `forging`.
 
-Do not implement recipes, production chains, items, resources, ecology, magic, schemas, validators, tests, runtime, UI, saves, migrations, dependencies, assets, or gameplay.
+This package adds explicit static relationships only. It does not make recipes executable, discoverable, available, craftable, buyable, ownable, or visible in UI.
 
-## Mandatory Live Inventory
+## Mandatory Pre-Authoring Inventory
 
-Reproduce and report current counts and owners for:
+Reproduce and report:
 
-- items by class and static market values;
-- recipes and represented families;
-- tools, workplaces, skills, and production chains;
-- recipe schema, semantic validator, lint registration, and focused tests;
-- flora, fauna, monsters, habitats, biomes, regional ecology, minerals, and source-local loot;
-- resources and commodities, including paused lifecycle posture;
-- relevant Knowledge domains and snippets;
-- crystal records by element and tier;
-- spell compatibility, conduit, catalyst, enchanter, magical-material, and infrastructure foundations;
-- current and missing runtime consumers.
+- items: 1,372, including 131 `tool` records;
+- item-class distribution: 24 accessory, 18 armor, 14 clothing, 1,114 commodity, 26 consumable, 131 tool, 10 vehicle, 35 weapon;
+- market item values: 1,617 unique item keys;
+- consumable profiles: 9;
+- weapon profiles: no live collection, 0;
+- armor profiles: no live collection, 0;
+- recipes: 12 planned standard records across 8 families;
+- workplaces: 58;
+- production chains: 121;
+- skills: 121;
+- resources: 2 planned;
+- commodities: 2 planned;
+- normal content lint registration: 67 checked files on the accepted baseline.
 
-Correct every stale repository claim through live evidence. External research informs design but cannot override repository facts or durable ownership decisions.
+Confirm there is no separate material registry: canonical material identity remains in `items.items`. Search every proposed recipe id, slug, input, output, tool, workplace, skill, and optional chain reference before authoring. Confirm each item/tool has static value closure and every required tool is item class `tool`.
 
-## Required Permanent Output
+If a count differs, inspect and record newer evidence. Do not silently substitute identities or broaden scope.
 
-Create `docs/design/cross-domain-production-research-synthesis.md` with:
+## Exact Target
 
-1. technology-capability baseline by household, village/town, urban specialist, institutional, elite/strategic, and rare/exceptional access;
-2. natural-source and byproduct taxonomy;
-3. ingredient and material-state taxonomy;
-4. transformation/process taxonomy;
-5. tools, workplaces, energy, environmental needs, losses, residues, salvage, and maintenance;
-6. regional and cultural variation without rename-only variants;
-7. mundane-baseline and useful-but-non-universal magic framework;
-8. Ice-conditioned-container case study with relative vessel guidance only;
-9. candidate matrix with authority, dependency, priority, confidence, and source classification;
-10. temporary-artifact disposition;
-11. exact revised `0.6.5` target and any prerequisite correction;
-12. implications reserved for later `0.6.6` and future packages.
+Add exactly 16 records to `packages/content/base/crafting/recipes.json`. Every record uses `status: "planned"`, `recipeSubtype: "standard"`, the exact positive integers and roles below, no `prerequisiteRefs`, exactly one primary output, and the existing non-inheriting optional chain field.
 
-## Recipe And Production-Chain Reconciliation
+| Recipe id | Family | Exact inputs | Exact outputs | Workplace | Tools | Skill / minimum rank | Optional chain |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `recipe.flax_bundle_to_linen_thread` | `tailoring` | `flax_bundle` 1 `material` | `linen_thread` 2 `primary` | `workplace.loomhouse` | `spindle` | `skill.crafting.weaving` / 1 | `chain.textile.linen` |
+| `recipe.wool_fleece_to_yarn` | `tailoring` | `wool_fleece` 1 `material` | `yarn` 2 `primary` | `workplace.loomhouse` | `spindle` | `skill.crafting.weaving` / 1 | `chain.textile.components` |
+| `recipe.yarn_to_wool_cloth` | `tailoring` | `yarn` 2 `material` | `wool_cloth` 1 `primary` | `workplace.loomhouse` | `weaving_shuttle` | `skill.crafting.weaving` / 1 | `chain.textile.wool` |
+| `recipe.linen_thread_to_fine_cloth` | `tailoring` | `linen_thread` 2 `material` | `fine_cloth` 1 `primary` | `workplace.loomhouse` | `weaving_shuttle` | `skill.crafting.weaving` / 1 | `chain.textile.cloth_grades` |
+| `recipe.flour_to_bread_dough` | `baking` | `flour` 1 `ingredient` | `bread_dough` 1 `primary` | `workplace.bakery` | `mixing_spoon` | `skill.crafting.cooking` / 1 | `chain.food.bread` |
+| `recipe.fish_raw_and_salt_crystal_to_smoked_fish` | `preserving` | `fish_raw` 1 `ingredient`; `salt_crystal` 1 `ingredient` | `smoked_fish` 1 `primary` | `workplace.smokehouse` | `smoking_rack` | `skill.crafting.cooking` / 1 | `chain.food.preserved_fish` |
+| `recipe.plank_to_barrel_stave` | `cooperage` | `plank` 1 `material` | `barrel_stave` 2 `primary` | `workplace.coopers_shop` | `cooper_adze` | `skill.crafting.carpentry` / 1 | `chain.cooperage.components` |
+| `recipe.barrel_stave_metal_ring_and_resin_pitch_to_cask` | `cooperage` | `barrel_stave` 4 `material`; `metal_ring` 2 `material`; `resin_pitch` 1 `material` | `cask` 1 `primary` | `workplace.coopers_shop` | `cooper_adze`, `hoop_anvil` | `skill.crafting.carpentry` / 1 | `chain.cooperage.cask` |
+| `recipe.copper_ore_to_copper_ingot` | `forging` | `copper_ore` 2 `material` | `copper_ingot` 1 `primary` | `workplace.smelter_hall` | `crucible_tongs` | `skill.crafting.smelting` / 1 | `chain.metal.copper_ingot` |
+| `recipe.copper_ore_and_tin_ore_to_bronze_ingot` | `forging` | `copper_ore` 2 `material`; `tin_ore` 1 `material` | `bronze_ingot` 2 `primary` | `workplace.smelter_hall` | `crucible_tongs` | `skill.crafting.smelting` / 1 | `chain.metal.bronze_ingot` |
+| `recipe.iron_ingot_to_metal_plate` | `metalsmithing` | `iron_ingot` 1 `material` | `metal_plate` 1 `primary` | `workplace.armorers_forge` | `blacksmith_hammer` | `skill.crafting.blacksmithing` / 1 | `chain.metal.components` |
+| `recipe.iron_ingot_to_blade_blank` | `metalsmithing` | `iron_ingot` 1 `material` | `blade_blank` 1 `primary` | `workplace.weaponsmith_forge` | `blacksmith_hammer` | `skill.crafting.blacksmithing` / 1 | `chain.metal.components` |
+| `recipe.blade_blank_tool_handle_and_leather_strap_to_arming_sword` | `assembly` | `blade_blank` 1 `material`; `tool_handle` 1 `material`; `leather_strap` 1 `material` | `arming_sword` 1 `primary` | `workplace.weaponsmith_forge` | `blacksmith_hammer` | `skill.crafting.blacksmithing` / 1 | `chain.warfare.weapons` |
+| `recipe.cured_leather_to_leather_strap` | `leatherworking` | `cured_leather` 1 `material` | `leather_strap` 2 `primary` | `workplace.tannery` | `tanning_scraper` | `skill.crafting.leatherworking` / 1 | `chain.leather.components` |
+| `recipe.cured_leather_to_hardened_leather_panel` | `leatherworking` | `cured_leather` 1 `material` | `hardened_leather_panel` 1 `primary` | `workplace.tannery` | `tanning_scraper` | `skill.crafting.leatherworking` / 1 | `chain.leather.components` |
+| `recipe.metal_ring_and_leather_strap_to_mail_coif` | `assembly` | `metal_ring` 2 `material`; `leather_strap` 1 `material` | `mail_coif` 1 `primary` | `workplace.armorers_forge` | `blacksmith_hammer` | `skill.crafting.armoring` / 1 | `chain.warfare.armor` |
 
-Apply `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`.
+The exact evidence and quantity classification for every row are owned by Section 13 of `docs/design/cross-domain-production-research-synthesis.md`. Every integer is `bounded_design_inference`: an authored game-scale batch unit, not a historical yield, a balance formula, a chain-derived ratio, or a claim about physical throughput.
 
-Default posture unless live evidence disproves it:
+The prior `recipe.flour_to_pastry_dough` and `recipe.pastry_dough_and_smoked_meat_to_savory_meat_pie` rows are not part of this package. Do not add substitutes. The flour-only pastry row omitted a required bounded ingredient relationship; the meat-pie row remains `authored_input_blocked`.
 
-- recipe records own explicit bounded static batch transformations;
-- production chains own macro process context and related stages;
-- `relatedProductionChainId` remains descriptive and non-inheriting;
-- chain profiles do not automatically supply exact recipe ratios;
-- research identifies necessary inputs, useful intermediates, process order, losses, and byproducts;
-- exact integer quantities are authored game-scale batch units, not claims of universal historical yield;
-- every quantity receives a confidence classification: `source_backed`, `bounded_design_inference`, `balance_placeholder`, or `authored_input_blocked`.
+## Authoring Rules
 
-Determine whether current production-chain records are materially wrong or merely broader than recipe authority. Select a separate narrow chain correction only when multiple recipes require a factual relationship that the current chain should own. Do not edit chains in this integration.
+- Use the current strict recipe schema and semantic validator without weakening either.
+- Recipe fields are complete and explicit. `relatedProductionChainId` is descriptive, existence-checked, and non-inheriting.
+- Do not call or derive any field from `resolveCraftAtSettlement`, candidate ordering, chain/workplace fallback, variants, stage/carry behavior, last-step outputs, workplace I/O, jobs, tiers, progression, upgrades, tool tags, fuel/power modes, values, prices, rates, or costs.
+- Use only the exact ids, quantities, roles, workplaces, tools, skills, ranks, and chain references above.
+- Keep summaries and notes concise. Each record must say it is a planned static transformation, its integers are authored bounded game-scale units, the chain link is non-inheriting, and no execution/inventory/economy behavior is implied.
+- Do not add `prerequisiteRefs`, Knowledge, guild, trial, unlock, availability, profession, progression, region, or cultural claims.
+- Do not edit existing recipes unless a focused defect caused by this batch proves a minimal expectation update is necessary; stop and report before changing existing content semantics.
+- Preserve resources and commodities exactly. Do not add weapon/armor profile collections or registrations.
+- Preserve `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` and the post-`0.6.7` route.
 
-## Revised 0.6.5 Target
+## Allowed Files
 
-The integration must install an exact revised `0.6.5` prompt that:
+Production content:
 
-- starts from the live 12-recipe baseline;
-- selects the largest coherent, reviewable, dependency-closed batch supported by the synthesis;
-- lists every exact recipe id, family, input/output item and quantity, role, workplace, tool, skill, and optional production-chain reference;
-- states the evidence and quantity-confidence classification for each row;
-- removes or corrects the failed pastry and meat-pie assumptions;
-- does not preserve an arbitrary count of 18 if evidence supports a different coherent batch;
-- does not invent missing item identities silently;
-- routes any necessary item, workplace, tool, skill, value, schema, validator, or production-chain precondition separately;
-- keeps recipe content static and planned-only;
-- prohibits crafting execution, availability, unlocks, labor, fuel, time, quality, spoilage, inventory mutation, economy behavior, magic execution, runtime, UI, saves, and gameplay;
-- requires normal content lint, focused authority tests, reference closure, hygiene checks, and complete changed-path review;
-- after acceptance, installs the exact research-informed `0.6.6` prompt.
+- `packages/content/base/crafting/recipes.json`
 
-## Research And Magic Rules
+Focused test:
 
-- Prefer archaeological, museum, university, government, peer-reviewed, historical-primary-source, ethnobotanical, zoological, agricultural, food-science, materials-science, and conservation evidence.
-- Label modern analogues and design inference.
-- Do not copy hazardous procedural instructions; retain process-level design information.
-- Research ordinary technology before magic.
-- Magic may assist or substitute in bounded specialist or institutional cases, but must account for affinity, vessel tier/capacity, efficiency, stability, attunement, recharge, ambient conditions, scale/throughput, material conductivity/retention, skill, installation, maintenance, failure, scarcity, security, and cost.
-- Preserve attractive player-facing magical production paths without making them the universal baseline.
-- Do not weaken schemas or validators to fit research suggestions.
+- `tests/unit/crafting-recipes-validation.test.mjs`
 
-## Artifact Disposition
+Update focused expectations from 12 to 28 recipes and assert the exact 16 new ids, exact family coverage, exact row fields, `planned`/`standard` status, and unchanged non-inheritance behavior. Do not weaken existing assertions.
 
-Delete an artifact only when fully promoted. Otherwise retain it with exactly one named consumer and a concrete removal condition. No orphan temporary artifacts.
+Coordination documents may be updated only as required:
 
-## Allowed Changes
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/current-codex-prompt.md`
+- `docs/dev/historical-version-and-deferred-route-register.md`
+- `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/dev/project-roadmap.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
+- `docs/future_content_backlog.md`
+- `docs/design/static-content-expansion-program.md`
+- `docs/design/cross-domain-production-research-synthesis.md` only for a factual correction proven during implementation
 
-Documentation only, including:
+The retained Gate 6 and audit artifacts may be deleted only if their Section 14 removal conditions are fully satisfied after accepted implementation; otherwise leave them unchanged and record the remaining concrete consumer/removal condition.
 
-- `docs/design/cross-domain-production-research-synthesis.md`;
-- temporary artifacts only for explicit deletion or retention notes;
-- current output, handoff, and prompt;
-- historical/deferred register;
-- roadmap, sequenced plan, continuity brief, backlog, and static program;
-- Deep Research tracking only for completed-gate status;
-- research program and reconciliation decision only for factual status correction.
+## Prohibited Scope
 
-Do not change content JSON, schemas, validators, tests, lint code, runtime, UI, saves, migrations, packages, dependencies, assets, generated output, or gameplay.
+Do not add or change:
+
+- items, values, tools, workplaces, skills, production chains, resources, commodities, flora, fauna, monsters, ecology, Knowledge, magic, services, buildings, infrastructure, schemas, validators, or lint code;
+- crafting availability/execution, input consumption, output creation, work orders, labor, fuel, power, time, queues, quality, spoilage, waste, maintenance, repair, salvage, prices, stock, vendors, trade, or service behavior;
+- item-instance state, provenance, ownership, storage, reservations, capacity, condition, durability, temperature, charge, recharge, catalyst/conduit behavior, or enchantment;
+- weapon/armor profiles, combat, medicine, gathering, extraction, agriculture, ecology/population, loot execution, runtime, UI, commands, events, saves, migrations, dependencies, generated output, assets, or gameplay;
+- location-recognition profiles or behavior, geography taxonomy, borders/claims, Knowledge evidence/progress/completion behavior, or recognition UI; or
+- compatibility aliases, retired-id preservation, unrelated cleanup, renames, or formatting churn.
 
 ## Validation
 
-- Verify every promoted repository claim against live files.
-- Verify every durable external claim has an appropriate citation.
-- Verify every Gate 6 audit finding is resolved, corrected, or explicitly quarantined by the accepted audit before integration dispositions it.
-- Verify classifications and quantity-confidence labels are complete.
-- Verify no route contradiction remains across current handoff, output, prompt, roadmap, sequence, backlog, static program, research program, and deferred register.
-- Verify the generated prompt targets revised `0.6.5`, not `0.6.6`.
-- Verify all temporary artifacts have an explicit disposition.
-- Run conflict-marker, trailing-whitespace, and `git diff --check` checks.
-- Inspect the complete changed-path set and full diff.
-- Do not run builds, typechecks, content lint, tests, package installation, servers, or generators unless a repository-fact check strictly requires one; document any exception.
+1. Reproduce final counts: 1,372 items, 1,617 market values, 9 consumable profiles, 0/0 live weapon/armor profile collections, 28 planned standard recipes across 10 families, 58 workplaces, 131 tools, 121 skills, 121 production chains, 2 planned resources, and 2 planned commodities.
+2. Run normal content lint: `npm.cmd run tool:content-lint`.
+3. Run exactly:
+
+   `node --test tests/unit/crafting-recipes-validation.test.mjs tests/unit/equipment-profiles-validation.test.mjs tests/unit/resource-commodity-authority-validation.test.mjs tests/unit/schema-files.test.mjs`
+
+4. Audit duplicate recipe ids/slugs, no-op transformations, duplicate same-role input/output keys, positive integers, exactly one primary output, exact target equality, and item/value/tool/workplace/skill/chain closure.
+5. Confirm each new `sourceAuthorityNotes` records `bounded_design_inference`, non-inheritance, and static-only scope.
+6. Confirm no chain/workplace resolver or quarantined field was consumed.
+7. Confirm no prohibited path changed and resources/commodities remain byte-identical.
+8. Run conflict-marker and trailing-whitespace searches, `git diff --check`, complete changed-path review, and full diff inspection.
+
+Do not run builds, typechecks, package installation, servers, generators, or the full test suite.
+
+## Documentation And Next Prompt
+
+After successful validation:
+
+- overwrite `docs/dev/current-codex-output.md` with the exact result, counts, 16 ids, closure, checks, behavior confirmation, risks, artifact disposition, and suggested commit;
+- advance current handoff, sequence, roadmap, continuity brief, backlog, static program, and route register only where the accepted package changes current direction;
+- keep the user-directed Geography/recognition decision immediately after `0.6.7`;
+- decide the retained Gate 6/audit artifact cleanup conditions explicitly; and
+- overwrite `docs/dev/current-codex-prompt.md` with the exact research-informed `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt.
+
+The installed `0.6.6` prompt must read this synthesis and the retained Gate 1-5 and Gate 7 artifacts, reproduce fresh monster/fauna/ecology/region/biome/combat-role/tactics/action-package/item/value/loot inventories, define an exact region/biome/role/threat matrix and batch, use current executable combat/action vocabulary only, close every monster/fauna-lineage-if-used/ecology/role/tactics/action/item/value/source-local-loot reference, and prohibit generic loot tables, loot execution, spawn rules, encounter execution, population/migration/harvest simulation, new combat mechanics, magic execution, runtime, UI, saves, migrations, and gameplay.
+
+It must require normal content lint, focused authority tests, closure/hygiene/full-diff review, explicit temporary-artifact disposition, and installation of the exact `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` prompt after success. Both prompts must preserve the queued Geography/recognition plan and treat current `Recognizing ...` snippets as structural lore only.
 
 ## Completion Report
 
-Report starting commit/state, seven research artifact paths and labels, the accepted production-authority audit artifact, live inventories, accepted/rejected/deferred findings, recipe/chain authority decision, technology/magic framework, synthesis path, artifact disposition, exact revised `0.6.5` prompt installed, files changed, checks run, and confirmation that no implementation behavior changed.
+Report starting commit/state; reproduced baseline/final counts; exact 16 ids and family distribution; all reference/value closure; quantity-confidence posture; files changed; checks; resolver-quarantine confirmation; unchanged behavior/runtime/UI/save/economy/magic/Knowledge-recognition state; artifact disposition; installed `0.6.6` prompt; risks; and suggested commit.

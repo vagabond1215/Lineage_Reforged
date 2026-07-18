@@ -1,13 +1,13 @@
 # Cross-Domain Natural Resources, Materials, Production, And Magitech Research Program
 
-Date: 2026-07-14
-Status: approved user-intent research program; active prerequisite before revised `0.6.5`; documentation only
+Date: 2026-07-17
+Status: seven gates and unversioned integration complete and accepted; revised `0.6.5` active next; documentation only
 
 ## 1. Decision Summary
 
-The accepted `0.6.5` pre-authoring blocker proved that the previous exact recipe target lacked sufficient transformation and quantity authority. Run this coordinated GPT Deep Research program **before** the revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+The accepted `0.6.5` pre-authoring blocker proved that the previous exact recipe target lacked sufficient transformation and quantity authority. This coordinated GPT Deep Research program and its unversioned integration completed before the revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
 
-Preserve one-gate/one-artifact discipline. Run seven named `GPT-DR.*` gates, commit one cited temporary artifact per gate, then run one unversioned Codex documentation integration. The integration promotes repo-corrected guidance and installs a revised exact `0.6.5` prompt.
+The completed program preserved one-gate/one-artifact discipline. `docs/design/cross-domain-production-research-synthesis.md` now promotes the repo-corrected guidance, dispositions every temporary artifact, and owns the installed revised exact `0.6.5` prompt.
 
 This program authorizes no content JSON, schemas, validators, tests, runtime, UI, saves, migrations, assets, generated output, economy behavior, gathering, crafting execution, spell casting, enchanting execution, or gameplay changes.
 

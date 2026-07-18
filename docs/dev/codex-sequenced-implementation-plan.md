@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-07-14
-Route: Codex local sequencing alignment after the unversioned static-content pipeline integration
+Date: 2026-07-17
+Route: Codex local sequencing alignment after accepted cross-domain production research integration
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -25,7 +25,7 @@ Latest completed primary:
 
 Latest completed support/audit run:
 
-- `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
+- Unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
 
 Immediate next primary:
 
@@ -52,6 +52,7 @@ Immediate next primary:
 - `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit` is complete and accepted. It confirmed the exact test-only repair, permanent equal-sequence record-id discrimination, all authority/behavior/atomicity/event/persistence/browser/UI/hygiene gates, expected queued-file Git blobs, and 45/45 focused tests.
 - Unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration` is complete. It created `docs/dev/historical-version-and-deferred-route-register.md`, created `docs/design/static-content-expansion-program.md`, reconciled historical/deferred routing, and installed the exact `0.6.4` prompt.
 - `Version 0.6.4 - World And Settlement Static Content Expansion` is complete. It landed the exact three-cluster 12-district, 18-site, 6-feature, and 12-snippet batch with 592/592 focused tests and 67-file normal lint green.
+- The seven-gate cross-domain research program, production-authority audit, and unversioned integration are complete. `docs/design/cross-domain-production-research-synthesis.md` owns the exact 16-row revised `0.6.5` target, quantity classifications, resolver quarantine, and temporary-artifact dispositions.
 - The remaining active primary sequence is `0.6.5` item/material/recipe static expansion, `0.6.6` monster/ecology/loot static expansion, then `0.6.7` cross-content coherence audit.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.

@@ -1,14 +1,14 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-14
+Last reviewed: 2026-07-17
 
 ## Current Runtime Transition Override
 
 - Latest completed primary: `Version 0.6.4 - World And Settlement Static Content Expansion`.
-- Latest completed support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`.
-- Completed support route: unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration`.
+- Latest completed support/audit run: unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`.
+- Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
 - Next primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
-- Activity selection remains accepted. `0.6.4` world/settlement content is complete; the static program continues through `0.6.5` item/material/recipe, `0.6.6` monster/ecology/loot, and `0.6.7` cross-content audit before another runtime consumer.
+- Activity selection remains accepted. `0.6.4` and the seven-gate production research/integration prerequisite are complete; the synthesis-owned 16-row revised `0.6.5` is active before `0.6.6` monster/ecology/loot and `0.6.7` cross-content audit.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -35,10 +35,10 @@ The current Codex handoff controls exact current version state. The current GPT 
 Current live anchor:
 
 - Latest completed version: `Version 0.6.4 - World And Settlement Static Content Expansion`
-- Latest support/audit run: `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
+- Latest support/audit run: unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
 - Next recommended run: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the first static package is complete and the remaining `0.6.5`-`0.6.7` milestone is active; UI information architecture remains durably bounded
+- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the first static package and cross-domain research integration are complete; revised `0.6.5` is active; UI information architecture remains durably bounded
 
 Versioning rule:
 

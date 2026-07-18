@@ -2,98 +2,83 @@
 
 ## Status
 
-- Gates 1-7 of the cross-domain natural-resources, ecology, agriculture, materials, food, crafting, and magitech program are accepted.
-- `CODEX-AUDIT.production-chain-workplace-runtime-authority` is accepted.
-- Audit result remains `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5`, conditional on complete disputed-resolver quarantine and non-inheritance of chain detail into recipes.
-- Gate 7 was documentation/research only. No content, schema, validator, test, runtime, economy, combat, medicine, infrastructure, UI, save, dependency, asset, or gameplay behavior changed.
-- Cross-domain integration is active next. Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` remains blocked.
+- The unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration` is complete and accepted as documentation only.
+- All seven dated research artifacts and `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md` were reconciled against live repository authority.
+- `docs/design/cross-domain-production-research-synthesis.md` is the durable integration authority.
+- Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is active next and installed exactly in `docs/dev/current-codex-prompt.md`.
+- `0.6.6` remains reserved after accepted revised `0.6.5`; `0.6.7` follows; the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan remains queued immediately afterward.
 
-## Gate 7 Run Record
+## Integration Baseline
 
-- Source run: `GPT-DR.magitech.production-infrastructure-substitution`
-- Execution date: 2026-07-16
-- Branch: `master`
-- Starting head: `fd5b667a141bb91b9538b7f4d1261ca2ecb0a5c1`
-- Starting state: clean and fetched `origin/master` at 0 ahead / 0 behind
-- Artifact: `docs/dev/tmp-magitech-production-infrastructure-substitution-research-2026-07-14.md`
-- Artifact commit: `763b96a778d851f4406c3f4399b83978ab66075b`
-- Ending research head before coordination: `763b96a778d851f4406c3f4399b83978ab66075b`
-- Coordination head: the commit containing this handoff and the activated integration prompt
+- Starting/verified head: `24d83b0e47a85fe29e6ad316c05964b5b57914e3`; `master`; clean and remote-aligned before documentation edits.
+- Items: 1,372 = 24 accessory, 18 armor, 14 clothing, 1,114 commodity, 26 consumable, 131 tool, 10 vehicle, 35 weapon.
+- Market values: 1,617 unique keys; all 1,372 item keys plus 245 market-only biological identities.
+- Recipes: 12 planned standard records across 8 families; no runtime consumer.
+- Production capability: 58 workplaces, 121 production chains, 121 skills, 22 extraction methods.
+- Ecology: 117 flora, 132 fauna, 24 monsters, 93 habitats, 36 biomes, 9 regional ecology profiles, 56 minerals.
+- Source-local monster loot: 49 drop rows / 37 unique item keys and 20 loot rows / 6 unique keys; no executable loot generator.
+- Resources/commodities: 2/2 planned and paused.
+- Knowledge: 7 registry rows (6 active, Arcane Lore planned), 4 legacy domain records, 28 snippets.
+- Magic: 27 vessels across nine affinities/three tiers, 55 spells (23 ready / 5 partial / 27 deferred), 7 conduit profiles, 3 catalyst profiles, 4 magic-service records, and 7 mundane infrastructure records.
+- Institution probe remains 88 settlement profiles, 264 reserve rows, and 352 service rows; it projects availability/charge only.
 
-## Exact Repository Baseline Reproduced
+## Revised 0.6.5 Target
 
-- 1,372 items; 131 tools.
-- 27 crystal records and 27 matching item keys: neutral, light, water, wind, ice, darkness, fire, stone/earth, thunder x shard/crystal/cluster.
-- Neutral capacity/efficiency/stability/mismatch: 20/44/92; 0.82/0.90/0.96; 0.90/0.88/0.84; 0.10/0.08/0.06.
-- Aligned capacity/efficiency/stability/mismatch: 22/48/100; 0.90/1.00/1.08; 0.93/0.90/0.86; 0.18/0.14/0.12.
-- All vessel records are reusable and consumed on permanent enchantment; exact recharge methods remain catalog metadata.
-- 55 spells: 23 ready, 5 partial, 27 deferred; 23 elementless and four each of direct air, earth, fire, ice, light, lightning, shadow, and water.
-- Seven conduit profiles and three catalyst profiles. Of 27 catalog-matching vessel items, 25 have no catalyst profile; `void_crystal` is a separate catalyst item.
-- 14 magic-facing skills among 121 skills; Arcane Lore remains planned registry-only with no live domain record or snippet.
-- Four magic services, 18 guilds, one pantheon, eight deities, six orders, four religious structure types, two hotspots, and one sacred site.
-- 22 buildings, 58 workplaces, 208 job rows / 110 unique job IDs, 21 progression profiles / 105 tiers, 25 upgrade profiles / 116 upgrades, five tier profiles.
-- Four unhosted building templates; 41 unique building service functions, five mapped to planned provider-independent services and 36 unmapped.
-- 121 production chains, 22 extraction-method records, and 12 planned recipes across eight families.
-- Seven mundane infrastructure records; no magical construction/infrastructure record.
-- 41 regions, 47 locality bands, 88 settlements, 14 districts, and 20 sites; no direct settlement magic-service placement.
-- Live institution probe: 88 profiles, 264 reserve rows, 352 service rows. Adventurer magic 65/88 limited; utility enchantment 10/88 moderate; ritual religious 88/88 (80 moderate, 8 strong); affinity binding 15/88 moderate.
-- Institution code projects reserve capacity/current charge and service availability but does not execute physical use cases, spend/recharge charge, mutate inventory, or persist installations.
-- Combat separately recognizes 11 narrow hooks; the general known-spell resolver remains an inert planning envelope.
+Add exactly 16 planned standard recipes, taking the catalog from 12 to 28 and represented families from 8 to 10 by adding `cooperage` and `forging`:
 
-## Gate 7 Evidence Coverage
+- `recipe.flax_bundle_to_linen_thread`
+- `recipe.wool_fleece_to_yarn`
+- `recipe.yarn_to_wool_cloth`
+- `recipe.linen_thread_to_fine_cloth`
+- `recipe.flour_to_bread_dough`
+- `recipe.fish_raw_and_salt_crystal_to_smoked_fish`
+- `recipe.plank_to_barrel_stave`
+- `recipe.barrel_stave_metal_ring_and_resin_pitch_to_cask`
+- `recipe.copper_ore_to_copper_ingot`
+- `recipe.copper_ore_and_tin_ore_to_bronze_ingot`
+- `recipe.iron_ingot_to_metal_plate`
+- `recipe.iron_ingot_to_blade_blank`
+- `recipe.blade_blank_tool_handle_and_leather_strap_to_arming_sword`
+- `recipe.cured_leather_to_leather_strap`
+- `recipe.cured_leather_to_hardened_leather_panel`
+- `recipe.metal_ring_and_leather_strap_to_mail_coif`
 
-- 40 required sections present.
-- Nine affinities covered, with stone/earth resolved as one owner-translated affinity rather than duplicate records.
-- All 43 physical demands covered once in the complete matrix.
-- All 11 required contexts covered.
-- All 11 required multi-affinity questions covered under a two-independent-vessel conservative default.
-- All 12 conservation/transformation postures covered: creation, extraction, movement, concentration, conversion, transfer, storage, release, stabilization, measurement, warning, containment.
-- All six access/scale bands applied.
-- 29 candidate/authority rows include every required authority, baseline, housing, recharge, failure, scarcity, provider, dependency, blocker, owner, confidence, value, classification, and disposition field.
-- 30 external sources: A1 4, A2 1, B1 24, B2 1, C 0. Every registered source is cited in the body and every body URL is registered.
+Every exact input/output quantity, role, workplace, tool, skill/rank, optional chain, evidence note, and classification is fixed by Section 13 of the synthesis and copied into the active prompt. Every integer is authored game-scale `bounded_design_inference`, not a historical yield, runtime balance formula, placeholder, or chain-derived ratio.
 
-## Strongest Accepted Principles
+The earlier flour-only pastry and savory-meat-pie rows are removed. Do not restore, replace, or partially author them. The meat-pie relationship remains `authored_input_blocked`.
 
-1. Ordinary technology remains the baseline; magic must not erase material, energy, labor, environment, housing, transmission, inspection, repair, waste, safety, or fallback.
-2. Creation is unsupported absent explicit repository authority. Movement, extraction, separation, purification, storage, warning, control, and containment remain distinct.
-3. A useful magic route is finite, housed, rechargeable, inspectable, fallible, scarce, institutionally accessible, and competitive with combat/civic/craft/ritual demand.
-4. Static compatibility, validator acceptance, institutional projection, presentation, and effect execution are separate authorities.
-5. No compound-affinity rule exists. Default research posture is two independent vessels, separate recharge, mundane compound housing, no pooled capacity/stability bonus, and specialist control.
-6. Stone IDs/presentation and earth affinity/spell/combat vocabulary describe one affinity across owner boundaries; no parallel earth crystal/provider family should be added.
-7. Existing services, guilds, orders, buildings, workplaces, and ordinary infrastructure require collision/reuse review before any new identity.
-8. Strongest integration questions are bounded civic lighting/navigation marks, warded-storage relationships, existing-water/channel assistance, airflow through ordinary ducts, finite conditioned storage, and service/provider reuse. They are questions, not effects.
+## Recipe And Production Authority
 
-## Strongest Rejections
+- Recipes own complete explicit bounded transformations.
+- Production chains own broad macro/economic context.
+- `relatedProductionChainId` is optional, descriptive, existence-checked, and non-inheriting.
+- Audit decision remains `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5`.
+- Reverse that decision and stop if implementation consumes chain/workplace resolver behavior.
 
-- Free matter, free fuel, free energy, perpetual recharge, unlimited cooling, universal purification, instant construction, automatic preservation, medical inference, flawless wards, unlimited force/transport/communication, and physical units inferred from crystal capacity.
-- Modern electrical-grid inference from thunder or conductivity metadata.
-- Light as sterilization, darkness as cooling/matter removal, wind as unlimited motive power, stone/earth as free material, or neutral as universal converter/controller.
-- Metadata, service labels, derived availability, inactive workplace fields, power modes, quantities, or upgrades treated as execution authority.
-- Duplicate elemental shops, guilds, towers, temples, workplaces, or providers; generic tag-driven spell execution; combat/medicine redesign; hazardous procedural detail.
+Revised `0.6.5` must not derive any field or admission decision from chain/workplace input/output fallback, target fallback, variants, stage/carry behavior, last-step output, workplace I/O, job/tier/progression/upgrades, tool tags, fuel/power modes, candidate ordering, resolver value, market price, labor association, or `resolveCraftAtSettlement`.
 
-## Service, Provider, Stale-Asset, And Regional Findings
+Later owner-specific corrections remain separate: chain/workplace loader types, topology/semantic validation, resolver branch tests, economy documentation, Stonevein placement, and transport baseline diagnosis.
 
-- Reuse adventurer magic, utility enchantment, ritual religious magic, and affinity binding; no mage/enchanter guild exists or is justified.
-- Utility preservation currently names `small_scale_preservation` while utility allowed elements exclude ice. Integration must collision-audit this without assuming either an error or an ice effect.
-- Ritual service's 88/88 availability is a derivation caveat, not universal local rite/effect/access.
-- The Scribes Guild excludes spell inscription. Arcane documents remain on the enchanter-authority path and deferred.
-- Reuse/attach candidates include guildhall, warehouse, barracks, harbor, forge, gemcutter, scriptoria, religious, waterwork, mine, kiln, and storage owners only after a concrete consumer exists.
-- Item/spell schemas omit some live conduit/catalyst/compatibility fields; some types omit live `earth`. This is a focused schema/validator question, not permission to weaken validation.
-- `high_steel` and `platinum` appear in magical-material metadata without canonical item records.
-- Twenty-one progression profiles, five tier profiles, 116 upgrade IDs, nine chain-unreferenced workplaces, four unhosted buildings, and 36 unmapped building service functions remain inactive/reusable evidence, not capability.
-- Derived regional affinity/reserve heuristics may inform labeled scarcity only. They must not become invented cultures, laws, industries, monopolies, placements, recharge practices, or public access.
+## Technology And Magic Guardrails
 
-## Validation Accepted
+- Ordinary tools, labor, materials, energy, housing, environmental needs, maintenance, inspection, waste, and fallback remain primary.
+- Source, part, harvested form, material state, product, value, recipe, chain, workplace, item instance, and runtime action remain separate owners.
+- Magic must name an exact physical effect, affinity, finite vessel, recharge, mundane housing/transmission, operator/provider, access, maintenance/failure, scale/scarcity, and ordinary fallback.
+- Creation, free matter/energy/fuel, perpetual recharge, unlimited cooling/purification/motive power/transport/communication, modern-grid inference, and generic tag-driven execution remain rejected.
+- Stone crystal ids and earth spell/combat terms are one owner-translated affinity, not duplicate families.
+- Utility preservation versus ice eligibility remains an unresolved collision question; do not edit or infer either side.
 
-- Structural artifact audit: 40 ordered headings; 43 unique demand rows; nine affinities; 11 contexts; 11 combinations; 12 postures; six access bands; 29 valid candidate rows.
-- External citation audit: 30 unique IDs present in body; body/register URL parity complete.
-- Focused existing tests: 652 passed, 0 failed.
-- Normal content lint: `content-lint: ok (67 files checked)`.
-- Conflict-marker, trailing-whitespace, placeholder/encoding, candidate-vocabulary, staged-path, and `git diff --check` checks passed.
-- No pre-existing failures were observed.
+## Temporary Artifacts
 
-## Active Next Route
+No artifact was deleted. Section 14 of the synthesis gives each exactly one named consumer and a concrete removal condition:
 
-`Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
+- Gate 1-5 and Gate 7 artifacts -> sole consumer `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
+- Gate 6 and the production audit -> sole consumer revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
 
-The exact queued integration prompt is active in `docs/dev/current-codex-prompt.md`. The queued prompt itself was not modified. Integration must reconcile all seven accepted artifacts and the audit, promote durable guidance, decide temporary-artifact disposition, install an exact revised 0.6.5 prompt, and keep revised 0.6.5 blocked until that integration is accepted.
+Do not orphan, broaden consumers for, or remove these files before their conditions are met.
+
+## Validation And Behavior
+
+- Integration used live JSON/script inventories, schema/validator/test registration inspection, exact target reference/value closure, route contradiction searches, and documentation hygiene/full-diff review.
+- Per the active integration prompt, no builds, typechecks, content lint, tests, generators, servers, or package installation were run.
+- No content JSON, schema, validator, test, lint, runtime, economy, combat, medicine, magic, infrastructure, inventory, UI, save, migration, dependency, asset, or gameplay behavior changed.

@@ -1,14 +1,14 @@
 # Static Content Expansion Program
 
-Date: 2026-07-14
+Date: 2026-07-17
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4` complete; `0.6.5` blocked before authoring; seven-gate cross-domain research and integration now precede revised `0.6.5`; `0.6.6` and `0.6.7` remain reserved
+Status: `0.6.4` complete; seven-gate cross-domain research and integration accepted; revised `0.6.5` active next; `0.6.6` and `0.6.7` remain reserved
 
 ## 1. Purpose
 
 The repository has enough strict authority, validation, and runtime separation to author broader static canon deliberately. Static records do not imply that content is simulated, obtainable, buyable, craftable, spawned, discovered, or active in gameplay.
 
-The accepted `0.6.5` pre-authoring blocker proved that the former exact recipe target lacked transformation and quantity authority. `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md` moves the user-directed cross-domain research program before revised `0.6.5`.
+The accepted `0.6.5` pre-authoring blocker proved that the former exact recipe target lacked transformation and quantity authority. The seven research gates and unversioned integration are now accepted. `docs/design/cross-domain-production-research-synthesis.md` owns the revised exact target and preserves `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md` as the route/ownership decision.
 
 Accepted engine ownership for travel, quest acceptance, quest tracking, and activity selection remains unchanged.
 
@@ -25,14 +25,14 @@ Counts were reproduced on 2026-07-14. Normal content lint passed at 67 checked f
 | Region localities | `world/region_localities.json` — 47 | established locality anchors | `ready-with-reference-constraints` | Reuse current anchors first; new records require geographic and hex closure. |
 | Semantic map features | `world/map_features.json` — 8 | 8 planned named semantic identities | `expanded-and-validated` | Named geography only; no generic POI catalog. |
 | Visual world-map aggregate | `world/world_map_features.json` — 1 | geometry/reference owner | `authored-input-gated` | Requires authoritative cartography; no fabricated geometry. |
-| Resources | `world/resources.json` — 2 | 2 planned | `research-gated; paused` | Broad expansion requires current research, integration, and a bounded seed decision. |
-| Commodities | `world/commodities.json` — 2 | 2 planned | `research-gated; paused` | Broader paired resource/trade evidence remains missing. |
+| Resources | `world/resources.json` — 2 | 2 planned | `research-integrated; paused` | Broad expansion still requires a separate bounded seed and relationship/schema decision. |
+| Commodities | `world/commodities.json` — 2 | 2 planned | `research-integrated; paused` | Broader paired resource/trade evidence still requires a separate bounded decision. |
 | Items | `items/items.json` — 1,372 | 1,114 commodity, 131 tool, 35 weapon, 26 consumable, 24 accessory, 18 armor, 14 clothing, 10 vehicle | `ready-with-reference-constraints` | Marketable identities require value closure; identity does not imply instances, ownership, durability, quality, or availability. |
 | Market values | `civilization/market_item_values.json` — 1,617 | static baselines | `ready-with-reference-constraints` | No dynamic price, stock, access, or transaction authority. |
 | Consumable profiles | `items/consumable_profiles.json` — 9 | static descriptors | `ready-with-reference-constraints` | References must close; no effect execution. |
 | Weapon profiles | no live collection — 0 | schema/validator fixtures only | `requires-small-precondition` | Requires live collection and normal-lint registration before content. |
 | Armor profiles | no live collection — 0 | schema/validator fixtures only | `requires-small-precondition` | Same precondition as weapon profiles. |
-| Crafting recipes | `crafting/recipes.json` — 12 | 12 planned standard records across 8 families | `research-prerequisite; blocked` | Failed 18-row target lacked chain transformation and quantity authority. Research and integration must define revised `0.6.5`. |
+| Crafting recipes | `crafting/recipes.json` — 12 | 12 planned standard records across 8 families | `implementation-ready` | Accepted synthesis defines an exact 16-row batch, 28-record/10-family final state, explicit `bounded_design_inference`, and complete resolver quarantine. |
 | Monsters | `world/monsters.json` — 24 | 6 classes; low through severe threats | `ready-with-reference-constraints` | Reuse executable vocabulary; no unproved mechanics or lineage. |
 | Source-local monster loot | 49 drop entries and 20 loot entries; 12 monsters empty | embedded descriptors | `research-informed later` | No general loot table, rolls, ownership, payout, or dynamic generation. |
 | Fauna | `world/fauna.json` — 132 | 7 types; none through high danger | `research-informed later` | Static ecology only; no population, migration, spawning, harvesting, or output execution. |
@@ -41,7 +41,7 @@ Counts were reproduced on 2026-07-14. Normal content lint passed at 67 checked f
 | Tactics presets | `game/tactics_presets.json` — 9 | linked defaults | `ready-with-reference-constraints` | Defaults do not authorize AI execution. |
 | Knowledge domains | `player/knowledge_domain_registry.json` — 7 | 6 active; Arcane Lore planned | `ready-with-reference-constraints` | New snippets require active domains, supported subjects/sources, and live subjects. |
 | Knowledge snippets | `player/knowledge_snippets.json` — 28 | 18 General Lore plus natural/religious subjects | `expanded-and-validated` | Informational and non-granting; current `Recognizing ...` records are not recognition mechanics. |
-| Elemental vessels and magic production foundations | crystal, spell, conduit, catalyst, enchanter, and material metadata | shard/crystal/cluster tiers and static compatibility data | `research-ready; implementation-gated` | Research may classify magitech; no casting, enchanting execution, recharge execution, catalyst consumption, or free modern-equivalent technology. |
+| Elemental vessels and magic production foundations | crystal, spell, conduit, catalyst, enchanter, and material metadata | shard/crystal/cluster tiers and static compatibility data | `research-integrated; implementation-gated` | Synthesis classifies bounded candidates; no casting, enchanting execution, recharge execution, catalyst consumption, or free modern-equivalent technology. |
 | Services | `civilization/services.json` — 5 | 5 planned | `paused` | No provider, availability, price, stock, access, or effect authority. |
 
 ## 3. Static, Research, And Runtime Boundary
@@ -83,9 +83,9 @@ Major settlements use justified civic, market, production, harbor, defensive, re
 
 ## 7. Item, Material, And Recipe Strategy
 
-The failed `0.6.5` target is not executable. Preserve its blocker evidence but do not preserve its arbitrary batch count or unsupported quantities.
+The failed `0.6.5` target remains historical blocker evidence and is not executable. The accepted synthesis replaces it with an exact 16-row target.
 
-The revised package must be generated after research integration and must:
+The revised package installed in `docs/dev/current-codex-prompt.md` must:
 
 - start from the live 12-recipe baseline;
 - build dependency-closed families from outputs backward through inputs, tools, workplaces, skills, item identities, values, and optional chain relationships;
@@ -95,12 +95,15 @@ The revised package must be generated after research integration and must:
 - preserve paused resources/commodities;
 - remain planned, descriptive, and non-executable.
 
+The target removes the unsupported flour-only pastry and savory-meat-pie rows, increases recipes from 12 to 28 across 10 families, and classifies every selected integer as authored game-scale `bounded_design_inference`.
+
 ## 8. Cross-Domain Research Prerequisite
 
 Durable authorities:
 
 - `docs/design/0.6.5-research-prerequisite-and-recipe-authority-reconciliation.md`
 - `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md`
+- `docs/design/cross-domain-production-research-synthesis.md`
 
 Required order:
 
@@ -114,7 +117,7 @@ Required order:
 8. Unversioned integration
 9. Revised `0.6.5`
 
-Each gate produces one cited temporary artifact. Integration creates `docs/design/cross-domain-production-research-synthesis.md`, dispositions artifacts, resolves recipe/chain authority, and installs revised exact `0.6.5`.
+All seven gates and integration are complete. The synthesis dispositions every temporary artifact, resolves recipe/chain authority, and owns the installed revised exact `0.6.5` target.
 
 Research ordinary technology first. Magic may augment or replace modern-like functions only through explicit affinity, vessel, capacity, efficiency, stability, recharge, environment, material, skill, installation, maintenance, scarcity, cost, security, and failure constraints.
 
