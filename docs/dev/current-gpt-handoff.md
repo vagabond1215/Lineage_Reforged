@@ -70,12 +70,21 @@ Later owner-specific corrections remain separate: chain/workplace loader types, 
 
 ## Temporary Artifacts
 
-No artifact was deleted. Section 14 of the synthesis gives each exactly one named consumer and a concrete removal condition:
+No integration research/audit artifact was deleted. Section 14 of the synthesis gives each exactly one named consumer and a concrete removal condition:
 
 - Gate 1-5 and Gate 7 artifacts -> sole consumer `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 - Gate 6 and the production audit -> sole consumer revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
 
 Do not orphan, broaden consumers for, or remove these files before their conditions are met.
+
+## Future Activity Resolution Planning
+
+- `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md` is the durable planning authority for contextual automatic, condensed, decision, trial, extended-activity, and project-level resolution across gathering, crafting, Skill Trials, Knowledge, workplaces, travel, services, and bounded magic-assisted work.
+- The earlier `docs/dev/tmp-contextual-action-resolution-depth-framework-2026-07-16.md` was fully promoted and removed; no replacement temporary artifact is required.
+- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` is a future hold only. It must not replace the active revised `0.6.5` prompt or run before accepted `0.6.5`, `0.6.6`, `0.6.7`, and the Geography/recognition contract plan.
+- Live Skill Trials remain a simple progress/max-potential accumulator; Knowledge has separate completion, eligibility, and readiness foundations but no authored readiness content adapter or mutable attempt/checkpoint/outcome owner; quest action trees remain the strongest branch-grammar candidate; recipes and production chains remain static/macro authorities without player crafting execution; activity advancement remains deferred.
+- The roadmap entry that still describes `0.5.161 - Knowledge Trial Readiness Policy Schema` as `next` is stale relative to the live schema and helper. The future reuse audit must reconcile that historical sequencing without confusing already-landed schema/helper work with still-missing policy content, adapters, mutable attempt state, persistence, runtime, or UI.
+- No action-resolution schema, helper, content, runtime, UI, save, economy, inventory, crafting, gathering, Knowledge, progression, or magic behavior is authorized by these documents.
 
 ## Validation And Behavior
 
