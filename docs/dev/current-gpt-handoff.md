@@ -85,6 +85,15 @@ Do not orphan, broaden consumers for, or remove the remaining Gate 1-5 and Gate 
 - The roadmap entry that still describes `0.5.161 - Knowledge Trial Readiness Policy Schema` as `next` is stale relative to the live schema and helper. The future reuse audit must reconcile that historical sequencing without confusing already-landed schema/helper work with still-missing policy content, adapters, mutable attempt state, persistence, runtime, or UI.
 - No action-resolution schema, helper, content, runtime, UI, save, economy, inventory, crafting, gathering, Knowledge, progression, or magic behavior is authorized by these documents.
 
+## Packed Food And Provisions Planning
+
+- `docs/design/packed-food-ration-and-provisions-content-plan.md` is the durable documentation-only authority for replacing generic directly consumed ration identities with named foods and explicit provisions packs.
+- `ration_bundle`, `trail_meal`, and `traveler_ration` must not receive new direct-consumption links merely because generic nutrition profiles exist. `ration_bundle` is the strongest retain-as-container candidate because six starting bundles already reference it; `trail_meal` and `traveler_ration` require later retain/replace/retire migration decisions.
+- Named foods such as `mixed_nuts`, `preserved_fruit`, `smoked_meat`, and `smoked_fish` are the intended consumption layer. Missing identities still require exact source, item/value, recipe, profile, and regional closure rather than name-based edibility inference.
+- Standard, hearty, and luxury provisions packs must contain explicit named foods. `Hearty` indicates greater filling value and nutritional completeness; `luxury` indicates variety, quality, rarity, preparation, prestige, or value and must not automatically mean maximum nutrition.
+- A provisions pack is not edible and must not carry a `consumableProfileId`. Current item schema has no contents/opening authority, so a future bundle-profile schema/validator and engine-owned atomic open-pack inventory command are required before packs execute.
+- Active `0.6.6` remains unchanged. `0.6.7` should inspect and disposition generic ration/profile mismatches and starting-bundle implications without inventing bundle runtime, unsupported recipes, or nutrition values.
+
 ## Versioning And Milestone Guardrail
 
 - `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable authority for prospective internal version classification and the reserved `0.7.0`, `0.8.0`, `0.9.0`, and `1.0.0` entry gates.
