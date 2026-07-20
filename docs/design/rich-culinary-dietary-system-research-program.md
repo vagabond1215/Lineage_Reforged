@@ -1,7 +1,7 @@
 # Rich Culinary And Dietary System Research Program
 
-Date: 2026-07-19
-Status: active documentation-only research authority; no content, schema, runtime, UI, save, economy, or gameplay implementation permission
+Date: 2026-07-20
+Status: completed documentation-only research authority; temporary outputs require repair-and-acceptance audit before implementation
 Run classification: unversioned cross-cutting audit and research program
 Milestone impact: `supports_current_band`
 
@@ -12,6 +12,8 @@ Define a deep, evidence-backed audit and research pass for a rich flora, fauna, 
 The pass must determine what the repository already owns, what is underused, what is mislabeled or contradictory, what can be safely reused, what requires new authored authority, and what should remain abstract or omitted.
 
 The research must support a later reviewed implementation package. It must not implement that package itself.
+
+The research completed at commit `cd12ee015b11d96d93df05cc2911c7525e1133c2`. GPT/human inspection retained the narrative direction but found blocking path-index, matrix-semantics, label-class, and package-dependency defects. The active consumer is now the unversioned `Rich Culinary And Dietary Research Results Repair And Acceptance Audit` in `docs/dev/current-codex-prompt.md`.
 
 ## 2. Game Intent
 
@@ -44,9 +46,12 @@ The research must preserve these accepted decisions unless it finds a concrete c
 Primary existing authorities include:
 
 - `docs/design/packed-food-ration-and-provisions-content-plan.md`;
+- `docs/design/regional-ration-manifest-and-container-knowledge-decision.md`;
 - `docs/design/cross-domain-production-research-synthesis.md`;
 - `docs/design/internal-versioning-and-release-milestone-policy.md`;
 - current item, recipe, flora, fauna, monster, regional ecology, production, body-state, inventory, and UI owners.
+
+The focused regional-ration decision controls archetypes, geographic fulfillment, creation-time manifest resolution, contents knowledge, stacking, fresh-package posture, and corrected package ordering where it is more specific.
 
 The retained Gate 1-5 and Gate 7 temporary research artifacts remain assigned to `Version 0.6.7`. This program must not consume, delete, or broaden their artifact-disposition contract. Use the durable synthesis rather than reassigning those files.
 
@@ -206,6 +211,8 @@ Research exact content principles for:
 
 A pack should contain explicit named foods spanning authored nutritional roles. Opening remains a future inventory command, not crafting and not direct consumption.
 
+The accepted refinement now separates ration archetype, geographic fulfillment profile, resolved physical manifest, and mutable contents knowledge. Regional RNG occurs at instance creation, never opening; self-packed and fixed issue packages use explicit manifests.
+
 ### 4.10 Food safety, storage, and spoilage
 
 Audit preparation-dependent edibility, contamination, toxins, parasites, rancidity, fermentation, water quality, storage, vessel compatibility, temperature, humidity, pests, and spoilage only to the depth justified by intended gameplay.
@@ -297,9 +304,11 @@ Classify each audited identity or proposal with one primary disposition:
 
 Also record confidence as `high`, `medium`, or `low`, and provenance as `repository_fact`, `external_fact`, `bounded_design_inference`, `authored_input_required`, or `unresolved`.
 
+The active repair audit must use the vocabulary semantically: food-safety blockers precede profile readiness, existing source-output relationships must not be described as absent, and orphan profiles must not be marked ready to link without an exact retain/retire/replace decision.
+
 ## 7. Required Research Outputs
 
-The active Codex pass must create exactly these temporary research artifacts:
+The completed Codex research pass created exactly these temporary research artifacts:
 
 1. `docs/dev/tmp-rich-culinary-dietary-system-research-2026-07-19.md`
    - narrative synthesis;
@@ -326,21 +335,24 @@ The active Codex pass must create exactly these temporary research artifacts:
    - repository-source inventory with exact paths;
    - no long copyrighted quotations.
 
-The artifacts are temporary because the next pass will audit the findings before durable promotion or implementation.
+The active repair-and-acceptance audit may replace these artifacts. They remain temporary because GPT/human review must accept the repaired findings before durable promotion or implementation.
 
-## 8. Required Candidate Packages
+## 8. Candidate Package Disposition
 
-The research must recommend a bounded sequence rather than one broad implementation dump. Evaluate at least:
+The original research package sequence is historical input only. Inspection proved that generic ration reconciliation and the bundle-profile package formed a dependency cycle, and the first support-label recommendation lacked one exact parent.
 
-1. factual item/profile/taxonomy corrections;
-2. generic ration and consumable-profile reconciliation;
-3. named preserved-food and ingredient content;
-4. bounded recipe expansion;
-5. nutrition and satiety authority;
-6. bundle-profile schema and validation;
-7. open-pack inventory command;
-8. regional cuisine and food-lore content;
-9. storage, spoilage, and food-safety runtime only if justified later.
+The active audit must use the corrected order in `docs/design/regional-ration-manifest-and-container-knowledge-decision.md`:
+
+1. research results repair and acceptance;
+2. food-named taxonomy and consumable-profile integrity;
+3. provision archetype and geographic fulfillment schema;
+4. named preserved food foundation;
+5. inventory manifest, knowledge, and stack contract;
+6. ration catalog and starting-bundle migration;
+7. engine-owned open-pack command;
+8. nutrition and satiety authority;
+9. regional cuisine and food lore;
+10. deferred storage, spoilage, and food-safety runtime.
 
 For each package, state:
 
@@ -350,9 +362,10 @@ For each package, state:
 - files likely affected;
 - validation required;
 - risks and rollback boundary;
-- whether it blocks or can remain independent of queued `0.6.6`.
+- whether it blocks or can remain independent of queued `0.6.6`;
+- implementation readiness and unresolved user decisions.
 
-Do not assign a new primary version number during the research pass.
+Do not assign a new primary version number during the repair audit.
 
 ## 9. Stop Conditions
 
@@ -369,12 +382,13 @@ Stop and report rather than infer when:
 
 ## 10. Route And Artifact Disposition
 
-- This unversioned research pass temporarily precedes queued `Version 0.6.6` by explicit user direction.
+- The research pass completed at `cd12ee015b11d96d93df05cc2911c7525e1133c2` and temporarily precedes queued `Version 0.6.6` by explicit user direction.
 - `0.6.6` is paused, not canceled, and its exact previous prompt must remain recoverable.
-- After the research pass, the next action is a human/GPT audit of the three temporary artifacts.
-- No implementation prompt should be selected until that audit accepts or revises the findings.
-- After accepted audit, select the smallest coherent implementation package and classify it under the versioning policy.
-- The queued `0.6.6` route resumes after the accepted culinary package unless the audit explicitly proves a different dependency order.
+- The active next action is the unversioned repair-and-acceptance audit of the three temporary artifacts.
+- `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` is accepted input to that audit.
+- No implementation prompt should be selected until GPT/human review accepts the repaired findings.
+- After accepted review, select the smallest coherent implementation package and classify it under the versioning policy.
+- The queued `0.6.6` route resumes after the accepted culinary package unless accepted evidence proves a different dependency order.
 - The temporary artifacts may be deleted only after their accepted findings are promoted into durable authority and every selected implementation prompt has a stable source.
 
 This program changes no current content or behavior.
