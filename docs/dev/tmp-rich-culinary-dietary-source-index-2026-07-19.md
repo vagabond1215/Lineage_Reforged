@@ -197,12 +197,13 @@ Access date for web sources: 2026-07-20. External evidence is advisory: it suppo
 |---|---|
 | `README.md` | Project scope, current runtime/content posture, and validation entry points. |
 | `AGENTS.md` | Repository workflow, version labels, guardrails, output, and stop rules. |
-| `docs/dev/current-codex-prompt.md` | Exact active unversioned research scope and permitted artifacts. |
+| `docs/dev/current-codex-prompt.md` | Exact active unversioned repair-and-acceptance scope and permitted artifacts. |
 | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` | Paused `0.6.6` prompt copy; preserved, not consumed. |
-| `docs/dev/current-gpt-handoff.md` | Current route: research, results audit, smallest accepted culinary package, then restore `0.6.6`. |
-| `docs/dev/internal-versioning-and-run-labeling-policy.md` | Label-class rules used in package recommendations. |
-| `docs/design/rich-flora-fauna-culinary-nutrition-dietary-research-program.md` | Research program, domains, evidence discipline, and expected deliverables. |
-| `docs/design/packed-food-itemization-and-nutrition-semantics-plan.md` | Named food versus pack/container decision; explicit contents; no aggregate pack nutrition. |
+| `docs/dev/current-gpt-handoff.md` | Earlier route context; the active repair prompt supersedes it for this run and requires stopping for GPT/human acceptance without restoring `0.6.6`. |
+| `docs/design/internal-versioning-and-release-milestone-policy.md` | Label-class rules used in package recommendations, including exact-parent requirements for support runs. |
+| `docs/design/rich-culinary-dietary-system-research-program.md` | Research program, domains, evidence discipline, and expected deliverables. |
+| `docs/design/packed-food-ration-and-provisions-content-plan.md` | Named food versus pack/container boundary, explicit contents, and no aggregate pack nutrition. |
+| `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` | Accepted four-layer ration authority: archetype, geographic fulfillment, locked creation-time manifest, and mutable knowledge; exact knowledge and stack rules; preserved-first fulfillment; separate bulk containers; package ordering. |
 | `docs/design/cross-domain-production-research-synthesis.md` | Production-chain/workplace boundaries and non-inheriting recipe authority. |
 | `packages/content/base/items/items.json` | Canonical item identity, class, branch/subbranch, roles, tags, stage, value, and optional profile link. |
 | `packages/content/base/items/consumable_profiles.json` | Nine authored body-state input profiles and their numeric fields. |
@@ -218,10 +219,12 @@ Access date for web sources: 2026-07-20. External evidence is advisory: it suppo
 | `packages/content/base/civilization/extraction_methods.json` | Descriptive extraction-method vocabulary. |
 | `packages/content/base/civilization/services.json` | Five provider-independent service terms; no service execution or menu authority. |
 | `packages/content/base/player/skills.json` | Skill identity, including `skill.crafting.cooking`. |
-| `packages/engines/player-engine/src/body-state.ts` and `.js` | Engine-owned body-state normalization, advance, rollover, and consumable-effect application. |
+| `packages/engines/player-engine/src/body-state.ts` | TypeScript source for engine-owned body-state normalization, advance, rollover, and consumable-effect application. |
+| `packages/engines/player-engine/src/body-state.js` | Runtime JavaScript counterpart for engine-owned body-state behavior. |
 | `packages/shared/types/src/contracts.ts` | Shared body-state, inventory, and consumable-profile state contracts. |
 | `apps/rpg-ui/src/features/characterPanelState.ts` | Current UI-side inventory decrement and call into engine body-state consumption. |
-| `apps/rpg-ui/src/runtime/bodyStatePresentation.ts` and `.js` | Read-only body-state presentation and consumable preview projection. |
+| `apps/rpg-ui/src/runtime/bodyStatePresentation.ts` | TypeScript source for read-only body-state presentation and consumable preview projection. |
+| `apps/rpg-ui/src/runtime/bodyStatePresentation.js` | Runtime JavaScript counterpart for body-state presentation and consumable preview projection. |
 | `tests/unit/player-body-state.test.mjs` | Focused characterization of body-state and consumable application. |
 
 ## Evidence Use Rule
