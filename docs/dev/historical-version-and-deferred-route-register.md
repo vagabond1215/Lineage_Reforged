@@ -1,6 +1,6 @@
 # Historical Version And Deferred Route Register
 
-Date: 2026-07-19
+Date: 2026-07-20
 Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
@@ -38,8 +38,9 @@ This register is the compact query surface for historical version identity and d
 | `0.6.5` | none | Item, Material, And Recipe Static Content Expansion | Complete and validated | Added the synthesis-owned 16-row batch for 28 recipes across 10 families; resolver quarantine held and consumed temporary artifacts were removed. | `docs/dev/current-codex-output.md` |
 | GPT-DR program | no Codex primary number | Cross-Domain Natural Resources, Materials, Production, And Magitech Research | Complete | Seven accepted one-gate/one-artifact research passes; artifacts retained only under synthesis dispositions. | `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` |
 | unversioned integration | no Codex primary number | Cross-Domain Production Research Integration | Complete | Created the durable synthesis, retained artifacts with exact consumers/removal conditions, and installed revised exact `0.6.5`. | `docs/design/cross-domain-production-research-synthesis.md` |
-| unversioned 2026-07-19 research | none | Rich Flora, Fauna, Culinary, Nutrition, And Dietary Systems Audit And Research | Active | Produce three temporary research artifacts, stop for GPT/human audit, and select no implementation version or prompt. | `docs/design/rich-culinary-dietary-system-research-program.md` |
-| `0.6.6`-`0.6.7` | future repair suffix only when evidence requires | Monster/ecology/loot expansion and cross-content audit | `0.6.6` paused and recoverably held; `0.6.7` reserved | Resume exact `0.6.6` after accepted culinary research audit and smallest culinary implementation package unless dependency evidence changes the order. | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` |
+| unversioned 2026-07-19 research | none | Rich Flora, Fauna, Culinary, Nutrition, And Dietary Systems Audit And Research | Complete; repair required | Produced three temporary artifacts at `cd12ee0...`; narrative direction retained, but path, matrix, classification, and dependency defects block acceptance. | `docs/dev/current-codex-output.md` |
+| unversioned 2026-07-20 audit | none | Rich Culinary And Dietary Research Results Repair And Acceptance Audit | Active | Repair the temporary artifacts around accepted regional manifest/knowledge authority, then stop for GPT/human acceptance. | `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` |
+| `0.6.6`-`0.6.7` | future repair suffix only when evidence requires | Monster/ecology/loot expansion and cross-content audit | `0.6.6` paused and recoverably held; `0.6.7` reserved | Resume exact `0.6.6` after accepted culinary artifacts and smallest accepted culinary implementation package unless dependency evidence changes the order. | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` |
 
 ## Identity Rules
 
@@ -48,15 +49,17 @@ This register is the compact query surface for historical version identity and d
 - An absent number is not evidence of missing work. `0.5.211` is an evidenced unused gap.
 - Stale planned rows are historical chronology, not current recommendations. `0.5.357` means Runtime Ownership Transition Readiness Consolidation.
 - GPT Deep Research labels and unversioned research integration do not consume primary `0.6.x` numbers.
-- The active culinary research and its results audit are unversioned; no implementation number is assigned before accepted audit classification.
+- The culinary research and results audit are unversioned; no implementation number is assigned before repaired-artifact acceptance.
+- A support suffix must name exactly one primary parent; `nearest accepted authority` is not a valid parent.
 
 ## Deferred Route Register
 
 | Lane | Classification | Completed foundation | Missing layer | Reopening trigger | Near-term posture | Primary source |
 | --- | --- | --- | --- | --- | --- | --- |
 | Static world and settlement content | expanded-and-validated | Accepted `0.6.4`: 12 districts, 18 sites, 6 semantic features, and 12 General Lore snippets added | None for accepted package | Complete at `44dfb0a...` | Completed and accepted | `docs/design/static-content-expansion-program.md` |
-| Static item, material, and recipe content | expanded-and-validated | 28 planned standard recipes across 10 families with complete static closure | No missing layer for accepted `0.6.5`; broader culinary depth is a separate research lane | Complete on 2026-07-19 | Preserve non-inheritance; do not restore failed pastry/meat-pie rows | `docs/design/cross-domain-production-research-synthesis.md` |
-| Rich culinary and dietary system | active research gate | Packed-food/provisions decision, current consumable profiles, items, recipes, flora/fauna outputs, body-state consumption, and cross-domain synthesis | Deep ingredient/edibility audit, nutrition/satiety model, naming rules, regional cuisine, safety/storage depth, owner map, and bounded package sequence | Explicit user direction on 2026-07-19 | Active unversioned Codex research; stop for GPT/human results audit | `docs/design/rich-culinary-dietary-system-research-program.md` |
+| Static item, material, and recipe content | expanded-and-validated | 28 planned standard recipes across 10 families with complete static closure | No missing layer for accepted `0.6.5`; broader culinary depth is a separate lane | Complete on 2026-07-19 | Preserve non-inheritance; do not restore failed pastry/meat-pie rows | `docs/design/cross-domain-production-research-synthesis.md` |
+| Rich culinary and dietary system | active repair-and-acceptance gate | Completed research artifacts; packed-food authority; accepted archetype/fulfillment/manifest/knowledge decision | Corrected paths, semantic dispositions, acyclic package order, valid label class, and GPT/human acceptance | Inspection findings plus user decisions on 2026-07-20 | Active unversioned Codex audit; no implementation prompt yet | `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` |
+| Regional ration manifests and container knowledge | accepted design authority; not implemented | Four-layer archetype/profile/manifest/knowledge model; creation-time RNG rule; fixed self-packed manifests; stack boundary | Static schema, canonical geography mapping, inventory instance owner, deterministic generation/opening, UI/save behavior | Accepted repaired research and owner-specific implementation prompt | Preserve as design input; no source changes | `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` |
 | Cross-domain sources, materials, production, and magitech research | complete; artifacts dispositioned | Items, values, flora, fauna, monsters, ecology, recipes, chains, tools, workplaces, crystals, spells, and magic infrastructure foundations | Durable synthesis and later owner-specific routes | Seven gates and integration accepted | Support accepted owners only through named consumers | `docs/design/cross-domain-production-research-synthesis.md` |
 | Static monster, ecology, and loot content | implementation-ready; paused | Monster/fauna/ecology/role/tactics authorities and source-local loot validation | Exact nine-monster, nine-lineage, nine-regional-ecology batch | Accepted culinary package or explicit dependency reorder | Exact `0.6.6` prompt held by commit/blob; do not regenerate | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` |
 | Cross-content coherence | maturity gate | Normal content lint and focused validators | Audit of completed static packages and research-informed relations | `0.6.6` acceptance | Planned as `0.6.7` | `docs/design/static-content-expansion-program.md` |
