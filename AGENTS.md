@@ -10,24 +10,34 @@
 
 ## Version And Run Labels
 
-- Use `Version X.Y.Z - Short Name` for Codex workflow labels. Do not use old `Step N` labels for new work.
-- Each Codex prompt should include a version label when it is part of the ongoing workflow.
-- Internal workflow versions are development maturity markers, not public game release versions.
+- Use `Version X.Y.Z - Short Name` for primary Codex workflow labels. Do not use old `Step N` labels for new work.
+- Use `Version X.Y.Z.S - Short Name` only for a support run attached to exactly one primary version, where `S` is the support-run counter.
+- Use a stable unversioned run name for cross-cutting research, coordination, source indexing, held planning, or read-only work that does not itself advance a primary capability and is not narrowly attached to one primary.
+- Each Codex prompt should include a version label when it is part of the ongoing primary or support workflow.
+- Internal workflow versions are development maturity markers, not public game release versions, package versions, save-format versions, protocol versions, or compatibility promises.
+- `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable detailed authority for label classification, maturity-band entry, and the reserved `0.7.0`, `0.8.0`, `0.9.0`, and `1.0.0` gates.
 - Patch numbers may be multi-digit, such as `Version 0.5.10 - Workflow Baseline Review`; do not roll from `v0.5.9` to `v0.6.0` automatically.
-- Minor-band advancement means project maturity has changed, not that the patch count reached 9.
-- Patch versions advance for scoped audits, implementations, cleanup, docs, validation, or handoff runs within the same maturity band.
-- Advance to a new minor band only when the project enters the next maturity phase described below:
+- Minor-band advancement means project maturity has changed, not that the patch count reached 9, 99, or any other visual threshold.
+- A three-segment primary version is appropriate only when a run materially adds, changes, activates, or closes a durable capability or authority within the current maturity band.
+- Routine audits, retries, repairs, validation, parent-specific clarification, and parent-required cleanup should use a four-segment suffix rather than consuming another primary number.
+- Broad research, coordination, and future-system planning should remain unversioned unless the document itself is the required durable decision that materially advances the active capability sequence.
+- Advance to a new minor band only after a docs-first readiness audit proves every criterion for that band and records an explicit accepted decision. If the gate is not accepted, continue the current band with later patch numbers.
+- Before assigning any new run, classify it in this order: new-band entry, current-band primary capability, parent-specific support suffix, or unversioned work. When uncertain, choose the less maturity-significant label.
+- Do not mass-renumber accepted historical versions. Apply the stricter classification prospectively and record historical anomalies rather than rewriting shared history.
+- Current maturity bands:
   - `v0.1.x`: repository scaffold, workspace conventions, schemas, and first canonical content foundations.
   - `v0.2.x`: player identity, clean save/load behavior, creator/start-state, and core local UI flow foundations.
   - `v0.3.x`: world, civilization, economy, reputation foundations, and stricter content validation.
   - `v0.4.x`: account, Legacy, Chronicle, progression, and local persistence foundations.
   - `v0.5.x`: foundation stabilization, including metadata guardrails, branding alignment, workflow rules, repo hygiene, generated/log/temp cleanup, and validation hardening.
-  - `v0.6.x`: runtime ownership transition, replacing UI-authored or demo command handling with engine-owned commands, tick/event output, and authoritative session updates.
-  - `v0.7.x`: integrated gameplay systems interacting through stable shared contracts.
-  - `v0.8.x`: pre-alpha vertical-slice hardening, narrow content completeness, balancing, and regression coverage.
-  - `v0.9.x`: alpha-readiness stabilization, current-data policy, known limitations, packaging/launch flow, clean save/load reliability, and release-candidate QA.
+  - `v0.6.x`: runtime ownership transition and its dependency-closure work, replacing UI-authored or demo command handling with engine-owned commands, tick/event output, authoritative session updates, and the bounded static/content prerequisites needed for later integration.
+  - `v0.7.x`: integrated gameplay systems interacting through stable shared contracts. Entry requires an accepted engine-owned gameplay loop with authoritative advancement/results, persistence, typed cross-system consequences, accepted-only UI application, and representative integration tests.
+  - `v0.8.x`: pre-alpha vertical-slice hardening. Entry requires one repeatable end-to-end slice with its agreed gameplay systems, content, UI/accessibility posture, balance baseline, regression coverage, and reliable save/load.
+  - `v0.9.x`: alpha-readiness stabilization. Entry requires the agreed alpha scope, packaging/launch and diagnostic posture, performance budgets, repeated external-play readiness, reliable current-data saves, explicit known limitations, and no ordinary-use critical blocker.
+  - `v1.0.0`: accepted public-release milestone. Entry requires completed or explicitly cut launch scope, integrated launch-critical owners, release-candidate QA, stable saves and packaging, accessibility and performance acceptance, user-facing release/support material, and explicit release approval.
+- Static content, isolated schemas, pure helpers, read-only projections, selection-only commands, or documentation volume do not independently justify promotion to `0.7.0` or a later milestone.
 - Use later `v0.8.x` labels only when a narrow playable path is being stabilized as a pre-alpha slice.
-- Reserve alpha readiness until a playable, validated vertical slice has engine-owned runtime behavior, stable save/load, and explicit known limits.
+- Reserve `v0.9.x` until sustained alpha testing is viable; reserve `1.0.0` until release-readiness acceptance is recorded.
 - Platform/tool recommendations belong outside and before copy-paste prompt bodies, not inside the prompt itself.
 - Accepted platform/tool labels:
   - ChatGPT via GitHub Connector
@@ -45,6 +55,9 @@
   - source version/run
   - date
   - branch/status assumption
+  - label class: primary, support suffix, or unversioned
+  - parent version when the run is a support suffix
+  - milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`
   - files changed
   - checks run
   - suggested commit message
@@ -142,6 +155,9 @@ Treat these as high-risk and require narrow scope plus focused validation:
 Source version/run:
 Date:
 Branch/status assumption:
+Label class:
+Parent version, when applicable:
+Milestone impact:
 
 ## Result
 Short result summary.
