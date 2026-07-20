@@ -70,7 +70,7 @@
 - State the platform/tool label outside and before the copy-paste prompt.
 - [docs/dev/current-codex-prompt.md](docs/dev/current-codex-prompt.md) stores the authoritative active prompt body and should not include the platform/tool/mode line.
 - When GPT generates, advances, or revises the next Codex prompt, it must update `docs/dev/current-codex-prompt.md`, fetch the file to verify the write, and give the selected platform/tool/mode line directly in chat.
-- For the active unversioned `Rich Culinary And Dietary Research Results Repair And Acceptance Audit` run, the chat mode line is `Codex 5.6 Sol Local High.`
+- For the active unversioned `Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit` run, the chat mode line is `Codex 5.6 Sol Local High.`
 - Do not include phrases like "I have included necessary files" unless the user must manually attach, move, upload, or provide files for that run.
 - Tell the user explicitly when they should include files, move files, upload files, pull/sync/push, or otherwise change files manually before running a prompt.
 - If no manual file action is needed, omit file-inclusion language entirely.
@@ -78,23 +78,3 @@
 ## Development Discipline
 
 - Prefer the smallest coherent patch that solves the requested task.
-- Preserve unrelated worktree changes.
-- Use read-only audits before broad edits.
-- Do not mix cleanup, feature work, rename work, and system design in one run unless explicitly requested.
-- Do not refactor unrelated systems.
-- Skip uncertain changes instead of guessing.
-- Until explicitly requested, this pre-release project should not plan or implement backwards compatibility. Do not add old-save preservation, old-account preservation, migration aliases, retired-id compatibility, converted-id compatibility, historical id preservation, or migration-only behavior unless the user explicitly asks for compatibility work.
-- Update `README.md`, `docs/future_content_backlog.md`, changelogs, `AGENTS.md`, or `.gitignore` only when relevant to the current change.
-- If generated or vendor artifacts appear tracked, flag them rather than editing them unless explicitly asked.
-
-## High-Risk Areas
-
-Treat these as high-risk and require narrow scope plus focused validation:
-
-- combat math and stat scaling
-- progression and rank-gate math
-- economy and trade simulation
-- magic runtime behavior
-- save/account schema
-- Legacy, account, preparation, and payout behavior
-- generated/vendor artifacts
