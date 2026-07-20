@@ -1,90 +1,54 @@
 # Current Codex Output
 
-Source version/run: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
-Date: 2026-07-19
-Branch/status assumption: `master`; clean at starting commit `b8262c87308601b98e27965ab1585d430c1771da`, then required fetch/pull fast-forwarded to `80eb3bea72236d47b301a3dea0b4649081e1aed2` before authoring; no unrelated local changes were present.
+Source version/run: unversioned `Rich Flora, Fauna, Culinary, Nutrition, And Dietary Systems Audit And Research`
+Date: 2026-07-20
+Branch/status assumption: `master`; starting commit `6d99e96474bf8a74ae54f80701c15be0c76dc9e1`; clean at start; fetch/pull up to date
+Run metadata: parent `none`; milestone impact `supports_current_band`
 
 ## Result
 
-Completed the exact synthesis-owned recipe expansion. Added 16 planned standard recipes, increasing the live catalog from 12 to 28 records and represented families from 8 to 10 by adding `cooperage` and `forging`.
+Completed the documentation-only culinary research pass. The fresh census found 1,372 items, 190 food/beverage-or-ingredient-role audit items, nine consumable profiles with five live links, 28 recipes with five food-adjacent transformations, 103 prepared-state foodish items, 117 flora, 132 fauna, 24 monsters, nine regional ecology profiles, and six of seven starting bundles containing one `ration_bundle`.
 
-Exact added ids:
+The principal factual defects are three food-named sausage identities classified as lighting/stationery, four semantically invalid or container-scaled consumable-profile links, and four orphan profiles. Ninety-nine prepared-state foodish identities lack a recipe producer. The report recommends a moderate explicit portion/fullness model, named-food pack contents with no aggregate pack nutrition, and no spoilage runtime until inventory-instance time/storage ownership exists.
 
-- `recipe.flax_bundle_to_linen_thread`
-- `recipe.wool_fleece_to_yarn`
-- `recipe.yarn_to_wool_cloth`
-- `recipe.linen_thread_to_fine_cloth`
-- `recipe.flour_to_bread_dough`
-- `recipe.fish_raw_and_salt_crystal_to_smoked_fish`
-- `recipe.plank_to_barrel_stave`
-- `recipe.barrel_stave_metal_ring_and_resin_pitch_to_cask`
-- `recipe.copper_ore_to_copper_ingot`
-- `recipe.copper_ore_and_tin_ore_to_bronze_ingot`
-- `recipe.iron_ingot_to_metal_plate`
-- `recipe.iron_ingot_to_blade_blank`
-- `recipe.blade_blank_tool_handle_and_leather_strap_to_arming_sword`
-- `recipe.cured_leather_to_leather_strap`
-- `recipe.cured_leather_to_hardened_leather_panel`
-- `recipe.metal_ring_and_leather_strap_to_mail_coif`
+External evidence quality is high for the distinctions used: official FAO/WHO/USDA/FDA/EFSA sources, peer-reviewed satiety reviews/trials, Kew/FishBase methodology, and museum/university historical syntheses. Limitations and non-canon posture are recorded per source.
 
-All 16 match the exact input/output quantities and roles, workplace, tools, skill/rank, and optional chain relationships in synthesis Section 13. Every integer is explicitly recorded as authored game-scale `bounded_design_inference`; no historical yield, runtime balance formula, or chain-derived ratio is claimed.
-
-Final inventory: 1,372 items (24 accessory, 18 armor, 14 clothing, 1,114 commodity, 26 consumable, 131 tool, 10 vehicle, 35 weapon); 1,617 unique market-value keys; 9 consumable profiles; no live weapon/armor profile collections; 28 planned standard recipes across 10 families; 58 workplaces; 121 skills; 121 production chains; 2 planned resources; and 2 planned commodities.
-
-Exact target, duplicate id/slug, direct no-op, same-role duplication, positive-integer, exactly-one-primary, and item/value/tool/workplace/skill/chain closure audits reported zero issues. Resources and commodities remained byte-identical at SHA-256 `7D9E306F70B3CBC5CE0E55537117D8AA36FF44698FAC4A8E4334B6AFBE4D5CB6` and `60C2CB6DF3B9A46048156559E774A0C6A5170853BB8F94206AF6F9CE17A3685B`.
-
-No resolver, chain fallback, workplace I/O, candidate ordering, variant, stage/carry, value, price, job/tier/progression, fuel/power, or runtime field was consumed. `relatedProductionChainId` remains descriptive, existence-checked, and non-inheriting.
-
-The Gate 6 research artifact and production-authority audit reached their sole-consumer removal conditions and were removed. Remaining owner-specific chain/workplace type, topology, semantic-validation, resolver-test, economy-documentation, Stonevein-placement, and transport-baseline work remains durably routed. Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
-
-Installed the exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt with a nine-region, nine-fauna-lineage monster matrix, exact source-local drop closure, current combat/action vocabulary only, and explicit runtime/gameplay prohibitions. The Geography/recognition plan remains immediately after `0.6.7`; the activity-resolution reuse audit remains behind that plan.
+Selected first recommendation for the later results audit: `Food-Named Taxonomy And Consumable Profile Link Integrity`, limited to the proven taxonomy/profile-link defects and focused guards. No implementation prompt or version number was installed. Held `0.6.6` remains paused and unchanged.
 
 ## Files Changed
 
-- `packages/content/base/crafting/recipes.json`
-- `tests/unit/crafting-recipes-validation.test.mjs`
+- `docs/dev/tmp-rich-culinary-dietary-system-research-2026-07-19.md`
+- `docs/dev/tmp-rich-culinary-dietary-audit-matrix-2026-07-19.json`
+- `docs/dev/tmp-rich-culinary-dietary-source-index-2026-07-19.md`
 - `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/current-codex-prompt.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/future_content_backlog.md`
-- `docs/design/static-content-expansion-program.md`
-- `docs/design/cross-domain-production-research-synthesis.md`
-- removed `docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md`
-- removed `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md`
 
 ## Checks Run
 
-- Required `git fetch` and `git pull --ff-only`; fast-forwarded cleanly before authoring.
-- Reproduced baseline and final inventories plus item-class, recipe-family, role, quantity, reference, and value closure.
-- `npm.cmd run tool:content-lint` — passed, 67 files checked.
-- `node --test tests/unit/crafting-recipes-validation.test.mjs tests/unit/equipment-profiles-validation.test.mjs tests/unit/resource-commodity-authority-validation.test.mjs tests/unit/schema-files.test.mjs` — passed, 310/310.
-- Exact-target/invariant/reference audit — passed with `AUDIT_ISSUES=0`.
-- Resource/commodity byte-identity hashes — unchanged.
-- Conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-diff review — passed.
-
-No builds, typechecks, package installation, servers, generators, or full test suite were run.
+- Confirmed exact held `0.6.6` recovery blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` from source commit `6394443f1628d9053b3417e926e581b7a444386c`.
+- Parsed all audited repository JSON inputs during matrix generation.
+- Strict matrix JSON parse — passed.
+- Matrix stable-shape/enums — passed for 575 records and nine candidate packages.
+- Matrix summary-count reconciliation — passed; entity-type and disposition totals match row data.
+- Repository id/key/path and candidate live-path verification — passed; future paths are explicitly prefixed `future:`.
+- Markdown local-link verification — passed.
+- Conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-artifact review — passed.
+- No builds, typechecks, dependency installs, servers, generators, content lint, or automated test suites were run, per prompt.
 
 ## Behavior / Runtime Confirmation
 
-Static planned recipe content and its focused validation expectations changed. Crafting availability/execution, input consumption, output creation, production-chain behavior, inventory, economy, equipment profiles, resources, commodities, combat, ecology, medicine, magic, Knowledge/recognition, runtime, UI, commands, events, saves, migrations, dependencies, assets, and gameplay did not change.
+Documentation and research artifacts only. No content, schema, validator, test, runtime, UI, save, account, economy, magic, asset, dependency, generated-output, recipe, item, profile, flora, fauna, monster, ecology, starting-bundle, service, workplace, or gameplay behavior changed.
 
 ## Risks / Follow-Up
 
-- The new quantities are deliberate structural batch units but are not executable crafting balance authority.
-- Production-chain/workplace resolver corrections remain separate owner-specific work and must not be inferred from these recipes.
-- `0.6.6` must remain static and source-local; it must stop if any exact fauna/ecology/role/tactics/action/item/value reference has drifted.
-- `0.6.7` owns the remaining six research-artifact disposition decision and cross-content coherence audit.
+- The later results audit must decide exact taxonomy targets and whether bad profile links are removed or relinked; this research does not authorize either action.
+- Edibility, toxicity, dietary restrictions, regional cuisine, recipe quantities, nutrition weights, pack contents, and spoilage remain authored or design inputs, not facts inferred by this run.
+- `Version 0.6.6` remains paused, not canceled. Do not consume or rewrite its held prompt.
+- Next run must be the unversioned `Rich Culinary And Dietary Research Results Audit`; it should audit these artifacts before any implementation prompt is written.
 
 ## Next Recommended Version
 
-`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-
-Mode: `Codex 5.6 Sol Local High.`
+Unversioned `Rich Culinary And Dietary Research Results Audit`
 
 ## Suggested Commit Message
 
-`content(crafting): add research-informed planned recipes`
+`docs(food): research rich culinary and dietary systems`
