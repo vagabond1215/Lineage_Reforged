@@ -70,7 +70,7 @@
 - State the platform/tool label outside and before the copy-paste prompt.
 - [docs/dev/current-codex-prompt.md](docs/dev/current-codex-prompt.md) stores the authoritative active prompt body and should not include the platform/tool/mode line.
 - When GPT generates, advances, or revises the next Codex prompt, it must update `docs/dev/current-codex-prompt.md`, fetch the file to verify the write, and give the selected platform/tool/mode line directly in chat.
-- For the active unversioned `Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit` run, the chat mode line is `Codex 5.6 Sol Local High.`
+- For the active unversioned `Culinary Integration Results Repair And Contract Acceptance Audit` run, the chat mode line is `Codex 5.6 Sol Local High.`
 - Do not include phrases like "I have included necessary files" unless the user must manually attach, move, upload, or provide files for that run.
 - Tell the user explicitly when they should include files, move files, upload files, pull/sync/push, or otherwise change files manually before running a prompt.
 - If no manual file action is needed, omit file-inclusion language entirely.
