@@ -3,135 +3,195 @@
 ## Status
 
 - The unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration` is complete and accepted as documentation only.
-- All seven dated research artifacts and `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md` were reconciled against live repository authority.
-- `docs/design/cross-domain-production-research-synthesis.md` is the durable integration authority.
+- `docs/design/cross-domain-production-research-synthesis.md` remains the durable integration authority for that program.
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is complete and validated: 16 exact planned standard recipes were added with resolver quarantine intact.
-- The unversioned `Rich Flora, Fauna, Culinary, Nutrition, And Dietary Systems Audit And Research` completed at commit `cd12ee015b11d96d93df05cc2911c7525e1133c2` and produced the three required temporary artifacts.
-- GPT/human inspection conditionally accepted the narrative but rejected the source-index verification, several matrix dispositions, the vague support-label recommendation, and the circular ration/bundle sequence.
-- `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` is the accepted focused authority for ration archetypes, geographic fulfillment, creation-time manifest resolution, contents knowledge, stacking, and corrected package order.
-- The unversioned `Rich Culinary And Dietary Research Results Repair And Acceptance Audit` is active in `docs/dev/current-codex-prompt.md`.
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled. Restore its exact prior prompt only after the repaired culinary artifacts are accepted and the smallest accepted culinary implementation package is complete, unless accepted evidence changes the order.
+- The unversioned `Rich Flora, Fauna, Culinary, Nutrition, And Dietary Systems Audit And Research` completed at commit `cd12ee015b11d96d93df05cc2911c7525e1133c2`.
+- The unversioned `Rich Culinary And Dietary Research Results Repair And Acceptance Audit` completed at commit `9b73c80e5fc28b3f0951a0d308c0f693ce1493c5`. GPT/human inspection accepts its repaired paths, matrix semantics, ration architecture, and acyclic package order as documentation input.
+- `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` remains the focused authority for ration archetypes, geographic fulfillment, creation-time manifests, contents knowledge, and base pack behavior.
+- `docs/design/culinary-preparation-portion-meal-composition-and-food-knowledge-decision.md` is the newer controlling authority for preparation/readiness/preservation axes, portions, meal composition, physical containers, variety morale, heterogeneous unknown display groups, fraud/inspection, nutrition, and historical food-safety direction.
+- The unversioned `Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit` is active in `docs/dev/current-codex-prompt.md`.
+- The earlier narrow food-taxonomy/profile correction is not automatically implementation-ready. Sausage and comparable items require an accepted preparation/readiness model rather than a branch-only rename.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and exactly recoverable from its held prompt.
 
 ## Integration Baseline
 
-- `0.6.5` starting state: `b8262c87308601b98e27965ab1585d430c1771da`, `master`, clean before required fetch/pull; fast-forwarded to `80eb3bea72236d47b301a3dea0b4649081e1aed2` before authoring.
 - Items: 1,372 = 24 accessory, 18 armor, 14 clothing, 1,114 commodity, 26 consumable, 131 tool, 10 vehicle, 35 weapon.
 - Market values: 1,617 unique keys; all 1,372 item keys plus 245 market-only biological identities.
-- Recipes: 28 planned standard records across 10 families; no runtime consumer.
+- Recipes: 28 planned standard records across 10 families; no player crafting runtime consumer.
 - Production capability: 58 workplaces, 121 production chains, 121 skills, 22 extraction methods.
 - Ecology: 117 flora, 132 fauna, 24 monsters, 93 habitats, 36 biomes, 9 regional ecology profiles, 56 minerals.
-- Source-local monster loot: 49 drop rows / 37 unique item keys and 20 loot rows / 6 unique keys; no executable loot generator.
-- Resources/commodities: 2/2 planned and paused.
-- Knowledge: 7 registry rows (6 active, Arcane Lore planned), 4 legacy domain records, 28 snippets.
-- Magic: 27 vessels across nine affinities/three tiers, 55 spells (23 ready / 5 partial / 27 deferred), 7 conduit profiles, 3 catalyst profiles, 4 magic-service records, and 7 mundane infrastructure records.
-- Institution probe remains 88 settlement profiles, 264 reserve rows, and 352 service rows; it projects availability/charge only.
+- Knowledge: 7 registry rows, 4 legacy domain records, and 28 snippets.
+- Difficulty: live `easy`, `normal`, `hard`, and `brutal` tiers plus `hardcore`; current modifiers cover stat growth, progression, body state, recovery, starvation/dehydration escalation, and prestige, but no accepted nutrition/fraud toggles yet.
+- Item/inventory authority preserves canonical static items and separate consumable profiles. Runtime/save owns bags, stacks, overflow, quantities, equipped refs, optional durability, and wallets; no mature general item-instance or container-template authority exists.
 
 ## Completed 0.6.5 Package
 
-Added exactly 16 planned standard recipes, taking the catalog from 12 to 28 and represented families from 8 to 10 by adding `cooperage` and `forging`:
+The accepted package added exactly 16 planned standard recipes, taking the catalog from 12 to 28 and represented families from 8 to 10 by adding `cooperage` and `forging`.
 
-- `recipe.flax_bundle_to_linen_thread`
-- `recipe.wool_fleece_to_yarn`
-- `recipe.yarn_to_wool_cloth`
-- `recipe.linen_thread_to_fine_cloth`
-- `recipe.flour_to_bread_dough`
-- `recipe.fish_raw_and_salt_crystal_to_smoked_fish`
-- `recipe.plank_to_barrel_stave`
-- `recipe.barrel_stave_metal_ring_and_resin_pitch_to_cask`
-- `recipe.copper_ore_to_copper_ingot`
-- `recipe.copper_ore_and_tin_ore_to_bronze_ingot`
-- `recipe.iron_ingot_to_metal_plate`
-- `recipe.iron_ingot_to_blade_blank`
-- `recipe.blade_blank_tool_handle_and_leather_strap_to_arming_sword`
-- `recipe.cured_leather_to_leather_strap`
-- `recipe.cured_leather_to_hardened_leather_panel`
-- `recipe.metal_ring_and_leather_strap_to_mail_coif`
+Recipes own complete explicit bounded transformations. Production chains own broad macro/economic context. `relatedProductionChainId` is optional, descriptive, existence-checked, and non-inheriting.
 
-Every exact input/output quantity, role, workplace, tool, skill/rank, optional chain, evidence note, and classification matches Section 13 of the synthesis. Every integer remains authored game-scale `bounded_design_inference`, not a historical yield, runtime balance formula, placeholder, or chain-derived ratio.
+Current recipe input/output quantities are authored positive integers. They are not historical yields, physical unit conversions, runtime balance formulas, or proof of serving/mass/volume semantics.
 
-The earlier flour-only pastry and savory-meat-pie rows are removed. Do not restore, replace, or partially author them. The meat-pie relationship remains `authored_input_blocked`.
+## Accepted Culinary Research Repair
 
-## Recipe And Production Authority
+The repair audit:
 
-- Recipes own complete explicit bounded transformations.
-- Production chains own broad macro/economic context.
-- `relatedProductionChainId` is optional, descriptive, existence-checked, and non-inheriting.
-- Audit decision `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5` held through implementation; no quarantined field was consumed.
+- corrected the three false repository paths;
+- preserved 239 explicit biological source-output relationships;
+- moved 377 safety-unknown rows to food-safety authority as their first blocker;
+- deferred all four orphan consumable profiles pending exact disposition;
+- classified the 99 prepared identities as topology rather than an automatic recipe backlog;
+- incorporated the four-layer ration/manifest/knowledge model;
+- replaced the circular package route with an acyclic sequence;
+- remained within its four-file documentation-only allowance.
 
-The accepted `0.6.5` records derive no field or admission decision from chain/workplace input/output fallback, target fallback, variants, stage/carry behavior, last-step output, workplace I/O, job/tier/progression/upgrades, tool tags, fuel/power modes, candidate ordering, resolver value, market price, labor association, or `resolveCraftAtSettlement`.
-
-Later owner-specific corrections remain separate: chain/workplace loader types, topology/semantic validation, resolver branch tests, economy documentation, Stonevein placement, and transport baseline diagnosis.
-
-## Technology And Magic Guardrails
-
-- Ordinary tools, labor, materials, energy, housing, environmental needs, maintenance, inspection, waste, and fallback remain primary.
-- Source, part, harvested form, material state, product, value, recipe, chain, workplace, item instance, and runtime action remain separate owners.
-- Magic must name an exact physical effect, affinity, finite vessel, recharge, mundane housing/transmission, operator/provider, access, maintenance/failure, scale/scarcity, and ordinary fallback.
-- Creation, free matter/energy/fuel, perpetual recharge, unlimited cooling/purification/motive power/transport/communication, modern-grid inference, and generic tag-driven execution remain rejected.
-- Stone crystal ids and earth spell/combat terms are one owner-translated affinity, not duplicate families.
-- Utility preservation versus ice eligibility remains an unresolved collision question; do not edit or infer either side.
-
-## Temporary Artifacts
-
-Section 14 of the synthesis gives each research/audit artifact exactly one named consumer and a concrete removal condition:
-
-- Gate 1-5 and Gate 7 artifacts -> sole consumer `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Gate 6 and the production audit were consumed by accepted `0.6.5` and removed after resolver quarantine and durable follow-up routing were verified.
-
-Do not orphan, broaden consumers for, or remove the remaining Gate 1-5 and Gate 7 files before `0.6.7` checks their conditions.
-
-The completed culinary research created:
+The repaired temporary artifacts remain inputs, not implementation authority:
 
 - `docs/dev/tmp-rich-culinary-dietary-system-research-2026-07-19.md`;
 - `docs/dev/tmp-rich-culinary-dietary-audit-matrix-2026-07-19.json`;
 - `docs/dev/tmp-rich-culinary-dietary-source-index-2026-07-19.md`.
 
-The active repair-and-acceptance audit may replace only those three artifacts and `docs/dev/current-codex-output.md`. They remain temporary until GPT/human review accepts the repaired findings and promotes selected conclusions into durable authority.
+## Expanded Culinary Decisions
 
-## Future Activity Resolution Planning
+### Food state and naming
 
-- `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md` is the durable planning authority for contextual automatic, condensed, decision, trial, extended-activity, and project-level resolution across gathering, crafting, Skill Trials, Knowledge, workplaces, travel, services, and bounded magic-assisted work.
-- The earlier `docs/dev/tmp-contextual-action-resolution-depth-framework-2026-07-16.md` was fully promoted and removed; no replacement temporary artifact is required.
-- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` is a future hold only. It must not replace the culinary audit prompt or run before the culinary route, accepted `0.6.6`, `0.6.7`, and the Geography/recognition contract plan.
-- Live Skill Trials remain a simple progress/max-potential accumulator; Knowledge has separate completion, eligibility, and readiness foundations but no authored readiness content adapter or mutable attempt/checkpoint/outcome owner; quest action trees remain the strongest branch-grammar candidate; recipes and production chains remain static/macro authorities without player crafting execution; activity advancement remains deferred.
-- The roadmap entry that still describes `0.5.161 - Knowledge Trial Readiness Policy Schema` as `next` is stale relative to the live schema and helper. The future reuse audit must reconcile that historical sequencing without confusing already-landed schema/helper work with still-missing policy content, adapters, mutable attempt state, persistence, runtime, or UI.
-- No action-resolution schema, helper, content, runtime, UI, save, economy, inventory, crafting, gathering, Knowledge, progression, or magic behavior is authorized by these documents.
+- Food identity must use orthogonal readiness, preparation-method, preservation-effect, safety/risk, and display-name concepts.
+- Do not reduce food to one mutually exclusive `raw/cooked/preserved` branch.
+- Smoking may cook and preserve. Canning/jarring may use heat, produce ready-to-eat food, and preserve. Drying may preserve without cooking.
+- `isPreserved` should be derived or validated from process/method authority rather than used as a lone manually authored truth.
+- Character-facing names should explicitly use authored state/technique terms such as Raw, Uncooked, Cooked, Smoked, Boiled, Baked, Poached, Fried, Steamed, and specialty descriptors such as Applewood-Smoked.
+- Mechanical meaning must not be parsed from names.
 
-## Packed Food, Regional Rations, And Manifest Planning
+### Rations and provisions
 
-- `docs/design/packed-food-ration-and-provisions-content-plan.md` remains the broad authority for replacing generic directly consumed ration identities with named foods and openable provisions packs.
-- `docs/design/regional-ration-manifest-and-container-knowledge-decision.md` is the focused refinement and controls where more specific.
-- A pack has four layers: global ration archetype, geographic/institutional fulfillment profile, resolved physical manifest, and mutable contents-knowledge state.
-- Small/medium/large describe serving or package capacity, not quality. Composition families may include fruit, fruit-and-nut, preserved protein, mixed, meal provisions, hearty provisions, and luxury provisions without requiring every permutation.
-- Regional variants normally share one character-facing primary name while origin remains visible in provenance or inspection detail.
-- Regional RNG, when authorized, resolves once when the pack instance enters the world or ownership graph. Opening-time RNG is rejected. Self-packed, fixed starting, and standard issue packages use explicit manifests.
-- The actual manifest always exists independently of character knowledge. Minimum candidate states are `unknown`, `category_known`, and `manifest_known`; this is mutable instance state, not a static item tag.
-- Stack compatibility must account for manifest/origin/knowledge/seal differences or prohibit merging when per-unit metadata is unavailable.
-- Packs remain non-edible and own no aggregate nutrition. Bulk storage remains semantically separate from personal rations. Persistent `fresh` claims remain deferred until freshness/storage ownership exists.
+- A ration is a relatively small portable package intended for personal use or carriage.
+- Provisional accepted meaning: a small ration is one meal for one person.
+- Medium, large, and possible extra-large meanings require historical calorie and provisioning research.
+- Future archetypes must state eater count, meal/day coverage, and bounded energy/portion band rather than relying on size adjectives alone.
+- Provisions are bulk supplies. Prefer concrete names such as sacks of grain, crates of fish, baskets of fruit, barrels of meat, and casks of drink.
+- A provisions crate may contain personal rations but is not itself a personal ration.
 
-## Active Culinary Results Audit Route
+### Quantity and portions
 
-- The completed research census found 1,372 items, 190 food/beverage-or-ingredient-role audit items, 9 consumable profiles with 5 links, 28 recipes with 5 food-adjacent transformations, and 103 prepared-state foodish identities.
-- Inspection accepted the research direction but identified incorrect repository paths, unsafe/simplistic matrix classifications, orphan profiles marked too ready, a vague parentless support recommendation, and a ration/bundle dependency cycle.
-- The active audit must correct those defects and incorporate the accepted manifest/knowledge decision without changing source content.
-- The corrected package order begins with results repair, then factual taxonomy/profile integrity, static archetype/fulfillment authority, named preserved foods, inventory manifest/knowledge/stack contract, ration migration, open-pack command, nutrition/satiety, regional cuisine, and deferred spoilage.
-- The audit must not install an implementation prompt or assign an implementation number. After completion, GPT/human review will decide acceptance and the smallest later implementation package.
-- After the accepted culinary implementation package is complete, restore exact queued `0.6.6` unless accepted dependency evidence changes the order.
+- Culinary quantities must eventually reconcile with cultivation, harvest, gathering, butchery, recipes, inventory, trade, and crafting.
+- Current recipe integers do not define count, mass, volume, serving, bundle, batch, or capacity.
+- Culinary closure may lead, but the quantity contract must remain extensible to nonculinary systems.
+- Direct consumables need a portionability posture: whole-only, portionable, pourable, or stack-divisible.
+- UI percentage sliders should map to deterministic integer/fixed-point remaining units; whole-only items expose none/all.
 
-## Versioning And Milestone Guardrail
+### Meal actions
 
-- `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable authority for prospective internal version classification and the reserved `0.7.0`, `0.8.0`, `0.9.0`, and `1.0.0` entry gates.
-- The current project remains in `0.6.x`. The culinary research and results audit are unversioned and do not themselves advance the project toward `0.7.0`.
-- The near-term sequence is: active culinary results repair audit -> GPT/human acceptance -> smallest accepted culinary implementation package -> restore queued `0.6.6` -> `0.6.7` -> Geography/recognition planning -> activity-resolution reuse audit, unless accepted evidence changes the dependency order.
-- No primary version is assigned to the future culinary implementation until the repaired results are accepted and its capability/scope is classified.
-- A support suffix must name exactly one primary parent. Do not use wording such as `nearest accepted authority`.
-- Future runs must be classified as one of: three-segment primary capability, four-segment parent-specific support, or unversioned cross-cutting work.
-- Historical versions remain unchanged. Apply the stricter policy prospectively rather than renumbering commits, prompts, or accepted documents.
-- Every future detailed Codex output must state its label class, parent version when applicable, and milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`.
+The intended food action surface has:
+
+1. Ready To Eat;
+2. Prepare;
+3. Cook.
+
+Ready To Eat supports one eating occasion assembled from multiple accessible foods. Prepare handles non-heated meals and requires a compatible dish/container where physically necessary. Cook requires an accepted station, tools, ingredients, skill, and recipe owner.
+
+A meal preview should summarize ingredients, amounts, calories, protein, fat, carbohydrate, hydration, hunger, satiety/duration, morale, known safety, and container compatibility. Backend carbohydrate remains accurate; lore-friendly UI may present qualitative descriptors without relabeling all carbohydrates as grain.
+
+### Variety and monotony
+
+- Meal diversity should grant bounded morale value.
+- Repeated high exposure to the same food should create gradual, dose-sensitive aversion that decays over time.
+- Dominant ingredients and repeated days matter more than small components.
+- The model must resist exact-item renaming or minor preparation exploits.
+- Difficulty may reduce or disable nutrition and monotony pressure.
+
+### Containers and physical inventory
+
+- Ordinary inventory is physical, not a magical list.
+- Loose berries, nuts, seeds, grain, flour, powders, and liquids normally require suitable containers.
+- Whole items such as apples may fit in a hand, pocket, belt, or pouch when capacity allows.
+- Future container templates need capacity, liquid-tightness, food-safe posture, heat tolerance, closure/seal, allowed forms, nesting, visibility, and transfer compatibility.
+- Actual contents, remaining capacity, seal, condition, contamination, owner, and position remain item-instance/runtime state.
+- Extradimensional containers remain later endgame/replay content.
+
+### Manifest truth and visible grouping
+
+- Creation-time manifest resolution remains the recommended default; transfer and opening do not reroll contents.
+- Unknown containers that appear identical may share one visible inventory group even when hidden manifests differ.
+- Each unit must preserve its own manifest, origin, quality, condition, and knowledge.
+- Identification or opening may split a unit into a more specific visible group.
+- Known items stack only with known-equivalent items under the future stack contract.
+- Physical instance identity, heterogeneous instance grouping, and UI presentation grouping are separate concepts.
+
+### Fraud, inspection, reputation, and difficulty
+
+- True identity, origin, manifest, quality, and condition are internally known when the source establishes them; character knowledge remains separate.
+- Fraud, substitution, smuggling, deceptive packing, and counterfeit presentation are accepted world concepts and must not be removed merely because runtime comes later.
+- Future resolution must consider seller claim, character observation, evidence, seller deception, buyer Knowledge/skill/exposure, seller reputation/ethics, transaction context, and difficulty.
+- Automatic recognition is appropriate when experience makes identity obvious. Altered, unfamiliar, or contested goods may require checks or inspection.
+- Inspection may involve sample viewing, deeper container inspection, smell, taste where safe, weight, marks, seals, documents, or consultation.
+- Intrusive inspection may offend honest sellers or require permission, deposits, destructive opening, or delay.
+- Difficulty may disable fraud or adjust frequency, sophistication, magnitude, inspection forgiveness, and spoilage/quality substitution severity.
+- Merchant reputation must not be globally omniscient to new characters.
+
+### Starting goods
+
+- Starting food and containers may vary by difficulty, spawn region, prestige/incremental legacy upgrades, future background, institution, lineage, or scenario.
+- Do not add starting food before naming, ration scale, quantity, and container authority are accepted.
+- Fixed starting manifests remain known and balance-stable.
+
+### Fresh, hearty, and luxury naming
+
+- Accepted fresh/prepared naming direction: Market Fruit Bag, Fresh Produce Basket, Prepared Meal, Baker's Bundle.
+- Avoid Wrapped Meal, Prepared Meal Parcel, Inn Meal Parcel, and Cookshop Parcel as defaults.
+- Venue does not create a distinct recipe identity; cook skill, ingredient quality, condition, serving, and presentation may vary.
+- Hearty means a high-energy, protein-supporting, filling, well-made cooked mixed meal with meaningful labor, skill, diversity, and morale value.
+- Luxury includes elite display luxury and attainable celebratory luxury for ordinary people.
+- The user's historical Earth examples are illustrative only and must not be inserted directly. New content must be lore-native and use repository regions/ingredients where supported.
+
+### Nutrition and food safety
+
+- Use a moderate model with calories, protein, fat, carbohydrate, hydration, portion size, satiety amount, and satiety duration.
+- Major macronutrient imbalance may later affect recovery, activity, fatigue, and development through accepted owners.
+- Nutrition may be reduced or disabled by difficulty; detailed micronutrients are not the default.
+- Character-facing food safety should use historically appropriate knowledge and practices, not modern germ-theory language.
+- Hidden engine truth may still model contamination, parasites, toxins, spoilage, and processing risk.
+- Dangerous foods may require specialist preparation and may remain hazardous after ordinary cooking.
+
+## Active Integration Audit
+
+The active unversioned audit must:
+
+- research historical energy use and provisioning;
+- audit quantity/unit semantics across culinary and adjacent systems;
+- propose exact preparation/readiness/preservation/safety owners;
+- design partial-consumption and composed-meal contracts;
+- reconcile physical containers with gathering and inventory;
+- design heterogeneous unknown display groups without losing per-unit truth;
+- integrate fraud, inspection, reputation, Knowledge, and difficulty boundaries;
+- propose nutrition, variety morale, monotony, and food-risk owners;
+- rebuild the package sequence and select the smallest later package only after dependencies are known;
+- remain documentation-only and stop for GPT/human review.
+
+It may create only:
+
+- `docs/dev/tmp-culinary-preparation-portion-meal-integration-2026-07-20.md`;
+- `docs/dev/tmp-culinary-historical-energy-ration-source-index-2026-07-20.md`;
+- `docs/dev/tmp-culinary-quantity-container-knowledge-audit-2026-07-20.json`;
+- a replacement `docs/dev/current-codex-output.md`.
+
+## Temporary Artifact Guardrails
+
+Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`. Do not edit, delete, consume, or repurpose them.
+
+The earlier culinary artifacts remain accepted inputs and must not be deleted or overwritten by the active integration audit.
+
+## Route And Version Guardrail
+
+- `docs/design/internal-versioning-and-release-milestone-policy.md` controls prospective classification.
+- The project remains in `0.6.x`.
+- This integration audit is unversioned and does not itself advance the project toward `0.7.0`.
+- The next implementation number is not assigned.
+- A support suffix must name exactly one primary parent.
+- The previous `0.6.5.1` recommendation is not accepted automatically because the required preparation and quantity authority may materially exceed a narrow parent repair.
+- Held `0.6.6` remains unchanged and recoverable. Restore it only after this integration route is accepted and an explicit route decision authorizes restoration.
 
 ## Validation And Behavior
 
 - The active repository coordination changes are documentation and prompt updates only.
-- The active Codex audit may modify only the three culinary temporary artifacts and `docs/dev/current-codex-output.md`.
-- No item, profile, recipe, flora, fauna, monster, ecology, region, starting bundle, schema, validator, test, runtime, inventory state, UI, save, economy, Knowledge, magic, dependency, asset, or gameplay behavior is authorized to change.
-- `0.6.5` remains accepted and `0.6.6` remains recoverably held.
+- The active Codex audit is restricted to the three new temporary artifacts and `current-codex-output.md`.
+- No item, profile, recipe, source, region, starting bundle, schema, validator, test, runtime, inventory state, UI, save, economy, Knowledge, merchant, reputation, difficulty, dependency, asset, or gameplay behavior is authorized to change.
