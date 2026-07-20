@@ -85,6 +85,16 @@ Do not orphan, broaden consumers for, or remove the remaining Gate 1-5 and Gate 
 - The roadmap entry that still describes `0.5.161 - Knowledge Trial Readiness Policy Schema` as `next` is stale relative to the live schema and helper. The future reuse audit must reconcile that historical sequencing without confusing already-landed schema/helper work with still-missing policy content, adapters, mutable attempt state, persistence, runtime, or UI.
 - No action-resolution schema, helper, content, runtime, UI, save, economy, inventory, crafting, gathering, Knowledge, progression, or magic behavior is authorized by these documents.
 
+## Versioning And Milestone Guardrail
+
+- `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable authority for prospective internal version classification and the reserved `0.7.0`, `0.8.0`, `0.9.0`, and `1.0.0` entry gates.
+- The current project remains in `0.6.x`. Accepted static-content packages close dependencies but do not establish the integrated engine-owned gameplay loop required for `0.7.0`.
+- The active sequence remains `0.6.6`, `0.6.7`, unversioned Geography/recognition planning, and the unversioned Activity Resolution Existing-System Reuse Audit. None of those labels implies automatic promotion to `0.7.0`.
+- After those decisions, continue with `0.6.8`, `0.6.9`, `0.6.10`, or later `0.6.x` primary versions unless a separate docs-first `0.7.0` readiness audit proves and accepts every integrated-gameplay criterion.
+- Future runs must be classified as one of: three-segment primary capability, four-segment parent-specific support, or unversioned cross-cutting work. Routine audits, repairs, retries, validation, and parent cleanup should use the fourth segment rather than consuming another primary version.
+- Historical versions remain unchanged. Apply the stricter policy prospectively rather than renumbering commits, prompts, or accepted documents.
+- Every future detailed Codex output must state its label class, parent version when applicable, and milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`.
+
 ## Validation And Behavior
 
 - `0.6.5` passed normal content lint at 67 files and the exact four-file focused command at 310/310 tests.
