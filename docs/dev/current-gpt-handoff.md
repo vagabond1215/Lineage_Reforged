@@ -6,7 +6,8 @@
 - All seven dated research artifacts and `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md` were reconciled against live repository authority.
 - `docs/design/cross-domain-production-research-synthesis.md` is the durable integration authority.
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is complete and validated: 16 exact planned standard recipes were added with resolver quarantine intact.
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is active next and installed exactly in `docs/dev/current-codex-prompt.md`; `0.6.7` follows, then the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
+- The unversioned `Rich Flora, Fauna, Culinary, Nutrition, And Dietary Systems Audit And Research` is active in `docs/dev/current-codex-prompt.md` by explicit user direction.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is paused, not canceled. Restore its exact prior prompt from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` after the culinary research is audited and the accepted smallest culinary implementation package is complete, unless the audit proves another dependency order.
 
 ## Integration Baseline
 
@@ -76,11 +77,19 @@ Section 14 of the synthesis gives each research/audit artifact exactly one named
 
 Do not orphan, broaden consumers for, or remove the remaining Gate 1-5 and Gate 7 files before `0.6.7` checks their conditions.
 
+The active culinary research pass will create three separate temporary artifacts:
+
+- `docs/dev/tmp-rich-culinary-dietary-system-research-2026-07-19.md`;
+- `docs/dev/tmp-rich-culinary-dietary-audit-matrix-2026-07-19.json`;
+- `docs/dev/tmp-rich-culinary-dietary-source-index-2026-07-19.md`.
+
+They must remain temporary until a later GPT/human audit accepts or revises the findings and promotes selected conclusions into durable authority.
+
 ## Future Activity Resolution Planning
 
 - `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md` is the durable planning authority for contextual automatic, condensed, decision, trial, extended-activity, and project-level resolution across gathering, crafting, Skill Trials, Knowledge, workplaces, travel, services, and bounded magic-assisted work.
 - The earlier `docs/dev/tmp-contextual-action-resolution-depth-framework-2026-07-16.md` was fully promoted and removed; no replacement temporary artifact is required.
-- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` is a future hold only. It must not replace active `0.6.6` or run before accepted `0.6.6`, `0.6.7`, and the Geography/recognition contract plan.
+- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` is a future hold only. It must not replace the culinary research prompt or run before the culinary route, accepted `0.6.6`, `0.6.7`, and the Geography/recognition contract plan.
 - Live Skill Trials remain a simple progress/max-potential accumulator; Knowledge has separate completion, eligibility, and readiness foundations but no authored readiness content adapter or mutable attempt/checkpoint/outcome owner; quest action trees remain the strongest branch-grammar candidate; recipes and production chains remain static/macro authorities without player crafting execution; activity advancement remains deferred.
 - The roadmap entry that still describes `0.5.161 - Knowledge Trial Readiness Policy Schema` as `next` is stale relative to the live schema and helper. The future reuse audit must reconcile that historical sequencing without confusing already-landed schema/helper work with still-missing policy content, adapters, mutable attempt state, persistence, runtime, or UI.
 - No action-resolution schema, helper, content, runtime, UI, save, economy, inventory, crafting, gathering, Knowledge, progression, or magic behavior is authorized by these documents.
@@ -92,20 +101,29 @@ Do not orphan, broaden consumers for, or remove the remaining Gate 1-5 and Gate 
 - Named foods such as `mixed_nuts`, `preserved_fruit`, `smoked_meat`, and `smoked_fish` are the intended consumption layer. Missing identities still require exact source, item/value, recipe, profile, and regional closure rather than name-based edibility inference.
 - Standard, hearty, and luxury provisions packs must contain explicit named foods. `Hearty` indicates greater filling value and nutritional completeness; `luxury` indicates variety, quality, rarity, preparation, prestige, or value and must not automatically mean maximum nutrition.
 - A provisions pack is not edible and must not carry a `consumableProfileId`. Current item schema has no contents/opening authority, so a future bundle-profile schema/validator and engine-owned atomic open-pack inventory command are required before packs execute.
-- Active `0.6.6` remains unchanged. `0.6.7` should inspect and disposition generic ration/profile mismatches and starting-bundle implications without inventing bundle runtime, unsupported recipes, or nutrition values.
+
+## Active Culinary Research Route
+
+- `docs/design/rich-culinary-dietary-system-research-program.md` is the active documentation-only research authority.
+- The active Codex run must audit live items, ingredient/consumable roles, profiles, recipes, flora/fauna outputs, monster drops, ecology, regions, workplaces, services, starting bundles, body state, inventory, storage/spoilage, economy context, UI consumption, naming, nutrition, satiety, diet, safety, and regional cuisine.
+- External factual claims require authoritative sources and explicit source indexing. Repository facts, external facts, bounded design inference, authored input, and unresolved claims must remain distinguishable.
+- The pass must produce a narrative synthesis, machine-readable audit matrix, and source index and then stop.
+- It must recommend a smallest first implementation package but must not assign a version, write an implementation prompt, or change source content.
+- The next run after research is an unversioned `Rich Culinary And Dietary Research Results Audit` performed by GPT/human review.
+- After accepted review, select and implement the smallest coherent culinary package. Then restore the exact queued `0.6.6` prompt unless the audit proves a different dependency order.
 
 ## Versioning And Milestone Guardrail
 
 - `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable authority for prospective internal version classification and the reserved `0.7.0`, `0.8.0`, `0.9.0`, and `1.0.0` entry gates.
-- The current project remains in `0.6.x`. Accepted static-content packages close dependencies but do not establish the integrated engine-owned gameplay loop required for `0.7.0`.
-- The active sequence remains `0.6.6`, `0.6.7`, unversioned Geography/recognition planning, and the unversioned Activity Resolution Existing-System Reuse Audit. None of those labels implies automatic promotion to `0.7.0`.
-- After those decisions, continue with `0.6.8`, `0.6.9`, `0.6.10`, or later `0.6.x` primary versions unless a separate docs-first `0.7.0` readiness audit proves and accepts every integrated-gameplay criterion.
+- The current project remains in `0.6.x`. The culinary research pass is unversioned and does not itself advance the project toward `0.7.0`.
+- The near-term sequence is: active culinary research -> unversioned research-results audit -> smallest accepted culinary implementation package -> restore queued `0.6.6` -> `0.6.7` -> Geography/recognition planning -> activity-resolution reuse audit, unless accepted audit evidence changes the dependency order.
+- No primary version is assigned to the future culinary implementation until the research-results audit classifies its capability and scope.
 - Future runs must be classified as one of: three-segment primary capability, four-segment parent-specific support, or unversioned cross-cutting work. Routine audits, repairs, retries, validation, and parent cleanup should use the fourth segment rather than consuming another primary version.
 - Historical versions remain unchanged. Apply the stricter policy prospectively rather than renumbering commits, prompts, or accepted documents.
 - Every future detailed Codex output must state its label class, parent version when applicable, and milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`.
 
 ## Validation And Behavior
 
-- `0.6.5` passed normal content lint at 67 files and the exact four-file focused command at 310/310 tests.
-- Exact target, duplicate/no-op/role/quantity, item/value/tool/workplace/skill/chain closure, resolver-field, byte-identity, and changed-path audits passed.
-- Static recipe content and its focused assertions changed; runtime, UI, saves, economy behavior, magic, Knowledge/recognition, resources, commodities, schemas, validators, dependencies, assets, and gameplay did not.
+- The active repository changes are documentation and prompt coordination only.
+- No item, profile, recipe, flora, fauna, monster, ecology, starting bundle, schema, validator, test, runtime, UI, save, economy, Knowledge, magic, dependency, asset, or gameplay behavior is authorized to change in the research pass.
+- `0.6.5` remains accepted and `0.6.6` remains recoverably held.
