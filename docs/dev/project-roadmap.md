@@ -7,8 +7,8 @@ Last reviewed: 2026-07-17
 - Latest completed primary: `Version 0.6.4 - World And Settlement Static Content Expansion`.
 - Latest completed support/audit run: unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Next primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
-- Activity selection remains accepted. `0.6.4` and the seven-gate production research/integration prerequisite are complete; the synthesis-owned 16-row revised `0.6.5` is active before `0.6.6` monster/ecology/loot and `0.6.7` cross-content audit.
+- Next primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
+- Activity selection remains accepted. `0.6.4`, the seven-gate research/integration prerequisite, and the synthesis-owned 16-row `0.6.5` recipe package are complete; `0.6.6` is active before the `0.6.7` cross-content audit.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -34,11 +34,11 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.6.4 - World And Settlement Static Content Expansion`
+- Latest completed version: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
 - Latest support/audit run: unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
-- Next recommended run: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
+- Next recommended run: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the first static package and cross-domain research integration are complete; revised `0.6.5` is active; UI information architecture remains durably bounded
+- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the first two static packages and cross-domain research integration are complete; `0.6.6` is active; UI information architecture remains durably bounded
 
 Versioning rule:
 
@@ -521,13 +521,12 @@ These lanes are roadmap candidates, not active implementation commitments:
 
 Recommended near-term direction:
 
-Completed: `0.6.4 - World And Settlement Static Content Expansion`.
+Completed: `0.6.4 - World And Settlement Static Content Expansion` and `0.6.5 - Item, Material, And Recipe Static Content Expansion`.
 
-1. `0.6.5 - Item, Material, And Recipe Static Content Expansion`
-2. `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-3. `0.6.7 - Cross-Content Coherence And Coverage Audit`
+1. `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+2. `0.6.7 - Cross-Content Coherence And Coverage Audit`
 
-The content sequence is intentional and controlled by `docs/design/static-content-expansion-program.md`; each package still requires its exact prompt, owner review, dependency closure, and focused validation. The canonical deferred classifications and reopening triggers are in `docs/dev/historical-version-and-deferred-route-register.md`. Living Character Manuscript, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, People/NPC, services, resources/commodities, and combat health retain their existing gates; generic `world.pois` remains rejected and Highcrown settlement Knowledge remains closed. After `0.6.7`, compare current activity advancement, rest, and quest turn-in owners and select exactly one bounded runtime consumer.
+The content sequence is intentional and controlled by `docs/design/static-content-expansion-program.md`; each package still requires its exact prompt, owner review, dependency closure, and focused validation. The canonical deferred classifications and reopening triggers are in `docs/dev/historical-version-and-deferred-route-register.md`. Living Character Manuscript, diplomacy/conflict, force/public order, government/jurisdiction, business, faction, institution, People/NPC, services, resources/commodities, and combat health retain their existing gates; generic `world.pois` remains rejected and Highcrown settlement Knowledge remains closed. After `0.6.7`, run the docs-first Geography/recognition plan and then the held activity-resolution existing-system reuse audit; do not select a runtime consumer before those decisions.
 
 High-priority unresolved questions:
 

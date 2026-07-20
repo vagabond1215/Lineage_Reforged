@@ -19,6 +19,31 @@ const workplaceWrapper = await readJson("packages/content/base/civilization/work
 const skillWrapper = await readJson("packages/content/base/player/skills.json");
 const productionChainWrapper = await readJson("packages/content/base/civilization/production_chains.json");
 
+const EXPANSION_RECIPES = [
+  ["recipe.flax_bundle_to_linen_thread", "tailoring", [["flax_bundle", 1, "material"]], [["linen_thread", 2, "primary"]], ["workplace.loomhouse"], ["spindle"], "skill.crafting.weaving", "chain.textile.linen"],
+  ["recipe.wool_fleece_to_yarn", "tailoring", [["wool_fleece", 1, "material"]], [["yarn", 2, "primary"]], ["workplace.loomhouse"], ["spindle"], "skill.crafting.weaving", "chain.textile.components"],
+  ["recipe.yarn_to_wool_cloth", "tailoring", [["yarn", 2, "material"]], [["wool_cloth", 1, "primary"]], ["workplace.loomhouse"], ["weaving_shuttle"], "skill.crafting.weaving", "chain.textile.wool"],
+  ["recipe.linen_thread_to_fine_cloth", "tailoring", [["linen_thread", 2, "material"]], [["fine_cloth", 1, "primary"]], ["workplace.loomhouse"], ["weaving_shuttle"], "skill.crafting.weaving", "chain.textile.cloth_grades"],
+  ["recipe.flour_to_bread_dough", "baking", [["flour", 1, "ingredient"]], [["bread_dough", 1, "primary"]], ["workplace.bakery"], ["mixing_spoon"], "skill.crafting.cooking", "chain.food.bread"],
+  ["recipe.fish_raw_and_salt_crystal_to_smoked_fish", "preserving", [["fish_raw", 1, "ingredient"], ["salt_crystal", 1, "ingredient"]], [["smoked_fish", 1, "primary"]], ["workplace.smokehouse"], ["smoking_rack"], "skill.crafting.cooking", "chain.food.preserved_fish"],
+  ["recipe.plank_to_barrel_stave", "cooperage", [["plank", 1, "material"]], [["barrel_stave", 2, "primary"]], ["workplace.coopers_shop"], ["cooper_adze"], "skill.crafting.carpentry", "chain.cooperage.components"],
+  ["recipe.barrel_stave_metal_ring_and_resin_pitch_to_cask", "cooperage", [["barrel_stave", 4, "material"], ["metal_ring", 2, "material"], ["resin_pitch", 1, "material"]], [["cask", 1, "primary"]], ["workplace.coopers_shop"], ["cooper_adze", "hoop_anvil"], "skill.crafting.carpentry", "chain.cooperage.cask"],
+  ["recipe.copper_ore_to_copper_ingot", "forging", [["copper_ore", 2, "material"]], [["copper_ingot", 1, "primary"]], ["workplace.smelter_hall"], ["crucible_tongs"], "skill.crafting.smelting", "chain.metal.copper_ingot"],
+  ["recipe.copper_ore_and_tin_ore_to_bronze_ingot", "forging", [["copper_ore", 2, "material"], ["tin_ore", 1, "material"]], [["bronze_ingot", 2, "primary"]], ["workplace.smelter_hall"], ["crucible_tongs"], "skill.crafting.smelting", "chain.metal.bronze_ingot"],
+  ["recipe.iron_ingot_to_metal_plate", "metalsmithing", [["iron_ingot", 1, "material"]], [["metal_plate", 1, "primary"]], ["workplace.armorers_forge"], ["blacksmith_hammer"], "skill.crafting.blacksmithing", "chain.metal.components"],
+  ["recipe.iron_ingot_to_blade_blank", "metalsmithing", [["iron_ingot", 1, "material"]], [["blade_blank", 1, "primary"]], ["workplace.weaponsmith_forge"], ["blacksmith_hammer"], "skill.crafting.blacksmithing", "chain.metal.components"],
+  ["recipe.blade_blank_tool_handle_and_leather_strap_to_arming_sword", "assembly", [["blade_blank", 1, "material"], ["tool_handle", 1, "material"], ["leather_strap", 1, "material"]], [["arming_sword", 1, "primary"]], ["workplace.weaponsmith_forge"], ["blacksmith_hammer"], "skill.crafting.blacksmithing", "chain.warfare.weapons"],
+  ["recipe.cured_leather_to_leather_strap", "leatherworking", [["cured_leather", 1, "material"]], [["leather_strap", 2, "primary"]], ["workplace.tannery"], ["tanning_scraper"], "skill.crafting.leatherworking", "chain.leather.components"],
+  ["recipe.cured_leather_to_hardened_leather_panel", "leatherworking", [["cured_leather", 1, "material"]], [["hardened_leather_panel", 1, "primary"]], ["workplace.tannery"], ["tanning_scraper"], "skill.crafting.leatherworking", "chain.leather.components"],
+  ["recipe.metal_ring_and_leather_strap_to_mail_coif", "assembly", [["metal_ring", 2, "material"], ["leather_strap", 1, "material"]], [["mail_coif", 1, "primary"]], ["workplace.armorers_forge"], ["blacksmith_hammer"], "skill.crafting.armoring", "chain.warfare.armor"]
+];
+
+const EXPANSION_SOURCE_NOTES = [
+  "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+  "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+  "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+];
+
 function recipe(overrides = {}) {
   return {
     id: "recipe.iron_ingot_from_ore",
@@ -320,8 +345,8 @@ test("rejects direct no-op self-transformations", () => {
   );
 });
 
-test("validates the live first planned recipe content seed", () => {
-  assert.equal(liveRecipeWrapper.records.length, 12);
+test("validates the live planned recipe content and exact expansion batch", () => {
+  assert.equal(liveRecipeWrapper.records.length, 28);
   assert.equal(
     liveRecipeWrapper.records.every((liveRecipe) => liveRecipe.status === "planned"),
     true
@@ -333,11 +358,36 @@ test("validates the live first planned recipe content seed", () => {
 
   const result = validate(makeInput(liveRecipeWrapper.records));
   assert.equal(result.ok, true);
-  assert.equal(result.recipeIds.length, 12);
+  assert.equal(result.recipeIds.length, 28);
   assert.deepEqual(
     result.recipeIds,
     [...new Set(result.recipeIds)].sort()
   );
+
+  assert.equal(new Set(liveRecipeWrapper.records.map((entry) => entry.recipeFamily)).size, 10);
+  const recordsById = new Map(liveRecipeWrapper.records.map((entry) => [entry.id, entry]));
+  assert.deepEqual(
+    EXPANSION_RECIPES.map(([id]) => id).sort(),
+    result.recipeIds.filter((id) => EXPANSION_RECIPES.some(([expectedId]) => expectedId === id))
+  );
+
+  for (const [id, family, inputs, outputs, workplaces, tools, skillId, chainId] of EXPANSION_RECIPES) {
+    const entry = recordsById.get(id);
+    assert.ok(entry, `missing expansion recipe ${id}`);
+    assert.equal(entry.recipeFamily, family);
+    assert.equal(entry.status, "planned");
+    assert.equal(entry.recipeSubtype, "standard");
+    assert.deepEqual(entry.inputs.map(({ itemKey, quantity, role }) => [itemKey, quantity, role]), inputs);
+    assert.deepEqual(entry.outputs.map(({ itemKey, quantity, role }) => [itemKey, quantity, role]), outputs);
+    assert.deepEqual(entry.requiredWorkplaceIds, workplaces);
+    assert.deepEqual(entry.requiredToolItemKeys, tools);
+    assert.deepEqual(entry.skillRequirements, [{ skillId, minimumRank: 1 }]);
+    assert.equal(entry.relatedProductionChainId, chainId);
+    assert.deepEqual(entry.sourceAuthorityNotes, EXPANSION_SOURCE_NOTES);
+    assert.equal(entry.facilityStrategy, undefined);
+    assert.equal(entry.recipeProfile, undefined);
+    assert.equal(entry.executionResolver, undefined);
+  }
 });
 
 test("registers the schema file and live recipe content lint", async () => {

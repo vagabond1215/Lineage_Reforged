@@ -45,7 +45,7 @@ Latest support/audit run:
 
 Next recommended primary:
 
-- `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 
 Current sequence source:
 
@@ -53,7 +53,7 @@ Current sequence source:
 
 Current phase:
 
-- player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; `0.6.4` static world content is complete and the milestone continues from `0.6.5` through `0.6.7` before one later bounded runtime consumer
+- player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; `0.6.4` world content and `0.6.5` recipe content are complete, and the milestone continues through `0.6.6` and `0.6.7` before later planning routes
 
 Current transition decisions:
 
@@ -118,10 +118,11 @@ Every major system should answer at least one of these questions:
 | `0.6.3.3` | Engine-Owned Activity Selection Post-Repair Audit | Complete and accepted at 45/45 focused tests. | Reconfirmed exact test-only repair, permanent equal-sequence identity coverage, and every transition gate. |
 | unversioned maintenance | Historical Route Cleanup And Static Content Expansion Pipeline Integration | Complete. Added the canonical historical/deferred register and durable static program. | Documentation only; accepted runtime anchors unchanged. |
 | `0.6.4` | World And Settlement Static Content Expansion | Complete. Added the exact three-cluster district, site, semantic-feature, and General Lore batch. | 592/592 focused tests and 67-file lint passed; static canon only. |
-| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Active next. Add the synthesis-owned 16 planned recipes, taking the catalog from 12 to 28 records and 8 to 10 families. | Preserve resolver quarantine, paused resource/commodity gates, and equipment-profile preconditions. |
-| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Planned third static package. | Region/biome/role/threat closure; static source-local loot only. |
-| `0.6.7` | Cross-Content Coherence And Coverage Audit | Planned program audit. | Validate all references/statuses and repair narrowly before runtime resumes. |
-| later `0.6.x` | Later Engine-Owned Consumer | Compare activity advancement, rest, and turn-in after `0.6.7`. | Select exactly one coherent consumer; no generic command bus. |
+| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete. Added the synthesis-owned 16 planned recipes for 28 records across 10 families. | Resolver quarantine held; 310 focused tests and 67-file lint passed. |
+| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active next with an exact nine-monster/regional-ecology matrix. | Region/biome/lineage/role/threat closure; static source-local drops only. |
+| `0.6.7` | Cross-Content Coherence And Coverage Audit | Planned program audit. | Validate all references/statuses and repair narrowly before the Geography/recognition plan. |
+| unversioned support | Geography/recognition plan, then activity-resolution reuse audit | Required planning sequence after `0.6.7`. | Do not select runtime work until both documentation decisions are complete. |
+| later `0.6.x` | Later Engine-Owned Consumer | Select from evidence after the two post-`0.6.7` planning routes. | Exactly one coherent consumer; no generic command bus. |
 
 For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
 

@@ -281,7 +281,7 @@ The implementation may change only `packages/content/base/crafting/recipes.json`
 
 ## 14. Temporary Artifact Disposition
 
-All eight temporary artifacts are retained because they contain detailed evidence, source registers, uncertainty, or resolver probes not repeated in full here. Each has exactly one named consumer and one removal condition.
+Six temporary research artifacts remain for `0.6.7`. The Gate 6 and production-audit artifacts were removed after accepted `0.6.5` satisfied their sole-consumer conditions. Each disposition remains explicit below.
 
 | Artifact | Gate / result | Sole named consumer | Removal condition |
 | --- | --- | --- | --- |
@@ -290,11 +290,11 @@ All eight temporary artifacts are retained because they contain detailed evidenc
 | `docs/dev/tmp-agriculture-land-food-livestock-research-2026-07-14.md` | Gate 3 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed agriculture/husbandry findings are represented durably and no detailed citation is still required. |
 | `docs/dev/tmp-materials-refinement-processing-research-2026-07-14.md` | Gate 4 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed material/process findings are represented durably and no detailed citation is still required. |
 | `docs/dev/tmp-food-processing-preservation-research-2026-07-14.md` | Gate 5 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed food/storage findings are represented durably and no detailed citation is still required. |
-| `docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md` | Gate 6 accepted / audit triggered | Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` | Remove after revised `0.6.5` is accepted with the resolver quarantine intact and every remaining owner-specific correction is durably routed. |
+| `docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md` | Gate 6 accepted / audit triggered | Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` | Removed 2026-07-19 after accepted `0.6.5` preserved resolver quarantine and durable owner-specific routes. |
 | `docs/dev/tmp-magitech-production-infrastructure-substitution-research-2026-07-14.md` | Gate 7 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed magic/infrastructure findings are represented durably and no detailed citation is still required. |
-| `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md` | `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5` accepted | Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` | Remove after revised `0.6.5` is accepted with no quarantined field consumed and the deferred type/validator/test/content/runtime corrections are durably preserved. |
+| `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md` | `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5` accepted | Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` | Removed 2026-07-19 after accepted `0.6.5` consumed no quarantined field and durable correction routes remained preserved. |
 
-No temporary artifact is orphaned or deleted by this integration.
+No remaining temporary artifact is orphaned; Gate 1-5 and Gate 7 remain solely assigned to `0.6.7`.
 
 ## 15. Later 0.6.6 And Future Implications
 

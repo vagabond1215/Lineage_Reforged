@@ -5,15 +5,15 @@
 - The unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration` is complete and accepted as documentation only.
 - All seven dated research artifacts and `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md` were reconciled against live repository authority.
 - `docs/design/cross-domain-production-research-synthesis.md` is the durable integration authority.
-- Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is active next and installed exactly in `docs/dev/current-codex-prompt.md`.
-- `0.6.6` remains reserved after accepted revised `0.6.5`; `0.6.7` follows; the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan remains queued immediately afterward.
+- `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is complete and validated: 16 exact planned standard recipes were added with resolver quarantine intact.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is active next and installed exactly in `docs/dev/current-codex-prompt.md`; `0.6.7` follows, then the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan.
 
 ## Integration Baseline
 
-- Starting/verified head: `24d83b0e47a85fe29e6ad316c05964b5b57914e3`; `master`; clean and remote-aligned before documentation edits.
+- `0.6.5` starting state: `b8262c87308601b98e27965ab1585d430c1771da`, `master`, clean before required fetch/pull; fast-forwarded to `80eb3bea72236d47b301a3dea0b4649081e1aed2` before authoring.
 - Items: 1,372 = 24 accessory, 18 armor, 14 clothing, 1,114 commodity, 26 consumable, 131 tool, 10 vehicle, 35 weapon.
 - Market values: 1,617 unique keys; all 1,372 item keys plus 245 market-only biological identities.
-- Recipes: 12 planned standard records across 8 families; no runtime consumer.
+- Recipes: 28 planned standard records across 10 families; no runtime consumer.
 - Production capability: 58 workplaces, 121 production chains, 121 skills, 22 extraction methods.
 - Ecology: 117 flora, 132 fauna, 24 monsters, 93 habitats, 36 biomes, 9 regional ecology profiles, 56 minerals.
 - Source-local monster loot: 49 drop rows / 37 unique item keys and 20 loot rows / 6 unique keys; no executable loot generator.
@@ -22,9 +22,9 @@
 - Magic: 27 vessels across nine affinities/three tiers, 55 spells (23 ready / 5 partial / 27 deferred), 7 conduit profiles, 3 catalyst profiles, 4 magic-service records, and 7 mundane infrastructure records.
 - Institution probe remains 88 settlement profiles, 264 reserve rows, and 352 service rows; it projects availability/charge only.
 
-## Revised 0.6.5 Target
+## Completed 0.6.5 Package
 
-Add exactly 16 planned standard recipes, taking the catalog from 12 to 28 and represented families from 8 to 10 by adding `cooperage` and `forging`:
+Added exactly 16 planned standard recipes, taking the catalog from 12 to 28 and represented families from 8 to 10 by adding `cooperage` and `forging`:
 
 - `recipe.flax_bundle_to_linen_thread`
 - `recipe.wool_fleece_to_yarn`
@@ -43,7 +43,7 @@ Add exactly 16 planned standard recipes, taking the catalog from 12 to 28 and re
 - `recipe.cured_leather_to_hardened_leather_panel`
 - `recipe.metal_ring_and_leather_strap_to_mail_coif`
 
-Every exact input/output quantity, role, workplace, tool, skill/rank, optional chain, evidence note, and classification is fixed by Section 13 of the synthesis and copied into the active prompt. Every integer is authored game-scale `bounded_design_inference`, not a historical yield, runtime balance formula, placeholder, or chain-derived ratio.
+Every exact input/output quantity, role, workplace, tool, skill/rank, optional chain, evidence note, and classification matches Section 13 of the synthesis. Every integer remains authored game-scale `bounded_design_inference`, not a historical yield, runtime balance formula, placeholder, or chain-derived ratio.
 
 The earlier flour-only pastry and savory-meat-pie rows are removed. Do not restore, replace, or partially author them. The meat-pie relationship remains `authored_input_blocked`.
 
@@ -52,10 +52,9 @@ The earlier flour-only pastry and savory-meat-pie rows are removed. Do not resto
 - Recipes own complete explicit bounded transformations.
 - Production chains own broad macro/economic context.
 - `relatedProductionChainId` is optional, descriptive, existence-checked, and non-inheriting.
-- Audit decision remains `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5`.
-- Reverse that decision and stop if implementation consumes chain/workplace resolver behavior.
+- Audit decision `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5` held through implementation; no quarantined field was consumed.
 
-Revised `0.6.5` must not derive any field or admission decision from chain/workplace input/output fallback, target fallback, variants, stage/carry behavior, last-step output, workplace I/O, job/tier/progression/upgrades, tool tags, fuel/power modes, candidate ordering, resolver value, market price, labor association, or `resolveCraftAtSettlement`.
+The accepted `0.6.5` records derive no field or admission decision from chain/workplace input/output fallback, target fallback, variants, stage/carry behavior, last-step output, workplace I/O, job/tier/progression/upgrades, tool tags, fuel/power modes, candidate ordering, resolver value, market price, labor association, or `resolveCraftAtSettlement`.
 
 Later owner-specific corrections remain separate: chain/workplace loader types, topology/semantic validation, resolver branch tests, economy documentation, Stonevein placement, and transport baseline diagnosis.
 
@@ -70,24 +69,24 @@ Later owner-specific corrections remain separate: chain/workplace loader types, 
 
 ## Temporary Artifacts
 
-No integration research/audit artifact was deleted. Section 14 of the synthesis gives each exactly one named consumer and a concrete removal condition:
+Section 14 of the synthesis gives each research/audit artifact exactly one named consumer and a concrete removal condition:
 
 - Gate 1-5 and Gate 7 artifacts -> sole consumer `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Gate 6 and the production audit -> sole consumer revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+- Gate 6 and the production audit were consumed by accepted `0.6.5` and removed after resolver quarantine and durable follow-up routing were verified.
 
-Do not orphan, broaden consumers for, or remove these files before their conditions are met.
+Do not orphan, broaden consumers for, or remove the remaining Gate 1-5 and Gate 7 files before `0.6.7` checks their conditions.
 
 ## Future Activity Resolution Planning
 
 - `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md` is the durable planning authority for contextual automatic, condensed, decision, trial, extended-activity, and project-level resolution across gathering, crafting, Skill Trials, Knowledge, workplaces, travel, services, and bounded magic-assisted work.
 - The earlier `docs/dev/tmp-contextual-action-resolution-depth-framework-2026-07-16.md` was fully promoted and removed; no replacement temporary artifact is required.
-- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` is a future hold only. It must not replace the active revised `0.6.5` prompt or run before accepted `0.6.5`, `0.6.6`, `0.6.7`, and the Geography/recognition contract plan.
+- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` is a future hold only. It must not replace active `0.6.6` or run before accepted `0.6.6`, `0.6.7`, and the Geography/recognition contract plan.
 - Live Skill Trials remain a simple progress/max-potential accumulator; Knowledge has separate completion, eligibility, and readiness foundations but no authored readiness content adapter or mutable attempt/checkpoint/outcome owner; quest action trees remain the strongest branch-grammar candidate; recipes and production chains remain static/macro authorities without player crafting execution; activity advancement remains deferred.
 - The roadmap entry that still describes `0.5.161 - Knowledge Trial Readiness Policy Schema` as `next` is stale relative to the live schema and helper. The future reuse audit must reconcile that historical sequencing without confusing already-landed schema/helper work with still-missing policy content, adapters, mutable attempt state, persistence, runtime, or UI.
 - No action-resolution schema, helper, content, runtime, UI, save, economy, inventory, crafting, gathering, Knowledge, progression, or magic behavior is authorized by these documents.
 
 ## Validation And Behavior
 
-- Integration used live JSON/script inventories, schema/validator/test registration inspection, exact target reference/value closure, route contradiction searches, and documentation hygiene/full-diff review.
-- Per the active integration prompt, no builds, typechecks, content lint, tests, generators, servers, or package installation were run.
-- No content JSON, schema, validator, test, lint, runtime, economy, combat, medicine, magic, infrastructure, inventory, UI, save, migration, dependency, asset, or gameplay behavior changed.
+- `0.6.5` passed normal content lint at 67 files and the exact four-file focused command at 310/310 tests.
+- Exact target, duplicate/no-op/role/quantity, item/value/tool/workplace/skill/chain closure, resolver-field, byte-identity, and changed-path audits passed.
+- Static recipe content and its focused assertions changed; runtime, UI, saves, economy behavior, magic, Knowledge/recognition, resources, commodities, schemas, validators, dependencies, assets, and gameplay did not.

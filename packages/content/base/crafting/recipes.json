@@ -555,6 +555,762 @@
         "No inventory mutation, item-instance creation, runtime behavior, UI, storage, reward, or gameplay behavior.",
         "No production-chain inheritance or economy behavior."
       ]
+    },
+    {
+      "id": "recipe.flax_bundle_to_linen_thread",
+      "slug": "flax_bundle_to_linen_thread",
+      "name": "Flax Bundle to Linen Thread",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for preparing and spinning a flax bundle into linen thread.",
+      "recipeFamily": "tailoring",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "flax_bundle",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "linen_thread",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.loomhouse"
+      ],
+      "requiredToolItemKeys": [
+        "spindle"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.weaving",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.textile.linen",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.wool_fleece_to_yarn",
+      "slug": "wool_fleece_to_yarn",
+      "name": "Wool Fleece to Yarn",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for preparing and spinning wool fleece into yarn.",
+      "recipeFamily": "tailoring",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "wool_fleece",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "yarn",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.loomhouse"
+      ],
+      "requiredToolItemKeys": [
+        "spindle"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.weaving",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.textile.components",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.yarn_to_wool_cloth",
+      "slug": "yarn_to_wool_cloth",
+      "name": "Yarn to Wool Cloth",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for weaving yarn into wool cloth.",
+      "recipeFamily": "tailoring",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "yarn",
+          "quantity": 2,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "wool_cloth",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.loomhouse"
+      ],
+      "requiredToolItemKeys": [
+        "weaving_shuttle"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.weaving",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.textile.wool",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.linen_thread_to_fine_cloth",
+      "slug": "linen_thread_to_fine_cloth",
+      "name": "Linen Thread to Fine Cloth",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for weaving linen thread into fine cloth.",
+      "recipeFamily": "tailoring",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "linen_thread",
+          "quantity": 2,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "fine_cloth",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.loomhouse"
+      ],
+      "requiredToolItemKeys": [
+        "weaving_shuttle"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.weaving",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.textile.cloth_grades",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.flour_to_bread_dough",
+      "slug": "flour_to_bread_dough",
+      "name": "Flour to Bread Dough",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for preparing flour as bread dough.",
+      "recipeFamily": "baking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "flour",
+          "quantity": 1,
+          "role": "ingredient"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "bread_dough",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.bakery"
+      ],
+      "requiredToolItemKeys": [
+        "mixing_spoon"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.cooking",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.food.bread",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.fish_raw_and_salt_crystal_to_smoked_fish",
+      "slug": "fish_raw_and_salt_crystal_to_smoked_fish",
+      "name": "Raw Fish and Salt Crystal to Smoked Fish",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for preserving raw fish with salt as smoked fish.",
+      "recipeFamily": "preserving",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "fish_raw",
+          "quantity": 1,
+          "role": "ingredient"
+        },
+        {
+          "itemKey": "salt_crystal",
+          "quantity": 1,
+          "role": "ingredient"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "smoked_fish",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.smokehouse"
+      ],
+      "requiredToolItemKeys": [
+        "smoking_rack"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.cooking",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.food.preserved_fish",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.plank_to_barrel_stave",
+      "slug": "plank_to_barrel_stave",
+      "name": "Plank to Barrel Stave",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for shaping a plank into barrel staves.",
+      "recipeFamily": "cooperage",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "plank",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "barrel_stave",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.coopers_shop"
+      ],
+      "requiredToolItemKeys": [
+        "cooper_adze"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.carpentry",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.cooperage.components",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.barrel_stave_metal_ring_and_resin_pitch_to_cask",
+      "slug": "barrel_stave_metal_ring_and_resin_pitch_to_cask",
+      "name": "Barrel Staves, Metal Rings, and Resin Pitch to Cask",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for assembling barrel staves, metal rings, and resin pitch into a cask.",
+      "recipeFamily": "cooperage",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "barrel_stave",
+          "quantity": 4,
+          "role": "material"
+        },
+        {
+          "itemKey": "metal_ring",
+          "quantity": 2,
+          "role": "material"
+        },
+        {
+          "itemKey": "resin_pitch",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "cask",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.coopers_shop"
+      ],
+      "requiredToolItemKeys": [
+        "cooper_adze",
+        "hoop_anvil"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.carpentry",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.cooperage.cask",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.copper_ore_to_copper_ingot",
+      "slug": "copper_ore_to_copper_ingot",
+      "name": "Copper Ore to Copper Ingot",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for smelting copper ore into a copper ingot.",
+      "recipeFamily": "forging",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "copper_ore",
+          "quantity": 2,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "copper_ingot",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.smelter_hall"
+      ],
+      "requiredToolItemKeys": [
+        "crucible_tongs"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.smelting",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.metal.copper_ingot",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.copper_ore_and_tin_ore_to_bronze_ingot",
+      "slug": "copper_ore_and_tin_ore_to_bronze_ingot",
+      "name": "Copper Ore and Tin Ore to Bronze Ingot",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for smelting copper ore and tin ore into bronze ingots.",
+      "recipeFamily": "forging",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "copper_ore",
+          "quantity": 2,
+          "role": "material"
+        },
+        {
+          "itemKey": "tin_ore",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "bronze_ingot",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.smelter_hall"
+      ],
+      "requiredToolItemKeys": [
+        "crucible_tongs"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.smelting",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.metal.bronze_ingot",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.iron_ingot_to_metal_plate",
+      "slug": "iron_ingot_to_metal_plate",
+      "name": "Iron Ingot to Metal Plate",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for shaping an iron ingot into a metal plate.",
+      "recipeFamily": "metalsmithing",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "iron_ingot",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "metal_plate",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.armorers_forge"
+      ],
+      "requiredToolItemKeys": [
+        "blacksmith_hammer"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.blacksmithing",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.metal.components",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.iron_ingot_to_blade_blank",
+      "slug": "iron_ingot_to_blade_blank",
+      "name": "Iron Ingot to Blade Blank",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for shaping an iron ingot into a blade blank.",
+      "recipeFamily": "metalsmithing",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "iron_ingot",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "blade_blank",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.weaponsmith_forge"
+      ],
+      "requiredToolItemKeys": [
+        "blacksmith_hammer"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.blacksmithing",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.metal.components",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.blade_blank_tool_handle_and_leather_strap_to_arming_sword",
+      "slug": "blade_blank_tool_handle_and_leather_strap_to_arming_sword",
+      "name": "Blade Blank, Tool Handle, and Leather Strap to Arming Sword",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for assembling a blade blank, tool handle, and leather strap into an arming sword.",
+      "recipeFamily": "assembly",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "blade_blank",
+          "quantity": 1,
+          "role": "material"
+        },
+        {
+          "itemKey": "tool_handle",
+          "quantity": 1,
+          "role": "material"
+        },
+        {
+          "itemKey": "leather_strap",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "arming_sword",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.weaponsmith_forge"
+      ],
+      "requiredToolItemKeys": [
+        "blacksmith_hammer"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.blacksmithing",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.warfare.weapons",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.cured_leather_to_leather_strap",
+      "slug": "cured_leather_to_leather_strap",
+      "name": "Cured Leather to Leather Strap",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for cutting cured leather into leather straps.",
+      "recipeFamily": "leatherworking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "cured_leather",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "leather_strap",
+          "quantity": 2,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.tannery"
+      ],
+      "requiredToolItemKeys": [
+        "tanning_scraper"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.leatherworking",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.leather.components",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.cured_leather_to_hardened_leather_panel",
+      "slug": "cured_leather_to_hardened_leather_panel",
+      "name": "Cured Leather to Hardened Leather Panel",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for shaping cured leather into a hardened leather panel.",
+      "recipeFamily": "leatherworking",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "cured_leather",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "hardened_leather_panel",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.tannery"
+      ],
+      "requiredToolItemKeys": [
+        "tanning_scraper"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.leatherworking",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.leather.components",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
+    },
+    {
+      "id": "recipe.metal_ring_and_leather_strap_to_mail_coif",
+      "slug": "metal_ring_and_leather_strap_to_mail_coif",
+      "name": "Metal Rings and Leather Strap to Mail Coif",
+      "status": "planned",
+      "summary": "A descriptive standard recipe for assembling metal rings and a leather strap into a mail coif.",
+      "recipeFamily": "assembly",
+      "recipeSubtype": "standard",
+      "inputs": [
+        {
+          "itemKey": "metal_ring",
+          "quantity": 2,
+          "role": "material"
+        },
+        {
+          "itemKey": "leather_strap",
+          "quantity": 1,
+          "role": "material"
+        }
+      ],
+      "outputs": [
+        {
+          "itemKey": "mail_coif",
+          "quantity": 1,
+          "role": "primary"
+        }
+      ],
+      "requiredWorkplaceIds": [
+        "workplace.armorers_forge"
+      ],
+      "requiredToolItemKeys": [
+        "blacksmith_hammer"
+      ],
+      "skillRequirements": [
+        {
+          "skillId": "skill.crafting.armoring",
+          "minimumRank": 1
+        }
+      ],
+      "relatedProductionChainId": "chain.warfare.armor",
+      "sourceAuthorityNotes": [
+        "Uses only canonical item, workplace, tool, skill, and optional production-chain references from the accepted synthesis.",
+        "All integer quantities are bounded_design_inference game-scale batch units, not historical yields or production-chain-derived ratios.",
+        "The production-chain link is descriptive and non-inheriting; this planned static record adds no execution, inventory, or economy behavior."
+      ],
+      "notes": [
+        "Static planned recipe content only.",
+        "No crafting availability or execution, input consumption, output creation, runtime, UI, save, or gameplay behavior."
+      ]
     }
   ]
 }
