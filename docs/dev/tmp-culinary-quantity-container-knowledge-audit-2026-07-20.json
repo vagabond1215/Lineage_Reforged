@@ -1,0 +1,1142 @@
+{
+  "metadata": {
+    "schemaVersion": 1,
+    "sourceRun": "Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit",
+    "date": "2026-07-20",
+    "runClassification": "unversioned documentation-only research, repository audit, and design integration",
+    "milestoneImpact": "supports_current_band",
+    "parentVersion": null,
+    "startingCommit": "d4d62234578b240b52dae8ad3e10b0155bcc80d4",
+    "branch": "master",
+    "startingWorktree": "clean",
+    "controllingDecision": {
+      "path": "docs/design/culinary-preparation-portion-meal-composition-and-food-knowledge-decision.md",
+      "sha256": "A4C57268467322A0071FAB5BCD399D93E61748D04A7FA2966487F0825659C4CA"
+    },
+    "acceptedRepairCommit": "9b73c80e5fc28b3f0951a0d308c0f693ce1493c5",
+    "heldVersion066Blob": "42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769",
+    "scope": "research and contract recommendation only; no implementation permission"
+  },
+  "liveOwners": [
+    {
+      "ownerId": "items.items",
+      "paths": [
+        "packages/content/base/items/items.json",
+        "packages/schemas/items/item.schema.json"
+      ],
+      "observedAuthority": "static item identity, classification, authored name, roles, tags, processing groups, value metadata, and profile references",
+      "observedLimits": "no orthogonal food readiness, preparation-method, hazard, portionability, or container-capability profiles",
+      "evidence": "1372 records; container-like items and foods are ordinary item records"
+    },
+    {
+      "ownerId": "items.consumable_profiles",
+      "paths": [
+        "packages/content/base/items/consumable_profiles.json",
+        "packages/schemas/items/consumable-profile.schema.json"
+      ],
+      "observedAuthority": "static consumable energy, protein, carbohydrate, fat, hydration, intoxication, and use verb",
+      "observedLimits": "no portion basis, satiety, readiness, safety, or meal-composition authority",
+      "evidence": "9 profiles; energy values range from 10 to 38 game units"
+    },
+    {
+      "ownerId": "crafting.recipes",
+      "paths": [
+        "packages/content/base/crafting/recipes.json",
+        "packages/schemas/crafting/recipe.schema.json"
+      ],
+      "observedAuthority": "descriptive item transformations with integer input and output quantities",
+      "observedLimits": "integers have no physical unit or conversion semantics and recipes do not execute inventory mutation",
+      "evidence": "28 recipes, 37 input rows with quantities 1, 2, or 4, and 28 output rows with quantities 1 or 2"
+    },
+    {
+      "ownerId": "civilization.production_and_workplaces",
+      "paths": [
+        "packages/content/base/civilization/production_chains.json",
+        "packages/content/base/civilization/workplaces.json",
+        "packages/schemas/civilization/workplace.schema.json"
+      ],
+      "observedAuthority": "descriptive production sequence, workplaces, skills, tools, and workplace IO profiles",
+      "observedLimits": "production-chain steps are mostly item-key lists; workplace quantities include placeholders and a large unit vocabulary without a shared physical-dimension contract",
+      "evidence": "121 production chains and 58 workplaces; workplace IO uses more than 50 labels including item, bundle, portion, pot, cask, crate, basket, liter, cut, and batch"
+    },
+    {
+      "ownerId": "world.resource_outputs",
+      "paths": [
+        "packages/content/base/world/flora.json",
+        "packages/schemas/world/flora.schema.json",
+        "packages/content/base/world/fauna.json",
+        "packages/schemas/world/fauna.schema.json",
+        "packages/content/base/world/monsters.json",
+        "packages/schemas/world/monster.schema.json",
+        "packages/content/base/civilization/extraction_methods.json"
+      ],
+      "observedAuthority": "flora harvest descriptions, fauna outputs, monster drop ranges, and extraction multipliers",
+      "observedLimits": "flora and fauna contain placeholder-valued yield fields or product lists; monster drops use count ranges; extraction uses multipliers without a shared basis",
+      "evidence": "117 flora, 132 fauna, 24 monsters with 49 drop rows, and 22 extraction methods"
+    },
+    {
+      "ownerId": "player.inventory_contracts",
+      "paths": [
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "observedAuthority": "InventoryStack, InventoryBag, PlayerInventoryState, equipment, player state, and shared deltas",
+      "observedLimits": "InventoryStack stores itemId, itemKey, and integer quantity only; no item-instance id, manifest, remaining amount, observed identity, or heterogeneous-group membership",
+      "evidence": "InventoryStack at the live shared contract is stack-level rather than per-unit instance truth"
+    },
+    {
+      "ownerId": "player.body_state",
+      "paths": [
+        "packages/engines/player-engine/src/body-state.ts",
+        "packages/content/base/game/global_rules.json",
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "observedAuthority": "daily intake, energy demand, protein, hydration, fatigue, starvation, recovery, and application of consumable profiles",
+      "observedLimits": "no satiety duration, dietary exposure history, composed-meal event, or partial-portion application",
+      "evidence": "rule.body_state_balance sets dailyCalories to 100 game units and dailyHydration to 72; applyConsumable adds profile values"
+    },
+    {
+      "ownerId": "player.run_difficulty",
+      "paths": [
+        "packages/engines/player-engine/src/difficulty.ts",
+        "packages/content/base/game/global_rules.json",
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "observedAuthority": "easy, normal, hard, brutal, and hardcore modifiers for progression, body state, recovery, starvation, and prestige",
+      "observedLimits": "no culinary feature switches for fraud, inspection forgiveness, monotony, detailed nutrition, or food-risk severity",
+      "evidence": "rule.run_difficulty_balance is live and player-engine-owned"
+    },
+    {
+      "ownerId": "player.knowledge_skill_reputation",
+      "paths": [
+        "packages/content/base/player/skills.json",
+        "packages/content/base/player/knowledge_domains.json",
+        "packages/content/base/player/knowledge_domain_registry.json",
+        "packages/engines/player-engine/src/progression.ts",
+        "packages/engines/player-engine/src/reputation.ts",
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "observedAuthority": "Cooking skill, general and natural-world Knowledge domains, Knowledge assistance, and scoped fame/notoriety",
+      "observedLimits": "no culinary/trade-goods Knowledge domain, per-item observation record, seller claim, inspection evidence, or omniscient merchant score",
+      "evidence": "skill.crafting.cooking is live; the domain registry has seven domains but no culinary or trade-appraisal domain"
+    },
+    {
+      "ownerId": "civilization.market_social_service",
+      "paths": [
+        "packages/content/base/civilization/services.json",
+        "packages/schemas/civilization/service.schema.json",
+        "packages/content/base/civilization/economy_rules.json",
+        "packages/schemas/civilization/economy-rule.schema.json",
+        "packages/content/base/civilization/guilds.json",
+        "packages/schemas/civilization/npc.schema.json"
+      ],
+      "observedAuthority": "static service, economy, guild, and NPC context",
+      "observedLimits": "no transaction-time seller claim, permissioned inspection, deposit, refusal, or deceptive-packing command contract",
+      "evidence": "guild text already references declared weights and inspections, but it is authored context rather than fraud runtime"
+    },
+    {
+      "ownerId": "ui.new_game_and_inventory",
+      "paths": [
+        "packages/content/base/player/starting_bundles.json",
+        "packages/schemas/player/starting-bundle.schema.json",
+        "apps/rpg-ui/src/game-shell/characterCreationCatalog.ts",
+        "apps/rpg-ui/src/game-shell/newGameSnapshot.ts",
+        "apps/rpg-ui/src/features/characterPanelState.ts"
+      ],
+      "observedAuthority": "current starting-bundle selection, starter inventory construction, and UI-side inventory consumption",
+      "observedLimits": "new-game construction is UI-owned and creates one simple bag with stack quantities; no fixed manifests, region/difficulty food variants, or item-instance construction",
+      "evidence": "7 starting bundles; 6 include one item.ration_bundle; buildStarterInventory creates bag.traveler_satchel with slotCapacity 20"
+    }
+  ],
+  "quantitySystems": [
+    {
+      "conceptId": "quantity.recipe_integer",
+      "currentOwner": "crafting.recipes",
+      "repositoryEvidence": [
+        "packages/content/base/crafting/recipes.json",
+        "packages/schemas/crafting/recipe.schema.json"
+      ],
+      "proposedOwner": "future:shared.quantity_contract",
+      "stateCategory": "static",
+      "dependencies": [],
+      "implementationReadiness": "blocked",
+      "recommendation": "Treat existing integers as legacy authored recipe units until every affected item declares a compatible basis; do not infer mass, volume, servings, or historical ratios.",
+      "provenanceConfidence": "high: directly observed schema and all 28 records",
+      "duplicationOrOwnerConflictRisk": "high if culinary code privately assigns units that conflict with workplaces or inventory"
+    },
+    {
+      "conceptId": "quantity.physical_dimension",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/civilization/workplaces.json",
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "proposedOwner": "future:packages/shared/types/src/quantity.ts",
+      "stateCategory": "static",
+      "dependencies": [],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Use controlled dimensions count, mass, volume, and serving. Model bundle, batch, and contained as aggregation or packaging kinds rather than pretending they are physical dimensions.",
+      "provenanceConfidence": "high: cross-domain unit vocabulary measured in live content",
+      "duplicationOrOwnerConflictRisk": "medium if the shared type is introduced without content-schema owners"
+    },
+    {
+      "conceptId": "quantity.basis_unit",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/civilization/workplaces.json"
+      ],
+      "proposedOwner": "future:packages/content/base/game/quantity_units.json",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.physical_dimension"
+      ],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Define stable basis units and separate display units; store amounts as integers or fixed-point basis units. Exact mass and volume bases require explicit acceptance.",
+      "provenanceConfidence": "medium: need is clear, exact unit catalog is an open decision",
+      "duplicationOrOwnerConflictRisk": "high if workplaces, recipes, and inventory each create their own conversion tables"
+    },
+    {
+      "conceptId": "quantity.serving_semantics",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/consumable_profiles.json",
+        "packages/content/base/game/global_rules.json"
+      ],
+      "proposedOwner": "future:items.food_portion_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.basis_unit"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "A serving is an authored culinary reference amount, not a universal physical conversion. It may reference a mass, volume, or discrete-count basis and must not replace the canonical amount.",
+      "provenanceConfidence": "high for separation; low for future authored values",
+      "duplicationOrOwnerConflictRisk": "medium if nutrition profiles independently define serving sizes"
+    },
+    {
+      "conceptId": "quantity.capacity_and_fill",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json",
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.physical_dimension",
+        "quantity.basis_unit"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Container templates declare capacity dimension and amount plus allowed fill postures. Instance contents declare current fill; density is optional conversion metadata used only when explicitly authored.",
+      "provenanceConfidence": "high: accepted item/inventory boundary; exact fields remain undecided",
+      "duplicationOrOwnerConflictRisk": "high if capacity is placed on stacks or parsed from item names"
+    },
+    {
+      "conceptId": "quantity.resource_yield",
+      "currentOwner": "world.resource_outputs",
+      "repositoryEvidence": [
+        "packages/content/base/world/flora.json",
+        "packages/content/base/world/fauna.json",
+        "packages/content/base/world/monsters.json",
+        "packages/content/base/civilization/extraction_methods.json"
+      ],
+      "proposedOwner": "future:cross_domain.resource_output_quantity_adapters",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.physical_dimension",
+        "quantity.basis_unit"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Defer nonculinary migration behind explicit adapters; until then, counts, placeholder yields, and multipliers retain their current domain-local meaning.",
+      "provenanceConfidence": "high: direct record and schema audit",
+      "duplicationOrOwnerConflictRisk": "medium; compatibility debt is inability to compare yields physically across domains"
+    },
+    {
+      "conceptId": "quantity.inventory_stack",
+      "currentOwner": "player.inventory_contracts",
+      "repositoryEvidence": [
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "proposedOwner": "future:player.inventory_instance_amount",
+      "stateCategory": "instance",
+      "dependencies": [
+        "quantity.basis_unit",
+        "portion.remaining_amount"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Retain stack quantity as a presentation/count optimization; divisible or manifested goods require per-instance or per-lot canonical amounts beneath the visible stack.",
+      "provenanceConfidence": "high: live stack contract is explicit",
+      "duplicationOrOwnerConflictRisk": "high if remaining amount is stored only as an aggregate stack fraction"
+    },
+    {
+      "conceptId": "quantity.market_bulk_basis",
+      "currentOwner": "civilization.market_social_service",
+      "repositoryEvidence": [
+        "packages/content/base/civilization/market_item_values.json",
+        "packages/schemas/civilization/market-item-value.schema.json",
+        "packages/content/base/items/items.json"
+      ],
+      "proposedOwner": "future:civilization.market_quantity_quote",
+      "stateCategory": "command",
+      "dependencies": [
+        "quantity.basis_unit",
+        "quantity.capacity_and_fill"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Market offers must quote item/lot amount and basis without changing static item value identity; bulk containers remain physical inventory instances.",
+      "provenanceConfidence": "medium: boundary is clear, transaction command owner is not implemented",
+      "duplicationOrOwnerConflictRisk": "high if bulk pricing owns container contents or manifest truth"
+    },
+    {
+      "conceptId": "quantity.starting_bundle",
+      "currentOwner": "ui.new_game_and_inventory",
+      "repositoryEvidence": [
+        "packages/content/base/player/starting_bundles.json",
+        "apps/rpg-ui/src/game-shell/newGameSnapshot.ts"
+      ],
+      "proposedOwner": "future:player.new_game_manifest_construction",
+      "stateCategory": "command",
+      "dependencies": [
+        "quantity.inventory_stack",
+        "manifest.creation_time_truth"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Starting definitions remain fixed and known; later construction should instantiate accepted quantities, containers, and manifests without randomizing on first open.",
+      "provenanceConfidence": "high: direct UI construction audit",
+      "duplicationOrOwnerConflictRisk": "medium if UI continues to author instance truth"
+    }
+  ],
+  "foodStateConcepts": [
+    {
+      "conceptId": "food.readiness",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json",
+        "packages/content/base/civilization/production_chains.json"
+      ],
+      "proposedOwner": "future:items.food_state_profiles",
+      "stateCategory": "static",
+      "dependencies": [],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Controlled readiness values distinguish ready_to_eat, requires_preparation, requires_cooking, conditionally_edible, and not_edible_as_presented; readiness is not preservation or safety.",
+      "provenanceConfidence": "high: controlling decision accepted",
+      "duplicationOrOwnerConflictRisk": "high if encoded as a replacement branch taxonomy"
+    },
+    {
+      "conceptId": "food.preparation_method",
+      "currentOwner": "civilization.production_and_workplaces",
+      "repositoryEvidence": [
+        "packages/content/base/civilization/production_chains.json",
+        "packages/content/base/crafting/recipes.json"
+      ],
+      "proposedOwner": "future:crafting.food_process_methods",
+      "stateCategory": "static",
+      "dependencies": [
+        "food.readiness"
+      ],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Use reusable method identities such as bake, boil, dry, ferment, fry, pickle, salt, smoke, steam, and sugar-preserve. Methods may overlap and carry validated effects; recipes/chains reference them.",
+      "provenanceConfidence": "high for model; exact vocabulary requires review",
+      "duplicationOrOwnerConflictRisk": "medium if both recipes and production chains claim separate method catalogs"
+    },
+    {
+      "conceptId": "food.preservation_effect",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json",
+        "packages/content/base/civilization/production_chains.json"
+      ],
+      "proposedOwner": "future:items.food_state_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "food.preparation_method"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Derive or validate preservation posture from controlled methods, parameters, packaging, and resulting profile; do not author a lone isPreserved flag.",
+      "provenanceConfidence": "high: accepted decision and modern food-safety sources",
+      "duplicationOrOwnerConflictRisk": "high if preservation is inferred from names or itemSubBranch"
+    },
+    {
+      "conceptId": "food.safety_hazard_profile",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json",
+        "packages/content/base/world/flora.json",
+        "packages/content/base/world/fauna.json",
+        "packages/content/base/world/monsters.json"
+      ],
+      "proposedOwner": "future:items.food_safety_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "food.readiness",
+        "food.preparation_method"
+      ],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Orthogonal hazards include biological contamination, parasites, toxin/poisonous part, harmful secretion, spoilage, environmental/chemical contamination, and physical hazards, with residual risk after each supported process.",
+      "provenanceConfidence": "high for categories; future fantasy biology requires authored input",
+      "duplicationOrOwnerConflictRisk": "high if generic heat is allowed to clear every hazard"
+    },
+    {
+      "conceptId": "food.authored_display_name",
+      "currentOwner": "items.items",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json"
+      ],
+      "proposedOwner": "items.items",
+      "stateCategory": "static",
+      "dependencies": [
+        "food.preparation_method"
+      ],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Names remain authored. Mechanical fields may validate that an Applewood-Smoked Sausage Links identity references smoking and a fuel/technique descriptor, but mechanics never parse the display name and names are not auto-generated.",
+      "provenanceConfidence": "high: accepted decision",
+      "duplicationOrOwnerConflictRisk": "low when names remain item identity metadata"
+    },
+    {
+      "conceptId": "food.quality_luxury_descriptors",
+      "currentOwner": "items.items",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json",
+        "packages/content/base/civilization/production_chains.json"
+      ],
+      "proposedOwner": "future:items.food_presentation_descriptors",
+      "stateCategory": "static",
+      "dependencies": [
+        "food.authored_display_name"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Keep regional, specialty, technique, fuel, quality, elite-display luxury, and attainable-celebratory luxury descriptors separate from readiness and preservation.",
+      "provenanceConfidence": "medium: semantic direction accepted, lore-native authored content absent",
+      "duplicationOrOwnerConflictRisk": "medium if descriptors become alternate item identity or price authority"
+    },
+    {
+      "conceptId": "food.sausage_collision_repair",
+      "currentOwner": "items.items",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json",
+        "packages/content/base/civilization/production_chains.json"
+      ],
+      "proposedOwner": "future:culinary_catalog_integrity_package",
+      "stateCategory": "static",
+      "dependencies": [
+        "food.readiness",
+        "food.preparation_method",
+        "food.preservation_effect",
+        "food.safety_hazard_profile"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Do not repair item.sausage_link, item.sausage_coil, item.smoked_sausage_link, item.skillet_sausage, or sausage-board classifications until the orthogonal food-state contract exists; the current stationery and lighting branches are collisions, while preserved does not prove ready-to-eat.",
+      "provenanceConfidence": "high: direct item and chain audit",
+      "duplicationOrOwnerConflictRisk": "high if a taxonomy-only patch lands first"
+    },
+    {
+      "conceptId": "food.composed_meal",
+      "currentOwner": "civilization.production_and_workplaces",
+      "repositoryEvidence": [
+        "packages/content/base/civilization/production_chains.json",
+        "packages/content/base/items/consumable_profiles.json"
+      ],
+      "proposedOwner": "future:player.meal_composition_command",
+      "stateCategory": "command",
+      "dependencies": [
+        "quantity.serving_semantics",
+        "food.readiness",
+        "portion.remaining_amount"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Static named recipes may produce durable meal items; ad hoc Ready To Eat and Prepare selections create a deterministic eating occasion or composed-meal instance without inventing a venue-specific recipe identity.",
+      "provenanceConfidence": "high for boundary; exact persistence choice is open",
+      "duplicationOrOwnerConflictRisk": "high if UI assembles nutrition totals or mutates inventory"
+    },
+    {
+      "conceptId": "food.nutrition_satiety",
+      "currentOwner": "items.consumable_profiles",
+      "repositoryEvidence": [
+        "packages/content/base/items/consumable_profiles.json",
+        "packages/engines/player-engine/src/body-state.ts"
+      ],
+      "proposedOwner": "future:items.consumable_profiles_v2",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.serving_semantics"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendation": "Retain energy, protein, fat, carbohydrate, hydration, portion size, satiety amount, and satiety duration. Body-state engine owns effects; detailed micronutrients are not the default.",
+      "provenanceConfidence": "high for existing macros and accepted moderate direction; medium for satiety fields",
+      "duplicationOrOwnerConflictRisk": "medium if meal preview calculates effects outside player-engine"
+    }
+  ],
+  "portionabilitySamples": [
+    {
+      "conceptId": "portion.apple",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json"
+      ],
+      "proposedOwner": "future:items.food_portion_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.basis_unit"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "whole_only for the first coherent slice",
+      "canonicalAmount": "one discrete item",
+      "minimumMeaningfulPortion": "all",
+      "notes": "Real bites need leftover-instance identity and spoilage semantics; omit until intentionally designed.",
+      "provenanceConfidence": "medium: simplification recommendation",
+      "duplicationOrOwnerConflictRisk": "low"
+    },
+    {
+      "conceptId": "portion.bread_loaf",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "item.bread_loaf",
+        "consume.bread_loaf"
+      ],
+      "proposedOwner": "future:items.food_portion_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.serving_semantics"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "portionable_solid",
+      "canonicalAmount": "integer basis slices or fixed-point loaf units",
+      "minimumMeaningfulPortion": "authored slice/segment",
+      "notes": "Nutrition scales by deterministic consumed amount; remainder belongs to the item instance.",
+      "provenanceConfidence": "high: accepted use case",
+      "duplicationOrOwnerConflictRisk": "medium if stored as floating percentage"
+    },
+    {
+      "conceptId": "portion.meat_cut",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "item.butchered_meat"
+      ],
+      "proposedOwner": "future:items.food_portion_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "food.safety_hazard_profile",
+        "quantity.basis_unit"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "portionable_solid_with_tool_or_prepare_action",
+      "canonicalAmount": "integer mass-basis units",
+      "minimumMeaningfulPortion": "authored cut amount",
+      "notes": "Cutting does not itself make raw meat safe.",
+      "provenanceConfidence": "high for separation; exact basis undecided",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "portion.bowl_food",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "item.game_stew",
+        "item.seafood_stew"
+      ],
+      "proposedOwner": "future:player.inventory_instance_amount",
+      "stateCategory": "instance",
+      "dependencies": [
+        "quantity.capacity_and_fill",
+        "portion.remaining_amount"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "portionable_or_pourable_by_recipe_output",
+      "canonicalAmount": "integer volume or serving-basis units",
+      "minimumMeaningfulPortion": "authored spoonful/serving basis, not a name-derived bowl",
+      "notes": "A required dish/container is selected when physical transfer needs one.",
+      "provenanceConfidence": "medium: live items exist but no amount/container contract",
+      "duplicationOrOwnerConflictRisk": "high if bowl identity and food contents are conflated"
+    },
+    {
+      "conceptId": "portion.drink",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "item.ale_cask",
+        "consume.ale_cask"
+      ],
+      "proposedOwner": "future:player.inventory_instance_amount",
+      "stateCategory": "instance",
+      "dependencies": [
+        "quantity.capacity_and_fill",
+        "portion.remaining_amount"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "pourable_liquid",
+      "canonicalAmount": "integer volume-basis units",
+      "minimumMeaningfulPortion": "authored drink measure",
+      "notes": "The current whole-cask consumable profile is not evidence that a cask is one drink.",
+      "provenanceConfidence": "high: current collision observed",
+      "duplicationOrOwnerConflictRisk": "high"
+    },
+    {
+      "conceptId": "portion.loose_nuts_berries",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json",
+        "packages/content/base/civilization/workplaces.json"
+      ],
+      "proposedOwner": "future:items.food_portion_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.basis_unit",
+        "quantity.capacity_and_fill"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "stack_divisible_small_units or divisible loose amount",
+      "canonicalAmount": "integer count or mass basis chosen per item family",
+      "minimumMeaningfulPortion": "non-token threshold for nutrition and diversity",
+      "notes": "Loose carriage normally requires a pouch, basket, sack, or other compatible container.",
+      "provenanceConfidence": "high for physical intent; exact item profiles require authorship",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "portion.sweets",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/content/base/items/items.json"
+      ],
+      "proposedOwner": "future:items.food_portion_profiles",
+      "stateCategory": "static",
+      "dependencies": [
+        "quantity.basis_unit"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "whole_only per piece or stack_divisible pieces",
+      "canonicalAmount": "integer pieces",
+      "minimumMeaningfulPortion": "one piece",
+      "notes": "A bag may be a container instance; it must not make the entire bag one indivisible food by default.",
+      "provenanceConfidence": "medium: representative recommendation",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "portion.remaining_amount",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "proposedOwner": "future:player.inventory_instance_amount",
+      "stateCategory": "instance",
+      "dependencies": [
+        "quantity.basis_unit"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "integer or fixed-point basis units",
+      "canonicalAmount": "totalAmount and remainingAmount in the same basis",
+      "minimumMeaningfulPortion": "static profile constraint",
+      "notes": "UI percentage sliders convert to deterministic integer amounts; free-floating percentage is never authoritative.",
+      "provenanceConfidence": "high: accepted decision",
+      "duplicationOrOwnerConflictRisk": "high if stored separately by UI and engine"
+    },
+    {
+      "conceptId": "portion.opened_state",
+      "currentOwner": "none",
+      "repositoryEvidence": [
+        "packages/shared/types/src/contracts.ts"
+      ],
+      "proposedOwner": "future:player.item_instance_condition",
+      "stateCategory": "instance",
+      "dependencies": [
+        "portion.remaining_amount",
+        "container.seal_state"
+      ],
+      "implementationReadiness": "blocked",
+      "recommendedMode": "explicit opened/closed/sealed instance state",
+      "canonicalAmount": "not applicable",
+      "minimumMeaningfulPortion": "not applicable",
+      "notes": "Later freshness and contamination may depend on opening, but this audit does not authorize spoilage runtime.",
+      "provenanceConfidence": "high for boundary; later behavior deferred",
+      "duplicationOrOwnerConflictRisk": "high if opening is inferred from remaining amount"
+    }
+  ],
+  "containerCapabilityNeeds": [
+    {
+      "conceptId": "container.capacity",
+      "currentOwner": "none",
+      "repositoryEvidence": ["item.cask", "item.jar", "item.sack", "item.basket"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": ["quantity.capacity_and_fill"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Declare dimension and maximum basis amount; slot capacity remains a separate bag concept.",
+      "provenanceConfidence": "high",
+      "duplicationOrOwnerConflictRisk": "high if confused with InventoryBag.slotCapacity"
+    },
+    {
+      "conceptId": "container.bulk_posture",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/content/base/items/items.json"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": ["container.capacity"],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Distinguish personal, hand-carried, pack, cart/wagon, and storage postures without making ordinary inventory magical.",
+      "provenanceConfidence": "medium",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "container.liquid_tightness",
+      "currentOwner": "none",
+      "repositoryEvidence": ["item.ale_cask", "item.glass_bottle", "item.jar"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": [],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Controlled capability forbids liquid transfer into incompatible containers.",
+      "provenanceConfidence": "high",
+      "duplicationOrOwnerConflictRisk": "low"
+    },
+    {
+      "conceptId": "container.food_safe_posture",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/content/base/items/items.json"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": ["food.safety_hazard_profile"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Describe food-contact compatibility and later contamination modifiers without claiming modern sanitation knowledge for characters.",
+      "provenanceConfidence": "high for need; exact mechanics later",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "container.heat_tolerance",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/content/base/civilization/workplaces.json"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": [],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Declare cold-only, warm-serving, direct-heat, or process-safe posture so Prepare and Cook can validate vessels.",
+      "provenanceConfidence": "medium",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "container.seal_state",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts"],
+      "proposedOwner": "future:player.item_instance_condition",
+      "stateCategory": "instance",
+      "dependencies": ["container.seal_capability"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Instance state records open, closed, sealed, locked, and resealed where the template permits; a template describes capability, not current state.",
+      "provenanceConfidence": "high",
+      "duplicationOrOwnerConflictRisk": "high"
+    },
+    {
+      "conceptId": "container.seal_capability",
+      "currentOwner": "none",
+      "repositoryEvidence": ["item.cask", "item.glass_jar"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": [],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Declare closable, sealable, lockable, and resealable capabilities independently.",
+      "provenanceConfidence": "high",
+      "duplicationOrOwnerConflictRisk": "low"
+    },
+    {
+      "conceptId": "container.allowed_forms",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/content/base/civilization/workplaces.json"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": ["quantity.physical_dimension"],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Allowed forms include discrete solids, loose solids, powders, pastes, and liquids; lists stay extensible and do not parse tags or names.",
+      "provenanceConfidence": "medium",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "container.nesting",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": ["container.capacity"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Template declares whether nesting is allowed; runtime prevents cycles and enforces capacity.",
+      "provenanceConfidence": "medium",
+      "duplicationOrOwnerConflictRisk": "high if bags and item containers create separate nesting graphs"
+    },
+    {
+      "conceptId": "container.visibility_inspectability",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts"],
+      "proposedOwner": "future:items.container_templates",
+      "stateCategory": "static",
+      "dependencies": ["knowledge.observation"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Template describes opaque/translucent/open-view and inspection access; character observation remains separate state.",
+      "provenanceConfidence": "high",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "container.transfer_contamination",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/engines/player-engine/src/body-state.ts"],
+      "proposedOwner": "future:player.inventory_transfer_command",
+      "stateCategory": "command",
+      "dependencies": ["container.food_safe_posture", "container.seal_state", "food.safety_hazard_profile"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Engine command validates form, capacity, seal access, and known compatibility; later contamination effects remain a separate risk-resolution package.",
+      "provenanceConfidence": "high for command ownership; runtime behavior deferred",
+      "duplicationOrOwnerConflictRisk": "high if UI directly changes contents"
+    }
+  ],
+  "knowledgeAndFraudConcepts": [
+    {
+      "conceptId": "manifest.creation_time_truth",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts", "docs/design/regional-ration-manifest-and-container-knowledge-decision.md"],
+      "proposedOwner": "future:player.item_instance_manifest",
+      "stateCategory": "instance",
+      "dependencies": ["quantity.inventory_stack"],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Resolve true manifest, origin, quality, and relevant condition when the lot or unit is created; opening reveals or samples existing truth and never rerolls contents.",
+      "provenanceConfidence": "high: accepted decision",
+      "duplicationOrOwnerConflictRisk": "high if container opening owns RNG"
+    },
+    {
+      "conceptId": "manifest.heterogeneous_visible_group",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts"],
+      "proposedOwner": "future:player.inventory_presentation_group",
+      "stateCategory": "instance",
+      "dependencies": ["manifest.creation_time_truth", "knowledge.observation"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Identical-looking unknown units may share one visible slot while retaining per-unit ids and manifests. Identification or opening splits presentation groups deterministically.",
+      "provenanceConfidence": "high: accepted decision",
+      "duplicationOrOwnerConflictRisk": "high if visible stacking erases per-unit truth"
+    },
+    {
+      "conceptId": "knowledge.observation",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/content/base/player/knowledge_domain_registry.json", "packages/shared/types/src/contracts.ts"],
+      "proposedOwner": "future:player.item_observation_state",
+      "stateCategory": "character-relative",
+      "dependencies": ["manifest.creation_time_truth"],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Store what this character has observed with certainty/provenance; never copy true identity into a universally visible field by default.",
+      "provenanceConfidence": "high for separation; exact persistence owner needs acceptance",
+      "duplicationOrOwnerConflictRisk": "high if Knowledge snippets and item observations both own the same certainty"
+    },
+    {
+      "conceptId": "knowledge.food_safety_cues",
+      "currentOwner": "player.knowledge_skill_reputation",
+      "repositoryEvidence": ["packages/content/base/player/skills.json", "packages/content/base/player/knowledge_domain_registry.json"],
+      "proposedOwner": "future:player.culinary_observation_rules",
+      "stateCategory": "character-relative",
+      "dependencies": ["food.safety_hazard_profile", "knowledge.observation"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Expose smell, visible condition, season, tradition, trust, preservation practice, and experience rather than pathogens or modern germ theory; hidden engine risk remains authoritative.",
+      "provenanceConfidence": "high: accepted decision and safety evidence",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "fraud.seller_claim",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/schemas/civilization/npc.schema.json", "packages/content/base/civilization/services.json"],
+      "proposedOwner": "future:civilization.transaction_claim_state",
+      "stateCategory": "instance",
+      "dependencies": ["manifest.creation_time_truth"],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "A claim or label is transaction/context state and may disagree with truth; it must not overwrite item identity, origin, manifest, quality, or condition.",
+      "provenanceConfidence": "high for separation; transaction owner is absent",
+      "duplicationOrOwnerConflictRisk": "high"
+    },
+    {
+      "conceptId": "fraud.deception_method",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/content/base/civilization/guilds.json", "packages/schemas/civilization/npc.schema.json"],
+      "proposedOwner": "future:civilization.trade_deception_profiles",
+      "stateCategory": "static",
+      "dependencies": ["fraud.seller_claim"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Static methods may describe substitution, short weight, false origin/quality, concealed spoilage, counterfeit mark, mixed lot, or deceptive packing; attempts are context-owned commands.",
+      "provenanceConfidence": "high for setting concepts; exact skill/ethics owners unresolved",
+      "duplicationOrOwnerConflictRisk": "high if encoded only as NPC personality text"
+    },
+    {
+      "conceptId": "fraud.inspection_action",
+      "currentOwner": "none",
+      "repositoryEvidence": ["docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md", "packages/content/base/civilization/guilds.json"],
+      "proposedOwner": "future:player.inspect_goods_command",
+      "stateCategory": "command",
+      "dependencies": ["knowledge.observation", "fraud.seller_claim", "container.visibility_inspectability"],
+      "implementationReadiness": "design-ready only",
+      "recommendation": "Context selects allowed observations: view sample, inspect deeper, smell, taste, weigh, examine seal/mark/document, or consult. Command accounts for access, permission, deposit, timing, offense, trust, refusal, and destructive opening.",
+      "provenanceConfidence": "high for action surface; exact resolution contract needs decision",
+      "duplicationOrOwnerConflictRisk": "high if each vendor UI invents checks"
+    },
+    {
+      "conceptId": "fraud.reputation_context",
+      "currentOwner": "player.knowledge_skill_reputation",
+      "repositoryEvidence": ["packages/engines/player-engine/src/reputation.ts", "packages/content/base/civilization/guilds.json"],
+      "proposedOwner": "future:civilization.trade_counterparty_memory",
+      "stateCategory": "character-relative",
+      "dependencies": ["fraud.inspection_action"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Use scoped counterparty/institution evidence and existing local/regional reputation boundaries; do not expose a global omniscient merchant score to new characters.",
+      "provenanceConfidence": "high for prohibition; exact memory owner unresolved",
+      "duplicationOrOwnerConflictRisk": "high if player reputation is repurposed as seller truth"
+    },
+    {
+      "conceptId": "fraud.difficulty_configuration",
+      "currentOwner": "player.run_difficulty",
+      "repositoryEvidence": ["packages/engines/player-engine/src/difficulty.ts", "packages/content/base/game/global_rules.json"],
+      "proposedOwner": "future:rule.culinary_trade_difficulty",
+      "stateCategory": "static",
+      "dependencies": ["fraud.deception_method", "fraud.inspection_action"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Difficulty can disable fraud or tune frequency, sophistication, magnitude, inspection forgiveness, and quality/spoilage substitution severity without changing manifest truth.",
+      "provenanceConfidence": "high for owner boundary; values are balance work",
+      "duplicationOrOwnerConflictRisk": "medium"
+    },
+    {
+      "conceptId": "dietary.exposure_history",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts", "packages/engines/player-engine/src/body-state.ts"],
+      "proposedOwner": "future:player.dietary_exposure_state",
+      "stateCategory": "character-relative",
+      "dependencies": ["food.composed_meal", "food.nutrition_satiety"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Track recent dose by source ingredient/family with dominant share and optional preparation-method facet; exact-item identity alone is exploitable. Decay by elapsed days and allow difficulty reduction or disablement.",
+      "provenanceConfidence": "high for bounded model; tuning requires tests",
+      "duplicationOrOwnerConflictRisk": "high if morale, body state, and meal UI each track separate histories"
+    }
+  ],
+  "candidatePackages": [
+    {
+      "packageId": "package.culinary_contract_acceptance_decision",
+      "labelClassRecommendation": "unversioned documentation-only decision; supports_current_band",
+      "selectedAsSmallestLaterPackage": true,
+      "exactOwnerAndScope": "durable design authority for quantity dimensions/bases, food-state/process/hazard ownership, portionability, instance truth, and command boundaries",
+      "prerequisites": ["human/GPT review of this audit", "open decisions OD-01 through OD-06"],
+      "proposedFiles": ["future:docs/design/culinary-quantity-food-state-and-instance-contract-decision.md"],
+      "validation": ["authority links resolve", "all future paths stay future-prefixed", "decision does not grant runtime behavior"],
+      "testsOrResearchChecks": ["review against all seven retained cross-domain research gates", "review against item/inventory and crafting decisions"],
+      "risks": ["prematurely fixing basis units could force broad migrations", "overbroad decision could mix design and implementation"],
+      "rollbackBoundary": "revert one durable documentation file before any dependent schema work",
+      "relationToHeld066": "parallel prerequisite clarification only; does not consume, edit, restore, or unblock held 0.6.6 by itself",
+      "provenance": "this integration audit plus accepted culinary decisions and live-owner evidence",
+      "readiness": "design-ready only",
+      "dependencies": []
+    },
+    {
+      "packageId": "package.shared_quantity_foundation",
+      "labelClassRecommendation": "three-segment current-band primary implementation package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "shared controlled dimensions, basis/display-unit registry, deterministic amount shape, and content validators without migrating all domains",
+      "prerequisites": ["package.culinary_contract_acceptance_decision"],
+      "proposedFiles": ["future:packages/shared/types/src/quantity.ts", "future:packages/content/base/game/quantity_units.json", "future:packages/schemas/game/quantity-unit.schema.json", "future:tests/unit/quantity-contract.test.mjs"],
+      "validation": ["strict schema", "unique unit ids", "dimension-compatible conversions", "no floating authoritative percentage"],
+      "testsOrResearchChecks": ["unit registry tests", "recipe/workplace compatibility audit fixtures"],
+      "risks": ["cross-domain compatibility debt remains until adapters land"],
+      "rollbackBoundary": "new shared files and registrations only; no existing quantity migration in this package",
+      "relationToHeld066": "must not alter monster quantities or held content",
+      "provenance": "live recipe/workplace/resource/inventory audit",
+      "readiness": "blocked",
+      "dependencies": ["package.culinary_contract_acceptance_decision"]
+    },
+    {
+      "packageId": "package.static_food_profiles",
+      "labelClassRecommendation": "three-segment current-band primary implementation package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "food readiness, controlled process methods, preservation-effect derivation/validation, hazard profiles, portionability, and consumable-profile v2 fields",
+      "prerequisites": ["package.shared_quantity_foundation"],
+      "proposedFiles": ["future:packages/content/base/items/food_state_profiles.json", "future:packages/content/base/items/food_process_methods.json", "future:packages/content/base/items/food_safety_profiles.json", "future:packages/content/base/items/food_portion_profiles.json", "future:packages/schemas/items/food-state-profile.schema.json", "future:packages/schemas/items/food-process-method.schema.json", "future:packages/schemas/items/food-safety-profile.schema.json", "future:packages/schemas/items/food-portion-profile.schema.json"],
+      "validation": ["orthogonal axes", "methods may overlap", "no display-name parsing", "no lone isPreserved", "hazard residuals are explicit"],
+      "testsOrResearchChecks": ["schema-file tests", "content-lint references", "representative smoking/drying/pickling/cooking fixtures"],
+      "risks": ["taxonomy and process authority could duplicate production chains"],
+      "rollbackBoundary": "new static profiles and references; no runtime",
+      "relationToHeld066": "does not modify monster/flora/fauna content; held 0.6.6 remains paused",
+      "provenance": "accepted culinary decision, WHO/FAO safety evidence, live item/chain audit",
+      "readiness": "blocked",
+      "dependencies": ["package.shared_quantity_foundation"]
+    },
+    {
+      "packageId": "package.static_container_templates",
+      "labelClassRecommendation": "three-segment current-band primary implementation package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "items.container_templates static capability authority only",
+      "prerequisites": ["package.shared_quantity_foundation", "package.culinary_contract_acceptance_decision"],
+      "proposedFiles": ["future:packages/content/base/items/container_templates.json", "future:packages/schemas/items/container-template.schema.json", "future:tests/unit/container-template-content.test.mjs"],
+      "validation": ["capacity dimension", "allowed forms", "seal and heat capabilities", "no mutable contents or current state"],
+      "testsOrResearchChecks": ["schema and reference checks", "representative sack/basket/jar/cask fixtures"],
+      "risks": ["confusion with InventoryBag slot capacity"],
+      "rollbackBoundary": "static template files and item references only",
+      "relationToHeld066": "independent of held 0.6.6",
+      "provenance": "accepted item/inventory decision and container capability audit",
+      "readiness": "blocked",
+      "dependencies": ["package.shared_quantity_foundation"]
+    },
+    {
+      "packageId": "package.item_instance_truth_and_groups",
+      "labelClassRecommendation": "three-segment current-band primary implementation package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "shared/player inventory item-instance ids, amounts, container contents/state, creation-time manifests, and visible presentation groups",
+      "prerequisites": ["package.static_container_templates", "package.static_food_profiles"],
+      "proposedFiles": ["future:packages/shared/types/src/item-instance.ts", "future:packages/engines/player-engine/src/inventory.ts", "future:tests/unit/inventory-instance-groups.test.mjs", "future:tests/simulation/item-instance-roundtrip.test.mjs"],
+      "validation": ["per-unit truth preserved", "known compatibility controls stacking", "identification splits groups", "opening does not reroll"],
+      "testsOrResearchChecks": ["heterogeneous unknown group fixtures", "partial amount round trips", "nesting cycle rejection"],
+      "risks": ["high-risk save/account and inventory change", "UI-authored inventory ownership conflict"],
+      "rollbackBoundary": "new instance contract behind explicit construction path; no compatibility migration unless separately authorized",
+      "relationToHeld066": "must not change held monster loot content; later loot generation may depend on this owner",
+      "provenance": "regional manifest decision and live InventoryStack audit",
+      "readiness": "blocked",
+      "dependencies": ["package.static_container_templates", "package.static_food_profiles"]
+    },
+    {
+      "packageId": "package.culinary_knowledge_fraud_inspection_contract",
+      "labelClassRecommendation": "three-segment current-band primary documentation/schema package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "character observations, claims, evidence, inspection action vocabulary, trade-deception profiles, and scoped counterparty memory boundaries",
+      "prerequisites": ["package.item_instance_truth_and_groups"],
+      "proposedFiles": ["future:docs/design/culinary-trade-knowledge-and-inspection-contract.md", "future:packages/schemas/player/item-observation.schema.json", "future:packages/schemas/civilization/trade-deception-profile.schema.json"],
+      "validation": ["truth never overwritten by claim", "ordinary recognition may auto-resolve", "no omniscient merchant score"],
+      "testsOrResearchChecks": ["owner review against Knowledge, reputation, services, NPCs, economy, and activity-resolution decisions"],
+      "risks": ["conflict between Knowledge snippets and per-item observation state"],
+      "rollbackBoundary": "new decision/schema files only; no checks or transactions",
+      "relationToHeld066": "independent of held 0.6.6",
+      "provenance": "accepted fraud decision, medieval assize evidence, live Knowledge/reputation audit",
+      "readiness": "blocked",
+      "dependencies": ["package.item_instance_truth_and_groups"]
+    },
+    {
+      "packageId": "package.culinary_catalog_integrity",
+      "labelClassRecommendation": "three-segment current-band support implementation package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "repair food classification collisions, profile references, ration naming, and controlled food-state references without adding broad new content",
+      "prerequisites": ["package.static_food_profiles", "package.static_container_templates"],
+      "proposedFiles": ["packages/content/base/items/items.json", "packages/content/base/items/consumable_profiles.json", "packages/content/base/civilization/production_chains.json", "future:tests/unit/culinary-catalog-integrity.test.mjs"],
+      "validation": ["sausage families use correct static axes", "cask is not one drink", "authored names preserved", "no Earth proper-name additions"],
+      "testsOrResearchChecks": ["targeted content lint", "schema tests", "collision audit"],
+      "risks": ["content values and recipe links may expose quantity gaps"],
+      "rollbackBoundary": "culinary item/profile/chain rows only",
+      "relationToHeld066": "may run before or after held 0.6.6 only if it does not touch held monster/ecology rows",
+      "provenance": "live collision audit and accepted naming semantics",
+      "readiness": "blocked",
+      "dependencies": ["package.static_food_profiles", "package.static_container_templates"]
+    },
+    {
+      "packageId": "package.meal_nutrition_difficulty_contract",
+      "labelClassRecommendation": "three-segment current-band primary implementation package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "consumable profile serving/satiety fields, meal preview result contract, dietary exposure state, and difficulty switches",
+      "prerequisites": ["package.static_food_profiles", "package.item_instance_truth_and_groups"],
+      "proposedFiles": ["packages/schemas/items/consumable-profile.schema.json", "packages/content/base/items/consumable_profiles.json", "packages/shared/types/src/contracts.ts", "packages/content/base/game/global_rules.json", "future:tests/unit/meal-nutrition-difficulty.test.mjs"],
+      "validation": ["moderate nutrition only", "macros remain backend truth", "difficulty can disable nutrition and monotony pressure", "tiny token ingredients do not count for diversity"],
+      "testsOrResearchChecks": ["body-state balance fixtures", "dominant-share exposure tests", "preview aggregation tests"],
+      "risks": ["high-risk body-state and difficulty balance changes"],
+      "rollbackBoundary": "profile/rule/contract fields without action commands",
+      "relationToHeld066": "independent of held 0.6.6",
+      "provenance": "modern physiology, satiety, variety evidence and live body-state audit",
+      "readiness": "blocked",
+      "dependencies": ["package.static_food_profiles", "package.item_instance_truth_and_groups"]
+    },
+    {
+      "packageId": "package.food_actions_engine_ownership",
+      "labelClassRecommendation": "three-segment current-band primary runtime package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "engine-owned Ready To Eat, Prepare, Cook, Open, Transfer, Inspect, and Consume commands plus authoritative deltas",
+      "prerequisites": ["package.culinary_knowledge_fraud_inspection_contract", "package.meal_nutrition_difficulty_contract", "package.culinary_catalog_integrity"],
+      "proposedFiles": ["future:packages/engines/player-engine/src/food-actions.ts", "future:packages/engines/civilization-engine/src/trade-inspection.ts", "future:packages/shared/types/src/food-commands.ts", "future:tests/integration/food-actions.test.mjs"],
+      "validation": ["engine owns inventory mutation", "cook respects recipe/workplace/tool/skill boundaries", "preview and execution share resolver", "known safety uncertainty is character-relative"],
+      "testsOrResearchChecks": ["command/delta integration", "partial consumption", "container compatibility", "inspection refusal/deposit/destructive-opening cases"],
+      "risks": ["broad multi-engine package; should be split during planning", "runtime ownership transition"] ,
+      "rollbackBoundary": "new command surfaces behind current UI until migrated",
+      "relationToHeld066": "runtime package is separate from held static monster/ecology expansion",
+      "provenance": "accepted action flow, crafting boundary, activity-resolution plan, and live UI mutation audit",
+      "readiness": "blocked",
+      "dependencies": ["package.culinary_knowledge_fraud_inspection_contract", "package.meal_nutrition_difficulty_contract", "package.culinary_catalog_integrity"]
+    },
+    {
+      "packageId": "package.starting_food_manifest_variants",
+      "labelClassRecommendation": "three-segment current-band support implementation package",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "known fixed starting food/container manifests selected by difficulty, region, prestige, and later supported background/scenario owners",
+      "prerequisites": ["package.item_instance_truth_and_groups", "package.culinary_catalog_integrity", "package.meal_nutrition_difficulty_contract"],
+      "proposedFiles": ["packages/content/base/player/starting_bundles.json", "apps/rpg-ui/src/game-shell/newGameSnapshot.ts", "future:tests/unit/starting-food-manifests.test.mjs"],
+      "validation": ["fixed manifests", "no opening RNG", "known and balance-stable", "no item additions before nomenclature acceptance"],
+      "testsOrResearchChecks": ["new-game snapshot fixtures by difficulty/region/prestige"],
+      "risks": ["current construction is UI-owned", "starting balance and prestige are high-risk"],
+      "rollbackBoundary": "starting selection and construction only",
+      "relationToHeld066": "independent of held 0.6.6",
+      "provenance": "live starting-bundle/new-game audit and accepted starting-goods decision",
+      "readiness": "blocked",
+      "dependencies": ["package.item_instance_truth_and_groups", "package.culinary_catalog_integrity", "package.meal_nutrition_difficulty_contract"]
+    }
+  ],
+  "openDecisions": [
+    {
+      "decisionId": "OD-01",
+      "question": "Which exact mass and volume basis units, scales, and display conversion rules should the shared quantity contract accept?",
+      "blocking": ["package.shared_quantity_foundation"]
+    },
+    {
+      "decisionId": "OD-02",
+      "question": "Should serving be a controlled dimension or a culinary reference amount that must point to count, mass, or volume?",
+      "recommendedAnswer": "culinary reference amount",
+      "blocking": ["package.shared_quantity_foundation", "package.static_food_profiles"]
+    },
+    {
+      "decisionId": "OD-03",
+      "question": "Which preparation methods and preservation-effect parameters form the first controlled vocabulary, and which owner registers them?",
+      "recommendedAnswer": "crafting-owned methods referenced by item food-state outcomes",
+      "blocking": ["package.static_food_profiles"]
+    },
+    {
+      "decisionId": "OD-04",
+      "question": "Does an ad hoc prepared meal persist as an inventory instance, an immediate eating occasion, or both depending on packaging?",
+      "recommendedAnswer": "immediate occasion unless deliberately packaged into a compatible container",
+      "blocking": ["package.food_actions_engine_ownership"]
+    },
+    {
+      "decisionId": "OD-05",
+      "question": "Which hazards can be cleared, reduced, or left residual by each process without implying that heat cures every danger?",
+      "blocking": ["package.static_food_profiles"]
+    },
+    {
+      "decisionId": "OD-06",
+      "question": "Which current food/container records are the minimal representative fixtures for the first schema package?",
+      "recommendedAnswer": "bread loaf, butchered meat, smoked fish/meat, stew, loose berries/nuts, jar, sack, basket, cask, and glass bottle",
+      "blocking": ["package.static_food_profiles", "package.static_container_templates"]
+    },
+    {
+      "decisionId": "OD-07",
+      "question": "Should per-item observations be saved as a distinct player collection or evidence records feeding the existing Knowledge framework?",
+      "blocking": ["package.culinary_knowledge_fraud_inspection_contract"]
+    },
+    {
+      "decisionId": "OD-08",
+      "question": "Which existing skills govern appraisal, weighing, seals/documents, smell/taste, and culinary recognition, and is a new domain needed?",
+      "blocking": ["package.culinary_knowledge_fraud_inspection_contract"]
+    },
+    {
+      "decisionId": "OD-09",
+      "question": "What non-token share threshold and decay window should count toward meal diversity and repeated exposure?",
+      "blocking": ["package.meal_nutrition_difficulty_contract"]
+    },
+    {
+      "decisionId": "OD-10",
+      "question": "Which difficulty tiers disable or soften fraud, monotony, nutrition pressure, and food-risk severity?",
+      "blocking": ["package.meal_nutrition_difficulty_contract", "package.culinary_knowledge_fraud_inspection_contract"]
+    }
+  ],
+  "summary": {
+    "liveOwnerCount": 11,
+    "quantitySystemCount": 9,
+    "foodStateConceptCount": 9,
+    "portionabilitySampleCount": 9,
+    "containerCapabilityCount": 11,
+    "knowledgeAndFraudConceptCount": 10,
+    "candidatePackageCount": 10,
+    "openDecisionCount": 10,
+    "selectedSmallestLaterPackage": "package.culinary_contract_acceptance_decision",
+    "selectedPackageReadiness": "design-ready only",
+    "implementationReadyPackageCount": 0,
+    "packageGraphAcyclic": true,
+    "openingTimeRngRequired": false,
+    "perUnitTruthRequired": true,
+    "displayNameParsingAllowed": false,
+    "singleRawCookedPreservedAxisSufficient": false,
+    "heldVersion066Status": "paused and unchanged"
+  }
+}
