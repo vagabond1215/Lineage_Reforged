@@ -2,7 +2,7 @@
 
 ## Run Identity
 
-`Physical Attribute Current-State, Structural-Loss, And Difficulty Contract Planning Audit`
+`Difficulty Preset, Grim World, And Stakes Separation Contract Planning Audit`
 
 Run classification: unversioned documentation-only repository audit and implementation-contract planning
 
@@ -12,278 +12,359 @@ Parent version: none
 
 Suggested commit:
 
-`docs(body): audit current attributes and structural loss contracts`
+`docs(difficulty): audit presets world rules and stakes`
 
 ## Purpose
 
-Inspect the live repository and produce the smallest implementation-ready contract plan for:
+Inspect the live repository and produce the smallest implementation-ready contract plan for three orthogonal campaign axes:
 
-- immutable base attributes;
-- persistent developed adjustments;
-- persistent structural-loss adjustments;
-- one current-attribute resolver consuming every authorized adjustment;
-- default-enabled nutrition, atrophy, and structural-loss consequences;
-- difficulty toggles, grace periods, rates, floors, warnings, and band forgiveness;
-- migration from any live fields that currently conflate base, current, effective, growth, fatigue, or nutrition state.
+1. difficulty preset;
+2. world rules;
+3. stakes rules.
 
-Do not implement runtime, schemas, saves, validators, UI, balance values, content, commands, or gameplay.
+The accepted difficulty presets are:
+
+- `Story`;
+- `Favored`;
+- `Mortal`;
+- `Forsaken`.
+
+The accepted world-rule choices are:
+
+- `Heroic World`;
+- `Grim World`.
+
+`Mortal` is the expected default. `Grim World` is the Hardcore world-simulation ruleset. Restricted saves and permanent death are a separate future Stakes axis and must not be silently bundled into Forsaken or Grim World.
+
+Do not implement runtime, schemas, saves, validators, UI, balance values, content, commands, disease, crime, taxation, conscription, corruption, or gameplay.
 
 ## Most Specific Authority
 
 Read first and treat as controlling where older documents overlap:
 
-`docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md`
+`docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`
 
 Also read:
 
+- `docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md`;
 - `docs/design/protein-recovery-muscle-adaptation-and-nutrition-integration-decision.md`;
 - `docs/design/fat-mobilization-body-stat-and-climate-effects-decision.md`;
 - `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md`;
+- `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md`;
 - `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md`;
 - `docs/dev/current-gpt-handoff.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
 - `AGENTS.md`;
 - `README.md`.
 
-The temporary Deep Research artifact is evidence support only. Do not repair its bibliography, cite it as player-facing authority, or make its preservation a prerequisite.
+The temporary protein Deep Research artifact is evidence support only. Do not repair its bibliography, cite it as player-facing authority, or make its preservation a prerequisite.
 
 ## Accepted Invariants
 
-1. A base attribute is immutable.
-2. Ordinary gameplay never rewrites base STR, DEX, AGI, CON, VIT, WIS, INT, SPT, or CHA.
-3. The existing stat-growth owner remains authoritative for persistent developed adjustments.
-4. Structural atrophy may create persistent negative adjustments through that same owner.
-5. Persistent structural loss is enabled by default, but begins only after substantial configurable severity and duration gates.
-6. Persistent structural loss is not passive-recovery state.
-7. Lost structural capacity is rebuilt through qualifying activity, nutrition, recovery, and the ordinary stat-growth pipeline.
-8. No parallel `muscleAdaptation` progression currency exists.
-9. The current attribute is the gameplay value resolved from all authorized persistent, reversible, external, magical, equipment, health, climate, burden, and contextual adjustments.
-10. Nutrition and body state supply gates and pressure; they do not directly award attributes.
-11. Difficulty changes consequence thresholds and forgiveness, not physical nutrient truth.
-12. One missed meal, one difficult day, short ordinary rest, or brief illness cannot create persistent structural loss.
+1. Difficulty, World Rules, and Stakes are separate axes.
+2. `Story` is a narrative-first RPG abstraction, not merely weaker enemies.
+3. `Favored` retains selected systems with benevolent tuning.
+4. `Mortal` is the intended default and enables every mechanic selected by World Rules.
+5. `Forsaken` is harsher tuning and does not itself enable Grim World.
+6. `Heroic World` retains the core nutrition, recovery, body-state, economy, social, and legal systems without universally simulating every harsh externality.
+7. `Grim World` adds or materially deepens systemic reality; it cannot be a scalar bundle.
+8. Core nutrition remains part of Mortal Heroic World.
+9. Story may bypass, neutralize, or collapse technical nutrition and structural-loss consequences through explicit difficulty rules.
+10. Grim health, sanitation, crime, institutional, economic, and information systems require distinct owner contracts.
+11. Save restrictions and permanent death require a separate Stakes contract.
+12. Physical nutrient truth does not change across Favored, Mortal, and Forsaken.
+13. Base attributes remain immutable; current attributes consume persistent and reversible adjustments.
+14. Held Version `0.6.6` remains paused and byte-recoverable.
 
 ## Execution Gate
 
-1. Read the authorities above.
+1. Read all authorities above.
 2. Run `git status`, fetch, and fast-forward pull. Record branch, starting commit, and clean/dirty state.
 3. Confirm this is the active prompt.
-4. Confirm the held `Version 0.6.6` prompt still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-5. Preserve unrelated work.
-6. Stop without editing if live repository fact materially contradicts the controlling decision; report the smallest coordination repair required.
+4. Confirm `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md` exists unchanged.
+5. Confirm the held `Version 0.6.6` prompt still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+6. Preserve unrelated work.
+7. Stop without editing if live repository facts materially contradict the controlling decision; report the smallest coordination repair required.
 
-## Audit 1: Live Attribute Representation
+## Audit 1: Existing Difficulty Representation
 
 Inspect all live definitions and uses of:
 
-- base stats;
-- current stats;
-- effective stats;
-- attribute growth state;
-- daily growth caps;
-- recovery-quality inputs;
-- stat penalties and bonuses;
-- equipment, magic, status, injury, illness, Fatigue, Stamina, climate, and burden modifiers;
-- serialization and save fields;
-- UI projections and derived-value consumers.
+- difficulty enums and labels;
+- difficulty selection during character or campaign creation;
+- global difficulty rules;
+- combat tuning;
+- economy tuning;
+- travel and activity tuning;
+- body-state and nutrition tuning;
+- failure and retry assistance;
+- tutorial, warning, forecast, and information-precision settings;
+- custom difficulty support;
+- difficulty persistence in saves;
+- UI projections and settings migration.
 
-At minimum inspect likely owners including:
+Identify every existing name equivalent to:
 
-- `packages/engines/player-engine/src/stat-growth.ts` and generated/runtime counterparts;
-- `packages/engines/player-engine/src/body-state.ts` and generated/runtime counterparts;
-- `packages/shared/types/src/contracts.ts`;
-- global rules and schemas;
-- save/load and migration paths;
-- representative combat, travel, work, crafting, inventory, and character-sheet consumers.
+- Story;
+- Easy;
+- Normal or Standard;
+- Hard;
+- Simulation;
+- Hardcore;
+- Survival;
+- Ironman;
+- permadeath;
+- custom difficulty.
 
-Record exact repository facts. Do not infer that a field named `base` is actually immutable or that a field named `current` already consumes every modifier.
+Do not assume similarly named fields share the same authority.
 
-## Audit 2: Target Attribute Contract
+## Audit 2: Three-Axis Target Contract
 
-Produce an implementation-ready target contract equivalent to:
-
-```text
-currentAttribute = resolveAttribute(
-  immutableBase,
-  developedAdjustment,
-  structuralLossAdjustment,
-  staminaAdjustment,
-  fatigueAdjustment,
-  recoveryDebtAdjustment,
-  energyAdjustment,
-  hydrationAdjustment,
-  leanConditionAdjustment,
-  injuryAdjustment,
-  illnessAdjustment,
-  climateAdjustment,
-  burdenAdjustment,
-  equipmentAdjustment,
-  magicAdjustment,
-  statusAdjustment,
-  contextualAdjustment
-)
-```
-
-Do not assume every term is additive. Identify:
-
-- canonical ordering;
-- additive versus multiplicative categories;
-- caps and floors;
-- rounding boundaries;
-- whether an intrinsic-current value should be resolved before equipment and magic;
-- which value each gameplay domain should consume;
-- how explanations and UI breakdowns preserve causal clarity.
-
-Recommend the smallest coherent contract, but leave exact coefficients open.
-
-## Audit 3: Persistent Development And Structural Loss
-
-Define how the existing stat-growth owner can support both positive development and persistent structural loss without changing immutable base attributes.
-
-The preferred direction is one persistent adjustment ledger or a clearly coordinated pair of persistent adjustment fields, not two independent progression systems.
-
-Record:
-
-- how positive progress accumulates;
-- how atrophy pressure is submitted;
-- where negative progress or structural loss is rate-limited;
-- floors and maximum interval loss;
-- how structural loss differs from Fatigue and Lean Condition;
-- how rebuilding uses ordinary qualifying stat growth;
-- how passive recovery is prevented from erasing structural loss;
-- how double rewards and loss/regain farming are prevented;
-- whether any optional bounded retraining assistance needs separate state.
-
-Default rebuilding is ordinary growth from the reduced current capacity. Do not assume automatic muscle-memory acceleration.
-
-## Audit 4: Difficulty Contract
-
-Inventory existing difficulty/global-rule support and propose the smallest schema direction for:
-
-- `nutritionConsequencesEnabled`;
-- `structuralAtrophyEnabled`;
-- `persistentStructuralLossEnabled`;
-- deficit severity threshold;
-- deficit grace period;
-- disuse grace period;
-- illness and injury contribution;
-- structural-loss accumulation rate;
-- maximum loss per update and longer interval;
-- persistent-loss floor;
-- rebuilding rate multiplier;
-- Energy-band forgiveness percentage or threshold offset;
-- Protein-band forgiveness percentage or threshold offset;
-- hysteresis and sustained-crossing requirements;
-- warning lead time;
-- player information precision;
-- optional retraining assistance.
-
-Preset direction:
-
-- Accessible: enabled, long grace, forgiving bands, very slow loss, strong warnings, faster rebuilding.
-- Standard: enabled, substantial grace, baseline bands, slow capped loss, ordinary rebuilding.
-- Simulation: enabled, stricter bands, shorter but meaningful grace, stronger cumulative effects.
-- Custom: major consequences independently toggleable.
-
-Do not choose exact numeric values unless an existing accepted rule already provides them.
-
-## Audit 5: Nutrition Coverage And Band Application
-
-Preserve exact physical truth:
+Propose the smallest coherent contract shape equivalent to:
 
 ```text
-rawCoverage = absorbedAmount / individualDemand
-adjustedCoverage = applyDifficultyForgiveness(rawCoverage, difficultyRules)
+campaignRules = {
+  difficultyPreset: Story | Favored | Mortal | Forsaken,
+  worldRules: HeroicWorld | GrimWorld,
+  stakesRules: NormalStakes | future explicit stakes option,
+  customOverrides?: owner-approved values
+}
 ```
 
-Determine the cleanest owner boundary for applying difficulty forgiveness while preserving raw values for saves, simulation, debugging, and detailed UI.
+Determine:
 
-Preserve mutually exclusive Standard candidate bands:
+- canonical enum and identifier names;
+- campaign-creation ownership;
+- save identity and migration;
+- whether each axis may change after campaign creation;
+- which changes are safe, unsafe, or one-way;
+- achievement and Chronicle identity implications;
+- how custom overrides record provenance;
+- how UI explains each axis without conflating them.
 
-Energy:
+Do not accept `Ironbound` as a final identifier unless repository naming evidence supports it. Record it only as the current working title.
 
-- Deep Deficit: `< 0.80`
-- Deficit: `0.80 to < 0.95`
-- Balanced: `0.95 to < 1.05`
-- Surplus: `1.05 to < 1.15`
-- Excess: `>= 1.15`
+## Audit 3: Preset Migration
 
-Protein:
+Map existing presets into:
 
-- Deficient: `< 0.60`
-- Low: `0.60 to < 0.85`
-- Adequate: `0.85 to < 1.10`
-- Recovery Supporting: `1.10 to < 1.30`
-- Saturated: `>= 1.30`
+### Story
 
-Treat these as balance candidates, not implementation authorization.
+- standard-RPG abstraction;
+- technical nutrition and body-state management collapsed, bypassed, hidden, or neutralized;
+- persistent structural loss disabled;
+- generous recovery and assistance;
+- Grim systems, if selected, projected through broad and forgiving states.
 
-## Audit 6: Migration And Compatibility
+### Favored
+
+- all systems selected by World Rules remain enabled;
+- wider consequence thresholds;
+- longer grace periods;
+- slower harmful accumulation;
+- faster recovery and rebuilding;
+- earlier warnings and better forecasts;
+- no change to physical item truth.
+
+### Mortal
+
+- intended default;
+- all selected mechanics enabled;
+- baseline bands, rates, grace periods, and recovery;
+- gentle onboarding through presentation, not disabled systems.
+
+### Forsaken
+
+- all selected mechanics enabled;
+- stricter thresholds;
+- shorter but meaningful grace periods;
+- stronger accumulation and slower recovery;
+- no automatic Grim World or Stakes activation.
+
+Inventory exact repository fields that can be reused, renamed, deprecated, or migrated.
+
+## Audit 4: Core Nutrition Placement
+
+Preserve this direction:
+
+- Story does not require technical kcal, protein, fat, atrophy, or rebuilding management.
+- Favored, Mortal, and Forsaken retain exact internal food truth and coherent body-state architecture.
+- Mortal Heroic World includes core digestion, Energy, Stamina, hunger, satiety, hydration, Protein Support, fat reserve, recovery, current attributes, and long-duration structural loss.
+- Grim World adds contamination, sanitation, parasite, food-borne, water-borne, outbreak, and related systemic layers only after separate owner contracts.
+
+Audit whether the live body-state implementation can support:
+
+- explicit bypass or neutralization in Story;
+- consequence tuning without changing physical truth;
+- campaign-rule identity in saves;
+- later Grim extensions without a parallel nutrition system.
+
+Do not select exact balance values.
+
+## Audit 5: Grim World System Classification
+
+Inventory live foundations and missing contracts for these module families:
+
+1. health, sanitation, contamination, parasites, and wound infection;
+2. water, fuel, shelter, storage, spoilage, vermin, equipment care, and logistics;
+3. violent crime, burglary, extortion, kidnapping, protection, and personal security;
+4. tolls, taxation, levies, military or labor service, requisition, debt, and confiscation;
+5. corruption, bribery, adulteration, false measures, counterfeiting, contract fraud, and market uncertainty;
+6. imperfect maps, rumors, misinformation, stock uncertainty, legal uncertainty, and navigation friction;
+7. persistent shortages, outbreaks, displacement, institutional memory, NPC vulnerability, and world recovery.
+
+For each module family classify:
+
+- existing owner;
+- existing schema/runtime/content foundation;
+- missing authority decision;
+- whether it belongs in core Grim World, an optional Grim submodule, or later content;
+- player decisions created;
+- counterplay;
+- anti-frustration requirements;
+- persistence and save needs;
+- tests;
+- dependency order.
+
+Do not design one universal disease, crime, tax, conscription, or corruption mechanic. Preserve polity, law, class, status, economy, environment, and local variation.
+
+## Audit 6: Stakes Separation
+
+Inspect live save, defeat, death, companion-death, campaign-failure, and rollback behavior.
+
+Produce a separate Stakes contract plan covering:
+
+- normal saves;
+- restricted save count;
+- save-and-exit;
+- Ironman-style single save;
+- permanent player death;
+- permanent party or NPC death;
+- lineage or succession continuation;
+- campaign deletion or retirement;
+- crash/corruption recovery;
+- opt-in warnings;
+- achievement integrity;
+- whether stakes may be changed after campaign creation.
+
+The audit must keep these separate from:
+
+- Favored, Mortal, and Forsaken tuning;
+- Heroic World and Grim World system selection.
+
+Do not authorize or implement permanent death.
+
+## Audit 7: Combination Matrix
+
+Validate these combinations conceptually:
+
+| Difficulty | World Rules | Required posture |
+|---|---|---|
+| Story | Heroic World | conventional narrative RPG |
+| Story | Grim World | harsh world themes through coarse, forgiving abstraction |
+| Favored | Heroic World | complete core game with favorable tuning |
+| Favored | Grim World | complete Grim systems with favorable tuning |
+| Mortal | Heroic World | default intended game |
+| Mortal | Grim World | default full harsh-world simulation |
+| Forsaken | Heroic World | demanding core game without Grim additions |
+| Forsaken | Grim World | most demanding systemic game without automatic save/death changes |
+
+Identify contradictions, unsupported combinations, migration hazards, and UI requirements.
+
+## Audit 8: Owner And Setting Classification
+
+Classify each relevant setting as exactly one of:
+
+- difficulty scalar or threshold;
+- world-rule module toggle;
+- stakes rule;
+- accessibility or information setting;
+- presentation-only setting;
+- content or campaign-selection rule;
+- custom override.
+
+Examples that must not be conflated:
+
+- enemy damage versus sanitation simulation;
+- nutrition forgiveness versus food-borne disease existence;
+- map assistance versus map truth;
+- save frequency versus campaign death permanence;
+- merchant price tuning versus corruption or fraud systems;
+- structural-loss rate versus structural-loss system existence.
+
+## Audit 9: Migration And Compatibility
 
 Identify migration requirements for:
 
-- existing base/current/effective attribute fields;
-- existing stat-growth accumulation;
-- existing body-state effective-Strength penalties;
-- legacy `dailyCalories: 100`;
-- legacy `proteinBaseline: 18`;
-- existing consumable-profile scales;
-- saves created before developed and structural-loss adjustments exist;
-- deterministic replay and seeded growth behavior;
-- generated JavaScript or built artifacts that mirror TypeScript sources.
+- existing difficulty names and stored enum values;
+- existing custom difficulty values;
+- saves created before World Rules and Stakes axes exist;
+- achievements and analytics keyed to old presets;
+- current body-state difficulty switches;
+- UI and localization;
+- deterministic replay;
+- multiplayer or shared-world assumptions if any;
+- generated JavaScript or built artifacts mirroring TypeScript sources.
 
-Recommend defaults for old saves that preserve player capability and avoid accidental loss on load.
+Recommend conservative defaults for old saves. Do not silently place existing campaigns into Grim World or restricted Stakes.
 
-## Audit 7: Test Matrix
+## Audit 10: Test Matrix
 
-Specify representative tests proving:
+Specify tests proving:
 
-- base attributes never mutate;
-- current attributes recompute from all authorized adjustments;
-- positive development changes persistent adjustment only;
-- prolonged severe neglect can eventually create structural loss when enabled;
-- short deficits cannot create structural loss;
-- toggles disable only their intended consequences;
-- forgiving difficulty shifts consequences without altering nutrient truth;
-- nutrition restoration repairs reversible states but not structural loss;
-- qualifying rebuilding restores current Strength without changing base Strength;
-- trivial actions cannot farm growth or rebuilding;
-- one event cannot double-award STR and muscle adaptation;
-- save/load preserves persistent adjustments and deterministic behavior;
-- old saves receive safe migration defaults.
+- Story bypasses technical nutrition management without corrupting item truth;
+- Favored, Mortal, and Forsaken share identical authored food values;
+- Mortal enables every system selected by World Rules;
+- Forsaken does not enable Grim World;
+- Grim World adds systemic modules instead of only scalar changes;
+- Story plus Grim World uses coarse abstraction;
+- nutrition remains core in Mortal Heroic World;
+- Grim disease and sanitation do not leak into Heroic World as universal systems;
+- Stakes remain independent from difficulty and world rules;
+- old saves migrate to conservative campaign rules;
+- campaign identity persists all selected axes;
+- custom overrides retain provenance;
+- held `0.6.6` remains untouched.
 
 ## Required Output
 
 Modify only:
 
 - `docs/dev/current-codex-output.md`;
-- one new temporary audit artifact under `docs/dev/` named for this run and date.
+- one new temporary audit artifact at `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md`.
 
-The temporary artifact should contain:
+The temporary artifact must contain:
 
 1. live repository inventory;
 2. contradiction table;
-3. proposed field and owner contracts;
-4. difficulty control inventory;
-5. migration map;
-6. test matrix;
-7. exact remaining user decisions;
-8. recommended package sequence;
-9. explicit non-decisions.
+3. three-axis target contract;
+4. preset migration map;
+5. nutrition placement analysis;
+6. Grim module classification;
+7. Stakes separation plan;
+8. combination matrix;
+9. owner matrix;
+10. migration map;
+11. test matrix;
+12. exact remaining user decisions;
+13. recommended package sequence;
+14. explicit non-decisions.
 
-Do not modify the controlling decision, handoff, held prompt, route register, runtime, schema, tests, saves, or UI in this run.
+Do not modify the controlling decisions, handoff, route register, held prompt, runtime, schemas, tests, saves, UI, content, or gameplay in this run.
 
 ## Stop Conditions
 
-Stop after producing the documentation audit and current output.
+Stop after producing the two allowed documentation files.
 
 Do not:
 
-- implement the system;
-- assign a version;
-- modify held `0.6.6`;
-- move retained `0.6.7` artifacts;
-- delete the research artifact;
-- install a follow-on implementation prompt;
-- invent exact balance coefficients.
+- implement the three axes;
+- assign exact balance values;
+- create Grim disease, crime, tax, service, corruption, fraud, save, or death mechanics;
+- assign a release version;
+- restore `0.6.6`;
+- alter retained `0.6.7` artifacts;
+- create a follow-on implementation prompt;
+- modify any file outside the exact allowed pair.
 
-Report anything requiring user input separately from matters that can be delegated to implementation balancing.
+Report the ending commit, exact changed paths, repository state, unresolved owner conflicts, and user decisions still required.
