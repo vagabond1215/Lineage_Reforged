@@ -5,18 +5,19 @@
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is complete and validated.
 - Original culinary research completed at commit `cd12ee015b11d96d93df05cc2911c7525e1133c2`.
 - The first culinary results repair completed at commit `9b73c80e5fc28b3f0951a0d308c0f693ce1493c5` and remains accepted documentation input.
-- The unversioned culinary preparation/portion/meal integration audit completed at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a`.
+- The culinary preparation/portion/meal integration audit completed at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a`.
 - The bounded integration-results repair completed at commit `b92b1344613669114641230a2e67f8ed77e7ae00`.
-- GPT/human inspection accepts that repair's percentage, quantity, ration, food-state, preparation-method, container, multi-serving, mystery-assortment, stock-window, contextual-quality, historical-source, and cross-domain direction.
-- The repaired artifacts still require one final four-file documentation repair for command ownership, generic item-instance dependencies, selected-package prerequisites, canonical kilocalorie ownership, metabolism/body-state direction, metadata, and contextual action surfaces.
-- `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md` is the newest controlling focused body-state authority.
+- GPT/human inspection accepts the repaired percentage, quantity, ration, food-state, preparation-method, container, multi-serving, mystery-assortment, stock-window, contextual-quality, historical-source, and cross-domain directions.
+- One final four-file documentation repair remains active for command ownership, generic item-instance dependencies, canonical nutrition, metabolism/body composition, metadata, and contextual action surfaces.
+- `docs/design/fat-mobilization-body-stat-and-climate-effects-decision.md` is the newest and most specific metabolism refinement.
+- `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md` remains the broader controlling body-state authority.
 - `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md` controls contextual invocation and command boundaries.
 - The active prompt is `Culinary Integration Final Contract, Metabolism, And Action-Surface Repair Audit` in `docs/dev/current-codex-prompt.md`.
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and recoverable from its held prompt and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and recoverable from the held prompt and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Controlling Metabolic Direction
 
-### Simplified pipeline
+### Pipeline
 
 ```text
 food consumed
@@ -28,224 +29,231 @@ food consumed
        -> stamina restoration support
        -> short-term deficit or surplus
             -> sustained surplus may become fat reserve
-            -> sustained deficit draws on reserves
-            -> prolonged severe deficit may cause fatigue and atrophy
+            -> mild and deeper deficits draw on rate-limited reserves
+            -> uncovered prolonged deficit may cause fatigue and atrophy
 ```
 
 Keep separate:
 
 - consumed intake;
 - digestion and absorption;
-- zero-centered metabolic energy balance;
-- stamina;
+- zero-centered metabolic Energy;
+- Stamina;
 - hunger and satiety;
 - hydration;
 - fat reserve and body mass;
 - lean tissue and atrophy;
 - temporary fatigue penalties;
-- persistent or permanent physical-stat consequences.
+- persistent physical-stat consequences.
 
-### Canonical nutritional energy
+### Canonical nutrition
 
-- Static food/nutrition profiles use per-basis kilocalories unless a later durable decision accepts an exact conversion contract.
-- The live `dailyCalories: 100` field is legacy compatibility only.
-- Nutrition derives from physical amount consumed multiplied by per-basis nutrient values.
-- Consumption emits an intake result; it does not instantly turn all calories into energy or stamina.
-- Calories, protein, fat, carbohydrate, hydration, hunger, satiety, stamina, body fat, and lean tissue remain separate concerns.
+- Static nutrition profiles use per-basis kilocalories unless a later durable decision accepts an exact conversion contract.
+- Live `dailyCalories: 100` is legacy compatibility only.
+- Nutrition derives from physical amount consumed and per-basis values.
+- Consumption emits an intake result; it does not instantly convert all calories into Energy or Stamina.
+- Calories, protein, dietary fat, carbohydrate, hydration, hunger, satiety, Stamina, body fat, and lean tissue are separate concerns.
 
-### BMR
+### BMR and expenditure
 
 Accepted candidate posture:
 
-- approximately `1,800-2,000 kcal/day` generated base BMR;
+- generated BMR base approximately `1,800-2,000 kcal/day`;
 - deterministic seeded variation;
 - small bounded effects from Strength, Constitution, Vitality, and later accepted body-state factors;
-- stat effects remain minor relative to the base and cannot create extreme multiplication.
+- stat effects remain minor relative to the base.
 
-The previously accepted broader activity anchors remain:
+Broader activity anchors remain approximately:
 
-- about `2,500 kcal/day` for an ordinary healthy active adult;
-- about `3,500-4,000 kcal/day` for sustained high-intensity labor or loaded military activity.
+- `2,500 kcal/day` for an ordinary healthy active adult;
+- `3,500-4,000 kcal/day` for sustained high-intensity labor or loaded military activity.
 
-These are user-authored design anchors, not universal historical findings or implementation values.
+Every meaningful time-advancing action incurs expenditure. Candidate direction:
 
-### Continuous expenditure
+```text
+baseline kcal per minute = BMR / 1,440
 
-- The body spends energy during sleep, waiting, walking, crafting, travel, combat, and every other meaningful time-advancing action.
-- Candidate baseline: `BMR / 1,440` kilocalories per minute.
-- Candidate action cost: duration × baseline × intensity × contextual modifiers × small bounded variance.
-- Context may include pace, terrain, slope, temperature, weather, burden, armor, body mass, injury, illness, fatigue, hydration, tool/workstation efficiency, movement constraints, combat intensity, and recovery state.
-- Minor RNG variation must be narrow, seeded or deterministic where possible, planning-friendly, and resistant to reroll abuse.
-- Activity, travel, combat, crafting, work, and rest owners provide duration and intensity context. They must not create private calorie ledgers.
+action expenditure
+  = duration
+  * baseline
+  * intensity
+  * contextual modifiers
+  * small bounded variance
+```
 
-### Digestion
+Context may include pace, terrain, slope, temperature, weather, burden, armor, body mass, injury, illness, fatigue, hydration, tool/workstation efficiency, movement constraints, combat intensity, and recovery state.
 
-- Food enters a digestion pool rather than instantly refilling energy or stamina.
-- A simplified release posture may later use fast, ordinary, slow, or prolonged digestion.
-- Account for calories spent or lost in digestion through a simple conversion-cost or coarse macro-weighted rule.
-- Exact release curves and conversion costs remain open.
+Activity, travel, combat, crafting, work, and rest owners provide duration and intensity. They do not own private calorie or fat ledgers.
 
-### Energy balance
+### Digestion and Stamina
 
-Preferred conceptual UI:
-
-- negative side: deficit;
-- center: `0`, short-term balance;
-- positive side: surplus.
-
-The bar represents current metabolic balance, not total stored body-fat energy and not stamina.
-
-A negative value means demand is being covered from reserves or metabolic debt. A positive value means usable absorbed energy exceeds immediate demand and may support recovery or later storage.
-
-### Stamina
-
+- Food enters a digestion pool rather than instantly refilling Energy or Stamina.
+- Simplified release may later use fast, ordinary, slow, or prolonged categories.
+- Digestion includes a bounded conversion cost.
 - Stamina is immediate exertion capacity.
-- Actions may consume stamina directly.
-- Recovery depends on rest, available metabolic energy, hydration, fatigue, injury, and environment.
-- Calories support stamina recovery over time but are not interchangeable stamina points.
+- Calories and fat support Stamina recovery only through time-based metabolism and recovery rules.
+- Fat never converts directly into an immediate Stamina refill.
 
-### Surplus and fat
+## Mild Deficits And Fat Mobilization
 
-- Meaningful sustained surplus may convert into fat after immediate needs and recovery demands.
-- Use smoothing, thresholds, or time windows rather than converting every positive tick.
-- Fat is a long-term reserve and may later affect body mass, burden, insulation, appearance, and movement only through accepted contracts.
+Fat is a normal long-term energy source, not emergency-only starvation fuel.
 
-### Deficit, fatigue, and atrophy
+When absorbed intake and the short-term accessible reserve do not cover demand, mild deficits begin drawing a bounded amount from fat reserve when usable reserve exists.
 
-Temporary deficit progression should begin with:
+Accepted conceptual order:
 
-1. reduced stamina recovery;
+```text
+current demand
+  -> recently absorbed usable energy
+  -> bounded short-term accessible reserve
+  -> rate-limited fat mobilization
+  -> uncovered deficit pressure
+       -> reduced Stamina recovery and fatigue
+       -> lean-tissue pressure only when prolonged or severe
+```
+
+Fat use may blend with the short-term reserve instead of waiting for one absolute threshold.
+
+A mild deficit should normally burn a small amount of fat without immediately causing severe fatigue, atrophy, or permanent stat loss.
+
+### Mobilization limit
+
+Fat may supply only a bounded amount per unit time.
+
+The future resolver must ensure:
+
+- elapsed time controls conversion;
+- mobilized energy cannot exceed the actual deficit;
+- fat cannot instantly refill Stamina;
+- large reserves cannot cover unlimited burst demand;
+- conversion is deterministic or seeded and resistant to save/reload, cancel/retry, or micro-action rerolls;
+- ordinary low-intensity deficits can be partly or fully supported;
+- high short-term demand can exceed mobilization capacity.
+
+Uncovered demand reduces recovery, increases fatigue, and reduces sustainable output even when body fat remains.
+
+### Storage limit
+
+- Fat gain is smoothed and rate-limited.
+- A single meal does not create a large immediate body-composition change.
+- Future contracts must define surplus buffering, maximum storage rate, conversion loss, update intervals, and minimum meaningful changes.
+
+### Exploit prevention
+
+Reject:
+
+- direct fat-to-Stamina commands;
+- repeated zero-crossing conversion bonuses;
+- unlimited burst conversion;
+- rerolling fat burn through micro-actions;
+- counting the same calories as both stored fat and unspent surplus;
+- reversing already elapsed fat use by eating afterward;
+- treating fat as weightless or climate-neutral;
+- using fat to replace protein, hydration, rest, clothing, shelter, or acclimatization.
+
+## Constitution, Vitality, And Climate
+
+Body fat contributes to Constitution- and Vitality-adjacent resilience through a derived diminishing-return modifier or calculation input, not an unlimited direct base-stat bonus.
+
+Conceptual relationship:
+
+```text
+very low reserve
+  -> meaningful vulnerability
+
+low-to-functional reserve
+  -> largest marginal resilience gain
+
+functional-to-elevated reserve
+  -> smaller additional benefit
+
+elevated-to-high reserve
+  -> little added benefit and increasing tradeoffs
+
+very high reserve
+  -> no further resilience gain; heat, burden, mobility, and Stamina costs may dominate
+```
+
+Preserve the distinction among:
+
+- base attribute;
+- temporary condition modifier;
+- persistent body-composition modifier;
+- injury, illness, fatigue, and environmental modifiers.
+
+No amount of body fat makes a character universally tougher, immune to starvation, or superior in every Constitution/Vitality use.
+
+### Cold
+
+Useful fat reserve may marginally:
+
+- reduce cold-stress accumulation;
+- reduce thermoregulatory calorie demand;
+- delay some cold-related fatigue or Constitution/Vitality pressure.
+
+Benefits use diminishing returns. Clothing, shelter, fire, dryness, wind protection, activity, acclimatization, health, and exposure duration remain more important. Fat never grants immunity to cold, wet exposure, frostbite, hypothermia, or magical cold.
+
+### Heat
+
+Elevated fat reserve may:
+
+- increase heat-stress accumulation;
+- increase thermoregulatory and hydration pressure;
+- reduce sustained-work tolerance in heat or humidity.
+
+Temperature, humidity, direct sun, ventilation, clothing, armor, burden, and exertion compound the effect. A functional reserve does not make ordinary warmth intolerable; penalties become material through combined context and nonlinear tradeoffs.
+
+## Deficit, Protein, Fatigue, And Atrophy
+
+Temporary deficit progression:
+
+1. reduced Stamina recovery;
 2. faster fatigue accumulation;
 3. temporary penalties to sustained Strength output, carrying, pace, or work efficiency;
-4. reduced stamina maximum or increased action cost at deeper deficits;
+4. reduced Stamina maximum or increased action cost at deeper deficits;
 5. chronic fatigue and impaired recovery;
 6. long-term atrophy only after prolonged severe conditions.
 
-Atrophy considers deficit severity/duration, protein, heavy exertion, illness/injury, rest, disuse, and remaining reserves.
+Atrophy considers deficit duration and severity, protein, exertion, illness/injury, rest, disuse, and remaining fat reserve.
 
-Severe long-term atrophy may cause lasting physical-stat loss. It must not trigger from ordinary missed meals or one difficult day. Whether this mutates base stats or applies persistent recoverable body-state modifiers remains open.
+Severe long-term atrophy may cause lasting physical-stat loss. It cannot arise from an ordinary missed meal or one hard day. Whether it mutates base stats or applies persistent recoverable body-state modifiers remains open.
 
-### Protein and satiety
+Adequate calories with insufficient protein may still impair recovery and lean-tissue preservation. Adequate protein with insufficient calories may still leave a deficit.
 
-- Calories support metabolic energy.
-- Protein supports lean-tissue preservation and recovery.
-- Hunger is the drive to eat.
-- Satiety controls fullness and duration.
-- Adequate calories with poor protein may still impair recovery.
-- Adequate protein with insufficient calories may still leave an energy deficit.
-
-### Owner separation
+## Owner Separation
 
 | Concern | Owner direction |
 | --- | --- |
 | Per-basis kcal/macros/hydration | Static nutrition profiles |
 | Meal nutrient aggregation | Consumption/meal resolver |
-| Digestion, absorption, BMR, energy balance | Body-state/metabolism owner |
+| Digestion, absorption, BMR, zero-centered balance | Body-state/metabolism owner |
+| Short-term reserve, fat storage, fat mobilization | Body-state/metabolism and body-composition owner |
 | Duration and intensity | Activity/travel/combat/crafting/rest owners |
-| Contextual calorie expenditure | Shared body-state/activity expenditure resolver |
+| Contextual expenditure | Shared body-state/activity expenditure resolver |
 | Immediate exertion capacity | Stamina/body/activity state |
-| Fat reserve and lean tissue | Body-composition owner |
+| Fat amount and lean tissue | Body-composition owner |
+| Constitution/Vitality contribution | Body-state plus attribute-resolution contract |
+| Environmental conditions | Weather/environment owner |
+| Body-composition climate response | Body-state/metabolism resolver |
 | Lasting attribute effects | Explicit body-state/attribute contract |
 | Hunger, satiety, fatigue, recovery | Player body-state owner |
-| Severity, forgiveness, permanent-loss switch | Difficulty owner |
-| Display | UI only |
+| Difficulty | Difficulty/global-rules owner |
+| Presentation | UI only |
+
+No food profile owns character fat. No activity privately burns fat. No weather system directly mutates body composition.
 
 ## Controlling Action-Surface Direction
 
-### General posture
+- Prefer contextual item-, entity-, workplace-, and location-driven actions over permanent global menus.
+- The UI surface exposing an action is not its execution owner.
+- Show only valid actions plus selectively useful unavailable actions with concise reasons.
+- A filtered ready-food view may exist but is not a second command owner.
 
-- Prefer contextual item-, entity-, workplace-, and location-driven actions over permanent global food, crafting, trade, or character-action menus.
-- The UI surface that exposes an action is not automatically the engine owner that executes it.
-- Show only actions valid in the current situation, plus selectively useful unavailable actions with concise reasons.
-- Avoid duplicating the same operation across Food, Inventory, Crafting, Party, Shop, and Location menus.
-- A filtered ready-food inventory view may later exist as convenience, but it is not a second command owner.
+Selecting a physical item may expose Eat/Drink, Open/Close, Inspect, Split/Combine/Pour/Transfer, Store/Take Out/Drop, Label, and eligible hand-crafting verbs.
 
-### Inventory and item actions
+Generic item commands own item operations and accessible-item inspection. Food consumption emits intake. Crafting owns transformations. Giving begins through character interaction. Buy/Sell/Barter begin through merchant interaction. Travel and location owners control building travel, entry, exit, and look-around context.
 
-Selecting a physical item may expose valid actions such as:
-
-- Eat or Drink;
-- Open or Close;
-- Inspect;
-- Split, Combine, Pour, or Transfer;
-- Store, Take Out, or Drop;
-- Label;
-- an eligible hand-crafting verb.
-
-Generic item-instance commands own open/close, seal/unseal, compatible lot operations, owned container transfer, movement/storage/drop, custom labels, and inspection of accessible goods. They do not own nutrition, recipes, metabolism, sales, or manifest generation.
-
-### Food consumption
-
-- Ready-to-eat items expose Eat, Drink, or another authored consumption verb from the selected item.
-- The food-consumption resolver owns amount selection, whole-only validation, inventory decrement/remainder, nutrient aggregation, food risk, dietary exposure, and morale inputs.
-- It emits intake to the digestion/metabolism owner rather than instantly applying all calories to energy or stamina.
-- There is no required permanent top-level Food menu.
-- `Prepare`, `Cook`, `Preserve`, `Smoke`, `Dry`, `Pickle`, `Ferment`, `Bake`, `Boil`, `Fry`, `Steam`, and similar transformations are crafting/process actions, not permanent food-menu buttons.
-
-### Give, trade, and barter
-
-- Do not place universal Give, Trade, Buy, Sell, or Barter buttons in the ordinary item menu.
-- Giving or offering an item/serving starts from a party-member or NPC interaction, then selects the item and amount.
-- Buying, selling, and bartering start from a merchant, storefront, market, or NPC transaction context.
-- Inventory may provide the item picker, but it does not execute the social or commercial transaction.
-
-### Hand crafting
-
-- Selecting a material, ingredient, component, or suitable tool may expose Craft, Shape, Prepare, Assemble, or another relevant verb when known recipes/processes use it.
-- The recipe view may toggle between all known recipes using the selected item and only recipes whose full material/tool/access requirements are currently satisfied.
-- Selecting one item does not imply it is the only ingredient.
-- The crafting resolver owns knowledge, inputs, tools, time, skill, success/failure, outputs, inventory mutation, and activity-duration/intensity output.
-
-### Workplace crafting
-
-- Fixed-station crafting appears from an accessible workplace, station, furnishing, location, selected recipe, or appropriate portable apparatus.
-- Cooking and preservation require compatible stations, tools, fuel, access, and permission where applicable.
-- Presence at a workplace does not prove authority, vacancy, reservation, fuel, staffing, ownership, or permission.
-- The future `crafting.food_process_methods` registry owns reusable culinary method identities.
-
-### Multi-serving food preparation
-
-- Selected serving vessels determine output count.
-- Uniform Servings is the default; Individual Servings allows per-vessel differences.
-- Source allocations cannot exceed available physical amounts.
-- Prepared servings may be consumed, stored, placed, or given through a separate party/NPC interaction.
-
-### Location and storefront flow
-
-Accepted documentation-only direction:
-
-1. Select a known building through a district, coordinate, map, or known-building directory.
-2. Resolve local travel by distance and ticks through the travel owner.
-3. Contextual events may later interrupt travel.
-4. Enter automatically when travel resolves and the destination is open and enterable.
-5. Present a short entity-aware contextual arrival narrative that does not invent absent facts.
-6. Expose a compact first-level location menu such as Browse Goods, Talk to an NPC, Look Around, and Exit.
-7. Look Around may reveal selectable people, furniture, displays, counters, cabinets, desks, goods, and exits.
-8. Browse Goods presents observable direct lots and persisted mystery assortments.
-9. Talk to a merchant may expose Buy, Sell, Barter, Converse, Request Service/Inspection, or Leave where valid.
-
-No location, travel, event, narrative, storefront, NPC, or UI implementation is authorized.
-
-## Command Ownership Matrix
-
-| Player-facing action | Invocation surface | Execution owner direction |
-| --- | --- | --- |
-| Eat / Drink | Selected inventory item | Food-consumption command emitting intake |
-| Digest / absorb | Time advancement | Body-state/metabolism resolver |
-| Open / Close / Seal | Selected item/container | Generic item-instance command |
-| Split / Combine / Pour / owned transfer | Selected item/container | Generic inventory/item-instance command |
-| Inspect held item | Selected accessible item | Generic item observation/inspection command |
-| Apply custom label | Selected item/container | Generic item-instance labeling command |
-| Hand Craft / Shape / Prepare | Selected material, ingredient, or portable apparatus | Crafting/process command |
-| Workplace Craft / Cook / Preserve | Accessible station, workplace, or recipe | Crafting/process command using workplace authority |
-| Spend action energy | Any time-advancing activity | Shared metabolism/expenditure resolver consuming duration/intensity context |
-| Recover stamina | Time/rest/body-state update | Stamina/body-state owner |
-| Give / Offer | Party-member or NPC interaction | Character interaction plus inventory transfer |
-| Browse Goods | Storefront or seller interaction | Market stock presentation |
-| Buy / Sell / Barter | Merchant transaction | Economy/market transaction command |
-| Inspect seller goods | Merchant interaction after permission | Transaction permission invoking generic inspection |
-| Travel to building | District/map/directory context | Travel/activity command |
-| Enter / Exit / Look Around | Current location | Location/activity command |
+Prepared-serving count remains determined by selected vessels. Uniform Servings is default; Individual Servings permits per-vessel allocation.
 
 ## Required Final Repair
 
@@ -258,69 +266,39 @@ The active Codex run may modify only:
 
 It must repair:
 
-1. duplicate Open/Transfer/Inspect command ownership;
+1. duplicate Open/Transfer/Inspect ownership;
 2. static-food dependency in generic item-instance truth;
-3. stale `OD-01 through OD-06` prerequisite language;
-4. canonical kilocalorie and nutrition-owner ambiguity;
+3. stale open-decision prerequisites;
+4. canonical kcal and nutrition ownership;
 5. original versus repair metadata;
-6. contextual inventory, crafting, workplace, location, NPC, and storefront invocation surfaces;
-7. digestion, BMR, energy balance, stamina, action expenditure, fat storage, protein pressure, fatigue, and atrophy ownership.
+6. contextual inventory/crafting/workplace/location/NPC/storefront invocation;
+7. digestion, BMR, Energy, Stamina, action expenditure, fat storage, protein, fatigue, and atrophy ownership;
+8. mild-deficit fat use, rate-limited mobilization/storage, Constitution/Vitality diminishing returns, climate tradeoffs, and exploit prevention.
 
-### Generic instance dependency
+Generic item-instance truth depends on shared quantity and generic container/item-instance foundations, not static food profiles.
 
-- Generic item-instance truth depends on shared quantity and generic container/item-instance foundations.
-- It must not depend on static food profiles.
-- Food, textiles, leather, wood, metal, seeds, apothecary goods, merchant stock, and mystery assortments consume the same generic instance truth.
+The selected contract-acceptance decision should explicitly depend on OD-01, OD-03, OD-05, OD-06, and OD-07. Include OD-04 only if it intentionally owns transient versus packaged ad hoc meal persistence.
 
-### Nutrition and metabolism ownership
+## Culinary And Assortment Direction To Preserve
 
-- Canonical authored nutritional energy is kilocalories unless a later durable decision accepts an exact conversion contract.
-- Legacy `dailyCalories: 100` is compatibility-only.
-- Static profiles own per-basis kcal/macros and accepted digestion/satiety descriptors.
-- Consumption resolver owns physical nutrient aggregation and emits intake.
-- Digestion/metabolism owns absorption, BMR, energy balance, reserve use, and fat-storage pressure.
-- Activity domains provide duration/intensity; one shared resolver calculates contextual expenditure.
-- Stamina owns immediate exertion and recovery capacity.
-- Body composition owns fat and lean-tissue state.
-- Body state owns hunger, satiety, fatigue, recovery, and physiological effects.
-- Difficulty owns feature switches and scalars, including whether lasting stat loss is enabled.
-
-### Explicit open-decision prerequisites
-
-The selected culinary contract-acceptance decision should explicitly depend on:
-
-- OD-01;
-- OD-03;
-- OD-05;
-- OD-06;
-- OD-07.
-
-OD-04 belongs there only if that decision intentionally accepts transient versus packaged ad hoc meal persistence.
-
-Metabolism decisions remain genuine later questions: BMR formula, digestion curves/cost, energy-bar range, action intensity, contextual modifiers, RNG seed/range, stamina recovery cost, fat-storage/reserve thresholds, protein/atrophy rules, persistent stat ownership, body-mass effects, and difficulty values.
-
-## Culinary Decisions To Preserve
-
-- Food state is orthogonal: readiness, preparation method, preservation effect, hazard, and authored display name.
-- Smoking may cook and preserve; drying may preserve without cooking.
-- Names remain authored and are never parsed for mechanics.
+- Food state remains orthogonal: readiness, process, preservation, hazard, and authored display name.
+- Mechanics never parse display names.
 - Physical dimensions are count, mass, and volume.
 - Serving is an authored culinary reference.
-- Percentages are source allocation or derived composition, not calorie points.
-- Nutrition derives from physical amount and per-basis values.
+- Percentages are allocation/composition, not calorie points.
 - Accepted ration names are Small, Medium, Large, Party, and Large Party Ration.
 - Party rations are short-duration multi-serving assortments; provisions are sustained multi-container logistics.
 - Mystery manifests resolve before opening and never reroll.
 - Direct known lots coexist with mystery assortments.
-- Clearance/standard/select candidate tier weights, contextual quality, finite stock windows, honest-clearance/fraud separation, and cross-domain assortment reuse remain accepted directions.
-- Container examples remain non-exhaustive and custom labels never replace true identity.
+- Clearance/standard/select candidate tiers, contextual quality, finite stock windows, honest-clearance/fraud separation, and cross-domain reuse remain accepted.
+- Container examples are non-exhaustive; custom labels never replace true identity.
 - Three-segment labels are primaries; support uses a fourth segment and an exact parent.
 
 ## Route Guardrails
 
 - The active run is unversioned and documentation-only.
 - No implementation number is assigned.
-- No item, recipe, ration, provision, assortment, producer, profession, store, NPC, building, event, container, stock, starting bundle, schema, validator, test, runtime, command, inventory, UI, save, economy, travel, narrative, metabolism, BMR, digestion, stamina, fat, atrophy, attribute, Knowledge, reputation, merchant, difficulty, dependency, asset, or gameplay change is authorized.
+- No item, recipe, ration, provision, assortment, producer, profession, store, NPC, building, event, container, stock, schema, validator, test, runtime, command, inventory, UI, save, economy, travel, weather, narrative, Knowledge, reputation, difficulty, attribute, body-state, or gameplay change is authorized.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
 - Held `0.6.6` remains recoverable and must not be restored or modified.
-- After the final repair, stop for GPT/human inspection before creating the durable contract-acceptance decision or any implementation prompt.
+- After the final repair, stop for GPT/human inspection before creating a durable contract-acceptance decision or implementation prompt.
