@@ -8,16 +8,37 @@
 - The culinary preparation/portion/meal integration audit completed at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a`.
 - The bounded integration-results repair completed at commit `b92b1344613669114641230a2e67f8ed77e7ae00`.
 - GPT/human inspection accepts the repaired percentage, quantity, ration, food-state, preparation-method, container, multi-serving, mystery-assortment, stock-window, contextual-quality, historical-source, and cross-domain directions.
-- One final four-file documentation repair remains active for command ownership, generic item-instance dependencies, canonical nutrition, metabolism/body composition, metadata, and contextual action surfaces.
-- `docs/design/fat-mobilization-body-stat-and-climate-effects-decision.md` is the newest and most specific metabolism refinement.
-- `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md` remains the broader controlling body-state authority.
-- `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md` controls contextual invocation and command boundaries.
-- The active prompt is `Culinary Integration Final Contract, Metabolism, And Action-Surface Repair Audit` in `docs/dev/current-codex-prompt.md`.
+- One final four-file documentation repair remains active for command ownership, generic item-instance dependencies, canonical nutrition, metabolism/body composition, protein recovery, muscle adaptation, metadata, and contextual action surfaces.
+- The active prompt is `Culinary Integration Final Contract, Metabolism, Protein, And Action-Surface Repair Audit` in `docs/dev/current-codex-prompt.md`.
+- The queued research gate is `GPT-DR.nutrition.protein-recovery-muscle-adaptation` in `docs/dev/queued-protein-recovery-muscle-adaptation-deep-research-prompt.md`.
+- The research gate is queued, not completed, and does not replace the active Codex repair.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and recoverable from the held prompt and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
-## Controlling Metabolic Direction
+## Controlling Decisions
 
-### Pipeline
+Most specific current authorities:
+
+1. `docs/design/protein-recovery-muscle-adaptation-and-nutrition-integration-decision.md`;
+2. `docs/design/fat-mobilization-body-stat-and-climate-effects-decision.md`;
+3. `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md`;
+4. `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md`;
+5. `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md`;
+6. `docs/design/artisan-mystery-assortment-stock-and-quality-decision.md`.
+
+The queued research prompt may correct factual assumptions and recommend candidate abstractions, but it cannot override repository owner boundaries or become implementation authority without a later integration decision.
+
+## Canonical Nutrition And Metabolism Direction
+
+### Nutrition truth
+
+- Canonical authored nutritional energy is kilocalories unless a later durable exact-conversion contract is accepted.
+- Live `dailyCalories: 100` is compatibility-only.
+- Nutrients derive from physical amount consumed and per-basis values.
+- Percentages in preparation are allocation/composition controls, not calorie points.
+- Static nutrition profiles own per-basis kcal, protein, fat, carbohydrate, hydration, and later accepted digestion/satiety descriptors.
+- Consumption emits an intake result; it does not directly mutate long-term body state.
+
+### Metabolic pipeline
 
 ```text
 food consumed
@@ -26,9 +47,9 @@ food consumed
   -> continuous metabolic balance
        -> basal body-function expenditure
        -> activity expenditure
-       -> stamina restoration support
-       -> short-term deficit or surplus
-            -> sustained surplus may become fat reserve
+       -> Stamina-restoration support
+       -> deficit or surplus
+            -> sustained surplus may become rate-limited fat storage
             -> mild and deeper deficits draw on rate-limited reserves
             -> uncovered prolonged deficit may cause fatigue and atrophy
 ```
@@ -42,220 +63,160 @@ Keep separate:
 - hunger and satiety;
 - hydration;
 - fat reserve and body mass;
-- lean tissue and atrophy;
+- protein availability;
+- lean condition and muscle adaptation;
 - temporary fatigue penalties;
-- persistent physical-stat consequences.
-
-### Canonical nutrition
-
-- Static nutrition profiles use per-basis kilocalories unless a later durable decision accepts an exact conversion contract.
-- Live `dailyCalories: 100` is legacy compatibility only.
-- Nutrition derives from physical amount consumed and per-basis values.
-- Consumption emits an intake result; it does not instantly convert all calories into Energy or Stamina.
-- Calories, protein, dietary fat, carbohydrate, hydration, hunger, satiety, Stamina, body fat, and lean tissue are separate concerns.
+- reversible short-term condition loss;
+- structural atrophy;
+- persistent or permanent physical-stat consequences.
 
 ### BMR and expenditure
 
 Accepted candidate posture:
 
-- generated BMR base approximately `1,800-2,000 kcal/day`;
+- generated base BMR approximately `1,800-2,000 kcal/day`;
 - deterministic seeded variation;
-- small bounded effects from Strength, Constitution, Vitality, and later accepted body-state factors;
-- stat effects remain minor relative to the base.
+- small bounded Strength, Constitution, and Vitality effects;
+- ordinary active daily expenditure around the user-authored `2,500 kcal/day` anchor;
+- sustained high-intensity labor or loaded military activity around the user-authored `3,500-4,000 kcal/day` anchor;
+- continuous expenditure during sleep, waiting, travel, crafting, combat, and other time advancement;
+- candidate baseline `BMR / 1,440` kcal per minute;
+- action expenditure based on duration, intensity, context, and small deterministic variance;
+- no activity domain creates its own private calorie ledger.
 
-Broader activity anchors remain approximately:
+Exact values beyond these anchors remain open.
 
-- `2,500 kcal/day` for an ordinary healthy active adult;
-- `3,500-4,000 kcal/day` for sustained high-intensity labor or loaded military activity.
+## Fat Mobilization And Climate Direction
 
-Every meaningful time-advancing action incurs expenditure. Candidate direction:
+- Fat is a normal long-term reserve, not an emergency-only starvation resource.
+- Mild deficits begin drawing a bounded amount from usable fat reserve when absorbed energy and the short-term reserve are insufficient.
+- Fat mobilization is rate-limited by elapsed time.
+- Fat cannot instantly refill Stamina or cover unlimited burst demand.
+- High short-term demand may exceed fat-mobilization capacity even when significant reserve remains.
+- Fat storage is also smoothed and rate-limited.
+- Fat contributes to Constitution/Vitality-adjacent resilience through derived diminishing-return effects, not unlimited base-stat bonuses.
+- Functional reserve provides the largest marginal benefit.
+- Additional reserve provides diminishing benefit and increasing heat, hydration, burden, mobility, and Stamina tradeoffs.
+- Useful reserve marginally helps cold resilience, but clothing, shelter, fire, dryness, wind protection, activity, and acclimatization remain more important.
+- Elevated reserve worsens heat/humidity management in combination with temperature, sunlight, ventilation, clothing, armor, burden, and exertion.
+- One authoritative body-state resolver owns fat storage, mobilization, and climate interaction.
 
-```text
-baseline kcal per minute = BMR / 1,440
+## Protein Recovery And Muscle Adaptation Direction
 
-action expenditure
-  = duration
-  * baseline
-  * intensity
-  * contextual modifiers
-  * small bounded variance
-```
+### Four required factors
 
-Context may include pace, terrain, slope, temperature, weather, burden, armor, body mass, injury, illness, fatigue, hydration, tool/workstation efficiency, movement constraints, combat intensity, and recovery state.
+Muscle repair and development depend on four distinct requirements:
 
-Activity, travel, combat, crafting, work, and rest owners provide duration and intensity. They do not own private calorie or fat ledgers.
+1. meaningful physical stimulus;
+2. protein availability;
+3. energy availability;
+4. rest and elapsed recovery time.
 
-### Digestion and Stamina
+Protein alone does not create muscle or grant Strength.
 
-- Food enters a digestion pool rather than instantly refilling Energy or Stamina.
-- Simplified release may later use fast, ordinary, slow, or prolonged categories.
-- Digestion includes a bounded conversion cost.
-- Stamina is immediate exertion capacity.
-- Calories and fat support Stamina recovery only through time-based metabolism and recovery rules.
-- Fat never converts directly into an immediate Stamina refill.
+### Physical-loss distinctions
 
-## Mild Deficits And Fat Mobilization
+Keep separate:
 
-Fat is a normal long-term energy source, not emergency-only starvation fuel.
+1. **acute exertion fatigue** — immediate Stamina/performance loss, usually recovering over minutes or hours;
+2. **recovery debt** — accumulated incomplete recovery over hours or days;
+3. **reversible short-term lean-condition loss** — recoverable decline after underfeeding, disuse, illness, or repeated recovery failure;
+4. **structural atrophy** — meaningful long-term tissue loss requiring rehabilitation and substantial time;
+5. **base-attribute change** — prohibited without a later explicit attribute contract.
 
-When absorbed intake and the short-term accessible reserve do not cover demand, mild deficits begin drawing a bounded amount from fat reserve when usable reserve exists.
+Protein is most relevant to tissue repair, maintenance, and recovery from reversible condition loss. It is not an instant cure for Stamina depletion, dehydration, sleep deprivation, heat/cold injury, disease, untreated injury, or magic/toxin effects.
 
-Accepted conceptual order:
+### Protein and energy interaction
 
-```text
-current demand
-  -> recently absorbed usable energy
-  -> bounded short-term accessible reserve
-  -> rate-limited fat mobilization
-  -> uncovered deficit pressure
-       -> reduced Stamina recovery and fatigue
-       -> lean-tissue pressure only when prolonged or severe
-```
+- Moving from protein deficiency to adequacy matters more than moving from adequate to excessive intake.
+- Adequate protein during a mild calorie deficit may help preserve lean tissue.
+- High protein cannot fully compensate for a large sustained energy deficit.
+- Adequate calories with poor protein may preserve Energy while impairing recovery and adaptation.
+- High protein with inadequate calories may reduce but not eliminate lean-tissue loss.
+- A modest energy surplus may support adaptation, but large surplus should not create proportional muscle gain and may primarily become fat.
+- Exact protein amounts, timing, quality, digestibility, and player-visible precision remain research questions.
 
-Fat use may blend with the short-term reserve instead of waiting for one absolute threshold.
-
-A mild deficit should normally burn a small amount of fat without immediately causing severe fatigue, atrophy, or permanent stat loss.
-
-### Mobilization limit
-
-Fat may supply only a bounded amount per unit time.
-
-The future resolver must ensure:
-
-- elapsed time controls conversion;
-- mobilized energy cannot exceed the actual deficit;
-- fat cannot instantly refill Stamina;
-- large reserves cannot cover unlimited burst demand;
-- conversion is deterministic or seeded and resistant to save/reload, cancel/retry, or micro-action rerolls;
-- ordinary low-intensity deficits can be partly or fully supported;
-- high short-term demand can exceed mobilization capacity.
-
-Uncovered demand reduces recovery, increases fatigue, and reduces sustainable output even when body fat remains.
-
-### Storage limit
-
-- Fat gain is smoothed and rate-limited.
-- A single meal does not create a large immediate body-composition change.
-- Future contracts must define surplus buffering, maximum storage rate, conversion loss, update intervals, and minimum meaningful changes.
-
-### Exploit prevention
-
-Reject:
-
-- direct fat-to-Stamina commands;
-- repeated zero-crossing conversion bonuses;
-- unlimited burst conversion;
-- rerolling fat burn through micro-actions;
-- counting the same calories as both stored fat and unspent surplus;
-- reversing already elapsed fat use by eating afterward;
-- treating fat as weightless or climate-neutral;
-- using fat to replace protein, hydration, rest, clothing, shelter, or acclimatization.
-
-## Constitution, Vitality, And Climate
-
-Body fat contributes to Constitution- and Vitality-adjacent resilience through a derived diminishing-return modifier or calculation input, not an unlimited direct base-stat bonus.
-
-Conceptual relationship:
+### Slow adaptation
 
 ```text
-very low reserve
-  -> meaningful vulnerability
-
-low-to-functional reserve
-  -> largest marginal resilience gain
-
-functional-to-elevated reserve
-  -> smaller additional benefit
-
-elevated-to-high reserve
-  -> little added benefit and increasing tradeoffs
-
-very high reserve
-  -> no further resilience gain; heat, burden, mobility, and Stamina costs may dominate
+meaningful loading or activity
+  -> physical stimulus and tissue stress
+  -> recovery demand
+       + protein
+       + energy
+       + hydration/rest
+       + elapsed time
+  -> repair
+  -> restoration of reversible loss
+  -> slow muscle-condition adaptation
 ```
 
-Preserve the distinction among:
+- Repeated heavy work, travel under load, climbing, rowing, farming, construction, mining, military drill, combat exertion, or deliberate training may provide stimulus when later owners describe it.
+- Not every action provides useful stimulus.
+- Activity without recovery can cause fatigue, injury risk, or deterioration instead of gain.
+- Muscle development is slow, rate-limited, and subject to diminishing returns.
+- Trivial micro-actions cannot farm adaptation.
+- High-condition characters require more demanding and specific stimulus.
+- Prolonged inactivity may cause detraining, but short rest does not.
+- Previously developed condition may recover faster than first-time gain only if the queued research supports a manageable rule.
 
-- base attribute;
-- temporary condition modifier;
-- persistent body-composition modifier;
-- injury, illness, fatigue, and environmental modifiers.
+### Attribute boundary
 
-No amount of body fat makes a character universally tougher, immune to starvation, or superior in every Constitution/Vitality use.
+- Muscle condition primarily affects effective physical output and derived values.
+- It does not silently rewrite base Strength.
+- Constitution and Vitality may affect recovery tolerance through bounded owner-approved modifiers.
+- The model distinguishes base attributes, temporary condition penalties, reversible body-condition modifiers, persistent adaptation modifiers, and injury/illness/climate/equipment effects.
 
-### Cold
+## Contextual Action Direction
 
-Useful fat reserve may marginally:
+- Prefer contextual item-, entity-, workplace-, and location-driven actions over permanent global Food, Crafting, Trade, or character-action menus.
+- Inventory is an invocation surface, not the owner of nutrition, crafting, inspection evidence, trade, or body state.
+- Ready items expose Eat or Drink from the selected item.
+- Generic item commands own Open, Close, Seal, Split, Combine, Pour, Transfer, Store, Drop, Label, and held-item inspection.
+- Crafting/process owners execute Prepare, Cook, Preserve, and other transformations from selected materials, tools, recipes, and accessible workplaces.
+- Give/Offer starts from party or NPC interaction.
+- Buy/Sell/Barter starts from merchant or storefront interaction.
+- Local travel and location actions remain travel/activity-owned.
+- Show only contextually valid actions or selectively useful unavailable actions with concise reasons.
 
-- reduce cold-stress accumulation;
-- reduce thermoregulatory calorie demand;
-- delay some cold-related fatigue or Constitution/Vitality pressure.
+## Rations, Servings, And Assortments To Preserve
 
-Benefits use diminishing returns. Clothing, shelter, fire, dryness, wind protection, activity, acclimatization, health, and exposure duration remain more important. Fat never grants immunity to cold, wet exposure, frostbite, hypothermia, or magical cold.
+- Accepted ration names: Small Ration, Medium Ration, Large Ration, Party Ration, Large Party Ration.
+- Size labels are packaging conventions, not exclusive eater/day counts.
+- Provisions are broader multi-container logistics.
+- Selected serving vessels determine prepared-serving count.
+- Uniform Servings is default; Individual Servings permits per-vessel allocation.
+- Source allocations cannot exceed physical amounts.
+- Mystery assortments resolve and persist before opening.
+- Direct known lots coexist with mystery assortments.
+- Clearance, Standard Artisan, and Select candidate tiers remain documentation-only balance direction.
+- Contextual quality, finite stock windows, honest-clearance/fraud separation, cross-domain producer reuse, non-exhaustive container vocabulary, and mutable custom labels remain accepted.
 
-### Heat
-
-Elevated fat reserve may:
-
-- increase heat-stress accumulation;
-- increase thermoregulatory and hydration pressure;
-- reduce sustained-work tolerance in heat or humidity.
-
-Temperature, humidity, direct sun, ventilation, clothing, armor, burden, and exertion compound the effect. A functional reserve does not make ordinary warmth intolerable; penalties become material through combined context and nonlinear tradeoffs.
-
-## Deficit, Protein, Fatigue, And Atrophy
-
-Temporary deficit progression:
-
-1. reduced Stamina recovery;
-2. faster fatigue accumulation;
-3. temporary penalties to sustained Strength output, carrying, pace, or work efficiency;
-4. reduced Stamina maximum or increased action cost at deeper deficits;
-5. chronic fatigue and impaired recovery;
-6. long-term atrophy only after prolonged severe conditions.
-
-Atrophy considers deficit duration and severity, protein, exertion, illness/injury, rest, disuse, and remaining fat reserve.
-
-Severe long-term atrophy may cause lasting physical-stat loss. It cannot arise from an ordinary missed meal or one hard day. Whether it mutates base stats or applies persistent recoverable body-state modifiers remains open.
-
-Adequate calories with insufficient protein may still impair recovery and lean-tissue preservation. Adequate protein with insufficient calories may still leave a deficit.
-
-## Owner Separation
+## Owner Matrix
 
 | Concern | Owner direction |
 | --- | --- |
-| Per-basis kcal/macros/hydration | Static nutrition profiles |
-| Meal nutrient aggregation | Consumption/meal resolver |
-| Digestion, absorption, BMR, zero-centered balance | Body-state/metabolism owner |
-| Short-term reserve, fat storage, fat mobilization | Body-state/metabolism and body-composition owner |
-| Duration and intensity | Activity/travel/combat/crafting/rest owners |
-| Contextual expenditure | Shared body-state/activity expenditure resolver |
-| Immediate exertion capacity | Stamina/body/activity state |
-| Fat amount and lean tissue | Body-composition owner |
+| Static kcal/protein/macros/hydration | Static nutrition profiles |
+| Meal aggregation | Consumption/meal resolver |
+| Digestion and nutrient availability | Body-state nutrition/metabolism owner |
+| BMR and zero-centered Energy | Body-state/metabolism owner |
+| Short-term reserve and fat conversion | Body-state/metabolism/body-composition owner |
+| Duration/intensity/loading | Activity/travel/combat/crafting/work/training owners |
+| Shared caloric expenditure | Body-state/activity expenditure resolver |
+| Immediate exertion capacity | Stamina/body/activity owner |
+| Recovery debt and fatigue | Body-state/recovery owner |
+| Lean condition and muscle adaptation | Body-state/body-composition owner |
+| Effective Strength contribution | Body-state plus attribute-resolution contract |
 | Constitution/Vitality contribution | Body-state plus attribute-resolution contract |
-| Environmental conditions | Weather/environment owner |
-| Body-composition climate response | Body-state/metabolism resolver |
-| Lasting attribute effects | Explicit body-state/attribute contract |
-| Hunger, satiety, fatigue, recovery | Player body-state owner |
+| Climate conditions | Environment/weather owner |
+| Body-composition climate response | Body-state/metabolism owner |
+| Lasting attribute effects | Explicit later body-state/attribute contract |
 | Difficulty | Difficulty/global-rules owner |
 | Presentation | UI only |
 
-No food profile owns character fat. No activity privately burns fat. No weather system directly mutates body composition.
+No food item owns muscle gain. No activity privately mutates lean tissue. No weather system owns body composition. No UI calculates physiology.
 
-## Controlling Action-Surface Direction
-
-- Prefer contextual item-, entity-, workplace-, and location-driven actions over permanent global menus.
-- The UI surface exposing an action is not its execution owner.
-- Show only valid actions plus selectively useful unavailable actions with concise reasons.
-- A filtered ready-food view may exist but is not a second command owner.
-
-Selecting a physical item may expose Eat/Drink, Open/Close, Inspect, Split/Combine/Pour/Transfer, Store/Take Out/Drop, Label, and eligible hand-crafting verbs.
-
-Generic item commands own item operations and accessible-item inspection. Food consumption emits intake. Crafting owns transformations. Giving begins through character interaction. Buy/Sell/Barter begin through merchant interaction. Travel and location owners control building travel, entry, exit, and look-around context.
-
-Prepared-serving count remains determined by selected vessels. Uniform Servings is default; Individual Servings permits per-vessel allocation.
-
-## Required Final Repair
+## Active Final Repair
 
 The active Codex run may modify only:
 
@@ -264,41 +225,55 @@ The active Codex run may modify only:
 - `docs/dev/tmp-culinary-quantity-container-knowledge-audit-2026-07-20.json`;
 - `docs/dev/current-codex-output.md`.
 
-It must repair:
+It must integrate conceptual protein recovery and muscle adaptation without inventing numerical findings from the queued research.
 
-1. duplicate Open/Transfer/Inspect ownership;
-2. static-food dependency in generic item-instance truth;
+It must also repair:
+
+1. duplicate command ownership;
+2. food coupling in generic item-instance truth;
 3. stale open-decision prerequisites;
-4. canonical kcal and nutrition ownership;
-5. original versus repair metadata;
-6. contextual inventory/crafting/workplace/location/NPC/storefront invocation;
-7. digestion, BMR, Energy, Stamina, action expenditure, fat storage, protein, fatigue, and atrophy ownership;
-8. mild-deficit fat use, rate-limited mobilization/storage, Constitution/Vitality diminishing returns, climate tradeoffs, and exploit prevention.
+4. canonical kcal and owner ambiguity;
+5. metabolism, Stamina, fat, climate, protein, recovery, and adaptation boundaries;
+6. artifact metadata;
+7. contextual action surfaces;
+8. candidate package graph and readiness.
 
-Generic item-instance truth depends on shared quantity and generic container/item-instance foundations, not static food profiles.
+Implementation remains unauthorized.
 
-The selected contract-acceptance decision should explicitly depend on OD-01, OD-03, OD-05, OD-06, and OD-07. Include OD-04 only if it intentionally owns transient versus packaged ad hoc meal persistence.
+## Queued Deep Research Gate
 
-## Culinary And Assortment Direction To Preserve
+Run identity:
 
-- Food state remains orthogonal: readiness, process, preservation, hazard, and authored display name.
-- Mechanics never parse display names.
-- Physical dimensions are count, mass, and volume.
-- Serving is an authored culinary reference.
-- Percentages are allocation/composition, not calorie points.
-- Accepted ration names are Small, Medium, Large, Party, and Large Party Ration.
-- Party rations are short-duration multi-serving assortments; provisions are sustained multi-container logistics.
-- Mystery manifests resolve before opening and never reroll.
-- Direct known lots coexist with mystery assortments.
-- Clearance/standard/select candidate tiers, contextual quality, finite stock windows, honest-clearance/fraud separation, and cross-domain reuse remain accepted.
-- Container examples are non-exhaustive; custom labels never replace true identity.
-- Three-segment labels are primaries; support uses a fourth segment and an exact parent.
+`GPT-DR.nutrition.protein-recovery-muscle-adaptation`
+
+Prompt:
+
+`docs/dev/queued-protein-recovery-muscle-adaptation-deep-research-prompt.md`
+
+Required artifact:
+
+`docs/dev/tmp-protein-recovery-muscle-adaptation-research-YYYY-MM-DD.md`
+
+Purpose:
+
+- compare real-world nutrition/physiology evidence with manageable game abstractions;
+- research protein maintenance, recovery, reversible loss, structural atrophy, slow adaptation, detraining, energy interaction, fat/climate integration, and premodern applicability;
+- recommend Accessible, Standard, and Simulation complexity tiers;
+- identify candidate ranges and confidence without canonizing them;
+- test anti-exploit scenarios;
+- preserve owner boundaries.
+
+The research gate creates one temporary artifact only. It does not modify the active prompt, implementation, held `0.6.6`, or retained `0.6.7` artifacts.
+
+After research, a separate unversioned integration decision is required before any body-state/protein/muscle implementation package.
 
 ## Route Guardrails
 
-- The active run is unversioned and documentation-only.
+- The active Codex repair and queued Deep Research gate are unversioned.
 - No implementation number is assigned.
-- No item, recipe, ration, provision, assortment, producer, profession, store, NPC, building, event, container, stock, schema, validator, test, runtime, command, inventory, UI, save, economy, travel, weather, narrative, Knowledge, reputation, difficulty, attribute, body-state, or gameplay change is authorized.
+- Three-segment labels remain primaries; four-segment labels are exact-parent support only.
+- Held `0.6.6` remains paused and byte-recoverable.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
-- Held `0.6.6` remains recoverable and must not be restored or modified.
-- After the final repair, stop for GPT/human inspection before creating a durable contract-acceptance decision or implementation prompt.
+- No item, recipe, ration, body, attribute, activity, training, store, schema, validator, test, runtime, command, save, UI, economy, difficulty, or gameplay change is authorized.
+- After the final repair, stop for GPT/human inspection.
+- After Deep Research, stop for GPT/human inspection and a separate research-integration decision.
