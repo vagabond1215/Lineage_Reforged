@@ -10,7 +10,7 @@ Milestone impact: `supports_current_band`
 
 Parent version: none
 
-Run this as one bounded repair of the completed culinary integration artifacts. Reconcile the audit at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a` with the accepted ration, serving, percentage, calorie, preparation, artisan-assortment, container-labeling, owner-boundary, and version-class corrections. Do not implement content, schemas, validators, runtime, UI, saves, economy, balance, or gameplay.
+Run this as one bounded repair of the completed culinary integration artifacts. Reconcile the audit at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a` with the accepted ration, serving, percentage, calorie, preparation, mystery-assortment, stock-window, contextual-quality, container-labeling, owner-boundary, and version-class corrections. Do not implement content, schemas, validators, runtime, UI, saves, economy, balance, or gameplay.
 
 Suggested commit:
 
@@ -18,7 +18,7 @@ Suggested commit:
 
 ## Route Context
 
-The completed integration audit produced useful repository evidence and historical sourcing, but GPT/human inspection found blocking contradictions:
+The completed integration audit produced useful repository evidence and historical sourcing, but GPT/human inspection found blocking contradictions and omissions:
 
 - a meal-composition `0-100%` control was confused with the live `dailyCalories: 100` body-state scale;
 - `serving` was both a physical dimension and a culinary reference amount;
@@ -27,18 +27,20 @@ The completed integration audit produced useful repository evidence and historic
 - container visibility depended backwards on character observation;
 - two candidate packages used the invalid phrase `three-segment support package`;
 - size/coverage ration recommendations were presented as accepted when they were not;
-- the audit did not include the accepted multi-serving preparation, party-ration, artisan-assortment, and custom-container-label direction.
+- the audit did not include the accepted multi-serving preparation, party-ration, mystery-assortment, contextual-quality, finite-stock, stock-window, cross-domain producer, and custom-container-label direction.
 
-The controlling focused correction is:
+The controlling focused corrections are:
 
-- `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md`.
+- `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md`;
+- `docs/design/artisan-mystery-assortment-stock-and-quality-decision.md`.
 
-It supplements:
+They supplement:
 
 - `docs/design/culinary-preparation-portion-meal-composition-and-food-knowledge-decision.md`;
 - `docs/design/regional-ration-manifest-and-container-knowledge-decision.md`;
 - `docs/design/packed-food-ration-and-provisions-content-plan.md`;
 - `docs/design/item-equipment-inventory-authority-boundary-decision.md`;
+- `docs/design/economy-authority-boundary-decision.md`;
 - `docs/design/recipe-and-production-schema-decision.md`;
 - `docs/design/crafting-authority-boundary-decision.md`;
 - `docs/design/internal-versioning-and-release-milestone-policy.md`.
@@ -47,7 +49,7 @@ The original culinary research completed at commit `cd12ee015b11d96d93df05cc2911
 
 `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled. Its exact prompt remains recoverable from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and source blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
-After this repair completes, stop for GPT/human inspection. Do not install an implementation prompt, create the future durable acceptance decision, assign a primary version, restore `0.6.6`, or modify the held prompt.
+After this repair completes, stop for GPT/human inspection. Do not install an implementation prompt, create the future durable contract-acceptance decision, assign a primary version, restore `0.6.6`, or modify the held prompt.
 
 ## Execution Gate
 
@@ -61,9 +63,11 @@ After this repair completes, stop for GPT/human inspection. Do not install an im
    - `docs/design/internal-versioning-and-release-milestone-policy.md`;
    - `docs/design/culinary-preparation-portion-meal-composition-and-food-knowledge-decision.md`;
    - `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md`;
+   - `docs/design/artisan-mystery-assortment-stock-and-quality-decision.md`;
    - `docs/design/regional-ration-manifest-and-container-knowledge-decision.md`;
    - `docs/design/packed-food-ration-and-provisions-content-plan.md`;
    - `docs/design/item-equipment-inventory-authority-boundary-decision.md`;
+   - `docs/design/economy-authority-boundary-decision.md`;
    - `docs/design/recipe-and-production-schema-decision.md`;
    - `docs/design/crafting-authority-boundary-decision.md`;
    - the three temporary integration artifacts named under Allowed Tracked Files;
@@ -71,10 +75,10 @@ After this repair completes, stop for GPT/human inspection. Do not install an im
 2. Run `git status`, fetch, and fast-forward pull. Record branch, starting commit, and clean/dirty state. Preserve unrelated work.
 3. Confirm the active prompt is this repair-and-acceptance audit.
 4. Confirm commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a` is an ancestor of the current branch.
-5. Confirm the focused correction decision exists and is unchanged before starting.
+5. Confirm both focused correction decisions exist and are unchanged before starting.
 6. Confirm held `0.6.6` still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 7. Confirm retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`; do not edit, delete, consume, or repurpose them.
-8. Stop without editing if a live repository fact materially contradicts the focused correction. Report the smallest coordination repair required.
+8. Stop without editing if a live repository fact materially contradicts either focused correction. Report the smallest coordination repair required.
 
 ## Repair 1: Percentage And Nutrition Semantics
 
@@ -237,33 +241,114 @@ These capabilities do not depend on character observation state.
 
 Later observation and inspection systems consume the capabilities. Reverse any dependency that makes static container visibility depend on `knowledge.observation` and verify the corrected package graph remains acyclic.
 
-## Repair 9: Artisan Assortments
+## Repair 9: Artisan And Producer Mystery Assortments
 
-Add the accepted direction for specialty producer assortments, including examples such as:
+Replace the previous treatment of artisan assortments as merely themed names with the accepted constrained randomized-manifest model.
 
-- `Baker's Basket`;
-- `Butcher's Bundle`;
-- `Fisher's Basket`;
-- `Cheesemaker's Basket`.
+### Direct known lots
 
-These are naming examples only and do not authorize content.
+Record that direct known store lots coexist with mystery assortments. Examples include a single loaf, half-dozen or dozen rolls or muffins, a measured sack, a known bolt of cloth, a known hide, stated boards, or stated metal stock. These have exact known manifests unless fraud separately creates a discrepancy.
 
-Artisan assortments are not automatically meals. Their manifest determines whether they are ingredients, ready foods, preserved goods, perishables, or a complete meal.
+### Mystery manifests
 
-Do not reintroduce inn-, tavern-, restaurant-, or ordinary-kitchen-specific ration identities. Ordinary kitchens use shared meal and ration naming.
+An artisan or producer assortment is a physical package with a true manifest resolved and persisted when merchant stock is generated. If future stock remains abstract until purchase, resolution may occur during the sale transaction immediately before ownership transfer. Opening-time RNG remains prohibited.
 
-Perishable artisan assortments may provide variety or morale value during town stays or near the start/end of travel, but do not implement spoilage.
+Opening reveals existing truth. Save/load, transfer, inspection, value, weight, fraud, and provenance operate against that persisted truth.
 
-## Repair 10: Physical Container Labels
+### Three-tier template
 
-Preparation and inventory examples should use true physical identities such as:
+Record one reusable default three-tier assortment template. A producer may expose only two tiers when appropriate, but every exposed tier must map explicitly.
 
-- `Burlap Sack`;
-- `Hemp Sack`;
-- `Wooden Crate`;
-- `Wicker Basket`;
-- `Glass Jar`;
-- `Wooden Cask`.
+Use contextual selection bands rather than one universal quality meaning:
+
+- `band_0`: clearance, scrap, day-old, irregular, seconds, or least desirable but honestly saleable goods;
+- `band_1`: ordinary, standard, fresh, or serviceable trade quality;
+- `band_2`: fine, select, premium, specialty, or unusually useful/expensive quality;
+- `band_3`: rare, exceptional, prestige, luxury, or masterwork-adjacent outcome.
+
+Candidate default per-slot weights:
+
+| Offer tier | `band_0` | `band_1` | `band_2` | `band_3` | Floor |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Clearance | 68% | 27% | 4% | 1% | `band_0` |
+| Standard Artisan | 0% | 72% | 23% | 5% | `band_1` |
+| Select | 0% | 0% | 80% | 20% | `band_2` |
+
+Treat these as accepted candidate defaults for later balancing, not implemented values. Preserve increasing minimum band and rare chance by tier.
+
+The future profile must define constrained slot pools, quantities, duplicate rules, value bounds, producer/trade eligibility, region/season/event conditions, package identity, and knowledge posture. Do not select arbitrary items from the entire catalog.
+
+### Contextual quality
+
+Assortment bands do not replace domain-specific quality. Record category-specific examples:
+
+- baker/pastrymaker/confectioner: freshness, flour refinement, enrichment, bake quality, decoration, ingredient rarity, size and consistency;
+- butcher/fishmonger/cheesemaker: freshness, cut, yield, fat/cure/smoke/aging, source rarity, condition;
+- apothecary/herbalist/spice merchant/alchemist: purity, freshness, potency, rarity, provenance, processing, contamination/adulteration, seals/documents;
+- tailor/weaver/leatherworker: fiber/hide, usable dimensions, weave/tan/dye/finish, condition, consistency, rarity;
+- carpenter/joiner/woodworker: species, dryness, straightness, dimensions, defects, finish, scarcity;
+- smith/foundry/metalworker: material/alloy, purity, usable mass/dimensions, defects, processing stage, finish, scarcity, workmanship.
+
+### Culinary and nonculinary scope
+
+Include broader culinary producer examples such as baker, pastrymaker or patisserie-equivalent, confectioner, chocolatier or lore-native equivalent, butcher, fishmonger, cheesemaker, brewer, spice merchant, grocer, farmer, orchardist, herbalist, apothecary, alchemist, and specialty preserver where live authority later supports them.
+
+Include nonculinary reuse examples such as:
+
+- `Scrap Textiles`, `Tailor's Scrap Bundle`, `Leather Scraps`, `Assorted Textiles`, `Fine Cloth Selection`, or `Fine Tanned Leather Selection`;
+- wood scraps, carpenter's offcuts, ordinary wood stock, and select joinery wood;
+- metal scrap, smith's scrap crate, ordinary metal stock, and selected processed or fine forged stock;
+- potter's seconds, glassworker's cullet/offcuts, cooper, fletcher, chandler, scribe/bookbinder, mason, jeweler, lapidary, enchanter, or magitech assortments only where later authority permits.
+
+These are examples only and do not authorize content.
+
+### Ingredient and production surplus
+
+Record that producers may offer ingredient/material surplus assortments in addition to finished-goods assortments. A baker's ingredient bag may contain controlled approved inputs such as flour, eggs, sweetener, fats, fruit, nuts, or spices only when the producer actually uses or stocks them. Finished-output and input-surplus pools remain distinct.
+
+### Stock and time windows
+
+Separate assortment tier from stock posture:
+
+- clearance/day-old/surplus/scrap/seconds: finite opening or rollover stock, normally no same-day replenishment, short availability window, intended to disappear quickly through future demand or deterministic withdrawal/expiry;
+- fresh/standard: finite production-batch stock with authored replenishment intervals;
+- select/luxury/event: very limited, may appear only during narrow hours, busy periods, market days, festivals, commissions, catering, noble/guild events, or leftovers from such work, and may be absent on ordinary days.
+
+Do not claim simulated NPC sell-through already exists. Record deterministic finite stock and withdrawal windows as a valid interim design posture until economy/runtime demand owns sell-through.
+
+### Honest clearance versus fraud
+
+Low-tier assortments are not automatically unsafe, rotten, fraudulent, or useless. Honest day-old food, cosmetic seconds, short cloth, leather/wood offcuts, irregular goods, and mixed small quantities remain saleable for their stated purpose.
+
+Undisclosed rot, contamination, false origin, unusable filler, or deceptive top layers belong to fraud and inspection. A declared tier never authorizes results below its stated floor.
+
+### Pricing posture
+
+Record expected-value direction without exact prices:
+
+- clearance usually discounted for age, irregularity, uncertainty, or mixed usability;
+- standard near ordinary expected trade value with variance;
+- select may charge a premium for the higher floor, rarity chance, scarcity, convenience, prestige, or packaging;
+- expected-value bounds and duplicate caps should prevent trivial infinite-profit loops;
+- appraisal, reputation, fraud, and haggling remain separate.
+
+Do not implement stock, prices, schedules, RNG, or content.
+
+## Repair 10: Physical Container Labels And Vocabulary
+
+Preparation and inventory examples should use true physical identities. The list is explicitly illustrative and non-exhaustive.
+
+Examples may include:
+
+- pouch, packet, bag, sack, satchel, bundle;
+- basket, bushel container, hamper;
+- box, case, chest, crate;
+- jar, bottle, flask, jug, crock, pot;
+- keg, cask, barrel;
+- bale, bolt, roll, rack;
+- another suitable personal, storage, or transport container supported later.
+
+The package identity must match the actual goods and capabilities. A basket is not used merely because it sounds artisanal.
 
 Add future custom labels as mutable item-instance presentation metadata, gated later by materials, tools, access, literacy or symbol knowledge, and relevant ability.
 
@@ -297,13 +382,31 @@ Correct candidate posture:
 - static container templates: candidate primary or explicitly bounded part of another accepted primary;
 - culinary catalog integrity: candidate support suffix attached to the exact future static food-profile parent after that parent exists;
 - item-instance truth and heterogeneous groups: candidate primary;
-- starting-food manifests: primary if ownership moves from UI to engine, or support only if it merely seeds content under an implemented exact parent.
+- starting-food manifests: primary if ownership moves from UI to engine, or support only if it merely seeds content under an implemented exact parent;
+- cross-domain artisan mystery-assortment profiles, stock generation, or merchant inventory behavior: do not classify as culinary implementation automatically; identify the exact future owner and dependency before assigning primary/support posture.
 
 Do not assign version numbers.
 
-## Repair 12: Open Decisions
+## Repair 12: Owner And Package Sequence Additions
 
-Resolve or remove questions already answered by the focused correction:
+Add the cross-domain assortment concepts to the owner matrix and package analysis without creating implementation authority.
+
+Distinguish at minimum:
+
+- static assortment profile: tier, slot pools, weights, floors, quantity ranges, duplicate rules, value bounds, producer/category eligibility, and package reference;
+- static producer/category quality mapping: how contextual bands map to category-specific attributes;
+- merchant stock instance: resolved manifest, condition, price quote, availability window, seller claim, and current stock identity;
+- economy/production schedule: batch generation, replenishment, withdrawal, event release, and future demand/sell-through;
+- character-relative knowledge: known tier, observed contents, appraisal evidence, and certainty;
+- engine command: purchase/transfer/open/inspect without rerolling truth.
+
+Identify whether the future assortment foundation is best owned by a reusable market/economy assortment authority with culinary and nonculinary consumers. Do not create a culinary-only random-box owner that would later be duplicated for textiles, wood, metal, apothecary goods, or other producers.
+
+Rebuild dependencies so persisted item/lot truth exists before opening and so stock scheduling does not become a prerequisite for static assortment profile authorship.
+
+## Repair 13: Open Decisions
+
+Resolve or remove questions already answered by the focused corrections:
 
 - serving is a culinary reference, not a physical dimension;
 - process-method owner is crafting;
@@ -311,20 +414,34 @@ Resolve or remove questions already answered by the focused correction:
 - accepted ration names are Small, Medium, Large, Party, and Large Party Ration;
 - party rations and expedition provisions are distinct;
 - multi-serving preparation uses selected vessels plus uniform/individual allocation;
-- package classification cannot use three-segment support.
+- package classification cannot use three-segment support;
+- artisan assortments are randomized constrained manifests, not only themed names;
+- direct known lots coexist with mystery assortments;
+- opening-time RNG is prohibited;
+- container examples are non-exhaustive;
+- assortment quality is contextual by producer/category;
+- clearance, standard, and select tiers increase floor and rare chance;
+- tier and stock window are separate concepts;
+- the framework is reusable outside culinary trades.
 
 Retain only genuine open decisions, such as:
 
 - exact mass and volume basis units and fixed-point scales;
-- exact first process vocabulary and method parameters;
+- exact first culinary process vocabulary and method parameters;
 - method-to-hazard reduction and residual rules;
-- exact representative fixtures;
+- exact representative culinary fixtures;
 - transient versus packaged ad hoc meal persistence;
 - item-observation persistence and Knowledge integration;
 - appraisal/inspection skills and Knowledge domains;
 - diversity thresholds and decay bands;
 - difficulty mappings;
-- exact ration manifests, sizes, calories, serving potential, and balance.
+- exact ration manifests, sizes, calories, serving potential, and balance;
+- exact assortment slot counts and quantity ranges;
+- whether the default tier weights require later adjustment after simulation;
+- exact static assortment-profile and contextual-quality owner paths;
+- exact stock-generation, replenishment, event-release, and demand owners;
+- exact producer/category catalogs and lore-native names;
+- exact expected-value and price-variance bounds.
 
 ## Required Artifact Results
 
@@ -337,13 +454,13 @@ Repair exactly these existing files:
 
 Do not create additional artifacts.
 
-The Markdown integration artifact must present one coherent corrected model and package sequence.
+The Markdown integration artifact must present one coherent corrected model and package sequence, including the cross-domain assortment owner boundary without turning the culinary audit into nonculinary implementation.
 
-The source index must preserve source quality, scope, limitations, and links. It may add a clearly separated user-authored game-balance posture but must not misrepresent 2,500 or 3,500-4,000 kcal as universal medieval findings.
+The source index must preserve source quality, scope, limitations, and links. It may add a clearly separated user-authored game-balance posture but must not misrepresent 2,500 or 3,500-4,000 kcal as universal medieval findings. The mystery-assortment direction is user-authored game design and does not require fabricated historical sourcing.
 
 The JSON must preserve its stable top-level shape unless a correction requires a backward-compatible field addition. All counts must reconcile.
 
-`current-codex-output.md` must summarize the repair, remaining open decisions, package readiness, and why no implementation is yet authorized.
+`current-codex-output.md` must summarize the repair, remaining open decisions, package readiness, cross-domain assortment boundary, and why no implementation is yet authorized.
 
 ## Allowed Tracked Files
 
@@ -388,8 +505,19 @@ At minimum:
 - verify selected dishes determine serving count and both uniform/individual allocation are represented;
 - verify source allocations cannot exceed available amount;
 - verify custom labels do not replace true container identity;
+- verify the container vocabulary is explicitly non-exhaustive;
+- verify direct known lots and mystery assortments coexist;
+- verify mystery manifests resolve before opening and opening never rerolls;
+- verify clearance/standard/select tiers have increasing floors and rare chances;
+- verify contextual bands do not replace category-specific quality truth;
+- verify tier is separate from stock/replenishment/release-window posture;
+- verify day-old/surplus stock is finite and time-sensitive without falsely claiming live NPC demand;
+- verify fresh stock is finite and replenishment-based;
+- verify select/luxury stock may be narrow-hour, event, commission, catering, or leftover based;
+- verify honest clearance is separate from fraud and unsafe goods;
+- verify culinary and nonculinary assortment consumers share one proposed reusable owner direction;
 - verify artisan assortments are not automatically meals or venue-based ration identities;
-- verify no opening-time RNG is required;
+- verify no opening-time RNG is required anywhere;
 - verify per-unit truth remains required;
 - verify the package graph is acyclic;
 - verify exactly the four allowed files changed;
@@ -412,6 +540,7 @@ Do not run builds, typechecks, application lint, generators, servers, dependency
 - accepted user decisions incorporated;
 - historical-source limitations;
 - corrected package classifications and dependencies;
+- reusable assortment owner and stock-window boundary;
 - remaining open decisions;
 - selected smallest later package and readiness;
 - relation to held `0.6.6`;
@@ -420,10 +549,10 @@ Do not run builds, typechecks, application lint, generators, servers, dependency
 
 ## Non-Goals
 
-- no item, recipe, consumable-profile, ration, provision, artisan-assortment, container, starting-bundle, source, or region content edits;
-- no calorie, nutrition, ration, ingredient, portion, container, or difficulty balance implementation;
+- no item, recipe, consumable-profile, ration, provision, direct store lot, mystery assortment, producer, profession, store stock, container, starting-bundle, source, or region content edits;
+- no calorie, nutrition, ration, ingredient, portion, assortment, chance-weight, stock, price, schedule, container, or difficulty balance implementation;
 - no schema, validator, content-lint, or test changes;
-- no runtime, inventory, item-instance, meal, cooking, preparation, consumption, transfer, labeling, inspection, fraud, Knowledge, reputation, or body-state behavior;
+- no runtime, inventory, item-instance, merchant-stock, economy, meal, cooking, preparation, consumption, transfer, labeling, inspection, fraud, Knowledge, reputation, or body-state behavior;
 - no UI/menu implementation;
 - no save or migration changes;
 - no version number assignment;
