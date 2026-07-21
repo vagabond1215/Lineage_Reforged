@@ -7,8 +7,9 @@
 - The first culinary results repair completed at commit `9b73c80e5fc28b3f0951a0d308c0f693ce1493c5` and remains accepted documentation input.
 - The unversioned `Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit` completed at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a`.
 - GPT/human inspection accepts that audit's repository evidence, source discipline, multi-axis food model, partial-consumption direction, physical-container direction, heterogeneous unknown-group direction, fraud/inspection direction, and hazard model.
-- The integration audit requires a bounded results repair before durable promotion because of calorie-scale, serving, process-owner, package-boundary, dependency, ration-name, and version-class contradictions.
-- `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md` is the newest controlling focused authority for those corrections.
+- The integration audit requires a bounded results repair before durable promotion because of calorie-scale, serving, process-owner, package-boundary, dependency, ration-name, version-class, and mystery-assortment omissions.
+- `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md` controls ration, serving, percentage, calorie, process-owner, package-boundary, and physical-label corrections.
+- `docs/design/artisan-mystery-assortment-stock-and-quality-decision.md` controls constrained randomized assortments, direct known lots, tier floors/weights, contextual quality, stock windows, producer scope, and cross-domain reuse.
 - The active prompt is the unversioned `Culinary Integration Results Repair And Contract Acceptance Audit` in `docs/dev/current-codex-prompt.md`.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and exactly recoverable from its held prompt.
 
@@ -80,29 +81,92 @@ Party rations may be repacked from provisions and stored in crates, wagons, or p
 - Serving composition may total 100% as presentation but must not be confused with calories.
 - Prepared servings may be consumed, given to party members, or stored where supported.
 
-### Artisan assortments
+## Artisan And Producer Assortments
 
-- Specialty producer assortments are accepted naming direction, including examples such as Baker's Basket, Butcher's Bundle, Fisher's Basket, and Cheesemaker's Basket.
-- These examples do not authorize content.
-- Artisan assortments are not automatically meals; the manifest controls.
-- Do not create inn-, tavern-, restaurant-, or ordinary-kitchen-specific ration identities.
-- Perishable assortments may later provide variety and morale value without authorizing spoilage runtime now.
+### Direct known lots
+
+- Ordinary direct goods remain available alongside mystery assortments.
+- Examples include a loaf, half-dozen or dozen rolls/muffins, measured flour, a known cloth bolt, a known hide, stated boards, or stated metal stock.
+- Direct lots have exact manifests unless fraud separately creates a discrepancy.
+
+### Mystery manifests
+
+- Artisan/producer assortments are constrained randomized physical manifests, not merely themed names.
+- True contents resolve and persist when merchant stock is generated or, if stock remains abstract, during purchase immediately before ownership transfer.
+- Opening-time RNG remains prohibited.
+- Opening reveals existing truth; save/load and transfer preserve it.
+- Unknown identical-looking assortments may share a presentation group while retaining per-unit truth.
+
+### Reusable tier template
+
+Contextual bands:
+
+- `band_0`: clearance, scrap, day-old, irregular, seconds, or least desirable but honestly saleable goods;
+- `band_1`: ordinary, standard, fresh, or serviceable trade quality;
+- `band_2`: fine, select, premium, specialty, or unusually useful/expensive quality;
+- `band_3`: rare, exceptional, prestige, luxury, or masterwork-adjacent outcome.
+
+Candidate default per-slot weights:
+
+| Tier | `band_0` | `band_1` | `band_2` | `band_3` | Floor |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Clearance | 68% | 27% | 4% | 1% | `band_0` |
+| Standard Artisan | 0% | 72% | 23% | 5% | `band_1` |
+| Select | 0% | 0% | 80% | 20% | `band_2` |
+
+- These are candidate balance defaults, not implemented numbers.
+- A producer may expose two or three tiers, but every offered tier must map explicitly.
+- Tier increases the minimum eligible band and rare/expensive chance.
+- Slot pools remain constrained by producer, category, region, season, stock source, quantity, duplicate rules, and value bounds.
+
+### Contextual quality
+
+- Assortment bands do not replace domain-specific quality truth.
+- Bakery quality may use freshness, flour refinement, enrichment, bake/finish, rarity, decoration, size, and consistency.
+- Butcher/fish/cheese quality may use freshness, cut/yield, cure/smoke/aging, source rarity, and condition.
+- Apothecary/spice/alchemy quality may use purity, potency, freshness, provenance, processing, adulteration, and seals.
+- Textile/leather quality may use fiber/hide, dimensions, weave/tan/dye/finish, condition, and rarity.
+- Wood quality may use species, dryness, straightness, dimensions, defects, finish, and scarcity.
+- Metal quality may use alloy/material, purity, mass/dimensions, defects, processing stage, finish, scarcity, and workmanship.
+
+### Producer scope
+
+- Culinary examples may include baker, pastrymaker, confectioner, chocolatier or lore-native equivalent, butcher, fishmonger, cheesemaker, brewer, spice merchant, grocer, farmer, orchardist, herbalist, apothecary, alchemist, and specialty preservers where supported.
+- Nonculinary reuse may include textile/leather scraps and selections, wood offcuts and select stock, metal scrap and processed stock, potter's seconds, glassworker remnants, cooper/fletcher/chandler/scribe/mason/jeweler/lapidary/enchanter/magitech assortments where later authority permits.
+- These are directions only and do not authorize content.
+- Ingredient/material surplus pools remain separate from finished-output pools and may only use actual production inputs or stock.
+
+### Stock and time windows
+
+- Clearance/day-old/surplus/scrap/seconds stock is finite, often released at opening or production rollover, normally not replenished that day, and available for a short window.
+- Fresh/standard stock is finite by production batch and replenishes at authored intervals.
+- Select/luxury/event stock is very limited and may appear only during narrow hours, market days, festivals, commissions, catering, noble/guild events, or leftovers from such work.
+- Do not claim live NPC sell-through exists. Deterministic finite stock and withdrawal windows may stand in until economy/runtime demand owns sell-through.
+- Low-tier assortments are not automatically unsafe, fraudulent, rotten, or useless. Undisclosed defects belong to fraud and inspection.
+
+### Pricing direction
+
+- Clearance is normally discounted for age, irregularity, uncertainty, or mixed usability.
+- Standard aims near ordinary expected trade value with variance.
+- Select may charge a premium for its higher floor, rare chance, scarcity, convenience, prestige, or packaging.
+- Expected-value bounds and duplicate caps should prevent trivial profit loops.
+- Exact prices, stock, schedules, RNG, and economy behavior remain unimplemented.
 
 ### Container identity and labels
 
-- Screens show true physical identities such as Burlap Sack, Hemp Sack, Wooden Crate, Wicker Basket, Glass Jar, and Wooden Cask.
-- Custom labels are mutable item-instance presentation metadata.
-- Labeling may later require materials, tools, access, literacy or symbol knowledge, and relevant ability.
-- Methods may include writing, painting, engraving, carving, burning, branding, stamping, plaques, or seals.
-- A custom label such as `Smoked Meats` or `Grains` never replaces true identity, contents, origin, condition, ownership, or character-relative knowledge.
+- Container examples are explicitly non-exhaustive.
+- Physical forms may include pouches, packets, bags, sacks, satchels, bundles, baskets, bushel containers, hampers, boxes, cases, chests, crates, jars, bottles, flasks, jugs, crocks, pots, kegs, casks, barrels, bales, bolts, rolls, racks, and later bulk transport forms where supported.
+- The physical container must suit the goods; `Basket` is not used only because it sounds artisanal.
+- Custom labels are mutable item-instance presentation metadata and never replace true identity or contents.
 
-### Package boundaries and labels
+## Package Boundaries And Labels
 
 - Static food profiles own readiness, method references, preservation outcomes, hazards, and portionability.
 - Meal/nutrition/difficulty work owns serving-basis nutrients, satiety, aggregation results, dietary exposure, body-state integration, and difficulty controls.
 - Static container visibility/access capabilities do not depend on character observation; inspection consumes those capabilities later.
 - There is no valid three-segment support package.
 - Three-segment runs are primaries; support runs use a fourth segment and name one exact primary parent.
+- The reusable artisan mystery-assortment owner must serve culinary and nonculinary consumers rather than creating separate random-box systems per domain.
 
 ## Active Repair Scope
 
@@ -119,7 +183,7 @@ It must repair the completed audit rather than add new research or implementatio
 
 - The active run is unversioned and documentation-only.
 - No implementation number is assigned.
-- No item, recipe, profile, ration, provision, artisan assortment, container, starting bundle, schema, validator, test, runtime, inventory, UI, save, economy, Knowledge, reputation, merchant, difficulty, dependency, asset, or gameplay change is authorized.
+- No item, recipe, profile, ration, provision, direct store lot, mystery assortment, producer, profession, store stock, container, starting bundle, schema, validator, test, runtime, inventory, UI, save, economy, Knowledge, reputation, merchant, difficulty, dependency, asset, or gameplay change is authorized.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
 - Held `0.6.6` remains byte-for-byte recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` and must not be restored or modified by the repair.
 - After the repair, stop for GPT/human inspection before creating the durable contract-acceptance decision or any implementation prompt.
