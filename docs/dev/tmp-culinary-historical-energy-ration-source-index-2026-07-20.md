@@ -1,6 +1,6 @@
 # Culinary Historical Energy And Ration Source Index
 
-Source run: Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit
+Source run: Culinary Integration Results Repair And Contract Acceptance Audit
 
 Date: 2026-07-20
 
@@ -10,7 +10,7 @@ Access date for all web sources: 2026-07-20
 
 - Historical records describe a place, institution, household, workforce, voyage, or provisioning system; none supplies a universal medieval diet or calorie target.
 - `Issued`, `purchased`, `supplied`, `carried`, `prepared`, `edible`, and `consumed` are different measurements. A source is not silently moved from one category to another.
-- Modern physiology and operational-ration sources are comparisons for game-scale bands, not evidence of medieval practice.
+- Modern physiology and operational-ration sources are comparisons for demand variation and package form, not evidence of medieval practice or exact ration balance.
 - Calorie estimates reconstructed from historical accounts inherit uncertainty in weights, edible fractions, recipes, distribution, waste, activity, and modern food-composition conversion.
 - The integration artifact cites source IDs from this index. Game recommendations are inferences and are labeled as such.
 
@@ -122,7 +122,7 @@ Access date for all web sources: 2026-07-20
 - **Exact claim supported:** One modern MRE is a self-contained meal for one person engaged in heavy activity and averages about 1,250 kcal; it contains multiple components and may be eaten without ordinary food-service facilities.
 - **Geographic/period scope:** Contemporary United States military operational feeding
 - **Limitations:** Modern formulation, packaging, fortification, logistics, body assumptions, and food safety are not medieval. Issued energy still need not equal consumed energy.
-- **Audit use:** Comparison supporting “Meal Ration” as one person's meal and component variety; no direct transfer of calories or packaging technology.
+- **Audit use:** Comparison showing that one modern operational meal can contain multiple components; no transfer of naming, calories, packaging technology, or ration bands.
 
 ### S10 — Food Balance Sheets: A Handbook
 
@@ -231,11 +231,20 @@ The following are design analogies, not historical or nutritional calibration so
 
 No modern format authorizes plastic packaging, fortification, Earth product names, exact calories, or modern safety knowledge as repository content.
 
+## User-Authored Game-Balance Posture
+
+The following approximations are accepted user-authored game-design direction. They are not findings from S01–S17 and must not be cited as universal medieval intake:
+
+- approximately `2,500 kcal/day` for an ordinary healthy active adult;
+- approximately `3,500-4,000 kcal/day` for sustained high-intensity labor, loaded marching, armored military activity, heavy farming, threshing, construction, or comparable exertion.
+
+Future demand may vary with activity, body, climate, injury, illness, age/life stage, load, terrain, pace, combat, training, and recovery under accepted owners. The observed live `dailyCalories: 100` rule remains a legacy game-scale body-state value; it does not convert these approximations into percentages or authorize a 100-point ration-energy model. Exact ration kilocalories, manifests, sizes, serving potential, and balance remain open.
+
 ## Evidence-To-Decision Summary
 
 | Decision area | Strongest sources | Supported conclusion | What remains an inference |
 | --- | --- | --- | --- |
-| Character energy demand | S01, S02 | Demand varies with body and activity; one universal value is unsuitable | Game-specific scaling and difficulty curves |
+| Character energy demand | S01, S02 | Demand varies with body and activity; one universal historical value is unsuitable | User-authored anchors, game-specific scaling, and difficulty curves |
 | Historical labor/household provisioning | S03, S05, S06 | Context, status, workload, and institution materially affect provision | Exact per-character intake |
 | Feasts and group provisions | S04, S06 | Large allocations can be feast/household supply, not personal daily rations | Group-pack game bands |
 | Maritime durable food | S07, S08 | Durable staples and preservation served logistics | Shelf life and individual consumption |

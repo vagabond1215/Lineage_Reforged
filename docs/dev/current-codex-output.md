@@ -1,22 +1,20 @@
 # Current Codex Output
 
-Source version/run: Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit
+Source version/run: Culinary Integration Results Repair And Contract Acceptance Audit
 
-Date: 2026-07-20
+Date: 2026-07-21
 
-Branch/status assumption: `master` at starting commit `d4d62234578b240b52dae8ad3e10b0155bcc80d4`; clean before the four authorized documentation changes; fetch and fast-forward pull reported already up to date
+Branch/status assumption: `master` at starting commit `d37bbdb6651d4b7c63a8838b8a4c0aa1d15f9d42`; clean before the four authorized documentation changes; fetch and fast-forward pull reported already up to date
 
-Label class and parent: unversioned documentation-only research, repository audit, and design integration; no parent version
+Label class and parent: unversioned documentation-only repair, coordination, and acceptance audit; no parent version
 
 Milestone impact: `supports_current_band`
 
 ## Result
 
-Completed the bounded culinary integration audit. The live repository confirms that preparation state, physical quantity, partial consumption, container contents, manifest truth, character observations, fraud/inspection, meal composition, satiety, and monotony cross several owners that do not yet share the required contracts.
+Repaired the completed culinary integration artifacts around the two accepted focused corrections. The artifacts now present one coherent quantity, nutrition, preparation, ration, container, manifest, assortment, stock-window, owner, and package model. No content, schema, validator, runtime, UI, save, economy, balance, dependency, or gameplay implementation is authorized.
 
-No code/content package is implementation-ready. The former taxonomy/profile correction must not run first because sausage and comparable collisions require accepted readiness, process, preservation, hazard, quantity, and portionability authority.
-
-Selected smallest later package: **Culinary Quantity, Food-State, And Instance Contract Acceptance Decision**. Recommended label class: unversioned documentation-only decision, `supports_current_band`. Readiness: **design-ready only**, pending the open user/GPT decisions recorded in the artifacts. No version number was assigned and no implementation prompt was installed.
+Selected smallest later package: **Culinary Quantity, Food-State, And Instance Contract Acceptance Decision**. Recommended label class: unversioned documentation-only decision. Readiness: **design-ready only**. It must accept the remaining exact quantity bases, method vocabulary/parameters, hazard rules, fixtures, and observation persistence before implementation planning. No version number or implementation prompt was assigned.
 
 ## Files Changed
 
@@ -27,76 +25,84 @@ Selected smallest later package: **Culinary Quantity, Food-State, And Instance C
 
 ## Checks Run
 
-- Confirmed active prompt identity and controlling-decision SHA-256 `A4C57268467322A0071FAB5BCD399D93E61748D04A7FA2966487F0825659C4CA`.
-- Confirmed accepted repair commit `9b73c80e5fc28b3f0951a0d308c0f693ce1493c5` is an ancestor.
-- Confirmed held `0.6.6` source remains blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-- Confirmed retained Gate 1–5 and Gate 7 artifacts remain solely assigned to `0.6.7` and were not changed.
-- Audited live item/profile, recipe, production/workplace, resource-output, inventory, body-state, difficulty, Knowledge/skill/reputation, service/economy/guild/NPC-schema, and new-game owners.
-- Parsed the new JSON strictly and reconciled all summary counts.
-- Verified live repository paths and sampled live item/profile ids referenced by the JSON.
-- Verified all proposed non-live files/owners are `future:`-prefixed in the machine-readable audit.
-- Verified local Markdown link targets.
-- Verified static, instance, character-relative, and command categories and both used readiness categories.
-- Verified the package graph is acyclic and all package dependencies resolve.
-- Verified creation-time/per-unit manifest truth, no opening-time reroll, no display-name parsing, no lone `isPreserved`, and no single `raw/cooked/preserved` axis recommendation.
-- Verified Earth examples are historical/modern comparisons only, not proposed repository content.
-- Ran conflict-marker, trailing-whitespace, changed-path, and `git diff --check` review.
+- Confirmed the active prompt is this results-repair and contract-acceptance audit.
+- Fetched and fast-forward pulled `master`; repository was already current.
+- Confirmed integration audit commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a` is an ancestor.
+- Confirmed focused correction SHA-256 values `3FCB04C970A7EA410FE8361F0ED36DBB146C243A9E6A082456CD211BDBC9F062` and `DBFC2286D8103F06FC0D0A07EAA585FE7BD5A2CA672E6F93E2E1E9E8662DB8A2`.
+- Confirmed the held `0.6.6` file still resolves to existing Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- Confirmed retained Gate 1–5 and Gate 7 artifacts remain assigned solely to `0.6.7` and were not edited, consumed, deleted, or repurposed.
+- Strictly parsed the repaired JSON and reconciled every summary count against array data.
+- Verified live paths/ids, `future:` non-live paths, local Markdown links, package dependency resolution, and an acyclic package graph.
+- Verified allocation/composition percentage separation, physical-basis nutrition, the three physical dimensions, one crafting-owned method registry, food/nutrition package separation, forward container visibility dependency, valid package-label classes, accepted ration/provision semantics, multi-serving preparation, labels, persisted assortment truth, contextual quality, stock windows, honest-clearance/fraud separation, reusable cross-domain ownership, and per-unit truth.
+- Ran conflict-marker, trailing-whitespace, exact changed-path, and `git diff --check` review.
 - Did not run builds, typechecks, application lint, generators, servers, dependency installation, or runtime tests because implementation is prohibited.
 
-## Behavior / Runtime Confirmation
+## Contradictions Repaired
 
-No runtime, JSON content authority, schema, validator, UI, save, economy, balance, dependency, or gameplay behavior changed. The new JSON is a temporary audit artifact, not a registered content file or implementation contract.
+- Removed the 100-point ration-energy model and separated meal percentage controls from the observed legacy `dailyCalories: 100` body-state rule.
+- Resolved `serving` as an authored culinary reference to count, mass, or volume, never a fourth physical dimension.
+- Assigned one canonical reusable process-method registry to future `crafting.food_process_methods`; item food-state profiles own outcomes and recipes/production chains reference the same identities.
+- Removed consumable-profile v2 nutrition and satiety from the static food-state package.
+- Reversed the container visibility dependency: static capabilities exist before and are consumed by character observation.
+- Replaced invalid support-label terminology with candidate primaries or exact-parent four-segment support suffixes.
+- Replaced unaccepted Day/Multi-Day/Group ration bands with the accepted Small/Medium/Large/Party/Large Party vocabulary and retained provisions as sustained logistics.
+- Added selected-vessel serving counts with uniform and individual allocations.
+- Replaced themed-name-only artisan assortments with constrained, persisted mystery manifests while retaining direct known lots.
+- Added contextual quality, finite stock/replenishment/release windows, custom physical labels, and one reusable culinary/nonculinary assortment owner direction.
 
-Accepted decisions preserved:
+## Accepted Decisions Incorporated
 
-- orthogonal item identity, readiness, preparation method, preservation effect, hazard, and authored-name axes;
-- no name parsing, no lone preservation flag, and overlapping processes such as smoking;
-- small ration means one meal for one person;
-- clearer Meal/Day/Multi-Day/Shared/Group naming instead of ambiguous size-only labels;
-- integer/fixed-point authoritative portions and per-instance remaining amount;
-- Ready To Eat, Prepare, and Cook as distinct intentions with engine-owned execution;
-- dose/dominance/recency-aware diversity and food fatigue with difficulty controls;
-- static container template versus mutable instance contents/state;
-- creation-time manifest truth, heterogeneous visible groups with per-unit truth, and no opening-time RNG;
-- true identity, seller claim, character observation, evidence, inspection, scoped reputation, and difficulty remain separate;
-- fixed known starting manifests and moderate nutrition/satiety direction;
-- hidden engine food risk versus historically plausible character cues.
+Authoritative amounts are integer or fixed-point count, mass, or volume units. Source allocation cannot exceed available physical amount; serving composition is normalized presentation on a labeled physical basis. Nutrition for kilocalories, protein, fat, carbohydrate, hydration, and later fields is calculated from amount consumed divided by basis amount, multiplied by the nutrient value per basis amount, then summed across ingredients.
+
+The provisional `2,500 kcal/day` ordinary-active and `3,500-4,000 kcal/day` sustained-high-intensity anchors are user-authored approximations. Activity, body, climate, injury, illness, age/life stage, load, terrain, pace, combat, training, and recovery remain future modifiers. Exact ration kilocalories and manifests remain open.
+
+`Small Ration`, `Medium Ration`, and `Large Ration` are portable logical sizes, not exclusive eater/day ledgers. `Party Ration` and `Large Party Ration` are short-duration multi-serving assortments and do not replace expedition provisions. Actual logistics use suitable constituent containers and goods.
+
+Mystery contents resolve at merchant-stock generation or, for abstract stock, during sale immediately before transfer. Opening never generates or rerolls. Clearance/standard/select candidate weights preserve increasing floors and rare chances; category-specific attributes remain true quality. Tier is separate from finite clearance windows, fresh replenishment, and narrow select/event release. Honest clearance is separate from fraud and unsafe goods.
+
+Custom container labels are mutable instance presentation only. The physical vocabulary is illustrative and non-exhaustive, and a label never replaces true container identity, manifest, origin, condition, ownership, or character-relative knowledge.
+
+## Historical-Source Limitations
+
+The source index retains international physiology/statistical guidance, government operational/safety sources, peer-reviewed historical and nutrition work, academic books, and museum/heritage syntheses with explicit geographic, period, and measurement limits. It distinguishes supply, issue, carriage, preparation, edible amount, service, and consumption. The evidence does not establish universal medieval calories, exact ration sizes, exact consumption, spoilage rates, package balance, or fraud frequency. Mystery-assortment direction and the provisional calorie anchors are user-authored game design rather than fabricated historical findings.
+
+## Corrected Packages And Dependencies
+
+- Candidate primary: shared quantity foundation.
+- Candidate primary: static food-state/process-reference/hazard/portion profiles. This package excludes nutrition and satiety.
+- Candidate primary, or a bounded part of another accepted primary: static container templates.
+- Candidate four-segment support suffix attached to the exact future static-food-profile primary: culinary catalog integrity.
+- Candidate primary: item-instance truth and heterogeneous presentation groups.
+- Candidate primary when ownership moves from UI to engine, otherwise exact-parent support suffix: starting-food manifests.
+- Separate later primary: meal/nutrition/difficulty contracts, including consumable-profile v2 nutrition and satiety.
+
+The cross-domain assortment path is: reusable static assortment profiles and contextual-quality mappings; then persistent merchant stock instances; independently authored stock schedules; then purchase/transfer/open/inspect commands. Static profile authorship does not depend on stock scheduling, and opening depends on existing stock truth. One market/economy assortment authority must serve culinary, textile, leather, wood, metal, apothecary, and later-authorized producer consumers instead of duplicating culinary-only random-box infrastructure.
+
+## Remaining Open Decisions
+
+- exact mass/volume basis units, fixed-point scales, and display conversions;
+- exact first culinary process vocabulary/parameters and method-to-hazard residual rules;
+- exact representative culinary/container fixtures;
+- transient versus packaged ad hoc meal persistence;
+- item-observation persistence and Knowledge integration;
+- appraisal/inspection skills and Knowledge domains;
+- diversity thresholds, dominance, and decay bands;
+- difficulty mappings;
+- exact ration manifests, physical sizes, kilocalories, serving potential, and balance;
+- exact assortment slot counts, quantity ranges, and later tier-weight tuning;
+- exact static assortment/contextual-quality, stock-generation, replenishment, event-release, and demand owner paths;
+- exact producer/category catalogs, lore-native names, expected-value bounds, and price variance.
 
 ## Risks / Follow-Up
 
-Historical source quality: the index uses international health/statistical guidance, government operational and safety sources, peer-reviewed historical/nutrition work, academic books, and museum/heritage syntheses. Every source records exact supported claim, geographic/period scope, limitations, and whether it informs history, modern comparison, or design inference. The evidence supports bounded recommendations, not final calories, physical portion conversions, spoilage rates, universal medieval menus, or fraud frequency.
+Package names and proposed paths remain candidates until a durable authority accepts them. Quantity and item-instance work crosses inventory/save boundaries; stock work crosses economy/production/inventory boundaries; no implementation package should infer those owners from this temporary audit. The three temporary artifacts remain review inputs and must not be promoted or deleted before GPT/human inspection.
 
-Owner conflicts found:
-
-- recipe integers and workplace unit labels lack one shared physical-quantity contract;
-- current inventory stacks cannot preserve item-instance remainder or heterogeneous per-unit manifests;
-- static container-like item records lack capability profiles, while bag slot capacity is a different concept;
-- consumable profiles and body state lack serving basis, satiety duration, and composed-meal/exposure contracts;
-- UI currently constructs starter inventory and performs some inventory consumption;
-- Knowledge/reputation/service/economy owners do not yet define per-item observation, transaction claim, inspection evidence, or scoped seller memory;
-- sausage and cask records expose taxonomy/profile collisions that cannot be safely repaired in isolation.
-
-Open user/GPT decisions:
-
-- exact mass/volume basis units and display conversions;
-- serving as physical dimension versus recommended culinary reference amount;
-- first controlled process vocabulary and its registry owner;
-- transient versus packaged ad hoc meal persistence;
-- process-to-hazard reduction/residual rules;
-- representative first-schema fixtures;
-- item-observation persistence versus Knowledge evidence;
-- appraisal/inspection skill and Knowledge owners;
-- diversity token/dominance/decay bands;
-- difficulty mapping for fraud, monotony, nutrition, and food risk.
-
-Temporary-artifact disposition: retain all three new artifacts for the next acceptance-decision run. That run must promote accepted guidance into one durable authority or name a further concrete consumer/removal condition.
-
-Held `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, recoverable, and unchanged. This audit does not restore, cancel, consume, or modify it.
-
-## Next Recommended Version
-
-Unversioned documentation-only decision — Culinary Quantity, Food-State, And Instance Contract Acceptance Decision. Stop for GPT/human review before installing it or assigning any primary version.
+Held `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, recoverable from its hold file and source blob, and unchanged. This repair does not restore, cancel, consume, or modify it.
 
 ## Suggested Commit Message
 
-`docs(food): audit culinary preparation portions and meal systems`
+`docs(food): repair culinary integration results and contracts`
+
+## Next Recommended Run
+
+Stop for GPT/human inspection of this repair. Do not install an implementation prompt, create the future durable contract-acceptance decision, assign a primary version, or restore `0.6.6` from this run.

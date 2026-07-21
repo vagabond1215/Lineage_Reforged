@@ -1,21 +1,73 @@
 {
   "metadata": {
     "schemaVersion": 1,
-    "sourceRun": "Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit",
+    "sourceRun": "Culinary Integration Results Repair And Contract Acceptance Audit",
     "date": "2026-07-20",
     "runClassification": "unversioned documentation-only research, repository audit, and design integration",
     "milestoneImpact": "supports_current_band",
     "parentVersion": null,
-    "startingCommit": "d4d62234578b240b52dae8ad3e10b0155bcc80d4",
+    "startingCommit": "d37bbdb6651d4b7c63a8838b8a4c0aa1d15f9d42",
     "branch": "master",
     "startingWorktree": "clean",
     "controllingDecision": {
       "path": "docs/design/culinary-preparation-portion-meal-composition-and-food-knowledge-decision.md",
       "sha256": "A4C57268467322A0071FAB5BCD399D93E61748D04A7FA2966487F0825659C4CA"
     },
+    "focusedCorrections": [
+      {
+        "path": "docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md",
+        "sha256": "3FCB04C970A7EA410FE8361F0ED36DBB146C243A9E6A082456CD211BDBC9F062"
+      },
+      {
+        "path": "docs/design/artisan-mystery-assortment-stock-and-quality-decision.md",
+        "sha256": "DBFC2286D8103F06FC0D0A07EAA585FE7BD5A2CA672E6F93E2E1E9E8662DB8A2"
+      }
+    ],
     "acceptedRepairCommit": "9b73c80e5fc28b3f0951a0d308c0f693ce1493c5",
     "heldVersion066Blob": "42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769",
-    "scope": "research and contract recommendation only; no implementation permission"
+    "scope": "documentation-only repair and contract acceptance audit; no implementation permission"
+  },
+  "acceptedContracts": {
+    "physicalDimensions": ["count", "mass", "volume"],
+    "servingSemantics": "authored culinary reference resolving to count, mass, or volume",
+    "authoritativeAmount": "integer or fixed-point canonical basis units",
+    "percentageViews": {
+      "sourceAllocation": "allocation across selected servings cannot exceed available physical amount",
+      "servingComposition": "normalized presentation on an explicitly labeled physical basis",
+      "storedNutritionTruth": false
+    },
+    "nutritionFormula": "amount consumed / nutrition basis amount * nutrient value per basis amount; meal total is the sum of ingredient contributions",
+    "legacyDailyCalories100Posture": "observed legacy game-scale body-state rule, not accepted future calorie authority",
+    "provisionalUserAuthoredKilocaloriePosture": {
+      "ordinaryHealthyActiveAdultKcalPerDayApprox": 2500,
+      "sustainedHighIntensityKcalPerDayApproxRange": [3500, 4000],
+      "historicalUniversalClaim": false
+    },
+    "rationNames": ["Small Ration", "Medium Ration", "Large Ration", "Party Ration", "Large Party Ration"],
+    "multiServingPrepare": {
+      "servingCountOwner": "selected compatible serving vessels",
+      "defaultMode": "uniform_servings",
+      "alternateMode": "individual_servings"
+    },
+    "canonicalProcessMethodOwner": "future:crafting.food_process_methods",
+    "customContainerLabelsReplaceTrueIdentity": false,
+    "containerVocabularyExhaustive": false,
+    "mysteryManifestResolution": "merchant stock generation or sale transaction immediately before transfer; never opening",
+    "assortmentFrameworkScope": "reusable market/economy authority with culinary and nonculinary consumers",
+    "artisanAssortmentAutomaticallyMealOrVenueRation": false,
+    "directKnownLotsCoexist": true,
+    "assortmentTierCandidateDefaults": [
+      {"tier": "clearance", "weights": {"band_0": 68, "band_1": 27, "band_2": 4, "band_3": 1}, "floor": "band_0"},
+      {"tier": "standard_artisan", "weights": {"band_0": 0, "band_1": 72, "band_2": 23, "band_3": 5}, "floor": "band_1"},
+      {"tier": "select", "weights": {"band_0": 0, "band_1": 0, "band_2": 80, "band_3": 20}, "floor": "band_2"}
+    ],
+    "assortmentStockPostures": {
+      "clearance": "finite opening/rollover stock, normally no same-day replenishment, short withdrawal or expiry window",
+      "freshStandard": "finite production-batch stock with authored replenishment intervals",
+      "selectLuxuryEvent": "very limited and potentially narrow-hour, market-day, festival, commission, catering, noble/guild-event, or leftover release"
+    },
+    "liveNpcSellThroughClaimed": false,
+    "honestClearanceAutomaticallyFraudulentOrUnsafe": false
   },
   "liveOwners": [
     {
@@ -174,7 +226,7 @@
       "stateCategory": "static",
       "dependencies": [],
       "implementationReadiness": "design-ready only",
-      "recommendation": "Use controlled dimensions count, mass, volume, and serving. Model bundle, batch, and contained as aggregation or packaging kinds rather than pretending they are physical dimensions.",
+      "recommendation": "Use only the controlled physical dimensions count, mass, and volume. Serving is an authored culinary reference; bundle, batch, contained lot, and package are aggregation or packaging kinds.",
       "provenanceConfidence": "high: cross-domain unit vocabulary measured in live content",
       "duplicationOrOwnerConflictRisk": "medium if the shared type is introduced without content-schema owners"
     },
@@ -459,7 +511,7 @@
         "quantity.serving_semantics"
       ],
       "implementationReadiness": "blocked",
-      "recommendation": "Retain energy, protein, fat, carbohydrate, hydration, portion size, satiety amount, and satiety duration. Body-state engine owns effects; detailed micronutrients are not the default.",
+      "recommendation": "Keep serving-basis energy, protein, fat, carbohydrate, hydration, satiety amount/duration, meal aggregation results, exposure/monotony, body-state integration, and difficulty controls in the later consumable-profile v2 and meal/nutrition/difficulty package. Static food-state profiles must not duplicate these fields.",
       "provenanceConfidence": "high for existing macros and accepted moderate direction; medium for satiety fields",
       "duplicationOrOwnerConflictRisk": "medium if meal preview calculates effects outside player-engine"
     }
@@ -761,9 +813,9 @@
       "repositoryEvidence": ["packages/shared/types/src/contracts.ts"],
       "proposedOwner": "future:items.container_templates",
       "stateCategory": "static",
-      "dependencies": ["knowledge.observation"],
+      "dependencies": ["container.capacity"],
       "implementationReadiness": "blocked",
-      "recommendation": "Template describes opaque/translucent/open-view and inspection access; character observation remains separate state.",
+      "recommendation": "Template owns open-view, translucent, opaque, sample-accessible, non-destructively openable, destructively inspectable, sealable, and lockable capabilities. Character observation consumes these capabilities and never owns or gates them.",
       "provenanceConfidence": "high",
       "duplicationOrOwnerConflictRisk": "medium"
     },
@@ -900,6 +952,78 @@
       "recommendation": "Track recent dose by source ingredient/family with dominant share and optional preparation-method facet; exact-item identity alone is exploitable. Decay by elapsed days and allow difficulty reduction or disablement.",
       "provenanceConfidence": "high for bounded model; tuning requires tests",
       "duplicationOrOwnerConflictRisk": "high if morale, body state, and meal UI each track separate histories"
+    },
+    {
+      "conceptId": "assortment.static_profile",
+      "currentOwner": "none",
+      "repositoryEvidence": ["docs/design/artisan-mystery-assortment-stock-and-quality-decision.md", "docs/design/economy-authority-boundary-decision.md"],
+      "proposedOwner": "future:civilization.market_assortment_profiles",
+      "stateCategory": "static",
+      "dependencies": ["quantity.capacity_and_fill", "container.capacity"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Reusable cross-domain profiles own tier, constrained slot pools, weights, floors, quantity ranges, duplicate rules, value bounds, producer/category eligibility, conditions, package reference, and knowledge posture.",
+      "provenanceConfidence": "high for boundary; exact owner path remains open",
+      "duplicationOrOwnerConflictRisk": "high if culinary, textile, wood, metal, and apothecary consumers create separate random-box registries"
+    },
+    {
+      "conceptId": "assortment.contextual_quality_mapping",
+      "currentOwner": "domain-specific item and production records",
+      "repositoryEvidence": ["docs/design/artisan-mystery-assortment-stock-and-quality-decision.md"],
+      "proposedOwner": "future:civilization.producer_category_quality_mappings",
+      "stateCategory": "static",
+      "dependencies": ["assortment.static_profile"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Map band_0 through band_3 to category-specific freshness, material, dimensions, process, condition, rarity, and workmanship attributes; bands do not replace physical quality truth.",
+      "provenanceConfidence": "high for separation; exact mappings remain open",
+      "duplicationOrOwnerConflictRisk": "high if a universal quality flag erases category truth"
+    },
+    {
+      "conceptId": "assortment.merchant_stock_instance",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts", "docs/design/economy-authority-boundary-decision.md"],
+      "proposedOwner": "future:civilization.merchant_stock_instances",
+      "stateCategory": "instance",
+      "dependencies": ["assortment.static_profile", "manifest.creation_time_truth"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Own the resolved persisted manifest, condition, price quote, availability window, seller claim, and current stock identity. Resolve at stock generation or immediately pre-transfer, never at opening.",
+      "provenanceConfidence": "high for truth timing; exact inventory/economy owner remains open",
+      "duplicationOrOwnerConflictRisk": "high if opening or UI owns manifest generation"
+    },
+    {
+      "conceptId": "assortment.stock_schedule",
+      "currentOwner": "descriptive production and economy context only",
+      "repositoryEvidence": ["packages/content/base/civilization/production_chains.json", "docs/design/economy-authority-boundary-decision.md"],
+      "proposedOwner": "future:civilization.production_and_market_schedule",
+      "stateCategory": "dynamic",
+      "dependencies": ["assortment.static_profile", "assortment.merchant_stock_instance"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Own finite batch generation, replenishment intervals, withdrawal/expiry, event release, and later demand/sell-through. Static profile authorship does not depend on this schedule.",
+      "provenanceConfidence": "high for boundary; exact schedule owner remains open",
+      "duplicationOrOwnerConflictRisk": "high if tier definitions directly simulate stock"
+    },
+    {
+      "conceptId": "assortment.character_knowledge",
+      "currentOwner": "none",
+      "repositoryEvidence": ["docs/design/regional-ration-manifest-and-container-knowledge-decision.md", "packages/shared/types/src/contracts.ts"],
+      "proposedOwner": "future:player.item_observation_evidence",
+      "stateCategory": "character-relative",
+      "dependencies": ["assortment.merchant_stock_instance", "knowledge.observation"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Track known tier, observed contents, appraisal evidence, and certainty without overwriting the merchant stock manifest.",
+      "provenanceConfidence": "high for separation; exact persistence owner remains open",
+      "duplicationOrOwnerConflictRisk": "high if seller claim becomes true contents"
+    },
+    {
+      "conceptId": "assortment.engine_command",
+      "currentOwner": "none",
+      "repositoryEvidence": ["packages/shared/types/src/contracts.ts", "docs/design/item-equipment-inventory-authority-boundary-decision.md"],
+      "proposedOwner": "future:civilization.market_assortment_commands",
+      "stateCategory": "command",
+      "dependencies": ["assortment.merchant_stock_instance", "assortment.character_knowledge"],
+      "implementationReadiness": "blocked",
+      "recommendation": "Purchase, transfer, open, and inspect consume persisted truth and update ownership or observations without rerolling.",
+      "provenanceConfidence": "high for command boundary; exact engine split remains open",
+      "duplicationOrOwnerConflictRisk": "high if purchase, inventory, and open each generate different contents"
     }
   ],
   "candidatePackages": [
@@ -939,10 +1063,10 @@
       "packageId": "package.static_food_profiles",
       "labelClassRecommendation": "three-segment current-band primary implementation package",
       "selectedAsSmallestLaterPackage": false,
-      "exactOwnerAndScope": "food readiness, controlled process methods, preservation-effect derivation/validation, hazard profiles, portionability, and consumable-profile v2 fields",
+      "exactOwnerAndScope": "item food-state readiness, references to crafting-owned process methods, preservation outcomes, hazard profiles, and portionability; excludes consumable-profile v2 nutrition and satiety",
       "prerequisites": ["package.shared_quantity_foundation"],
-      "proposedFiles": ["future:packages/content/base/items/food_state_profiles.json", "future:packages/content/base/items/food_process_methods.json", "future:packages/content/base/items/food_safety_profiles.json", "future:packages/content/base/items/food_portion_profiles.json", "future:packages/schemas/items/food-state-profile.schema.json", "future:packages/schemas/items/food-process-method.schema.json", "future:packages/schemas/items/food-safety-profile.schema.json", "future:packages/schemas/items/food-portion-profile.schema.json"],
-      "validation": ["orthogonal axes", "methods may overlap", "no display-name parsing", "no lone isPreserved", "hazard residuals are explicit"],
+      "proposedFiles": ["future:packages/content/base/items/food_state_profiles.json", "future:packages/content/base/crafting/food_process_methods.json", "future:packages/content/base/items/food_safety_profiles.json", "future:packages/content/base/items/food_portion_profiles.json", "future:packages/schemas/items/food-state-profile.schema.json", "future:packages/schemas/crafting/food-process-method.schema.json", "future:packages/schemas/items/food-safety-profile.schema.json", "future:packages/schemas/items/food-portion-profile.schema.json"],
+      "validation": ["orthogonal axes", "one crafting-owned reusable method registry", "no nutrition or satiety duplication", "no display-name parsing", "no lone isPreserved", "hazard residuals are explicit"],
       "testsOrResearchChecks": ["schema-file tests", "content-lint references", "representative smoking/drying/pickling/cooking fixtures"],
       "risks": ["taxonomy and process authority could duplicate production chains"],
       "rollbackBoundary": "new static profiles and references; no runtime",
@@ -953,7 +1077,7 @@
     },
     {
       "packageId": "package.static_container_templates",
-      "labelClassRecommendation": "three-segment current-band primary implementation package",
+      "labelClassRecommendation": "candidate three-segment current-band primary capability or explicitly bounded part of another accepted primary",
       "selectedAsSmallestLaterPackage": false,
       "exactOwnerAndScope": "items.container_templates static capability authority only",
       "prerequisites": ["package.shared_quantity_foundation", "package.culinary_contract_acceptance_decision"],
@@ -1001,7 +1125,7 @@
     },
     {
       "packageId": "package.culinary_catalog_integrity",
-      "labelClassRecommendation": "three-segment current-band support implementation package",
+      "labelClassRecommendation": "candidate four-segment support suffix attached to the exact future static-food-profile primary after that primary exists",
       "selectedAsSmallestLaterPackage": false,
       "exactOwnerAndScope": "repair food classification collisions, profile references, ration naming, and controlled food-state references without adding broad new content",
       "prerequisites": ["package.static_food_profiles", "package.static_container_templates"],
@@ -1049,7 +1173,7 @@
     },
     {
       "packageId": "package.starting_food_manifest_variants",
-      "labelClassRecommendation": "three-segment current-band support implementation package",
+      "labelClassRecommendation": "candidate three-segment current-band primary only if ownership moves from UI to engine; otherwise four-segment support suffix attached to an exact implemented parent",
       "selectedAsSmallestLaterPackage": false,
       "exactOwnerAndScope": "known fixed starting food/container manifests selected by difficulty, region, prestige, and later supported background/scenario owners",
       "prerequisites": ["package.item_instance_truth_and_groups", "package.culinary_catalog_integrity", "package.meal_nutrition_difficulty_contract"],
@@ -1062,6 +1186,70 @@
       "provenance": "live starting-bundle/new-game audit and accepted starting-goods decision",
       "readiness": "blocked",
       "dependencies": ["package.item_instance_truth_and_groups", "package.culinary_catalog_integrity", "package.meal_nutrition_difficulty_contract"]
+    },
+    {
+      "packageId": "package.static_assortment_profiles",
+      "labelClassRecommendation": "candidate three-segment current-band primary capability; exact owner must be accepted before assignment",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "reusable market/economy static assortment profiles and producer/category contextual-quality mappings for culinary and nonculinary consumers",
+      "prerequisites": ["package.shared_quantity_foundation", "package.static_container_templates", "exact owner-path decision"],
+      "proposedFiles": ["future:packages/content/base/civilization/market_assortment_profiles.json", "future:packages/content/base/civilization/producer_quality_mappings.json", "future:packages/schemas/civilization/market-assortment-profile.schema.json"],
+      "validation": ["constrained slot pools", "tier floors and weights explicit", "direct known lots remain valid", "contextual bands do not replace category truth", "culinary and nonculinary consumers share the owner"],
+      "testsOrResearchChecks": ["schema/reference tests", "tier floor/weight checks", "cross-domain fixture audit"],
+      "risks": ["exact static owner path is not accepted", "content pools and balance are not authorized"],
+      "rollbackBoundary": "new reusable static profiles and schemas only; no merchant stock or content offers",
+      "relationToHeld066": "independent of held 0.6.6 and must not consume retained Gate artifacts",
+      "provenance": "accepted artisan assortment decision and economy/item owner boundaries",
+      "readiness": "blocked",
+      "dependencies": ["package.shared_quantity_foundation", "package.static_container_templates"]
+    },
+    {
+      "packageId": "package.merchant_stock_instances",
+      "labelClassRecommendation": "candidate three-segment current-band primary capability",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "merchant stock identities with resolved manifests, condition, price quote, availability window, seller claim, and persistent per-unit truth",
+      "prerequisites": ["package.static_assortment_profiles", "package.item_instance_truth_and_groups"],
+      "proposedFiles": ["future:packages/shared/types/src/merchant-stock-instance.ts", "future:packages/engines/civilization-engine/src/merchant-stock.ts", "future:tests/simulation/merchant-stock-roundtrip.test.mjs"],
+      "validation": ["manifest resolves at stock creation or immediately pre-transfer", "opening never rerolls", "save/load and transfer preserve truth", "direct known lots coexist"],
+      "testsOrResearchChecks": ["deterministic manifest fixtures", "per-unit grouping", "save/load and transfer round trips"],
+      "risks": ["inventory/save/economy ownership is high risk", "price and condition owners remain open"],
+      "rollbackBoundary": "new stock-instance contract and resolver only; no schedules, demand, or store content",
+      "relationToHeld066": "does not alter held monster loot or dynamic loot",
+      "provenance": "accepted manifest timing and assortment decisions",
+      "readiness": "blocked",
+      "dependencies": ["package.static_assortment_profiles", "package.item_instance_truth_and_groups"]
+    },
+    {
+      "packageId": "package.assortment_stock_schedule",
+      "labelClassRecommendation": "candidate three-segment current-band primary capability or exact-parent four-segment support suffix after owner acceptance",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "economy/production batch generation, finite replenishment, withdrawal/expiry, event release, and later demand/sell-through",
+      "prerequisites": ["package.static_assortment_profiles", "package.merchant_stock_instances", "exact economy/production schedule owner decision"],
+      "proposedFiles": ["future:packages/engines/civilization-engine/src/merchant-stock-schedule.ts", "future:packages/shared/types/src/merchant-stock-schedule.ts", "future:tests/simulation/merchant-stock-schedule.test.mjs"],
+      "validation": ["clearance finite and time-sensitive", "fresh finite and replenishment-based", "select may be narrow-window or event-based", "no false claim of existing NPC sell-through"],
+      "testsOrResearchChecks": ["deterministic withdrawal/replenishment fixtures", "event-release fixtures", "no infinite same-day replenishment"],
+      "risks": ["demand simulation is absent", "exact schedule owner and values remain open"],
+      "rollbackBoundary": "schedule behavior only; static profiles remain independently authorable",
+      "relationToHeld066": "independent of held 0.6.6",
+      "provenance": "accepted finite-stock and release-window decision",
+      "readiness": "blocked",
+      "dependencies": ["package.static_assortment_profiles", "package.merchant_stock_instances"]
+    },
+    {
+      "packageId": "package.assortment_commands",
+      "labelClassRecommendation": "candidate three-segment current-band primary runtime capability",
+      "selectedAsSmallestLaterPackage": false,
+      "exactOwnerAndScope": "engine-owned purchase, transfer, open, and inspect commands for direct lots and mystery assortments",
+      "prerequisites": ["package.merchant_stock_instances", "package.culinary_knowledge_fraud_inspection_contract"],
+      "proposedFiles": ["future:packages/engines/civilization-engine/src/market-assortment-commands.ts", "future:packages/shared/types/src/market-assortment-commands.ts", "future:tests/integration/market-assortment-commands.test.mjs"],
+      "validation": ["commands use persisted truth", "opening never generates", "claims and observations remain separate", "honest clearance is not fraud"],
+      "testsOrResearchChecks": ["purchase/transfer/open/inspect integration", "fraud and refusal cases", "no-reroll assertions"],
+      "risks": ["crosses economy, inventory, knowledge, and command owners"],
+      "rollbackBoundary": "new command surfaces only after stock-instance and observation contracts exist",
+      "relationToHeld066": "runtime package is separate from held static monster/ecology expansion",
+      "provenance": "accepted assortment, inventory, economy, and inspection boundaries",
+      "readiness": "blocked",
+      "dependencies": ["package.merchant_stock_instances", "package.culinary_knowledge_fraud_inspection_contract"]
     }
   ],
   "openDecisions": [
@@ -1071,15 +1259,8 @@
       "blocking": ["package.shared_quantity_foundation"]
     },
     {
-      "decisionId": "OD-02",
-      "question": "Should serving be a controlled dimension or a culinary reference amount that must point to count, mass, or volume?",
-      "recommendedAnswer": "culinary reference amount",
-      "blocking": ["package.shared_quantity_foundation", "package.static_food_profiles"]
-    },
-    {
       "decisionId": "OD-03",
-      "question": "Which preparation methods and preservation-effect parameters form the first controlled vocabulary, and which owner registers them?",
-      "recommendedAnswer": "crafting-owned methods referenced by item food-state outcomes",
+      "question": "Which preparation methods and preservation-effect parameters form the first controlled vocabulary under the accepted future crafting.food_process_methods owner?",
       "blocking": ["package.static_food_profiles"]
     },
     {
@@ -1118,6 +1299,26 @@
       "decisionId": "OD-10",
       "question": "Which difficulty tiers disable or soften fraud, monotony, nutrition pressure, and food-risk severity?",
       "blocking": ["package.meal_nutrition_difficulty_contract", "package.culinary_knowledge_fraud_inspection_contract"]
+    },
+    {
+      "decisionId": "OD-11",
+      "question": "What exact ration manifests, physical sizes, kilocalories, serving potential, and balance should each accepted ration name receive?",
+      "blocking": ["package.culinary_catalog_integrity", "package.meal_nutrition_difficulty_contract"]
+    },
+    {
+      "decisionId": "OD-12",
+      "question": "What exact assortment slot counts, quantity ranges, and later-simulated adjustments, if any, should apply to the candidate tier weights?",
+      "blocking": ["package.static_assortment_profiles"]
+    },
+    {
+      "decisionId": "OD-13",
+      "question": "What exact reusable static assortment/contextual-quality paths and stock-generation, replenishment, event-release, and demand owners should be accepted?",
+      "blocking": ["package.static_assortment_profiles", "package.merchant_stock_instances", "package.assortment_stock_schedule"]
+    },
+    {
+      "decisionId": "OD-14",
+      "question": "Which producer/category catalogs, lore-native names, expected-value bounds, and price-variance bounds should later content and balance use?",
+      "blocking": ["package.static_assortment_profiles", "package.assortment_stock_schedule"]
     }
   ],
   "summary": {
@@ -1126,9 +1327,9 @@
     "foodStateConceptCount": 9,
     "portionabilitySampleCount": 9,
     "containerCapabilityCount": 11,
-    "knowledgeAndFraudConceptCount": 10,
-    "candidatePackageCount": 10,
-    "openDecisionCount": 10,
+    "knowledgeAndFraudConceptCount": 16,
+    "candidatePackageCount": 14,
+    "openDecisionCount": 13,
     "selectedSmallestLaterPackage": "package.culinary_contract_acceptance_decision",
     "selectedPackageReadiness": "design-ready only",
     "implementationReadyPackageCount": 0,
