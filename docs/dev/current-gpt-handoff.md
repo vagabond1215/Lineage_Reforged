@@ -3,172 +3,119 @@
 ## Status
 
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is complete and validated.
-- The original culinary research completed at commit `cd12ee015b11d96d93df05cc2911c7525e1133c2`.
+- Original culinary research completed at commit `cd12ee015b11d96d93df05cc2911c7525e1133c2`.
 - The first culinary results repair completed at commit `9b73c80e5fc28b3f0951a0d308c0f693ce1493c5` and remains accepted documentation input.
-- The unversioned `Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit` completed at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a`.
-- GPT/human inspection accepts that audit's repository evidence, source discipline, multi-axis food model, partial-consumption direction, physical-container direction, heterogeneous unknown-group direction, fraud/inspection direction, and hazard model.
-- The integration audit requires a bounded results repair before durable promotion because of calorie-scale, serving, process-owner, package-boundary, dependency, ration-name, version-class, and mystery-assortment omissions.
-- `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md` controls ration, serving, percentage, calorie, process-owner, package-boundary, and physical-label corrections.
-- `docs/design/artisan-mystery-assortment-stock-and-quality-decision.md` controls constrained randomized assortments, direct known lots, tier floors/weights, contextual quality, stock windows, producer scope, and cross-domain reuse.
-- The active prompt is the unversioned `Culinary Integration Results Repair And Contract Acceptance Audit` in `docs/dev/current-codex-prompt.md`.
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and exactly recoverable from its held prompt.
+- The unversioned culinary preparation/portion/meal integration audit completed at commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a`.
+- The bounded integration-results repair completed at commit `b92b1344613669114641230a2e67f8ed77e7ae00`.
+- GPT/human inspection accepts that repair's percentage, quantity, ration, food-state, preparation-method, container, multi-serving, mystery-assortment, stock-window, contextual-quality, historical-source, and cross-domain direction.
+- The repaired artifacts still require one final four-file documentation repair for command ownership, generic item-instance dependencies, selected-package prerequisites, canonical kilocalorie ownership, metadata, and contextual action surfaces.
+- `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md` is the newest controlling focused authority.
+- The active prompt is `Culinary Integration Final Contract And Action-Surface Repair Audit` in `docs/dev/current-codex-prompt.md`.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and recoverable from its held prompt and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
-## Controlling Culinary Decisions
+## Controlling Action-Surface Direction
 
-### Food state
+### General posture
 
-- Food state remains orthogonal: readiness, preparation method, preservation effect, hazard/safety, and authored display name.
-- Smoking may cook and preserve. Drying may preserve without cooking. Canning/jarring may heat, make ready to eat, and preserve.
-- Display names remain authored; mechanics never parse names.
-- `raw` and `uncooked` may both be used for lexical variety.
-- One lone manually authored `isPreserved` flag is insufficient.
+- Prefer contextual item-, entity-, workplace-, and location-driven actions over permanent global food, crafting, trade, or character-action menus.
+- The UI surface that exposes an action is not automatically the engine owner that executes it.
+- Show only actions valid in the current situation, plus selectively useful unavailable actions with concise reasons.
+- Avoid duplicating the same operation across Food, Inventory, Crafting, Party, Shop, and Location menus.
+- A filtered ready-food inventory view may later exist as convenience, but it is not a second command owner.
 
-### Preparation-method ownership
+### Inventory and item actions
 
-- Future `crafting.food_process_methods` is the recommended single canonical method registry.
-- Item food-state profiles reference methods and own resulting readiness, preservation, hazard, and presentation relationships.
-- Recipes and production chains reference the same method identities without copying or inheriting competing definitions.
-- Do not create a parallel canonical `items.food_process_methods` registry.
+Selecting a physical item may expose valid actions such as:
 
-### Percentages and nutrition
+- Eat or Drink;
+- Open or Close;
+- Inspect;
+- Split, Combine, Pour, or Transfer;
+- Store, Take Out, or Drop;
+- Label;
+- an eligible hand-crafting verb.
 
-- Meal-preparation `0-100%` controls describe ingredient source allocation or derived serving composition.
-- They do not define daily calorie points.
-- Authoritative nutrients derive from physical amount consumed and nutrient value per basis amount.
-- The live `dailyCalories: 100` rule is a legacy game-scale implementation fact, not accepted future calorie authority.
-- Provisional user-authored game-balance posture:
-  - approximately `2,500 kcal/day` for an ordinary healthy active adult;
-  - approximately `3,500-4,000 kcal/day` for sustained high-intensity labor or loaded military activity.
-- Exact balance remains later work.
+Generic item-instance commands own:
 
-### Quantity
+- open/close and seal/unseal;
+- split/combine compatible lots;
+- pour/transfer between owned or permitted containers;
+- move/store/take out/drop;
+- custom labels;
+- inspection of lawfully held or accessible goods.
 
-- Physical dimensions: count, mass, volume.
-- Serving is an authored culinary reference resolving to count, mass, or volume.
-- Bundle, batch, contained lot, and package are aggregation/packaging kinds, not dimensions.
-- Amounts use deterministic integer or fixed-point basis units.
-- Display percentages and units are not authoritative storage.
+They do not own nutrition, recipes, sales, or manifest generation.
 
-### Rations and provisions
+### Food consumption
 
-Accepted primary ration names:
+- Ready-to-eat items expose Eat, Drink, or another authored consumption verb from the selected item.
+- The food-consumption resolver owns amount selection, whole-only validation, inventory decrement/remainder, nutrition, satiety, food risk, dietary exposure, and morale effects.
+- There is no required permanent top-level Food menu.
+- `Prepare`, `Cook`, `Preserve`, `Smoke`, `Dry`, `Pickle`, `Ferment`, `Bake`, `Boil`, `Fry`, `Steam`, and similar transformations are crafting/process actions, not permanent food-menu buttons.
 
-- Small Ration;
-- Medium Ration;
-- Large Ration;
-- Party Ration;
-- Large Party Ration.
+### Give, trade, and barter
 
-Do not prefer Day Ration, Multi-Day Ration, Group Meal Provisions, Group Meal Container, or Extra-Large Group Meal Container as ordinary item names.
+- Do not place universal Give, Trade, Buy, Sell, or Barter buttons in the ordinary item menu.
+- Giving or offering an item/serving starts from a party-member or NPC interaction, then selects the item and amount.
+- Buying, selling, and bartering start from a merchant, storefront, market, or NPC transaction context.
+- Inventory may provide the item picker, but it does not execute the social or commercial transaction.
 
-Small, medium, and large are convenient portable package sizes, not exclusive eater counts. A medium ration may feed several people during a short outing depending on manifest, appetite, activity, and other food carried.
+### Hand crafting
 
-Party Ration and Large Party Ration are short-duration multi-serving assortments intended to reduce clutter and preparation time. They do not replace sustained expedition provisions.
+- Selecting a material, ingredient, component, or suitable tool may expose Craft, Shape, Prepare, Assemble, or another relevant verb when known recipes/processes use it.
+- The recipe view may toggle between all known recipes using the selected item and only recipes whose full material/tool/access requirements are currently satisfied.
+- Selecting one item does not imply it is the only ingredient.
+- The crafting resolver owns knowledge, inputs, tools, time, skill, success/failure, outputs, and inventory mutation.
 
-Provisions remain the broader logistics supply represented through actual sacks, baskets, crates, barrels, casks, ingredients, rations, tools, cookware, fuel, vehicles, and pack animals.
+### Workplace crafting
 
-Party rations may be repacked from provisions and stored in crates, wagons, or pack-animal loads.
+- Fixed-station crafting appears from an accessible workplace, station, furnishing, location, selected recipe, or appropriate portable apparatus.
+- Cooking and preservation require compatible stations, tools, fuel, access, and permission where applicable.
+- Presence at a workplace does not prove authority, vacancy, reservation, fuel, staffing, ownership, or permission.
+- The future `crafting.food_process_methods` registry owns reusable culinary method identities.
 
-### Multi-serving preparation
+### Multi-serving food preparation
 
-- Extend the future Prepare action; do not create a separate infrastructure system.
-- The number of selected serving vessels determines serving count.
-- One bowl generally represents one serving.
-- Uniform Servings is the default.
-- Individual Servings permits per-dish differences such as more protein, no meat, reduced dairy, different portions, or supported substitutions.
-- Candidate UI: ingredient-source rows and selected-vessel columns.
-- Source allocations across servings cannot exceed available physical amount.
-- Serving composition may total 100% as presentation but must not be confused with calories.
-- Prepared servings may be consumed, given to party members, or stored where supported.
+- The selected serving vessels determine output count.
+- Uniform Servings is the default; Individual Servings allows per-vessel differences.
+- Source allocations cannot exceed available physical amounts.
+- Prepared servings may be consumed, stored, placed, or given through a separate party/NPC interaction.
 
-## Artisan And Producer Assortments
+### Location and storefront flow
 
-### Direct known lots
+Accepted documentation-only direction:
 
-- Ordinary direct goods remain available alongside mystery assortments.
-- Examples include a loaf, half-dozen or dozen rolls/muffins, measured flour, a known cloth bolt, a known hide, stated boards, or stated metal stock.
-- Direct lots have exact manifests unless fraud separately creates a discrepancy.
+1. Select a known building through a district, coordinate, map, or known-building directory.
+2. Resolve local travel by distance and ticks through the travel owner.
+3. Contextual events may later interrupt travel.
+4. Enter automatically when travel resolves and the destination is open and enterable.
+5. Present a short entity-aware contextual arrival narrative that does not invent absent facts.
+6. Expose a compact first-level location menu such as Browse Goods, Talk to an NPC, Look Around, and Exit.
+7. Look Around may reveal selectable people, furniture, displays, counters, cabinets, desks, goods, and exits.
+8. Browse Goods presents observable direct lots and persisted mystery assortments.
+9. Talk to a merchant may expose Buy, Sell, Barter, Converse, Request Service/Inspection, or Leave where valid.
 
-### Mystery manifests
+No location, travel, event, narrative, storefront, NPC, or UI implementation is authorized.
 
-- Artisan/producer assortments are constrained randomized physical manifests, not merely themed names.
-- True contents resolve and persist when merchant stock is generated or, if stock remains abstract, during purchase immediately before ownership transfer.
-- Opening-time RNG remains prohibited.
-- Opening reveals existing truth; save/load and transfer preserve it.
-- Unknown identical-looking assortments may share a presentation group while retaining per-unit truth.
+## Command Ownership Matrix
 
-### Reusable tier template
+| Player-facing action | Invocation surface | Execution owner direction |
+| --- | --- | --- |
+| Eat / Drink | Selected inventory item | Food-consumption command |
+| Open / Close / Seal | Selected item/container | Generic item-instance command |
+| Split / Combine / Pour / owned transfer | Selected item/container | Generic inventory/item-instance command |
+| Inspect held item | Selected accessible item | Generic item observation/inspection command |
+| Apply custom label | Selected item/container | Generic item-instance labeling command |
+| Hand Craft / Shape / Prepare | Selected material, ingredient, or portable apparatus | Crafting/process command |
+| Workplace Craft / Cook / Preserve | Accessible station, workplace, or recipe | Crafting/process command using workplace authority |
+| Give / Offer | Party-member or NPC interaction | Character interaction plus inventory transfer |
+| Browse Goods | Storefront or seller interaction | Market stock presentation |
+| Buy / Sell / Barter | Merchant transaction | Economy/market transaction command |
+| Inspect seller goods | Merchant interaction after permission | Transaction permission invoking generic inspection |
+| Travel to building | District/map/directory context | Travel/activity command |
+| Enter / Exit / Look Around | Current location | Location/activity command |
 
-Contextual bands:
-
-- `band_0`: clearance, scrap, day-old, irregular, seconds, or least desirable but honestly saleable goods;
-- `band_1`: ordinary, standard, fresh, or serviceable trade quality;
-- `band_2`: fine, select, premium, specialty, or unusually useful/expensive quality;
-- `band_3`: rare, exceptional, prestige, luxury, or masterwork-adjacent outcome.
-
-Candidate default per-slot weights:
-
-| Tier | `band_0` | `band_1` | `band_2` | `band_3` | Floor |
-| --- | ---: | ---: | ---: | ---: | --- |
-| Clearance | 68% | 27% | 4% | 1% | `band_0` |
-| Standard Artisan | 0% | 72% | 23% | 5% | `band_1` |
-| Select | 0% | 0% | 80% | 20% | `band_2` |
-
-- These are candidate balance defaults, not implemented numbers.
-- A producer may expose two or three tiers, but every offered tier must map explicitly.
-- Tier increases the minimum eligible band and rare/expensive chance.
-- Slot pools remain constrained by producer, category, region, season, stock source, quantity, duplicate rules, and value bounds.
-
-### Contextual quality
-
-- Assortment bands do not replace domain-specific quality truth.
-- Bakery quality may use freshness, flour refinement, enrichment, bake/finish, rarity, decoration, size, and consistency.
-- Butcher/fish/cheese quality may use freshness, cut/yield, cure/smoke/aging, source rarity, and condition.
-- Apothecary/spice/alchemy quality may use purity, potency, freshness, provenance, processing, adulteration, and seals.
-- Textile/leather quality may use fiber/hide, dimensions, weave/tan/dye/finish, condition, and rarity.
-- Wood quality may use species, dryness, straightness, dimensions, defects, finish, and scarcity.
-- Metal quality may use alloy/material, purity, mass/dimensions, defects, processing stage, finish, scarcity, and workmanship.
-
-### Producer scope
-
-- Culinary examples may include baker, pastrymaker, confectioner, chocolatier or lore-native equivalent, butcher, fishmonger, cheesemaker, brewer, spice merchant, grocer, farmer, orchardist, herbalist, apothecary, alchemist, and specialty preservers where supported.
-- Nonculinary reuse may include textile/leather scraps and selections, wood offcuts and select stock, metal scrap and processed stock, potter's seconds, glassworker remnants, cooper/fletcher/chandler/scribe/mason/jeweler/lapidary/enchanter/magitech assortments where later authority permits.
-- These are directions only and do not authorize content.
-- Ingredient/material surplus pools remain separate from finished-output pools and may only use actual production inputs or stock.
-
-### Stock and time windows
-
-- Clearance/day-old/surplus/scrap/seconds stock is finite, often released at opening or production rollover, normally not replenished that day, and available for a short window.
-- Fresh/standard stock is finite by production batch and replenishes at authored intervals.
-- Select/luxury/event stock is very limited and may appear only during narrow hours, market days, festivals, commissions, catering, noble/guild events, or leftovers from such work.
-- Do not claim live NPC sell-through exists. Deterministic finite stock and withdrawal windows may stand in until economy/runtime demand owns sell-through.
-- Low-tier assortments are not automatically unsafe, fraudulent, rotten, or useless. Undisclosed defects belong to fraud and inspection.
-
-### Pricing direction
-
-- Clearance is normally discounted for age, irregularity, uncertainty, or mixed usability.
-- Standard aims near ordinary expected trade value with variance.
-- Select may charge a premium for its higher floor, rare chance, scarcity, convenience, prestige, or packaging.
-- Expected-value bounds and duplicate caps should prevent trivial profit loops.
-- Exact prices, stock, schedules, RNG, and economy behavior remain unimplemented.
-
-### Container identity and labels
-
-- Container examples are explicitly non-exhaustive.
-- Physical forms may include pouches, packets, bags, sacks, satchels, bundles, baskets, bushel containers, hampers, boxes, cases, chests, crates, jars, bottles, flasks, jugs, crocks, pots, kegs, casks, barrels, bales, bolts, rolls, racks, and later bulk transport forms where supported.
-- The physical container must suit the goods; `Basket` is not used only because it sounds artisanal.
-- Custom labels are mutable item-instance presentation metadata and never replace true identity or contents.
-
-## Package Boundaries And Labels
-
-- Static food profiles own readiness, method references, preservation outcomes, hazards, and portionability.
-- Meal/nutrition/difficulty work owns serving-basis nutrients, satiety, aggregation results, dietary exposure, body-state integration, and difficulty controls.
-- Static container visibility/access capabilities do not depend on character observation; inspection consumes those capabilities later.
-- There is no valid three-segment support package.
-- Three-segment runs are primaries; support runs use a fourth segment and name one exact primary parent.
-- The reusable artisan mystery-assortment owner must serve culinary and nonculinary consumers rather than creating separate random-box systems per domain.
-
-## Active Repair Scope
+## Required Final Repair
 
 The active Codex run may modify only:
 
@@ -177,13 +124,66 @@ The active Codex run may modify only:
 - `docs/dev/tmp-culinary-quantity-container-knowledge-audit-2026-07-20.json`;
 - `docs/dev/current-codex-output.md`.
 
-It must repair the completed audit rather than add new research or implementation.
+It must repair:
+
+1. duplicate Open/Transfer/Inspect command ownership;
+2. static-food dependency in generic item-instance truth;
+3. stale `OD-01 through OD-06` prerequisite language;
+4. canonical kilocalorie and nutrition-owner ambiguity;
+5. original versus repair metadata;
+6. contextual inventory, crafting, workplace, location, NPC, and storefront invocation surfaces.
+
+### Generic instance dependency
+
+- Generic item-instance truth depends on shared quantity and generic container/item-instance foundations.
+- It must not depend on static food profiles.
+- Food, textiles, leather, wood, metal, seeds, apothecary goods, merchant stock, and mystery assortments consume the same generic instance truth.
+
+### Nutrition ownership
+
+- Canonical authored nutritional energy is kilocalories unless a later durable decision accepts an exact conversion contract.
+- Legacy `dailyCalories: 100` is compatibility-only.
+- Static profiles own per-basis kcal/macros and later accepted static satiety parameters.
+- Meal resolver owns aggregation.
+- Dietary exposure state owns monotony/variety history.
+- Body state owns intake and physiological effects.
+- Difficulty owns feature switches and scalars.
+
+### Explicit open-decision prerequisites
+
+The selected contract-acceptance decision should explicitly depend on:
+
+- OD-01;
+- OD-03;
+- OD-05;
+- OD-06;
+- OD-07.
+
+OD-04 belongs there only if that decision intentionally accepts transient versus packaged ad hoc meal persistence.
+
+## Culinary Decisions To Preserve
+
+- Food state is orthogonal: readiness, preparation method, preservation effect, hazard, and authored display name.
+- Smoking may cook and preserve; drying may preserve without cooking.
+- Names remain authored and are never parsed for mechanics.
+- Physical dimensions are count, mass, and volume.
+- Serving is an authored culinary reference.
+- Percentages are source allocation or derived composition, not calorie points.
+- Nutrition derives from physical amount and per-basis values.
+- Provisional game-design anchors remain about 2,500 kcal/day for an ordinary active adult and 3,500-4,000 kcal/day for sustained high-intensity labor.
+- Accepted ration names are Small, Medium, Large, Party, and Large Party Ration.
+- Party rations are short-duration multi-serving assortments; provisions are sustained multi-container logistics.
+- Mystery manifests resolve before opening and never reroll.
+- Direct known lots coexist with mystery assortments.
+- Clearance/standard/select candidate tier weights, contextual quality, finite stock windows, honest-clearance/fraud separation, and cross-domain assortment reuse remain accepted directions.
+- Container examples remain non-exhaustive and custom labels never replace true identity.
+- Three-segment labels are primaries; support uses a fourth segment and an exact parent.
 
 ## Route Guardrails
 
 - The active run is unversioned and documentation-only.
 - No implementation number is assigned.
-- No item, recipe, profile, ration, provision, direct store lot, mystery assortment, producer, profession, store stock, container, starting bundle, schema, validator, test, runtime, inventory, UI, save, economy, Knowledge, reputation, merchant, difficulty, dependency, asset, or gameplay change is authorized.
+- No item, recipe, ration, provision, assortment, producer, profession, store, NPC, building, event, container, stock, starting bundle, schema, validator, test, runtime, command, inventory, UI, save, economy, travel, narrative, Knowledge, reputation, merchant, difficulty, dependency, asset, or gameplay change is authorized.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
-- Held `0.6.6` remains byte-for-byte recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` and must not be restored or modified by the repair.
-- After the repair, stop for GPT/human inspection before creating the durable contract-acceptance decision or any implementation prompt.
+- Held `0.6.6` remains recoverable and must not be restored or modified.
+- After the final repair, stop for GPT/human inspection before creating the durable contract-acceptance decision or any implementation prompt.
