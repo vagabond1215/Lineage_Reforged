@@ -57,7 +57,7 @@ It does not change through:
 - structural atrophy;
 - injury, illness, climate, equipment, or magic.
 
-A later transformation, curse, blessing, lineage expression, or story effect must also be represented as an adjustment unless a future explicit character-foundation decision deliberately changes this invariant.
+Transformations, curses, blessings, lineage expressions, and story effects must also be represented as adjustments around the immutable base. The base value itself never changes.
 
 ### 3.2 Persistent developed adjustment
 
