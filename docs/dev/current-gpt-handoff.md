@@ -7,22 +7,25 @@
 - Deep Research `GPT-DR.nutrition.protein-recovery-muscle-adaptation` completed at commit `462547fa64faa87d5d36cd5bf4d918b6c103002d`.
 - Difficulty, World Rules, and Stakes were separated by `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`.
 - The repository audit `Difficulty Preset, Grim World, And Stakes Separation Contract Planning Audit` completed at commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694`.
-- The audit changed exactly `docs/dev/current-codex-output.md` and `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md`.
 - GPT inspection accepted the audit as decision-ready and source-verified the universal HP-zero archival/save-deletion conflict.
-- The active Codex run is now `Campaign Rules Identity, Legacy Migration, Story Abstraction, And Normal Stakes Acceptance Decision` in `docs/dev/current-codex-prompt.md`.
+- The future restricted-Stakes save, death-closure, and Prestige direction is now controlled by `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`.
+- The active Codex run is `Campaign Rules Identity, Legacy Migration, Story Abstraction, And Normal Stakes Acceptance Decision` in `docs/dev/current-codex-prompt.md`.
 - The active run is documentation-only. On success it may create one durable decision, update current output, and delete the consumed temporary difficulty audit.
-- No runtime, schema, save, migration, UI, balance, test, content, Grim module, death, or Stakes implementation is authorized.
+- No runtime, schema, save, migration, UI, balance, test, content, Grim module, restricted-Stakes runtime, death, succession, or Prestige implementation is authorized.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and byte-recoverable from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
 
 ## Most Specific Current Authorities
 
-1. `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`
-2. `docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md`
-3. `docs/design/protein-recovery-muscle-adaptation-and-nutrition-integration-decision.md`
-4. `docs/design/fat-mobilization-body-stat-and-climate-effects-decision.md`
-5. `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md`
-6. `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md`
+1. `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`
+2. `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`
+3. `docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md`
+4. `docs/design/protein-recovery-muscle-adaptation-and-nutrition-integration-decision.md`
+5. `docs/design/fat-mobilization-body-stat-and-climate-effects-decision.md`
+6. `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md`
+7. `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md`
+
+The restricted-Stakes decision is more specific only for future restricted save continuity, rollback, terminal death closure, read-only post-death access, and death-time Prestige direction. It does not change the active initial contract, which remains limited to `normal_stakes`.
 
 The active acceptance run must create:
 
@@ -87,7 +90,7 @@ Requirements:
 - item nutrient truth, manifests, world facts, and immutable base attributes are not settings;
 - an id may exist in contracts before ordinary production campaign creation is allowed to select it.
 
-`Ironbound` remains only a working title. No restricted-Stakes id is accepted in the active run.
+No restricted-Stakes machine id is accepted in the active run. `Ironbound` remains only a working title.
 
 ## Initial Lock And Availability Policy
 
@@ -170,7 +173,7 @@ Legacy Brutal:
 Legacy `hardcore: true`:
 
 - never maps to Grim World;
-- never maps to a future restricted Stakes mode;
+- never maps to the future restricted-Stakes mode;
 - maps its tier normally;
 - receives Heroic World and Normal Stakes;
 - records `legacy_hardcore` provenance;
@@ -242,6 +245,47 @@ Initial posture:
 - historical run-end labels remain historical;
 - difficulty and world rules do not determine death or save permanence.
 
+Legacy `deathZeroesPrestige` is not accepted as the future restricted-Stakes rule.
+
+## Future Restricted-Stakes Direction
+
+The future mode remains a separate Stakes rule whose final player-facing name and machine id are open.
+
+Accepted save posture:
+
+- one authoritative campaign continuity save or save stream;
+- autosaving exists for current-state continuity, session resumption, and technical recovery;
+- manual prior-save loading, quick-load rollback, and save-scumming are unavailable;
+- accepted state changes become durable through live or semi-live deterministic checkpoints;
+- save-and-exit may force the latest authoritative checkpoint without creating a branch;
+- hidden technical generations may recover the latest verified state after corruption or interrupted writes;
+- technical recovery is not a player-selectable rollback history.
+
+Accepted death posture:
+
+- the mode makes actual death irreversible;
+- it does not require every HP-zero event to be death;
+- actual death is committed atomically;
+- the character is immediately flagged terminal and closed to gameplay mutation;
+- closing the application cannot escape a verified death;
+- dead characters remain available for informational and Chronicle access;
+- the terminal character record is retained rather than deleted;
+- succession, house/line continuation, and campaign continuation remain later owner decisions.
+
+Accepted Prestige posture:
+
+- death does not zero Prestige;
+- every dead restricted-Stakes character receives a positive Prestige or Legacy floor;
+- a disgraced death may reduce the final settlement substantially;
+- a martyring, sacrificial, celebrated, or heroic death may increase it;
+- completed-life significance remains relevant;
+- manner of death, conduct, public perception, legal perception, publicity, witnesses, evidence, audience, house/line impact, disgrace, and martyrdom are distinct inputs;
+- legal condemnation and public admiration may coexist, including outlaw, vigilante, or Robin Hood-like cases;
+- exact formulas, floors, caps, publicity mechanics, and thresholds remain deferred;
+- settlement occurs exactly once and must be deterministic.
+
+The active acceptance run must cite the focused restricted-Stakes decision and avoid contradicting it, but it must keep only `normal_stakes` in the initial contract.
+
 ## Combat-Profile Naming
 
 `PlayerCombatProfileState.preferredMode: normal | hardcore` is not campaign difficulty, World Rules, or Stakes.
@@ -281,7 +325,7 @@ It must not modify:
 - current prompt;
 - this handoff;
 - route register;
-- older decisions;
+- older decisions, including the restricted-Stakes decision;
 - runtime;
 - schemas;
 - saves;
@@ -309,7 +353,7 @@ No release number is assigned.
 9. focused Grim health/sanitation decision and slice;
 10. expose Grim World only after a real persisted module and required Story adapter exist;
 11. later Grim owner modules;
-12. separate Stakes decision before restricted saves, permanent death, or succession.
+12. restricted-Stakes sequence: authoritative save continuity/recovery contract, actual-death/terminal-closure and succession contract, Prestige/Legacy settlement contract, final name/id acceptance, then runtime and opt-in UI.
 
 Steps 1-3 may need to be one atomic versioned package so `normal_stakes` never coexists with automatic save deletion.
 
@@ -318,12 +362,14 @@ No production UI may present a canonical option merely because its id exists in 
 ## Deferred Decisions
 
 - exact preset values and formulas;
-- exact contextual defeat outcomes;
-- actual death and permanent death;
+- exact contextual Normal Stakes defeat outcomes;
+- final restricted-Stakes name and machine id;
+- exact restricted-Stakes autosave cadence, save architecture, and technical recovery depth;
+- exact actual-death contexts and lethality rules;
 - party/NPC permanence;
-- succession and campaign termination;
-- final restricted-Stakes name;
-- restricted-save, save-and-exit, rollback, checkpoint, and crash-recovery topology;
+- succession and same-world continuation;
+- estate and inheritance transfer;
+- exact Prestige base, floor, caps, curves, publicity model, disgrace thresholds, and martyrdom thresholds;
 - player-facing custom difficulty;
 - Story adapters for owners not yet implemented;
 - replacement combat-profile identifier;
@@ -336,6 +382,7 @@ No production UI may present a canonical option merely because its id exists in 
 - The active run is contract acceptance only.
 - Do not call the result implementation-ready.
 - No implementation prompt may be created by Codex.
+- The future restricted-Stakes decision is accepted design direction but not an initial live campaign id.
 - Held `0.6.6` remains paused and byte-recoverable.
 - Retained `0.6.7` artifacts remain untouched.
 - No prior temporary culinary or research artifact is reopened by this run.
