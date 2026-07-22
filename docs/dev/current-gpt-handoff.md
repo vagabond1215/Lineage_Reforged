@@ -3,18 +3,16 @@
 ## Status
 
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is complete and validated.
-- The rich culinary, ration, container, contextual-action, metabolism, fat, protein, and muscle research/decision sequence is complete as design input.
-- The protein Deep Research run completed at commit `462547fa64faa87d5d36cd5bf4d918b6c103002d`.
-- Its temporary bibliography is not player-facing authority and may be deleted after durable conclusions are transferred.
-- One authoritative stat-growth system and one authoritative current-attribute resolver are accepted.
-- Base attributes are immutable.
-- Training changes persistent developed adjustments.
-- Long-duration structural deterioration may create persistent structural-loss adjustments.
-- Structural loss is recoverable only through qualifying rebuilding and ordinary stat growth, not passive recovery.
-- Difficulty naming and Hardcore semantics are controlled by `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`.
-- The active Codex run is `Difficulty Preset, Grim World, And Stakes Separation Contract Planning Audit` in `docs/dev/current-codex-prompt.md`.
-- The active run is documentation-only and may modify exactly two files.
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and recoverable from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- The culinary, nutrition, metabolism, fat, protein, recovery, muscle, and unified-attribute design sequence is complete as design input.
+- Deep Research `GPT-DR.nutrition.protein-recovery-muscle-adaptation` completed at commit `462547fa64faa87d5d36cd5bf4d918b6c103002d`.
+- Difficulty, World Rules, and Stakes were separated by `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`.
+- The repository audit `Difficulty Preset, Grim World, And Stakes Separation Contract Planning Audit` completed at commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694`.
+- The audit changed exactly `docs/dev/current-codex-output.md` and `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md`.
+- GPT inspection accepted the audit as decision-ready and source-verified the universal HP-zero archival/save-deletion conflict.
+- The active Codex run is now `Campaign Rules Identity, Legacy Migration, Story Abstraction, And Normal Stakes Acceptance Decision` in `docs/dev/current-codex-prompt.md`.
+- The active run is documentation-only. On success it may create one durable decision, update current output, and delete the consumed temporary difficulty audit.
+- No runtime, schema, save, migration, UI, balance, test, content, Grim module, death, or Stakes implementation is authorized.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and byte-recoverable from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
 
 ## Most Specific Current Authorities
@@ -26,11 +24,13 @@
 5. `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md`
 6. `docs/design/contextual-action-surfaces-inventory-crafting-and-trade-decision.md`
 
-The newest focused decision controls difficulty and Hardcore semantics where older documents use `Accessible`, `Standard`, `Simulation`, or an overloaded `Hardcore` term.
+The active acceptance run must create:
+
+`docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`
+
+After acceptance, that new focused decision will control canonical campaign ids, lock policy, Normal Stakes HP-zero behavior, legacy migration, Story abstraction, override availability, Chronicle identity, and package-order gates where older documents overlap.
 
 ## Accepted Campaign Axes
-
-Lineage: Reforged separates:
 
 ```text
 difficulty preset
@@ -43,194 +43,290 @@ stakes rules
   -> saving, rollback, defeat, death, and campaign permanence
 ```
 
-These axes must not be silently conflated.
+The axes remain orthogonal.
 
-## Difficulty Presets
+Canonical player-facing difficulty names:
 
-### Story
+- Story
+- Favored
+- Mortal
+- Forsaken
 
-Narrative-first standard-RPG abstraction.
+Canonical world-rule names:
 
-- Technical nutrition and body-state management may be collapsed, bypassed, hidden, or neutralized.
-- Persistent structural loss is disabled.
-- Food may use broad healing, morale, benefit, or `Well Fed` behavior.
-- Grim World content may appear through broad events and forgiving checks rather than technical meters.
-- Tutorials, forecasts, and recovery assistance are maximally clear and generous.
+- Heroic World
+- Grim World
 
-### Favored
+`Mortal + Heroic World + Normal Stakes` is the intended default identity.
 
-Easier full-system mode, framed as divine or metaphysical benevolence.
+## Required Campaign Identity Direction
 
-- Every system selected by World Rules remains enabled.
-- Healthy thresholds are more forgiving.
-- Grace periods are longer.
-- Harmful accumulation is slower.
-- Recovery and rebuilding are faster.
-- Warnings and forecasts are earlier and clearer.
-- Physical food truth remains unchanged.
+The active acceptance prompt requires a contract equivalent to:
 
-### Mortal
+```ts
+type DifficultyPresetId = "story" | "favored" | "mortal" | "forsaken";
+type WorldRulesId = "heroic_world" | "grim_world";
+type StakesRulesId = "normal_stakes";
 
-Expected default and player-facing replacement for `Standard`.
-
-- Every system selected by World Rules is enabled.
-- Core nutrition, metabolism, recovery, current attributes, and long-duration structural loss are active in Heroic World.
-- Baseline bands, grace periods, rates, and recovery apply.
-- Onboarding is gentle through presentation, warnings, and progressive explanation rather than disabled mechanics.
-
-### Forsaken
-
-Difficult full-system mode and thematic opposite of Favored.
-
-- Every system selected by World Rules remains enabled.
-- Thresholds are stricter.
-- Grace periods are shorter but meaningful.
-- Harm accumulates faster and recovery is slower.
-- It does not automatically enable Grim World, permanent death, or restricted saves.
-
-## World Rules
-
-### Heroic World
-
-Default fantasy-world posture.
-
-Heroic World contains the accepted core systems without universally simulating every historical, biological, criminal, legal, and institutional burden.
-
-It may include authored crime, disease, politics, fraud, scarcity, law, and social consequences where content and existing owners require them.
-
-### Grim World
-
-Hardcore world-simulation ruleset.
-
-Grim World changes what systems exist. It is not a scalar package.
-
-Candidate module families:
-
-1. food- and water-borne illness, parasites, contamination, sanitation, waste, vermin, wound infection, and outbreaks;
-2. water, fuel, shelter, washing, storage, spoilage, pack-animal, weather, transport, and equipment-maintenance logistics;
-3. violent crime, burglary, robbery, extortion, kidnapping, protection, unsafe districts, and unreliable enforcement;
-4. tolls, taxation, levies, military or labor service, requisition, debt, billeting, confiscation, and negotiated exemptions;
-5. corruption, bribery, adulteration, false measures, counterfeiting, manipulated scarcity, and contract fraud;
-6. imperfect maps, rumors, misinformation, stock uncertainty, legal uncertainty, and reduced perfect HUD knowledge;
-7. persistent shortages, outbreaks, displacement, NPC vulnerability, institutional memory, and slower world recovery.
-
-Grim World requirements:
-
-- causal consequences;
-- telegraphing;
-- counterplay;
-- local and institutional variation;
-- persistence;
-- proportionality;
-- no universal grimdark assumption;
-- no scalar duplication of Forsaken;
-- distinct owners;
-- manageable player presentation.
-
-## Stakes
-
-Saving and death permanence are separate from difficulty and world rules.
-
-A future Stakes contract may define:
-
-- normal saving;
-- restricted saves;
-- save-and-exit;
-- one-save Ironman behavior;
-- permanent character or party death;
-- lineage or succession continuation;
-- campaign retirement or deletion;
-- crash/corruption recovery.
-
-`Ironbound` is the current working title for a possible restricted-save/permanent-death option. It is not yet accepted implementation identity.
-
-Neither Forsaken nor Grim World activates permanent death or restricted saving by itself.
-
-## Combination Matrix
-
-| Difficulty | World Rules | Intended result |
-|---|---|---|
-| Story | Heroic World | conventional narrative RPG |
-| Story | Grim World | harsh themes through coarse, forgiving abstraction |
-| Favored | Heroic World | complete core game with favorable tuning |
-| Favored | Grim World | complete Grim systems with favorable tuning |
-| Mortal | Heroic World | default intended game |
-| Mortal | Grim World | default full harsh-world simulation |
-| Forsaken | Heroic World | demanding core game without Grim additions |
-| Forsaken | Grim World | most demanding systemic game without automatic save/death changes |
-
-## Nutrition Placement
-
-Core nutrition remains part of Mortal Heroic World.
-
-Do not move all nutrition into Grim World.
-
-- Story may disable or abstract kcal, Protein Support, fat, atrophy, and rebuilding management.
-- Favored, Mortal, and Forsaken preserve exact internal food truth.
-- Difficulty changes consequences and forgiveness, not authored nutrient values.
-- Grim World adds contamination, sanitation, parasites, food/water-borne illness, outbreaks, and related interaction only after separate owner contracts.
-- Persistent structural loss remains default-enabled in Favored, Mortal, and Forsaken, with preset-controlled grace and rates.
-
-## Attribute Direction To Preserve
-
-```text
-currentAttribute = resolveAttribute(
-  immutableBase,
-  developedAdjustment,
-  structuralLossAdjustment,
-  reversibleConditionAdjustments,
-  injuryIllnessAdjustments,
-  climateAndBurdenAdjustments,
-  equipmentAdjustments,
-  magicAndStatusAdjustments,
-  contextualAdjustments
-)
+interface CampaignRulesState {
+  version: 1;
+  difficultyPreset: DifficultyPresetId;
+  worldRules: WorldRulesId;
+  stakesRules: StakesRulesId;
+  overrides?: CampaignRuleOverrideState[];
+  migration?: CampaignRuleMigrationProvenanceState;
+}
 ```
 
-- Base values never change.
-- Developed and structural-loss adjustments are stat-growth-owned.
-- Body state supplies nutrition, recovery, Fatigue, Lean Condition, and atrophy pressure.
-- Rebuilding structural loss uses qualifying activity, nutrition, recovery, elapsed time, daily caps, and diminishing returns.
-- No parallel muscle-adaptation progression currency exists.
+Requirements:
 
-## Active Codex Audit
+- machine ids are stable and distinct from localized labels;
+- campaign/save state is authoritative;
+- UI, save metadata, and Chronicle are projections;
+- overrides are typed, owner-approved, versioned, and provenance-bearing;
+- item nutrient truth, manifests, world facts, and immutable base attributes are not settings.
 
-The active run may modify only:
+`Ironbound` remains only a working title. No restricted-Stakes id is accepted in the active run.
 
-- `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md`;
-- `docs/dev/current-codex-output.md`.
+## Initial Lock Policy
 
-It must inspect:
+The active acceptance prompt requires:
 
-- live difficulty enums, labels, settings, and persistence;
-- migration into Story/Favored/Mortal/Forsaken;
-- Heroic World/Grim World campaign-rule identity;
-- Story abstraction of technical nutrition;
-- Grim module foundations and missing owners;
-- separate save/death Stakes architecture;
-- combination support;
-- migration and test requirements.
+- Difficulty creation-locked;
+- World Rules creation-locked;
+- Stakes creation-locked;
+- mechanical overrides creation-locked;
+- accessibility, presentation, input, localization, and nonmechanical information formatting changeable.
 
-It must not implement or modify runtime, schemas, saves, tests, UI, content, disease, crime, law, taxation, conscription, corruption, or gameplay.
+No mid-campaign Story/Favored/Mortal/Forsaken changes are initially supported.
 
-## Recommended Route After Audit
+No Heroic/Grim transition is initially supported.
 
-After GPT/human inspection of the two-file audit:
+No Stakes transition is initially supported.
 
-1. accept or repair the three-axis contract;
-2. select the first implementation package;
-3. prefer difficulty/world-rule schema and migration before any Grim subsystem;
-4. implement Story/Favored/Mortal/Forsaken and Heroic/Grim identity before adding systemic modules;
-5. add Grim World through separate vertical slices, not one monolithic package;
-6. keep Stakes/Ironbound separate until explicitly accepted;
-7. do not restore `0.6.6` without an explicit route decision.
+A later focused contract may allow difficulty-only changes with append-only provenance. World Rules and Stakes require dedicated state-closure migrations before any change is allowed.
 
-## Explicit Guardrails
+## Normal Stakes And HP Zero
 
-- No implementation version is assigned.
-- No current runtime or save work is authorized.
-- No broad disease, crime, tax, conscription, corruption, fraud, or permadeath mechanic is authorized.
-- Ordinary cultures, peoples, or fantasy lineages are not inherently criminal, diseased, corrupt, or violent.
-- Grim systems must derive from local institutions, conditions, events, and authored physiology.
-- `0.6.6` remains held and recoverable.
-- `0.6.7` remains reserved for its retained artifacts and later cross-content audit.
+The live repository currently does this for every campaign:
+
+```text
+HP <= 0
+  -> dead or hardcore_dead
+  -> archive run
+  -> resolve Legacy/estate
+  -> delete all character saves
+```
+
+That behavior is not accepted Normal Stakes.
+
+The active acceptance prompt requires:
+
+```text
+HP reaches zero
+  -> defeated or incapacitated
+  -> context-owned defeat resolution
+  -> campaign and saves remain intact
+```
+
+Possible later contextual consequences include retreat, rescue, capture, injury, loss, recovery, or another explicitly accepted result.
+
+The acceptance decision must establish:
+
+- HP zero is not automatic death;
+- HP zero is not automatic campaign archival;
+- HP zero does not delete saves;
+- HP zero does not pay terminal Legacy rewards;
+- actual death, permanent death, succession, or campaign termination require a later explicit Stakes/death contract;
+- retirement remains separate.
+
+Critical implementation gate:
+
+**Runtime migration to `normal_stakes` cannot ship while HP zero still automatically archives the run and deletes saves.** The nonterminal defeat boundary must land first or atomically with campaign-rules migration.
+
+## Legacy Migration Direction
+
+Accepted mapping to encode:
+
+| Legacy | Difficulty | World Rules | Stakes |
+|---|---|---|---|
+| missing/invalid | Mortal | Heroic World | Normal Stakes |
+| easy | Favored | Heroic World | Normal Stakes |
+| normal | Mortal | Heroic World | Normal Stakes |
+| hard | Forsaken | Heroic World | Normal Stakes |
+| brutal | Forsaken | Heroic World | Normal Stakes |
+
+All migration records include source identity and rules version.
+
+Legacy Brutal:
+
+- becomes Forsaken;
+- preserves materially distinct owner-approved tuning through typed compatibility overrides;
+- remains migration provenance, not a fifth public preset.
+
+Legacy `hardcore: true`:
+
+- never maps to Grim World;
+- never maps to a future restricted Stakes mode;
+- maps its tier normally;
+- receives Heroic World and Normal Stakes;
+- records `legacy_hardcore` provenance;
+- may preserve owner-approved non-Stakes tuning through typed compatibility overrides;
+- does not preserve automatic save deletion or implicit HP-zero terminal archival;
+- does not automatically preserve `deathZeroesPrestige` or the Hardcore-specific Prestige multiplier;
+- preserves historical `dead` and `hardcore_dead` archive labels as historical data only.
+
+Encounter, process, material, infrastructure, route, and content `difficultyTier` fields remain separate authorities.
+
+## Story Policy To Accept
+
+Story is a narrative-first RPG abstraction, not legacy Easy.
+
+Always preserve:
+
+- authored item identity and manifests;
+- physical quantities and nutrient truth;
+- consumption events;
+- campaign time;
+- deterministic save/load;
+- ordinary RPG HP, MP, Stamina, combat, quest, inventory, and equipment state unless separately decided.
+
+Story body-state direction:
+
+- one shared owner architecture with a Story adapter;
+- detailed metabolism, digestion, Protein Support, fat, body composition, and recovery ledgers may be absent, inert, or internal compatibility caches;
+- broad conditions such as well-fed/nourished, hungry, dehydrated, tired/exhausted, and ill provide the ordinary player-facing model;
+- generous recovery and clear feedback;
+- persistent structural atrophy and structural-loss accumulation disabled;
+- no detailed macro optimization requirement.
+
+Story plus Grim remains conceptually valid only where each selected Grim module has an explicit coarse Story adapter. A module without an adapter is unavailable in Story.
+
+Because campaign axes are creation-locked and no legacy campaign maps to Story, the first decision does not need a mid-campaign conversion policy for existing technical or structural state.
+
+## Overrides And Customization
+
+The campaign-rules contract reserves typed overrides.
+
+The first implementation must not expose player-facing custom mechanical overrides.
+
+Initially accepted sources:
+
+- legacy migration;
+- developer/test fixtures.
+
+Player customization requires a later owner-aware decision with validated bounds, interactions, UI explanations, persistence, and eligibility policy.
+
+## Chronicle, Achievements, And Legacy
+
+New and active campaign records must store:
+
+- all three ids;
+- campaign-rules version;
+- migration provenance;
+- compatibility overrides;
+- any future append-only rule-change history.
+
+Initial posture:
+
+- record identity first;
+- achievements remain rules-agnostic unless an individual achievement later declares predicates;
+- no new difficulty/world/migration/custom reward multiplier is accepted;
+- no new achievement exclusion is accepted;
+- no new Legacy multiplier is accepted;
+- historical run-end labels remain historical;
+- difficulty and world rules do not determine death or save permanence.
+
+## Combat-Profile Naming
+
+`PlayerCombatProfileState.preferredMode: normal | hardcore` is not campaign difficulty, World Rules, or Stakes.
+
+The active acceptance prompt requires:
+
+- quarantine from campaign migration;
+- deprecate the overloaded `hardcore` wording;
+- defer replacement naming to a combat-owned decision based on actual behavior.
+
+## Grim World Sequencing
+
+The campaign identity may define `grim_world` before a module exists, but UI must not imply a complete harsh-world implementation.
+
+Preferred first future Grim slice:
+
+- health/sanitation;
+- one traceable exposure;
+- one environmental or settlement source;
+- one treatment/counterplay path;
+- deterministic persistence;
+- Story adapter;
+- no hidden random illness.
+
+This is sequencing direction only. The active acceptance run does not implement or authorize a Grim module.
+
+## Active Codex Scope
+
+On success the active run may modify exactly:
+
+1. create `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
+2. update `docs/dev/current-codex-output.md`;
+3. delete `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md` after complete durable transfer.
+
+It must not modify:
+
+- current prompt;
+- this handoff;
+- route register;
+- older decisions;
+- runtime;
+- schemas;
+- saves;
+- tests;
+- UI;
+- content;
+- generated files;
+- held `0.6.6`;
+- retained `0.6.7` artifacts.
+
+If live facts materially contradict the audit, it must update only current output, retain the temporary audit, and stop.
+
+## Accepted Package Order Direction
+
+No release number is assigned.
+
+1. campaign-rules identity, owner, save/Chronicle projection, provenance, and internal override registry;
+2. nonterminal Normal Stakes defeat boundary;
+3. atomic migration from legacy `runDifficulty`;
+4. campaign creation and read-only identity display;
+5. Favored/Mortal/Forsaken owner adapters;
+6. immutable-base/current-attribute and physical-nutrition prerequisites;
+7. Story adapter;
+8. focused Grim health/sanitation decision and slice;
+9. later Grim owner modules;
+10. separate Stakes decision before restricted saves, permanent death, or succession.
+
+Steps 1-3 may need to be one atomic versioned package so `normal_stakes` never coexists with automatic save deletion.
+
+## Deferred Decisions
+
+- exact preset values and formulas;
+- exact contextual defeat outcomes;
+- actual death and permanent death;
+- party/NPC permanence;
+- succession and campaign termination;
+- final restricted-Stakes name;
+- restricted-save, save-and-exit, rollback, checkpoint, and crash-recovery topology;
+- player-facing custom difficulty;
+- Story adapters for owners not yet implemented;
+- replacement combat-profile identifier;
+- exact Grim disease/content catalog;
+- core-versus-optional classification of later Grim modules;
+- implementation version and milestone.
+
+## Route Guardrails
+
+- The active run is contract acceptance only.
+- Do not call the result implementation-ready.
+- No implementation prompt may be created by Codex.
+- Held `0.6.6` remains paused and byte-recoverable.
+- Retained `0.6.7` artifacts remain untouched.
+- No prior temporary culinary or research artifact is reopened by this run.
