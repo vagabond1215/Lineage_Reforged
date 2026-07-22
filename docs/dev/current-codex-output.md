@@ -1,108 +1,114 @@
 # Current Codex Output
 
-Source version/run: Culinary Integration Results Repair And Contract Acceptance Audit
+Source version/run: Difficulty Preset, Grim World, And Stakes Separation Contract Planning Audit
 
 Date: 2026-07-21
 
-Branch/status assumption: `master` at starting commit `d37bbdb6651d4b7c63a8838b8a4c0aa1d15f9d42`; clean before the four authorized documentation changes; fetch and fast-forward pull reported already up to date
+Branch/status assumption: `master` at starting and ending commit `fbe68b7aa5641a4f38581c9da8a745b6c58a094b`; clean before the two authorized documentation changes; fetch and fast-forward pull completed with `HEAD` unchanged; ending worktree state is exactly the tracked output modification and new untracked audit listed below
 
-Label class and parent: unversioned documentation-only repair, coordination, and acceptance audit; no parent version
+Label class and parent: unversioned documentation-only repository audit and implementation-contract planning; no parent version
 
 Milestone impact: `supports_current_band`
 
 ## Result
 
-Repaired the completed culinary integration artifacts around the two accepted focused corrections. The artifacts now present one coherent quantity, nutrition, preparation, ration, container, manifest, assortment, stock-window, owner, and package model. No content, schema, validator, runtime, UI, save, economy, balance, dependency, or gameplay implementation is authorized.
+Produced the implementation-ready contract audit for three orthogonal campaign axes:
 
-Selected smallest later package: **Culinary Quantity, Food-State, And Instance Contract Acceptance Decision**. Recommended label class: unversioned documentation-only decision. Readiness: **design-ready only**. It must accept the remaining exact quantity bases, method vocabulary/parameters, hazard rules, fixtures, and observation persistence before implementation planning. No version number or implementation prompt was assigned.
+```text
+difficultyPreset: Story | Favored | Mortal | Forsaken
+worldRules: HeroicWorld | GrimWorld
+stakesRules: NormalStakes | future separately accepted option
+```
+
+The smallest safe target is a versioned `CampaignRulesState` stored in saves and Chronicle records, with stable ids `story | favored | mortal | forsaken`, `heroic_world | grim_world`, and initially only `normal_stakes`. `Ironbound` remains a working title and is not accepted as an identifier. All axes and typed custom overrides should be creation-locked in the first implementation; accessibility and presentation settings remain changeable.
+
+No live fact contradicts the controlling decision. The repository instead contains the expected legacy conflations and missing owners.
 
 ## Files Changed
 
-- `docs/dev/tmp-culinary-preparation-portion-meal-integration-2026-07-20.md`
-- `docs/dev/tmp-culinary-historical-energy-ration-source-index-2026-07-20.md`
-- `docs/dev/tmp-culinary-quantity-container-knowledge-audit-2026-07-20.json`
+- `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md`
 - `docs/dev/current-codex-output.md`
+
+## Patch Summary
+
+- Inventoried every live campaign-difficulty definition and consumer.
+- Defined canonical three-axis ids, ownership, save/Chronicle identity, change policy, and typed override provenance.
+- Mapped easy/normal/hard/brutal into Favored/Mortal/Forsaken while keeping Story as a new abstraction contract.
+- Classified seven Grim module families by existing foundations, missing authorities, placement, counterplay, persistence, tests, and dependency order.
+- Separated saving, defeat, death, succession, archival, deletion, and crash recovery into a future Stakes owner.
+- Specified combination, owner, migration, compatibility, and test matrices.
+- Recorded exact remaining user decisions and a no-version package sequence.
+
+## Principal Findings
+
+1. Live campaign difficulty is `easy | normal | hard | brutal` plus `hardcore: boolean`. It tunes stat growth, skill/Knowledge progression, body state, and Prestige. There is no Story, World Rules, Stakes, custom difficulty, or campaign-creation selection.
+2. `hardcore` is multiply conflated: it changes bodily recovery/forgiveness, Prestige/death behavior, terminal labels, and legacy payout posture. It does not enable any Grim World system.
+3. Player HP at or below zero currently archives every run and clears all saves, including non-hardcore runs. Normal Stakes therefore needs an explicit ordinary defeat/death decision before runtime migration.
+4. The live body-state seam can accept owner-specific difficulty policy without changing item values, but it has no Story bypass, physical-kcal/digestion/fat architecture, structural-loss state, or Grim health extension.
+5. Live stat growth directly increments `PlayerState.attributes`; immutable base attributes, developed adjustments, structural-loss adjustments, and a current-attribute resolver are accepted design authority but not implemented.
+6. New saves default to normal/non-hardcore; old saves normalize missing difficulty to that state. Run history, achievements, and Chronicle records do not preserve complete difficulty identity.
+7. The repository has useful static/runtime foundations for Grim work—body state, hazards/status vocabulary, logistics content, reputation, polities/institutions, economy, maps/Knowledge, and save snapshots—but none of the seven requested Grim families has a complete owner contract.
+8. Tracked JavaScript mirrors exist beside TypeScript player-engine sources and must be regenerated or updated with any later implementation.
+
+## Migration Recommendation
+
+- missing/invalid -> Mortal + Heroic World + Normal Stakes;
+- easy -> Favored;
+- normal -> Mortal;
+- hard -> Forsaken;
+- brutal -> Forsaken with explicit legacy provenance and, if accepted, typed compatibility overrides;
+- every old campaign -> Heroic World and Normal Stakes unless the user explicitly selects a later accepted option;
+- legacy `hardcore: true` -> never infer Grim World or a future restricted Stakes id. Split non-stakes tuning from death/save/Prestige semantics and preserve a migration marker.
+
+The current universal HP-zero archival behavior remains an unresolved owner conflict, not an accepted migration default.
 
 ## Checks Run
 
-- Confirmed the active prompt is this results-repair and contract-acceptance audit.
-- Fetched and fast-forward pulled `master`; repository was already current.
-- Confirmed integration audit commit `a78b10714b5a6e587989d9c52f02f0d66fb9ea6a` is an ancestor.
-- Confirmed focused correction SHA-256 values `3FCB04C970A7EA410FE8361F0ED36DBB146C243A9E6A082456CD211BDBC9F062` and `DBFC2286D8103F06FC0D0A07EAA585FE7BD5A2CA672E6F93E2E1E9E8662DB8A2`.
-- Confirmed the held `0.6.6` file still resolves to existing Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-- Confirmed retained Gate 1–5 and Gate 7 artifacts remain assigned solely to `0.6.7` and were not edited, consumed, deleted, or repurposed.
-- Strictly parsed the repaired JSON and reconciled every summary count against array data.
-- Verified live paths/ids, `future:` non-live paths, local Markdown links, package dependency resolution, and an acyclic package graph.
-- Verified allocation/composition percentage separation, physical-basis nutrition, the three physical dimensions, one crafting-owned method registry, food/nutrition package separation, forward container visibility dependency, valid package-label classes, accepted ration/provision semantics, multi-serving preparation, labels, persisted assortment truth, contextual quality, stock windows, honest-clearance/fraud separation, reusable cross-domain ownership, and per-unit truth.
-- Ran conflict-marker, trailing-whitespace, exact changed-path, and `git diff --check` review.
-- Did not run builds, typechecks, application lint, generators, servers, dependency installation, or runtime tests because implementation is prohibited.
+- Read every authority required by the active prompt plus `AGENTS.md` and `README.md`.
+- Confirmed the active prompt and exact two-file scope.
+- Recorded branch, clean starting state, starting commit, successful fetch/fast-forward pull, and unchanged ending commit.
+- Confirmed controlling decision blob `0b2bfc434e586321336bbf5ecb6af55111d6db69` is present and unmodified.
+- Confirmed held `0.6.6` pointer, source commit, and exact prompt blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`; inspected the object to verify its run identity.
+- Searched live TypeScript, tracked JavaScript, JSON content/rules, schemas, tests, and UI for difficulty, Hardcore, Story, Easy, Normal/Standard, Hard, Simulation, Survival, Ironman, permadeath, custom difficulty, saves, death, defeat, rollback, warnings, forecasts, and relevant Grim system terms.
+- Inspected run-difficulty types/resolver, global balance rules, body state, stat growth, game defaults, new-game creation, save normalization, save slots, run lifecycle, Chronicle/payout behavior, combat/encounter difficulty, economy difficulty, settings, and representative Grim foundations.
+- Verified there is no live multiplayer/shared-world campaign-rules authority.
+- Verified all 14 required audit sections, exact changed-path scope, absence of conflict markers and trailing whitespace, and clean Markdown diff checks.
+- Did not run builds, typechecks, generators, application lint, servers, or runtime tests because this run is documentation-only.
 
-## Contradictions Repaired
+## Unresolved Owner Conflicts
 
-- Removed the 100-point ration-energy model and separated meal percentage controls from the observed legacy `dailyCalories: 100` body-state rule.
-- Resolved `serving` as an authored culinary reference to count, mass, or volume, never a fourth physical dimension.
-- Assigned one canonical reusable process-method registry to future `crafting.food_process_methods`; item food-state profiles own outcomes and recipes/production chains reference the same identities.
-- Removed consumable-profile v2 nutrition and satiety from the static food-state package.
-- Reversed the container visibility dependency: static capabilities exist before and are consumed by character observation.
-- Replaced invalid support-label terminology with candidate primaries or exact-parent four-segment support suffixes.
-- Replaced unaccepted Day/Multi-Day/Group ration bands with the accepted Small/Medium/Large/Party/Large Party vocabulary and retained provisions as sustained logistics.
-- Added selected-vessel serving counts with uniform and individual allocations.
-- Replaced themed-name-only artisan assortments with constrained, persisted mystery manifests while retaining direct known lots.
-- Added contextual quality, finite stock/replenishment/release windows, custom physical labels, and one reusable culinary/nonculinary assortment owner direction.
+- Save/campaign Stakes versus current universal HP-zero archival and save clearing.
+- Difficulty versus current `hardcore` recovery, Prestige, death, and payout behavior.
+- Attribute progression versus accepted immutable base/developed/structural/current separation.
+- Legacy 100-unit body energy/nutrition versus accepted physical kcal/macronutrient truth.
+- Combat-profile `normal | hardcore` vocabulary versus campaign-facing terminology.
+- Chronicle/achievements/Legacy payout versus missing complete campaign-rule identity and migration provenance.
+- Story abstraction versus always-active technical body state.
+- Each Grim family versus its missing domain-specific runtime and persistence owner.
 
-## Accepted Decisions Incorporated
+## Exact User Decisions Still Required
 
-Authoritative amounts are integer or fixed-point count, mass, or volume units. Source allocation cannot exceed available physical amount; serving composition is normalized presentation on a labeled physical basis. Nutrition for kilocalories, protein, fat, carbohydrate, hydration, and later fields is calculated from amount consumed divided by basis amount, multiplied by the nutrient value per basis amount, then summed across ingredients.
+1. Whether all axes and overrides are creation-locked initially.
+2. The Normal Stakes HP-zero outcome.
+3. Active legacy-hardcore save migration for death, Prestige, recovery, and payout behavior.
+4. Whether brutal maps to Forsaken with provenance only or compatibility overrides.
+5. Story’s per-owner compute-invisibly/coarsen/bypass choices.
+6. Whether player-facing custom overrides ship in the first package.
+7. Chronicle, achievement, and Legacy eligibility/provenance policy.
+8. Core versus optional Grim module classification and first vertical slice.
+9. Disposition of combat-profile `hardcore` naming.
+10. Later Stakes naming and exact save/death/succession rules.
 
-The provisional `2,500 kcal/day` ordinary-active and `3,500-4,000 kcal/day` sustained-high-intensity anchors are user-authored approximations. Activity, body, climate, injury, illness, age/life stage, load, terrain, pace, combat, training, and recovery remain future modifiers. Exact ration kilocalories and manifests remain open.
+## Risks / Follow-Up Notes
 
-`Small Ration`, `Medium Ration`, and `Large Ration` are portable logical sizes, not exclusive eater/day ledgers. `Party Ration` and `Large Party Ration` are short-duration multi-serving assortments and do not replace expedition provisions. Actual logistics use suitable constituent containers and goods.
+The first implementation must not merely rename existing tiers. Story is not easy, Forsaken is not legacy hardcore, Grim World is not a scalar overlay, and Normal Stakes cannot inherit current permanent run archival without an explicit decision. World Rules modules need typed persistent state and owner-specific Story adapters. Save migration must be one-way from legacy `runDifficulty` to canonical campaign identity and must not dual-write two authorities indefinitely.
 
-Mystery contents resolve at merchant-stock generation or, for abstract stock, during sale immediately before transfer. Opening never generates or rerolls. Clearance/standard/select candidate weights preserve increasing floors and rare chances; category-specific attributes remain true quality. Tier is separate from finite clearance windows, fresh replenishment, and narrow select/event release. Honest clearance is separate from fraud and unsafe goods.
-
-Custom container labels are mutable instance presentation only. The physical vocabulary is illustrative and non-exhaustive, and a label never replaces true container identity, manifest, origin, condition, ownership, or character-relative knowledge.
-
-## Historical-Source Limitations
-
-The source index retains international physiology/statistical guidance, government operational/safety sources, peer-reviewed historical and nutrition work, academic books, and museum/heritage syntheses with explicit geographic, period, and measurement limits. It distinguishes supply, issue, carriage, preparation, edible amount, service, and consumption. The evidence does not establish universal medieval calories, exact ration sizes, exact consumption, spoilage rates, package balance, or fraud frequency. Mystery-assortment direction and the provisional calorie anchors are user-authored game design rather than fabricated historical findings.
-
-## Corrected Packages And Dependencies
-
-- Candidate primary: shared quantity foundation.
-- Candidate primary: static food-state/process-reference/hazard/portion profiles. This package excludes nutrition and satiety.
-- Candidate primary, or a bounded part of another accepted primary: static container templates.
-- Candidate four-segment support suffix attached to the exact future static-food-profile primary: culinary catalog integrity.
-- Candidate primary: item-instance truth and heterogeneous presentation groups.
-- Candidate primary when ownership moves from UI to engine, otherwise exact-parent support suffix: starting-food manifests.
-- Separate later primary: meal/nutrition/difficulty contracts, including consumable-profile v2 nutrition and satiety.
-
-The cross-domain assortment path is: reusable static assortment profiles and contextual-quality mappings; then persistent merchant stock instances; independently authored stock schedules; then purchase/transfer/open/inspect commands. Static profile authorship does not depend on stock scheduling, and opening depends on existing stock truth. One market/economy assortment authority must serve culinary, textile, leather, wood, metal, apothecary, and later-authorized producer consumers instead of duplicating culinary-only random-box infrastructure.
-
-## Remaining Open Decisions
-
-- exact mass/volume basis units, fixed-point scales, and display conversions;
-- exact first culinary process vocabulary/parameters and method-to-hazard residual rules;
-- exact representative culinary/container fixtures;
-- transient versus packaged ad hoc meal persistence;
-- item-observation persistence and Knowledge integration;
-- appraisal/inspection skills and Knowledge domains;
-- diversity thresholds, dominance, and decay bands;
-- difficulty mappings;
-- exact ration manifests, physical sizes, kilocalories, serving potential, and balance;
-- exact assortment slot counts, quantity ranges, and later tier-weight tuning;
-- exact static assortment/contextual-quality, stock-generation, replenishment, event-release, and demand owner paths;
-- exact producer/category catalogs, lore-native names, expected-value bounds, and price variance.
-
-## Risks / Follow-Up
-
-Package names and proposed paths remain candidates until a durable authority accepts them. Quantity and item-instance work crosses inventory/save boundaries; stock work crosses economy/production/inventory boundaries; no implementation package should infer those owners from this temporary audit. The three temporary artifacts remain review inputs and must not be promoted or deleted before GPT/human inspection.
-
-Held `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, recoverable from its hold file and source blob, and unchanged. This repair does not restore, cancel, consume, or modify it.
+The temporary audit is review input. It does not authorize implementation or select exact balance values. Held `Version 0.6.6` remains paused and byte-recoverable; retained `0.6.7` artifacts remain untouched.
 
 ## Suggested Commit Message
 
-`docs(food): repair culinary integration results and contracts`
+`docs(difficulty): audit presets world rules and stakes`
 
-## Next Recommended Run
+## Next Recommended Version / Run
 
-Stop for GPT/human inspection of this repair. Do not install an implementation prompt, create the future durable contract-acceptance decision, assign a primary version, or restore `0.6.6` from this run.
+Stop for GPT/human inspection. If the audit is accepted, the next run should be an unversioned campaign-rules identity, migration, and change-policy acceptance decision resolving the listed user choices. Do not create that prompt, assign an implementation version, implement a Grim module, define restricted Stakes, or restore `0.6.6` from this run.
