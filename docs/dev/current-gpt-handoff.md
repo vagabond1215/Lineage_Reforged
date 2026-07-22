@@ -28,7 +28,7 @@ The active acceptance run must create:
 
 `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`
 
-After acceptance, that new focused decision will control canonical campaign ids, lock policy, Normal Stakes HP-zero behavior, legacy migration, Story abstraction, override availability, Chronicle identity, and package-order gates where older documents overlap.
+After acceptance, that new focused decision will control canonical campaign ids, lock and availability policy, Normal Stakes HP-zero behavior, legacy migration, Story abstraction, override availability, Chronicle identity, and package-order gates where older documents overlap.
 
 ## Accepted Campaign Axes
 
@@ -84,11 +84,12 @@ Requirements:
 - campaign/save state is authoritative;
 - UI, save metadata, and Chronicle are projections;
 - overrides are typed, owner-approved, versioned, and provenance-bearing;
-- item nutrient truth, manifests, world facts, and immutable base attributes are not settings.
+- item nutrient truth, manifests, world facts, and immutable base attributes are not settings;
+- an id may exist in contracts before ordinary production campaign creation is allowed to select it.
 
 `Ironbound` remains only a working title. No restricted-Stakes id is accepted in the active run.
 
-## Initial Lock Policy
+## Initial Lock And Availability Policy
 
 The active acceptance prompt requires:
 
@@ -105,6 +106,8 @@ No Heroic/Grim transition is initially supported.
 No Stakes transition is initially supported.
 
 A later focused contract may allow difficulty-only changes with append-only provenance. World Rules and Stakes require dedicated state-closure migrations before any change is allowed.
+
+Production campaign creation exposes only combinations whose required owner policies and modules are implemented and tested. Canonical ids may be reserved in types or fixtures without being selectable by ordinary players.
 
 ## Normal Stakes And HP Zero
 
@@ -204,6 +207,8 @@ Story plus Grim remains conceptually valid only where each selected Grim module 
 
 Because campaign axes are creation-locked and no legacy campaign maps to Story, the first decision does not need a mid-campaign conversion policy for existing technical or structural state.
 
+Production campaign creation must not expose Story until its adapter exists for every core owner active in the selected world-rules combination.
+
 ## Overrides And Customization
 
 The campaign-rules contract reserves typed overrides.
@@ -249,7 +254,7 @@ The active acceptance prompt requires:
 
 ## Grim World Sequencing
 
-The campaign identity may define `grim_world` before a module exists, but UI must not imply a complete harsh-world implementation.
+The canonical contract may reserve `grim_world` before a module exists, but production campaign creation must not expose Grim World until at least one accepted Grim module has typed state, owner resolution, persistence, tests, and required Story adapters.
 
 Preferred first future Grim slice:
 
@@ -293,18 +298,22 @@ If live facts materially contradict the audit, it must update only current outpu
 
 No release number is assigned.
 
-1. campaign-rules identity, owner, save/Chronicle projection, provenance, and internal override registry;
+1. campaign-rules types, owner, save/Chronicle identity, provenance, and internal override registry, defaulting to Mortal/Heroic/Normal without broad player selection;
 2. nonterminal Normal Stakes defeat boundary;
 3. atomic migration from legacy `runDifficulty`;
-4. campaign creation and read-only identity display;
-5. Favored/Mortal/Forsaken owner adapters;
+4. read-only identity projection and migration visibility;
+5. Favored/Mortal/Forsaken owner adapters, then production selection among implemented difficulty presets under Heroic World and Normal Stakes;
 6. immutable-base/current-attribute and physical-nutrition prerequisites;
-7. Story adapter;
-8. focused Grim health/sanitation decision and slice;
-9. later Grim owner modules;
-10. separate Stakes decision before restricted saves, permanent death, or succession.
+7. Story adapter across every active core owner;
+8. expose Story only after its required adapters and tests exist;
+9. focused Grim health/sanitation decision and slice;
+10. expose Grim World only after a real persisted module and required Story adapter exist;
+11. later Grim owner modules;
+12. separate Stakes decision before restricted saves, permanent death, or succession.
 
 Steps 1-3 may need to be one atomic versioned package so `normal_stakes` never coexists with automatic save deletion.
+
+No production UI may present a canonical option merely because its id exists in types.
 
 ## Deferred Decisions
 
