@@ -25,9 +25,10 @@ Consume the completed repository audit and create one durable, owner-aware accep
 5. Story-mode technical-system abstraction;
 6. typed compatibility overrides and provenance;
 7. Chronicle, achievement, and Legacy identity posture;
-8. the next safe implementation package sequence.
+8. preservation of the accepted future restricted-Stakes direction;
+9. the next safe implementation package sequence.
 
-This run accepts contracts. It does not implement runtime, schemas, saves, migration, UI, tests, balance, nutrition, attributes, Grim modules, Stakes variants, death, succession, disease, crime, taxation, corruption, or gameplay.
+This run accepts contracts. It does not implement runtime, schemas, saves, migration, UI, tests, balance, nutrition, attributes, Grim modules, restricted-Stakes runtime, death, succession, disease, crime, taxation, corruption, Prestige formulas, or gameplay.
 
 ## Required Source State
 
@@ -35,7 +36,8 @@ Read first:
 
 - `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md`;
 - `docs/dev/current-codex-output.md`;
-- `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`.
+- `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`;
+- `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`.
 
 Also read:
 
@@ -67,6 +69,7 @@ The new durable decision created by this run must be more specific than the gene
 
 - canonical ids and state shape;
 - lock policy;
+- availability gates;
 - Normal Stakes HP-zero behavior;
 - legacy tier and Hardcore migration;
 - Story state abstraction;
@@ -83,15 +86,30 @@ It must not supersede the general authority for:
 - immutable base attributes and unified current-attribute resolution;
 - physical nutrient truth.
 
+It must not supersede `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md` for the future restricted-Stakes mode's:
+
+- one-authoritative-save continuity posture;
+- no player-chosen rollback rule;
+- live or semi-live autosave purpose;
+- crash-recovery separation;
+- irreversible actual death;
+- read-only dead-character access;
+- nonzero circumstance-sensitive Prestige settlement;
+- public versus legal perception;
+- publicity, disgrace, and martyrdom factors.
+
+The new campaign-rules decision should preserve those future boundaries while keeping only `normal_stakes` in the initial canonical contract.
+
 ## Execution Gate
 
 1. Run `git status`, fetch, and fast-forward pull. Record branch, starting commit, and clean/dirty state.
 2. Confirm this is the active prompt.
 3. Confirm commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694` is an ancestor of `HEAD`.
 4. Confirm the temporary audit exists at the expected path and materially matches blob `b08c5b2ba418e8a3a4effea80984888c2b4fc10e`.
-5. Confirm the held `Version 0.6.6` prompt still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-6. Preserve unrelated work.
-7. If a live repository change materially invalidates the audit, do not create a false acceptance decision. Update only `docs/dev/current-codex-output.md` with the exact contradiction and stop. Do not delete the temporary audit in that case.
+5. Confirm `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md` exists and is unmodified in the worktree.
+6. Confirm the held `Version 0.6.6` prompt still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+7. Preserve unrelated work.
+8. If a live repository change materially invalidates the audit, do not create a false acceptance decision. Update only `docs/dev/current-codex-output.md` with the exact contradiction and stop. Do not delete the temporary audit in that case.
 
 ## Accepted Outcomes To Encode
 
@@ -130,7 +148,7 @@ Requirements:
 - physical item truth, immutable attributes, world facts, and manifests are authoritative domain truth outside the settings taxonomy, not campaign settings;
 - defining an id in the contract does not mean production campaign creation may select it before its required runtime policy exists.
 
-Do not add `ironbound` or another restricted-Stakes id.
+Do not add `ironbound`, `hardcore_stakes`, or another restricted-Stakes id in this run. The future mode's final machine id and player-facing name remain deferred.
 
 ### 2. Initial lock policy
 
@@ -202,7 +220,7 @@ Encounter, process, material, infrastructure, route, and authored content `diffi
 
 ### 5. Legacy `hardcore: true`
 
-Legacy Hardcore never implies Grim World and never implies a future restricted Stakes mode.
+Legacy Hardcore never implies Grim World and never implies the future restricted-Stakes mode.
 
 For an active legacy Hardcore save:
 
@@ -215,7 +233,7 @@ For an active legacy Hardcore save:
 - do not automatically preserve `deathZeroesPrestige`;
 - do not automatically preserve the Hardcore-specific Prestige multiplier without a separate Legacy/achievement owner decision.
 
-Historical archived `dead` and `hardcore_dead` records remain historical data. Do not rewrite history and do not treat those labels as proof that a future Stakes mode was selected.
+Historical archived `dead` and `hardcore_dead` records remain historical data. Do not rewrite history and do not treat those labels as proof that the future restricted-Stakes mode was selected.
 
 The ordinary tier's existing Prestige weighting may remain a later difficulty-policy seed, but this decision must not create new reward multipliers or achievement exclusions.
 
@@ -282,6 +300,8 @@ Initial policy:
 - historical run-end labels remain historical;
 - difficulty and world rules do not silently determine death or save permanence.
 
+The legacy `deathZeroesPrestige` behavior is not accepted as a future restricted-Stakes rule. The focused restricted-Stakes decision controls future death-time Prestige direction.
+
 ### 9. Combat-profile vocabulary
 
 `PlayerCombatProfileState.preferredMode: "normal" | "hardcore"` is not campaign difficulty, World Rules, or Stakes.
@@ -308,6 +328,30 @@ Accept health/sanitation as the preferred first future Grim vertical-slice famil
 
 This is sequencing direction, not implementation authorization. Core-versus-optional classification for all other Grim module families remains owner-specific later work.
 
+### 11. Future restricted-Stakes direction to preserve
+
+The initial contract remains limited to `normal_stakes`, but the durable campaign-rules decision must record that the future restricted-Stakes mode is already directionally controlled by `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`.
+
+Accepted future invariants:
+
+- the mode uses one authoritative continuity save or save stream;
+- saving exists for current-state continuity, session resumption, and technical recovery, not chosen rollback;
+- manual prior-save loading, quick-load rollback, and save-scumming are unavailable;
+- state is saved live or semi-live through deterministic owner-approved checkpoints;
+- hidden technical generations may recover the latest verified state after corruption or interrupted writes but do not form a player-selectable history;
+- actual death is irreversible and atomically flags the character as terminal;
+- terminal death closes the character to further gameplay while preserving read-only informational and Chronicle access;
+- the dead character's terminal record is retained rather than deleted;
+- actual death is distinct from ordinary defeat or incapacitation, and this direction does not make every HP-zero result death;
+- death triggers exactly one nonzero Prestige or Legacy settlement;
+- disgrace may reduce the settlement substantially but cannot erase it;
+- martyrdom, meaningful sacrifice, or celebrated death may increase it;
+- public perception, legal perception, publicity, evidence, audience, house/line impact, conduct, and manner of death are distinct factors;
+- legal condemnation and public admiration may coexist;
+- the exact final mode name, machine id, autosave cadence, succession model, death contexts, publicity system, and Prestige formula remain deferred.
+
+Do not reproduce the entire focused decision. Cite it, preserve its ownership, and prevent the initial campaign-rules decision from contradicting it.
+
 ## Required Durable Decision
 
 Create:
@@ -330,12 +374,13 @@ The decision must contain:
 12. Chronicle, achievement, and Legacy policy;
 13. combat-profile naming quarantine;
 14. Grim sequencing and availability posture;
-15. migration invariants;
-16. implementation package order and atomicity gates;
-17. required validation matrix;
-18. temporary artifact disposition;
-19. exact deferred decisions;
-20. explicit non-decisions.
+15. future restricted-Stakes authority boundary;
+16. migration invariants;
+17. implementation package order and atomicity gates;
+18. required validation matrix;
+19. temporary artifact disposition;
+20. exact deferred decisions;
+21. explicit non-decisions.
 
 Use accepted contract language. Do not describe the listed outcomes as mere recommendations.
 
@@ -354,7 +399,7 @@ The durable decision should accept this dependency order without assigning relea
 9. first focused Grim health/sanitation decision and vertical slice;
 10. expose Grim World in production campaign creation only after at least one real module, persistence path, tests, and required Story adapter exist;
 11. later owner-specific Grim modules;
-12. separate Stakes decision before exposing restricted saving, permanent death, or succession.
+12. separate restricted-Stakes implementation sequence using the focused authority: save continuity/recovery contract, actual-death/terminal-closure and succession contract, Prestige/Legacy settlement contract, final name/id acceptance, then runtime implementation and opt-in UI.
 
 Clarify that steps 1-3 may be one atomic versioned package if necessary to prevent `normal_stakes` from coexisting with automatic save deletion.
 
@@ -364,11 +409,11 @@ No production UI may present a canonical option merely because its id exists in 
 
 The durable decision must require later tests proving:
 
-- all three axes serialize independently;
+- all three initial axes serialize independently;
 - Mortal/Heroic/Normal is the new and legacy-missing default;
 - Easy maps to Favored, Normal to Mortal, Hard to Forsaken;
 - Brutal maps to Forsaken with provenance and approved compatibility overrides;
-- legacy Hardcore never maps to Grim World or restricted Stakes;
+- legacy Hardcore never maps to Grim World or the future restricted-Stakes mode;
 - legacy Hardcore active saves do not retain automatic save deletion under Normal Stakes;
 - historical archive labels remain unchanged;
 - HP zero under Normal Stakes does not archive the run, delete saves, or pay terminal Legacy rewards;
@@ -382,6 +427,7 @@ The durable decision must require later tests proving:
 - Chronicle identity preserves ids, version, provenance, and overrides;
 - achievements remain unchanged unless individually declared;
 - combat-profile `hardcore` cannot deserialize or project as campaign Hardcore;
+- the initial campaign-rules contract does not implement or contradict the accepted future restricted-Stakes save, death-closure, and Prestige direction;
 - tracked TypeScript and JavaScript mirrors remain synchronized in later implementation;
 - held `0.6.6` remains untouched.
 
@@ -414,7 +460,7 @@ Do not modify:
 - this prompt;
 - current GPT handoff;
 - route register;
-- prior design authorities;
+- prior design authorities, including the restricted-Stakes decision;
 - held `0.6.6`;
 - retained `0.6.7` artifacts;
 - runtime;
@@ -442,6 +488,7 @@ Update `docs/dev/current-codex-output.md` with:
 - Story abstraction posture;
 - override availability;
 - Chronicle/achievement/Legacy posture;
+- restricted-Stakes authority preservation;
 - temporary artifact deletion confirmation;
 - implementation dependency order;
 - exact deferred decisions;
@@ -456,10 +503,14 @@ Keep these deferred:
 
 - exact Favored/Mortal/Forsaken numeric values;
 - exact body, progression, economy, combat, and warning tunables;
-- exact contextual defeat outcomes and their frequencies;
-- actual death, permanent death, party/NPC death, succession, and campaign termination;
-- final restricted-Stakes name;
-- save-and-exit, single-save, checkpoint, rollback, and crash-recovery topology;
+- exact contextual Normal Stakes defeat outcomes and their frequencies;
+- final restricted-Stakes name and machine id;
+- exact restricted-Stakes autosave cadence, journal/snapshot mechanism, and technical recovery depth;
+- exact actual-death contexts and lethality rules;
+- party/NPC permanent-death rules;
+- succession and same-world continuation;
+- exact estate and inheritance transfer;
+- exact restricted-Stakes Prestige base, floor, caps, curves, publicity model, disgrace thresholds, and martyrdom thresholds;
 - player-facing custom difficulty controls;
 - exact Story adapters for owners not yet implemented;
 - replacement combat-profile identifier;
@@ -479,7 +530,10 @@ Do not:
 - migrate a save;
 - add a setting screen;
 - add Grim health state;
-- add `ironbound`;
+- add a restricted-Stakes id;
+- implement autosave or rollback restrictions;
+- implement terminal death closure;
+- implement Prestige settlement;
 - assign exact tuning;
 - assign a release number;
 - create a follow-on implementation prompt;
