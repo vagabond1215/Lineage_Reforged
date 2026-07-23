@@ -2,9 +2,9 @@
 
 ## Run Identity
 
-`Normal Stakes Defeat, Injury, Trauma, And Magical Restoration Repository Audit And Contract Planning`
+`Normal Stakes Defeat Fallback And Recovery Receipt Acceptance Decision`
 
-Run classification: unversioned documentation-only repository audit and implementation-contract planning
+Run classification: unversioned documentation-only acceptance and contract decision
 
 Milestone impact: `supports_current_band`
 
@@ -12,21 +12,21 @@ Parent version: none
 
 Suggested commit:
 
-`docs(health): audit defeat injury trauma and restoration contracts`
+`docs(health): accept normal defeat fallback and recovery receipt`
 
 ## Purpose
 
-Inspect the live repository and produce the smallest decision-ready contract plan for:
+Convert the completed repository audit into one durable, decision-complete authority for the first Normal Stakes defeat fallback and recovery receipt.
 
-1. nonterminal Normal Stakes defeat resolution;
-2. naturally recoverable physical injuries;
-3. trauma-instigated nonphysical conditions;
-4. normally irreversible harm and rare magical restoration;
-5. resurrection boundaries;
-6. injury and trauma persistence, ownership, current-attribute integration, and tests;
-7. the exact package sequence required before campaign-rules runtime migration.
+This run must accept the smallest coherent nonterminal fallback needed before campaign-rules runtime migration while preserving the separation between:
 
-This run is an audit and planning pass. It does not implement runtime, schemas, saves, migration, combat, health, injury, trauma, treatment, magic, resurrection, UI, tests, content, services, spells, balance, or gameplay.
+1. ordinary in-session Normal Stakes defeat;
+2. one-time repair of an active legacy HP-zero save;
+3. explicit terminal retirement or later actual death;
+4. future restricted-Stakes continuity saving and terminal closure;
+5. later injury, trauma, anatomy, magical restoration, and resurrection systems.
+
+This run is documentation-only. It does not implement runtime, shared types, schemas, saves, migrations, combat, health, injury, trauma, treatment, magic, resurrection, UI, tests, content, balance, or gameplay.
 
 ## Required Source State
 
@@ -35,30 +35,31 @@ Read first and treat as controlling where older documents overlap:
 - `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
 - `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`;
 - `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`;
-- `docs/design/combat-status-condition-injury-boundary-decision.md`.
-
-Also read:
-
-- `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`;
-- `docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md`;
-- `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md`;
-- `docs/design/magic-runtime-boundary-plan.md`;
+- `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
 - `docs/dev/current-codex-output.md`;
 - `docs/dev/current-gpt-handoff.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
 - `AGENTS.md`;
 - `README.md`.
 
-Inspect live source and tests relevant to:
+Also inspect only as needed to verify the accepted live seams:
 
-- HP-zero detection and run archival;
-- encounter defeat and incapacitation flags;
-- party combat state and encounter outcomes;
-- player resources, body state, active effects, attributes, and save snapshots;
-- save-slot deletion, archival, retirement, Chronicle, estate, and Legacy payout;
-- location, travel, rest, safe-settlement, and recovery surfaces;
-- combat statuses, injuries, conditions, healing, services, spells, magic hooks, death, and resurrection vocabulary;
-- generated TypeScript/JavaScript mirrors.
+- `apps/rpg-ui/src/App.tsx`;
+- `apps/rpg-ui/src/game-shell/runLifecycle.ts`;
+- current save-manager and run-entry ownership;
+- current combat encounter cleanup and player-resource synchronization;
+- current account history, achievement, estate, Chronicle, and Legacy payout ownership;
+- current location, settlement, travel, rest, and campaign-start facts;
+- focused lifecycle, save, combat, and travel tests;
+- tracked TypeScript/JavaScript mirrors.
+
+The completed audit commit is:
+
+`aa4ccfeceec023c676c98c4bf5a68216b0017263`
+
+The temporary audit blob is:
+
+`ad5b66157f61e25223e2abd7b2a7f4ef560366e3`
 
 The accepted campaign-rules decision commit is:
 
@@ -68,381 +69,395 @@ The accepted campaign-rules decision commit is:
 
 1. Run `git status`, fetch, and fast-forward pull. Record branch, starting commit, and clean/dirty state.
 2. Confirm this is the active prompt.
-3. Confirm commit `764f7ef5e4028e82fc76af6ae0381cc1eab00e20` is an ancestor of `HEAD`.
-4. Confirm `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md` exists and is unmodified in the worktree.
+3. Confirm commits `764f7ef5e4028e82fc76af6ae0381cc1eab00e20` and `aa4ccfeceec023c676c98c4bf5a68216b0017263` are ancestors of `HEAD`.
+4. Confirm the temporary audit resolves to blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3` and is unmodified in the worktree.
 5. Confirm the held `Version 0.6.6` prompt still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 6. Preserve unrelated work.
-7. If live repository facts materially contradict an accepted authority, do not infer a repair. Record the contradiction in `docs/dev/current-codex-output.md`, do not create the temporary audit, and stop.
+7. If live repository facts materially contradict the completed audit or an accepted authority, do not infer a repair. Record the contradiction in `docs/dev/current-codex-output.md`, do not create the durable decision, and stop.
 
 ## Accepted Invariants
 
 The following are not open recommendations.
 
-### Campaign and Stakes
-
-1. Difficulty, World Rules, and Stakes remain orthogonal.
-2. `normal_stakes` is the only accepted initial Stakes identity.
-3. Ordinary HP zero under Normal Stakes is defeat or incapacitation, not implicit terminal death.
-4. Ordinary HP zero must not archive the run, delete saves, settle terminal Prestige/Legacy, or prove permanent death.
-5. Runtime migration to `normal_stakes` cannot ship while ordinary HP zero still triggers terminal archival and save deletion.
-6. Restricted Stakes remains a separate future authority with one continuity stream, no chosen rollback, and irreversible actual death after terminal commitment.
-
-### Injury Classification
-
-7. Severity and recoverability are separate dimensions.
-8. Naturally recoverable physical injuries use `Minor`, `Moderate`, and `Major` severity labels.
-9. A Major naturally recoverable injury remains capable of complete functional recovery by definition.
-10. Naturally recoverable injuries may heal without professional treatment, although treatment may accelerate recovery, reduce impairment, or prevent complications.
-11. Reduced use is injury-specific and may range from ordinary use through reduced use to protected nonuse.
-12. Naturally recoverable injuries are nonchronic; complications or reinjury may causally convert them into another state.
-13. Injury does not change immutable base attributes.
-
-### Trauma
-
-14. The accepted broad player-facing trauma umbrella is `Shaken Spirit`.
-15. `Shaken Spirit` is a lore-facing trauma condition, not magical soul damage, possession, insanity, moral weakness, or a modern diagnostic catalog.
-16. Trauma may self-resolve, respond to support or treatment, require focused care, persist for a long period, or remain unresolved during the campaign.
-17. Trauma consequences must be event- and trigger-linked, explainable, proportional, and respectful of character agency.
-18. Trauma does not rewrite immutable attributes or authored personality.
-
-### Irreversible Harm And Magic
-
-19. Normally irreversible harm does not fully regenerate through time or generic healing.
-20. Mundane treatment may stabilize, rehabilitate, or support adaptation without recreating destroyed anatomy.
-21. Prosthetic or assistive capability is not anatomical regrowth.
-22. Only explicitly capable, extremely rare, and expensive magic may restore destroyed anatomy, regrow limbs or organs, or reverse other normally irreversible harm.
-23. Ordinary healing magic does not automatically provide regrowth or resurrection.
-24. Resurrection is a death-and-magic contract, not ordinary injury treatment.
-25. This run must not create a resurrection exception to restricted-Stakes terminal closure.
-
-### Attributes And Systems
-
-26. Injury and trauma affect current-state resolution, not immutable base values.
-27. Physical injury adjustments, trauma adjustments, reversible body condition, and nutrition-derived structural loss must not be double-counted.
-28. Story may use coarse and generous injury/trauma projections.
-29. Grim World may later deepen complications, infection, sanitation, access, or stigma only through distinct owner contracts.
-30. Defeat must not automatically impose an injury, trauma, item loss, or permanent maiming as a generic tax.
-31. Normally irreversible or magic-only harm must be exceptional, strongly causal, and clearly surfaced.
-
-## Audit 1: Live HP-Zero And Defeat Lifecycle
-
-Trace every live path that can observe or produce player HP at or below zero.
-
-Identify:
-
-- the authoritative HP-zero check;
-- when and where it runs;
-- encounter-state transitions;
-- `incapacitated` and `defeated` flags;
-- whether combat can end without run archival;
-- party-member defeat behavior;
-- encounter cleanup;
-- stale save and copied-save blocking;
-- archival, retirement, estate, Legacy, and Chronicle calls;
-- save-slot deletion;
-- UI behavior after defeat or archival;
-- tests encoding current behavior.
-
-Produce one exact call/ownership flow from HP zero to current terminal archival.
-
-Identify the smallest seam where a Normal Stakes defeat resolver can replace terminal archival without creating a second HP authority.
-
-## Audit 2: Default Normal Stakes Defeat Fallback
-
-The game needs one deterministic fallback when no quest, scripted encounter, law, capture, rescue, or other context owner provides a specific defeat outcome.
-
-Evaluate at least these candidate components:
-
-- encounter termination;
-- incapacitated versus defeated state;
-- removal from immediate danger;
-- nearest valid safe location or context-owned recovery location;
-- time advancement;
-- bounded HP restoration sufficient to resume play;
-- body-state and recovery consequences;
-- naturally recoverable injury consequences;
-- `Shaken Spirit` consequences;
-- currency, item, equipment, or supply loss;
-- companion and party handling;
-- quest/event state;
-- Chronicle and notice output;
-- repeated-defeat-loop prevention;
-- absence of a valid safe location;
-- deterministic save/load behavior.
-
-Do not assume every defeat causes injury, trauma, capture, or loss.
-
-Recommend the smallest coherent default fallback and identify which consequences should remain optional context-owned extensions.
-
-## Audit 3: Live Health, Injury, And Condition Representation
-
-Inventory all live or partially implemented representations for:
+### Normal Stakes And Terminal Separation
+
+1. `normal_stakes` is the only accepted initial Stakes identity.
+2. Ordinary HP zero is defeat or incapacitation, not implicit actual death.
+3. Ordinary HP zero must not archive the run, delete saves, settle terminal Prestige or Legacy, deposit an estate, prove permanent death, or retire the character.
+4. `archiveActiveRun` may be reached only through a separately accepted explicit terminal result such as retirement or a later actual-death contract.
+5. Runtime campaign-rules migration cannot ship while ordinary HP zero still triggers archival and save deletion.
+6. Existing archived or deleted account-history records remain blocked and must never be reopened by defeat repair.
+7. Historical `dead` and `hardcore_dead` records remain historical truth.
+
+### Save-Topology Separation
+
+8. Normal Stakes preserves the existing ordinary manual-save and quick-save topology until a later save-owner decision changes it.
+9. A newly resolved ordinary defeat during play does not force an autosave or checkpoint.
+10. Ordinary defeat produces an authoritative in-memory session state, marks the session unsaved through existing behavior, and remains subject to the player’s ordinary manual save, quick save, return-without-saving, and earlier-save loading choices.
+11. A one-time repair write for an already persisted active legacy HP-zero save is a migration operation, not a new ordinary-defeat autosave rule.
+12. Future restricted-Stakes continuity saving, no-rollback behavior, and terminal closure must not be imported into Normal Stakes by inference.
+
+### Defeat Consequences
+
+13. The generic fallback must be deterministic, nonterminal, idempotent, explainable, and capable of restoring playability.
+14. The generic fallback does not automatically create injury, `Shaken Spirit`, capture, item loss, currency loss, equipment loss, companion loss, permanent impairment, or magical consequences.
+15. Injury, trauma, capture, law, quest, rescue, loss, and permanent harm remain optional context-owned extensions.
+16. The first fallback must not require the full injury, trauma, immutable-base/current-attribute, anatomy, magical-restoration, or resurrection packages.
+17. Restricted-Stakes terminal closure remains irreversible.
+
+## Decision 1: Authoritative Defeat Receipt
+
+Accept one engine-owned Normal Stakes defeat result and receipt boundary.
+
+The durable decision must require conceptually:
+
+- a stable defeat receipt id or idempotency key;
+- the player/run identity;
+- campaign-rules version and `normal_stakes` identity;
+- source kind and source receipt/event/revision identity where available;
+- a safe explicit `unknown_or_legacy` source posture when the cause is not typed;
+- the causing authoritative tick or equivalent ordering fact;
+- pre-resolution HP-zero truth;
+- encounter cleanup disposition;
+- recovery destination and destination provenance;
+- bounded time-advance disposition;
+- HP, Stamina, MP, and body-state recovery disposition;
+- party and transient-binding disposition;
+- context-adapter identity when one supplied an outcome;
+- Chronicle and notice projection facts;
+- recovery-pending or playable completion state;
+- consumed/applied evidence sufficient to prevent duplicate resolution.
+
+Do not prescribe an exact hash formula, field names, storage nesting, numeric values, or serialization version in this decision. Those belong to the later implementation prompt after the contract is accepted.
+
+The receipt is authoritative defeat truth. UI notices, Chronicle text, account projections, and save metadata are projections and must not author or independently reinterpret the result.
+
+## Decision 2: Default Fallback Sequence
+
+Accept this smallest generic fallback when no context owner provides a specific result:
+
+```text
+HP reaches zero
+  -> resolve one Normal Stakes defeat receipt
+  -> finish or clear the active encounter and transient combat bindings
+  -> resolve a deterministic recovery destination
+  -> advance one bounded deterministic recovery interval
+  -> restore bounded HP and Stamina sufficient to resume play
+  -> preserve MP and body state by default
+  -> preserve inventory, equipment, currency, quests, party membership,
+     injury state, trauma state, and immutable character truth
+  -> produce one explanatory notice and one Chronicle projection
+  -> return a playable unsaved in-session snapshot
+```
+
+Accept these qualitative resource rules:
+
+- HP must become positive and sufficient to avoid an immediate zero-value loop;
+- Stamina must become sufficient for at least one ordinary basic movement or action supported by the current game;
+- MP is preserved unchanged by the generic fallback;
+- body state, nutrition state, fatigue, and structural state are preserved unchanged by the first generic fallback;
+- no generic recovery debt, injury, trauma, item loss, currency loss, or hidden penalty is added in the first package;
+- exact time, HP, and Stamina constants remain deferred to the implementation prompt and must be selected from live clock/resource scales rather than invented independently.
+
+## Decision 3: Recovery Destination And `recovery_pending`
+
+Accept this target destination order:
+
+1. an explicit context-owned recovery destination;
+2. the current location when it is already a validated safe recovery settlement;
+3. a persisted last-safe recovery location when a later accepted owner exists;
+4. the campaign-start settlement;
+5. a nonterminal `recovery_pending` state when no destination validates.
+
+For the first implementation package, do not require inventing a new last-safe-location system. Its minimum chain is:
+
+1. explicit context destination;
+2. current validated safe recovery settlement;
+3. campaign-start settlement;
+4. `recovery_pending`.
+
+The durable decision must require:
+
+- no random destination selection;
+- no inferred nearest-settlement geometry without an accepted owner;
+- no silent teleport lacking destination provenance;
+- no archival, payout, estate deposit, or save deletion when destination resolution fails;
+- a clear diagnostic and retained defeat receipt in `recovery_pending`;
+- ordinary gameplay blocked while `recovery_pending` is unresolved;
+- a deterministic repair path owned by a later implementation/repair surface;
+- no conversion of `recovery_pending` into a permanent unusable or terminal run.
+
+## Decision 4: Loop Protection
+
+Accept structural loop protection rather than a new generic invulnerability effect.
+
+The decision must require:
+
+- one source receipt or HP-zero transition can resolve at most once;
+- a resolved encounter cannot remain active and continue applying damage;
+- transient combat-to-party bindings are cleared consistently;
+- a recovery destination must satisfy the accepted safe-location predicate or resolution enters `recovery_pending`;
+- the same defeat receipt cannot repeat relocation, time advancement, resource restoration, Chronicle output, or notice output;
+- load/re-entry cannot reroll destination or recovery facts;
+- the first package does not add a hidden immunity buff, arbitrary grace timer, or new combat status solely to mask an unsafe recovery destination.
+
+## Decision 5: Ordinary Defeat Save Behavior
+
+Accept this Normal Stakes behavior for defeats that occur during ordinary live play:
+
+```text
+causing mutation
+  -> engine-owned defeat resolution
+  -> accepted in-memory snapshot and receipt
+  -> account/history/achievement projection from the resolved truth
+  -> accepted-only UI application
+  -> session remains unsaved until the player uses existing save behavior
+```
 
-- active combat status effects;
-- player active effects;
-- body state;
-- injuries, wounds, scars, impairments, pain, bleeding, concussion, fracture, maiming, and trauma vocabulary;
-- current attributes and modifiers;
-- treatment or healing state;
-- recovery timers or elapsed-time updates;
-- NPC and party health persistence;
-- save and Chronicle projection.
+The durable decision must state explicitly:
 
-For each relevant field or type classify it as:
+- no forced save, autosave, or checkpoint occurs merely because defeat resolved;
+- existing manual and quick-save choices remain available;
+- the player may still load an earlier save under Normal Stakes;
+- returning to the menu without saving may discard the defeat result under the existing ordinary-save contract;
+- this permissive rollback is intentional Normal Stakes behavior and not a defect;
+- a later save-owner decision may change Normal Stakes saving only through a separate explicit authority.
 
-- reusable owner boundary;
-- migration input;
-- naming conflict;
-- incomplete placeholder;
-- forbidden parallel authority;
-- unrelated domain vocabulary.
+## Decision 6: Active Legacy HP-Zero Save Repair
 
-Do not reinterpret current mutable attributes as immutable base attributes.
+Accept an automatic one-time repair when loading an active legacy HP-zero save that has no archived or deleted account-history outcome.
 
-## Audit 4: Naturally Recoverable Injury Contract
+The repair contract must require:
 
-Produce a decision-ready runtime contract plan for naturally recoverable physical injuries.
+1. check blocked account-history outcomes first;
+2. apply accepted campaign-rules/legacy-difficulty migration;
+3. resolve the HP-zero snapshot through the deterministic Normal Stakes fallback;
+4. write the repaired snapshot back to the same loaded slot only after the repair result is complete;
+5. record migration/repair provenance and the stable defeat receipt;
+6. show a visible explanation before play resumes;
+7. keep the run active and grant no terminal payout, estate transfer, or archival result;
+8. leave other save slots untouched;
+9. if the same character has another active HP-zero slot, repair that slot only when it is separately loaded;
+10. if the repair write fails, do not enter ordinary play, do not archive the run, and surface a recoverable storage diagnostic.
 
-The plan must separate:
+This same-slot repair write is accepted solely to prevent repeated migration on every load. It does not authorize automatic persistence for new defeats.
+
+## Decision 7: Transaction Ordering And Idempotence
 
-- injury identity;
-- `Minor | Moderate | Major` severity;
-- recovery class;
-- current recovery progress;
-- ordinary, reduced, or protected-use posture;
-- treatment state;
-- complication state;
-- source event and body region where supported;
-- current effects;
-- save/Chronicle presentation.
+The durable decision must establish these ordering constraints without prescribing a premature generic transaction framework.
 
-Determine:
+### Ordinary live defeat
 
-- which owner creates an injury instance;
-- which owner advances healing over time;
-- how rest, activity, nutrition, body state, treatment, and magic contribute without duplicating math;
-- how an injury reaches complete functional recovery;
-- how overuse or reinjury delays recovery;
-- how a causal complication may convert the state without making every injury chronic;
-- how multiple injuries combine without uncontrolled stacking;
-- how temporary injury adjustments enter the current-attribute resolver;
-- how scars remain descriptive without forcing permanent impairment.
+```text
+causing authoritative snapshot
+  -> defeat resolver
+  -> one accepted next snapshot and receipt
+  -> account/history/achievement evaluation from resolved truth
+  -> accepted-only UI application
+```
 
-Do not select exact durations, percentages, penalties, or medical formulas.
+### Legacy HP-zero load repair
 
-## Audit 5: `Shaken Spirit` Trauma Contract
+```text
+load slot
+  -> block archived/deleted history
+  -> migrate campaign rules
+  -> resolve one defeat repair
+  -> persist repaired same-slot snapshot
+  -> evaluate/project active account and Chronicle truth
+  -> enter play with visible repair notice
+```
 
-Produce a decision-ready plan for a trauma-condition instance using the player-facing umbrella `Shaken Spirit`.
+Require that interruption, retry, reload, or duplicate application cannot:
 
-Inspect whether existing morale, fear, Knowledge, relationship, Chronicle, body-state, active-effect, or event systems provide reusable seams.
+- advance time twice;
+- relocate twice;
+- restore resources twice;
+- emit multiple Chronicle records for one receipt;
+- duplicate notices as authoritative events;
+- settle terminal rewards;
+- deposit estate assets;
+- delete saves;
+- create a second defeat receipt from the same source transition.
 
-The contract plan must distinguish:
+Do not require a repository-wide command bus, event dispatcher, replay service, or generic transaction framework in the first package.
 
-- source event;
-- trigger identities or categories;
-- current expression tags;
-- current burden/severity;
-- recovery course;
-- safety/support/treatment inputs;
-- current contextual effects;
-- persistence and save/load;
-- Chronicle explanation;
-- resolution, dormancy, relapse, or continued persistence.
+## Decision 8: Chronicle And Notice Policy
 
-Use descriptive expressions such as dread, nightmares, avoidance, vigilance, suspiciousness, startle, withdrawal, or event-linked panic without creating a comprehensive modern diagnosis list.
+Accept:
 
-Identify lore-compatible support owners such as household support, companions, spiritual counsel, ritual, healers, confessors, mentors, or other setting-appropriate care, while preserving cultural variation.
-
-Require anti-frustration and agency guardrails. Do not authorize arbitrary forced dialogue, betrayal, violence, or self-destructive action.
+- one stable defeat receipt for every accepted fallback resolution;
+- one immediate player-facing notice for every accepted fallback resolution;
+- one Chronicle entry projected from that receipt in the first implementation;
+- no separate UI-authored or Chronicle-authored defeat truth;
+- later coalescing, filtering, or summary presentation may change how repeated defeats are displayed without changing the underlying receipts.
 
-## Audit 6: Normally Irreversible Harm And Adaptation
+The Chronicle entry must remain descriptive. It must not claim injury, capture, loss, death, rescue actors, legal judgment, or other facts absent from the accepted receipt.
 
-Plan the owner boundary for normally irreversible harm.
+## Decision 9: Party And Companion Baseline
 
-Determine how the future system distinguishes:
+Accept the first-package baseline:
 
-- destroyed or absent anatomy;
-- persistent impairment;
-- stable wound closure;
-- rehabilitation;
-- prosthetic or assistive compensation;
-- current capability;
-- magical restoration eligibility;
-- restoration completion.
+- preserve party membership and all current durable party metadata;
+- clear transient encounter/combatant bindings consistently;
+- do not create companion injury, trauma, separation, capture, death, inventory loss, or relationship consequences;
+- do not claim that current party metadata constitutes a durable party-health system;
+- later party-health or context adapters may add causal consequences through separate owner contracts.
 
-Identify whether any live anatomy, equipment, body-region, disability, service, spell, or item contract can support the direction without inventing premature generic infrastructure.
+## Decision 10: Context Adapters
 
-Normally irreversible harm must not be the routine default defeat fallback.
+The first atomic implementation needs only the deterministic generic fallback and a nullable context-outcome input seam. It does not need a live rescue, capture, surrender, law, or quest adapter.
 
-## Audit 7: Magical Restoration And Resurrection
-
-Inventory live spell, magic-hook, service, healer, item, sacred-site, death, corpse, Chronicle, and save concepts relevant to:
-
-- extraordinary tissue restoration;
-- limb or organ regrowth;
-- curse or transformation reversal;
-- resurrection;
-- healer rarity, access, cost, requirements, and institutions.
-
-Separate:
-
-1. ordinary healing;
-2. exceptional restoration;
-3. regrowth;
-4. resurrection.
-
-Identify missing owner decisions and dependencies.
-
-Preserve these boundaries:
-
-- generic healing cannot imply regrowth;
-- the existence of resurrection in the setting does not define its Normal Stakes mechanics;
-- resurrection must not bypass restricted-Stakes terminal closure;
-- exact spells, prices, healer counts, probabilities, materials, rituals, corpse windows, and soul rules remain deferred.
-
-## Audit 8: Difficulty, Story, Grim, And Stakes Interaction
-
-Produce an interaction matrix for:
-
-- Story/Favored/Mortal/Forsaken;
-- Heroic World/Grim World;
-- Normal Stakes/future restricted Stakes.
-
-Classify which axis may tune:
-
-- consequence weighting;
-- recovery duration;
-- treatment effectiveness;
-- reduced-use burden;
-- complication resistance;
-- trauma recovery/support effectiveness;
-- warnings and forecast precision.
-
-Classify which truths cannot be tuned away:
-
-- source event;
-- existing or absent anatomy;
-- immutable base attributes;
-- actual magic capability;
-- selected Stakes resurrection/death boundary.
-
-Story must remain coarse and forgiving. Grim may deepen systems but cannot make all injury or trauma ubiquitous.
-
-## Audit 9: Ownership And Persistence Matrix
-
-Assign one owner for each concern:
-
-- static injury/condition vocabulary;
-- active injury instance;
-- active trauma instance;
-- source event receipt;
-- body region/anatomy;
-- recovery progression;
-- treatment;
-- complication;
-- current-attribute adjustments;
-- activity/use restrictions;
-- magic restoration;
-- prosthetics and equipment compensation;
-- resurrection;
-- actual death;
-- defeat fallback;
-- safe-location resolution;
-- time advancement;
-- save identity;
-- Chronicle projection;
-- UI explanation.
-
-Identify all persistence and migration needs without proposing a parallel health save.
-
-## Audit 10: Implementation Package Sequence
-
-Recommend the smallest package sequence that respects these gates:
-
-1. Normal Stakes cannot become live while HP zero still deletes saves.
-2. Injury and trauma instance owners must not mutate immutable base attributes.
-3. The current-attribute resolver must have one authorized adjustment path.
-4. Defeat fallback may need a minimal recovery consequence before the complete injury catalog exists.
-5. Story and Grim availability gates remain enforced.
-6. Magical restoration and resurrection must not be smuggled into the first defeat package.
-7. TypeScript and tracked JavaScript mirrors must remain synchronized.
-
-Classify each proposed package as:
-
-- required for the first atomic campaign-rules/defeat implementation;
-- safe immediate follow-up;
-- later health/injury package;
-- later trauma package;
-- later magical-restoration package;
-- later resurrection/death package.
-
-Do not assign release numbers.
-
-## Audit 11: Validation Matrix
-
-Specify tests proving at least:
-
-- Normal Stakes HP zero does not archive the run or delete saves;
-- explicit terminal retirement/death remains separate;
-- fallback defeat is deterministic;
-- repeated defeat cannot soft-lock the player;
-- defeat does not always create an injury or trauma condition;
-- naturally recoverable Minor, Moderate, and Major injuries can reach complete recovery;
-- reduced-use requirements are injury-specific;
-- treatment assistance and natural recovery do not conflict;
-- complications are causal and persisted;
-- `Shaken Spirit` remains a trauma condition rather than magical soul damage or a diagnosis catalog;
-- trauma may self-resolve, respond to support, or persist;
-- trauma does not rewrite personality or immutable attributes;
-- normally irreversible harm does not heal through generic time or ordinary healing;
-- prosthetic compensation differs from regrowth;
-- only explicitly capable magic restores destroyed anatomy;
-- resurrection follows Stakes and death authority;
-- restricted-Stakes terminal closure remains irreversible;
-- injury, trauma, body condition, and structural loss are not double-counted;
-- save/load does not reroll outcomes or recovery truth;
-- held `0.6.6` remains untouched.
+Select a narrow explicit rescue/recovery-destination adapter as the first safe follow-up candidate because it can supply:
+
+- a destination;
+- an authored time interval;
+- explanatory actors or institutions;
+- optional later cost or relationship consequences through their own owners.
+
+Do not implement or fully specify that adapter in this decision. Capture, surrender, law, and quest consequences remain later alternatives and must not be bundled into the first atomic package.
+
+## Decision 11: First Atomic Implementation Boundary
+
+Accept the future first implementation package as one atomic live-contract transition containing:
+
+1. campaign-rules identity, defaults, provenance, typed compatibility overrides, and save migration already accepted by the campaign-rules decision;
+2. engine-owned Normal Stakes defeat result and receipt;
+3. explicit separation between nonterminal defeat and terminal archival;
+4. deterministic recovery-location resolution and `recovery_pending`;
+5. bounded time/resource fallback with the accepted qualitative policy;
+6. structural loop protection and idempotence;
+7. automatic same-slot repair for active legacy HP-zero saves;
+8. ordinary manual/quick-save topology preservation for new defeats;
+9. account/history/achievement, Chronicle, notice, and accepted-only UI projections;
+10. focused lifecycle, combat, save/load, migration, travel/noncombat HP-zero, account, and TypeScript/JavaScript parity tests.
+
+The package must not include:
+
+- full physical-injury instances;
+- `Shaken Spirit` runtime;
+- immutable-base/current-attribute implementation except where independently authorized and strictly required;
+- anatomy, body-region, prosthetic, treatment, complication, regrowth, resurrection, or restricted-Stakes runtime;
+- Story or Grim availability;
+- player-facing custom overrides;
+- a generic command bus, delivery framework, replay service, or broad shell rewrite.
+
+No release or primary version number is assigned by this decision.
+
+## Injury, Trauma, Restoration, And Resurrection Disposition
+
+Preserve the temporary audit as planning evidence for later owner-specific decisions.
+
+This run must not consume or delete:
+
+`docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`
+
+Its named future consumers are:
+
+1. naturally recoverable injury active-state and recovery contract;
+2. `Shaken Spirit` trauma active-state and support contract;
+3. anatomy, impairment, adaptation, and prosthetic ownership decision;
+4. extraordinary magical restoration and regrowth decision;
+5. Normal Stakes actual-death/resurrection decision, if later pursued.
+
+The artifact may be deleted only after all durable findings needed by those consumers have been transferred into accepted focused authorities and exact source identity remains recorded in history or a durable disposition table.
+
+## Required Durable Decision
+
+Create:
+
+`docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`
+
+The decision must contain:
+
+1. status, scope, authority precedence, and source identities;
+2. accepted invariants;
+3. authoritative defeat result/receipt boundary;
+4. default fallback sequence;
+5. qualitative time/resource policy;
+6. recovery destination chain and first-package minimum chain;
+7. `recovery_pending` contract;
+8. loop-protection and idempotence rules;
+9. ordinary Normal Stakes save behavior;
+10. active legacy HP-zero same-slot repair behavior;
+11. transaction ordering and partial-failure constraints;
+12. Chronicle and notice policy;
+13. party/companion baseline;
+14. context-adapter posture and first follow-up candidate;
+15. first atomic implementation boundary;
+16. validation obligations;
+17. temporary-audit disposition;
+18. explicit deferred decisions and prohibited inferences.
+
+The decision must be more specific than the campaign-rules decision for the generic fallback, receipt, save behavior, and legacy HP-zero repair. It must defer to the injury/restoration and restricted-Stakes decisions for their respective future domains.
+
+## Validation Obligations For The Future Implementation
+
+The durable decision must require tests proving at least:
+
+- combat and noncombat HP zero resolve nonterminally under Normal Stakes;
+- ordinary defeat does not archive the run, delete saves, settle Legacy/Prestige, or deposit an estate;
+- explicit retirement remains terminal and unchanged;
+- identical source/snapshot/context resolves the same receipt, destination, time, and resource facts;
+- duplicate application cannot repeat any consequence or projection;
+- encounter cleanup prevents continued damage from the resolved encounter;
+- the first generic fallback creates no injury, trauma, capture, loss, or permanent harm;
+- HP is positive and Stamina permits an ordinary basic action after recovery;
+- MP and body state remain unchanged by the generic fallback;
+- ordinary defeat creates no automatic save and remains discardable through existing return/load behavior;
+- ordinary manual and quick saves remain usable after defeat;
+- an active legacy HP-zero slot is repaired once, rewritten only in that slot, explained visibly, and enters play active;
+- repair-write failure does not archive, delete, or enter play with an unpersisted repair;
+- archived/deleted history remains blocked and cannot be reopened;
+- `recovery_pending` is nonterminal, persisted for legacy repair where applicable, diagnostic, and repairable;
+- one receipt yields one notice and one Chronicle entry;
+- party membership is preserved while transient bindings clear;
+- no restricted-Stakes continuity or terminal behavior is imported;
+- TypeScript and tracked JavaScript mirrors remain synchronized;
+- held `0.6.6` remains untouched and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Required Output
 
 On successful completion, modify exactly:
 
-1. create `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
+1. create `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
 2. update `docs/dev/current-codex-output.md`.
-
-The temporary audit must contain:
-
-1. execution and source-state confirmation;
-2. live HP-zero and defeat call flow;
-3. contradiction table;
-4. default Normal Stakes fallback options and recommendation;
-5. health/injury/condition inventory;
-6. naturally recoverable injury contract plan;
-7. `Shaken Spirit` trauma contract plan;
-8. irreversible-harm and adaptation plan;
-9. magical restoration and resurrection boundary analysis;
-10. difficulty/world/stakes interaction matrix;
-11. owner and persistence matrix;
-12. migration and compatibility risks;
-13. implementation package sequence;
-14. validation matrix;
-15. exact remaining user decisions;
-16. explicit non-decisions.
 
 Update `docs/dev/current-codex-output.md` with:
 
 - source run identity;
 - branch/start/end state;
+- label class and milestone impact;
 - exact changed paths;
-- principal repository findings;
-- recommended default defeat fallback;
-- injury, trauma, and restoration contract summary;
-- owner conflicts;
-- package sequence;
-- exact remaining user decisions;
-- checks run;
+- durable decision created;
+- accepted fallback and receipt summary;
+- ordinary-defeat versus legacy-repair save distinction;
+- recovery-location and `recovery_pending` summary;
+- transaction/idempotence summary;
+- first atomic implementation boundary;
+- validation obligations;
+- temporary-audit retention and named consumers;
 - held-route confirmation;
-- next recommended decision run.
+- checks run;
+- exact remaining implementation-only decisions;
+- next recommended route.
+
+The next recommended route must be an explicit unversioned `0.6.6 Restoration And Baseline Confirmation` coordination gate, not a runtime implementation prompt. It must remain separate from this run and must not be installed by Codex here.
+
+## Exact Remaining Implementation-Only Decisions
+
+Do not reopen the accepted qualitative contract. Record these as later implementation details:
+
+- exact defeat receipt field names and serialization nesting;
+- exact deterministic id derivation;
+- exact recovery time constant;
+- exact HP and Stamina resume constants;
+- exact safe-settlement predicate implementation;
+- exact campaign-start settlement source when multiple historical fields exist;
+- exact `recovery_pending` UI/repair surface;
+- exact save-format/schema version and migration function names;
+- exact test file paths and TypeScript/JavaScript mirror paths;
+- exact first primary `0.6.x` implementation version after the static-content sequence and post-`0.6.7` route decisions.
 
 ## Forbidden Scope
 
@@ -451,7 +466,12 @@ Do not modify:
 - this prompt;
 - current GPT handoff;
 - route register;
-- accepted design authorities;
+- roadmap;
+- sequenced plan;
+- continuity brief;
+- backlog;
+- accepted design authorities other than creating the new focused decision;
+- the temporary audit;
 - held `0.6.6`;
 - retained `0.6.7` artifacts;
 - runtime;
@@ -476,18 +496,20 @@ Do not:
 
 - implement defeat resolution;
 - change HP-zero behavior;
+- change save topology;
+- add autosaving or checkpoints;
+- repair an actual save;
+- add campaign-rules runtime;
 - add injury or trauma state;
-- add a static catalog;
-- add healing, treatment, regrowth, resurrection, or prosthetic mechanics;
-- select exact durations, rates, probabilities, penalties, costs, or healer counts;
+- add anatomy, prosthetic, healing, treatment, regrowth, resurrection, or restricted-Stakes mechanics;
+- select exact numeric balance values;
 - create a modern psychiatric diagnosis list;
-- make every defeat cause injury or trauma;
-- authorize permanent maiming as the generic Normal Stakes fallback;
-- add a restricted-Stakes id;
-- create a follow-on implementation prompt;
-- assign a release number;
+- make every defeat cause injury, trauma, capture, or loss;
+- weaken terminal retirement or archived/deleted save blocking;
 - restore `0.6.6`;
 - alter `0.6.7` artifacts;
+- create a follow-on implementation prompt;
+- assign a release or primary version number;
 - modify any path outside the exact allowed pair.
 
 Report the ending commit, exact changed paths, repository state, and any contradiction that prevented completion.
