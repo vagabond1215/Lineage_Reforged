@@ -1,127 +1,119 @@
 # Current Codex Output
 
-Source version/run: Normal Stakes Defeat Fallback And Recovery Receipt Acceptance Decision
+Source version/run: Comparative Checkpoint, Mortal-State, Rescue, Resurrection, And Stakes Research
 
-Date: 2026-07-22
+Date: 2026-07-23
 
-Branch/status assumption: `master`; starting and ending commit before documentation edits `3b6eece79d8b359a43c1e8e6b886f27cf16316f5`; clean starting worktree; fetch/prune and fast-forward pull reported already up to date; successful run ends with exactly the two authorized documentation changes below
+Branch/status assumption: `master`; clean start at `fbd562f3b6dd30ca78d5c418f21149b9af15524f`; fetched and fast-forwarded to starting/ending commit before documentation edits `bea5e9e95bcf4b2cae3ad8783ca7b381a657e678`; successful run ends with exactly the two authorized documentation changes below
 
-Label class and parent: unversioned documentation-only acceptance and contract decision; no parent version
+Label class and parent: unversioned bounded external research and repository-integration planning; no parent version
 
 Milestone impact: `supports_current_band`
 
-Status: focused contract accepted; implementation remains unauthorized
+Status: research complete; no accepted authority revised; implementation unauthorized
 
 ## Files Changed
 
-- created `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
+- created `docs/dev/tmp-comparative-checkpoint-mortality-rescue-and-stakes-research-2026-07-23.md`;
 - updated `docs/dev/current-codex-output.md`.
 
-## Durable Decision Created
+## External Access And Comparison Set
 
-`docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md` is now the most specific authority for the generic Normal Stakes fallback, defeat receipt, ordinary-save behavior, active legacy HP-zero repair, destination failure, idempotence, and the first atomic implementation boundary.
+Reliable external search and page access were available. The bounded set is:
 
-It defers campaign identity and migration mapping to the campaign-rules decision, injury/trauma/restoration/resurrection to their focused decision, and future restricted-Stakes continuity and terminal closure to the restricted-Stakes decision.
+1. Kingdom Come: Deliverance;
+2. XCOM: Enemy Unknown;
+3. RimWorld;
+4. Kenshi;
+5. Wildermyth;
+6. Crusader Kings III.
 
-## Accepted Fallback And Receipt
+Ten principal sources were used, with no more than two per game. Direct crawler access was intermittently blocked for three community-hosted pages; indexed content and direct URLs remained available, and claims from those pages were kept narrow.
 
-One engine-owned resolver consumes the authoritative HP-zero snapshot and optional context outcome, then returns one accepted next snapshot with one stable defeat receipt. The receipt preserves run/player/rules/source identity, ordering, pre-resolution HP-zero truth, encounter cleanup, destination provenance, time/resource dispositions, party/transient-binding handling, context identity, projection facts, completion state, and consumed/applied evidence.
+## Strongest Evidence-Backed Findings
 
-The generic sequence clears the encounter and transient bindings, chooses a deterministic destination, advances one bounded interval, restores positive playable HP and sufficient Stamina for a basic action, preserves MP and body state, preserves durable character/party/quest/inventory truth, and projects one notice and Chronicle entry. It creates no default injury, `Shaken Spirit`, capture, loss, debt, permanent harm, or magic.
+- Checkpoint scarcity and deterministic event commitment solve different problems. Sleep/resource-gated saves bound retry frequency; they do not prevent materially identical outcome fishing.
+- XCOM demonstrates the combination of action commitment and replay-stable random sequences. Its order-sensitive sequence also cautions against letting unrelated action order reshape outcomes.
+- RimWorld and Kenshi show that incapacity, functional recovery, lethal wound processes, first aid, and definitive recovery can remain separate.
+- A stable aid-required state is useful as player-facing triage but can be derived from functional state, active lethal processes, and care requirement instead of becoming a new mutable authority.
+- Rescue is clearest when attacker intent, active hazards, helpers, aid, supplies, carrying, route, terrain/weather, destination, travel time, and body state are explicit inputs rather than one rescue roll.
+- RimWorld shows a legible rare-resurrection structure: explicit capability, eligible corpse, preservation/time posture, body possession, exceptional access, and visible risks.
+- Wildermyth shows completion-gated Legacy settlement and tracks spent promotions so reloading cannot duplicate account rewards.
+- CK3 shows a clean lineage handoff after character death; in a resurrection-permitting system, that handoff should wait for final closure.
 
-UI, Chronicle, account, and save metadata are projections; the defeat receipt is authoritative.
+## Findings Supporting The Proposal
 
-## Ordinary Defeat Versus Legacy Repair Saves
+- Qualifying sleep checkpoints are an understandable middle topology.
+- Hidden technical recovery should remain nonselectable.
+- Independent lethal processes are more expressive than one bleed-out clock.
+- Basic stabilization can stop a named lethal process while definitive care remains necessary.
+- Contextual rescue/body recovery and rare deterministic resurrection eligibility create meaningful preparation and institutional play.
+- A three-tier Stakes model may be justified when each tier has distinct loading, commitment, finality, reward, and warning contracts.
 
-An ordinary in-session defeat does not force a save, autosave, or checkpoint. It produces an authoritative in-memory snapshot, remains subject to existing manual/quick save and load behavior, and may be discarded by returning without saving or loading an earlier Normal Stakes save. That rollback posture is intentional.
+## Simplification And Caution
 
-An active legacy HP-zero slot with no archived/deleted history receives one automatic migration repair when loaded. Blocked history is checked first; campaign rules are migrated; the deterministic fallback is applied; the completed repair and receipt are written to the same loaded slot before play; and a visible explanation is shown. Other slots remain untouched. A write failure blocks play and surfaces a recoverable storage diagnostic without archival or deletion.
+- `critical_stable` should initially be a derived presentation, not a separate persisted state.
+- Sleep checkpoints without committed event identity are insufficient for anti-reroll goals.
+- A global ordered random stream can make trivial action ordering an exploit; event/draw ownership needs a focused decision.
+- Rescue should not be an opaque aggregate probability.
+- Resurrection access should be scarce, but eligibility should be deterministic and explained.
+- Prestige, estate, terminal Chronicle closure, and heir control must not settle at a death that can still be reversed.
+- If a proposed middle Stakes tier differs only by fewer saves, it does not justify a separate public choice.
 
-The same-slot write is migration repair only and does not create an ordinary-defeat autosave rule.
+## Conflicts With Current Accepted Authorities
 
-## Recovery Destination And `recovery_pending`
+The research does not revise these conflicts:
 
-The complete chain is explicit context destination, current validated safe recovery settlement, later persisted last-safe location, campaign-start settlement, then `recovery_pending`. The first package may omit last-safe-location infrastructure.
+- Normal Stakes currently preserves ordinary manual and quick saves; sleep-only checkpoints would supersede that topology.
+- The defeat-fallback decision intentionally permits discarding an unsaved defeat or loading an earlier save; committed event outcomes and checkpoint limits would revise that contract.
+- Campaign rules accept only initial `normal_stakes`; three public Stakes tiers require new identities and migration/availability decisions.
+- Restricted Stakes currently makes accepted actual death immediately terminal. A restorable actual-death stage before final death would explicitly supersede that rule if applied to the restricted tier.
+- The injury/restoration decision allows a later Normal Stakes resurrection decision but prohibits reopening currently terminal restricted-Stakes death.
 
-No random choice, inferred nearest-settlement geometry, silent teleport, archival, payout, estate transfer, or save deletion is allowed when destination resolution fails.
+## Decisions Still Requiring Human/GPT Acceptance
 
-`recovery_pending` retains the defeat receipt and diagnostic, blocks ordinary gameplay, remains nonterminal and deterministically repairable, and cannot reroll destination or recovery facts.
-
-## Transaction And Idempotence Summary
-
-One source transition resolves at most once. A resolved encounter cannot continue damaging the player. The same receipt cannot repeat relocation, time advancement, resource restoration, Chronicle output, or authoritative notice facts.
-
-Ordinary live defeat applies one in-memory result before account/history/achievement evaluation and accepted-only UI projection. Legacy repair blocks terminal history first, migrates and resolves, persists the same slot, then projects active truth and enters play. Retry, interruption, or reload cannot settle terminal rewards, deposit estate assets, delete saves, or produce a second receipt.
-
-No repository-wide command bus, replay service, generic transaction framework, invulnerability effect, grace timer, or broad shell rewrite is accepted.
-
-## First Atomic Implementation Boundary
-
-The future atomic package contains campaign-rules identity/defaults/provenance/typed compatibility overrides/save migration; engine-owned defeat result/receipt; nonterminal-versus-terminal separation; destination resolution and `recovery_pending`; bounded time/resource fallback; structural idempotence; active legacy same-slot repair; ordinary save-topology preservation; account/Chronicle/notice/UI projections; and focused lifecycle, combat, save/load, migration, travel/noncombat HP-zero, account, and mirror-parity tests.
-
-It excludes injury, `Shaken Spirit`, anatomy, body regions, prosthetics, treatment, complications, regrowth, resurrection, restricted Stakes, Story/Grim availability, player custom overrides, and broad infrastructure. No primary or release version is assigned.
-
-## Validation Obligations
-
-Future tests must prove nonterminal combat and noncombat HP zero; absence of archival/deletion/payout/estate effects; unchanged explicit retirement; deterministic receipt/destination/time/resources; consequence and projection idempotence; encounter cleanup; no automatic injury/trauma/capture/loss/harm; playable HP/Stamina with unchanged MP/body state; no ordinary autosave; retained manual/quick saves and Normal Stakes rollback; one-time same-slot legacy repair; safe repair-write failure; blocked archived/deleted history; repairable `recovery_pending`; one notice and Chronicle entry per receipt; preserved party membership with cleared transient bindings; no imported restricted-Stakes behavior; synchronized TypeScript/JavaScript mirrors; and untouched held `0.6.6`.
-
-## Temporary Audit Retention
-
-Retained unchanged:
-
-`docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`
-
-Source: commit `aa4ccfeceec023c676c98c4bf5a68216b0017263`, blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`.
-
-Named remaining consumers:
-
-1. naturally recoverable injury active-state/recovery contract;
-2. `Shaken Spirit` active-state/support contract;
-3. anatomy, impairment, adaptation, and prosthetic decision;
-4. extraordinary restoration and regrowth decision;
-5. Normal Stakes actual-death/resurrection decision, if pursued.
+- whether to replace Normal Stakes save topology and with which tier model;
+- qualifying sleep/day checkpoint creation and retention;
+- deterministic event/draw identity and materially identical replay;
+- hidden technical-recovery depth;
+- authoritative versus derived mortal-state vocabulary;
+- first lethal-process owners and stabilization boundaries;
+- rescue facts, uncertainty, body recovery, and institution ownership;
+- resurrection eligibility, preservation, recovery, access, abandonment, and closure;
+- final ordering of Prestige, estate, Chronicle, and heir creation;
+- rollback-provenance effects on account rewards;
+- whether three public Stakes choices are mechanically distinct enough;
+- whether restricted-Stakes terminal closure remains or is superseded.
 
 ## Held Route Confirmation
 
-Held `Version 0.6.6` remains paused and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. Retained `0.6.7` artifacts remain untouched.
+Held `Version 0.6.6` remains paused and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. The retained defeat/injury audit remains unchanged at blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`. Retained `0.6.7` artifacts remain untouched.
 
 ## Checks Run
 
-- confirmed clean `master` at starting commit `3b6eece79d8b359a43c1e8e6b886f27cf16316f5`;
-- fetched/pruned and fast-forward pulled; repository was already up to date;
-- confirmed this acceptance decision was the active prompt;
-- confirmed commits `764f7ef5e4028e82fc76af6ae0381cc1eab00e20` and `aa4ccfeceec023c676c98c4bf5a68216b0017263` are ancestors of `HEAD`;
-- confirmed the temporary audit is unmodified and hashes to required blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`;
-- confirmed held `0.6.6` object `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` resolves as a blob;
-- read all required authorities, audit, output, handoff, route register, `AGENTS.md`, and `README.md`;
-- compared the completed audit commit to `HEAD` and found only the active prompt changed; live App, run-lifecycle, and combat seam blobs are identical;
-- verified all 18 required decision sections and all required output fields;
-- verified exact two-path scope, Markdown structure, and absence of conflict markers;
-- did not run builds, typechecks, generators, servers, or application tests because this run changes documentation only.
-
-## Exact Remaining Implementation-Only Decisions
-
-- exact receipt field names and serialization nesting;
-- exact deterministic id derivation;
-- exact recovery time constant;
-- exact HP and Stamina resume constants;
-- exact safe-settlement predicate implementation;
-- exact campaign-start settlement source when historical fields differ;
-- exact `recovery_pending` UI and repair surface;
-- exact save-format/schema version and migration function names;
-- exact test file paths and TypeScript/JavaScript mirror paths;
-- exact first primary `0.6.x` implementation version after the static-content sequence and post-`0.6.7` route decisions.
+- confirmed clean `master`, fetched/pruned, and fast-forwarded to `bea5e9e95bcf4b2cae3ad8783ca7b381a657e678`;
+- confirmed this comparative research prompt is active;
+- confirmed accepted defeat-fallback commit `fbd562f3b6dd30ca78d5c418f21149b9af15524f` is an ancestor;
+- confirmed its decision file is unmodified and hashes to `e32ee0eb7a64777e2ca1134600b189d80fd0eafe`;
+- confirmed the retained audit and held `0.6.6` blob identities;
+- read the required authorities and coordination sources;
+- confirmed reliable external access before making comparative claims;
+- used six games and ten principal sources, within the prompt limits;
+- preserved source titles, sites, dates where available, access date, direct URLs, and quality classifications;
+- verified all 17 required research sections and required output fields;
+- verified exact two-path scope, Markdown structure, source-link presence, and absence of conflict markers;
+- did not run builds, typechecks, generators, servers, or application tests because this run changes research documentation only.
 
 ## Risks / Follow-Up Notes
 
-The live runtime still archives ordinary HP-zero runs and deletes saves. This decision changes documentation only. Runtime campaign-rules migration remains prohibited until the accepted nonterminal defeat boundary lands before or atomically with migration.
+Comparative mechanics are evidence, not authority. No save, death, rescue, resurrection, Stakes, Prestige, or succession contract changed. The live runtime still archives ordinary HP-zero runs under the pre-migration implementation.
 
-Do not implement from this run, modify save topology, repair an actual save, consume the retained audit prematurely, restore held `0.6.6`, or alter retained `0.6.7` artifacts.
+The findings provide material reasons to revisit current Stakes and death authorities before restoring the static-content route or authorizing runtime work.
 
 ## Suggested Commit Message
 
-`docs(health): accept normal defeat fallback and recovery receipt`
+`docs(research): compare checkpoint mortality and succession systems`
 
-## Next Recommended Route
+## Next Recommended Decision Run
 
-Run a separate unversioned `0.6.6 Restoration And Baseline Confirmation` coordination gate. It must not be treated as a runtime implementation prompt, assigned a primary version, or installed by this run.
+Run an unversioned documentation-only `Checkpoint Commitment, Mortal-State, Resurrection, Final Closure, And Stakes Authority Revision` decision pass. It should explicitly retain or supersede each conflicting authority and must not implement runtime or restore `0.6.6`.
