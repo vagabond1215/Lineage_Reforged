@@ -1,120 +1,127 @@
 # Current Codex Output
 
-Source version/run: Normal Stakes Defeat, Injury, Trauma, And Magical Restoration Repository Audit And Contract Planning
+Source version/run: Normal Stakes Defeat Fallback And Recovery Receipt Acceptance Decision
 
 Date: 2026-07-22
 
-Branch/status assumption: `master`; starting and ending commit before documentation edits `d11c270bfeaa75a9a36ebe1302303e61b9384491`; clean starting worktree; fetch/prune and fast-forward pull reported already up to date; successful run ends with exactly the two authorized documentation changes below
+Branch/status assumption: `master`; starting and ending commit before documentation edits `3b6eece79d8b359a43c1e8e6b886f27cf16316f5`; clean starting worktree; fetch/prune and fast-forward pull reported already up to date; successful run ends with exactly the two authorized documentation changes below
 
-Label class and parent: unversioned documentation-only repository audit and implementation-contract planning; no parent version
+Label class and parent: unversioned documentation-only acceptance and contract decision; no parent version
 
 Milestone impact: `supports_current_band`
 
-Status: audit complete; findings are decision-ready, but implementation and contract acceptance remain unauthorized
+Status: focused contract accepted; implementation remains unauthorized
 
 ## Files Changed
 
-- created `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
+- created `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
 - updated `docs/dev/current-codex-output.md`.
 
-## Principal Repository Findings
+## Durable Decision Created
 
-- Combat already owns damage, HP clamping, `incapacitated`/`defeated` flags, encounter outcome, history/event emission, and encounter cleanup. It does not itself archive the run.
-- `apps/rpg-ui/src/App.tsx` interprets every HP-zero snapshot as terminal during both snapshot change and run entry.
-- `resolveTerminalArchiveReason` returns `dead` or `hardcore_dead`; `archiveActiveRun` then evaluates history/achievements, settles Legacy/Prestige, records archival, deposits estate assets, persists the account, and deletes all character saves.
-- Noncombat resource and travel paths can also produce HP zero, so a replacement needs a typed source receipt plus a safe unknown/legacy fallback.
-- The smallest replacement seam is the current snapshot-admission terminal check. One engine-owned Stakes/defeat resolver should consume HP zero there; only an explicit terminal result may reach `archiveActiveRun`.
-- A descriptive combat-health schema/content/lint/test foundation already exists, but it contains only two planned status rows and owns no active health state.
-- The repository has no active injury, `Shaken Spirit`, anatomy, treatment, complication, prosthetic, corpse, regrowth, or resurrection owner.
-- Combat `heal.hp` restores the HP resource only. The 55-record spell catalog includes healing/regeneration descriptions, but no live player capability was found for resurrection, revival, limb/organ restoration, or anatomical regrowth.
-- The five-record service catalog contains no healer/treatment/restoration service.
-- No live fact materially contradicts an accepted authority. The current HP-zero behavior is the already-recognized implementation gap and atomic migration gate.
+`docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md` is now the most specific authority for the generic Normal Stakes fallback, defeat receipt, ordinary-save behavior, active legacy HP-zero repair, destination failure, idempotence, and the first atomic implementation boundary.
 
-## Recommended Default Defeat Fallback
+It defers campaign identity and migration mapping to the campaign-rules decision, injury/trauma/restoration/resurrection to their focused decision, and future restricted-Stakes continuity and terminal closure to the restricted-Stakes decision.
 
-Create one stable, idempotent defeat receipt; finish/clear the encounter; choose an explicit context recovery destination or deterministic safe fallback; advance bounded time once; restore HP to a playable floor and Stamina enough to act; preserve inventory, equipment, currency, quests, party membership, injury state, trauma state, and immutable truth; persist before play resumes; and project Chronicle/notice output from the same receipt.
+## Accepted Fallback And Receipt
 
-Default destination order should be decided as: explicit context destination, current valid recovery settlement, persisted last-safe location, then campaign-start settlement. If none validates, retain a nonterminal recovery-pending repair state and surface a diagnostic. Never archive, delete saves, choose randomly, or silently teleport.
+One engine-owned resolver consumes the authoritative HP-zero snapshot and optional context outcome, then returns one accepted next snapshot with one stable defeat receipt. The receipt preserves run/player/rules/source identity, ordering, pre-resolution HP-zero truth, encounter cleanup, destination provenance, time/resource dispositions, party/transient-binding handling, context identity, projection facts, completion state, and consumed/applied evidence.
 
-Injury, `Shaken Spirit`, capture, item/currency loss, and permanent harm are optional causal context extensions, not generic defeat taxes. Exact time/resource values remain deferred.
+The generic sequence clears the encounter and transient bindings, chooses a deterministic destination, advances one bounded interval, restores positive playable HP and sufficient Stamina for a basic action, preserves MP and body state, preserves durable character/party/quest/inventory truth, and projects one notice and Chronicle entry. It creates no default injury, `Shaken Spirit`, capture, loss, debt, permanent harm, or magic.
 
-## Contract Summary
+UI, Chronicle, account, and save metadata are projections; the defeat receipt is authoritative.
 
-### Naturally recoverable injury
+## Ordinary Defeat Versus Legacy Repair Saves
 
-Use a typed player-health instance with stable identity, `Minor | Moderate | Major` severity, separate recovery class, progress, injury-specific ordinary/reduced/protected-use posture, treatment inputs, complication references, causal source receipt, optional body region, current-effect contributions, and resolved presentation. One health resolver advances recovery. Rest, activity, nutrition/body state, treatment, and magic provide typed inputs rather than editing progress independently. Major naturally recoverable injury can fully recover.
+An ordinary in-session defeat does not force a save, autosave, or checkpoint. It produces an authoritative in-memory snapshot, remains subject to existing manual/quick save and load behavior, and may be discarded by returning without saving or loading an earlier Normal Stakes save. That rollback posture is intentional.
 
-### `Shaken Spirit`
+An active legacy HP-zero slot with no archived/deleted history receives one automatic migration repair when loaded. Blocked history is checked first; campaign rules are migrated; the deterministic fallback is applied; the completed repair and receipt are written to the same loaded slot before play; and a visible explanation is shown. Other slots remain untouched. A write failure blocks play and surfaces a recoverable storage diagnostic without archival or deletion.
 
-Use a separate lore-facing trauma-condition instance with source event, trigger identities/categories, expression tags, burden/course, safety/support/treatment inputs, contextual contributions, active/dormant/resolved/persistent state, causal relapse, and Chronicle explanation. It may self-resolve, respond to setting-appropriate support, or persist. It cannot become soul damage, a diagnosis catalog, personality mutation, or arbitrary forced behavior.
+The same-slot write is migration repair only and does not create an ordinary-defeat autosave rule.
 
-### Irreversible harm and restoration
+## Recovery Destination And `recovery_pending`
 
-A later anatomy/capability owner must distinguish absent/destroyed anatomy, wound closure, persistent impairment, rehabilitation, prosthetic compensation, current capability, restoration eligibility, and restoration completion. Ordinary healing may restore HP or aid recovery but cannot recreate anatomy. Exceptional restoration, regrowth, and resurrection require separate explicit capabilities and authority. Resurrection must obey death and Stakes ownership and cannot reopen restricted-Stakes terminal closure.
+The complete chain is explicit context destination, current validated safe recovery settlement, later persisted last-safe location, campaign-start settlement, then `recovery_pending`. The first package may omit last-safe-location infrastructure.
 
-## Owner Conflicts
+No random choice, inferred nearest-settlement geometry, silent teleport, archival, payout, estate transfer, or save deletion is allowed when destination resolution fails.
 
-- `PlayerState.activeEffects: string[]` is a label projection, not an injury/trauma owner.
-- `PlayerState.attributes` is a migration input, not accepted immutable base state.
-- `bodyState` and `resourceRuntime` may inform recovery but cannot own injury progression.
-- Combat statuses are transient combat instances and must not silently become persistent conditions.
-- Static health vocabulary describes identities but cannot execute recovery or consequences.
-- Settlement rest cannot be reused wholesale for defeat because it charges currency, fully restores resources, and could duplicate time/recovery.
-- Equipment can host a future prosthetic item but cannot claim anatomical restoration.
-- UI and Chronicle explain accepted results; they do not author them.
+`recovery_pending` retains the defeat receipt and diagnostic, blocks ordinary gameplay, remains nonterminal and deterministically repairable, and cannot reroll destination or recovery facts.
 
-## Package Sequence
+## Transaction And Idempotence Summary
 
-1. Required atomic package: campaign-rules identity/save migration plus the engine-owned nonterminal defeat resolver, explicit terminal separation, deterministic recovery location/receipt, time/resource fallback, immediate persistence, loop protection, legacy HP-zero handling, focused tests, and synchronized mirrors.
-2. Safe immediate follow-up: read-only projection and typed rescue/capture/surrender/law/quest context adapters.
-3. Later health/injury: immutable-base/current resolver, health instances, vocabulary extension, recovery/use/treatment/complication contracts, and natural-recovery implementation.
-4. Later trauma: `Shaken Spirit` state, source/trigger/support progression, persistence, projection, and agency guardrails.
-5. Later magical restoration: anatomy/capability, persistent impairment, adaptation/prosthetics, eligibility, and explicit extraordinary restoration/regrowth.
-6. Later resurrection/death: focused Normal Stakes death/resurrection decision and future restricted-Stakes integration.
+One source transition resolves at most once. A resolved encounter cannot continue damaging the player. The same receipt cannot repeat relocation, time advancement, resource restoration, Chronicle output, or authoritative notice facts.
 
-No release number is assigned.
+Ordinary live defeat applies one in-memory result before account/history/achievement evaluation and accepted-only UI projection. Legacy repair blocks terminal history first, migrates and resolves, persists the same slot, then projects active truth and enters play. Retry, interruption, or reload cannot settle terminal rewards, deposit estate assets, delete saves, or produce a second receipt.
 
-## Exact Remaining User Decisions
+No repository-wide command bus, replay service, generic transaction framework, invulnerability effect, grace timer, or broad shell rewrite is accepted.
 
-- safe-location fallback order and behavior when none validates;
-- qualitative HP/Stamina/MP resume policy and whether default body/fatigue burden exists;
-- recovery/re-entry loop protection;
-- automatic fallback versus visible repair for active legacy HP-zero saves;
-- first context-outcome extension and adapter;
-- party/guest baseline after player defeat;
-- first naturally recoverable injury vocabulary and body-region granularity;
-- active health-container placement and injury/trauma separation;
-- multiple-injury aggregation/caps;
-- initial `Shaken Spirit` triggers, expressions, support, dormancy, and relapse;
-- anatomy/capability and prosthetic ownership;
-- which explicit magic capabilities and access owners can restore/regrow anatomy;
-- whether Normal Stakes later supports actual death/resurrection at all.
+## First Atomic Implementation Boundary
+
+The future atomic package contains campaign-rules identity/defaults/provenance/typed compatibility overrides/save migration; engine-owned defeat result/receipt; nonterminal-versus-terminal separation; destination resolution and `recovery_pending`; bounded time/resource fallback; structural idempotence; active legacy same-slot repair; ordinary save-topology preservation; account/Chronicle/notice/UI projections; and focused lifecycle, combat, save/load, migration, travel/noncombat HP-zero, account, and mirror-parity tests.
+
+It excludes injury, `Shaken Spirit`, anatomy, body regions, prosthetics, treatment, complications, regrowth, resurrection, restricted Stakes, Story/Grim availability, player custom overrides, and broad infrastructure. No primary or release version is assigned.
+
+## Validation Obligations
+
+Future tests must prove nonterminal combat and noncombat HP zero; absence of archival/deletion/payout/estate effects; unchanged explicit retirement; deterministic receipt/destination/time/resources; consequence and projection idempotence; encounter cleanup; no automatic injury/trauma/capture/loss/harm; playable HP/Stamina with unchanged MP/body state; no ordinary autosave; retained manual/quick saves and Normal Stakes rollback; one-time same-slot legacy repair; safe repair-write failure; blocked archived/deleted history; repairable `recovery_pending`; one notice and Chronicle entry per receipt; preserved party membership with cleared transient bindings; no imported restricted-Stakes behavior; synchronized TypeScript/JavaScript mirrors; and untouched held `0.6.6`.
+
+## Temporary Audit Retention
+
+Retained unchanged:
+
+`docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`
+
+Source: commit `aa4ccfeceec023c676c98c4bf5a68216b0017263`, blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`.
+
+Named remaining consumers:
+
+1. naturally recoverable injury active-state/recovery contract;
+2. `Shaken Spirit` active-state/support contract;
+3. anatomy, impairment, adaptation, and prosthetic decision;
+4. extraordinary restoration and regrowth decision;
+5. Normal Stakes actual-death/resurrection decision, if pursued.
+
+## Held Route Confirmation
+
+Held `Version 0.6.6` remains paused and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. Retained `0.6.7` artifacts remain untouched.
 
 ## Checks Run
 
-- confirmed a clean starting worktree on branch `master` at `d11c270bfeaa75a9a36ebe1302303e61b9384491`;
+- confirmed clean `master` at starting commit `3b6eece79d8b359a43c1e8e6b886f27cf16316f5`;
 - fetched/pruned and fast-forward pulled; repository was already up to date;
-- confirmed this audit was the active prompt;
-- confirmed campaign-rules decision commit `764f7ef5e4028e82fc76af6ae0381cc1eab00e20` is an ancestor of `HEAD`;
-- confirmed the injury/restoration decision exists and was unmodified;
-- confirmed held `0.6.6` blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` exists as a blob;
-- confirmed only documentation changed between the campaign-rules decision and current `HEAD`;
-- read all required authorities and coordination files and traced relevant runtime, shared types, content, schema, save, UI, generated-mirror, and focused-test surfaces;
-- counted 55 spell records and five service records; found no live player resurrection/revival/anatomical-regrowth match;
-- verified the audit contains all 16 required sections and this output contains all required handoff fields;
+- confirmed this acceptance decision was the active prompt;
+- confirmed commits `764f7ef5e4028e82fc76af6ae0381cc1eab00e20` and `aa4ccfeceec023c676c98c4bf5a68216b0017263` are ancestors of `HEAD`;
+- confirmed the temporary audit is unmodified and hashes to required blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`;
+- confirmed held `0.6.6` object `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` resolves as a blob;
+- read all required authorities, audit, output, handoff, route register, `AGENTS.md`, and `README.md`;
+- compared the completed audit commit to `HEAD` and found only the active prompt changed; live App, run-lifecycle, and combat seam blobs are identical;
+- verified all 18 required decision sections and all required output fields;
 - verified exact two-path scope, Markdown structure, and absence of conflict markers;
 - did not run builds, typechecks, generators, servers, or application tests because this run changes documentation only.
 
-## Held Route And Risks
+## Exact Remaining Implementation-Only Decisions
 
-Held `Version 0.6.6` remains paused and byte-recoverable at blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. Retained `0.6.7` artifacts are untouched.
+- exact receipt field names and serialization nesting;
+- exact deterministic id derivation;
+- exact recovery time constant;
+- exact HP and Stamina resume constants;
+- exact safe-settlement predicate implementation;
+- exact campaign-start settlement source when historical fields differ;
+- exact `recovery_pending` UI and repair surface;
+- exact save-format/schema version and migration function names;
+- exact test file paths and TypeScript/JavaScript mirror paths;
+- exact first primary `0.6.x` implementation version after the static-content sequence and post-`0.6.7` route decisions.
 
-The current runtime still archives ordinary HP-zero runs, settles terminal account effects, and deletes their saves. This audit does not change that behavior. `normal_stakes` must not become live until the nonterminal defeat boundary lands before or atomically with campaign migration.
+## Risks / Follow-Up Notes
+
+The live runtime still archives ordinary HP-zero runs and deletes saves. This decision changes documentation only. Runtime campaign-rules migration remains prohibited until the accepted nonterminal defeat boundary lands before or atomically with migration.
+
+Do not implement from this run, modify save topology, repair an actual save, consume the retained audit prematurely, restore held `0.6.6`, or alter retained `0.6.7` artifacts.
 
 ## Suggested Commit Message
 
-`docs(health): audit defeat injury trauma and restoration contracts`
+`docs(health): accept normal defeat fallback and recovery receipt`
 
-## Next Recommended Decision Run
+## Next Recommended Route
 
-An unversioned `Normal Stakes Defeat Fallback And Recovery Receipt Acceptance Decision` should resolve the safe-location chain, resume-resource posture, loop protection, legacy HP-zero handling, party baseline, context adapter, persistence receipt, and atomic first-package boundary. Do not implement from this audit alone.
+Run a separate unversioned `0.6.6 Restoration And Baseline Confirmation` coordination gate. It must not be treated as a runtime implementation prompt, assigned a primary version, or installed by this run.
