@@ -1,173 +1,120 @@
 # Current Codex Output
 
-Source version/run: Campaign Rules Identity, Legacy Migration, Story Abstraction, And Normal Stakes Acceptance Decision
+Source version/run: Normal Stakes Defeat, Injury, Trauma, And Magical Restoration Repository Audit And Contract Planning
 
 Date: 2026-07-22
 
-Branch/status assumption: `master`; starting commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694` before the required fetch and fast-forward pull; clean starting worktree; pulled to ending commit `c53b000077c90bfa821125adf11fe9d7e2b0c58f`; successful run ends with exactly the three authorized documentation-path changes listed below
+Branch/status assumption: `master`; starting and ending commit before documentation edits `d11c270bfeaa75a9a36ebe1302303e61b9384491`; clean starting worktree; fetch/prune and fast-forward pull reported already up to date; successful run ends with exactly the two authorized documentation changes below
 
-Label class and parent: unversioned documentation-only acceptance and contract decision; no parent version
+Label class and parent: unversioned documentation-only repository audit and implementation-contract planning; no parent version
 
 Milestone impact: `supports_current_band`
 
-Status: contract accepted; implementation unauthorized
-
-## Result
-
-Created the durable campaign-rules acceptance authority:
-
-`docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`
-
-It is more specific than the general difficulty/world/stakes decision for canonical ids, state shape, locks, availability, Normal Stakes defeat, legacy migration, Story abstraction, overrides, campaign-history identity, and package-order gates. It preserves the separate focused restricted-Stakes authority for future continuity saving, irreversible actual death, terminal closure, and nonzero circumstance-sensitive Prestige.
-
-No live fact materially contradicted the accepted audit. Runtime and shared-contract sources were unchanged between audit commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694` and `HEAD`; only coordination documentation and the focused restricted-Stakes decision changed.
+Status: audit complete; findings are decision-ready, but implementation and contract acceptance remain unauthorized
 
 ## Files Changed
 
-- created `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
-- updated `docs/dev/current-codex-output.md`;
-- deleted `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md` after transferring its durable findings.
+- created `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
+- updated `docs/dev/current-codex-output.md`.
 
-## Accepted Campaign Identity
+## Principal Repository Findings
 
-```ts
-type DifficultyPresetId = "story" | "favored" | "mortal" | "forsaken";
-type WorldRulesId = "heroic_world" | "grim_world";
-type StakesRulesId = "normal_stakes";
-```
+- Combat already owns damage, HP clamping, `incapacitated`/`defeated` flags, encounter outcome, history/event emission, and encounter cleanup. It does not itself archive the run.
+- `apps/rpg-ui/src/App.tsx` interprets every HP-zero snapshot as terminal during both snapshot change and run entry.
+- `resolveTerminalArchiveReason` returns `dead` or `hardcore_dead`; `archiveActiveRun` then evaluates history/achievements, settles Legacy/Prestige, records archival, deposits estate assets, persists the account, and deletes all character saves.
+- Noncombat resource and travel paths can also produce HP zero, so a replacement needs a typed source receipt plus a safe unknown/legacy fallback.
+- The smallest replacement seam is the current snapshot-admission terminal check. One engine-owned Stakes/defeat resolver should consume HP zero there; only an explicit terminal result may reach `archiveActiveRun`.
+- A descriptive combat-health schema/content/lint/test foundation already exists, but it contains only two planned status rows and owns no active health state.
+- The repository has no active injury, `Shaken Spirit`, anatomy, treatment, complication, prosthetic, corpse, regrowth, or resurrection owner.
+- Combat `heal.hp` restores the HP resource only. The 55-record spell catalog includes healing/regeneration descriptions, but no live player capability was found for resurrection, revival, limb/organ restoration, or anatomical regrowth.
+- The five-record service catalog contains no healer/treatment/restoration service.
+- No live fact materially contradicts an accepted authority. The current HP-zero behavior is the already-recognized implementation gap and atomic migration gate.
 
-The authoritative campaign/save state is versioned and may contain typed compatibility overrides plus migration provenance. Save metadata, Chronicle, account history, and UI are projections. Physical item truth, manifests, world facts, immutable base attributes, and authored-content difficulty remain outside the campaign-setting taxonomy.
+## Recommended Default Defeat Fallback
 
-No restricted-Stakes id is accepted. `Ironbound` remains a working title.
+Create one stable, idempotent defeat receipt; finish/clear the encounter; choose an explicit context recovery destination or deterministic safe fallback; advance bounded time once; restore HP to a playable floor and Stamina enough to act; preserve inventory, equipment, currency, quests, party membership, injury state, trauma state, and immutable truth; persist before play resumes; and project Chronicle/notice output from the same receipt.
 
-## Lock And Availability Policy
+Default destination order should be decided as: explicit context destination, current valid recovery settlement, persisted last-safe location, then campaign-start settlement. If none validates, retain a nonterminal recovery-pending repair state and surface a diagnostic. Never archive, delete saves, choose randomly, or silently teleport.
 
-- Difficulty, World Rules, Stakes, and mechanical overrides are creation-locked initially.
-- Accessibility, presentation, input, localization, and nonmechanical information formatting remain changeable.
-- No initial mid-campaign axis transition is supported.
-- A later focused contract may allow difficulty-only changes with append-only provenance and eligibility effects.
-- World Rules and Stakes remain locked unless a dedicated migration proves persistent-state closure.
-- Production creation exposes only combinations whose required owner policies, persistence, migrations, and tests exist.
-- No option is player-selectable merely because its canonical id exists.
+Injury, `Shaken Spirit`, capture, item/currency loss, and permanent harm are optional causal context extensions, not generic defeat taxes. Exact time/resource values remain deferred.
 
-## Normal Stakes Defeat Boundary
+## Contract Summary
 
-`normal_stakes` preserves ordinary manual and quick-save topology but rejects the current implicit terminal HP-zero behavior.
+### Naturally recoverable injury
 
-```text
-HP reaches zero
-  -> defeated or incapacitated
-  -> context-owned nonterminal defeat resolution
-  -> campaign identity and saves remain intact
-```
+Use a typed player-health instance with stable identity, `Minor | Moderate | Major` severity, separate recovery class, progress, injury-specific ordinary/reduced/protected-use posture, treatment inputs, complication references, causal source receipt, optional body region, current-effect contributions, and resolved presentation. One health resolver advances recovery. Rest, activity, nutrition/body state, treatment, and magic provide typed inputs rather than editing progress independently. Major naturally recoverable injury can fully recover.
 
-Ordinary HP zero does not archive the run, delete saves, settle Legacy/Prestige, prove actual death, or imply retirement. `resolveTerminalArchiveReason` cannot remain the authority for ordinary HP-zero resolution, and `archiveActiveRun` requires a separately accepted explicit terminal outcome.
+### `Shaken Spirit`
 
-Runtime migration to `normal_stakes` is prohibited while HP zero still automatically archives the run and deletes saves. The defeat boundary must land before or atomically with campaign-rules migration.
+Use a separate lore-facing trauma-condition instance with source event, trigger identities/categories, expression tags, burden/course, safety/support/treatment inputs, contextual contributions, active/dormant/resolved/persistent state, causal relapse, and Chronicle explanation. It may self-resolve, respond to setting-appropriate support, or persist. It cannot become soul damage, a diagnosis catalog, personality mutation, or arbitrary forced behavior.
 
-## Exact Migration Map
+### Irreversible harm and restoration
 
-| Legacy state | Difficulty | World Rules | Stakes |
-| --- | --- | --- | --- |
-| missing or invalid | Mortal | Heroic World | Normal Stakes |
-| `easy` | Favored | Heroic World | Normal Stakes |
-| `normal` | Mortal | Heroic World | Normal Stakes |
-| `hard` | Forsaken | Heroic World | Normal Stakes |
-| `brutal` | Forsaken | Heroic World | Normal Stakes |
+A later anatomy/capability owner must distinguish absent/destroyed anatomy, wound closure, persistent impairment, rehabilitation, prosthetic compensation, current capability, restoration eligibility, and restoration completion. Ordinary healing may restore HP or aid recovery but cannot recreate anatomy. Exceptional restoration, regrowth, and resurrection require separate explicit capabilities and authority. Resurrection must obey death and Stakes ownership and cannot reopen restricted-Stakes terminal closure.
 
-Brutal retains materially distinct owner-approved tuning through typed compatibility overrides and provenance; it is not a fifth public preset.
+## Owner Conflicts
 
-Legacy `hardcore: true` maps its ordinary tier normally, always receives Heroic World and Normal Stakes, records `legacy_hardcore` provenance, and may retain only owner-approved non-Stakes tuning. It does not preserve implicit terminal HP-zero archival, save deletion, `deathZeroesPrestige`, or the Hardcore-specific Prestige multiplier automatically. Historical `dead` and `hardcore_dead` records remain unchanged history.
+- `PlayerState.activeEffects: string[]` is a label projection, not an injury/trauma owner.
+- `PlayerState.attributes` is a migration input, not accepted immutable base state.
+- `bodyState` and `resourceRuntime` may inform recovery but cannot own injury progression.
+- Combat statuses are transient combat instances and must not silently become persistent conditions.
+- Static health vocabulary describes identities but cannot execute recovery or consequences.
+- Settlement rest cannot be reused wholesale for defeat because it charges currency, fully restores resources, and could duplicate time/recovery.
+- Equipment can host a future prosthetic item but cannot claim anatomical restoration.
+- UI and Chronicle explain accepted results; they do not author them.
 
-## Story Abstraction
+## Package Sequence
 
-Story uses the shared owner architecture through a Story policy adapter. Authored item identity, manifests, quantities, nutrients, consumption, time, deterministic save/load, and ordinary RPG state remain true.
+1. Required atomic package: campaign-rules identity/save migration plus the engine-owned nonterminal defeat resolver, explicit terminal separation, deterministic recovery location/receipt, time/resource fallback, immediate persistence, loop protection, legacy HP-zero handling, focused tests, and synchronized mirrors.
+2. Safe immediate follow-up: read-only projection and typed rescue/capture/surrender/law/quest context adapters.
+3. Later health/injury: immutable-base/current resolver, health instances, vocabulary extension, recovery/use/treatment/complication contracts, and natural-recovery implementation.
+4. Later trauma: `Shaken Spirit` state, source/trigger/support progression, persistence, projection, and agency guardrails.
+5. Later magical restoration: anatomy/capability, persistent impairment, adaptation/prosthetics, eligibility, and explicit extraordinary restoration/regrowth.
+6. Later resurrection/death: focused Normal Stakes death/resurrection decision and future restricted-Stakes integration.
 
-Detailed metabolism, digestion, Protein Support, fat, detailed recovery, and body-composition ledgers may be absent, inert, or internal compatibility caches. Broad RPG conditions replace required technical management; recovery is generous; persistent structural atrophy and structural-loss accumulation are disabled.
+No release number is assigned.
 
-Story is unavailable in production until every active core owner has a tested adapter. Story plus Grim requires a coarse adapter for every selected Grim module; a module without one is unavailable rather than silently running full detail.
+## Exact Remaining User Decisions
 
-## Overrides, Chronicle, Achievements, And Legacy
-
-The first package reserves a typed owner-approved override registry but provides no player-facing custom mechanical overrides. Initial sources are limited to legacy migration and developer/test fixtures. Owner, key, typed value, source, base preset, and rules version must survive roundtrip.
-
-New and active campaign records preserve all ids, rules version, migration provenance, compatibility overrides, and any future append-only change history.
-
-Achievements remain rules-agnostic unless an individual achievement later declares predicates. No new difficulty, world, migration, override, achievement, Prestige, or Legacy multiplier or exclusion is accepted.
-
-The combat-profile `preferredMode: normal | hardcore` is quarantined from campaign migration. Its overloaded `hardcore` label is deprecated in direction only; a later combat-owned contract must choose any replacement.
-
-## Restricted-Stakes Authority Preserved
-
-`docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md` remains controlling for the future mode's one authoritative continuity stream, no chosen rollback, technical recovery separation, irreversible actual death, atomic terminal closure, retained read-only character history, and exactly one nonzero Prestige/Legacy settlement informed by completed life, public and legal perception, publicity, disgrace, sacrifice, and martyrdom.
-
-The initial contract contains only `normal_stakes` and does not implement that future direction.
-
-## Accepted Implementation Dependency Order
-
-1. Campaign-rules types/owner, save and Chronicle identity, provenance, and internal typed override registry with Mortal/Heroic/Normal defaults and no broad selection.
-2. Nonterminal Normal Stakes defeat boundary.
-3. Atomic legacy `runDifficulty` migration.
-4. Read-only identity and migration projection.
-5. Favored/Mortal/Forsaken owner adapters, then bounded production selection under Heroic/Normal.
-6. Immutable-base/current-attribute and physical-nutrition prerequisites.
-7. Story adapters across active core owners.
-8. Story production availability after adapter tests.
-9. Focused Grim health/sanitation decision and vertical slice.
-10. Grim production availability after a real persisted module, tests, and Story adapter.
-11. Later owner-specific Grim modules.
-12. Separate restricted-Stakes save, death/succession, Prestige/Legacy, name/id, runtime, and opt-in UI sequence.
-
-Steps 1-3 may be one atomic versioned package to prevent `normal_stakes` from coexisting with automatic save deletion. No release number is assigned.
-
-## Temporary Artifact Disposition
-
-Deleted `docs/dev/tmp-difficulty-grim-world-and-stakes-audit-2026-07-21.md` after consuming exact blob `b08c5b2ba418e8a3a4effea80984888c2b4fc10e` from source commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694`.
-
-Its live inventory, contradiction, migration, owner, Story, Grim, Stakes, and test findings are transferred into the durable decision. Exact evidence remains available in git history and live source paths.
-
-## Exact Deferred Decisions
-
-- exact Favored/Mortal/Forsaken numeric values and domain tunables;
-- exact contextual Normal Stakes defeat outcomes and frequencies;
-- final restricted-Stakes name and machine id;
-- restricted-Stakes autosave cadence, storage mechanism, and recovery depth;
-- actual-death contexts, lethality, party/NPC permanence, succession, same-world continuation, estate, and inheritance;
-- restricted-Stakes Prestige base, floor, caps, curves, publicity, disgrace, and martyrdom rules;
-- player-facing custom difficulty;
-- Story adapters for owners not yet implemented;
-- replacement combat-profile identifier;
-- exact Grim disease/content catalog and later core-versus-optional module classification;
-- release version and milestone assignment.
+- safe-location fallback order and behavior when none validates;
+- qualitative HP/Stamina/MP resume policy and whether default body/fatigue burden exists;
+- recovery/re-entry loop protection;
+- automatic fallback versus visible repair for active legacy HP-zero saves;
+- first context-outcome extension and adapter;
+- party/guest baseline after player defeat;
+- first naturally recoverable injury vocabulary and body-region granularity;
+- active health-container placement and injury/trauma separation;
+- multiple-injury aggregation/caps;
+- initial `Shaken Spirit` triggers, expressions, support, dormancy, and relapse;
+- anatomy/capability and prosthetic ownership;
+- which explicit magic capabilities and access owners can restore/regrow anatomy;
+- whether Normal Stakes later supports actual death/resurrection at all.
 
 ## Checks Run
 
-- ran `git status` before work and confirmed a clean worktree;
-- recorded branch `master` and pre-pull commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694`;
-- fetched and fast-forward pulled to `c53b000077c90bfa821125adf11fe9d7e2b0c58f`;
-- re-read the active prompt after the pull replaced it;
-- confirmed audit commit `e60c6e6b6df6b418d2a1497a7725b4ad8d30a694` is an ancestor of `HEAD`;
-- confirmed the temporary audit hash exactly matched `b08c5b2ba418e8a3a4effea80984888c2b4fc10e` before deletion;
-- confirmed the restricted-Stakes decision existed and was unmodified in the worktree;
-- confirmed held `0.6.6` prompt blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` exists and resolves to `docs/dev/current-codex-prompt.md` in history;
-- read the required audit, output, general difficulty/world/stakes authority, focused restricted-Stakes authority, nutrition/attribute authorities, handoff, route register, live lifecycle/difficulty/shared-contract/tactics sources, `AGENTS.md`, and `README.md`;
-- compared audit commit to `HEAD` and confirmed no audited runtime/type file changed;
-- verified required decision sections, accepted ids, migration table, package order, validation obligations, deferred decisions, and non-decisions;
-- verified exact three-path scope, Markdown diff checks, absence of conflict markers, and temporary-artifact deletion;
-- did not run builds, typechecks, application tests, generators, or servers because this run changes documentation only.
+- confirmed a clean starting worktree on branch `master` at `d11c270bfeaa75a9a36ebe1302303e61b9384491`;
+- fetched/pruned and fast-forward pulled; repository was already up to date;
+- confirmed this audit was the active prompt;
+- confirmed campaign-rules decision commit `764f7ef5e4028e82fc76af6ae0381cc1eab00e20` is an ancestor of `HEAD`;
+- confirmed the injury/restoration decision exists and was unmodified;
+- confirmed held `0.6.6` blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` exists as a blob;
+- confirmed only documentation changed between the campaign-rules decision and current `HEAD`;
+- read all required authorities and coordination files and traced relevant runtime, shared types, content, schema, save, UI, generated-mirror, and focused-test surfaces;
+- counted 55 spell records and five service records; found no live player resurrection/revival/anatomical-regrowth match;
+- verified the audit contains all 16 required sections and this output contains all required handoff fields;
+- verified exact two-path scope, Markdown structure, and absence of conflict markers;
+- did not run builds, typechecks, generators, servers, or application tests because this run changes documentation only.
 
-## Risks / Follow-Up Notes
+## Held Route And Risks
 
-The current runtime still archives ordinary HP-zero runs, settles payout/estate effects, and deletes character saves. This run does not change that behavior. Any later implementation must respect the atomicity gate and cannot claim live Normal Stakes until the nonterminal defeat boundary is present.
+Held `Version 0.6.6` remains paused and byte-recoverable at blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. Retained `0.6.7` artifacts are untouched.
 
-Story remains unavailable until owner adapters exist. Grim World remains unavailable until a real typed persisted module and required Story adapter exist. Restricted Stakes remains future authority without an accepted live id.
-
-Held `Version 0.6.6` remains paused and byte-recoverable. Retained `0.6.7` artifacts remain untouched.
+The current runtime still archives ordinary HP-zero runs, settles terminal account effects, and deletes their saves. This audit does not change that behavior. `normal_stakes` must not become live until the nonterminal defeat boundary lands before or atomically with campaign migration.
 
 ## Suggested Commit Message
 
-`docs(difficulty): accept campaign rules identity and migration`
+`docs(health): audit defeat injury trauma and restoration contracts`
 
-## Next Recommended Version / Run
+## Next Recommended Decision Run
 
-Stop for GPT/human inspection. The contract is accepted, but implementation remains unauthorized. Do not create a follow-on implementation prompt, assign a version, restore held `0.6.6`, or alter retained `0.6.7` artifacts from this run.
+An unversioned `Normal Stakes Defeat Fallback And Recovery Receipt Acceptance Decision` should resolve the safe-location chain, resume-resource posture, loop protection, legacy HP-zero handling, party baseline, context adapter, persistence receipt, and atomic first-package boundary. Do not implement from this audit alone.
