@@ -1,190 +1,191 @@
 # Current Codex Output
 
-Source version/run: Narrative Realization, Mortal Crisis Presentation, And Elemental Ecology Repository Audit And Contract Planning
+Source version/run: `Grounded Narrative Realization, Referential Grammar, And Validation Research`
 
-Date: 2026-07-23
+Date: 2026-07-24
 
-Branch/status assumption: `master`; clean first observation at `d2dff9fdf2b35206b5d7be91716aa614640f1ff3`; required fetch/prune and fast-forward pull advanced to ending pre-edit commit `8bd6ddecf3714da9c222d71b61f9af06953a6395`
+Branch/status assumption: `master`; clean starting state and ending pre-edit commit `a021457a210f35d94089006e48bd71beb5f7d0bc`
 
-Label class and parent: unversioned large documentation-only repository audit and contract planning; no parent version
+Label class and parent: unversioned substantial external research and repository-integration planning; no parent version
 
 Milestone impact: `supports_current_band`
 
-Status: both inventories and contract-planning audits complete; no design authority accepted and no implementation authorized
+Status: research complete; evidence is sufficient for the named durable narrative decision; no design authority, dependency, model, schema, or implementation accepted
 
 ## Files Changed
 
-- created `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`;
-- created `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md`;
+- created `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md`;
 - updated `docs/dev/current-codex-output.md`.
 
 No other path was intentionally modified.
 
 ## Source-Identity Verification
 
-- Comparative research commit `d2dff9fdf2b35206b5d7be91716aa614640f1ff3` is an ancestor of `HEAD`.
-- Comparative research artifact is unmodified and resolves to required blob `26ce50958f348f316ab98bcafe31282393709fd6`.
-- Comparative research `current-codex-output.md` at its source commit resolves to `e996fd61903431b4fd364b82ed2490e6dae6270a`.
-- Accepted defeat-fallback decision is unmodified and resolves to required blob `e32ee0eb7a64777e2ca1134600b189d80fd0eafe`.
-- Held `Version 0.6.6` remains paused and recoverable as blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-- The post-pull active prompt is this run.
-- No source mismatch required a blocked result.
+- Completed audit commit `5288c2c5bd5f53d09d2889c42efbe7f8c53811c1` is an ancestor of `HEAD`.
+- Narrative audit resolves in the source commit, `HEAD`, and worktree to required blob `6cb28305a3b2c67601568103c6309f33956ecd31`.
+- Elemental audit resolves in the source commit, `HEAD`, and worktree to required blob `974e84f89805ba3e6789331183b474fce7f30d36`.
+- Completed audit output at its source resolves to required blob `c0301ba587a60916cdb002a9774bd2b018e746ae`.
+- Comparative mortality research remains available as required blob `26ce50958f348f316ab98bcafe31282393709fd6`.
+- Accepted defeat-fallback decision remains unmodified as required blob `e32ee0eb7a64777e2ca1134600b189d80fd0eafe`.
+- Held `Version 0.6.6` remains recoverable as blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- The post-pull active prompt is this research run.
 
-## Strongest Narrative-Engine Findings
+## External Access And Source Quality
 
-- No reusable narrative-realization engine exists. Current prose is scattered deterministic interpolation in engine, game-shell and presentation modules.
-- The repository has no grammatical profile, referent/discourse resolver, tense/inflection layer, fact-envelope validator or deterministic general prose fallback.
-- `PlayerSexId` is mechanical identity and includes an undefined `neutral` posture; it cannot safely drive pronouns. People/NPC schemas deliberately omit pronouns, combatants/party retain only display names, and deity `presentationGender` is descriptive content.
-- Session Chronicle and quest journal entries are UI-ready mutable strings, not provenance. Shared events have promising envelopes but no general retention and ids based only on type/domain/tick can collide for repeated same-tick event families.
-- A hybrid of deterministic beat planning, small morphology, authored fallback templates, optional separately authorized bounded generation, and deterministic validation is the safest future posture.
+Reliable access was confirmed to publisher, ACL Anthology, standards-body, official documentation, and official repository pages. No repository data was sent to an external model or generation service.
 
-## Strongest Mortal Crisis Presentation Findings
+The bounded ledger contains 18 principal sources and 6 supplementary implementation sources:
 
-- Current active combat state can support a restrained immediate scene, but later regeneration cannot prove event-time appearance, held/equipped objects, drops, transfers, removal, breakage, visibility or position.
-- Knowledge domains and skills provide identification inputs, but no observer-specific visibility/diagnosis boundary separates hidden health truth from perceptible evidence.
-- Mortal Crisis resolution must remain upstream of prose through explicit phases: threat, access, assessment, process-specific stabilization, extraction, route/intermediate care, transit/reassessment, definitive care/resurrection, and recovery/final closure.
-- Static routes, modes, terrain, hazards, settlements and institutions are substantial inputs. Patient transport tolerance, provider competence/access, live availability and process-specific care remain absent.
-- Default presentation should be connected factual narrative with qualitative urgency. Raw state ids, hidden clocks, percentages, seeds and dice remain excluded.
+- 10 peer-reviewed foundational, realization, data-to-text, factuality, constrained-generation, or controlled-generation papers;
+- 4 current official grammar, localization, or interactive-narrative technical sources;
+- 3 normative standards sources;
+- 1 official informational standards-body specification;
+- 6 official implementation repositories used only for runtime, maintenance, release, license, and integration posture.
 
-## Strongest Elemental Findings
+All material claims preserve direct URLs, access date, source class, supported question, and applicability caveat.
 
-- Eight canonical elements are documented, but live vocabularies fragment them across `wind/air`, `thunder/lightning`, `darkness/shadow` and `earth/stone`.
-- Religion, spells, crystals, infrastructure, monster records and TypeScript/schema unions do not share one canonical alias authority.
-- Only River and Storm elementals are currently authored as monsters; both are combat-oriented and current records lack explicit element, manifestation, temperament, capability and stimulus-response contracts.
-- The repository has many affinity-pressure inputs—terrain, habitat, climate, water, hazards, sacred/convergence sites and active magic—but no time-aware pressure or manifestation resolver.
-- Combat actions retain useful spell source/element identity, but no accepted cast-result envelope provides canonical element, space/area, committed intensity, residue, environment amplification, conduit/catalyst use or passive-enchantment state.
-- No typed fae/nature-spirit/guardian taxonomy exists.
+## Strongest Architecture Findings
 
-## Repository Contradictions And Stale Authorities
+- Preserve separate authoritative resolution, event-time retention, observer projection, scene planning, aggregation, reference selection, morphology, deterministic rendering, optional request construction, candidate generation, validation, fallback, and downstream projection stages.
+- Prompt/request construction and prose realization must be separate. The former is optional and security-sensitive; the latter is mandatory, local, deterministic, and model-independent.
+- Chronicle, Manuscript, quest strings, and generated prose remain presentation. They cannot become provenance or gameplay input.
+- A mixed retention posture is strongest: authoritative durable domain events where available, compact owner-approved event-time narrative views, exact provenance/revision links, and current snapshots only as immediate aids.
 
-- Coordination documents still name prior active runs; the active prompt explicitly marks only those route lines stale.
-- Normal Stakes accepted authorities preserve ordinary manual/quick saves and a deterministic generic defeat fallback. Comparative research proposes later revision but does not supersede them.
-- Restricted Stakes still makes committed actual death terminal; resurrection before final closure would require explicit supersession.
-- Religion uses `stone`, spells use `air`, `lightning` and `shadow`, while the canonical combat vocabulary uses Earth, Wind, Thunder and Darkness.
-- Some schemas admit both `stone` and `earth`, while settlement-institution TypeScript unions retain `stone` but omit `earth`.
-- Existing hostile elemental content is valid context but cannot establish universal elemental hostility.
-- Current session Chronicle and account presentation are descriptive projections and cannot serve as historical fact authorities.
+## Strongest Grammar And Referent Findings
 
-## Alignment Analysis
+- A language-independent profile must keep semantic cardinality, grammatical person, reference permissions, entity kind, and profile provenance separate from English surface forms.
+- Personal pronouns must be explicit; they must not be inferred from `PlayerSexId`, `neutral`, name, title, lineage, appearance, or deity presentation.
+- Singular `they` and plural `they` share surface agreement but remain different semantic cardinalities and group identities.
+- Missing profiles degrade to a recognized canonical name or observer-safe description. Pronouns are omitted when clarity cannot be proved.
+- The first referent resolver can be a deterministic salience/role state machine. After subject changes or with competing same-paradigm actors, repeat the shortest safe name or description.
 
-The prompt's working hypothesis—Light: Fire/Water/Wind; Darkness: Earth/Ice/Thunder—has intuitive physical support but splits current religious-order groupings.
+## Strongest Fact-Retention And Knowledge-Boundary Findings
 
-The audit recommends, for later explicit acceptance only:
+- Later accurate regeneration requires event-time role identities, accepted actions/results, order/simultaneity, location/route, visible appearance, worn/held/object transitions, visible condition evidence, observer knowledge/confidence, and exact source revisions.
+- Observer projection must occur before planning and realization. Visibility, recognition, diagnosis, and urgency are upstream facts, not renderer inferences.
+- Exact hidden timers/percentages, seeds, debug ids, inaccessible diagnoses, private motives/identities, future outcomes, and viewpoint-barred facts stay out of the renderer envelope.
+- Reassessment creates a new accepted beat; it does not retroactively rewrite earlier uncertainty.
 
-```text
-Light: Water, Wind, Ice
-Darkness: Fire, Earth, Thunder
-```
+## Strongest Deterministic-Template Findings
 
-This retains current order pairs Light+Water, Wind+Ice, Fire+Stone and Thunder+Darkness and matches the Unbound's Darkness+Fire+Thunder grouping. It is not accepted canon and must be assessed for player legibility without equating higher alignment with morality or deity presentation gender.
+- A first Mortal Crisis slice can be trustworthy without a model through typed beat- and scene-level sentence families, controlled morphology, deterministic alternatives, static linting, and golden tests.
+- Sufficient quality is connected multi-sentence prose with accurate chronology, clear references, visible state, qualitative urgency, and a separate decision. Limited, clear repetition is acceptable.
+- Fully inflected locked templates minimize first-slice risk; a narrow project-owned morphology layer covers controlled composition. A later corpus-based spike can evaluate whether production morphology remains owned or uses jsRealB.
 
-## Recommended Narrative Decision Scope
+## Strongest Bounded-Generation And Validation Findings
 
-`Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision` should decide:
+- An optional later adapter may improve transitions, compression, equivalent lexical variety, and rhythm. It cannot own facts, order, identity, pronouns, knowledge, diagnosis, causality, outcomes, or canonical history.
+- Grammar/schema-constrained output guarantees structure only. Learned entailment/consistency checks are fallible risk signals, not factuality proof.
+- Mandatory validation layers cover source/schema identity, required facts, entities/relations, referents/agreement/order, event-time consistency, observer/spoiler policy, forbidden claims, mechanical-language suppression, and style budgets.
+- Any material failure triggers deterministic simplification or fallback. No studied method guarantees unrestricted generated prose factuality.
 
-- grammatical-profile and entity fallback boundary;
-- discourse/referent ownership;
-- first deterministic grammar/inflection scope;
-- event-time narrative fact envelope and provenance;
-- knowledge/visibility/diagnosis filtering;
-- scene/beat planning, validation, deterministic fallback and regeneration identity;
-- strict separation between prompt requests, prose realization and gameplay authority.
+## Strongest Localization And Dependency Findings
 
-It should not yet decide Mortal Crisis outcomes, add an external model, or implement runtime.
+- Locale-neutral semantics should retain roles, person, semantic cardinality, reference permissions, chronology, knowledge, intent, and provenance. English modules own pronoun surfaces, agreement, articles, inflection, word order, and punctuation.
+- CLDR plural categories are not entity number. MF2 and Fluent are message/localization systems, not scene planners or grammatical-profile authorities.
+- SimpleNLG is mature but Java/MPL-2.0 and not a strong direct runtime fit. GF is maintained and multilingual but disproportionate for the first English slice.
+- jsRealB is current, JavaScript/Node, and the strongest later surface-realizer evaluation candidate; its bundle, API, lexicon/data licenses, deterministic behavior, and corpus accuracy require a bounded spike.
+- MF2 or Fluent.js may later support localization resources. Ink, Yarn Spinner, and Tracery contribute patterns but should not become the fact-to-prose owner.
+- No dependency is selected or added.
 
-## Recommended Elemental Decision Scope
+## Hybrid Recommendation Assessment
 
-`Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision` should decide:
+The research supports the audit's hybrid recommendation with a narrower first step:
 
-- canonical aliases and the three-and-three mapping;
-- magical-entity taxonomy versus combat `monster` adaptation;
-- affinity-pressure and manifestation/reinforcement boundaries;
-- baseline temperament/current-disposition separation;
-- accepted cast/enchantment stimulus envelope;
-- directional per-element relationship structure;
-- beneficial capability authorization;
-- fae/spirit/guardian separation and narrative-fact projection.
+- project-owned authoritative fact, observer, planning, referent, validation, and identity boundaries;
+- locked deterministic sentence families plus a small English morphology layer;
+- deterministic fallback as the acceptance baseline;
+- optional bounded generation only after separate authorization and only as a rejectable presentation adapter;
+- later offline evaluation of jsRealB and one localization-message system before any dependency decision.
 
-It should retain current hostile encounters as authored contexts and avoid exact spawn probabilities or balance.
+It rejects an external-model minimum path, prose-as-provenance, raw current-snapshot regeneration, universal pronoun inference, grammar-constrained output as truth proof, and adoption of a full interactive-narrative runtime as the realizer.
 
-## Recommended Later Stakes/Mortal Crisis Authority-Revision Scope
+## Questions Resolved Sufficiently For A Durable Decision
 
-After the narrative decision, revise checkpoint commitment, Mortal Crisis phase ownership, process-specific stabilization, route/intermediate care, body recovery, resurrection eligibility/aftereffects, actual-to-final-death closure, rollback provenance, Prestige/estate/Chronicle settlement, succession and public Stakes distinctions.
+1. Minimum deterministic architecture and stage ordering.
+2. Mandatory separation of prompt construction and prose realization.
+3. Which grammatical facts must be explicit and which inference sources are forbidden.
+4. Conservative missing-profile fallback.
+5. Hybrid first English morphology posture and later library-evaluation gate.
+6. Separation of singular and plural `they`.
+7. Conservative ambiguous-referent resolution.
+8. Event-time information and provenance required for later regeneration.
+9. Facts barred from the renderer-facing envelope.
+10. Observer knowledge and diagnosis-confidence boundary.
+11. Minimum deterministic-template quality for the first slice.
+12. Safe value and strict non-authority of optional generation.
+13. Mandatory validation layers and their inability to guarantee unrestricted prose.
+14. Deterministic regeneration and explicitly versioned presentation improvement.
+15. Locale-neutral abstractions needed now.
+16. No further broad narrative research required before the durable decision.
 
-That decision must explicitly retain or supersede:
+## Questions Still Unresolved
 
-- Normal Stakes manual/quick-save and unsaved-defeat rollback;
-- the accepted generic fallback;
-- restricted-Stakes immediate terminal closure;
-- current resurrection separation;
-- idempotent terminal reward and heir ordering.
+- exact grammatical-profile fields and ownership by entity category;
+- exact English template corpus, irregular lexicon, reflexive/contraction/style policies;
+- exact narrative-view retention owner, lifetime, compaction, migration, privacy, and save/account boundary;
+- exact semantic normalization and identity composition, including repeated same-tick events;
+- exact owners and inputs for visibility, recognition, and diagnosis projection;
+- exact supported causality relations and length/repetition budgets;
+- later morphology choice after a jsRealB spike;
+- later localization system choice;
+- whether optional learned validation or bounded generation is ever authorized.
 
-## Ownership And Implementation-Package Order
+These are appropriate for the durable decision or later bounded implementation spikes. They do not require another broad research pass.
 
-Recommended later package order, without version assignment:
+## Recommended Durable Narrative-Decision Scope
 
-1. grammatical profile and deterministic inflection foundation;
-2. referent/discourse resolver;
-3. retained event-time narrative fact envelope and validation;
-4. deterministic factual template fallback;
-5. appearance/equipment/object transition retention;
-6. knowledge/visibility projection;
-7. Mortal Crisis narrative adapter;
-8. optional bounded generative adapter only after separate authorization;
-9. canonical element/alias and static alignment authority;
-10. affinity-pressure candidate generation;
-11. accepted cast/enchantment stimulus envelope and response resolver;
-12. temperament/disposition and encounter/AI integration;
-13. beneficial capability adapters;
-14. narrative/UI projection;
-15. save/migration, TypeScript/JavaScript parity and focused tests.
+Run `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision` as documentation-only. It should consume:
 
-Packages 1-7 are dependencies of a rich revised Mortal Crisis presentation. Packages 9-13 can remain deferred unless elementals participate in the first crisis slice.
+- `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`;
+- `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md`.
+
+It should decide the owner graph; grammatical-profile and fallback boundary; deterministic reference rules; first English morphology/template scope; event-time narrative information, provenance, retention classes, and regeneration identity; observer projection; scene/decision-pause planning; validation/fallback; optional adapter non-authority; and localization seams.
+
+It should not accept final runtime schemas/packages, add a dependency, select a model/vendor, or decide Mortal Crisis outcomes.
+
+## Separate Elemental Lane
+
+Elemental research remains separate. Its later targeted external research should precede `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`. It does not displace the narrative decision, and no elemental claim or system was researched here beyond preserving that separation and consumer order.
 
 ## Temporary-Artifact Retention And Consumers
 
-Retain `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md` until consumed by:
+Retain `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md` until consumed by:
 
-1. the named narrative-realization decision;
+1. `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision`;
 2. the later Mortal Crisis/Stakes authority revision;
 3. a later narrative-engine implementation prompt.
 
-Retain `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md` until consumed by:
-
-1. the named elemental decision;
-2. a later elemental ecology/spawn implementation prompt;
-3. a later magic-stimulus/AI implementation prompt;
-4. the held static monster/ecology route only if a later explicit integration decision requires it.
-
-The comparative mortality research and retained defeat/injury audit remain untouched.
+Retain both completed audits, comparative mortality research, and retained defeat/injury audit.
 
 ## Held Route Confirmation
 
-Held `Version 0.6.6` remains paused. The prompt content remains recoverable as exact blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. This run does not restore or revise it.
+Held `Version 0.6.6` remains paused and recoverable as exact blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. This run does not restore or revise it.
 
 ## Checks Run
 
-- ran initial `git status`, branch and commit inspection;
-- fetched/pruned and fast-forward pulled `master`;
-- reloaded the post-pull active prompt;
-- verified all required source identities and clean source files;
-- read the required design, research, coordination, repository and content sources;
-- inventoried live shared types, events, combat, Chronicle, quest, save, account, identity, equipment, travel, institution, religion, spell, monster, encounter, ecology and presentation seams;
-- confirmed no external research was required;
-- verified the required section sets in both new audits;
-- verified the exact three-path intended change scope;
-- no build, runtime test, typecheck, generator or application server was run because this run is documentation-only.
+- inspected initial status, branch, `HEAD`, and upstream;
+- ran `git fetch --prune` and `git pull --ff-only`;
+- reloaded and confirmed the active post-pull prompt;
+- verified the required ancestor and all pinned source identities;
+- confirmed clean protected inputs and exact held-prompt object identity;
+- read the required audits, current output, coordination/design boundaries, relevant repository types/consumers, manifests, `AGENTS.md`, and `README.md`;
+- confirmed reliable direct primary-source access;
+- researched and recorded 18 principal plus 6 supplementary sources;
+- verified all 27 required research-artifact sections and required output-summary topics;
+- checked exact intended two-path change scope;
+- no build, typecheck, runtime test, generator, application server, dependency change, or external generation call was run because this run is documentation-only.
 
 ## Risks / Follow-Up Notes
 
-Both domains depend on stable factual events but must receive separate durable decisions. Combining them into one final authority would risk coupling grammar/provenance to elemental balance and AI behavior.
+The largest design risk is allowing current state or prose to stand in for event-time truth. The largest language risk is overloading English pronoun strings as universal grammar. The largest optional-generation risk is mistaking structured or fluent output for grounded output.
 
-The recommended alignment is evidence-based repository planning, not canon. The largest implementation risk is persisting prose or current snapshots instead of event-time factual views; the largest elemental risk is letting legacy aliases or encounter hostility become parallel authorities.
+The next decision should keep stage contracts small and avoid accepting a production dependency before a Lineage-owned corpus and license/bundle evaluation.
 
 ## Suggested Commit Message
 
-`docs(design): audit narrative realization and elemental ecology contracts`
+`docs(research): study grounded narrative realization`
 
 ## Next Recommended Run
 
-Run the unversioned documentation-only `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision` first. It should consume the narrative audit, accept a reusable fact-to-prose boundary, and remain non-mutating outside its named documentation outputs.
+Run the unversioned documentation-only `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision`.
