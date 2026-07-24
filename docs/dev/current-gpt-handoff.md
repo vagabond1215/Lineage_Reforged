@@ -1,32 +1,53 @@
 # Current GPT Handoff
 
+Date: 2026-07-24
+
 ## Status
 
 - `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` is complete and validated.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and byte-recoverable from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
-- The campaign-rules acceptance decision completed at commit `764f7ef5e4028e82fc76af6ae0381cc1eab00e20`.
-- The authoritative initial campaign identity is Story/Favored/Mortal/Forsaken, Heroic/Grim, and only `normal_stakes` initially.
-- Normal Stakes ordinary HP zero is accepted as defeat or incapacitation, not implicit terminal death, archival, save deletion, or terminal payout.
-- The live runtime still archives HP-zero runs and deletes saves. Runtime migration to `normal_stakes` is prohibited until the nonterminal defeat boundary lands before or atomically with migration.
-- Future restricted Stakes remains controlled by `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`.
-- Injury, trauma, normally irreversible harm, magical restoration, and resurrection boundaries are now controlled by `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`.
-- The active Codex run is `Normal Stakes Defeat, Injury, Trauma, And Magical Restoration Repository Audit And Contract Planning` in `docs/dev/current-codex-prompt.md`.
-- The active run is documentation-only and may modify exactly `docs/dev/current-codex-output.md` plus one new temporary audit.
-- No runtime, schema, save, migration, combat, health, injury, trauma, treatment, magic, resurrection, UI, test, content, service, spell, or balance implementation is authorized.
+- Campaign-rules identity, initial `normal_stakes`, injury/recovery, restricted-Stakes continuity, and Normal Stakes defeat fallback are accepted documentation authorities; implementation remains unauthorized.
+- The comparative mortality, repository narrative/elemental audit, and grounded narrative-realization research passes are complete and retained as evidence.
+- The active Codex run is `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision` in `docs/dev/current-codex-prompt.md`.
+- The active run is documentation-only. It must accept a durable narrative authority without implementing runtime, schemas, saves, UI, tests, dependencies, external-model integration, Mortal Crisis outcomes, elemental systems, or gameplay.
 
-## Most Specific Current Authorities
+## Active Run Outputs
 
-1. `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`
-2. `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`
-3. `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`
-4. `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`
-5. `docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md`
-6. `docs/design/combat-status-condition-injury-boundary-decision.md`
-7. `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md`
-8. `docs/design/magic-runtime-boundary-plan.md`
+The active run may modify exactly:
 
-The injury decision is more specific than the older combat status/condition/injury boundary for recovery classes, trauma semantics, magical restoration, and defeat integration. The older decision still controls the separation between static vocabulary and active runtime state.
+1. create `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`;
+2. update `docs/dev/current-codex-output.md`;
+3. update `docs/dev/current-gpt-handoff.md`;
+4. update `docs/dev/historical-version-and-deferred-route-register.md`.
+
+It must not modify `docs/dev/current-codex-prompt.md` during execution.
+
+## Controlling Evidence For The Active Decision
+
+- Narrative/Mortal Crisis repository audit: `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`, blob `6cb28305a3b2c67601568103c6309f33956ecd31`.
+- Grounded narrative research: `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md`, blob `878219b57342430a47021c45e343ad27e1db95ac`.
+- Completed research commit: `902a33597581c18000b7fd1ecee72e06e258762c`.
+- Living Character Manuscript boundary: `docs/design/living-character-manuscript-design-boundary.md`, blob `5ad12814696e65c77f893b7d4426731350757245`.
+- Quest/Event/Chronicle boundary: `docs/design/quest-event-chronicle-authority-boundary-decision.md`, blob `38ee8287c4c072807f6590537f361b80afc723fc`.
+- Person/NPC schema posture: `docs/design/person-vs-npc-schema-decision.md`, blob `1f130a3b1d63de8d2b7e607c9215ce13d76ea463`.
+
+The elemental audit remains evidence for a separate later lane and must not be converted into accepted elemental authority by the active narrative decision.
+
+## Most Specific Accepted Authorities
+
+1. `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`
+2. `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`
+3. `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`
+4. `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`
+5. `docs/design/living-character-manuscript-design-boundary.md`
+6. `docs/design/quest-event-chronicle-authority-boundary-decision.md`
+7. `docs/design/person-vs-npc-schema-decision.md`
+8. `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`
+9. `docs/design/combat-status-condition-injury-boundary-decision.md`
+10. `docs/design/magic-runtime-boundary-plan.md`
+
+Newer focused decisions control their subjects. Temporary audits and research artifacts are evidence, not authority.
 
 ## Accepted Campaign Rules
 
@@ -36,18 +57,15 @@ type WorldRulesId = "heroic_world" | "grim_world";
 type StakesRulesId = "normal_stakes";
 ```
 
-Initial rules:
-
 - Difficulty, World Rules, Stakes, and mechanical overrides are creation-locked.
 - Accessibility, presentation, input, localization, and nonmechanical information formatting remain changeable.
 - Production creation exposes only implemented and tested combinations.
-- Story remains unavailable until all active owners have Story adapters.
-- Grim remains unavailable until at least one real typed persisted Grim module exists with required adapters.
-- The future restricted-Stakes name and machine id remain deferred.
+- Story and Grim remain availability-gated.
+- The future restricted-Stakes public name and machine id remain deferred.
 
-## Normal Stakes Defeat Boundary
+## Current Defeat, Death, And Restoration Boundaries
 
-Accepted semantic boundary:
+Normal Stakes ordinary HP zero means defeat or incapacitation, not implicit terminal death:
 
 ```text
 HP reaches zero
@@ -56,179 +74,90 @@ HP reaches zero
   -> campaign identity and saves remain intact
 ```
 
-Ordinary HP zero is not:
+Ordinary HP zero is not automatic archival, character deletion, save deletion, terminal Prestige settlement, retirement, or succession.
 
-- automatic actual death;
-- campaign archival;
-- character deletion;
-- save deletion;
-- terminal Prestige or Legacy settlement;
-- retirement.
+The accepted generic fallback and current manual/quick-save topology remain controlling until a later explicit Stakes/Mortal Crisis authority revision retains, narrows, or supersedes them.
 
-The active audit must identify the smallest live seam where this resolver can replace terminal archival without creating a second HP authority.
+Restricted Stakes currently treats atomically committed actual death as terminal. A later resurrection-permitting actual-death stage would require explicit supersession; the active narrative decision cannot make that change.
 
-## Injury Classification
+Injury and restoration remain controlled by the accepted injury decision:
 
-Severity and recoverability are separate.
+- naturally recoverable physical injuries use Minor, Moderate, and Major severity independent from recoverability;
+- `Shaken Spirit` is the broad lore-facing trauma umbrella;
+- normally irreversible harm does not fully regenerate through ordinary time or generic healing;
+- complete anatomical restoration requires explicitly capable magic;
+- resurrection is separate from ordinary injury treatment.
 
-Naturally recoverable physical injuries use:
+## Active Narrative Decision Requirements
 
-- `Minor`;
-- `Moderate`;
-- `Major`.
+The decision must establish a reusable narrative-realization authority for Mortal Crisis, Chronicle, Manuscript, elemental encounters, and later fact-grounded prose consumers without becoming any gameplay owner.
 
-All three may reach complete functional recovery when uncomplicated. Severity controls immediate burden, recovery duration, reduced-use needs, treatment value, and complication risk; it does not determine permanence.
+It must decide:
 
-Naturally recoverable injuries:
+- the owner graph from authoritative domain results through retained event-time evidence, observer projection, scene planning, reference selection, realization, validation, fallback, and downstream presentation;
+- a locale-neutral grammatical-profile boundary separated from mechanical sex, gender presentation, English pronoun strings, and entity cardinality;
+- explicit personal-pronoun authoring and conservative no-pronoun fallback;
+- singular `they` and plural `they` as distinct semantic referents despite shared English agreement;
+- observer-known event-time naming, title, alias, role, and description rules;
+- deterministic ambiguity handling that repeats a safe name or description rather than guessing a pronoun;
+- a deliberately bounded first English morphology and locked-template scope;
+- event-time appearance, clothing, armor, held/worn/dropped/consumed/removed/transferred objects, injury evidence, location, and position requirements;
+- durable narrative evidence that is not limited to today’s template slots;
+- exact temporal binding for any current snapshot used as an immediate rendering aid;
+- observer visibility, recognition, diagnosis confidence, uncertainty, qualitative urgency, and spoiler filtering before prose planning;
+- scene/beat ordering, supported causal language, decision pauses, deterministic regeneration, and presentation-version identity;
+- layered validation and deterministic simplification/fallback;
+- a hard separation between renderer-visible facts and validator-only hidden facts;
+- locked and player-edited prose staleness, invalidation, comparison, and explicit regeneration behavior;
+- optional bounded generation as a separately authorized, rejectable presentation adapter with no fact, order, identity, pronoun, diagnosis, outcome, or history authority;
+- localization seams and later bounded dependency-evaluation gates.
 
-- may heal without professional treatment;
-- may recover faster or more safely with treatment;
-- may require ordinary, reduced, or protected nonuse depending on the injury;
-- do not change immutable base attributes;
-- may leave cosmetic scars without permanent functional impairment;
-- may causally convert to another state through overuse, reinjury, contamination, or failed stabilization, but must not become chronic through a hidden roll.
+The decision must not accept exact runtime field names, final schemas, storage tables, package names, a production dependency, a model/vendor, or an implementation version.
 
-## Trauma Direction
+## Narrative Non-Negotiables
 
-Accepted broad player-facing umbrella:
+- Gameplay owners resolve truth before narrative projection.
+- Generated or templated prose is replaceable presentation, never canonical evidence.
+- Prose is never parsed back into gameplay state.
+- Chronicle, quest-journal, and Manuscript strings do not become event provenance.
+- Personal pronouns are never inferred from `PlayerSexId`, `neutral`, name, title, lineage, appearance, or deity presentation.
+- Unknown identity degrades to an observer-safe event-time description, not a backend canonical name.
+- Hidden timers, percentages, seeds, debug ids, private motives, inaccessible diagnoses, and future outcomes are excluded from the renderer-facing envelope.
+- Player-facing Mortal Crisis output defaults to connected narrative and qualitative urgency, not battle-log lines or a timer dashboard.
+- Any material validation failure produces deterministic simplification or fallback.
+- No external model is required for minimum viable output.
 
-**Shaken Spirit**
+## Elemental Lane
 
-`Shaken Spirit` is a lore-facing trauma condition, not:
+The repository elemental audit is complete but non-canonical:
 
-- magical soul damage;
-- possession;
-- insanity;
-- moral weakness;
-- a comprehensive modern diagnosis catalog.
+- canonical aliases remain fragmented across Earth/stone, Wind/air, Thunder/lightning, and Darkness/shadow;
+- the final three-and-three Light/Darkness core alignment is unresolved;
+- environmental affinity pressure, manifestation, baseline temperament, current disposition, magic stimuli, beneficial capabilities, and fae/spirit/guardian taxonomy remain undecided;
+- current hostile River and Storm elementals are valid authored encounters but do not establish universal elemental hostility.
 
-Possible descriptive expressions include dread, nightmares, intrusive recollection, vigilance, avoidance, suspiciousness, startle, withdrawal, and event-linked panic.
+After the narrative decision, the next recommended run is targeted external research for elemental affinity ecology, manifestation, temperament, and magic-stimulus behavior. That research must precede the durable elemental decision.
 
-Trauma may:
+## Later Mortal Crisis And Stakes Route
 
-- self-resolve with time and safety;
-- improve through companionship, counsel, spiritual care, ritual, a healer, a confessor, a mentor, or other lore-appropriate support;
-- require focused treatment or event resolution;
-- persist or remain unresolved during the campaign.
+After the narrative and elemental authority lanes are complete, a separate documentation-only decision must address:
 
-Trauma must be event- and trigger-linked, proportional, explainable, and respectful of character agency. It must not rewrite immutable attributes or authored personality.
+- checkpoint commitment and replay-stable event identity;
+- Mortal Crisis phase ownership;
+- process-specific stabilization;
+- direct versus intermediate-care routing and transport;
+- body recovery and preservation;
+- resurrection eligibility and post-restoration convalescence;
+- actual death versus final closure;
+- rollback provenance;
+- Prestige, estate, Chronicle, and succession ordering;
+- public Stakes distinctions and explicit supersession of conflicting authorities.
 
-## Normally Irreversible Harm
-
-Normally irreversible harm does not fully regenerate through ordinary time or generic healing.
-
-Potential examples include lost limbs, destroyed eyes or organs, severe tissue loss, normally permanent sensory loss, severe nerve or spinal harm, and explicitly authored magical injuries.
-
-Mundane treatment may stabilize, protect, rehabilitate, reduce pain, preserve function, and enable adaptation. Prostheses and assistive equipment may restore capability but do not recreate anatomy.
-
-Complete restoration requires explicitly capable magic.
-
-## Magical Restoration
-
-Exceptional magical restoration direction:
-
-- generic healing does not imply limb or organ regrowth;
-- regrowth and restoration capabilities must be explicit;
-- capable healers are extremely rare;
-- access is exceptionally expensive or resource-intensive;
-- travel, standing, patronage, faith, law, ritual, rare materials, or institutional permission may matter;
-- exact spells, prices, healer counts, success rules, and requirements remain deferred.
-
-## Resurrection Boundary
-
-Resurrection is a death-and-magic system, not ordinary injury treatment.
-
-Under Normal Stakes, a later focused decision may permit extremely rare and expensive resurrection.
-
-Under the accepted restricted-Stakes authority, actual death is irreversible once atomically committed as terminal. The injury decision does not reopen a terminal restricted-Stakes character.
-
-## Attribute And Body Integration
-
-Immutable base attributes never change because of injury or trauma.
-
-```text
-current attribute
-  = immutable base
-  + developed adjustment
-  + structural-loss adjustment
-  + reversible body-condition adjustments
-  + physical-injury adjustments
-  + trauma-condition adjustments
-  + equipment, magic, status, and contextual adjustments
-```
-
-Requirements:
-
-- naturally recoverable injuries use reversible injury adjustments;
-- trauma uses condition- and trigger-owned adjustments;
-- normally irreversible harm may use persistent injury/capability adjustments;
-- magical restoration removes or transforms injury-owned state through one authoritative resolver;
-- injury, body condition, and nutrition-derived structural loss must not be double-counted.
-
-## Defeat Consequence Guardrails
-
-Normal Stakes defeat may result in:
-
-- no injury;
-- a naturally recoverable physical injury;
-- Shaken Spirit;
-- both physical and trauma consequences;
-- another context-owned nonterminal consequence.
-
-It must not guarantee injury, trauma, item loss, or permanent maiming as a generic tax.
-
-Minor and Moderate injuries may be common where context supports them. Major injuries require proportionate causes. Normally irreversible or magic-only harm must be exceptional, strongly causal, and clearly surfaced.
-
-The default fallback must prevent repeated-defeat soft locks and preserve campaign continuation.
-
-## Difficulty, Story, Grim, And Stakes
-
-Difficulty may tune owner-approved consequence weighting, recovery duration, reduced-use burden, treatment effectiveness, complication resistance, trauma recovery/support, warnings, and forecast precision.
-
-Difficulty does not change physical truth, anatomy, immutable base attributes, magical capability, or the selected Stakes death/resurrection boundary.
-
-Story may use coarse, generous injury and trauma projections and should not routinely produce normally irreversible harm from defeat.
-
-Grim may later deepen infection, sanitation, treatment scarcity, institutional access, or stigma through distinct owner contracts. Grim does not make all injury permanent or all trauma ubiquitous.
-
-## Active Codex Audit
-
-The active run must inspect:
-
-- every live HP-zero and archival path;
-- encounter defeat and incapacitation state;
-- party and companion handling;
-- safe-location, travel, rest, and recovery surfaces;
-- current status, active-effect, body-state, attribute, and save representations;
-- healing, service, spell, magic, death, and resurrection foundations;
-- TypeScript/JavaScript mirror requirements.
-
-It must produce:
-
-1. `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
-2. an updated `docs/dev/current-codex-output.md`.
-
-It must not modify the active prompt, this handoff, route register, accepted decisions, runtime, shared types, schemas, saves, migrations, tests, UI, content, spells, services, generated files, or gameplay.
-
-## Required Audit Outcomes
-
-The audit must provide:
-
-- the exact live call flow from HP zero to archival and save deletion;
-- the smallest replacement seam for Normal Stakes defeat;
-- fallback defeat options and one recommendation;
-- injury, trauma, irreversible-harm, magical-restoration, and resurrection owner plans;
-- persistence and migration risks;
-- difficulty/world/stakes interactions;
-- implementation package sequence;
-- validation matrix;
-- exact remaining user decisions;
-- explicit non-decisions.
+The active narrative decision cannot resolve these gameplay outcomes.
 
 ## Held And Deferred Routes
 
 - Held `0.6.6` remains untouched and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained `0.6.7` artifacts remain untouched.
-- Restricted Stakes remains future work with no accepted live id.
-- Exact injury catalogs, trauma expressions, healing formulas, magical restoration capabilities, and resurrection mechanics remain deferred.
-- No release version or milestone is assigned to the active audit.
+- No release or primary version is assigned to the active narrative decision.
+- No narrative dependency, external model, localization system, elemental runtime, Mortal Crisis runtime, save migration, or gameplay implementation is authorized.
