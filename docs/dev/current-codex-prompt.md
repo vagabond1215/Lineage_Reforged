@@ -2,9 +2,9 @@
 
 ## Run Identity
 
-`Narrative Realization, Mortal Crisis Presentation, And Elemental Ecology Repository Audit And Contract Planning`
+`Grounded Narrative Realization, Referential Grammar, And Validation Research`
 
-Run classification: unversioned large documentation-only repository audit and contract planning
+Run classification: unversioned substantial external research and repository-integration planning
 
 Milestone impact: `supports_current_band`
 
@@ -12,43 +12,39 @@ Parent version: none
 
 Suggested commit:
 
-`docs(design): audit narrative realization and elemental ecology contracts`
+`docs(research): study grounded narrative realization`
 
 ## Purpose
 
-Perform one substantial repository-wide documentation audit that prepares two later durable design decisions:
+Perform a focused external research pass after the completed repository audit and before accepting a durable narrative-realization authority.
 
-1. a reusable narrative-realization boundary for grammar, referents, tense, event-time appearance/equipment truth, knowledge-limited prose, Mortal Crisis presentation, bounded prompt generation, validation, and deterministic fallback;
-2. an elemental ecology and behavior boundary for the eight-element cosmology, three-and-three core alignment, environmental manifestation, passive/helpful temperament, active-magic stimuli, assimilation and opposition, beneficial capabilities, higher-element behavior, fae separation, and narrative projection.
+The run must determine which established natural-language-generation, grammatical-realization, referring-expression, interactive-narrative, factual-grounding, and validation principles are appropriate for Lineage Reborn's repository constraints.
 
-This run may inspect broadly because these systems cross current player identity, equipment, Chronicle/manuscript, combat, party, encounter, spawn, magic, religion, monster, ecology, location, and presentation seams.
+The target system must eventually turn authoritative gameplay facts into connected, context-aware narrative while preserving:
 
-This run is documentation-only. It does not accept final design authority and does not implement runtime, shared types, schemas, generators, language-model integration, prompts sent to an external model, saves, migrations, combat, AI, encounters, spawning, magic reactions, religion changes, content, UI, tests, or gameplay.
+- correct names, titles, pronouns, grammatical person, grammatical number, possessives, reflexives, verb agreement, tense, and chronology;
+- event-time appearance, clothing, armor, held objects, worn equipment, dropped or transferred objects, visible injuries, location, and position;
+- observer knowledge, recognition, visibility, diagnosis confidence, and spoiler boundaries;
+- deterministic scene and beat ordering;
+- qualitative urgency without default exposure of hidden timers, percentages, random seeds, or debug-state identifiers;
+- factual traceability and a deterministic fallback when richer prose cannot be validated.
 
-## Why This Audit Is Required
+This is research and decision support only. It must not accept final design authority, select a hosted model or vendor, add a dependency, implement a generator, change schemas, send repository data to an external model, revise gameplay, or restore `Version 0.6.6`.
 
-The completed comparative mortality research supports a context-aware Mortal Crisis sequence, but the repository does not yet have an implementation-ready owner for generating accurate narrative from authoritative facts.
+## Why This Research Precedes The Narrative Decision
 
-A Mortal Crisis scene must be able to describe, without inventing facts:
+The completed repository audit established the live gaps but did not provide enough external evidence to choose among:
 
-- who fell, acted, observed, carried, treated, or cast;
-- correct names, titles, pronouns, grammatical number, and verb agreement;
-- correct tense and chronology;
-- event-time appearance, visible injuries, clothing, armor, held objects, worn equipment, dropped items, and positional changes;
-- what each observer could actually see, recognize, diagnose, or know;
-- qualitative urgency and changing condition without default exposure of exact hidden timers;
-- multi-stage stabilization, transport, intermediate care, definitive treatment, resurrection, and closure decisions;
-- elemental or other benevolent entities that were actually present and explicitly capable of helping.
+- project-owned English morphology versus a reusable realization library;
+- message formatting versus sentence realization versus full document planning;
+- stored grammatical profiles versus entity-specific defaults and explicit fallbacks;
+- salience-based referring expressions versus conservative name repetition;
+- deterministic templates, grammar-based realization, bounded generation, or a hybrid;
+- candidate-prose validation methods and their limits;
+- event-time fact retention and regeneration/versioning posture;
+- localization-ready abstractions.
 
-The repository also has the eight canonical elemental identities and ecology hooks, but it does not yet have one accepted authority for:
-
-- assigning three core elements to Light and three to Darkness;
-- determining when elementals manifest from environmental affinity pressure;
-- establishing their ordinary passive, curious, territorial, or helpful posture;
-- reacting to active magic by resonance, higher-order alignment, assimilation, defensive opposition, or other typed response;
-- handling beneficial elemental capabilities;
-- distinguishing elementals from fae, spirits, guardian beasts, and other benevolent magical entities;
-- preventing elemental assistance from becoming an unexplained rescue roll or deus ex machina.
+The elemental ecology and stimulus-response domain requires a different evidence base and remains a separate later research pass. Do not dilute this run by researching elemental AI, ecology, alignment, mythology, spawning, or magic behavior.
 
 ## Temporary Precedence And Route Note
 
@@ -56,853 +52,595 @@ The active-run lines in `docs/dev/current-gpt-handoff.md` and `docs/dev/historic
 
 This prompt temporarily controls the active run. Existing accepted design authorities remain controlling until a later explicit decision retains, narrows, or supersedes them.
 
-The completed comparative research remains evidence, not authority.
+The completed narrative and elemental audits remain repository evidence, not accepted authority.
 
 Held `Version 0.6.6` remains paused. Do not restore it in this run.
 
-## Required Source State
+## Required Repository State
 
 Read first:
 
-- `docs/dev/tmp-comparative-checkpoint-mortality-rescue-and-stakes-research-2026-07-23.md`;
+- `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`;
+- `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md` only for the separation boundary and later consumer order;
 - `docs/dev/current-codex-output.md`;
 - `docs/dev/current-gpt-handoff.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/living-character-manuscript-design-boundary.md`;
+- `docs/design/living-character-manuscript-research-intake-route.md`;
+- `docs/design/quest-event-chronicle-authority-boundary-decision.md`;
+- `docs/design/person-vs-npc-schema-decision.md`;
 - `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
 - `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
 - `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`;
-- `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`;
-- `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
-- `docs/design/living-character-manuscript-design-boundary.md`;
-- `docs/design/quest-event-chronicle-authority-boundary-decision.md`;
-- `docs/design/person-vs-npc-schema-decision.md`;
-- `docs/design/magic-system-charter.md`;
-- `docs/simulation-rules/elemental_combat_and_enchanting.md`;
-- `packages/content/base/world/religions.json`;
-- relevant elemental monster reference files;
+- relevant shared event, combat, party, player identity, equipment, inventory, Chronicle, quest journal, route, and presentation types and consumers;
+- workspace/package manifests only to establish language, runtime, dependency, and module constraints;
 - `AGENTS.md`;
 - `README.md`.
 
 Relevant source identities:
 
-- completed comparative research commit: `d2dff9fdf2b35206b5d7be91716aa614640f1ff3`;
-- comparative research artifact blob: `26ce50958f348f316ab98bcafe31282393709fd6`;
-- comparative research current-output blob: `e996fd61903431b4fd364b82ed2490e6dae6270a`;
+- completed audit commit: `5288c2c5bd5f53d09d2889c42efbe7f8c53811c1`;
+- narrative audit blob: `6cb28305a3b2c67601568103c6309f33956ecd31`;
+- elemental audit blob: `974e84f89805ba3e6789331183b474fce7f30d36`;
+- completed audit output blob: `c0301ba587a60916cdb002a9774bd2b018e746ae`;
+- comparative mortality research artifact blob: `26ce50958f348f316ab98bcafe31282393709fd6`;
 - accepted defeat-fallback decision blob: `e32ee0eb7a64777e2ca1134600b189d80fd0eafe`;
-- retained defeat/injury audit blob: `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`;
 - held `Version 0.6.6` prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Execution Gate
 
-1. Run `git status`, fetch, and fast-forward pull. Record branch, starting commit, and clean/dirty state.
+1. Run `git status`, fetch, and fast-forward pull. Record branch, starting commit, ending pre-edit commit, and clean/dirty state.
 2. Confirm this prompt is active.
-3. Confirm commit `d2dff9fdf2b35206b5d7be91716aa614640f1ff3` is an ancestor of `HEAD`.
-4. Confirm the comparative research artifact resolves to blob `26ce50958f348f316ab98bcafe31282393709fd6` and is unmodified.
-5. Confirm the accepted defeat-fallback decision resolves to blob `e32ee0eb7a64777e2ca1134600b189d80fd0eafe` and is unmodified.
-6. Confirm held `0.6.6` still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-7. Preserve unrelated work.
-8. Do not use external research unless a repository term cannot be resolved internally. This run is primarily a live-repository audit, not another comparative survey.
-9. If a required source identity does not match, record the contradiction in `docs/dev/current-codex-output.md`, do not invent a replacement authority, and stop without creating temporary audits.
+3. Confirm commit `5288c2c5bd5f53d09d2889c42efbe7f8c53811c1` is an ancestor of `HEAD`.
+4. Confirm the narrative audit resolves to blob `6cb28305a3b2c67601568103c6309f33956ecd31` and is unmodified.
+5. Confirm the elemental audit resolves to blob `974e84f89805ba3e6789331183b474fce7f30d36` and remains unmodified.
+6. Confirm the accepted defeat-fallback decision resolves to blob `e32ee0eb7a64777e2ca1134600b189d80fd0eafe` and remains unmodified.
+7. Confirm held `0.6.6` still resolves to blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+8. Preserve unrelated work.
+9. Confirm reliable external search and primary-source page access exists before making external factual claims.
+10. If reliable external access is unavailable, do not rely on memory or fabricate findings. Update only `docs/dev/current-codex-output.md` with a blocked result and stop.
 
-# Part I — Narrative Realization And Mortal Crisis Presentation Audit
+## Repository Constraints The Research Must Respect
 
-## 1. Live Narrative And Presentation Ownership Inventory
+Treat these as repository facts or current accepted boundaries to test against external evidence:
 
-Inspect all current owners and consumers relevant to generated or assembled prose, including as applicable:
+- no reusable narrative-realization engine currently exists;
+- current prose is scattered interpolation and UI-ready strings;
+- `PlayerSexId` is mechanical identity and must not automatically own pronouns;
+- people/NPC records currently omit pronouns and grammatical profiles;
+- combatants and party members commonly retain display names but not full authored identity grammar;
+- current Chronicle and quest-journal strings are presentation, not canonical event provenance;
+- current shared event envelopes are promising but are not a durable general historical store;
+- later regeneration cannot currently prove event-time appearance, equipment, object transitions, visibility, diagnosis, or position;
+- gameplay owners must resolve truth before prose generation;
+- generated prose cannot become gameplay authority or be parsed back into canonical state;
+- the minimum viable path must have a deterministic non-model fallback;
+- player-facing Mortal Crisis output should be connected narrative, not a battle log or raw timer dashboard;
+- rich Mortal Crisis outcomes, saving, resurrection, and Stakes remain outside this research run.
 
-- Living Character Manuscript and Chronicle design boundaries;
-- session Chronicle records and current UI-ready strings;
-- discovery Chronicle;
-- quest journals, event envelopes, run history, and run-end presentation;
-- character-creation narrative copy;
-- combat and encounter summaries;
-- account history, titles, achievements, and Legacy presentation;
-- any interpolation, templating, formatting, article, pluralization, pronoun, tense, or sentence-building helpers;
-- any current external-AI, local-model, template, grammar, or prompt-builder foundation;
-- deterministic fallback copy and error handling;
-- TypeScript/JavaScript mirrors and tests.
+## Research Scope And Limits
 
-For every discovered component, record:
+This is a substantial but bounded technical research pass, not a general AI or game-writing survey.
 
-- path and exported symbol;
-- owning domain;
-- whether it consumes authoritative facts, current snapshots, presentation strings, or prose;
-- whether it is deterministic;
-- whether it persists generated text;
-- whether it can safely support Mortal Crisis scenes;
-- gaps and collision risks.
+Use no more than **eighteen principal sources** and no more than **six supplementary implementation or standards sources**.
 
-Explicitly determine whether a general narrative realization engine exists. Do not treat scattered string interpolation as such an engine.
+The principal source set must collectively include:
 
-## 2. Identity, Sex, Gender, Pronoun, And Grammatical-Number Audit
+1. at least three foundational or peer-reviewed sources on natural-language generation, surface realization, document planning, or referring-expression generation;
+2. at least three current official standards, maintained library documents, or primary technical sources relevant to morphology, agreement, plural/select logic, grammar realization, or localization;
+3. at least three primary research sources on factual grounding, semantic faithfulness, constrained generation, or hallucination detection/validation;
+4. at least two official or primary sources on interactive narrative, stateful dialogue, narrative scripting, or deterministic text generation in games or simulations;
+5. at least two sources addressing evaluation, reproducibility, provenance, or deterministic regeneration;
+6. any remaining sources only where they answer a repository-specific unresolved question.
 
-Inspect current player, authored person, NPC, combatant, party, monster, animal, elemental, deity, generated-person, and group identities.
+The temporary research artifact should be no longer than approximately **6,500 words**, excluding source metadata, compact comparison tables, and concise repository-path inventories.
+
+Do not force every source to address the whole system. Select sources for strong evidence on specific questions.
+
+## Source Quality Rules
+
+For technical claims, prefer primary sources only:
+
+1. peer-reviewed papers, conference papers, standards, or scholarly books from the original authors;
+2. official documentation and repositories for maintained standards or libraries;
+3. official engine or narrative-tool documentation;
+4. original developer or research-team technical reports.
+
+Use secondary sources only to locate a primary source, not as principal evidence.
+
+Do not use:
+
+- unsourced tutorials or listicles;
+- vendor marketing claims as evidence of correctness;
+- forum anecdotes;
+- AI-generated summaries;
+- benchmark leaderboards without methodology;
+- memory as a substitute for access;
+- popularity or download counts as proof of architectural suitability.
+
+For every material external claim preserve:
+
+- source title;
+- author or maintaining organization;
+- publication/update date when available;
+- access date;
+- direct URL or DOI;
+- source-quality classification;
+- exact question supported;
+- limitations or applicability caveats.
+
+Paraphrase. Use only minimal quotation when exact terminology is necessary.
+
+If reliable sources conflict, record the conflict and explain the design consequence rather than selecting the convenient result.
+
+## Candidate Technologies And Patterns To Evaluate
+
+The research may evaluate, without preselecting or authorizing:
+
+- classic data-to-text NLG pipelines;
+- document planning, microplanning, aggregation, lexicalization, and surface realization;
+- referring-expression generation and discourse salience;
+- SimpleNLG or comparable surface-realization approaches;
+- Grammatical Framework and resource-grammar approaches;
+- ICU MessageFormat / MessageFormat 2 and CLDR plural, select, grammatical-feature, and localization concepts;
+- deterministic template grammars and controlled natural language;
+- Tracery-like or authored expansion grammars;
+- Ink, Yarn Spinner, or comparable official interactive-narrative state and text practices;
+- structured generation, constrained decoding, schema-bound output, retrieval or fact-envelope grounding;
+- semantic validation, natural-language inference, rule validation, entity linking, and contradiction checks;
+- hybrid deterministic and bounded-generative architectures.
+
+Do not assume any named technology is suitable. Evaluate its actual role, limitations, license posture, maintenance, TypeScript/JavaScript compatibility, deterministic behavior, localization implications, and fit with the repository.
+
+## Research Questions
+
+### 1. Pipeline Architecture
+
+Determine which stages should remain separate for Lineage Reborn:
+
+- authoritative gameplay resolution;
+- event-time fact retention;
+- knowledge/visibility projection;
+- document or scene planning;
+- beat ordering and aggregation;
+- lexical choice;
+- referring-expression selection;
+- morphology and surface realization;
+- bounded prompt/request construction;
+- candidate prose generation;
+- factual and grammatical validation;
+- deterministic fallback;
+- Chronicle/Manuscript/UI projection.
+
+Explicitly answer whether `prompt generation` and `prose realization` should be separate functions and why.
+
+### 2. Grammatical Profile
+
+Research the minimum language-independent and English-specific facts needed to realize:
+
+- first, second, and third person where relevant;
+- singular and plural number;
+- male singular pronouns;
+- female singular pronouns;
+- singular `they`;
+- plural `they`;
+- non-person `it` where appropriate;
+- subject, object, possessive determiner, possessive pronoun, and reflexive forms;
+- entities that should use names, titles, descriptions, or no pronoun;
+- collective and coordinated subjects;
+- unknown or incomplete grammatical identity.
 
 Determine:
 
-- current sex identity values and their owners;
-- whether gender presentation or pronoun preferences exist separately;
-- whether `neutral` currently means a biological/mechanical value, grammatical profile, migration placeholder, or something else;
-- whether singular `they` can be represented without confusing it with a plural group;
-- whether non-person entities default to `it`, `they`, a name, a title, or authored terminology;
-- whether deities' `presentationGender` can safely drive prose or is only descriptive content;
-- whether generated people, combatants, party members, animals, monsters, and elementals have sufficient identity facts for prose;
-- whether any source currently infers pronouns from sex, names, titles, lineage, appearance, or prose.
+- which facts should be explicitly authored or player-selected;
+- which may use safe entity-kind defaults;
+- which must never be inferred solely from sex, name, title, lineage, appearance, or deity presentation;
+- how missing profiles should degrade safely;
+- how to avoid conflating singular `they` with plural agreement;
+- how a future localization boundary should avoid hardcoding English pronoun fields as universal grammar.
 
-The audit must preserve these distinctions:
+Do not accept final field names in this run.
 
-```text
-physical or mechanical sex identity
-  != gender identity or presentation
-  != grammatical profile
-  != narrative point of view
-  != singular or plural referent count
-```
+### 3. English Morphology And Inflection
 
-Recommend a minimum future grammatical-profile contract capable of supporting:
+Determine the smallest reliable English realization subset needed for the first implementation package, including:
 
-- grammatical person;
-- singular/plural number;
-- subject, object, possessive-determiner, possessive-pronoun, and reflexive forms;
-- singular `they`;
-- group pronouns;
-- irregular verb agreement;
-- optional titles or honorifics;
-- safe fallback when a profile is unavailable.
+- `be`, `have`, `do`, and other irregular auxiliaries;
+- present and past agreement;
+- progressive and perfect constructions only if justified;
+- third-person singular agreement;
+- plural and possessive formation;
+- articles and determiner choice;
+- coordinated subjects;
+- negation;
+- punctuation and capitalization;
+- irregular verbs especially relevant to crisis prose, such as `go`, `lie`, `lay`, `fall`, `flee`, `carry`, `bleed`, `lead`, `hold`, `take`, and `wake`.
 
-Do not accept final field names or modify current identity schemas in this run.
+Compare:
 
-## 3. Referent, Discourse, And Ambiguity Audit
+- a small project-owned morphology layer;
+- a maintained surface-realization library;
+- a grammar framework;
+- authored fully inflected templates.
 
-Determine the minimum future owner needed to choose safely among:
+Record tradeoffs in correctness, dependency size, determinism, localization, testability, and TypeScript/JavaScript integration.
+
+### 4. Referring Expressions And Discourse
+
+Research how a deterministic resolver can choose among:
 
 - canonical name;
 - recognized name or alias;
 - title;
-- role description;
-- relationship label;
-- descriptive noun phrase;
+- relationship or role description;
+- observer-safe descriptive noun phrase;
 - pronoun;
-- collective group reference.
+- repeated name when pronouns would be ambiguous;
+- plural group reference.
 
-The proposed system must prevent ambiguous prose such as:
+Address:
 
-> Bran dragged Lyrian away as he began to lose consciousness.
+- first mention versus subsequent mention;
+- discourse salience;
+- two or more actors sharing a pronoun set;
+- subject changes across clauses;
+- unknown identity;
+- hidden or unrecognized entities;
+- group formation and dissolution;
+- title/name changes;
+- conservative fallback when clarity cannot be proved.
 
-when the intended referent is not unambiguous.
+Assess whether classic referring-expression algorithms are appropriate, adaptable, or too complex for the first package.
 
-Audit requirements for a future discourse state, including:
+### 5. Event-Time Facts And Provenance
 
-- current paragraph subject;
-- recently mentioned entities;
-- competing same-pronoun referents;
-- active threat and patient;
-- recognition state;
-- point of view;
-- tense;
-- location and scene phase;
-- prior chosen labels;
-- repetition avoidance that never sacrifices clarity.
+Determine the minimum structured fact posture required to state accurately:
 
-Determine whether this belongs in a reusable narrative engine, a presentation package, a Chronicle/manuscript owner, or a narrower Mortal Crisis adapter.
+- actor, patient, observer, threat, helper, caster, carrier, and provider identities;
+- event and beat chronology;
+- action and accepted result;
+- location and route segment;
+- visible appearance;
+- worn, held, dropped, damaged, consumed, removed, or transferred objects;
+- visible injury and condition evidence;
+- observer knowledge, confidence, and hidden facts;
+- exact source records and revision identity.
 
-## 4. Tense, Aspect, Grammar, And Inflection Audit
+Compare:
 
-Inspect whether the repository currently supports:
+- retaining full snapshots;
+- retaining domain-specific event payloads;
+- retaining compact narrative event-time views;
+- deterministic reconstruction from durable events;
+- mixed retention with explicit provenance.
+
+Do not accept a schema. Identify information requirements, ownership, retention risks, and migration implications.
 
-- past and present tense;
-- first, second, and third person;
-- singular/plural verb agreement;
-- irregular verbs such as `be`, `have`, `do`, `go`, `lie`, `lay`, `fall`, `flee`, and `carry`;
-- articles and determiners;
-- count and mass nouns;
-- possessives;
-- coordinated subjects;
-- capitalization and punctuation;
-- sentence joining and paragraph continuity.
+### 6. Knowledge, Visibility, And Diagnosis
 
-Recommend whether the first implementation should use:
+Research principles for ensuring prose does not reveal facts unavailable to the viewpoint or observer.
 
-- deterministic authored grammar templates;
-- a lightweight inflection/morphology layer;
-- bounded generative prose over a fact envelope;
-- a hybrid of deterministic planning, bounded generation, and deterministic validation.
+Address:
 
-The audit must not select or add a third-party package. It may identify existing dependencies and implementation risks.
+- visibility, distance, lighting, obstruction, armor, and concealment;
+- recognition and identity knowledge;
+- skill-based diagnosis;
+- confidence and uncertainty language;
+- progressive inspection and reassessment;
+- hidden exact timers with qualitative urgency;
+- avoiding unsupported motives, emotions, intentions, dialogue, or private knowledge;
+- deterministic phrasing when evidence is incomplete.
 
-## 5. Event-Time Appearance, Equipment, And Object Truth Audit
+### 7. Scene And Beat Planning
 
-Inspect current owners for:
+Determine how authoritative results can become a connected scene without changing gameplay truth.
 
-- player appearance and character-creation identity;
-- visible body traits;
-- equipment slots and worn items;
-- held items, weapons, shields, tools, focuses, catalysts, consumables, and containers;
-- item condition, damage, contamination, blood, breakage, and removal;
-- inventory versus equipped versus held distinction;
-- two-hand or hand-occupancy constraints if any;
-- party carrying, body transport, mounts, wagons, and litters;
-- combat positions and scene locations;
-- event-time history versus current-state-only truth.
+Research:
 
-The audit must answer:
+- chronological beat planning;
+- causal linkage without invented causality;
+- aggregation of simultaneous or repetitive facts;
+- paragraph and sentence grouping;
+- pauses for player decisions;
+- resumption after a committed choice;
+- perspective and tense consistency;
+- length and repetition budgets;
+- transition from immediate crisis scene to later Chronicle or Manuscript treatment.
+
+The player-facing default must remain narrative, not one line per backend event.
+
+### 8. Deterministic Templates And Controlled Grammars
 
-1. Can current live state support an accurate immediate Mortal Crisis scene?
-2. Can a scene regenerated later prove what was worn, held, visible, dropped, consumed, damaged, or removed at the event tick?
-3. Which facts must be retained by event owners rather than reconstructed from a later save snapshot?
-4. How should a scene track transitions between beats, such as dropping a shield before lifting a patient or cutting armor away before treating a wound?
-5. How should visibility, lighting, distance, coverings, observer position, and recognition prevent unsupported appearance claims?
+Determine what a no-model minimum viable renderer can provide.
 
-Recommend a minimum event-time narrative view or fact-envelope posture without finalizing schema names.
+Evaluate:
 
-## 6. Knowledge, Visibility, Diagnosis, And Uncertainty Audit
+- authored fallback sentence families;
+- feature-based template slots;
+- controlled grammar expansions;
+- deterministic lexical alternatives;
+- beat-level and scene-level templates;
+- repetition avoidance without nondeterministic fact changes;
+- grammar validation and static linting;
+- content-author workflow and maintainability.
+
+Define what deterministic fallback quality is realistically sufficient for a first Mortal Crisis slice.
+
+### 9. Bounded Generative Adapter
 
-Mortal Crisis narrative must distinguish authoritative hidden truth from what an observer can perceive or infer.
+Without selecting or authorizing a model, research the architecture and risks of an optional later adapter.
 
-Audit current foundations for:
+Address:
 
-- character Knowledge and recognition;
-- skill and attribute evidence relevant to first aid, healing, magic, observation, medicine, alchemy, survival, or diagnosis;
-- visibility and line-of-sight;
-- lighting and weather;
-- relationship and party membership;
-- hidden statuses, injuries, poisons, internal bleeding, curses, and magical effects;
-- professional healer, institution, or magical-service capabilities.
+- fact-envelope-to-request construction;
+- structured or schema-constrained output;
+- stable source and regeneration ids;
+- temperature/randomness posture;
+- prompt injection and untrusted content boundaries;
+- privacy and deployment posture;
+- version drift;
+- deterministic caching;
+- candidate rejection;
+- no generated prose as canonical evidence;
+- no parsing prose back into gameplay;
+- graceful operation when generation is unavailable.
+
+Explicitly distinguish what a generative adapter can improve from what it cannot safely own.
+
+### 10. Validation And Semantic Fidelity
+
+Research layered validation for candidate prose:
+
+- required-fact coverage;
+- forbidden-fact detection;
+- entity and referent consistency;
+- names, pronouns, number, and agreement;
+- event order and causal claims;
+- appearance, equipment, object, injury, magic, location, and position consistency;
+- observer knowledge and spoiler boundaries;
+- tense and viewpoint consistency;
+- unsupported dialogue, motives, emotion, diagnosis, witness, or outcome detection;
+- mechanical-language suppression;
+- deterministic simplification and fallback.
 
-Recommend a future knowledge boundary capable of rendering:
-
-- direct observation;
-- confident professional assessment;
-- uncertain assessment;
-- hidden truth that must not appear in prose;
-- later reassessment after stabilization or travel;
-- honest worsening or improvement without promising a guaranteed outcome.
-
-Do not permit narrative ambiguity to conceal a deterministic result arbitrarily. Uncertainty must arise from observer limits or genuinely committed uncertain events.
-
-## 7. Mortal Crisis Narrative Presentation Contract Planning
-
-Consume the comparative research and current user direction as proposal input.
-
-The future Mortal Crisis system should resolve structured authoritative facts through named internal phases such as:
-
-```text
-threat disposition
-  -> immediate access and protection
-  -> assessment
-  -> process-specific stabilization
-  -> extraction
-  -> route and intermediate-care planning
-  -> transit and reassessment
-  -> definitive treatment or resurrection
-  -> recovery or final closure
-```
-
-The player-facing default must be connected narrative, not a battle log, state dump, or exact-timer dashboard.
-
-Audit and recommend:
-
-- which owner resolves each phase;
-- which facts are deterministic and which may use committed event/draw identity;
-- how narrative beats are planned from the accepted result;
-- where player decisions may occur;
-- how a scene pauses and resumes around decisions;
-- how qualitative urgency is derived;
-- how repeated inspections improve or revise the apparent prognosis;
-- how the renderer avoids mechanical labels and raw state ids;
-- how a deterministic factual fallback is produced if rich prose fails validation.
-
-Default player-facing prose must not expose raw percentages, dice, random seeds, hidden survival clocks, exact bleed-out times, exact internal progression rates, or debug-state identifiers.
-
-Exact time may be shown only when an accepted owner and character-facing context make it naturally knowable, such as a known travel duration, scheduled departure, visible clock, or specialist estimate. Even then, the Mortal Crisis narrative should normally express urgency qualitatively.
-
-Examples of acceptable qualitative meanings include:
-
-- no immediate danger;
-- stable for the moment;
-- needs care soon;
-- urgent;
-- rapidly worsening;
-- unlikely to survive a long journey;
-- unsafe to move without stabilization;
-- stabilized enough for transport;
-- beyond available mundane care.
-
-These are semantic inputs, not mandatory labels to paste into player prose.
-
-## 8. Multi-Stop Care, Transit, And Resource Planning Audit
-
-The future crisis resolver must not reduce destination selection to `nearest healer`.
-
-Inspect current foundations for:
-
-- route topology and travel time;
-- settlements, villages, districts, sites, and institutions;
-- healer, alchemist, temple, guild, hospice, government, patrol, and service capabilities;
-- mounts, wagons, carts, litters, carrying capacity, and road access;
-- weather, terrain, barriers, pursuit, and environmental hazards;
-- medicines, bandages, antidotes, healing potions, coagulation aids, blood-restorative items, stimulants, preservation items, and magical protections;
-- affordability, reputation, legal access, faction access, and party willingness.
-
-The audit must support routes such as:
-
-```text
-incident site
-  -> field stabilization
-  -> village healer for stronger stabilization, supplies, diagnosis, or transport
-  -> guild hospice for surgery or definitive care
-```
-
-Determine how the future owner should compare:
-
-- direct travel versus an intermediate stop;
-- whether the stop is on the route or a detour;
-- whether stabilization changes transport tolerance or the effective survival window;
-- whether a horse, wagon, litter, escort, or road improves transit enough to justify the stop;
-- whether movement itself worsens the patient;
-- whether a local provider can diagnose or stabilize but not cure;
-- whether a consumable changes one named lethal process without becoming a generic survival bonus.
-
-The narrative plan should describe what changed causally rather than reveal raw timer arithmetic.
-
-## 9. Bounded Prompt Generation And Validation Audit
-
-The user requires an engine or function that can properly resolve and generate context-sensitive prompts or prose.
-
-Audit and recommend a safe future pipeline:
-
-```text
-authoritative gameplay owners
-  -> retained factual event or accepted snapshot
-  -> narrative fact envelope
-  -> scene/beat planner
-  -> referent and grammar resolver
-  -> deterministic template or bounded generation request
-  -> candidate prose
-  -> factual, continuity, grammar, knowledge, and style validation
-  -> accepted prose or deterministic factual fallback
-```
-
-The audit must address:
-
-- whether `prompt generation` and `prose realization` should be separate functions;
-- stable source ids and provenance;
-- deterministic regeneration and idempotence;
-- allowed and forbidden facts;
-- vocabulary restrictions;
-- tense and point-of-view controls;
-- scene length and repetition controls;
-- validation of names, pronouns, objects, appearance, equipment, locations, injuries, magic, and chronology;
-- rejection or simplification when a candidate adds unsupported dialogue, motives, emotions, witnesses, equipment, appearance, diagnoses, entities, or outcomes;
-- no parsing generated prose back into canonical gameplay state;
-- no external-model dependency for the minimum viable fallback.
-
-## 10. Narrative Test Matrix Planning
-
-Provide a focused future test matrix including at minimum:
-
-- male singular `he/him/his/himself`;
-- female singular `she/her/hers/herself`;
-- singular `they/them/their/theirs/themself`;
-- plural group `they/them/their/theirs/themselves`;
-- non-person `it/its/itself` where appropriate;
-- named or titled entities that should not use pronouns;
-- ambiguous same-pronoun actors;
-- coordinated subjects and plural verbs;
-- past and present tense;
-- irregular verb forms;
-- identity unknown to the observer;
-- appearance hidden by armor or darkness;
-- equipment dropped, consumed, damaged, removed, or transferred between beats;
-- a character carrying another character while no longer holding a two-handed object;
-- progressive diagnosis with changing confidence;
-- hidden exact timer with qualitative narrative only;
-- direct versus intermediate-care route narrative;
-- deterministic regeneration from the same fact envelope;
-- unsupported-fact rejection;
-- deterministic fallback when prose validation fails.
-
-# Part II — Elemental Alignment, Manifestation, Temperament, And Magic-Stimulus Audit
-
-## 11. Canonical Element And Religion Inventory
-
-Confirm and inventory the current eight-element foundation:
-
-- Fire;
-- Water;
-- Earth;
-- Wind;
-- Thunder;
-- Ice;
-- Light;
-- Darkness.
-
-Preserve current compatibility facts unless a later decision explicitly changes them:
-
-- `stone` is a world/religion-facing legacy alias for Earth;
-- `shadow` may be a lore-facing expression of Darkness rather than a ninth element;
-- `holy` may be a lore-facing expression or tradition associated with Light rather than a ninth element;
-- `electricity` or lightning is a manifestation of Thunder rather than a ninth canonical element.
-
-Inventory:
-
-- deities, domains, oppositions, dominance cycles, orders, sacred sites, and convergence sites;
-- elemental spells, statuses, affinities, vessels, catalysts, enchantments, and magic tags;
-- elemental monsters and reference entries;
-- encounter and spawn foundations;
-- terrain, habitat, weather, hazard, resource, magic-residue, and sacred-site facts;
-- existing benevolent, neutral, territorial, or hostile magical entities;
-- fae/faye, pixie, spirit, guardian, or similar content if present;
-- tests, schemas, validators, and TypeScript/JavaScript mirrors.
-
-Record contradictions, aliases, missing owners, and stale narrative-only content.
-
-## 12. Three-And-Three Core Alignment Analysis
-
-Treat this as an accepted structural requirement for the later decision:
-
-- Light and Darkness are higher-order elements;
-- exactly three of the six core elements are Light-aligned;
-- exactly three are Darkness-aligned;
-- higher-order alignment is not equivalent to moral good or evil.
-
-The exact assignment is not yet accepted.
-
-Evaluate the strongest internally coherent mappings against:
-
-- current deity and religious-order pairings;
-- current dominance cycle;
-- physical and magical metaphors;
-- combat status identities;
-- environmental manifestation;
-- beneficial and dangerous expressions;
-- per-element assimilation and opposition relationships;
-- player legibility;
-- symmetry without forced false equivalence.
-
-At minimum, evaluate this working hypothesis without treating it as canon:
-
-```text
-Light-aligned: Fire, Water, Wind
-Darkness-aligned: Earth, Ice, Thunder
-```
-
-Explain where the current repository supports or contradicts it and compare any better alternative.
-
-Provide one recommended mapping for a later human/GPT acceptance decision, but do not modify religion content or accept the mapping in this audit.
-
-## 13. Elemental Manifestation And Affinity-Pressure Audit
-
-Elementals should manifest where their element is strongly represented by the current environment, not from an undifferentiated monster table.
-
-Audit the current data available to derive affinity pressure from:
-
-- terrain;
-- habitat;
-- weather;
-- season and climate;
-- active hazards;
-- geology and resources;
-- water and air access;
-- fire, cold, storm, or seismic conditions;
-- sacred sites and religious structures;
-- magical residue;
-- active casting;
-- breaches and convergence sites;
-- prior elemental presence;
-- world events.
-
-Recommend a future affinity-pressure contract for each of the eight elements.
-
-The audit must distinguish:
-
-- ordinary core-element environmental manifestation;
-- higher-element manifestation requiring rarer aligned convergence, sacred, magical, or world-event conditions;
-- authored encounter placement;
-- dynamic spawn candidacy;
-- an elemental already present becoming stronger or more active;
-- temporary magical residue that should not permanently rewrite ecology.
-
-Do not define exact spawn percentages or implement dynamic spawning.
-
-## 14. Baseline Temperament And Entity Taxonomy Audit
-
-Treat this proposed direction as a later-decision invariant unless repository evidence requires a stated exception:
-
-- elementals are generally passive, curious, territorial, conditionally cooperative, or helpful when undisturbed;
-- they are not ordinary always-hostile monsters;
-- they may still be dangerous through environmental behavior, territoriality, misunderstanding, assimilation, or active-magic response;
-- higher alignment does not determine moral goodness;
-- Darkness-aligned elementals may be benevolent;
-- Light-aligned elementals may be destructive, purifying, judgmental, or hazardous.
-
-Audit whether current monster records, schemas, encounter roles, AI dispositions, ecology records, or narrative references can represent:
-
-- passive;
-- curious;
-- wary;
-- territorial;
-- helpful;
-- conditional cooperation;
-- assimilative hunger;
-- defensive hostility;
-- predatory behavior;
-- guardian behavior;
-- scripted hostility caused by local corruption, binding, exploitation, or an authored event.
-
-Determine whether elemental identity belongs inside `monster`, a broader creature/entity authority, a disposition overlay, or a future magical-entity authority.
-
-Do not erase existing hostile elemental encounters. Explain how they can remain valid context-specific manifestations without proving that all elementals are hostile.
-
-## 15. Active-Magic Stimulus And Aggression Audit
-
-The future system must react to accepted cast results, not to generic classification tags alone.
-
-Audit current spell/cast outputs and determine whether they expose:
-
-- resolved canonical element;
-- source caster;
-- target and area;
-- position;
-- intensity or power band;
-- duration or active residue;
-- conduit, catalyst, and environmental amplification;
-- whether an enchantment is passive, activated, leaking, or discharged;
-- stable event identity.
-
-The later decision should distinguish:
-
-### Resonance
-
-Same-element magic is normally tolerated, ignored, observed, or empowering.
-
-### Higher-order alignment
-
-A core elemental normally tolerates its aligned higher element.
-
-A Light elemental normally tolerates Light and the three Light-aligned core elements.
-
-A Darkness elemental normally tolerates Darkness and the three Darkness-aligned core elements.
-
-### Assimilative or nourishing stimulus
-
-Some elements are perceived as fuel, material, charge, or conquerable power. This may trigger pursuit or attempted absorption even when the elemental is not morally hostile.
-
-### Countering or disruptive stimulus
-
-Some elements directly suppress, displace, fracture, quench, ground, freeze, ignite, or otherwise threaten the elemental. This may trigger defensive aggression, retreat, suppression, or retaliation.
-
-### Foreign or unresolved active magic
-
-Untyped, foreign, chaotic, or incompatible active magic may produce suspicion, retreat, investigation, or hostility according to the elemental's explicit response contract.
-
-### Passive enchantment
-
-A dormant worn or carried enchantment should not automatically provoke aggression merely by existing. Activation, discharge, leakage, deliberate presentation, overwhelming intensity, or environmental pressure may matter.
-
-Audit the smallest future authority needed to resolve these categories without duplicating spell, combat, AI, or encounter ownership.
-
-## 16. Per-Element Relationship Schema Planning
-
-Every core element should use the same structural schema even when the relationships differ.
-
-For each of Fire, Water, Earth, Wind, Thunder, and Ice, recommend:
-
-- higher-order alignment candidate;
-- same-element response;
-- two or more plausible assimilable/nourishing relationships;
-- countering or adversarial relationships;
-- directional versus mutual relationships;
-- environmental sources it may incorporate;
-- beneficial capabilities it may possess;
-- noncombat hazards it may create;
-- what could calm, redirect, satisfy, or befriend it;
-- what active magic should provoke immediate aggression;
-- what passive magic should remain tolerated.
-
-Use this user-provided Fire example as a required test case, not automatically accepted universal fact:
-
-```text
-Fire elemental
-  -> indifferent or receptive to Fire
-  -> safe with Light if Fire is Light-aligned
-  -> may feed on or assimilate Wind and Thunder
-  -> treats Water, Ice, and Earth as countering threats
-```
-
-Test the physical and magical logic behind the fire-triangle reasoning:
-
-- Wind or oxygen may feed Fire;
-- Thunder or electricity may provide ignition or energetic charge;
-- Water quenches Fire;
-- Ice represents cold and phase-change pressure;
-- Earth may smother Fire or deny oxygen.
-
-Then produce equally explicit recommended schemas for the other five core elements.
-
-Do not force perfect rock-paper-scissors symmetry when directional ecology or magic is more coherent.
-
-## 17. Beneficial Elemental Capabilities Audit
-
-Elementals and other magical entities may provide aid when their explicit capabilities and context permit it.
-
-Audit current foundations for beneficial magic and recommend capability categories such as:
-
-- warming or shelter;
-- cooling;
-- water purification;
-- air or breathing support;
-- grounding or stabilization;
-- illumination;
-- concealment or shadow shelter;
-- path guidance;
-- hazard warning;
-- poison suppression;
-- wound stabilization;
-- protective wards;
-- transport assistance;
-- preservation of a body;
-- amplification of an aligned healer or spell;
-- direct healing only where an explicit spell or capability authorizes it.
-
-Requirements:
-
-- `benevolent`, `passive`, `Light-aligned`, or `helpful` must not itself execute healing;
-- aid must resolve from a present entity, explicit capability, accepted disposition, knowledge, range, cost, and event identity;
-- elemental assistance in a Mortal Crisis must not appear randomly after defeat without prior world presence or a deterministic manifestation rule;
-- ordinary healing must not imply anatomical regrowth or resurrection;
-- resurrection must remain separately authorized.
-
-## 18. Fae, Spirits, Guardian Beasts, And Other Benevolent Entities Audit
-
-Search for existing fae/faye, pixie, sprite, spirit, guardian, sacred beast, familiar, or similar identities.
-
-Recommend a boundary that allows these entities to have:
-
-- one or more elemental affinities;
-- benevolent, curious, mischievous, territorial, predatory, hostile, or conditional temperaments;
-- explicit beneficial capabilities;
-- environmental or sacred manifestation requirements;
-- cultural and religious associations;
-- reactions to elemental magic.
-
-Do not collapse all magical beings into `elemental`.
-
-Determine the minimum future taxonomy needed to distinguish:
-
-- true elemental manifestations;
-- fae or nature spirits;
-- summoned or bound entities;
-- constructs;
-- magical animals;
-- guardian beings;
-- corrupted or altered variants;
-- ordinary monsters with elemental affinity.
-
-## 19. Elemental Narrative Integration Audit
-
-The elemental system must project through the narrative-realization boundary rather than generating independent combat-log strings.
-
-Plan how authoritative facts such as:
-
-```text
-fire elemental observed Wind stimulus
-stimulus source was Selene
-response was assimilative pursuit
-Bran intercepted
-nearby brush was incorporated into the elemental
-```
-
-can become accurate prose while preserving:
-
-- entity pronouns and number;
-- names and recognition;
-- actual spell identity;
-- current held and worn objects;
-- visible environmental material;
-- chronology;
-- observer knowledge;
-- response category without printing an internal state label;
-- no unsupported intention or emotion.
-
-Determine which elemental facts must be present in the narrative fact envelope and which remain hidden engine truth.
-
-## 20. Elemental Test Matrix Planning
-
-Provide a focused future test matrix including at minimum:
-
-- all eight canonical identities and `stone -> earth` compatibility;
-- exactly three Light-aligned and three Darkness-aligned core elements after later acceptance;
-- Light elemental tolerating Light and all Light-aligned core magic;
-- Darkness elemental tolerating Darkness and all Darkness-aligned core magic;
-- same-element resonance;
-- assimilative response versus defensive hostility;
-- directional relationship behavior;
-- passive enchanted equipment not provoking by default;
-- activated or leaking incompatible enchantment provoking an appropriate response;
-- environment with insufficient affinity pressure producing no dynamic elemental candidate;
-- strong terrain/weather/sacred pressure producing a candidate;
-- higher elementals requiring rarer convergence conditions;
-- helpful elemental action requiring an explicit capability;
-- hostile authored elemental encounter remaining valid;
-- Darkness-aligned benevolent entity;
-- Light-aligned dangerous entity;
-- fae or guardian entity with affinity but not elemental identity;
-- deterministic event identity across replay;
-- narrative projection using accurate entity, spell, equipment, and terrain facts.
-
-# Part III — Synthesis And Package Planning
-
-## 21. Ownership And Dependency Graph
-
-Produce one integrated ownership graph covering:
-
-- authoritative gameplay/event owners;
-- character/player/person/entity identity;
-- grammatical profiles;
-- appearance and equipment state;
-- knowledge and visibility;
-- narrative fact envelopes;
-- scene/beat planning;
-- prose realization;
-- validation and fallback;
-- Chronicle/manuscript projections;
-- Mortal Crisis resolution;
-- travel and care institutions;
-- magic cast identity;
-- elemental affinity pressure;
-- elemental disposition and stimulus response;
-- AI/encounter action selection;
-- beneficial capabilities;
-- save and event persistence.
-
-Explicitly identify forbidden parallel authorities and likely dependency cycles.
-
-## 22. Recommended Durable Decision Sequence
-
-Recommend a bounded decision sequence after this audit.
-
-The preferred route to test is:
-
-1. `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision`;
-2. `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`;
-3. `Checkpoint Commitment, Mortal Crisis Sequence, Resurrection Aftereffects, Final Closure, And Stakes Authority Revision`, consuming the narrative decision;
-4. coordination-document reconciliation;
-5. only then reconsider the `0.6.6 Restoration And Baseline Confirmation` gate.
-
-Explain whether the audit supports this sequence or recommends a safer alternative.
-
-Do not create these decisions in this run.
-
-## 23. Implementation-Package Decomposition
-
-Recommend later implementation packages without assigning release numbers.
-
-At minimum distinguish:
-
-- grammatical profile and inflection foundation;
-- referent/discourse resolver;
-- narrative fact envelope and validation;
-- deterministic template fallback;
-- bounded generative adapter, if ever authorized;
-- Mortal Crisis narrative adapter;
-- event-time appearance/equipment retention;
-- elemental identity/alignment static authority;
-- affinity-pressure candidate generation;
-- magic-stimulus response resolver;
-- temperament/disposition integration;
-- beneficial capability integration;
-- narrative projection and UI;
-- save/migration and TypeScript/JavaScript mirrors;
-- focused tests.
-
-State which packages are dependencies of the revised Stakes/Mortal Crisis implementation and which can remain deferred.
-
-## 24. Required Outputs
+Assess the limits of:
+
+- rule-based validation;
+- schema comparison;
+- entity/relation extraction;
+- natural-language-inference or entailment models;
+- round-trip semantic parsing;
+- human-authored locked passages.
+
+Do not claim validation can guarantee factuality unless the evidence supports that claim.
+
+### 11. Determinism, Regeneration, And Idempotence
+
+Determine a safe identity model for:
+
+- source fact set;
+- scene plan;
+- renderer version;
+- template/grammar version;
+- optional model/request version;
+- candidate prose version;
+- accepted/locked prose;
+- regeneration scope.
+
+Research how identical accepted facts can reproduce a stable fallback while allowing explicitly versioned presentation improvements without changing gameplay truth.
+
+### 12. Localization And Future Language Support
+
+Determine which first-pass abstractions should remain language-independent and which may be English-specific.
+
+Address:
+
+- grammatical gender versus natural gender;
+- person and number;
+- agreement features;
+- case;
+- articles and definiteness;
+- plural categories;
+- word order;
+- pronoun omission;
+- language-specific morphology;
+- translated authored templates;
+- fallback behavior when a locale lacks a full realization module.
+
+The first implementation may be English-only, but the authority should avoid making English strings the only possible representation of grammar.
+
+### 13. Library And Dependency Assessment
+
+For any plausible maintained library or standard, record:
+
+- exact role it could fill;
+- language/runtime compatibility;
+- maintenance and release posture as of the access date;
+- license;
+- deterministic behavior;
+- localization coverage;
+- dependency and bundle implications;
+- whether it handles messages, sentences, or documents;
+- gaps requiring project-owned logic;
+- whether adoption should be evaluated later or rejected.
+
+Do not add a dependency or recommend adoption solely because a library exists.
+
+### 14. Player-Facing Mortal Crisis Requirements
+
+Apply the research to the eventual Mortal Crisis presentation without deciding crisis outcomes.
+
+The player-facing narrative should be able to express:
+
+- a character falling or becoming unresponsive;
+- a threat continuing, disengaging, or being intercepted;
+- another party member assessing or treating the patient;
+- progressive visible deterioration or stabilization;
+- direct travel versus an intermediate healer, supplies, transport, or diagnosis stop;
+- accurate held/worn/dropped objects and changes between beats;
+- an observer's uncertainty and improving diagnosis;
+- qualitative urgency;
+- a clear player decision separated from the prose;
+- later treatment, resurrection, convalescence, or final closure facts only when accepted by their upstream owners.
+
+Research should explain how the narrative engine supports these scenes without becoming a crisis resolver.
+
+## Required Comparative Classification
+
+Classify each observed technique as:
+
+- `directly_transferable_principle`;
+- `adaptable_pattern`;
+- `dependency_candidate_for_later_evaluation`;
+- `caution_or_antipattern`;
+- `not_applicable`.
+
+Do not copy proprietary terminology, authored text, templates, formulas, or content.
+
+## Required Synthesis
+
+Produce a compact comparison matrix covering:
+
+- pipeline stage addressed;
+- grammatical capability;
+- referent/discourse capability;
+- deterministic behavior;
+- event/fact grounding;
+- validation capability;
+- localization posture;
+- TypeScript/JavaScript fit;
+- dependency/license posture;
+- principal limitation;
+- classification;
+- lesson for Lineage Reborn.
+
+Then answer these Lineage Reborn questions directly:
+
+1. What is the minimum deterministic narrative architecture?
+2. Should prompt construction and prose realization be separate functions?
+3. Which grammatical facts must be explicit rather than inferred?
+4. What is the safest fallback when grammatical identity is missing?
+5. Should the first English morphology layer be project-owned, library-backed, or hybrid?
+6. How should singular `they` and plural `they` remain distinct?
+7. How should ambiguous referents be resolved?
+8. What event-time facts must be retained for accurate later regeneration?
+9. What should remain hidden from the narrative fact envelope?
+10. How should observer knowledge and diagnosis confidence constrain prose?
+11. What deterministic template quality is sufficient for the first slice?
+12. Which optional generative capabilities add value without owning truth?
+13. Which validation layers are mandatory and what can they not guarantee?
+14. How should deterministic regeneration and versioned presentation coexist?
+15. Which abstractions are required now to avoid blocking future localization?
+16. Is any further research required before the durable narrative decision?
+
+## Guardrails
+
+- External techniques are evidence, not authority.
+- Do not accept final field names, interfaces, schemas, ids, storage locations, or package boundaries.
+- Do not infer pronouns solely from sex, name, title, lineage, appearance, or deity presentation.
+- Do not treat `neutral` mechanical sex as an automatic singular-they profile.
+- Do not require an external model for minimum viable output.
+- Do not select or integrate a hosted model, API, vendor, or local model.
+- Do not add packages or dependencies.
+- Do not send repository content to an external generation service.
+- Do not persist generated prose as gameplay truth.
+- Do not parse generated prose back into gameplay state.
+- Do not let Chronicle or Manuscript prose become event provenance.
+- Do not invent dialogue, motives, emotion, witnesses, appearance, equipment, diagnoses, injuries, magic, entities, locations, or outcomes.
+- Do not decide Mortal Crisis resolution, saving, resurrection, death, Prestige, heir, or Stakes rules.
+- Do not research elemental alignment, ecology, manifestation, temperament, magic stimulus, fae, or monster behavior in this run.
+- Do not restore `0.6.6`.
+
+## Required Output
 
 On successful completion, modify exactly:
 
-1. create `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`;
-2. create `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md`;
-3. update `docs/dev/current-codex-output.md`.
+1. create `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md`;
+2. update `docs/dev/current-codex-output.md`.
 
 Do not modify this prompt.
 
-### Narrative audit required sections
+The temporary research artifact must contain:
 
-1. execution and repository-state confirmation;
-2. source and authority inventory;
-3. live presentation and prose-generation seams;
-4. identity, sex, gender, pronoun, and grammatical-number findings;
-5. referent/discourse findings;
-6. tense, inflection, and grammar findings;
-7. event-time appearance/equipment/object findings;
-8. knowledge/visibility/diagnosis findings;
-9. Mortal Crisis narrative presentation findings;
-10. multi-stop care and transit findings;
-11. prompt-generation and validation architecture options;
-12. recommended owner graph;
-13. test matrix;
-14. unresolved decisions;
-15. explicit non-decisions and limitations.
+1. execution and external-access confirmation;
+2. repository baseline and audited gaps;
+3. research method and source-quality rubric;
+4. source ledger;
+5. comparison matrix;
+6. pipeline architecture findings;
+7. grammatical-profile findings;
+8. English morphology and inflection findings;
+9. referent and discourse findings;
+10. event-time fact and provenance findings;
+11. knowledge, visibility, and diagnosis findings;
+12. scene and beat planning findings;
+13. deterministic template and controlled-grammar findings;
+14. bounded generative-adapter findings;
+15. validation and semantic-fidelity findings;
+16. determinism, regeneration, and idempotence findings;
+17. localization findings;
+18. library/dependency assessment;
+19. Mortal Crisis presentation application;
+20. directly transferable principles;
+21. adaptable patterns;
+22. dependency candidates for later evaluation;
+23. cautions and anti-patterns;
+24. answers to the sixteen Lineage Reborn questions;
+25. recommended durable-decision boundaries;
+26. unresolved decisions;
+27. explicit non-decisions and research limitations.
 
-### Elemental audit required sections
-
-1. execution and repository-state confirmation;
-2. canonical element/religion/magic/ecology inventory;
-3. aliases and contradictions;
-4. three-and-three alignment options and recommendation;
-5. environmental affinity-pressure findings;
-6. baseline temperament and taxonomy findings;
-7. active-magic stimulus findings;
-8. per-element relationship recommendations;
-9. beneficial capability findings;
-10. fae/spirit/guardian separation;
-11. Mortal Crisis and narrative integration;
-12. recommended owner graph;
-13. test matrix;
-14. unresolved decisions;
-15. explicit non-decisions and limitations.
-
-### Current output required fields
+Update `docs/dev/current-codex-output.md` with:
 
 - source run identity;
 - branch, starting commit, ending pre-edit commit, and repository state;
 - exact changed paths;
 - source-identity verification;
-- strongest narrative-engine findings;
-- strongest Mortal Crisis presentation findings;
-- strongest elemental findings;
-- repository contradictions and stale authorities;
-- recommended narrative decision scope;
-- recommended elemental decision scope;
-- recommended later Stakes/Mortal Crisis authority-revision scope;
-- implementation-package order;
-- exact temporary-artifact retention/consumer posture;
+- external-access status;
+- source count and source-quality summary;
+- strongest architecture findings;
+- strongest grammar and referent findings;
+- strongest fact-retention and knowledge-boundary findings;
+- strongest deterministic-template findings;
+- strongest bounded-generation and validation findings;
+- strongest localization and dependency findings;
+- findings that support or reject the audit's hybrid recommendation;
+- exact questions resolved sufficiently for a durable decision;
+- exact questions still unresolved;
+- whether another narrative research pass is required;
+- recommended durable narrative-decision scope;
+- confirmation that elemental research remains separate and next in its lane;
+- temporary-artifact retention and named consumers;
 - held `0.6.6` confirmation;
 - checks run;
 - next recommended run.
 
-## 25. Temporary Artifact Retention
+## Next-Route Rule
 
-Both new temporary audits must be retained until their findings are consumed by named durable decisions.
+If the research provides sufficient evidence, the next recommended run should be:
 
-The narrative audit's named consumers are:
+`Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision`
+
+That decision must be documentation-only and consume both:
+
+- `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`;
+- `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md`.
+
+If a material evidence gap remains, recommend one narrowly named follow-up research question rather than another broad survey.
+
+The separate elemental lane should later run a targeted external research pass before its durable elemental decision. It must not displace the narrative decision unless repository dependencies prove otherwise.
+
+## Temporary Artifact Retention
+
+Retain the new research artifact until consumed by:
 
 1. `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision`;
 2. the later Mortal Crisis/Stakes authority revision;
 3. a later narrative-engine implementation prompt.
 
-The elemental audit's named consumers are:
+Do not delete either completed audit, the comparative mortality research, or the retained defeat/injury audit in this run.
 
-1. `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`;
-2. a later elemental ecology/spawn implementation prompt;
-3. a later magic-stimulus/AI behavior implementation prompt;
-4. the held static monster/ecology route only if a later explicit integration decision says the static content must consume it.
-
-Do not delete the completed comparative mortality research or retained defeat/injury audit in this run.
-
-## 26. Forbidden Scope
+## Forbidden Scope
 
 Do not modify:
 
@@ -913,46 +651,44 @@ Do not modify:
 - sequenced plan;
 - continuity brief;
 - accepted design authorities;
-- completed comparative research;
+- completed narrative audit;
+- completed elemental audit;
+- completed comparative mortality research;
 - retained defeat/injury audit;
 - held `0.6.6`;
 - retained `0.6.7` artifacts;
 - runtime;
 - shared types;
 - schemas;
-- package manifests or dependencies;
+- package manifests, lockfiles, or dependencies;
 - saves or migrations;
 - tests;
 - UI;
 - content;
-- religion records;
-- monster records;
-- elemental reference prose;
 - generated files;
 - gameplay.
 
 Do not:
 
-- accept final pronoun field names;
-- infer pronouns solely from sex, name, title, lineage, or appearance;
-- accept final three-and-three element alignment;
-- accept exact per-element response matrices;
-- define exact spawn rates, timers, survival windows, medical values, or elemental probabilities;
-- add an external language-model dependency;
-- send repository data to an external model;
-- treat generated prose as gameplay authority;
-- parse generated prose into canonical state;
-- implement sleep checkpoints, deterministic RNG, Mortal Crisis, resurrection, Stakes, elementals, fae, AI, or narrative generation;
-- restore `0.6.6`;
+- accept final grammatical-profile field names;
+- accept a library or dependency;
+- implement grammar, templates, prompt generation, validation, or prose generation;
+- generate Lineage canon samples that add unsupported facts;
+- select a model or service;
+- research or alter elemental systems;
+- revise Mortal Crisis, defeat, injury, resurrection, Stakes, Prestige, succession, Chronicle, or Manuscript authority;
 - assign a release or primary version;
+- restore `0.6.6`;
 - create an implementation prompt.
 
-## 27. Stop Conditions
+## Stop Conditions
 
-Stop after the exact three documentation outputs.
+Stop after the exact two documentation outputs.
 
-If the audit finds that the two domains cannot safely share one run, still complete both inventories and record why separate durable decisions are mandatory. Do not silently drop either domain.
+If reliable primary-source access is unavailable, update only `docs/dev/current-codex-output.md` with a blocked result and stop.
 
-If a source mismatch or repository contradiction prevents trustworthy completion, update only `docs/dev/current-codex-output.md` with the blocked result and stop.
+If repository source identities do not match, update only `docs/dev/current-codex-output.md` with the contradiction and stop.
 
-Report the ending commit, exact changed paths, repository state, source identities, unresolved contradictions, and next recommended decision run.
+If research shows that no evidence-backed architecture can satisfy the deterministic fallback and factual-authority constraints, record that conclusion and recommend the smallest repository-compatible alternative. Do not relax the constraints or authorize unconstrained generation.
+
+Report the ending commit, exact changed paths, repository state, source identities, source-access status, unresolved contradictions, and next recommended run.
