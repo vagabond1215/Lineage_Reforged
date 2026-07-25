@@ -8,12 +8,31 @@ Date: 2026-07-24
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and byte-recoverable from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
 - Campaign-rules identity, initial `normal_stakes`, injury/recovery, restricted-Stakes continuity, and Normal Stakes defeat fallback remain accepted documentation authorities; implementation remains unauthorized.
-- The comparative mortality, repository narrative/elemental audit, grounded narrative-realization research, and targeted elemental research passes are complete evidence.
-- `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision` is complete and controlling as a documentation authority.
-- The completed decision artifact is `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`, blob `879c8e0b419eb429fe5af2022ef647f175b130f4`.
-- Targeted elemental research is complete at `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md`, blob `909b2bc1d36539880780f2a48b473ccc725333dd`.
-- The next active route recommendation is the documentation-only `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`.
-- No decision prompt is installed by the completed research.
+- `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision` is complete and controlling as the shared presentation authority.
+- The repository narrative/elemental audit and both grounded research passes are complete evidence.
+- The active Codex run is `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision` in `docs/dev/current-codex-prompt.md`.
+- The active run is a durable documentation-only design-authority decision. It must establish bounded elemental canon and owner contracts without implementing schemas, runtime, saves, UI, tests, dependencies, content, AI, spawning, combat behavior, or gameplay.
+
+## Active Run Outputs
+
+The active run may modify exactly:
+
+1. create `docs/design/elemental-alignment-environmental-manifestation-temperament-and-magic-stimulus-decision.md`;
+2. update `docs/dev/current-codex-output.md`;
+3. update `docs/dev/current-gpt-handoff.md`;
+4. update `docs/dev/historical-version-and-deferred-route-register.md`.
+
+It must not modify `docs/dev/current-codex-prompt.md` during execution.
+
+## Controlling Evidence For The Active Decision
+
+- Elemental repository audit: `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md`, blob `974e84f89805ba3e6789331183b474fce7f30d36`.
+- Grounded elemental research: `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md`, blob `909b2bc1d36539880780f2a48b473ccc725333dd`.
+- Accepted narrative authority: `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`, blob `879c8e0b419eb429fe5af2022ef647f175b130f4`.
+- Completed elemental research commit: `b30119cc5e1d9111e6a8db967e8fc3e7b08b71bf`.
+- Held `Version 0.6.6` prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+
+Temporary audits and research artifacts are evidence, not authority. The active decision must consume them without converting external ecology, animal behavior, mythology, or another game's conventions directly into setting canon.
 
 ## Most Specific Accepted Authorities
 
@@ -29,11 +48,11 @@ Date: 2026-07-24
 10. `docs/design/combat-status-condition-injury-boundary-decision.md`
 11. `docs/design/magic-runtime-boundary-plan.md`
 
-Newer focused decisions control their subjects. Temporary audits and research artifacts are evidence, not authority.
+Newer focused decisions control their subjects. The active elemental decision may supplement or narrow descriptive seams, but it must not silently supersede campaign, defeat, death, resurrection, Stakes, Chronicle, narrative, magic-resolution, combat, or content authority.
 
-## Accepted Narrative Owner Graph
+## Accepted Narrative Boundary
 
-The controlling graph is:
+The controlling downstream graph is:
 
 ```text
 authoritative domain results
@@ -47,185 +66,229 @@ authoritative domain results
   -> Mortal Crisis UI / Chronicle / Manuscript / other consumers
 ```
 
-Gameplay and domain owners remain authoritative for identity, combat, health, injury, equipment, inventory, recognition, travel, treatment, magic, death, and accepted outcomes. Narrative stages are downstream and cannot mutate or reconstruct gameplay.
+Elemental owners must decide manifestation, identity, affinities, stimulus, perception, temperament/disposition inputs, response, action request, and accepted outcome before narrative presentation. Prose cannot infer elemental identity, sapience, morality, motive, capability, intent, or future behavior.
 
-Prompt/request construction is an optional, separate function after a closed scene plan. Deterministic local prose realization and fallback are mandatory and model-independent.
+## Existing Element Foundation
 
-## Accepted Grammar And Reference Boundary
-
-- Locale-neutral grammatical identity distinguishes person, one entity, explicit coordination, persistent groups, entity kind, reference permissions, pronoun posture, provenance, and event-time revision.
-- Personal pronoun paradigms are explicit authored or player-selected facts.
-- Mechanical sex, `neutral`, names, aliases, titles, lineage, appearance, roles, professions, and deity presentation cannot infer personal pronouns.
-- Singular `they` and plural `they` remain distinct semantic identities despite overlapping English forms.
-- Missing or forbidden pronouns degrade to observer-safe event-time names, titles, roles, relationships, or stable descriptions.
-- Unknown identity never exposes a backend canonical name.
-- A deterministic recency-and-role resolver uses pronouns only when profile, agreement, salience, and unique antecedence are all proved. Conservative repetition is controlling.
-- Groups require explicit event-time membership and change or dissolve with membership.
-
-## Accepted English Realization Boundary
-
-- The first posture is locked fully inflected sentence families plus a narrow project-owned morphology/agreement layer.
-- Present and simple past are baseline; progressive or perfect appears only where the tested corpus needs it.
-- The controlled layer covers corpus-used `be`, `have`, `do`, negation, modals, agreement, regular plural/possessive, articles, punctuation, capitalization, and curated irregulars.
-- Default first-corpus prose avoids contractions. Quotation and generated dialogue remain unsupported without separate authority.
-- Deterministic alternatives require declared semantic equivalence, static lint, and golden tests.
-- Clear connected prose and correct repetition outrank literary variety.
-- No production dependency is accepted. A later offline `jsRealB` comparison remains separately gated.
-
-## Accepted Evidence And Provenance Boundary
-
-Keep distinct:
-
-1. authoritative domain events/results;
-2. durable owner-certified event-time narrative evidence;
-3. observer-projected facts;
-4. renderer/template plans;
-5. accepted prose;
-6. validator-only hidden evidence.
-
-Event-time evidence includes relevant role identities, accepted actions/results, occurrence and order identity, simultaneity, location/route/position, visible appearance, worn/held/object transitions, visible condition/injury evidence, recognition/visibility/diagnosis confidence, explicit unknowns, content revisions, and exact source/projection provenance.
-
-The evidence class is not limited to current template slots and is not a full duplicate snapshot. Current state is not historical proof unless bound to the exact occurrence, beat, order/time, and revision. Event type plus tick cannot identify repeated same-tick occurrences.
-
-Chronicle, journal, Manuscript, generated, locked, or player-edited prose is never provenance.
-
-## Accepted Observer And Secret Boundaries
-
-Observer projection occurs before planning, references, realization, and optional request construction. It consumes upstream visibility, recognition, inspection, diagnosis, and qualitative-urgency decisions and does not calculate them.
-
-Exact diagnosis requires accepted observer knowledge. Reassessment creates a new beat. Hidden timers, percentages, seeds, raw rolls, debug ids, private motives, secret identities, inaccessible diagnoses, future outcomes, and viewpoint-barred facts remain outside the renderer-facing envelope.
-
-Renderer-visible and validator-only evidence are separate channels. Validator-only facts cannot reach realization, request construction, generation, UI, ordinary logs, or telemetry.
-
-## Accepted Planning, Validation, Fallback, And Identity Boundary
-
-- Scene planning may order, group, compress, preserve simultaneity, join accepted action/results, use supported relations, maintain viewpoint/tense, and insert a hard decision pause.
-- It cannot invent causality, intention, motive, emotion, strategy, witness, dialogue, action, or outcome.
-- Validation covers source/revision, required facts, allowlisted identities/relations, leakage, grammar/reference/order, event-time truth, observer/spoiler policy, unsupported claims, mechanical language, and style budgets.
-- Structural, schema, grammar, or learned consistency is not sole factuality proof.
-- Material failure rejects, deterministically simplifies, revalidates, and selects the minimum safe fallback.
-- Identical normalized inputs and deterministic stage versions reproduce the fallback byte-for-byte.
-- Semantic normalization must precede authoritative hashes.
-- Regeneration changes presentation only.
-
-## Locked And Player-Edited Presentation
-
-Accepted conceptual statuses are current, locked-current, player-edited-current, stale-source, stale-policy, validation-failed, and superseded.
-
-Locked and player-edited prose is never silently overwritten. Preserve source/presentation versions, validation identity, lock state, and edit lineage. Changed facts or policies mark incompatible text stale or validation-failed and permit later compare, regenerate, relock, or retain-as-personal-text handling.
-
-Player-approved wording remains non-authoritative and cannot block gameplay correction.
-
-## Optional Adapter And Localization
-
-No model or generator is authorized. A later separately approved adapter may improve transitions, compression, rhythm, equivalent lexical variation, or paragraph grouping over a closed allowlisted plan. It may not own facts, order, identity, references, pronouns, visibility, knowledge, diagnosis, urgency, causality, actions, outcomes, or history.
-
-Locale-neutral semantics own roles, identity, person, semantic cardinality, reference permissions, observer knowledge, chronology, relations, intent, urgency categories, and provenance. Locale modules own surface paradigms, agreement, gender/case where needed, articles, inflection, lexicon, word order, punctuation, contractions, register, honorifics, and localized templates.
-
-CLDR plural categories are not entity cardinality. English strings are not the universal profile. No localization dependency is accepted.
-
-## Accepted Campaign Rules
-
-```ts
-type DifficultyPresetId = "story" | "favored" | "mortal" | "forsaken";
-type WorldRulesId = "heroic_world" | "grim_world";
-type StakesRulesId = "normal_stakes";
-```
-
-- Difficulty, World Rules, Stakes, and mechanical overrides remain creation-locked.
-- Accessibility, presentation, input, localization, and nonmechanical information formatting remain changeable.
-- Production creation exposes only implemented and tested combinations.
-- Story and Grim remain availability-gated.
-- The future restricted-Stakes public name and machine id remain deferred.
-
-## Current Defeat, Death, And Restoration Boundaries
-
-Normal Stakes ordinary HP zero remains defeat or incapacitation, not implicit terminal death:
+The repository currently recognizes eight elemental identities:
 
 ```text
-HP reaches zero
-  -> defeated or incapacitated
-  -> context-owned nonterminal defeat resolution
-  -> campaign identity and saves remain intact
+Fire
+Water
+Earth
+Wind
+Thunder
+Ice
+Light
+Darkness
 ```
 
-The accepted generic fallback and current manual/quick-save topology remain controlling until a later explicit Stakes/Mortal Crisis authority revision retains, narrows, or supersedes them.
+The active decision must normalize aliases without creating extra elements:
 
-Restricted Stakes still treats atomically committed actual death as terminal. A resurrection-permitting actual-death stage requires explicit supersession.
+- `stone` projects to Earth for legacy world, religion, crystal, and applied-label compatibility;
+- `air` projects to Wind;
+- `lightning` and electricity are Thunder manifestations or applied labels;
+- `shadow` and `void` project to Darkness where context supports them;
+- `holy` and `divine_light` may describe a Light-associated tradition or effect but are not a ninth element.
 
-Injury and restoration remain upstream:
+The decision must preserve alias provenance and must not require immediate content or schema migration.
 
-- naturally recoverable physical injuries use Minor, Moderate, and Major severity independently from recoverability;
-- `Shaken Spirit` remains the broad lore-facing trauma umbrella;
-- normally irreversible harm does not fully regenerate through ordinary time or generic healing;
-- complete anatomical restoration requires explicitly capable magic;
-- resurrection remains separate from ordinary injury treatment.
+## Alignment Decision Required
 
-Narrative may present only results accepted by these owners.
+The active decision must accept exactly three core elements aligned with Light and exactly three aligned with Darkness. Higher alignment is metaphysical affinity, not moral good/evil, benevolence/malice, deity sex/gender, or universal temperament.
 
-## Elemental Lane
-
-The elemental audit and targeted research remain non-canonical evidence. The research supports this conceptual owner graph:
+Repository evidence currently favors:
 
 ```text
-world/magic/site/entity owners
+Light: Water, Wind, Ice
+Darkness: Fire, Earth, Thunder
+```
+
+This mapping preserves the strongest authored religious pairings and the Unbound grouping. The earlier Fire-Light example was conditional rather than an accepted mapping. The active decision must nevertheless compare both evidenced options, make one explicit choice, explain player legibility, and not leave the mapping deferred.
+
+## Research-Backed Elemental Owner Graph
+
+The active decision should accept, narrow, or explicitly reject this conceptual graph:
+
+```text
+world / magic / site / entity owners
   -> owner-certified affinity contributions and magical occurrences
-  -> bounded affinity observation/aggregation
+  -> bounded affinity observation and aggregation
   -> manifestation eligibility and accepted transition
-  -> persistent entity/presence identity
-  -> perceived/recognized stimulus
-  -> temperament + disposition + condition/memory
+  -> persistent entity or presence identity
+  -> perceived and recognized stimulus
+  -> temperament + target-relative disposition + current condition or memory
   -> capability eligibility and deterministic response
-  -> accepted upstream action/outcome
+  -> accepted upstream action and outcome
   -> elemental interaction evidence
   -> observer projection and narrative realization
 ```
 
-Evidence-backed boundaries:
+Research supports a family of heterogeneous owner-produced affinity evidence with bounded projections, not one universal `affinityPressure` scalar that becomes the owner of terrain, climate, magic, sacred sites, settlements, and entity truth.
 
-- Affinity pressure should be a family of heterogeneous owner-produced evidence with bounded projections, not one universal canonical scalar.
-- Source, field/observation, manifestation transition, persistent entity, and target-relative disposition remain separate.
-- Stable identity and constitutive axes remain separate from capabilities, relationships, contextual roles, current condition, disposition, and selected action.
-- Temperament is a repeatable prior; disposition is target/context specific; condition constrains the present; action is one accepted response.
-- Active/passive, authoritative/perceived, direct/observed, source/target/locality, novelty/familiarity, compatibility, ownership/consent, and recognition are the minimum stimulus distinctions.
-- The smallest safe first response posture is deterministic eligibility rules plus a small explicit state-transition policy and retained causal reasons.
-- Helpful behavior remains explicitly capability-, trigger-, relationship/consent-, access-, cost-, selection-, and upstream-effect-gated.
-- Warning cues may be observer-visible while exact temperament, disposition, policy branch, motive, and future action remain hidden.
-- Migration, dormancy, dispersal, dissolution, death, runtime unloading, and correction are distinct; despawn is not an in-world outcome.
-- Response identity retains normalized stimulus, context/state and policy versions, perception/recognition, candidates, eligibility/rejections, tie posture, authorized randomness, selection, causes, outcomes, and correction lineage.
-- Current hostile River and Storm elementals do not establish universal hostility.
-- No production dependency is recommended.
+## Required Separation Boundaries
 
-The next recommended run is `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`. It must decide bounded authority using the audit and research without treating external ecology, animal behavior, mythology, or game precedent as setting canon. Final Light/Darkness grouping, aliases, environmental mappings, entity taxonomy, temperament/capability distributions, response policies, persistence meanings, schemas, values, content, and implementation remain unauthorized.
+The active decision must keep separate:
 
-## Later Mortal Crisis And Stakes Route
+- source contribution;
+- local affinity observation or bounded projection;
+- ambient manifestation;
+- discrete manifestation transition;
+- persistent entity or presence identity;
+- encounter selection;
+- combatant adaptation;
+- temperament prior;
+- disposition toward an actor, group, place, object, action, or stimulus;
+- current condition and scoped memory;
+- eligible response;
+- selected action;
+- accepted effect or outcome;
+- narrative evidence and presentation.
 
-After narrative and elemental authorities are complete, a separate documentation-only decision remains required for:
+An ambient effect does not require an agent identity. A discrete elemental requires an accepted manifestation, arrival, summoning, authored placement, or comparable identity-bearing transition. Removing a source does not silently delete a persistent entity.
 
-- checkpoint commitment and replay-stable event identity;
-- Mortal Crisis phase ownership;
-- process-specific stabilization;
-- direct versus intermediate care, transport, and reassessment;
-- body recovery and preservation;
-- resurrection eligibility and post-restoration convalescence;
-- actual death versus final closure;
-- rollback provenance;
-- Prestige, estate, Chronicle, and succession ordering;
-- public Stakes distinctions and explicit supersession of conflicting authorities.
+## Magical-Entity Taxonomy Boundary
 
-The narrative decision did not resolve these gameplay outcomes.
+The decision must distinguish at least:
 
-## Implementation Order And Authorization
+- environmental elemental manifestations;
+- fae or nature spirits with affinities but independent identity and culture;
+- summoned or bound entities whose controller or contract matters;
+- constructs whose material, program, or binding matters;
+- magical animals whose species ecology remains primary;
+- guardian beings whose duty, site, or relationship is primary;
+- corrupted or transformed variants;
+- ordinary monsters with elemental affinities.
 
-The accepted future order is grammatical/reference contracts; first English deterministic foundation; discourse resolver; event-time evidence; observer projection; scene planner; validation/fallback/regeneration; appearance/equipment/object/location adapters; Mortal Crisis consumer after later authority; Chronicle/Manuscript consumers; locked-edit lifecycle; optional morphology and localization spikes; optional generation only after separate authorization; and later persistence/UI integration.
+`guardian`, `territorial`, `helpful`, `predatory`, `defensive`, and `hostile` are not substance categories or moral identities by default. A being does not become an elemental merely because it uses elemental magic. Combat may adapt any eligible entity into a combatant without making `monsterClass` the universal identity owner.
 
-Packages for evidence through fallback must form the minimum authoritative end-to-end pipeline before factual production use. No implementation package, release version, runtime schema, dependency, model, save migration, UI, content, or tests are authorized now.
+## Temperament, Disposition, Condition, And Action
+
+The active decision must use separate conceptual layers:
+
+- **temperament:** a repeatable authored or retained prior across comparable contexts;
+- **disposition:** mutable and relative to a specific actor, group, place, object, activity, or stimulus;
+- **condition and memory:** current constraints, needs, familiarity, habituation, sensitization, corruption, binding, injury, resource state, or comparable accepted facts;
+- **selected action:** one deterministic policy result, not a personality label.
+
+Elementals may be passive, curious, wary, territorial, cooperative, helpful, assimilative, defensive, predatory, guardian-like, or authored-hostile according to accepted identity and context. Current hostile River and Storm elementals remain valid authored examples but do not establish universal hostility.
+
+## Magic-Stimulus Boundary
+
+The minimum stimulus contract must distinguish:
+
+- active versus passive;
+- authoritative occurrence versus perceived cue;
+- direct magical interaction versus observation;
+- source, target, locality, area, and relevant range;
+- duration and residue posture;
+- novelty, familiarity, habituation, and sensitization;
+- canonical element and applied manifestation;
+- compatibility or relationship category;
+- ownership, consent, binding, and deliberate presentation where relevant;
+- recognition and confidence;
+- activated, leaking, discharged, dormant, or merely carried enchantments.
+
+Passive equipment is not equivalent to casting. It remains tolerated unless an accepted policy treats activation, leakage, deliberate presentation, overwhelming intensity, or environmental destabilization as a qualifying stimulus.
+
+## First Response Posture
+
+The research-backed first posture is:
+
+```text
+closed deterministic eligibility rules
+  -> small explicit response-state policy
+  -> retained candidates, rejection reasons, tie posture, selected response, and causes
+```
+
+Capability and preconditions determine eligibility before any priority or utility ranking. Utility may later rank eligible responses only after a separate need is proven. Behavior trees may later orchestrate broader accepted behavior, but GOAP, BDI, full planners, external ontology engines, and a production AI dependency are not justified now.
+
+The decision must define directional relationship categories without forcing a symmetric rock-paper-scissors table. It must preserve distinctions such as:
+
+- same-element resonance;
+- aligned-higher tolerance or deference;
+- assimilable or nourishing stimuli;
+- countering, disruptive, or defensive stimuli;
+- foreign, unresolved, or cautious stimuli;
+- passive-enchantment tolerance;
+- authored relationship, corruption, binding, or exceptional-context overrides.
+
+The Fire row must preserve the established proposal that Wind, Thunder/charge, and suitable fuel may be assimilable or nourishing, while Water, Ice, and Earth may counter, quench, chill, or smother it. The final higher alignment depends on the accepted three-and-three mapping.
+
+## Higher-Element Behavior
+
+The decision must establish that:
+
+- Light and Darkness manifestations are rarer than core-element manifestations;
+- they ordinarily require sacred, convergence, breach, exceptional world-event, or intense aligned-core conditions rather than ordinary terrain alone;
+- a higher elemental tolerates itself and its three aligned core elements;
+- the opposite higher element and nonaligned core stimuli require explicit directional policy rather than automatic morality;
+- Light-aligned beings may be dangerous and Darkness-aligned beings may be benevolent;
+- alignment alone does not grant healing, corruption, hostility, sapience, or religious allegiance.
+
+## Helpful And Benevolent Behavior
+
+A helpful outcome requires all of:
+
+1. a present entity or accepted presence identity;
+2. an explicit capability applicable to the target or problem;
+3. a qualifying perceived or direct trigger;
+4. disposition, relationship, role, consent, and policy eligibility;
+5. range, access, environment, knowledge, and current-condition eligibility;
+6. resource, cost, cooldown, sacrifice, or comparable constraints where applicable;
+7. deterministic response selection;
+8. acceptance by the owning health, treatment, magic, travel, quest, economy, inventory, or environmental system;
+9. retained causal and event-time evidence.
+
+`benevolent`, `helpful`, passive, aligned, fae, pixie, spirit, or guardian is never itself a generic healing hook. Generic aid cannot regrow anatomy, resurrect, bypass route and treatment owners, create supplies, complete quests, or manufacture knowledge.
+
+## Escalation And Readability
+
+Use an authored graph of eligible postures and actions, not one universal hostility meter or mandatory linear ladder. Observer-visible progression may include:
+
+```text
+presence -> attention -> boundary or warning display -> guarded posture
+         -> aid | withdrawal | interception | pursuit | attack | dormancy
+```
+
+Severe accepted triggers may skip stages. De-escalation may follow withdrawal, consent, restitution, familiarity, changed conditions, resource relief, or other accepted causes. Hidden temperament, exact disposition, policy branch, scores, motive, unrecognized identity, and future action remain hidden unless an upstream owner establishes disclosure.
+
+## Persistence And Removal
+
+The active decision must distinguish:
+
+- migration or displacement;
+- dormancy;
+- dispersal;
+- dissolution or transformation;
+- death or destruction;
+- binding, release, corruption, purification, or comparable authored transitions;
+- runtime unloading or despawn;
+- correction or supersession.
+
+Runtime unloading is not an in-world outcome. Source recreation, save/load, repeated stimulus, or unloading/reloading must not duplicate identity, drops, favorability, capabilities, or consequences. Exact timers, formulas, reappearance rates, rewards, and loot remain deferred.
+
+## Campaign, Defeat, Death, And Restoration Boundaries
+
+Normal Stakes ordinary HP zero remains defeat or incapacitation, not implicit terminal death. Current save topology and the accepted generic fallback remain controlling until the later explicit Mortal Crisis/Stakes authority revision.
+
+Restricted Stakes still treats atomically committed actual death as terminal. Injury, magical restoration, and resurrection remain upstream authorities. The elemental decision may authorize capability categories and interaction boundaries only; it cannot create a resurrection exception, generic anatomical restoration, post-defeat rescue, or unexplained elemental intervention.
+
+## Later Route
+
+After the elemental decision completes, the next recommended documentation route remains:
+
+`Checkpoint Commitment, Mortal Crisis Sequence, Resurrection Aftereffects, Final Closure, And Stakes Authority Revision`
+
+That later decision must explicitly reconcile checkpoint commitment, Mortal Crisis phases, rescue, care routing, body recovery, resurrection eligibility and aftereffects, actual versus final death, rollback provenance, Prestige, estate, Chronicle settlement, succession, and public Stakes distinctions.
+
+Do not install or execute that later prompt during the active elemental decision.
 
 ## Temporary Evidence And Held Routes
 
-- Retain both narrative evidence artifacts for the later Mortal Crisis/Stakes revision and narrative-engine implementation prompt.
-- Retain the elemental audit and targeted elemental research for the durable elemental decision and later elemental implementation; retain the research also for the later Mortal Crisis/Stakes revision where elemental interaction matters.
+- Retain the elemental audit and grounded elemental research until the active decision, the later Mortal Crisis/Stakes revision where relevant, and later elemental implementation prompts have consumed them.
+- Retain the narrative audit and research for their named remaining consumers.
 - Retain comparative mortality and defeat/injury evidence for their named consumers.
 - Held `0.6.6` remains untouched and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained `0.6.7` artifacts remain untouched.
-- No decision prompt, release, primary version, dependency, external model, elemental canon/runtime, Mortal Crisis runtime, save migration, or gameplay implementation is authorized.
+- No implementation package, release version, dependency, external model, save migration, content batch, AI runtime, spawning, loot, or gameplay change is authorized.
