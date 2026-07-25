@@ -8,11 +8,12 @@ Date: 2026-07-24
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains paused, not canceled, and byte-recoverable from `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained Gate 1-5 and Gate 7 artifacts remain solely assigned to `0.6.7`.
 - Campaign-rules identity, initial `normal_stakes`, injury/recovery, restricted-Stakes continuity, and Normal Stakes defeat fallback remain accepted documentation authorities; implementation remains unauthorized.
-- The comparative mortality, repository narrative/elemental audit, and grounded narrative-realization research passes remain completed evidence.
+- The comparative mortality, repository narrative/elemental audit, grounded narrative-realization research, and targeted elemental research passes are complete evidence.
 - `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision` is complete and controlling as a documentation authority.
 - The completed decision artifact is `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`, blob `879c8e0b419eb429fe5af2022ef647f175b130f4`.
-- The next active route recommendation is the separate substantial research pass `Elemental Affinity Ecology, Environmental Manifestation, Temperament, And Magic-Stimulus Research`.
-- No next prompt is installed by the completed decision.
+- Targeted elemental research is complete at `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md`, blob `909b2bc1d36539880780f2a48b473ccc725333dd`.
+- The next active route recommendation is the documentation-only `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`.
+- No decision prompt is installed by the completed research.
 
 ## Most Specific Accepted Authorities
 
@@ -164,14 +165,38 @@ Narrative may present only results accepted by these owners.
 
 ## Elemental Lane
 
-The elemental audit remains non-canonical evidence:
+The elemental audit and targeted research remain non-canonical evidence. The research supports this conceptual owner graph:
 
-- canonical aliases remain fragmented across Earth/stone, Wind/air, Thunder/lightning, and Darkness/shadow;
-- the final three-and-three Light/Darkness core alignment remains unresolved;
-- environmental affinity pressure, manifestation, baseline temperament, current disposition, magic stimuli, beneficial capabilities, and fae/spirit/guardian taxonomy remain undecided;
-- current hostile River and Storm elementals do not establish universal hostility.
+```text
+world/magic/site/entity owners
+  -> owner-certified affinity contributions and magical occurrences
+  -> bounded affinity observation/aggregation
+  -> manifestation eligibility and accepted transition
+  -> persistent entity/presence identity
+  -> perceived/recognized stimulus
+  -> temperament + disposition + condition/memory
+  -> capability eligibility and deterministic response
+  -> accepted upstream action/outcome
+  -> elemental interaction evidence
+  -> observer projection and narrative realization
+```
 
-The next recommended run is `Elemental Affinity Ecology, Environmental Manifestation, Temperament, And Magic-Stimulus Research`. It must investigate grounded external patterns without deciding setting canon by popularity or mythology. Its evidence must precede `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`.
+Evidence-backed boundaries:
+
+- Affinity pressure should be a family of heterogeneous owner-produced evidence with bounded projections, not one universal canonical scalar.
+- Source, field/observation, manifestation transition, persistent entity, and target-relative disposition remain separate.
+- Stable identity and constitutive axes remain separate from capabilities, relationships, contextual roles, current condition, disposition, and selected action.
+- Temperament is a repeatable prior; disposition is target/context specific; condition constrains the present; action is one accepted response.
+- Active/passive, authoritative/perceived, direct/observed, source/target/locality, novelty/familiarity, compatibility, ownership/consent, and recognition are the minimum stimulus distinctions.
+- The smallest safe first response posture is deterministic eligibility rules plus a small explicit state-transition policy and retained causal reasons.
+- Helpful behavior remains explicitly capability-, trigger-, relationship/consent-, access-, cost-, selection-, and upstream-effect-gated.
+- Warning cues may be observer-visible while exact temperament, disposition, policy branch, motive, and future action remain hidden.
+- Migration, dormancy, dispersal, dissolution, death, runtime unloading, and correction are distinct; despawn is not an in-world outcome.
+- Response identity retains normalized stimulus, context/state and policy versions, perception/recognition, candidates, eligibility/rejections, tie posture, authorized randomness, selection, causes, outcomes, and correction lineage.
+- Current hostile River and Storm elementals do not establish universal hostility.
+- No production dependency is recommended.
+
+The next recommended run is `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`. It must decide bounded authority using the audit and research without treating external ecology, animal behavior, mythology, or game precedent as setting canon. Final Light/Darkness grouping, aliases, environmental mappings, entity taxonomy, temperament/capability distributions, response policies, persistence meanings, schemas, values, content, and implementation remain unauthorized.
 
 ## Later Mortal Crisis And Stakes Route
 
@@ -199,8 +224,8 @@ Packages for evidence through fallback must form the minimum authoritative end-t
 ## Temporary Evidence And Held Routes
 
 - Retain both narrative evidence artifacts for the later Mortal Crisis/Stakes revision and narrative-engine implementation prompt.
-- Retain the elemental audit for targeted research, durable elemental decision, and later implementation.
+- Retain the elemental audit and targeted elemental research for the durable elemental decision and later elemental implementation; retain the research also for the later Mortal Crisis/Stakes revision where elemental interaction matters.
 - Retain comparative mortality and defeat/injury evidence for their named consumers.
 - Held `0.6.6` remains untouched and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Retained `0.6.7` artifacts remain untouched.
-- No prompt, release, primary version, dependency, external model, elemental runtime, Mortal Crisis runtime, save migration, or gameplay implementation is authorized.
+- No decision prompt, release, primary version, dependency, external model, elemental canon/runtime, Mortal Crisis runtime, save migration, or gameplay implementation is authorized.

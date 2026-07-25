@@ -1,231 +1,153 @@
 # Current Codex Output
 
-Source version/run: `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision`
+Source version/run: `Elemental Affinity Ecology, Environmental Manifestation, Temperament, And Magic-Stimulus Research`
 
 Date: 2026-07-24
 
-Branch/status assumption: `master`; starting commit and ending pre-edit commit `a6a2b0d2a760ea53a7684fbb2880e3725022b507`; clean initial and post-pull worktree
+Branch/status assumption: `master`; starting and ending pre-edit commit `b342dfb8a1e8aeb038c42484fe32e923136785e1`; clean before prompt installation, then only the installed prompt was modified before execution
 
-Label class: unversioned durable documentation-only design authority decision
+Label class: unversioned substantial external research and repository-integration planning
 
 Parent version: none
 
 Milestone impact: `supports_current_band`
 
-Status: complete; narrative-realization authority accepted; implementation remains unauthorized
+Status: complete evidence; elemental canon and implementation remain unauthorized
 
 ## Files Changed
 
-- created `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`;
-- updated `docs/dev/current-codex-output.md`;
+The active prompt was installed before execution:
+
+- updated `docs/dev/current-codex-prompt.md`.
+
+The research run then modified exactly its four authorized outputs:
+
+- created `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md`;
+- replaced `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
 - updated `docs/dev/historical-version-and-deferred-route-register.md`.
 
-No other path was intentionally modified. The active prompt was not changed.
+No source, content, schema, validator, test, runtime, save, migration, UI, dependency, generated asset, held `0.6.6`, or retained `0.6.7` path was changed.
 
-## Repository And Source-Identity Verification
+## Repository And Source Verification
 
-- Initial branch/upstream: `master...origin/master`; initial `HEAD` `a6a2b0d2a760ea53a7684fbb2880e3725022b507`.
-- The required fetch and fast-forward pull completed after approval and reported already up to date.
-- The post-pull active prompt remained `Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision`.
-- Completed grounded-research commit `902a33597581c18000b7fd1ecee72e06e258762c` is an ancestor of `HEAD`.
-- Narrative audit matched blob `6cb28305a3b2c67601568103c6309f33956ecd31` and was unmodified.
-- Grounded narrative research matched blob `878219b57342430a47021c45e343ad27e1db95ac` and was unmodified.
-- Living Character Manuscript boundary matched blob `5ad12814696e65c77f893b7d4426731350757245` and was unmodified.
-- Quest/Event/Chronicle boundary matched blob `38ee8287c4c072807f6590537f361b80afc723fc` and was unmodified.
-- Person/NPC decision matched blob `1f130a3b1d63de8d2b7e607c9215ce13d76ea463` and was unmodified.
-- Normal Stakes fallback, campaign rules, injury/restoration, and restricted-Stakes decisions matched blobs `e32ee0eb7a64777e2ca1134600b189d80fd0eafe`, `20e72fb280fd67351135e195f75195a592bce9c9`, `71550ab225cacfea0e8ad00eb29b034dfb86f4ff`, and `e1d2ec6b087eb9be7f9222763e25fee86c2f5329`.
-- Elemental audit matched blob `974e84f89805ba3e6789331183b474fce7f30d36` and was unmodified.
-- Pre-edit handoff and route register matched blobs `802dcf66df93b4c8290cbfe111399049dae460fc` and `186e6b6e0b60ad7c69538c7793c67e2374e23f3e`.
-- Held `Version 0.6.6` remains available as Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`; `git cat-file` confirmed object type `blob`.
-- The new decision artifact resolves in the worktree to blob `879c8e0b419eb429fe5af2022ef647f175b130f4`.
+- Initial branch/upstream was `master...origin/master`; initial `HEAD` was `b342dfb8a1e8aeb038c42484fe32e923136785e1`.
+- Required fetch and fast-forward pull completed and reported already up to date.
+- The prompt was reloaded after pull.
+- Narrative decision matched blob `879c8e0b419eb429fe5af2022ef647f175b130f4`.
+- Elemental audit matched blob `974e84f89805ba3e6789331183b474fce7f30d36`.
+- Pre-edit handoff and route register matched blobs `deaf6870ba51440ddaad20b54d9b62e00b01efc3` and `6fb5a85ff21d4693998b035bd2740b56c6c616b9`.
+- Held `0.6.6` remains a Git blob at `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- The new research artifact resolves in the worktree to blob `909b2bc1d36539880780f2a48b473ccc725333dd`.
 
-## Accepted Owner Graph
+## Research Method And Source Quality
 
-Accepted:
+The pass reviewed repository religion, magic, spell, monster, fauna, habitat, biome, climate, encounter, spawn, Knowledge, Chronicle, presentation, schema, and manifest sources. It then compared 26 direct external sources accessed 2026-07-24:
+
+- ecological threshold, source/sink, hysteresis, and niche-construction research;
+- peer-reviewed temperament, habituation, territoriality, and escalation research;
+- behavior-tree, finite-state, GOAP, utility, BDI, and hybrid-agent literature;
+- W3C OWL, SKOS, and PROV standards;
+- CloudEvents and RFC 8785;
+- a determinism study and direct technical game-AI publications.
+
+The artifact labels each source with author/institution, title, year/posture, URL, evidence class, supported question, and applicability limitation. Ecological and behavioral findings are explicitly analogical; no external lore or mythology source was treated as canon.
+
+## Strongest Findings
+
+### Minimum owner graph
 
 ```text
-authoritative domain results
-  -> owner-certified event-time narrative evidence
-  -> observer / viewpoint projection
-  -> scene and beat plan
-  -> discourse and referent resolution
-  -> locale-specific deterministic realization
-  -> validation
-  -> accepted presentation or deterministic fallback
-  -> presentation consumers
+world/magic/site/entity owners
+  -> owner-certified affinity contributions and magical occurrences
+  -> bounded affinity observation/aggregation
+  -> manifestation eligibility and accepted transition
+  -> persistent entity/presence identity
+  -> perceived/recognized stimulus
+  -> temperament + disposition + condition/memory
+  -> capability eligibility and deterministic response
+  -> accepted upstream action/outcome
+  -> elemental interaction evidence
+  -> observer projection and narrative realization
 ```
 
-Gameplay/domain owners continue to own identity, combat, health, injury, equipment, inventory, recognition, travel, treatment, magic, death, and all accepted outcomes. Narrative planning, realization, validation, and storage are downstream presentation stages.
+### Affinity and manifestation
 
-Prompt/request construction is a separate optional adapter after a closed scene plan. Local deterministic realization is mandatory and model-independent.
+- Affinity pressure should be a family of heterogeneous owner-produced evidence with bounded consumer projections, not one universal canonical scalar.
+- Source, local field/observation, manifestation transition, persistent entity, and current disposition are distinct.
+- Ambient effects do not require an agent identity. Discrete manifestation requires an accepted transition.
+- Entry and exit may differ where later canon accepts history-dependent persistence; source removal must not silently delete an independently persistent entity.
 
-## Accepted Grammar And Referent Boundary
+### Taxonomy and behavior
 
-- Locale-neutral grammatical identity distinguishes grammatical person, one entity, explicit coordination, persistent groups, entity kind, permitted reference strategies, pronoun posture, provenance, and event-time revision.
-- Personal pronoun paradigms are explicit authored or player-selected facts. Mechanical sex, `neutral`, name, title, lineage, appearance, role, profession, and deity presentation cannot infer them.
-- Singular `they` and plural `they` remain distinct semantic cardinalities despite overlapping English agreement.
-- Missing or forbidden personal pronouns degrade to the shortest observer-safe event-time name, title, role, relationship, or stable description.
-- Backend canonical names are never exposed merely because a profile is missing.
-- The first resolver is a deterministic recency-and-role state machine. Competing same-paradigm actors, subject/viewpoint changes, or uncertainty force conservative repetition.
-- Groups require explicit event-time membership and change identity when membership changes.
+- Stable identity/constitutive origin/embodiment/persistence must remain separate from capability, relationship, contextual role, mutable condition, disposition, and selected action.
+- `guardian`, `territorial`, `helpful`, `predatory`, and `defensive` cannot be substance or moral categories by default.
+- Temperament is a repeatable prior; disposition is target- and context-relative; condition supplies current constraints; selected action is one accepted policy result.
+- River and Storm elementals remain examples only and do not prove universal hostility.
 
-## Accepted First English Realization Posture
+### Stimulus and response
 
-- Locked fully inflected sentence families plus a narrow project-owned morphology/agreement layer.
-- Present and simple past; progressive or perfect only where the tested first corpus requires them.
-- Controlled `be`, `have`, `do`, negation, modals, third-person singular, coordination, plural, possessive, article, capitalization, punctuation, and curated irregular behavior.
-- Default no contractions for the first corpus. Quotation and generated dialogue are unsupported without separate upstream and realization authority.
-- Deterministic lexical alternatives require declared semantic equivalence and tests.
-- Static linting and corpus golden tests are mandatory.
-- Correct connected prose and clear controlled repetition outrank unlimited literary variety.
-- No production dependency is accepted. A later offline `jsRealB` comparison remains optional and separately gated.
+- Active versus passive, authoritative versus perceived, direct interaction versus observation, source/target/locality, novelty/familiarity, compatibility, ownership/consent, and recognition are the minimum conceptual distinctions.
+- The smallest safe first response posture is closed deterministic eligibility rules plus a small explicit state-transition policy and retained reasons.
+- Utility may later rank eligible actions; behavior trees may later orchestrate greater accepted breadth. GOAP, BDI, full planners, and hybrid systems are unjustified for the first slice.
+- No production dependency is recommended.
 
-## Accepted Event-Time Evidence And Provenance Boundary
+### Determinism, helpful behavior, and persistence
 
-Six classes remain distinct:
+- Response identity must retain normalized stimulus, context/state and policy versions, perception/recognition, candidates, eligibility/rejections, ordering/ties, authorized randomness, selection, causal parents, action/outcome, and correction lineage.
+- Canonical serialization can stabilize bytes only after semantic normalization; it cannot define semantic identity.
+- Helpful behavior requires explicit capability, qualifying trigger, disposition/relationship/consent, range/access/knowledge, cost/resources, deterministic selection, and acceptance by the upstream effect owner.
+- Migration, dormancy, dispersal, dissolution, death/destruction, runtime unloading, and correction are separate outcomes. Runtime despawn never establishes an in-world outcome.
 
-1. authoritative domain events/results;
-2. owner-certified durable event-time narrative evidence;
-3. observer-projected facts;
-4. renderer/template plans;
-5. accepted prose;
-6. validator-only hidden evidence.
+### Narrative boundary
 
-Durable evidence retains, when relevant, role-bound identities, accepted actions/results, stable occurrence and order identity, explicit simultaneity, location/route/position, visible appearance, worn/held/object transitions, visible injury/condition evidence, observer knowledge and confidence, content revisions, and exact source/projection provenance.
+The completed narrative decision remains controlling. Elemental owners decide identity, manifestation, stimulus, perception, disposition, response, action, and outcome. Narrative evidence records accepted event-time facts and provenance. Observer projection hides unavailable facts. Deterministic realization may present accepted cues and outcomes but cannot infer intent, morality, sapience, identity, or future behavior.
 
-Evidence is not limited to today's template slots and is not a duplicate world snapshot. Current snapshots are usable only when bound to the exact accepted occurrence, beat, order/time, and revision. Event type plus tick is insufficient for repeated same-tick events.
+## Unresolved Questions
 
-## Accepted Observer Projection Boundary
+The later durable decision still owns:
 
-Observer projection precedes planning and realization. It consumes upstream visibility, lighting, distance, obstruction, concealment, armor, recognition, inspection, diagnosis, and qualitative-urgency results.
+- final Light/Darkness three-and-three grouping;
+- final canonical aliases and applied labels;
+- environmental element mappings and locality;
+- public/internal affinity terminology;
+- ambient-manifestation categories;
+- exact magical-entity taxonomy;
+- sapience, communication, mortality, reproduction, binding, and persistence posture;
+- temperament/capability distributions;
+- perception, recognition, stimulus compatibility, favorability interaction, response policy, memory, and any randomness;
+- reinforcement, depletion, recovery, migration, dormancy, dissolution, benefit, warning, consent, anti-farming, and reward rules;
+- all schemas, interfaces, packages, formulas, values, content, tests, UI, saves, and implementation.
 
-The renderer does not calculate line of sight, health truth, diagnosis, severity, urgency, or future outcomes. Exact diagnosis requires upstream observer knowledge. Otherwise, presentation uses visible evidence and a closed uncertainty vocabulary.
-
-Reassessment is a new beat. Hidden timers, percentages, seeds, raw rolls, debug ids, private motives, secret identities, inaccessible diagnoses, future outcomes, and viewpoint-barred facts remain outside the renderer envelope.
-
-## Accepted Planning, Validation, Fallback, And Regeneration Posture
-
-- The planner orders accepted facts, preserves simultaneity, groups compatible beats, uses only supported relations, applies consumer budgets, and inserts a hard decision pause.
-- It cannot invent causality, intention, motive, emotion, strategy, witness, dialogue, action, or outcome.
-- Validation covers source/revision, fact coverage, allowlisted identities/relations/values, leakage, grammar/reference/order, event-time truth, observer/spoiler policy, unsupported claims, mechanical-language suppression, and style budgets.
-- Structural or grammar validity is not factual validity. Learned checks cannot be the sole proof.
-- Material failure rejects, deterministically simplifies, revalidates, and falls back to the minimum safe factual presentation.
-- Identical normalized inputs and deterministic stage versions reproduce the fallback byte-for-byte.
-- Semantic normalization must define set/sequence ordering, absent versus unknown, time, content revision, and roles before hashes become authoritative.
-- Regeneration changes presentation only.
-
-## Accepted Locked-Prose Lifecycle
-
-Accepted conceptual statuses are current, locked-current, player-edited-current, stale-source, stale-policy, validation-failed, and superseded.
-
-Locked or player-edited prose is never silently overwritten. Source, presentation, validation, and edit lineage remain attached. Changed facts or policies mark incompatible text stale or validation-failed and support later compare, regenerate, relock, or retain-as-personal-text choices.
-
-Locked/player-edited prose remains non-authoritative and cannot block gameplay corrections or become evidence.
-
-## Accepted Optional-Adapter Non-Authority
-
-No generator is authorized. A separately approved future adapter may improve transitions, compression, rhythm, equivalent lexical variation, or paragraph grouping over a closed plan.
-
-It may not own facts, order, identity, references, pronouns, visibility, knowledge, diagnosis, urgency, causality, actions, outcomes, or history. Request construction uses allowlisted plan data, never raw saves, unrestricted repository state, or validator-only evidence. Candidate prose is rejectable, never parsed into gameplay, and never provenance.
-
-## Accepted Localization Boundary
-
-Locale-neutral semantics own roles, identity, grammatical person, semantic cardinality, reference permissions, observer knowledge, chronology, supported relations, beat intent, urgency categories, and provenance.
-
-Locale modules own pronoun surfaces, agreement, grammatical gender/case where required, articles, inflection, irregular lexicon, word order, punctuation, contractions, register, honorifics, and localized templates/messages.
-
-CLDR plural categories are not entity cardinality. English strings are not the universal profile. MessageFormat- or Fluent-like systems may later own resources but not planning, references, or factuality. No localization dependency is accepted.
-
-## Authority Retention And Supersession
-
-- Living Character Manuscript, Quest/Event/Chronicle, Person/NPC, combat, party, equipment, inventory, campaign, Normal Stakes fallback, injury/restoration, restricted-Stakes, status/condition/injury, and magic authorities are retained and clarified.
-- Existing Chronicle, journal, notice, account-history, and UI strings remain presentation but are narrowed explicitly: they are not event provenance, grammar authority, or historical reconstruction input.
-- No save, defeat, death, resurrection, Stakes, Chronicle persistence, authored-content, or gameplay authority is superseded.
-- Mortal Crisis narrative can present only accepted upstream outcomes and cannot own crisis resolution.
-
-## Implementation-Package Order
-
-1. grammatical identity and locale-neutral reference contracts;
-2. English profiles, locked templates, and narrow morphology;
-3. deterministic discourse/referent resolver;
-4. event-time narrative evidence and provenance;
-5. observer/recognition/diagnosis projection;
-6. scene and beat planner;
-7. validation, simplification, fallback, and regeneration identity;
-8. appearance/equipment/object/location/position adapters;
-9. Mortal Crisis adapter only after later crisis authority;
-10. Chronicle and Manuscript adapters;
-11. locked/player-edited lifecycle;
-12. morphology-library comparison;
-13. localization-resource spike;
-14. optional bounded-generation spike after separate authorization;
-15. separately approved save/migration/UI integration.
-
-Packages 1-3 may use non-canonical fixtures. Packages 4-7 are the minimum atomic authoritative pipeline before factual production use. No implementation is authorized and no release version is assigned.
-
-## Tests Required
-
-Future non-canonical fixtures must cover:
-
-- all required pronoun/cardinality profiles, forbidden/incomplete profiles, ambiguous actors, viewpoint resets, groups, unknown identities, event-time labels, tense, agreement, and irregular morphology;
-- held, worn, dropped, released, consumed, removed, damaged, and transferred objects; two-hand release before carrying; concealment; location/position; bound snapshots; later state drift; same-tick occurrences; simultaneity; corrections;
-- unknown identity, limited diagnosis, reassessment, qualitative urgency, hidden facts, and validator-channel isolation;
-- connected scenes, decision pauses, supported relations, rejection of invented claims, deterministic reproduction, fallback, mechanical-language rejection, and stale marking;
-- locked/player-edited lineage and seamless optional-adapter fallback.
-
-## Unresolved Implementation Questions
-
-- exact profile fields and entity-category owners;
-- exact English corpus, irregular lexicon, reflexive/modals/style budgets;
-- evidence retention owner, lifetime, compaction, privacy, save/account boundary, storage, and migration;
-- semantic normalization and occurrence identity composition;
-- upstream visibility, recognition, diagnosis, and urgency contracts;
-- supported causal vocabulary and aggregation budgets;
-- presentation persistence and stale-status storage;
-- project-owned morphology versus `jsRealB`;
-- localization resource choice;
-- whether learned validation or bounded generation is ever authorized;
-- exact compare/regenerate/relock/personal-text product controls.
-
-These are later focused questions, not reasons for more broad narrative research.
-
-## Elemental-Lane Separation
-
-The elemental audit remains evidence only. No elemental alignment, manifestation, ecology, temperament, stimulus, beneficial capability, taxonomy, AI, fae, spirit, guardian, construct, animal, or monster behavior is accepted.
-
-The next recommended run is `Elemental Affinity Ecology, Environmental Manifestation, Temperament, And Magic-Stimulus Research`. The later durable elemental decision and later Mortal Crisis/Stakes revision remain separate.
-
-## Temporary Artifacts And Held Routes
-
-Both narrative evidence artifacts remain retained for the later Mortal Crisis/Stakes revision and narrative-engine implementation prompt. The elemental audit remains retained for targeted research, the elemental decision, and later implementation. Comparative mortality and defeat/injury evidence remain retained for their named consumers.
-
-Held `Version 0.6.6` remains paused and byte-recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. Retained `0.6.7` posture is unchanged.
+No additional broad research pass is required before the decision. A later focused evaluation is appropriate only if that decision selects a concrete architecture or ontology need.
 
 ## Checks Run
 
-- inspected initial branch, status, upstream, and `HEAD`;
-- ran the required fetch and fast-forward pull;
-- reloaded and confirmed the active prompt;
-- verified the required ancestor and all pinned evidence/authority identities;
-- confirmed the held `0.6.6` Git object;
-- read the required audits, research, coordination documents, accepted design boundaries, `AGENTS.md`, and `README.md`;
-- inspected relevant event, identity, combat, party, equipment, inventory, Chronicle, journal, account-history, save, and presentation types/consumers plus workspace manifests;
-- verified the decision contains all required authority, evidence, grammar, observer, planning, validation, regeneration, lifecycle, localization, consumer, package-order, test, retention, unresolved, and non-decision sections;
-- verified exact four-path change scope and protected-input status;
-- ran whitespace/error-marker and targeted content checks after editing;
-- no build, typecheck, runtime test, dependency install, generator, external research, or application server was run because this was documentation-only.
+- inspected branch, upstream, status, and `HEAD`;
+- fetched and fast-forward pulled;
+- reloaded the installed prompt;
+- verified all pinned blob identities and the held Git object;
+- read the required audit, narrative authority, coordination files, `AGENTS.md`, `README.md`, manifests, and relevant repository sources;
+- performed direct external research and recorded access date, source class, supported question, and limits;
+- verified the research artifact contains all 26 required sections and answers all 16 questions;
+- verified artifact blob identity;
+- checked exact worktree path scope, protected inputs, conflict/error markers, and whitespace after editing;
+- no build, typecheck, runtime test, dependency install, generator, or application server was run because this was documentation-only research.
 
 ## Risks / Follow-Up Notes
 
-The principal future risks are treating current state as event-time proof, allowing display strings to become identity or provenance, overloading English pronouns as universal grammar, and mistaking structurally valid optional prose for factual prose.
+The largest later risks are collapsing heterogeneous evidence into one number; treating class/tags as current intent; allowing perception, eligibility, and action to blur; using utility to create capability; equating despawn with an in-world outcome; and permitting narrative to infer hidden motive.
 
-Later implementation must preserve the atomic evidence/projection/planning/validation boundary and must not adopt a production dependency before a Lineage-owned corpus, licensing review, bundle measurement, and deterministic evaluation.
+The research artifact and elemental audit must remain evidence rather than authority until the durable decision accepts bounded contracts. The accepted narrative decision remains controlling for presentation.
+
+Held `Version 0.6.6` remains paused and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. Retained `0.6.7` posture is unchanged. The later Mortal Crisis/Stakes authority revision remains separate and follows the elemental decision.
 
 ## Suggested Commit Message
 
-`docs(design): accept narrative realization and fact projection authority`
+`docs(research): study elemental affinity ecology and magic stimuli`
 
 ## Next Recommended Run
 
-Run the separate substantial research pass `Elemental Affinity Ecology, Environmental Manifestation, Temperament, And Magic-Stimulus Research`.
+`Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`
+
+Do not create or execute that decision prompt by inference.
