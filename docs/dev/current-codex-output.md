@@ -74,15 +74,18 @@ The exact held prompt was restored byte-for-byte to `docs/dev/current-codex-prom
 1. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
 2. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
 3. docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-4. `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
-5. bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-6. owner-specific health, care, body, restoration, convalescence, persistence, UI, and runtime packages under separate authorization.
+4. unversioned `Activity Resolution Existing-System Reuse Audit`;
+5. `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
+6. bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+7. owner-specific health, care, body, restoration, convalescence, persistence, UI, and runtime packages under separate authorization.
 
-The Mortal Crisis receipt contract remains the next mortality-system route. It is sequenced behind the restored static milestone and existing user-directed Geography route, not canceled.
+The activity-resolution audit is preserved immediately after its final prerequisite, Geography/recognition acceptance. It must consume the accepted occurrence contract when evaluating attempt identity, determinism, replay, and typed-effect reuse, but remains documentation-only.
+
+The Mortal Crisis receipt contract remains the next mortality-system route. It is sequenced behind the restored static milestone, Geography route, and already queued activity-reuse audit, not canceled.
 
 ## Research Disposition
 
-No new broad research is required before `0.6.6`, `0.6.7`, Geography/recognition planning, or the abstract Mortal Crisis receipt contract. Existing repository audits, comparative mortality research, occurrence authority, save/Stakes authority, narrative authority, and elemental authority are sufficient for those decisions.
+No new broad research is required before `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt contract. Existing repository audits, comparative mortality research, occurrence authority, save/Stakes authority, narrative authority, and elemental authority are sufficient for those decisions.
 
 Before the first executable or balance-bearing lethal-process catalog, run bounded real-world research on:
 
@@ -109,7 +112,8 @@ Keep deferred:
 - services, resources, commodities, stock, dynamic economy, inventory, or crafting execution;
 - resurrection, regrowth, rare-healer, magical-book, tome, scroll, or enchanter-document content;
 - maps, recognition clues, or new Knowledge content before the Geography route;
-- generic POIs and filler in closed content lanes.
+- generic POIs and filler in closed content lanes;
+- activity-resolution trial/process/profile/effect content before the queued reuse audit accepts ownership and reuse boundaries.
 
 ## Files Changed By This Inspection
 
@@ -132,7 +136,8 @@ No production content, runtime, test, schema, validator, dependency, generated f
 - verified the exact held prompt identity;
 - verified no named `0.6.6` production or focused-test source changed after the held prompt source commit;
 - restored the prompt through its original Git blob rather than a regenerated copy;
-- preserved `0.6.7`, Geography/recognition, activity-reuse, mortality, narrative, elemental, and temporary-evidence routes.
+- rechecked the queued Activity Resolution audit and preserved its explicit prerequisite order;
+- preserved `0.6.7`, Geography/recognition, activity reuse, mortality, narrative, elemental, and temporary-evidence routes.
 
 No runtime tests were run because this inspection changed documentation and routing only.
 
