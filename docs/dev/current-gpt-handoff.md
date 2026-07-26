@@ -1,100 +1,122 @@
 # Current GPT Handoff
 
-Date: 2026-07-25
+Date: 2026-07-26
 
 ## Status
 
 - `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision` is complete and controlling.
-- Controlling occurrence contract: `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`, blob `332476a6c90f4a80161ecb8c5123f846997dcf52`.
-- The save/Stakes authority remains controlling for campaign/continuity provenance, artifacts, checkpoints, branches, generations, publication, copied-state protection, and technical recovery.
-- The Mortal Crisis/Stakes authority remains controlling for public Stakes semantics, crisis, actual/final death, resurrection, convalescence, closure, and settlement/succession order.
-- No implementation or next prompt is authorized or installed.
-- Held `Version 0.6.6` remains paused at blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`; retained `0.6.7` remains unchanged.
+- Controlling occurrence artifact: `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`, blob `332476a6c90f4a80161ecb8c5123f846997dcf52`.
+- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md` is the most specific authority for the corrected taxonomy diagram, Ironbound admitted-request wording, and deferred-boundary wording.
+- `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` restores the static milestone and controls the immediate route order.
+- Active prompt: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
+- Active prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- Implementation is authorized only inside the exact `0.6.6` prompt scope.
 
-## Most Specific Accepted Authorities
+## Most Specific Authorities
 
 Use these in precedence order at affected seams:
 
-1. `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md` for occurrence identity, material equivalence, result receipts, named uncertainty, commitment, consequence idempotency, correction, supersession, and legacy event-id classification.
-2. `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md` for campaign-rules version 2, Stakes policy revision 1, campaign/continuity/artifact identity, branching, checkpoint topology, write/recovery ordering, migration, and copied-state protection.
-3. `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md` for Normal/Committed/Ironbound gameplay semantics and the Mortal Crisis/closure sequence.
-4. Campaign-rules, Normal fallback, restricted Stakes, injury/restoration, narrative, elemental, combat, quest/event/Chronicle, and other domain decisions for unchanged owner boundaries.
+1. `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md` for its three narrow corrections.
+2. `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md` for occurrence identity, material equivalence, result receipts, named uncertainty, commitment, consequence idempotency, correction, supersession, and legacy event-id classification.
+3. `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md` for campaign/save identity, topology, migration, publication, and technical recovery.
+4. `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md` for public Stakes semantics, Mortal Crisis, actual/final death, resurrection, convalescence, closure, and settlement/succession order.
+5. `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` for current route priority, research timing, and content disposition.
+6. Campaign-rules, Normal fallback, injury/restoration, narrative, elemental, combat, quest/event/Chronicle, static-content, and other domain decisions for unchanged boundaries.
 
-Temporary audits and research are evidence, not authority. Live code remains implementation and migration evidence.
+Temporary audits and research are evidence, not gameplay authority. Live code remains implementation and migration evidence.
 
-## Accepted Occurrence And Result Contract
+## Occurrence Clarification
+
+The canonical flow is:
 
 ```text
-request / delivery
-  -> domain admission
+request / command
+  -> delivery and admission
        -> occurrence
-            -> deterministic result
-            -> uncertain result -> named channel evidence
-                 -> owner-specific consequence receipts
-                      -> projections
+            -> deterministic accepted result
+            -> uncertain accepted result -> named channel evidence
+            -> no accepted result
+
+accepted result
+  -> owner-specific consequence receipts
+       -> projections
 ```
 
-- Request identity precedes delivery.
-- Domain admission reserves occurrence identity before mutation.
-- Accepted occurrence/result publication is atomic with the authoritative transition.
-- A command id, event id, tick, seed, hash, slot, timestamp, Chronicle id, or UI id is never sufficient authority.
-- Same-tick uniqueness uses stable owner scope plus an admitted-attempt discriminator/source identity, not one global sequence.
-- Order, simultaneity, correlation, causation, parent/child, aggregate/member, and supersession are explicit distinct relations.
+An admitted rejection/no-result occurrence has a consequence only when its owning domain explicitly defines one. A pre-admission rejection has no gameplay occurrence or consequence.
 
-## Material Equivalence And Named Uncertainty
+Ironbound commits admitted request/admission identity, accepted occurrences, accepted results, consequences, and correction lineage. Duplicate delivery, invalid/pre-admission requests, and projection-only command records are not committed gameplay truth.
 
-- Each domain owns a versioned normalized causal fact set.
-- Reload, repeated delivery, address movement, UI/camera/localization changes, and unrelated harmless actions do not create a new opportunity.
-- Owner-certified changes to choice, preparation, equipment, route, time, participants, target, environment, or causal state may create one.
-- A named uncertainty channel is a versioned domain/family authorization, separate from seeds, algorithms, event types, occurrences, and results.
-- A draw is hidden evidence, not gameplay meaning; the domain owner accepts the result.
-- Multiple channels/results require declared roles and relations; unrelated channel use cannot perturb them.
-- Historical rules/content changes never silently reroll accepted results.
+## Active Content Package
 
-## Stakes Commitment
+`0.6.6` adds exactly:
 
-- **Normal:** no general cross-reload commitment; accepted continuity truth remains idempotent; narrow owners may explicitly commit a result family.
-- **Committed:** materially identical uncertain results survive checkpoint replay, restart, relocation, and recovery. Equivalent results link into a child continuity; material divergence may create a new opportunity.
-- **Ironbound:** accepted commands, occurrences, results, and consequences survive retry, reconnect, copies, and technical recovery in one continuity. Terminal authority is not replayable.
+- nine encounter-scale beast records;
+- nine explicit monster-to-fauna lineages;
+- nine macroregional native-fauna ecology additions;
+- 28 source-local drop rows;
+- final expected totals of 33 monsters, 77 drops, 20 loot rows, and 9 explicit fauna lineages.
 
-Loading history and branching remain governed by the save contract. Rollback is not correction.
+Allowed production/test files remain exactly:
 
-## Consequence And Correction Contract
+- `packages/content/base/world/monsters.json`;
+- `packages/content/base/world/regional_ecology_profiles.json`;
+- `tests/unit/monster-validation-hardening.test.mjs`.
 
-- Every downstream owner records one stable receipt per source result and consequence kind.
-- Partial failure retries only the missing receipt; successful sibling effects are not repeated.
-- Correction replaces proven invalid authority with owner approval and retained evidence.
-- Preserve occurrence identity when the event happened; replace it when admission/identity/cause was invalid or merged.
-- Reuse valid uncertainty evidence for interpretation/projection defects; invalidate/recompute only under explicit versioned correction after proven defect.
-- Each consumer owns retain/reverse/compensate/replace/quarantine reconciliation.
-- Correction propagates across addresses, copies, checkpoints, and recovery generations by identity.
-- Closed Ironbound correction exposes no rollback, state selection, resurrection, or favorable reroll.
+The package is static identity, ecology, combat-descriptor, and source-local drop content only. It does not authorize spawning, encounters, dynamic loot, harvesting, populations, AI, status effects, runtime, UI, saves, migrations, economy, magic, or gameplay.
 
-## Projection And Migration Boundaries
+## Near-Term Sequence
 
-- Event envelopes, Chronicle, Manuscript, narrative, UI, logs, telemetry, and indexes are projections.
-- Narrative/UI receive observer-safe facts, never hidden seeds, draws, channels, weights, diagnoses, validator facts, or future outcomes.
-- Generic `type:domain:tick` ids are collision-prone compatibility evidence.
-- Current command/revision patterns and domain hashes are migration inputs, not accepted occurrence/channel/result architecture.
-- UI randomization is nonauthoritative; launcher suffix randomness is unrelated technical use.
-- Ambiguous value-bearing legacy records are quarantined and cannot mint committed results or duplicate consequences.
+1. run exact `0.6.6`;
+2. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
+3. run the queued docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+4. run `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
+5. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+6. proceed to owner-specific health, body, care, restoration, convalescence, persistence, UI, and runtime packages only under separate prompts.
 
-## Future Conceptual Package Order
+The later activity-resolution reuse audit remains behind the Geography route as already queued.
 
-If separately authorized: vocabulary/version; request/retry; occurrence relations; domain material normalization; deterministic receipts; channel/uncertain receipts; Stakes adapters; save/continuity links; consumer receipts; correction/reconciliation; event compatibility; narrow domain adapters; projections; then migration, diagnostics, tests, and availability.
+## Research Posture
 
-Exact fields, packages, schemas, algorithms, persistence, migrations, tooling, UI, content, tests, and availability remain implementation-only.
+No new broad research is needed before `0.6.6`, `0.6.7`, Geography/recognition planning, or the abstract Mortal Crisis receipt decision.
 
-## Evidence And Held Routes
+Before a first executable lethal-process catalog, research should cover hemorrhage/shock; airway compromise, suffocation, and drowning; poisoning and antidote limits; hypothermia/heat exposure; burns; stabilization versus definitive care; transport/reassessment; and observer-safe urgency communication.
 
-- Retain comparative mortality evidence through checkpoint, occurrence, Mortal Crisis, resurrection, settlement, and succession consumers.
-- Retain defeat/injury evidence through the first relevant runtime repair.
+That research should inform grounded categories and causal/intervention boundaries. It must not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
+
+## Content Posture
+
+Expand now only the exact `0.6.6` package.
+
+Keep deferred:
+
+- injury, condition, lethal-process, care, trauma, and convalescence catalogs;
+- dynamic encounter/spawn/loot/ecology systems;
+- NPC, schedule, companion, faction, institution, diplomacy, government, or business content without named authored inputs;
+- service/resource/commodity expansion and dynamic inventory/crafting/economy work;
+- resurrection, regrowth, rare-healer, magical-book/tome/scroll, or enchanter-document content;
+- maps, recognition clues, and new Knowledge content before the Geography contract;
+- generic POIs and filler for closed content lanes.
+
+## Known Live Gaps
+
+- Current HP zero can still flow through legacy terminal archival and save deletion.
+- Generic event ids remain collision-prone `type:domain:tick` projections.
+- Current random/hash mechanisms are not named uncertainty-channel authority.
+- No active functional/lethal/care receipt contract, injury instances, body/restoration runtime, or correction tooling exists.
+- No dynamic monster/ecology/loot behavior is authorized by the static package.
+
+## Evidence Retention
+
+- Retain comparative mortality research through checkpoint, occurrence, Mortal Crisis, resurrection, settlement, and succession consumers.
+- Retain the defeat/injury audit through the first relevant runtime repair.
 - Retain narrative and elemental evidence through their occurrence-aware consumers.
-- Preserve completed save/Stakes, Mortal Crisis/Stakes, and occurrence authorities permanently.
-- Do not restore or regenerate held `0.6.6`.
+- Preserve save/Stakes, Mortal Crisis/Stakes, occurrence, and the narrow occurrence clarification permanently.
+- Keep Gate 1-5 and Gate 7 production-research artifacts through `0.6.7` according to synthesis disposition.
 
-## Next Recommended Route
+## Active Prompt
 
-`Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
+`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 
-This is the expected next unversioned documentation-only contract route. No next prompt has been installed.
+Suggested commit:
+
+`content(world): expand regional monster ecology`
