@@ -2,132 +2,117 @@
 
 Date: 2026-07-26
 
-Source run: `Current Repository Inspection And Planning-Anchor Reconciliation`
+Source run: `Version 0.6.6 Fail-Closed Preflight Review And Support Routing`
 
-Run classification: unversioned documentation-only inspection and coordination maintenance
+Run classification: unversioned documentation-only inspection and coordination correction
 
-Parent version: none
+Parent version: `0.6.6`
 
 Milestone impact: `supports_current_band`
 
-## Repository State Inspected
+## Inspected State
 
-Starting head:
+Codex inspected the clean synchronized repository at:
 
-`d67fbbf8de2df425f45bb947bf58f5df08c75822`
+`36f83d0856eb59446af9dfe597cf4e503470a158`
 
-`docs(routes): preserve activity audit prerequisite order`
+The exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt was not executed because its mandatory untouched baseline failed.
 
-No newer user or Codex push was present. The active prompt remained the exact held/restored:
+No production content, runtime, schema, validator, test, save, migration, dependency, UI, generated, asset, or gameplay file was changed by the preflight.
 
-`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+## Accepted Preflight Findings
 
-Prompt blob:
+The preflight confirmed:
+
+- the exact nine-row monster/ecology matrix is internally correct;
+- all named content references resolve;
+- baseline counts are correct;
+- the exact source-output rule produces 28 new drop rows;
+- `npm.cmd run tool:content-lint` passes at 67 checked files;
+- the required focused command passes 142 of 146 tests;
+- all four failures are JSON parse failures caused by optional leading UTF-8 BOMs.
+
+The required command was:
+
+`node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
+
+## Independent Repository Verification
+
+The reported cause matches the live repository:
+
+- `tests/unit/region-first-world-data.test.mjs` reads UTF-8 text and calls `JSON.parse(raw)` directly;
+- `tests/unit/slug-content.test.mjs` does the same;
+- `regional_ecology_profiles.json` begins with UTF-8 BOM bytes;
+- `region_localities.json` begins with UTF-8 BOM bytes;
+- `flora.json` begins with `U+FEFF`;
+- `minerals.json` begins with `U+FEFF`.
+
+The JSON files are valid BOM-bearing fixtures. The defect is the narrow test-reader assumption, not the `0.6.6` content target.
+
+## Routing Decision
+
+Activated support suffix:
+
+`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
+
+Active prompt blob:
+
+`93d2a29e1cbc8dd931a243becfbbeab2ed8a69a0`
+
+Preserved exact parent prompt blob:
 
 `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
 
-The prompt, production content, runtime, schemas, validators, tests, saves, migrations, dependencies, UI, generated output, and gameplay files were not modified during this inspection.
+`0.6.6.1` changes only:
 
-## Findings
+- `tests/unit/region-first-world-data.test.mjs`;
+- `tests/unit/slug-content.test.mjs`;
+- completion coordination documents.
 
-### Active route is coherent
+The repair removes at most one optional leading `U+FEFF` before `JSON.parse`. It may not edit JSON content, broadly trim input, weaken assertions, create a production parser, add dependencies, or author the parent content package.
 
-The active prompt, current GPT handoff, static-content program, restoration/sequencing decision, and route register all identify exact `0.6.6` as active, `0.6.7` as next, Geography/recognition after `0.6.7`, Activity Resolution reuse after Geography, and the Mortal Crisis receipt contract after that.
+## Required Acceptance
 
-### Three canonical planning headers were stale
+The support run must:
 
-The following live planning documents retained current-anchor wording from before completion of `0.6.5` and the later unversioned authority sequence:
+1. reproduce the four baseline failures before editing;
+2. repair only the two test readers;
+3. pass the two focused tests;
+4. pass content lint at 67 files;
+5. pass the exact parent command at 146/146;
+6. prove all content files are byte-unchanged;
+7. pass `git diff --check` and complete changed-path review;
+8. restore `docs/dev/current-codex-prompt.md` byte-for-byte from parent blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+9. stop without executing `0.6.6` in the same run.
 
-- `docs/dev/project-roadmap.md` named `0.6.4` as the latest completed primary in its top override section;
-- `docs/dev/codex-sequenced-implementation-plan.md` named `0.6.4` as the latest completed primary in its current-anchor section;
-- `docs/dev/project-vision-and-continuity-brief.md` was dated after `0.6.4` and named an older support/audit run.
-
-The roadmap and sequenced plan remain valuable historical records, but their stale top current-anchor lines could misroute a future reader because both documents describe themselves as current sequencing sources.
-
-### No broken temporary evidence artifact was found
-
-The apparently suspicious defeat/injury temporary artifact is not empty. It resolves to blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`, contains the full repository audit, and remains referenced by accepted downstream decisions. It should be retained through the first relevant runtime repair.
-
-### Route-register compression did not erase the active lanes
-
-The current route register still retained the active static lane, `0.6.7`, Geography, Activity Resolution reuse, Mortal Crisis receipts, targeted later research, Stakes, narrative, elemental, Ironbound, culinary, inventory/crafting, command/replay, services/resources, NPC/social, dynamic ecology, maps, and other principal deferred lanes. The maintenance pass strengthened precedence and added explicit planning-anchor maintenance without reopening historical chronology.
-
-## Corrections Applied
-
-Created:
-
-`docs/design/current-planning-anchor-reconciliation.md`
-
-This narrow authority:
-
-- identifies the stale roadmap, sequenced-plan, and former continuity-brief anchors;
-- establishes current-source precedence;
-- records the accepted current primary and near-term sequence;
-- preserves historical roadmap/sequence chronology;
-- requires a later dedicated full-document maintenance pass to refresh those large documents' current-header sections.
+## Coordination Updated
 
 Updated:
 
-- `docs/dev/project-vision-and-continuity-brief.md`;
-- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/dev/current-codex-prompt.md`;
 - `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/current-planning-anchor-reconciliation.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
 - `docs/dev/current-codex-output.md`.
 
-## Current Planning Precedence
+The static-content program remains semantically correct: `0.6.6` is still the active primary and `0.6.7` remains reserved next. The new suffix is a fail-closed prerequisite repair, not a new content milestone.
 
-Use:
+## Near-Term Sequence
 
-1. `docs/dev/current-codex-prompt.md` for executable scope;
-2. `docs/dev/current-gpt-handoff.md` for immediate guardrails and route order;
-3. `docs/dev/current-codex-output.md` for latest inspection/implementation state;
-4. `docs/dev/historical-version-and-deferred-route-register.md` for route identity and deferred posture;
-5. the most specific focused decision;
-6. `docs/design/current-planning-anchor-reconciliation.md` for stale roadmap/sequence current-header conflicts;
-7. roadmap and sequenced plan for non-conflicting historical and long-term context.
-
-## Accepted Current Anchor
-
-- latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
-- latest completed contract: `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision`;
-- active primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-- reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-
-## Accepted Near-Term Sequence
-
-1. exact `0.6.6` static monster/ecology/loot package;
-2. `0.6.7` cross-content audit;
-3. Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-4. Activity Resolution Existing-System Reuse Audit;
-5. Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-6. bounded physiology/first-aid research only before an executable or balance-bearing lethal-process catalog;
-7. separately authorized owner-specific implementation packages.
-
-## Research And Content Disposition
-
-No broad external research is needed before `0.6.6`, `0.6.7`, Geography/recognition, the repository-only Activity Resolution audit, or the abstract Mortal Crisis receipt contract.
-
-Targeted physiology/first-aid research remains required before the first executable or balance-bearing lethal-process catalog. It should cover causal categories, intervention limits, transport/reassessment, and observer-safe urgency without directly importing clinical protocols, exact real-world timers, medical advice, or proprietary values.
-
-Expand now only the exact `0.6.6` package. Dynamic ecology, injury/care catalogs, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection/rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content remain deferred behind their recorded gates.
-
-## Validation
-
-- confirmed latest repository head and recent commit order;
-- verified exact active prompt identity and blob;
-- inspected current output, handoff, route register, roadmap top sections, sequenced-plan current anchor, continuity brief, static-content program, and held Activity Resolution audit;
-- inspected the referenced defeat/injury temporary artifact and confirmed it is populated and still consumed;
-- preserved every production, test, runtime, schema, validator, persistence, save, migration, dependency, UI, asset, generated, and gameplay path;
-- made documentation-only changes;
-- did not run runtime tests because no runtime, content, schema, validator, or test file changed.
-
-## Remaining Maintenance
-
-The roadmap and sequenced plan still physically contain stale top current-anchor wording. They are explicitly noncontrolling under the new reconciliation until a dedicated full-document maintenance pass can update those large files without disturbing their historical chronology.
+1. complete `0.6.6.1`;
+2. restore and run exact `0.6.6`;
+3. run `0.6.7`;
+4. run Geography/recognition planning;
+5. run Activity Resolution reuse audit;
+6. run the Mortal Crisis receipt contract;
+7. run bounded lethal-process/stabilization research only when that contract confirms readiness;
+8. proceed through separately authorized owner-specific packages.
 
 ## Active Prompt
 
-`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
 
-Suggested implementation commit:
+Suggested commit:
 
-`content(world): expand regional monster ecology`
+`test(content): tolerate utf-8 bom in json fixtures`
