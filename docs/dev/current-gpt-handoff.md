@@ -4,13 +4,15 @@ Date: 2026-07-26
 
 ## Status
 
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains the active primary but is fail-closed before authoring.
-- A clean preflight at commit `36f83d0856eb59446af9dfe597cf4e503470a158` confirmed the exact matrix, references, counts, and 28-drop calculation.
-- `npm.cmd run tool:content-lint` passed at 67 files.
-- The required focused baseline failed at 142/146 because two test harnesses passed BOM-bearing UTF-8 text directly to `JSON.parse`.
-- Active support prompt: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`.
-- Active prompt blob: `93d2a29e1cbc8dd931a243becfbbeab2ed8a69a0`.
-- The exact parent `0.6.6` prompt remains preserved as Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- Latest completed primary remains `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains the active parent primary and has not begun authoring.
+- The narrow BOM repair implementation landed at commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
+- That commit changes only `tests/unit/region-first-world-data.test.mjs` and `tests/unit/slug-content.test.mjs`.
+- Both readers now remove one optional leading `U+FEFF` before `JSON.parse`.
+- The repair has not yet been accepted because validation results, content byte-identity evidence, coordination completion, and exact parent-prompt restoration are not committed.
+- Active support prompt: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`.
+- Active prompt blob: `75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`.
+- Exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Current Planning Precedence
 
@@ -24,57 +26,77 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale roadmap/sequence current-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-## Verified BOM Defect
+## Repair Evidence
 
-The baseline readers currently do this:
+Pinned pre-repair coordination head:
 
-```text
-readFile(path, "utf8")
-  -> JSON.parse(raw)
+`895c02df40332c813a8403bd489af6184111ccba`
+
+Pinned repair commit:
+
+`66f12fd6f649f8f218f7f49fc721a8fe545a7a01`
+
+The exact repair range must contain only the two named test files and no content change.
+
+Accepted repair operation:
+
+```js
+JSON.parse(raw.replace(/^\uFEFF/, ""))
 ```
 
-Affected tests:
+No broad `trim()`, content normalization, production parser, dependency, assertion change, or unrelated test change is allowed.
 
-- `tests/unit/region-first-world-data.test.mjs`;
-- `tests/unit/slug-content.test.mjs`.
+## Exact `0.6.6.2` Scope
 
-Confirmed BOM-bearing fixture inputs include:
+The active pass is validation and coordination only.
 
-- `packages/content/base/world/regional_ecology_profiles.json`;
-- `packages/content/base/world/region_localities.json`;
-- `packages/content/base/world/flora.json`;
-- `packages/content/base/world/minerals.json`.
+It must not edit:
 
-The repair must remove only an optional leading `U+FEFF` before parsing. It must not edit or normalize the JSON files, weaken assertions, trim general whitespace, create a production parser, or add dependencies.
+- source or test files;
+- JSON content;
+- schemas or validators;
+- runtime or persistence;
+- UI or gameplay;
+- dependencies, assets, or generated output.
 
-## Exact `0.6.6.1` Scope
+After successful validation only, it may update:
 
-Test files:
-
-- `tests/unit/region-first-world-data.test.mjs`;
-- `tests/unit/slug-content.test.mjs`.
-
-After successful validation, coordination may update current output, this handoff, the route register, and restore the current prompt byte-for-byte from parent blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-
-The support run must not author any `0.6.6` content.
+- current output;
+- this handoff;
+- the route register;
+- the planning-anchor reconciliation;
+- the strategic continuity brief;
+- the current prompt solely by restoring exact parent blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Required Validation
 
-1. reproduce the four baseline BOM parse failures before editing;
-2. run the two repaired test files;
-3. run `npm.cmd run tool:content-lint`;
-4. rerun the exact parent command:
+1. Verify commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` and its exact two-file repair scope.
+2. Run:
+
+   `node --test tests/unit/region-first-world-data.test.mjs tests/unit/slug-content.test.mjs`
+
+3. Run:
+
+   `npm.cmd run tool:content-lint`
+
+4. Run:
 
    `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
 
-5. require 146/146 unless a legitimate baseline change is explicitly explained;
-6. confirm all JSON content is byte-unchanged;
-7. run `git diff --check` and full changed-path inspection.
+5. Require all named tests to pass and the parent baseline to report `146/146` unless a legitimate current count change is fully explained.
+6. Prove `packages/content` is unchanged from `895c02df40332c813a8403bd489af6184111ccba`.
+7. Run conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-diff checks.
+8. Restore the exact parent prompt only after every gate passes.
+9. Stop without running `0.6.6` in the same pass.
+
+## Failure Behavior
+
+If any gate fails, make no edits, leave `0.6.6.2` active, and report the exact blocker. Do not repair tests opportunistically in this pass.
 
 ## Near-Term Sequence
 
-1. complete `0.6.6.1` test-harness repair;
-2. restore and run exact `0.6.6`;
+1. complete `0.6.6.2` and restore the exact parent prompt;
+2. run exact `0.6.6` in a separate Codex pass;
 3. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
 4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
 5. run Activity Resolution Existing-System Reuse Audit;
@@ -82,27 +104,22 @@ The support run must not author any `0.6.6` content.
 7. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
 8. proceed to separately authorized owner-specific implementation packages.
 
-## Preserved Authorities
+## Preserved Authorities And Known Gaps
 
-- occurrence identity, commitment, correction, and consequence idempotency remain controlled by the occurrence decision and its narrow clarification;
-- campaign/save topology and recovery remain controlled by the save/Stakes decision;
-- Normal/Committed/Ironbound and Mortal Crisis remain controlled by the Stakes authority revision;
-- narrative and elemental decisions remain documentation authority;
-- `0.6.6.1` changes no content or gameplay authority.
-
-## Known Live Gaps
-
-- current HP zero can still enter legacy terminal archival and save deletion;
-- generic event ids remain collision-prone compatibility projections;
+- occurrence identity, commitment, correction, and consequence idempotency remain design authority but are not broadly implemented;
+- campaign/save topology and technical recovery remain design authority but are not implemented in live save envelopes;
+- Normal, Committed, Ironbound, Mortal Crisis, resurrection, and final closure remain controlling documentation authority;
+- current HP zero may still enter legacy terminal archival and save deletion;
+- generic event ids remain collision-prone;
 - current random/hash mechanisms are not named uncertainty-channel authority;
 - no active functional/lethal/care receipt, injury instance, body/restoration runtime, or correction tooling exists;
 - no dynamic monster/ecology/loot behavior is authorized;
-- roadmap and sequenced-plan top current anchors remain stale and noncontrolling under the planning-anchor reconciliation.
+- the isolated `0.7` readiness-audit branch is noncontrolling and must not be merged by this support pass.
 
 ## Active Prompt
 
-`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
+`Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`
 
 Suggested commit:
 
-`test(content): tolerate utf-8 bom in json fixtures`
+`docs(routes): accept bom repair and restore 0.6.6`
