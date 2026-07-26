@@ -5,86 +5,55 @@ Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
 
-This register is the compact query surface for historical version identity and deferred-route posture. It does not replace detailed chronology, current output, or focused decisions. When an older roadmap row conflicts with this register, use this register for route identity and the newer focused decision for implementation boundaries.
+This register is the compact query surface for historical version identity and deferred-route posture. It does not replace detailed chronology, current output, or focused decisions.
 
-## Historical Version Register
+For current execution use, in order:
 
-| Canonical version | Alias or suffix | Route | Status | Final disposition | Primary source |
-| --- | --- | --- | --- | --- | --- |
-| `0.1.x`-`0.5.197` | none unless a focused handoff says otherwise | Foundation, authority, validation, and first content foundations | Historical completed range | Retained as chronology; exact evidence remains in git and the sequenced plan. | `docs/dev/codex-sequenced-implementation-plan.md` |
-| `0.5.198` | none | Economy Authority Boundary Decision | Complete | Durable economy ownership boundary. | `docs/design/economy-authority-boundary-decision.md` |
-| `0.5.199` | historical alias for `0.5.227` | Settlement Economy Schema Decision | Remapped | Completed at `0.5.227`; never present `0.5.199` as pending. | `docs/design/settlement-economy-schema-decision.md` |
-| `0.5.200`-`0.5.201` | none | Family and civic authority boundary decisions | Complete | Durable planning foundations. | `docs/dev/codex-sequenced-implementation-plan.md` |
-| `0.5.202` | historical alias for `0.5.225` | Polity Schema Decision | Remapped | Completed at `0.5.225`. | `docs/design/pipeline-roadmap-consolidation-decision.md` |
-| `0.5.203`-`0.5.204` | none | Travel and magic-study authority boundary decisions | Complete | Durable planning foundations. | `docs/dev/codex-sequenced-implementation-plan.md` |
-| `0.5.205` | historical alias for `0.5.224` | Magic Study Source Schema Decision | Remapped | Completed at `0.5.224`. | `docs/design/pipeline-roadmap-consolidation-decision.md` |
-| `0.5.206` | none | NPC And Social Authority Boundary Decision | Complete | Durable planning foundation. | `docs/design/npc-social-authority-boundary-decision.md` |
-| `0.5.207` | historical alias for `0.5.223` | Person vs NPC Schema Decision | Remapped | Completed at `0.5.223`. | `docs/design/pipeline-roadmap-consolidation-decision.md` |
-| `0.5.208`-`0.5.209` | none | Quest/event/Chronicle and item/equipment authority decisions | Complete | Durable planning foundations. | `docs/dev/codex-sequenced-implementation-plan.md` |
-| `0.5.210` | historical alias for `0.5.221` | Weapon And Armor Profile Schema Decision | Remapped | Completed at `0.5.221`. | `docs/design/weapon-and-armor-profile-schema-decision.md` |
-| `0.5.211` | none | No route assigned | Unused numbering gap | No proposal, implementation, reservation, or missing work was found. Do not invent one. | git history around commits `16921e5e` and `79fed273` |
-| `0.5.212` | none | Combat Authority Boundary Decision | Complete | Durable combat ownership boundary. | `docs/design/combat-authority-boundary-decision.md` |
-| `0.5.213` | historical alias for `0.5.220` | Monster Record Schema Decision | Remapped | Completed at `0.5.220`. | `docs/design/monster-record-schema-decision.md` |
-| `0.5.214` | none | Crafting Authority Boundary Decision | Complete | Durable crafting ownership boundary. | `docs/design/crafting-authority-boundary-decision.md` |
-| `0.5.215` | historical alias for `0.5.219` | Recipe And Production Schema Decision | Remapped | Completed at `0.5.219`. | `docs/design/recipe-and-production-schema-decision.md` |
-| `0.5.216`-`0.5.355` | consolidated labels control displaced proposals | Authority decisions, schemas, seeds, validation, audits, and stabilization | Historical completed range | Use the sequenced plan for exact routes; a planned row is not implementation evidence. | `docs/dev/codex-sequenced-implementation-plan.md` |
-| `0.5.356` | none | Tool Surface Test Boundary Repair | Complete | Accepted repair; no automatic audit required. | `docs/future_content_backlog.md` |
-| `0.5.356.1` | support suffix only | Tool Surface Test Post-Repair Audit | Conditional support | Run only if fresh focused evidence contradicts the accepted repair. | `docs/design/streamlined-pipeline-roadmap-decision.md` |
-| `0.5.357` | supersedes stale tool-surface audit identity | Runtime Ownership Transition Readiness Consolidation | Complete | Canonical `0.5.357`; selected player travel as the first runtime consumer. | `docs/design/runtime-ownership-transition-readiness-consolidation.md` |
-| `0.5.357.1` | support suffix | Player Travel Boundary Clarification | Complete | Support clarification; did not consume a primary label. | `docs/design/player-travel-boundary-clarification.md` |
-| `0.6.0`-`0.6.3` | `.1`/`.2`/`.3` audit or repair suffixes | Engine-owned travel, quest acceptance, quest tracking, and activity selection | Complete and accepted | Runtime ownership accomplishments remain authoritative. | `docs/dev/codex-sequenced-implementation-plan.md` |
-| unversioned 2026-07-14 maintenance | none | Historical Route Cleanup And Static Content Expansion Pipeline Integration | Complete | Installed the static expansion milestone and exact `0.6.4` prompt without changing content or runtime behavior. | `docs/design/static-content-expansion-program.md` |
-| `0.6.4` | none | World And Settlement Static Content Expansion | Complete and accepted | Commit `44dfb0a79bdd9941ca45e39d83b125b3ced6d9ca` contains the accepted package despite its inaccurate subject. | `docs/future_content_backlog.md` |
-| `0.6.5` | none | Item, Material, And Recipe Static Content Expansion | Complete and validated | Added the synthesis-owned 16-row batch for 28 recipes across 10 families with complete static closure. | `docs/future_content_backlog.md` |
-| GPT-DR program | no Codex primary number | Cross-Domain Natural Resources, Materials, Production, And Magitech Research | Complete | Seven accepted one-gate/one-artifact research passes; artifacts retained only under synthesis dispositions. | `docs/design/cross-domain-natural-resources-materials-production-and-magitech-research-program.md` |
-| unversioned integration | no Codex primary number | Cross-Domain Production Research Integration | Complete | Created durable synthesis and installed revised exact `0.6.5`. | `docs/design/cross-domain-production-research-synthesis.md` |
-| unversioned 2026-07-19 research | none | Rich Flora, Fauna, Culinary, Nutrition, And Dietary Systems Audit And Research | Complete; superseded by repair | Temporary evidence was repaired and integrated. | `docs/dev/tmp-rich-culinary-dietary-system-research-2026-07-19.md` |
-| unversioned 2026-07-20 first repair | none | Rich Culinary And Dietary Research Results Repair And Acceptance Audit | Complete | Repaired paths, dispositions, confidence, dependencies, and ration integration. | `docs/design/rich-culinary-dietary-system-research-program.md` |
-| unversioned 2026-07-20 integration audit | none | Culinary Preparation, Portion, Meal Composition, Food Knowledge, And Historical Ration Integration Audit | Complete; superseded | Later focused decisions control. | `docs/design/culinary-ration-serving-preparation-and-container-labeling-decision.md` |
-| unversioned 2026-07-21 first integration repair | none | Culinary Integration Results Repair And Contract Acceptance Audit | Complete | Later metabolism/protein/attribute decisions control. | `docs/design/metabolic-energy-stamina-fat-storage-and-atrophy-decision.md` |
-| `GPT-DR.nutrition.protein-recovery-muscle-adaptation` | no Codex primary number | Real-World Nutrition, Protein Recovery, And Muscle-Adaptation Research | Complete | Conclusions transferred into durable integration decisions. | `docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md` |
-| unversioned 2026-07-21 attribute integration | none | Unified Physical Attribute Growth, Current State, Nutrition Bands, And Structural Loss | Complete design authority | Accepted base/current/developed/structural-loss and rebuilding boundaries. | `docs/design/unified-physical-attribute-growth-and-nutrition-band-integration-decision.md` |
-| unversioned 2026-07-21 difficulty/world/stakes audit | none | Difficulty Preset, Grim World, And Stakes Separation Contract Planning Audit | Complete and consumed | Later campaign/Stakes decisions control. | `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md` |
-| unversioned 2026-07-22 restricted Stakes direction | none | Restricted Stakes Continuity, Death Closure, And Prestige Decision | Complete design authority | Later authority names and narrows this as Ironbound. | `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md` |
-| unversioned 2026-07-22 campaign-rules acceptance | none | Campaign Rules Identity, Legacy Migration, Story Abstraction, And Normal Stakes Acceptance Decision | Complete design authority | Accepted canonical axes, locks, migration, Story, and Normal. | `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md` |
-| unversioned 2026-07-22 injury/trauma/restoration direction | none | Injury Recovery, Trauma, And Magical Restoration Decision | Complete design authority | Accepted injury, trauma, irreversible harm, restoration, and resurrection boundaries. | `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md` |
-| unversioned 2026-07-22 defeat/health audit | none | Normal Stakes Defeat, Injury, Trauma, And Magical Restoration Repository Audit And Contract Planning | Complete evidence | Recorded terminal paths and owner risks. | `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md` |
-| unversioned 2026-07-22 Normal Stakes fallback | none | Normal Stakes Defeat Fallback And Recovery Receipt Decision | Complete design authority | Accepted generic nonterminal fallback and repair receipt. | `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md` |
-| unversioned 2026-07-23 mortality research | none | Comparative Checkpoint, Mortal-State, Rescue, Resurrection, And Stakes Research | Complete evidence | Compared commitment, incapacity, rescue, restoration, and succession. | `docs/dev/tmp-comparative-checkpoint-mortality-rescue-and-stakes-research-2026-07-23.md` |
-| unversioned 2026-07-23 narrative/elemental audit | none | Narrative Realization, Mortal Crisis Presentation, And Elemental Ecology Repository Audit And Contract Planning | Complete evidence | Established live gaps and owner graphs. | `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md` |
-| `GPT-DR.narrative.grounded-realization` | no Codex primary number | Grounded Narrative Realization, Referential Grammar, And Validation Research | Complete evidence | Supported deterministic fact-grounded narrative authority. | `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md` |
-| unversioned 2026-07-24 narrative authority | none | Narrative Realization, Referential Grammar, Appearance, And Fact-Projection Decision | Complete design authority | Accepted grammar, event-time evidence, observer projection, deterministic realization, validation, staleness, and localization. | `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md` |
-| unversioned 2026-07-24 elemental ecology research | none | Elemental Affinity Ecology, Environmental Manifestation, Temperament, And Magic-Stimulus Research | Complete evidence | Supported heterogeneous affinity and stimulus boundaries. | `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md` |
-| unversioned 2026-07-25 elemental authority | none | Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision | Complete design authority | Accepted eight-element canon and affinity/manifestation/response boundaries. | `docs/design/elemental-alignment-environmental-manifestation-temperament-and-magic-stimulus-decision.md` |
-| unversioned 2026-07-25 mortality/Stakes authority | none | Checkpoint Commitment, Mortal Crisis Sequence, Resurrection Aftereffects, Final Closure, And Stakes Authority Revision | Complete design authority | Accepted Stakes, six-phase Mortal Crisis, body/restoration/finality, convalescence, and closure ordering. | `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md` |
-| unversioned 2026-07-25 save/Stakes contract | none | Stakes Identity, Campaign/Save Provenance, Checkpoint Topology, And Technical-Recovery Contract Decision | Complete design authority | Accepted campaign/save provenance/topology/recovery/migration/copy protection. | `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md` |
-| unversioned 2026-07-25 occurrence contract | none | Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision | Complete design authority | Accepted admission, uniqueness, material equivalence, results, channels, commitment, correction, and idempotency. | `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md` |
-| unversioned 2026-07-26 clarification | none | Occurrence Contract Taxonomy And Commitment Clarification | Complete narrow authority | Corrected consequence flow, Ironbound admitted-request semantics, and deferred wording. | `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md` |
-| unversioned 2026-07-26 sequencing | none | Static Content Restoration And Mortality Research Sequencing Decision | Complete coordination authority | Restored exact `0.6.6`; preserved `0.6.7`, Geography, Activity reuse, mortality receipt, and later research order. | `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` |
-| `0.6.6` | none | Monster, Ecology, And Loot Static Content Expansion | Active exact prompt | Exact nine-monster, nine-lineage, nine-ecology-link static package. | `docs/dev/current-codex-prompt.md` |
-| `0.6.7` | none | Cross-Content Coherence And Coverage Audit | Reserved next | Install after accepted `0.6.6`; repair only if proven. | `docs/design/static-content-expansion-program.md` |
+1. `docs/dev/current-codex-prompt.md`;
+2. `docs/dev/current-gpt-handoff.md`;
+3. `docs/dev/current-codex-output.md`;
+4. this register;
+5. the most specific focused decision;
+6. `docs/design/current-planning-anchor-reconciliation.md` when stale current-anchor wording in the roadmap or sequenced plan conflicts with the sources above.
+
+Historical roadmap and sequenced-plan rows remain chronology unless a live current-state section is explicitly refreshed.
+
+## Current Primary Register
+
+| Canonical version | Route | Status | Final disposition | Primary source |
+| --- | --- | --- | --- | --- |
+| `0.1.x`-`0.5.355` | Foundation, authority, schemas, validation, content, and early runtime transitions | Historical completed range | Use git history and the sequenced plan for exact chronology. | `docs/dev/codex-sequenced-implementation-plan.md` |
+| `0.5.356` | Tool Surface Test Boundary Repair | Complete | Accepted repair. | `docs/future_content_backlog.md` |
+| `0.5.356.1` | Tool Surface Test Post-Repair Audit | Conditional support | Run only if fresh focused evidence contradicts the accepted repair. | `docs/design/streamlined-pipeline-roadmap-decision.md` |
+| `0.5.357` | Runtime Ownership Transition Readiness Consolidation | Complete | Canonical route; selected player travel. | `docs/design/runtime-ownership-transition-readiness-consolidation.md` |
+| `0.5.357.1` | Player Travel Boundary Clarification | Complete support suffix | Did not consume a primary label. | `docs/design/player-travel-boundary-clarification.md` |
+| `0.6.0`-`0.6.3` | Engine-owned travel, quest acceptance/tracking, and activity selection | Complete and accepted | Runtime ownership accomplishments remain authoritative. | `docs/dev/codex-sequenced-implementation-plan.md` |
+| `0.6.4` | World And Settlement Static Content Expansion | Complete and accepted | Exact static package accepted. | `docs/future_content_backlog.md` |
+| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete and validated | 28 recipes across 10 families. | `docs/design/cross-domain-production-research-synthesis.md` |
+| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active exact prompt | Add only the exact nine-monster, nine-lineage, nine-ecology-link package. | `docs/dev/current-codex-prompt.md` |
+| `0.6.7` | Cross-Content Coherence And Coverage Audit | Reserved next | Install after accepted `0.6.6`; repair only if evidence proves a defect. | `docs/design/static-content-expansion-program.md` |
 
 ## Identity Rules
 
-- Three-segment labels are primary roadmap versions. Four-segment labels are support runs attached to their primary and never silently become primaries.
+- Three-segment labels are primary roadmap versions. Four-segment labels are support runs attached to one named primary.
 - `three-segment support package` is invalid terminology.
-- A historical proposed label is an alias only when a durable consolidation source maps it to a completed canonical label.
+- A historical proposed label is an alias only when a durable source maps it to a completed canonical label.
 - An absent number is not evidence of missing work. `0.5.211` is an evidenced unused gap.
-- Stale planned rows are historical chronology, not current recommendations.
 - GPT Deep Research and unversioned research/integration do not consume primary `0.6.x` numbers.
 - Difficulty, World Rules, Stakes, injury, narrative, elemental, Mortal Crisis, save, and occurrence contracts remain unversioned until implementation packages are assigned.
-- A support suffix must name exactly one primary parent.
+- Stale current-anchor wording in the roadmap or sequenced plan does not override the active prompt, handoff, output, this register, or the planning-anchor reconciliation.
 
 ## Deferred Route Register
 
 | Lane | Classification | Completed foundation | Missing layer | Reopening trigger | Near-term posture | Primary source |
 | --- | --- | --- | --- | --- | --- | --- |
+| Planning-anchor maintenance | accepted correction; full refresh deferred | Current handoff/output/register and refreshed continuity brief | Full roadmap and sequenced-plan current-header maintenance | Dedicated documentation maintenance or next material roadmap rewrite | Do not treat stale headers as execution authority | `docs/design/current-planning-anchor-reconciliation.md` |
 | Static world/settlement | expanded-and-validated | Accepted `0.6.4` | None | New proven gap | Complete | `docs/design/static-content-expansion-program.md` |
 | Static item/material/recipe | expanded-and-validated | Accepted `0.6.5`: 28 recipes/10 families | None | New proven gap | Complete | `docs/design/cross-domain-production-research-synthesis.md` |
 | Static monster/ecology/loot | active implementation | Exact matrix and closed references | Execute exact package/tests | Active prompt | Expand now; no dynamic behavior | `docs/dev/current-codex-prompt.md` |
 | Cross-content coherence | reserved maturity gate | Static lint/validators | Audit `0.6.4`-`0.6.6` | Accepted `0.6.6` | Run `0.6.7` next | `docs/design/static-content-expansion-program.md` |
 | Geographic Knowledge/recognition | queued user-directed design gate | Place/Knowledge authorities | Facets, clues, observation, overlays | Accepted `0.6.7` | Run after static audit | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
-| Activity resolution reuse | queued repository audit | Selection, trial, quest, Knowledge, crafting, magic, and occurrence foundations | Repository ownership/reuse audit | Accepted Geography plan plus live route check | Run immediately after Geography; docs only | `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` |
+| Activity resolution reuse | queued repository audit | Selection, trial, quest, Knowledge, crafting, magic, and occurrence foundations | Repository ownership/reuse audit | Accepted Geography plan plus live route check | Run immediately after Geography; documentation only | `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` |
 | Injury/trauma/Mortal Crisis/restoration | accepted authority; queued receipt contract | Injury, Mortal Crisis, save, occurrence | Functional/lethal/care/crisis receipts | Accepted Activity reuse audit | Run receipt contract; no catalog/runtime | `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` |
 | First lethal-process/stabilization catalog | research-gated | Comparative principles and abstract authority | Bounded physiology/first-aid research and owner contract | Receipt contract confirms readiness | Research then plan; no inferred content | `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` |
 | Difficulty/World/Stakes | accepted; not implemented | Axes, topology, occurrence, commitment, correction | Schemas, persistence, migration, adapters, UI/tests | Separate authorization | Legacy runtime remains | `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md` |
