@@ -27,23 +27,27 @@ The accepted near-term order is:
 1. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
 2. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
 3. the already queued docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-4. `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
-5. bounded external research for the first lethal-process and stabilization catalog, only if that later contract confirms implementation or content readiness;
-6. owner-specific lethal-process, care, body, restoration, convalescence, persistence, UI, and runtime packages under separate authorization.
+4. the queued unversioned `Activity Resolution Existing-System Reuse Audit`;
+5. `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
+6. bounded external research for the first lethal-process and stabilization catalog, only if that later contract confirms implementation or content readiness;
+7. owner-specific lethal-process, care, body, restoration, convalescence, persistence, UI, and runtime packages under separate authorization.
 
-The occurrence decision's recommendation of the Mortal Crisis receipt contract remains valid. It is temporarily sequenced behind the restored user-directed static-content and Geography routes; it is not canceled or demoted to optional work.
+The activity-resolution audit is preserved immediately after its final prerequisite, Geography/recognition acceptance. It must consume the completed occurrence contract when evaluating request, attempt, deterministic/uncertain result, replay, and typed-effect reuse; it remains documentation-only and authorizes no shared resolver.
+
+The occurrence decision's recommendation of the Mortal Crisis receipt contract remains valid. It is temporarily sequenced behind the restored user-directed static-content, Geography, and already queued activity-reuse routes; it is not canceled or demoted to optional work.
 
 ## Research Disposition
 
 ### Research not required now
 
-No broad external research is required before `0.6.6`, `0.6.7`, Geography/recognition planning, or the abstract Mortal Crisis receipt contract.
+No broad external research is required before `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt contract.
 
 Existing evidence is sufficient for those routes:
 
 - repository audits establish the current HP-zero, combat, save, health-vocabulary, party, treatment-item, spell-hook, body, Chronicle, and lifecycle seams;
 - comparative mortality research already supports separation of functional state, independently owned lethal processes, process-specific stabilization, contextual rescue, body identity, and closure;
-- accepted occurrence authority now supplies identity, result, retry, correction, and consequence-receipt boundaries.
+- accepted occurrence authority now supplies identity, result, retry, correction, and consequence-receipt boundaries;
+- the queued activity audit is explicitly a live-repository reuse/ownership audit, not an external-comparison research gate.
 
 ### Research required later
 
@@ -86,6 +90,8 @@ Do not expand the following merely because their design lanes exist:
 - magical books, tomes, scrolls, enchanter documents, resurrection capabilities, rare healers, or regrowth content;
 - region maps, political overlays, recognition clues, or new Knowledge content before the queued Geography/recognition route;
 - generic POIs or filler expansions in closed Highcrown coverage.
+
+The Activity Resolution audit may identify later content prerequisites, but it must not author trials, quest actions, process profiles, crafting phases, gathering difficulty, familiarity, effects, or runtime content during the audit itself.
 
 ## Coordination Rule
 
