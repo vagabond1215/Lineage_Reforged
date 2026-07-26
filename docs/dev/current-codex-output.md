@@ -1,175 +1,251 @@
 # Current Codex Output
 
-Source version/run: `Elemental Alignment, Environmental Manifestation, Temperament, And Magic-Stimulus Decision`
-
 Date: 2026-07-25
 
-Branch/status assumption: `master`; starting and ending pre-edit commit `ddfed7497a016496c1f4a2deb71c3128d5260689`; `origin/master` matched after fetch and fast-forward pull; clean before editing
+Source run: `Checkpoint Commitment, Mortal Crisis Sequence, Resurrection Aftereffects, Final Closure, And Stakes Authority Revision`
 
-Label class: unversioned durable documentation-only design-authority decision
+Run classification: unversioned durable documentation-only design-authority revision
 
 Parent version: none
 
 Milestone impact: `supports_current_band`
 
-Status: complete and controlling; implementation remains unauthorized
+Branch/status assumption: `master`, tracking `origin/master`; starting and post-pull worktree clean; documentation edits remain unstaged
+
+Starting commit before fetch: `7734f07971ffbe7d66403c3d4267619f6cccf03b`
+
+Ending pre-edit commit after fast-forward pull: `fea042ab914f3da0b2db0a89648fcaf5c07d774c`
+
+Ending commit: `fea042ab914f3da0b2db0a89648fcaf5c07d774c` (documentation changes uncommitted)
+
+Suggested commit: `docs(design): revise mortal crisis resurrection and stakes authority`
 
 ## Files Changed
 
-Modified exactly the four authorized outputs:
+1. Created `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md`.
+2. Replaced `docs/dev/current-codex-output.md`.
+3. Updated `docs/dev/current-gpt-handoff.md`.
+4. Updated materially affected rows in `docs/dev/historical-version-and-deferred-route-register.md`.
 
-- created `docs/design/elemental-alignment-environmental-manifestation-temperament-and-magic-stimulus-decision.md`;
-- replaced `docs/dev/current-codex-output.md`;
-- updated `docs/dev/current-gpt-handoff.md`;
-- updated `docs/dev/historical-version-and-deferred-route-register.md`.
-
-No prompt, audit, research, runtime, schema, validator, content, test, save, migration, UI, dependency, generated file, held `0.6.6`, or retained `0.6.7` path was changed.
+No runtime, shared type, schema, validator, save, migration, package, dependency, content, UI, test, generated, roadmap, sequenced-plan, held-route, or retained-route file changed.
 
 ## Repository And Pinned Source Verification
 
-- Branch/upstream: `master...origin/master`.
-- Starting and ending pre-edit commit: `ddfed7497a016496c1f4a2deb71c3128d5260689`.
-- Required fetch and fast-forward pull completed and reported already up to date.
-- The active prompt was reloaded after pull and remained unmodified.
-- Completed elemental research commit `b30119cc5e1d9111e6a8db967e8fc3e7b08b71bf` is an ancestor of `HEAD`.
-- Elemental audit matched blob `974e84f89805ba3e6789331183b474fce7f30d36`.
-- Grounded elemental research matched blob `909b2bc1d36539880780f2a48b473ccc725333dd`.
-- Accepted narrative decision matched blob `879c8e0b419eb429fe5af2022ef647f175b130f4`.
-- Pre-decision handoff matched blob `19d4c373975d4030973ef9254bbd6ee3b7e66930`.
-- Pre-decision route register matched blob `d9707336416d1b79c7f6587030a26b0d39a39c16`.
-- Held `0.6.6` remains available as Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-- New decision artifact resolves to blob `932f017b75c7cb43539945f5cac3310efa413f75`.
+- Fetched and pruned `origin`, then fast-forwarded `master` from `7734f079` to `fea042ab`.
+- Reloaded the active prompt after pull and confirmed the checkpoint/Mortal Crisis/Stakes revision remained active.
+- Confirmed elemental-authority commit `7734f07971ffbe7d66403c3d4267619f6cccf03b` is an ancestor of `HEAD`.
+- Confirmed every prompt-pinned authority, research, audit, coordination, and grounded-elemental blob matched exactly.
+- Confirmed held `Version 0.6.6` blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` remains available.
+- The decision artifact resolves to blob `615c5da8f9bf2c7ef210a44227bdcbb1f5f89a78`.
+- No execution-gate contradiction was found.
 
-## Accepted Canon, Aliases, And Alignment
+## Final Stakes Taxonomy
 
-Exactly eight canonical elements are accepted:
+Exactly three public choices are accepted:
 
-```text
-Fire
-Water
-Earth
-Wind
-Thunder
-Ice
-Light
-Darkness
-```
+| Public label | Machine id | Defining posture |
+| --- | --- | --- |
+| Normal Stakes | `normal_stakes` | Ordinary manual/quick saves, broad selected rollback, no general event commitment. |
+| Committed Stakes | `committed_stakes` | Qualifying checkpoints only, selected checkpoint rollback, committed named uncertain outcomes. |
+| Ironbound Stakes | `ironbound_stakes` | One authoritative continuity, no selected rollback, committed outcomes, actual death atomically final. |
 
-Accepted alias and applied-label posture:
+`Ironbound` is accepted as the final restricted-Stakes name. `Committed` is the distinct checkpoint tier. `Mortal` remains a Difficulty label. Legacy `hardcore`, `hardcore_stakes`, historical death labels, and combat-profile `hardcore` do not become Stakes identities.
 
-- `stone` projects to Earth;
-- `air` projects to Wind;
-- `lightning` and electricity project to Thunder;
-- `shadow` and `void` are Darkness-associated where source context supports it;
-- `holy` and `divine_light` are Light-associated traditions, effects, religious terms, or presentation labels;
-- none creates another element, and no immediate migration is authorized.
+The ids do not imply production availability. Creation locks and owner-completeness gates remain controlling.
 
-Accepted higher alignment:
+## Checkpoint, Load, Technical-Recovery, And Commitment Decisions
 
-```text
-Light: Water, Wind, Ice
-Darkness: Fire, Earth, Thunder
-```
+- Load topology, event commitment, and technical recovery are separate authorities.
+- Normal retains its current ordinary manual/quick-save topology and permissive rollback.
+- Committed permits checkpoint creation/selection only at qualifying owner-approved boundaries; exact sleep/cadence/retention rules remain deferred.
+- Ironbound retains one authoritative continuity and no chosen rollback.
+- Technical recovery restores the latest verified authoritative state and is never a favorable-state picker in Committed or Ironbound.
+- Committed and Ironbound use stable occurrence identity and named uncertainty channels or an equivalent causal model.
+- One global ordered random stream is rejected.
+- Materially identical causes include the same occurrence, participants, relevant accepted choices/order, resources/state, locality/environment, policy, and named uncertainty channel.
+- Material preparation, equipment, route, timing, participant, environment, or accepted-action changes may form a new identity; reload, menu order, presentation, or unrelated harmless order may not.
+- Correction retains source/policy/checkpoint lineage and cannot duplicate consequences.
 
-The alternative Light = Fire/Water/Wind and Darkness = Earth/Ice/Thunder was rejected because it split the repository's stronger religious-order pairings and the Unbound grouping. Higher alignment is metaphysical, not moral, thermal, demographic, religious, temperamental, or capability-bearing.
+## Mortal State And Mortal Crisis Decisions
 
-## Accepted Owner Graph
+Accepted conceptual layers:
 
 ```text
-world / magic / site / entity owners
-  -> owner-certified affinity contributions and magical occurrences
-  -> bounded affinity observation
-  -> manifestation eligibility and accepted transition
-  -> persistent presence or entity identity
-  -> perceived or directly interacting stimulus
-  -> temperament + target-relative disposition + condition + scoped memory
-  -> capability and precondition eligibility
-  -> deterministic response policy
-  -> accepted upstream action and outcome
-  -> elemental interaction evidence
-  -> observer projection and narrative realization
+functional state
+  active | downed | unconscious
+
+lethal processes
+  independently owned, causally sourced conditions
+
+care requirement
+  none | basic stabilization | professional care | exceptional magic
+
+life state
+  alive | actually dead but restoration-eligible | final death
+
+derived presentation
+  stable | unstable | aid required | resurrection possible | closure imminent
 ```
 
-Affinity is a family of heterogeneous, provenance-bearing evidence with locality- and time-bounded projections, not one universal canonical scalar. Source, observation, ambient phenomenon, discrete transition, entity identity, authored placement, encounter selection, combatant adaptation, response, outcome, and narrative remain separate.
+`stable`, `unstable`, and similar urgency are derived, not mutable duplicate truth. HP zero, defeat, downing, unconsciousness, immobility, or encounter closure cannot establish actual death. No universal bleed-out timer or critical flag is accepted.
 
-## Manifestation And Taxonomy Decisions
+The six accepted phases are:
 
-- Candidate environmental evidence was accepted for all eight elements without formulas or guarantees.
-- Core manifestations may use strong ordinary environmental evidence; Light and Darkness ordinarily require rarer sacred, convergence, breach, world-event, or intense aligned-core evidence.
-- Ambient phenomena, transient presences, persistent entities, authored placements, summoned/bound entities, and reinforcement of existing identities remain distinct.
-- Removing a source cannot silently delete an independently persistent entity.
-- Reinforcement cannot create duplicate identity or reset consequences.
-- Environmental elementals, fae/nature spirits, summoned/bound entities, constructs, magical animals, guardian beings, corrupted variants, and ordinary affinity-bearing monsters remain distinct.
-- `guardian`, `territorial`, `helpful`, `predatory`, `defensive`, `hostile`, `benevolent`, and `aggressive` are not substance or moral classes.
-- `monsterClass` and combatant adaptation do not own broader entity identity.
+1. Threat Resolution;
+2. Immediate Stabilization;
+3. Extraction;
+4. Transit;
+5. Treatment Or Restoration;
+6. Closure.
 
-## Temperament, Stimulus, And Response Decisions
+Mortal Crisis is an orchestrator and presentation framework. Health, injury, condition, hazard, combat, party, inventory, travel, institution, magic, body, death, Stakes, Chronicle, and narrative owners retain their facts. Phase skipping requires an explicit accepted reason.
 
-- Temperament prior, target-relative disposition, current condition, scoped memory/familiarity, and selected action are separate.
-- River and Storm elementals remain valid hostile authored examples without establishing universal hostility.
-- Active and passive magic, authoritative occurrence and perceived cue, direct interaction and observation, and activated/leaking/discharged/dormant/carried enchantments remain distinct.
-- Passive enchanted equipment is not casting and is ordinarily tolerated unless an accepted policy recognizes a qualifying activation, leak, presentation, contact, intensity, or destabilization.
-- Directional same-element resonance, aligned-higher tolerance, assimilation, countering, caution, passive-enchantment tolerance, and contextual overrides are accepted.
-- The six-core directional matrix is accepted conceptually without symmetry, scores, formulas, probabilities, or balance.
-- The first response posture is deterministic eligibility, a small explicit response-state policy, stable candidate ordering/ties, selected response, upstream action/outcome acceptance, and retained reasons.
-- Capability and preconditions precede ranking; utility cannot create eligibility.
-- No production AI, behavior tree, planner, ontology engine, canonical-serialization dependency, or other new dependency is accepted.
+## Rescue And Care Decisions
 
-## Capability, Persistence, And Narrative Boundaries
+- Stabilization addresses only named lethal processes and does not imply consciousness, mobility, complete recovery, safety, transport, or definitive care.
+- An unconscious or actually dead character cannot make reflex choices.
+- Extraction/rescue consumes threat, helper, permission, relationship, capability, supply, patient/body, route, terrain, weather, time, destination, institution, law, cost, and willingness facts.
+- One omnibus rescue percentage is rejected.
+- Named uncertain events require stable causal identity and retained results.
+- Intermediate care may stabilize, resupply, transport, or refer; definitive treatment requires an applicable capability and access.
+- Context-specific certified crisis outcomes control before the Normal generic fallback.
+- The generic Normal fallback and `recovery_pending` remain safe nonterminal minimums when context facts are insufficient.
+- Ordinary defeat still does not force a Normal save or create a mandatory injury, trauma, loss, or convalescence tax.
 
-Helpful behavior requires a present identity, explicit applicable capability, qualifying trigger, relationship/consent, access and current-condition eligibility, cost or constraint where applicable, deterministic selection, upstream effect acceptance, and retained evidence. Benevolence, alignment, fae identity, or guardian role cannot directly create healing, regrowth, resurrection, supplies, quest completion, or rescue.
+## Actual Death, Body, Resurrection, And Convalescence Decisions
 
-Observer-readable warning and escalation use accepted cues and actions rather than a universal hostility meter. Severe stimuli may skip warning; de-escalation requires an accepted cause.
+- Actual death is a death-owner transition from authoritative causes, never an inference from HP zero.
+- Actual death retains stable character, occurrence, cause/source, place/order, policy, body identity/location/condition, evidence, eligibility, and correction provenance.
+- A body is a unique identity-bearing world fact, not a generic item; recovery, transport, preservation, theft, burial, loss, destruction, and correction require accepted transitions.
+- Runtime unloading, save/load, scene exit, or source recreation cannot move, lose, destroy, or duplicate a body.
+- Normal and Committed may allow deterministic restoration-eligible actual death.
+- In Normal, an allowed earlier save may abandon the later death timeline and all unauthorized durable value.
+- In Committed, prior checkpoints remain selectable while eligibility is open; accepted final closure atomically retires the prior checkpoint ladder.
+- In Ironbound, actual death, final death, and terminal closure are one transaction; resurrection is unavailable after commitment.
+- Eligibility depends on tier, identity, body, explicit capability, access, actor/institution, resource, law, consent, willingness, time, and absence of final closure.
+- Informed abandonment is allowed only in Normal/Committed by an authorized living controller after an explicit warning.
+- Successful resurrection restores life state but does not imply full healing, consciousness, mobility, resource restoration, regrowth, inventory reset, teleport, quest reset, or relationship reset.
+- Post-Restoration Convalescence is typed restoration strain plus unresolved injuries, body-condition consequences, method-specific complications, and optional owner-accepted trauma consequences.
+- Immutable base attributes never decrease.
 
-Migration, dormancy, dispersal, dissolution/transformation, death/destruction, binding/release, alteration, runtime unloading, and correction are separate. Runtime despawn is never an in-world outcome.
+## Final Closure, Settlement, And Succession
 
-The accepted narrative authority remains controlling downstream. Elemental owners establish identity, manifestation, stimulus, perception, disposition, response, action, and outcome before evidence, observer projection, realization, validation, Chronicle, or Manuscript. Prose cannot infer motive, morality, identity, sapience, capability, or future behavior.
+For resurrection-permitting tiers:
 
-## Retained And Superseded Boundaries
+```text
+actual death
+  -> provisional nonpaying body/restoration state
+  -> restoration OR eligibility closure
+  -> final death
+  -> terminal character closure
+  -> terminal Chronicle / Prestige / estate / account / achievement settlement
+  -> successor availability
+```
 
-Religion, spells, crystals, infrastructure, magic, monsters, encounters, spawn selectors, ecology, favorability, Knowledge, Chronicle, Manuscript, campaign, defeat, injury/restoration, death, resurrection, and Stakes authorities remain retained. Their elemental seams are clarified or narrowed only where aliases, display labels, tags, encounter hostility, `monsterClass`, or presentation previously could be mistaken for broader authority.
+Ironbound collapses actual death through closure atomically, then uses the same downstream settlement ordering.
 
-Current save topology, Normal Stakes fallback, restricted-Stakes death closure, resurrection, Prestige, estate, succession, and rewards are unchanged. Held `0.6.6` and retained `0.6.7` remain untouched.
+- Live commands stop and read-only historical access begins at terminal closure.
+- A closed character record is retained rather than physically deleted.
+- Prestige, estate, terminal Chronicle, irreversible rewards/achievements, and successor control do not settle at reversible actual death.
+- Normal abandoned timelines cannot retain durable account value.
+- Committed settlement follows successful checkpoint retirement and closure commit.
+- Ironbound settlement follows atomic closure.
+- Stable closure/source/checkpoint identities, consumed evidence, and idempotent application prevent duplicate value.
+- `deathZeroesPrestige` remains rejected.
+
+## Retained, Clarified, And Superseded Authorities
+
+Retained:
+
+- Difficulty/World Rules/Stakes orthogonality;
+- campaign creation locks and production gates;
+- Normal manual/quick saving, no-forced-save defeat behavior, nonterminal HP-zero, fallback, and `recovery_pending`;
+- restricted one-continuity/no-rollback and immediate terminal-death posture;
+- nonzero circumstance-sensitive restricted Prestige;
+- injury severity/recoverability, `Shaken Spirit`, immutable base attributes, and healing/restoration/resurrection separation;
+- narrative-realization and elemental capability owners;
+- held `0.6.6` and retained `0.6.7`.
+
+Clarified/narrowed:
+
+- certified Mortal Crisis outcomes precede the generic fallback;
+- resurrection policy is per tier;
+- settlement follows final closure;
+- Ironbound adds event/draw commitment and a final public identity;
+- magical-entity aid remains explicit-capability and effect-owner gated.
+
+Superseded:
+
+- deferral of public tier count;
+- deferral of the restricted label/id;
+- any checkpoint tier based only on fewer saves;
+- any terminal payout at restoration-eligible actual death.
+
+No controlling authority file was edited in place.
+
+## Narrative And Elemental Integration
+
+The accepted narrative pipeline remains downstream of authoritative crisis/body/care/restoration/closure facts. Observer projection may expose qualitative urgency, known diagnoses, visible changes, blockers, and explicit decisions without revealing hidden timers, percentages, seeds, draw ids, future outcomes, or validator-only truth.
+
+Narrative cannot invent motive, capability, rescuer, institution, route, object, action, or outcome. Chronicle and Manuscript cannot reconstruct active state.
+
+Elemental, fae, guardian, construct, magical-animal, summoned/bound, or other entity aid requires present identity, explicit applicable capability, trigger, relationship/consent/policy eligibility, access/condition, cost/resource, deterministic response, affected-owner acceptance, and retained evidence. Alignment, benevolence, role, religion, or narrative importance cannot create healing or resurrection.
 
 ## Unresolved Implementation Questions
 
-Still deferred:
+- checkpoint cadence, qualifying sleep/boundary rules, retention, and UI;
+- journal/snapshot/storage/canonicalization/recovery mechanisms;
+- occurrence normalization, uncertainty channels, algorithm, and correction;
+- lethal-process catalog, progression, treatment, and observation;
+- rescue, route, transport, and institution adapters;
+- body representation and preservation;
+- resurrection capabilities, content, access, cost, law, risk, and resources;
+- convalescence catalog, duration, formula, and balance;
+- closure/account/estate/achievement/succession transactions;
+- reward formulas, inheritance, successor selection, migrations, saves, copied-slot protection, and production availability.
 
-- exact schemas, interfaces, packages, storage, saves, migrations, and canonicalization adapters;
-- exact contribution vocabulary, locality, aggregation, threshold, depletion, recovery, and persistence;
-- exact entity taxonomy representation, sapience, communication, reproduction, mortality, summoning, and binding;
-- exact temperament vocabulary, distributions, favorability integration, perception, recognition, memory, and response states;
-- exact ordering, ties, any authorized randomness, capabilities, costs, consent, range, and effect adapters;
-- exact reinforcement, migration, dormancy, dispersal, dissolution, anti-farming, reappearance, loot, and rewards;
-- exact elemental narrative-evidence contracts and consumers;
-- any later bounded architecture or vocabulary-tool evaluation after concrete need.
-
-These questions do not reopen the accepted canon, aliases, mapping, owner graph, or deterministic first posture.
+These do not reopen the accepted taxonomy, owner graph, tier policies, or settlement order.
 
 ## Checks Run
 
-- inspected branch, upstream, status, and `HEAD`;
-- fetched and fast-forward pulled, then reloaded the active prompt;
-- verified every pinned source identity and held Git object;
-- read the required audit, research, narrative authority, coordination files, elemental/magic authorities, religion content, `AGENTS.md`, and `README.md`;
-- inspected relevant spell, crystal, infrastructure, monster, encounter, spawn, habitat, schema, TypeScript, validator, test, and presentation seams for contradictions;
-- confirmed the live religious pairings and Unbound grouping support the accepted alignment;
-- verified the decision artifact contains all required sections and all 32 mandatory conclusions;
-- verified exact changed-path scope, protected inputs, conflict/error markers, whitespace, JSON-independent Markdown structure, and artifact blob identities;
-- no build, typecheck, runtime test, dependency install, generator, or application server was run because this was documentation-only.
+- `git fetch --prune origin`
+- `git pull --ff-only origin master`
+- branch/upstream/HEAD and clean-state inspection
+- ancestor verification for `7734f07971ffbe7d66403c3d4267619f6cccf03b`
+- exact `git hash-object` verification for every pinned file
+- held-blob availability verification with `git cat-file`
+- required-file and live-seam inspection with `rg`
+- decision heading/section inventory
+- required-conclusion and key-term coverage checks
+- Markdown whitespace/error scan
+- exact changed-path and forbidden-path review
+- final `git diff --check`
+- final `git status --short --branch`
+
+No runtime or automated gameplay tests were run because the authorized change is documentation-only.
 
 ## Risks / Follow-Up Notes
 
-The principal future risks are collapsing heterogeneous evidence into one scalar; allowing aliases, tags, `monsterClass`, encounter hostility, or prose to own behavior; blurring authoritative and perceived stimuli; letting utility manufacture capability; duplicating persistent identity across reloads; and treating despawn as an in-world outcome.
+- Committed checkpoint cadence, retention, and exact terminal checkpoint retirement are intentionally unresolved implementation design.
+- Normal rollback means terminal state and settlement can remain timeline-local; durable account value must not survive abandonment.
+- Ironbound is semantically accepted but must remain unavailable until its one-continuity, commitment, death, closure, recovery, migration, warning, and idempotency packages are complete.
+- Existing live HP-zero archival, save deletion, legacy difficulty, and account settlement seams remain implementation gaps; this run does not repair them.
+- Temporary mortality, defeat/injury, narrative, and elemental evidence remains retained for named consumers.
+- No next prompt was installed.
 
-Temporary elemental audit and research artifacts remain retained for their named Mortal Crisis/Stakes and implementation consumers. Narrative, mortality, and defeat/injury evidence retain their separately named consumers.
+## Temporary Evidence And Held Routes
 
-No next prompt was installed. Implementation remains unauthorized.
-
-## Suggested Commit Message
-
-`docs(design): accept elemental alignment and manifestation authority`
+- Retain comparative mortality research through all checkpoint/crisis/resurrection/settlement/succession implementation consumers.
+- Retain the defeat/injury audit through the first relevant runtime replacement/repair package.
+- Retain narrative evidence through Mortal Crisis/narrative implementation consumers.
+- Retain elemental evidence through remaining elemental implementations and any crisis-capability consumer.
+- Held `Version 0.6.6` remains paused and recoverable.
+- Retained `0.6.7` remains unchanged.
 
 ## Next Recommended Run
 
-`Checkpoint Commitment, Mortal Crisis Sequence, Resurrection Aftereffects, Final Closure, And Stakes Authority Revision`
+Unversioned documentation-only:
+
+`Stakes Identity, Campaign/Save Provenance, Checkpoint Topology, And Technical-Recovery Contract Decision`
+
+It should define the smallest first package’s exact conceptual contracts without implementing schemas, persistence, migrations, UI, or gameplay.
