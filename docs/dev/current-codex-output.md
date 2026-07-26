@@ -2,250 +2,330 @@
 
 Date: 2026-07-25
 
-Source run: `Checkpoint Commitment, Mortal Crisis Sequence, Resurrection Aftereffects, Final Closure, And Stakes Authority Revision`
+Source run: `Stakes Identity, Campaign/Save Provenance, Checkpoint Topology, And Technical-Recovery Contract Decision`
 
-Run classification: unversioned durable documentation-only design-authority revision
+Run classification: unversioned durable documentation-only contract decision
 
 Parent version: none
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master`, tracking `origin/master`; starting and post-pull worktree clean; documentation edits remain unstaged
+Branch/status assumption: `master`, tracking `origin/master`; pre-edit worktree clean; documentation edits remain unstaged
 
-Starting commit before fetch: `7734f07971ffbe7d66403c3d4267619f6cccf03b`
+Starting commit before fetch: `8a67597143798841b53c4857e5ccd5dae5acb923`
 
-Ending pre-edit commit after fast-forward pull: `fea042ab914f3da0b2db0a89648fcaf5c07d774c`
+Ending pre-edit commit after fetch: `8a67597143798841b53c4857e5ccd5dae5acb923`
 
-Ending commit: `fea042ab914f3da0b2db0a89648fcaf5c07d774c` (documentation changes uncommitted)
+Ending commit before requested completion commit: `8a67597143798841b53c4857e5ccd5dae5acb923`
 
-Suggested commit: `docs(design): revise mortal crisis resurrection and stakes authority`
+Suggested commit: `docs(design): define stakes save and recovery contracts`
 
 ## Files Changed
 
-1. Created `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md`.
+1. Created `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`.
 2. Replaced `docs/dev/current-codex-output.md`.
 3. Updated `docs/dev/current-gpt-handoff.md`.
 4. Updated materially affected rows in `docs/dev/historical-version-and-deferred-route-register.md`.
 
-No runtime, shared type, schema, validator, save, migration, package, dependency, content, UI, test, generated, roadmap, sequenced-plan, held-route, or retained-route file changed.
+No prompt, completed authority, audit, research, roadmap, sequenced plan, runtime, shared type, schema, validator, package, dependency, persistence, save manager, lifecycle, migration, account, test, UI, content, generated, held-route, or retained-route file changed.
 
 ## Repository And Pinned Source Verification
 
-- Fetched and pruned `origin`, then fast-forwarded `master` from `7734f079` to `fea042ab`.
-- Reloaded the active prompt after pull and confirmed the checkpoint/Mortal Crisis/Stakes revision remained active.
-- Confirmed elemental-authority commit `7734f07971ffbe7d66403c3d4267619f6cccf03b` is an ancestor of `HEAD`.
-- Confirmed every prompt-pinned authority, research, audit, coordination, and grounded-elemental blob matched exactly.
-- Confirmed held `Version 0.6.6` blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` remains available.
-- The decision artifact resolves to blob `615c5da8f9bf2c7ef210a44227bdcbb1f5f89a78`.
+- Fetched/pruned `origin`; local `master` was already synchronized with `origin/master`.
+- Reloaded the full active prompt after fetch.
+- Confirmed Mortal Crisis/Stakes commit `b55b9d5e2656d62644251c289038aa19f5eebe7f` is an ancestor of `HEAD`.
+- Confirmed every pinned authority, evidence, coordination, and live-source blob exactly.
+- Confirmed no pinned live save-system source changed after the controlling commit.
+- Confirmed held `Version 0.6.6` blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- The new contract artifact resolves to blob `86f10b6fbdc4fc7fdce3f50673556930b9d35999`.
 - No execution-gate contradiction was found.
 
-## Final Stakes Taxonomy
+## Accepted Semantic Version And Registry
 
-Exactly three public choices are accepted:
+- Target campaign-rules semantic version: **2**.
+- Version 1: readable Normal-only migration input.
+- Initial three-policy Stakes registry semantic revision: **1**.
 
-| Public label | Machine id | Defining posture |
-| --- | --- | --- |
-| Normal Stakes | `normal_stakes` | Ordinary manual/quick saves, broad selected rollback, no general event commitment. |
-| Committed Stakes | `committed_stakes` | Qualifying checkpoints only, selected checkpoint rollback, committed named uncertain outcomes. |
-| Ironbound Stakes | `ironbound_stakes` | One authoritative continuity, no selected rollback, committed outcomes, actual death atomically final. |
+| Label | Machine id |
+| --- | --- |
+| Normal Stakes | `normal_stakes` |
+| Committed Stakes | `committed_stakes` |
+| Ironbound Stakes | `ironbound_stakes` |
 
-`Ironbound` is accepted as the final restricted-Stakes name. `Committed` is the distinct checkpoint tier. `Mortal` remains a Difficulty label. Legacy `hardcore`, `hardcore_stakes`, historical death labels, and combat-profile `hardcore` do not become Stakes identities.
+Campaign/save policy authority owns the registry. Display/localization labels version independently. Policies remain creation-locked, append-only or explicitly migrated, and unavailable until all required owners are complete.
 
-The ids do not imply production availability. Creation locks and owner-completeness gates remain controlling.
+Legacy difficulty, `hardcore`, `hardcore_stakes`, `dead`, `hardcore_dead`, and combat-profile `hardcore` remain migration/history inputs, never policy identities.
 
-## Checkpoint, Load, Technical-Recovery, And Commitment Decisions
+## Canonical Identity Graph And Vocabulary
 
-- Load topology, event commitment, and technical recovery are separate authorities.
-- Normal retains its current ordinary manual/quick-save topology and permissive rollback.
-- Committed permits checkpoint creation/selection only at qualifying owner-approved boundaries; exact sleep/cadence/retention rules remain deferred.
-- Ironbound retains one authoritative continuity and no chosen rollback.
-- Technical recovery restores the latest verified authoritative state and is never a favorable-state picker in Committed or Ironbound.
-- Committed and Ironbound use stable occurrence identity and named uncertainty channels or an equivalent causal model.
-- One global ordered random stream is rejected.
-- Materially identical causes include the same occurrence, participants, relevant accepted choices/order, resources/state, locality/environment, policy, and named uncertainty channel.
-- Material preparation, equipment, route, timing, participant, environment, or accepted-action changes may form a new identity; reload, menu order, presentation, or unrelated harmless order may not.
-- Correction retains source/policy/checkpoint lineage and cannot duplicate consequences.
+Canonical terms:
 
-## Mortal State And Mortal Crisis Decisions
-
-Accepted conceptual layers:
+- `campaign` is the durable playable world/history identity;
+- `continuity` is one authoritative or selected playable history chain;
+- `run` is a scoped compatibility/account-history term;
+- `timeline` is descriptive continuity-lineage language, not a second authority id.
 
 ```text
-functional state
-  active | downed | unconscious
-
-lethal processes
-  independently owned, causally sourced conditions
-
-care requirement
-  none | basic stabilization | professional care | exceptional magic
-
-life state
-  alive | actually dead but restoration-eligible | final death
-
-derived presentation
-  stable | unstable | aid required | resurrection possible | closure imminent
+account
+  -> campaign
+       -> continuity
+            -> character identities
+            -> continuation head
+            -> artifacts/checkpoints
+            -> hidden write/recovery generations
+            -> correction lineage
+       -> closure, retirement, and consumed-value authority
 ```
 
-`stable`, `unstable`, and similar urgency are derived, not mutable duplicate truth. HP zero, defeat, downing, unconsciousness, immobility, or encounter closure cannot establish actual death. No universal bleed-out timer or critical flag is accepted.
+Account, campaign, continuity, character, storage address, artifact, snapshot, checkpoint, head revision, write/recovery generation, correction, and closure identities are distinct.
 
-The six accepted phases are:
+A successor is a new character in the same campaign and may continue its authoritative continuity. Copying bytes or moving an address cannot mint identity.
 
-1. Threat Resolution;
-2. Immediate Stabilization;
-3. Extraction;
-4. Transit;
-5. Treatment Or Restoration;
-6. Closure.
+## Live Baseline Classification
 
-Mortal Crisis is an orchestrator and presentation framework. Health, injury, condition, hazard, combat, party, inventory, travel, institution, magic, body, death, Stakes, Chronicle, and narrative owners retain their facts. Phase skipping requires an explicit accepted reason.
+- Current manual/quick slot ids and localStorage keys are addresses.
+- Version-6 envelopes are migration source artifacts.
+- `SaveSnapshot.accountId` is valid account association, not campaign identity.
+- `snapshotVersion` is format compatibility only.
+- `capturedAtTick` is ordering evidence, not head revision.
+- Current `RunDifficultyState` is migration input.
+- `sourceRunId` is scoped lineage/migration evidence.
+- history `saveSlotIds`, metadata, and UI summaries are projections/indexes.
+- current payout/estate/achievement receipts are consumer evidence requiring future campaign/continuity/closure links.
+- bare JSON and current save-then-profile ordering are implementation facts, not accepted architecture.
+- current HP-zero archival/deletion remains a known defect.
 
-## Rescue And Care Decisions
+## Artifact And Generation Taxonomy
 
-- Stabilization addresses only named lethal processes and does not imply consciousness, mobility, complete recovery, safety, transport, or definitive care.
-- An unconscious or actually dead character cannot make reflex choices.
-- Extraction/rescue consumes threat, helper, permission, relationship, capability, supply, patient/body, route, terrain, weather, time, destination, institution, law, cost, and willingness facts.
-- One omnibus rescue percentage is rejected.
-- Named uncertain events require stable causal identity and retained results.
-- Intermediate care may stabilize, resupply, transport, or refer; definitive treatment requires an applicable capability and access.
-- Context-specific certified crisis outcomes control before the Normal generic fallback.
-- The generic Normal fallback and `recovery_pending` remain safe nonterminal minimums when context facts are insufficient.
-- Ordinary defeat still does not force a Normal save or create a mandatory injury, trauma, loss, or convalescence tax.
+| Class | Player posture |
+| --- | --- |
+| Normal manual/quick artifact | visible and selectable; address may be rebound to a new accepted artifact revision |
+| Committed selectable checkpoint | visible/selectable only after owner qualification and verified publication |
+| Committed continuation head | ordinary Continue state; may be newer than the last checkpoint; not rollback history |
+| Ironbound continuation head | sole continuable state |
+| technical recovery generation | hidden and never selectable |
+| correction artifact/generation | authorized supersession, not ordinary selection |
 
-## Actual Death, Body, Resurrection, And Convalescence Decisions
+A snapshot is the captured gameplay payload, not artifact kind, checkpoint qualification, head status, generation, closure, or policy.
 
-- Actual death is a death-owner transition from authoritative causes, never an inference from HP zero.
-- Actual death retains stable character, occurrence, cause/source, place/order, policy, body identity/location/condition, evidence, eligibility, and correction provenance.
-- A body is a unique identity-bearing world fact, not a generic item; recovery, transport, preservation, theft, burial, loss, destruction, and correction require accepted transitions.
-- Runtime unloading, save/load, scene exit, or source recreation cannot move, lose, destroy, or duplicate a body.
-- Normal and Committed may allow deterministic restoration-eligible actual death.
-- In Normal, an allowed earlier save may abandon the later death timeline and all unauthorized durable value.
-- In Committed, prior checkpoints remain selectable while eligibility is open; accepted final closure atomically retires the prior checkpoint ladder.
-- In Ironbound, actual death, final death, and terminal closure are one transaction; resurrection is unavailable after commitment.
-- Eligibility depends on tier, identity, body, explicit capability, access, actor/institution, resource, law, consent, willingness, time, and absence of final closure.
-- Informed abandonment is allowed only in Normal/Committed by an authorized living controller after an explicit warning.
-- Successful resurrection restores life state but does not imply full healing, consciousness, mobility, resource restoration, regrowth, inventory reset, teleport, quest reset, or relationship reset.
-- Post-Restoration Convalescence is typed restoration strain plus unresolved injuries, body-condition consequences, method-specific complications, and optional owner-accepted trauma consequences.
-- Immutable base attributes never decrease.
+## Minimum Provenance
 
-## Final Closure, Settlement, And Succession
+Every authoritative artifact/generation must retain or resolve:
 
-For resurrection-permitting tiers:
+- account, campaign, continuity/parent, and relevant character identity;
+- Difficulty, World Rules, Stakes id, campaign-rules version, and policy revision;
+- artifact/generation kind and identity;
+- parent/source artifact, checkpoint, or head;
+- separate address binding;
+- capture order/source/reason;
+- snapshot/content/format compatibility;
+- qualifying-boundary receipt where applicable;
+- head identity/revision;
+- generation identity/order/verification;
+- state posture;
+- correction cause/lineage;
+- closure and checkpoint-retirement links;
+- downstream consumed receipts;
+- reserved occurrence/result/correction links.
+
+Exact fields and storage remain deferred.
+
+## Normal Topology And Branch Decision
+
+Normal retains manual/quick saves, broad rollback, no defeat-forced save, unsaved generic fallback, legacy repair exception, and no general event commitment.
+
+Loading an earlier artifact does not create a branch. A new child continuity is created at the **first accepted gameplay mutation after loading an artifact that is not the current head**. Saving later only captures that already-selected/created continuity.
+
+When the child becomes active, later history on the abandoned continuity is nonauthoritative. It cannot newly post durable closure, estate, account, achievement, or successor value.
+
+Because Normal preserves rollback, closure-derived durable value remains provisional until a separately accepted branch-finalization transaction retires conflicting rollback artifacts. No cross-timeline entitlement is accepted.
+
+Copies retain artifact, continuity, closure, and receipt identity regardless of address.
+
+## Committed Topology
+
+Committed separates:
 
 ```text
-actual death
-  -> provisional nonpaying body/restoration state
-  -> restoration OR eligibility closure
-  -> final death
-  -> terminal character closure
-  -> terminal Chronicle / Prestige / estate / account / achievement settlement
-  -> successor availability
+latest continuation head
+  -> ordinary quit/restart continuation
+
+retained qualifying checkpoints
+  -> only player-selectable rollback
+
+hidden verified generations
+  -> technical recovery only
 ```
 
-Ironbound collapses actual death through closure atomically, then uses the same downstream settlement ordering.
+Save-and-exit and arbitrary save requests may persist/confirm the head but never create checkpoints.
 
-- Live commands stop and read-only historical access begins at terminal closure.
-- A closed character record is retained rather than physically deleted.
-- Prestige, estate, terminal Chronicle, irreversible rewards/achievements, and successor control do not settle at reversible actual death.
-- Normal abandoned timelines cannot retain durable account value.
-- Committed settlement follows successful checkpoint retirement and closure commit.
-- Ironbound settlement follows atomic closure.
-- Stable closure/source/checkpoint identities, consumed evidence, and idempotent application prevent duplicate value.
-- `deathZeroesPrestige` remains rejected.
+Minimum qualifying boundaries:
 
-## Retained, Clarified, And Superseded Authorities
+1. campaign creation/start;
+2. completed qualifying major sleep or secure-rest transaction;
+3. owner-registered authored milestone or transition.
+
+Menus, rest-screen entry, incomplete sleep, UI changes, quit, and save requests do not qualify.
+
+Selecting an earlier checkpoint creates a child continuity only on the first accepted mutation. Later occurrence commitment retains materially identical results.
+
+Final closure binds closure identity, retires the complete checkpoint ladder, publishes/verifies the closed head, and only then permits terminal settlement. Retirement follows checkpoint identity, so copies cannot bypass it.
+
+## Ironbound Topology
+
+Ironbound retains:
+
+- one player-continuable head;
+- no historical selection or player fork;
+- hidden prior verified generations for recovery only;
+- save-and-exit as head confirmation, not a checkpoint;
+- atomic actual/final death and closure;
+- read-only history afterward.
+
+Older copies remain same-campaign/same-continuity superseded material. A verified terminal closure blocks reopening through another address or generation.
+
+If the newest attempted write is invalid/incomplete, recovery selects the newest prior verified compatible generation. The player never chooses.
+
+## Technical-Recovery And Write Ordering
+
+Accepted order:
+
+```text
+prepare
+  -> validate identity/policy/snapshot/source
+  -> durably write candidate
+  -> verify
+  -> publish as artifact/head
+  -> verify publication
+  -> retain/retire prior verified generation
+  -> update indexes/account/UI projections idempotently
+```
+
+The last verified state remains recoverable until replacement publication succeeds. UI cannot report success earlier.
+
+Projection failure after publication is repairable without rewriting gameplay. Account transactions have separate authoritative receipts and consume verified closure/consequence identity.
+
+Recovery stays within account/campaign/continuity/policy/closure boundaries and selects newest verified state, never favorable state.
+
+Accepted distinct postures: current, superseded, invalid, corrupt, incompatible, retired, and closed.
+
+## Account, Save, And Index Authority
+
+Verified gameplay/campaign-control authority wins over slot metadata, account-history indexes, and UI summaries.
+
+Separately authoritative account reward/estate/achievement/Prestige ledgers still prevent duplicate transactions. They consume gameplay receipts but cannot rewrite gameplay.
+
+Stale metadata/indexes are repaired. A failed profile update cannot make an absent save authoritative. Competing purported authoritative heads are quarantined for correction rather than resolved by timestamp, address, or UI choice.
+
+## Migration Decisions
+
+- Campaign-rules version 1 remains readable input; version 2 is target.
+- Every active current/legacy campaign migrates to Normal only.
+- Legacy Hardcore records provenance but never selects Ironbound or preserves terminal HP-zero/zero-Prestige behavior.
+- Migration establishes one campaign, initial continuity, and target artifact identity exactly once through an idempotent receipt.
+- Current addresses/metadata remain compatibility projections.
+- `sourceRunId` remains scoped evidence.
+- Failed migration preserves the verified source, publishes no partial target, and blocks ordinary play pending repair.
+- Archived/deleted/dead/hardcore-dead history remains historical and blocked.
+- Active legacy HP-zero repair runs after campaign identity migration through the accepted Normal fallback and same-address repair boundary.
+
+## Copied, Stale, Closed, And Duplicate Protection
+
+- Stable identities and consumed receipts, not location, reveal duplication.
+- New addresses do not mint campaigns, checkpoints, closures, or value.
+- Altered identity without migration/correction authority is invalid/quarantined.
+- Abandoned Normal state cannot retain another continuity’s durable value.
+- Copied Committed checkpoint identity remains retired everywhere after closure.
+- Older Ironbound generations remain superseded/closed after terminal closure.
+- Stale projections repair from authority.
+- Missing authority needed to distinguish heads/closure blocks play for correction rather than guessing.
+
+## Retained, Narrowed, And Superseded Boundaries
 
 Retained:
 
-- Difficulty/World Rules/Stakes orthogonality;
-- campaign creation locks and production gates;
-- Normal manual/quick saving, no-forced-save defeat behavior, nonterminal HP-zero, fallback, and `recovery_pending`;
-- restricted one-continuity/no-rollback and immediate terminal-death posture;
-- nonzero circumstance-sensitive restricted Prestige;
-- injury severity/recoverability, `Shaken Spirit`, immutable base attributes, and healing/restoration/resurrection separation;
-- narrative-realization and elemental capability owners;
+- three Stakes ids and gameplay semantics;
+- creation locks/availability gates;
+- Normal manual/quick and no-forced-save behavior;
+- Committed qualified-checkpoint direction;
+- Ironbound one continuity/no rollback/finality;
+- closure before settlement;
+- Mortal Crisis, injury, narrative, and elemental authority;
 - held `0.6.6` and retained `0.6.7`.
 
-Clarified/narrowed:
+Narrowed/clarified:
 
-- certified Mortal Crisis outcomes precede the generic fallback;
-- resurrection policy is per tier;
-- settlement follows final closure;
-- Ironbound adds event/draw commitment and a final public identity;
-- magical-entity aid remains explicit-capability and effect-owner gated.
+- campaign-rules version 1 is migration input; version 2 is target;
+- slots/localStorage/sourceRunId/snapshotVersion/history are address, evidence, compatibility, or projection seams;
+- Normal branch creation occurs at first divergent mutation;
+- Committed head/checkpoint and pruning/closure-retirement are distinct;
+- Ironbound generations are recovery-only;
+- technical recovery uses verified publication ordering.
 
-Superseded:
+Rejected/superseded:
 
-- deferral of public tier count;
-- deferral of the restricted label/id;
-- any checkpoint tier based only on fewer saves;
-- any terminal payout at restoration-eligible actual death.
+- address-as-identity;
+- write-before-verification success;
+- copied-state authority/value minting;
+- current HP-zero archival as target behavior.
 
-No controlling authority file was edited in place.
-
-## Narrative And Elemental Integration
-
-The accepted narrative pipeline remains downstream of authoritative crisis/body/care/restoration/closure facts. Observer projection may expose qualitative urgency, known diagnoses, visible changes, blockers, and explicit decisions without revealing hidden timers, percentages, seeds, draw ids, future outcomes, or validator-only truth.
-
-Narrative cannot invent motive, capability, rescuer, institution, route, object, action, or outcome. Chronicle and Manuscript cannot reconstruct active state.
-
-Elemental, fae, guardian, construct, magical-animal, summoned/bound, or other entity aid requires present identity, explicit applicable capability, trigger, relationship/consent/policy eligibility, access/condition, cost/resource, deterministic response, affected-owner acceptance, and retained evidence. Alignment, benevolence, role, religion, or narrative importance cannot create healing or resurrection.
+Occurrence normalization, uncertainty channels, RNG, and replay equivalence remain explicitly deferred.
 
 ## Unresolved Implementation Questions
 
-- checkpoint cadence, qualifying sleep/boundary rules, retention, and UI;
-- journal/snapshot/storage/canonicalization/recovery mechanisms;
-- occurrence normalization, uncertainty channels, algorithm, and correction;
-- lethal-process catalog, progression, treatment, and observation;
-- rescue, route, transport, and institution adapters;
-- body representation and preservation;
-- resurrection capabilities, content, access, cost, law, risk, and resources;
-- convalescence catalog, duration, formula, and balance;
-- closure/account/estate/achievement/succession transactions;
-- reward formulas, inheritance, successor selection, migrations, saves, copied-slot protection, and production availability.
-
-These do not reopen the accepted taxonomy, owner graph, tier policies, or settlement order.
+- exact ids, fields, interfaces, packages, and serialization;
+- identity/migration-receipt generation;
+- storage, integrity, verification, locking, journaling, atomicity, and recovery depth;
+- head revision ordering;
+- Normal branch finalization/provisional value mechanics;
+- Committed rest predicates, checkpoint cadence/count/pruning/labels/UI;
+- Ironbound autosave cadence and operational recovery;
+- campaign-control/closure representation and replication;
+- copied/cloud/offline conflict and anti-tamper posture;
+- compatibility/migration support windows;
+- correction permissions/tooling;
+- account transaction reconciliation and downstream consumers;
+- tests, rollout, diagnostics, support, and production availability.
 
 ## Checks Run
 
 - `git fetch --prune origin`
-- `git pull --ff-only origin master`
-- branch/upstream/HEAD and clean-state inspection
-- ancestor verification for `7734f07971ffbe7d66403c3d4267619f6cccf03b`
-- exact `git hash-object` verification for every pinned file
-- held-blob availability verification with `git cat-file`
-- required-file and live-seam inspection with `rg`
-- decision heading/section inventory
-- required-conclusion and key-term coverage checks
-- Markdown whitespace/error scan
-- exact changed-path and forbidden-path review
-- final `git diff --check`
-- final `git status --short --branch`
+- branch/upstream/HEAD and ahead/behind inspection
+- complete prompt reload
+- ancestor verification
+- exact pinned-file `git hash-object` verification
+- held-blob `git cat-file` verification
+- post-authority live-source change inspection
+- required authority/live-source/test inspection with `rg` and focused file reads
+- required section/conclusion coverage checks
+- document-reference existence scan
+- trailing-whitespace scan
+- exact changed-path/forbidden-path review
+- `git diff --check`
+- final repository status review
 
-No runtime or automated gameplay tests were run because the authorized change is documentation-only.
+No runtime tests were run because the authorized work is documentation-only.
 
 ## Risks / Follow-Up Notes
 
-- Committed checkpoint cadence, retention, and exact terminal checkpoint retirement are intentionally unresolved implementation design.
-- Normal rollback means terminal state and settlement can remain timeline-local; durable account value must not survive abandonment.
-- Ironbound is semantically accepted but must remain unavailable until its one-continuity, commitment, death, closure, recovery, migration, warning, and idempotency packages are complete.
-- Existing live HP-zero archival, save deletion, legacy difficulty, and account settlement seams remain implementation gaps; this run does not repair them.
-- Temporary mortality, defeat/injury, narrative, and elemental evidence remains retained for named consumers.
+- The contract intentionally does not choose storage, hashing, transactions, or exact schemas.
+- Normal durable settlement still needs a later branch-finalization/provisional-value contract.
+- Cross-device/cloud/offline conflict resolution needs a later architecture decision.
+- Current HP-zero archival and nontransactional save/profile ordering remain live implementation gaps.
+- Committed and Ironbound remain unavailable in production.
 - No next prompt was installed.
 
 ## Temporary Evidence And Held Routes
 
-- Retain comparative mortality research through all checkpoint/crisis/resurrection/settlement/succession implementation consumers.
-- Retain the defeat/injury audit through the first relevant runtime replacement/repair package.
-- Retain narrative evidence through Mortal Crisis/narrative implementation consumers.
-- Retain elemental evidence through remaining elemental implementations and any crisis-capability consumer.
-- Held `Version 0.6.6` remains paused and recoverable.
+- Comparative mortality research remains retained for all named implementation consumers.
+- The defeat/injury audit remains through the first relevant runtime repair.
+- The Mortal Crisis/Stakes decision remains permanent controlling authority.
+- Narrative and elemental evidence remains for named consumers.
+- Held `Version 0.6.6` remains paused/recoverable.
 - Retained `0.6.7` remains unchanged.
 
 ## Next Recommended Run
 
 Unversioned documentation-only:
 
-`Stakes Identity, Campaign/Save Provenance, Checkpoint Topology, And Technical-Recovery Contract Decision`
-
-It should define the smallest first package’s exact conceptual contracts without implementing schemas, persistence, migrations, UI, or gameplay.
+`Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision`
