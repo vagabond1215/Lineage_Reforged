@@ -30,8 +30,9 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `0.6.0`-`0.6.3` | Engine-owned travel, quest acceptance/tracking, and activity selection | Complete and accepted | Runtime ownership accomplishments remain authoritative. | `docs/dev/codex-sequenced-implementation-plan.md` |
 | `0.6.4` | World And Settlement Static Content Expansion | Complete and accepted | Exact static package accepted. | `docs/future_content_backlog.md` |
 | `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete and validated | 28 recipes across 10 families. | `docs/design/cross-domain-production-research-synthesis.md` |
-| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active exact prompt | Add only the exact nine-monster, nine-lineage, nine-ecology-link package. | `docs/dev/current-codex-prompt.md` |
-| `0.6.7` | Cross-Content Coherence And Coverage Audit | Reserved next | Install after accepted `0.6.6`; repair only if evidence proves a defect. | `docs/design/static-content-expansion-program.md` |
+| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active primary; fail-closed before authoring | Exact content target remains accepted, but mandatory baseline must be repaired first. | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` |
+| `0.6.6.1` | UTF-8 BOM Test-Harness Repair | Active support suffix | Change only two test readers; restore exact `0.6.6` after 146/146 validation. | `docs/dev/current-codex-prompt.md` |
+| `0.6.7` | Cross-Content Coherence And Coverage Audit | Reserved next | Install only after accepted `0.6.6`; repair only if evidence proves a defect. | `docs/design/static-content-expansion-program.md` |
 
 ## Identity Rules
 
@@ -50,7 +51,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | Planning-anchor maintenance | accepted correction; full refresh deferred | Current handoff/output/register and refreshed continuity brief | Full roadmap and sequenced-plan current-header maintenance | Dedicated documentation maintenance or next material roadmap rewrite | Do not treat stale headers as execution authority | `docs/design/current-planning-anchor-reconciliation.md` |
 | Static world/settlement | expanded-and-validated | Accepted `0.6.4` | None | New proven gap | Complete | `docs/design/static-content-expansion-program.md` |
 | Static item/material/recipe | expanded-and-validated | Accepted `0.6.5`: 28 recipes/10 families | None | New proven gap | Complete | `docs/design/cross-domain-production-research-synthesis.md` |
-| Static monster/ecology/loot | active implementation | Exact matrix and closed references | Execute exact package/tests | Active prompt | Expand now; no dynamic behavior | `docs/dev/current-codex-prompt.md` |
+| Static monster/ecology/loot | active primary; baseline repair required | Exact matrix and closed references; lint passes | BOM-tolerant test harness, then exact package/tests | Accepted `0.6.6.1` | Repair tests first; then expand exact static package | `docs/dev/current-codex-prompt.md` |
 | Cross-content coherence | reserved maturity gate | Static lint/validators | Audit `0.6.4`-`0.6.6` | Accepted `0.6.6` | Run `0.6.7` next | `docs/design/static-content-expansion-program.md` |
 | Geographic Knowledge/recognition | queued user-directed design gate | Place/Knowledge authorities | Facets, clues, observation, overlays | Accepted `0.6.7` | Run after static audit | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
 | Activity resolution reuse | queued repository audit | Selection, trial, quest, Knowledge, crafting, magic, and occurrence foundations | Repository ownership/reuse audit | Accepted Geography plan plus live route check | Run immediately after Geography; documentation only | `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` |
