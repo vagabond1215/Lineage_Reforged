@@ -1,147 +1,145 @@
 # Current Codex Output
 
-Date: 2026-07-25
+Date: 2026-07-26
 
-Source run: `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision`
+Source run: `Last Push Inspection, Occurrence Clarification, Static Content Restoration, And Research Sequencing`
 
-Run classification: unversioned durable documentation-only contract decision
+Run classification: unversioned documentation-only inspection and coordination correction
 
 Parent version: none
 
-Milestone impact: `supports_current_band`
+Milestone impact: `advances_current_band`
 
-Branch/status assumption: `master`, tracking `origin/master`; pre-edit worktree clean; documentation edits remain unstaged
+## Inspected Push
 
-Starting and ending pre-edit commit after fetch: `e7aa0d694b44dc5377c80f8ea8715bc55cd4f8c5`
+Inspected commit:
 
-Suggested commit: `docs(design): define occurrence commitment and correction contracts`
+`c116b614478a8dadbcef7d0ff95027c6565cd791`
 
-## Files Changed
+`docs(design): define occurrence commitment and correction contracts`
 
-1. Created `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`.
-2. Replaced `docs/dev/current-codex-output.md`.
-3. Replaced `docs/dev/current-gpt-handoff.md`.
-4. Updated materially affected rows in `docs/dev/historical-version-and-deferred-route-register.md`.
+The push stayed within its exact four-file authorization:
 
-No prompt, completed authority, audit, research, roadmap, sequenced plan, runtime, shared type, schema, validator, package, dependency, persistence, save manager, lifecycle, migration, account, test, UI, content, generated, held-route, or retained-route file changed.
+1. created `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
+2. replaced `docs/dev/current-codex-output.md`;
+3. replaced `docs/dev/current-gpt-handoff.md`;
+4. updated materially affected rows in `docs/dev/historical-version-and-deferred-route-register.md`.
 
-## Repository And Pinned Source Verification
+No runtime, shared type, schema, validator, package, dependency, persistence, save, migration, account, test, UI, content, generated, held-route, or retained-route file changed in the inspected push.
 
-- Fetched/pruned `origin`; local `master` was synchronized with `origin/master`.
-- Reloaded the complete active prompt after fetch.
-- Confirmed save/Stakes commit `dcea4e42dcbbf67cecf19490923e63384027243e` is an ancestor of `HEAD`.
-- Confirmed all prompt-pinned authority, coordination, live-source, and held-route blobs.
-- Confirmed no relevant live event/random source changed beyond the pinned baseline.
-- Held `Version 0.6.6` blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` remains untouched; retained `0.6.7` remains unchanged.
-- The new contract artifact resolves to blob `332476a6c90f4a80161ecb8c5123f846997dcf52`.
-- No execution-gate contradiction was found.
+The occurrence decision remains accepted durable authority. Its artifact blob is:
 
-## Live Event And Random Baseline
+`332476a6c90f4a80161ecb8c5123f846997dcf52`
 
-- Generic `createEvent` ids use `type:domain:tick`; these are collision-prone compatibility projections, not occurrence authority.
-- Travel, quest acceptance/tracking, and activity selection have bounded engine-owned command and snapshot-revision patterns. Their ids are useful migration evidence but are not complete occurrence/result/retry receipts.
-- `TickContextBase.seed` and spawn/combat/quest/stat-growth hashes are deterministic domain inputs. Chance-like spawn resolution is unauthorized gameplay uncertainty for future committed policies until migrated to an owner-certified channel/result contract.
-- Character-creation and narrative-screen `Math.random` calls are non-authoritative setup/presentation conveniences; launcher suffix randomness is unrelated technical use.
-- Account, save, Chronicle, closure, reward, estate, achievement, and lifecycle records are consumer/migration evidence, not a universal occurrence ledger.
+## Issues Found And Corrected
 
-## Accepted Taxonomy And Owner Graph
+### Taxonomy indentation
 
-```text
-request / delivery
-  -> domain admission
-       -> occurrence
-            -> deterministic result
-            -> uncertain result -> authorized named channel evidence
-                 -> owner-specific consequence receipts
-                      -> event / Chronicle / narrative / UI projections
-```
+The original Section 6 diagram visually placed owner-specific consequence receipts beneath `no accepted result`. The controlling prose correctly required accepted results before ordinary consequence consumption, except for an explicitly owner-defined consequential admitted rejection/no-result occurrence.
 
-- The initiating owner owns request identity and intent.
-- The domain owner owns admission, occurrence identity, material-input normalization, and result meaning.
-- Uncertainty infrastructure owns channel/draw identity but never domain interpretation.
-- Each downstream owner owns one consequence truth and idempotent receipt.
-- Save authority persists links without resolving outcomes.
-- Projection owners receive safe facts and cannot reconstruct authority.
+Created:
 
-The accepted occurrence-contract semantic policy version is **1**. Exact fields and implementation remain deferred.
+`docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`
 
-## Occurrence, Same-Tick, And Relation Decisions
+This clarification replaces only the misleading diagram relation.
 
-- Request identity is established before delivery; domain admission reserves occurrence identity before mutation; accepted occurrence/result publication is atomic with authoritative transition.
-- Pre-admission rejection has a request receipt but no gameplay occurrence. An admitted consequential rejection remains an occurrence without an accepted result unless its owner defines one.
-- Retry preserves request identity, normalized intent, causal source, and opportunity. Conflicting reuse of an id is rejected/quarantined.
-- Same-type/domain/tick occurrences require stable owner scope plus an admitted-attempt discriminator/source identity. Tick or global sequence alone is insufficient.
-- Causal order, explicit simultaneity, correlation, cause, parent/child, aggregate/member, and supersession are distinct relations.
-- Genuine simultaneity is unordered; aggregation references components without collapsing provenance.
+### Ironbound request wording
 
-## Material Equivalence And Result Decisions
+The shorthand `Ironbound commits accepted commands` was too broad because a request/command is not automatically an occurrence. The clarification now commits admitted request/admission identity, accepted occurrences, accepted results, consequences, and correction lineage. Duplicate delivery, pre-admission rejection, invalid requests, and projection-only command records do not become committed gameplay truth.
 
-- Each domain certifies a versioned normalized causal fact set; infrastructure cannot decide universal materiality.
-- Opaque whole-snapshot hashing is not the conceptual default.
-- UI, camera, renderer, localization, telemetry order, storage movement, reload, and duplicate delivery do not create opportunities.
-- Certified changes to preparation, equipment, route, timing, participants, target, environment, choice, or causal state may create a new opportunity.
-- Historical content/policy/resolver changes are explicit; accepted history is retained or handled through migration/quarantine/correction, never silent reroll.
-- Deterministic results use no authorized channel. Uncertain results link authorized channel evidence. A draw is not a result.
+### Deferred-boundary wording
 
-## Named Uncertainty And Per-Stakes Commitment
+The prior completion output stated `No accepted semantic boundary remains deferred`. The accepted reading is now limited to the occurrence decision's own scope. Domain-specific material-input policies, channel families, functional/lethal/care receipts, correction permissions, schemas, persistence, algorithms, tests, and implementation remain deferred.
 
-- A named channel is a stable, versioned semantic authorization scoped to a domain and uncertainty family.
-- Channel identity is separate from event type, label, seed, occurrence, result, and algorithm.
-- Uses are occurrence-scoped and independent of unrelated call order; no global random stream is authority.
-- Multiple channels/results require declared semantic roles, cardinality, and relations.
-- Normal has no general cross-reload commitment, but remains idempotent inside authoritative continuity and permits narrow owner-specific commitment.
-- Committed retains materially identical uncertain results across checkpoint replay, restart, relocation, and recovery; equivalent results link into a child continuity.
-- Ironbound retains accepted commands, occurrences, results, and consequences across retry, reconnect, copies, and technical recovery.
+## Content And Route Inspection
 
-## Consequence, Correction, And Projection Decisions
+The exact held `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` package is ready now:
 
-- Every consumer uses its own stable consequence receipt; duplicate delivery cannot duplicate body, injury, inventory, quest, Chronicle, closure, settlement, reward, estate, achievement, Prestige, or succession effects.
-- Partial failure retries only the missing consumer receipt.
-- Correction is owner-approved replacement/reconciliation of proven invalid authority, not rollback, recovery, resurrection, record deletion, or favorable reroll.
-- Original records remain retained with reason, evidence, supersession, and reconciliation state.
-- Preserve occurrence identity when the causal event happened; replace it when admission/identity/cause was invalid or merged.
-- Reuse valid uncertainty evidence for interpretation/projection defects; invalidate/recompute only under proven defect and an explicit versioned correction policy.
-- Each downstream owner retains, reverses, compensates, replaces, or quarantines its consequence.
-- Closed Ironbound correction requires proven defect, follows the closed lineage across copies/generations, and exposes no state picker.
-- Events, Chronicle, Manuscript, narrative, UI, logs, and telemetry are projections. Hidden seeds/draws/channels/weights/diagnoses/validator facts stay private.
+- the culinary insertion that caused the hold is complete and durably integrated;
+- `0.6.5` is complete at 28 recipes across 10 families;
+- the exact held prompt remained recoverable as blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+- its production monster, ecology, focused-test, fauna, item/value, region, biome, role, tactics, action-package, and combat-template baseline did not change after source commit `6394443f1628d9053b3417e926e581b7a444386c`;
+- intervening documentation decisions do not alter its narrow static-content scope.
 
-## Retained, Rejected, And Superseded Authorities
+Created:
 
-- Retained permanently: save/Stakes and Mortal Crisis/Stakes authorities.
-- Retained: domain gameplay ownership, narrative observer-safe projection, and bounded command patterns as migration evidence.
-- Rejected as sufficient authority: event type, tick, envelope id, command id, seed, hash, slot, timestamp, Chronicle id, UI id, global sequence, and global random stream.
-- Rejected: correction by UI/player preference, silent historical reroll, and projection authority.
-- Superseded: any older ambiguity that command, occurrence, result, consequence, and projection are interchangeable.
+`docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`
 
-## Unresolved Implementation Questions
+The exact held prompt was restored byte-for-byte to `docs/dev/current-codex-prompt.md`. Its live blob is again:
 
-Exact types, encodings, identity generation, reservation durability, packages, schemas, registry storage, algorithms, seeds, hashes, cryptographic posture, persistence/migration formats, compatibility thresholds, correction tooling/permissions, retention, diagnostics/privacy access, domain adapter selection, and availability gates remain implementation-only.
+`42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
 
-No accepted semantic boundary remains deferred.
+## Active Sequence
 
-## Checks Run
+1. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
+2. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
+3. docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+4. `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
+5. bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+6. owner-specific health, care, body, restoration, convalescence, persistence, UI, and runtime packages under separate authorization.
 
-- repository status, upstream, fetch/prune, ahead/behind, and ancestor checks;
-- exact SHA-1 verification for every prompt-pinned file and held blob;
-- focused source search for event ids, commands, seeds, hashes, `Math.random`, retries, and consequence receipts;
-- exact authorized-path diff/status check;
-- 41-section artifact structure and 38 required-conclusion answer check;
-- Markdown heading, link/path reference, conflict-marker, whitespace, and forbidden-scope checks;
-- artifact hash verification.
+The Mortal Crisis receipt contract remains the next mortality-system route. It is sequenced behind the restored static milestone and existing user-directed Geography route, not canceled.
 
-## Risks And Follow-Up
+## Research Disposition
 
-- This is authority only; current runtime remains legacy and collision-prone.
-- Under-proven value-bearing legacy records require quarantine rather than inferred commitment.
-- Domain materiality, channel families, and correction permissions still require separately authorized implementation contracts.
-- No next prompt was installed.
+No new broad research is required before `0.6.6`, `0.6.7`, Geography/recognition planning, or the abstract Mortal Crisis receipt contract. Existing repository audits, comparative mortality research, occurrence authority, save/Stakes authority, narrative authority, and elemental authority are sufficient for those decisions.
 
-## Evidence And Held Routes
+Before the first executable or balance-bearing lethal-process catalog, run bounded real-world research on:
 
-Retain comparative mortality, defeat/injury, narrative, and elemental evidence through their named consumers. Preserve completed save/Stakes and Mortal Crisis/Stakes authorities permanently. Do not restore held `0.6.6`; retained `0.6.7` remains unchanged.
+- hemorrhage and shock;
+- airway compromise, suffocation, and drowning;
+- poisoning and antidote limits;
+- hypothermia, heat injury, and environmental exposure;
+- burns and progressive tissue injury;
+- stabilization versus definitive treatment;
+- transport, delay, reassessment, and deterioration;
+- observer knowledge and safe urgency communication.
 
-## Next Recommended Route
+Do not copy exact clinical timers, medical protocols, or proprietary game values into gameplay by default.
 
-`Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
+## Content Disposition
 
-This should remain an unversioned documentation-only contract route unless later evidence changes its classification.
+Expand now only the exact `0.6.6` nine-monster, nine-lineage, nine-ecology-link package.
+
+Keep deferred:
+
+- injury, lethal-process, care, trauma, or condition catalogs;
+- dynamic encounter, spawn, loot, population, migration, harvesting, or ecology runtime;
+- NPC/social/faction/institution content without named authored sources;
+- services, resources, commodities, stock, dynamic economy, inventory, or crafting execution;
+- resurrection, regrowth, rare-healer, magical-book, tome, scroll, or enchanter-document content;
+- maps, recognition clues, or new Knowledge content before the Geography route;
+- generic POIs and filler in closed content lanes.
+
+## Files Changed By This Inspection
+
+1. created `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
+2. created `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`;
+3. restored `docs/dev/current-codex-prompt.md` to exact held blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+4. replaced `docs/dev/current-codex-output.md`;
+5. replaced `docs/dev/current-gpt-handoff.md`;
+6. updated `docs/dev/historical-version-and-deferred-route-register.md`;
+7. updated `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md`.
+
+No production content, runtime, test, schema, validator, dependency, generated file, asset, save, migration, account, UI, or gameplay file changed during this inspection.
+
+## Validation
+
+- inspected exact latest commit and changed-path scope;
+- reviewed the complete occurrence decision, output, handoff, active prompt, and route register;
+- traced the accepted Mortal Crisis model and owner graph;
+- reviewed comparative mortality evidence and the live defeat/injury audit;
+- verified the exact held prompt identity;
+- verified no named `0.6.6` production or focused-test source changed after the held prompt source commit;
+- restored the prompt through its original Git blob rather than a regenerated copy;
+- preserved `0.6.7`, Geography/recognition, activity-reuse, mortality, narrative, elemental, and temporary-evidence routes.
+
+No runtime tests were run because this inspection changed documentation and routing only.
+
+## Active Prompt
+
+`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+
+Suggested implementation commit:
+
+`content(world): expand regional monster ecology`
