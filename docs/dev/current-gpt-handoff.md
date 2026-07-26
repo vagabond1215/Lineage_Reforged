@@ -4,166 +4,97 @@ Date: 2026-07-25
 
 ## Status
 
-- `Stakes Identity, Campaign/Save Provenance, Checkpoint Topology, And Technical-Recovery Contract Decision` is complete and controlling for save-side identity, topology, provenance, migration, write publication, copied-state protection, and technical recovery.
-- Controlling save contract: `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`, blob `86f10b6fbdc4fc7fdce3f50673556930b9d35999`.
-- The preceding Mortal Crisis/Stakes authority remains controlling for public Stakes semantics, Mortal Crisis, actual/final death, resurrection, closure, terminal settlement, and warnings.
-- The active route is the documentation-only `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision`.
-- Implementation remains unauthorized.
-- Held `Version 0.6.6` remains paused and recoverable from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`; retained `0.6.7` remains unchanged.
+- `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision` is complete and controlling.
+- Controlling occurrence contract: `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`, blob `332476a6c90f4a80161ecb8c5123f846997dcf52`.
+- The save/Stakes authority remains controlling for campaign/continuity provenance, artifacts, checkpoints, branches, generations, publication, copied-state protection, and technical recovery.
+- The Mortal Crisis/Stakes authority remains controlling for public Stakes semantics, crisis, actual/final death, resurrection, convalescence, closure, and settlement/succession order.
+- No implementation or next prompt is authorized or installed.
+- Held `Version 0.6.6` remains paused at blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`; retained `0.6.7` remains unchanged.
 
 ## Most Specific Accepted Authorities
 
-Use these in precedence order for affected seams:
+Use these in precedence order at affected seams:
 
-1. `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md` for campaign-rules semantic version 2, Stakes policy revision 1, campaign/continuity/artifact identities, Normal branching, Committed checkpoint topology, Ironbound recovery generations, migration, publication ordering, and copied-state protection.
-2. `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md` for Normal/Committed/Ironbound gameplay semantics, commitment posture, Mortal Crisis, actual/final death, resurrection, convalescence, closure, and settlement/succession ordering.
-3. `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md` for orthogonal Difficulty, World Rules, and Stakes axes, creation locks, Story/Grim boundaries, and legacy campaign mapping where not superseded.
-4. `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md` for the minimum Normal defeat fallback and active legacy HP-zero same-address repair.
-5. `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md` for retained Ironbound continuity, read-only history, and circumstance-sensitive Prestige details as narrowed by newer authorities.
-6. Narrative, elemental, injury/restoration, combat, quest/event/Chronicle, and domain-specific decisions for their unchanged ownership boundaries.
+1. `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md` for occurrence identity, material equivalence, result receipts, named uncertainty, commitment, consequence idempotency, correction, supersession, and legacy event-id classification.
+2. `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md` for campaign-rules version 2, Stakes policy revision 1, campaign/continuity/artifact identity, branching, checkpoint topology, write/recovery ordering, migration, and copied-state protection.
+3. `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md` for Normal/Committed/Ironbound gameplay semantics and the Mortal Crisis/closure sequence.
+4. Campaign-rules, Normal fallback, restricted Stakes, injury/restoration, narrative, elemental, combat, quest/event/Chronicle, and other domain decisions for unchanged owner boundaries.
 
 Temporary audits and research are evidence, not authority. Live code remains implementation and migration evidence.
 
-## Accepted Campaign And Save Contract
+## Accepted Occurrence And Result Contract
 
 ```text
-campaign-rules semantic version 2
-Stakes policy revision 1
-
-Normal Stakes     -> normal_stakes
-Committed Stakes  -> committed_stakes
-Ironbound Stakes  -> ironbound_stakes
+request / delivery
+  -> domain admission
+       -> occurrence
+            -> deterministic result
+            -> uncertain result -> named channel evidence
+                 -> owner-specific consequence receipts
+                      -> projections
 ```
 
-Canonical vocabulary:
+- Request identity precedes delivery.
+- Domain admission reserves occurrence identity before mutation.
+- Accepted occurrence/result publication is atomic with the authoritative transition.
+- A command id, event id, tick, seed, hash, slot, timestamp, Chronicle id, or UI id is never sufficient authority.
+- Same-tick uniqueness uses stable owner scope plus an admitted-attempt discriminator/source identity, not one global sequence.
+- Order, simultaneity, correlation, causation, parent/child, aggregate/member, and supersession are explicit distinct relations.
 
-- `campaign` is the durable playable world/history identity;
-- `continuity` is one authoritative or selected causal history within a campaign;
-- `run` is a compatibility/account-history term;
-- `timeline` is descriptive continuity-lineage language.
+## Material Equivalence And Named Uncertainty
 
-```text
-account
-  -> campaign
-       -> continuity
-            -> character identities
-            -> continuation head
-            -> save artifacts / selectable checkpoints
-            -> hidden write / recovery generations
-            -> correction and supersession lineage
-       -> closure, checkpoint retirement, and consumed-value authority
-```
+- Each domain owns a versioned normalized causal fact set.
+- Reload, repeated delivery, address movement, UI/camera/localization changes, and unrelated harmless actions do not create a new opportunity.
+- Owner-certified changes to choice, preparation, equipment, route, time, participants, target, environment, or causal state may create one.
+- A named uncertainty channel is a versioned domain/family authorization, separate from seeds, algorithms, event types, occurrences, and results.
+- A draw is hidden evidence, not gameplay meaning; the domain owner accepts the result.
+- Multiple channels/results require declared roles and relations; unrelated channel use cannot perturb them.
+- Historical rules/content changes never silently reroll accepted results.
 
-Storage addresses, artifacts, snapshots, checkpoints, continuation heads, write generations, recovery generations, corrections, and closure identities remain distinct.
+## Stakes Commitment
 
-## Accepted Per-Tier Topology
+- **Normal:** no general cross-reload commitment; accepted continuity truth remains idempotent; narrow owners may explicitly commit a result family.
+- **Committed:** materially identical uncertain results survive checkpoint replay, restart, relocation, and recovery. Equivalent results link into a child continuity; material divergence may create a new opportunity.
+- **Ironbound:** accepted commands, occurrences, results, and consequences survive retry, reconnect, copies, and technical recovery in one continuity. Terminal authority is not replayable.
 
-### Normal
+Loading history and branching remain governed by the save contract. Rollback is not correction.
 
-- Ordinary manual and quick-save artifacts remain available.
-- Loading an older artifact does not immediately fork.
-- The first accepted gameplay mutation after loading a non-head artifact creates one child continuity.
-- Abandoned later continuity state cannot newly post durable closure, estate, achievement, reward, or successor value.
-- Copied bytes or a new address do not mint identity or entitlement.
-- Normal has no general outcome-commitment policy, but narrower already-authoritative results remain binding.
+## Consequence And Correction Contract
 
-### Committed
+- Every downstream owner records one stable receipt per source result and consequence kind.
+- Partial failure retries only the missing receipt; successful sibling effects are not repeated.
+- Correction replaces proven invalid authority with owner approval and retained evidence.
+- Preserve occurrence identity when the event happened; replace it when admission/identity/cause was invalid or merged.
+- Reuse valid uncertainty evidence for interpretation/projection defects; invalidate/recompute only under explicit versioned correction after proven defect.
+- Each consumer owns retain/reverse/compensate/replace/quarantine reconciliation.
+- Correction propagates across addresses, copies, checkpoints, and recovery generations by identity.
+- Closed Ironbound correction exposes no rollback, state selection, resurrection, or favorable reroll.
 
-```text
-continuation head
-  -> ordinary resume
+## Projection And Migration Boundaries
 
-qualified checkpoints
-  -> only selectable rollback
+- Event envelopes, Chronicle, Manuscript, narrative, UI, logs, telemetry, and indexes are projections.
+- Narrative/UI receive observer-safe facts, never hidden seeds, draws, channels, weights, diagnoses, validator facts, or future outcomes.
+- Generic `type:domain:tick` ids are collision-prone compatibility evidence.
+- Current command/revision patterns and domain hashes are migration inputs, not accepted occurrence/channel/result architecture.
+- UI randomization is nonauthoritative; launcher suffix randomness is unrelated technical use.
+- Ambiguous value-bearing legacy records are quarantined and cannot mint committed results or duplicate consequences.
 
-hidden verified generations
-  -> technical recovery only
-```
+## Future Conceptual Package Order
 
-- Save-and-exit may persist the continuation head but cannot create a checkpoint.
-- Minimum qualifying checkpoint classes are campaign start, completed qualifying major sleep/secure rest, and an owner-registered authored milestone or transition.
-- Selecting an earlier checkpoint creates a child continuity only at the first accepted gameplay mutation.
-- Final closure retires the complete checkpoint ladder before terminal settlement.
+If separately authorized: vocabulary/version; request/retry; occurrence relations; domain material normalization; deterministic receipts; channel/uncertain receipts; Stakes adapters; save/continuity links; consumer receipts; correction/reconciliation; event compatibility; narrow domain adapters; projections; then migration, diagnostics, tests, and availability.
 
-### Ironbound
+Exact fields, packages, schemas, algorithms, persistence, migrations, tooling, UI, content, tests, and availability remain implementation-only.
 
-- One player-continuable head.
-- No player-selected historical state and no player-created fork.
-- Hidden prior verified generations exist only for technical recovery.
-- Accepted actual death, final death, and closure remain atomic.
-- A copied or older generation cannot reopen verified terminal closure.
+## Evidence And Held Routes
 
-## Technical Recovery And Publication
-
-Accepted order:
-
-```text
-prepare candidate
-  -> validate identity, policy, source, and snapshot
-  -> durably write candidate generation
-  -> verify generation
-  -> publish artifact or continuation head
-  -> verify publication
-  -> retain or retire the previous verified generation
-  -> update indexes, account projections, and UI idempotently
-```
-
-Technical recovery selects the newest verified compatible generation inside the same account, campaign, continuity, policy, and closure boundary. It is not player rollback, correction, resurrection, or favorable-state selection.
-
-## Live Occurrence And Randomness Baseline
-
-The active occurrence contract must inspect and classify at least:
-
-- `GameEventEnvelope` and `packages/shared/events/src/index.ts`, where generic event ids currently use `type:domain:tick` and therefore cannot distinguish repeated same-type, same-domain events at one tick;
-- domain-specific event constructors and inline event ids in travel, quest acceptance/tracking, activity selection, combat, resources, world/spawn, and related engines;
-- `TickContextBase.seed` and current domain-specific deterministic selection;
-- spawn resolution’s ad hoc `seed + tick + profile + region` and `profile + tick + seed + encounter` hashes;
-- direct `Math.random` uses that are outside authoritative gameplay or need explicit classification;
-- account, save, checkpoint, closure, correction, Chronicle, and downstream consequence receipts.
-
-These are migration facts, not accepted final occurrence, channel, draw, or algorithm contracts.
-
-## Active Route Requirements
-
-The active run must decide conceptually:
-
-- occurrence identity and same-tick uniqueness;
-- parent/source occurrence, causal scope, simultaneity, ordering, and material-input normalization;
-- deterministic result receipts versus uncertain result receipts;
-- named uncertainty-channel identity and ownership;
-- committed result identity for Committed and Ironbound;
-- the boundary for Normal owner-specific commitments;
-- materially identical replay and material-change rules;
-- correction authority, reason, evidence, supersession, replay, and consequence reconciliation;
-- idempotent consumption by injury, body, Chronicle, closure, settlement, rewards, achievements, estate, succession, narrative, and other owners;
-- privacy and presentation boundaries for seeds, channels, draws, and validator-only facts;
-- migration classification of current event ids, seeds, hashes, and ad hoc deterministic mechanisms.
-
-The run must not select RNG algorithms, hash functions, exact seeds, schemas, package paths, dependencies, persistence layouts, content, probabilities, balance, or runtime implementation.
-
-## Known Live Gaps
-
-- Generic `createEvent` ids can collide for repeated same-type, same-domain events at the same tick.
-- Same-tick occurrence uniqueness and simultaneity are not authoritative.
-- Randomness and deterministic selection are domain-local and inconsistently identified.
-- There is no accepted named uncertainty-channel registry, result receipt, replay-equivalence contract, or correction owner graph.
-- Current HP-zero archival and nontransactional save/account projection ordering remain implementation defects, not target authority.
-- Normal branch-finalization and provisional durable-value mechanics remain a later focused settlement/branch contract.
-- Cross-device/cloud/offline conflict and anti-tamper policy remain later architecture work.
-
-## Temporary Evidence And Held Routes
-
-- Retain comparative mortality research through checkpoint, commitment, Mortal Crisis, resurrection, settlement, and succession implementation consumers.
-- Retain the defeat/injury audit through the first relevant runtime repair.
-- Retain narrative evidence through narrative and Mortal Crisis consumers.
-- Retain elemental evidence through elemental implementations and crisis-capability consumers.
-- Preserve the completed Mortal Crisis/Stakes and save/Stakes decisions permanently as controlling authorities.
+- Retain comparative mortality evidence through checkpoint, occurrence, Mortal Crisis, resurrection, settlement, and succession consumers.
+- Retain defeat/injury evidence through the first relevant runtime repair.
+- Retain narrative and elemental evidence through their occurrence-aware consumers.
+- Preserve completed save/Stakes, Mortal Crisis/Stakes, and occurrence authorities permanently.
 - Do not restore or regenerate held `0.6.6`.
 
-## Next Route
+## Next Recommended Route
 
-Run the active documentation-only:
+`Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
 
-`Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision`
-
-No implementation route is active.
+This is the expected next unversioned documentation-only contract route. No next prompt has been installed.
