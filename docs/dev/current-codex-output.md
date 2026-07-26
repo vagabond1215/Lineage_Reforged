@@ -2,9 +2,9 @@
 
 Date: 2026-07-26
 
-Source run: `Version 0.6.6 Fail-Closed Preflight Review And Support Routing`
+Source run: `0.6.6 BOM Repair Completion Routing`
 
-Run classification: unversioned documentation-only inspection and coordination correction
+Run classification: unversioned documentation-only connector inspection and prompt correction
 
 Parent version: `0.6.6`
 
@@ -12,107 +12,99 @@ Milestone impact: `supports_current_band`
 
 ## Inspected State
 
-Codex inspected the clean synchronized repository at:
+Latest inspected `master` repair commit:
 
-`36f83d0856eb59446af9dfe597cf4e503470a158`
+`66f12fd6f649f8f218f7f49fc721a8fe545a7a01`
 
-The exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt was not executed because its mandatory untouched baseline failed.
+Commit subject:
 
-No production content, runtime, schema, validator, test, save, migration, dependency, UI, generated, asset, or gameplay file was changed by the preflight.
+`Handle BOM-prefixed JSON in unit tests`
 
-## Accepted Preflight Findings
+The commit changes exactly:
 
-The preflight confirmed:
+- `tests/unit/region-first-world-data.test.mjs`;
+- `tests/unit/slug-content.test.mjs`.
 
-- the exact nine-row monster/ecology matrix is internally correct;
-- all named content references resolve;
-- baseline counts are correct;
-- the exact source-output rule produces 28 new drop rows;
-- `npm.cmd run tool:content-lint` passes at 67 checked files;
-- the required focused command passes 142 of 146 tests;
-- all four failures are JSON parse failures caused by optional leading UTF-8 BOMs.
+Each reader now parses through the narrow operation:
 
-The required command was:
+```js
+JSON.parse(raw.replace(/^\uFEFF/, ""))
+```
 
-`node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
+No content, runtime, schema, validator, persistence, UI, dependency, or gameplay file changed in that repair commit.
 
-## Independent Repository Verification
+## Incomplete Support State Found
 
-The reported cause matches the live repository:
+The code repair landed, but the repository did not contain completion evidence for the full `0.6.6.1` support gate:
 
-- `tests/unit/region-first-world-data.test.mjs` reads UTF-8 text and calls `JSON.parse(raw)` directly;
-- `tests/unit/slug-content.test.mjs` does the same;
-- `regional_ecology_profiles.json` begins with UTF-8 BOM bytes;
-- `region_localities.json` begins with UTF-8 BOM bytes;
-- `flora.json` begins with `U+FEFF`;
-- `minerals.json` begins with `U+FEFF`.
+- no committed focused-test result;
+- no committed content-lint result;
+- no committed `146/146` parent-baseline result;
+- no committed content byte-identity confirmation;
+- no completion updates in current output, handoff, or route register;
+- `docs/dev/current-codex-prompt.md` still contained the stale repair prompt instead of the exact parent `0.6.6` prompt.
 
-The JSON files are valid BOM-bearing fixtures. The defect is the narrow test-reader assumption, not the `0.6.6` content target.
+The old prompt could no longer execute correctly because it required reproduction of the pre-repair four-failure baseline.
 
 ## Routing Decision
 
-Activated support suffix:
+Activated:
 
-`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
+`Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`
 
 Active prompt blob:
 
-`93d2a29e1cbc8dd931a243becfbbeab2ed8a69a0`
+`75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`
+
+Prior repair implementation:
+
+`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
+
+Expected repair commit:
+
+`66f12fd6f649f8f218f7f49fc721a8fe545a7a01`
 
 Preserved exact parent prompt blob:
 
 `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
 
-`0.6.6.1` changes only:
-
-- `tests/unit/region-first-world-data.test.mjs`;
-- `tests/unit/slug-content.test.mjs`;
-- completion coordination documents.
-
-The repair removes at most one optional leading `U+FEFF` before `JSON.parse`. It may not edit JSON content, broadly trim input, weaken assertions, create a production parser, add dependencies, or author the parent content package.
+`0.6.6.2` is a validation-only support suffix. It may not edit the repaired tests, content, runtime, schemas, validators, saves, dependencies, UI, or gameplay.
 
 ## Required Acceptance
 
-The support run must:
+The Codex pass must:
 
-1. reproduce the four baseline failures before editing;
-2. repair only the two test readers;
-3. pass the two focused tests;
-4. pass content lint at 67 files;
-5. pass the exact parent command at 146/146;
-6. prove all content files are byte-unchanged;
-7. pass `git diff --check` and complete changed-path review;
-8. restore `docs/dev/current-codex-prompt.md` byte-for-byte from parent blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
-9. stop without executing `0.6.6` in the same run.
+1. verify the exact repair range and two-file scope;
+2. run the two repaired test files;
+3. run normal content lint;
+4. rerun the parent baseline and require `146/146` unless a legitimate current count change is fully explained;
+5. prove `packages/content` is unchanged from the pre-repair head;
+6. pass hygiene and full-diff review;
+7. update completion coordination only after all checks pass;
+8. restore `docs/dev/current-codex-prompt.md` byte-for-byte from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+9. stop without executing the parent content package.
 
-## Coordination Updated
-
-Updated:
-
-- `docs/dev/current-codex-prompt.md`;
-- `docs/dev/current-gpt-handoff.md`;
-- `docs/dev/historical-version-and-deferred-route-register.md`;
-- `docs/design/current-planning-anchor-reconciliation.md`;
-- `docs/dev/project-vision-and-continuity-brief.md`;
-- `docs/dev/current-codex-output.md`.
-
-The static-content program remains semantically correct: `0.6.6` is still the active primary and `0.6.7` remains reserved next. The new suffix is a fail-closed prerequisite repair, not a new content milestone.
+If any gate fails, Codex must leave this prompt active and make no edits.
 
 ## Near-Term Sequence
 
-1. complete `0.6.6.1`;
-2. restore and run exact `0.6.6`;
-3. run `0.6.7`;
-4. run Geography/recognition planning;
-5. run Activity Resolution reuse audit;
-6. run the Mortal Crisis receipt contract;
-7. run bounded lethal-process/stabilization research only when that contract confirms readiness;
-8. proceed through separately authorized owner-specific packages.
+1. complete `0.6.6.2` validation and exact parent-prompt restoration;
+2. execute exact `0.6.6 - Monster, Ecology, And Loot Static Content Expansion` in a separate pass;
+3. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
+4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+5. run Activity Resolution Existing-System Reuse Audit;
+6. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+7. run bounded physiology/first-aid research only when the receipt contract authorizes it;
+8. proceed through separately authorized owner-specific implementation packages.
+
+## Parallel Audit Posture
+
+The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and noncontrolling. Its findings require a fresh integration inspection after the active static and documentation sequence.
 
 ## Active Prompt
 
-`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
+`Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`
 
 Suggested commit:
 
-`test(content): tolerate utf-8 bom in json fixtures`
+`docs(routes): accept bom repair and restore 0.6.6`
