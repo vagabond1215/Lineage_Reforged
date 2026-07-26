@@ -69,15 +69,16 @@ The package is static identity, ecology, combat-descriptor, and source-local dro
 1. run exact `0.6.6`;
 2. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
 3. run the queued docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-4. run `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
-5. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-6. proceed to owner-specific health, body, care, restoration, convalescence, persistence, UI, and runtime packages only under separate prompts.
+4. run the queued unversioned `Activity Resolution Existing-System Reuse Audit`;
+5. run `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
+6. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+7. proceed to owner-specific health, body, care, restoration, convalescence, persistence, UI, and runtime packages only under separate prompts.
 
-The later activity-resolution reuse audit remains behind the Geography route as already queued.
+The activity-resolution audit must remain documentation-only. It should consume completed occurrence authority when classifying attempt identity, material inputs, deterministic/uncertain results, replay, typed effects, and existing-system reuse. It must not implement a shared resolver or add content.
 
 ## Research Posture
 
-No new broad research is needed before `0.6.6`, `0.6.7`, Geography/recognition planning, or the abstract Mortal Crisis receipt decision.
+No new broad research is needed before `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
 
 Before a first executable lethal-process catalog, research should cover hemorrhage/shock; airway compromise, suffocation, and drowning; poisoning and antidote limits; hypothermia/heat exposure; burns; stabilization versus definitive care; transport/reassessment; and observer-safe urgency communication.
 
@@ -95,7 +96,8 @@ Keep deferred:
 - service/resource/commodity expansion and dynamic inventory/crafting/economy work;
 - resurrection, regrowth, rare-healer, magical-book/tome/scroll, or enchanter-document content;
 - maps, recognition clues, and new Knowledge content before the Geography contract;
-- generic POIs and filler for closed content lanes.
+- generic POIs and filler for closed content lanes;
+- activity trial/process/profile/effect content before the queued reuse audit accepts authority and reuse boundaries.
 
 ## Known Live Gaps
 
@@ -112,6 +114,7 @@ Keep deferred:
 - Retain narrative and elemental evidence through their occurrence-aware consumers.
 - Preserve save/Stakes, Mortal Crisis/Stakes, occurrence, and the narrow occurrence clarification permanently.
 - Keep Gate 1-5 and Gate 7 production-research artifacts through `0.6.7` according to synthesis disposition.
+- Preserve `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` unchanged until all prerequisites are accepted and coordination activates it.
 
 ## Active Prompt
 
