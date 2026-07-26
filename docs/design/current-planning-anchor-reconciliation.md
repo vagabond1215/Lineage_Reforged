@@ -34,24 +34,25 @@ Until the roadmap and sequenced plan receive a dedicated full-document maintenan
 ## Accepted Current State
 
 - latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
-- active primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-- active support suffix: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`;
-- active support prompt blob: `93d2a29e1cbc8dd931a243becfbbeab2ed8a69a0`;
-- preserved parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+- active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
+- landed but unaccepted repair implementation: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair` at commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
+- active support suffix: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`;
+- active support prompt blob: `75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`;
+- preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
 - reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
-`0.6.6` remains the current primary. The support suffix exists only because its mandatory untouched baseline failed on BOM-bearing JSON fixtures before content authoring began.
+`0.6.6` remains the current parent primary. The repair code has landed, but content authoring remains fail-closed until the validation suffix proves the required tests, content identity, and exact parent-prompt restoration.
 
 ## Accepted Near-Term Order
 
-1. `0.6.6.1` BOM-tolerant test-harness repair;
-2. restore and execute exact `0.6.6` static monster/ecology/loot package;
-3. `0.6.7` cross-content audit;
-4. Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-5. Activity Resolution Existing-System Reuse Audit;
-6. Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-7. bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-8. separately authorized owner-specific implementation packages.
+1. validate the landed BOM repair and restore exact `0.6.6` through `0.6.6.2`;
+2. execute exact `0.6.6` in a separate pass;
+3. run `0.6.7` cross-content audit;
+4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+5. run Activity Resolution Existing-System Reuse Audit;
+6. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+7. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+8. proceed through separately authorized owner-specific implementation packages.
 
 ## Maintenance Rule
 
