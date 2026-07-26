@@ -2,124 +2,180 @@
 
 ## Run Identity
 
-`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
+`Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`
 
 Parent primary:
 
 `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 
-Run this as one narrow support repair. Do not author the `0.6.6` monster/ecology/loot content in this pass.
+Prior support run:
+
+`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
+
+Run classification: four-segment support suffix attached to `0.6.6`.
+
+Milestone impact: `supports_current_band`.
 
 Suggested commit:
 
-`test(content): tolerate utf-8 bom in json fixtures`
+`docs(routes): accept bom repair and restore 0.6.6`
 
-## Reason For The Support Run
+## Purpose
 
-The fail-closed `0.6.6` preflight at commit `36f83d0856eb59446af9dfe597cf4e503470a158` confirmed:
+The narrow test repair has landed, but the support sequence is incomplete. The repository still exposes the old `0.6.6.1` repair prompt and has no committed validation/completion evidence or restored parent prompt.
 
-- repository state was clean and synchronized;
-- the exact `0.6.6` content matrix, references, counts, and 28-drop calculation were valid;
-- `npm.cmd run tool:content-lint` passed at 67 checked files;
-- the mandatory focused command completed 142 of 146 tests;
-- four failures came from baseline tests calling `JSON.parse(raw)` on JSON text with an optional leading UTF-8 BOM;
-- affected readers are `tests/unit/region-first-world-data.test.mjs` and `tests/unit/slug-content.test.mjs`;
-- confirmed BOM-bearing inputs include `regional_ecology_profiles.json`, `region_localities.json`, `flora.json`, and `minerals.json`.
+This pass must:
 
-This is a test-harness compatibility defect. It is not permission to normalize, rewrite, reformat, or otherwise edit the content files.
+1. verify the landed repair exactly;
+2. run the required validation against the current repository;
+3. prove that content data remained byte-unchanged;
+4. mark `0.6.6.1` and this validation suffix complete;
+5. restore the exact parent `0.6.6` prompt byte-for-byte;
+6. stop without executing the parent content package.
+
+This is a validation and coordination pass. It is not permission to edit tests again or author content.
+
+## Pinned Repository Evidence
+
+Expected repair commit:
+
+`66f12fd6f649f8f218f7f49fc721a8fe545a7a01`
+
+Repair commit parent and pre-repair coordination head:
+
+`895c02df40332c813a8403bd489af6184111ccba`
+
+The exact repair range `895c02df40332c813a8403bd489af6184111ccba..66f12fd6f649f8f218f7f49fc721a8fe545a7a01` must change only:
+
+- `tests/unit/region-first-world-data.test.mjs`;
+- `tests/unit/slug-content.test.mjs`.
+
+The accepted repair in each reader is equivalent to:
+
+```js
+JSON.parse(raw.replace(/^\uFEFF/, ""))
+```
+
+The stale prior support-prompt blob is:
+
+`93d2a29e1cbc8dd931a243becfbbeab2ed8a69a0`
+
+The exact parent `0.6.6` prompt blob to restore is:
+
+`42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
+
+Do not regenerate or paraphrase the parent prompt.
 
 ## Execution Gate
 
-1. Read `AGENTS.md`, `README.md`, current output, current handoff, this prompt, the route register, `docs/design/static-content-expansion-program.md`, and `docs/design/current-planning-anchor-reconciliation.md`.
-2. Resolve and inspect the held `0.6.6` prompt blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`. Preserve it unchanged for restoration after this repair.
-3. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
-4. Confirm the two test files still pass raw `readFile(..., "utf8")` text directly to `JSON.parse(...)` without removing an optional leading `U+FEFF`.
-5. Confirm the named JSON inputs still begin with an optional BOM where reported. Do not edit them.
-6. Reproduce the baseline failure with the exact parent command before editing:
+1. Read `AGENTS.md`, `README.md`, current output, current handoff, this prompt, the route register, `docs/design/current-planning-anchor-reconciliation.md`, `docs/dev/project-vision-and-continuity-brief.md`, and `docs/design/static-content-expansion-program.md`.
+2. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
+3. Confirm commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` is an ancestor of the current branch.
+4. Inspect the exact repair commit and its range from `895c02df40332c813a8403bd489af6184111ccba`. Require exactly the two test-file changes listed above and no content-file change.
+5. Confirm both current test readers remove at most one leading `U+FEFF` before `JSON.parse`, preserve all other text, and do not use broad `trim()` or a shared production parser.
+6. Confirm Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` resolves and is the held exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt.
+7. Stop without edits if the repair commit is missing, contains broader source/test changes, alters content data, weakens assertions, or no longer matches the narrow accepted operation.
 
-   `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
+## Required Validation
 
-7. Stop without editing if the failure count, failure cause, affected tests, or repository baseline materially differs from the reported four BOM parse failures.
+Run the two repaired test files:
 
-## Exact Repair
+`node --test tests/unit/region-first-world-data.test.mjs tests/unit/slug-content.test.mjs`
 
-Update only the two test readers so an optional leading UTF-8 BOM is removed before `JSON.parse`.
+Run normal content lint:
 
-The accepted semantic operation is equivalent to:
+`npm.cmd run tool:content-lint`
 
-```js
-const parsed = JSON.parse(raw.replace(/^\uFEFF/, ""));
-```
+Rerun the exact parent baseline:
 
-A small file-local helper is also acceptable when it performs exactly the same narrow operation.
+`node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
 
-Requirements:
+Acceptance requirements:
 
-- remove at most one leading `U+FEFF`;
-- preserve all other whitespace and JSON text;
-- do not call broad `trim()` or normalize line endings;
-- do not change record assertions, expected counts, slug rules, geographic rules, or test coverage;
-- do not create a shared production parser or new dependency;
-- keep the change local to test harnesses.
+- every named test passes;
+- the parent baseline passes at `146/146` unless a legitimate test-count change after the pinned repair is fully explained and contains no failure;
+- normal content lint passes at 67 checked files unless a legitimate current-baseline count change is fully explained;
+- `git diff --exit-code 895c02df40332c813a8403bd489af6184111ccba..HEAD -- packages/content` reports no content change;
+- no JSON data file was normalized, reformatted, or rewritten;
+- conflict-marker and trailing-whitespace searches pass;
+- `git diff --check` passes;
+- complete changed-path and full-diff inspection confirms that the landed repair is narrow and all later connector changes are documentation-only.
 
-## Allowed Files
+Do not run the full test suite, builds, typechecks, package installation, servers, generators, or gameplay.
 
-Test repair:
+## Failure Behavior
 
-- `tests/unit/region-first-world-data.test.mjs`
-- `tests/unit/slug-content.test.mjs`
+If any validation or scope requirement fails:
 
-Coordination after successful validation only:
+- do not edit any file;
+- do not restore the parent prompt;
+- do not change tests, content, runtime, schemas, validators, dependencies, or coordination state;
+- report the exact command, failure, changed-path evidence, and smallest recommended follow-up;
+- leave this support prompt active.
 
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
-- `docs/dev/current-codex-prompt.md`, solely to restore the exact parent prompt from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
+## Allowed Changes After Successful Validation Only
 
-## Prohibited Scope
+Update only:
 
-Do not modify:
+- `docs/dev/current-codex-output.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/current-planning-anchor-reconciliation.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/dev/current-codex-prompt.md`, solely by restoring exact blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
-- any JSON content file, including the four BOM-bearing inputs;
-- `packages/content/base/world/monsters.json`;
-- schemas, validators, lint code, loaders, serializers, runtime parsers, packages, or dependencies;
-- production runtime, UI, saves, migrations, generated output, assets, or gameplay;
-- existing test assertions beyond the minimal BOM-tolerant parse seam;
-- the held parent-prompt blob or held-route file;
-- `0.6.7` or any later route.
+No source, test, content, schema, validator, runtime, persistence, save, migration, UI, dependency, asset, generated-output, or gameplay file may change in this pass.
 
-Do not remove BOMs from repository data as cleanup. This support run fixes readers that explicitly parse repository JSON fixtures as UTF-8 text.
+## Required Completion Updates
 
-## Validation
+On success, record in current output:
 
-After the repair:
+- starting and ending commits;
+- exact repair commit and two-file scope;
+- focused-test result;
+- content-lint result;
+- parent-baseline result;
+- content byte-identity check;
+- hygiene results;
+- exact changed paths;
+- confirmation that no test or content file changed during this validation pass;
+- restored parent-prompt blob;
+- next run: exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
 
-1. Run:
+Update the handoff, route register, planning anchor, and continuity brief so they agree that:
 
-   `node --test tests/unit/region-first-world-data.test.mjs tests/unit/slug-content.test.mjs`
+- `0.6.6.1` repair implementation is accepted;
+- `0.6.6.2` validation/restoration support is complete;
+- `0.6.6` is active and unblocked;
+- the active prompt is the exact parent blob;
+- `0.6.7` remains reserved after accepted `0.6.6`;
+- no content was authored by either support suffix.
 
-2. Run:
+## Exact Parent Restoration
 
-   `npm.cmd run tool:content-lint`
+Restore `docs/dev/current-codex-prompt.md` directly from Git blob:
 
-3. Rerun the exact parent baseline:
+`42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
 
-   `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
+After writing, require:
 
-4. Require all 146 tests to pass. If the total differs because the live baseline legitimately changed, report the exact total and stop before restoring the parent prompt unless every named test passes and no unrelated failure exists.
-5. Confirm the four BOM-bearing content files and every other content file are byte-unchanged.
-6. Run conflict-marker and trailing-whitespace searches, `git diff --check`, changed-path review, and full diff inspection.
-7. Do not run builds, typechecks, package installation, servers, generators, or the full test suite.
+`git hash-object docs/dev/current-codex-prompt.md`
 
-## Completion And Parent Restoration
+returns exactly:
 
-On success:
+`42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
 
-1. record exact before/after results and changed paths in `docs/dev/current-codex-output.md`;
-2. mark `0.6.6.1` complete and exact `0.6.6` unblocked in the handoff and route register;
-3. restore `docs/dev/current-codex-prompt.md` byte-for-byte from Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
-4. do not execute the parent `0.6.6` content package in the same run.
+Do not add a wrapper, completion note, mode line, or commentary to the restored prompt.
 
-The next run after accepted `0.6.6.1` is the restored exact:
+## Stop Condition
+
+After the completion documentation and exact prompt restoration are committed:
+
+- stop;
+- do not execute `0.6.6` in the same run;
+- do not begin `0.6.7`;
+- do not merge or modify the separate parallel `0.7` readiness-audit branch.
+
+The next Codex pass is the restored exact:
 
 `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
