@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-26 after fail-closed `0.6.6` preflight and activation of `0.6.6.1`.
+Updated 2026-07-26 after the BOM repair implementation landed and `0.6.6.2` validation/restoration was activated.
 
 ## Purpose
 
@@ -25,25 +25,27 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
-- Active primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
-- Active support suffix: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`.
-- Active support prompt blob: `93d2a29e1cbc8dd931a243becfbbeab2ed8a69a0`.
+- Active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
+- Landed repair implementation: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
+- Active support suffix: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`.
+- Active support prompt blob: `75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`.
 - Preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
-The parent content package is fail-closed before authoring because its untouched mandatory test baseline produced 142/146 passes. The four failures are BOM parse failures in two test readers, not content-reference or matrix defects.
+The repair code is present in the two intended test readers. The support sequence remains incomplete until Codex records the focused tests, normal content lint, parent baseline, content byte-identity check, hygiene review, completion coordination, and exact parent-prompt restoration.
 
 ## Immediate Sequence
 
-1. repair the two BOM-sensitive test readers in `0.6.6.1`;
-2. require the exact baseline to pass at 146/146 and keep all JSON data byte-unchanged;
-3. restore and execute exact `0.6.6`;
-4. run `0.6.7` cross-content coherence and coverage audit;
-5. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-6. run Activity Resolution Existing-System Reuse Audit;
-7. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-8. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-9. proceed through separately authorized owner-specific packages.
+1. validate the landed BOM repair through `0.6.6.2`;
+2. require all named tests to pass, require the parent baseline at `146/146` unless a legitimate count change is fully explained, and keep all content byte-unchanged;
+3. restore exact `0.6.6` from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+4. execute exact `0.6.6` in a separate pass;
+5. run `0.6.7` cross-content coherence and coverage audit;
+6. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+7. run Activity Resolution Existing-System Reuse Audit;
+8. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+9. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+10. proceed through separately authorized owner-specific packages.
 
 ## Current Implementation Reality
 
@@ -51,7 +53,8 @@ The parent content package is fail-closed before authoring because its untouched
 - `0.6.4` added the accepted world/settlement static package.
 - `0.6.5` added the accepted 16-row recipe batch for 28 recipes across 10 families.
 - The exact `0.6.6` target remains valid: nine monsters, nine fauna lineages, nine ecology additions, and 28 source-local drop rows.
-- `0.6.6.1` may change only `tests/unit/region-first-world-data.test.mjs` and `tests/unit/slug-content.test.mjs`, plus completion coordination.
+- Commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` changes only the two BOM-sensitive unit-test readers.
+- `0.6.6.2` may not change tests or content; it validates, updates coordination, and restores the exact parent prompt only after success.
 - BOM-bearing JSON files must not be rewritten as cleanup.
 - Static content does not authorize spawning, encounters, AI, dynamic loot, harvesting, populations, migration, ecology simulation, inventory mutation, or rewards.
 - Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
@@ -61,11 +64,15 @@ The parent content package is fail-closed before authoring because its untouched
 
 ## Research And Content Posture
 
-No new broad research is needed before the support repair, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
+No new broad research is needed before the support validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
 
 Before the first executable or balance-bearing lethal-process catalog, run bounded research on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
-Expand content only through the exact `0.6.6` package after the baseline repair. Keep injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content deferred behind their recorded gates.
+Expand content only through the exact `0.6.6` package after support validation. Keep injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content deferred behind their recorded gates.
+
+## Parallel Preparation Posture
+
+The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch is noncontrolling and remains unmerged. Its findings require a fresh integration inspection after the active static and documentation sequence. The support validation pass must not merge, rebase, or modify that branch.
 
 ## North Star
 
