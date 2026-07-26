@@ -2,144 +2,127 @@
 
 Date: 2026-07-26
 
-Source run: `Last Push Inspection, Occurrence Clarification, Static Content Restoration, And Research Sequencing`
+Source run: `Current Repository Inspection And Planning-Anchor Reconciliation`
 
-Run classification: unversioned documentation-only inspection and coordination correction
+Run classification: unversioned documentation-only inspection and coordination maintenance
 
 Parent version: none
 
-Milestone impact: `advances_current_band`
+Milestone impact: `supports_current_band`
 
-## Inspected Push
+## Repository State Inspected
 
-Inspected commit:
+Starting head:
 
-`c116b614478a8dadbcef7d0ff95027c6565cd791`
+`d67fbbf8de2df425f45bb947bf58f5df08c75822`
 
-`docs(design): define occurrence commitment and correction contracts`
+`docs(routes): preserve activity audit prerequisite order`
 
-The push stayed within its exact four-file authorization:
+No newer user or Codex push was present. The active prompt remained the exact held/restored:
 
-1. created `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
-2. replaced `docs/dev/current-codex-output.md`;
-3. replaced `docs/dev/current-gpt-handoff.md`;
-4. updated materially affected rows in `docs/dev/historical-version-and-deferred-route-register.md`.
+`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 
-No runtime, shared type, schema, validator, package, dependency, persistence, save, migration, account, test, UI, content, generated, held-route, or retained-route file changed in the inspected push.
-
-The occurrence decision remains accepted durable authority. Its artifact blob is:
-
-`332476a6c90f4a80161ecb8c5123f846997dcf52`
-
-## Issues Found And Corrected
-
-### Taxonomy indentation
-
-The original Section 6 diagram visually placed owner-specific consequence receipts beneath `no accepted result`. The controlling prose correctly required accepted results before ordinary consequence consumption, except for an explicitly owner-defined consequential admitted rejection/no-result occurrence.
-
-Created:
-
-`docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`
-
-This clarification replaces only the misleading diagram relation.
-
-### Ironbound request wording
-
-The shorthand `Ironbound commits accepted commands` was too broad because a request/command is not automatically an occurrence. The clarification now commits admitted request/admission identity, accepted occurrences, accepted results, consequences, and correction lineage. Duplicate delivery, pre-admission rejection, invalid requests, and projection-only command records do not become committed gameplay truth.
-
-### Deferred-boundary wording
-
-The prior completion output stated `No accepted semantic boundary remains deferred`. The accepted reading is now limited to the occurrence decision's own scope. Domain-specific material-input policies, channel families, functional/lethal/care receipts, correction permissions, schemas, persistence, algorithms, tests, and implementation remain deferred.
-
-## Content And Route Inspection
-
-The exact held `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` package is ready now:
-
-- the culinary insertion that caused the hold is complete and durably integrated;
-- `0.6.5` is complete at 28 recipes across 10 families;
-- the exact held prompt remained recoverable as blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
-- its production monster, ecology, focused-test, fauna, item/value, region, biome, role, tactics, action-package, and combat-template baseline did not change after source commit `6394443f1628d9053b3417e926e581b7a444386c`;
-- intervening documentation decisions do not alter its narrow static-content scope.
-
-Created:
-
-`docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`
-
-The exact held prompt was restored byte-for-byte to `docs/dev/current-codex-prompt.md`. Its live blob is again:
+Prompt blob:
 
 `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
 
-## Active Sequence
+The prompt, production content, runtime, schemas, validators, tests, saves, migrations, dependencies, UI, generated output, and gameplay files were not modified during this inspection.
 
-1. `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-2. `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
-3. docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-4. unversioned `Activity Resolution Existing-System Reuse Audit`;
-5. `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
-6. bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-7. owner-specific health, care, body, restoration, convalescence, persistence, UI, and runtime packages under separate authorization.
+## Findings
 
-The activity-resolution audit is preserved immediately after its final prerequisite, Geography/recognition acceptance. It must consume the accepted occurrence contract when evaluating attempt identity, determinism, replay, and typed-effect reuse, but remains documentation-only.
+### Active route is coherent
 
-The Mortal Crisis receipt contract remains the next mortality-system route. It is sequenced behind the restored static milestone, Geography route, and already queued activity-reuse audit, not canceled.
+The active prompt, current GPT handoff, static-content program, restoration/sequencing decision, and route register all identify exact `0.6.6` as active, `0.6.7` as next, Geography/recognition after `0.6.7`, Activity Resolution reuse after Geography, and the Mortal Crisis receipt contract after that.
 
-## Research Disposition
+### Three canonical planning headers were stale
 
-No new broad research is required before `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt contract. Existing repository audits, comparative mortality research, occurrence authority, save/Stakes authority, narrative authority, and elemental authority are sufficient for those decisions.
+The following live planning documents retained current-anchor wording from before completion of `0.6.5` and the later unversioned authority sequence:
 
-Before the first executable or balance-bearing lethal-process catalog, run bounded real-world research on:
+- `docs/dev/project-roadmap.md` named `0.6.4` as the latest completed primary in its top override section;
+- `docs/dev/codex-sequenced-implementation-plan.md` named `0.6.4` as the latest completed primary in its current-anchor section;
+- `docs/dev/project-vision-and-continuity-brief.md` was dated after `0.6.4` and named an older support/audit run.
 
-- hemorrhage and shock;
-- airway compromise, suffocation, and drowning;
-- poisoning and antidote limits;
-- hypothermia, heat injury, and environmental exposure;
-- burns and progressive tissue injury;
-- stabilization versus definitive treatment;
-- transport, delay, reassessment, and deterioration;
-- observer knowledge and safe urgency communication.
+The roadmap and sequenced plan remain valuable historical records, but their stale top current-anchor lines could misroute a future reader because both documents describe themselves as current sequencing sources.
 
-Do not copy exact clinical timers, medical protocols, or proprietary game values into gameplay by default.
+### No broken temporary evidence artifact was found
 
-## Content Disposition
+The apparently suspicious defeat/injury temporary artifact is not empty. It resolves to blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3`, contains the full repository audit, and remains referenced by accepted downstream decisions. It should be retained through the first relevant runtime repair.
 
-Expand now only the exact `0.6.6` nine-monster, nine-lineage, nine-ecology-link package.
+### Route-register compression did not erase the active lanes
 
-Keep deferred:
+The current route register still retained the active static lane, `0.6.7`, Geography, Activity Resolution reuse, Mortal Crisis receipts, targeted later research, Stakes, narrative, elemental, Ironbound, culinary, inventory/crafting, command/replay, services/resources, NPC/social, dynamic ecology, maps, and other principal deferred lanes. The maintenance pass strengthened precedence and added explicit planning-anchor maintenance without reopening historical chronology.
 
-- injury, lethal-process, care, trauma, or condition catalogs;
-- dynamic encounter, spawn, loot, population, migration, harvesting, or ecology runtime;
-- NPC/social/faction/institution content without named authored sources;
-- services, resources, commodities, stock, dynamic economy, inventory, or crafting execution;
-- resurrection, regrowth, rare-healer, magical-book, tome, scroll, or enchanter-document content;
-- maps, recognition clues, or new Knowledge content before the Geography route;
-- generic POIs and filler in closed content lanes;
-- activity-resolution trial/process/profile/effect content before the queued reuse audit accepts ownership and reuse boundaries.
+## Corrections Applied
 
-## Files Changed By This Inspection
+Created:
 
-1. created `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
-2. created `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`;
-3. restored `docs/dev/current-codex-prompt.md` to exact held blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
-4. replaced `docs/dev/current-codex-output.md`;
-5. replaced `docs/dev/current-gpt-handoff.md`;
-6. updated `docs/dev/historical-version-and-deferred-route-register.md`;
-7. updated `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md`.
+`docs/design/current-planning-anchor-reconciliation.md`
 
-No production content, runtime, test, schema, validator, dependency, generated file, asset, save, migration, account, UI, or gameplay file changed during this inspection.
+This narrow authority:
+
+- identifies the stale roadmap, sequenced-plan, and former continuity-brief anchors;
+- establishes current-source precedence;
+- records the accepted current primary and near-term sequence;
+- preserves historical roadmap/sequence chronology;
+- requires a later dedicated full-document maintenance pass to refresh those large documents' current-header sections.
+
+Updated:
+
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/current-codex-output.md`.
+
+## Current Planning Precedence
+
+Use:
+
+1. `docs/dev/current-codex-prompt.md` for executable scope;
+2. `docs/dev/current-gpt-handoff.md` for immediate guardrails and route order;
+3. `docs/dev/current-codex-output.md` for latest inspection/implementation state;
+4. `docs/dev/historical-version-and-deferred-route-register.md` for route identity and deferred posture;
+5. the most specific focused decision;
+6. `docs/design/current-planning-anchor-reconciliation.md` for stale roadmap/sequence current-header conflicts;
+7. roadmap and sequenced plan for non-conflicting historical and long-term context.
+
+## Accepted Current Anchor
+
+- latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
+- latest completed contract: `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision`;
+- active primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
+- reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
+
+## Accepted Near-Term Sequence
+
+1. exact `0.6.6` static monster/ecology/loot package;
+2. `0.6.7` cross-content audit;
+3. Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+4. Activity Resolution Existing-System Reuse Audit;
+5. Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+6. bounded physiology/first-aid research only before an executable or balance-bearing lethal-process catalog;
+7. separately authorized owner-specific implementation packages.
+
+## Research And Content Disposition
+
+No broad external research is needed before `0.6.6`, `0.6.7`, Geography/recognition, the repository-only Activity Resolution audit, or the abstract Mortal Crisis receipt contract.
+
+Targeted physiology/first-aid research remains required before the first executable or balance-bearing lethal-process catalog. It should cover causal categories, intervention limits, transport/reassessment, and observer-safe urgency without directly importing clinical protocols, exact real-world timers, medical advice, or proprietary values.
+
+Expand now only the exact `0.6.6` package. Dynamic ecology, injury/care catalogs, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection/rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content remain deferred behind their recorded gates.
 
 ## Validation
 
-- inspected exact latest commit and changed-path scope;
-- reviewed the complete occurrence decision, output, handoff, active prompt, and route register;
-- traced the accepted Mortal Crisis model and owner graph;
-- reviewed comparative mortality evidence and the live defeat/injury audit;
-- verified the exact held prompt identity;
-- verified no named `0.6.6` production or focused-test source changed after the held prompt source commit;
-- restored the prompt through its original Git blob rather than a regenerated copy;
-- rechecked the queued Activity Resolution audit and preserved its explicit prerequisite order;
-- preserved `0.6.7`, Geography/recognition, activity reuse, mortality, narrative, elemental, and temporary-evidence routes.
+- confirmed latest repository head and recent commit order;
+- verified exact active prompt identity and blob;
+- inspected current output, handoff, route register, roadmap top sections, sequenced-plan current anchor, continuity brief, static-content program, and held Activity Resolution audit;
+- inspected the referenced defeat/injury temporary artifact and confirmed it is populated and still consumed;
+- preserved every production, test, runtime, schema, validator, persistence, save, migration, dependency, UI, asset, generated, and gameplay path;
+- made documentation-only changes;
+- did not run runtime tests because no runtime, content, schema, validator, or test file changed.
 
-No runtime tests were run because this inspection changed documentation and routing only.
+## Remaining Maintenance
+
+The roadmap and sequenced plan still physically contain stale top current-anchor wording. They are explicitly noncontrolling under the new reconciliation until a dedicated full-document maintenance pass can update those large files without disturbing their historical chronology.
 
 ## Active Prompt
 
