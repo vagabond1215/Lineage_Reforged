@@ -4,14 +4,13 @@ Date: 2026-07-26
 
 ## Status
 
-- `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision` is complete and controlling.
-- Controlling occurrence artifact: `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`, blob `332476a6c90f4a80161ecb8c5123f846997dcf52`.
-- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md` is the most specific authority for corrected consequence flow, Ironbound admitted-request wording, and occurrence-scope deferred wording.
-- `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` controls the immediate route order and research timing.
-- `docs/design/current-planning-anchor-reconciliation.md` controls conflicts caused by stale current-anchor text in the roadmap or sequenced plan.
-- Active prompt: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
-- Active prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
-- Implementation is authorized only inside the exact `0.6.6` prompt scope.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains the active primary but is fail-closed before authoring.
+- A clean preflight at commit `36f83d0856eb59446af9dfe597cf4e503470a158` confirmed the exact matrix, references, counts, and 28-drop calculation.
+- `npm.cmd run tool:content-lint` passed at 67 files.
+- The required focused baseline failed at 142/146 because two test harnesses passed BOM-bearing UTF-8 text directly to `JSON.parse`.
+- Active support prompt: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`.
+- Active prompt blob: `93d2a29e1cbc8dd931a243becfbbeab2ed8a69a0`.
+- The exact parent `0.6.6` prompt remains preserved as Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Current Planning Precedence
 
@@ -25,115 +24,85 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale roadmap/sequence current-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-Known stale text remains in the top current-anchor sections of `docs/dev/project-roadmap.md` and `docs/dev/codex-sequenced-implementation-plan.md`. It must not displace the exact active prompt or route register. Their full historical chronology remains retained pending a dedicated full-document maintenance pass.
+## Verified BOM Defect
 
-## Most Specific Authorities
-
-1. `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md` for its narrow corrections.
-2. `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md` for occurrence identity, material equivalence, result receipts, named uncertainty, commitment, consequence idempotency, correction, supersession, and legacy event-id classification.
-3. `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md` for campaign/save identity, topology, migration, publication, and technical recovery.
-4. `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md` for public Stakes semantics, Mortal Crisis, actual/final death, resurrection, convalescence, closure, and settlement/succession order.
-5. `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` for current route priority, research timing, and content disposition.
-6. `docs/design/current-planning-anchor-reconciliation.md` only for current-anchor coordination conflicts.
-7. Campaign-rules, Normal fallback, injury/restoration, narrative, elemental, combat, quest/event/Chronicle, static-content, and other domain decisions for unchanged boundaries.
-
-Temporary audits and research are evidence, not gameplay authority. Live code remains implementation and migration evidence.
-
-## Occurrence Clarification
+The baseline readers currently do this:
 
 ```text
-request / command
-  -> delivery and admission
-       -> occurrence
-            -> deterministic accepted result
-            -> uncertain accepted result -> named channel evidence
-            -> no accepted result
-
-accepted result
-  -> owner-specific consequence receipts
-       -> projections
+readFile(path, "utf8")
+  -> JSON.parse(raw)
 ```
 
-An admitted rejection or no-result occurrence has a consequence only when its owning domain explicitly defines one. A pre-admission rejection has no gameplay occurrence or consequence.
+Affected tests:
 
-Ironbound commits admitted request/admission identity, accepted occurrences, accepted results, consequences, and correction lineage. Duplicate delivery, invalid/pre-admission requests, and projection-only command records are not committed gameplay truth.
+- `tests/unit/region-first-world-data.test.mjs`;
+- `tests/unit/slug-content.test.mjs`.
 
-## Active Content Package
+Confirmed BOM-bearing fixture inputs include:
 
-`0.6.6` adds exactly:
-
-- nine encounter-scale beast records;
-- nine explicit monster-to-fauna lineages;
-- nine macroregional native-fauna ecology additions;
-- 28 source-local drop rows;
-- final expected totals of 33 monsters, 77 drops, 20 loot rows, and 9 explicit fauna lineages.
-
-Allowed production/test files remain exactly:
-
-- `packages/content/base/world/monsters.json`;
 - `packages/content/base/world/regional_ecology_profiles.json`;
-- `tests/unit/monster-validation-hardening.test.mjs`.
+- `packages/content/base/world/region_localities.json`;
+- `packages/content/base/world/flora.json`;
+- `packages/content/base/world/minerals.json`.
 
-The package is static identity, ecology, combat-descriptor, and source-local drop content only. It does not authorize spawning, encounters, dynamic loot, harvesting, populations, AI, status effects, runtime, UI, saves, migrations, economy, magic, or gameplay.
+The repair must remove only an optional leading `U+FEFF` before parsing. It must not edit or normalize the JSON files, weaken assertions, trim general whitespace, create a production parser, or add dependencies.
+
+## Exact `0.6.6.1` Scope
+
+Test files:
+
+- `tests/unit/region-first-world-data.test.mjs`;
+- `tests/unit/slug-content.test.mjs`.
+
+After successful validation, coordination may update current output, this handoff, the route register, and restore the current prompt byte-for-byte from parent blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+
+The support run must not author any `0.6.6` content.
+
+## Required Validation
+
+1. reproduce the four baseline BOM parse failures before editing;
+2. run the two repaired test files;
+3. run `npm.cmd run tool:content-lint`;
+4. rerun the exact parent command:
+
+   `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
+
+5. require 146/146 unless a legitimate baseline change is explicitly explained;
+6. confirm all JSON content is byte-unchanged;
+7. run `git diff --check` and full changed-path inspection.
 
 ## Near-Term Sequence
 
-1. run exact `0.6.6`;
-2. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
-3. run the queued Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-4. run the queued unversioned `Activity Resolution Existing-System Reuse Audit`;
-5. run `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
-6. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-7. proceed to owner-specific health, body, care, restoration, convalescence, persistence, UI, and runtime packages only under separate prompts.
+1. complete `0.6.6.1` test-harness repair;
+2. restore and run exact `0.6.6`;
+3. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
+4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+5. run Activity Resolution Existing-System Reuse Audit;
+6. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+7. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+8. proceed to separately authorized owner-specific implementation packages.
 
-The activity-resolution audit remains documentation-only. It should consume completed occurrence authority when classifying attempt identity, material inputs, deterministic/uncertain results, replay, typed effects, and existing-system reuse. It must not implement a shared resolver or add content.
+## Preserved Authorities
 
-## Research Posture
-
-No new broad research is needed before `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
-
-Before a first executable lethal-process catalog, research should cover hemorrhage/shock; airway compromise, suffocation, and drowning; poisoning and antidote limits; hypothermia/heat exposure; burns; stabilization versus definitive care; transport/reassessment; and observer-safe urgency communication.
-
-That research should inform grounded categories and causal/intervention boundaries. It must not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
-
-## Content Posture
-
-Expand now only the exact `0.6.6` package.
-
-Keep deferred:
-
-- injury, condition, lethal-process, care, trauma, and convalescence catalogs;
-- dynamic encounter/spawn/loot/ecology systems;
-- NPC, schedule, companion, faction, institution, diplomacy, government, or business content without named authored inputs;
-- service/resource/commodity expansion and dynamic inventory/crafting/economy work;
-- resurrection, regrowth, rare-healer, magical-book/tome/scroll, or enchanter-document content;
-- maps, recognition clues, and new Knowledge content before the Geography contract;
-- generic POIs and filler for closed content lanes;
-- activity trial/process/profile/effect content before the queued reuse audit accepts authority and reuse boundaries.
+- occurrence identity, commitment, correction, and consequence idempotency remain controlled by the occurrence decision and its narrow clarification;
+- campaign/save topology and recovery remain controlled by the save/Stakes decision;
+- Normal/Committed/Ironbound and Mortal Crisis remain controlled by the Stakes authority revision;
+- narrative and elemental decisions remain documentation authority;
+- `0.6.6.1` changes no content or gameplay authority.
 
 ## Known Live Gaps
 
-- Current HP zero can still flow through legacy terminal archival and save deletion.
-- Generic event ids remain collision-prone `type:domain:tick` projections.
-- Current random/hash mechanisms are not named uncertainty-channel authority.
-- No active functional/lethal/care receipt contract, injury instances, body/restoration runtime, or correction tooling exists.
-- No dynamic monster/ecology/loot behavior is authorized by the static package.
-- Roadmap and sequenced-plan current-anchor headers remain stale; the planning-anchor reconciliation prevents them from controlling execution.
-
-## Evidence Retention
-
-- Retain comparative mortality research through checkpoint, occurrence, Mortal Crisis, resurrection, settlement, and succession consumers.
-- Retain the defeat/injury audit through the first relevant runtime repair.
-- Retain narrative and elemental evidence through their occurrence-aware consumers.
-- Preserve save/Stakes, Mortal Crisis/Stakes, occurrence, and the occurrence clarification permanently.
-- Keep Gate 1-5 and Gate 7 production-research artifacts through `0.6.7` according to synthesis disposition.
-- Preserve `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` unchanged until all prerequisites are accepted and coordination activates it.
-- Retain `docs/design/current-planning-anchor-reconciliation.md` until roadmap and sequenced-plan live headers are explicitly refreshed.
+- current HP zero can still enter legacy terminal archival and save deletion;
+- generic event ids remain collision-prone compatibility projections;
+- current random/hash mechanisms are not named uncertainty-channel authority;
+- no active functional/lethal/care receipt, injury instance, body/restoration runtime, or correction tooling exists;
+- no dynamic monster/ecology/loot behavior is authorized;
+- roadmap and sequenced-plan top current anchors remain stale and noncontrolling under the planning-anchor reconciliation.
 
 ## Active Prompt
 
-`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+`Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`
 
 Suggested commit:
 
-`content(world): expand regional monster ecology`
+`test(content): tolerate utf-8 bom in json fixtures`
