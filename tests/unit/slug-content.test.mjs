@@ -14,7 +14,7 @@ const geoQualifierPattern = /\b(american|european|asian|african|oregon|texas|cal
 for (const file of files) {
   test(`slug and naming rules: ${file}`, async () => {
     const raw = await readFile(file, "utf8");
-    const parsed = JSON.parse(raw);
+    const parsed = JSON.parse(raw.replace(/^\uFEFF/, ""));
 
     assert.ok(Array.isArray(parsed.records));
 

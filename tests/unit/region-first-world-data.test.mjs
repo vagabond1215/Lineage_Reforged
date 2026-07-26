@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 
 async function loadRecords(path) {
   const raw = await readFile(path, "utf8");
-  const parsed = JSON.parse(raw);
+  const parsed = JSON.parse(raw.replace(/^\uFEFF/, ""));
   return parsed.records;
 }
 
