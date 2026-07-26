@@ -1,86 +1,74 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-14 after `Version 0.6.4 - World And Settlement Static Content Expansion`.
+Updated 2026-07-26 after occurrence-contract acceptance and restoration of exact `Version 0.6.6`.
 
 ## Purpose
 
-This brief is the strategic north-star and source map for Lineage: Reforged. Keep it short. Detailed current state and implementation guidance live in the specialized repo docs.
+This brief is the strategic north star and compact source map for Lineage: Reforged. Detailed current state and implementation guidance live in the specialized repository documents.
 
-## Source Map
+## Source Map And Precedence
 
-- `docs/dev/current-codex-output.md` owns exact latest Codex implementation state.
-- `docs/dev/current-gpt-handoff.md` owns current connector-side guardrails and immediate prompt direction.
-- `docs/dev/current-codex-prompt.md` owns the active copy-paste Codex prompt body.
-- `docs/dev/project-roadmap.md` owns version order, version-band maturity, and active pipeline direction.
-- `docs/dev/codex-sequenced-implementation-plan.md` owns the detailed ordered Codex queue and historical sequencing record.
-- `docs/design/runtime-ownership-transition-readiness-consolidation.md` selects player travel as the first engine-owned consumer and owns the base `0.6.0` boundary.
-- `docs/design/player-travel-boundary-clarification.md` controls `0.6.0` collision-safe identity, shared preview/execution resolution, and full post-travel synchronization parity.
-- `docs/design/ui-information-architecture-boundary.md` controls the future six-domain shell, Home/re-entry, linked-record routing, Codex/knowledge presentation, text-first combat, tactics/gambit-style UX limits, accessibility, and anti-clutter boundaries.
-- `docs/design/magic-runtime-boundary-plan.md` owns the cast-readiness helper boundary and later runtime guardrails.
-- `docs/design/known-spell-acquisition-event-plan.md` owns the training-event acquisition helper boundary and later acquisition mutation constraints.
-- `docs/design/magic-command-contract-plan.md` owns the future active magic command/intention boundary.
-- `docs/design/first-narrow-runtime-cast-resolver-plan.md` owns the first narrow runtime cast resolver readiness boundary.
-- `docs/design/magic-resolver-planned-output-envelope-plan.md` owns the inert planned-output-envelope boundary.
-- `docs/design/spell-hook-support-expansion-plan.md` owns hook taxonomy, readiness classification, executable promotion criteria, and future hook-owner sequencing.
-- `docs/design/legacy-combat-spell-runtime-ownership-plan.md` owns deferred legacy spell staging, compatibility, multi-effect, and status-approximation decisions.
+- `docs/dev/current-codex-prompt.md` owns the active copy-paste Codex prompt.
+- `docs/dev/current-gpt-handoff.md` owns immediate connector-side guardrails and route order.
+- `docs/dev/current-codex-output.md` owns the latest exact inspection or implementation report.
+- `docs/dev/historical-version-and-deferred-route-register.md` owns canonical route identities, active/deferred posture, and reopening triggers.
+- `docs/design/current-planning-anchor-reconciliation.md` controls conflicts caused by stale current-anchor wording in the roadmap or sequenced plan.
+- `docs/dev/project-roadmap.md` owns version-band meaning, playability checkpoints, and non-conflicting long-term direction.
+- `docs/dev/codex-sequenced-implementation-plan.md` owns detailed historical sequencing and non-conflicting queue context.
+- `docs/design/static-content-expansion-program.md` owns the `0.6.4`-`0.6.7` static milestone and static/runtime boundary.
+- `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` owns the current post-occurrence route order and research timing.
+- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md` owns its narrow corrections to consequence flow, Ironbound admitted-request commitment, and deferred-boundary wording.
+- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md` owns occurrence identity, result receipts, named uncertainty, replay equivalence, correction, and downstream idempotency.
+- `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md` owns campaign/save identity, topology, branching, migration, publication, and technical recovery.
+- `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md` owns Normal/Committed/Ironbound semantics, Mortal Crisis, actual/final death, resurrection, convalescence, closure, and settlement order.
+- `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md` owns grounded narrative realization and observer-safe fact projection.
+- `docs/design/elemental-alignment-environmental-manifestation-temperament-and-magic-stimulus-decision.md` owns elemental canon and response boundaries.
+- `docs/design/runtime-ownership-transition-readiness-consolidation.md` and `docs/design/player-travel-boundary-clarification.md` own the accepted first engine-consumer transition.
+- `docs/design/ui-information-architecture-boundary.md` owns future shell, Home, linked-record, Codex, combat-presentation, tactics, accessibility, and anti-clutter boundaries.
 - `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
-- `docs/design/static-content-expansion-program.md` owns live static-catalog readiness, new-canon rules, the `0.6.4`-`0.6.7` sequence, and the return-to-runtime gate.
-- `docs/dev/historical-version-and-deferred-route-register.md` owns canonical historical aliases/suffixes and deferred reopening triggers.
-- `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` owns broad survival/builder/RPG/MMO gap context for later roadmap planning; it is not runtime authority or a backlog replacement.
-- `docs/design/skill-mastery-trial-framework-plan.md` owns skill trial and magic study-event planning constraints.
-- `docs/design/knowledge-domain-registry-plan.md` owns knowledge-domain purpose, groups, waves, source/evidence vocabulary, and ownership boundaries.
-- `docs/design/knowledge-domain-registry-schema-plan.md` owns the future broad-registry schema contract, reference authorities, validation ownership, and current-data transition.
-- `packages/schemas/player/knowledge_snippet.schema.json` is planning-only schema source for snippet-based knowledge progression; it is not runtime content loading.
-- `docs/future_content_backlog.md` owns chronological deferred notes and run notes.
+- `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` is broad future context only, not implementation permission.
+- `docs/future_content_backlog.md` owns chronological deferred notes and run history.
 
-## Current Repo Anchor
+## Current Repository Anchor
 
-Latest completed primary:
+- Latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+- Latest completed contract: `Occurrence Identity, Named Uncertainty Channels, Outcome Commitment, And Correction Contract Decision`.
+- Active primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
+- Active prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- Reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
+- Current sequence authority: `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`.
 
-- `Version 0.6.4 - World And Settlement Static Content Expansion`
+## Immediate Sequence
 
-Latest support/audit run:
-
-- `Version 0.6.3.3 - Engine-Owned Activity Selection Post-Repair Audit`
-
-Next recommended primary:
-
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-
-Current sequence source:
-
-- `docs/dev/codex-sequenced-implementation-plan.md`, with immediate execution guardrails in `docs/dev/current-gpt-handoff.md` and the active prompt in `docs/dev/current-codex-prompt.md`
-
-Current phase:
-
-- player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; `0.6.4` world content and `0.6.5` recipe content are complete, and the milestone continues through `0.6.6` and `0.6.7` before later planning routes
-
-Current transition decisions:
-
-- `docs/design/runtime-ownership-transition-readiness-consolidation.md` selects player travel/movement and fixes the base package boundary.
-- `docs/design/player-travel-boundary-clarification.md` requires deterministic collision-safe command/event identity, one engine-owned resolver for preview and execution, and complete parity with the current post-travel `syncSnapshot(...)` result.
+1. exact `0.6.6` nine-monster, nine-lineage, nine-ecology-link static package;
+2. `0.6.7` cross-content coherence and coverage audit;
+3. Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+4. Activity Resolution Existing-System Reuse Audit;
+5. Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+6. bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+7. separately authorized health, care, body, restoration, convalescence, persistence, UI, and runtime packages.
 
 ## Current Implementation Reality
 
-- Player travel preview and execution are engine-owned through one resolver and one transient command in `packages/engines/game-engine/src/`; the active `gameplayLoop.ts` path is a notice/application bridge and `WorldPanel.tsx` commits accepted snapshots only.
-- Quest acceptance is engine-owned through `player-quest-acceptance.ts`; the gameplay-loop bridge projects eligibility/notices and `QuestsPanel.tsx` applies accepted snapshots and section changes only on success.
-- Accepted travel atomically mutates the cloned clock, body/resources, player location and geographic Knowledge, session activity, quest-arrival operations, notifications, and Chronicle, then applies the shared engine-owned derived snapshot synchronization path.
-- Rejected or exceptional travel returns the original snapshot identity/content and emits no completion event. No travel catalog, direct travel mutation, or duplicate snapshot synchronization helper remains in the UI bridge.
-- Known spell ownership planning, helpers, validation helpers, acquisition-evidence helpers, read-only projection, blocker tests, boundary planning, cast-readiness helpers, acquisition event planning, training-event acquisition helpers, command contract planning, first narrow runtime cast resolver planning, resolver-readiness helpers, planned output-envelope policy, inert resolver envelope helpers, spell-hook support expansion planning, spell-hook classification auditing, and spell-hook constants cleanup have landed.
-- `buildMagicCastReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
-- `validateKnownSpellTrainingEventAcquisition(...)` and `buildKnownSpellRecordFromTrainingEvent(...)` are pure, deterministic, read-only, and exported through the game-engine boundary.
-- `buildMagicCastResolverReadiness(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
-- `buildMagicResolverInertEnvelope(...)` is pure, deterministic, read-only, and exported through the game-engine boundary.
-- `docs/design/magic-resolver-planned-output-envelope-plan.md` defines planned resolver envelopes as inert result projections, not emitted events or side-effecting command results.
-- `docs/design/spell-hook-support-expansion-plan.md` defines runtime-consumed, classifier, supported, deferred, unsupported, and unknown hook classes without making any hook executable.
-- `packages/shared/types/src/spell-hook-support.ts` is now the browser-safe authored authority consumed by lint, UI presentation, and focused readiness tests.
-- `buildMagicHookSupportProjection(...)` now projects six-class policy provenance and blocker detail while keeping every hook explicitly non-executable.
-- The temporary classification audit was consumed; unresolved legacy combat findings were promoted into `docs/design/legacy-combat-spell-runtime-ownership-plan.md`.
-- Runtime casting, command handling outside the selected travel slice, acquisition mutation, save/account changes, broader ownership routes, broader acquisition routes, target resolution, effect application, resource payment, catalyst behavior, Chronicle/Renown expansion, skill trial runtime behavior, magic study event runtime behavior, and knowledge snippet runtime behavior remain deferred.
-- Current `PlayerSpellState[]` remains readiness context, not a complete acquisition/ownership model.
-- The project is entering the first runtime-ownership transition; broad runtime expansion remains out of scope.
-- Religion is active with exactly two live Religion Knowledge snippets, and hotspot content remains blocked until `world.religious_hotspots` schema, validator, seed authority, and direct snippet subject support exist.
-- `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` is durable broad gap context for later roadmap planning around inventory/storage, survival needs, builder construction, NPC population, factions, reputation/favorability, quests/contracts, travel/POIs, law/crime, and estate/succession. It must not broaden narrow implementation prompts by default.
+- Player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted.
+- `0.6.4` added the accepted world/settlement static package.
+- `0.6.5` added the accepted 16-row recipe batch for 28 recipes across 10 families.
+- `0.6.6` is authorized only for static monster identity, fauna lineage, regional ecology membership, combat descriptors, and source-local drops.
+- Static content does not authorize spawning, encounters, AI, dynamic loot, harvesting, populations, migration, ecology simulation, inventory mutation, or rewards.
+- Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
+- Current hashes and random mechanisms are not accepted named uncertainty-channel authority.
+- Campaign/save/Stakes, Mortal Crisis, narrative, elemental, nutrition, injury, and occurrence decisions are documentation authority; their runtime schemas, persistence, migrations, adapters, UI, and tests remain unimplemented unless a focused package says otherwise.
+- Current HP zero may still enter legacy terminal archival and save deletion. The accepted Normal Stakes and Mortal Crisis authorities do not make that legacy flow correct.
+- Runtime casting and broad magic mutation remain deferred despite landed readiness and classification helpers.
+- No active injury instance, lethal-process owner, care receipt, body/restoration runtime, or correction tool exists.
+
+## Research And Content Posture
+
+No new broad research is needed before `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
+
+Before the first executable or balance-bearing lethal-process catalog, run bounded research on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
+
+Expand now only the exact `0.6.6` package. Keep injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content deferred behind their recorded gates.
 
 ## North Star
 
@@ -95,46 +83,16 @@ Every major system should answer at least one of these questions:
 - What can be carried forward?
 - What remains dangerous, limited, or uncertain despite inheritance?
 
-## Active Pipeline
-
-| Version | Name | Intent | Key Guardrail |
-| --- | --- | --- | --- |
-| `0.5.357` | Runtime Ownership Transition Readiness Consolidation | Landed. Selected player travel/movement as the first engine-owned consumer and fixed the base command/state/event/persistence/UI boundary. | Documentation only; no runtime behavior changed. |
-| `0.5.357.1` | Player Travel Boundary Clarification | Landed. Added collision-safe identity, shared preview/execution resolver, and full post-travel synchronization parity requirements. | Support clarification only; does not consume the next primary slot. |
-| `0.6.0` | Engine-Owned Player Travel Command | Landed. Moved the complete current travel transition behind one engine-owned command and shared resolver with atomic rejection safety and typed completion events. | Preserved current behavior and canon; added no travel mechanics, save fields, quest redesign, or broad UI rewrite. |
-| `0.6.0.1` | Engine-Owned Player Travel Post-Transition Audit | Complete. Focused behavior passed; five dead UI synchronization helper copies failed the no-residual-authority gate. | Read-only audit; no production files changed. |
-| `0.6.0.2` | Residual UI Snapshot Authority Repair | Complete. Removed only the five dead UI helper copies and newly unused imports; added a focused source guard. | Preserved live engine delegation and all current behavior; 17/17 focused tests passed. |
-| `0.6.0.3` | Engine-Owned Player Travel Post-Repair Audit | Complete and accepted. | Reconfirmed repaired authority, behavior, persistence/browser, adapter, and hygiene boundaries. |
-| `0.6.1` | Engine-Owned Quest Acceptance Command | Complete. Moved acceptance behind one resolver/command/event boundary with exact characterized parity. | Acceptance only; 26/26 focused tests passed. |
-| `0.6.1.1` | Engine-Owned Quest Acceptance Post-Transition Audit | Complete and accepted at 26/26 focused tests. | Reconfirmed sole authority, parity, atomic rejection, event, persistence/browser, UI-adapter, and hygiene boundaries. |
-| `0.6.1.2` | UI Information Architecture Research Integration | Complete. Promoted durable shell, Home, linked-record, Codex, combat, tactics, accessibility, and anti-clutter guidance and retired the temporary artifact. | Documentation only; preserved `0.6.2` and authorized no UI/runtime implementation. |
-| `0.6.2` | Engine-Owned Quest Tracking Command | Complete. Moved tracking behind one resolver/command/event boundary with exact characterized parity. | Tracking toggle only; 35/35 focused tests passed. |
-| `0.6.2.1` | Engine-Owned Quest Tracking Post-Transition Audit | Complete; transition not yet accepted. | All focused gates passed except the accepted event included presentation `title`; 35/35 tests still passed. |
-| `0.6.2.2` | Engine-Owned Quest Tracking Repair | Complete. Removed only event `title` and added an exact payload guard. | Result/notice title facts and hashes preserved; 35/35 focused tests passed. |
-| `0.6.2.3` | Engine-Owned Quest Tracking Post-Repair Audit | Complete and accepted. | Reconfirmed repaired contract and all transition gates at 35/35 focused tests. |
-| `0.6.3` | Engine-Owned Activity Selection Command | Complete. Moved selection behind one resolver/command/event boundary with exact parity. | Selection only; 45/45 focused tests passed. |
-| `0.6.3.1` | Engine-Owned Activity Selection Post-Transition Audit | Complete; transition not yet accepted. | All runtime gates passed, but committed collision coverage varies sequence as well as record id. |
-| `0.6.3.2` | Engine-Owned Activity Selection Collision Regression Repair | Complete. Corrected only the existing collision test and passed 45/45 focused tests. | Equal tick, sequence, player, version, and revision now prove record-id command/event discrimination. |
-| `0.6.3.3` | Engine-Owned Activity Selection Post-Repair Audit | Complete and accepted at 45/45 focused tests. | Reconfirmed exact test-only repair, permanent equal-sequence identity coverage, and every transition gate. |
-| unversioned maintenance | Historical Route Cleanup And Static Content Expansion Pipeline Integration | Complete. Added the canonical historical/deferred register and durable static program. | Documentation only; accepted runtime anchors unchanged. |
-| `0.6.4` | World And Settlement Static Content Expansion | Complete. Added the exact three-cluster district, site, semantic-feature, and General Lore batch. | 592/592 focused tests and 67-file lint passed; static canon only. |
-| `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete. Added the synthesis-owned 16 planned recipes for 28 records across 10 families. | Resolver quarantine held; 310 focused tests and 67-file lint passed. |
-| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active next with an exact nine-monster/regional-ecology matrix. | Region/biome/lineage/role/threat closure; static source-local drops only. |
-| `0.6.7` | Cross-Content Coherence And Coverage Audit | Planned program audit. | Validate all references/statuses and repair narrowly before the Geography/recognition plan. |
-| unversioned support | Geography/recognition plan, then activity-resolution reuse audit | Required planning sequence after `0.6.7`. | Do not select runtime work until both documentation decisions are complete. |
-| later `0.6.x` | Later Engine-Owned Consumer | Select from evidence after the two post-`0.6.7` planning routes. | Exactly one coherent consumer; no generic command bus. |
-
-For the detailed historical queue, use `docs/dev/codex-sequenced-implementation-plan.md`. For the exact current implementation prompt, use `docs/dev/current-codex-prompt.md`.
-
 ## Core Development Rules
 
 - Use current branch reality only.
-- Prefer the smallest coherent patch that advances the current pipeline.
-- Do not weaken validation unless the validator is demonstrably stale or wrong.
-- Do not add old-save or old-account compatibility unless explicitly requested.
-- Keep current data direct and validated.
-- Minor-band advancement reflects maturity: `v0.6.x` is now justified by the selected bounded runtime-ownership transition, not by patch-number rollover.
-- For complex systems, prefer design criteria, runtime shape, pure helpers, validation, view model, read-only UI, then mutating behavior.
+- Prefer the smallest coherent, owner-correct package.
+- Do not weaken validation unless it is demonstrably stale or wrong.
+- Do not infer runtime behavior from static content or design authority.
+- Do not add compatibility, aliases, migrations, or generic infrastructure without explicit authorization.
+- Separate authority, persistence, projection, and UI ownership.
+- For complex systems, prefer criteria, contract, pure helpers, validation, read-only projection, and focused mutation in that order.
+- Preserve occurrence/result/consequence identity and prevent duplicate value-bearing effects.
 
 ## New Thread Starter
 
@@ -144,52 +102,17 @@ I am continuing development of Lineage: Reforged.
 Repo: vagabond1215/Lineage_Reforged
 Default branch: master
 Primary repo instruction file: AGENTS.md
-Latest Codex handoff: docs/dev/current-codex-output.md
-Current GPT handoff: docs/dev/current-gpt-handoff.md
 Current Codex prompt: docs/dev/current-codex-prompt.md
+Current GPT handoff: docs/dev/current-gpt-handoff.md
+Latest Codex output: docs/dev/current-codex-output.md
+Deferred-route register: docs/dev/historical-version-and-deferred-route-register.md
+Current planning-anchor reconciliation: docs/design/current-planning-anchor-reconciliation.md
+Static milestone: docs/design/static-content-expansion-program.md
+Current route sequencing: docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md
 Roadmap: docs/dev/project-roadmap.md
-Sequenced Codex plan: docs/dev/codex-sequenced-implementation-plan.md
-Runtime ownership readiness: docs/design/runtime-ownership-transition-readiness-consolidation.md
-Player travel boundary clarification: docs/design/player-travel-boundary-clarification.md
-Magic runtime boundary plan: docs/design/magic-runtime-boundary-plan.md
-Known-spell acquisition event plan: docs/design/known-spell-acquisition-event-plan.md
-Magic command contract plan: docs/design/magic-command-contract-plan.md
-First narrow runtime cast resolver plan: docs/design/first-narrow-runtime-cast-resolver-plan.md
-Magic resolver planned output envelope plan: docs/design/magic-resolver-planned-output-envelope-plan.md
-Spell hook support expansion plan: docs/design/spell-hook-support-expansion-plan.md
-Legacy combat spell runtime ownership plan: docs/design/legacy-combat-spell-runtime-ownership-plan.md
-Future system design ledger: docs/design/future-system-design-ledger.md
-Survival/builder/RPG/MMO gap audit: docs/design/survival-builder-rpg-mmo-content-gap-audit.md
-Strategic continuity brief: docs/dev/project-vision-and-continuity-brief.md
-Backlog: docs/future_content_backlog.md
+Sequenced plan: docs/dev/codex-sequenced-implementation-plan.md
 
-Read current-codex-output first for exact implementation state.
-Read current-gpt-handoff second for current connector-side guardrails.
-Read current-codex-prompt for the active implementation task.
-Use the roadmap for version order and playability checkpoints.
-Use the sequenced Codex plan for detailed queue history and current override context.
-Use the runtime ownership readiness decision for the base travel-command boundary.
-Use the player travel clarification for collision-safe identity, shared preview/execution resolution, and complete synchronization parity.
-Use the magic runtime boundary plan for cast-readiness helper and later runtime guardrails.
-Use the known-spell acquisition event plan for training-event acquisition helper history and later acquisition mutation constraints.
-Use the magic command contract plan for active magic command/intention constraints.
-Use the first narrow runtime cast resolver plan for resolver-readiness and later resolver constraints.
-Use the magic resolver planned output envelope plan for inert envelope constraints.
-Use the spell hook support expansion plan for hook classification, readiness, executable-owner, and sequencing constraints.
-Use the design ledger for durable conceptual criteria and vocabulary.
-Use the survival/builder/RPG/MMO gap audit as broad future roadmap context only, not as implementation permission.
-Use the continuity brief for north-star direction and source map.
-Use the backlog for deferred work and historical run notes.
-
-When I ask "inspect the push," read docs/dev/current-codex-output.md first, then inspect changed/important files as needed.
-
-When I ask "prompt please," use docs/dev/current-codex-prompt.md as the authoritative body and provide the platform/model recommendation separately.
+Read the active prompt, handoff, current output, route register, and planning-anchor reconciliation before using roadmap or sequenced-plan current-anchor wording.
+The active route is exact Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion.
+Preserve the active prompt blob 42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769 unless the run completes and explicitly installs 0.6.7.
 ```
-
-## Maintenance Rules
-
-- Keep this brief short.
-- Move durable conceptual rules to `docs/design/future-system-design-ledger.md`.
-- Move version sequencing to `docs/dev/project-roadmap.md` and `docs/dev/codex-sequenced-implementation-plan.md`.
-- Move current connector findings to `docs/dev/current-gpt-handoff.md`.
-- Move deferred chronological notes to `docs/future_content_backlog.md`.
