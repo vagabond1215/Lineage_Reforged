@@ -2,110 +2,111 @@
 
 Date: 2026-07-27
 
-Source run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
+Source version/run: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 
-Branch/status assumption: `master`, clean and synchronized with `origin/master`
+Label class: primary
 
-Starting commit: `83b73db44a84943759a3adbbae3fefb875840bab`
+Parent version: not applicable
 
-Validation-ending commit before coordination: `83b73db44a84943759a3adbbae3fefb875840bab`
+Milestone impact: `advances_current_band`
 
-Run classification: support suffix
-
-Parent version: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-
-Milestone impact: `supports_current_band`
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `9a2fec9cc11718b5c9fb1264099bff51eabc9b4b`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-`0.6.6.5` is accepted.
+`0.6.6` is complete and accepted.
 
-The run established and immediately reproduced a fresh complete workspace typecheck baseline, completed every deferred green gate, accepted the BOM and region climate repair chain, and restored the exact parent `0.6.6` prompt.
+The exact nine-row regional species package landed without broadening monster, ecology, loot, combat, runtime, or simulation authority. Each new monster is a `species_only` beast variant of one live fauna record, reuses a live combat/scaling template, uses only live role/preset/action vocabulary, and exposes only the ordered source-fauna slaughter-output item keys through static source-local drop envelopes. Each matching regional ecology profile gained exactly one native-fauna id.
 
-No implementation, content, schema, test, TypeScript, config, dependency, generator, UI, runtime, save, gameplay, monster, ecology, or loot file changed in this support run.
+## Baseline And Final Inventories
 
-## Support Chain
+| Inventory | Baseline | Final |
+| --- | ---: | ---: |
+| Monsters | 24 | 33 |
+| Beast / humanoid / ooze / elemental / undead / giantkin | 9 / 6 / 3 / 2 / 3 / 1 | 18 / 6 / 3 / 2 / 3 / 1 |
+| Low / moderate / high / severe threat | 5 / 12 / 6 / 1 | 6 / 15 / 11 / 1 |
+| Monster drop rows | 49 | 77 |
+| Monster loot rows | 20 | 20 |
+| Empty monster `loot` arrays | 12 | 21 |
+| Explicit fauna lineages | 0 | 9 |
+| Fauna records | 132 | 132 |
+| Regional ecology profiles | 9 | 9 |
+| Biomes / habitats / roles / tactics presets | 36 / 93 / 9 / 9 | unchanged |
+| Items / market values / recipes | 1,372 / 1,617 / 28 | unchanged |
 
-- `0.6.6.1` landed the BOM-only reader repair at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
-- `0.6.6.2` failed closed at `4/5` on the initial climate-contract mismatch.
-- `0.6.6.3` landed schema repair `56932eecedd7b28216b23cb5bf211fea7b01df46` and focused assertion repair `e71f8f6b625f7b6744492cc8b19ab695f788d89c`, then failed closed on the bounded migration requirement.
-- `0.6.6.4` landed implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d`.
-- Two unexecuted `0.6.6.5` prompt variants were superseded because one contradicted the four-diagnostic baseline and the other required a nonexistent historical capture.
-- Corrected `0.6.6.5` established a fresh reproducible baseline and completed acceptance.
+## Exact Accepted Matrix
 
-Implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` changes exactly:
+| Monster | Fauna lineage | Ecology / biome | Threat / role | Actions | Copied template |
+| --- | --- | --- | --- | --- | --- |
+| `monster.kaelvar_cliff_viper` | `fauna.cliff_viper` | Kaelvar / dry scrub | high / disruptor | `melee_skirmisher`, `enfeebling_burst` | `monster.cave_spider_matron` |
+| `monster.valtherion_brown_bear` | `fauna.bear` | Valtherion / mixed forest | high / frontliner | `melee_brute` | `monster.ember_boar` |
+| `monster.serathyl_ravine_wolverine` | `fauna.wolverine` | Serathyl / temperate rainforest | high / opportunist | `melee_skirmisher` | `monster.shadow_wolf` |
+| `monster.draemor_marsh_alligator` | `fauna.american_alligator` | Draemor / marsh | high / tank protector | `melee_brute` | `monster.bog_troll` |
+| `monster.talmyran_savanna_scorpion` | `fauna.scorpion` | Talmyra / savanna | moderate / disruptor | `melee_skirmisher`, `enfeebling_burst` | `monster.dune_scorpion` |
+| `monster.myridian_reef_lobster` | `fauna.reef_lobster` | Myridian Chain / marine | moderate / tank protector | `melee_brute` | `monster.dire_boar` |
+| `monster.lantern_glowmire_caecilian` | `fauna.glowmire_caecilian` | Lantern Isles / mangrove forest | moderate / debuffer controller | `melee_brute` | `monster.mire_slime` |
+| `monster.serpents_wake_tide_lizard` | `fauna.tide_lizard` | Serpent's Wake / mangrove forest | low / opportunist | `melee_skirmisher` | `monster.granary_rat` |
+| `monster.dawnreach_bull_walrus` | `fauna.walrus` | Dawnreach Isles / tundra | high / tank protector | `melee_brute` | `monster.bog_troll` |
 
-- `packages/content/base/world/regions.json`;
-- `packages/engines/civilization-engine/src/content.ts`;
-- `packages/shared/types/src/settlement-institutions.ts`;
-- `tests/unit/region-first-world-data.test.mjs`.
+The nine source-local drop arrays contain exactly 28 rows. Their ordered item keys equal each base fauna's slaughter-output ingredients followed by byproducts, and every row uses the required positional quantity/chance envelope. All nine `loot` arrays are empty.
 
-It contains exactly the five authorized scalar-to-singleton-array migrations, the `simulationProfile.populationCapacity` assertion correction, and the two `string[]` contract alignments.
+## Closure And Behavior Confirmation
 
-## Checks Run
-
-Passed green gates:
-
-- `node --test tests/unit/region-first-world-data.test.mjs tests/unit/slug-content.test.mjs` - `5/5` passed.
-- `npm.cmd run tool:content-lint` - passed with `67` files checked.
-- `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs` - `146/146` passed.
-- BOM repair range content diff - empty.
-- Post-`e71f8f6b` content diff - only `packages/content/base/world/regions.json`, with exactly five authorized migrations and `15` additions / `5` deletions.
-- Integration script and UI compatibility normalization diff - empty.
-- Conflict-marker scan - zero matches.
-- Added trailing-whitespace scan - zero matches.
-- `git diff --check` for implementation, coordination range, and worktree - passed.
-- Changed-path, full-diff, ancestry, prompt-blob, clean-status, and capture-artifact checks - passed.
-
-Workspace audit:
-
-`npm.cmd run typecheck:workspace -- --pretty false`
-
-Result:
-
-`ran twice; fresh 173-diagnostic baseline established and reproduced; no climate-contract or implementation-attributable diagnostics`
-
-- Capture A: `C:\Users\vagab\AppData\Local\Temp\EoL-0.6.6.5-typecheck-A.log`
-- Capture B: `C:\Users\vagab\AppData\Local\Temp\EoL-0.6.6.5-typecheck-B.log`
-- Both commands exited `2`.
-- Both contained exactly `173` normalized diagnostic-header tuples.
-- The complete normalized tuple multisets matched exactly, including multiplicity.
-- Both contained exactly four diagnostics across the two changed TypeScript files.
-- Both contained zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`.
-- Neither raw capture is tracked or staged.
-
-Exact changed-file tuples:
-
-1. `packages/engines/civilization-engine/src/content.ts|1|30|TS2307|Cannot find module 'node:fs' or its corresponding type declarations.`
-2. `packages/engines/civilization-engine/src/content.ts|1280|37|TS2345|Argument of type 'FameBranchId' is not assignable to parameter of type 'never'.`
-3. `packages/engines/civilization-engine/src/content.ts|1294|82|TS2345|Argument of type 'NotorietyCategoryId' is not assignable to parameter of type '"theft" | "fraud" | "violent" | "murder" | "arson" | "banditry" | "treason"'.`
-4. `packages/shared/types/src/settlement-institutions.ts|1111|7|TS2345|Argument of type 'StartAuthorityTier' is not assignable to parameter of type '"military" | "chartered"'.`
-
-Source inspection, zero-context diff, and blame proved that all four diagnostic statements predate and are untouched by `232d3c2f`. The implementation changes only lines `276` and `173` in those TypeScript files; no diagnostic occurs at or refers to either climate contract.
+- All monster ids, slugs, names, tags, and source-local drop keys are unique where required; no lineage cycle exists.
+- All fauna, ecology, region, biome, habitat, combat-role, enemy-preset, action-package, item, market-value, and copied-template references close.
+- Each selected fauna id appears exactly once in exactly its target ecology profile.
+- The nine copied `combatProfile` and `difficultyScalingHooks` objects equal their named templates value-for-value.
+- No generic loot table, direct region/biome/ecology field, spawn rule, population rule, attack, effect, reward, anatomy, harvesting, or executable/runtime field was added.
+- Existing monster and regional-ecology semantics were not changed; the production diff is only nine appended monster records and nine appended native-fauna ids.
+- Runtime, UI, commands, events, saves, migrations, economy, crafting, magic, Knowledge, and recognition behavior are unchanged.
 
 ## Files Changed
 
-Completion coordination only:
+Production and focused validation:
 
-- `docs/dev/current-codex-output.md`;
-- `docs/dev/current-gpt-handoff.md`;
-- `docs/dev/historical-version-and-deferred-route-register.md`;
-- `docs/design/current-planning-anchor-reconciliation.md`;
-- `docs/dev/project-vision-and-continuity-brief.md`;
-- `docs/dev/current-codex-prompt.md`, restored exactly from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- `packages/content/base/world/monsters.json`
+- `packages/content/base/world/regional_ecology_profiles.json`
+- `tests/unit/monster-validation-hardening.test.mjs`
+
+Coordination:
+
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-codex-prompt.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/codex-sequenced-implementation-plan.md`
+- `docs/dev/project-roadmap.md`
+- `docs/dev/project-vision-and-continuity-brief.md`
+- `docs/future_content_backlog.md`
+- `docs/design/static-content-expansion-program.md`
+- `docs/dev/historical-version-and-deferred-route-register.md`
+
+## Checks Run
+
+- `git pull --ff-only` - already up to date.
+- `npm.cmd run tool:content-lint` - passed; 67 files checked.
+- `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs` - passed; 147 tests after the final exact-package assertions.
+- Exact inventory/distribution and reference-closure assertions - passed.
+- Conflict-marker and trailing-whitespace searches - clean.
+- `git diff --check` - clean.
+- Complete changed-path and full-diff review - accepted.
+
+No build, typecheck, package install, server, generator, or full-suite command was run.
+
+## Temporary Artifact Disposition
+
+The six Gate 1-5 and Gate 7 research artifacts remain present and solely assigned to `0.6.7`; `0.6.6` did not delete or reassign them. The consumed Gate 6 and production-authority-audit artifacts remain absent and were not restored.
 
 ## Risks / Follow-Up Notes
 
-- The workspace audit remains intentionally non-green with the reproduced broad 173-diagnostic backlog. It was not reported as passed and remains a separate cleanup route.
-- The temporary raw captures remain outside the repository and must not be committed.
-- The parent `0.6.6` authoring package has not been executed in this run.
-- `0.6.7` remains reserved until accepted `0.6.6`.
-- The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
+- The new records are static authority only. No spawn frequency, population, ecology simulation, loot execution, harvesting, inventory mutation, combat effect, or reward behavior exists because of this package.
+- The broad workspace typecheck remains the separately classified 173-diagnostic known-failing audit and was outside this run.
+- `0.6.7` must be read-first and repair only proven defects. It must decide the six retained research-artifact removal conditions without broadening content or runtime.
+- Geography/recognition remains immediately after accepted `0.6.7`; current `Recognizing ...` snippets remain structural lore only. The activity-resolution reuse audit remains behind Geography.
 
 Suggested commit message:
 
-`docs(validation): accept climate repair against reproduced typecheck baseline`
+`content(world): expand regional monster ecology`
 
-Next recommended version/run:
+## Next Recommended Version / Run
 
-`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+`Version 0.6.7 - Cross-Content Coherence And Coverage Audit`

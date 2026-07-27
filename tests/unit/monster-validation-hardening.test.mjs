@@ -16,8 +16,164 @@ const monsterWrapper = await readJson(MONSTER_PATH);
 const itemWrapper = await readJson("packages/content/base/items/items.json");
 const marketWrapper = await readJson("packages/content/base/civilization/market_item_values.json");
 const faunaWrapper = await readJson("packages/content/base/world/fauna.json");
+const ecologyWrapper = await readJson("packages/content/base/world/regional_ecology_profiles.json");
+const regionWrapper = await readJson("packages/content/base/world/regions.json");
+const biomeWrapper = await readJson("packages/content/base/world/biomes.json");
+const habitatWrapper = await readJson("packages/content/base/world/habitats.json");
 const combatRoleWrapper = await readJson("packages/content/base/game/combat_roles.json");
 const tacticsPresetWrapper = await readJson("packages/content/base/game/tactics_presets.json");
+const combatEngineSource = await readFile(
+  path.join(ROOT, "packages/engines/game-engine/src/combat/index.ts"),
+  "utf8"
+);
+
+function expectedDrops(itemKeys) {
+  const chances = [0.82, 0.68, 0.54, 0.4, 0.26];
+  return itemKeys.map((itemKey, index) => ({
+    itemKey,
+    quantityMin: 1,
+    quantityMax: index === 0 ? 2 : 1,
+    chance: chances[index]
+  }));
+}
+
+const LIVE_EXPANSION = [
+  {
+    id: "monster.kaelvar_cliff_viper",
+    name: "Kaelvar Cliff Viper",
+    faunaId: "fauna.cliff_viper",
+    ecologyId: "regional_ecology.kaelvar",
+    regionId: "region.kaelvar",
+    biomeId: "biome.shrublands.dry_scrub",
+    threat: "high",
+    habitatTags: ["dry_scrub", "sea_cliff", "scree_run", "ravine"],
+    behaviorTags: ["ambush_predator", "territorial", "venomous"],
+    role: "disruptor",
+    actionPackageIds: ["melee_skirmisher", "enfeebling_burst"],
+    templateId: "monster.cave_spider_matron",
+    dropItemKeys: ["cliff_viper_meat", "cliff_viper_scale", "cliff_viper_bone"]
+  },
+  {
+    id: "monster.valtherion_brown_bear",
+    name: "Valtherion Brown Bear",
+    faunaId: "fauna.bear",
+    ecologyId: "regional_ecology.valtherion",
+    regionId: "region.valtherion",
+    biomeId: "biome.temperate.mixed_forest",
+    threat: "high",
+    habitatTags: ["mixed_forest", "rapids", "estuary", "forest_edge"],
+    behaviorTags: ["territorial", "foraging", "defensive"],
+    role: "frontliner",
+    actionPackageIds: ["melee_brute"],
+    templateId: "monster.ember_boar",
+    dropItemKeys: ["bear_meat", "bear_hide", "bear_bone", "bear_claw"]
+  },
+  {
+    id: "monster.serathyl_ravine_wolverine",
+    name: "Serathyl Ravine Wolverine",
+    faunaId: "fauna.wolverine",
+    ecologyId: "regional_ecology.serathyl",
+    regionId: "region.serathyl",
+    biomeId: "biome.temperate.temperate_rainforest",
+    threat: "high",
+    habitatTags: ["temperate_rainforest", "talus_field", "ravine", "cliff"],
+    behaviorTags: ["solitary", "territorial", "relentless"],
+    role: "opportunist",
+    actionPackageIds: ["melee_skirmisher"],
+    templateId: "monster.shadow_wolf",
+    dropItemKeys: ["wolverine_meat", "wolverine_fur", "wolverine_bone"]
+  },
+  {
+    id: "monster.draemor_marsh_alligator",
+    name: "Draemor Marsh Alligator",
+    faunaId: "fauna.american_alligator",
+    ecologyId: "regional_ecology.draemor",
+    regionId: "region.draemor",
+    biomeId: "biome.wetlands.marsh",
+    threat: "high",
+    habitatTags: ["marsh", "marsh_pool", "oxbow_lake", "estuary"],
+    behaviorTags: ["ambush_predator", "territorial", "aquatic"],
+    role: "tank_protector",
+    actionPackageIds: ["melee_brute"],
+    templateId: "monster.bog_troll",
+    dropItemKeys: ["american_alligator_meat", "american_alligator_hide", "american_alligator_bone"]
+  },
+  {
+    id: "monster.talmyran_savanna_scorpion",
+    name: "Talmyran Savanna Scorpion",
+    faunaId: "fauna.scorpion",
+    ecologyId: "regional_ecology.talmyra",
+    regionId: "region.talmyra",
+    biomeId: "biome.grasslands.savanna",
+    threat: "moderate",
+    habitatTags: ["savanna", "talus_field", "scree_run", "ravine"],
+    behaviorTags: ["ambush_predator", "territorial", "venomous"],
+    role: "disruptor",
+    actionPackageIds: ["melee_skirmisher", "enfeebling_burst"],
+    templateId: "monster.dune_scorpion",
+    dropItemKeys: ["scorpion_meat", "scorpion_venom", "scorpion_chitin"]
+  },
+  {
+    id: "monster.myridian_reef_lobster",
+    name: "Myridian Reef Lobster",
+    faunaId: "fauna.reef_lobster",
+    ecologyId: "regional_ecology.myridian_chain",
+    regionId: "region.myridian_chain",
+    biomeId: "biome.marine.marine",
+    threat: "moderate",
+    habitatTags: ["marine", "coral_reef_fringe", "tide_pools", "kelp_forest_coastal"],
+    behaviorTags: ["territorial", "armored", "aquatic"],
+    role: "tank_protector",
+    actionPackageIds: ["melee_brute"],
+    templateId: "monster.dire_boar",
+    dropItemKeys: ["reef_lobster_meat", "reef_lobster_shell"]
+  },
+  {
+    id: "monster.lantern_glowmire_caecilian",
+    name: "Lantern Glowmire Caecilian",
+    faunaId: "fauna.glowmire_caecilian",
+    ecologyId: "regional_ecology.lantern_isles",
+    regionId: "region.lantern_isles",
+    biomeId: "biome.wetlands.mangrove_forest",
+    threat: "moderate",
+    habitatTags: ["mangrove_forest", "marsh_pool", "cave_flooded", "thicket"],
+    behaviorTags: ["ambush_predator", "subterranean", "aquatic"],
+    role: "debuffer_controller",
+    actionPackageIds: ["melee_brute"],
+    templateId: "monster.mire_slime",
+    dropItemKeys: ["glowmire_caecilian_meat", "glowmire_caecilian_hide", "glowmire_caecilian_bone"]
+  },
+  {
+    id: "monster.serpents_wake_tide_lizard",
+    name: "Serpent's Wake Tide Lizard",
+    faunaId: "fauna.tide_lizard",
+    ecologyId: "regional_ecology.serpents_wake",
+    regionId: "region.serpents_wake",
+    biomeId: "biome.wetlands.mangrove_forest",
+    threat: "low",
+    habitatTags: ["mangrove_forest", "tidal_flat", "shoreline", "tide_pools"],
+    behaviorTags: ["opportunistic", "territorial", "aquatic"],
+    role: "opportunist",
+    actionPackageIds: ["melee_skirmisher"],
+    templateId: "monster.granary_rat",
+    dropItemKeys: ["tide_lizard_meat", "tide_lizard_scale", "tide_lizard_bone"]
+  },
+  {
+    id: "monster.dawnreach_bull_walrus",
+    name: "Dawnreach Bull Walrus",
+    faunaId: "fauna.walrus",
+    ecologyId: "regional_ecology.dawnreach_isles",
+    regionId: "region.dawnreach_isles",
+    biomeId: "biome.polar.tundra",
+    threat: "high",
+    habitatTags: ["tundra", "shoreline", "tidal_flat", "kelp_forest_coastal"],
+    behaviorTags: ["territorial", "herd_defender", "aquatic"],
+    role: "tank_protector",
+    actionPackageIds: ["melee_brute"],
+    templateId: "monster.bog_troll",
+    dropItemKeys: ["walrus_meat", "walrus_hide", "walrus_tusk", "walrus_bone"]
+  }
+];
 
 function makeInput(records = monsterWrapper.records) {
   return {
@@ -50,6 +206,164 @@ test("accepts current live monsters with deterministic output", () => {
   assert.equal(result.ok, true);
   assert.equal(result.monsterIds.length, monsterWrapper.records.length);
   assert.deepEqual(result.monsterIds, [...result.monsterIds].sort());
+});
+
+test("accepts the exact regional species expansion package", () => {
+  const monsterById = new Map(monsterWrapper.records.map((monster) => [monster.id, monster]));
+  const faunaById = new Map(faunaWrapper.records.map((fauna) => [fauna.id, fauna]));
+  const ecologyById = new Map(ecologyWrapper.records.map((ecology) => [ecology.id, ecology]));
+  const regionIds = new Set(regionWrapper.records.map((region) => region.id));
+  const biomeIds = new Set(biomeWrapper.records.map((biome) => biome.id));
+  const biomeSlugs = new Set(biomeWrapper.records.map((biome) => biome.slug));
+  const habitatSlugs = new Set(habitatWrapper.records.map((habitat) => habitat.slug));
+  const itemKeys = new Set(itemWrapper.records.map((item) => item.itemKey));
+  const marketItemKeys = new Set(marketWrapper.records.map((item) => item.itemKey));
+  const roleIds = new Set(combatRoleWrapper.records.map((role) => role.id));
+  const presetIds = new Set(tacticsPresetWrapper.records.map((preset) => preset.id));
+  const countBy = (field) => Object.fromEntries(
+    [...Map.groupBy(monsterWrapper.records, (monster) => monster[field])]
+      .map(([key, records]) => [key, records.length])
+  );
+
+  assert.equal(monsterWrapper.records.length, 33);
+  assert.deepEqual(countBy("monsterClass"), {
+    humanoid: 6,
+    beast: 18,
+    ooze: 3,
+    elemental: 2,
+    giantkin: 1,
+    undead: 3
+  });
+  assert.deepEqual(countBy("threat"), {
+    low: 6,
+    moderate: 15,
+    high: 11,
+    severe: 1
+  });
+  assert.equal(monsterWrapper.records.reduce((total, monster) => total + monster.drops.length, 0), 77);
+  assert.equal(monsterWrapper.records.reduce((total, monster) => total + monster.loot.length, 0), 20);
+  assert.equal(monsterWrapper.records.filter((monster) => monster.loot.length === 0).length, 21);
+  assert.equal(
+    monsterWrapper.records.filter(
+      (monster) => monster.baseFaunaId !== undefined || monster.baseMonsterId !== undefined
+    ).length,
+    LIVE_EXPANSION.length
+  );
+  assert.deepEqual(
+    monsterWrapper.records
+      .filter((monster) => monster.baseFaunaId !== undefined)
+      .map((monster) => monster.id)
+      .sort(),
+    LIVE_EXPANSION.map((expected) => expected.id).sort()
+  );
+  assert.equal(new Set(monsterWrapper.records.map((monster) => monster.id)).size, 33);
+  assert.equal(new Set(monsterWrapper.records.map((monster) => monster.slug)).size, 33);
+  assert.equal(new Set(monsterWrapper.records.map((monster) => monster.name)).size, 33);
+
+  for (const expected of LIVE_EXPANSION) {
+    const monster = monsterById.get(expected.id);
+    const slug = expected.id.slice("monster.".length);
+    assert.ok(monster, `${expected.id} must be present`);
+    assert.deepEqual(
+      {
+        id: monster.id,
+        slug: monster.slug,
+        name: monster.name,
+        monsterClass: monster.monsterClass,
+        baseFaunaId: monster.baseFaunaId,
+        variantType: monster.variantType,
+        threat: monster.threat,
+        habitatTags: monster.habitatTags,
+        behaviorTags: monster.behaviorTags,
+        defaultRole: monster.defaultRole,
+        actionPackageIds: monster.actionPackageIds,
+        drops: monster.drops,
+        loot: monster.loot
+      },
+      {
+        id: expected.id,
+        slug,
+        name: expected.name,
+        monsterClass: "beast",
+        baseFaunaId: expected.faunaId,
+        variantType: "species_only",
+        threat: expected.threat,
+        habitatTags: expected.habitatTags,
+        behaviorTags: expected.behaviorTags,
+        defaultRole: expected.role,
+        actionPackageIds: expected.actionPackageIds,
+        drops: expectedDrops(expected.dropItemKeys),
+        loot: []
+      }
+    );
+
+    const template = monsterById.get(expected.templateId);
+    assert.ok(template, `${expected.templateId} template must be present`);
+    assert.deepEqual(monster.combatProfile, template.combatProfile);
+    assert.deepEqual(monster.difficultyScalingHooks, template.difficultyScalingHooks);
+
+    const fauna = faunaById.get(expected.faunaId);
+    assert.ok(fauna, `${expected.faunaId} must be present`);
+    const slaughterProducts = fauna.template.output.slaughterOutput.products;
+    assert.deepEqual(
+      monster.drops.map((drop) => drop.itemKey),
+      [...slaughterProducts.ingredients, ...slaughterProducts.byproducts]
+    );
+
+    const ecology = ecologyById.get(expected.ecologyId);
+    assert.ok(ecology, `${expected.ecologyId} must be present`);
+    assert.equal(ecology.regionId, expected.regionId);
+    assert.equal(regionIds.has(expected.regionId), true);
+    assert.equal(biomeIds.has(expected.biomeId), true);
+    assert.equal(
+      ecology.nativeFaunaIds.filter((faunaId) => faunaId === expected.faunaId).length,
+      1
+    );
+    assert.equal(
+      ecologyWrapper.records.reduce(
+        (total, candidate) => total + candidate.nativeFaunaIds.filter(
+          (faunaId) => faunaId === expected.faunaId
+        ).length,
+        0
+      ),
+      1
+    );
+
+    for (const habitatTag of expected.habitatTags) {
+      assert.equal(
+        biomeSlugs.has(habitatTag) || habitatSlugs.has(habitatTag),
+        true,
+        `${habitatTag} must resolve to a biome or habitat`
+      );
+    }
+    assert.equal(roleIds.has(expected.role), true);
+    assert.equal(presetIds.has(`preset.enemy.${expected.role}`), true);
+    for (const actionPackageId of expected.actionPackageIds) {
+      assert.match(combatEngineSource, new RegExp(`^\\s*${actionPackageId}:`, "m"));
+    }
+    for (const drop of monster.drops) {
+      assert.equal(itemKeys.has(drop.itemKey), true);
+      assert.equal(marketItemKeys.has(drop.itemKey), true);
+    }
+
+    for (const prohibitedField of [
+      "baseMonsterId",
+      "regionId",
+      "biomeId",
+      "ecologyId",
+      "attunement",
+      "elements",
+      "origin",
+      "spawnRules",
+      "population",
+      "attacks",
+      "effects",
+      "rewards",
+      "lootTableId"
+    ]) {
+      assert.equal(Object.hasOwn(monster, prohibitedField), false);
+    }
+  }
 });
 
 test("does not mutate any input", () => {

@@ -1543,6 +1543,617 @@
         "actionTimeMultiplierPerTier": 0.04,
         "recoveryMultiplierPerTier": 0.03
       }
+    },
+    {
+      "id": "monster.kaelvar_cliff_viper",
+      "slug": "kaelvar_cliff_viper",
+      "name": "Kaelvar Cliff Viper",
+      "monsterClass": "beast",
+      "threat": "high",
+      "summary": "A venomous cliff viper that fills an ambush-predator niche among Kaelvar's dry scrub, ravines, and sea cliffs.",
+      "baseFaunaId": "fauna.cliff_viper",
+      "variantType": "species_only",
+      "habitatTags": [
+        "dry_scrub",
+        "sea_cliff",
+        "scree_run",
+        "ravine"
+      ],
+      "behaviorTags": [
+        "ambush_predator",
+        "territorial",
+        "venomous"
+      ],
+      "drops": [
+        {
+          "itemKey": "cliff_viper_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "cliff_viper_scale",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "cliff_viper_bone",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 78,
+        "baseMp": 14,
+        "baseStamina": 52,
+        "baseAccuracy": 14,
+        "baseDefense": 13,
+        "baseEvasion": 11,
+        "baseAttackSpeed": 14,
+        "baseRecoverySpeed": 12,
+        "threatRating": 6,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "disruptor",
+      "actionPackageIds": [
+        "melee_skirmisher",
+        "enfeebling_burst"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 9,
+        "mpPerTier": 3,
+        "staminaPerTier": 4,
+        "accuracyPerTier": 1,
+        "defensePerTier": 2,
+        "actionTimeMultiplierPerTier": 0.05,
+        "recoveryMultiplierPerTier": 0.04
+      }
+    },
+    {
+      "id": "monster.valtherion_brown_bear",
+      "slug": "valtherion_brown_bear",
+      "name": "Valtherion Brown Bear",
+      "monsterClass": "beast",
+      "threat": "high",
+      "summary": "A powerful brown bear that fills a territorial forager niche along Valtherion's mixed forests, rapids, and estuaries.",
+      "baseFaunaId": "fauna.bear",
+      "variantType": "species_only",
+      "habitatTags": [
+        "mixed_forest",
+        "rapids",
+        "estuary",
+        "forest_edge"
+      ],
+      "behaviorTags": [
+        "territorial",
+        "foraging",
+        "defensive"
+      ],
+      "drops": [
+        {
+          "itemKey": "bear_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "bear_hide",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "bear_bone",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        },
+        {
+          "itemKey": "bear_claw",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.4
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 78,
+        "baseMp": 14,
+        "baseStamina": 52,
+        "baseAccuracy": 14,
+        "baseDefense": 13,
+        "baseEvasion": 11,
+        "baseAttackSpeed": 14,
+        "baseRecoverySpeed": 12,
+        "threatRating": 6,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "frontliner",
+      "actionPackageIds": [
+        "melee_brute"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 9,
+        "mpPerTier": 3,
+        "staminaPerTier": 4,
+        "accuracyPerTier": 1,
+        "defensePerTier": 2,
+        "actionTimeMultiplierPerTier": 0.05,
+        "recoveryMultiplierPerTier": 0.04
+      }
+    },
+    {
+      "id": "monster.serathyl_ravine_wolverine",
+      "slug": "serathyl_ravine_wolverine",
+      "name": "Serathyl Ravine Wolverine",
+      "monsterClass": "beast",
+      "threat": "high",
+      "summary": "A relentless wolverine that fills a solitary scavenger-predator niche in Serathyl's rainforests, talus fields, and ravines.",
+      "baseFaunaId": "fauna.wolverine",
+      "variantType": "species_only",
+      "habitatTags": [
+        "temperate_rainforest",
+        "talus_field",
+        "ravine",
+        "cliff"
+      ],
+      "behaviorTags": [
+        "solitary",
+        "territorial",
+        "relentless"
+      ],
+      "drops": [
+        {
+          "itemKey": "wolverine_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "wolverine_fur",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "wolverine_bone",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 78,
+        "baseMp": 14,
+        "baseStamina": 52,
+        "baseAccuracy": 14,
+        "baseDefense": 13,
+        "baseEvasion": 11,
+        "baseAttackSpeed": 14,
+        "baseRecoverySpeed": 12,
+        "threatRating": 6,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "opportunist",
+      "actionPackageIds": [
+        "melee_skirmisher"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 9,
+        "mpPerTier": 3,
+        "staminaPerTier": 4,
+        "accuracyPerTier": 1,
+        "defensePerTier": 2,
+        "actionTimeMultiplierPerTier": 0.05,
+        "recoveryMultiplierPerTier": 0.04
+      }
+    },
+    {
+      "id": "monster.draemor_marsh_alligator",
+      "slug": "draemor_marsh_alligator",
+      "name": "Draemor Marsh Alligator",
+      "monsterClass": "beast",
+      "threat": "high",
+      "summary": "An armored alligator that fills an aquatic ambush-predator niche in Draemor's marsh pools, oxbow lakes, and estuaries.",
+      "baseFaunaId": "fauna.american_alligator",
+      "variantType": "species_only",
+      "habitatTags": [
+        "marsh",
+        "marsh_pool",
+        "oxbow_lake",
+        "estuary"
+      ],
+      "behaviorTags": [
+        "ambush_predator",
+        "territorial",
+        "aquatic"
+      ],
+      "drops": [
+        {
+          "itemKey": "american_alligator_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "american_alligator_hide",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "american_alligator_bone",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 78,
+        "baseMp": 14,
+        "baseStamina": 48,
+        "baseAccuracy": 14,
+        "baseDefense": 13,
+        "baseEvasion": 11,
+        "baseAttackSpeed": 13,
+        "baseRecoverySpeed": 12,
+        "threatRating": 6,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "tank_protector",
+      "actionPackageIds": [
+        "melee_brute"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 9,
+        "mpPerTier": 3,
+        "staminaPerTier": 4,
+        "accuracyPerTier": 1,
+        "defensePerTier": 2,
+        "actionTimeMultiplierPerTier": 0.05,
+        "recoveryMultiplierPerTier": 0.04
+      }
+    },
+    {
+      "id": "monster.talmyran_savanna_scorpion",
+      "slug": "talmyran_savanna_scorpion",
+      "name": "Talmyran Savanna Scorpion",
+      "monsterClass": "beast",
+      "threat": "moderate",
+      "summary": "A venomous scorpion that fills an ambush-predator niche among Talmyra's savanna ravines, talus fields, and scree runs.",
+      "baseFaunaId": "fauna.scorpion",
+      "variantType": "species_only",
+      "habitatTags": [
+        "savanna",
+        "talus_field",
+        "scree_run",
+        "ravine"
+      ],
+      "behaviorTags": [
+        "ambush_predator",
+        "territorial",
+        "venomous"
+      ],
+      "drops": [
+        {
+          "itemKey": "scorpion_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "scorpion_venom",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "scorpion_chitin",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 56,
+        "baseMp": 8,
+        "baseStamina": 42,
+        "baseAccuracy": 12,
+        "baseDefense": 11,
+        "baseEvasion": 10,
+        "baseAttackSpeed": 13,
+        "baseRecoverySpeed": 11,
+        "threatRating": 4,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "disruptor",
+      "actionPackageIds": [
+        "melee_skirmisher",
+        "enfeebling_burst"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 6,
+        "mpPerTier": 2,
+        "staminaPerTier": 3,
+        "accuracyPerTier": 1,
+        "defensePerTier": 1,
+        "actionTimeMultiplierPerTier": 0.04,
+        "recoveryMultiplierPerTier": 0.03
+      }
+    },
+    {
+      "id": "monster.myridian_reef_lobster",
+      "slug": "myridian_reef_lobster",
+      "name": "Myridian Reef Lobster",
+      "monsterClass": "beast",
+      "threat": "moderate",
+      "summary": "An armored reef lobster that fills a territorial grazer niche along the Myridian Chain's reefs, tide pools, and coastal kelp forests.",
+      "baseFaunaId": "fauna.reef_lobster",
+      "variantType": "species_only",
+      "habitatTags": [
+        "marine",
+        "coral_reef_fringe",
+        "tide_pools",
+        "kelp_forest_coastal"
+      ],
+      "behaviorTags": [
+        "territorial",
+        "armored",
+        "aquatic"
+      ],
+      "drops": [
+        {
+          "itemKey": "reef_lobster_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "reef_lobster_shell",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 56,
+        "baseMp": 8,
+        "baseStamina": 42,
+        "baseAccuracy": 12,
+        "baseDefense": 11,
+        "baseEvasion": 10,
+        "baseAttackSpeed": 13,
+        "baseRecoverySpeed": 11,
+        "threatRating": 4,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "tank_protector",
+      "actionPackageIds": [
+        "melee_brute"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 6,
+        "mpPerTier": 2,
+        "staminaPerTier": 3,
+        "accuracyPerTier": 1,
+        "defensePerTier": 1,
+        "actionTimeMultiplierPerTier": 0.04,
+        "recoveryMultiplierPerTier": 0.03
+      }
+    },
+    {
+      "id": "monster.lantern_glowmire_caecilian",
+      "slug": "lantern_glowmire_caecilian",
+      "name": "Lantern Glowmire Caecilian",
+      "monsterClass": "beast",
+      "threat": "moderate",
+      "summary": "A subterranean caecilian that fills an aquatic ambush-predator niche in the Lantern Isles' mangrove pools, flooded caves, and thickets.",
+      "baseFaunaId": "fauna.glowmire_caecilian",
+      "variantType": "species_only",
+      "habitatTags": [
+        "mangrove_forest",
+        "marsh_pool",
+        "cave_flooded",
+        "thicket"
+      ],
+      "behaviorTags": [
+        "ambush_predator",
+        "subterranean",
+        "aquatic"
+      ],
+      "drops": [
+        {
+          "itemKey": "glowmire_caecilian_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "glowmire_caecilian_hide",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "glowmire_caecilian_bone",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 66,
+        "baseMp": 8,
+        "baseStamina": 38,
+        "baseAccuracy": 12,
+        "baseDefense": 11,
+        "baseEvasion": 8,
+        "baseAttackSpeed": 11,
+        "baseRecoverySpeed": 11,
+        "threatRating": 4,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "debuffer_controller",
+      "actionPackageIds": [
+        "melee_brute"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 6,
+        "mpPerTier": 2,
+        "staminaPerTier": 3,
+        "accuracyPerTier": 1,
+        "defensePerTier": 1,
+        "actionTimeMultiplierPerTier": 0.04,
+        "recoveryMultiplierPerTier": 0.03
+      }
+    },
+    {
+      "id": "monster.serpents_wake_tide_lizard",
+      "slug": "serpents_wake_tide_lizard",
+      "name": "Serpent's Wake Tide Lizard",
+      "monsterClass": "beast",
+      "threat": "low",
+      "summary": "An opportunistic tide lizard that fills a shoreline scavenger niche in the Serpent's Wake mangroves, tidal flats, and tide pools.",
+      "baseFaunaId": "fauna.tide_lizard",
+      "variantType": "species_only",
+      "habitatTags": [
+        "mangrove_forest",
+        "tidal_flat",
+        "shoreline",
+        "tide_pools"
+      ],
+      "behaviorTags": [
+        "opportunistic",
+        "territorial",
+        "aquatic"
+      ],
+      "drops": [
+        {
+          "itemKey": "tide_lizard_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "tide_lizard_scale",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "tide_lizard_bone",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 36,
+        "baseMp": 4,
+        "baseStamina": 34,
+        "baseAccuracy": 10,
+        "baseDefense": 9,
+        "baseEvasion": 10,
+        "baseAttackSpeed": 12,
+        "baseRecoverySpeed": 10,
+        "threatRating": 2,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "opportunist",
+      "actionPackageIds": [
+        "melee_skirmisher"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 4,
+        "mpPerTier": 1,
+        "staminaPerTier": 2,
+        "accuracyPerTier": 1,
+        "defensePerTier": 1,
+        "actionTimeMultiplierPerTier": 0.03,
+        "recoveryMultiplierPerTier": 0.02
+      }
+    },
+    {
+      "id": "monster.dawnreach_bull_walrus",
+      "slug": "dawnreach_bull_walrus",
+      "name": "Dawnreach Bull Walrus",
+      "monsterClass": "beast",
+      "threat": "high",
+      "summary": "A herd-defending bull walrus that fills a coastal protector niche along the Dawnreach Isles' tundra shores and kelp forests.",
+      "baseFaunaId": "fauna.walrus",
+      "variantType": "species_only",
+      "habitatTags": [
+        "tundra",
+        "shoreline",
+        "tidal_flat",
+        "kelp_forest_coastal"
+      ],
+      "behaviorTags": [
+        "territorial",
+        "herd_defender",
+        "aquatic"
+      ],
+      "drops": [
+        {
+          "itemKey": "walrus_meat",
+          "quantityMin": 1,
+          "quantityMax": 2,
+          "chance": 0.82
+        },
+        {
+          "itemKey": "walrus_hide",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.68
+        },
+        {
+          "itemKey": "walrus_tusk",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.54
+        },
+        {
+          "itemKey": "walrus_bone",
+          "quantityMin": 1,
+          "quantityMax": 1,
+          "chance": 0.4
+        }
+      ],
+      "loot": [],
+      "combatProfile": {
+        "baseHp": 78,
+        "baseMp": 14,
+        "baseStamina": 48,
+        "baseAccuracy": 14,
+        "baseDefense": 13,
+        "baseEvasion": 11,
+        "baseAttackSpeed": 13,
+        "baseRecoverySpeed": 12,
+        "threatRating": 6,
+        "preferredRange": "melee"
+      },
+      "defaultRole": "tank_protector",
+      "actionPackageIds": [
+        "melee_brute"
+      ],
+      "difficultyScalingHooks": {
+        "hpPerTier": 9,
+        "mpPerTier": 3,
+        "staminaPerTier": 4,
+        "accuracyPerTier": 1,
+        "defensePerTier": 2,
+        "actionTimeMultiplierPerTier": 0.05,
+        "recoveryMultiplierPerTier": 0.04
+      }
     }
   ]
 }

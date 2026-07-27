@@ -2,157 +2,202 @@
 
 ## Run Identity
 
-`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+`Version 0.6.7 - Cross-Content Coherence And Coverage Audit`
 
-Run this as one narrow static-content implementation package. Preserve the accepted `0.6.5` recipe package and all engine-owned behavior. Do not broaden into encounter execution, spawn logic, dynamic loot, population simulation, harvesting, combat mechanics, magic, or cleanup.
+Primary audit run in the `0.6.x` stabilization band.
 
 Suggested commit:
 
-`content(world): expand regional monster ecology`
-
-## Execution Gate
-
-1. Read `AGENTS.md`, `README.md`, current output/handoff/prompt, roadmap, sequenced plan, continuity brief, backlog, route register, `docs/design/static-content-expansion-program.md`, `docs/design/cross-domain-production-research-synthesis.md`, `docs/design/monster-record-schema-decision.md`, and the retained Gate 1-5 and Gate 7 artifacts named in synthesis Section 14.
-2. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state; preserve unrelated work.
-3. Confirm accepted `0.6.5` remains exactly 28 planned standard recipes across 10 families and the Gate 6/production-audit artifacts were removed only after their conditions passed.
-4. Confirm the live baseline remains 24 monsters, 132 fauna, 9 regional ecology profiles, 41 regions, 36 biomes, 9 combat roles, 9 tactics presets, and the eight engine action-package mappings listed below.
-5. Confirm `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` has not been implemented.
-6. Confirm the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan remains immediately after `0.6.7`; current `Recognizing ...` snippets remain structural lore only.
-7. Stop without editing if any exact fauna, ecology, region, biome, role, enemy tactics preset, action package, item, market value, or combat-template reference below is absent or materially changed.
+`audit(content): verify cross-content coherence`
 
 ## Purpose
 
-Add exactly nine encounter-scale beast records backed by nine existing fauna identities and add each base fauna to exactly one existing macroregional ecology profile. Increase monsters from 24 to 33, explicit monster-to-fauna lineages from 0 to 9, and source-local drop rows from 49 to 77 while preserving 20 loot rows.
+Perform the final read-first audit of the accepted `0.6.4` world/settlement package, accepted `0.6.5` item/material/recipe package, accepted `0.6.6` monster/ecology/loot package, and their accepted research synthesis. Prove cross-content coherence, lifecycle honesty, research compatibility, route preservation, and repository hygiene.
 
-These are static identity, ecology, combat-descriptor, and source-local drop relationships. They do not make monsters spawn, fight, migrate, reproduce, get harvested, create items, roll loot, or enter encounters.
+This is not a content-expansion run. Repair only a defect proven by live authority, strict validation, or direct cross-reference evidence. If no defect is proven, leave production content, schemas, validators, tests, runtime, and UI unchanged.
 
-## Mandatory Fresh Inventory
+## Start And Sync Gate
 
-Reproduce and report:
+1. Read `AGENTS.md` and obey repository/version/prompt-packaging rules.
+2. Inspect repository identity, branch, worktree, remotes, tracking state, and current `HEAD`.
+3. Fetch the tracked remote. If it is ahead and the worktree is safe, fast-forward pull before auditing. Do not discard or overwrite unrelated local work.
+4. Confirm `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is accepted in current output, handoff, sequence, roadmap, continuity, backlog, static-program, and route-register authority.
+5. Confirm this exact `0.6.7` prompt is active.
+6. Confirm the docs-first `Geographic Knowledge Taxonomy And Location Recognition Contract Plan` remains immediately after `0.6.7`, current `Recognizing ...` snippets remain structural lore only, and the `Activity Resolution Existing-System Reuse Audit` remains behind accepted Geography planning.
+7. If active-route identity, accepted-package status, or remote/worktree state is contradictory and cannot be reconciled from current authority, stop without edits and report the exact issue.
 
-- monsters: 24 = 9 beast, 6 humanoid, 3 ooze, 2 elemental, 3 undead, 1 giantkin;
-- threat distribution: 5 low, 12 moderate, 6 high, 1 severe;
-- roles: 5 debuffer controller, 4 disruptor, 4 frontliner, 6 opportunist, 4 ranged pressure, 1 tank protector;
-- source-local descriptors: 49 drops / 37 unique keys, 20 loot rows / 6 unique keys, 12 empty `loot` arrays;
-- explicit fauna/monster lineage fields: 0;
-- fauna: 132 across 7 types;
-- regional ecology: 9, one per macro region;
-- regions: 41; biomes: 36; habitats: 93;
-- combat roles: 9; tactics presets: 9, including the six current enemy presets used by monsters;
-- action packages in live monster content: `melee_skirmisher`, `melee_brute`, `ranged_harrier`, `disruptor_bash`, `elemental_burst`, and `enfeebling_burst`;
-- engine action-package library: the six preceding ids plus `support_ward` and `healing_cast`;
-- items: 1,372; market item values: 1,617 unique keys; and
-- normal content lint registration: 67 checked files before this package.
+## Required Reading
 
-Search every proposed id, slug, name, base fauna, ecology profile, region, biome, habitat tag, role, enemy preset, action package, drop item, market value, and combat-template id before authoring. Confirm each selected fauna output and every new drop item resolves to both item and market-value authority.
+Read fully:
 
-## Exact Region / Biome / Role / Threat Matrix
+- `README.md`;
+- `docs/dev/current-codex-output.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/codex-sequenced-implementation-plan.md`;
+- `docs/dev/project-roadmap.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/future_content_backlog.md`;
+- `docs/design/static-content-expansion-program.md`;
+- `docs/design/internal-versioning-and-release-milestone-policy.md`;
+- `docs/design/cross-domain-production-research-synthesis.md`;
+- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`;
+- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md`.
 
-Add exactly these records and ecology links. `species_only` means the monster record is the encounter-scale authority for the same canonical fauna species; it does not create a biological mutation, subspecies, or spawn rule.
+Read all live schemas, semantic validators, normal-lint registration, focused tests, and content collections required to audit:
 
-| Monster id | Base fauna / ecology addition | Region / dominant biome audit anchor | Threat / role | Exact action packages | Exact combat/scaling template | Exact habitat tags |
-| --- | --- | --- | --- | --- | --- | --- |
-| `monster.kaelvar_cliff_viper` | `fauna.cliff_viper` -> `regional_ecology.kaelvar` | `region.kaelvar` / `biome.shrublands.dry_scrub` | high / `disruptor` | `melee_skirmisher`, `enfeebling_burst` | `monster.cave_spider_matron` | `dry_scrub`, `sea_cliff`, `scree_run`, `ravine` |
-| `monster.valtherion_brown_bear` | `fauna.bear` -> `regional_ecology.valtherion` | `region.valtherion` / `biome.temperate.mixed_forest` | high / `frontliner` | `melee_brute` | `monster.ember_boar` | `mixed_forest`, `rapids`, `estuary`, `forest_edge` |
-| `monster.serathyl_ravine_wolverine` | `fauna.wolverine` -> `regional_ecology.serathyl` | `region.serathyl` / `biome.temperate.temperate_rainforest` | high / `opportunist` | `melee_skirmisher` | `monster.shadow_wolf` | `temperate_rainforest`, `talus_field`, `ravine`, `cliff` |
-| `monster.draemor_marsh_alligator` | `fauna.american_alligator` -> `regional_ecology.draemor` | `region.draemor` / `biome.wetlands.marsh` | high / `tank_protector` | `melee_brute` | `monster.bog_troll` | `marsh`, `marsh_pool`, `oxbow_lake`, `estuary` |
-| `monster.talmyran_savanna_scorpion` | `fauna.scorpion` -> `regional_ecology.talmyra` | `region.talmyra` / `biome.grasslands.savanna` | moderate / `disruptor` | `melee_skirmisher`, `enfeebling_burst` | `monster.dune_scorpion` | `savanna`, `talus_field`, `scree_run`, `ravine` |
-| `monster.myridian_reef_lobster` | `fauna.reef_lobster` -> `regional_ecology.myridian_chain` | `region.myridian_chain` / `biome.marine.marine` | moderate / `tank_protector` | `melee_brute` | `monster.dire_boar` | `marine`, `coral_reef_fringe`, `tide_pools`, `kelp_forest_coastal` |
-| `monster.lantern_glowmire_caecilian` | `fauna.glowmire_caecilian` -> `regional_ecology.lantern_isles` | `region.lantern_isles` / `biome.wetlands.mangrove_forest` | moderate / `debuffer_controller` | `melee_brute` | `monster.mire_slime` | `mangrove_forest`, `marsh_pool`, `cave_flooded`, `thicket` |
-| `monster.serpents_wake_tide_lizard` | `fauna.tide_lizard` -> `regional_ecology.serpents_wake` | `region.serpents_wake` / `biome.wetlands.mangrove_forest` | low / `opportunist` | `melee_skirmisher` | `monster.granary_rat` | `mangrove_forest`, `tidal_flat`, `shoreline`, `tide_pools` |
-| `monster.dawnreach_bull_walrus` | `fauna.walrus` -> `regional_ecology.dawnreach_isles` | `region.dawnreach_isles` / `biome.polar.tundra` | high / `tank_protector` | `melee_brute` | `monster.bog_troll` | `tundra`, `shoreline`, `tidal_flat`, `kelp_forest_coastal` |
+- regions, regional ecology, settlements, districts, sites, semantic map features, visual map references, and General Lore subjects;
+- items, consumable/weapon/armor profiles, market values, resources, commodities, workplaces, skills, production chains, and recipes;
+- fauna, monsters, habitats, biomes, combat roles, tactics presets, action-package mappings, drops, and loot;
+- Knowledge domain registry, snippets, subjects, sources, policy references, lifecycle/status fields, and geography-facing content.
 
-Use exact slugs equal to each id suffix and grounded display names derived directly from those slugs. Use `monsterClass: "beast"`, `baseFaunaId` exactly as listed, `variantType: "species_only"`, and omit `baseMonsterId`, attunement, elements, and origin profile.
+Read the six retained research artifacts:
 
-For each record, copy `combatProfile` and `difficultyScalingHooks` value-for-value from its named live template. Do not derive new combat numbers or change the template record.
+- `docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md`;
+- `docs/dev/tmp-ecology-flora-fauna-byproducts-research-2026-07-14.md`;
+- `docs/dev/tmp-agriculture-land-food-livestock-research-2026-07-14.md`;
+- `docs/dev/tmp-materials-refinement-processing-research-2026-07-14.md`;
+- `docs/dev/tmp-food-processing-preservation-research-2026-07-14.md`;
+- `docs/dev/tmp-magitech-production-infrastructure-substitution-research-2026-07-14.md`.
 
-Behavior tags are exact and ordered:
+Confirm the consumed Gate 6 artifact and production-authority audit remain absent:
 
-- cliff viper: `ambush_predator`, `territorial`, `venomous`;
-- brown bear: `territorial`, `foraging`, `defensive`;
-- ravine wolverine: `solitary`, `territorial`, `relentless`;
-- marsh alligator: `ambush_predator`, `territorial`, `aquatic`;
-- savanna scorpion: `ambush_predator`, `territorial`, `venomous`;
-- reef lobster: `territorial`, `armored`, `aquatic`;
-- glowmire caecilian: `ambush_predator`, `subterranean`, `aquatic`;
-- tide lizard: `opportunistic`, `territorial`, `aquatic`; and
-- bull walrus: `territorial`, `herd_defender`, `aquatic`.
+- `docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md`;
+- `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md`.
 
-Summaries must identify the named macroregion and terrain niche as static canon without claiming frequency, placement, spawn rules, population, attacks, status effects, or rewards.
+## Baseline Reproduction
 
-## Exact Source-Local Drop Rule
+Before any repair:
 
-For each new monster, author one `drops` row for every ordered item key in its base fauna's `template.output.slaughterOutput.products.ingredients`, followed by every ordered key in `byproducts`. Do not omit, add, alias, rename, or reorder keys.
+1. Reproduce the 67-file normal content inventory and every live records-wrapper count.
+2. Reproduce accepted `0.6.4` totals: 14 settlement districts, 20 settlement sites, 8 semantic map features, and 28 Knowledge snippets with 18 General Lore snippets.
+3. Reproduce accepted `0.6.5` totals: 28 recipes across 10 represented recipe families, including the exact accepted 16-row `bounded_design_inference` package.
+4. Reproduce accepted `0.6.6` totals: 33 monsters; 18 beast / 6 humanoid / 3 ooze / 2 elemental / 3 undead / 1 giantkin; 6 low / 15 moderate / 11 high / 1 severe; 77 drops; 20 loot rows; 21 empty `loot` arrays; 9 explicit fauna lineages; 132 fauna; and 9 regional ecology profiles.
+5. Reproduce unchanged owner inventories named by current output, including biomes, habitats, roles, tactics presets, items, values, resources, commodities, workplaces, skills, chains, and Knowledge domains.
+6. Record any mismatch before editing. A mismatch is evidence to investigate, not permission to normalize unrelated content.
 
-Apply this exact per-record envelope by zero-based drop position:
+## Audit Matrix
 
-| Position | quantityMin | quantityMax | chance |
-| ---: | ---: | ---: | ---: |
-| 0 | 1 | 2 | 0.82 |
-| 1 | 1 | 1 | 0.68 |
-| 2 | 1 | 1 | 0.54 |
-| 3 | 1 | 1 | 0.40 |
-| 4 | 1 | 1 | 0.26 |
+### 1. Schema, Validator, And Registration Integrity
 
-All selected fauna have two to four output keys, producing exactly 28 new drop rows. Set `loot: []` on all nine new monsters. These are authored static probability envelopes local to each monster record; they are not anatomy, guaranteed harvest yields, reusable loot tables, loot execution, generated items, inventory mutation, or balance formulas.
+- Every registered static file parses through its intended BOM-safe reader and validates against its owning strict schema.
+- Normal lint registers each live content collection exactly once and no planned/unused file is silently treated as live.
+- Semantic validators preserve strict identity, lifecycle, reference, duplicate, and source/owner boundaries.
+- No schema, validator, or test has been weakened to accept malformed, orphaned, generic, or executable authority.
+- Types and mirrored contracts agree where the accepted packages depend on them.
 
-## Exact Ecology Edits
+### 2. Identity, Duplicate, Orphan, And Contradiction Audit
 
-Append exactly the listed base fauna id to the corresponding `nativeFaunaIds` array, preserving all existing entries and all other regional ecology fields. Do not add monster ids to ecology records and do not edit regions, biomes, habitats, flora, fauna, or items.
+- Audit duplicate ids, slugs, names, item keys, titles, tags, nested source-local keys, and canonical aliases where uniqueness is required.
+- Audit every direct reference, reverse reference required by policy, parent link, subject link, status/lifecycle dependency, and derived naming convention.
+- Identify orphan records, unreachable active records, dangling planned references, contradictory statuses, and prose that claims behavior absent from live owners.
+- Do not treat descriptive overlap as a defect without an owning uniqueness rule or concrete contradiction.
 
-The matrix is the region/biome authoring audit. The monster schema does not own direct region or biome fields; do not invent them. `habitatTags` remain descriptive, while region, biome, and native-fauna existence are checked against their owning collections in the focused test.
+### 3. World, Settlement, Map, And Knowledge Closure
 
-## Allowed Files
+- Verify region, locality, settlement, district, site, map-feature, world-map/hex, visual-map, ecology, climate, and parent/anchor closure.
+- Verify the exact `0.6.4` districts/sites/features/snippets remain regionally and thematically coherent without inventing visual geometry, routes, services, resources, commodities, POIs, or runtime discovery.
+- Verify Knowledge domain, subject type/id, source, registry, lifecycle, and policy-reference closure.
+- Treat all current `Recognizing ...` snippets as structural authored lore only. Do not infer clues, observation, recognition thresholds, achievements, borders, claims, overlays, or map access.
 
-Production content:
+### 4. Item, Material, Value, Workplace, Skill, Chain, And Recipe Closure
 
-- `packages/content/base/world/monsters.json`
-- `packages/content/base/world/regional_ecology_profiles.json`
+- Verify every recipe input/output/tool/workplace/skill/chain/item/value reference and status.
+- Verify the accepted 16-row package remains exact and all recipe integers retain `bounded_design_inference`.
+- Verify production chains and workplace fields remain macro/descriptive authority and no quarantined resolver field is consumed.
+- Audit resources, commodities, item profiles, values, tools, fuels, process aids, intermediate materials, and outputs for orphaning or contradictions without adding speculative transformations or quantities.
+- Preserve the rejected flour-only pastry and blocked meat-pie conclusions unless new live authority proves otherwise.
 
-Focused test:
+### 5. Monster, Fauna, Ecology, Combat, Drop, And Loot Closure
 
-- `tests/unit/monster-validation-hardening.test.mjs`
+- Verify every monster/fauna lineage, regional ecology membership, region, biome, habitat tag, combat role, enemy tactics preset, action package, item, market value, drop, loot, and copied-template reference.
+- Verify the exact nine `0.6.6` ids, source-fauna ids, `species_only` lineage, threats, roles, action packages, habitats, behavior tags, source-local drop arrays, empty loot arrays, combat profiles, and scaling hooks.
+- Verify each new drop array equals the source fauna's ordered slaughter-output ingredients followed by byproducts and uses the exact positional quantity/chance envelope.
+- Verify the target fauna id appears exactly once in exactly its target ecology profile and no existing ecology meaning changed.
+- Reject generic loot authorities, anatomy-by-name inference, spawn/population rules, encounter execution, dynamic drops, harvesting, attacks/effects, AI, rewards, or runtime behavior.
 
-Update the focused test to assert the exact nine ids, final counts/distributions, exact lineage/ecology/region/biome/role/preset/action/drop/value/template closure, exact source-local drop arrays, and absence of unowned or executable fields. Do not weaken existing assertions.
+### 6. Lifecycle And Static/Runtime Honesty
 
-Coordination documents may be updated only as required to report success, advance to `0.6.7`, and preserve the post-`0.6.7` routes.
+- Verify planned/active/deprecated or equivalent statuses agree with validation, references, prose, and actual consumers.
+- Verify static metadata does not claim item ownership, inventory mutation, crafting execution, economy/stock/prices, population/ecology simulation, encounter/spawn behavior, loot rolls, Knowledge grants, discovery, magic execution, services, construction, NPC schedules, or gameplay.
+- Preserve accepted engine-owned travel, quest acceptance/tracking, and activity selection behavior unchanged.
+
+### 7. Research Drift And Temporary Artifacts
+
+- Compare Gate 1-5 and Gate 7 findings against the durable synthesis, live authority, backlog, and deferred-route register.
+- Record each retained artifact's still-needed findings and its durable destination.
+- Remove a retained artifact only when the audit proves all still-needed findings are represented in durable authority/backlog and no detailed citation is still required. Do not delete first and reconstruct later.
+- If any artifact still has unique required evidence, retain it and state the unmet removal condition.
+- Do not restore the consumed Gate 6 or production-audit artifacts.
+- Do not convert research recommendations directly into canon, quantities, behavior, or runtime.
+
+### 8. Route, Hygiene, And Diff Integrity
+
+- Preserve `0.6.7` as a stabilization audit, not a `0.7.0` band-entry claim.
+- Preserve Geography/recognition next, Activity Resolution reuse after Geography, and later owner-specific routes and research gates.
+- Audit tracked generated/vendor/log/temp/cache/build output and flag it without broad cleanup unless a named temporary-artifact condition authorizes deletion.
+- Search conflict markers and trailing whitespace, run `git diff --check`, inspect every changed path, and read the full diff.
+
+## Repair Gate
+
+Remain read-only until the baseline and audit matrix identify a concrete defect.
+
+For each defect:
+
+1. cite the live owner, violated invariant, and reproducing evidence;
+2. classify the defect as introduced by `0.6.4`, `0.6.5`, `0.6.6`, older authority, or coordination-only drift;
+3. choose the smallest owner-correct repair;
+4. edit only files necessary for that repair and its focused regression proof;
+5. preserve unrelated work and existing behavior;
+6. do not weaken validators or replace exact references with permissive fallback;
+7. stop and report instead of guessing when correction requires new canon, a new authority, disputed semantics, runtime behavior, broad migration, external research, or a scope-expanding user decision.
+
+If no defect is proven, do not manufacture a repair for activity.
 
 ## Prohibited Scope
 
-Do not add or change fauna identities or biology scalars, items, values, generic loot tables, roles, tactics presets, action-package mappings, combat actions, status/condition/injury vocabulary, schemas, validators, lint code, recipes, resources, commodities, flora, habitats, biomes, regions, encounters, spawns, population, migration, reproduction, depletion, regrowth, harvesting, hunting, fishing, butchery, item creation, loot rolls, ownership, payout, inventory, economy, crafting, magic, Knowledge, recognition, runtime, UI, commands, events, saves, migrations, dependencies, generated output, assets, or gameplay.
+Do not broaden world, settlement, map, item, material, recipe, fauna, monster, ecology, loot, Knowledge, service, resource, commodity, NPC, institution, faction, combat-health, magic, or other static content.
 
-Do not treat `enfeebling_burst`, venomous prose, combat templates, drops, or habitat tags as permission to add effects, attacks, AI, placement, or execution. Do not infer fauna lineage beyond the exact nine rows.
+Do not add schemas, fields, authorities, generic POIs, generic loot tables, recipes, items, values, fauna, monsters, ecology profiles, Knowledge recognition mechanics, clues, observations, borders, claims, overlays, runtime commands/events, UI, saves, migrations, dependencies, generated assets, gameplay behavior, dynamic economy, crafting execution, inventory mutation, population/ecology simulation, encounter/spawn execution, loot rolls, harvesting, combat effects, or magic execution unless the repair gate proves a narrow defect in an already accepted owner and the correction stays wholly within that owner.
 
-## Validation
+Do not run builds, servers, package installation, generators, deployment, broad typecheck repair, or unrelated cleanup.
 
-1. Reproduce final counts: 33 monsters; 18 beast / 6 humanoid / 3 ooze / 2 elemental / 3 undead / 1 giantkin; 6 low / 15 moderate / 11 high / 1 severe; 77 drops; 20 loot rows; 21 empty `loot` arrays; 9 explicit fauna lineages; 132 fauna; 9 regional ecology profiles; all other inventories unchanged.
-2. Run `npm.cmd run tool:content-lint`.
-3. Run exactly:
+## Required Validation
 
-   `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
+1. Run `npm.cmd run tool:content-lint`.
+2. Run exactly:
 
-4. Audit duplicate monster ids/slugs/names, duplicate tags/drop keys, lineage cycles, exact target equality, exact ecology additions, source-output equality, chance/quantity envelopes, and item/value/fauna/ecology/region/biome/role/enemy-preset/action/template closure.
-5. Confirm no generic loot table or executable/runtime field was added and no existing monster/ecology semantics changed.
-6. Confirm every prohibited path is unchanged.
-7. Run conflict-marker and trailing-whitespace searches, `git diff --check`, complete changed-path review, and full diff inspection.
+   `node --test tests/unit/crafting-recipes-validation.test.mjs tests/unit/knowledge-domain-registry-validation.test.mjs tests/unit/knowledge-snippets-validation.test.mjs tests/unit/map-feature-validation.test.mjs tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/settlement-district-validation.test.mjs tests/unit/settlement-site-validation.test.mjs tests/unit/settlement-visual-map-refs.test.mjs tests/unit/slug-content.test.mjs`
 
-Do not run builds, typechecks, package installation, servers, generators, or the full test suite.
+3. Run focused tests for any repaired owner in addition to the exact group.
+4. Reproduce final counts and the complete cross-reference audit after any repair or artifact deletion.
+5. Confirm prohibited production/runtime paths are unchanged unless the repair gate explicitly justified one.
+6. Run conflict-marker and trailing-whitespace searches, `git diff --check`, changed-path review, and full diff inspection.
+7. Do not run the full test suite or broad workspace typecheck. Preserve the accepted 173-diagnostic typecheck classification unless a separately authorized route changes it.
 
-## Temporary Artifact Disposition
+## Completion And Next Prompt
 
-Do not delete Gate 1-5 or Gate 7 artifacts during `0.6.6`; synthesis Section 14 assigns them solely to `0.6.7`. Record that disposition explicitly. The Gate 6 and production-audit artifacts should already be absent after accepted `0.6.5`; do not restore them.
+After every required gate passes:
 
-## Documentation And Next Prompt
-
-After successful validation:
-
-- overwrite `docs/dev/current-codex-output.md` with exact results, counts, nine ids, closure, checks, behavior confirmation, risks, and artifact disposition;
-- advance handoff, sequence, roadmap, continuity brief, backlog, static program, and route register only where completion changes current direction;
-- preserve the docs-first Geography/recognition plan immediately after `0.6.7` and the later activity-resolution reuse audit after that plan; and
-- overwrite `docs/dev/current-codex-prompt.md` with the exact `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` prompt.
-
-The installed `0.6.7` prompt must be a read-first, repair-only-if-proven audit of `0.6.4`-`0.6.6` plus the accepted research synthesis. It must check schemas/validators, all static references and statuses, duplicates, orphans, contradictions, generic authorities, recipe/value/tool/workplace/skill/chain closure, monster/fauna/ecology/role/tactics/action/item/value/drop closure, Knowledge and geography closure, lifecycle honesty, research drift, temporary-artifact removal conditions, route preservation, hygiene, and full diff. It must not broaden static content or runtime. After success it must install the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan prompt, treating current `Recognizing ...` snippets as structural lore only and keeping the later activity-resolution reuse audit behind that plan.
+- overwrite `docs/dev/current-codex-output.md` with source run, date, branch/status assumption, label class, milestone impact, baseline/final inventories, findings, repairs if any, artifact dispositions, files changed, checks, risks, suggested commit, and next run;
+- advance handoff, sequence, roadmap, continuity brief, backlog, static program, and route register only where audit completion changes current direction;
+- overwrite `docs/dev/current-codex-prompt.md` with the exact unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan` prompt;
+- make that prompt documentation-only and require it to inventory current location snippets, domain/evidence/progress schemas, subject vocabularies, skills, place/map/route/polity authorities; decide the first Geography domain/taxonomy-node contract, recognition-profile/clue contract, source-teaching contract, observation-occurrence contract, settlement-district/site evidence-subject closure, political-geography ownership, and one smallest later implementation package;
+- prohibit that prompt from reinterpreting `Recognizing ...` snippets as recognition criteria or implementing borders, claims, overlays, recognition runtime, UI, saves, or gameplay;
+- preserve the held `Activity Resolution Existing-System Reuse Audit` immediately behind accepted Geography planning.
 
 ## Completion Report
 
-Report starting commit/state; baseline/final inventories; exact matrix and nine ids; ecology, lineage, role, tactics, action, item, value, and source-local drop closure; files changed; checks; unchanged runtime/UI/save/economy/crafting/magic/Knowledge-recognition state; artifact disposition; installed `0.6.7` prompt; risks; and suggested commit.
+Report:
+
+- starting commit, branch, sync, and worktree state;
+- baseline/final inventories;
+- schema/validator/registration results;
+- identity, duplicate, orphan, contradiction, lifecycle, and closure findings;
+- exact `0.6.4`-`0.6.6` package acceptance results;
+- every repair and its proof, or explicit confirmation that no repair was needed;
+- each of the six research-artifact dispositions and why its removal condition passed or remains unmet;
+- files changed and full validation results;
+- unchanged runtime/UI/save/economy/crafting/combat/ecology/loot/magic/Knowledge-recognition behavior;
+- installed Geographic Knowledge prompt and preserved Activity Resolution route;
+- risks and suggested commit.

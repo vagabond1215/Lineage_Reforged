@@ -2,7 +2,7 @@
 
 Date: 2026-07-19
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4` and `0.6.5` complete; seven-gate cross-domain research and integration accepted; exact `0.6.6` active next; `0.6.7` remains reserved
+Status: `0.6.4`, `0.6.5`, and `0.6.6` complete; seven-gate cross-domain research and integration accepted; exact `0.6.7` active
 
 ## 1. Purpose
 
@@ -14,7 +14,7 @@ Accepted engine ownership for travel, quest acceptance, quest tracking, and acti
 
 ## 2. Reproducible Live Inventory
 
-Counts were reproduced on 2026-07-14. Normal content lint passed at 67 checked files. Reproduce current counts before every later package.
+Counts were initially reproduced on 2026-07-14 and advanced through accepted `0.6.6` on 2026-07-27. Normal content lint passes at 67 checked files. Reproduce current counts before every later package.
 
 | Authority | Content and count | Lifecycle or coverage | Readiness | Exact blocker or constraint |
 | --- | --- | --- | --- | --- |
@@ -33,11 +33,11 @@ Counts were reproduced on 2026-07-14. Normal content lint passed at 67 checked f
 | Weapon profiles | no live collection — 0 | schema/validator fixtures only | `requires-small-precondition` | Requires live collection and normal-lint registration before content. |
 | Armor profiles | no live collection — 0 | schema/validator fixtures only | `requires-small-precondition` | Same precondition as weapon profiles. |
 | Crafting recipes | `crafting/recipes.json` — 28 | 28 planned standard records across 10 families | `expanded-and-validated` | Accepted `0.6.5`; explicit `bounded_design_inference`, reference closure, and resolver quarantine are preserved. |
-| Monsters | `world/monsters.json` — 24 | 6 classes; low through severe threats | `ready-with-reference-constraints` | Reuse executable vocabulary; no unproved mechanics or lineage. |
-| Source-local monster loot | 49 drop entries and 20 loot entries; 12 monsters empty | embedded descriptors | `research-informed later` | No general loot table, rolls, ownership, payout, or dynamic generation. |
+| Monsters | `world/monsters.json` — 33 | 6 classes; low through severe threats; 9 fauna lineages | `expanded-and-validated` | Static source-local drops only; no unproved mechanics or execution. |
+| Source-local monster loot | 77 drop entries and 20 loot entries; 21 monsters empty | embedded descriptors | `expanded-and-validated` | No general loot table, rolls, ownership, payout, or dynamic generation. |
 | Fauna | `world/fauna.json` — 132 | 7 types; none through high danger | `research-informed later` | Static ecology only; no population, migration, spawning, harvesting, or output execution. |
-| Regional ecology | `world/regional_ecology_profiles.json` — 9 | one per macro region | `research-informed later` | No runtime ecology or trade simulation. |
-| Combat roles | `game/combat_roles.json` — 9 | stable vocabulary | `ready-with-reference-constraints` | Prefer reuse in `0.6.6`. |
+| Regional ecology | `world/regional_ecology_profiles.json` — 9 | one per macro region; 9 accepted fauna additions | `expanded-and-validated` | No runtime ecology or trade simulation. |
+| Combat roles | `game/combat_roles.json` — 9 | stable vocabulary | `ready-with-reference-constraints` | Reused without expansion in `0.6.6`. |
 | Tactics presets | `game/tactics_presets.json` — 9 | linked defaults | `ready-with-reference-constraints` | Defaults do not authorize AI execution. |
 | Knowledge domains | `player/knowledge_domain_registry.json` — 7 | 6 active; Arcane Lore planned | `ready-with-reference-constraints` | New snippets require active domains, supported subjects/sources, and live subjects. |
 | Knowledge snippets | `player/knowledge_snippets.json` — 28 | 18 General Lore plus natural/religious subjects | `expanded-and-validated` | Informational and non-granting; current `Recognizing ...` records are not recognition mechanics. |
@@ -123,7 +123,7 @@ Research ordinary technology first. Magic may augment or replace modern-like fun
 
 ## 9. Monster, Ecology, And Loot Strategy
 
-The installed `0.6.6` uses an exact nine-monster, nine-fauna-lineage, nine-regional-ecology biome/region/role/threat matrix. Each row reuses current combat/action vocabulary, closes role/tactics and item/value references, and keeps source-local drop arrays static. Do not infer spawn rules, population simulation, dynamic rolls, new combat mechanics, status execution, gathering, harvesting, body-part execution, crafting, or magic runtime.
+The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine-regional-ecology biome/region/role/threat matrix with 28 source-local drop rows. Each row reuses current combat/action vocabulary, closes role/tactics and item/value references, and keeps source-local drop arrays static. Do not infer spawn rules, population simulation, dynamic rolls, new combat mechanics, status execution, gathering, harvesting, body-part execution, crafting, or magic runtime.
 
 ## 10. Knowledge Integration
 
@@ -145,8 +145,8 @@ Deep Research uses one gate and one artifact at a time.
 | GPT-DR program | Seven cross-domain gates | One cited artifact per gate; repo baseline; technology, ecology, materials, food, crafting, and magitech findings; explicit uncertainty and ownership; no implementation. |
 | unversioned integration | Cross-Domain Production Research Integration | Seven artifacts reconciled; synthesis created; artifacts dispositioned; recipe/chain authority resolved; exact revised `0.6.5` prompt installed. |
 | revised `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete: exact 16-row dependency-closed batch, 310 focused tests, and 67-file normal lint passed; no execution claims. |
-| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active: exact nine-row regional matrix and reference closure; no generic loot or unimplemented mechanics. |
-| `0.6.7` | Cross-Content Coherence And Coverage Audit | Schemas/validators pass; no duplicate ids/slugs, orphans, contradictions, generic authorities, runtime claims, research drift, or hygiene failures. |
+| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Complete: exact nine-row regional matrix, 28 source-local drops, full reference closure, 147 focused tests, and 67-file lint passed. |
+| `0.6.7` | Cross-Content Coherence And Coverage Audit | Active: schemas/validators pass; no duplicate ids/slugs, orphans, contradictions, generic authorities, runtime claims, research drift, or hygiene failures. |
 | unversioned support | Geographic Knowledge Taxonomy And Location Recognition Contract Plan | Geography facets and recognition criteria planned without treating current snippets as mechanics. |
 | unversioned support | Activity Resolution Existing-System Reuse Audit | Read-only reuse decision after the Geography/recognition plan; no implementation authority. |
 

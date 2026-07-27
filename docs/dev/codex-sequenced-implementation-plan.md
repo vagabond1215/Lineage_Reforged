@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-07-17
-Route: Codex local sequencing alignment after accepted cross-domain production research integration
+Date: 2026-07-27
+Route: Codex local sequencing alignment after accepted monster/ecology static expansion
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,15 +21,15 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest completed primary:
 
-- `Version 0.6.4 - World And Settlement Static Content Expansion`
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 
 Latest completed support/audit run:
 
-- Unversioned `Cross-Domain Natural Resources, Materials, Production, And Magitech Research Integration`
+- `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
 
 Immediate next primary:
 
-- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
+- `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`
 
 ## Current Queue Override
 
@@ -53,7 +53,8 @@ Immediate next primary:
 - Unversioned `Historical Route Cleanup And Static Content Expansion Pipeline Integration` is complete. It created `docs/dev/historical-version-and-deferred-route-register.md`, created `docs/design/static-content-expansion-program.md`, reconciled historical/deferred routing, and installed the exact `0.6.4` prompt.
 - `Version 0.6.4 - World And Settlement Static Content Expansion` is complete. It landed the exact three-cluster 12-district, 18-site, 6-feature, and 12-snippet batch with 592/592 focused tests and 67-file normal lint green.
 - The seven-gate cross-domain research program, production-authority audit, unversioned integration, and exact 16-row `0.6.5` recipe package are complete. Resolver quarantine held; the consumed Gate 6/audit artifacts were removed under synthesis conditions.
-- The remaining active primary sequence is `0.6.6` monster/ecology/loot static expansion, then `0.6.7` cross-content coherence audit.
+- `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is complete. It landed the exact nine-monster, nine-fauna-lineage, nine-ecology-addition, and 28-drop-row package with 147/147 prescribed focused tests and 67-file normal lint green.
+- The remaining active primary route is `0.6.7` cross-content coherence audit.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
@@ -546,10 +547,9 @@ Versioning note:
 
 This is recommended ordering, not implementation lock-in:
 
-Completed: `0.6.4 - World And Settlement Static Content Expansion` and `0.6.5 - Item, Material, And Recipe Static Content Expansion`.
+Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Item, Material, And Recipe Static Content Expansion`, and `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
 
-1. `0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-2. `0.6.7 - Cross-Content Coherence And Coverage Audit`
+1. `0.6.7 - Cross-Content Coherence And Coverage Audit`
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
@@ -569,7 +569,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Keep `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` as the immediate next run. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
+- Keep `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` as the immediate next run. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

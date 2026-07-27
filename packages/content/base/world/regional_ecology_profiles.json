@@ -39,7 +39,8 @@
                                                "fauna.boar",
                                                "fauna.rabbit",
                                                "fauna.trout",
-                                               "fauna.cod"
+                                               "fauna.cod",
+                                               "fauna.cliff_viper"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "moderate",
@@ -137,7 +138,8 @@
                                                "fauna.trout",
                                                "fauna.pike",
                                                "fauna.sturgeon",
-                                               "fauna.cod"
+                                               "fauna.cod",
+                                               "fauna.bear"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "surplus",
@@ -232,7 +234,8 @@
                                                "fauna.goat",
                                                "fauna.rabbit",
                                                "fauna.mallard",
-                                               "fauna.oyster"
+                                               "fauna.oyster",
+                                               "fauna.wolverine"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "limited",
@@ -324,7 +327,8 @@
                                                "fauna.goat",
                                                "fauna.deer",
                                                "fauna.trout",
-                                               "fauna.catfish"
+                                               "fauna.catfish",
+                                               "fauna.american_alligator"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "surplus",
@@ -407,7 +411,8 @@
                                                "fauna.boar",
                                                "fauna.deer",
                                                "fauna.oyster",
-                                               "fauna.crab"
+                                               "fauna.crab",
+                                               "fauna.scorpion"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "limited",
@@ -488,7 +493,8 @@
                         "nativeFaunaIds":  [
                                                "fauna.cod",
                                                "fauna.oyster",
-                                               "fauna.crab"
+                                               "fauna.crab",
+                                               "fauna.reef_lobster"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "limited",
@@ -566,7 +572,8 @@
                                                "fauna.cod",
                                                "fauna.oyster",
                                                "fauna.crab",
-                                               "fauna.goat"
+                                               "fauna.goat",
+                                               "fauna.glowmire_caecilian"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "limited",
@@ -642,7 +649,8 @@
                                                "fauna.crab",
                                                "fauna.oyster",
                                                "fauna.cod",
-                                               "fauna.goat"
+                                               "fauna.goat",
+                                               "fauna.tide_lizard"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "scarce",
@@ -718,7 +726,8 @@
                         "nativeFaunaIds":  [
                                                "fauna.cod",
                                                "fauna.seal",
-                                               "fauna.rabbit"
+                                               "fauna.rabbit",
+                                               "fauna.walrus"
                                            ],
                         "coverageProfile":  {
                                                 "stapleCrops":  "scarce",
