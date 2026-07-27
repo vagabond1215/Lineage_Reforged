@@ -6,14 +6,16 @@ Date: 2026-07-27
 
 - Latest completed primary remains `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains the active parent primary and has not begun authoring.
-- The narrow BOM repair implementation landed at commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` and changes only `tests/unit/region-first-world-data.test.mjs` and `tests/unit/slug-content.test.mjs`.
-- Local and `origin/master` were synchronized at `9c7eb636af284905a14dd6162bc3ba49edc43fbd` for the first `0.6.6.2` validation attempt.
-- Repair-scope and `packages/content` byte-identity gates passed.
-- The mandatory focused command reported `4/5` passing tests.
-- The remaining failure is a pre-existing contract mismatch: authored `environmentProfile.climateTendencies` values are arrays, while the focused assertion, region schema, and one engine content interface require a scalar string.
-- `0.6.6.2` correctly failed closed: no files changed locally, the parent prompt was not restored, and `0.6.6` was not executed.
-- Active support prompt: `Version 0.6.6.3 - Region Climate Tendencies Contract Repair And BOM Acceptance`.
-- Active prompt blob: `ab1bc43f258258a91ad478d8de8fefdeadfe7a4f`.
+- The BOM reader repair landed at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` and remains limited to the two intended test readers.
+- `0.6.6.2` failed closed at `4/5` focused tests and exposed the initial climate scalar-versus-array contract mismatch.
+- `0.6.6.3` landed two partial commits: schema repair `56932eecedd7b28216b23cb5bf211fea7b01df46` and focused climate assertion repair `e71f8f6b625f7b6744492cc8b19ab695f788d89c`.
+- Local and `origin/master` were synchronized at `e71f8f6b625f7b6744492cc8b19ab695f788d89c` for the blocked `0.6.6.3` validation attempt.
+- Focused tests remained `4/5`.
+- The current failing assertion expects `populationProfile.populationCapacity`, while the schema and all 37 non-ocean records use `simulationProfile.populationCapacity`.
+- Five live records still carry scalar `climateTendencies` values and require exact singleton-array migration.
+- `0.6.6.3` correctly stopped on broader migration evidence and validation failure: no further local files changed, the parent prompt was not restored, and `0.6.6` was not executed.
+- Active support prompt: `Version 0.6.6.4 - Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`.
+- Active prompt blob: `1fce964f515a64f0b7e97ea96a5604e858d7b9f0`.
 - Exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Current Planning Precedence
@@ -44,76 +46,80 @@ Accepted BOM operation:
 JSON.parse(raw.replace(/^\uFEFF/, ""))
 ```
 
-The exact repair range must contain only the two named test files and no content change. No broad `trim()`, content normalization, production parser, dependency, assertion weakening, or unrelated test change is allowed.
+The exact BOM repair range must remain limited to the two named test files and contain no content change.
 
-## Climate Contract Evidence
+## Canonical Region Contracts
 
-The canonical contract is a non-empty array of normalized string identifiers:
+### Climate tendencies
 
-- `packages/content/base/world/regions.json` authors multiple values per region;
-- `scripts/integrate_region_first_world_data.ps1` intentionally assigns `Split-List $row.climateTendencies`;
-- `apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts` already normalizes array-or-string input and presents multiple values;
-- `packages/shared/types/src/settlement-institutions.ts` already admits arrays;
-- the stale scalar requirements are in the region schema, focused test assertion, and engine content interface.
+The canonical field is a non-empty array of normalized string identifiers.
 
-Do not rewrite the content as a scalar. Align the contract surfaces to `string[]` and preserve every content byte.
+Exact migrations:
 
-## Exact `0.6.6.3` Scope
+- `region.verdant_thalos`: `mild` -> `["mild"]`;
+- `region.jade_expanse`: `temperate_open_country` -> `["temperate_open_country"]`;
+- `region.sailors_verge`: `mild_maritime` -> `["mild_maritime"]`;
+- `region.stormcap_coast`: `storm_washed_maritime` -> `["storm_washed_maritime"]`;
+- `region.myridian_chain`: `mild_wet_maritime` -> `["mild_wet_maritime"]`.
+
+Do not rename or reinterpret any value. The integration script already uses `Split-List`; do not change it. The UI compatibility normalization may remain unchanged.
+
+### Population capacity
+
+Canonical absolute capacity is `simulationProfile.populationCapacity`.
+
+Do not add `populationCapacity` to `populationProfile`. Keep `populationCapacityMillions` as the existing million-scale presentation field.
+
+## Exact `0.6.6.4` Scope
 
 Before validation succeeds, implementation edits are limited to:
 
-- `packages/schemas/world/region.schema.json`;
-- `tests/unit/region-first-world-data.test.mjs`;
-- `packages/engines/civilization-engine/src/content.ts`;
-- `packages/shared/types/src/settlement-institutions.ts`, only if the compatibility union can be safely narrowed.
+- `packages/content/base/world/regions.json`, solely for the five exact singleton-array migrations;
+- `tests/unit/region-first-world-data.test.mjs`, solely to move the capacity assertion to `simulationProfile`;
+- `packages/engines/civilization-engine/src/content.ts`, solely to change the climate type to `string[]`;
+- `packages/shared/types/src/settlement-institutions.ts`, solely to narrow `string[] | string` to `string[]` when type-safe.
 
-The pass must not edit:
+The landed region schema and climate-array assertion must remain intact.
 
-- JSON content;
-- the integration script;
-- UI normalization code;
-- runtime behavior;
-- persistence, saves, or migrations;
-- dependencies, assets, or generated output;
-- gameplay or the parent `0.6.6` content package.
-
-After successful validation only, it may update current output, this handoff, the route register, planning-anchor reconciliation, strategic continuity brief, and restore the exact parent prompt.
+The pass must not edit any other content, generator, UI normalization, runtime behavior, persistence, save, migration, dependency, asset, generated output, gameplay, monster, ecology, or loot file.
 
 ## Required Validation
 
-1. Verify the BOM commit and exact two-file repair scope.
-2. Confirm the failed focused result is solely the scalar-versus-array mismatch.
-3. Align the schema, focused assertion, and static TypeScript contracts to a non-empty normalized string array.
-4. Run:
+1. Verify the BOM commit and the two partial `0.6.6.3` commits.
+2. Confirm exactly the five pinned scalar records and exact values.
+3. Confirm the current focused failure is the stale population-capacity path.
+4. Apply only the authorized migration, assertion, and static-type changes.
+5. Run:
 
    `node --test tests/unit/region-first-world-data.test.mjs tests/unit/slug-content.test.mjs`
 
-5. Require `5/5` passing tests unless a legitimate count change is fully explained.
-6. Run:
+6. Require `5/5` passing tests unless a legitimate count change is fully explained.
+7. Run:
 
    `npm.cmd run tool:content-lint`
 
-7. Run:
+8. Run:
 
    `npm.cmd run typecheck:workspace`
 
-8. Run:
+9. Run:
 
    `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
 
-9. Require the parent baseline at `146/146` unless a legitimate count change is fully explained.
-10. Prove `packages/content` remains byte-identical from `895c02df40332c813a8403bd489af6184111ccba`.
-11. Run conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-diff checks.
-12. Restore the exact parent prompt only after every gate passes.
-13. Stop without running `0.6.6` in the same pass.
+10. Require the parent baseline at `146/146` unless a legitimate count change is fully explained.
+11. Prove the BOM repair range still has no content change.
+12. Prove the post-`e71f8f6b` content diff changes only `regions.json` and exactly the five pinned shapes.
+13. Run conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-diff checks.
+14. Restore the exact parent prompt only after every gate passes.
+15. Stop without running `0.6.6` in the same pass.
 
 ## Failure Behavior
 
-If repository evidence contradicts the array contract or any validation fails, do not restore the parent prompt or update completion coordination. Do not broaden the repair. Leave `0.6.6.3` active and report the exact blocker.
+If the pinned count or values differ, a legitimate scalar producer exists, or any validation fails, do not restore the parent prompt or update completion coordination. Do not broaden the migration. Leave `0.6.6.4` active and report the exact blocker.
 
 ## Near-Term Sequence
 
-1. complete `0.6.6.3`, accept the BOM repair, and restore the exact parent prompt;
+1. complete `0.6.6.4`, accept the BOM repair, and restore the exact parent prompt;
 2. run exact `0.6.6` in a separate Codex pass;
 3. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
 4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
@@ -136,12 +142,12 @@ If repository evidence contradicts the array contract or any validation fails, d
 
 ## Active Prompt
 
-`Version 0.6.6.3 - Region Climate Tendencies Contract Repair And BOM Acceptance`
+`Version 0.6.6.4 - Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`
 
 Active prompt blob:
 
-`ab1bc43f258258a91ad478d8de8fefdeadfe7a4f`
+`1fce964f515a64f0b7e97ea96a5604e858d7b9f0`
 
-Suggested commit:
+Suggested implementation commit:
 
-`fix(content): align climate tendencies and accept bom repair`
+`fix(content): complete region climate array migration`
