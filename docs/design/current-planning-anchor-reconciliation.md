@@ -1,6 +1,6 @@
 # Current Planning Anchor Reconciliation
 
-Date: 2026-07-26
+Date: 2026-07-27
 
 Status: accepted narrow documentation-only coordination authority
 
@@ -35,17 +35,18 @@ Until the roadmap and sequenced plan receive a dedicated full-document maintenan
 
 - latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
 - active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-- landed but unaccepted repair implementation: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair` at commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
-- active support suffix: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`;
-- active support prompt blob: `5d4aa0a0961065f4cfea0968317b8e7f0df4c190`;
+- landed but not yet accepted repair implementation: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair` at commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
+- completed fail-closed validation attempt: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`, with repair scope/content identity passing and focused tests stopping at `4/5` on the region climate scalar-versus-array mismatch;
+- active support suffix: `Version 0.6.6.3 - Region Climate Tendencies Contract Repair And BOM Acceptance`;
+- active support prompt blob: `ab1bc43f258258a91ad478d8de8fefdeadfe7a4f`;
 - preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
 - reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
-`0.6.6` remains the current parent primary. The repair code has landed, but content authoring remains fail-closed until the validation suffix proves the required tests, content identity, and exact parent-prompt restoration.
+`0.6.6` remains the current parent primary. Content authoring remains fail-closed until `0.6.6.3` aligns the stale region climate contract to the canonical non-empty string array, passes the focused tests, content lint, workspace typecheck, parent baseline, content identity, and hygiene gates, and restores the exact parent prompt.
 
 ## Accepted Near-Term Order
 
-1. validate the landed BOM repair and restore exact `0.6.6` through `0.6.6.2`;
+1. repair the region climate contract, complete the BOM acceptance gate, and restore exact `0.6.6` through `0.6.6.3`;
 2. execute exact `0.6.6` in a separate pass;
 3. run `0.6.7` cross-content audit;
 4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
