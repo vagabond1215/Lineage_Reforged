@@ -40,20 +40,25 @@ Until the roadmap and sequenced plan receive a dedicated full-document maintenan
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
 - exact `0.6.6.4` implementation commit: `232d3c2f466e3ec18e620e29a47f4466ae05b84d`, changing four authorized files;
 - `0.6.6.4` focused tests passed `5/5` and content lint passed `67`;
-- `0.6.6.4` stopped because `typecheck:workspace` returned the unchanged broad `173`-diagnostic baseline and the prompt incorrectly required universal success;
+- `0.6.6.4` stopped because `typecheck:workspace` returned the unchanged broad `173`-diagnostic baseline and the prompt treated it as a universal green gate;
+- exactly four known unrelated diagnostics occur across the two changed TypeScript files;
 - the `146`-test baseline was not run and the parent prompt was not restored;
-- active support suffix: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`;
-- active support prompt blob: `ff436c355268d21783f2dd5d87835e75b7542d92`;
+- the first installed `0.6.6.5` prompt blob `ff436c355268d21783f2dd5d87835e75b7542d92` incorrectly required zero diagnostics in those files and was not run;
+- local and remote were synchronized at `1d6880f5a2d7bcdc5c843e64b50bcd25d6883525`, with a clean worktree, before correction;
+- active corrected support suffix: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`;
+- corrected active prompt blob: `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`;
 - preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
 - reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
-`0.6.6` remains fail-closed until `0.6.6.5` confirms the workspace audit is exactly the accepted 173-diagnostic baseline with no climate-contract-related diagnostics, passes the deferred `146/146` parent baseline and all diff/hygiene gates, and restores the exact parent prompt.
+`0.6.6` remains fail-closed until corrected `0.6.6.5` confirms exactly `173` total diagnostics, exactly the four pinned changed-file tuples and no additional changed-file diagnostic, zero mentions of `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`, no new or changed diagnostic attributable to `232d3c2f`, passes the deferred `146/146` parent baseline and all diff/hygiene gates, and restores the exact parent prompt.
+
+If the complete clean `0.6.6.4` diagnostic capture is unavailable or truncated, the pass must stop rather than infer the four tuples.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. complete baseline-aware validation and exact parent restoration through `0.6.6.5`;
+1. complete corrected baseline-aware validation and exact parent restoration through `0.6.6.5`;
 2. execute exact `0.6.6` in a separate pass;
 3. run `0.6.7` cross-content audit;
 4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
