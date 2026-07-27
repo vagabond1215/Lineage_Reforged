@@ -35,41 +35,32 @@ Until the roadmap and sequenced plan receive a dedicated full-document maintenan
 
 - latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
 - active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-- landed but not yet accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
+- accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
 - exact `0.6.6.4` implementation commit: `232d3c2f466e3ec18e620e29a47f4466ae05b84d`, changing four authorized files;
 - `0.6.6.4` focused tests passed `5/5` and content lint passed `67`;
-- workspace typecheck remained non-green at `173` diagnostics, including four known unrelated diagnostics in the changed TypeScript files;
-- the `146`-test baseline was not run and the parent prompt was not restored;
+- corrected `0.6.6.5` ran the workspace audit twice and reproduced an identical `173`-tuple baseline with exactly four proven-unrelated changed-file diagnostics and zero climate-contract mentions;
+- the deferred parent baseline passed `146/146`, and all content-diff and hygiene gates passed;
 - first unexecuted `0.6.6.5` prompt blob `ff436c355268d21783f2dd5d87835e75b7542d92` incorrectly required zero changed-file diagnostics;
 - second unexecuted prompt blob `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f` required a complete prior capture that does not exist;
-- local and remote were synchronized at `0f677b78e76905ef8d37eb8b4965b127d93d4db1`, with a clean worktree and no invalid prompt execution;
-- active support suffix remains `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`;
-- active prompt blob: `7b60f7caf417f2d49cdeed7fcdca4a9011010310`;
-- preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+- corrected `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance` is complete and accepted;
+- active parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
 - reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
-`0.6.6` remains fail-closed until corrected `0.6.6.5`:
-
-1. reconfirms focused tests `5/5` and content lint `67`;
-2. creates Capture A with exactly `173` normalized diagnostics, exactly four changed-file tuples, zero forbidden climate-contract identifier mentions, and source/diff/blame proof that the four are unrelated to `232d3c2f`;
-3. creates Capture B under unchanged conditions and reproduces the complete normalized `173`-tuple multiset exactly;
-4. passes the deferred `146/146` parent baseline and every diff/hygiene gate;
-5. restores the exact parent prompt.
+`0.6.6` is active and unblocked after corrected `0.6.6.5` completed every acceptance condition and restored the exact parent prompt. It must execute in a separate pass.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. complete reproducible baseline validation and exact parent restoration through corrected `0.6.6.5`;
-2. execute exact `0.6.6` in a separate pass;
-3. run `0.6.7` cross-content audit;
-4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-5. run Activity Resolution Existing-System Reuse Audit;
-6. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-7. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-8. proceed through separately authorized owner-specific implementation packages.
+1. execute exact `0.6.6` in a separate pass;
+2. run `0.6.7` cross-content audit;
+3. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+4. run Activity Resolution Existing-System Reuse Audit;
+5. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+6. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+7. proceed through separately authorized owner-specific implementation packages.
 
 ## Maintenance Rule
 

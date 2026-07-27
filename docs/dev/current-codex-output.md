@@ -2,145 +2,110 @@
 
 Date: 2026-07-27
 
-Source run: `0.6.6.4 Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`
+Source run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
 
-Run classification: exact implementation plus partial validation, followed by fail-closed prompt corrections for the known-failing workspace audit
+Branch/status assumption: `master`, clean and synchronized with `origin/master`
 
-Parent version: `0.6.6`
+Starting commit: `83b73db44a84943759a3adbbae3fefb875840bab`
+
+Validation-ending commit before coordination: `83b73db44a84943759a3adbbae3fefb875840bab`
+
+Run classification: support suffix
+
+Parent version: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
 
 Milestone impact: `supports_current_band`
 
-## Landed Implementation
+## Result
 
-Implementation commit:
+`0.6.6.5` is accepted.
 
-`232d3c2f466e3ec18e620e29a47f4466ae05b84d` - `Normalize region climate tendency arrays and population capacity test`
+The run established and immediately reproduced a fresh complete workspace typecheck baseline, completed every deferred green gate, accepted the BOM and region climate repair chain, and restored the exact parent `0.6.6` prompt.
 
-It changes exactly:
+No implementation, content, schema, test, TypeScript, config, dependency, generator, UI, runtime, save, gameplay, monster, ecology, or loot file changed in this support run.
+
+## Support Chain
+
+- `0.6.6.1` landed the BOM-only reader repair at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
+- `0.6.6.2` failed closed at `4/5` on the initial climate-contract mismatch.
+- `0.6.6.3` landed schema repair `56932eecedd7b28216b23cb5bf211fea7b01df46` and focused assertion repair `e71f8f6b625f7b6744492cc8b19ab695f788d89c`, then failed closed on the bounded migration requirement.
+- `0.6.6.4` landed implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d`.
+- Two unexecuted `0.6.6.5` prompt variants were superseded because one contradicted the four-diagnostic baseline and the other required a nonexistent historical capture.
+- Corrected `0.6.6.5` established a fresh reproducible baseline and completed acceptance.
+
+Implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` changes exactly:
 
 - `packages/content/base/world/regions.json`;
 - `packages/engines/civilization-engine/src/content.ts`;
 - `packages/shared/types/src/settlement-institutions.ts`;
 - `tests/unit/region-first-world-data.test.mjs`.
 
-The implementation:
+It contains exactly the five authorized scalar-to-singleton-array migrations, the `simulationProfile.populationCapacity` assertion correction, and the two `string[]` contract alignments.
 
-- converts the five pinned scalar `climateTendencies` values to singleton arrays without changing identifiers;
-- moves the stale capacity assertion to `simulationProfile.populationCapacity`;
-- changes `RegionContentRecord.environmentProfile.climateTendencies` to `string[]`;
-- narrows `InstitutionRegionRecord.environmentProfile.climateTendencies` to `string[]`.
+## Checks Run
 
-Earlier support commits remain:
+Passed green gates:
 
-- schema repair `56932eecedd7b28216b23cb5bf211fea7b01df46`;
-- focused climate assertion repair `e71f8f6b625f7b6744492cc8b19ab695f788d89c`;
-- BOM reader repair `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
+- `node --test tests/unit/region-first-world-data.test.mjs tests/unit/slug-content.test.mjs` - `5/5` passed.
+- `npm.cmd run tool:content-lint` - passed with `67` files checked.
+- `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs` - `146/146` passed.
+- BOM repair range content diff - empty.
+- Post-`e71f8f6b` content diff - only `packages/content/base/world/regions.json`, with exactly five authorized migrations and `15` additions / `5` deletions.
+- Integration script and UI compatibility normalization diff - empty.
+- Conflict-marker scan - zero matches.
+- Added trailing-whitespace scan - zero matches.
+- `git diff --check` for implementation, coordination range, and worktree - passed.
+- Changed-path, full-diff, ancestry, prompt-blob, clean-status, and capture-artifact checks - passed.
 
-The accepted BOM operation remains:
+Workspace audit:
 
-```js
-JSON.parse(raw.replace(/^\uFEFF/, ""))
-```
+`npm.cmd run typecheck:workspace -- --pretty false`
 
-## Passed Green Gates
-
-The `0.6.6.4` validation attempt established:
-
-- focused command passed `5/5`;
-- `npm.cmd run tool:content-lint` passed with `67` files checked;
-- local and remote synchronization passed;
-- no files changed during the failed validation attempt.
-
-## Workspace Audit Result
-
-`npm.cmd run typecheck:workspace` exited nonzero with `173` broad diagnostics.
-
-Exactly four known unrelated diagnostics occurred across:
-
-- `packages/engines/civilization-engine/src/content.ts`;
-- `packages/shared/types/src/settlement-institutions.ts`.
-
-The repository's approved validation sources classify this command as a known-failing audit rather than a universal green gate. The broad JSON-import, Node typing, JSX/root-config, target/lib, module-resolution, and strict optional-property backlog must remain a separate cleanup route.
-
-The `146`-test parent baseline was not run after the nonzero audit. The exact parent prompt was not restored, and `0.6.6` was not executed.
-
-## Unexecuted Prompt Corrections
-
-Two `0.6.6.5` prompt variants were installed but not run:
-
-1. blob `ff436c355268d21783f2dd5d87835e75b7542d92` incorrectly required zero diagnostics in the two changed TypeScript files;
-2. blob `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f` allowed four diagnostics but required a complete prior non-pretty `173`-diagnostic capture.
-
-The second prerequisite was impossible because:
-
-- no complete capture exists in the repository or ignored temporary files;
-- the earlier terminal output was truncated;
-- later notes retained only filtered counts and changed-file evidence.
-
-Local and `origin/master` were synchronized at:
-
-`0f677b78e76905ef8d37eb8b4965b127d93d4db1`
-
-The worktree was clean, no files changed locally, and the invalid prompt was not run.
-
-## Current Correction
-
-The active route remains:
-
-`Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
-
-Corrected active prompt blob:
-
-`7b60f7caf417f2d49cdeed7fcdca4a9011010310`
-
-The corrected prompt authorizes a fresh complete baseline procedure:
-
-1. Capture A runs `typecheck:workspace -- --pretty false` and records complete output outside the repository.
-2. Capture A must contain exactly `173` normalized diagnostic tuples, exactly four across the two changed TypeScript files, and zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`.
-3. Each changed-file diagnostic must be proven unrelated to `232d3c2f` by source-line inspection, the exact implementation diff, and blame evidence.
-4. Capture B immediately reruns the same command without repository, compiler, dependency, or environment changes.
-5. Capture B's complete normalized `173`-tuple multiset must match Capture A exactly, including multiplicity.
-6. Neither raw capture may be committed.
-
-The audit must be reported as:
+Result:
 
 `ran twice; fresh 173-diagnostic baseline established and reproduced; no climate-contract or implementation-attributable diagnostics`
 
-It must never be reported as passed.
+- Capture A: `C:\Users\vagab\AppData\Local\Temp\EoL-0.6.6.5-typecheck-A.log`
+- Capture B: `C:\Users\vagab\AppData\Local\Temp\EoL-0.6.6.5-typecheck-B.log`
+- Both commands exited `2`.
+- Both contained exactly `173` normalized diagnostic-header tuples.
+- The complete normalized tuple multisets matched exactly, including multiplicity.
+- Both contained exactly four diagnostics across the two changed TypeScript files.
+- Both contained zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`.
+- Neither raw capture is tracked or staged.
 
-## Remaining Acceptance
+Exact changed-file tuples:
 
-The corrected pass must:
+1. `packages/engines/civilization-engine/src/content.ts|1|30|TS2307|Cannot find module 'node:fs' or its corresponding type declarations.`
+2. `packages/engines/civilization-engine/src/content.ts|1280|37|TS2345|Argument of type 'FameBranchId' is not assignable to parameter of type 'never'.`
+3. `packages/engines/civilization-engine/src/content.ts|1294|82|TS2345|Argument of type 'NotorietyCategoryId' is not assignable to parameter of type '"theft" | "fraud" | "violent" | "murder" | "arson" | "banditry" | "treason"'.`
+4. `packages/shared/types/src/settlement-institutions.ts|1111|7|TS2345|Argument of type 'StartAuthorityTier' is not assignable to parameter of type '"military" | "chartered"'.`
 
-1. verify the exact four-file implementation commit;
-2. reconfirm focused tests at `5/5`;
-3. reconfirm content lint at `67`;
-4. establish and reproduce the fresh complete workspace baseline;
-5. record the exact four changed-file tuples and prove their unrelated attribution;
-6. run the deferred parent baseline and require `146/146` unless a legitimate count change is fully explained;
-7. prove BOM-range content identity and the exact five-record content diff;
-8. pass conflict-marker, whitespace, `git diff --check`, changed-path, full-diff, and clean-status checks;
-9. update completion coordination only after every condition succeeds;
-10. restore exact parent prompt blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
-11. stop without executing `0.6.6`.
+Source inspection, zero-context diff, and blame proved that all four diagnostic statements predate and are untouched by `232d3c2f`. The implementation changes only lines `276` and `173` in those TypeScript files; no diagnostic occurs at or refers to either climate contract.
 
-Any capture-count mismatch, tuple-set difference, forbidden identifier match, uncertain attribution, or green-gate failure leaves corrected `0.6.6.5` active and fail-closed.
+## Files Changed
 
-## Near-Term Sequence
+Completion coordination only:
 
-1. complete corrected `0.6.6.5` and restore exact `0.6.6`;
-2. execute exact `0.6.6 - Monster, Ecology, And Loot Static Content Expansion` in a separate pass;
-3. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
-4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-5. run Activity Resolution Existing-System Reuse Audit;
-6. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-7. run bounded physiology/first-aid research only when the receipt contract authorizes it;
-8. proceed through separately authorized owner-specific implementation packages.
+- `docs/dev/current-codex-output.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/current-planning-anchor-reconciliation.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/dev/current-codex-prompt.md`, restored exactly from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
-## Parallel Audit Posture
+## Risks / Follow-Up Notes
 
-The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and noncontrolling. This support pass must not merge, rebase, or modify it.
+- The workspace audit remains intentionally non-green with the reproduced broad 173-diagnostic backlog. It was not reported as passed and remains a separate cleanup route.
+- The temporary raw captures remain outside the repository and must not be committed.
+- The parent `0.6.6` authoring package has not been executed in this run.
+- `0.6.7` remains reserved until accepted `0.6.6`.
+- The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
 
-## Active Prompt
+Suggested commit message:
 
-`Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
+`docs(validation): accept climate repair against reproduced typecheck baseline`
+
+Next recommended version/run:
+
+`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`

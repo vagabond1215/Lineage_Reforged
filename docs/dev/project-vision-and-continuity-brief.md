@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-27 after two unexecuted `0.6.6.5` prompt variants were superseded and the active prompt was corrected to establish and reproduce a fresh complete workspace typecheck baseline.
+Updated 2026-07-27 after accepted `0.6.6.5` reproduced the complete workspace typecheck baseline, completed BOM/climate acceptance, and restored exact `0.6.6`.
 
 ## Purpose
 
@@ -31,14 +31,12 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The five climate values are singleton arrays, the capacity assertion targets `simulationProfile`, and both static contracts use `string[]`.
 - Focused tests passed `5/5`.
 - Normal content lint passed with `67` files checked.
-- Workspace typecheck remained non-green with `173` broad diagnostics, including four known unrelated diagnostics across the two changed TypeScript files.
-- The `146`-test parent baseline was not run, and the parent prompt was not restored.
+- Workspace typecheck remains a known-failing audit; two fresh captures reproduced exactly `173` identical diagnostic tuples, including four proven-unrelated changed-file diagnostics and zero climate-contract mentions.
+- The deferred parent baseline passed `146/146`, and all content-diff and hygiene gates passed.
 - Prompt blob `ff436c355268d21783f2dd5d87835e75b7542d92` was superseded unexecuted because it required zero changed-file diagnostics.
 - Prompt blob `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f` was superseded unexecuted because it required a nonexistent complete prior capture.
-- Local and remote were synchronized at `0f677b78e76905ef8d37eb8b4965b127d93d4db1`; the worktree remained clean and no invalid prompt was run.
-- Active support suffix remains `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
-- Active support prompt blob: `7b60f7caf417f2d49cdeed7fcdca4a9011010310`.
-- Preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
+- `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance` is complete and accepted.
+- Active parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
 ## Validation Posture
@@ -49,36 +47,19 @@ The repository has no universal green command.
 - normal content lint is a green gate and currently checks 67 live files;
 - `typecheck:workspace` is a known-failing audit with broad NodeNext/config/strictness debt;
 - broad TypeScript cleanup remains a separate route and must not be mixed into the static-content support chain;
-- corrected `0.6.6.5` no longer depends on a missing historical artifact.
+- accepted `0.6.6.5` established the current reproducible `173`-tuple audit baseline without weakening or repairing broad TypeScript debt.
 
-The active audit gate is:
-
-1. Capture A records complete non-pretty output outside the repository.
-2. Capture A must contain exactly `173` normalized diagnostic tuples, exactly four in the two changed TypeScript files, and zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`.
-3. Each changed-file diagnostic must be pinned exactly and proven unrelated to `232d3c2f` through source inspection, the exact implementation diff, and blame evidence.
-4. Capture B reruns the command without state changes.
-5. Capture B must reproduce the complete normalized `173`-tuple multiset exactly, including multiplicity.
-6. Raw captures remain temporary and uncommitted.
-7. The audit is reported as established and reproduced, never as passed.
-
-Any count, tuple, forbidden-identifier, attribution, or reproducibility difference is fail-closed.
+The accepted audit evidence is two nonzero runs with identical complete `173`-tuple multisets, exactly four proven-unrelated changed-file diagnostics, and zero mentions of `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`. The audit was established and reproduced, never reported as passed.
 
 ## Immediate Sequence
 
-1. execute corrected `0.6.6.5` without implementation edits;
-2. reconfirm focused tests `5/5` and content lint `67`;
-3. establish Capture A and prove the four changed-file diagnostics unrelated;
-4. establish Capture B and require exact complete tuple-set reproduction;
-5. run and require the deferred parent baseline at `146/146`, absent a legitimate explained count change;
-6. prove BOM-range content identity, exact five-record content diff, hygiene, and temporary-artifact cleanliness;
-7. restore exact `0.6.6` from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` only after every condition succeeds;
-8. execute exact `0.6.6` in a separate pass;
-9. run `0.6.7` cross-content coherence and coverage audit;
-10. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-11. run Activity Resolution Existing-System Reuse Audit;
-12. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-13. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-14. proceed through separately authorized owner-specific packages.
+1. execute exact `0.6.6` in a separate pass;
+2. run `0.6.7` cross-content coherence and coverage audit;
+3. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+4. run Activity Resolution Existing-System Reuse Audit;
+5. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+6. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+7. proceed through separately authorized owner-specific packages.
 
 ## Current Implementation Reality
 
@@ -97,11 +78,11 @@ Any count, tuple, forbidden-identifier, attribution, or reproducibility differen
 
 ## Research And Content Posture
 
-No new broad research is needed before reproducible baseline validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
+No new broad research is needed before `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
 
 Before the first executable or balance-bearing lethal-process catalog, run bounded research on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
-Do not expand content again until exact `0.6.6` is restored and run separately. Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content behind their recorded gates.
+Expand content only through the restored exact `0.6.6` package. Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content behind their recorded gates.
 
 ## Parallel Preparation Posture
 
