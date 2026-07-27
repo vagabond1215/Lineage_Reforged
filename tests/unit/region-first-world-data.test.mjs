@@ -40,7 +40,7 @@ test("region-first world data exposes survivability and locality hierarchy", asy
     assert.equal(typeof region.simulationProfile?.climateBurden, "number");
     assert.equal(typeof region.simulationProfile?.hazardPressure, "number");
     assert.equal(typeof region.simulationProfile?.infrastructureDifficulty, "number");
-    assert.equal(typeof region.populationProfile?.populationCapacity, "number");
+    assert.equal(typeof region.simulationProfile?.populationCapacity, "number");
     assert.equal(typeof region.populationProfile?.densityBand, "string");
     assert.ok(Array.isArray(region.economicProfile?.supplyStrengths));
     assert.ok(Array.isArray(region.economicProfile?.demandPressures));

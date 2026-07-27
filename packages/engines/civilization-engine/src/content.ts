@@ -273,7 +273,7 @@ export interface RegionContentRecord {
   environmentProfile?: {
     dominantBiomeMix: string[];
     elevationProfile: string;
-    climateTendencies: string;
+    climateTendencies: string[];
     freshwaterAvailability: string;
     climateSeverity: string;
     agriculturalPotential: string;

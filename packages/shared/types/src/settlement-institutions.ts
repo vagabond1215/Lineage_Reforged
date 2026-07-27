@@ -170,7 +170,7 @@ export interface InstitutionRegionRecord {
   environmentProfile?: {
     dominantBiomeMix: string[];
     elevationProfile: string;
-    climateTendencies: string[] | string;
+    climateTendencies: string[];
   };
   simulationProfile?: {
     habitationScore: number;

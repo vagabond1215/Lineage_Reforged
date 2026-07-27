@@ -888,7 +888,9 @@
                                                                             "coastal_scrub"
                                                                         ],
                                                    "elevationProfile":  "low_hills_and_coast",
-                                                   "climateTendencies":  "mild",
+                                                   "climateTendencies":  [
+                                                                             "mild"
+                                                                         ],
                                                    "freshwaterAvailability":  "high",
                                                    "climateSeverity":  "low",
                                                    "agriculturalPotential":  "high",
@@ -1317,7 +1319,9 @@
                                                                             "orchard_belt"
                                                                         ],
                                                    "elevationProfile":  "rolling_plains",
-                                                   "climateTendencies":  "temperate_open_country",
+                                                   "climateTendencies":  [
+                                                                             "temperate_open_country"
+                                                                         ],
                                                    "freshwaterAvailability":  "high",
                                                    "climateSeverity":  "low",
                                                    "agriculturalPotential":  "very_high",
@@ -1572,7 +1576,9 @@
                                                                             "estuary"
                                                                         ],
                                                    "elevationProfile":  "coastal_lowlands",
-                                                   "climateTendencies":  "mild_maritime",
+                                                   "climateTendencies":  [
+                                                                             "mild_maritime"
+                                                                         ],
                                                    "freshwaterAvailability":  "high",
                                                    "climateSeverity":  "moderate",
                                                    "agriculturalPotential":  "moderate_high",
@@ -1828,7 +1834,9 @@
                                                                             "chaparral_fringe"
                                                                         ],
                                                    "elevationProfile":  "low_coast_and_bluffs",
-                                                   "climateTendencies":  "storm_washed_maritime",
+                                                   "climateTendencies":  [
+                                                                             "storm_washed_maritime"
+                                                                         ],
                                                    "freshwaterAvailability":  "high",
                                                    "climateSeverity":  "moderate",
                                                    "agriculturalPotential":  "moderate_high",
@@ -2198,7 +2206,9 @@
                                                                             "marine_shelf"
                                                                         ],
                                                    "elevationProfile":  "rugged_archipelago",
-                                                   "climateTendencies":  "mild_wet_maritime",
+                                                   "climateTendencies":  [
+                                                                             "mild_wet_maritime"
+                                                                         ],
                                                    "freshwaterAvailability":  "moderate_high",
                                                    "climateSeverity":  "moderate",
                                                    "agriculturalPotential":  "moderate",
