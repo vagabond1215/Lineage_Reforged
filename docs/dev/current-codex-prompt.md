@@ -2,7 +2,7 @@
 
 ## Run Identity
 
-`Version 0.6.6.4 - Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`
+`Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
 
 Parent primary:
 
@@ -12,47 +12,69 @@ Predecessor support runs:
 
 - `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`;
 - `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`;
-- `Version 0.6.6.3 - Region Climate Tendencies Contract Repair And BOM Acceptance`.
+- `Version 0.6.6.3 - Region Climate Tendencies Contract Repair And BOM Acceptance`;
+- `Version 0.6.6.4 - Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`.
 
 Run classification: four-segment support suffix attached to `0.6.6`.
 
 Milestone impact: `supports_current_band`.
 
-Suggested implementation commit:
+Suggested coordination commit after successful validation:
 
-`fix(content): complete region climate array migration`
+`docs(validation): accept climate repair against known typecheck baseline`
 
 ## Purpose
 
-The BOM reader repair remains narrow and correct. `0.6.6.2` failed closed at `4/5` focused tests and exposed a stale scalar climate contract. `0.6.6.3` then landed two partial repair commits:
+The region climate/population implementation is now committed at:
 
-- `56932eecedd7b28216b23cb5bf211fea7b01df46` changes the region schema to require a non-empty normalized string array;
-- `e71f8f6b625f7b6744492cc8b19ab695f788d89c` changes the focused climate assertion to require that array shape.
+`232d3c2f466e3ec18e620e29a47f4466ae05b84d`
 
-Local and `origin/master` were synchronized at `e71f8f6b625f7b6744492cc8b19ab695f788d89c`. The focused command still reported `4/5` passing tests. Repository inspection proved two additional conflicts that `0.6.6.3` was not authorized to repair:
+That commit changes exactly:
 
-1. five live non-ocean region records still store one normalized climate identifier as a scalar string, while the landed schema and focused assertion now require arrays exclusively;
-2. the focused test asserts `populationProfile.populationCapacity`, while the schema and all 37 non-ocean records place canonical absolute capacity at `simulationProfile.populationCapacity`. `populationProfile` instead carries density and million-scale presentation fields.
+- `packages/content/base/world/regions.json`;
+- `packages/engines/civilization-engine/src/content.ts`;
+- `packages/shared/types/src/settlement-institutions.ts`;
+- `tests/unit/region-first-world-data.test.mjs`.
 
-`0.6.6.3` correctly stopped on broader migration evidence and validation failure. No further files changed, the parent prompt was not restored, and `0.6.6` was not executed.
+The committed implementation performs exactly the five authorized scalar-to-singleton-array migrations, moves the stale population-capacity assertion to `simulationProfile.populationCapacity`, changes the engine climate contract to `string[]`, and narrows the shared compatibility union to `string[]`.
 
-This pass authorizes the smallest exact data-shape migration, corrects the stale population assertion, aligns the remaining static TypeScript contracts, reruns the complete BOM acceptance gate, restores the exact parent `0.6.6` prompt only after success, and stops.
+The first `0.6.6.4` validation attempt then established:
+
+- local and `origin/master` synchronized at `232d3c2f466e3ec18e620e29a47f4466ae05b84d`;
+- focused tests passed `5/5`;
+- normal content lint passed with `67` files checked;
+- `npm.cmd run typecheck:workspace` still exited nonzero with the same broad, unrelated `173`-diagnostic TypeScript baseline;
+- the `146`-test parent baseline was not run after that failure;
+- the exact parent prompt was not restored;
+- no files changed during the failed validation attempt.
+
+The repository's approved validation authorities classify `npm.cmd run typecheck:workspace` as a known-failing audit, not a universal green gate:
+
+- `docs/design/validation-command-matrix-plan.md` says the command is expected to expose accepted broad NodeNext/config/strictness debt and should block narrow work only on new or changed failures;
+- `docs/design/validation-source-map.md` records that the workspace audit is already non-green on broad existing debt;
+- `docs/dev/typecheck-blocker-triage-plan.md` explicitly says future prompts must not require broad workspace typecheck success for narrow feature work until the separate cleanup tracks are resolved.
+
+This pass must classify the current audit correctly, prove that the climate/population change introduced no new or contract-related TypeScript diagnostic, finish the deferred green gates, restore the exact parent prompt only after success, and stop.
 
 ## Pinned Repository Evidence
 
-Starting head and blocked `0.6.6.3` head:
+Starting implementation head:
 
-`e71f8f6b625f7b6744492cc8b19ab695f788d89c`
+`232d3c2f466e3ec18e620e29a47f4466ae05b84d`
+
+Pre-implementation `0.6.6.4` coordination head:
+
+`047bc073900eacae9892b01994796ad9011b5b24`
 
 Landed partial schema repair:
 
 `56932eecedd7b28216b23cb5bf211fea7b01df46`
 
-Landed partial focused-test repair:
+Landed partial focused climate assertion repair:
 
 `e71f8f6b625f7b6744492cc8b19ab695f788d89c`
 
-BOM repair commit:
+BOM reader repair:
 
 `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`
 
@@ -62,133 +84,121 @@ Pre-repair coordination head:
 
 Blocked predecessor prompt blob:
 
-`ab1bc43f258258a91ad478d8de8fefdeadfe7a4f`
+`1fce964f515a64f0b7e97ea96a5604e858d7b9f0`
 
 Exact parent `0.6.6` prompt blob to restore after success:
 
 `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
 
-The exact BOM repair range `895c02df40332c813a8403bd489af6184111ccba..66f12fd6f649f8f218f7f49fc721a8fe545a7a01` must still change only:
-
-- `tests/unit/region-first-world-data.test.mjs`;
-- `tests/unit/slug-content.test.mjs`.
-
-The accepted BOM operation remains:
+Accepted BOM operation:
 
 ```js
 JSON.parse(raw.replace(/^\uFEFF/, ""))
 ```
 
-## Canonical Contract Decisions
+## Validation Classification Decision
 
-### Climate tendencies
+`npm.cmd run typecheck:workspace` is a **known-failing audit** for this pass, not a green gate.
 
-`environmentProfile.climateTendencies` is a non-empty array of normalized string identifiers.
+The audit is acceptable only when all of the following are true:
 
-Exactly five live records require scalar-to-singleton-array migration:
+1. it reports exactly `173` TypeScript diagnostics under the same installed dependency and compiler state;
+2. no diagnostic is reported in:
+   - `packages/engines/civilization-engine/src/content.ts`;
+   - `packages/shared/types/src/settlement-institutions.ts`;
+3. no diagnostic message mentions:
+   - `climateTendencies`;
+   - `RegionContentRecord`;
+   - `InstitutionRegionRecord`;
+4. no new or changed diagnostic can reasonably be attributed to commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d`;
+5. the command is reported as `ran; accepted baseline unchanged`, never as passed.
 
-- `region.verdant_thalos`: `"mild"` -> `["mild"]`;
-- `region.jade_expanse`: `"temperate_open_country"` -> `["temperate_open_country"]`;
-- `region.sailors_verge`: `"mild_maritime"` -> `["mild_maritime"]`;
-- `region.stormcap_coast`: `"storm_washed_maritime"` -> `["storm_washed_maritime"]`;
-- `region.myridian_chain`: `"mild_wet_maritime"` -> `["mild_wet_maritime"]`.
+Any mismatch in count, path, message family, dependency state, or climate/population attribution is unexpected and blocks completion.
 
-This is a shape-only migration. Do not rename, split, merge, reinterpret, or otherwise rewrite any identifier.
-
-`scripts/integrate_region_first_world_data.ps1` already produces arrays through `Split-List`; do not edit it. The UI compatibility normalization may remain; do not edit it.
-
-### Population capacity
-
-Canonical absolute population capacity belongs at:
-
-`simulationProfile.populationCapacity`
-
-The focused test must assert that location. Do not add or copy `populationCapacity` into `populationProfile`. Preserve `populationCapacityMillions` as the existing presentation-scale field.
-
-### Static TypeScript contracts
-
-- `packages/engines/civilization-engine/src/content.ts` must change `RegionContentRecord.environmentProfile.climateTendencies` from `string` to `string[]`.
-- `packages/shared/types/src/settlement-institutions.ts` may narrow `InstitutionRegionRecord.environmentProfile.climateTendencies` from `string[] | string` to `string[]` only if the workspace typecheck confirms no legitimate scalar producer remains.
+Do not repair the broad TypeScript backlog in this pass. The JSON-import, Node typing, JSX/root-config, target/lib, module-resolution, and strict optional-property tracks remain separate cleanup routes.
 
 ## Execution Gate
 
-1. Read `AGENTS.md`, `README.md`, current output, current handoff, this prompt, the route register, `docs/design/current-planning-anchor-reconciliation.md`, `docs/dev/project-vision-and-continuity-brief.md`, and `docs/design/static-content-expansion-program.md`.
-2. Run branch status, fetch, and fast-forward pull. Record the starting commit and clean/dirty state. Preserve unrelated work.
-3. Confirm `e71f8f6b625f7b6744492cc8b19ab695f788d89c` is an ancestor of the current branch and inspect every later change before proceeding.
-4. Confirm the two partial commits have exactly their intended schema and focused-test scope. Do not amend or rewrite them merely to consolidate history.
-5. Confirm commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` remains an ancestor and still has the exact two-test-file BOM scope.
-6. Reproduce or inspect the focused failure and confirm the current failing assertion is the stale `populationProfile.populationCapacity` path.
-7. Enumerate all live `climateTendencies` values. Require exactly the five scalar records and exact scalar values listed above. Stop without implementation edits if the count, ids, or values differ.
-8. Confirm the region schema requires `simulationProfile.populationCapacity` and does not define `populationProfile.populationCapacity`.
-9. Inspect all TypeScript and UI references for a legitimate scalar producer or scalar-only protocol. Stop without implementation edits if one exists.
-10. Confirm Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` resolves and is the exact held `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt.
+1. Read `AGENTS.md`, `README.md`, current output, current handoff, this prompt, the route register, `docs/design/current-planning-anchor-reconciliation.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/design/validation-command-matrix-plan.md`, `docs/design/validation-source-map.md`, `docs/dev/typecheck-blocker-triage-plan.md`, and `docs/design/static-content-expansion-program.md`.
+2. Run branch status, fetch, and fast-forward pull. Require a clean working tree and record the starting commit.
+3. Confirm `232d3c2f466e3ec18e620e29a47f4466ae05b84d` is an ancestor of the current branch and inspect every later change before proceeding.
+4. Inspect commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` and require exactly the four authorized files and exact intended changes.
+5. Confirm the schema commit `56932eecedd7b28216b23cb5bf211fea7b01df46`, focused climate assertion commit `e71f8f6b625f7b6744492cc8b19ab695f788d89c`, and BOM commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` remain ancestors with their intended scopes.
+6. Confirm Git blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` resolves and is the exact held `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` prompt.
 
-## Allowed Implementation Changes
+## Allowed Changes
 
-Before validation succeeds, edit only:
+Before every validation gate succeeds, make no implementation, content, schema, test, TypeScript, config, dependency, generator, UI, runtime, save, migration, gameplay, monster, ecology, or loot change.
 
-- `packages/content/base/world/regions.json`, solely for the five exact scalar-to-singleton-array changes listed above;
-- `tests/unit/region-first-world-data.test.mjs`, solely to move the stale population-capacity assertion from `populationProfile` to `simulationProfile`; preserve the landed climate-array assertions and BOM reader operation unchanged;
-- `packages/engines/civilization-engine/src/content.ts`, solely to change the climate type from `string` to `string[]`;
-- `packages/shared/types/src/settlement-institutions.ts`, solely to narrow `string[] | string` to `string[]` when type-safe.
+Do not edit `package.json`, `tsconfig.json`, app configs, compiler settings, or the 173-error backlog.
 
-The landed region schema change is already correct. Do not modify `packages/schemas/world/region.schema.json` unless inspection proves the landed partial commit itself is malformed; if so, stop and report rather than broadening this pass.
-
-No other content record, JSON formatting, generator, UI normalization code, runtime behavior, save, migration, dependency, asset, generated output, gameplay, monster, ecology, or loot file may change.
-
-Do not weaken or remove any unrelated assertion. Do not use `trim()` or alter the accepted BOM reader operation.
+After successful validation only, update the authorized coordination files and restore the exact parent prompt as specified below.
 
 ## Required Validation
 
-Run the repaired focused command:
+### 1. Reconfirm green gates already observed
+
+Run:
 
 `node --test tests/unit/region-first-world-data.test.mjs tests/unit/slug-content.test.mjs`
 
 Require `5/5` passing tests unless a legitimate current test-count change is fully explained and contains no failure.
 
-Run normal content lint:
+Run:
 
 `npm.cmd run tool:content-lint`
 
-Run the relevant workspace typecheck:
+Require success with `67` files checked unless a legitimate current registration-count change is fully explained.
 
-`npm.cmd run typecheck:workspace`
+### 2. Classify the workspace audit
 
-Rerun the exact parent baseline:
+Run the workspace command with non-pretty output and capture the complete output to a temporary file outside the repository or an already ignored temporary path:
+
+`npm.cmd run typecheck:workspace -- --pretty false`
+
+Require the exact baseline classification decision above:
+
+- nonzero exit is expected;
+- exactly `173` diagnostics;
+- zero diagnostics in the two changed TypeScript files;
+- zero diagnostic messages mentioning the three pinned climate contract identifiers;
+- no changed or attributable diagnostic family.
+
+Record the command as `ran; accepted baseline unchanged` when all conditions hold.
+
+### 3. Run the deferred parent baseline
+
+Run:
 
 `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
 
-Acceptance requirements:
+Require `146/146` passing tests unless a legitimate current test-count change is fully explained and contains no failure.
 
-- every named test passes;
-- the parent baseline passes at `146/146` unless a legitimate current test-count change is fully explained and contains no failure;
-- normal content lint passes at 67 checked files unless a legitimate current-baseline count change is fully explained;
-- workspace typecheck passes;
-- `git diff --exit-code 895c02df40332c813a8403bd489af6184111ccba..66f12fd6f649f8f218f7f49fc721a8fe545a7a01 -- packages/content` still reports no content change in the BOM repair range;
-- the complete content diff after `e71f8f6b625f7b6744492cc8b19ab695f788d89c` changes only `packages/content/base/world/regions.json` and contains exactly the five scalar-to-singleton-array migrations listed above;
-- no unrelated JSON byte, indentation, ordering, escape sequence, newline convention, or record changes;
-- the focused test asserts `simulationProfile.populationCapacity` and no longer asserts the nonexistent population-profile field;
-- the engine static type requires `string[]`;
-- the shared static type no longer advertises a scalar producer when the typecheck proves narrowing safe;
+### 4. Diff and hygiene gates
+
+Require:
+
+- `git diff --exit-code 895c02df40332c813a8403bd489af6184111ccba..66f12fd6f649f8f218f7f49fc721a8fe545a7a01 -- packages/content` reports no content change in the BOM repair range;
+- the complete content diff after `e71f8f6b625f7b6744492cc8b19ab695f788d89c` changes only `packages/content/base/world/regions.json` and exactly the five authorized scalar-to-singleton-array migrations;
+- commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` changes exactly four authorized files;
+- no unrelated JSON byte, indentation, ordering, escape sequence, or record change;
 - the integration script and UI compatibility normalization remain unchanged;
-- conflict-marker and trailing-whitespace searches pass;
+- conflict-marker and trailing-whitespace scans pass;
 - `git diff --check` passes;
-- changed-path and full-diff inspection confirms only the authorized implementation and later coordination files changed.
+- final changed-path and full-diff inspection passes;
+- final working tree is clean before coordination changes.
 
 Do not run the full test suite, builds, package installation, servers, generators, or gameplay.
 
 ## Failure Behavior
 
-If repository evidence differs from the pinned five-record migration, a legitimate scalar producer exists, or any validation fails:
+If the workspace audit differs from the pinned accepted baseline, a diagnostic touches or implicates the changed climate contracts, or any green gate fails:
 
 - do not restore the parent prompt;
 - do not update completion coordination;
-- do not broaden the migration or repair;
-- do not author monster, ecology, or loot content;
-- report the exact command, failure, changed-path evidence, and smallest follow-up;
-- leave this `0.6.6.4` prompt active.
-
-Run-owned implementation edits may remain uncommitted only when necessary to show the exact failing state. Do not commit an additional partial or red repair.
+- do not edit implementation or broad TypeScript debt;
+- report the exact command, exit code, diagnostic count, relevant paths/messages, and smallest follow-up;
+- leave this `0.6.6.5` prompt active.
 
 ## Allowed Coordination Changes After Successful Validation Only
 
@@ -206,24 +216,28 @@ Update only:
 On success, record:
 
 - starting and ending commits;
-- the `0.6.6.2` fail-closed result;
-- the two partial `0.6.6.3` commits;
-- the blocked `0.6.6.3` result: five scalar records, stale population assertion, focused tests at `4/5`, no parent restoration;
-- exact implementation changed paths and the five migrated record ids;
-- final focused-test, content-lint, workspace-typecheck, parent-baseline, content-diff, and hygiene results;
-- confirmation that no generator, UI, runtime behavior, save, dependency, gameplay, monster, ecology, or loot file changed;
+- the original `0.6.6.2` fail-closed result;
+- the two partial `0.6.6.3` commits and blocked result;
+- implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` and its exact four-file scope;
+- focused tests `5/5`;
+- content lint `67`;
+- workspace typecheck audit: nonzero, `173` diagnostics, accepted baseline unchanged, zero climate-contract-related diagnostics;
+- parent baseline `146/146`;
+- BOM-range content identity and exact five-record post-`e71f8f6b` content diff;
+- hygiene results;
+- confirmation that no broad TypeScript cleanup, config, dependency, generator, UI, runtime, save, gameplay, monster, ecology, or loot change occurred;
 - restored parent-prompt blob;
 - next run: exact `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
 
 Update coordination so it agrees that:
 
 - `0.6.6.1` landed the BOM-only reader repair;
-- `0.6.6.2` executed fail-closed and exposed the initial climate contract mismatch;
-- `0.6.6.3` landed two partial contract commits, then failed closed on bounded content migration and a second stale assertion;
-- `0.6.6.4` completed the exact migration and BOM acceptance gate;
-- `0.6.6` becomes active and unblocked only after every validation succeeds;
-- `0.6.7` remains reserved after accepted `0.6.6`;
-- no static monster/ecology/loot content was authored by any support suffix.
+- `0.6.6.2` failed closed on the initial climate contract mismatch;
+- `0.6.6.3` landed two partial contract commits and failed closed on bounded migration evidence;
+- `0.6.6.4` landed the exact four-file implementation and passed focused tests/content lint, then stopped because it incorrectly treated the known-failing workspace audit as a green gate;
+- `0.6.6.5` correctly classified the unchanged workspace audit, completed the remaining green gates, and restored the parent prompt;
+- `0.6.6` becomes active and unblocked only after every required result above is recorded;
+- `0.6.7` remains reserved after accepted `0.6.6`.
 
 ## Exact Parent Restoration
 
@@ -243,7 +257,7 @@ Do not add a wrapper, completion note, mode line, or commentary to the restored 
 
 ## Stop Condition
 
-After the validated implementation, completion documentation, and exact parent-prompt restoration are committed:
+After validated completion documentation and exact parent-prompt restoration are committed:
 
 - stop;
 - do not execute `0.6.6` in the same run;
