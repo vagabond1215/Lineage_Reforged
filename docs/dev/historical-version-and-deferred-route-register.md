@@ -1,6 +1,6 @@
 # Historical Version And Deferred Route Register
 
-Date: 2026-07-26
+Date: 2026-07-27
 Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
@@ -30,9 +30,10 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `0.6.0`-`0.6.3` | Engine-owned travel, quest acceptance/tracking, and activity selection | Complete and accepted | Runtime ownership accomplishments remain authoritative. | `docs/dev/codex-sequenced-implementation-plan.md` |
 | `0.6.4` | World And Settlement Static Content Expansion | Complete and accepted | Exact static package accepted. | `docs/future_content_backlog.md` |
 | `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete and validated | 28 recipes across 10 families. | `docs/design/cross-domain-production-research-synthesis.md` |
-| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active parent primary; authoring still fail-closed | Exact content target remains accepted. Begin only after support validation and exact prompt restoration. | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` |
-| `0.6.6.1` | UTF-8 BOM Test-Harness Repair | Repair implementation landed; not yet accepted | Commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` changes the two intended test readers. Acceptance requires the active post-validation suffix. | `docs/dev/current-codex-output.md` |
-| `0.6.6.2` | BOM Repair Post-Validation And Parent Prompt Restoration | Active support suffix | Validate the landed repair, prove content identity, update coordination, restore exact `0.6.6`, and stop. | `docs/dev/current-codex-prompt.md` |
+| `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active parent primary; authoring still fail-closed | Exact content target remains accepted. Begin only after `0.6.6.3` completes every validation and restores the exact parent prompt. | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` |
+| `0.6.6.1` | UTF-8 BOM Test-Harness Repair | Repair implementation landed; acceptance pending | Commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` changes the two intended test readers. Final acceptance is folded into `0.6.6.3`. | `docs/dev/current-codex-output.md` |
+| `0.6.6.2` | BOM Repair Post-Validation And Parent Prompt Restoration | Completed fail-closed attempt; superseded | Repair scope and content identity passed, but the focused command stopped at `4/5` because the region climate contract was stale. No files changed and no parent prompt was restored. | `docs/dev/current-codex-output.md` |
+| `0.6.6.3` | Region Climate Tendencies Contract Repair And BOM Acceptance | Active support suffix | Align the stale scalar contract to a non-empty normalized string array, rerun all BOM acceptance gates, restore exact `0.6.6`, and stop. | `docs/dev/current-codex-prompt.md` |
 | `0.6.7` | Cross-Content Coherence And Coverage Audit | Reserved next | Install only after accepted `0.6.6`; repair only if evidence proves a defect. | `docs/design/static-content-expansion-program.md` |
 
 ## Identity Rules
@@ -52,7 +53,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | Planning-anchor maintenance | accepted correction; full refresh deferred | Current handoff/output/register and refreshed continuity brief | Full roadmap and sequenced-plan current-header maintenance | Dedicated documentation maintenance or next material roadmap rewrite | Do not treat stale headers as execution authority | `docs/design/current-planning-anchor-reconciliation.md` |
 | Static world/settlement | expanded-and-validated | Accepted `0.6.4` | None | New proven gap | Complete | `docs/design/static-content-expansion-program.md` |
 | Static item/material/recipe | expanded-and-validated | Accepted `0.6.5`: 28 recipes/10 families | None | New proven gap | Complete | `docs/design/cross-domain-production-research-synthesis.md` |
-| Static monster/ecology/loot | active parent primary; support validation required | Exact matrix and closed references; lint passed before repair; BOM repair implementation landed | Validate repair, prove content identity, restore exact parent prompt, then run package | Accepted `0.6.6.2` | Validation first; no authoring in support pass | `docs/dev/current-codex-prompt.md` |
+| Static monster/ecology/loot | active parent primary; contract repair and support validation required | Exact matrix and closed references; BOM repair landed; repair scope/content identity passed | Align region climate contract, rerun focused/lint/typecheck/parent baseline, restore exact parent prompt, then run package | Accepted `0.6.6.3` | Contract repair and validation first; no content authoring in support pass | `docs/dev/current-codex-prompt.md` |
 | Cross-content coherence | reserved maturity gate | Static lint/validators | Audit `0.6.4`-`0.6.6` | Accepted `0.6.6` | Run `0.6.7` next | `docs/design/static-content-expansion-program.md` |
 | Geographic Knowledge/recognition | queued user-directed design gate | Place/Knowledge authorities | Facets, clues, observation, overlays | Accepted `0.6.7` | Run after static audit | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
 | Activity resolution reuse | queued repository audit | Selection, trial, quest, Knowledge, crafting, magic, and occurrence foundations | Repository ownership/reuse audit | Accepted Geography plan plus live route check | Run immediately after Geography; documentation only | `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` |
