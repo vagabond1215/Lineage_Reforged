@@ -14,7 +14,7 @@ For current execution use, in order:
 3. `docs/dev/current-codex-output.md`;
 4. this register;
 5. the most specific focused decision;
-6. `docs/design/current-planning-anchor-reconciliation.md` when stale current-anchor wording in the roadmap or sequenced plan conflicts with the sources above.
+6. `docs/design/current-planning-anchor-reconciliation.md` when stale current-anchor wording conflicts with the sources above.
 
 Historical roadmap and sequenced-plan rows remain chronology unless a live current-state section is explicitly refreshed.
 
@@ -31,11 +31,11 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `0.6.4` | World And Settlement Static Content Expansion | Complete and accepted | Exact static package accepted. | `docs/future_content_backlog.md` |
 | `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete and validated | 28 recipes across 10 families. | `docs/design/cross-domain-production-research-synthesis.md` |
 | `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Active parent primary; authoring still fail-closed | Begin only after corrected `0.6.6.5` completes validation and restores the exact parent prompt. | `docs/dev/held-0.6.6-monster-ecology-loot-prompt.md` and blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` |
-| `0.6.6.1` | UTF-8 BOM Test-Harness Repair | Repair implementation landed; acceptance pending | Commit `66f12fd6` changes the two intended readers. Final acceptance is folded into corrected `0.6.6.5`. | `docs/dev/current-codex-output.md` |
+| `0.6.6.1` | UTF-8 BOM Test-Harness Repair | Repair implementation landed; acceptance pending | Commit `66f12fd6` changes the two intended readers. Final acceptance is folded into `0.6.6.5`. | `docs/dev/current-codex-output.md` |
 | `0.6.6.2` | BOM Repair Post-Validation And Parent Prompt Restoration | Completed fail-closed attempt; superseded | Stopped at `4/5` on the initial climate contract mismatch. | `docs/dev/current-codex-output.md` |
 | `0.6.6.3` | Region Climate Tendencies Contract Repair And BOM Acceptance | Partial implementation followed by fail-closed stop; superseded | Schema `56932eec` and focused assertion `e71f8f6b` landed; broader bounded migration was required. | `docs/dev/current-codex-output.md` |
-| `0.6.6.4` | Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance | Exact implementation landed; partial validation; superseded | Commit `232d3c2f` changed exactly four authorized files; focused `5/5` and lint `67` passed; stopped because the known-failing 173-diagnostic workspace audit was treated as a green gate. | `docs/dev/current-codex-output.md` |
-| `0.6.6.5` | Workspace Typecheck Baseline Classification And BOM Acceptance | Active corrected support suffix | First prompt blob `ff436c35` was not run and incorrectly required zero changed-file diagnostics. Corrected blob `b78d4950` allows only the exact four pinned unrelated changed-file tuples, requires exactly 173 total diagnostics, zero forbidden climate-contract mentions, no attributable change, then runs deferred green gates and restores exact `0.6.6`. | `docs/dev/current-codex-prompt.md` |
+| `0.6.6.4` | Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance | Exact implementation landed; partial validation; superseded | Commit `232d3c2f` changed exactly four authorized files; focused `5/5` and lint `67` passed; the broad workspace audit remained non-green at `173`. | `docs/dev/current-codex-output.md` |
+| `0.6.6.5` | Workspace Typecheck Baseline Classification And BOM Acceptance | Active corrected support suffix | Two unexecuted prompt variants were superseded. The active prompt establishes Capture A, reproduces the complete `173`-tuple set with Capture B, proves the four changed-file diagnostics unrelated, runs deferred green gates, restores exact `0.6.6`, and stops. | `docs/dev/current-codex-prompt.md` blob `7b60f7caf417f2d49cdeed7fcdca4a9011010310` |
 | `0.6.7` | Cross-Content Coherence And Coverage Audit | Reserved next | Install only after accepted `0.6.6`; repair only if evidence proves a defect. | `docs/design/static-content-expansion-program.md` |
 
 ## Identity Rules
@@ -46,15 +46,15 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 - An absent number is not evidence of missing work. `0.5.211` is an evidenced unused gap.
 - GPT Deep Research and unversioned research/integration do not consume primary `0.6.x` numbers.
 - Difficulty, World Rules, Stakes, injury, narrative, elemental, Mortal Crisis, save, and occurrence contracts remain unversioned until implementation packages are assigned.
-- Stale current-anchor wording in the roadmap or sequenced plan does not override the active prompt, handoff, output, this register, or the planning-anchor reconciliation.
+- Stale current-anchor wording does not override the active prompt, handoff, output, this register, or planning-anchor reconciliation.
 
 ## Deferred Route Register
 
 | Lane | Classification | Completed foundation | Missing layer | Reopening trigger | Near-term posture | Primary source |
 | --- | --- | --- | --- | --- | --- | --- |
 | Planning-anchor maintenance | accepted correction; full refresh deferred | Current handoff/output/register and refreshed continuity brief | Full roadmap and sequenced-plan current-header maintenance | Dedicated documentation maintenance or next material roadmap rewrite | Do not treat stale headers as execution authority | `docs/design/current-planning-anchor-reconciliation.md` |
-| Validation/typecheck | known-failing audit with separate cleanup tracks | Approved command matrix, source map, blocker triage, and clean 173-diagnostic baseline with four pinned unrelated changed-file tuples | Dedicated JSON import, environment typing, root-config/JSX, target/lib, module, and strict optional cleanup | Explicit tooling/typecheck route | Do not mix broad backlog into corrected `0.6.6.5`; accept only an exact baseline match and block on any new, changed, forbidden, or attributable diagnostic | `docs/design/validation-command-matrix-plan.md` |
-| Static world/settlement | expanded-and-validated with acceptance active | Accepted `0.6.4`; exact climate/population repair commit `232d3c2f`; focused `5/5`; lint `67` | Exact four-tuple typecheck baseline classification, parent baseline, diff/hygiene, restoration | Accepted corrected `0.6.6.5` | Complete validation only; no further implementation | `docs/dev/current-codex-prompt.md` |
+| Validation/typecheck | known-failing audit with separate cleanup tracks | Approved command matrix, source map, blocker triage, and observed `173`-diagnostic posture | Dedicated JSON import, environment typing, root-config/JSX, target/lib, module, and strict optional cleanup | Explicit tooling/typecheck route | In `0.6.6.5`, establish and immediately reproduce the complete diagnostic baseline; block on count, tuple, attribution, or forbidden-identifier differences | `docs/design/validation-command-matrix-plan.md` |
+| Static world/settlement | expanded-and-validated with acceptance active | Accepted `0.6.4`; exact repair commit `232d3c2f`; focused `5/5`; lint `67` | Reproducible workspace audit classification, parent baseline, diff/hygiene, restoration | Accepted corrected `0.6.6.5` | Validation only; no further implementation | `docs/dev/current-codex-prompt.md` |
 | Static item/material/recipe | expanded-and-validated | Accepted `0.6.5`: 28 recipes/10 families | None | New proven gap | Complete | `docs/design/cross-domain-production-research-synthesis.md` |
 | Static monster/ecology/loot | active parent primary; support validation required | Exact matrix and closed references; support implementation landed | Complete corrected `0.6.6.5`, restore exact parent prompt, then run package | Accepted corrected `0.6.6.5` | Validation and restoration first; no parent authoring in support pass | `docs/dev/current-codex-prompt.md` |
 | Cross-content coherence | reserved maturity gate | Static lint/validators | Audit `0.6.4`-`0.6.6` | Accepted `0.6.6` | Run `0.6.7` next | `docs/design/static-content-expansion-program.md` |
