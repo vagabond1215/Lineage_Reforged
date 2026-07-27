@@ -11,7 +11,7 @@ Date: 2026-07-26
 - Both readers now remove one optional leading `U+FEFF` before `JSON.parse`.
 - The repair has not yet been accepted because validation results, content byte-identity evidence, coordination completion, and exact parent-prompt restoration are not committed.
 - Active support prompt: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`.
-- Active prompt blob: `75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`.
+- Active prompt blob: `5d4aa0a0961065f4cfea0968317b8e7f0df4c190`.
 - Exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Current Planning Precedence
@@ -119,6 +119,10 @@ If any gate fails, make no edits, leave `0.6.6.2` active, and report the exact b
 ## Active Prompt
 
 `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`
+
+Active prompt blob:
+
+`5d4aa0a0961065f4cfea0968317b8e7f0df4c190`
 
 Suggested commit:
 
