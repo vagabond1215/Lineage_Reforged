@@ -35,19 +35,25 @@ Until the roadmap and sequenced plan receive a dedicated full-document maintenan
 
 - latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`;
 - active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
-- landed but not yet accepted BOM repair: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair` at commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
-- completed fail-closed attempt: `Version 0.6.6.2`, which passed repair-scope/content-identity gates and stopped at `4/5` on the initial climate contract mismatch;
-- partial then fail-closed attempt: `Version 0.6.6.3`, with schema commit `56932eecedd7b28216b23cb5bf211fea7b01df46` and focused climate assertion commit `e71f8f6b625f7b6744492cc8b19ab695f788d89c`; validation remained `4/5`, five scalar climate records required bounded migration, and the test asserted population capacity at the wrong profile path;
-- active support suffix: `Version 0.6.6.4 - Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`;
-- active support prompt blob: `1fce964f515a64f0b7e97ea96a5604e858d7b9f0`;
+- landed but not yet accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
+- completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
+- partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
+- exact `0.6.6.4` implementation commit: `232d3c2f466e3ec18e620e29a47f4466ae05b84d`, changing four authorized files;
+- `0.6.6.4` focused tests passed `5/5` and content lint passed `67`;
+- `0.6.6.4` stopped because `typecheck:workspace` returned the unchanged broad `173`-diagnostic baseline and the prompt incorrectly required universal success;
+- the `146`-test baseline was not run and the parent prompt was not restored;
+- active support suffix: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`;
+- active support prompt blob: `ff436c355268d21783f2dd5d87835e75b7542d92`;
 - preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
 - reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
-`0.6.6` remains the current parent primary. Its content authoring remains fail-closed until `0.6.6.4` performs exactly five scalar-to-singleton-array migrations, repairs the population-capacity assertion, aligns the remaining static types, passes focused tests, content lint, workspace typecheck, the parent baseline, exact content-diff and hygiene gates, and restores the exact parent prompt.
+`0.6.6` remains fail-closed until `0.6.6.5` confirms the workspace audit is exactly the accepted 173-diagnostic baseline with no climate-contract-related diagnostics, passes the deferred `146/146` parent baseline and all diff/hygiene gates, and restores the exact parent prompt.
+
+The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. complete the bounded region climate migration and BOM acceptance gate, then restore exact `0.6.6` through `0.6.6.4`;
+1. complete baseline-aware validation and exact parent restoration through `0.6.6.5`;
 2. execute exact `0.6.6` in a separate pass;
 3. run `0.6.7` cross-content audit;
 4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
