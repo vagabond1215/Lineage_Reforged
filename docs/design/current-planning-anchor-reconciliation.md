@@ -37,7 +37,7 @@ Until the roadmap and sequenced plan receive a dedicated full-document maintenan
 - active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`;
 - landed but unaccepted repair implementation: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair` at commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - active support suffix: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`;
-- active support prompt blob: `75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`;
+- active support prompt blob: `5d4aa0a0961065f4cfea0968317b8e7f0df4c190`;
 - preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
 - reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
