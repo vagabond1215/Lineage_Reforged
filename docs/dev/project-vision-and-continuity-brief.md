@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-27 after `0.6.6.3` stopped on bounded climate-data migration evidence and a second stale world-data assertion, and `0.6.6.4` was activated.
+Updated 2026-07-27 after `0.6.6.4` landed the exact climate/population repair, passed focused tests and content lint, then stopped on the repository's known-failing workspace typecheck audit; `0.6.6.5` is active.
 
 ## Purpose
 
@@ -13,49 +13,57 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - `docs/dev/current-codex-output.md` owns the latest exact inspection or implementation report.
 - `docs/dev/historical-version-and-deferred-route-register.md` owns canonical route identities, active/deferred posture, and reopening triggers.
 - `docs/design/current-planning-anchor-reconciliation.md` controls conflicts caused by stale current-anchor wording in the roadmap or sequenced plan.
+- `docs/design/validation-command-matrix-plan.md`, `docs/design/validation-source-map.md`, and `docs/dev/typecheck-blocker-triage-plan.md` control validation command classification and the known-failing workspace typecheck posture.
 - `docs/dev/project-roadmap.md` owns version-band meaning, playability checkpoints, and non-conflicting long-term direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns detailed historical sequencing and non-conflicting queue context.
 - `docs/design/static-content-expansion-program.md` owns the `0.6.4`-`0.6.7` static milestone and static/runtime boundary.
 - `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` owns the post-static route order and research timing.
 - occurrence, save/Stakes, Mortal Crisis, narrative, elemental, nutrition, injury, combat, quest/event/Chronicle, and other focused decisions remain controlling at their named seams.
-- `docs/design/future-system-design-ledger.md` owns durable future-system criteria and vocabulary.
-- `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` is broad future context only, not implementation permission.
-- `docs/future_content_backlog.md` owns chronological deferred notes and run history.
 
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`.
 - Active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
-- Landed BOM repair: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
-- Completed fail-closed support attempt: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`.
-- Partial then fail-closed support attempt: `Version 0.6.6.3 - Region Climate Tendencies Contract Repair And BOM Acceptance`.
-- `0.6.6.3` landed schema commit `56932eecedd7b28216b23cb5bf211fea7b01df46` and focused climate assertion commit `e71f8f6b625f7b6744492cc8b19ab695f788d89c`, then remained at `4/5` focused tests.
-- Five live regions require exact scalar-to-singleton-array migration: Verdant Thalos, Jade Expanse, Sailor's Verge, Stormcap Coast, and Myridian Chain.
-- The focused test also asserts population capacity at `populationProfile` even though the schema and all 37 non-ocean records place it at `simulationProfile`.
-- Active support suffix: `Version 0.6.6.4 - Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`.
-- Active support prompt blob: `1fce964f515a64f0b7e97ea96a5604e858d7b9f0`.
+- Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
+- `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
+- `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
+- `0.6.6.4` landed exact implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` with four authorized changed files.
+- The five climate values are now singleton arrays, the capacity assertion targets `simulationProfile`, and both static contracts use `string[]`.
+- Focused tests passed `5/5`.
+- Normal content lint passed with `67` files checked.
+- Workspace typecheck remained non-green with the same broad, unrelated `173`-diagnostic baseline.
+- The `146`-test parent baseline was not run after that failure, and the parent prompt was not restored.
+- Active support suffix: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
+- Active support prompt blob: `ff436c355268d21783f2dd5d87835e75b7542d92`.
 - Preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
-The BOM reader repair remains narrow and correct. The support sequence now requires one exact five-record data-shape migration, one stale assertion-path repair, remaining static-type alignment, focused tests, content lint, workspace typecheck, the parent baseline, exact content-diff and hygiene review, completion coordination, and exact parent-prompt restoration.
+## Validation Posture
+
+The repository has no universal green command.
+
+- focused `node --test <exact files>` commands are green gates;
+- normal content lint is a green gate and currently checks 67 live files;
+- `typecheck:workspace` is a known-failing audit with broad NodeNext/config/strictness debt;
+- an unchanged baseline does not block narrow work, but any new, changed, or contract-related diagnostic does;
+- the current accepted audit candidate is exactly 173 diagnostics with no diagnostic in the two changed TypeScript files and no message mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`;
+- the broad TypeScript backlog remains a separate owner-specific cleanup sequence and must not be mixed into this support chain.
 
 ## Immediate Sequence
 
-1. execute exact `0.6.6.4`;
-2. migrate only the five pinned scalar climate identifiers to singleton arrays;
-3. move the stale population-capacity assertion to `simulationProfile`;
-4. align the engine climate type to `string[]` and narrow the shared compatibility union only when type-safe;
-5. require the focused command to pass at `5/5` unless a legitimate count change is explained;
-6. require content lint, workspace typecheck, and the parent baseline at `146/146` unless legitimate count changes are explained;
-7. require the BOM repair range to remain content-identical and the post-`e71f8f6b` content diff to contain exactly the five authorized shape changes;
-8. restore exact `0.6.6` from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` only after every gate passes;
-9. execute exact `0.6.6` in a separate pass;
-10. run `0.6.7` cross-content coherence and coverage audit;
-11. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-12. run Activity Resolution Existing-System Reuse Audit;
-13. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-14. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-15. proceed through separately authorized owner-specific packages.
+1. execute exact `0.6.6.5` without implementation edits;
+2. reconfirm focused tests `5/5` and content lint `67`;
+3. classify the workspace audit as `ran; accepted baseline unchanged` only if all pinned count/path/message conditions hold;
+4. run and require the deferred parent baseline at `146/146`, absent a legitimate explained count change;
+5. prove BOM-range content identity, exact five-record content diff, and hygiene;
+6. restore exact `0.6.6` from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` only after every condition succeeds;
+7. execute exact `0.6.6` in a separate pass;
+8. run `0.6.7` cross-content coherence and coverage audit;
+9. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+10. run Activity Resolution Existing-System Reuse Audit;
+11. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+12. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+13. proceed through separately authorized owner-specific packages.
 
 ## Current Implementation Reality
 
@@ -63,13 +71,8 @@ The BOM reader repair remains narrow and correct. The support sequence now requi
 - `0.6.4` added the accepted world/settlement static package.
 - `0.6.5` added the accepted 16-row recipe batch for 28 recipes across 10 families.
 - The exact `0.6.6` target remains valid: nine monsters, nine fauna lineages, nine ecology additions, and 28 source-local drop rows.
-- Commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01` changes only the two BOM-sensitive unit-test readers.
-- The region schema and focused climate assertion now require non-empty normalized arrays.
-- The five remaining scalar values are already normalized identifiers and require only singleton wrapping; no semantic content authoring is authorized.
-- Canonical absolute population capacity is `simulationProfile.populationCapacity`; `populationProfile.populationCapacityMillions` remains presentation-scale data.
-- The integration script already produces arrays through `Split-List`; it must not change.
-- The UI may retain compatibility normalization; it must not change in this support pass.
-- `0.6.6.4` may not author static monster, ecology, or loot content.
+- No support suffix authored monster, ecology, or loot content.
+- The integration script still produces climate arrays through `Split-List`, and UI compatibility normalization remains unchanged.
 - BOM-bearing JSON files must not be rewritten as cleanup.
 - Static content does not authorize spawning, encounters, AI, dynamic loot, harvesting, populations, migration, ecology simulation, inventory mutation, or rewards.
 - Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
@@ -79,11 +82,11 @@ The BOM reader repair remains narrow and correct. The support sequence now requi
 
 ## Research And Content Posture
 
-No new broad research is needed before the bounded migration, support validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
+No new broad research is needed before baseline-aware validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
 
 Before the first executable or balance-bearing lethal-process catalog, run bounded research on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
-Expand content only through the exact five-record shape migration authorized by `0.6.6.4`, then through the exact `0.6.6` package after support validation. Keep injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content deferred behind their recorded gates.
+Do not expand content again until exact `0.6.6` is restored and run separately. Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content behind their recorded gates.
 
 ## Parallel Preparation Posture
 
@@ -106,6 +109,7 @@ Every major system should answer at least one of these questions:
 
 - Use current branch reality only.
 - Prefer the smallest coherent, owner-correct package.
-- Fail closed when a mandatory baseline is red.
-- Do not weaken validation unless it is demonstrably stale or wrong.
+- Fail closed when a true green gate or changed audit baseline is red.
+- Do not misclassify known-failing audits as universal green gates.
+- Do not weaken validation or mix unrelated cleanup into narrow work.
 - Preserve historical chronology while keeping live execution pointers current.
