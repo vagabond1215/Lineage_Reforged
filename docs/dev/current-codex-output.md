@@ -54,7 +54,7 @@ Activated:
 
 Active prompt blob:
 
-`75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`
+`5d4aa0a0961065f4cfea0968317b8e7f0df4c190`
 
 Prior repair implementation:
 
