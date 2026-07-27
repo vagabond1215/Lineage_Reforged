@@ -22,7 +22,7 @@ Suggested commit:
 
 ## Purpose
 
-The narrow test repair has landed, but the support sequence is incomplete. The repository still exposes the old `0.6.6.1` repair prompt and has no committed validation/completion evidence or restored parent prompt.
+The narrow test repair has landed. Before this support-validation prompt was installed, the repository still exposed the stale `0.6.6.1` repair prompt and lacked committed validation/completion evidence or the restored parent prompt.
 
 This pass must:
 
