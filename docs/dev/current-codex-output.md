@@ -4,17 +4,13 @@ Date: 2026-07-27
 
 Source run: `0.6.6.4 Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance`
 
-Run classification: exact implementation plus partial validation followed by fail-closed stop and connector-side acceptance-gate correction
+Run classification: exact implementation plus partial validation, followed by fail-closed prompt corrections for the known-failing workspace audit
 
 Parent version: `0.6.6`
 
 Milestone impact: `supports_current_band`
 
-## Starting And Landed State
-
-Local and `origin/master` were synchronized at:
-
-`232d3c2f466e3ec18e620e29a47f4466ae05b84d`
+## Landed Implementation
 
 Implementation commit:
 
@@ -34,16 +30,13 @@ The implementation:
 - changes `RegionContentRecord.environmentProfile.climateTendencies` to `string[]`;
 - narrows `InstitutionRegionRecord.environmentProfile.climateTendencies` to `string[]`.
 
-The earlier schema and focused climate assertion commits remain:
+Earlier support commits remain:
 
-- `56932eecedd7b28216b23cb5bf211fea7b01df46`;
-- `e71f8f6b625f7b6744492cc8b19ab695f788d89c`.
+- schema repair `56932eecedd7b28216b23cb5bf211fea7b01df46`;
+- focused climate assertion repair `e71f8f6b625f7b6744492cc8b19ab695f788d89c`;
+- BOM reader repair `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 
-The BOM reader repair remains:
-
-`66f12fd6f649f8f218f7f49fc721a8fe545a7a01`
-
-with the accepted operation:
+The accepted BOM operation remains:
 
 ```js
 JSON.parse(raw.replace(/^\uFEFF/, ""))
@@ -58,81 +51,80 @@ The `0.6.6.4` validation attempt established:
 - local and remote synchronization passed;
 - no files changed during the failed validation attempt.
 
-## Blocking Result
+## Workspace Audit Result
 
-`npm.cmd run typecheck:workspace` exited nonzero with the same broad, unrelated `173`-diagnostic TypeScript baseline.
+`npm.cmd run typecheck:workspace` exited nonzero with `173` broad diagnostics.
 
-Exactly four known unrelated diagnostics were present across:
+Exactly four known unrelated diagnostics occurred across:
 
 - `packages/engines/civilization-engine/src/content.ts`;
 - `packages/shared/types/src/settlement-institutions.ts`.
 
-The `146`-test parent baseline was not run after that failure. The exact parent prompt was not restored, and `0.6.6` was not executed.
+The repository's approved validation sources classify this command as a known-failing audit rather than a universal green gate. The broad JSON-import, Node typing, JSX/root-config, target/lib, module-resolution, and strict optional-property backlog must remain a separate cleanup route.
 
-## Validation Classification Finding
+The `146`-test parent baseline was not run after the nonzero audit. The exact parent prompt was not restored, and `0.6.6` was not executed.
 
-The repository's approved validation sources classify `typecheck:workspace` as a known-failing audit, not a universal green gate:
+## Unexecuted Prompt Corrections
 
-- `docs/design/validation-command-matrix-plan.md` says it blocks narrow work only on new or changed failures;
-- `docs/design/validation-source-map.md` records broad existing NodeNext/config/strictness debt;
-- `docs/dev/typecheck-blocker-triage-plan.md` says broad workspace success must not be required for narrow feature work until separate cleanup tracks are resolved.
+Two `0.6.6.5` prompt variants were installed but not run:
 
-The 173-error backlog must not be repaired opportunistically in this support chain.
+1. blob `ff436c355268d21783f2dd5d87835e75b7542d92` incorrectly required zero diagnostics in the two changed TypeScript files;
+2. blob `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f` allowed four diagnostics but required a complete prior non-pretty `173`-diagnostic capture.
 
-## Prompt-Correction Disposition
+The second prerequisite was impossible because:
 
-The first installed `0.6.6.5` prompt required zero diagnostics in the two changed TypeScript files. That requirement contradicted the known baseline.
+- no complete capture exists in the repository or ignored temporary files;
+- the earlier terminal output was truncated;
+- later notes retained only filtered counts and changed-file evidence.
 
-The invalid prompt was not run. Local and `origin/master` were synchronized at:
+Local and `origin/master` were synchronized at:
 
-`1d6880f5a2d7bcdc5c843e64b50bcd25d6883525`
+`0f677b78e76905ef8d37eb8b4965b127d93d4db1`
 
-The worktree remained clean.
+The worktree was clean, no files changed locally, and the invalid prompt was not run.
 
-The corrected gate now allows only the exact four diagnostic tuples from the complete clean `0.6.6.4` baseline capture. Each tuple is pinned by repository-relative path, line, column, TypeScript code, and complete message. The rerun must match those four tuples exactly, retain exactly `173` total diagnostics, contain no additional changed-file diagnostic, contain zero mentions of `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`, and contain no new or changed diagnostic attributable to commit `232d3c2f`.
+## Current Correction
 
-If the complete prior capture is unavailable or truncated, the pass must fail closed rather than infer the four tuples.
-
-Superseded unexecuted prompt blob:
-
-`ff436c355268d21783f2dd5d87835e75b7542d92`
-
-## Routing Decision
-
-Active prompt remains:
+The active route remains:
 
 `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
 
 Corrected active prompt blob:
 
-`b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`
+`7b60f7caf417f2d49cdeed7fcdca4a9011010310`
 
-Exact parent prompt blob preserved for restoration only after successful validation:
+The corrected prompt authorizes a fresh complete baseline procedure:
 
-`42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`
+1. Capture A runs `typecheck:workspace -- --pretty false` and records complete output outside the repository.
+2. Capture A must contain exactly `173` normalized diagnostic tuples, exactly four across the two changed TypeScript files, and zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`.
+3. Each changed-file diagnostic must be proven unrelated to `232d3c2f` by source-line inspection, the exact implementation diff, and blame evidence.
+4. Capture B immediately reruns the same command without repository, compiler, dependency, or environment changes.
+5. Capture B's complete normalized `173`-tuple multiset must match Capture A exactly, including multiplicity.
+6. Neither raw capture may be committed.
 
-## Required Acceptance
+The audit must be reported as:
+
+`ran twice; fresh 173-diagnostic baseline established and reproduced; no climate-contract or implementation-attributable diagnostics`
+
+It must never be reported as passed.
+
+## Remaining Acceptance
 
 The corrected pass must:
 
 1. verify the exact four-file implementation commit;
 2. reconfirm focused tests at `5/5`;
 3. reconfirm content lint at `67`;
-4. locate the complete clean `0.6.6.4` typecheck capture and pin its exact four changed-file diagnostic tuples;
-5. rerun `typecheck:workspace` as a known-failing audit;
-6. require exactly `173` total diagnostics;
-7. require exactly the four pinned changed-file diagnostics and no others in those files;
-8. require zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`;
-9. require no new or changed diagnostic attributable to `232d3c2f`;
-10. report the audit as `ran; accepted baseline unchanged`, never as passed;
-11. run the deferred parent baseline and require `146/146` unless a legitimate count change is fully explained;
-12. prove the BOM-range content identity and exact five-record content diff;
-13. pass hygiene and changed-path review;
-14. update completion coordination only after every green gate and audit-classification condition succeeds;
-15. restore exact parent prompt blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
-16. stop without executing `0.6.6`.
+4. establish and reproduce the fresh complete workspace baseline;
+5. record the exact four changed-file tuples and prove their unrelated attribution;
+6. run the deferred parent baseline and require `146/146` unless a legitimate count change is fully explained;
+7. prove BOM-range content identity and the exact five-record content diff;
+8. pass conflict-marker, whitespace, `git diff --check`, changed-path, full-diff, and clean-status checks;
+9. update completion coordination only after every condition succeeds;
+10. restore exact parent prompt blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`;
+11. stop without executing `0.6.6`.
 
-If the diagnostic count, exact four tuples, forbidden identifier search, diagnostic families, or attribution differ, leave corrected `0.6.6.5` active and fail closed.
+Any capture-count mismatch, tuple-set difference, forbidden identifier match, uncertain attribution, or green-gate failure leaves corrected `0.6.6.5` active and fail-closed.
 
 ## Near-Term Sequence
 
