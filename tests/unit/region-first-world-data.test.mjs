@@ -27,7 +27,13 @@ test("region-first world data exposes survivability and locality hierarchy", asy
     }
     assert.ok(Array.isArray(region.environmentProfile?.dominantBiomeMix));
     assert.equal(typeof region.environmentProfile?.elevationProfile, "string");
-    assert.equal(typeof region.environmentProfile?.climateTendencies, "string");
+    const climateTendencies = region.environmentProfile?.climateTendencies;
+    assert.ok(Array.isArray(climateTendencies), `${region.id} climateTendencies must be an array`);
+    assert.ok(climateTendencies.length > 0, `${region.id} climateTendencies must not be empty`);
+    for (const tendency of climateTendencies) {
+      assert.equal(typeof tendency, "string", `${region.id} climate tendency must be a string`);
+      assert.match(tendency, /^[a-z0-9]+(?:_[a-z0-9]+)*$/, `${region.id} climate tendency must be normalized`);
+    }
     assert.equal(typeof region.simulationProfile?.habitationScore, "number");
     assert.equal(typeof region.simulationProfile?.foodProductionCapacity, "number");
     assert.equal(typeof region.simulationProfile?.waterAvailability, "number");
