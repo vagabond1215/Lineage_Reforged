@@ -12,15 +12,13 @@ Date: 2026-07-27
 - `0.6.6.4` landed implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` with exactly four authorized changed files.
 - Focused tests passed `5/5`.
 - Content lint passed with `67` files checked.
-- `npm.cmd run typecheck:workspace` remained non-green with the same broad, unrelated `173`-diagnostic baseline.
-- Exactly four known unrelated diagnostics occur across the two changed TypeScript files.
-- The `146`-test parent baseline was not run after that failure.
-- No files changed during the failed validation attempt, the parent prompt was not restored, and `0.6.6` was not executed.
-- The first installed `0.6.6.5` prompt incorrectly required zero diagnostics in the changed TypeScript files.
-- That invalid prompt was not run. Local and `origin/master` were synchronized at `1d6880f5a2d7bcdc5c843e64b50bcd25d6883525`, and the worktree remained clean.
+- `npm.cmd run typecheck:workspace` remained non-green with `173` broad diagnostics and exactly four known unrelated diagnostics across the two changed TypeScript files.
+- The `146`-test parent baseline was not run after that audit.
+- No parent prompt restoration occurred and `0.6.6` was not executed.
+- Two unexecuted `0.6.6.5` prompt variants were superseded: one required zero changed-file diagnostics; the next required a nonexistent complete prior capture.
+- Local and `origin/master` were synchronized at `0f677b78e76905ef8d37eb8b4965b127d93d4db1`; the worktree remained clean; no invalid prompt was run.
 - Active support prompt remains `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
-- Corrected active prompt blob: `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`.
-- Superseded unexecuted prompt blob: `ff436c355268d21783f2dd5d87835e75b7542d92`.
+- Corrected active prompt blob: `7b60f7caf417f2d49cdeed7fcdca4a9011010310`.
 - Exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Current Planning Precedence
@@ -48,51 +46,73 @@ It performs exactly five scalar-to-singleton-array migrations, moves the capacit
 
 No generator, UI normalization, runtime, save, dependency, gameplay, monster, ecology, or loot file changed.
 
-## Typecheck Classification
+## Workspace Audit Classification
 
 Repository authority is explicit:
 
 - `typecheck:workspace` is a known-failing audit, not a universal green gate;
-- narrow work blocks only on new or changed failures relative to the accepted baseline;
-- the broad JSON-import, Node typing, JSX/root-config, target/lib, module-resolution, and strict optional-property backlog remains a separate cleanup sequence;
-- broad cleanup must not be mixed into this support route.
+- narrow work blocks on new, changed, or implementation-attributable failures, not on the unchanged broad baseline alone;
+- broad JSON-import, Node typing, JSX/root-config, target/lib, module-resolution, and strict optional-property cleanup remains a separate route;
+- broad cleanup must not be mixed into this support chain.
 
-Corrected `0.6.6.5` must use the complete non-pretty output from the clean `0.6.6.4` run to pin exactly four changed-file diagnostic tuples. Each tuple includes repository-relative path, line, column, diagnostic code, and complete message.
+A complete prior non-pretty capture does not exist. Corrected `0.6.6.5` therefore establishes a fresh baseline through two complete captures under the same clean state.
 
-The rerun is acceptable only when:
+### Capture A
 
-- it reports exactly `173` diagnostics under the same compiler/dependency state;
-- it reports exactly four diagnostics across the two changed TypeScript files;
-- those four tuples match the pinned baseline exactly;
+Capture complete output from:
+
+`npm.cmd run typecheck:workspace -- --pretty false`
+
+Capture A is eligible only when:
+
+- exactly `173` normalized diagnostic tuples are parsed;
+- exactly four occur across `packages/engines/civilization-engine/src/content.ts` and `packages/shared/types/src/settlement-institutions.ts`;
 - no additional changed-file diagnostic exists;
 - no message mentions `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`;
-- no failure is new, changed, or attributable to the climate/population implementation.
+- each of the four changed-file diagnostics is pinned by path, line, column, code, and complete message;
+- source-line inspection, `git diff --unified=0 047bc073..232d3c2f`, and `git blame` prove each diagnostic source statement was untouched by `232d3c2f` and concerns no changed climate/population contract;
+- no other diagnostic is reasonably attributable to the implementation.
 
-If the complete prior capture is unavailable or truncated, stop. Do not reconstruct the tuples from memory.
+### Capture B
 
-Report the command as `ran; accepted baseline unchanged`, never as passed.
+Without changing tracked files, compiler, dependencies, environment, or command arguments, run the same command again.
+
+Require:
+
+- exactly `173` normalized tuples;
+- the complete tuple multiset matches Capture A exactly, including multiplicity;
+- the changed-file subset is the same four tuples;
+- zero forbidden identifier mentions;
+- no implementation-attributable diagnostic.
+
+Report the audit as:
+
+`ran twice; fresh 173-diagnostic baseline established and reproduced; no climate-contract or implementation-attributable diagnostics`
+
+Never report it as passed. Raw captures must remain outside the repository or in an already ignored temporary location and must not be committed.
 
 ## Required Validation
 
 1. Verify commit `232d3c2f` has exactly the four authorized files and intended patch.
 2. Reconfirm focused tests at `5/5`.
 3. Reconfirm content lint at `67`.
-4. Pin the exact four changed-file diagnostic tuples from the complete clean `0.6.6.4` capture.
-5. Rerun and classify the workspace audit against the exact `173`-diagnostic baseline, exact four tuples, and forbidden-identifier filters.
-6. Run the deferred parent baseline:
+4. Establish Capture A and pin the exact four changed-file diagnostic tuples.
+5. Prove each tuple is unrelated to `232d3c2f` through source, diff, and blame evidence.
+6. Establish Capture B and require exact complete tuple-multiset reproduction.
+7. Run the deferred parent baseline:
 
    `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
 
-7. Require `146/146` unless a legitimate current count change is fully explained.
-8. Prove the BOM repair range contains no content change.
-9. Prove the post-`e71f8f6b` content diff contains only the five pinned migrations in `regions.json`.
-10. Pass conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-diff checks.
-11. Restore the exact parent prompt only after every condition succeeds.
-12. Stop without executing `0.6.6` in the same pass.
+8. Require `146/146` unless a legitimate current count change is fully explained.
+9. Prove the BOM repair range contains no content change.
+10. Prove the post-`e71f8f6b` content diff contains only the five pinned migrations in `regions.json`.
+11. Pass conflict-marker, trailing-whitespace, `git diff --check`, changed-path, full-diff, clean-status, and temporary-artifact checks.
+12. Restore the exact parent prompt only after every condition succeeds.
+13. Stop without executing `0.6.6` in the same pass.
 
 ## Failure Behavior
 
-If the complete prior capture is unavailable, the diagnostic count or exact tuples differ, a forbidden identifier appears, attribution changes, or any green gate fails, do not restore the parent prompt or update completion coordination. Do not repair broad TypeScript debt. Leave corrected `0.6.6.5` active and report the smallest owner-correct follow-up.
+If either capture differs from the required count or tuple set, a forbidden identifier appears, attribution cannot be proven, a raw capture becomes tracked, or any green gate fails, do not restore the parent prompt or update completion coordination. Do not repair broad TypeScript debt. Leave corrected `0.6.6.5` active and report the smallest owner-correct follow-up.
 
 ## Near-Term Sequence
 
@@ -122,4 +142,4 @@ If the complete prior capture is unavailable, the diagnostic count or exact tupl
 
 Active prompt blob:
 
-`b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`
+`7b60f7caf417f2d49cdeed7fcdca4a9011010310`
