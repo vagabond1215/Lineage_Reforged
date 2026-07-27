@@ -13,10 +13,14 @@ Date: 2026-07-27
 - Focused tests passed `5/5`.
 - Content lint passed with `67` files checked.
 - `npm.cmd run typecheck:workspace` remained non-green with the same broad, unrelated `173`-diagnostic baseline.
+- Exactly four known unrelated diagnostics occur across the two changed TypeScript files.
 - The `146`-test parent baseline was not run after that failure.
 - No files changed during the failed validation attempt, the parent prompt was not restored, and `0.6.6` was not executed.
-- Active support prompt: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
-- Active prompt blob: `ff436c355268d21783f2dd5d87835e75b7542d92`.
+- The first installed `0.6.6.5` prompt incorrectly required zero diagnostics in the changed TypeScript files.
+- That invalid prompt was not run. Local and `origin/master` were synchronized at `1d6880f5a2d7bcdc5c843e64b50bcd25d6883525`, and the worktree remained clean.
+- Active support prompt remains `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
+- Corrected active prompt blob: `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`.
+- Superseded unexecuted prompt blob: `ff436c355268d21783f2dd5d87835e75b7542d92`.
 - Exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 
 ## Current Planning Precedence
@@ -53,12 +57,18 @@ Repository authority is explicit:
 - the broad JSON-import, Node typing, JSX/root-config, target/lib, module-resolution, and strict optional-property backlog remains a separate cleanup sequence;
 - broad cleanup must not be mixed into this support route.
 
-`0.6.6.5` must rerun the command with complete non-pretty output and accept it only when:
+Corrected `0.6.6.5` must use the complete non-pretty output from the clean `0.6.6.4` run to pin exactly four changed-file diagnostic tuples. Each tuple includes repository-relative path, line, column, diagnostic code, and complete message.
+
+The rerun is acceptable only when:
 
 - it reports exactly `173` diagnostics under the same compiler/dependency state;
-- neither changed TypeScript file appears in diagnostics;
+- it reports exactly four diagnostics across the two changed TypeScript files;
+- those four tuples match the pinned baseline exactly;
+- no additional changed-file diagnostic exists;
 - no message mentions `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`;
 - no failure is new, changed, or attributable to the climate/population implementation.
+
+If the complete prior capture is unavailable or truncated, stop. Do not reconstruct the tuples from memory.
 
 Report the command as `ran; accepted baseline unchanged`, never as passed.
 
@@ -67,25 +77,26 @@ Report the command as `ran; accepted baseline unchanged`, never as passed.
 1. Verify commit `232d3c2f` has exactly the four authorized files and intended patch.
 2. Reconfirm focused tests at `5/5`.
 3. Reconfirm content lint at `67`.
-4. Classify the workspace audit against the exact `173`-diagnostic baseline and contract-related filters.
-5. Run the deferred parent baseline:
+4. Pin the exact four changed-file diagnostic tuples from the complete clean `0.6.6.4` capture.
+5. Rerun and classify the workspace audit against the exact `173`-diagnostic baseline, exact four tuples, and forbidden-identifier filters.
+6. Run the deferred parent baseline:
 
    `node --test tests/unit/monster-validation-hardening.test.mjs tests/unit/region-first-world-data.test.mjs tests/unit/schema-files.test.mjs tests/unit/slug-content.test.mjs`
 
-6. Require `146/146` unless a legitimate current count change is fully explained.
-7. Prove the BOM repair range contains no content change.
-8. Prove the post-`e71f8f6b` content diff contains only the five pinned migrations in `regions.json`.
-9. Pass conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-diff checks.
-10. Restore the exact parent prompt only after every condition succeeds.
-11. Stop without executing `0.6.6` in the same pass.
+7. Require `146/146` unless a legitimate current count change is fully explained.
+8. Prove the BOM repair range contains no content change.
+9. Prove the post-`e71f8f6b` content diff contains only the five pinned migrations in `regions.json`.
+10. Pass conflict-marker, trailing-whitespace, `git diff --check`, changed-path, and full-diff checks.
+11. Restore the exact parent prompt only after every condition succeeds.
+12. Stop without executing `0.6.6` in the same pass.
 
 ## Failure Behavior
 
-If the diagnostic count, paths, message families, or attribution differ, or any green gate fails, do not restore the parent prompt or update completion coordination. Do not repair broad TypeScript debt. Leave `0.6.6.5` active and report the smallest owner-correct follow-up.
+If the complete prior capture is unavailable, the diagnostic count or exact tuples differ, a forbidden identifier appears, attribution changes, or any green gate fails, do not restore the parent prompt or update completion coordination. Do not repair broad TypeScript debt. Leave corrected `0.6.6.5` active and report the smallest owner-correct follow-up.
 
 ## Near-Term Sequence
 
-1. complete `0.6.6.5`, accept the support chain, and restore exact `0.6.6`;
+1. complete corrected `0.6.6.5`, accept the support chain, and restore exact `0.6.6`;
 2. run exact `0.6.6` in a separate Codex pass;
 3. run `0.6.7 - Cross-Content Coherence And Coverage Audit`;
 4. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
@@ -111,4 +122,4 @@ If the diagnostic count, paths, message families, or attribution differ, or any 
 
 Active prompt blob:
 
-`ff436c355268d21783f2dd5d87835e75b7542d92`
+`b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`
