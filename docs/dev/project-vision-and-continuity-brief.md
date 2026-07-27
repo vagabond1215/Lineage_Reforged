@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-27 after `0.6.6.4` landed the exact climate/population repair, passed focused tests and content lint, then stopped on the repository's known-failing workspace typecheck audit; `0.6.6.5` is active.
+Updated 2026-07-27 after the first installed `0.6.6.5` prompt was corrected before execution to allow only the exact four pinned unrelated changed-file diagnostics within the known `173`-diagnostic workspace baseline.
 
 ## Purpose
 
@@ -32,9 +32,12 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Focused tests passed `5/5`.
 - Normal content lint passed with `67` files checked.
 - Workspace typecheck remained non-green with the same broad, unrelated `173`-diagnostic baseline.
+- Exactly four known unrelated diagnostics occur across the two changed TypeScript files.
 - The `146`-test parent baseline was not run after that failure, and the parent prompt was not restored.
-- Active support suffix: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
-- Active support prompt blob: `ff436c355268d21783f2dd5d87835e75b7542d92`.
+- The first installed `0.6.6.5` prompt blob `ff436c355268d21783f2dd5d87835e75b7542d92` incorrectly required zero diagnostics in those files.
+- That invalid prompt was not run. Local and remote were synchronized at `1d6880f5a2d7bcdc5c843e64b50bcd25d6883525`, and the worktree remained clean.
+- Active support suffix remains `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
+- Corrected active prompt blob: `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`.
 - Preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
@@ -46,24 +49,26 @@ The repository has no universal green command.
 - normal content lint is a green gate and currently checks 67 live files;
 - `typecheck:workspace` is a known-failing audit with broad NodeNext/config/strictness debt;
 - an unchanged baseline does not block narrow work, but any new, changed, or contract-related diagnostic does;
-- the current accepted audit candidate is exactly 173 diagnostics with no diagnostic in the two changed TypeScript files and no message mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`;
+- the corrected audit candidate is exactly 173 diagnostics, exactly the four pinned changed-file tuples from the complete clean `0.6.6.4` capture, no additional diagnostic in those files, zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`, and no diagnostic attributable to `232d3c2f`;
+- if the complete prior capture is unavailable or truncated, the pass stops rather than infers the four tuples;
 - the broad TypeScript backlog remains a separate owner-specific cleanup sequence and must not be mixed into this support chain.
 
 ## Immediate Sequence
 
-1. execute exact `0.6.6.5` without implementation edits;
+1. execute corrected `0.6.6.5` without implementation edits;
 2. reconfirm focused tests `5/5` and content lint `67`;
-3. classify the workspace audit as `ran; accepted baseline unchanged` only if all pinned count/path/message conditions hold;
-4. run and require the deferred parent baseline at `146/146`, absent a legitimate explained count change;
-5. prove BOM-range content identity, exact five-record content diff, and hygiene;
-6. restore exact `0.6.6` from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` only after every condition succeeds;
-7. execute exact `0.6.6` in a separate pass;
-8. run `0.6.7` cross-content coherence and coverage audit;
-9. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-10. run Activity Resolution Existing-System Reuse Audit;
-11. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-12. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-13. proceed through separately authorized owner-specific packages.
+3. pin the exact four changed-file diagnostic tuples from the complete clean `0.6.6.4` capture;
+4. classify the rerun workspace audit as `ran; accepted baseline unchanged` only if all pinned total-count, exact-tuple, no-additional-diagnostic, forbidden-identifier, and attribution conditions hold;
+5. run and require the deferred parent baseline at `146/146`, absent a legitimate explained count change;
+6. prove BOM-range content identity, exact five-record content diff, and hygiene;
+7. restore exact `0.6.6` from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` only after every condition succeeds;
+8. execute exact `0.6.6` in a separate pass;
+9. run `0.6.7` cross-content coherence and coverage audit;
+10. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+11. run Activity Resolution Existing-System Reuse Audit;
+12. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+13. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+14. proceed through separately authorized owner-specific packages.
 
 ## Current Implementation Reality
 
@@ -82,7 +87,7 @@ The repository has no universal green command.
 
 ## Research And Content Posture
 
-No new broad research is needed before baseline-aware validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
+No new broad research is needed before corrected baseline-aware validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
 
 Before the first executable or balance-bearing lethal-process catalog, run bounded research on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
