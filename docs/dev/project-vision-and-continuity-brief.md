@@ -28,7 +28,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Active parent primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
 - Landed repair implementation: `Version 0.6.6.1 - UTF-8 BOM Test-Harness Repair`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - Active support suffix: `Version 0.6.6.2 - BOM Repair Post-Validation And Parent Prompt Restoration`.
-- Active support prompt blob: `75e51e1f5c11a2c57d1d9b4b9cbe880540dd6927`.
+- Active support prompt blob: `5d4aa0a0961065f4cfea0968317b8e7f0df4c190`.
 - Preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
