@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-27 after the first installed `0.6.6.5` prompt was corrected before execution to allow only the exact four pinned unrelated changed-file diagnostics within the known `173`-diagnostic workspace baseline.
+Updated 2026-07-27 after two unexecuted `0.6.6.5` prompt variants were superseded and the active prompt was corrected to establish and reproduce a fresh complete workspace typecheck baseline.
 
 ## Purpose
 
@@ -12,7 +12,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - `docs/dev/current-gpt-handoff.md` owns immediate connector-side guardrails and route order.
 - `docs/dev/current-codex-output.md` owns the latest exact inspection or implementation report.
 - `docs/dev/historical-version-and-deferred-route-register.md` owns canonical route identities, active/deferred posture, and reopening triggers.
-- `docs/design/current-planning-anchor-reconciliation.md` controls conflicts caused by stale current-anchor wording in the roadmap or sequenced plan.
+- `docs/design/current-planning-anchor-reconciliation.md` controls conflicts caused by stale current-anchor wording.
 - `docs/design/validation-command-matrix-plan.md`, `docs/design/validation-source-map.md`, and `docs/dev/typecheck-blocker-triage-plan.md` control validation command classification and the known-failing workspace typecheck posture.
 - `docs/dev/project-roadmap.md` owns version-band meaning, playability checkpoints, and non-conflicting long-term direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns detailed historical sequencing and non-conflicting queue context.
@@ -28,16 +28,16 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
 - `0.6.6.4` landed exact implementation commit `232d3c2f466e3ec18e620e29a47f4466ae05b84d` with four authorized changed files.
-- The five climate values are now singleton arrays, the capacity assertion targets `simulationProfile`, and both static contracts use `string[]`.
+- The five climate values are singleton arrays, the capacity assertion targets `simulationProfile`, and both static contracts use `string[]`.
 - Focused tests passed `5/5`.
 - Normal content lint passed with `67` files checked.
-- Workspace typecheck remained non-green with the same broad, unrelated `173`-diagnostic baseline.
-- Exactly four known unrelated diagnostics occur across the two changed TypeScript files.
-- The `146`-test parent baseline was not run after that failure, and the parent prompt was not restored.
-- The first installed `0.6.6.5` prompt blob `ff436c355268d21783f2dd5d87835e75b7542d92` incorrectly required zero diagnostics in those files.
-- That invalid prompt was not run. Local and remote were synchronized at `1d6880f5a2d7bcdc5c843e64b50bcd25d6883525`, and the worktree remained clean.
+- Workspace typecheck remained non-green with `173` broad diagnostics, including four known unrelated diagnostics across the two changed TypeScript files.
+- The `146`-test parent baseline was not run, and the parent prompt was not restored.
+- Prompt blob `ff436c355268d21783f2dd5d87835e75b7542d92` was superseded unexecuted because it required zero changed-file diagnostics.
+- Prompt blob `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f` was superseded unexecuted because it required a nonexistent complete prior capture.
+- Local and remote were synchronized at `0f677b78e76905ef8d37eb8b4965b127d93d4db1`; the worktree remained clean and no invalid prompt was run.
 - Active support suffix remains `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
-- Corrected active prompt blob: `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f`.
+- Active support prompt blob: `7b60f7caf417f2d49cdeed7fcdca4a9011010310`.
 - Preserved exact parent prompt blob: `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769`.
 - Reserved next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 
@@ -48,19 +48,29 @@ The repository has no universal green command.
 - focused `node --test <exact files>` commands are green gates;
 - normal content lint is a green gate and currently checks 67 live files;
 - `typecheck:workspace` is a known-failing audit with broad NodeNext/config/strictness debt;
-- an unchanged baseline does not block narrow work, but any new, changed, or contract-related diagnostic does;
-- the corrected audit candidate is exactly 173 diagnostics, exactly the four pinned changed-file tuples from the complete clean `0.6.6.4` capture, no additional diagnostic in those files, zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`, and no diagnostic attributable to `232d3c2f`;
-- if the complete prior capture is unavailable or truncated, the pass stops rather than infers the four tuples;
-- the broad TypeScript backlog remains a separate owner-specific cleanup sequence and must not be mixed into this support chain.
+- broad TypeScript cleanup remains a separate route and must not be mixed into the static-content support chain;
+- corrected `0.6.6.5` no longer depends on a missing historical artifact.
+
+The active audit gate is:
+
+1. Capture A records complete non-pretty output outside the repository.
+2. Capture A must contain exactly `173` normalized diagnostic tuples, exactly four in the two changed TypeScript files, and zero messages mentioning `climateTendencies`, `RegionContentRecord`, or `InstitutionRegionRecord`.
+3. Each changed-file diagnostic must be pinned exactly and proven unrelated to `232d3c2f` through source inspection, the exact implementation diff, and blame evidence.
+4. Capture B reruns the command without state changes.
+5. Capture B must reproduce the complete normalized `173`-tuple multiset exactly, including multiplicity.
+6. Raw captures remain temporary and uncommitted.
+7. The audit is reported as established and reproduced, never as passed.
+
+Any count, tuple, forbidden-identifier, attribution, or reproducibility difference is fail-closed.
 
 ## Immediate Sequence
 
 1. execute corrected `0.6.6.5` without implementation edits;
 2. reconfirm focused tests `5/5` and content lint `67`;
-3. pin the exact four changed-file diagnostic tuples from the complete clean `0.6.6.4` capture;
-4. classify the rerun workspace audit as `ran; accepted baseline unchanged` only if all pinned total-count, exact-tuple, no-additional-diagnostic, forbidden-identifier, and attribution conditions hold;
+3. establish Capture A and prove the four changed-file diagnostics unrelated;
+4. establish Capture B and require exact complete tuple-set reproduction;
 5. run and require the deferred parent baseline at `146/146`, absent a legitimate explained count change;
-6. prove BOM-range content identity, exact five-record content diff, and hygiene;
+6. prove BOM-range content identity, exact five-record content diff, hygiene, and temporary-artifact cleanliness;
 7. restore exact `0.6.6` from blob `42014541c15d2d7ccc01f43dd8b0a4fa6fbf8769` only after every condition succeeds;
 8. execute exact `0.6.6` in a separate pass;
 9. run `0.6.7` cross-content coherence and coverage audit;
@@ -87,7 +97,7 @@ The repository has no universal green command.
 
 ## Research And Content Posture
 
-No new broad research is needed before corrected baseline-aware validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
+No new broad research is needed before reproducible baseline validation, `0.6.6`, `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
 
 Before the first executable or balance-bearing lethal-process catalog, run bounded research on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
@@ -114,7 +124,8 @@ Every major system should answer at least one of these questions:
 
 - Use current branch reality only.
 - Prefer the smallest coherent, owner-correct package.
-- Fail closed when a true green gate or changed audit baseline is red.
+- Fail closed when a true green gate or audit-classification condition is red.
 - Do not misclassify known-failing audits as universal green gates.
+- Do not depend on missing validation artifacts when a fresh reproducible capture can provide stronger evidence.
 - Do not weaken validation or mix unrelated cleanup into narrow work.
 - Preserve historical chronology while keeping live execution pointers current.
