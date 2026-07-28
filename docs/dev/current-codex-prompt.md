@@ -16,18 +16,21 @@ Do not implement content, schemas, validators, tests, runtime, UI, saves, maps, 
 
 ## Start And Sync Gate
 
-1. Read `AGENTS.md` and obey repository/version/prompt-packaging rules.
+1. Read `AGENTS.md` and `README.md`; obey repository/version/prompt-packaging rules.
 2. Inspect repository identity, branch, worktree, remotes, tracking state, and current `HEAD`.
 3. Fetch the tracked remote. If it is ahead and the worktree is safe, fast-forward pull before planning. Preserve unrelated work.
-4. Confirm `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is accepted in current output, handoff, sequence, roadmap, continuity, backlog, static program, and route register.
+4. Confirm `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is accepted in current output, handoff, sequenced-plan current anchor, roadmap top override, continuity brief, backlog, static program, and route register.
 5. Confirm this exact unversioned prompt is active and the `Activity Resolution Existing-System Reuse Audit` remains held immediately behind accepted Geography planning.
-6. If route identity or remote/worktree state is contradictory and cannot be reconciled from current authority, stop without edits and report the exact issue.
+6. Apply the documented planning precedence. `docs/dev/project-roadmap.md` has one known lower `## 1. Current Anchor` block with pre-`0.6.7` wording; `docs/design/current-planning-anchor-reconciliation.md` classifies it as stale and noncontrolling. Do not stop solely because of that already-reconciled block, and do not rewrite the large roadmap from truncated content.
+7. Confirm the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched. Do not check it out, merge it, rebase it, or modify it.
+8. If active-route identity, accepted-package status, or remote/worktree state is otherwise contradictory and cannot be reconciled from current authority, stop without edits and report the exact issue.
 
 ## Required Reading
 
 Read at minimum:
 
 - `AGENTS.md`
+- `README.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
@@ -35,6 +38,7 @@ Read at minimum:
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
 - `docs/dev/historical-version-and-deferred-route-register.md`
+- `docs/design/current-planning-anchor-reconciliation.md`
 - `docs/design/static-content-expansion-program.md`
 - `docs/design/internal-versioning-and-release-milestone-policy.md`
 - `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`
@@ -55,9 +59,17 @@ Reproduce and cite the live repository facts needed to decide:
 
 Do not infer authority from filenames, prose titles, UI labels, or future backlog entries.
 
+## Durable Design Owner
+
+Update exactly:
+
+- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`
+
+Use that file as the single durable focused authority for this plan. Do not create a competing Geography/recognition design document. If live evidence proves that the existing owner cannot carry a required contract, stop and report the ownership conflict instead of creating another authority by inference.
+
 ## Required Decisions
 
-Create or update one durable focused design document that decides all of the following.
+Make the existing durable design document decision-complete for all of the following.
 
 ### 1. First Geography Domain And Taxonomy Node
 
@@ -112,6 +124,7 @@ The title or summary of a current `Recognizing ...` Knowledge snippet is not a c
 - No generic POI authority.
 - No weakening of existing owner, lifecycle, reference, or validation boundaries.
 - No broad research unless a specific decision is proven blocked by absent external evidence; report that gate instead.
+- No merge, rebase, checkout, or modification of `prep/integrated-gameplay-0-7-readiness-audit`.
 
 ## Validation And Completion
 
@@ -120,8 +133,9 @@ The title or summary of a current `Recognizing ...` Knowledge snippet is not a c
 3. Run documentation hygiene checks: conflict markers, trailing whitespace, `git diff --check`, changed-path review, and full diff review.
 4. Do not run builds, typechecks, servers, generators, package installs, or broad test suites.
 5. Overwrite `docs/dev/current-codex-output.md` with the unversioned plan result and all required metadata.
-6. Advance handoff, sequence, roadmap, continuity brief, backlog, and route register only where accepted planning changes current direction.
-7. Install the exact held `Activity Resolution Existing-System Reuse Audit` prompt from `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` only after every plan decision and hygiene gate passes.
+6. Advance handoff, sequence, roadmap, continuity brief, backlog, and route register only where accepted planning changes current direction. Do not replace any large file from truncated content.
+7. Activate the held `Activity Resolution Existing-System Reuse Audit` only after every plan decision and hygiene gate passes. When activating it, write `# Activity Resolution Existing-System Reuse Audit` as the active title and copy the queued file from `## Run Identity` onward into `docs/dev/current-codex-prompt.md`. Omit the queued-only title and `## Hold Status`; preserve the substantive audit body. If the accepted Geography plan proves a direct contradiction in that held body, stop and revise the held prompt before activation rather than silently changing it during installation.
+8. Fetch `docs/dev/current-codex-prompt.md` after installation and verify that it names the Activity Resolution audit as active, contains no queued-only hold language, and preserves the accepted prerequisite order.
 
 ## Final Report
 
@@ -129,9 +143,10 @@ Report:
 
 - exact inventories and authority findings;
 - all seven required decisions and unresolved blockers;
-- the durable design document created or updated;
+- confirmation that `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` is the single durable design owner updated;
 - confirmation that current `Recognizing ...` snippets remain structural lore only;
 - confirmation that no borders, claims, overlays, runtime, UI, saves, or gameplay were implemented;
 - the smallest later package or `NO_IMPLEMENTATION_PACKAGE_READY`;
 - files changed, checks, risks, suggested commit, and next run;
-- confirmation that Activity Resolution reuse remains next only after accepted Geography planning.
+- confirmation that Activity Resolution reuse remains next only after accepted Geography planning;
+- confirmation that any installed Activity Resolution prompt omits its queued-only Hold Status and was fetched after writing.
