@@ -1,413 +1,554 @@
 # Location Recognition And Geographic Knowledge Taxonomy
 
-Date: 2026-07-14
-Status: approved user-intent design boundary; documentation only
+Date: 2026-07-28
+
+Status: accepted decision-complete design authority; documentation only
+
+Source run: unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`
+
+Milestone impact: `supports_current_band`
 
 ## 1. Decision Summary
 
-Character-facing Knowledge must not remain a flat list of records titled `Recognizing ...`. Knowledge presentation and achievement progress should be organized into durable categorized brackets, beginning with a first-class `Knowledge -> Geography` branch.
+Geographic Knowledge and location recognition require separate authored and mutable owners.
+
+- A future `knowledge_domain.geography` record belongs in the broad Knowledge domain registry.
+- The narrow legacy `knowledge_domains.json` resource-identification model does not own Geography.
+- Character-facing Geography facets belong in a separate future typed Knowledge-taxonomy owner, not in domain metadata, place records, or UI state.
+- Location-recognition profiles own authored identifying clues for one canonical subject.
+- Knowledge-source teaching records relate one authorized source to specific teachable clues.
+- Observation occurrences and accepted observation results own what was perceptible and interpreted in one bounded context.
+- Character Knowledge evidence/progress and future recognition state remain mutable character-owned state.
+- Existing `playerState.geographicKnowledge` is a preserved legacy three-scope level projection, not evidence-based recognition.
 
-Geography must use a faceted hierarchy rather than one exclusive continent-to-region-to-city tree. Physical geography, settlements and places, political geography, and cartography/navigation overlap. One subject may appear through several useful browse paths without changing its canonical owner or identity.
+Current `Recognizing ...` snippet titles and summaries remain structural authored lore. They are not clues, criteria, scores, thresholds, grants, observations, or recognition results.
 
-Location recognition must be evidence-based. An authored snippet such as `Recognizing Aurelis` or `Recognizing Millrun's Wheelrace Mills` currently identifies a possible unit of knowledge; it does not yet define the criteria by which a character can recognize that subject. Future recognition requires explicit learned clues, perceptible observed clues, interpretation requirements, contextual distinctiveness, aggregation rules, contradiction handling, and recognition states.
+This decision adds no content, schema, validator, test, runtime, UI, save, map, overlay, claim, border, jurisdiction, dependency, or gameplay behavior.
 
-Kingdoms, empires, city-states, and comparable realms are polity objects, not physical-region objects. Political geography describes how a polity relates to physical places through separate future claims, borders, frontiers, administrative divisions, jurisdictions, seats, and historical overlays. A polity must not own physical geometry or silently convert a region into a kingdom.
+## 2. Verified Repository Baseline
 
-This decision changes no schema, validator, content JSON, evidence state, progress state, runtime, UI, save, migration, asset, generated output, or gameplay behavior.
+The planning baseline was reproduced on clean synchronized `master` at `0872341b12ad5fced21cd725372447c6df1249be`. The isolated remote branch `origin/prep/integrated-gameplay-0-7-readiness-audit` remains unmerged and untouched.
 
-## 2. Current Repository Reality
+### 2.1 Knowledge content
 
-The current repository has useful foundations but not the intended recognition system:
+| Authority | Live posture |
+| --- | --- |
+| Broad domain registry | 7 records: 6 active and planned `knowledge_domain.arcane_lore`; no Geography record |
+| Narrow legacy domains | 4 records: Flora, Fauna, Minerals, and General Lore |
+| Knowledge snippets | 28 tier-1 records |
+| Domain distribution | Flora 1, Fauna 1, Minerals 1, Ecology 3, Religion 4, General Lore 18 |
+| Subject distribution | flora 2, fauna 2, mineral 1, region 2, religion 1, deity 1, religious hotspot 1, sacred site 1, settlement 4, settlement district 6, settlement site 7 |
+| Category distribution | identification 24, habitat 1, regional variant 1, seasonality 1, cultural context 1 |
+| Source distribution | book study 21, field identification 3, travel observation 4 |
+| Prerequisites | 0 snippets declare prerequisites |
+| Progression | all 28 use tier 1, completion weight 1, tier-completion participation true, and trial-unlock weight 0 |
+| Visibility | all 28 are locked until discovered and have hidden summaries; 24 reveal subject identity and 4 do not |
+| `Recognizing ...` titles | 24 |
+| Trial policy content | 1 active Flora tier-1 eligibility policy; readiness and rewards remain null/empty |
 
-- `knowledge_domain.general_lore` currently owns settlement, settlement-district, settlement-site, and region snippets.
-- The domain registry supports the group label `geography_travel`, but no dedicated Geography domain or character-facing taxonomy exists.
-- Current location snippets contain one subject, prose, broad discovery-source declarations, progression metadata, and visibility metadata.
-- Discovery sources are possible routes only; access, possession, proximity, map visibility, or entering a location does not grant knowledge.
-- The evidence contract can validate broad source and location context, but it does not record which identifying clues were learned, perceived, interpreted, or matched.
-- The first evidence-to-progress posture treats eligible evidence as flat additive proposals and defines no clue weighting, recognition threshold, confidence, contradiction, or completion rule.
-- The current evidence schema does not yet cover every live place subject used by authored snippets, including settlement districts and settlement sites.
-- Existing region, locality, settlement, district, site, map-feature, route, and map authorities own physical place identity and relationships.
-- The approved polity decision reserves `world.polities` for durable political identity and explicitly keeps borders, claims, jurisdiction, control, occupation, and diplomacy in separate future overlays.
+All 18 General Lore snippets are location-related: one region cultural-context record, 4 settlement identification records, 6 district identification records, and 7 site identification records. The other live place-oriented snippets are one Ecology region record and Religion records for an active sacred site and active religious hotspot.
 
-Therefore every current `Recognizing ...` location snippet must be interpreted as authored identification lore only. It must not be cited as proof that the game can determine whether a character recognizes that place.
+The broad registry already accepts group value `geography_travel`, but no record uses it. General Lore currently owns `region`, `settlement`, `settlement_district`, and `settlement_site` snippets.
 
-## 3. Ownership Vocabulary
+### 2.2 Knowledge contracts and helpers
 
-Use these concepts consistently:
+Seven Knowledge schemas exist:
 
-- **Knowledge domain:** semantic subject family that owns supported subjects, categories, and evidence routes, such as future Geography.
-- **Knowledge bracket:** character-facing category used for navigation, completion summaries, achievements, and presentation.
-- **Taxonomy node or facet:** one browse or aggregation path within a bracket. It does not replace canonical subject identity.
-- **Subject:** the canonical thing knowledge concerns, such as a region, settlement, district, site, map feature, polity, or border claim.
-- **Containment relationship:** physical or administrative relationship between subjects, owned by world or political authorities rather than inferred from the Knowledge UI.
-- **Recognition profile:** authored criteria describing how one subject may be distinguished from plausible alternatives.
-- **Clue:** one learnable and potentially observable identifying fact.
-- **Knowledge source:** a book, sign, map, picture, teacher, rumor, institution, Chronicle record, quest outcome, or other authorized route that can teach specific clues.
-- **Observation occurrence:** a bounded event describing which clues were perceptible in a particular context.
-- **Evidence:** validated proof that one character encountered an authorized source or observation relevant to one knowledge target.
-- **Recognition result:** a derived state based on known clues, observed clues, interpretation, contradictions, and confirmation rules.
+- broad domain registry;
+- narrow legacy domain;
+- snippets;
+- evidence;
+- progress;
+- trial policy;
+- trial-readiness policy.
 
-Knowledge presentation may project these authorities, but it must not invent containment, political ownership, clues, evidence, or recognition state.
+The snippet and broad-registry subject vocabularies include settlement districts and settlement sites. The evidence and progress schemas do not. Their subject enums stop at the older set and therefore cannot structurally represent 13 live district/site snippets.
 
-## 4. Character-Facing Knowledge Hierarchy
+The repository has pure helpers for domain validation, snippet validation, evidence validation and production, evidence acceptance proposal, progress validation, initialization, evidence-to-progress proposal, progress-application proposal, completion evaluation, trial-policy validation, eligibility, and readiness. Evidence/progress/readiness records remain test fixtures or inert proposals; there is no live evidence or progress content collection, canonical mutable storage owner, accepted occurrence adapter, or runtime/UI mutation flow.
 
-The top-level presentation root is:
+The evidence validator currently:
 
-`Knowledge`
+- requires character ownership;
+- requires the evidence domain/subject to equal its referenced snippet;
+- accepts only a source type declared by that snippet;
+- requires `sourceId` to remain null;
+- restricts unresolved event, action, document, teacher, institution, quest-outcome, Chronicle, skill, and spell references to null or absence;
+- validates continent/region/settlement acquisition context;
+- does not record learned, perceived, interpreted, matched, contradictory, or stale clue identity.
 
-The intended Geography branch is:
+Progress is character/snippet scoped, stores integer points plus consumed evidence ids, and is explicitly not a percentage, completion flag, recognition result, or persistence contract.
 
-`Knowledge -> Geography`
+### 2.3 Skills and source-adjacent authority
 
-Geography should contain four parallel primary facets.
+There is no dedicated Geography, cartography, literacy, language, script, heraldry, or observation Knowledge skill.
 
-### 4.1 Physical Geography
+Relevant live skills are:
 
-Physical Geography concerns the natural and spatial world:
+- `skill.survival.navigation`;
+- `skill.knowledge.general_lore`;
+- `skill.knowledge.civic_lore`;
+- `skill.knowledge.cultural_lore`.
 
-- continents and macroregions;
-- regions and subregions;
-- region localities;
-- landforms and waters;
-- rivers, bays, coasts, mountain ranges, ridges, passes, marshes, islands, and other semantic map features;
-- climate and biome context when the knowledge is primarily spatial.
+They may be declared support references later. Skill rank never grants Geography knowledge or recognition.
 
-Climate, biome, habitat, flora, fauna, and ecology may cross-link to Natural World or Ecology knowledge. Geography should not duplicate their detailed scientific ownership.
+Eight generic item identities have source-adjacent names: Blank Book, Blank Scroll, Ledger, Record Book, Record Scroll, Reference Book, Route Charts, and Signet Ring. They do not contain teaching assignments, clue content, document-instance authority, authenticity, language, script, or study-completion facts.
 
-### 4.2 Settlements And Places
+### 2.4 Place, map, route, and political authority
 
-Settlements And Places concerns inhabited and constructed places:
+| Owner | Live posture |
+| --- | --- |
+| `world.regions` | 41 records: 5 continents, 4 island systems, 4 oceans, 28 subregions |
+| `world.region_localities` | 47 locality records |
+| `world.settlements` | 88 settlement records |
+| `world.settlement_districts` | 14 active records |
+| `world.settlement_sites` | 20 active records; 7 have null `parentDistrictId` |
+| `world.sacred_sites` | 1 active record |
+| `world.religious_hotspots` | 2 records: 1 active and 1 planned |
+| `world.map_features` | 8 planned semantic feature records |
+| `world.world_maps` | 1 metadata record with 4 descriptive major-trade-route summaries and 4 descriptive conflict-zone summaries |
+| `world.world_map_features` | 1 visual/reference aggregate with geometry and zone collections |
+| `world.world_hexes` / `world.world_hex_edges` | 47 semantic cells / 49 topology edges |
+| `world.travel_networks` | 1 aggregate containing 12 route records and 8 inter-port ship lanes |
+| `world.polities` | 2 planned identities, Valtherion and Draemor |
+| Claims | no collection, schema, validator, or content |
+| Borders/frontiers | no collection, schema, validator, or content |
+| Jurisdictions | no collection, schema, validator, or content; explicitly not schema-ready |
+| Governments | no collection, schema, validator, or content; explicitly not schema-ready |
+| Generic `world.pois` | rejected and absent |
 
-- settlements by scale or type, including cities, towns, villages, forts, citadels, monasteries, ports, and other supported forms;
-- settlement districts and wards;
-- settlement sites, buildings, facilities, landmarks, and named complexes;
-- associated harbors, crossings, bridgeheads, gates, plazas, and other specific place owners;
-- place relationships such as located-in, part-of, near, upstream-of, adjacent-to, and approached-from when a canonical authority owns them.
+Semantic map features own named physical identity without geometry or topology. The visual aggregate owns reference geometry without semantic identity. Travel networks own current nested routes, topology, timing, and signage descriptions. Polities own planned political identity and descriptive place anchors, not territory or control. World-map conflict-zone strings are display summaries, not canonical conflicts or claims.
 
-A convenient browse path may be:
+### 2.5 Current runtime, save, and UI reality
 
-`Continent -> Region -> Locality -> Settlement -> District -> Site`
+The shared snapshot has a persisted `playerState.geographicKnowledge` array:
 
-That path is a projection of validated relationships, not the only canonical Knowledge hierarchy. Sites without districts, settlements spanning several localities, and cross-regional routes must remain representable.
+```text
+scope: continent | region | settlement
+geographyId: canonical region or settlement id
+level: non-negative number
+```
 
-### 4.3 Political Geography
+The player engine validates and upserts those entries. Granting a settlement also grants its parent region and continent. New-game creation seeds the selected continent, region, and settlement at level 1. Accepted player travel currently grants the destination settlement and its parents at level 1. Save/load fixtures preserve the array.
 
-Political Geography concerns political identity and territorial relationships:
+The UI projects levels as Unaware, Unfamiliar, Familiar, Knowledgeable, Seasoned, and Intimate and groups them under Known Lands, Known Regions, and Known Settlements. Achievements and account-estate logic also read parts of this legacy state. `sessionState.knownLocations` and `playerState.discoveryChronicle` are separate current runtime/UI surfaces.
 
-- polity identities such as kingdoms, realms, empires, city-states, republics, confederations, principalities, and autonomous settlements;
-- recognized, claimed, administered, occupied, disputed, tributary, or historical territorial relationships when their own authorities exist;
-- borders, frontiers, marches, enclaves, exclaves, buffer zones, and disputed zones;
-- administrative divisions and jurisdictions;
-- capitals, seats, and associated places;
-- historical border changes and conflicting accounts.
+These are real current consumers and must not be described as absent. They are also not the clue/evidence recognition system selected here:
 
-A kingdom is a `polity.*` subject. It is not a `region.*` subject merely because it occupies territory. A physical region may be associated with several polities across time, subject to overlapping claims, or divided by several jurisdictions.
+- the level has no source, clue, observation, interpretation, contradiction, confidence, or correction provenance;
+- travel currently grants the level without an evidence-acceptance boundary;
+- it covers only continents/island systems, other regions, and settlements;
+- it does not cover districts, sites, semantic features, routes, polities, claims, borders, or jurisdictions.
 
-### 4.4 Cartography And Navigation
+Preserve current behavior until a separately authorized adapter/migration decision characterizes it. Do not silently reinterpret its numeric levels as the recognition states in this plan.
 
-Cartography And Navigation concerns practical spatial understanding:
+## 3. Controlling Ownership Vocabulary
 
-- routes, roads, tracks, passes, crossings, river lanes, coasts, and sea lanes;
-- direction, distance, sequence of landmarks, and relative position;
-- map interpretation and map provenance;
-- known hazards, seasonal accessibility, and route conditions when an approved owner exists;
-- wayfinding instructions and landmark chains;
-- differences between approximate, surveyed, historical, and misleading maps.
+- **Domain:** stable broad Knowledge subject family and source-policy metadata.
+- **Taxonomy node:** authored browse/aggregation facet that references a domain and allowed relationship projections without copying subjects.
+- **Subject:** one canonical record owned by its place, route, map, polity, or later political owner.
+- **Recognition profile:** static authored criteria for distinguishing one canonical subject.
+- **Clue:** one stable profile-owned learnable and potentially observable identifying fact.
+- **Source teaching:** a static relation saying one authorized source may teach named clues.
+- **Observation occurrence:** one owner-admitted bounded causal opportunity to observe clues.
+- **Observation result:** the accepted deterministic or uncertain result listing what was perceptible and interpreted.
+- **Evidence:** character-scoped accepted proof relating an authorized source/result to a Knowledge target.
+- **Recognition state:** future character-owned result derived from accepted clue knowledge and accepted observations.
+- **Projection:** UI, Chronicle, map label, marker, achievement, or report derived from authority without becoming authority.
 
-Travel visibility or map display does not itself complete this knowledge.
+## 4. Geography Domain Contract
 
-## 5. Why Geography Must Be Faceted
+### 4.1 Selected owner
 
-A single strict tree is insufficient.
+The first Geography domain belongs in `player.knowledge_domain_registry` as future id:
 
-Aurelis is simultaneously:
+`knowledge_domain.geography`
 
-- a settlement in a physical locality and region;
-- a royal port with associated districts and sites;
-- a seat or anchor of a future polity relationship;
-- a destination connected by roads and sea lanes;
-- a subject of cultural and historical knowledge.
+Do not add it to the narrow `knowledge_domains.json` collection. That legacy collection owns resource-identification thresholds and requires a dedicated Knowledge skill shape that Geography does not have. Extending it would conflate broad authored domains with the existing runtime assistance model.
 
-The same canonical subject should be reachable through several bracket paths. Taxonomy nodes should contain references to canonical subjects and relationship queries, not copies of place records.
+### 4.2 Exact first record posture
 
-Character-facing achievements should aggregate by stable brackets and facets. They should not depend on a subject having only one parent category.
+A later seed may add exactly one planned broad-registry record with:
 
-## 6. Kingdoms, Borders, And Political Objects
+- `id`: `knowledge_domain.geography`;
+- `slug`: `geography`;
+- `name`: `Geography`;
+- `summary`: `Physical, inhabited, political, and cartographic knowledge of canonical places and spatial relationships, without granting travel, reveal, or recognition.`;
+- `group`: `geography_travel`;
+- `wave`: `1`;
+- `status`: `planned`;
+- `canonicalSubjectTypes`: `region`, `settlement`, `settlement_district`, `settlement_site`;
+- `supportedSnippetCategories`: `identification`, `historical_context`, `cultural_context`;
+- `supportedDiscoverySourceFamilies`: `field_observation`, `textual_study`, `instruction`, `event_record`;
+- `supportedDiscoverySourceTypes`: `travel_observation`, `book_study`, `teacher_instruction`, `institutional_study`, `quest_event`, `chronicle_record`;
+- `defaultEvidenceOwnerScopes`: `character`, `institution`, `quest_event`, `chronicle_record`, `document_instance`, `teacher`, `study_event`, `travel_event`;
+- `relatedSkillIds`: `skill.survival.navigation`, `skill.knowledge.general_lore`, `skill.knowledge.civic_lore`;
+- `relatedContentCollections`: `world.regions`, `world.region_localities`, `world.settlements`, `world.settlement_districts`, `world.settlement_sites`;
+- `relatedMagicSchoolIds`: empty;
+- null trial, completion, and visibility policy references;
+- schema-gap notes naming absent map-feature, route, polity, claim, border, and jurisdiction subject types;
+- notes that current sources are possible evidence routes only, current place records remain canonical owners, and no source access, travel, map visibility, skill rank, or catalog presence grants knowledge.
 
-The approved boundary is:
+It remains planned until a separate content migration/seed decision selects snippets and proves every subject/source/evidence contract. Existing General Lore snippets do not move automatically.
 
-- **Polity identity** owns the durable identity of a kingdom, empire, republic, city-state, or comparable political entity.
-- **Physical geography** owns regions, localities, landforms, waters, map features, and geometry.
-- **Territorial claim or control overlays** later describe what a polity claims, administers, occupies, controls, disputes, or historically held.
-- **Borders or frontier overlays** later identify the boundary between claims, jurisdictions, or control postures.
-- **Jurisdiction** later owns where a body of law or administration applies.
-- **Government** later owns how authority is organized at a given time.
+## 5. Geography Taxonomy Contract
 
-A river or mountain range may physically mark a border, but the river or range remains a geographic feature. A separate political-border record states that a claim or jurisdiction uses that feature as a boundary.
+### 5.1 Selected owner
 
-Borders must support:
+Taxonomy belongs in a separate future static owner:
 
-- precise, approximate, customary, surveyed, fortified, natural-feature-aligned, and disputed postures;
-- overlapping or contradictory claims;
-- current and historical validity;
-- incomplete character knowledge;
-- stale maps and outdated testimony;
-- different public, local, legal, and practical understandings.
+`player.knowledge_taxonomy_nodes`
 
-Do not add a `kingdomRegionId`, territory array, or border geometry directly to a polity identity merely to simplify Knowledge presentation.
+The domain registry must not absorb a mutable UI tree, and canonical place owners must not carry Knowledge navigation state.
 
-## 7. Location Recognition Model
+### 5.2 First bounded node family
 
-### 7.1 Knowledge Of A Place Is Not Recognition Of A Place
+The smallest coherent family is one root plus four parallel facets:
 
-The system must distinguish:
+- `knowledge_taxonomy_node.geography`;
+- `knowledge_taxonomy_node.geography.physical_geography`;
+- `knowledge_taxonomy_node.geography.settlements_and_places`;
+- `knowledge_taxonomy_node.geography.political_geography`;
+- `knowledge_taxonomy_node.geography.cartography_and_navigation`.
 
-- knowing that a place exists;
-- knowing facts or descriptions about it;
-- knowing one or more identifying clues;
-- being able to identify it from a particular viewpoint or source;
-- probable recognition;
-- confirmed identity;
-- familiarity or mastery.
+Each future node owns only:
 
-A character may know the name Wheelrace Mills without recognizing it from the road. A character may recognize a working mill without knowing that it is specifically Wheelrace Mills.
+- stable id, slug, name, summary, and planned/active/retired lifecycle;
+- `domainId`;
+- nullable `parentNodeId`;
+- a controlled facet key;
+- allowed canonical subject types;
+- allowed relationship-projection kinds;
+- aggregation posture;
+- provenance and non-grant notes.
 
-### 7.2 Recognition Profiles
+Nodes do not own subject records, subject membership copies, geometry, routes, claims, character progress, completion, achievements, UI order, or visibility. UI may order/project nodes later.
 
-Each recognizable location should eventually have one canonical recognition profile. The profile should reference the canonical subject and contain authored clue definitions rather than duplicating the complete place record.
+Initially supported place subjects are only region, settlement, settlement district, and settlement site. Region localities, map features, routes, maps, polities, claims, borders, and jurisdictions remain blocked until their specific Knowledge subject vocabularies and lifecycle rules exist.
 
-A future profile should be able to express:
+## 6. Recognition Profile And Clue Contract
 
-- clue identity;
-- sensory or informational modality;
-- concise clue description;
-- whether the clue is direct, strong, supporting, weak, contradictory, or confirming;
-- the comparison scope in which it is distinctive;
-- literacy, language, script, emblem, profession, skill, or prior-knowledge requirements;
-- distance, viewpoint, lighting, weather, obstruction, audibility, operational-state, and accessibility constraints;
-- stability or likelihood of becoming outdated;
-- relationships to other clues;
-- whether the clue may be learned from text, image, map, instruction, rumor, or direct experience.
+### 6.1 Selected owner
 
-The first implementation should prefer explicit rule bands over pretending that one universal numeric weight is accurate in every context.
+Future static owner:
 
-### 7.3 Clue Modalities
+`player.location_recognition_profiles`
 
-Required future clue families include:
+Record id:
 
-- `written_identifier`: names, signs, plaques, carved labels, milestones, harbor boards;
-- `emblem_or_heraldry`: coats of arms, guild marks, religious signs, flags, seals, maker marks;
-- `visual_form`: silhouette, roofline, construction material, color, height, towers, facade, layout;
-- `structural_mechanism`: waterwheel, windmill sails, cranes, kilns, sluices, furnaces, defensive works;
-- `spatial_relationship`: beside a bridge, upstream of a landing, beneath a cliff, opposite a temple, third gate after a plaza;
-- `cartographic`: map position, route sequence, coordinate, coastline shape, surveyed relationship;
-- `auditory`: bells, machinery, surf, market calls, forge noise, millstones;
-- `olfactory`: smoke, salt fish, tannery odor, herbs, pitch, flour dust;
-- `activity_or_use`: shipbuilding, threshing, milling, worship, military signaling, market exchange;
-- `oral_identifier`: spoken name, local nickname, directions, warning, story, or description;
-- `historical_or_cultural`: memorial event, founder, customary association, legend, ritual, or local saying.
+`location_recognition_profile.<subject_type>.<subject_slug>`
 
-### 7.4 Interpretation Requirements
+Each profile targets exactly one canonical subject and must resolve that subject through its actual owner. No subject is created by a profile.
 
-Perception and understanding are separate.
+The first eventual profile vocabulary should be limited to active settlements, districts, and sites. Planned map features and polities are not eligible until their lifecycle and Knowledge subject decisions permit them.
 
-Examples:
+### 6.2 Profile fields
 
-- Seeing letters does not mean the character can read them.
-- Reading requires appropriate literacy, language, and script knowledge.
-- Seeing a heraldic device does not mean the character knows which polity or institution it represents.
-- Seeing a turning wheel does not necessarily mean the character understands a water-powered mill.
-- Recognizing a mill mechanism may require common-world familiarity, a relevant practical skill, prior instruction, or an already learned clue.
-- A distant silhouette may reveal towers but not inscriptions or machinery.
-- A silent or damaged mill may not expose the same clues as an operating mill.
+A future strict profile owns:
 
-The system must support partial interpretation rather than converting every perceived object into its canonical meaning.
+- id, subject type, subject id, status, summary;
+- comparison scope;
+- globally unique embedded clue ids;
+- confirmation and contradiction bands expressed as rule categories, not final balance numbers;
+- provenance and notes.
 
-### 7.5 Contextual Distinctiveness
+It must not own geometry, discovery state, map reveal, character progress, recognition results, rewards, access, or runtime behavior.
 
-Clue usefulness is contextual.
+### 6.3 Clue identity and vocabulary
 
-A reddish-orange clay tile roof is:
+Clue id:
 
-- directly useful if it is unique in the comparison area;
-- weak if half the district shares it;
-- useful only in combination if paired with a rare tower, adjacent bridge, and known emblem;
-- misleading if the roof has been replaced or the description is old.
+`location_recognition_clue.<profile_slug>.<clue_slug>`
 
-Recognition must compare clues against plausible alternatives in the current context. A clue must not have one permanent identifying value independent of locality, visibility, and competing subjects.
+Required modality vocabulary:
 
-Future evaluation should distinguish:
+- `written_identifier`;
+- `emblem_or_heraldry`;
+- `visual_form`;
+- `structural_mechanism`;
+- `spatial_relationship`;
+- `cartographic`;
+- `auditory`;
+- `olfactory`;
+- `activity_or_use`;
+- `oral_identifier`;
+- `historical_or_cultural`.
 
-- globally unique;
-- unique within a settlement;
-- unique within a district or visible candidate set;
-- uncommon;
-- common;
-- non-diagnostic;
-- contradictory or outdated.
+Required evidence-role vocabulary:
 
-### 7.6 Learned Clues And Observed Clues
+- `direct`;
+- `strong`;
+- `supporting`;
+- `weak`;
+- `contradictory`;
+- `confirming`.
 
-Knowledge sources should teach specific clues, not silently grant final recognition.
+Each clue also declares:
 
-Possible source outcomes include:
+- concise observable description;
+- distinctiveness scope: global, region, settlement, district/candidate-set, uncommon, common, or non-diagnostic;
+- independence group so restatements of one feature do not count as independent proof;
+- interpretation requirements;
+- observation constraints;
+- source modalities that may teach it;
+- stability/outdated posture;
+- optional canonical subject anchors used only as references.
 
-- a written guide teaches a name, district, appearance, and neighboring landmark;
-- oral directions teach a route sequence and local nickname;
-- a picture teaches a facade or skyline but not exact location;
-- a map teaches spatial position and route relations;
-- a sign provides a direct identifier only when visible, authentic, legible, and understood;
-- practical experience teaches the function of a waterwheel, kiln, crane, or other mechanism;
-- repeated travel teaches approach views, neighborhood layout, and stable landmark chains;
-- a rumor teaches a clue with uncertain reliability;
-- a Chronicle record teaches historical identity but may be outdated for current recognition.
+### 6.4 Static, contextual, presentation, uncertainty, and state split
 
-An observation occurrence should record which clues were perceptible and which were successfully interpreted. The recognition consumer should compare that result with the character's learned clues.
+- The profile owns invariant authored clue meaning.
+- The observation result owns context: distance, viewpoint, light, weather, obstruction, audibility, operational state, candidate set, and interpreted clues.
+- UI owns hints and wording only.
+- A named uncertainty channel may own accepted uncertainty evidence only when a domain contract authorizes it.
+- Character evidence/progress/recognition owners store accepted mutable state.
 
-### 7.7 Aggregation And Confirmation
+One common weak clue never confirms identity. Several independent supporting clues may establish probable or recognized identity. One authentic, visible, legible, understood, and trusted direct identifier may confirm identity. Contradictions and stale clues can block, downgrade, or support correction. Exact aggregation numbers remain deferred.
 
-Rules must support these principles:
+## 7. Source-Teaching Contract
 
-- one authentic, legible, understood, and trusted direct identifier may confirm identity;
-- one common weak clue must never be sufficient merely because it matches;
-- several independent supporting clues may establish probable or recognized identity;
-- multiple clues that are merely restatements of one feature must not be treated as independent proof;
-- contradictions must reduce or block recognition;
-- stale or unreliable clues may produce uncertainty or misidentification;
-- proximity, map visibility, catalog presence, or entering the owning settlement must not automatically recognize every subject within it.
+Future static relation owner:
 
-The future implementation must define deterministic aggregation, but this decision does not select final numbers or formulas.
+`player.knowledge_source_teachings`
 
-### 7.8 Recognition States
+A teaching record relates:
 
-The character-facing model should support at least:
+- one canonical source type and source id;
+- one recognition profile;
+- a duplicate-free set of clue ids;
+- teaching posture and reliability;
+- literacy/language/script, emblem, skill, or prior-knowledge requirements where those owners exist;
+- provenance and non-grant notes.
 
-- `unknown`: no usable knowledge of the subject;
-- `known_of`: knows the name or existence but cannot reliably identify it;
-- `described`: knows one or more clues or facts;
-- `possible_match`: current observation matches weak or incomplete clues;
-- `probable_match`: several independent clues support the identity;
-- `recognized`: sufficient valid evidence supports the identity;
-- `confirmed`: a direct identifier or authoritative confirmation establishes identity;
-- `misidentified`: the character has accepted the wrong subject identity;
-- `outdated`: known clues are materially stale or contradicted by current evidence.
+Source identity, teaching offer, accepted evidence, progress application, and presentation remain separate.
 
-Recognition state is not the same as total lore completion, map revelation, travel access, service access, ownership, reputation, or achievement completion.
+Current source classifications:
 
-## 8. Examples
+| Candidate | Current classification |
+| --- | --- |
+| `world_map.first_world` | map metadata/visual reference, not a possessed or studied source |
+| Route Charts / Reference Book / other generic items | item identities only; no clue-teaching authority |
+| Route `signage` objects | descriptive nested route data without canonical sign identity |
+| Books/documents | no authored document-instance teaching owner |
+| Teachers | no canonical teacher identity/teaching owner selected |
+| Institutions | no canonical institution teaching relation selected; guild/place proximity is insufficient |
+| Prior travel | accepted travel result and legacy level grant; potential future occurrence source only |
+| Quest outcomes / Chronicle records | supported vocabulary, but no clue-teaching adapter |
+| Pictures, rumors, oral directions | no canonical source records selected |
 
-### 8.1 Aurelis
+Until an exact source owner exists, `sourceId` remains null under current evidence validation. Access, possession, proximity, membership, travel, or UI display never completes teaching.
 
-Possible learned clues:
+## 8. Observation-Occurrence Contract
 
-- a sheltered southern deep-water bay;
-- palace roads rising inland from the port;
-- royal naval yards on the harbor frontage;
-- terraced vineyards behind the city;
-- crown harbor emblems or official signs;
-- a known relation to the Thalos Run and Aurelis Bay.
+Use the accepted occurrence taxonomy:
 
-Approaching by sea, the combined bay shape, naval yards, terraced slopes, palace approaches, and recognized harbor emblem may establish recognition. A readable and trusted official harbor board may confirm it. Merely seeing a large coastal city does not.
+```text
+request
+  -> admission
+       -> location observation occurrence
+            -> accepted observation result
+                 -> candidate clue evidence
+                      -> owner acceptance
+                           -> future recognition proposal
+```
 
-### 8.2 Wheelrace Mills
+The location-observation domain owner must establish:
 
-Possible learned clues:
+- stable request and admitted occurrence identity;
+- canonical profile and candidate-subject references;
+- owner-certified material inputs;
+- causal location/travel/activity relation;
+- deterministic same-tick discriminator;
+- policy/profile/content versions;
+- replay and idempotency posture.
 
-- located in Millrun's Wheelwater Ward;
-- positioned along the fast branch channel;
-- multiple waterwheels and mill structures;
-- near Towpath Landing;
-- flour dust, millstone carts, or grinding noise;
-- a wheel-and-sheaf emblem or written name board.
+An accepted observation result may list:
 
-One waterwheel may identify a generic mill but not Wheelrace Mills. A red tile roof is weak if common locally. Several wheels on the correct branch channel, near the expected landing, with matching mill activity and emblem may establish recognition. A literate character reading a trusted name board may confirm it. Understanding why the wheels power the mill requires functional knowledge beyond simply seeing them.
+- perceptible clue ids;
+- interpreted clue ids;
+- blocked interpretation reasons;
+- contradictory or outdated clue ids;
+- applicable candidate subjects;
+- confirmation evidence;
+- named-channel evidence references when uncertainty was authorized.
 
-## 9. Knowledge Progress, Completion, And Achievements
+The result does not mutate Knowledge, recognition, map visibility, or UI. A later evidence producer creates candidates; an acceptance owner resolves authority, duplicate/replay, sequence, and storage; an application owner applies only accepted changes.
 
-Character-facing achievements should be grouped by stable domains and facets rather than by a flat count of snippets.
+Materially identical retry returns the existing occurrence/result. Different evidence ids claiming one occurrence require equivalence checks. Correction retains original authority and explicit supersession/reconciliation. Projection order, event-envelope ids, wall-clock time, and global insertion order cannot define identity.
 
-Possible Geography achievement paths include:
+Current travel can later provide a causal source through an adapter, but its automatic legacy `geographicKnowledge` grant remains separate until explicitly migrated.
 
-- continents and macroregions known;
-- regions and localities described;
-- settlements known of;
-- settlements recognized in the field;
-- districts and sites confirmed;
-- physical features identified;
-- routes and approaches understood;
-- polity identities known;
-- borders or claims understood at a stated validity level.
+## 9. Settlement, District, And Site Evidence Closure
 
-Achievement aggregation must distinguish awareness, descriptive knowledge, field recognition, and confirmation. Reading one list of city names must not award the same result as reliably navigating to and recognizing those cities.
+Subject closure rules:
 
-The UI may project a browse path such as:
+### Settlement
 
-`Knowledge -> Geography -> Settlements And Places -> Kaelvar -> Verdant Thalos -> Aurelis`
+- Subject id resolves to one live settlement.
+- Region and macroregion ancestry remain settlement/world authority.
+- Evidence context settlement, region, and continent must agree.
 
-It may also project the same subject through:
+### District
 
-`Knowledge -> Geography -> Political Geography -> <Polity> -> Seats -> Aurelis`
+- Subject id resolves to one active district.
+- `parentSettlementId` resolves to one live settlement.
+- District subject identity encodes the same settlement slug.
+- Evidence context uses the owning settlement and its region/continent.
 
-These are character-facing projections over canonical relationships, not duplicate Aurelis records.
+### Site
 
-## 10. Future Authority Direction
+- Subject id resolves to one active site.
+- `parentSettlementId` resolves to one live settlement.
+- A null `parentDistrictId` is valid and must not be inferred.
+- A non-null district resolves to one active district with the same parent settlement.
+- Site subject identity encodes the same settlement slug.
+- Evidence context uses the owning settlement and its region/continent.
 
-A later docs-first schema decision should evaluate the following separate authorities:
+Current snippet validation already enforces these active-subject relationships. The evidence and progress schemas remain the blocking mismatch because they omit district/site subject types. No generic POI record or shortcut subject is permitted.
 
-1. A dedicated `knowledge_domain.geography` record rather than continuing to place all location knowledge in General Lore.
-2. A Knowledge taxonomy or bracket authority for hierarchical/faceted presentation and achievement aggregation. Do not overload the domain registry with mutable UI trees without a focused decision.
-3. Expanded subject vocabulary for map features, routes, polities, territorial claims, borders, jurisdictions, settlement districts, settlement sites, and other approved place owners.
-4. Location recognition profiles with explicit clue definitions.
-5. Knowledge-source records that state which clues a book, sign, map, picture, teacher, institution, rumor, quest outcome, or Chronicle record can teach.
-6. Observation occurrences that state which clues were perceptible and interpreted.
-7. Evidence producers that validate source, clue, subject, owner, location, and occurrence relationships.
-8. Recognition aggregation and contradiction rules.
-9. Progress/completion rules that separate awareness, description, recognition, confirmation, and achievements.
-10. Read-only UI projection only after the data and state owners exist.
+## 10. Political Geography Ownership Matrix
 
-No future pass should combine all ten layers into one implementation package.
+| Concept | Owner and current posture | Geography/recognition use |
+| --- | --- | --- |
+| Physical regions/localities | live world owners | canonical physical subjects after vocabulary support |
+| Settlements/districts/sites | live specific owners | canonical inhabited-place subjects |
+| Semantic map features | 8 planned records | blocked as Knowledge subjects until active/lifecycle and subject support |
+| Visual geometry | one `world.world_map_features` aggregate | reference/presentation only; never subject identity |
+| World map metadata | one `world_map.first_world` record | map identity/metadata only; not character knowledge |
+| Hexes/edges | world topology owners | spatial/traversal input only; no reveal or recognition |
+| Routes/ship lanes | nested under one travel network | route identity/topology input; no current Knowledge subject |
+| Polities | 2 planned `polity.*` records | political identity only; blocked as active Knowledge subjects |
+| Claims/control/occupation | no owner | unavailable; do not infer |
+| Borders/frontiers | no owner | unavailable; physical feature alignment does not create a border |
+| Jurisdictions | boundary decided but not schema-ready; zero ids | unavailable |
+| Governments | boundary decided but not schema-ready; zero ids | unavailable |
+| Conflict-zone summaries | 4 world-map descriptive entries | display context only; no canonical conflict or territory |
 
-## 11. Required Implementation Order
+Political Geography projects typed relations when their owners exist. A region never becomes a kingdom by presentation. A polity place anchor is identity/seat context, not territory, control, claim, border, or jurisdiction. A river or mountain remains physical geography even if a future border record references it.
 
-Preserve the active `0.6.5`-`0.6.7` static-content program.
+No border, claim, control, occupation, jurisdiction, government, geometry, overlay, or political inference is authorized by this plan.
 
-After `0.6.7` acceptance, run a docs-first support pass named:
+## 11. Recognition States And Legacy-Level Boundary
 
-`Geographic Knowledge Taxonomy And Location Recognition Contract Plan`
+Future clue-based recognition should distinguish:
 
-That pass should:
+- `unknown`;
+- `known_of`;
+- `described`;
+- `possible_match`;
+- `probable_match`;
+- `recognized`;
+- `confirmed`;
+- `misidentified`;
+- `outdated`.
 
-1. inventory current location snippets, domain fields, evidence/progress schemas, subject vocabularies, skills, place authorities, map/route authorities, and polity/border decisions;
-2. decide the first Geography domain and taxonomy-node contracts;
-3. decide recognition-profile and clue contracts;
-4. decide how source records teach clues;
-5. decide how observation occurrences expose clues;
-6. close the settlement-district and settlement-site evidence subject gap;
-7. decide political-geography subject ownership without implementing borders or claims by inference;
-8. select one smallest implementation package;
-9. preserve current runtime-consumer candidates until the support pass completes.
+These states are not the existing numeric level ladder. No direct mapping from Unfamiliar/Familiar/Knowledgeable/Seasoned/Intimate is approved.
 
-The support pass must not reinterpret existing `Recognizing ...` snippets as completed recognition criteria.
+Recognition is also distinct from:
 
-## 12. Acceptance Principles For Future Work
+- snippet points or completion;
+- taxonomy/achievement aggregation;
+- map reveal or route visibility;
+- known-location UI lists;
+- travel access;
+- service access;
+- reputation or public recognition;
+- Chronicle presence;
+- ownership and rewards.
 
-Future recognition work is acceptable only when it can prove:
+## 12. Smallest Later Implementation Package
 
-- every recognition profile targets one canonical subject;
-- every clue has a stable identity and explicit modality;
-- every learned clue has an authorized source and beneficiary;
-- every observed clue comes from a bounded occurrence;
-- literacy, language, emblem, practical-knowledge, perception, and context requirements are explicit where relevant;
-- common clues cannot independently identify a subject;
-- contextual distinctiveness and plausible alternatives are considered;
-- contradictions and outdated clues are representable;
-- direct confirmation is distinguished from probable recognition;
-- no knowledge, recognition, achievement, map, access, service, reward, or gameplay state is granted by catalog presence alone;
-- polity, claim, border, jurisdiction, and physical geography remain separate authorities;
-- UI remains a projection and does not become recognition authority.
+Selected future package:
 
-## 13. Active Pipeline Boundary
+`Settlement District And Site Knowledge Evidence Subject Closure`
 
-This decision is durable but queued. It does not displace `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion`, `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`, or `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
+Classification: current-band primary capability candidate in `0.6.x`, with no number assigned during this unversioned planning run. It materially closes a live cross-layer Knowledge contract but does not satisfy any `0.7.0` integrated-gameplay criterion. Activity Resolution reuse remains the immediate next documentation run before this package is scheduled.
 
-Every active and generated prompt in that sequence must preserve this decision and the post-`0.6.7` support route. Existing location snippets remain valid static lore records, but they must be described as structural authored knowledge rather than full recognition mechanics.
+### Allowed scope
+
+- add `settlement_district` and `settlement_site` to the Knowledge evidence and progress schema subject enums;
+- add exact focused fixtures for the 6 live district snippets and 7 live site snippets;
+- prove target parity with the referenced snippet;
+- prove active parent settlement closure;
+- prove active district closure for non-null site district refs;
+- prove null site district refs remain valid;
+- prove planned/retired, unresolved, malformed, and cross-settlement subjects reject;
+- prove existing Flora/Fauna/Minerals/General Lore behavior remains unchanged.
+
+### Allowed files
+
+- `packages/schemas/player/knowledge_evidence.schema.json`;
+- `packages/schemas/player/knowledge_progress.schema.json`;
+- only the existing pure Knowledge evidence/progress validators or adapters proven necessary by the signature/authority audit;
+- only their focused unit tests and schema-file assertions;
+- required coordination documents.
+
+### Prerequisites
+
+- fresh clean/synchronized repository audit;
+- exact characterization of every evidence/progress helper that consumes subject enums;
+- explicit authority inputs for districts and sites where semantic validation needs them;
+- no change to snippet content, domain registry, legacy Geography levels, storage, runtime, UI, or saves.
+
+### Fail-closed conditions
+
+Stop if closure requires:
+
+- weakening active-subject or parent validation;
+- treating snippet parity alone as proof when required place authority is unavailable;
+- adding generic POI authority;
+- expanding to recognition profiles, source teaching, occurrence execution, persistence, or UI;
+- migrating General Lore snippets;
+- changing current travel grants or geographic level semantics.
+
+The separate planned Geography domain seed and taxonomy/profile schema plans remain later packages. They must not be bundled into this closure.
+
+## 13. Deferred Implementation Sequence
+
+After the immediate Activity Resolution Existing-System Reuse Audit, retain this owner-correct sequence:
+
+1. settlement district/site evidence/progress subject closure;
+2. planned broad Geography domain seed;
+3. taxonomy-node schema/validator plan and then its bounded five-node seed;
+4. recognition-profile/clue schema and validator;
+5. source-teaching schema and owner-specific source adapters;
+6. location-observation occurrence/result contract implementation;
+7. character evidence/recognition storage and accepted-only application;
+8. legacy `geographicKnowledge` characterization, adapter, and migration decision;
+9. read-only UI/taxonomy/achievement projection;
+10. separately authorized map reveal, political overlays, or gameplay consumers.
+
+Each item requires its own scope and acceptance evidence. No later step may be inferred from completion of an earlier static package.
+
+## 14. Acceptance Rules
+
+Future work must prove:
+
+- every profile targets one canonical subject;
+- every clue has stable identity, modality, evidence role, independence, and context;
+- every learned clue has an authorized source and character beneficiary;
+- every observed clue comes from an accepted bounded occurrence/result;
+- interpretation requirements are explicit and use live owners;
+- common clues do not independently identify a subject;
+- contradictions, alternatives, uncertainty, stale knowledge, and correction are representable;
+- accepted-only application is idempotent;
+- district/site parent and lifecycle closure is enforced;
+- physical geography, routes, maps, polities, claims, borders, jurisdictions, and UI stay in their owners;
+- catalog presence, travel, access, possession, visibility, and prose do not grant recognition.
+
+## 15. Explicit Non-Goals
+
+- no content or snippet migration;
+- no schema, validator, test, helper, or runtime change;
+- no Geography domain or taxonomy content in this run;
+- no recognition profiles or clues in this run;
+- no source teaching, evidence, progress, storage, occurrence, command, event, save, or UI implementation;
+- no change to legacy geographic levels or travel grants;
+- no map reveal, fog of war, markers, routes, pathfinding, coordinates, geometry, overlays, borders, claims, jurisdictions, governments, or political control;
+- no generic POI authority;
+- no activity-resolution implementation;
+- no modification of the isolated readiness branch.
+
+## 16. Immediate Route
+
+This Geography/recognition plan is accepted when its coordination and hygiene gates pass.
+
+The immediate next run remains the unversioned `Activity Resolution Existing-System Reuse Audit`. The selected settlement district/site evidence closure is a later current-band candidate and does not displace that audit.

@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The roadmap top override and the sequenced-plan current anchor are refreshed through accepted `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` and the active Geography/recognition plan.
+The roadmap top override and the sequenced-plan current anchor are refreshed through the accepted Geography/recognition plan and the active Activity Resolution existing-system reuse audit.
 
-`docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution, does not invalidate the refreshed top override, and does not require a pre-run edit before the active Geography/recognition plan. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
+`docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution, does not invalidate the refreshed top override, and does not require a pre-run edit before the active Activity Resolution audit. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
 
 ## Controlling Current Anchor
 
@@ -31,7 +31,8 @@ Use the following precedence for current execution and routing:
 ## Accepted Current State
 
 - latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
-- next run: unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`;
+- latest completed unversioned run: `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`;
+- next run: unversioned `Activity Resolution Existing-System Reuse Audit`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
@@ -45,17 +46,16 @@ Use the following precedence for current execution and routing:
 - accepted `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` completed its exact static package;
 - accepted `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` reproduced all static-package inventories, passed normal lint and 688 prescribed focused tests, and found no content/schema/validator/runtime repair need;
 - the six remaining cross-domain temporary research artifacts were removed after their durable-coverage conditions passed;
-- the Geography/recognition plan is active next, with Activity Resolution reuse held immediately behind its acceptance.
+- the Geography/recognition plan is accepted and the Activity Resolution reuse audit is active next.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-2. run Activity Resolution Existing-System Reuse Audit;
-3. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-4. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-5. proceed through separately authorized owner-specific implementation packages.
+1. run Activity Resolution Existing-System Reuse Audit;
+2. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+3. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+4. proceed through separately authorized owner-specific implementation packages.
 
 ## Maintenance Rule
 

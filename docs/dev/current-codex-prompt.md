@@ -1,152 +1,325 @@
-# Geographic Knowledge Taxonomy And Location Recognition Contract Plan
+# Activity Resolution Existing-System Reuse Audit
 
 ## Run Identity
 
-- Run name: `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`
-- Label class: unversioned cross-cutting documentation plan
-- Milestone impact: `supports_current_band`
-- Scope: documentation only
-- Parent version: not applicable
+Unversioned `Activity Resolution Existing-System Reuse Audit`
 
-## Objective
+Documentation only. This run does not consume a primary `0.6.x` or later implementation version.
 
-Inspect the live repository and produce one decision-complete contract plan for geographic Knowledge and location recognition. Reuse current place, map, route, polity, Knowledge, skill, evidence, progress, and occurrence authorities without treating descriptive lore as executable mechanics.
+Suggested commit:
 
-Do not implement content, schemas, validators, tests, runtime, UI, saves, maps, overlays, or gameplay in this run.
+`docs(audit): reconcile activity resolution systems`
 
-## Start And Sync Gate
+## Purpose
 
-1. Read `AGENTS.md` and `README.md`; obey repository/version/prompt-packaging rules.
-2. Inspect repository identity, branch, worktree, remotes, tracking state, and current `HEAD`.
-3. Fetch the tracked remote. If it is ahead and the worktree is safe, fast-forward pull before planning. Preserve unrelated work.
-4. Confirm `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is accepted in current output, handoff, sequenced-plan current anchor, roadmap top override, continuity brief, backlog, static program, and route register.
-5. Confirm this exact unversioned prompt is active and the `Activity Resolution Existing-System Reuse Audit` remains held immediately behind accepted Geography planning.
-6. Apply the documented planning precedence. `docs/dev/project-roadmap.md` has one known lower `## 1. Current Anchor` block with pre-`0.6.7` wording; `docs/design/current-planning-anchor-reconciliation.md` classifies it as stale and noncontrolling. Do not stop solely because of that already-reconciled block, and do not rewrite the large roadmap from truncated content.
-7. Confirm the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched. Do not check it out, merge it, rebase it, or modify it.
-8. If active-route identity, accepted-package status, or remote/worktree state is otherwise contradictory and cannot be reconciled from current authority, stop without edits and report the exact issue.
+Reinspect the live repository and determine which existing trial, quest, Knowledge, activity, crafting, workplace, difficulty, and magic structures can safely support a future shared contextual activity-resolution framework.
+
+The audit must decide what is:
+
+- reusable shared vocabulary;
+- reusable only through an adapter;
+- legacy behavior to preserve temporarily;
+- domain-owned and not generalizable;
+- missing authority;
+- blocked pending another owner;
+- unsafe to promote.
+
+The audit must not implement the shared framework.
 
 ## Required Reading
 
-Read at minimum:
+Read:
 
-- `AGENTS.md`
-- `README.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/future_content_backlog.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
-- `docs/design/current-planning-anchor-reconciliation.md`
-- `docs/design/static-content-expansion-program.md`
-- `docs/design/internal-versioning-and-release-milestone-policy.md`
-- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`
-- the controlling Knowledge domain, evidence/progress, trial, occurrence, discovery/POI, settlement, map, route, polity, and world-authority decisions
-- `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md`
-- live Knowledge schemas/content/validators and live place/map/route/polity/skill authorities needed to verify the plan
+- `AGENTS.md`;
+- `README.md`;
+- current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, and backlog;
+- `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md`;
+- `docs/design/future-system-design-ledger.md`;
+- `docs/design/skill-mastery-trial-framework-plan.md`;
+- `docs/design/knowledge-trial-boundary-plan.md`;
+- `docs/design/knowledge-trial-readiness-boundary-plan.md`;
+- `docs/design/knowledge-trial-readiness-policy-schema-plan.md`;
+- `docs/design/crafting-authority-boundary-decision.md`;
+- `docs/design/cross-domain-production-research-synthesis.md`;
+- `docs/data-dictionary/quests.md`;
+- `docs/design/magic-study-authority-boundary-decision.md`;
+- relevant activity, travel, quest, difficulty, command/event, and preview/execution boundary documents.
 
-## Required Inventory
+Inspect the live files that own or consume:
 
-Reproduce and cite the live repository facts needed to decide:
+- Skill Trial schema, content, progression, tests, and title/breakthrough relationships;
+- Knowledge completion, eligibility, readiness, policy, schema, helper, content, and tests;
+- quest archetype/definition action trees and their validation/runtime consumers;
+- crafting recipes, production chains, workplaces, jobs, tools, and any current craft resolver;
+- activity selection and every activity advancement/preview/execution path;
+- run difficulty modifiers that could affect progression, checks, or consequences;
+- magic readiness/planned-output envelopes and narrow combat-hook execution;
+- shared types, commands, events, revision identity, synchronization, and persistence patterns.
 
-1. current location-related Knowledge snippets, their domains, subject types/ids, categories, discovery-source families/types, prerequisites, progression, and visibility;
-2. broad Knowledge domain registry and narrow legacy domain/policy authorities;
-3. Knowledge evidence, progress, completion, readiness, trial, and occurrence boundaries;
-4. supported subject vocabularies and the exact settlement, district, site, sacred-site, hotspot, region, locality, continent, map-feature, visual-map, route/travel-network, polity, claim/border/jurisdiction, and generic-POI posture;
-5. geography- or observation-adjacent skills and any live source-teaching authority;
-6. current runtime/UI/save consumers, proving what is implemented versus absent.
+## Execution Gate
 
-Do not infer authority from filenames, prose titles, UI labels, or future backlog entries.
+1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
+2. Confirm every hold prerequisite is accepted. Stop without edits when any prerequisite is not accepted.
+3. Confirm `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md` exists and remains planning-only.
+4. Reproduce current counts and identities for trials, skills, Knowledge trial policies/readiness schemas, quest archetypes/definitions, recipes, workplaces/jobs, and relevant helpers.
+5. Search for every implementation and consumer of trial outcomes, checkpoints, action trees, activity advancement, crafting resolution, Knowledge readiness, and generic checks.
+6. Record stale or contradictory documentation separately from runtime defects.
+7. Do not assume that similarly named fields share semantics.
 
-## Durable Design Owner
+## Required Audit Output
 
-Update exactly:
+Create:
 
-- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`
+- `docs/design/activity-resolution-existing-system-reuse-audit.md`
 
-Use that file as the single durable focused authority for this plan. Do not create a competing Geography/recognition design document. If live evidence proves that the existing owner cannot carry a required contract, stop and report the ownership conflict instead of creating another authority by inference.
+The audit must contain the following sections.
 
-## Required Decisions
+### 1. Exact Live Baseline
 
-Make the existing durable design document decision-complete for all of the following.
+Report exact current:
 
-### 1. First Geography Domain And Taxonomy Node
+- skill bands, gates, and maximum rank;
+- trial records and schema capabilities;
+- trial progression helper behavior;
+- Knowledge policy, schema, content, helper, and adapter state;
+- quest action-tree fields, outcome branches, effects, and consumers;
+- crafting recipe and production/workplace authority;
+- activity selection and advancement ownership;
+- difficulty modifier owners;
+- magic readiness and execution boundaries.
 
-- Decide whether the first contract belongs in the broad Knowledge registry, a narrow legacy domain, or a separate typed taxonomy owner.
-- Name the owner, exact identity shape, lifecycle posture, allowed subject relationships, and why adjacent owners are not being overloaded.
-- Define the smallest first taxonomy node or bounded node family. Do not seed content in this run.
+### 2. Authority Matrix
 
-### 2. Recognition Profile And Clue Contract
+For each candidate concept, identify:
 
-- Separate subject identity and lore from recognition criteria.
-- Define the future profile owner and a bounded clue vocabulary for observable, non-secret evidence.
-- Distinguish invariant authored clues, contextual clues, presentation hints, uncertainty, and player progress.
-- State whether clues reference existing place/map authorities and how closure is validated.
+- static owner;
+- mutable owner;
+- current consumer;
+- validation;
+- tests;
+- persistence;
+- UI owner;
+- missing owner;
+- promotion posture.
 
-The title or summary of a current `Recognizing ...` Knowledge snippet is not a criterion, clue list, rule, score, grant, or implemented mechanic.
+Candidate concepts must include:
 
-### 3. Source-Teaching Contract
+- eligibility;
+- readiness;
+- depth selection;
+- attempt identity;
+- phase/node;
+- check;
+- continuous margin;
+- result band;
+- branch;
+- recovery;
+- consecutive soft failure;
+- participant role;
+- aggregation;
+- metric/accumulator;
+- familiarity;
+- reliability/compression;
+- typed effect;
+- terminal status;
+- cooldown;
+- reward/progression proposal;
+- deterministic seed/randomness evidence.
 
-- Decide how maps, books/documents, people/institutions, signs/landmarks, prior travel, and other possible sources may teach geographic information.
-- Separate source identity, teaching offer, evidence receipt, progress application, and presentation.
-- Use only live owners or mark a dependency explicitly absent; do not invent generic source authority.
+### 3. Quest Action-Tree Reuse Decision
 
-### 4. Observation-Occurrence Contract
+Determine whether quest action trees should:
 
-- Decide the boundary between observing clues and recording an occurrence/evidence receipt.
-- Preserve deterministic identity, atomicity, replay/idempotency, provenance, uncertainty, and accepted-only application requirements from current occurrence authority.
-- Keep runtime commands/events/save fields deferred.
+- become the shared definition grammar;
+- expose selected shared components;
+- remain quest-owned while a separate shared grammar is authored;
+- require correction before any reuse.
 
-### 5. Settlement, District, And Site Evidence-Subject Closure
+Inspect strictness, effect ownership, node identity, graph closure, participant aggregation, outcome semantics, and runtime consumers. Do not decide by field-name similarity alone.
 
-- Decide exact subject/evidence relationships for settlements, districts, and sites, including parent/status requirements and null district anchors.
-- Preserve specific place owners and active-subject rules.
-- Reject a generic `world.pois` substitute.
+### 4. Legacy Trial Adapter Decision
 
-### 6. Political Geography Ownership
+Classify the current trial system as an explicit model such as `state_accumulator` and decide:
 
-- Decide ownership boundaries among regions/localities, polities, claims, borders, jurisdictions, routes, semantic map features, and visual geometry.
-- State which political-geography concepts have live authority, schema-only authority, descriptive-only evidence, or no authority.
-- Do not author borders, claims, jurisdiction records, geometry, overlays, or inferred political control.
+- which behavior must remain stable;
+- whether current checkpoint thresholds are descriptive, cumulative, or executable;
+- how pass/fail and potential loss can coexist with future node outcomes;
+- whether content migration is needed;
+- whether an adapter can be read-only first;
+- which tests lock current behavior.
 
-### 7. Smallest Later Implementation Package
+Do not change rank gates or progression math.
 
-- Select exactly one smallest dependency-closed later package, or explicitly return `NO_IMPLEMENTATION_PACKAGE_READY`.
-- Name allowed files, prerequisites, validation evidence, non-goals, and fail-closed conditions.
-- Classify its future label under the internal versioning policy; do not preassign a new primary version unless the plan proves a durable current-band capability advance.
+### 5. Knowledge Attempt Gap Decision
 
-## Prohibitions
+Separate what already exists from what remains missing.
 
-- No content, schema, validator, test, runtime, UI, save, migration, asset, dependency, or gameplay edits.
-- No borders, claims, jurisdiction data, map geometry, map overlays, fog-of-war, markers, route finding, travel discovery, recognition scoring, clue matching, Knowledge grants, progression mutation, or occurrence execution.
-- No reinterpretation of `Recognizing ...` prose as mechanics.
-- No generic POI authority.
-- No weakening of existing owner, lifecycle, reference, or validation boundaries.
-- No broad research unless a specific decision is proven blocked by absent external evidence; report that gate instead.
-- No merge, rebase, checkout, or modification of `prep/integrated-gameplay-0-7-readiness-audit`.
+At minimum distinguish:
 
-## Validation And Completion
+- completion;
+- eligibility;
+- authored readiness policy content;
+- content-to-helper adapter;
+- attempt creation;
+- checkpoint resolution;
+- outcome;
+- cooldown;
+- reward;
+- storage/persistence;
+- runtime/UI.
 
-1. Verify every cited file and live identity exists and every quoted count is reproducible.
-2. Search the final plan for contradictions with current Knowledge, place, map, route, polity, occurrence, and static/runtime authority.
-3. Run documentation hygiene checks: conflict markers, trailing whitespace, `git diff --check`, changed-path review, and full diff review.
-4. Do not run builds, typechecks, servers, generators, package installs, or broad test suites.
-5. Overwrite `docs/dev/current-codex-output.md` with the unversioned plan result and all required metadata.
-6. Advance handoff, sequence, roadmap, continuity brief, backlog, and route register only where accepted planning changes current direction. Do not replace any large file from truncated content.
-7. Activate the held `Activity Resolution Existing-System Reuse Audit` only after every plan decision and hygiene gate passes. When activating it, write `# Activity Resolution Existing-System Reuse Audit` as the active title and copy the queued file from `## Run Identity` onward into `docs/dev/current-codex-prompt.md`. Omit the queued-only title and `## Hold Status`; preserve the substantive audit body. If the accepted Geography plan proves a direct contradiction in that held body, stop and revise the held prompt before activation rather than silently changing it during installation.
-8. Fetch `docs/dev/current-codex-prompt.md` after installation and verify that it names the Activity Resolution audit as active, contains no queued-only hold language, and preserves the accepted prerequisite order.
+Correct stale roadmap claims that treat already-landed schema/helper work as future work, while preserving genuinely missing layers.
 
-## Final Report
+### 6. Crafting Process-Profile Decision
+
+Determine the minimum future static process-profile authority separate from:
+
+- recipes;
+- production chains;
+- workplaces;
+- item instances;
+- mutable work orders.
+
+Decide whether phases, metrics, defects, recovery, and objectives belong in a shared activity profile, a crafting-specific profile, or both.
+
+### 7. Gathering Difficulty And Familiarity Gap
+
+Identify the current owners or absences for:
+
+- target difficulty;
+- minimum/recommended competence;
+- method identity;
+- target/method familiarity;
+- yield/condition/safety/site-impact dimensions;
+- source depletion/regrowth;
+- item creation;
+- automation/compression reliability.
+
+Do not infer these from production-chain difficulty or workplace metadata unless a current owner explicitly establishes that relationship.
+
+### 8. Activity Advancement Integration Decision
+
+Audit every activity advancement and preview/execution path. Decide whether a future shared attempt resolver should integrate through activity advancement, a separate command family, or domain-owned commands.
+
+Preserve engine-owned activity selection as a separate accepted boundary.
+
+### 9. Determinism And RNG Decision
+
+Identify current deterministic command/revision/event patterns and every relevant randomness owner.
+
+Recommend a future posture for:
+
+- preview/execution parity;
+- seed ownership;
+- replay;
+- stale protection;
+- accepted-only application;
+- graph simulation;
+- test fixtures.
+
+Do not implement RNG or state.
+
+### 10. Typed Effect Ownership Matrix
+
+Map candidate outcome effects to explicit owners. Mark missing owners and prohibit direct generic-resolver mutation.
+
+### 11. Documentation Contradictions
+
+At minimum inspect:
+
+- stale Knowledge readiness sequencing;
+- historical `0.5.x` placeholders that should not be executed as future active versions;
+- temporary-artifact references and removal conditions;
+- any conflict between roadmap, sequenced plan, current handoff, current output, backlog, and durable design plans.
+
+### 12. Exact Follow-Up Sequence
+
+Select the smallest documentation-first sequence after the audit. It should normally separate:
+
+1. competence/difficulty/familiarity/compression authority;
+2. shared node/outcome/aggregation vocabulary;
+3. attempt identity/state/determinism;
+4. typed effect ownership;
+5. domain adapters;
+6. pure helpers and simulation-only slices;
+7. presentation;
+8. mutation owners.
+
+Install the exact next prompt only when the audit has enough live evidence to make it decision-complete.
+
+## Required Classifications
+
+Use explicit classifications such as:
+
+- `reuse_shared`;
+- `reuse_via_adapter`;
+- `preserve_legacy`;
+- `domain_owned`;
+- `missing_static_authority`;
+- `missing_mutable_owner`;
+- `validation_gap`;
+- `test_gap`;
+- `documentation_stale`;
+- `blocked_by_owner`;
+- `reject_generalization`.
+
+## Prohibited Scope
+
+Do not change:
+
+- content JSON;
+- schemas;
+- validators;
+- tests;
+- helpers;
+- runtime;
+- commands/events;
+- UI;
+- saves/persistence;
+- progression math;
+- economy;
+- inventory;
+- crafting execution;
+- gathering execution;
+- Knowledge mutation;
+- magic execution;
+- combat;
+- dependencies;
+- assets;
+- generated output;
+- gameplay.
+
+## Allowed Changes When Activated
+
+Documentation only:
+
+- `docs/design/activity-resolution-existing-system-reuse-audit.md`;
+- current output and handoff;
+- current prompt only to install an exact accepted follow-up prompt;
+- roadmap, sequenced plan, backlog, historical/deferred register, continuity brief, and future-system ledger only for proven route or factual corrections;
+- this queued file for explicit disposition.
+
+## Validation
+
+- Verify every repository claim against live files.
+- Verify all referenced paths exist.
+- Search for duplicate or conflicting authority descriptions.
+- Confirm no source/test/content/runtime path changed.
+- Run conflict-marker and trailing-whitespace checks and `git diff --check`.
+- Inspect the complete changed-path set and full diff.
+- Do not run builds, content lint, typechecks, tests, servers, generators, package installation, or gameplay unless a repository-fact check strictly requires one; document any exception.
+
+## Completion Report
 
 Report:
 
-- exact inventories and authority findings;
-- all seven required decisions and unresolved blockers;
-- confirmation that `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` is the single durable design owner updated;
-- confirmation that current `Recognizing ...` snippets remain structural lore only;
-- confirmation that no borders, claims, overlays, runtime, UI, saves, or gameplay were implemented;
-- the smallest later package or `NO_IMPLEMENTATION_PACKAGE_READY`;
-- files changed, checks, risks, suggested commit, and next run;
-- confirmation that Activity Resolution reuse remains next only after accepted Geography planning;
-- confirmation that any installed Activity Resolution prompt omits its queued-only Hold Status and was fetched after writing.
+- starting commit and worktree state;
+- exact inspected systems and counts;
+- accepted reuse/adaptation/rejection decisions;
+- stale documentation findings;
+- required authority and test gaps;
+- audit path;
+- exact next route and prompt disposition;
+- files changed;
+- checks run;
+- confirmation that no implementation or gameplay behavior changed.
