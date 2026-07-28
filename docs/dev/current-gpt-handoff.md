@@ -10,6 +10,7 @@ Date: 2026-07-28
 - The integration decision accepted coarse process separations, stabilization/care semantics, reassessment triggers, observer-safe evidence, and unsafe-transfer rejections.
 - A documentation-only first catalog plan is ready; executable or balance-bearing work remains `NO_PACKAGE`.
 - The active route is unversioned `First Lethal-Process Definition And Catalog Plan`.
+- Internal health authority may remain precise, but future player-facing labels, statuses, dialogue, Chronicle text, and narrative cues must remain simple, direct, understandable, and plausible for the fantasy setting.
 
 ## Current Planning Precedence
 
@@ -34,6 +35,11 @@ Run exact unversioned `First Lethal-Process Definition And Catalog Plan`.
 - Select a smallest first non-executable definition scope or return `NO_PACKAGE`.
 - Treat suspected internal bleeding as observer-only unless actual process truth is owner-accepted.
 - Keep poison-family taxonomy as a research/design gap.
+- Preserve a strict internal-versus-player-facing language boundary.
+- Internal ids and contracts may use precise technical distinctions, but future display labels and prose must use brief, concrete, setting-appropriate language such as `bleeding badly`, `struggling to breathe`, `faint and cold`, `badly burned`, `poisoned`, `stable for now`, or `needs a healer`.
+- Do not expose modern clinical terms such as `hypovolemic`, `respiratory compromise`, `cyanosis`, `perfusion`, `neurological deficit`, `syndrome`, or `triage` as ordinary player-facing language.
+- Trained healers, alchemists, scholars, and magical diagnosticians may know more than ordinary observers, but their speech must remain understandable and their certainty must be bounded by accepted capability.
+- Magic may extend observation, diagnosis, stabilization, restoration, or communication, but must not justify modern-scientific exposition, pseudo-scientific technobabble, or omniscient diagnosis.
 - Do not implement content, schemas, validators, tests, runtime, UI, saves, migrations, values, timers, probabilities, diagnoses, protocols, or gameplay.
 - Preserve the decoded research artifact; it still has two later consumers after this plan.
 - Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
