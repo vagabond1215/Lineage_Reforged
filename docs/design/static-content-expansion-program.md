@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4`-`0.6.7`, Geography/recognition, Activity Resolution, Mortal Crisis receipt, lethal-process research integration, first catalog plan, and care-capability contract complete; observer-safe assessment active next
+Status: `0.6.4`-`0.6.7`, Geography/recognition, Activity Resolution, Mortal Crisis receipt, lethal-process research integration, first catalog plan, care-capability contract, and observer-safe assessment complete; health-runtime dependency closure active next
 
 ## 1. Purpose
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, lethal-process research integration, first lethal-process catalog plan, and care-capability contract are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. Care implementation remains `NO_PACKAGE`; observer-safe crisis assessment/presentation is active next.
+The Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, lethal-process research integration, first lethal-process catalog plan, care-capability contract, and observer-safe crisis assessment/presentation contract are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. Health implementation remains `NO_PACKAGE`; health-runtime dependency closure is active next.
 
 ## 11. Batch And Review Policy
 
@@ -151,6 +151,9 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned support | Activity Resolution Existing-System Reuse Audit | Complete and accepted read-only reuse decision; no implementation authority. |
 | unversioned support | Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision | Complete and accepted documentation authority; bounded research required before any executable or balance-bearing catalog. |
 | unversioned integration | Lethal Process And Stabilization Research Integration Decision | Complete: grounded research narrowed into durable process, care, reassessment, and observer boundaries; executable work remains `NO_PACKAGE`. |
+| unversioned support | First Lethal-Process Definition And Catalog Plan | Complete: six-process conceptual scope selected; implementation remains `NO_PACKAGE`. |
+| unversioned support | Care Capability, Stabilization, And Process-Effect Contract Decision | Complete: grants, availability, access, attempts, results, and owner receipts separated; implementation remains `NO_PACKAGE`. |
+| unversioned support | Observer-Safe Crisis Assessment And Presentation Contract Decision | Complete: evidence, assessment, urgency, safe projection, realization, and validator separation accepted; final research artifact retired; implementation remains `NO_PACKAGE`. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -162,4 +165,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the documentation-only Observer-Safe Crisis Assessment And Presentation Contract Decision. Do not preassign `0.6.8`, authorize executable content, diagnostic logic, treatment protocols, or UI/runtime by inference.
+Run the documentation-only Health Runtime Ownership And Dependency Closure Audit. Do not preassign `0.6.8`, authorize executable content, diagnostic logic, treatment protocols, or UI/runtime by inference.

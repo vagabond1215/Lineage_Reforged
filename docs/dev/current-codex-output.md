@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`
+Source version/run: unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`
 
 Label class: unversioned
 
@@ -10,109 +10,100 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `26b9626961396d44db8b15494249dd0bfd3964e7`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `14f12dedf43ca0f26a70f784c867137f0243a167`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-Created `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`.
+Created `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
 
-Accepted one future shared care-capability identity vocabulary with owner-specific grants, scene/destination availability assessments, care-attempt resolvers, accepted results, and consequence receipts. A care result may propose bounded effects; only the target process/body/injury/function owner may accept its own mutation.
+Accepted a conceptual owner-safe contract that separates viewpoint, visibility, observation, attributed reports, trained and magical assessment, diagnosis confidence, qualitative urgency, renderer-safe projection, deterministic realization, and validator-only evidence.
 
 Implementation remains `NO_PACKAGE`.
 
 ## Live Baseline
 
-- 55 spell records; exactly 12 healing-school spells and 10 `heal.hp` spell hooks.
-- `heal.hp` is runtime-consumed but only restores combat HP through combat-owned math.
-- The general known-spell resolver remains a `planning_only` inert envelope.
-- Relevant identity evidence: Field Medicine, Water Safety, Healing Magic, and Alchemy skills.
-- Nine combat roles include healer and support metadata, which does not grant care capability.
-- Six care-like items—antidote phial, field bandage, healing tonic, two remedy kits, and utility salve—have no use profile or consumable profile.
-- Nine consumable profiles are food/drink metabolic inputs only.
-- Five planned services contain no care service; service validation forbids healing effects.
-- Body recovery owns sleep/camp/safety/meal/water metabolic effects, not injury or lethal-process care.
-- UI presentation previews metabolic recovery; a legacy UI-owned rest path still restores resources but is not care authority.
-- Saves, events, deltas, commands, active effects, inventory, equipment, Chronicle, and UI contain no care-capability grant, attempt, process effect, or owner receipt.
+- `PlayerBodyState` owns current metabolic state, not injury, diagnosis, process, or care truth.
+- `bodyStatePresentation.ts` projects exactly energy, hydration, fatigue, protein, and intoxication into condition/readiness/recovery views.
+- Current condition severities are `normal`, `warning`, and `critical`; readiness is `Ready`, `Pressured`, `Strained`, or `Compromised`.
+- Current recommendations are only `Drink`, `Rest`, and `Eat`.
+- HP/MP/stamina, combat statuses, incapacitation, defeat, metabolic alerts, notifications, toasts, labels, and Chronicle prose have no observer or diagnosis provenance.
+- `activeEffects` remains `string[]`.
+- Generic events/deltas and `SaveSnapshot` contain no assessment result, process instance, care receipt, observer-safe projection, or correction lineage.
+- Legacy UI-owned rest and HP-zero terminal behavior remain compatibility seams, not accepted care or death authority.
 
-## Capability And Availability Decision
+## Owner And Evidence Decision
 
-The shared vocabulary owns collision-safe capability identity only.
+Accepted separate conceptual owners for:
 
-Owner-specific contracts own:
+- viewpoint and observer identity;
+- scene visibility, reach, examination access, and consent;
+- direct observation and attributed reports;
+- capability-bounded trained or magical assessment;
+- observer-specific diagnosis confidence and provenance;
+- qualitative urgency;
+- renderer-safe fact projection;
+- deterministic presentation;
+- validator-only evidence;
+- UI, dialogue, narrative, Chronicle, and run-end consumers.
 
-- skill/training, magic, equipment/material, provider, or institution grants;
-- scene availability;
-- destination offer and current availability;
-- access, legality, willingness, consent, reachability, and affordability;
-- care-attempt admission/result;
-- process, body, injury, function, inventory, magic, travel, economy, and institution consequences.
+Accepted evidence classes are directly perceived, recognized, inferred under a named accepted rule, attributed report, trained qualified judgment, magically sensed qualified judgment, and unknown/withheld/unsafe.
 
-Grant, availability, access, admission, and success are distinct. No role, profession, item name, spell name, service name, tag, or prose may imply capability.
+## Assessment And Hidden-Truth Boundary
 
-## Request, Result, And Receipt Boundary
+An assessment uses stable request identity, pre-admission checks, one admitted occurrence, and one capability-bounded result. Rejection creates no occurrence or consequence; duplicate delivery returns existing status; replay does not reroll; correction retains supersession.
 
-- The initiating owner establishes request identity and normalized intent.
-- The care/action owner validates and admits one care-attempt occurrence.
-- Pre-admission rejection creates no gameplay occurrence or consequence.
-- Duplicate delivery returns existing status and cannot repeat a roll, consumption, or mutation.
-- An accepted result records the attempt and owner-addressed effect proposals.
-- Every target owner accepts/rejects its own consequence and records one stable receipt.
-- Partial failure retries only the missing receipt.
-- Presentation failure never retries care or mutation.
+Assessment changes observer knowledge only. It never mutates process, body, injury, care, inventory, travel, destination, death, or future outcome.
 
-## Care Semantic Boundaries
+Process identity/stage, hidden anatomy/physiology, timers, rates, probabilities, rolls, prognosis, future outcomes, and validator evidence remain private. No single sign, HP value, status, label, role, item, spell, service, or prose line establishes diagnosis.
 
-Kept distinct:
+## Urgency, Reassessment, And Presentation
 
-- stabilization;
-- suppression;
-- supportive care;
-- definitive treatment;
-- process resolution;
-- functional recovery;
-- ordinary injury recovery;
-- convalescence;
-- anatomical restoration;
-- resurrection.
+Qualitative urgency is an upstream owner-approved projection over accepted facts, never a renderer calculation from hidden numbers.
 
-`heal.hp`, generic healing, rest, roles, services, items, or magic cannot collapse these meanings.
+Visible concern, qualified urgency, immediate threat, current stability, unresolved care need, provider/destination need, functional limitation, actual death, and restoration eligibility remain separate.
 
-## Reassessment, Magic, Language, And Migration
+Reassessment is a new accepted event-time result. It may revise present knowledge but cannot rewrite what an earlier observer knew.
 
-Qualitative reassessment may follow owner-certified movement, delay, environment, observed trend, intervention response, destination/capability, or upstream-state change. No universal timer, clinical schedule, or automatic diagnosis is accepted.
+Renderer-safe facts and validator-only evidence are closed separate channels. Validator evidence may reject leakage but cannot influence planning, wording, telemetry, logs, UI, or player reports.
 
-Magic contributes only explicitly granted capability and still uses owner-specific results/receipts. It implies no omniscience, universal healing, anatomical restoration, resurrection, or modern-scientific exposition.
+Player-facing language must be brief, concrete, everyday, setting-appropriate, attributed, and uncertainty-preserving. Internal ids, clinical jargon, hidden stages, probabilities, raw rolls, private diagnosis, and future outcomes remain hidden.
 
-Internal technical terms remain hidden. Player-facing text must be brief, concrete, setting-appropriate, attributed, and capability-bounded.
+## First-Scope And Care Compatibility
 
-No current hook, skill, role, item, service, body-recovery fact, save, event, label, or prose migrates into care truth.
+Observer-safe boundaries were recorded for:
+
+- external hemorrhage;
+- confirmed internal hemorrhage versus suspicion;
+- airway obstruction;
+- post-submersion respiratory compromise;
+- systemic hypothermia;
+- hot-altered heat crisis.
+
+Shock-like deterioration, poison families, local freezing injury, contextual heat illness, superficial/serious burns, and chemical/electrical/inhalation mechanisms retain their existing gaps or split owners.
+
+Care request, attempt admission, visible occurrence, care result, process-owner receipt, support, stabilization, unresolved need, extraction, transport, destination offer/availability/access/arrival/admission, and provider result remain distinct.
 
 ## Package Readiness
 
 `NO_PACKAGE`
 
-Missing authority includes exact capability catalog/grant contracts, live process definitions/instances, care requirements, care-attempt schemas, material-input policies, scene/destination access owners, consent/law/provider contracts, inventory receipt behavior, general magic execution, persistence/correction, observer-safe assessment, poison families, and serious-burn ownership.
+Missing authority includes observer/viewpoint identity, health visibility/recognition/access, live process and care state, assessment grants/requests/results, named uncertainty, qualitative urgency, renderer-safe health facts, validator isolation, deterministic presentation lineage, destination/provider admission, persistence/migration/correction, and unresolved poison/shock/burn ownership.
 
-## Research Consumption And Retention
+## Research Consumption And Disposition
 
-This decision is the third named consumer of:
+This decision is the fourth and final named consumer of the grounded lethal-process research artifact.
 
-`docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
-
-Verified:
+Before deletion, the artifact was verified at:
 
 - 58,943 UTF-8 bytes;
 - SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d`.
 
-The artifact remains unchanged.
-
-The only outstanding named consumer is:
-
-1. the first observer-safe crisis assessment/presentation package.
+All four consumers are complete. Their durable decisions preserve every still-needed conclusion, source identity, path, and integrity hash. The installed follow-up prompt does not require the temporary path. The retention condition was therefore satisfied and the artifact was deleted.
 
 ## Files Changed
 
-- added `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`;
+- added `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`;
+- deleted `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`;
 - updated `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-codex-prompt.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
@@ -127,11 +118,12 @@ The only outstanding named consumer is:
 ## Checks Run
 
 - repository, branch, worktree, upstream, fetch, and tracking alignment;
-- preceding catalog-plan acceptance and `NO_PACKAGE`;
-- exact research-artifact byte length and SHA-256;
-- healing spell/hook counts and compatibility;
-- skill, role, item, consumable-profile, service, body-recovery, inventory, save, command/result, event/delta, magic-readiness, UI, and presentation inventories;
-- accepted occurrence, care, process, restoration, Stakes, and narrative-authority reconciliation;
+- exact research-artifact byte length and SHA-256 before deletion;
+- four-consumer completion and durable-retention conditions;
+- live body-state, HP/resource, combat-status, active-effect, notification, toast, Chronicle, save, event/delta, terminal-run, and UI presentation inventories;
+- accepted occurrence, process, care, Mortal Crisis, Stakes, restoration, narrative, observer, replay, and correction authority reconciliation;
+- first-scope process and deferred-gap reconciliation;
+- installed-prompt and live-authority artifact-path checks;
 - referenced-path and documentation-only scope checks;
 - conflict-marker, trailing-whitespace, and `git diff --check` scans;
 - complete changed-path and full-diff review.
@@ -140,16 +132,16 @@ No build, content lint, typecheck, test, generator, server, package installation
 
 ## Suggested Commit Message
 
-`docs(health): define care capability contract`
+`docs(health): define observer-safe crisis assessment`
 
 ## Risks / Follow-Up Notes
 
 - Current HP-zero defeat/archive/save-deletion behavior remains a rejected target behavior outside this run.
-- No active lethal-process, care-requirement, care-attempt, crisis-receipt, death/restoration, persistence, or correction owner exists.
-- Exact poison taxonomy and detailed burn/process ownership remain unresolved.
-- The observer-safe assessment contract is required before presentation or implementation readiness can be reassessed.
+- No active functional-state, lethal-process, care-requirement, care-attempt, assessment, urgency, crisis-receipt, death/restoration, persistence, or correction owner exists.
+- Exact poison taxonomy, shock-like ownership, and detailed burn/process representation remain unresolved.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
+- The temporary research artifact is intentionally no longer present; durable decisions are now the source.
 
 ## Next Recommended Run
 
-Unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`
+Unversioned `Health Runtime Ownership And Dependency Closure Audit`

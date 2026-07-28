@@ -5,13 +5,15 @@ Date: 2026-07-28
 ## Status
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Care Capability, Stabilization, And Process-Effect Contract Decision`.
-- A shared care-capability identity vocabulary with owner-specific grants, availability, access, attempts, results, and consequence receipts is accepted conceptually.
-- Care results may propose bounded effects; only target owners mutate process, body, injury, function, inventory, magic, travel, economy, or institution truth.
-- Stabilization, suppression, support, definitive treatment, process resolution, recovery, restoration, and resurrection remain distinct.
+- Latest completed unversioned run: `Observer-Safe Crisis Assessment And Presentation Contract Decision`.
+- Observation, assessment, diagnosis confidence, urgency, renderer-safe projection, deterministic presentation, and validator evidence now have separate accepted conceptual owners.
+- The seven accepted evidence classes preserve direct perception, recognition, named-rule inference, attribution, trained judgment, magical judgment, and unknown/withheld/unsafe posture.
+- Assessment is capability-bounded knowledge only and cannot mutate the assessed process.
+- Reassessment creates new event-time knowledge and never rewrites earlier uncertainty.
 - Exact static or executable implementation remains `NO_PACKAGE`.
-- The active route is unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`.
-- This next run is the fourth and final named consumer of the grounded research artifact.
+- The four named grounded-research consumers are complete.
+- The research artifact was verified at 58,943 bytes and SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d`, then deleted after durable-retention conditions passed.
+- The active route is unversioned `Health Runtime Ownership And Dependency Closure Audit`.
 
 ## Current Planning Precedence
 
@@ -27,58 +29,47 @@ Use current execution sources in this order:
 
 ## Active Plan Guardrails
 
-Run exact unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`.
+Run exact unversioned `Health Runtime Ownership And Dependency Closure Audit`.
 
-- Documentation only; create `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
-- Treat this as the fourth and final named consumer of the retained research artifact.
-- Separate hidden owner truth from direct observation, attributed reports, trained assessment, magical sensing, qualitative urgency, and renderer-safe claims.
-- Preserve ordinary observer, helper, trained healer/alchemist/scholar, and magical-diagnostician capability differences.
-- Define assessment request/admission/result and reassessment without diagnosing from one sign.
-- Preserve process, care attempt, effect receipt, functional state, transport, destination, and unresolved-need ownership.
-- Separate renderer-safe inputs from validator-only hidden evidence.
-- Define deterministic plain-language fallback and correction/regeneration posture without making prose authority.
-- Preserve brief, concrete, everyday, setting-appropriate player-facing wording.
-- Do not expose modern clinical jargon, hidden stages, timers, probabilities, raw rolls, private diagnosis, or future outcomes.
-- Do not implement UI, narrative generation, content, schemas, validators, tests, runtime, saves, migrations, values, diagnosis logic, treatment instructions, or gameplay.
-- Decide final research-artifact retention or safe removal conditions after recording consumption.
+- Documentation only; create `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`.
+- Reproduce live health-adjacent owners and gaps.
+- Reconcile functional state, processes, care, Mortal Crisis, assessment/presentation, death/restoration, Stakes, persistence, occurrence, replay, and correction.
+- Produce an explicit dependency graph and owner-readiness matrix.
+- Distinguish current authority, compatibility inputs, static metadata, UI-owned mutation, unsupported inference, and absent conceptual owners.
+- Select at most one smallest safe prerequisite.
+- Return one exact later documentation package route or `NO_PACKAGE`.
+- Do not recreate the retired research artifact.
+- Do not preassign `0.6.8`.
+- Do not implement content, schemas, validators, tests, runtime, UI, saves, migrations, diagnosis, care, death, or gameplay.
 - Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
 
-## Research Artifact
+## Durable Research Closure
 
-Path:
+The four complete consumers are:
 
-`docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
+1. `docs/design/lethal-process-and-stabilization-research-integration-decision.md`;
+2. `docs/design/first-lethal-process-definition-and-catalog-plan.md`;
+3. `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`;
+4. `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
 
-Integrity:
-
-- 58,943 UTF-8 bytes;
-- SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d`.
-
-Named consumers:
-
-1. research integration — complete;
-2. first lethal-process definition/catalog plan — complete;
-3. care-capability and stabilization contract/package — complete;
-4. observer-safe crisis assessment/presentation package — active.
-
-After the active run, no named consumer remains. The run must decide whether durable decisions preserve all required conclusions and source identity before deleting or retaining the artifact.
+These decisions are now the durable source. The temporary decoded artifact is retired and must not be required by future prompts.
 
 ## Preserved Known Gaps
 
 - Workspace typecheck remains a separately classified known-failing audit with 173 reproducible diagnostics.
 - Current HP zero may still enter legacy terminal archival and save deletion.
 - Generic event ids remain collision-prone compatibility projections.
-- No active functional-state, lethal-process, care-requirement, care-attempt, Mortal Crisis receipt, death/restoration, persistence, or correction owner exists.
-- Exact poison taxonomy and detailed burn/process representation remain unresolved.
+- No active functional-state, lethal-process, care-requirement, care-attempt, assessment, urgency, Mortal Crisis receipt, death/restoration, persistence, or correction owner exists.
+- Exact poison taxonomy, shock-like ownership, and detailed burn/process representation remain unresolved.
 - Activity advancement, rest, and quest turn-in still include UI-owned mutation paths.
 
 ## Near-Term Sequence
 
-1. run `Observer-Safe Crisis Assessment And Presentation Contract Decision`;
-2. record final research-artifact retention or removal authority;
-3. reassess exact owner-specific package readiness only after the final consumer is accepted;
+1. run `Health Runtime Ownership And Dependency Closure Audit`;
+2. identify the smallest exact owner/schema prerequisite or return `NO_PACKAGE`;
+3. classify any later package only after its dependency and maturity impact are proven;
 4. keep executable and balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Active Prompt
 
-Unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`
+Unversioned `Health Runtime Ownership And Dependency Closure Audit`

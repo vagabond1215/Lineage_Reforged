@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-28 after the care-capability/process-effect contract was accepted and observer-safe crisis assessment/presentation was activated.
+Updated 2026-07-28 after observer-safe crisis assessment/presentation was accepted, the final grounded-research artifact was retired, and health-runtime dependency closure was activated.
 
 ## Purpose
 
@@ -23,8 +23,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Care Capability, Stabilization, And Process-Effect Contract Decision`.
-- Active run: unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`.
+- Latest completed unversioned run: `Observer-Safe Crisis Assessment And Presentation Contract Decision`.
+- Active run: unversioned `Health Runtime Ownership And Dependency Closure Audit`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -44,7 +44,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The accepted research integration is `docs/design/lethal-process-and-stabilization-research-integration-decision.md`.
 - The accepted first catalog plan is `docs/design/first-lethal-process-definition-and-catalog-plan.md`.
 - The accepted care-capability contract is `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`.
-- The observer-safe crisis assessment/presentation prompt is installed in `docs/dev/current-codex-prompt.md`.
+- The accepted observer-safe contract is `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
+- All four grounded-research consumers are complete; the verified temporary artifact was retired.
+- The health-runtime ownership/dependency-closure prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -60,9 +62,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`;
-2. record final research-artifact retention or removal authority;
-3. reassess exact owner-specific static or executable package readiness only after the final consumer is accepted;
+1. run unversioned `Health Runtime Ownership And Dependency Closure Audit`;
+2. identify the smallest exact owner/schema prerequisite or return `NO_PACKAGE`;
+3. classify any later package only after dependency order and maturity impact are proven;
 4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Current Implementation Reality
@@ -78,11 +80,11 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 - Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
 - Current hashes and random mechanisms are not accepted named uncertainty-channel authority.
 - Current HP zero may still enter legacy terminal archival and save deletion.
-- No active injury instance, lethal-process owner, care receipt, body/restoration runtime, or correction tool exists.
+- No active injury instance, lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists.
 
 ## Research And Content Posture
 
-The bounded lethal-process research and its repository integration are accepted. Coarse process families, stabilization semantics, reassessment triggers, observer-safe evidence, and unsafe-transfer rejections are durable; exact poison taxonomy, catalog ownership, mutable representation, persistence, and implementation remain gated. Do not import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
+The bounded lethal-process research and all four named repository consumers are accepted. Coarse process families, stabilization semantics, reassessment triggers, observer-safe evidence, and unsafe-transfer rejections are durable; the verified temporary artifact was retired. Exact poison taxonomy, catalog ownership, mutable representation, persistence, and implementation remain gated. Do not import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
 Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition implementation, generic POIs, and activity-resolution implementation behind their recorded gates.
 
