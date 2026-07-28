@@ -8,9 +8,11 @@ Date: 2026-07-28
 - Accepted `0.6.4`-`0.6.6` inventories, references, lifecycle/status posture, and static/runtime boundaries were reproduced and accepted.
 - Normal content lint passed at 67 files; the prescribed focused group passed 688/688.
 - No content, schema, validator, test, runtime, UI, save, or gameplay repair was required.
-- Stale live coordination wording was corrected.
+- Stale top-level live coordination wording was corrected during `0.6.7`.
+- One lower `docs/dev/project-roadmap.md` `## 1. Current Anchor` block remains pre-`0.6.7`; `docs/design/current-planning-anchor-reconciliation.md` explicitly classifies it as stale and noncontrolling, so it does not block the active plan.
 - All six remaining Gate 1-5 and Gate 7 research artifacts were removed after their durable-coverage and no-citation-need conditions passed.
 - The unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan` is active.
+- Prompt readiness was hardened after `0.6.7`: the stale run-specific mode pointer was removed from `AGENTS.md`, the Geography plan now updates exactly one durable design owner, and successor activation must omit the queued Activity Resolution hold wrapper.
 
 ## Current Planning Precedence
 
@@ -29,12 +31,15 @@ Use current execution sources in this order:
 Run the exact unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`.
 
 - Documentation only: inspect and decide contracts; do not edit content, schemas, validators, tests, runtime, UI, saves, maps, or gameplay.
+- Update exactly `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` as the single durable focused design owner; do not create a competing Geography/recognition plan.
 - Inventory current location snippets, domain/evidence/progress schemas, subject vocabularies, skills, and place/map/route/polity authorities.
 - Decide the first Geography domain/taxonomy-node contract, recognition profile and clue contract, source-teaching contract, observation-occurrence contract, settlement/district/site evidence-subject closure, political-geography ownership, and one smallest later implementation package.
 - Treat current `Recognizing ...` snippets as structural lore only, never as implicit recognition criteria or mechanics.
 - Do not implement borders, claims, overlays, recognition runtime, UI, saves, or gameplay.
 - Preserve generic `world.pois` rejection and all current owner boundaries.
+- Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
 - Preserve the held `Activity Resolution Existing-System Reuse Audit` immediately behind accepted Geography planning.
+- On successful activation of the held audit, copy its executable body from `## Run Identity` onward, use an active title, omit the queued-only title and Hold Status, and fetch the installed prompt to verify it.
 
 ## Preserved Known Gaps
 
