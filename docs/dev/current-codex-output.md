@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `First Lethal-Process Definition And Catalog Plan`
+Source version/run: unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`
 
 Label class: unversioned
 
@@ -10,85 +10,92 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `599cef0d1dc2f1f05080c0a61a1686005bf017e1`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `26b9626961396d44db8b15494249dd0bfd3964e7`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-Created `docs/design/first-lethal-process-definition-and-catalog-plan.md`.
+Created `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`.
 
-The existing combined combat-health vocabulary cannot safely host lethal-process definitions. The accepted direction is a shared structural envelope with owner-specific definition catalogs. Exact implementation remains `NO_PACKAGE`.
+Accepted one future shared care-capability identity vocabulary with owner-specific grants, scene/destination availability assessments, care-attempt resolvers, accepted results, and consequence receipts. A care result may propose bounded effects; only the target process/body/injury/function owner may accept its own mutation.
 
-## Live Vocabulary Inventory
+Implementation remains `NO_PACKAGE`.
 
-- Content: `packages/content/base/game/combat_health_vocabulary.json`.
-- Exactly two records: `combat_status.stagger` and `combat_status.bind`.
-- Both are `kind: status`, `status: planned`, `family: control`.
-- Zero live condition and injury records.
-- Strict eleven-field records: id, slug, name, kind, status, family, summary, allowed owner types, tags, authority notes, and notes.
-- Exact kinds: status, condition, injury.
-- Exact prefixes: `combat_status.`, `combat_condition.`, `combat_injury.`.
-- Pure focused validator, exact-once normal-lint registration, and 13 focused tests.
-- No production import of the canonical records.
-- Runtime uses separate `status.*` hooks, mutable combat status effects, plain `activeEffects` labels, HP-zero defeat/incapacitation, body-state projections, and save snapshots. None is lethal-process authority.
+## Live Baseline
 
-## Catalog And Owner Decision
+- 55 spell records; exactly 12 healing-school spells and 10 `heal.hp` spell hooks.
+- `heal.hp` is runtime-consumed but only restores combat HP through combat-owned math.
+- The general known-spell resolver remains a `planning_only` inert envelope.
+- Relevant identity evidence: Field Medicine, Water Safety, Healing Magic, and Alchemy skills.
+- Nine combat roles include healer and support metadata, which does not grant care capability.
+- Six care-like items—antidote phial, field bandage, healing tonic, two remedy kits, and utility salve—have no use profile or consumable profile.
+- Nine consumable profiles are food/drink metabolic inputs only.
+- Five planned services contain no care service; service validation forbids healing effects.
+- Body recovery owns sleep/camp/safety/meal/water metabolic effects, not injury or lethal-process care.
+- UI presentation previews metabolic recovery; a legacy UI-owned rest path still restores resources but is not care authority.
+- Saves, events, deltas, commands, active effects, inventory, equipment, Chronicle, and UI contain no care-capability grant, attempt, process effect, or owner receipt.
 
-Rejected:
+## Capability And Availability Decision
 
-- adding a lethal-process kind to `combat_health_vocabulary`;
-- reclassifying lethal processes as status, condition, or injury;
-- one universal lethal-process catalog or resolver;
-- multiple unrelated owner catalogs without a shared identity envelope.
+The shared vocabulary owns collision-safe capability identity only.
 
-Accepted conceptually:
+Owner-specific contracts own:
 
-- a shared structural envelope for collision-safe identity, owner declaration, definition lifecycle, provenance, and bounded references;
-- owner-specific catalogs for definition meaning;
-- owner-specific mutable instances and accepted results;
-- strict separation from observer projection, care resolution, death, persistence, UI, and Chronicle.
+- skill/training, magic, equipment/material, provider, or institution grants;
+- scene availability;
+- destination offer and current availability;
+- access, legality, willingness, consent, reachability, and affordability;
+- care-attempt admission/result;
+- process, body, injury, function, inventory, magic, travel, economy, and institution consequences.
 
-No exact fields, enums, prefixes, paths, or schema were accepted.
+Grant, availability, access, admission, and success are distinct. No role, profession, item name, spell name, service name, tag, or prose may imply capability.
 
-## First Definition Scope
+## Request, Result, And Receipt Boundary
 
-Selected conceptually:
+- The initiating owner establishes request identity and normalized intent.
+- The care/action owner validates and admits one care-attempt occurrence.
+- Pre-admission rejection creates no gameplay occurrence or consequence.
+- Duplicate delivery returns existing status and cannot repeat a roll, consumption, or mutation.
+- An accepted result records the attempt and owner-addressed effect proposals.
+- Every target owner accepts/rejects its own consequence and records one stable receipt.
+- Partial failure retries only the missing receipt.
+- Presentation failure never retries care or mutation.
 
-1. external hemorrhage;
-2. confirmed internal hemorrhage;
-3. airway obstruction;
-4. post-submersion respiratory compromise;
-5. systemic hypothermia;
-6. hot-altered heat crisis.
+## Care Semantic Boundaries
 
-Outside the first scope:
+Kept distinct:
 
-- suspected internal bleeding is observer-only;
-- shock-like circulatory deterioration remains an owner question;
-- poison families remain a research/design gap;
-- local freezing and superficial burns remain injury-owned;
-- non-stroke heat illness remains contextual;
-- serious burns retain split injury/body/respiratory/mechanism ownership;
-- chemical, electrical, and inhalation distinctions remain source-domain inputs unless later accepted as distinct processes.
+- stabilization;
+- suppression;
+- supportive care;
+- definitive treatment;
+- process resolution;
+- functional recovery;
+- ordinary injury recovery;
+- convalescence;
+- anatomical restoration;
+- resurrection.
 
-## Static, Mutable, Observer, Care, And Language Boundaries
+`heal.hp`, generic healing, rest, roles, services, items, or magic cannot collapse these meanings.
 
-Static definitions may eventually carry stable identity, owner, lifecycle, provenance, meaning, and bounded references only.
+## Reassessment, Magic, Language, And Migration
 
-Static definitions must not carry current actor state, severity, stage, timer, probability, diagnosis, care attempt, treatment progress, inventory or magic use, functional state, death, save, event, correction, UI, Chronicle, or gameplay behavior.
+Qualitative reassessment may follow owner-certified movement, delay, environment, observed trend, intervention response, destination/capability, or upstream-state change. No universal timer, clinical schedule, or automatic diagnosis is accepted.
 
-Observer suspicion never becomes process truth automatically. Later care work must use explicit capability and owner-specific result/receipt boundaries.
+Magic contributes only explicitly granted capability and still uses owner-specific results/receipts. It implies no omniscience, universal healing, anatomical restoration, resurrection, or modern-scientific exposition.
 
-Precise internal technical language may remain hidden. Player-facing labels, dialogue, narrative, status text, and Chronicle output must use brief, concrete, setting-appropriate wording; ordinary observation, trained judgment, and magical sensing must remain distinct. Modern clinical jargon and pseudo-scientific exposition are not default display language.
+Internal technical terms remain hidden. Player-facing text must be brief, concrete, setting-appropriate, attributed, and capability-bounded.
+
+No current hook, skill, role, item, service, body-recovery fact, save, event, label, or prose migrates into care truth.
 
 ## Package Readiness
 
 `NO_PACKAGE`
 
-Missing authority includes exact owner namespaces and paths, shared fields/enums, cross-owner reference rules, the care-capability/process-effect contract, mutable instances, persistence/migration/correction, the circulatory and burn splits, poison families, and presentation validation.
+Missing authority includes exact capability catalog/grant contracts, live process definitions/instances, care requirements, care-attempt schemas, material-input policies, scene/destination access owners, consent/law/provider contracts, inventory receipt behavior, general magic execution, persistence/correction, observer-safe assessment, poison families, and serious-burn ownership.
 
 ## Research Consumption And Retention
 
-This plan is the second named consumer of:
+This decision is the third named consumer of:
 
 `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
 
@@ -99,14 +106,13 @@ Verified:
 
 The artifact remains unchanged.
 
-Outstanding named consumers are exactly:
+The only outstanding named consumer is:
 
-1. the first care-capability and stabilization contract/package;
-2. the first observer-safe crisis assessment/presentation package.
+1. the first observer-safe crisis assessment/presentation package.
 
 ## Files Changed
 
-- added `docs/design/first-lethal-process-definition-and-catalog-plan.md`;
+- added `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`;
 - updated `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-codex-prompt.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
@@ -121,29 +127,29 @@ Outstanding named consumers are exactly:
 ## Checks Run
 
 - repository, branch, worktree, upstream, fetch, and tracking alignment;
-- research integration acceptance and artifact presence;
+- preceding catalog-plan acceptance and `NO_PACKAGE`;
 - exact research-artifact byte length and SHA-256;
-- exact combat-health content count, ids, kinds, fields, enums, prefixes, validator rules, registration, and focused-test count;
-- production reference, import, runtime, body-state, persistence, and presentation searches;
-- required design-authority reconciliation;
+- healing spell/hook counts and compatibility;
+- skill, role, item, consumable-profile, service, body-recovery, inventory, save, command/result, event/delta, magic-readiness, UI, and presentation inventories;
+- accepted occurrence, care, process, restoration, Stakes, and narrative-authority reconciliation;
 - referenced-path and documentation-only scope checks;
 - conflict-marker, trailing-whitespace, and `git diff --check` scans;
 - complete changed-path and full-diff review.
 
-No build, content lint, typecheck, test, generator, server, package installation, external research, medical protocol, or gameplay command was run.
+No build, content lint, typecheck, test, generator, server, package installation, external research, medical protocol, treatment instruction, or gameplay command was run.
 
 ## Suggested Commit Message
 
-`docs(health): plan first lethal process catalog`
+`docs(health): define care capability contract`
 
 ## Risks / Follow-Up Notes
 
 - Current HP-zero defeat/archive/save-deletion behavior remains a rejected target behavior outside this run.
-- No active functional-state, lethal-process, care, crisis-receipt, death/restoration, persistence, or correction owner exists.
-- Exact poison taxonomy and detailed burn/process representation remain unresolved.
-- The catalog cannot be implemented safely until care capability and process-effect references are decided.
+- No active lethal-process, care-requirement, care-attempt, crisis-receipt, death/restoration, persistence, or correction owner exists.
+- Exact poison taxonomy and detailed burn/process ownership remain unresolved.
+- The observer-safe assessment contract is required before presentation or implementation readiness can be reassessed.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
 
 ## Next Recommended Run
 
-Unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`
+Unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`

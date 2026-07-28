@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-28 after the first lethal-process definition/catalog plan was accepted and the care-capability decision was activated.
+Updated 2026-07-28 after the care-capability/process-effect contract was accepted and observer-safe crisis assessment/presentation was activated.
 
 ## Purpose
 
@@ -23,8 +23,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `First Lethal-Process Definition And Catalog Plan`.
-- Active run: unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`.
+- Latest completed unversioned run: `Care Capability, Stabilization, And Process-Effect Contract Decision`.
+- Active run: unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -43,7 +43,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The accepted Mortal Crisis receipt contract is `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`.
 - The accepted research integration is `docs/design/lethal-process-and-stabilization-research-integration-decision.md`.
 - The accepted first catalog plan is `docs/design/first-lethal-process-definition-and-catalog-plan.md`.
-- The care-capability contract prompt is installed in `docs/dev/current-codex-prompt.md`.
+- The accepted care-capability contract is `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`.
+- The observer-safe crisis assessment/presentation prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -59,9 +60,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`;
-2. run the first observer-safe crisis assessment/presentation package;
-3. reassess exact owner-specific static or executable package readiness only when both consumer decisions are accepted;
+1. run unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`;
+2. record final research-artifact retention or removal authority;
+3. reassess exact owner-specific static or executable package readiness only after the final consumer is accepted;
 4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Current Implementation Reality

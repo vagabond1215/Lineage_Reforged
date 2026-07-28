@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4`-`0.6.7`, Geography/recognition, Activity Resolution, Mortal Crisis receipt, lethal-process research integration, and first catalog plan complete; care-capability decision active next
+Status: `0.6.4`-`0.6.7`, Geography/recognition, Activity Resolution, Mortal Crisis receipt, lethal-process research integration, first catalog plan, and care-capability contract complete; observer-safe assessment active next
 
 ## 1. Purpose
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, lethal-process research integration, and first lethal-process catalog plan are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. The catalog plan returned `NO_PACKAGE`; the care-capability decision is active next.
+The Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, lethal-process research integration, first lethal-process catalog plan, and care-capability contract are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. Care implementation remains `NO_PACKAGE`; observer-safe crisis assessment/presentation is active next.
 
 ## 11. Batch And Review Policy
 
@@ -162,4 +162,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the documentation-only Care Capability, Stabilization, And Process-Effect Contract Decision. Do not preassign `0.6.8`, authorize executable content, treatment protocols, or reopen generic command infrastructure by inference.
+Run the documentation-only Observer-Safe Crisis Assessment And Presentation Contract Decision. Do not preassign `0.6.8`, authorize executable content, diagnostic logic, treatment protocols, or UI/runtime by inference.
