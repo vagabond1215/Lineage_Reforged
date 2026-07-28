@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-28 after the Mortal Crisis receipt-contract decision was accepted and bounded lethal-process/stabilization research was activated.
+Updated 2026-07-28 after grounded lethal-process/stabilization research was integrated and the first catalog plan was activated.
 
 ## Purpose
 
@@ -23,8 +23,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`.
-- Active run: `GPT-DR.health.lethal-process-stabilization`.
+- Latest completed unversioned run: `Lethal Process And Stabilization Research Integration Decision`.
+- Active run: unversioned `First Lethal-Process Definition And Catalog Plan`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -41,7 +41,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Accepted `0.6.7` reproduced the `0.6.4`-`0.6.6` inventories, passed normal lint at 67 files and the prescribed 688/688 focused tests, found no production repair need, corrected stale coordination wording, and retired all six remaining cross-domain temporary research artifacts.
 - The accepted Geography/recognition authority is `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`.
 - The accepted Mortal Crisis receipt contract is `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`.
-- The bounded research prompt is installed in `docs/dev/current-codex-prompt.md`.
+- The accepted research integration is `docs/design/lethal-process-and-stabilization-research-integration-decision.md`.
+- The first catalog-plan prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -57,10 +58,10 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run `GPT-DR.health.lethal-process-stabilization`;
-2. run the unversioned `Lethal Process And Stabilization Research Integration Decision`;
-3. keep executable or balance-bearing lethal-process catalogs behind accepted research integration and owner-specific authorization;
-4. resume the activity-resolution authority sequence and other packages only through explicit route decisions.
+1. run unversioned `First Lethal-Process Definition And Catalog Plan`;
+2. run the first care-capability and stabilization contract/package selected by accepted evidence;
+3. run the first observer-safe crisis assessment/presentation package;
+4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Current Implementation Reality
 
@@ -79,7 +80,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Research And Content Posture
 
-The abstract Mortal Crisis receipt decision is accepted. Its exact next gate is bounded research `GPT-DR.health.lethal-process-stabilization` on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
+The bounded lethal-process research and its repository integration are accepted. Coarse process families, stabilization semantics, reassessment triggers, observer-safe evidence, and unsafe-transfer rejections are durable; exact poison taxonomy, catalog ownership, mutable representation, persistence, and implementation remain gated. Do not import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
 Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition implementation, generic POIs, and activity-resolution implementation behind their recorded gates.
 

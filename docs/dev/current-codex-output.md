@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
+Source version/run: unversioned `Lethal Process And Stabilization Research Integration Decision`
 
 Label class: unversioned
 
@@ -10,105 +10,125 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `18e3ca6ca47ceb88260cd18521beb27e1305b209`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `4b8722818c9254a18d52d56c3e1f1ddc50727e11`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-The documentation-only receipt-contract decision is complete and accepted.
+The bounded research transport was verified, decoded, and integrated into durable repository authority.
 
-`docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md` now separates functional state, body/resources, injury/trauma, independently owned lethal processes, derived care requirements, life state, Mortal Crisis orchestration, accepted actual death, final closure, and convalescence. It defines phase admission, request/occurrence/result/consequence identity, owner-specific receipts, Stakes commitment, persistence, replay, correction, and observer-safe presentation.
+Created:
 
-No executable or balance-bearing package is authorized. Bounded external research is required next.
+- `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`;
+- `docs/design/lethal-process-and-stabilization-research-integration-decision.md`.
 
-## Live Baseline
+The three verified transport parts were deleted. The decoded artifact is retained for its three remaining named consumers.
 
-- Current HP at or below zero resolves to `dead` or `hardcore_dead`.
-- Run entry and snapshot changes can call `archiveActiveRun(...)`.
-- Archival evaluates achievements, resolves Legacy payout, records account history, deposits the estate, persists the profile, and deletes resolved character slots.
-- Combat defeat/incapacitation, HP/resource synchronization, metabolic body state, recovery context, party, travel, inventory, service, spell, Chronicle, and snapshot seams exist, but no durable functional-state, lethal-process, care-requirement, Mortal Crisis, death-result, consequence-receipt, or correction owner exists.
-- Current combat `heal.hp` behavior is a narrow HP hook and does not own injury, lethal-process, care, restoration, or death truth.
-- Current tick-composed event ids, `hardcore`, and `deathZeroesPrestige` are compatibility evidence, not accepted occurrence/Stakes authority.
-- Current HP-zero archive/delete behavior is classified as `rejected_target_behavior`, not architecture.
+## Transport And Artifact Integrity
 
-## Accepted Decisions
+| Check | Result |
+| --- | --- |
+| Part 1 | 9,000 ASCII characters; SHA-256 `d01fcee441f90822206dcd9bf539a02b2e694148fbd01beac30c70114f01de59` |
+| Part 2 | 9,000 ASCII characters; SHA-256 `090e76843e765f92075af01de6ee8e3b3fff83197d08150d45c4d6daccf41e9d` |
+| Part 3 | 6,812 ASCII characters; SHA-256 `a4e9398b6d4a8c062de714b67e3c5ef51c9756ab3878eb6d674438ec628bcc5f` |
+| Combined payload | 24,812 characters; prefix `H4sIAAAA`; gzip magic `1F 8B` |
+| Decoded artifact | 58,943 UTF-8 bytes; SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d` |
+| Citation integrity | `S01`-`S31` ledger rows and matching URL definitions; no session-local tokens |
+| Retention | Four original consumers exact; integration recorded as first consumer |
 
-- Functional state is an owner-accepted assessment of capability, separate from causes and life state.
-- Every active lethal-process instance has exactly one owning domain and independent accepted transitions.
-- Care requirements are source-linked derived needs; care attempts are occurrences whose affected owners apply accepted results through separate consequence receipts.
-- Mortal Crisis owns episode and phase orchestration only. The accepted phases are Threat Resolution, Immediate Stabilization, Extraction, Transit, Treatment Or Restoration, and Closure.
-- A phase skip requires retained owner-certified evidence.
-- Stabilization does not imply consciousness, mobility, full recovery, definitive care, process resolution, restoration, or survival.
-- Normal, Committed, and Ironbound retain their accepted rollback, commitment, checkpoint, continuity, death, and closure semantics.
-- Actual death and final closure remain separate except where accepted Ironbound policy makes actual death, final death, and closure atomic.
-- UI, Chronicle, and narrative may project observer-safe accepted facts only; hidden timers, diagnoses, uncertainty internals, and future outcomes remain private.
-- The smallest later implementation package is `NO_PACKAGE`.
+## Durable Decisions
 
-## Research Decision
+- Retain independent owner-specific process families rather than one critical state.
+- Retain external hemorrhage, airway obstruction, post-submersion respiratory compromise, systemic hypothermia, and coarse hot-altered heat crisis as distinct planning candidates.
+- Narrow suspected internal bleeding to observer projection unless an owner accepts actual internal hemorrhage.
+- Narrow shock-like deterioration to an owner-specific circulatory process/assessment input, never a universal status or certain diagnosis.
+- Keep local freezing injury and superficial burns injury-owned by default.
+- Keep non-stroke heat illness contextual unless an accepted transition creates a lethal process.
+- Retain serious burns coarsely while preserving separate injury, body, respiratory, and causal-mechanism owners.
+- Retain selective, capability-bound antidotes and reject a universal antidote; exact poison syndrome families remain a research gap.
+- Stabilization, suppression, supportive care, definitive treatment, resolution, functional recovery, anatomical restoration, and resurrection remain separate.
+- Accept qualitative reassessment triggers after owner-certified movement, delay, environment, symptom, response, destination, or capability changes.
+- Show observations, attributed reports, qualified assessments, and trends; hide unsupported diagnosis, exact stages, timers, probabilities, uncertainty evidence, and future outcomes.
 
-Exact next route:
+## Rejected Transfers
 
-`GPT-DR.health.lethal-process-stabilization`
+Rejected:
 
-Exact artifact:
+- universal critical meters, bleed-out timers, poison meters, antidotes, or omnibus lethal rolls;
+- diagnosis certainty from one visible sign;
+- asymptomatic delayed-death “dry drowning” mechanics;
+- clinical timers, protocols, dosages, treatment trees, rates, or medical advice;
+- direct transfer of modern institutional assumptions into every setting context.
 
-`docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
+## Package Readiness
 
-The bounded domains are hemorrhage/shock, airway compromise/drowning, poisoning/antidote limits, cold/heat exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe qualitative urgency.
+A documentation-only `First Lethal-Process Definition And Catalog Plan` is ready.
 
-The prompt prohibits medical advice, clinical protocols, exact real-world timers, dosages, diagnostic decision trees, probabilities ready for gameplay, and proprietary game values.
+Executable or balance-bearing content remains `NO_PACKAGE`. Exact catalog ownership, relation to `combat_health_vocabulary`, first records, poison scope, burn/process split, mutable representation, persistence/migration, correction, and package validation remain undecided.
 
-Named consumers are:
+Accepted order:
 
-1. unversioned `Lethal Process And Stabilization Research Integration Decision`;
-2. the first lethal-process definition/catalog plan;
-3. the first care-capability and stabilization contract/package;
-4. the first observer-safe crisis assessment/presentation package.
+1. first lethal-process definition/catalog plan;
+2. first care-capability and stabilization contract/package;
+3. first observer-safe crisis assessment/presentation package.
 
-## Retained Evidence
+## Research Retention
 
-All six named mortality/narrative/elemental artifacts were consumed only for bounded trace evidence, remained byte-identical, and remain preserved because named later consumers still exist.
+This integration consumed the process-family separations, care semantic distinctions, qualitative reassessment triggers, observer-safe cue boundary, capability/access constraints, and explicit unsafe-transfer rejections.
+
+Outstanding named consumers:
+
+1. the first lethal-process definition/catalog plan;
+2. the first care-capability and stabilization contract/package;
+3. the first observer-safe crisis assessment/presentation package.
+
+The decoded artifact remains until every named consumer records consumption and durable authority retains the conclusions and source identity still needed.
 
 ## Files Changed
 
-- `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-codex-prompt.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
-- `docs/design/current-planning-anchor-reconciliation.md`
-- `docs/design/static-content-expansion-program.md`
-- `docs/future_content_backlog.md`
+- added `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`;
+- added `docs/design/lethal-process-and-stabilization-research-integration-decision.md`;
+- deleted the three `.gz.b64.part01`-`.part03` transport files;
+- updated `docs/dev/current-codex-output.md`;
+- updated `docs/dev/current-codex-prompt.md`;
+- updated `docs/dev/current-gpt-handoff.md`;
+- updated `docs/dev/codex-sequenced-implementation-plan.md`;
+- updated `docs/dev/project-roadmap.md`;
+- updated `docs/dev/project-vision-and-continuity-brief.md`;
+- updated `docs/dev/historical-version-and-deferred-route-register.md`;
+- updated `docs/design/current-planning-anchor-reconciliation.md`;
+- updated `docs/design/static-content-expansion-program.md`;
+- updated `docs/future_content_backlog.md`.
 
 ## Checks Run
 
-- repository, branch, worktree, upstream, fetch/pull, and tracking alignment;
-- active prompt and prerequisite acceptance review;
-- live HP-zero, archival/delete, recovery, combat, body/resource, party, treatment/spell, event, persistence, and account seam inventory;
-- exact six-artifact existence and before/after SHA-256 verification;
-- required document and active-prompt path verification;
-- changed-path and documentation-only scope review;
-- conflict-marker and trailing-whitespace scans;
-- `git diff --check`;
-- complete diff review.
+- repository, branch, worktree, upstream, fetch, and tracking alignment;
+- contract and three transport-commit ancestry;
+- exact part length/hash verification;
+- exact concatenation length, prefix, base64, and gzip-magic verification;
+- decoded byte-length and SHA-256 verification;
+- `S01`-`S31` ledger/reference URL parity;
+- session-local citation-token exclusion;
+- named-consumer and retention-rule verification;
+- accepted repository-contract compatibility review;
+- referenced-path and documentation-only scope verification;
+- conflict-marker and trailing-whitespace scans; authored integration and coordination files are clean;
+- `git diff --check`, which reports only the decoded artifact’s byte-locked Markdown hard-break spaces; those spaces were preserved to retain the verified SHA-256;
+- complete changed-path and full-diff review.
 
-No build, content lint, typecheck, test, server, generator, package installation, or gameplay command was run because this was a documentation-only decision and the prompt prohibited unrelated validation.
+No build, content lint, typecheck, test, generator, server, package installation, external research, or gameplay command was run because the prompt prohibited them and no repository-fact check required one.
 
 ## Suggested Commit Message
 
-`docs(stakes): define mortal crisis receipt contracts`
+`docs(health): integrate lethal process research`
 
 ## Risks / Follow-Up Notes
 
-- Current HP-zero archival and save deletion remain live legacy behavior.
-- No active functional-state, lethal-process, care-requirement, Mortal Crisis receipt, death/restoration, or correction owner exists.
-- The research artifact will remain advisory until the repository integration decision explicitly accepts, narrows, rejects, or defers each abstraction.
-- All six retained evidence artifacts must remain until their later named consumers record consumption.
-- The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
+- Current HP-zero archival and save deletion remain live rejected target behavior.
+- No active process, care, crisis-receipt, death/restoration, persistence, or correction owner exists.
+- Exact poison taxonomy and detailed burn/process representation remain unresolved.
+- The next plan must audit the existing combat-health vocabulary before selecting any catalog path.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
 
 ## Next Recommended Run
 
-`GPT-DR.health.lethal-process-stabilization`
+Unversioned `First Lethal-Process Definition And Catalog Plan`
