@@ -1,14 +1,14 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-27
+Last reviewed: 2026-07-28
 
 ## Current Runtime Transition Override
 
-- Latest completed primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
+- Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 - Latest completed support/audit run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Next primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Activity selection remains accepted. `0.6.4`, the seven-gate research/integration prerequisite, the synthesis-owned 16-row `0.6.5` recipe package, and the exact nine-row `0.6.6` monster/ecology package are complete; `0.6.7` is active.
+- Next run: unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`.
+- Activity selection remains accepted. `0.6.4`, the seven-gate research/integration prerequisite, the synthesis-owned 16-row `0.6.5` recipe package, the exact nine-row `0.6.6` monster/ecology package, and the `0.6.7` coherence audit are complete. Geography/recognition planning is active next; Activity Resolution reuse remains immediately behind it.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.

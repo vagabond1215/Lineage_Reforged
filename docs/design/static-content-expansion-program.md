@@ -1,8 +1,8 @@
 # Static Content Expansion Program
 
-Date: 2026-07-19
+Date: 2026-07-28
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4`, `0.6.5`, and `0.6.6` complete; seven-gate cross-domain research and integration accepted; exact `0.6.7` active
+Status: `0.6.4`-`0.6.7` complete and accepted; Geography/recognition planning active next
 
 ## 1. Purpose
 
@@ -117,7 +117,7 @@ Required order:
 8. Unversioned integration
 9. Revised `0.6.5`
 
-All seven gates, integration, and `0.6.5` are complete. The synthesis owns recipe/chain authority and artifact dispositions; Gate 6 and the production audit were removed after their sole consumer passed.
+All seven gates, integration, `0.6.5`, and the `0.6.7` artifact audit are complete. The synthesis owns recipe/chain authority and artifact dispositions; all eight temporary research/audit artifacts were removed after their sole-consumer conditions passed.
 
 Research ordinary technology first. Magic may augment or replace modern-like functions only through explicit affinity, vessel, capacity, efficiency, stability, recharge, environment, material, skill, installation, maintenance, scarcity, cost, security, and failure constraints.
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The Geographic Knowledge Taxonomy And Location Recognition Contract Plan remains queued after `0.6.7`. Current `Recognizing ...` snippets are structural lore, not implemented recognition criteria.
+The Geographic Knowledge Taxonomy And Location Recognition Contract Plan is active after accepted `0.6.7`. Current `Recognizing ...` snippets are structural lore, not implemented recognition criteria.
 
 ## 11. Batch And Review Policy
 
@@ -146,13 +146,13 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned integration | Cross-Domain Production Research Integration | Seven artifacts reconciled; synthesis created; artifacts dispositioned; recipe/chain authority resolved; exact revised `0.6.5` prompt installed. |
 | revised `0.6.5` | Item, Material, And Recipe Static Content Expansion | Complete: exact 16-row dependency-closed batch, 310 focused tests, and 67-file normal lint passed; no execution claims. |
 | `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Complete: exact nine-row regional matrix, 28 source-local drops, full reference closure, 147 focused tests, and 67-file lint passed. |
-| `0.6.7` | Cross-Content Coherence And Coverage Audit | Active: schemas/validators pass; no duplicate ids/slugs, orphans, contradictions, generic authorities, runtime claims, research drift, or hygiene failures. |
-| unversioned support | Geographic Knowledge Taxonomy And Location Recognition Contract Plan | Geography facets and recognition criteria planned without treating current snippets as mechanics. |
+| `0.6.7` | Cross-Content Coherence And Coverage Audit | Complete: inventories/reference/lifecycle/static-runtime closure passed, prescribed focused tests passed 688/688, normal lint passed at 67 files, and all artifact decisions closed. |
+| unversioned support | Geographic Knowledge Taxonomy And Location Recognition Contract Plan | Active: plan Geography facets and recognition contracts without treating current snippets as mechanics. |
 | unversioned support | Activity Resolution Existing-System Reuse Audit | Read-only reuse decision after the Geography/recognition plan; no implementation authority. |
 
 ## 13. Cross-Content Audit Criteria
 
-`0.6.7` verifies schema compliance, normal lint, semantic validators, duplicate identities, orphan references, settlement/district/site/map/region anchoring, item/resource/commodity/value closure, recipe closure, equipment-profile closure if landed, monster/loot/fauna/lineage/role/tactics closure, Knowledge closure, lifecycle honesty, synthesis compatibility, artifact disposition, route preservation, formatting, and generated-output hygiene. Defects receive the smallest repair suffix attached to the introducing primary. Validators must not be weakened.
+Accepted `0.6.7` verified schema compliance, normal lint, semantic validators, duplicate identities, orphan references, settlement/district/site/map/region anchoring, item/resource/commodity/value closure, recipe closure, monster/loot/fauna/lineage/role/tactics closure, Knowledge closure, lifecycle honesty, synthesis compatibility, artifact disposition, route preservation, formatting, and generated-output hygiene. It found no production defect requiring repair. Validators remain unchanged.
 
 ## 14. Deferred Integrated Gameplay
 
@@ -160,4 +160,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-After `0.6.7`, complete/disposition the Geography and recognition plan, then run the held activity-resolution existing-system reuse audit. Only after both documentation decisions should a later prompt select one bounded consumer from current evidence. Do not preassign `0.6.8` or reopen generic command infrastructure by inference.
+Complete/disposition the Geography and recognition plan, then run the held activity-resolution existing-system reuse audit. Only after both documentation decisions should a later prompt select one bounded consumer from current evidence. Do not preassign `0.6.8` or reopen generic command infrastructure by inference.

@@ -251,6 +251,6 @@ Do not:
 
 ## 11. Next Required Use
 
-The active `0.6.6` and reserved `0.6.7` sequence remains unchanged.
+Accepted `0.6.6` and `0.6.7` complete the planned static-content sequence. The unversioned Geography/recognition plan is next, followed by the held unversioned Activity Resolution reuse audit.
 
 The first planning pass after `0.6.7`, Geography/recognition, and the Activity Resolution Existing-System Reuse Audit that selects a runtime consumer must apply this policy before assigning its label. It must continue in `0.6.x` unless a separate `0.7.0` readiness audit proves and accepts every integrated-gameplay criterion.

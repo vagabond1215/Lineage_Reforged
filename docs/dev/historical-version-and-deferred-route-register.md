@@ -1,6 +1,6 @@
 # Historical Version And Deferred Route Register
 
-Date: 2026-07-27
+Date: 2026-07-28
 Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
@@ -36,7 +36,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `0.6.6.3` | Region Climate Tendencies Contract Repair And BOM Acceptance | Partial implementation followed by fail-closed stop; superseded | Schema `56932eec` and focused assertion `e71f8f6b` landed; broader bounded migration was required. | `docs/dev/current-codex-output.md` |
 | `0.6.6.4` | Region Climate Data Migration, Population Assertion Repair, And BOM Acceptance | Exact implementation landed; partial validation; superseded | Commit `232d3c2f` changed exactly four authorized files; focused `5/5` and lint `67` passed; the broad workspace audit remained non-green at `173`. | `docs/dev/current-codex-output.md` |
 | `0.6.6.5` | Workspace Typecheck Baseline Classification And BOM Acceptance | Complete and accepted | Two fresh captures reproduced the identical `173`-tuple baseline, the four changed-file diagnostics were proven unrelated, the parent baseline passed `146/146`, and exact `0.6.6` was restored. | `docs/dev/current-codex-output.md` |
-| `0.6.7` | Cross-Content Coherence And Coverage Audit | Active | Read-first audit; repair only if evidence proves a defect; no static-content or runtime expansion. | `docs/dev/current-codex-prompt.md` |
+| `0.6.7` | Cross-Content Coherence And Coverage Audit | Complete and accepted | Inventories and reference/lifecycle/static-runtime closure passed; no production repair required; six remaining research artifacts retired. | `docs/dev/current-codex-output.md` |
 
 ## Identity Rules
 
@@ -57,8 +57,8 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | Static world/settlement | expanded-and-validated | Accepted `0.6.4`; exact repair commit `232d3c2f`; focused `5/5`; lint `67`; parent baseline `146/146`; diff/hygiene accepted | None | New proven defect | Complete | `docs/dev/current-codex-output.md` |
 | Static item/material/recipe | expanded-and-validated | Accepted `0.6.5`: 28 recipes/10 families | None | New proven gap | Complete | `docs/design/cross-domain-production-research-synthesis.md` |
 | Static monster/ecology/loot | expanded-and-validated | Accepted `0.6.6`: 33 monsters, 9 fauna lineages, 9 ecology additions, 77 drop rows | None | New proven defect | Complete | `docs/dev/current-codex-output.md` |
-| Cross-content coherence | active maturity gate | Accepted `0.6.4`-`0.6.6`, static lint/validators, retained research artifacts | Complete read-first audit and artifact decisions | Accepted `0.6.6` | Run exact `0.6.7` now | `docs/dev/current-codex-prompt.md` |
-| Geographic Knowledge/recognition | queued user-directed design gate | Place/Knowledge authorities | Facets, clues, observation, overlays | Accepted `0.6.7` | Run after static audit | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
+| Cross-content coherence | complete maturity gate | Accepted `0.6.4`-`0.6.6`, static lint/validators, durable research synthesis | None | New proven defect | Accepted `0.6.7`; no production repair needed | `docs/dev/current-codex-output.md` |
+| Geographic Knowledge/recognition | active user-directed design gate | Place/Knowledge authorities and accepted `0.6.7` | Facets, clues, observation, source teaching, political-geography ownership | Accepted `0.6.7` | Run documentation-only plan now | `docs/dev/current-codex-prompt.md` |
 | Activity resolution reuse | queued repository audit | Selection, trial, quest, Knowledge, crafting, magic, and occurrence foundations | Repository ownership/reuse audit | Accepted Geography plan plus live route check | Run immediately after Geography; documentation only | `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md` |
 | Injury/trauma/Mortal Crisis/restoration | accepted authority; queued receipt contract | Injury, Mortal Crisis, save, occurrence | Functional/lethal/care/crisis receipts | Accepted Activity reuse audit | Run receipt contract; no catalog/runtime | `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md` |
 | Generic `world.pois` | rejected | Specific owner families | None | Explicit decision | Never infer | `docs/design/discovery-poi-boundary-decision.md` |

@@ -281,29 +281,29 @@ The implementation may change only `packages/content/base/crafting/recipes.json`
 
 ## 14. Temporary Artifact Disposition
 
-Six temporary research artifacts remain for `0.6.7`. The Gate 6 and production-audit artifacts were removed after accepted `0.6.5` satisfied their sole-consumer conditions. Each disposition remains explicit below.
+All eight temporary research/audit artifacts have been removed after their sole-consumer conditions passed. Accepted `0.6.7` confirmed that the still-needed Gate 1-5 and Gate 7 findings, uncertainties, ownership boundaries, and deferred correction routes are represented in this synthesis, the static expansion program, backlog, and deferred-route register; no detailed temporary citation catalog remains necessary.
 
 | Artifact | Gate / result | Sole named consumer | Removal condition |
 | --- | --- | --- | --- |
-| `docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md` | Gate 1 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed source/extraction findings are represented in durable authority/backlog and no detailed citation is still required. |
-| `docs/dev/tmp-ecology-flora-fauna-byproducts-research-2026-07-14.md` | Gate 2 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed ecology/output findings are represented durably and no detailed citation is still required. |
-| `docs/dev/tmp-agriculture-land-food-livestock-research-2026-07-14.md` | Gate 3 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed agriculture/husbandry findings are represented durably and no detailed citation is still required. |
-| `docs/dev/tmp-materials-refinement-processing-research-2026-07-14.md` | Gate 4 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed material/process findings are represented durably and no detailed citation is still required. |
-| `docs/dev/tmp-food-processing-preservation-research-2026-07-14.md` | Gate 5 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed food/storage findings are represented durably and no detailed citation is still required. |
+| `docs/dev/tmp-resources-gathering-extraction-research-2026-07-14.md` | Gate 1 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Removed 2026-07-28 after accepted `0.6.7` confirmed durable source/extraction coverage and no remaining citation need. |
+| `docs/dev/tmp-ecology-flora-fauna-byproducts-research-2026-07-14.md` | Gate 2 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Removed 2026-07-28 after accepted `0.6.7` confirmed durable ecology/output coverage and no remaining citation need. |
+| `docs/dev/tmp-agriculture-land-food-livestock-research-2026-07-14.md` | Gate 3 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Removed 2026-07-28 after accepted `0.6.7` confirmed durable agriculture/husbandry coverage and no remaining citation need. |
+| `docs/dev/tmp-materials-refinement-processing-research-2026-07-14.md` | Gate 4 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Removed 2026-07-28 after accepted `0.6.7` confirmed durable material/process coverage and no remaining citation need. |
+| `docs/dev/tmp-food-processing-preservation-research-2026-07-14.md` | Gate 5 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Removed 2026-07-28 after accepted `0.6.7` confirmed durable food/storage coverage and no remaining citation need. |
 | `docs/dev/tmp-crafting-tools-workplaces-production-research-2026-07-14.md` | Gate 6 accepted / audit triggered | Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` | Removed 2026-07-19 after accepted `0.6.5` preserved resolver quarantine and durable owner-specific routes. |
-| `docs/dev/tmp-magitech-production-infrastructure-substitution-research-2026-07-14.md` | Gate 7 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Remove when `0.6.7` confirms all still-needed magic/infrastructure findings are represented durably and no detailed citation is still required. |
+| `docs/dev/tmp-magitech-production-infrastructure-substitution-research-2026-07-14.md` | Gate 7 accepted | `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` | Removed 2026-07-28 after accepted `0.6.7` confirmed durable magic/infrastructure coverage and no remaining citation need. |
 | `docs/dev/tmp-production-chain-workplace-runtime-authority-audit-2026-07-15.md` | `NO_NARROW_CORRECTION_REQUIRED_BEFORE_REVISED_0_6_5` accepted | Revised `Version 0.6.5 - Item, Material, And Recipe Static Content Expansion` | Removed 2026-07-19 after accepted `0.6.5` consumed no quarantined field and durable correction routes remained preserved. |
 
-No remaining temporary artifact is orphaned; Gate 1-5 and Gate 7 remain solely assigned to `0.6.7`.
+No temporary artifact from this research program remains.
 
-## 15. Later 0.6.6 And Future Implications
+## 15. Accepted 0.6.6 And Future Implications
 
-`Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` remains reserved behind accepted revised `0.6.5`. It may use this synthesis to improve static source relationships and niche coverage, but must preserve:
+Accepted `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` used this synthesis for static source relationships and niche coverage while preserving:
 
 - source-local monster drop/loot ownership and exact item/value closure;
 - flora/fauna/monster identity separation and no anatomy-by-name inference;
 - current biome, habitat, regional ecology, combat role, tactics, action-package, and threat owners;
 - no generic loot tables, loot rolls, generated items, spawn execution, population/migration, harvesting, body-part execution, new combat mechanics, magic execution, runtime, UI, saves, or gameplay; and
-- the queued docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan immediately after `0.6.7`.
+- the docs-first Geographic Knowledge Taxonomy And Location Recognition Contract Plan immediately after accepted `0.6.7`.
 
 Later owner-specific work may address extraction relationships, biology scalar validity, recipe balance, fuel/process-aid policy, production resolver contracts, workplace types, item-instance condition and spoilage, storage lots, crafting work orders, dynamic economy, ecology/population, loot execution, services, magitech effects, charge/recharge, installations, maintenance, and persistence. Research and static metadata do not prove those systems exist.

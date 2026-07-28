@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-27 after accepted `0.6.6` completed the exact regional monster/ecology static package and activated `0.6.7`.
+Updated 2026-07-28 after accepted `0.6.7` completed the static coherence gate and activated Geography/recognition planning.
 
 ## Purpose
 
@@ -22,8 +22,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 
 ## Current Repository Anchor
 
-- Latest completed primary: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`.
-- Active primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
+- Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
+- Active run: unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -37,7 +37,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Prompt blob `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f` was superseded unexecuted because it required a nonexistent complete prior capture.
 - `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance` is complete and accepted.
 - Accepted `0.6.6` added nine beast records, nine fauna lineages, nine ecology memberships, and 28 source-local drop rows; normal lint passed at 67 files and the prescribed group passed 147/147.
-- The `0.6.7` audit prompt is installed in `docs/dev/current-codex-prompt.md`.
+- Accepted `0.6.7` reproduced the `0.6.4`-`0.6.6` inventories, passed normal lint at 67 files and the prescribed 688/688 focused tests, found no production repair need, corrected stale coordination wording, and retired all six remaining cross-domain temporary research artifacts.
+- The Geography/recognition planning prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -53,12 +54,11 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run `0.6.7` cross-content coherence and coverage audit;
-2. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
-3. run Activity Resolution Existing-System Reuse Audit;
-4. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-5. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-6. proceed through separately authorized owner-specific packages.
+1. run Geographic Knowledge Taxonomy And Location Recognition Contract Plan;
+2. run Activity Resolution Existing-System Reuse Audit;
+3. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+4. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
+5. proceed through separately authorized owner-specific packages.
 
 ## Current Implementation Reality
 
@@ -66,7 +66,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 - `0.6.4` added the accepted world/settlement static package.
 - `0.6.5` added the accepted 16-row recipe batch for 28 recipes across 10 families.
 - `0.6.6` added the exact nine monsters, nine fauna lineages, nine ecology additions, and 28 source-local drop rows without dynamic behavior.
-- All three `0.6.4`-`0.6.6` static expansion packages are complete; `0.6.7` is their coherence gate.
+- All three `0.6.4`-`0.6.6` static expansion packages and their `0.6.7` coherence gate are complete.
 - The integration script still produces climate arrays through `Split-List`, and UI compatibility normalization remains unchanged.
 - BOM-bearing JSON files must not be rewritten as cleanup.
 - Static content does not authorize spawning, encounters, AI, dynamic loot, harvesting, populations, migration, ecology simulation, inventory mutation, or rewards.
@@ -77,11 +77,11 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Research And Content Posture
 
-No new broad research is needed before `0.6.7`, Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
+No new broad research is needed before Geography/recognition planning, the repository-only Activity Resolution reuse audit, or the abstract Mortal Crisis receipt decision.
 
 Before the first executable or balance-bearing lethal-process catalog, run bounded research on hemorrhage/shock, airway compromise and drowning, poisoning and antidote limits, thermal exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe urgency. Do not directly import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
 
-Do not expand content inside `0.6.7`; repair only a proven cross-content defect. Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition clues, generic POIs, and activity-resolution content behind their recorded gates.
+Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition implementation, generic POIs, and activity-resolution implementation behind their recorded gates.
 
 ## Parallel Preparation Posture
 
