@@ -10,6 +10,7 @@ Date: 2026-07-28
 - Current HP-zero archival and save deletion are classified as rejected target behavior and remain a live implementation defect.
 - No executable or balance-bearing lethal-process package is authorized.
 - The active route is `GPT-DR.health.lethal-process-stabilization`.
+- The active research is pinned to repository baseline `3eda0921ae0d11b940bfb9649f69b42aab52ee9d` and must return a complete Markdown artifact for later persistence rather than claiming a repository write.
 
 ## Current Planning Precedence
 
@@ -27,13 +28,15 @@ Use current execution sources in this order:
 
 Run exact route `GPT-DR.health.lethal-process-stabilization`.
 
-- Create only `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`.
+- Use fixed repository baseline `3eda0921ae0d11b940bfb9649f69b42aab52ee9d`.
+- Prepare exactly one complete Markdown artifact intended for `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`.
+- Deep Research is non-mutating: return the finished artifact in the response, do not claim a repository write/commit/push, and leave persistence to a later connector or Codex integration step.
 - Research hemorrhage/shock, airway compromise/drowning, poisoning/antidote limits, cold/heat exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe qualitative urgency.
 - Prefer systematic reviews, professional consensus/guidelines, government/public-health sources, and academic medical sources.
 - Cite every material factual claim and distinguish evidence, inference, and proposed abstraction.
 - Keep all findings advisory and non-canonical.
 - Do not provide medical advice, clinical protocols, step-by-step treatment, dosage, exact real-world timers, diagnostic decision trees, gameplay-ready probabilities, or proprietary values.
-- Do not edit coordination, design authority, content, schema, runtime, UI, save, tests, dependencies, generated output, or other retained evidence.
+- Do not propose edits to coordination, design authority, content, schema, runtime, UI, save, tests, dependencies, generated output, or other retained evidence.
 - Stop without installing a follow-up prompt or authorizing implementation.
 
 ## Required Named Consumers
@@ -59,9 +62,10 @@ Preserve the artifact until every named consumer records consumption and durable
 ## Near-Term Sequence
 
 1. run `GPT-DR.health.lethal-process-stabilization`;
-2. run unversioned `Lethal Process And Stabilization Research Integration Decision`;
-3. keep executable or balance-bearing catalogs behind accepted integration and owner-specific authorization;
-4. resume activity-resolution authority work and other packages only through explicit route decisions.
+2. persist the returned artifact at the exact temporary path through a separate repository integration step;
+3. run unversioned `Lethal Process And Stabilization Research Integration Decision`;
+4. keep executable or balance-bearing catalogs behind accepted integration and owner-specific authorization;
+5. resume activity-resolution authority work and other packages only through explicit route decisions.
 
 ## Active Prompt
 
