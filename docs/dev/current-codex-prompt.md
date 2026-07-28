@@ -34,8 +34,15 @@ Read:
 - `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`;
 - `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
 - `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`;
-- accepted narrative-realization and elemental capability/boundary decisions relevant to Mortal Crisis;
-- the retained comparative mortality, defeat/injury, and narrative audits only where a precise accepted conclusion still needs evidence.
+- `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`;
+- `docs/design/elemental-alignment-environmental-manifestation-temperament-and-magic-stimulus-decision.md`;
+- the following retained evidence artifacts only where a precise accepted conclusion still needs trace evidence:
+  - `docs/dev/tmp-comparative-checkpoint-mortality-rescue-and-stakes-research-2026-07-23.md`;
+  - `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
+  - `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`;
+  - `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md`;
+  - `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md`;
+  - `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md`.
 
 Inspect the live files that currently own or consume:
 
@@ -52,8 +59,9 @@ Inspect the live files that currently own or consume:
 3. Confirm occurrence taxonomy, Mortal Crisis/Stakes, save/Stakes, injury/restoration, Normal defeat, narrative, and elemental prerequisites are accepted.
 4. Reproduce the current live HP-zero, archival/save, recovery, combat, body, party, spell/treatment, event, and persistence seams.
 5. Separate stale runtime behavior from accepted future authority. Current implementation is evidence, not architecture.
-6. Stop without edits if accepted sources materially conflict and cannot be resolved by their recorded precedence.
-7. Do not perform external research in this run.
+6. Confirm all six retained evidence artifacts named above exist. Record this run's actual consumption, but do not delete any of them: each still has at least one named later implementation consumer under accepted retention authority.
+7. Stop without edits if accepted sources materially conflict and cannot be resolved by their recorded precedence.
+8. Do not perform external research in this run.
 
 ## Required Output
 
@@ -201,7 +209,18 @@ Decide whether the bounded physiology/first-aid research named by the sequencing
 
 Select the smallest later repository package only if owner, scope, fields, validation, tests, persistence, and migration boundaries are decision-complete. Otherwise say `NO_PACKAGE` and name the missing decision.
 
-### 13. Exact Follow-Up Route
+### 13. Retained Evidence Disposition
+
+For each of the six retained evidence artifacts named in Required Reading:
+
+- state whether this run consumed it and for which exact conclusion;
+- identify every still-outstanding named implementation consumer;
+- preserve the file when any later consumer remains;
+- do not delete it merely because its durable conclusions were cited here.
+
+This run is not the final removal consumer for any of the six artifacts.
+
+### 14. Exact Follow-Up Route
 
 Install an exact next prompt only when supported by this decision and current coordination. Do not activate an executable or balance-bearing lethal-process catalog before the bounded research gate passes.
 
@@ -233,6 +252,7 @@ Do not:
 - weaken Stakes commitment or Ironbound closure;
 - reopen archived/deleted history;
 - physically delete save/history as a design requirement;
+- delete any of the six retained evidence artifacts named in Required Reading;
 - run builds, tests, generators, servers, package installation, or gameplay unless a repository-fact check strictly requires one.
 
 ## Allowed Changes
@@ -242,7 +262,7 @@ Documentation only:
 - the new focused decision;
 - current output, handoff, and prompt;
 - roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven route/factual corrections;
-- retained temporary evidence only for explicit disposition after every consumer/removal condition is proven.
+- the six retained evidence artifacts only as read-only inputs; do not edit or delete them in this run.
 
 ## Validation
 
@@ -250,6 +270,7 @@ Documentation only:
 - Verify all referenced paths exist.
 - Check consistency against every accepted authority named above.
 - Confirm no source, test, content, schema, runtime, UI, save, or generated path changed.
+- Confirm all six retained evidence artifacts remain byte-identical and present.
 - Run conflict-marker and trailing-whitespace scans plus `git diff --check`.
 - Inspect the complete changed-path set and full diff.
 
@@ -262,6 +283,7 @@ Report:
 - accepted state, process, care, crisis, receipt, Stakes, persistence, presentation, replay, and correction decisions;
 - research-gate disposition;
 - smallest later package or `NO_PACKAGE`;
+- retained-evidence consumption and preservation disposition;
 - exact next route and prompt disposition;
 - files changed;
 - checks run;
