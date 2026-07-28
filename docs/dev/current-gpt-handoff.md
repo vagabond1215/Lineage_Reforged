@@ -5,12 +5,11 @@ Date: 2026-07-28
 ## Status
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`.
-- The accepted decision separates functional capability, body/resources, injury/trauma, lethal processes, care needs, life state, crisis orchestration, actual death, closure, and convalescence.
-- Current HP-zero archival and save deletion are classified as rejected target behavior and remain a live implementation defect.
+- Latest completed unversioned repository run: `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`.
+- Bounded external research `GPT-DR.health.lethal-process-stabilization` is complete and has been returned for persistence.
+- The research remains temporary advisory evidence. It does not create canon, authorize implementation, define medical protocols, or supply balance values.
+- The active route is unversioned `Lethal Process And Stabilization Research Integration Decision`.
 - No executable or balance-bearing lethal-process package is authorized.
-- The active route is `GPT-DR.health.lethal-process-stabilization`.
-- The active research is pinned to repository baseline `3eda0921ae0d11b940bfb9649f69b42aab52ee9d` and must return a complete Markdown artifact for later persistence rather than claiming a repository write.
 
 ## Current Planning Precedence
 
@@ -24,31 +23,44 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale historical-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-## Active Research Guardrails
+## Active Integration Guardrails
 
-Run exact route `GPT-DR.health.lethal-process-stabilization`.
+Run exact unversioned `Lethal Process And Stabilization Research Integration Decision`.
 
-- Use fixed repository baseline `3eda0921ae0d11b940bfb9649f69b42aab52ee9d`.
-- Prepare exactly one complete Markdown artifact intended for `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`.
-- Deep Research is non-mutating: return the finished artifact in the response, do not claim a repository write/commit/push, and leave persistence to a later connector or Codex integration step.
-- Research hemorrhage/shock, airway compromise/drowning, poisoning/antidote limits, cold/heat exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe qualitative urgency.
-- Prefer systematic reviews, professional consensus/guidelines, government/public-health sources, and academic medical sources.
-- Cite every material factual claim and distinguish evidence, inference, and proposed abstraction.
-- Keep all findings advisory and non-canonical.
-- Do not provide medical advice, clinical protocols, step-by-step treatment, dosage, exact real-world timers, diagnostic decision trees, gameplay-ready probabilities, or proprietary values.
-- Do not propose edits to coordination, design authority, content, schema, runtime, UI, save, tests, dependencies, generated output, or other retained evidence.
-- Stop without installing a follow-up prompt or authorizing implementation.
+- Documentation only.
+- The accepted Mortal Crisis contract baseline is commit `3eda0921ae0d11b940bfb9649f69b42aab52ee9d`.
+- The normalized research artifact is staged as compressed transport at `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md.gz.b64`.
+- Decode it to exactly `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`.
+- Verify decoded UTF-8 byte length `59757` and SHA-256 `4c4a4efd0199448a6365179e0a2b77ec568e37e5e78345a232f6c5391eba1b36`.
+- Verify session-local `turn<number>view<number>` citation tokens are absent and durable source identifiers `S01` through `S31` close to source URLs.
+- Delete the compressed transport only after successful integrity verification.
+- Create `docs/design/lethal-process-and-stabilization-research-integration-decision.md`.
+- Treat the artifact's recorded lack of repository-file access during Deep Research as a provenance limitation; independently verify repository compatibility now.
+- Accept, narrow, reject, or defer abstractions without implementing catalogs, schemas, validators, content, runtime, saves, UI, tests, treatment protocols, timers, probabilities, or balance.
+- Record this integration as the first named consumer and preserve the decoded artifact for the three later named consumers.
+- Do not perform new external research.
+- Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
+
+## Research Disposition Questions
+
+The integration must decide:
+
+- process-family granularity for hemorrhage, airway/drowning, poisoning, thermal exposure, and burns;
+- stabilization versus suppression, definitive care, resolution, recovery, restoration, and resurrection;
+- qualitative transport, delay, monitoring, and reassessment triggers;
+- observer-safe visible, reported, capability-dependent, hidden, and misleading cues;
+- rejection of universal critical meters, bleed timers, poison meters, omnibus rolls, certainty diagnosis, and asymptomatic delayed-death drowning tropes;
+- whether the first lethal-process definition/catalog plan is ready or remains `NO_PACKAGE`;
+- the order among catalog planning, care-capability contracting, and observer-safe presentation work.
 
 ## Required Named Consumers
 
-The temporary artifact must name:
+The decoded temporary artifact must remain until all named consumers record consumption:
 
-1. unversioned `Lethal Process And Stabilization Research Integration Decision`;
+1. unversioned `Lethal Process And Stabilization Research Integration Decision` — active first consumer;
 2. the first lethal-process definition/catalog plan;
 3. the first care-capability and stabilization contract/package;
 4. the first observer-safe crisis assessment/presentation package.
-
-Preserve the artifact until every named consumer records consumption and durable authority retains the conclusions and source identity still needed.
 
 ## Preserved Known Gaps
 
@@ -61,12 +73,12 @@ Preserve the artifact until every named consumer records consumption and durable
 
 ## Near-Term Sequence
 
-1. run `GPT-DR.health.lethal-process-stabilization`;
-2. persist the returned artifact at the exact temporary path through a separate repository integration step;
-3. run unversioned `Lethal Process And Stabilization Research Integration Decision`;
-4. keep executable or balance-bearing catalogs behind accepted integration and owner-specific authorization;
+1. run unversioned `Lethal Process And Stabilization Research Integration Decision`;
+2. retain the decoded research artifact for all outstanding named consumers;
+3. run only the exact documentation route selected by the integration decision;
+4. keep executable or balance-bearing catalogs behind accepted owner-specific authorization;
 5. resume activity-resolution authority work and other packages only through explicit route decisions.
 
 ## Active Prompt
 
-`GPT-DR.health.lethal-process-stabilization`
+Unversioned `Lethal Process And Stabilization Research Integration Decision`
