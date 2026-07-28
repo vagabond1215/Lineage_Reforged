@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4`-`0.6.7`, Geography/recognition planning, and Activity Resolution reuse audit complete and accepted; Mortal Crisis receipt contract active next
+Status: `0.6.4`-`0.6.7`, Geography/recognition planning, Activity Resolution reuse audit, and Mortal Crisis receipt contract complete and accepted; bounded lethal-process/stabilization research active next
 
 ## 1. Purpose
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The Geographic Knowledge Taxonomy And Location Recognition Contract Plan and Activity Resolution Existing-System Reuse Audit are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. The Mortal Crisis receipt contract is the active documentation route.
+The Geographic Knowledge Taxonomy And Location Recognition Contract Plan, Activity Resolution Existing-System Reuse Audit, and Mortal Crisis receipt-contract decision are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. Bounded research `GPT-DR.health.lethal-process-stabilization` is active; it authorizes no static or runtime content.
 
 ## 11. Batch And Review Policy
 
@@ -149,6 +149,7 @@ Deep Research uses one gate and one artifact at a time.
 | `0.6.7` | Cross-Content Coherence And Coverage Audit | Complete: inventories/reference/lifecycle/static-runtime closure passed, prescribed focused tests passed 688/688, normal lint passed at 67 files, and all artifact decisions closed. |
 | unversioned support | Geographic Knowledge Taxonomy And Location Recognition Contract Plan | Complete: accepted Geography domain/taxonomy/profile/source/observation/legacy boundaries without implementation. |
 | unversioned support | Activity Resolution Existing-System Reuse Audit | Complete and accepted read-only reuse decision; no implementation authority. |
+| unversioned support | Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision | Complete and accepted documentation authority; bounded research required before any executable or balance-bearing catalog. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -160,4 +161,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run and disposition the active activity-resolution existing-system reuse audit. Only after that documentation decision should a later prompt select one bounded consumer from current evidence. Do not preassign `0.6.8` or reopen generic command infrastructure by inference.
+Run and integrate the bounded lethal-process/stabilization research before selecting any executable or balance-bearing catalog. Do not preassign `0.6.8` or reopen generic command infrastructure by inference.

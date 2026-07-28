@@ -12,7 +12,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The roadmap top override and the sequenced-plan current anchor are refreshed through the accepted Geography/recognition plan and Activity Resolution existing-system reuse audit, with the Mortal Crisis receipt-contract decision active.
+The roadmap top override and the sequenced-plan current anchor are refreshed through the accepted Mortal Crisis receipt-contract decision, with bounded research `GPT-DR.health.lethal-process-stabilization` active.
 
 `docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution or invalidate the refreshed top override. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
 
@@ -31,8 +31,8 @@ Use the following precedence for current execution and routing:
 ## Accepted Current State
 
 - latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
-- latest completed unversioned run: `Activity Resolution Existing-System Reuse Audit`;
-- next run: unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
+- latest completed unversioned run: `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`;
+- next run: bounded research `GPT-DR.health.lethal-process-stabilization`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
@@ -46,15 +46,15 @@ Use the following precedence for current execution and routing:
 - accepted `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` completed its exact static package;
 - accepted `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` reproduced all static-package inventories, passed normal lint and 688 prescribed focused tests, and found no content/schema/validator/runtime repair need;
 - the six remaining cross-domain temporary research artifacts were removed after their durable-coverage conditions passed;
-- the Geography/recognition plan and Activity Resolution reuse audit are accepted, and the Mortal Crisis receipt-contract decision is active next.
+- the Geography/recognition plan, Activity Resolution reuse audit, and Mortal Crisis receipt-contract decision are accepted, and bounded lethal-process/stabilization research is active next.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-2. run bounded physiology/first-aid research only if that decision confirms the gate;
-3. keep executable or balance-bearing lethal-process catalogs behind accepted research and owner-specific authorization;
+1. run `GPT-DR.health.lethal-process-stabilization`;
+2. run the unversioned `Lethal Process And Stabilization Research Integration Decision`;
+3. keep executable or balance-bearing lethal-process catalogs behind accepted research integration and owner-specific authorization;
 4. resume activity-resolution authority work and other packages only through explicit route decisions.
 
 ## Maintenance Rule

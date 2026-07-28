@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `Activity Resolution Existing-System Reuse Audit`
+Source version/run: unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
 
 Label class: unversioned
 
@@ -10,89 +10,105 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `3d77171ca2034c8b2fb8d19f374cef5df9605053`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `18e3ca6ca47ceb88260cd18521beb27e1305b209`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-The documentation-only Activity Resolution existing-system reuse audit is complete and accepted.
+The documentation-only receipt-contract decision is complete and accepted.
 
-`docs/design/activity-resolution-existing-system-reuse-audit.md` records the live system inventory, explicit authority matrix, reuse/adaptation/rejection decisions, typed-effect ownership, determinism posture, documentation corrections, and exact follow-up sequence. No shared resolver or gameplay implementation was authorized.
+`docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md` now separates functional state, body/resources, injury/trauma, independently owned lethal processes, derived care requirements, life state, Mortal Crisis orchestration, accepted actual death, final closure, and convalescence. It defines phase admission, request/occurrence/result/consequence identity, owner-specific receipts, Stakes commitment, persistence, replay, correction, and observer-safe presentation.
 
-## Reproduced Baseline
+No executable or balance-bearing package is authorized. Bounded external research is required next.
 
-| Area | Verified result |
-| --- | --- |
-| Skills | 121 records across 8 categories; maximum rank 125; five overlapping bands; gates 30/55/80/100 |
-| Legacy Skill Trials | 4 records, 12 checkpoints, 8 rewards, 8 penalties; accumulator-only mutable state |
-| Knowledge | One active Flora eligibility policy; strict readiness schema/helper; no authored readiness record, adapter, attempt, outcome, cooldown owner, reward applier, persistence, runtime, or UI |
-| Quest action trees | 8 archetypes with 35 nodes/137 checks/111 branches/180 effect tokens; 5 definitions with 20 nodes/54 checks/44 branches/68 effect tokens; no runtime executor |
-| Crafting | 28 recipes in 10 families; 121 chains/311 steps; 58 workplaces/208 job rows/110 unique job ids; current resolver is estimate-only |
-| Activity advancement | Selection is engine-owned; preview/execution remain UI-owned bespoke branches in `gameplayLoop.ts` |
-| Difficulty | Four persisted tiers plus Hardcore and global domain scalars; no target/method difficulty or familiarity |
-| Magic | 55 spells: 23 ready, 5 partial, 27 deferred; readiness/projection/envelope foundations are inert outside narrow combat hooks |
-| Determinism | Engine command discipline is reusable; current hashes, event ids, and unversioned RNG utility are not uncertainty authority |
-| Persistence | Trial accumulators and applied domain state persist; shared attempts, nodes, result evidence, effect proposals, and consequence receipts do not |
+## Live Baseline
+
+- Current HP at or below zero resolves to `dead` or `hardcore_dead`.
+- Run entry and snapshot changes can call `archiveActiveRun(...)`.
+- Archival evaluates achievements, resolves Legacy payout, records account history, deposits the estate, persists the profile, and deletes resolved character slots.
+- Combat defeat/incapacitation, HP/resource synchronization, metabolic body state, recovery context, party, travel, inventory, service, spell, Chronicle, and snapshot seams exist, but no durable functional-state, lethal-process, care-requirement, Mortal Crisis, death-result, consequence-receipt, or correction owner exists.
+- Current combat `heal.hp` behavior is a narrow HP hook and does not own injury, lethal-process, care, restoration, or death truth.
+- Current tick-composed event ids, `hardcore`, and `deathZeroesPrestige` are compatibility evidence, not accepted occurrence/Stakes authority.
+- Current HP-zero archive/delete behavior is classified as `rejected_target_behavior`, not architecture.
 
 ## Accepted Decisions
 
-- Quest action trees remain quest-owned; selected phase/check/result vocabulary is reusable only through adapters.
-- Legacy Skill Trials remain a preserved `state_accumulator`; the first future adapter is read-only and may not award rewards or invent attempts.
-- Knowledge completion/eligibility/readiness foundations remain pure and inert; authored readiness content and the content-to-helper adapter are still missing.
-- Future crafting needs a crafting-specific `crafting.activity_process_profiles` authority composed with a separate shared activity grammar.
-- Gathering remains blocked by missing target/method difficulty, familiarity, source-state, and output owners.
-- Engine-owned activity selection remains separate. Advancement should move through domain-owned commands that consume pure shared proposals; the current UI function must not become the generic resolver.
-- The accepted command/revision/stale/atomic/accepted-only discipline is reusable. Current hashes, event ids, and `DeterministicRng` are rejected as committed uncertainty authority.
-- A generic resolver may propose typed effects only; domain owners must accept and apply them with owner-specific receipts.
-- No shared-framework implementation package is ready from this audit.
+- Functional state is an owner-accepted assessment of capability, separate from causes and life state.
+- Every active lethal-process instance has exactly one owning domain and independent accepted transitions.
+- Care requirements are source-linked derived needs; care attempts are occurrences whose affected owners apply accepted results through separate consequence receipts.
+- Mortal Crisis owns episode and phase orchestration only. The accepted phases are Threat Resolution, Immediate Stabilization, Extraction, Transit, Treatment Or Restoration, and Closure.
+- A phase skip requires retained owner-certified evidence.
+- Stabilization does not imply consciousness, mobility, full recovery, definitive care, process resolution, restoration, or survival.
+- Normal, Committed, and Ironbound retain their accepted rollback, commitment, checkpoint, continuity, death, and closure semantics.
+- Actual death and final closure remain separate except where accepted Ironbound policy makes actual death, final death, and closure atomic.
+- UI, Chronicle, and narrative may project observer-safe accepted facts only; hidden timers, diagnoses, uncertainty internals, and future outcomes remain private.
+- The smallest later implementation package is `NO_PACKAGE`.
 
-## Documentation Corrections
+## Research Decision
 
-- Two historical roadmap sequences incorrectly called landed `0.5.161 - Knowledge Trial Readiness Policy Schema` "next"; both now say completed.
-- Subsequent anonymous `0.5.x` checkpoint/cooldown/Magic Study rows are explicitly historical, unassigned, and non-executable.
-- The consumed queued Activity audit prompt was removed.
-- Current coordination now activates the restored Mortal Crisis receipt-contract route without displacing the later activity-resolution sequence.
+Exact next route:
+
+`GPT-DR.health.lethal-process-stabilization`
+
+Exact artifact:
+
+`docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
+
+The bounded domains are hemorrhage/shock, airway compromise/drowning, poisoning/antidote limits, cold/heat exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe qualitative urgency.
+
+The prompt prohibits medical advice, clinical protocols, exact real-world timers, dosages, diagnostic decision trees, probabilities ready for gameplay, and proprietary game values.
+
+Named consumers are:
+
+1. unversioned `Lethal Process And Stabilization Research Integration Decision`;
+2. the first lethal-process definition/catalog plan;
+3. the first care-capability and stabilization contract/package;
+4. the first observer-safe crisis assessment/presentation package.
+
+## Retained Evidence
+
+All six named mortality/narrative/elemental artifacts were consumed only for bounded trace evidence, remained byte-identical, and remain preserved because named later consumers still exist.
 
 ## Files Changed
 
-- `docs/design/activity-resolution-existing-system-reuse-audit.md`
+- `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-codex-prompt.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/codex-sequenced-implementation-plan.md`
 - `docs/dev/project-roadmap.md`
 - `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/future_content_backlog.md`
 - `docs/dev/historical-version-and-deferred-route-register.md`
 - `docs/design/current-planning-anchor-reconciliation.md`
 - `docs/design/static-content-expansion-program.md`
-- removed `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md`
+- `docs/future_content_backlog.md`
 
 ## Checks Run
 
-- repository, branch, worktree, upstream, fetch, and tracking alignment;
-- prompt and prerequisite acceptance review;
-- exact live skill/trial, Knowledge, quest, recipe/chain/workplace/job, activity, difficulty, magic, command/event, RNG, synchronization, and persistence inventory;
-- implementation/consumer searches for trial outcomes, action trees, activity advancement, crafting resolution, Knowledge readiness, and generic checks;
-- referenced-path verification;
-- source/test/content/runtime changed-path exclusion;
+- repository, branch, worktree, upstream, fetch/pull, and tracking alignment;
+- active prompt and prerequisite acceptance review;
+- live HP-zero, archival/delete, recovery, combat, body/resource, party, treatment/spell, event, persistence, and account seam inventory;
+- exact six-artifact existence and before/after SHA-256 verification;
+- required document and active-prompt path verification;
+- changed-path and documentation-only scope review;
 - conflict-marker and trailing-whitespace scans;
 - `git diff --check`;
-- complete changed-path and full-diff review.
+- complete diff review.
 
-No build, content lint, typecheck, test, server, generator, package installation, or gameplay command was run because the prompt prohibited them unless a repository-fact check required one; none did.
+No build, content lint, typecheck, test, server, generator, package installation, or gameplay command was run because this was a documentation-only decision and the prompt prohibited unrelated validation.
 
 ## Suggested Commit Message
 
-`docs(audit): reconcile activity resolution systems`
+`docs(stakes): define mortal crisis receipt contracts`
 
 ## Risks / Follow-Up Notes
 
-- Activity advancement, rest, and quest turn-in still contain UI-owned mutation paths.
-- Shared attempt identity, check/margin/result semantics, named uncertainty evidence, typed effects, mutable owners, persistence, correction, and owner receipts remain unimplemented.
-- Current HP zero may still enter legacy terminal archival and save deletion.
+- Current HP-zero archival and save deletion remain live legacy behavior.
+- No active functional-state, lethal-process, care-requirement, Mortal Crisis receipt, death/restoration, or correction owner exists.
+- The research artifact will remain advisory until the repository integration decision explicitly accepts, narrows, rejects, or defers each abstraction.
+- All six retained evidence artifacts must remain until their later named consumers record consumption.
+- The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
-- The lower historical roadmap current-anchor block remains stale and noncontrolling under the planning-anchor reconciliation.
 
 ## Next Recommended Run
 
-Unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
+`GPT-DR.health.lethal-process-stabilization`

@@ -7,8 +7,8 @@ Last reviewed: 2026-07-28
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 - Latest completed support/audit run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Next run: unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`.
-- Activity selection remains accepted. `0.6.4`, the seven-gate research/integration prerequisite, the synthesis-owned 16-row `0.6.5` recipe package, the exact nine-row `0.6.6` monster/ecology package, the `0.6.7` coherence audit, Geography/recognition planning, and the Activity Resolution reuse audit are complete. The Mortal Crisis receipt contract is active next.
+- Next run: bounded research `GPT-DR.health.lethal-process-stabilization`.
+- Activity selection remains accepted. `0.6.4`, the seven-gate research/integration prerequisite, the synthesis-owned 16-row `0.6.5` recipe package, the exact nine-row `0.6.6` monster/ecology package, the `0.6.7` coherence audit, Geography/recognition planning, the Activity Resolution reuse audit, and the Mortal Crisis receipt-contract decision are complete. Grounded lethal-process/stabilization research is active next; no executable catalog is authorized.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.

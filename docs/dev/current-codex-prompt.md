@@ -1,290 +1,194 @@
-# Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision
+# Grounded Lethal Process, Stabilization, And First-Aid Research
 
 ## Run Identity
 
-Unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
+`GPT-DR.health.lethal-process-stabilization`
 
-Documentation only. This run does not consume a primary implementation version.
-
-Suggested commit:
-
-`docs(stakes): define mortal crisis receipt contracts`
+Unversioned bounded external research. This run does not consume a primary implementation version.
 
 ## Purpose
 
-Define the decision-complete conceptual contracts that connect functional state, independently owned lethal processes, derived care requirements, the accepted six-phase Mortal Crisis framework, accepted occurrence/results, downstream consequence receipts, Stakes commitment, persistence, correction, and observer-safe presentation.
+Produce a cited, repository-aware evidence artifact that can support later game-design decisions about lethal-process categories, stabilization versus definitive care, transport and reassessment, and observer-safe qualitative urgency.
 
-This run must close the authority and identity seams needed before bounded physiology/first-aid research or any lethal-process catalog. It must not implement those systems or invent medical/balance values.
+Research is advisory evidence only. It does not create repository canon, authorize implementation, define medical protocols, or supply balance values.
 
-## Required Reading
+## Required Repository Reading
 
 Read:
 
 - `AGENTS.md`;
-- `README.md`;
-- current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, and backlog;
-- `docs/design/activity-resolution-existing-system-reuse-audit.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/current-codex-output.md`;
+- `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`;
 - `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`;
-- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
 - `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
+- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
 - `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md`;
-- `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`;
-- `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
 - `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`;
-- `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`;
-- `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
-- `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`;
-- `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`;
-- `docs/design/elemental-alignment-environmental-manifestation-temperament-and-magic-stimulus-decision.md`;
-- the following retained evidence artifacts only where a precise accepted conclusion still needs trace evidence:
-  - `docs/dev/tmp-comparative-checkpoint-mortality-rescue-and-stakes-research-2026-07-23.md`;
-  - `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md`;
-  - `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md`;
-  - `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md`;
-  - `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md`;
-  - `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md`.
+- `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
+- `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`.
 
-Inspect the live files that currently own or consume:
+Treat accepted repository contracts as design constraints, not claims about real medicine.
 
-- HP, body/resource state, damage, defeat, archival, save deletion, and run lifecycle;
-- combat results, encounter cleanup, status/condition/injury vocabulary, and recovery gates;
-- save snapshots, campaign/Stakes identity, checkpoint/recovery, account, estate, Prestige, Chronicle, and succession;
-- party membership, location, travel, inventory/treatment items, services, spells, magic hooks, and activity/rest presentation;
-- commands, events, deterministic identity, synchronization, and persistence.
+## Exact Artifact
 
-## Execution Gate
+Create only:
 
-1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
-2. Confirm the Activity Resolution reuse audit is accepted and its queued prompt is consumed.
-3. Confirm occurrence taxonomy, Mortal Crisis/Stakes, save/Stakes, injury/restoration, Normal defeat, narrative, and elemental prerequisites are accepted.
-4. Reproduce the current live HP-zero, archival/save, recovery, combat, body, party, spell/treatment, event, and persistence seams.
-5. Separate stale runtime behavior from accepted future authority. Current implementation is evidence, not architecture.
-6. Confirm all six retained evidence artifacts named above exist. Record this run's actual consumption, but do not delete any of them: each still has at least one named later implementation consumer under accepted retention authority.
-7. Stop without edits if accepted sources materially conflict and cannot be resolved by their recorded precedence.
-8. Do not perform external research in this run.
+`docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
 
-## Required Output
+Do not edit coordination files, design authorities, schemas, content, source, tests, runtime, UI, saves, dependencies, generated output, or any other retained evidence artifact.
 
-Create:
+## Research Questions
 
-- `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`
+For grounded medieval-fantasy abstraction, investigate:
 
-The decision must contain the following sections.
+1. hemorrhage and shock;
+2. airway compromise and drowning;
+3. poisoning and the limits of antidotes;
+4. cold exposure and heat illness;
+5. burns;
+6. immediate stabilization versus definitive care;
+7. transport risk, monitoring, and reassessment;
+8. observer-safe qualitative urgency cues.
 
-### 1. Live Baseline And Precedence
+For each domain, answer:
 
-Record the exact current runtime seams and the accepted document precedence. Explicitly identify:
+- Which broad causal processes are meaningfully distinct?
+- Which visible or reportable signs can support qualitative urgency without claiming a diagnosis?
+- Which interventions are best understood as stabilization, temporary suppression, definitive treatment, supportive care, or ineffective/harmful folklore?
+- Which conditions can recur or worsen after apparent stabilization?
+- Which transport, delay, environment, equipment, training, or provider constraints materially matter?
+- Which distinctions are robust enough for coarse game abstraction, and which require rejection or further research?
 
-- current HP-zero behavior;
-- current terminal/archive/delete behavior;
-- current body/resource and injury/status capabilities;
-- current recovery, party, location, treatment-item, service, and magic seams;
-- current occurrence/result/event/save capabilities;
-- every known legacy behavior that must not be mistaken for accepted authority.
+## Source Standards
 
-### 2. Canonical State Separation
+- Prefer systematic reviews, evidence syntheses, recognized professional consensus/guidelines, public-health or government sources, and academic medical sources.
+- Use current sources where guidance may have changed.
+- Give direct citations or URLs for every material factual claim.
+- Record publication or update date, issuing body, source type, and an evidence-quality or limitation note.
+- Distinguish source evidence, researcher inference, and proposed game abstraction.
+- Identify disagreement, weak evidence, context dependence, and uncertainty explicitly.
+- Do not use commercial game mechanics as evidence and do not import proprietary values.
 
-Define and distinguish:
+## Safety And Scope Boundary
 
-- functional state;
-- body/resource measurements;
-- injury/trauma instances;
-- lethal-process instances;
-- care requirements;
-- life state;
-- Mortal Crisis phase state;
-- accepted actual death;
-- final closure;
-- convalescence/recovery.
+This is game-design research, not medical advice.
 
-State which facts may be derived, which require owner acceptance, and which must never be collapsed into HP or one generic critical flag.
+Do not provide:
 
-### 3. Functional-State Contract
+- step-by-step emergency treatment instructions;
+- medication names as player-facing prescriptions, dosages, concentrations, or administration schedules;
+- exact real-world deterioration, rescue, survival, or death timers;
+- diagnostic decision trees intended for real-world use;
+- probabilities or outcome rates ready to paste into gameplay;
+- graphic procedural detail;
+- claims that one visible sign proves a hidden diagnosis;
+- a universal critical meter, bleed-out timer, or omnibus lethal roll.
 
-Decide the minimum conceptual identity, owner, lifecycle, and evidence for functional ability without defining exact fields or values. Cover consciousness, mobility, agency, breathing/circulation capability at game abstraction, participation, transportability, and observer-safe uncertainty.
+Summarize interventions at a categorical level suitable for later abstraction. When a source contains operational clinical detail, extract only the conceptual distinction needed for game design.
 
-### 4. Lethal-Process Contract
+## Required Artifact Structure
 
-Define an owner-neutral conceptual contract for independently progressing threats without authoring a catalog. Decide:
+### 1. Scope, Method, And Non-Authority
 
-- definition identity versus active instance identity;
-- cause/source and affected body identity;
-- phase/stage and progression evidence;
-- deterministic versus uncertain transitions;
-- interaction among multiple processes;
-- stabilization, suppression, recurrence, resolution, and terminal contribution;
-- responsibility for declaring actual death.
+State the run identity, date, repository baseline, research boundary, and that the artifact is temporary advisory evidence.
 
-Do not define real-world protocols, exact timers, probabilities, formulas, diagnoses, or balance.
+### 2. Source Ledger
 
-### 5. Care-Requirement And Intervention Contract
+For every used source record:
 
-Define how owner-certified process/body facts produce care requirements and how interventions propose results. Separate:
+- title;
+- authoring/issuing body;
+- date;
+- source type;
+- direct URL;
+- domain supported;
+- evidence-quality or limitation note.
 
-- requirement identity;
-- capability requirement;
-- actor agency and authority;
-- supplies/tools/location/access;
-- immediate stabilization versus extraction, transit, definitive treatment/restoration, and convalescence;
-- attempt, accepted result, and applied consequence;
-- reassessment and unmet/partially met requirements.
+### 3. Cross-Process Comparison
 
-Care requirements must not themselves consume inventory, cast spells, move parties, heal injuries, or mutate body state.
+Compare the eight research domains using a matrix that separates:
 
-### 6. Mortal Crisis Orchestration
+- initiating hazard;
+- independently meaningful process;
+- qualitative progression/reassessment need;
+- stabilization concept;
+- definitive-care distinction;
+- recurrence/worsening concern;
+- transport/environment concern;
+- observer-safe evidence;
+- major uncertainty.
 
-Preserve the accepted phases:
+### 4. Domain Findings
 
-1. Threat Resolution;
-2. Immediate Stabilization;
-3. Extraction;
-4. Transit;
-5. Treatment Or Restoration;
-6. Closure.
+Provide one bounded subsection for each research domain. Separate evidence, inference, and candidate abstraction.
 
-For each phase, identify admission, owner-certified inputs, allowed results, skip/transition authority, interruption/retry posture, and projections. Mortal Crisis remains orchestration/presentation, not a health owner, medical minigame, planner, AI, or generic resolver.
+### 5. Stabilization, Definitive Care, And Restoration Boundary
 
-### 7. Identity And Receipt Taxonomy
+Explain why stabilization does not imply consciousness, mobility, full recovery, process resolution, definitive treatment, anatomical restoration, resurrection, or survival. Identify domain-specific exceptions and uncertainties.
 
-Apply the accepted occurrence clarification exactly:
+### 6. Transport, Monitoring, And Reassessment
 
-`request/delivery -> admission -> occurrence -> accepted result -> owner-specific consequence receipts -> projections`
+Summarize why movement, delay, environment, provider access, changing symptoms, and intervention response can require reassessment. Keep the findings qualitative and non-procedural.
 
-Define the conceptual identities and relationships for:
+### 7. Observer-Safe Urgency
 
-- crisis episode;
-- phase occurrence;
-- lethal-process transition;
-- care attempt;
-- accepted deterministic/uncertain result;
-- named uncertainty evidence;
-- body/injury/inventory/magic/travel/save/Chronicle consequence receipts;
-- duplicate delivery and partial consumer failure;
-- correction and supersession.
+Classify potential cues as:
 
-Do not equate event-envelope ids, ticks, timestamps, save addresses, or command ids with these authorities.
+- directly visible;
+- patient-reported;
+- helper- or provider-reported;
+- equipment- or capability-dependent;
+- hidden or diagnosis-dependent;
+- unsafe or misleading to present as certainty.
 
-### 8. Stakes Commitment Matrix
+Do not expose raw timers, probabilities, hidden process stages, or future outcomes.
 
-For Normal, Committed, and Ironbound Stakes, decide:
+### 8. Game-Abstraction Candidate Ledger
 
-- what becomes committed and when;
-- reload/replay posture;
-- checkpoint and continuity behavior;
-- actual-death and final-closure relationship;
-- resurrection/restoration boundaries;
-- correction and technical-recovery posture;
-- what the player may inspect or select.
+For each proposed abstraction classify it as:
 
-Preserve accepted tier semantics. Do not infer that HP zero is actual death or that final closure permits silent physical deletion.
+- `retain`;
+- `retain_coarsely`;
+- `optional_contextual`;
+- `reject`;
+- `research_gap`.
 
-### 9. Owner And Persistence Matrix
+Include source support, uncertainty, likely owner/consumer, and the specific reason for the classification. Recommendations remain non-canonical.
 
-For every canonical record/fact, identify:
+### 9. Cautions And Explicit Non-Decisions
 
-- static owner;
-- mutable owner;
-- writer;
-- reader/consumer;
-- occurrence/result source;
-- persistence requirement;
-- idempotency key or relation;
-- correction authority;
-- presentation boundary;
-- missing implementation owner.
+List unsafe transfers, unsupported precision, cultural/geographic limits, scope omissions, and every question the research cannot answer.
 
-At minimum include body, injury/trauma, lethal process, care requirement/attempt, Mortal Crisis, inventory, magic, party/travel/location, save/Stakes, actual death, closure, estate/Prestige/succession, Chronicle, and UI.
+### 10. Named Consumers And Retention
 
-### 10. Observer-Safe Presentation
+Name exactly:
 
-Decide what may be shown before and after acceptance. Preserve uncertainty, agency, accessibility, and narrative boundaries. Keep hidden diagnoses, uncertainty draws, validator facts, unavailable choices, and omniscient future outcomes private.
+1. unversioned `Lethal Process And Stabilization Research Integration Decision`;
+2. the first lethal-process definition/catalog plan;
+3. the first care-capability and stabilization contract/package;
+4. the first observer-safe crisis assessment/presentation package.
 
-### 11. Compatibility, Migration, Replay, And Correction
+The artifact must remain until every named consumer records consumption and a durable authority retains the conclusions and source identity it still needs.
 
-Classify current HP-zero/archive/delete behavior, legacy save facts, missing receipts, and collision-prone event ids. Define fail-closed migration and correction posture without implementing repair or claiming old data can be reconstructed.
+### 11. Bounded Answers
 
-### 12. Research Gate And Smallest Later Package
+Conclude with concise answers to:
 
-Decide whether the bounded physiology/first-aid research named by the sequencing decision is now required. If it is required, define its exact questions, prohibited medical-advice/value transfer, artifact, consumers, and removal conditions.
+1. Which process families appear distinct enough for later repository integration?
+2. Which stabilization/definitive-care distinctions are strongly supported?
+3. Which recurrence, transport, and reassessment concerns are robust enough for qualitative abstraction?
+4. Which observer-safe signs are defensible, and which diagnoses/mechanics must remain hidden?
+5. Which proposed abstractions should be rejected or researched further?
+6. What exact repository decisions remain before any executable or balance-bearing catalog?
 
-Select the smallest later repository package only if owner, scope, fields, validation, tests, persistence, and migration boundaries are decision-complete. Otherwise say `NO_PACKAGE` and name the missing decision.
+## Completion Gate
 
-### 13. Retained Evidence Disposition
+Before finishing:
 
-For each of the six retained evidence artifacts named in Required Reading:
-
-- state whether this run consumed it and for which exact conclusion;
-- identify every still-outstanding named implementation consumer;
-- preserve the file when any later consumer remains;
-- do not delete it merely because its durable conclusions were cited here.
-
-This run is not the final removal consumer for any of the six artifacts.
-
-### 14. Exact Follow-Up Route
-
-Install an exact next prompt only when supported by this decision and current coordination. Do not activate an executable or balance-bearing lethal-process catalog before the bounded research gate passes.
-
-## Required Decisions
-
-The document must answer explicitly:
-
-1. What owns functional state, and what does it not own?
-2. What is the minimum lethal-process definition/instance split?
-3. How are care requirements derived without becoming mutation owners?
-4. What creates a Mortal Crisis episode and each phase occurrence?
-5. What accepted results exist, and which owner-specific receipts consume them?
-6. How do duplicate delivery, retry, partial application, replay, and correction work?
-7. How do Normal, Committed, and Ironbound differ?
-8. What persists across saves, checkpoints, technical recovery, and branch creation?
-9. What may UI, Chronicle, and narrative projections reveal?
-10. Is bounded research now required, and what exact route follows?
-
-## Prohibited Scope
-
-Do not:
-
-- change content JSON, schemas, validators, tests, helpers, runtime, commands/events, UI, saves, migrations, or gameplay;
-- create lethal-process, injury, treatment, healer, institution, spell, item, service, resurrection, or convalescence content;
-- define medical protocols, real-world advice, exact timers, probabilities, formulas, balance values, or diagnosis taxonomies;
-- make HP zero equal actual death;
-- make Mortal Crisis a mutation owner;
-- authorize generic-resolver mutation;
-- weaken Stakes commitment or Ironbound closure;
-- reopen archived/deleted history;
-- physically delete save/history as a design requirement;
-- delete any of the six retained evidence artifacts named in Required Reading;
-- run builds, tests, generators, servers, package installation, or gameplay unless a repository-fact check strictly requires one.
-
-## Allowed Changes
-
-Documentation only:
-
-- the new focused decision;
-- current output, handoff, and prompt;
-- roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven route/factual corrections;
-- the six retained evidence artifacts only as read-only inputs; do not edit or delete them in this run.
-
-## Validation
-
-- Verify every repository claim against live files.
-- Verify all referenced paths exist.
-- Check consistency against every accepted authority named above.
-- Confirm no source, test, content, schema, runtime, UI, save, or generated path changed.
-- Confirm all six retained evidence artifacts remain byte-identical and present.
-- Run conflict-marker and trailing-whitespace scans plus `git diff --check`.
-- Inspect the complete changed-path set and full diff.
-
-## Completion Report
-
-Report:
-
-- starting commit and worktree state;
-- exact live seams inspected;
-- accepted state, process, care, crisis, receipt, Stakes, persistence, presentation, replay, and correction decisions;
-- research-gate disposition;
-- smallest later package or `NO_PACKAGE`;
-- retained-evidence consumption and preservation disposition;
-- exact next route and prompt disposition;
-- files changed;
-- checks run;
-- confirmation that no implementation or gameplay behavior changed.
+1. verify the exact artifact path and no other changed path;
+2. verify every material factual claim has a direct supporting citation;
+3. verify source, inference, and proposed abstraction are visibly separated;
+4. verify no clinical protocol, medical advice, exact real-world timer, dosage, probability, or proprietary game value was imported;
+5. verify the named consumers and retention rule are exact;
+6. stop without installing a follow-up prompt or authorizing implementation.

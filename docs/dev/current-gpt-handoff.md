@@ -5,12 +5,11 @@ Date: 2026-07-28
 ## Status
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- The unversioned Geography/recognition plan and Activity Resolution existing-system reuse audit are complete and accepted.
-- The Activity audit preserves quest ownership, legacy trial accumulator behavior, Knowledge readiness boundaries, estimate-only crafting, separate activity selection, owner-routed typed effects, and engine command discipline.
-- No shared activity resolver, attempt state, named uncertainty channel, typed effect executor, or gameplay behavior was implemented.
-- The queued Activity audit prompt was consumed and removed.
-- The unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision` is active.
-- Prompt readiness was hardened to name the six retained mortality/narrative/elemental evidence artifacts exactly, record this run's consumption, and prohibit deletion because later implementation consumers remain.
+- Latest completed unversioned run: `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`.
+- The accepted decision separates functional capability, body/resources, injury/trauma, lethal processes, care needs, life state, crisis orchestration, actual death, closure, and convalescence.
+- Current HP-zero archival and save deletion are classified as rejected target behavior and remain a live implementation defect.
+- No executable or balance-bearing lethal-process package is authorized.
+- The active route is `GPT-DR.health.lethal-process-stabilization`.
 
 ## Current Planning Precedence
 
@@ -24,36 +23,46 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale historical-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-## Active Plan Guardrails
+## Active Research Guardrails
 
-Run the exact unversioned Mortal Crisis receipt-contract decision.
+Run exact route `GPT-DR.health.lethal-process-stabilization`.
 
-- Documentation only; create `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`.
-- Separate functional state, body/resources, injury/trauma, lethal processes, care requirements, life state, Mortal Crisis orchestration, actual death, closure, and convalescence.
-- Apply the accepted request/admission/occurrence/result/consequence-receipt/projection taxonomy and correction rules.
-- Preserve Normal, Committed, and Ironbound Stakes semantics, save/checkpoint topology, observer-safe narrative, and elemental/magic capability boundaries.
-- Reproduce current HP-zero, archive/delete, recovery, combat, body, party, treatment/spell, event, and persistence seams without treating them as accepted architecture.
-- Read the six exact retained mortality/narrative/elemental evidence artifacts named in the active prompt only as bounded trace evidence; record actual consumption and preserve every file because later named implementation consumers remain.
-- Do not perform external research, author a lethal-process catalog, define medical/balance values, or implement runtime/schema/save/UI work.
-- Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
+- Create only `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`.
+- Research hemorrhage/shock, airway compromise/drowning, poisoning/antidote limits, cold/heat exposure, burns, stabilization versus definitive care, transport/reassessment, and observer-safe qualitative urgency.
+- Prefer systematic reviews, professional consensus/guidelines, government/public-health sources, and academic medical sources.
+- Cite every material factual claim and distinguish evidence, inference, and proposed abstraction.
+- Keep all findings advisory and non-canonical.
+- Do not provide medical advice, clinical protocols, step-by-step treatment, dosage, exact real-world timers, diagnostic decision trees, gameplay-ready probabilities, or proprietary values.
+- Do not edit coordination, design authority, content, schema, runtime, UI, save, tests, dependencies, generated output, or other retained evidence.
+- Stop without installing a follow-up prompt or authorizing implementation.
+
+## Required Named Consumers
+
+The temporary artifact must name:
+
+1. unversioned `Lethal Process And Stabilization Research Integration Decision`;
+2. the first lethal-process definition/catalog plan;
+3. the first care-capability and stabilization contract/package;
+4. the first observer-safe crisis assessment/presentation package.
+
+Preserve the artifact until every named consumer records consumption and durable authority retains the conclusions and source identity still needed.
 
 ## Preserved Known Gaps
 
 - Workspace typecheck remains a separately classified known-failing audit with 173 reproducible diagnostics.
 - Current HP zero may still enter legacy terminal archival and save deletion.
 - Generic event ids remain collision-prone compatibility projections.
-- Occurrence, named uncertainty, consequence receipts, correction, save/Stakes, Mortal Crisis, and injury/restoration are accepted design authority but not broad runtime implementation.
-- No active lethal-process, care-requirement, Mortal Crisis receipt, body/restoration, or correction owner exists.
+- Occurrence, named uncertainty, consequence receipts, correction, save/Stakes, Mortal Crisis, injury/restoration, functional state, lethal processes, and care requirements remain unimplemented beyond narrow existing seams.
 - Activity advancement, rest, and quest turn-in still include UI-owned mutation paths.
-- Shared activity-resolution implementation remains deferred behind its documented authority sequence.
+- The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
 
 ## Near-Term Sequence
 
-1. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-2. run bounded physiology/first-aid research only if the decision confirms that gate;
-3. keep executable or balance-bearing lethal-process catalogs behind accepted research and owner-specific authorization;
-4. resume the activity-resolution authority sequence and other packages only through explicit route decisions.
+1. run `GPT-DR.health.lethal-process-stabilization`;
+2. run unversioned `Lethal Process And Stabilization Research Integration Decision`;
+3. keep executable or balance-bearing catalogs behind accepted integration and owner-specific authorization;
+4. resume activity-resolution authority work and other packages only through explicit route decisions.
 
 ## Active Prompt
 
-Unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
+`GPT-DR.health.lethal-process-stabilization`
