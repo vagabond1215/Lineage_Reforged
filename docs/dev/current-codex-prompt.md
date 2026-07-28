@@ -12,6 +12,10 @@ Produce a cited, repository-aware evidence artifact that can support later game-
 
 Research is advisory evidence only. It does not create repository canon, authorize implementation, define medical protocols, or supply balance values.
 
+## Repository Baseline
+
+Use repository commit `3eda0921ae0d11b940bfb9649f69b42aab52ee9d` as the fixed repository baseline for this research run. Treat later repository changes as outside this artifact unless the user explicitly restarts the research against a newer baseline.
+
 ## Required Repository Reading
 
 Read:
@@ -32,11 +36,13 @@ Treat accepted repository contracts as design constraints, not claims about real
 
 ## Exact Artifact
 
-Create only:
+Prepare exactly one complete Markdown artifact for later repository persistence at:
 
 `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
 
-Do not edit coordination files, design authorities, schemas, content, source, tests, runtime, UI, saves, dependencies, generated output, or any other retained evidence artifact.
+Deep Research is non-mutating. Return the entire finished artifact in the response and do not claim that the repository file was created, edited, committed, or pushed. A later connector or Codex integration step will persist the artifact at the exact path above.
+
+Do not propose edits to coordination files, design authorities, schemas, content, source, tests, runtime, UI, saves, dependencies, generated output, or any other retained evidence artifact.
 
 ## Research Questions
 
@@ -91,7 +97,7 @@ Summarize interventions at a categorical level suitable for later abstraction. W
 
 ### 1. Scope, Method, And Non-Authority
 
-State the run identity, date, repository baseline, research boundary, and that the artifact is temporary advisory evidence.
+State the run identity, date, fixed repository baseline, research boundary, and that the artifact is temporary advisory evidence.
 
 ### 2. Source Ledger
 
@@ -186,9 +192,10 @@ Conclude with concise answers to:
 
 Before finishing:
 
-1. verify the exact artifact path and no other changed path;
+1. verify the response contains exactly one complete Markdown artifact intended for the exact path;
 2. verify every material factual claim has a direct supporting citation;
 3. verify source, inference, and proposed abstraction are visibly separated;
 4. verify no clinical protocol, medical advice, exact real-world timer, dosage, probability, or proprietary game value was imported;
 5. verify the named consumers and retention rule are exact;
-6. stop without installing a follow-up prompt or authorizing implementation.
+6. state explicitly that no repository write, commit, or push was performed;
+7. stop without installing a follow-up prompt or authorizing implementation.
