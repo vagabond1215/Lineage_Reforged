@@ -16,6 +16,8 @@ Decide whether and how the first non-executable lethal-process definition vocabu
 
 This is the second named consumer of the grounded lethal-process research artifact. It must produce a decision-complete catalog plan or return `NO_PACKAGE`. It must not implement the catalog.
 
+Preserve a strict separation between precise internal authority and player-facing language. Internal ids, contracts, and owner boundaries may use technical terms where necessary, but future status text, dialogue, and narrative presentation must remain simple, concrete, readable, and plausible for the setting.
+
 ## Required Reading
 
 Read:
@@ -59,8 +61,9 @@ Inspect live:
    - as multiple domain-owned catalogs;
    - or nowhere yet.
 7. Treat accepted research abstractions as design authority only at the level retained by the integration decision.
-8. Stop without edits if the artifact fails integrity, existing authority materially conflicts, or an exact owner-safe plan cannot be supported.
-9. Do not perform new external research.
+8. Preserve the internal-versus-player-facing language boundary described below; do not assume an internal id or technical design term is suitable display text.
+9. Stop without edits if the artifact fails integrity, existing authority materially conflicts, or an exact owner-safe plan cannot be supported.
+10. Do not perform new external research.
 
 ## Required Output
 
@@ -113,7 +116,21 @@ Prohibit current severity, stages, timers, progression, diagnosis, treatment pro
 
 ### 7. Observer And Care Boundaries
 
-Identify only which evidence and capability hooks later consumers require. Do not decide care actions, treatment recipes, diagnosis logic, or UI wording.
+Identify only which evidence and capability hooks later consumers require. Do not decide care actions, treatment recipes, diagnosis logic, or exact UI wording.
+
+### 7A. Player-Facing Language Boundary
+
+Define the mandatory separation between internal authority and future presentation:
+
+- internal ids, contracts, and design documents may use precise technical distinctions where owner safety requires them;
+- player-facing labels, status text, dialogue, Chronicle text, and narrative cues must use brief, concrete, everyday language plausible for the fantasy setting;
+- prefer observable or attributed wording such as `bleeding badly`, `struggling to breathe`, `faint and cold`, `badly burned`, `poisoned`, `stable for now`, or `needs a healer` rather than clinical diagnoses;
+- avoid modern clinical or scientific display language such as `hypovolemic`, `respiratory compromise`, `cyanosis`, `perfusion`, `neurological deficit`, `syndrome`, or `triage`, unless it remains hidden internal terminology;
+- rare trained healers, alchemists, scholars, or magical diagnosticians may know more than ordinary observers, but their player-facing speech should still be understandable and setting-appropriate, with technical certainty bounded by their accepted capability;
+- magic may provide extraordinary observation, diagnosis, stabilization, restoration, or communication, but must not become an excuse for modern medical exposition or pseudo-scientific technobabble;
+- future presentation should distinguish ordinary observation, healer judgment, and magical sensing without exposing hidden process truth automatically.
+
+Do not author final display strings in this plan. Define the constraints and later validation expectations only.
 
 ### 8. Validation And Test Plan
 
@@ -156,9 +173,10 @@ Answer explicitly:
 5. What static data is allowed and forbidden?
 6. What ids, references, lifecycle, provenance, and validation are required?
 7. What current data may or may not migrate?
-8. Is a later static package ready, or is the result `NO_PACKAGE`?
-9. What research conclusions were consumed and which consumers remain?
-10. What exact route and prompt follow?
+8. What internal-versus-player-facing language boundary must every later catalog, care, narrative, dialogue, Chronicle, and UI package preserve?
+9. Is a later static package ready, or is the result `NO_PACKAGE`?
+10. What research conclusions were consumed and which consumers remain?
+11. What exact route and prompt follow?
 
 ## Prohibited Scope
 
@@ -171,6 +189,8 @@ Do not:
 - make a static definition, Mortal Crisis, save authority, UI, Chronicle, or a generic resolver own mutation;
 - infer process truth from prose, `activeEffects`, display labels, one observed sign, morality, role, alignment, religion, or narrative importance;
 - author poison families, antidotes, treatments, healers, services, institutions, items, spells, injuries, or resurrection content;
+- require modern clinical terminology in player-facing text or treat internal technical names as automatic display labels;
+- use magic as justification for modern-scientific exposition, omniscient diagnosis, or needlessly technical dialogue;
 - delete or edit the decoded research artifact;
 - authorize implementation merely because a definition plan is accepted.
 
@@ -187,6 +207,7 @@ Documentation only:
 - Verify the research artifact length and SHA-256.
 - Verify every live vocabulary count, id, field, validator, registration, test, import, and consumer claim.
 - Verify the plan records second-consumer status and the exact two remaining consumers.
+- Verify the plan defines and preserves the internal-versus-player-facing language boundary, including plain in-world wording, capability-bounded healer or magical knowledge, and rejection of modern clinical display jargon.
 - Verify all referenced paths exist.
 - Confirm no content, schema, validator, test, source, runtime, UI, save, dependency, generated, or gameplay path changed.
 - Run conflict-marker and trailing-whitespace scans plus `git diff --check`.
@@ -202,7 +223,7 @@ Report:
 - exact live vocabulary inventory;
 - catalog/envelope ownership decision;
 - exact first-scope disposition;
-- static/mutable, observer, care, migration, and validation boundaries;
+- static/mutable, observer, care, player-facing language, migration, and validation boundaries;
 - package readiness or `NO_PACKAGE`;
 - artifact consumption and retention;
 - exact next route and prompt;
