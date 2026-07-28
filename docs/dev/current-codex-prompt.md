@@ -1,28 +1,28 @@
-# Grounded Lethal Process, Stabilization, And First-Aid Research
+# Lethal Process And Stabilization Research Integration Decision
 
 ## Run Identity
 
-`GPT-DR.health.lethal-process-stabilization`
+Unversioned `Lethal Process And Stabilization Research Integration Decision`
 
-Unversioned bounded external research. This run does not consume a primary implementation version.
+Documentation only. This run does not consume a primary implementation version.
+
+Suggested commit:
+
+`docs(health): integrate lethal process research`
 
 ## Purpose
 
-Produce a cited, repository-aware evidence artifact that can support later game-design decisions about lethal-process categories, stabilization versus definitive care, transport and reassessment, and observer-safe qualitative urgency.
+Persist the completed bounded research artifact, verify its transport and citation integrity, and create the durable repository decision that accepts, narrows, rejects, or defers each proposed lethal-process, stabilization, reassessment, transport, and observer-safe urgency abstraction.
 
-Research is advisory evidence only. It does not create repository canon, authorize implementation, define medical protocols, or supply balance values.
+This run is the first named consumer of the research artifact. It must not implement a lethal-process catalog, care runtime, medical simulation, UI behavior, schema, save state, balance values, or gameplay.
 
-## Repository Baseline
-
-Use repository commit `3eda0921ae0d11b940bfb9649f69b42aab52ee9d` as the fixed repository baseline for this research run. Treat later repository changes as outside this artifact unless the user explicitly restarts the research against a newer baseline.
-
-## Required Repository Reading
+## Required Reading
 
 Read:
 
 - `AGENTS.md`;
-- `docs/dev/current-gpt-handoff.md`;
-- `docs/dev/current-codex-output.md`;
+- `README.md`;
+- current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, and static-content program;
 - `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`;
 - `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`;
 - `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
@@ -30,172 +30,254 @@ Read:
 - `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md`;
 - `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`;
 - `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
-- `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`.
+- `docs/design/narrative-realization-referential-grammar-appearance-and-fact-projection-decision.md`;
+- `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md.gz.b64`.
 
-Treat accepted repository contracts as design constraints, not claims about real medicine.
+After successful transport verification, read the decoded artifact at:
 
-## Exact Artifact
+- `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`.
 
-Prepare exactly one complete Markdown artifact for later repository persistence at:
+## Execution Gate
 
-`docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
+1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
+2. Confirm accepted Mortal Crisis contract commit `3eda0921ae0d11b940bfb9649f69b42aab52ee9d` is an ancestor of `HEAD`.
+3. Confirm transport commit `ef6bb4f0a799c7ec62848f9ba2d6a21ff5e8bfaa` is an ancestor of `HEAD` and the transport file is the only research payload source.
+4. Decode the transport file as base64, then gzip, then UTF-8 into exactly:
+   - `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`.
+5. Verify the decoded artifact before using it:
+   - UTF-8 byte length: `59757`;
+   - SHA-256: `4c4a4efd0199448a6365179e0a2b77ec568e37e5e78345a232f6c5391eba1b36`;
+   - no `turn<number>view<number>` session-local citation tokens remain;
+   - source-ledger identifiers `S01` through `S31` and their Markdown reference definitions are present;
+   - the four named consumers and retention rule are exact.
+6. Delete `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md.gz.b64` only after every decode and integrity check passes.
+7. Treat the research artifact's statement that repository files were unavailable to Deep Research as a retained provenance limitation. Do not rewrite that historical statement. Independently verify repository compatibility in the integration decision.
+8. Stop without edits if payload integrity fails, a named source URL is missing, or accepted repository authority materially conflicts with the research in a way precedence cannot resolve.
+9. Do not perform new external research in this run.
 
-Deep Research is non-mutating. Return the entire finished artifact in the response and do not claim that the repository file was created, edited, committed, or pushed. A later connector or Codex integration step will persist the artifact at the exact path above.
+## Required Output
 
-Do not propose edits to coordination files, design authorities, schemas, content, source, tests, runtime, UI, saves, dependencies, generated output, or any other retained evidence artifact.
+Create:
 
-## Research Questions
+- `docs/design/lethal-process-and-stabilization-research-integration-decision.md`.
 
-For grounded medieval-fantasy abstraction, investigate:
+The decision must contain the following sections.
 
-1. hemorrhage and shock;
-2. airway compromise and drowning;
-3. poisoning and the limits of antidotes;
-4. cold exposure and heat illness;
-5. burns;
-6. immediate stabilization versus definitive care;
-7. transport risk, monitoring, and reassessment;
-8. observer-safe qualitative urgency cues.
+### 1. Artifact Provenance, Integrity, And Non-Authority
 
-For each domain, answer:
+Record:
 
-- Which broad causal processes are meaningfully distinct?
-- Which visible or reportable signs can support qualitative urgency without claiming a diagnosis?
-- Which interventions are best understood as stabilization, temporary suppression, definitive treatment, supportive care, or ineffective/harmful folklore?
-- Which conditions can recur or worsen after apparent stabilization?
-- Which transport, delay, environment, equipment, training, or provider constraints materially matter?
-- Which distinctions are robust enough for coarse game abstraction, and which require rejection or further research?
+- Deep Research run identity and date;
+- fixed research baseline `3eda0921ae0d11b940bfb9649f69b42aab52ee9d`;
+- transport commit and path;
+- decoded path, byte length, and SHA-256;
+- citation normalization posture;
+- the repository-access limitation recorded by the research;
+- confirmation that research is evidence, not canon or medical advice.
 
-## Source Standards
+### 2. Source Quality And Limitation Matrix
 
-- Prefer systematic reviews, evidence syntheses, recognized professional consensus/guidelines, public-health or government sources, and academic medical sources.
-- Use current sources where guidance may have changed.
-- Give direct citations or URLs for every material factual claim.
-- Record publication or update date, issuing body, source type, and an evidence-quality or limitation note.
-- Distinguish source evidence, researcher inference, and proposed game abstraction.
-- Identify disagreement, weak evidence, context dependence, and uncertainty explicitly.
-- Do not use commercial game mechanics as evidence and do not import proprietary values.
+Classify the 31 source-ledger entries by issuing body, source type, recency, domain, and limitation. Distinguish professional consensus, government/public-health guidance, specialty guidance, evidence synthesis, and lay-facing educational material.
 
-## Safety And Scope Boundary
+Do not re-research or upgrade source quality beyond what the artifact supports.
 
-This is game-design research, not medical advice.
+### 3. Repository Contract Compatibility
 
-Do not provide:
+Compare the artifact against accepted authority for:
 
-- step-by-step emergency treatment instructions;
-- medication names as player-facing prescriptions, dosages, concentrations, or administration schedules;
-- exact real-world deterioration, rescue, survival, or death timers;
-- diagnostic decision trees intended for real-world use;
-- probabilities or outcome rates ready to paste into gameplay;
-- graphic procedural detail;
-- claims that one visible sign proves a hidden diagnosis;
-- a universal critical meter, bleed-out timer, or omnibus lethal roll.
+- independently owned lethal processes;
+- functional state and life state separation;
+- care requirements and care attempts;
+- stabilization versus definitive care and restoration;
+- Mortal Crisis orchestration;
+- occurrence, named uncertainty, result, consequence receipt, replay, and correction;
+- Stakes commitment and closure;
+- observer-safe narrative and UI projection.
 
-Summarize interventions at a categorical level suitable for later abstraction. When a source contains operational clinical detail, extract only the conceptual distinction needed for game design.
+Classify every material research conclusion as compatible, compatible with narrowing, conflicting, unsupported, or outside repository authority.
 
-## Required Artifact Structure
+### 4. Process-Family Disposition
 
-### 1. Scope, Method, And Non-Authority
+For each candidate family or distinction, decide `retain`, `retain_coarsely`, `optional_contextual`, `reject`, or `research_gap`:
 
-State the run identity, date, fixed repository baseline, research boundary, and that the artifact is temporary advisory evidence.
+- external hemorrhage;
+- suspected internal bleeding;
+- shock-like circulatory deterioration;
+- choking or upper-airway obstruction;
+- post-submersion respiratory compromise;
+- poisoning syndrome families and antidote limits;
+- systemic hypothermia;
+- local freezing injury;
+- non-stroke heat illness;
+- heat-stroke-like hot altered crisis;
+- superficial and serious burns;
+- chemical, electrical, and inhalation-related burn distinctions.
 
-### 2. Source Ledger
+State whether each belongs in a future shared structural vocabulary, an owner-specific catalog, an observer-only projection, or no repository model.
 
-For every used source record:
+Do not author executable definitions, values, timers, probabilities, diagnoses, treatment recipes, or content records.
 
-- title;
-- authoring/issuing body;
-- date;
-- source type;
-- direct URL;
-- domain supported;
-- evidence-quality or limitation note.
+### 5. Stabilization, Suppression, Definitive Care, Resolution, And Restoration
 
-### 3. Cross-Process Comparison
+Define the accepted semantic boundaries among:
 
-Compare the eight research domains using a matrix that separates:
+- stabilization;
+- temporary suppression;
+- supportive care;
+- definitive treatment;
+- process resolution;
+- functional recovery;
+- anatomical restoration;
+- resurrection.
 
-- initiating hazard;
-- independently meaningful process;
-- qualitative progression/reassessment need;
-- stabilization concept;
-- definitive-care distinction;
-- recurrence/worsening concern;
-- transport/environment concern;
-- observer-safe evidence;
-- major uncertainty.
+Preserve the accepted rule that stabilization does not imply consciousness, mobility, survival, full recovery, process resolution, definitive care, restoration, or resurrection. Identify only tightly bounded low-severity exceptions supported by the research.
 
-### 4. Domain Findings
+### 6. Transport, Delay, Monitoring, And Reassessment
 
-Provide one bounded subsection for each research domain. Separate evidence, inference, and candidate abstraction.
+Decide which qualitative triggers are robust enough for later contract work, including:
 
-### 5. Stabilization, Definitive Care, And Restoration Boundary
+- movement or extraction;
+- material delay;
+- environmental change;
+- new or returning symptoms;
+- failed or partial response;
+- destination capability change;
+- provider, equipment, contamination, shelter, route, and escort constraints.
 
-Explain why stabilization does not imply consciousness, mobility, full recovery, process resolution, definitive treatment, anatomical restoration, resurrection, or survival. Identify domain-specific exceptions and uncertainties.
+Do not create exact reassessment intervals, travel penalties, probabilities, or omniscient hidden-state updates.
 
-### 6. Transport, Monitoring, And Reassessment
+### 7. Observer-Safe Urgency Evidence
 
-Summarize why movement, delay, environment, provider access, changing symptoms, and intervention response can require reassessment. Keep the findings qualitative and non-procedural.
-
-### 7. Observer-Safe Urgency
-
-Classify potential cues as:
+Accept, narrow, reject, or defer cue categories:
 
 - directly visible;
 - patient-reported;
 - helper- or provider-reported;
 - equipment- or capability-dependent;
 - hidden or diagnosis-dependent;
-- unsafe or misleading to present as certainty.
+- unsafe or misleading as certainty.
 
-Do not expose raw timers, probabilities, hidden process stages, or future outcomes.
+Define the repository-safe rule for showing observations and trends without exposing diagnoses, exact hidden stages, raw timers, outcome probabilities, or future outcomes.
 
-### 8. Game-Abstraction Candidate Ledger
+### 8. Rejected And Unsafe Transfers
 
-For each proposed abstraction classify it as:
+Explicitly disposition:
 
-- `retain`;
-- `retain_coarsely`;
-- `optional_contextual`;
-- `reject`;
-- `research_gap`.
+- universal critical meters;
+- universal bleed-out timers;
+- omnibus lethal rolls;
+- universal poison meters or antidotes;
+- certainty diagnosis from one visible sign;
+- hidden delayed-death `dry drowning` mechanics after asymptomatic recovery;
+- exact real-world clinical timers, protocols, dosages, treatment trees, or outcome rates;
+- direct transfer of contemporary institutional assumptions into all medieval-fantasy contexts.
 
-Include source support, uncertainty, likely owner/consumer, and the specific reason for the classification. Recommendations remain non-canonical.
+### 9. Owner And Consumer Matrix
 
-### 9. Cautions And Explicit Non-Decisions
+For every retained or narrowed abstraction, identify:
 
-List unsafe transfers, unsupported precision, cultural/geographic limits, scope omissions, and every question the research cannot answer.
+- likely static owner;
+- likely mutable owner;
+- evidence producer;
+- accepted-result owner;
+- care or intervention consumer;
+- transport or institution consumer;
+- observer-safe projection consumer;
+- persistence and correction need;
+- missing authority.
 
-### 10. Named Consumers And Retention
+Do not assign implementation packages that the evidence and accepted contracts do not support.
 
-Name exactly:
+### 10. Catalog And Package Readiness
 
-1. unversioned `Lethal Process And Stabilization Research Integration Decision`;
-2. the first lethal-process definition/catalog plan;
-3. the first care-capability and stabilization contract/package;
-4. the first observer-safe crisis assessment/presentation package.
+Decide whether the first lethal-process definition/catalog plan is now decision-ready.
 
-The artifact must remain until every named consumer records consumption and a durable authority retains the conclusions and source identity it still needs.
+If not, return `NO_PACKAGE` and name the exact missing decisions. If a later planning package is ready, define only its documentation scope, owner questions, validation expectations, and prohibited implementation. Do not create schemas, validators, content, tests, runtime, or balance.
 
-### 11. Bounded Answers
+Also determine whether the care-capability/stabilization contract or observer-safe crisis assessment package must precede, follow, or remain parallel to the first catalog plan.
 
-Conclude with concise answers to:
+### 11. Research Artifact Consumption And Retention
 
-1. Which process families appear distinct enough for later repository integration?
-2. Which stabilization/definitive-care distinctions are strongly supported?
-3. Which recurrence, transport, and reassessment concerns are robust enough for qualitative abstraction?
-4. Which observer-safe signs are defensible, and which diagnoses/mechanics must remain hidden?
-5. Which proposed abstractions should be rejected or researched further?
-6. What exact repository decisions remain before any executable or balance-bearing catalog?
+Record this run as the first named consumer. For the artifact:
 
-## Completion Gate
+- state the exact conclusions consumed;
+- preserve the decoded Markdown artifact;
+- confirm the transport payload was deleted;
+- identify the three still-outstanding named consumers:
+  1. the first lethal-process definition/catalog plan;
+  2. the first care-capability and stabilization contract/package;
+  3. the first observer-safe crisis assessment/presentation package;
+- retain the artifact until every named consumer records consumption and durable authority preserves the conclusions and source identity still needed.
 
-Before finishing:
+### 12. Exact Follow-Up Route
 
-1. verify the response contains exactly one complete Markdown artifact intended for the exact path;
-2. verify every material factual claim has a direct supporting citation;
-3. verify source, inference, and proposed abstraction are visibly separated;
-4. verify no clinical protocol, medical advice, exact real-world timer, dosage, probability, or proprietary game value was imported;
-5. verify the named consumers and retention rule are exact;
-6. state explicitly that no repository write, commit, or push was performed;
-7. stop without installing a follow-up prompt or authorizing implementation.
+Install an exact next prompt only when supported by the integration decision and current coordination. Do not activate executable or balance-bearing lethal-process content.
+
+## Required Decisions
+
+Answer explicitly:
+
+1. Which research conclusions become durable design authority, and at what level of abstraction?
+2. Which process families remain distinct, coarse, contextual, rejected, or research gaps?
+3. What exactly does stabilization mean and not mean?
+4. Which transport and reassessment triggers are accepted without numeric timing?
+5. Which observer-safe cues may be shown, by whom, and with what uncertainty?
+6. Which research claims remain too source-specific, modern-context-dependent, or weak for authority?
+7. Is a first catalog plan ready, or is the result `NO_PACKAGE`?
+8. What is the exact order among catalog planning, care-capability contracting, and observer-safe presentation work?
+9. What exact next route and prompt follow?
+
+## Prohibited Scope
+
+Do not:
+
+- perform new external research;
+- change content JSON, schemas, validators, tests, helpers, runtime, commands/events, UI, saves, migrations, dependencies, generated output, or gameplay;
+- define player-facing medical protocols, diagnoses, treatment instructions, dosages, concentrations, exact timers, probabilities, formulas, or balance values;
+- create lethal-process, injury, poison, burn, treatment, healer, institution, spell, item, service, resurrection, or convalescence content;
+- make HP zero equal actual death;
+- make Mortal Crisis or a generic resolver a mutation owner;
+- infer medical capability from morality, identity, role, religion, alignment, or narrative importance;
+- delete the decoded research artifact;
+- retain the compressed transport payload after successful verified decoding;
+- authorize implementation merely because a research abstraction is retained.
+
+## Allowed Changes
+
+Documentation only:
+
+- create the decoded temporary research artifact at its exact path;
+- delete the verified compressed transport payload;
+- create the focused integration decision;
+- update current output, handoff, and prompt;
+- update roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven route or factual corrections.
+
+## Validation
+
+- Verify the decoded artifact byte length and SHA-256 exactly.
+- Verify no session-local `turn<number>view<number>` citations remain.
+- Verify source identifiers `S01` through `S31` and all source URLs close.
+- Verify the decoded artifact remains present and the compressed transport file is absent.
+- Verify the integration decision records the artifact as first consumer and preserves the three remaining consumers.
+- Verify every repository claim against live files.
+- Verify all referenced paths exist.
+- Confirm no source, test, content, schema, runtime, UI, save, dependency, generated, or gameplay path changed.
+- Run conflict-marker and trailing-whitespace scans plus `git diff --check`.
+- Inspect the complete changed-path set and full diff.
+
+Do not run builds, tests, content lint, typecheck, generators, servers, package installation, or gameplay unless a repository-fact check strictly requires one.
+
+## Completion Report
+
+Report:
+
+- starting commit and worktree state;
+- transport decode and integrity evidence;
+- exact research conclusions retained, narrowed, rejected, or deferred;
+- stabilization, care, reassessment, transport, and observer-safe decisions;
+- catalog/package readiness or `NO_PACKAGE`;
+- artifact consumption and retention disposition;
+- exact next route and prompt disposition;
+- files created, modified, and deleted;
+- checks run;
+- confirmation that no implementation, medical protocol, or gameplay behavior changed.
