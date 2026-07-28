@@ -10,9 +10,11 @@ Milestone impact: `supports_current_band`
 
 This document reconciles stale current-state headers in long-lived planning documents without rewriting their historical chronology. It changes no runtime, content, schema, validator, test, save, migration, dependency, UI, or gameplay authority.
 
-## Resolved Stale Headers
+## Current Header Status
 
-The roadmap and sequenced-plan current anchors previously predated completion of `Version 0.6.5` and the later support/static sequence. Accepted `0.6.7` refreshed those top current-state sections through the active Geography/recognition plan. Their long historical chronology remains valuable and was not mass-rewritten.
+The roadmap top override and the sequenced-plan current anchor are refreshed through accepted `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` and the active Geography/recognition plan.
+
+`docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution, does not invalidate the refreshed top override, and does not require a pre-run edit before the active Geography/recognition plan. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
 
 ## Controlling Current Anchor
 
@@ -57,4 +59,4 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation as audit history unless a later dedicated maintenance pass supersedes it.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation as audit history unless a later dedicated maintenance pass supersedes it. The known lower roadmap anchor does not block the current prompt because its stale status and controlling precedence are explicit here.
