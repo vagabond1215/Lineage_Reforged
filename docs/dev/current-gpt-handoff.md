@@ -5,15 +5,11 @@ Date: 2026-07-28
 ## Status
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Accepted `0.6.4`-`0.6.6` inventories, references, lifecycle/status posture, and static/runtime boundaries were reproduced and accepted.
-- Normal content lint passed at 67 files; the prescribed focused group passed 688/688.
-- No content, schema, validator, test, runtime, UI, save, or gameplay repair was required.
-- Stale top-level live coordination wording was corrected during `0.6.7`.
-- One lower `docs/dev/project-roadmap.md` `## 1. Current Anchor` block remains pre-`0.6.7`; `docs/design/current-planning-anchor-reconciliation.md` explicitly classifies it as stale and noncontrolling, so it does not block the active plan.
-- All six remaining Gate 1-5 and Gate 7 research artifacts were removed after their durable-coverage and no-citation-need conditions passed.
-- The unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan` is complete and accepted.
-- The accepted design assigns Geography to a future broad domain plus separate taxonomy, recognition-profile, source-teaching, occurrence, and mutable-state owners. Existing numeric geographic levels remain preserved legacy behavior.
-- The unversioned `Activity Resolution Existing-System Reuse Audit` is active.
+- The unversioned Geography/recognition plan and Activity Resolution existing-system reuse audit are complete and accepted.
+- The Activity audit preserves quest ownership, legacy trial accumulator behavior, Knowledge readiness boundaries, estimate-only crafting, separate activity selection, owner-routed typed effects, and engine command discipline.
+- No shared activity resolver, attempt state, named uncertainty channel, typed effect executor, or gameplay behavior was implemented.
+- The queued Activity audit prompt was consumed and removed.
+- The unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision` is active.
 
 ## Current Planning Precedence
 
@@ -29,32 +25,33 @@ Use current execution sources in this order:
 
 ## Active Plan Guardrails
 
-Run the exact unversioned `Activity Resolution Existing-System Reuse Audit`.
+Run the exact unversioned Mortal Crisis receipt-contract decision.
 
-- Documentation only: audit live systems and decide reuse, adapter, preservation, ownership, gap, block, and rejection postures; do not implement the shared framework.
-- Create exactly `docs/design/activity-resolution-existing-system-reuse-audit.md` as the audit owner.
-- Inventory Skill Trials, Knowledge completion/eligibility/readiness, quest action trees, crafting/process authorities, activity advancement, difficulty, magic, command/event identity, synchronization, and persistence.
-- Keep engine-owned activity selection separate and accepted.
-- Do not generalize by field-name similarity or mutate content, schemas, validators, tests, helpers, runtime, commands/events, UI, saves, progression, economy, inventory, crafting, gathering, Knowledge, magic, combat, dependencies, assets, generated output, or gameplay.
+- Documentation only; create `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`.
+- Separate functional state, body/resources, injury/trauma, lethal processes, care requirements, life state, Mortal Crisis orchestration, actual death, closure, and convalescence.
+- Apply the accepted request/admission/occurrence/result/consequence-receipt/projection taxonomy and correction rules.
+- Preserve Normal, Committed, and Ironbound Stakes semantics, save/checkpoint topology, observer-safe narrative, and elemental/magic capability boundaries.
+- Reproduce current HP-zero, archive/delete, recovery, combat, body, party, treatment/spell, event, and persistence seams without treating them as accepted architecture.
+- Do not perform external research, author a lethal-process catalog, define medical/balance values, or implement runtime/schema/save/UI work.
 - Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
-- Preserve the accepted Geography/recognition owner boundaries and selected later district/site Knowledge evidence closure.
 
 ## Preserved Known Gaps
 
 - Workspace typecheck remains a separately classified known-failing audit with 173 reproducible diagnostics.
-- Current `Recognizing ...` Knowledge snippets are structural lore, not implemented recognition mechanics.
-- Occurrence identity, commitment, correction, consequence idempotency, save/Stakes topology, Mortal Crisis, and recovery contracts remain design authority rather than broad runtime implementation.
 - Current HP zero may still enter legacy terminal archival and save deletion.
-- Generic event ids remain collision-prone.
-- No dynamic monster, ecology, loot, spawn, encounter, harvesting, population, inventory, crafting, economy, magitech, Geography-recognition, or political-overlay execution is authorized.
+- Generic event ids remain collision-prone compatibility projections.
+- Occurrence, named uncertainty, consequence receipts, correction, save/Stakes, Mortal Crisis, and injury/restoration are accepted design authority but not broad runtime implementation.
+- No active lethal-process, care-requirement, Mortal Crisis receipt, body/restoration, or correction owner exists.
+- Activity advancement, rest, and quest turn-in still include UI-owned mutation paths.
+- Shared activity-resolution implementation remains deferred behind its documented authority sequence.
 
 ## Near-Term Sequence
 
-1. run Activity Resolution Existing-System Reuse Audit;
-2. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
-3. run bounded physiology/first-aid research only before the first executable or balance-bearing lethal-process catalog;
-4. schedule the selected settlement district/site Knowledge evidence closure and other owner-specific packages only through explicit route decisions.
+1. run Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision;
+2. run bounded physiology/first-aid research only if the decision confirms that gate;
+3. keep executable or balance-bearing lethal-process catalogs behind accepted research and owner-specific authorization;
+4. resume the activity-resolution authority sequence and other packages only through explicit route decisions.
 
 ## Active Prompt
 
-Unversioned `Activity Resolution Existing-System Reuse Audit`
+Unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`

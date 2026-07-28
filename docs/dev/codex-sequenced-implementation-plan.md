@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-28
-Route: Codex local sequencing alignment after accepted cross-content coherence audit
+Route: Codex local sequencing alignment after accepted Activity Resolution reuse audit
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -29,7 +29,7 @@ Latest completed support/audit run:
 
 Immediate next run:
 
-- unversioned `Activity Resolution Existing-System Reuse Audit`
+- unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
 
 ## Current Queue Override
 
@@ -55,7 +55,7 @@ Immediate next run:
 - The seven-gate cross-domain research program, production-authority audit, unversioned integration, and exact 16-row `0.6.5` recipe package are complete. Resolver quarantine held; the consumed Gate 6/audit artifacts were removed under synthesis conditions.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is complete. It landed the exact nine-monster, nine-fauna-lineage, nine-ecology-addition, and 28-drop-row package with 147/147 prescribed focused tests and 67-file normal lint green.
 - `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is complete and accepted. All required inventories and owner/reference boundaries closed, normal lint passed at 67 files, the prescribed group passed 688/688, no production repair was needed, and all six remaining research artifacts were removed after durable-coverage conditions passed.
-- The unversioned Geographic Knowledge Taxonomy And Location Recognition Contract Plan is complete and accepted. The active route is the unversioned Activity Resolution Existing-System Reuse Audit.
+- The unversioned Geographic Knowledge Taxonomy And Location Recognition Contract Plan and Activity Resolution Existing-System Reuse Audit are complete and accepted. The active route is the unversioned Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.

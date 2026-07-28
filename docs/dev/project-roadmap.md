@@ -7,8 +7,8 @@ Last reviewed: 2026-07-28
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 - Latest completed support/audit run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Next run: unversioned `Activity Resolution Existing-System Reuse Audit`.
-- Activity selection remains accepted. `0.6.4`, the seven-gate research/integration prerequisite, the synthesis-owned 16-row `0.6.5` recipe package, the exact nine-row `0.6.6` monster/ecology package, the `0.6.7` coherence audit, and the Geography/recognition contract plan are complete. Activity Resolution reuse is active next.
+- Next run: unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`.
+- Activity selection remains accepted. `0.6.4`, the seven-gate research/integration prerequisite, the synthesis-owned 16-row `0.6.5` recipe package, the exact nine-row `0.6.6` monster/ecology package, the `0.6.7` coherence audit, Geography/recognition planning, and the Activity Resolution reuse audit are complete. The Mortal Crisis receipt contract is active next.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -651,7 +651,7 @@ Practical near-term sequence:
 47. `0.5.158 - 0.5.x Roadmap Integration Pass` - completed
 48. `0.5.159 - Knowledge Trial Registry Reference Alignment` - completed
 49. `0.5.160 - Knowledge Trial Readiness Policy Schema Plan` - completed
-50. `0.5.161 - Knowledge Trial Readiness Policy Schema` - next
+50. `0.5.161 - Knowledge Trial Readiness Policy Schema` - completed
 
 ## 5. Advancement Framework Roadmap
 
@@ -719,7 +719,7 @@ Recommended advancement sequence:
 52. `0.5.158 - 0.5.x Roadmap Integration Pass` - completed
 53. `0.5.159 - Knowledge Trial Registry Reference Alignment` - completed
 54. `0.5.160 - Knowledge Trial Readiness Policy Schema Plan` - completed
-55. `0.5.161 - Knowledge Trial Readiness Policy Schema` - next
+55. `0.5.161 - Knowledge Trial Readiness Policy Schema` - completed
 56. `0.5.x - Knowledge Trial Checkpoint Helper`
 57. `0.5.x - Skill Trial Schema Expansion Plan`
 58. `0.5.x - Skill Trial Checkpoint Outcome Helper`
@@ -729,6 +729,8 @@ Recommended advancement sequence:
 61. `0.5.x - Magic Study Checkpoint Helper`
 62. `0.5.x - Known-Spell Acquisition Evidence Integration Plan`
 63. `0.5.x - Shared Trial Vocabulary / Envelope Plan`
+
+Rows 56-63 are historical, unassigned placeholders. They are not executable versions or current routing authority; their still-relevant concerns must be reselected through current owner-specific decisions.
 64. `0.5.x - Trial UI Presentation Plan`
 65. `0.6.x - First Advancement Event Runtime Shape`
 66. `0.6.x - First Skill Trial Family Content`

@@ -1,30 +1,20 @@
-# Activity Resolution Existing-System Reuse Audit
+# Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision
 
 ## Run Identity
 
-Unversioned `Activity Resolution Existing-System Reuse Audit`
+Unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`
 
-Documentation only. This run does not consume a primary `0.6.x` or later implementation version.
+Documentation only. This run does not consume a primary implementation version.
 
 Suggested commit:
 
-`docs(audit): reconcile activity resolution systems`
+`docs(stakes): define mortal crisis receipt contracts`
 
 ## Purpose
 
-Reinspect the live repository and determine which existing trial, quest, Knowledge, activity, crafting, workplace, difficulty, and magic structures can safely support a future shared contextual activity-resolution framework.
+Define the decision-complete conceptual contracts that connect functional state, independently owned lethal processes, derived care requirements, the accepted six-phase Mortal Crisis framework, accepted occurrence/results, downstream consequence receipts, Stakes commitment, persistence, correction, and observer-safe presentation.
 
-The audit must decide what is:
-
-- reusable shared vocabulary;
-- reusable only through an adapter;
-- legacy behavior to preserve temporarily;
-- domain-owned and not generalizable;
-- missing authority;
-- blocked pending another owner;
-- unsafe to promote.
-
-The audit must not implement the shared framework.
+This run must close the authority and identity seams needed before bounded physiology/first-aid research or any lethal-process catalog. It must not implement those systems or invent medical/balance values.
 
 ## Required Reading
 
@@ -32,293 +22,246 @@ Read:
 
 - `AGENTS.md`;
 - `README.md`;
-- current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, and backlog;
-- `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md`;
-- `docs/design/future-system-design-ledger.md`;
-- `docs/design/skill-mastery-trial-framework-plan.md`;
-- `docs/design/knowledge-trial-boundary-plan.md`;
-- `docs/design/knowledge-trial-readiness-boundary-plan.md`;
-- `docs/design/knowledge-trial-readiness-policy-schema-plan.md`;
-- `docs/design/crafting-authority-boundary-decision.md`;
-- `docs/design/cross-domain-production-research-synthesis.md`;
-- `docs/data-dictionary/quests.md`;
-- `docs/design/magic-study-authority-boundary-decision.md`;
-- relevant activity, travel, quest, difficulty, command/event, and preview/execution boundary documents.
+- current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, and backlog;
+- `docs/design/activity-resolution-existing-system-reuse-audit.md`;
+- `docs/design/static-content-restoration-and-mortality-research-sequencing-decision.md`;
+- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
+- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
+- `docs/design/checkpoint-commitment-mortal-crisis-resurrection-aftereffects-final-closure-and-stakes-authority-revision.md`;
+- `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`;
+- `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
+- `docs/design/injury-recovery-trauma-and-magical-restoration-decision.md`;
+- `docs/design/restricted-stakes-continuity-death-closure-and-prestige-decision.md`;
+- `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
+- `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`;
+- accepted narrative-realization and elemental capability/boundary decisions relevant to Mortal Crisis;
+- the retained comparative mortality, defeat/injury, and narrative audits only where a precise accepted conclusion still needs evidence.
 
-Inspect the live files that own or consume:
+Inspect the live files that currently own or consume:
 
-- Skill Trial schema, content, progression, tests, and title/breakthrough relationships;
-- Knowledge completion, eligibility, readiness, policy, schema, helper, content, and tests;
-- quest archetype/definition action trees and their validation/runtime consumers;
-- crafting recipes, production chains, workplaces, jobs, tools, and any current craft resolver;
-- activity selection and every activity advancement/preview/execution path;
-- run difficulty modifiers that could affect progression, checks, or consequences;
-- magic readiness/planned-output envelopes and narrow combat-hook execution;
-- shared types, commands, events, revision identity, synchronization, and persistence patterns.
+- HP, body/resource state, damage, defeat, archival, save deletion, and run lifecycle;
+- combat results, encounter cleanup, status/condition/injury vocabulary, and recovery gates;
+- save snapshots, campaign/Stakes identity, checkpoint/recovery, account, estate, Prestige, Chronicle, and succession;
+- party membership, location, travel, inventory/treatment items, services, spells, magic hooks, and activity/rest presentation;
+- commands, events, deterministic identity, synchronization, and persistence.
 
 ## Execution Gate
 
 1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
-2. Confirm every hold prerequisite is accepted. Stop without edits when any prerequisite is not accepted.
-3. Confirm `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md` exists and remains planning-only.
-4. Reproduce current counts and identities for trials, skills, Knowledge trial policies/readiness schemas, quest archetypes/definitions, recipes, workplaces/jobs, and relevant helpers.
-5. Search for every implementation and consumer of trial outcomes, checkpoints, action trees, activity advancement, crafting resolution, Knowledge readiness, and generic checks.
-6. Record stale or contradictory documentation separately from runtime defects.
-7. Do not assume that similarly named fields share semantics.
+2. Confirm the Activity Resolution reuse audit is accepted and its queued prompt is consumed.
+3. Confirm occurrence taxonomy, Mortal Crisis/Stakes, save/Stakes, injury/restoration, Normal defeat, narrative, and elemental prerequisites are accepted.
+4. Reproduce the current live HP-zero, archival/save, recovery, combat, body, party, spell/treatment, event, and persistence seams.
+5. Separate stale runtime behavior from accepted future authority. Current implementation is evidence, not architecture.
+6. Stop without edits if accepted sources materially conflict and cannot be resolved by their recorded precedence.
+7. Do not perform external research in this run.
 
-## Required Audit Output
+## Required Output
 
 Create:
 
-- `docs/design/activity-resolution-existing-system-reuse-audit.md`
+- `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`
 
-The audit must contain the following sections.
+The decision must contain the following sections.
 
-### 1. Exact Live Baseline
+### 1. Live Baseline And Precedence
 
-Report exact current:
+Record the exact current runtime seams and the accepted document precedence. Explicitly identify:
 
-- skill bands, gates, and maximum rank;
-- trial records and schema capabilities;
-- trial progression helper behavior;
-- Knowledge policy, schema, content, helper, and adapter state;
-- quest action-tree fields, outcome branches, effects, and consumers;
-- crafting recipe and production/workplace authority;
-- activity selection and advancement ownership;
-- difficulty modifier owners;
-- magic readiness and execution boundaries.
+- current HP-zero behavior;
+- current terminal/archive/delete behavior;
+- current body/resource and injury/status capabilities;
+- current recovery, party, location, treatment-item, service, and magic seams;
+- current occurrence/result/event/save capabilities;
+- every known legacy behavior that must not be mistaken for accepted authority.
 
-### 2. Authority Matrix
+### 2. Canonical State Separation
 
-For each candidate concept, identify:
+Define and distinguish:
+
+- functional state;
+- body/resource measurements;
+- injury/trauma instances;
+- lethal-process instances;
+- care requirements;
+- life state;
+- Mortal Crisis phase state;
+- accepted actual death;
+- final closure;
+- convalescence/recovery.
+
+State which facts may be derived, which require owner acceptance, and which must never be collapsed into HP or one generic critical flag.
+
+### 3. Functional-State Contract
+
+Decide the minimum conceptual identity, owner, lifecycle, and evidence for functional ability without defining exact fields or values. Cover consciousness, mobility, agency, breathing/circulation capability at game abstraction, participation, transportability, and observer-safe uncertainty.
+
+### 4. Lethal-Process Contract
+
+Define an owner-neutral conceptual contract for independently progressing threats without authoring a catalog. Decide:
+
+- definition identity versus active instance identity;
+- cause/source and affected body identity;
+- phase/stage and progression evidence;
+- deterministic versus uncertain transitions;
+- interaction among multiple processes;
+- stabilization, suppression, recurrence, resolution, and terminal contribution;
+- responsibility for declaring actual death.
+
+Do not define real-world protocols, exact timers, probabilities, formulas, diagnoses, or balance.
+
+### 5. Care-Requirement And Intervention Contract
+
+Define how owner-certified process/body facts produce care requirements and how interventions propose results. Separate:
+
+- requirement identity;
+- capability requirement;
+- actor agency and authority;
+- supplies/tools/location/access;
+- immediate stabilization versus extraction, transit, definitive treatment/restoration, and convalescence;
+- attempt, accepted result, and applied consequence;
+- reassessment and unmet/partially met requirements.
+
+Care requirements must not themselves consume inventory, cast spells, move parties, heal injuries, or mutate body state.
+
+### 6. Mortal Crisis Orchestration
+
+Preserve the accepted phases:
+
+1. Threat Resolution;
+2. Immediate Stabilization;
+3. Extraction;
+4. Transit;
+5. Treatment Or Restoration;
+6. Closure.
+
+For each phase, identify admission, owner-certified inputs, allowed results, skip/transition authority, interruption/retry posture, and projections. Mortal Crisis remains orchestration/presentation, not a health owner, medical minigame, planner, AI, or generic resolver.
+
+### 7. Identity And Receipt Taxonomy
+
+Apply the accepted occurrence clarification exactly:
+
+`request/delivery -> admission -> occurrence -> accepted result -> owner-specific consequence receipts -> projections`
+
+Define the conceptual identities and relationships for:
+
+- crisis episode;
+- phase occurrence;
+- lethal-process transition;
+- care attempt;
+- accepted deterministic/uncertain result;
+- named uncertainty evidence;
+- body/injury/inventory/magic/travel/save/Chronicle consequence receipts;
+- duplicate delivery and partial consumer failure;
+- correction and supersession.
+
+Do not equate event-envelope ids, ticks, timestamps, save addresses, or command ids with these authorities.
+
+### 8. Stakes Commitment Matrix
+
+For Normal, Committed, and Ironbound Stakes, decide:
+
+- what becomes committed and when;
+- reload/replay posture;
+- checkpoint and continuity behavior;
+- actual-death and final-closure relationship;
+- resurrection/restoration boundaries;
+- correction and technical-recovery posture;
+- what the player may inspect or select.
+
+Preserve accepted tier semantics. Do not infer that HP zero is actual death or that final closure permits silent physical deletion.
+
+### 9. Owner And Persistence Matrix
+
+For every canonical record/fact, identify:
 
 - static owner;
 - mutable owner;
-- current consumer;
-- validation;
-- tests;
-- persistence;
-- UI owner;
-- missing owner;
-- promotion posture.
+- writer;
+- reader/consumer;
+- occurrence/result source;
+- persistence requirement;
+- idempotency key or relation;
+- correction authority;
+- presentation boundary;
+- missing implementation owner.
 
-Candidate concepts must include:
+At minimum include body, injury/trauma, lethal process, care requirement/attempt, Mortal Crisis, inventory, magic, party/travel/location, save/Stakes, actual death, closure, estate/Prestige/succession, Chronicle, and UI.
 
-- eligibility;
-- readiness;
-- depth selection;
-- attempt identity;
-- phase/node;
-- check;
-- continuous margin;
-- result band;
-- branch;
-- recovery;
-- consecutive soft failure;
-- participant role;
-- aggregation;
-- metric/accumulator;
-- familiarity;
-- reliability/compression;
-- typed effect;
-- terminal status;
-- cooldown;
-- reward/progression proposal;
-- deterministic seed/randomness evidence.
+### 10. Observer-Safe Presentation
 
-### 3. Quest Action-Tree Reuse Decision
+Decide what may be shown before and after acceptance. Preserve uncertainty, agency, accessibility, and narrative boundaries. Keep hidden diagnoses, uncertainty draws, validator facts, unavailable choices, and omniscient future outcomes private.
 
-Determine whether quest action trees should:
+### 11. Compatibility, Migration, Replay, And Correction
 
-- become the shared definition grammar;
-- expose selected shared components;
-- remain quest-owned while a separate shared grammar is authored;
-- require correction before any reuse.
+Classify current HP-zero/archive/delete behavior, legacy save facts, missing receipts, and collision-prone event ids. Define fail-closed migration and correction posture without implementing repair or claiming old data can be reconstructed.
 
-Inspect strictness, effect ownership, node identity, graph closure, participant aggregation, outcome semantics, and runtime consumers. Do not decide by field-name similarity alone.
+### 12. Research Gate And Smallest Later Package
 
-### 4. Legacy Trial Adapter Decision
+Decide whether the bounded physiology/first-aid research named by the sequencing decision is now required. If it is required, define its exact questions, prohibited medical-advice/value transfer, artifact, consumers, and removal conditions.
 
-Classify the current trial system as an explicit model such as `state_accumulator` and decide:
+Select the smallest later repository package only if owner, scope, fields, validation, tests, persistence, and migration boundaries are decision-complete. Otherwise say `NO_PACKAGE` and name the missing decision.
 
-- which behavior must remain stable;
-- whether current checkpoint thresholds are descriptive, cumulative, or executable;
-- how pass/fail and potential loss can coexist with future node outcomes;
-- whether content migration is needed;
-- whether an adapter can be read-only first;
-- which tests lock current behavior.
+### 13. Exact Follow-Up Route
 
-Do not change rank gates or progression math.
+Install an exact next prompt only when supported by this decision and current coordination. Do not activate an executable or balance-bearing lethal-process catalog before the bounded research gate passes.
 
-### 5. Knowledge Attempt Gap Decision
+## Required Decisions
 
-Separate what already exists from what remains missing.
+The document must answer explicitly:
 
-At minimum distinguish:
-
-- completion;
-- eligibility;
-- authored readiness policy content;
-- content-to-helper adapter;
-- attempt creation;
-- checkpoint resolution;
-- outcome;
-- cooldown;
-- reward;
-- storage/persistence;
-- runtime/UI.
-
-Correct stale roadmap claims that treat already-landed schema/helper work as future work, while preserving genuinely missing layers.
-
-### 6. Crafting Process-Profile Decision
-
-Determine the minimum future static process-profile authority separate from:
-
-- recipes;
-- production chains;
-- workplaces;
-- item instances;
-- mutable work orders.
-
-Decide whether phases, metrics, defects, recovery, and objectives belong in a shared activity profile, a crafting-specific profile, or both.
-
-### 7. Gathering Difficulty And Familiarity Gap
-
-Identify the current owners or absences for:
-
-- target difficulty;
-- minimum/recommended competence;
-- method identity;
-- target/method familiarity;
-- yield/condition/safety/site-impact dimensions;
-- source depletion/regrowth;
-- item creation;
-- automation/compression reliability.
-
-Do not infer these from production-chain difficulty or workplace metadata unless a current owner explicitly establishes that relationship.
-
-### 8. Activity Advancement Integration Decision
-
-Audit every activity advancement and preview/execution path. Decide whether a future shared attempt resolver should integrate through activity advancement, a separate command family, or domain-owned commands.
-
-Preserve engine-owned activity selection as a separate accepted boundary.
-
-### 9. Determinism And RNG Decision
-
-Identify current deterministic command/revision/event patterns and every relevant randomness owner.
-
-Recommend a future posture for:
-
-- preview/execution parity;
-- seed ownership;
-- replay;
-- stale protection;
-- accepted-only application;
-- graph simulation;
-- test fixtures.
-
-Do not implement RNG or state.
-
-### 10. Typed Effect Ownership Matrix
-
-Map candidate outcome effects to explicit owners. Mark missing owners and prohibit direct generic-resolver mutation.
-
-### 11. Documentation Contradictions
-
-At minimum inspect:
-
-- stale Knowledge readiness sequencing;
-- historical `0.5.x` placeholders that should not be executed as future active versions;
-- temporary-artifact references and removal conditions;
-- any conflict between roadmap, sequenced plan, current handoff, current output, backlog, and durable design plans.
-
-### 12. Exact Follow-Up Sequence
-
-Select the smallest documentation-first sequence after the audit. It should normally separate:
-
-1. competence/difficulty/familiarity/compression authority;
-2. shared node/outcome/aggregation vocabulary;
-3. attempt identity/state/determinism;
-4. typed effect ownership;
-5. domain adapters;
-6. pure helpers and simulation-only slices;
-7. presentation;
-8. mutation owners.
-
-Install the exact next prompt only when the audit has enough live evidence to make it decision-complete.
-
-## Required Classifications
-
-Use explicit classifications such as:
-
-- `reuse_shared`;
-- `reuse_via_adapter`;
-- `preserve_legacy`;
-- `domain_owned`;
-- `missing_static_authority`;
-- `missing_mutable_owner`;
-- `validation_gap`;
-- `test_gap`;
-- `documentation_stale`;
-- `blocked_by_owner`;
-- `reject_generalization`.
+1. What owns functional state, and what does it not own?
+2. What is the minimum lethal-process definition/instance split?
+3. How are care requirements derived without becoming mutation owners?
+4. What creates a Mortal Crisis episode and each phase occurrence?
+5. What accepted results exist, and which owner-specific receipts consume them?
+6. How do duplicate delivery, retry, partial application, replay, and correction work?
+7. How do Normal, Committed, and Ironbound differ?
+8. What persists across saves, checkpoints, technical recovery, and branch creation?
+9. What may UI, Chronicle, and narrative projections reveal?
+10. Is bounded research now required, and what exact route follows?
 
 ## Prohibited Scope
 
-Do not change:
+Do not:
 
-- content JSON;
-- schemas;
-- validators;
-- tests;
-- helpers;
-- runtime;
-- commands/events;
-- UI;
-- saves/persistence;
-- progression math;
-- economy;
-- inventory;
-- crafting execution;
-- gathering execution;
-- Knowledge mutation;
-- magic execution;
-- combat;
-- dependencies;
-- assets;
-- generated output;
-- gameplay.
+- change content JSON, schemas, validators, tests, helpers, runtime, commands/events, UI, saves, migrations, or gameplay;
+- create lethal-process, injury, treatment, healer, institution, spell, item, service, resurrection, or convalescence content;
+- define medical protocols, real-world advice, exact timers, probabilities, formulas, balance values, or diagnosis taxonomies;
+- make HP zero equal actual death;
+- make Mortal Crisis a mutation owner;
+- authorize generic-resolver mutation;
+- weaken Stakes commitment or Ironbound closure;
+- reopen archived/deleted history;
+- physically delete save/history as a design requirement;
+- run builds, tests, generators, servers, package installation, or gameplay unless a repository-fact check strictly requires one.
 
-## Allowed Changes When Activated
+## Allowed Changes
 
 Documentation only:
 
-- `docs/design/activity-resolution-existing-system-reuse-audit.md`;
-- current output and handoff;
-- current prompt only to install an exact accepted follow-up prompt;
-- roadmap, sequenced plan, backlog, historical/deferred register, continuity brief, and future-system ledger only for proven route or factual corrections;
-- this queued file for explicit disposition.
+- the new focused decision;
+- current output, handoff, and prompt;
+- roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven route/factual corrections;
+- retained temporary evidence only for explicit disposition after every consumer/removal condition is proven.
 
 ## Validation
 
 - Verify every repository claim against live files.
 - Verify all referenced paths exist.
-- Search for duplicate or conflicting authority descriptions.
-- Confirm no source/test/content/runtime path changed.
-- Run conflict-marker and trailing-whitespace checks and `git diff --check`.
+- Check consistency against every accepted authority named above.
+- Confirm no source, test, content, schema, runtime, UI, save, or generated path changed.
+- Run conflict-marker and trailing-whitespace scans plus `git diff --check`.
 - Inspect the complete changed-path set and full diff.
-- Do not run builds, content lint, typechecks, tests, servers, generators, package installation, or gameplay unless a repository-fact check strictly requires one; document any exception.
 
 ## Completion Report
 
 Report:
 
 - starting commit and worktree state;
-- exact inspected systems and counts;
-- accepted reuse/adaptation/rejection decisions;
-- stale documentation findings;
-- required authority and test gaps;
-- audit path;
+- exact live seams inspected;
+- accepted state, process, care, crisis, receipt, Stakes, persistence, presentation, replay, and correction decisions;
+- research-gate disposition;
+- smallest later package or `NO_PACKAGE`;
 - exact next route and prompt disposition;
 - files changed;
 - checks run;

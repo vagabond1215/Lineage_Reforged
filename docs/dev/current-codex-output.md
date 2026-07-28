@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `Geographic Knowledge Taxonomy And Location Recognition Contract Plan`
+Source version/run: unversioned `Activity Resolution Existing-System Reuse Audit`
 
 Label class: unversioned
 
@@ -10,57 +10,51 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean, fetched, and fast-forwarded from `f8fc9a42747cf57a786c9562220a7b369f98edac` to synchronized `origin/master` at `0872341b12ad5fced21cd725372447c6df1249be`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `3d77171ca2034c8b2fb8d19f374cef5df9605053`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-The Geography/recognition plan is complete and accepted as documentation-only design authority.
+The documentation-only Activity Resolution existing-system reuse audit is complete and accepted.
 
-`docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` now separates domain metadata, taxonomy, authored recognition profiles/clues, source teaching, observation occurrences/results, mutable evidence/recognition, canonical place/political owners, and presentation. No content, schema, validator, helper, test, runtime, UI, save, map, overlay, dependency, or gameplay behavior changed.
+`docs/design/activity-resolution-existing-system-reuse-audit.md` records the live system inventory, explicit authority matrix, reuse/adaptation/rejection decisions, typed-effect ownership, determinism posture, documentation corrections, and exact follow-up sequence. No shared resolver or gameplay implementation was authorized.
 
 ## Reproduced Baseline
 
 | Area | Verified result |
 | --- | --- |
-| Broad Knowledge registry | 7 records: 6 active plus planned Arcane Lore; no Geography record |
-| Narrow Knowledge domains | 4 records: Flora, Fauna, Minerals, General Lore |
-| Knowledge snippets | 28 tier-1 records; 18 General Lore; 24 `Recognizing ...` titles |
-| Location subjects | region 2, settlement 4, settlement district 6, settlement site 7, sacred site 1, religious hotspot 1 |
-| Knowledge contract gap | snippet/registry vocabularies include districts/sites; evidence/progress schemas do not |
-| Evidence/progress runtime | pure validators/proposal helpers and fixtures only; no live mutable Knowledge evidence/progress store or accepted occurrence adapter |
-| Geography-adjacent skills | Navigation, Common Lore, Civic Lore, Cultural Lore; none grants recognition |
-| World place owners | 41 regions, 47 localities, 88 settlements, 14 active districts, 20 active sites |
-| Map/travel owners | 8 planned semantic features, one visual aggregate, 47 hexes, 49 edges, one travel network with 12 route records and 8 ship lanes |
-| Political owners | 2 planned polities; no claim, border, jurisdiction, or government collection/schema/content |
-| Generic POIs | rejected and absent |
-| Legacy runtime Geography | persisted continent/region/settlement numeric levels; seeded at new game and granted by accepted travel |
-
-The isolated `origin/prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
+| Skills | 121 records across 8 categories; maximum rank 125; five overlapping bands; gates 30/55/80/100 |
+| Legacy Skill Trials | 4 records, 12 checkpoints, 8 rewards, 8 penalties; accumulator-only mutable state |
+| Knowledge | One active Flora eligibility policy; strict readiness schema/helper; no authored readiness record, adapter, attempt, outcome, cooldown owner, reward applier, persistence, runtime, or UI |
+| Quest action trees | 8 archetypes with 35 nodes/137 checks/111 branches/180 effect tokens; 5 definitions with 20 nodes/54 checks/44 branches/68 effect tokens; no runtime executor |
+| Crafting | 28 recipes in 10 families; 121 chains/311 steps; 58 workplaces/208 job rows/110 unique job ids; current resolver is estimate-only |
+| Activity advancement | Selection is engine-owned; preview/execution remain UI-owned bespoke branches in `gameplayLoop.ts` |
+| Difficulty | Four persisted tiers plus Hardcore and global domain scalars; no target/method difficulty or familiarity |
+| Magic | 55 spells: 23 ready, 5 partial, 27 deferred; readiness/projection/envelope foundations are inert outside narrow combat hooks |
+| Determinism | Engine command discipline is reusable; current hashes, event ids, and unversioned RNG utility are not uncertainty authority |
+| Persistence | Trial accumulators and applied domain state persist; shared attempts, nodes, result evidence, effect proposals, and consequence receipts do not |
 
 ## Accepted Decisions
 
-- Future broad domain: `knowledge_domain.geography` in `player.knowledge_domain_registry`, planned wave 1.
-- The narrow resource-identification domain collection does not own Geography.
-- Future taxonomy owner: `player.knowledge_taxonomy_nodes`, initially one Geography root plus Physical Geography, Settlements And Places, Political Geography, and Cartography And Navigation.
-- Future recognition owner: `player.location_recognition_profiles`, with profile-owned typed clues, independence, distinctiveness, interpretation, observation, and stability metadata.
-- Future source relation owner: `player.knowledge_source_teachings`; access, possession, proximity, travel, catalog presence, or display does not teach clues.
-- Observation follows the accepted request/admission/occurrence/result/evidence/acceptance/application separation.
-- Canonical settlement, district, and site owners remain authoritative; null site districts remain valid; generic POIs remain prohibited.
-- Regions, maps, routes, polities, claims, borders, jurisdictions, governments, and UI retain their existing owner boundaries.
-- Existing `playerState.geographicKnowledge` levels remain preserved legacy behavior and are not mapped to future clue-based recognition states.
-- Existing `Recognizing ...` snippets remain structural lore, not executable recognition criteria.
+- Quest action trees remain quest-owned; selected phase/check/result vocabulary is reusable only through adapters.
+- Legacy Skill Trials remain a preserved `state_accumulator`; the first future adapter is read-only and may not award rewards or invent attempts.
+- Knowledge completion/eligibility/readiness foundations remain pure and inert; authored readiness content and the content-to-helper adapter are still missing.
+- Future crafting needs a crafting-specific `crafting.activity_process_profiles` authority composed with a separate shared activity grammar.
+- Gathering remains blocked by missing target/method difficulty, familiarity, source-state, and output owners.
+- Engine-owned activity selection remains separate. Advancement should move through domain-owned commands that consume pure shared proposals; the current UI function must not become the generic resolver.
+- The accepted command/revision/stale/atomic/accepted-only discipline is reusable. Current hashes, event ids, and `DeterministicRng` are rejected as committed uncertainty authority.
+- A generic resolver may propose typed effects only; domain owners must accept and apply them with owner-specific receipts.
+- No shared-framework implementation package is ready from this audit.
 
-## Smallest Later Package
+## Documentation Corrections
 
-Selected future package: `Settlement District And Site Knowledge Evidence Subject Closure`.
-
-This is a later current-band primary capability candidate in `0.6.x`, with no version number assigned here. It may add only district/site subject support and focused semantic closure to current Knowledge evidence/progress contracts. It must stop if generic POI authority, recognition/profile/source/occurrence runtime, storage, migration, UI, or weakened parent/lifecycle validation would be required.
-
-The immediate next run remains the unversioned `Activity Resolution Existing-System Reuse Audit`; it was activated from the held prompt body after every prerequisite and route gate passed.
+- Two historical roadmap sequences incorrectly called landed `0.5.161 - Knowledge Trial Readiness Policy Schema` "next"; both now say completed.
+- Subsequent anonymous `0.5.x` checkpoint/cooldown/Magic Study rows are explicitly historical, unassigned, and non-executable.
+- The consumed queued Activity audit prompt was removed.
+- Current coordination now activates the restored Mortal Crisis receipt-contract route without displacing the later activity-resolution sequence.
 
 ## Files Changed
 
-- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`
+- `docs/design/activity-resolution-existing-system-reuse-audit.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-codex-prompt.md`
 - `docs/dev/current-gpt-handoff.md`
@@ -71,34 +65,34 @@ The immediate next run remains the unversioned `Activity Resolution Existing-Sys
 - `docs/dev/historical-version-and-deferred-route-register.md`
 - `docs/design/current-planning-anchor-reconciliation.md`
 - `docs/design/static-content-expansion-program.md`
+- removed `docs/dev/queued-activity-resolution-existing-system-reuse-audit-prompt.md`
 
 ## Checks Run
 
-- repository/branch/worktree/remote/tracking inspection;
-- `git fetch --prune` and safe `git pull --ff-only`;
-- isolated-branch merge-base and ancestor check;
-- exact live Knowledge, place, map, route, polity, skill, runtime, save, UI, and occurrence-source inventory;
-- referenced-path existence check;
-- active-prompt title/body/hold-wrapper verification;
+- repository, branch, worktree, upstream, fetch, and tracking alignment;
+- prompt and prerequisite acceptance review;
+- exact live skill/trial, Knowledge, quest, recipe/chain/workplace/job, activity, difficulty, magic, command/event, RNG, synchronization, and persistence inventory;
+- implementation/consumer searches for trial outcomes, action trees, activity advancement, crafting resolution, Knowledge readiness, and generic checks;
+- referenced-path verification;
 - source/test/content/runtime changed-path exclusion;
 - conflict-marker and trailing-whitespace scans;
 - `git diff --check`;
 - complete changed-path and full-diff review.
 
-No build, content lint, typecheck, test, server, generator, package installation, or gameplay command was run because this was a documentation-only contract plan and no repository-fact check required one.
+No build, content lint, typecheck, test, server, generator, package installation, or gameplay command was run because the prompt prohibited them unless a repository-fact check required one; none did.
 
 ## Suggested Commit Message
 
-`docs(knowledge): define geography recognition contracts`
+`docs(audit): reconcile activity resolution systems`
 
 ## Risks / Follow-Up Notes
 
-- The live evidence/progress subject-vocabulary gap for 13 district/site snippets remains unimplemented.
-- Geography domain, taxonomy, profiles, source teachings, occurrences, mutable recognition, migration, and UI remain future packages.
-- The legacy numeric Geography state still grants through travel and must be characterized before any adapter or migration.
-- The known lower `docs/dev/project-roadmap.md` `## 1. Current Anchor` block remains stale and noncontrolling; it was not rewritten from partial context.
-- Workspace typecheck remains the separately classified 173-diagnostic baseline.
+- Activity advancement, rest, and quest turn-in still contain UI-owned mutation paths.
+- Shared attempt identity, check/margin/result semantics, named uncertainty evidence, typed effects, mutable owners, persistence, correction, and owner receipts remain unimplemented.
+- Current HP zero may still enter legacy terminal archival and save deletion.
+- The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
+- The lower historical roadmap current-anchor block remains stale and noncontrolling under the planning-anchor reconciliation.
 
 ## Next Recommended Run
 
-Unversioned `Activity Resolution Existing-System Reuse Audit`
+Unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision`

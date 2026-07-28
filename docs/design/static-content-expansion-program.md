@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4`-`0.6.7` and Geography/recognition planning complete and accepted; Activity Resolution reuse audit active next
+Status: `0.6.4`-`0.6.7`, Geography/recognition planning, and Activity Resolution reuse audit complete and accepted; Mortal Crisis receipt contract active next
 
 ## 1. Purpose
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The Geographic Knowledge Taxonomy And Location Recognition Contract Plan is accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. Activity Resolution reuse is the active documentation audit.
+The Geographic Knowledge Taxonomy And Location Recognition Contract Plan and Activity Resolution Existing-System Reuse Audit are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. The Mortal Crisis receipt contract is the active documentation route.
 
 ## 11. Batch And Review Policy
 
@@ -148,7 +148,7 @@ Deep Research uses one gate and one artifact at a time.
 | `0.6.6` | Monster, Ecology, And Loot Static Content Expansion | Complete: exact nine-row regional matrix, 28 source-local drops, full reference closure, 147 focused tests, and 67-file lint passed. |
 | `0.6.7` | Cross-Content Coherence And Coverage Audit | Complete: inventories/reference/lifecycle/static-runtime closure passed, prescribed focused tests passed 688/688, normal lint passed at 67 files, and all artifact decisions closed. |
 | unversioned support | Geographic Knowledge Taxonomy And Location Recognition Contract Plan | Complete: accepted Geography domain/taxonomy/profile/source/observation/legacy boundaries without implementation. |
-| unversioned support | Activity Resolution Existing-System Reuse Audit | Active read-only reuse decision; no implementation authority. |
+| unversioned support | Activity Resolution Existing-System Reuse Audit | Complete and accepted read-only reuse decision; no implementation authority. |
 
 ## 13. Cross-Content Audit Criteria
 
