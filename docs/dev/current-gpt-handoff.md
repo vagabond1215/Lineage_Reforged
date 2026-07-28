@@ -5,12 +5,13 @@ Date: 2026-07-28
 ## Status
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Lethal Process And Stabilization Research Integration Decision`.
-- The grounded research transport passed every integrity gate and decoded to the exact retained Markdown artifact.
-- The integration decision accepted coarse process separations, stabilization/care semantics, reassessment triggers, observer-safe evidence, and unsafe-transfer rejections.
-- A documentation-only first catalog plan is ready; executable or balance-bearing work remains `NO_PACKAGE`.
-- The active route is unversioned `First Lethal-Process Definition And Catalog Plan`.
-- Internal health authority may remain precise, but future player-facing labels, statuses, dialogue, Chronicle text, and narrative cues must remain simple, direct, understandable, and plausible for the fantasy setting.
+- Latest completed unversioned run: `First Lethal-Process Definition And Catalog Plan`.
+- The catalog plan reproduced the live two-record combat-health authority and rejected widening it for lethal processes.
+- A shared structural envelope with owner-specific definition catalogs is accepted conceptually.
+- The smallest conceptual first scope is external hemorrhage, confirmed internal hemorrhage, airway obstruction, post-submersion respiratory compromise, systemic hypothermia, and hot-altered heat crisis.
+- Exact static or executable implementation remains `NO_PACKAGE`.
+- The active route is unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`.
+- Precise internal health authority must remain separate from plain, concrete, setting-appropriate player-facing language.
 
 ## Current Planning Precedence
 
@@ -26,22 +27,22 @@ Use current execution sources in this order:
 
 ## Active Plan Guardrails
 
-Run exact unversioned `First Lethal-Process Definition And Catalog Plan`.
+Run exact unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`.
 
-- Documentation only; create `docs/design/first-lethal-process-definition-and-catalog-plan.md`.
-- Reproduce the live combat-health vocabulary’s files, counts, kinds, ids, fields, validation, registration, tests, imports, consumers, and runtime posture.
-- Decide whether lethal-process definitions belong in the existing combined vocabulary, a new shared catalog, multiple owner-specific catalogs, or a shared envelope with owner-specific catalogs.
-- Preserve injury, body, condition, functional, care, death, observer, and mutable process ownership.
-- Select a smallest first non-executable definition scope or return `NO_PACKAGE`.
-- Treat suspected internal bleeding as observer-only unless actual process truth is owner-accepted.
-- Keep poison-family taxonomy as a research/design gap.
-- Preserve a strict internal-versus-player-facing language boundary.
-- Internal ids and contracts may use precise technical distinctions, but future display labels and prose must use brief, concrete, setting-appropriate language such as `bleeding badly`, `struggling to breathe`, `faint and cold`, `badly burned`, `poisoned`, `stable for now`, or `needs a healer`.
-- Do not expose modern clinical terms such as `hypovolemic`, `respiratory compromise`, `cyanosis`, `perfusion`, `neurological deficit`, `syndrome`, or `triage` as ordinary player-facing language.
-- Trained healers, alchemists, scholars, and magical diagnosticians may know more than ordinary observers, but their speech must remain understandable and their certainty must be bounded by accepted capability.
-- Magic may extend observation, diagnosis, stabilization, restoration, or communication, but must not justify modern-scientific exposition, pseudo-scientific technobabble, or omniscient diagnosis.
-- Do not implement content, schemas, validators, tests, runtime, UI, saves, migrations, values, timers, probabilities, diagnoses, protocols, or gameplay.
-- Preserve the decoded research artifact; it still has two later consumers after this plan.
+- Documentation only; create `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`.
+- Treat this as the third named consumer of the retained research artifact.
+- Decide shared capability identity without creating a universal care resolver.
+- Separate scene capability, destination capability, actor knowledge/skill, equipment, material, access, consent, environment, and source-owner evidence.
+- Use the accepted request/admission/occurrence/result/consequence taxonomy.
+- Distinguish stabilization, suppression, supportive care, definitive treatment, process resolution, functional recovery, anatomical restoration, and resurrection.
+- Define owner-specific process-effect proposals and accepted receipts without cross-owner mutation.
+- Preserve qualitative reassessment and capability-bounded magical observation/care.
+- Preserve the six conceptual first-scope processes without authoring definitions, values, or treatment protocols.
+- Preserve the strict internal-versus-player-facing language boundary.
+- Internal ids and contracts may be precise, but future display text must remain brief, concrete, understandable, and plausible for the setting.
+- Do not expose modern clinical jargon or use magic to justify pseudo-scientific exposition.
+- Do not implement content, schemas, validators, tests, runtime, UI, saves, migrations, values, timers, probabilities, diagnoses, treatment instructions, items, spells, services, or gameplay.
+- Preserve the research artifact; exactly one named consumer remains after this run.
 - Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
 
 ## Research Artifact
@@ -55,29 +56,31 @@ Integrity:
 - 58,943 UTF-8 bytes;
 - SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d`.
 
-The integration decision is the first named consumer. The active catalog plan is the second.
+Named consumers:
 
-After the active plan, outstanding named consumers must be exactly:
+1. research integration — complete;
+2. first lethal-process definition/catalog plan — complete;
+3. care-capability and stabilization contract/package — active;
+4. observer-safe crisis assessment/presentation package — outstanding.
 
-1. the first care-capability and stabilization contract/package;
-2. the first observer-safe crisis assessment/presentation package.
+After the active run, the only outstanding named consumer must be the first observer-safe crisis assessment/presentation package.
 
 ## Preserved Known Gaps
 
 - Workspace typecheck remains a separately classified known-failing audit with 173 reproducible diagnostics.
 - Current HP zero may still enter legacy terminal archival and save deletion.
 - Generic event ids remain collision-prone compatibility projections.
-- No active functional-state, lethal-process, care-requirement, Mortal Crisis receipt, death/restoration, or correction owner exists.
+- No active functional-state, lethal-process, care-requirement, Mortal Crisis receipt, death/restoration, persistence, or correction owner exists.
 - Exact poison taxonomy and detailed burn/process representation remain unresolved.
 - Activity advancement, rest, and quest turn-in still include UI-owned mutation paths.
 
 ## Near-Term Sequence
 
-1. run `First Lethal-Process Definition And Catalog Plan`;
-2. run the first care-capability and stabilization contract/package selected by accepted evidence;
-3. run the first observer-safe crisis assessment/presentation package;
+1. run `Care Capability, Stabilization, And Process-Effect Contract Decision`;
+2. run the first observer-safe crisis assessment/presentation package;
+3. reassess owner-specific package readiness only after both consumer decisions are accepted;
 4. keep executable and balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Active Prompt
 
-Unversioned `First Lethal-Process Definition And Catalog Plan`
+Unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`

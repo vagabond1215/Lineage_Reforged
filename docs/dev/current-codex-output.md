@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `Lethal Process And Stabilization Research Integration Decision`
+Source version/run: unversioned `First Lethal-Process Definition And Catalog Plan`
 
 Label class: unversioned
 
@@ -10,84 +10,103 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `4b8722818c9254a18d52d56c3e1f1ddc50727e11`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `599cef0d1dc2f1f05080c0a61a1686005bf017e1`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-The bounded research transport was verified, decoded, and integrated into durable repository authority.
+Created `docs/design/first-lethal-process-definition-and-catalog-plan.md`.
 
-Created:
+The existing combined combat-health vocabulary cannot safely host lethal-process definitions. The accepted direction is a shared structural envelope with owner-specific definition catalogs. Exact implementation remains `NO_PACKAGE`.
 
-- `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`;
-- `docs/design/lethal-process-and-stabilization-research-integration-decision.md`.
+## Live Vocabulary Inventory
 
-The three verified transport parts were deleted. The decoded artifact is retained for its three remaining named consumers.
+- Content: `packages/content/base/game/combat_health_vocabulary.json`.
+- Exactly two records: `combat_status.stagger` and `combat_status.bind`.
+- Both are `kind: status`, `status: planned`, `family: control`.
+- Zero live condition and injury records.
+- Strict eleven-field records: id, slug, name, kind, status, family, summary, allowed owner types, tags, authority notes, and notes.
+- Exact kinds: status, condition, injury.
+- Exact prefixes: `combat_status.`, `combat_condition.`, `combat_injury.`.
+- Pure focused validator, exact-once normal-lint registration, and 13 focused tests.
+- No production import of the canonical records.
+- Runtime uses separate `status.*` hooks, mutable combat status effects, plain `activeEffects` labels, HP-zero defeat/incapacitation, body-state projections, and save snapshots. None is lethal-process authority.
 
-## Transport And Artifact Integrity
-
-| Check | Result |
-| --- | --- |
-| Part 1 | 9,000 ASCII characters; SHA-256 `d01fcee441f90822206dcd9bf539a02b2e694148fbd01beac30c70114f01de59` |
-| Part 2 | 9,000 ASCII characters; SHA-256 `090e76843e765f92075af01de6ee8e3b3fff83197d08150d45c4d6daccf41e9d` |
-| Part 3 | 6,812 ASCII characters; SHA-256 `a4e9398b6d4a8c062de714b67e3c5ef51c9756ab3878eb6d674438ec628bcc5f` |
-| Combined payload | 24,812 characters; prefix `H4sIAAAA`; gzip magic `1F 8B` |
-| Decoded artifact | 58,943 UTF-8 bytes; SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d` |
-| Citation integrity | `S01`-`S31` ledger rows and matching URL definitions; no session-local tokens |
-| Retention | Four original consumers exact; integration recorded as first consumer |
-
-## Durable Decisions
-
-- Retain independent owner-specific process families rather than one critical state.
-- Retain external hemorrhage, airway obstruction, post-submersion respiratory compromise, systemic hypothermia, and coarse hot-altered heat crisis as distinct planning candidates.
-- Narrow suspected internal bleeding to observer projection unless an owner accepts actual internal hemorrhage.
-- Narrow shock-like deterioration to an owner-specific circulatory process/assessment input, never a universal status or certain diagnosis.
-- Keep local freezing injury and superficial burns injury-owned by default.
-- Keep non-stroke heat illness contextual unless an accepted transition creates a lethal process.
-- Retain serious burns coarsely while preserving separate injury, body, respiratory, and causal-mechanism owners.
-- Retain selective, capability-bound antidotes and reject a universal antidote; exact poison syndrome families remain a research gap.
-- Stabilization, suppression, supportive care, definitive treatment, resolution, functional recovery, anatomical restoration, and resurrection remain separate.
-- Accept qualitative reassessment triggers after owner-certified movement, delay, environment, symptom, response, destination, or capability changes.
-- Show observations, attributed reports, qualified assessments, and trends; hide unsupported diagnosis, exact stages, timers, probabilities, uncertainty evidence, and future outcomes.
-
-## Rejected Transfers
+## Catalog And Owner Decision
 
 Rejected:
 
-- universal critical meters, bleed-out timers, poison meters, antidotes, or omnibus lethal rolls;
-- diagnosis certainty from one visible sign;
-- asymptomatic delayed-death “dry drowning” mechanics;
-- clinical timers, protocols, dosages, treatment trees, rates, or medical advice;
-- direct transfer of modern institutional assumptions into every setting context.
+- adding a lethal-process kind to `combat_health_vocabulary`;
+- reclassifying lethal processes as status, condition, or injury;
+- one universal lethal-process catalog or resolver;
+- multiple unrelated owner catalogs without a shared identity envelope.
+
+Accepted conceptually:
+
+- a shared structural envelope for collision-safe identity, owner declaration, definition lifecycle, provenance, and bounded references;
+- owner-specific catalogs for definition meaning;
+- owner-specific mutable instances and accepted results;
+- strict separation from observer projection, care resolution, death, persistence, UI, and Chronicle.
+
+No exact fields, enums, prefixes, paths, or schema were accepted.
+
+## First Definition Scope
+
+Selected conceptually:
+
+1. external hemorrhage;
+2. confirmed internal hemorrhage;
+3. airway obstruction;
+4. post-submersion respiratory compromise;
+5. systemic hypothermia;
+6. hot-altered heat crisis.
+
+Outside the first scope:
+
+- suspected internal bleeding is observer-only;
+- shock-like circulatory deterioration remains an owner question;
+- poison families remain a research/design gap;
+- local freezing and superficial burns remain injury-owned;
+- non-stroke heat illness remains contextual;
+- serious burns retain split injury/body/respiratory/mechanism ownership;
+- chemical, electrical, and inhalation distinctions remain source-domain inputs unless later accepted as distinct processes.
+
+## Static, Mutable, Observer, Care, And Language Boundaries
+
+Static definitions may eventually carry stable identity, owner, lifecycle, provenance, meaning, and bounded references only.
+
+Static definitions must not carry current actor state, severity, stage, timer, probability, diagnosis, care attempt, treatment progress, inventory or magic use, functional state, death, save, event, correction, UI, Chronicle, or gameplay behavior.
+
+Observer suspicion never becomes process truth automatically. Later care work must use explicit capability and owner-specific result/receipt boundaries.
+
+Precise internal technical language may remain hidden. Player-facing labels, dialogue, narrative, status text, and Chronicle output must use brief, concrete, setting-appropriate wording; ordinary observation, trained judgment, and magical sensing must remain distinct. Modern clinical jargon and pseudo-scientific exposition are not default display language.
 
 ## Package Readiness
 
-A documentation-only `First Lethal-Process Definition And Catalog Plan` is ready.
+`NO_PACKAGE`
 
-Executable or balance-bearing content remains `NO_PACKAGE`. Exact catalog ownership, relation to `combat_health_vocabulary`, first records, poison scope, burn/process split, mutable representation, persistence/migration, correction, and package validation remain undecided.
+Missing authority includes exact owner namespaces and paths, shared fields/enums, cross-owner reference rules, the care-capability/process-effect contract, mutable instances, persistence/migration/correction, the circulatory and burn splits, poison families, and presentation validation.
 
-Accepted order:
+## Research Consumption And Retention
 
-1. first lethal-process definition/catalog plan;
-2. first care-capability and stabilization contract/package;
-3. first observer-safe crisis assessment/presentation package.
+This plan is the second named consumer of:
 
-## Research Retention
+`docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`
 
-This integration consumed the process-family separations, care semantic distinctions, qualitative reassessment triggers, observer-safe cue boundary, capability/access constraints, and explicit unsafe-transfer rejections.
+Verified:
 
-Outstanding named consumers:
+- 58,943 UTF-8 bytes;
+- SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d`.
 
-1. the first lethal-process definition/catalog plan;
-2. the first care-capability and stabilization contract/package;
-3. the first observer-safe crisis assessment/presentation package.
+The artifact remains unchanged.
 
-The decoded artifact remains until every named consumer records consumption and durable authority retains the conclusions and source identity still needed.
+Outstanding named consumers are exactly:
+
+1. the first care-capability and stabilization contract/package;
+2. the first observer-safe crisis assessment/presentation package.
 
 ## Files Changed
 
-- added `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`;
-- added `docs/design/lethal-process-and-stabilization-research-integration-decision.md`;
-- deleted the three `.gz.b64.part01`-`.part03` transport files;
+- added `docs/design/first-lethal-process-definition-and-catalog-plan.md`;
 - updated `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-codex-prompt.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
@@ -102,33 +121,29 @@ The decoded artifact remains until every named consumer records consumption and 
 ## Checks Run
 
 - repository, branch, worktree, upstream, fetch, and tracking alignment;
-- contract and three transport-commit ancestry;
-- exact part length/hash verification;
-- exact concatenation length, prefix, base64, and gzip-magic verification;
-- decoded byte-length and SHA-256 verification;
-- `S01`-`S31` ledger/reference URL parity;
-- session-local citation-token exclusion;
-- named-consumer and retention-rule verification;
-- accepted repository-contract compatibility review;
-- referenced-path and documentation-only scope verification;
-- conflict-marker and trailing-whitespace scans; authored integration and coordination files are clean;
-- `git diff --check`, which reports only the decoded artifact’s byte-locked Markdown hard-break spaces; those spaces were preserved to retain the verified SHA-256;
+- research integration acceptance and artifact presence;
+- exact research-artifact byte length and SHA-256;
+- exact combat-health content count, ids, kinds, fields, enums, prefixes, validator rules, registration, and focused-test count;
+- production reference, import, runtime, body-state, persistence, and presentation searches;
+- required design-authority reconciliation;
+- referenced-path and documentation-only scope checks;
+- conflict-marker, trailing-whitespace, and `git diff --check` scans;
 - complete changed-path and full-diff review.
 
-No build, content lint, typecheck, test, generator, server, package installation, external research, or gameplay command was run because the prompt prohibited them and no repository-fact check required one.
+No build, content lint, typecheck, test, generator, server, package installation, external research, medical protocol, or gameplay command was run.
 
 ## Suggested Commit Message
 
-`docs(health): integrate lethal process research`
+`docs(health): plan first lethal process catalog`
 
 ## Risks / Follow-Up Notes
 
-- Current HP-zero archival and save deletion remain live rejected target behavior.
-- No active process, care, crisis-receipt, death/restoration, persistence, or correction owner exists.
+- Current HP-zero defeat/archive/save-deletion behavior remains a rejected target behavior outside this run.
+- No active functional-state, lethal-process, care, crisis-receipt, death/restoration, persistence, or correction owner exists.
 - Exact poison taxonomy and detailed burn/process representation remain unresolved.
-- The next plan must audit the existing combat-health vocabulary before selecting any catalog path.
+- The catalog cannot be implemented safely until care capability and process-effect references are decided.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
 
 ## Next Recommended Run
 
-Unversioned `First Lethal-Process Definition And Catalog Plan`
+Unversioned `Care Capability, Stabilization, And Process-Effect Contract Decision`
