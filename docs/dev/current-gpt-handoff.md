@@ -10,6 +10,7 @@ Date: 2026-07-28
 - No shared activity resolver, attempt state, named uncertainty channel, typed effect executor, or gameplay behavior was implemented.
 - The queued Activity audit prompt was consumed and removed.
 - The unversioned `Functional State, Lethal Process, Care Requirement, And Mortal Crisis Receipt Contract Decision` is active.
+- Prompt readiness was hardened to name the six retained mortality/narrative/elemental evidence artifacts exactly, record this run's consumption, and prohibit deletion because later implementation consumers remain.
 
 ## Current Planning Precedence
 
@@ -32,6 +33,7 @@ Run the exact unversioned Mortal Crisis receipt-contract decision.
 - Apply the accepted request/admission/occurrence/result/consequence-receipt/projection taxonomy and correction rules.
 - Preserve Normal, Committed, and Ironbound Stakes semantics, save/checkpoint topology, observer-safe narrative, and elemental/magic capability boundaries.
 - Reproduce current HP-zero, archive/delete, recovery, combat, body, party, treatment/spell, event, and persistence seams without treating them as accepted architecture.
+- Read the six exact retained mortality/narrative/elemental evidence artifacts named in the active prompt only as bounded trace evidence; record actual consumption and preserve every file because later named implementation consumers remain.
 - Do not perform external research, author a lethal-process catalog, define medical/balance values, or implement runtime/schema/save/UI work.
 - Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
 
