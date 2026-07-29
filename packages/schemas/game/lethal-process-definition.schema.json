@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LethalProcessDefinitionCatalog",
+  "description": "Strict static identity authority for owner-partitioned lethal-process definitions. It defines no mutable process state, mechanics, diagnosis, care, persistence, death, UI, or gameplay behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ownerDomain", "records"],
+  "properties": {
+    "ownerDomain": { "$ref": "#/$defs/definitionOwner" },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/lethalProcessDefinition" }
+    }
+  },
+  "$defs": {
+    "lowerSnake": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lethalProcessId": {
+      "type": "string",
+      "pattern": "^lethal_process\\.(hemorrhage|airway|respiratory|thermal)\\.[a-z0-9]+(?:_[a-z0-9]+)*$"
+    },
+    "definitionOwner": {
+      "type": "string",
+      "enum": [
+        "hemorrhage_process",
+        "airway_process",
+        "respiratory_process",
+        "thermal_process"
+      ]
+    },
+    "processFamily": {
+      "type": "string",
+      "enum": ["hemorrhage", "airway", "respiratory", "thermal"]
+    },
+    "catalogLifecycle": {
+      "type": "string",
+      "enum": ["planned", "canonical", "retired"]
+    },
+    "referenceRelation": {
+      "type": "string",
+      "enum": [
+        "causal_source",
+        "contributing_source",
+        "coexisting_process",
+        "transition_source"
+      ]
+    },
+    "referenceTargetDomain": {
+      "type": "string",
+      "enum": [
+        "injury",
+        "body_state",
+        "hazard",
+        "environment",
+        "poison",
+        "respiratory_process",
+        "magic",
+        "lethal_process"
+      ]
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relation", "targetDomain", "targetId"],
+      "properties": {
+        "relation": { "$ref": "#/$defs/referenceRelation" },
+        "targetDomain": { "$ref": "#/$defs/referenceTargetDomain" },
+        "targetId": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "referenceList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/reference" }
+    },
+    "tagList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/lowerSnake" }
+    },
+    "lethalProcessDefinition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "definitionOwner",
+        "processFamily",
+        "catalogLifecycle",
+        "semanticVersion",
+        "summary",
+        "references",
+        "tags",
+        "sourceAuthorityNotes",
+        "notes"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/lethalProcessId" },
+        "slug": { "$ref": "#/$defs/lowerSnake" },
+        "name": { "$ref": "#/$defs/nonEmptyString" },
+        "definitionOwner": { "$ref": "#/$defs/definitionOwner" },
+        "processFamily": { "$ref": "#/$defs/processFamily" },
+        "catalogLifecycle": { "$ref": "#/$defs/catalogLifecycle" },
+        "semanticVersion": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "summary": { "$ref": "#/$defs/nonEmptyString" },
+        "references": { "$ref": "#/$defs/referenceList" },
+        "tags": { "$ref": "#/$defs/tagList" },
+        "sourceAuthorityNotes": { "$ref": "#/$defs/nonEmptyString" },
+        "notes": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    }
+  }
+}

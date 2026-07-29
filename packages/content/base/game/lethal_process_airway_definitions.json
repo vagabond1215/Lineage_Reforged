@@ -1,0 +1,19 @@
+{
+  "ownerDomain": "airway_process",
+  "records": [
+    {
+      "id": "lethal_process.airway.obstruction",
+      "slug": "obstruction",
+      "name": "Airway Obstruction",
+      "definitionOwner": "airway_process",
+      "processFamily": "airway",
+      "catalogLifecycle": "canonical",
+      "semanticVersion": 1,
+      "summary": "Static identity for an independently owned airway obstruction process accepted from owner-certified causal facts; it defines no cause, stage, care, resolution rule, outcome, or display behavior.",
+      "references": [],
+      "tags": ["airway", "obstruction"],
+      "sourceAuthorityNotes": "Accepted by the lethal-process research integration, first catalog plan, care and observer contracts, dependency audit, and definition owner/schema plan.",
+      "notes": "Airway obstruction remains distinct from later respiratory harm and does not absorb hazard, body, care, or observer authority."
+    }
+  ]
+}

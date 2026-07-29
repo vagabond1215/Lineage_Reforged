@@ -12,7 +12,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The roadmap top override and sequenced-plan current anchor are refreshed through the accepted lethal-process static-foundation version classification, with `Version 0.6.8` active.
+The roadmap top override and sequenced-plan current anchor are refreshed through implemented `Version 0.6.8`, with its parent-specific `Version 0.6.8.1` acceptance audit active.
 
 `docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution or invalidate the refreshed top override. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
 
@@ -30,9 +30,9 @@ Use the following precedence for current execution and routing:
 
 ## Accepted Current State
 
-- latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`;
+- latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
 - latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`;
-- next run: `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
+- next run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
@@ -51,15 +51,16 @@ Use the following precedence for current execution and routing:
 - the health-runtime ownership/dependency audit is accepted and selected definition owner namespaces plus a shared static-only envelope as the first dependency;
 - the lethal-process definition owner/schema plan accepted four owners, six ids, exact catalogs/envelope/references/paths, and one static package subject to version classification;
 - the classification gate accepted `CURRENT_BAND_PRIMARY`, assigned `Version 0.6.8`, and installed the exact static implementation prompt;
-- the lethal-process static foundation is active next.
+- the lethal-process static foundation is implemented with exactly six records across four owner catalogs, a strict shared schema, a pure validator, exact registration, and passing prescribed checks;
+- the parent-specific `0.6.8.1` acceptance audit is active next.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. implement `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
-2. run exact focused/schema/lint checks;
-3. run the parent-specific acceptance audit;
+1. run `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`;
+2. record exact acceptance or a failed parent criterion without repair;
+3. use an unversioned next-capability classification gate after acceptance;
 4. keep executable and balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Maintenance Rule

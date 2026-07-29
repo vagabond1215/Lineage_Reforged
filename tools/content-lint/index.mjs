@@ -35,6 +35,7 @@ import { validateServicesContent } from "./services.mjs";
 import { validateResourcesContent } from "./resources.mjs";
 import { validateCommoditiesContent } from "./commodities.mjs";
 import { validateCombatHealthVocabularyContent } from "./combat-health-vocabulary.mjs";
+import { validateLethalProcessDefinitionCatalogs } from "./lethal-process-definitions.mjs";
 
 async function readFile(filePath, options) {
   const raw = await readFileRaw(filePath, options);
@@ -733,6 +734,30 @@ const checks = [
   {
     file: "packages/content/base/game/combat_health_vocabulary.json",
     requiredTopLevel: ["records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/game/lethal_process_hemorrhage_definitions.json",
+    requiredTopLevel: ["ownerDomain", "records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/game/lethal_process_airway_definitions.json",
+    requiredTopLevel: ["ownerDomain", "records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/game/lethal_process_respiratory_definitions.json",
+    requiredTopLevel: ["ownerDomain", "records"],
+    requireSlug: true,
+    forbidGeoQualifierInName: false
+  },
+  {
+    file: "packages/content/base/game/lethal_process_thermal_definitions.json",
+    requiredTopLevel: ["ownerDomain", "records"],
     requireSlug: true,
     forbidGeoQualifierInName: false
   },
@@ -9819,6 +9844,35 @@ async function validateCombatHealthVocabularyAgainstDependencies() {
   });
 }
 
+async function validateLethalProcessDefinitionsAgainstDependencies() {
+  const relativePaths = [
+    "packages/content/base/game/lethal_process_hemorrhage_definitions.json",
+    "packages/content/base/game/lethal_process_airway_definitions.json",
+    "packages/content/base/game/lethal_process_respiratory_definitions.json",
+    "packages/content/base/game/lethal_process_thermal_definitions.json"
+  ];
+  const schemaPath = path.join(
+    ROOT,
+    "packages/schemas/game/lethal-process-definition.schema.json"
+  );
+  const catalogs = [];
+
+  for (const relativePath of relativePaths) {
+    catalogs.push({
+      relativePath,
+      wrapper: JSON.parse(
+        await readFile(path.join(ROOT, relativePath), "utf8")
+      )
+    });
+  }
+
+  validateLethalProcessDefinitionCatalogs({
+    catalogs,
+    schema: JSON.parse(await readFile(schemaPath, "utf8")),
+    canonicalReferenceIdsByTargetDomain: {}
+  });
+}
+
 async function validatePlayerContentAgainstDependencies() {
   const attributePath = path.join(ROOT, "packages/content/base/player/attributes.json");
   const skillPath = path.join(ROOT, "packages/content/base/player/skills.json");
@@ -10423,6 +10477,7 @@ async function main() {
   await validateServicesAgainstDependencies();
   await validateResourcesAndCommoditiesAgainstDependencies();
   await validateCombatHealthVocabularyAgainstDependencies();
+  await validateLethalProcessDefinitionsAgainstDependencies();
   await validateFloraOutputsAgainstItemIdentitySpace();
   await validateFaunaProductsAgainstMarketKeys();
   await validateCanonicalCommodityItemsAgainstMarketKeys();

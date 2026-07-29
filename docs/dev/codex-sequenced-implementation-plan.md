@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-29
-Route: Codex local sequencing alignment after accepted lethal-process static-foundation version classification
+Route: Codex local sequencing alignment after completed lethal-process static-foundation implementation
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest completed primary:
 
-- `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`
+- `Version 0.6.8 - Lethal-Process Definition Static Foundation`
 
-Latest completed support/audit run:
+Active support/audit run:
 
-- `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
+- `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit` is active next; latest completed historical support remains `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
 
 Latest completed unversioned run:
 
@@ -33,7 +33,7 @@ Latest completed unversioned run:
 
 Immediate next run:
 
-- `Version 0.6.8 - Lethal-Process Definition Static Foundation`
+- `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`
 
 ## Current Queue Override
 
@@ -59,7 +59,7 @@ Immediate next run:
 - The seven-gate cross-domain research program, production-authority audit, unversioned integration, and exact 16-row `0.6.5` recipe package are complete. Resolver quarantine held; the consumed Gate 6/audit artifacts were removed under synthesis conditions.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is complete. It landed the exact nine-monster, nine-fauna-lineage, nine-ecology-addition, and 28-drop-row package with 147/147 prescribed focused tests and 67-file normal lint green.
 - `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is complete and accepted. All required inventories and owner/reference boundaries closed, normal lint passed at 67 files, the prescribed group passed 688/688, no production repair was needed, and all six remaining research artifacts were removed after durable-coverage conditions passed.
-- The health documentation chain through lethal-process definition owner/schema planning and static-foundation version classification is complete and accepted. The exact package is `CURRENT_BAND_PRIMARY`, dependency-closed for its static scope, and assigned `Version 0.6.8 - Lethal-Process Definition Static Foundation`. Mutable implementation remains `NO_PACKAGE`. The active route is the exact versioned static implementation.
+- `Version 0.6.8 - Lethal-Process Definition Static Foundation` is implemented. It added exactly six canonical records across four owner catalogs, one strict shared schema, one pure validator, exact lint/schema registration, and focused validation; the prescribed focused/schema/combat-health tests and 71-file normal lint pass. Mutable implementation remains `NO_PACKAGE`. The active route is the parent-specific `0.6.8.1` acceptance audit.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.

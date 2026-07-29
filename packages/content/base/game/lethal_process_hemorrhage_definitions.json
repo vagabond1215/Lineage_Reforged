@@ -1,0 +1,33 @@
+{
+  "ownerDomain": "hemorrhage_process",
+  "records": [
+    {
+      "id": "lethal_process.hemorrhage.external_hemorrhage",
+      "slug": "external_hemorrhage",
+      "name": "External Hemorrhage",
+      "definitionOwner": "hemorrhage_process",
+      "processFamily": "hemorrhage",
+      "catalogLifecycle": "canonical",
+      "semanticVersion": 1,
+      "summary": "Static identity for an independently owned external hemorrhage process accepted from owner-certified causal facts; it defines no stage, rate, care, outcome, or display behavior.",
+      "references": [],
+      "tags": ["hemorrhage", "external"],
+      "sourceAuthorityNotes": "Accepted by the lethal-process research integration, first catalog plan, care and observer contracts, dependency audit, and definition owner/schema plan.",
+      "notes": "Causal injury remains injury-owned. This definition does not infer process truth from a wound, bleeding label, HP, or prose."
+    },
+    {
+      "id": "lethal_process.hemorrhage.internal_hemorrhage",
+      "slug": "internal_hemorrhage",
+      "name": "Internal Hemorrhage",
+      "definitionOwner": "hemorrhage_process",
+      "processFamily": "hemorrhage",
+      "catalogLifecycle": "canonical",
+      "semanticVersion": 1,
+      "summary": "Static identity for an independently owned internal hemorrhage process accepted as actual process truth; it defines no observation, diagnosis, stage, rate, care, outcome, or display behavior.",
+      "references": [],
+      "tags": ["hemorrhage", "internal"],
+      "sourceAuthorityNotes": "Accepted by the lethal-process research integration, first catalog plan, care and observer contracts, dependency audit, and definition owner/schema plan.",
+      "notes": "An instance represents owner-accepted actual internal hemorrhage. Suspicion and observer confidence remain assessment-owned."
+    }
+  ]
+}

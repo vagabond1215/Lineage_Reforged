@@ -1,0 +1,19 @@
+{
+  "ownerDomain": "respiratory_process",
+  "records": [
+    {
+      "id": "lethal_process.respiratory.post_submersion_compromise",
+      "slug": "post_submersion_compromise",
+      "name": "Post-Submersion Respiratory Compromise",
+      "definitionOwner": "respiratory_process",
+      "processFamily": "respiratory",
+      "catalogLifecycle": "canonical",
+      "semanticVersion": 1,
+      "summary": "Static identity for an independently owned post-submersion respiratory process accepted from owner-certified source facts; it defines no hidden timer, stage, care, prognosis, outcome, or display behavior.",
+      "references": [],
+      "tags": ["respiratory", "post_submersion"],
+      "sourceAuthorityNotes": "Accepted by the lethal-process research integration, first catalog plan, care and observer contracts, dependency audit, and definition owner/schema plan.",
+      "notes": "Submersion and hazard sources remain separately owned. This definition creates no delayed-death timer or automatic diagnosis."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-29 after the lethal-process static foundation was classified as current-band primary `Version 0.6.8`.
+Updated 2026-07-29 after implementation of current-band primary `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 
 ## Purpose
 
@@ -22,9 +22,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 
 ## Current Repository Anchor
 
-- Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
+- Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
-- Active run: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+- Active run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -49,7 +49,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The accepted lethal-process definition owner/schema plan is `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`.
 - The accepted static-foundation version classification is `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md`.
 - All four grounded-research consumers are complete; the verified temporary artifact was retired.
-- The exact `Version 0.6.8` static-foundation implementation prompt is installed in `docs/dev/current-codex-prompt.md`.
+- The exact `Version 0.6.8` static foundation is implemented with six canonical records, four owner catalogs, one shared schema, one pure validator, exact registration, and passing focused/schema/combat-health tests plus 71-file normal lint.
+- The parent-specific `Version 0.6.8.1` acceptance-audit prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -65,9 +66,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. implement `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
-2. run the exact focused/schema/lint checks;
-3. run the parent-specific `0.6.8.1` acceptance audit after implementation;
+1. run `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`;
+2. record exact parent acceptance or one failed criterion without repair;
+3. use an unversioned next-capability classification gate after acceptance;
 4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Current Implementation Reality
@@ -83,7 +84,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 - Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
 - Current hashes and random mechanisms are not accepted named uncertainty-channel authority.
 - Current HP zero may still enter legacy terminal archival and save deletion.
-- No active injury instance, mutable lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists; only the static definition foundation is package-ready.
+- No active injury instance, mutable lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists; only the static definition foundation is implemented.
 
 ## Research And Content Posture
 

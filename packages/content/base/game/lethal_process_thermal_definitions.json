@@ -1,0 +1,33 @@
+{
+  "ownerDomain": "thermal_process",
+  "records": [
+    {
+      "id": "lethal_process.thermal.systemic_hypothermia",
+      "slug": "systemic_hypothermia",
+      "name": "Systemic Hypothermia",
+      "definitionOwner": "thermal_process",
+      "processFamily": "thermal",
+      "catalogLifecycle": "canonical",
+      "semanticVersion": 1,
+      "summary": "Static identity for an independently owned systemic cold process accepted from owner-certified thermal, body, and environment facts; it defines no temperature threshold, stage, care, outcome, or display behavior.",
+      "references": [],
+      "tags": ["thermal", "cold_exposure"],
+      "sourceAuthorityNotes": "Accepted by the lethal-process research integration, first catalog plan, care and observer contracts, dependency audit, and definition owner/schema plan.",
+      "notes": "This is a systemic thermal process only. Local freezing injury remains injury-owned, and environment and body facts remain source-owned."
+    },
+    {
+      "id": "lethal_process.thermal.hot_altered_crisis",
+      "slug": "hot_altered_crisis",
+      "name": "Hot-Altered Heat Crisis",
+      "definitionOwner": "thermal_process",
+      "processFamily": "thermal",
+      "catalogLifecycle": "canonical",
+      "semanticVersion": 1,
+      "summary": "Static identity for an independently owned hot-altered heat process accepted from owner-certified thermal, body, function, and environment facts; it defines no threshold, stage, care, outcome, or display behavior.",
+      "references": [],
+      "tags": ["thermal", "heat_exposure"],
+      "sourceAuthorityNotes": "Accepted by the lethal-process research integration, first catalog plan, care and observer contracts, dependency audit, and definition owner/schema plan.",
+      "notes": "This process requires a later owner-accepted transition; contextual heat illness remains body and environment evidence."
+    }
+  ]
+}
