@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-28 after observer-safe crisis assessment/presentation was accepted, the final grounded-research artifact was retired, and health-runtime dependency closure was activated.
+Updated 2026-07-28 after the health-runtime dependency audit selected lethal-process definition owner namespaces and a shared static envelope as the first prerequisite.
 
 ## Purpose
 
@@ -23,8 +23,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Observer-Safe Crisis Assessment And Presentation Contract Decision`.
-- Active run: unversioned `Health Runtime Ownership And Dependency Closure Audit`.
+- Latest completed unversioned run: `Health Runtime Ownership And Dependency Closure Audit`.
+- Active run: unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -45,8 +45,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The accepted first catalog plan is `docs/design/first-lethal-process-definition-and-catalog-plan.md`.
 - The accepted care-capability contract is `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`.
 - The accepted observer-safe contract is `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
+- The accepted health-runtime dependency audit is `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`.
 - All four grounded-research consumers are complete; the verified temporary artifact was retired.
-- The health-runtime ownership/dependency-closure prompt is installed in `docs/dev/current-codex-prompt.md`.
+- The lethal-process definition owner-namespace/shared-envelope prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -62,9 +63,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run unversioned `Health Runtime Ownership And Dependency Closure Audit`;
-2. identify the smallest exact owner/schema prerequisite or return `NO_PACKAGE`;
-3. classify any later package only after dependency order and maturity impact are proven;
+1. run unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`;
+2. return one exact static schema package or `NO_PACKAGE`;
+3. classify any later package only after owner and maturity impact are proven;
 4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Current Implementation Reality
@@ -80,7 +81,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 - Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
 - Current hashes and random mechanisms are not accepted named uncertainty-channel authority.
 - Current HP zero may still enter legacy terminal archival and save deletion.
-- No active injury instance, lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists.
+- No active injury instance, lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists; exact static definition ownership is the first selected dependency.
 
 ## Research And Content Posture
 

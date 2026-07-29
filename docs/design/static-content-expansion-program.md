@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4`-`0.6.7`, Geography/recognition, Activity Resolution, Mortal Crisis receipt, lethal-process research integration, first catalog plan, care-capability contract, and observer-safe assessment complete; health-runtime dependency closure active next
+Status: `0.6.4`-`0.6.7`, Geography/recognition, Activity Resolution, Mortal Crisis receipt, lethal-process research integration, first catalog plan, care-capability contract, observer-safe assessment, and health-runtime dependency closure complete; lethal-process definition owner/schema planning active next
 
 ## 1. Purpose
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, lethal-process research integration, first lethal-process catalog plan, care-capability contract, and observer-safe crisis assessment/presentation contract are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. Health implementation remains `NO_PACKAGE`; health-runtime dependency closure is active next.
+The Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, lethal-process research integration, first lethal-process catalog plan, care-capability contract, observer-safe crisis assessment/presentation contract, and health-runtime dependency audit are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. Health implementation remains `NO_PACKAGE`; lethal-process definition owner/schema planning is active next.
 
 ## 11. Batch And Review Policy
 
@@ -154,6 +154,7 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned support | First Lethal-Process Definition And Catalog Plan | Complete: six-process conceptual scope selected; implementation remains `NO_PACKAGE`. |
 | unversioned support | Care Capability, Stabilization, And Process-Effect Contract Decision | Complete: grants, availability, access, attempts, results, and owner receipts separated; implementation remains `NO_PACKAGE`. |
 | unversioned support | Observer-Safe Crisis Assessment And Presentation Contract Decision | Complete: evidence, assessment, urgency, safe projection, realization, and validator separation accepted; final research artifact retired; implementation remains `NO_PACKAGE`. |
+| unversioned audit | Health Runtime Ownership And Dependency Closure Audit | Complete: dependency graph and owner-readiness matrix selected the definition owner-namespace/shared-envelope documentation prerequisite; implementation remains `NO_PACKAGE`. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -165,4 +166,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the documentation-only Health Runtime Ownership And Dependency Closure Audit. Do not preassign `0.6.8`, authorize executable content, diagnostic logic, treatment protocols, or UI/runtime by inference.
+Run the documentation-only Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan. Do not preassign a primary version or authorize executable content, diagnostic logic, treatment protocols, or UI/runtime by inference.

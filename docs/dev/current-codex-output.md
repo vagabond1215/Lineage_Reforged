@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`
+Source version/run: unversioned `Health Runtime Ownership And Dependency Closure Audit`
 
 Label class: unversioned
 
@@ -10,100 +10,100 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `14f12dedf43ca0f26a70f784c867137f0243a167`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `bd08669b30b1e0dce06fb67e8411463d8f168341`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-Created `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
+Created `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`.
 
-Accepted a conceptual owner-safe contract that separates viewpoint, visibility, observation, attributed reports, trained and magical assessment, diagnosis confidence, qualitative urgency, renderer-safe projection, deterministic realization, and validator-only evidence.
+Reconciled live health-adjacent authority with accepted process, care, crisis, observer, death/restoration, Stakes, occurrence, persistence, replay, and correction contracts.
 
-Implementation remains `NO_PACKAGE`.
+One narrower documentation prerequisite is ready:
 
-## Live Baseline
+`Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`
 
-- `PlayerBodyState` owns current metabolic state, not injury, diagnosis, process, or care truth.
-- `bodyStatePresentation.ts` projects exactly energy, hydration, fatigue, protein, and intoxication into condition/readiness/recovery views.
-- Current condition severities are `normal`, `warning`, and `critical`; readiness is `Ready`, `Pressured`, `Strained`, or `Compromised`.
-- Current recommendations are only `Drink`, `Rest`, and `Eat`.
-- HP/MP/stamina, combat statuses, incapacitation, defeat, metabolic alerts, notifications, toasts, labels, and Chronicle prose have no observer or diagnosis provenance.
-- `activeEffects` remains `string[]`.
-- Generic events/deltas and `SaveSnapshot` contain no assessment result, process instance, care receipt, observer-safe projection, or correction lineage.
-- Legacy UI-owned rest and HP-zero terminal behavior remain compatibility seams, not accepted care or death authority.
+Static and executable implementation remain `NO_PACKAGE`.
 
-## Owner And Evidence Decision
+## Live Runtime Baseline
 
-Accepted separate conceptual owners for:
+Live authority:
 
-- viewpoint and observer identity;
-- scene visibility, reach, examination access, and consent;
-- direct observation and attributed reports;
-- capability-bounded trained or magical assessment;
-- observer-specific diagnosis confidence and provenance;
-- qualitative urgency;
-- renderer-safe fact projection;
-- deterministic presentation;
-- validator-only evidence;
-- UI, dialogue, narrative, Chronicle, and run-end consumers.
+- player HP/MP/stamina and resource-change state;
+- metabolic `PlayerBodyState` and player-engine advancement/recovery/consumable behavior;
+- combat HP, statuses, incapacitation, defeat, damage, and `heal.hp`;
+- inventory, spells/known spells, skills, roles, items, consumables, and services within their current owners;
+- engine-owned travel, quest acceptance/tracking, and activity-selection command patterns;
+- `SaveSnapshot` JSON persistence and version `0.6.0` local save handling;
+- generic event/delta transport;
+- notification, Chronicle, run-end, body-state, and combat presentation;
+- legacy HP-zero archive/delete and UI-owned full-resource rest behavior.
 
-Accepted evidence classes are directly perceived, recognized, inferred under a named accepted rule, attributed report, trained qualified judgment, magically sensed qualified judgment, and unknown/withheld/unsafe.
+Absent:
 
-## Assessment And Hidden-Truth Boundary
+- functional state;
+- lethal-process definition owners/catalogs and instances;
+- care requirements, capabilities, availability/access, attempts, and receipts;
+- health assessment, urgency, Mortal Crisis, actual death, restoration, closure;
+- health persistence, replay, migration, correction, and safe projection.
 
-An assessment uses stable request identity, pre-admission checks, one admitted occurrence, and one capability-bounded result. Rejection creates no occurrence or consequence; duplicate delivery returns existing status; replay does not reroll; correction retains supersession.
+## Static And Runtime Inventory
 
-Assessment changes observer knowledge only. It never mutates process, body, injury, care, inventory, travel, destination, death, or future outcome.
+- Current combat-health vocabulary has exactly two planned status records: stagger and bind.
+- Its strict schema supports only status/condition/injury descriptive vocabulary and intentionally forbids relationships and runtime fields.
+- `future_health_runtime` is a compatibility owner label, not an accepted process owner.
+- Current static counts remain 55 spells, 12 healing-school spells, 10 `heal.hp` spells, 121 skills, 9 roles, 1,372 items, 9 metabolic consumable profiles, and 5 planned services.
+- Six care-like items still have no use profile or consumable profile.
 
-Process identity/stage, hidden anatomy/physiology, timers, rates, probabilities, rolls, prognosis, future outcomes, and validator evidence remain private. No single sign, HP value, status, label, role, item, spell, service, or prose line establishes diagnosis.
+The combined combat-health catalog cannot host lethal processes and must not be widened.
 
-## Urgency, Reassessment, And Presentation
+## Dependency Result
 
-Qualitative urgency is an upstream owner-approved projection over accepted facts, never a renderer calculation from hidden numbers.
+Ordered dependency:
 
-Visible concern, qualified urgency, immediate threat, current stability, unresolved care need, provider/destination need, functional limitation, actual death, and restoration eligibility remain separate.
+1. definition owner namespaces and shared static envelope;
+2. owner-specific process-definition catalogs;
+3. source reference contracts and mutable process instances;
+4. functional-state assessment and care-requirement derivation;
+5. care capability, availability, and access;
+6. care attempts/results and affected-owner receipts;
+7. Mortal Crisis adapters/orchestration;
+8. actual death, restoration, closure, Stakes publication, and account settlement;
+9. health assessment, qualitative urgency, renderer-safe projection, validator isolation, and deterministic consumers.
 
-Reassessment is a new accepted event-time result. It may revise present knowledge but cannot rewrite what an earlier observer knew.
+Occurrence identity, named uncertainty, persistence, replay, migration, and correction must be designed into every mutable owner rather than reconstructed later.
 
-Renderer-safe facts and validator-only evidence are closed separate channels. Validator evidence may reject leakage but cannot influence planning, wording, telemetry, logs, UI, or player reports.
+Rejected couplings:
 
-Player-facing language must be brief, concrete, everyday, setting-appropriate, attributed, and uncertainty-preserving. Internal ids, clinical jargon, hidden stages, probabilities, raw rolls, private diagnosis, and future outcomes remain hidden.
+- combat-health vocabulary to lethal-process definitions;
+- HP zero to actual death;
+- rest/full HP to process resolution;
+- labels/roles/items/spells/services to capability;
+- save, UI, Chronicle, or Mortal Crisis to health mutation.
 
-## First-Scope And Care Compatibility
+## Migration Boundary
 
-Observer-safe boundaries were recorded for:
+Current facts retain their current meanings and may later be bounded owner-certified inputs.
 
-- external hemorrhage;
-- confirmed internal hemorrhage versus suspicion;
-- airway obstruction;
-- post-submersion respiratory compromise;
-- systemic hypothermia;
-- hot-altered heat crisis.
+No HP, body band, combat status, active-effect label, rest result, item, spell, skill, role, service, notification, Chronicle line, event/delta, save field, or terminal archive record may be backfilled as historical process, care, assessment, death, or correction truth.
 
-Shock-like deterioration, poison families, local freezing injury, contextual heat illness, superficial/serious burns, and chemical/electrical/inhalation mechanisms retain their existing gaps or split owners.
-
-Care request, attempt admission, visible occurrence, care result, process-owner receipt, support, stabilization, unresolved need, extraction, transport, destination offer/availability/access/arrival/admission, and provider result remain distinct.
+There is no canonical lethal-process data to alias or migrate.
 
 ## Package Readiness
 
-`NO_PACKAGE`
+`DOCUMENTATION_PACKAGE_READY`
 
-Missing authority includes observer/viewpoint identity, health visibility/recognition/access, live process and care state, assessment grants/requests/results, named uncertainty, qualitative urgency, renderer-safe health facts, validator isolation, deterministic presentation lineage, destination/provider admission, persistence/migration/correction, and unresolved poison/shock/burn ownership.
+Exact next documentation package:
 
-## Research Consumption And Disposition
+- unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`;
+- create `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`;
+- decide exact owner matrix, namespace, owner-specific catalogs, shared static fields, lifecycle, directional references, future paths, and validation plan;
+- authorize no implementation.
 
-This decision is the fourth and final named consumer of the grounded lethal-process research artifact.
-
-Before deletion, the artifact was verified at:
-
-- 58,943 UTF-8 bytes;
-- SHA-256 `95760de325004f7e19c030e0177e2022873ff8ff1690a0924974bd3b9674da6d`.
-
-All four consumers are complete. Their durable decisions preserve every still-needed conclusion, source identity, path, and integrity hash. The installed follow-up prompt does not require the temporary path. The retention condition was therefore satisfied and the artifact was deleted.
+`NO_PACKAGE` for content, schema, validator, test, runtime, persistence, migration, diagnosis, care, death, UI, or gameplay implementation.
 
 ## Files Changed
 
-- added `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`;
-- deleted `docs/dev/tmp-grounded-lethal-process-stabilization-and-first-aid-research-2026-07-28.md`;
+- added `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`;
 - updated `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-codex-prompt.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
@@ -118,12 +118,14 @@ All four consumers are complete. Their durable decisions preserve every still-ne
 ## Checks Run
 
 - repository, branch, worktree, upstream, fetch, and tracking alignment;
-- exact research-artifact byte length and SHA-256 before deletion;
-- four-consumer completion and durable-retention conditions;
-- live body-state, HP/resource, combat-status, active-effect, notification, toast, Chronicle, save, event/delta, terminal-run, and UI presentation inventories;
-- accepted occurrence, process, care, Mortal Crisis, Stakes, restoration, narrative, observer, replay, and correction authority reconciliation;
-- first-scope process and deferred-gap reconciliation;
-- installed-prompt and live-authority artifact-path checks;
+- four grounded-research consumer and artifact-retirement closure;
+- exact combat-health content/schema/validator/registration/test inspection;
+- exact spell/skill/role/item/consumable/service counts;
+- body/resource/combat/inventory/rest/save/archive command and mutation inspection;
+- command/result/event identity pattern inspection;
+- health presentation, observer, Knowledge, notification, Chronicle, and run-end inspection;
+- accepted process, care, Mortal Crisis, Stakes, restoration, occurrence, narrative, observer, replay, and correction reconciliation;
+- dependency graph, owner-readiness, migration, and package-boundary consistency checks;
 - referenced-path and documentation-only scope checks;
 - conflict-marker, trailing-whitespace, and `git diff --check` scans;
 - complete changed-path and full-diff review.
@@ -132,16 +134,17 @@ No build, content lint, typecheck, test, generator, server, package installation
 
 ## Suggested Commit Message
 
-`docs(health): define observer-safe crisis assessment`
+`docs(health): audit runtime dependency closure`
 
 ## Risks / Follow-Up Notes
 
-- Current HP-zero defeat/archive/save-deletion behavior remains a rejected target behavior outside this run.
-- No active functional-state, lethal-process, care-requirement, care-attempt, assessment, urgency, crisis-receipt, death/restoration, persistence, or correction owner exists.
-- Exact poison taxonomy, shock-like ownership, and detailed burn/process representation remain unresolved.
+- Current HP-zero archive/save-deletion remains rejected target behavior.
+- UI-owned full-resource rest remains a compatibility seam.
+- Process owner namespaces are not yet decided; the next documentation plan must fail closed if exact owner attribution is unsafe.
+- Poison families remain blocked by research and are outside the six-process first scope.
+- Shock-like and serious-burn ownership remain deferred.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
-- The temporary research artifact is intentionally no longer present; durable decisions are now the source.
 
 ## Next Recommended Run
 
-Unversioned `Health Runtime Ownership And Dependency Closure Audit`
+Unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`

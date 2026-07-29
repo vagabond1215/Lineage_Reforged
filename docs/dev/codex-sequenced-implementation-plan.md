@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-28
-Route: Codex local sequencing alignment after accepted observer-safe crisis assessment/presentation contract
+Route: Codex local sequencing alignment after accepted health-runtime ownership and dependency-closure audit
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -29,11 +29,11 @@ Latest completed support/audit run:
 
 Latest completed unversioned run:
 
-- unversioned `Observer-Safe Crisis Assessment And Presentation Contract Decision`
+- unversioned `Health Runtime Ownership And Dependency Closure Audit`
 
 Immediate next run:
 
-- unversioned `Health Runtime Ownership And Dependency Closure Audit`
+- unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`
 
 ## Current Queue Override
 
@@ -59,7 +59,7 @@ Immediate next run:
 - The seven-gate cross-domain research program, production-authority audit, unversioned integration, and exact 16-row `0.6.5` recipe package are complete. Resolver quarantine held; the consumed Gate 6/audit artifacts were removed under synthesis conditions.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is complete. It landed the exact nine-monster, nine-fauna-lineage, nine-ecology-addition, and 28-drop-row package with 147/147 prescribed focused tests and 67-file normal lint green.
 - `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is complete and accepted. All required inventories and owner/reference boundaries closed, normal lint passed at 67 files, the prescribed group passed 688/688, no production repair was needed, and all six remaining research artifacts were removed after durable-coverage conditions passed.
-- The unversioned Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, bounded lethal-process research integration, first catalog plan, care-capability contract, and observer-safe crisis assessment/presentation contract are complete and accepted. The observer-safe contract separated viewpoint, visibility, evidence, assessment, urgency, safe projection, deterministic realization, and validator-only evidence and returned `NO_PACKAGE`. All four named research consumers are complete and the verified temporary artifact was retired. The active route is the unversioned Health Runtime Ownership And Dependency Closure Audit.
+- The unversioned Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, bounded lethal-process research integration, first catalog plan, care-capability contract, observer-safe crisis assessment/presentation contract, and health-runtime ownership/dependency audit are complete and accepted. The audit selected exact definition owner namespaces plus a shared static-only envelope as the first dependency, authorized one narrower documentation prerequisite, and kept implementation `NO_PACKAGE`. The active route is the unversioned Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
