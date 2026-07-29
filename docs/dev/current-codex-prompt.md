@@ -31,6 +31,8 @@ Read:
 
 - `AGENTS.md`;
 - `README.md`;
+- `docs/dev/branch-lifecycle-and-integration-policy.md`;
+- `docs/dev/branch-disposition-register.md`;
 - current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, and static-content program;
 - `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
 - `docs/design/post-lethal-process-static-foundation-next-capability-classification-gate.md`;
@@ -47,11 +49,13 @@ Read:
 ## Execution Gate
 
 1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
-2. Confirm the survey owner decision returned `NO_PACKAGE`.
-3. Confirm `0.7.0` remains `NOT_READY` and no primary implementation label is active.
-4. Reproduce the current version-6 save envelope, snapshot identity fields, account/run linkage, write/load validation, and current-data compatibility posture.
-5. Reproduce the accepted campaign/continuity/artifact/publication and occurrence-persistence boundaries.
-6. Stop without edits if the worktree is dirty, required evidence conflicts, or a required source cannot be inspected safely.
+2. Run `git fetch --all --prune`; inventory relevant local and remote branches and open PRs; inspect merge bases, unique commits, changed paths, and current-route overlap; refresh `docs/dev/branch-disposition-register.md` for proven lifecycle facts.
+3. Confirm the survey owner decision returned `NO_PACKAGE`.
+4. Confirm `0.7.0` remains `NOT_READY` and no primary implementation label is active.
+5. Reproduce the current version-6 save envelope, snapshot identity fields, account/run linkage, write/load validation, and current-data compatibility posture.
+6. Reproduce the accepted campaign/continuity/artifact/publication and occurrence-persistence boundaries.
+7. Decide whether any branch integration, PR closure, or branch deletion is due inside this run. Perform no branch action unless it satisfies the branch policy, fits the documentation-only scope, and does not broaden the active decision.
+8. Stop without edits if the worktree is dirty, required evidence conflicts, a required source cannot be inspected safely, or a proposed branch action lacks semantic review or required validation.
 
 ## Required Decisions
 
@@ -70,7 +74,8 @@ Decide explicitly:
 11. correction/supersession links required now versus deferred tooling;
 12. current-save compatibility, corruption, copied-slot, and stale-artifact behavior;
 13. exact later paths, tests, migration gates, and protected boundaries;
-14. whether one implementation package is dependency-closed and how policy classifies it.
+14. whether one implementation package is dependency-closed and how policy classifies it;
+15. whether any live branch contains save, persistence, occurrence, receipt, or publication evidence relevant to this decision, and its exact disposition without treating branch content as current authority automatically.
 
 ## Minimum-Slice Constraint
 
@@ -123,7 +128,8 @@ Inspect and record:
 - current corruption/incompatibility behavior;
 - current save/load and command serialization tests;
 - accepted save identity graph, Normal branching, write/verify/publication ordering, occurrence links, migration, and copy protection;
-- the isolated readiness audit's minimum-save recommendation after refresh.
+- the isolated readiness audit's minimum-save recommendation after refresh;
+- live branch and PR inventory, including every register entry relevant to save, occurrence, survey, persistence, or current coordination.
 
 ## Prohibited Scope
 
@@ -135,7 +141,9 @@ Do not:
 - change save-slot behavior, delete saves, rewrite account history, or migrate live user data;
 - implement Committed, Ironbound, checkpoint, death, closure, settlement, succession, estate, reward, cloud, networking, encryption, anti-cheat, or broad recovery features;
 - infer occurrence identity from event, Chronicle, notification, tick, hash, timestamp, slot, or projection state;
-- merge, modify, delete, rebase, or cherry-pick the isolated readiness branch;
+- merge, modify, delete, rebase, force-update, or cherry-pick any `PROTECTED_REFERENCE` branch;
+- merge unrelated candidate branches merely to reduce branch count;
+- delete any branch without reachability/equivalent-preservation proof, named-consumer closure, linked-PR disposition, exact-ref verification, and required validation;
 - run broad workspace typecheck as a decision gate.
 
 ## Allowed Documentation Scope
@@ -144,6 +152,8 @@ If the execution gate passes:
 
 - add `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
 - update current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven routing facts;
+- update `docs/dev/branch-disposition-register.md` only for proven live branch and PR facts;
+- integrate a documentation-only branch only when it is directly relevant, semantically current, fully reviewed, validation fits this run, and the action does not broaden the save decision; otherwise retain it with an exact review trigger;
 - install exactly one later prompt only if one package or prerequisite is exact, dependency-closed, and safely classified;
 - otherwise set the current prompt result to `NO_NEXT_PROMPT`.
 
@@ -152,6 +162,8 @@ If the execution gate passes:
 Run:
 
 - repository, branch, worktree, fetch, upstream, and divergence checks;
+- complete local/remote branch and open-PR inventory after prune;
+- merge-base, unique-commit, changed-path, and authority-overlap review for relevant branch-register entries;
 - current-versus-isolated-readiness-branch read-only comparison;
 - exact save identity, writer, reader, publication, and migration inventory;
 - accepted-versus-live save contract matrix;
@@ -178,6 +190,9 @@ Report:
 - label class and exact label only when supported;
 - exact later paths and checks;
 - protected boundaries;
+- branches and PRs inspected;
+- disposition changes, integrations, closures, or deletions performed and validation for each;
+- retained branches and their exact next review triggers;
 - files changed;
 - risks and follow-up notes;
 - installed next prompt or `NO_NEXT_PROMPT`.
