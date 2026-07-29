@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-29 after implementation of current-band primary `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+Updated 2026-07-29 after acceptance of current-band primary `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 
 ## Purpose
 
@@ -24,7 +24,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
-- Active run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
+- Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
+- Active run: unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -50,7 +51,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The accepted static-foundation version classification is `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md`.
 - All four grounded-research consumers are complete; the verified temporary artifact was retired.
 - The exact `Version 0.6.8` static foundation is implemented with six canonical records, four owner catalogs, one shared schema, one pure validator, exact registration, and passing focused/schema/combat-health tests plus 71-file normal lint.
-- The parent-specific `Version 0.6.8.1` acceptance-audit prompt is installed in `docs/dev/current-codex-prompt.md`.
+- Parent-specific `Version 0.6.8.1` accepted the implementation without repair.
+- The unversioned next-capability classification prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -66,9 +68,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`;
-2. record exact parent acceptance or one failed criterion without repair;
-3. use an unversioned next-capability classification gate after acceptance;
+1. run the unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`;
+2. compare current maturity and dependency evidence without presuming a label;
+3. install one exact dependency-closing route or return `NO_NEXT_PROMPT`;
 4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Current Implementation Reality

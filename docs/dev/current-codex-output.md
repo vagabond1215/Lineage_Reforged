@@ -2,89 +2,63 @@
 
 Date: 2026-07-29
 
-Source version/run: `Version 0.6.8 - Lethal-Process Definition Static Foundation`
+Source version/run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`
 
-Label class: primary
+Label class: support suffix
 
-Parent version: not applicable
+Parent version: `Version 0.6.8 - Lethal-Process Definition Static Foundation`
 
-Milestone impact: `advances_current_band`
+Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `9e045e057ab659d67df500136530a059ab0bb351`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at audited parent commit `b07084055359aa4ba13eeac3ad63c2a8fad05477`; no pull was required.
 
 ## Result
 
-Implemented the exact accepted lethal-process static foundation:
+`ACCEPTED`
 
-- four owner-specific catalogs;
-- six canonical definitions;
-- one strict shared draft-2020-12 schema;
-- one pure cross-catalog validator;
-- exact normal-lint and schema registration;
-- one focused authority-validation test.
+Created:
 
-The implementation is static identity authority only. It creates no mutable process state or runtime consumer.
+`docs/design/lethal-process-definition-static-foundation-acceptance-audit.md`
 
-## Exact Records
+The exact `Version 0.6.8` static foundation is accepted without repair. This audit changes documentation only.
 
-| Id | Owner | Family |
-| --- | --- | --- |
-| `lethal_process.hemorrhage.external_hemorrhage` | `hemorrhage_process` | `hemorrhage` |
-| `lethal_process.hemorrhage.internal_hemorrhage` | `hemorrhage_process` | `hemorrhage` |
-| `lethal_process.airway.obstruction` | `airway_process` | `airway` |
-| `lethal_process.respiratory.post_submersion_compromise` | `respiratory_process` | `respiratory` |
-| `lethal_process.thermal.systemic_hypothermia` | `thermal_process` | `thermal` |
-| `lethal_process.thermal.hot_altered_crisis` | `thermal_process` | `thermal` |
+## Accepted Parent
 
-Every definition uses:
+- Audited commit: `b07084055359aa4ba13eeac3ad63c2a8fad05477`.
+- Parent commit: `9e045e057ab659d67df500136530a059ab0bb351`.
+- Parent changed exactly nine implementation paths plus ten authorized coordination paths.
+- Exactly six records exist under four owners with two/one/one/two distribution.
+- Every record is canonical, semantic version `1`, and has empty references.
+- All accepted seed metadata matches the owner/schema plan.
+- The shared strict schema and import-free validator satisfy the accepted boundaries.
+- Normal lint and schema registration are exact-once.
+- No production engine/app/shared source imports or references the new authority.
+- Current combat-health authority remains unchanged.
 
-- `catalogLifecycle: "canonical"`;
-- `semanticVersion: 1`;
-- `references: []`;
-- the exact accepted seed values.
+## Acceptance Criteria
 
-Distribution is exactly two hemorrhage, one airway, one respiratory, and two thermal definitions.
+All sixteen criteria in the active acceptance prompt passed:
 
-## Schema And Validation
-
-The shared schema:
-
-- uses JSON Schema draft 2020-12;
-- is titled `LethalProcessDefinitionCatalog`;
-- defines no `$id`;
-- permits only `ownerDomain` and `records` at wrapper level;
-- permits only the accepted twelve fields on records;
-- defines strict local-reference objects and exact owner, family, lifecycle, relation, and target-domain enums.
-
-The pure validator:
-
-- has no imports and mutates no input;
-- requires all four exact catalogs and owners once;
-- validates strict structural shape before catalog semantics;
-- enforces path/owner/id/family/slug coherence;
-- enforces the exact inventory and two/one/one/two distribution;
-- rejects global id, slug, and internal-name collisions;
-- validates injected canonical references without authoring live references;
-- rejects unresolved, invalid, mismatched, or duplicate references;
-- rejects forbidden mutable, mechanical, diagnosis, care, occurrence, persistence, death, UI, and gameplay fields recursively;
-- returns only an inert success envelope with sorted definition ids.
+1. exact inventory and owners;
+2. exact distribution;
+3. exact seed values;
+4. lifecycle/version/reference posture;
+5. strict schema;
+6. exact enums;
+7. pure non-mutating validator;
+8. structure-before-semantics;
+9. owner/path/id/family/slug coherence;
+10. collision/reference/forbidden-field enforcement;
+11. normal-lint registration;
+12. schema registration;
+13. focused obligations;
+14. production isolation;
+15. combat-health separation;
+16. no executable or behavioral expansion.
 
 ## Files Changed
 
-Implementation:
-
-- added `packages/content/base/game/lethal_process_hemorrhage_definitions.json`;
-- added `packages/content/base/game/lethal_process_airway_definitions.json`;
-- added `packages/content/base/game/lethal_process_respiratory_definitions.json`;
-- added `packages/content/base/game/lethal_process_thermal_definitions.json`;
-- added `packages/schemas/game/lethal-process-definition.schema.json`;
-- added `tools/content-lint/lethal-process-definitions.mjs`;
-- updated `tools/content-lint/index.mjs`;
-- updated `tests/unit/schema-files.test.mjs`;
-- added `tests/unit/lethal-process-definition-authority-validation.test.mjs`.
-
-Post-acceptance coordination:
-
+- added `docs/design/lethal-process-definition-static-foundation-acceptance-audit.md`;
 - updated `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-codex-prompt.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
@@ -96,35 +70,38 @@ Post-acceptance coordination:
 - updated `docs/design/static-content-expansion-program.md`;
 - updated `docs/future_content_backlog.md`.
 
+No content, schema, validator, test, runtime, shared contract, save, migration, dependency, generated, UI, or gameplay path changed.
+
 ## Checks Run
 
 - `node --test tests/unit/lethal-process-definition-authority-validation.test.mjs`: 51/51 passed;
 - `node --test tests/unit/schema-files.test.mjs`: 106/106 passed;
-- `npm.cmd run tool:content-lint`: passed with `content-lint: ok (71 files checked)`;
+- `npm.cmd run tool:content-lint`: `content-lint: ok (71 files checked)`;
 - `node --test tests/unit/combat-status-condition-injury-authority-validation.test.mjs`: 90/90 passed;
-- reserved-id and path collision/replacement scans;
-- exact nine-path implementation diff audit;
-- protected combat-health unchanged check;
-- production engine/app import and reference scan;
-- conflict-marker and whitespace checks;
-- `git diff --check`;
-- complete implementation diff review.
+- repository, branch, worktree, fetch, remote alignment, parent, and parent-path inspection;
+- exact records, owners, distribution, lifecycle, semantic version, and empty-reference inspection;
+- exact-once registration scans;
+- reserved-id collision scan;
+- parent protected combat-health diff;
+- production engine/app/shared import/reference scan;
+- validator purity/prohibited-import scan;
+- parent conflict-marker and `git diff --check` scans;
+- complete parent path and implementation diff review.
 
-No broad workspace typecheck, dependency installation, generator, server, save migration, runtime command, diagnosis, treatment, death, UI, or gameplay execution was run.
+Two disposable ad hoc schema-summary commands were malformed by shell interpolation. They changed nothing; direct schema inspection and the passing schema suite supplied the required evidence.
 
 ## Suggested Commit Message
 
-`feat(content): add lethal-process definition foundation`
+`docs(health): accept lethal-process static foundation`
 
 ## Risks / Follow-Up Notes
 
-- The definitions are static identities, not mutable process instances or diagnoses.
-- Empty live references remain mandatory until later target owners and resolver registration are accepted.
-- Current `combat_health_vocabulary` content, schema, validator, registration behavior, and focused validation remain unchanged.
-- No runtime, shared contract, save, migration, care, death, UI, or gameplay module imports or consumes the new authority.
+- Acceptance is limited to static definition identity and validation authority.
 - Mutable or executable health work remains `NO_PACKAGE`.
+- Empty live references remain mandatory until later target authority and resolver registration are independently accepted.
+- No `0.6.9` or `0.7.0` label is assigned by this audit.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
 
 ## Next Recommended Run
 
-`Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`
+Unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`

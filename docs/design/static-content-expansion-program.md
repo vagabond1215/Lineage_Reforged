@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.8` implementation complete; parent-specific lethal-process static-foundation acceptance audit active next
+Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; unversioned next-capability classification active
 
 ## 1. Purpose
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The complete health planning chain through lethal-process definition owner/schema planning and version classification is accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. The exact `Version 0.6.8` static health-definition foundation is implemented and passes its prescribed focused/schema/combat-health checks plus 71-file normal lint; parent acceptance remains next and mutable health implementation remains `NO_PACKAGE`.
+The complete health planning chain through lethal-process definition owner/schema planning, version classification, implementation, and parent acceptance is complete after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. The exact `Version 0.6.8` static health-definition foundation is accepted by `0.6.8.1` with its prescribed focused/schema/combat-health checks plus 71-file normal lint green; mutable health implementation remains `NO_PACKAGE`.
 
 ## 11. Batch And Review Policy
 
@@ -158,6 +158,7 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned support | Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan | Complete: four definition domains, six ids, strict envelope, references, exact paths, and static package boundary accepted; version classification required before implementation. |
 | unversioned gate | Lethal-Process Static Foundation Version Classification And Implementation Gate | Complete: classified the dependency-closed static package `CURRENT_BAND_PRIMARY` and assigned `Version 0.6.8`. |
 | `0.6.8` | Lethal-Process Definition Static Foundation | Implemented: exactly six canonical definitions, four owner catalogs, one strict shared schema, one pure validator, exact registration, and prescribed checks green. |
+| `0.6.8.1` | Lethal-Process Definition Static Foundation Acceptance Audit | Complete: parent accepted without repair; static-only and protected-authority boundaries preserved. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -169,4 +170,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`. Audit the committed parent without repair or scope widening; do not authorize mutable content, diagnostic logic, treatment protocols, or UI/runtime by inference.
+Run the unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`. Reapply the maturity policy and dependency evidence before assigning another route; do not authorize mutable content, diagnostic logic, treatment protocols, or UI/runtime by inference.

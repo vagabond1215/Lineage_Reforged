@@ -5,13 +5,10 @@ Date: 2026-07-29
 ## Status
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
-- Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
-- The exact six-record/four-owner static definition foundation is implemented.
-- Focused validation passed 51/51.
-- Schema validation passed 106/106.
-- Normal content lint passed at 71 files.
-- Existing combat-health focused validation passed 90/90.
-- The active route is the parent-specific `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
+- Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
+- Parent `0.6.8` is `ACCEPTED` at audited commit `b07084055359aa4ba13eeac3ad63c2a8fad05477`.
+- The parent required no repair.
+- The active route is unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
 - Mutable or executable health work remains `NO_PACKAGE`.
 
 ## Current Planning Precedence
@@ -26,51 +23,49 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale historical-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-## Accepted Implementation Facts
+## Accepted Static Foundation
 
-- Four catalogs own hemorrhage, airway, respiratory, and thermal definitions separately.
-- Exactly six accepted ids exist with the required two/one/one/two distribution.
-- Every record is canonical at semantic version `1`.
-- Every live reference array is empty.
-- The schema is a strict draft-2020-12 two-field wrapper and twelve-field record contract.
-- The validator is import-free, input-preserving, cross-catalog, exact-inventory enforcing, reference-aware, and recursively fail-closed.
-- All four catalogs participate in normal content lint exactly once.
-- The shared schema participates in schema parse coverage exactly once.
-- No production runtime or app source references the new definitions.
-- Existing combat-health authority remains separate.
+- Four owner-specific catalogs contain exactly six canonical definitions.
+- Distribution is exactly two hemorrhage, one airway, one respiratory, and two thermal.
+- Every record uses semantic version `1` and empty references.
+- The strict shared schema and pure cross-catalog validator are accepted.
+- All four catalogs and the schema are registered exactly once.
+- Focused validation passed 51/51.
+- Schema validation passed 106/106.
+- Normal content lint passed at 71 files.
+- Existing combat-health validation passed 90/90.
+- Protected combat-health authority and production engine/app/shared sources remain isolated.
 
-## Active Acceptance Guardrails
+## Active Classification Guardrails
 
-Run exact `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
+Run unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
 
-- Treat it as a support suffix attached only to parent `0.6.8`.
-- Reproduce the committed package independently.
-- Run the exact focused, schema, lint, and combat-health checks.
-- Verify the six records, four owners, paths, schema, validator, registration, empty references, and static-only boundary.
-- Inspect the complete parent diff and production reference surface.
-- Do not repair or broaden implementation during the audit.
-- If any parent defect appears, stop with a precise failed criterion and recommend a separate parent-specific repair suffix.
-- If all criteria pass, create the durable acceptance record and reconcile only coordination documents.
-- Do not authorize mutable process, persistence, care, assessment, death, UI, or gameplay work.
+- Apply the internal maturity policy before assigning any new label.
+- Reproduce current `0.6.x` capability and dependency state.
+- Do not infer `0.7.0` readiness from static content.
+- Inspect health dependency closure, Geography/recognition, Activity Resolution reuse, current runtime-owner gaps, and the isolated integrated-gameplay readiness branch without merging it.
+- Distinguish a current-band primary capability from a parent support suffix, unversioned prerequisite, or `NO_NEXT_PROMPT`.
+- Assign no implementation label unless one exact package is dependency-closed.
+- Do not implement content, schema, validator, runtime, persistence, migration, care, diagnosis, death, UI, or gameplay in the classification run.
 - Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
 
 ## Preserved Boundaries
 
-- No seventh definition.
-- No non-empty live reference.
-- No migration or alias.
-- No current combat-health widening.
-- No poison, shock-like, burn, local-freezing, or contextual-heat definition.
-- No mutable process, diagnosis, care, observer, death, save, UI, or gameplay behavior.
-- Workspace typecheck remains a separate known-failing 173-diagnostic audit and is not an acceptance gate.
+- Static lethal-process definitions are identities, not mutable instances.
+- Current combat-health vocabulary remains separate.
+- No non-empty live reference is accepted.
+- No migration or alias exists.
+- No poison, shock-like, burn, local-freezing, or contextual-heat definition is authorized.
+- No health process, care, assessment, urgency, death, restoration, closure, save, UI, or gameplay implementation is ready by inference.
+- Workspace typecheck remains a separate known-failing 173-diagnostic audit and is not a classification gate.
 
 ## Near-Term Sequence
 
-1. run the `0.6.8.1` parent acceptance audit;
-2. record either `accepted` or an exact failed parent criterion;
-3. if accepted, use an unversioned next-capability classification gate before assigning another implementation label;
-4. keep mutable health work blocked until a later exact owner/persistence package is independently accepted.
+1. run the unversioned next-capability classification gate;
+2. identify the smallest exact dependency-closed package or return `NO_NEXT_PROMPT`;
+3. classify the selected route under the durable maturity policy;
+4. only then install one exact implementation or documentation prerequisite prompt.
 
 ## Active Prompt
 
-`Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`
+Unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
