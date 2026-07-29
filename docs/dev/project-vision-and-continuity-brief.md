@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-28 after the lethal-process definition owner/schema plan fixed the four owner domains, six ids, shared static envelope, and exact package boundary.
+Updated 2026-07-29 after the lethal-process static foundation was classified as current-band primary `Version 0.6.8`.
 
 ## Purpose
 
@@ -23,8 +23,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`.
-- Active run: unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+- Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+- Active run: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -47,8 +47,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The accepted observer-safe contract is `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
 - The accepted health-runtime dependency audit is `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`.
 - The accepted lethal-process definition owner/schema plan is `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`.
+- The accepted static-foundation version classification is `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md`.
 - All four grounded-research consumers are complete; the verified temporary artifact was retired.
-- The lethal-process static-foundation version-classification gate is installed in `docs/dev/current-codex-prompt.md`.
+- The exact `Version 0.6.8` static-foundation implementation prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -64,9 +65,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`;
-2. assign an implementation version only if the internal policy supports it;
-3. install one exact versioned static-foundation prompt or return `NO_NEXT_PROMPT`;
+1. implement `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
+2. run the exact focused/schema/lint checks;
+3. run the parent-specific `0.6.8.1` acceptance audit after implementation;
 4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Current Implementation Reality

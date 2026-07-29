@@ -1,15 +1,15 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-28
+Last reviewed: 2026-07-29
 
 ## Current Runtime Transition Override
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 - Latest completed support/audit run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Latest completed unversioned run: `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`.
-- Next run: unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
-- Activity selection remains accepted. `0.6.4`-`0.6.7` and the complete health-planning chain through lethal-process definition owner/schema closure are accepted. Four exact owner catalogs and six identities form one static foundation ready for version classification; mutable implementation remains `NO_PACKAGE`.
+- Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+- Next run: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+- Activity selection remains accepted. `0.6.4`-`0.6.7` and the health-planning/classification chain are complete. The exact six-record static foundation is dependency-closed and classified as the next `0.6.x` primary; mutable implementation remains `NO_PACKAGE`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.

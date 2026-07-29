@@ -1,8 +1,8 @@
 # Static Content Expansion Program
 
-Date: 2026-07-28
-Program versions: `0.6.4`-`0.6.7`
-Status: `0.6.4`-`0.6.7` and the health documentation chain through lethal-process definition owner/schema planning complete; static-foundation version classification active next
+Date: 2026-07-29
+Program versions: `0.6.4`-`0.6.8`
+Status: `0.6.4`-`0.6.7` and the health documentation/classification chain complete; exact `Version 0.6.8` lethal-process static foundation active next
 
 ## 1. Purpose
 
@@ -129,7 +129,7 @@ The accepted `0.6.6` implements the exact nine-monster, nine-fauna-lineage, nine
 
 Knowledge is authored with source canon, not filler. Use active domains and declared subject vocabularies. A snippet identifies or contextualizes a live active subject without granting discovery, skill, rewards, travel access, magic, reputation, or runtime consequences. Arcane Lore remains planned.
 
-The Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, lethal-process research integration, first lethal-process catalog plan, care-capability contract, observer-safe crisis assessment/presentation contract, health-runtime dependency audit, and lethal-process definition owner/schema plan are accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. One static health-definition foundation is ready for version classification; mutable health implementation remains `NO_PACKAGE`.
+The complete health planning chain through lethal-process definition owner/schema planning and version classification is accepted after `0.6.7`. Current `Recognizing ...` snippets remain structural lore, not implemented recognition criteria. The exact static health-definition foundation is assigned `Version 0.6.8`; mutable health implementation remains `NO_PACKAGE`.
 
 ## 11. Batch And Review Policy
 
@@ -156,6 +156,7 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned support | Observer-Safe Crisis Assessment And Presentation Contract Decision | Complete: evidence, assessment, urgency, safe projection, realization, and validator separation accepted; final research artifact retired; implementation remains `NO_PACKAGE`. |
 | unversioned audit | Health Runtime Ownership And Dependency Closure Audit | Complete: dependency graph and owner-readiness matrix selected the definition owner-namespace/shared-envelope documentation prerequisite; implementation remains `NO_PACKAGE`. |
 | unversioned support | Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan | Complete: four definition domains, six ids, strict envelope, references, exact paths, and static package boundary accepted; version classification required before implementation. |
+| unversioned gate | Lethal-Process Static Foundation Version Classification And Implementation Gate | Complete: classified the dependency-closed static package `CURRENT_BAND_PRIMARY` and assigned `Version 0.6.8`. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -167,4 +168,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the documentation-only Lethal-Process Static Foundation Version Classification And Implementation Gate. Do not implement before an exact version is accepted or authorize mutable content, diagnostic logic, treatment protocols, or UI/runtime by inference.
+Run `Version 0.6.8 - Lethal-Process Definition Static Foundation`. Implement only the exact six-record/four-owner static package and do not authorize mutable content, diagnostic logic, treatment protocols, or UI/runtime by inference.

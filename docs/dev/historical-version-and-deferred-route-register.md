@@ -1,6 +1,6 @@
 # Historical Version And Deferred Route Register
 
-Date: 2026-07-28
+Date: 2026-07-29
 Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
@@ -60,7 +60,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | Cross-content coherence | complete maturity gate | Accepted `0.6.4`-`0.6.6`, static lint/validators, durable research synthesis | None | New proven defect | Accepted `0.6.7`; no production repair needed | `docs/dev/current-codex-output.md` |
 | Geographic Knowledge/recognition | accepted documentation design gate | Place/Knowledge authorities and accepted `0.6.7` | Implementation packages remain separate | New explicitly scheduled owner-specific package | Preserve accepted domain/taxonomy/profile/source/occurrence/legacy boundaries | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
 | Activity resolution reuse | accepted repository audit | Selection, trial, quest, Knowledge, crafting, magic, and occurrence foundations | Shared authority sequence and owner-specific adapters | Explicit later route decision | Preserve audit decisions; no implementation package is authorized | `docs/design/activity-resolution-existing-system-reuse-audit.md` |
-| Injury/trauma/Mortal Crisis/restoration | accepted conceptual-contract lane; static-foundation classification active | Injury, Mortal Crisis, save, occurrence, functional/lethal/care/crisis receipt authority, research integration, care/observer contracts, dependency audit, and definition owner/schema plan | Version classification and then the exact static foundation | Four owners, six ids, shared envelope, references, paths, and checks accepted | Run Lethal-Process Static Foundation Version Classification And Implementation Gate; mutable implementation remains `NO_PACKAGE` | `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md` |
+| Injury/trauma/Mortal Crisis/restoration | accepted conceptual-contract lane; static foundation active | Injury, Mortal Crisis, save, occurrence, functional/lethal/care/crisis receipt authority, research integration, care/observer contracts, dependency audit, owner/schema plan, and version classification | Exact `Version 0.6.8` static foundation, then parent acceptance audit | Classified `CURRENT_BAND_PRIMARY`; six ids/four owners/nine paths dependency-closed | Implement `Version 0.6.8`; mutable implementation remains `NO_PACKAGE` | `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md` |
 | Generic `world.pois` | rejected | Specific owner families | None | Explicit decision | Never infer | `docs/design/discovery-poi-boundary-decision.md` |
 
 ## Maintenance Rule

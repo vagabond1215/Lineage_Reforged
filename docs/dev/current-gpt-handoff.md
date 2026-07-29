@@ -1,18 +1,17 @@
 # Current GPT Handoff
 
-Date: 2026-07-28
+Date: 2026-07-29
 
 ## Status
 
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
-- Latest completed unversioned run: `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`.
-- Four exact domains now own the six first-scope definitions: hemorrhage, airway, respiratory, and thermal process.
-- The namespace is `lethal_process.<owner_segment>.<slug>`.
-- Four owner catalogs, one strict shared schema, one pure validator, exact registration points, and one focused test are fixed.
-- The six live seed records must have empty references and no runtime consumer.
-- One static foundation is `STATIC_PACKAGE_READY`; mutable or executable health work remains `NO_PACKAGE`.
-- No implementation version has been assigned.
-- The active route is unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+- Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+- The exact static package is classified `CURRENT_BAND_PRIMARY`.
+- The active route is `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+- The package is `DEPENDENCY_CLOSED` for its static scope.
+- It contains six canonical definitions under hemorrhage, airway, respiratory, and thermal owners.
+- All live references remain empty.
+- Mutable or executable health work remains `NO_PACKAGE`.
 
 ## Current Planning Precedence
 
@@ -26,70 +25,78 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale historical-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-## Active Plan Guardrails
+## Version Decision
 
-Run exact unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+`Version 0.6.8` is a current-band primary because it creates new validated static authority required by `0.6.x` dependency closure.
 
-- Documentation only; create `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md`.
-- Reproduce the exact package without changing its owners, ids, fields, lifecycle, reference posture, paths, or prohibitions.
-- Apply the internal versioning policy in the required classification order.
-- Assign a version only when current-band primary or parent-specific support evidence is explicit.
-- Do not advance to `0.7.0`.
-- Install one exact versioned implementation prompt only if the classification passes.
-- Otherwise return `NO_NEXT_PROMPT`.
-- Do not create content, schemas, validators, tests, runtime, saves, migrations, diagnosis, care, death, UI, or gameplay.
+It is not:
+
+- `0.7.0`, because the integrated-gameplay gate is unmet;
+- a `0.6.7.x` suffix, because it is not parent-specific audit/repair work;
+- unversioned implementation, because canonical content/schema/validation authority changes.
+
+Milestone impact:
+
+`advances_current_band`
+
+## Active Implementation Guardrails
+
+Run exact `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+
+- Verify the clean/synchronized gate before editing.
+- Change only the nine accepted implementation paths.
+- Create exactly six records with the exact accepted values.
+- Use four owner catalogs and one strict shared schema.
+- Keep every live `references` array empty.
+- Implement one pure cross-catalog validator with no imports.
+- Register all four catalogs and the schema exactly once.
+- Add the focused test and run only the prescribed checks.
+- Preserve current `combat_health_vocabulary` authority unchanged.
+- Do not add runtime, persistence, migration, diagnosis, care, death, UI, gameplay, or dependencies.
+- After all checks pass, update coordination docs and install the `0.6.8.1` acceptance audit.
 - Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
 
-## Exact Static Foundation
+## Exact Implementation Package
 
-Owners:
+New:
 
-- `hemorrhage_process`;
-- `airway_process`;
-- `respiratory_process`;
-- `thermal_process`.
-
-Reserved ids:
-
-- `lethal_process.hemorrhage.external_hemorrhage`;
-- `lethal_process.hemorrhage.internal_hemorrhage`;
-- `lethal_process.airway.obstruction`;
-- `lethal_process.respiratory.post_submersion_compromise`;
-- `lethal_process.thermal.systemic_hypothermia`;
-- `lethal_process.thermal.hot_altered_crisis`.
-
-Future package paths:
-
-- four `packages/content/base/game/lethal_process_*_definitions.json` owner catalogs;
+- `packages/content/base/game/lethal_process_hemorrhage_definitions.json`;
+- `packages/content/base/game/lethal_process_airway_definitions.json`;
+- `packages/content/base/game/lethal_process_respiratory_definitions.json`;
+- `packages/content/base/game/lethal_process_thermal_definitions.json`;
 - `packages/schemas/game/lethal-process-definition.schema.json`;
 - `tools/content-lint/lethal-process-definitions.mjs`;
-- `tools/content-lint/index.mjs`;
-- `tests/unit/schema-files.test.mjs`;
 - `tests/unit/lethal-process-definition-authority-validation.test.mjs`.
+
+Registration only:
+
+- `tools/content-lint/index.mjs`;
+- `tests/unit/schema-files.test.mjs`.
+
+Required checks:
+
+- focused lethal-process authority test;
+- schema-file test;
+- normal content lint at 71 files;
+- collisions, exact paths, protected files, production imports, whitespace, and full diff.
 
 ## Preserved Boundaries
 
-- Current `combat_health_vocabulary` remains unchanged and unrelated.
-- `confirmed` internal hemorrhage is an accepted-instance/knowledge boundary, not an id segment.
-- All six seed definitions use empty references.
-- No current content or historical data migrates.
-- Static definitions own no actor state, progression, care, diagnosis, persistence, death, UI, or gameplay.
-- Poison, shock-like deterioration, burns, local freezing, and contextual heat illness remain outside scope.
-
-## Preserved Known Gaps
-
-- Workspace typecheck remains a separately classified known-failing audit with 173 reproducible diagnostics.
-- Current HP zero may still enter legacy terminal archival and save deletion.
-- UI-owned rest still restores all resources.
-- No mutable lethal-process, functional-state, care, assessment, urgency, crisis, accepted-death, restoration, health-persistence, or correction owner exists.
+- No seventh definition.
+- No non-empty live reference.
+- No migration or alias.
+- No current combat-health edit.
+- No poison, shock-like, burn, local-freezing, or contextual-heat definition.
+- No mutable process, care, observer, death, save, UI, or gameplay behavior.
+- Workspace typecheck remains a separate known-failing 173-diagnostic audit and is not an acceptance gate.
 
 ## Near-Term Sequence
 
-1. run the version-classification and implementation gate;
-2. if accepted, install the exact versioned static-foundation implementation prompt;
-3. implement only after the versioned prompt becomes active;
-4. keep every mutable and balance-bearing package behind later owner, occurrence, persistence, migration, and validation decisions.
+1. implement `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
+2. run exact focused/schema/lint acceptance checks;
+3. install `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`;
+4. do not advance mutable health work without a later exact owner/persistence package.
 
 ## Active Prompt
 
-Unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`
+`Version 0.6.8 - Lethal-Process Definition Static Foundation`

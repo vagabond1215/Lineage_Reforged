@@ -1,20 +1,29 @@
-# Lethal-Process Static Foundation Version Classification And Implementation Gate
+# Version 0.6.8 - Lethal-Process Definition Static Foundation
 
 ## Run Identity
 
-Unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`
+`Version 0.6.8 - Lethal-Process Definition Static Foundation`
 
-Documentation only. This run does not consume or preassign a primary implementation version.
+Label class: primary
+
+Parent version: not applicable
+
+Milestone impact: `advances_current_band`
 
 Suggested commit:
 
-`docs(health): classify lethal-process static foundation`
+`feat(content): add lethal-process definition foundation`
 
 ## Purpose
 
-Classify the exact static package accepted by `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md` under the repository's internal versioning policy. If and only if the package is dependency-closed and materially qualifies for a current-band primary or parent-specific support label, assign the exact label and install one versioned implementation prompt. Otherwise return `NO_NEXT_PROMPT`.
+Implement the exact static foundation accepted by:
 
-Do not implement the package in this run.
+- `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`;
+- `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md`.
+
+Create exactly six non-executing lethal-process definitions under four owner-specific catalogs, one shared strict schema, one pure cross-catalog validator, exact normal-lint/schema registration, and one focused test file.
+
+This run creates static identity authority only. It must not create mutable process state, runtime behavior, persistence, migration, diagnosis, care, death, UI, or gameplay.
 
 ## Required Reading
 
@@ -22,131 +31,263 @@ Read:
 
 - `AGENTS.md`;
 - `README.md`;
-- `docs/design/internal-versioning-and-release-milestone-policy.md`;
 - current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, and static-content program;
+- `docs/design/internal-versioning-and-release-milestone-policy.md`;
 - `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`;
+- `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md`;
 - `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`;
-- `docs/design/first-lethal-process-definition-and-catalog-plan.md`;
-- `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`;
-- `docs/design/care-capability-stabilization-and-process-effect-contract-decision.md`;
-- `docs/design/observer-safe-crisis-assessment-and-presentation-contract-decision.md`.
-
-Inspect live:
-
-- current branch/head/worktree/upstream;
-- current `0.6.x` completion history and maturity posture;
-- the exact nine future paths selected by the schema plan;
-- current combat-health content/schema/validator/registration/tests;
-- collision state for every reserved id and future path.
+- `packages/content/base/game/combat_health_vocabulary.json`;
+- `packages/schemas/game/combat-health-vocabulary.schema.json`;
+- `tools/content-lint/combat-health-vocabulary.mjs`;
+- `tools/content-lint/index.mjs`;
+- `tests/unit/combat-status-condition-injury-authority-validation.test.mjs`;
+- `tests/unit/schema-files.test.mjs`.
 
 ## Execution Gate
 
-1. Verify repository, branch, clean worktree, remote alignment, and active route.
-2. Confirm the owner/schema plan is accepted and internally complete.
-3. Reproduce all six reserved ids, four owners, four catalog paths, shared fields, lifecycle, reference posture, and package prohibitions.
-4. Confirm every reserved id and new path remains collision-free.
-5. Confirm no unresolved static owner, schema, reference, validation, registration, or migration decision blocks the package.
-6. Classify in this order:
-   - new-band entry;
-   - current-band primary capability;
-   - parent-specific support suffix;
-   - unversioned work.
-7. Stop without edits if classification would require guessing, historical renumbering, or a maturity claim not supported by the policy.
-8. Do not run builds, tests, content lint, typecheck, generators, servers, package installation, or gameplay.
+1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
+2. Confirm `Version 0.6.8` remains unused and the classification gate is accepted.
+3. Confirm all seven new paths remain absent.
+4. Confirm all six reserved ids remain collision-free.
+5. Confirm the four current combat-health authority files are unchanged.
+6. Reproduce the exact owner matrix, seed values, envelope, lifecycle, reference posture, paths, and checks from the accepted schema plan.
+7. Stop without edits if any collision, authority conflict, missing exact value, or unrelated worktree change makes the package unsafe.
 
-## Required Output
+## Exact Implementation Scope
+
+### New content
+
+- `packages/content/base/game/lethal_process_hemorrhage_definitions.json`;
+- `packages/content/base/game/lethal_process_airway_definitions.json`;
+- `packages/content/base/game/lethal_process_respiratory_definitions.json`;
+- `packages/content/base/game/lethal_process_thermal_definitions.json`.
+
+### New schema and validator
+
+- `packages/schemas/game/lethal-process-definition.schema.json`;
+- `tools/content-lint/lethal-process-definitions.mjs`.
+
+### Existing registration
+
+- `tools/content-lint/index.mjs`;
+- `tests/unit/schema-files.test.mjs`.
+
+### New focused test
+
+- `tests/unit/lethal-process-definition-authority-validation.test.mjs`.
+
+No implementation path outside these nine may change.
+
+## Exact Content
+
+Create exactly:
+
+| Id | Owner | Family | Catalog |
+| --- | --- | --- | --- |
+| `lethal_process.hemorrhage.external_hemorrhage` | `hemorrhage_process` | `hemorrhage` | hemorrhage |
+| `lethal_process.hemorrhage.internal_hemorrhage` | `hemorrhage_process` | `hemorrhage` | hemorrhage |
+| `lethal_process.airway.obstruction` | `airway_process` | `airway` | airway |
+| `lethal_process.respiratory.post_submersion_compromise` | `respiratory_process` | `respiratory` | respiratory |
+| `lethal_process.thermal.systemic_hypothermia` | `thermal_process` | `thermal` | thermal |
+| `lethal_process.thermal.hot_altered_crisis` | `thermal_process` | `thermal` | thermal |
+
+Copy every exact slug, internal name, summary, tags, source-authority note, and boundary note from Section 4.2.1 of the accepted schema plan.
+
+Every record must use:
+
+- `catalogLifecycle: "canonical"`;
+- `semanticVersion: 1`;
+- `references: []`.
+
+Every wrapper contains exactly:
+
+- `ownerDomain`;
+- `records`.
+
+Distribution must be exactly two/one/one/two.
+
+Do not add a seventh record, alias, migration, display label, executable hook, or cross-owner reference.
+
+## Shared Schema
+
+Create draft-2020-12 schema:
+
+- title: `LethalProcessDefinitionCatalog`;
+- no `$id`;
+- strict two-field wrapper;
+- strict twelve-field records;
+- local `$defs`/`$ref` only.
+
+Required record fields:
+
+1. `id`;
+2. `slug`;
+3. `name`;
+4. `definitionOwner`;
+5. `processFamily`;
+6. `catalogLifecycle`;
+7. `semanticVersion`;
+8. `summary`;
+9. `references`;
+10. `tags`;
+11. `sourceAuthorityNotes`;
+12. `notes`.
+
+Exact owner enum:
+
+- `hemorrhage_process`;
+- `airway_process`;
+- `respiratory_process`;
+- `thermal_process`.
+
+Exact family enum:
+
+- `hemorrhage`;
+- `airway`;
+- `respiratory`;
+- `thermal`.
+
+Exact lifecycle enum:
+
+- `planned`;
+- `canonical`;
+- `retired`.
+
+Exact reference relations:
+
+- `causal_source`;
+- `contributing_source`;
+- `coexisting_process`;
+- `transition_source`.
+
+Exact target domains:
+
+- `injury`;
+- `body_state`;
+- `hazard`;
+- `environment`;
+- `poison`;
+- `respiratory_process`;
+- `magic`;
+- `lethal_process`.
+
+Use the exact id, lower-snake, reference, integer-minimum, uniqueness, and static-only constraints from the accepted schema plan.
+
+## Pure Validator
+
+Export one pure cross-catalog validator from:
+
+`tools/content-lint/lethal-process-definitions.mjs`
+
+It must:
+
+- import nothing;
+- mutate no input;
+- accept all four path/wrapper pairs plus the shared schema in one call;
+- optionally accept canonical reference ids by target domain for focused in-memory validation;
+- validate strict schema shape before semantics;
+- require every exact path and owner once;
+- reject unrecognized/missing catalogs;
+- enforce wrapper/path/owner/id-segment/family/slug coherence;
+- enforce global id, slug, and internal-name uniqueness;
+- validate the exact six-record inventory and two/one/one/two distribution for live content;
+- validate reference shape, target-domain pattern, duplicates, and injected target existence;
+- recursively reject forbidden mutable/runtime/mechanic/diagnosis/care/occurrence/persistence/death/UI/gameplay keys;
+- return an inert success envelope with sorted definition ids;
+- import no filesystem, engine, app, save, runtime, content owner, or dependency.
+
+## Normal-Lint And Schema Registration
+
+In `tools/content-lint/index.mjs`:
+
+- import the validator exactly once;
+- add every catalog to `checks` exactly once;
+- use `requiredTopLevel: ["ownerDomain", "records"]`;
+- call one dependency helper exactly once;
+- have that helper read only the four catalogs and shared schema;
+- invoke the pure validator once with empty live reference authority;
+- do not import or consult runtime, app, save, combat-health, item, spell, role, service, care, death, UI, or gameplay owners.
+
+In `tests/unit/schema-files.test.mjs`:
+
+- register `packages/schemas/game/lethal-process-definition.schema.json` exactly once.
+
+## Focused Test Requirements
 
 Create:
 
-- `docs/design/lethal-process-static-foundation-version-classification-and-implementation-gate.md`.
+`tests/unit/lethal-process-definition-authority-validation.test.mjs`
 
-The gate must include:
+Prove all eighteen obligations in Section 8 of the accepted schema plan, including:
 
-### 1. Policy Baseline
-
-Record exact policy criteria relevant to current-band primary capability versus support suffix versus unversioned work.
-
-### 2. Package Reproduction
-
-Reproduce the exact ready package:
-
-- four owner-specific catalogs;
-- six reserved identities;
-- one shared schema;
-- one pure validator;
-- normal-lint and schema registration;
-- one focused test;
-- no runtime consumer.
-
-### 3. Dependency And Risk Gate
-
-Confirm the package is static-only, reference-closed with empty live references, no-migration, non-executing, and independent of unresolved mutable process, care, observer, persistence, death, UI, or gameplay authority.
-
-### 4. Version Classification
-
-Return exactly one:
-
-- `CURRENT_BAND_PRIMARY`;
-- `PARENT_SUPPORT_SUFFIX`;
-- `UNVERSIONED_ONLY`;
-- `NOT_READY`.
-
-Explain why every other class is rejected.
-
-Do not advance to `0.7.0` or another maturity band.
-
-### 5. Exact Implementation Prompt
-
-If classification passes, assign the exact permitted version label and install a decision-complete prompt that:
-
-- changes only the nine paths accepted by the schema plan;
-- creates exactly six static records under four owners;
-- preserves empty live references;
-- implements the strict shared envelope and pure cross-catalog validator;
-- registers all four catalogs and the schema exactly once;
-- adds the focused tests and runs only the prescribed checks;
-- preserves `combat_health_vocabulary` unchanged;
-- prohibits runtime, persistence, migration, diagnosis, care, death, UI, and gameplay.
-
-If classification does not pass, install no implementation prompt and use `NO_NEXT_PROMPT`.
-
-## Allowed Changes
-
-Documentation only:
-
-- create the focused classification gate;
-- update current output, handoff, and prompt;
-- update roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven route facts.
+- exact live records and distribution;
+- exact-once wiring;
+- strict schema/wrapper/record behavior;
+- owner/id/family/slug coherence;
+- global collisions;
+- lifecycle and semantic version;
+- input non-mutation and validator purity;
+- empty live references;
+- injected valid reference fixtures;
+- unresolved/invalid/duplicate reference rejection;
+- recursive forbidden-field rejection;
+- current combat-health separation;
+- no production runtime import/reference.
 
 ## Prohibited Scope
 
 Do not:
 
-- create or edit content, schemas, validators, tests, source, runtime, commands/events, UI, saves, migrations, dependencies, or generated output;
-- change `combat_health_vocabulary`;
-- alter the six ids, owner matrix, envelope, lifecycle, reference contract, paths, or package boundaries merely to force a classification;
-- define process stages, values, timers, probabilities, diagnosis, care, treatment, death, restoration, display copy, or gameplay;
-- assign `0.7.0` or claim integrated-gameplay readiness;
-- mass-renumber history.
+- edit `combat_health_vocabulary` content, schema, validator, or focused test;
+- create mutable instances, commands, events, results, receipts, saves, migrations, replay, or correction;
+- define stages, severity, rates, timers, thresholds, probabilities, formulas, rolls, damage, healing, symptoms as proof, diagnosis, prognosis, treatment, care, materials, access, providers, costs, death, restoration, or closure;
+- add item, spell, skill, role, service, hazard, environment, poison, injury, body-state, magic, observer, UI, narrative, Chronicle, or gameplay integration;
+- create aliases or backfill current data;
+- add production dependencies;
+- run broad workspace typecheck as an acceptance gate;
+- modify generated or vendor files.
 
-## Validation
+## Required Checks
 
-- Verify all cited policy and repository facts.
-- Verify the exact future paths and ids remain absent/collision-free.
-- Verify documentation-only changed paths.
-- Run conflict-marker and trailing-whitespace scans plus `git diff --check`.
-- Inspect the complete changed-path set and full diff.
+Run:
+
+1. `node --test tests/unit/lethal-process-definition-authority-validation.test.mjs`;
+2. `node --test tests/unit/schema-files.test.mjs`;
+3. `npm.cmd run tool:content-lint`.
+
+Then run:
+
+- reserved-id and path collision/replacement scans;
+- exact nine-path implementation diff audit;
+- protected combat-health unchanged check;
+- production import/reference scan;
+- conflict-marker and trailing-whitespace scans;
+- `git diff --check`;
+- complete implementation diff review.
+
+Expected normal-lint inventory after adding four catalogs:
+
+`content-lint: ok (71 files checked)`
+
+## Post-Acceptance Coordination
+
+Only after every required check passes:
+
+- update current output and handoff with exact results;
+- install `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit` as the next prompt;
+- update roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven completion facts.
+
+These documentation updates are coordination artifacts, not implementation-package expansion.
 
 ## Completion Report
 
 Report:
 
 - starting commit and worktree state;
-- policy evidence;
-- package reproduction;
-- dependency/risk result;
-- exact classification and label, or `NOT_READY`;
-- installed implementation prompt, or `NO_NEXT_PROMPT`;
-- files changed;
-- checks run;
-- confirmation that no content, schema, validator, test, runtime, UI, save, migration, dependency, diagnosis, care, death, or gameplay behavior changed.
+- exact records, owners, schema, validator, and registration;
+- focused/schema/lint results;
+- exact implementation and coordination files changed;
+- confirmation that protected combat-health authority is unchanged;
+- confirmation that no runtime, save, migration, diagnosis, care, death, UI, dependency, or gameplay behavior changed;
+- risks/follow-up notes;
+- next support audit.
