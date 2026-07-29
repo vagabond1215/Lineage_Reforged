@@ -51,6 +51,19 @@
 - If an implementation or cleanup request arrives while still in Codex Plan Mode, return a decision-complete proposed plan instead of editing files.
 - Prefer ChatGPT via GitHub Connector for small repo-aware docs, handoff, audit, prompt-file, or tiny GitHub file edits when quality will not be sacrificed.
 - Use Codex for local validation, multi-file code/content changes, commands, tests, or edits that need the local working tree.
+
+## GPT Connector Active Assistance
+
+- `docs/dev/gpt-connector-assistance-policy.md` is the durable detailed authority for proactive ChatGPT via GitHub Connector support.
+- GPT should actively identify safe connector work that can aid the current Codex run, prepare future Codex work, run independently in parallel, improve documentation, classify stale or historical material, or remove avoidable inspection and packaging burden from Codex.
+- Prefer the least-powerful safe tool. Do not send work to Codex solely because Codex can perform it when the connector can complete it with equal confidence and lower overhead.
+- Parallel connector passes should normally use isolated branches, state their source commit, avoid the active Codex edit surface, and remain unmerged until overlap and routing are reviewed.
+- GPT may apply only tiny, obvious, low-risk bug or metadata fixes when intent is unambiguous, the complete patch is connector-reviewable, local execution is not materially required, and the active Codex route does not own the same files or behavior.
+- GPT should maintain repository documentation when safe, but must not rewrite large files from partial fetches, delete artifacts without proven retention closure, invent canon, or claim validation that was not run.
+- GPT should ask for user input when product direction, canon, UX, balance, abstraction, milestone scope, or route priority is materially ambiguous and repository evidence cannot decide it safely.
+- User-direction questions should be concrete and timely enough to prevent avoidable implementation assumptions; do not ask the user to decide facts already settled by accepted repository authority.
+- After completing a task, GPT should briefly reassess whether another authorized connector-safe pass would materially advance the same objective, while avoiding open-ended scope expansion or duplicate work without an independent-verification purpose.
+
 - Each detailed Codex output written to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) must state:
   - source version/run
   - date
