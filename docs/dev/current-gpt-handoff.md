@@ -6,13 +6,14 @@ Date: 2026-07-29
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Latest completed unversioned run: `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
+- Latest completed unversioned run: `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
 - Survey owner-contract result: `ACCEPTED`.
-- Survey implementation result: `NO_PACKAGE`.
-- Blocking dependency: `MINIMUM_SAVE_IDENTITY_AND_ACCEPTED_STATE_PUBLICATION`.
-- Active route: unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
+- Minimum save-contract result: `ACCEPTED`.
+- Implementation result: `NO_PACKAGE`.
+- Blocking dependency: `NORMAL_STAKES_ACTIVATION_CONTINUITY_AND_ACCOUNT_VALUE_PUBLICATION`.
+- Active route: unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 
 ## Current Planning Precedence
 
@@ -66,17 +67,19 @@ Literal ordered `condition -> action` gambits remain deferred. No ordered-rule s
 
 Do not treat the existing weighted AI as absent, and do not describe it as a completed Final Fantasy XII-style gambit system.
 
-## Blocking Save Boundary
+## Accepted Minimum Save Boundary
 
-Current persistence serializes existing snapshot fields, but it lacks:
+`docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md` accepts the minimum Normal-only contract:
 
-- stable campaign and continuity identity;
-- accepted campaign-rules/Stakes identity;
-- durable occurrence/result/consequence receipt authority;
-- candidate-write, verification, publication, and authoritative-head semantics;
-- restart duplicate handling and correction linkage.
+- distinct account, campaign, continuity, character, artifact, generation, publication, revision, and occurrence identities;
+- campaign rules version 2 and an authoritative typed ledger in the snapshot;
+- artifact/publication control in the save envelope;
+- idempotent version-6 migration with an owner-certified persisted receipt;
+- candidate write, semantic readback verification, authoritative-head publication, and publication verification;
+- one child continuity at the first accepted divergent mutation after loading a non-head artifact, never on load alone;
+- retained request/occurrence/result/consequence/correction authority across restart.
 
-Those cross-cutting identities must not be invented inside the survey command. The next run decides the minimum Normal-only foundation and must either return one dependency-closed later package or `NO_PACKAGE`.
+Implementation remains `NO_PACKAGE` because campaign-rules activation still conflicts with terminal HP-zero archival, accepted-mutation admission has no complete current owner, and account value can publish before authoritative campaign state.
 
 ## Branch Lifecycle Posture
 
@@ -98,22 +101,22 @@ Known protected branches:
 - `prep/integrated-gameplay-0-7-readiness-audit`;
 - `parallel/prompt-packaging-integrity-audit`.
 
-Eight connector-created documentation branches are registered as `CANDIDATE_INTEGRATION`. They should be reviewed at the triggers named in the register or in a dedicated documentation integration pass, then deleted only after accepted content is reachable or equivalently preserved on `master`.
+Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. They should be reviewed at the triggers named in the register or in a dedicated documentation integration pass, then deleted only after accepted content is reachable or equivalently preserved on `master`.
 
 PR #2 / `main-menu-asset-contract-pass` is currently `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
 
 ## Active Decision Guardrails
 
-Run unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
+Run unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 
-- Define the minimum Normal-only campaign-rules/Stakes, campaign, continuity, character, artifact, and publication identities.
-- Decide new-game identity creation and version-6 migration.
-- Decide candidate write, verification, accepted publication, and failure behavior.
-- Decide the minimum persisted receipt container required by the accepted survey contract.
-- Decide restart duplicate, replay, and correction-link behavior.
-- Return one exact later dependency-closed package and policy-derived label class, or `NO_PACKAGE`.
+- Decide the atomic boundary for campaign rules version 2, `normal_stakes`, nonterminal defeat, and active legacy HP-zero repair.
+- Decide the authoritative loaded-artifact session context and first-accepted-mutation fork owner.
+- Decide duplicate-fork protection and when a child continuity becomes durable.
+- Require authoritative campaign publication before account history, achievements, Legacy, estate, or other durable account value.
+- Preserve explicit retirement as terminal and ordinary HP zero as nonterminal.
+- Return one exact dependency-closed implementation package and policy-derived label class, or `NO_PACKAGE`.
 - Do not preassign `0.6.9`, `0.7.0`, or a suffix.
-- Complete branch/PR preflight and disposition reporting without allowing unrelated branch cleanup to broaden the save decision.
+- Complete branch/PR preflight and disposition reporting without allowing unrelated branch cleanup to broaden the decision.
 
 ## Preserved Boundaries
 
@@ -129,13 +132,14 @@ Run unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publ
 
 ## Near-Term Sequence
 
-1. run the minimum save identity and accepted-state publication decision;
-2. if dependency-closed, implement only its exact minimum persistence foundation;
-3. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
-4. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
-5. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
-6. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
+1. run the Normal Stakes activation, first-mutation continuity, and account-value publication dependency-closure decision;
+2. if dependency-closed, implement only its exact atomic campaign/save/account package;
+3. implement the accepted minimum save identity and publication contract only in the resulting authorized package;
+4. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
+5. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
+6. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
+7. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-Unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`
+Unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`

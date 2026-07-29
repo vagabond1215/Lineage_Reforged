@@ -6,32 +6,38 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
-## 1. Inventory Limitation
+## 1. Complete Inventory Snapshot
 
-The GitHub Connector confirmed the named refs below through commit comparison and PR inspection, but its branch-search surface did not return a complete repository-wide branch listing. The next Codex preflight must run local and remote enumeration after `git fetch --all --prune` and add any omitted branches.
+Codex ran `git fetch --all --prune`, complete local/remote ref enumeration, merge-base and unique-path comparison, and open-PR inspection during the minimum-save decision.
 
-Current `master` when the branch comparisons below were performed:
+Current `master`:
 
-`acdfc3db363692130917ac896abc5d65d711ee00` — `docs(activity): define survey advancement owner contract`
+`03a79c8a359414f7c79421a1cef2d72d91d040de` — `docs(handoff): add branch and combat AI posture`
 
-The workflow-policy commits added after that comparison do not change the unique files on the listed parallel branches. Ahead/behind counts must nevertheless be refreshed before action.
+Inventory result:
+
+- one local branch: `master`, tracking synchronized `origin/master`;
+- seventeen non-default remote branches;
+- one open pull request: PR #2, `main-menu-asset-contract-pass`;
+- no branch with save, persistence, campaign identity, occurrence receipt, or publication implementation relevant to the active route;
+- no integration, PR closure, or deletion due inside the documentation-only save decision.
+
+Ahead/behind counts below are `branch behind master / branch ahead of master` (`master`-only / branch-only commits) as observed at this snapshot and must be refreshed before action.
 
 ## 2. Protected References
 
 | Branch | Reviewed posture | Unique work | Disposition | Named consumer / next review | Retirement rule |
 | --- | --- | --- | --- | --- | --- |
-| `prep/integrated-gameplay-0-7-readiness-audit` | Diverged; two unique documentation commits; substantially behind `master` | integrated-gameplay `0.7` readiness audit and queued audit prompt | `PROTECTED_REFERENCE` | active and future `0.7.0` readiness gates may inspect it read-only | never merge, rebase, force-update, or delete without a later accepted prompt or explicit user instruction |
-| `parallel/prompt-packaging-integrity-audit` | Diverged; one unique documentation commit; behind `master` | prompt-packaging integrity audit prompt | `PROTECTED_REFERENCE` | future prompt-packaging or workflow-integrity review | preserve untouched until a dedicated disposition pass proves promotion, supersession, or explicit abandonment |
+| `prep/integrated-gameplay-0-7-readiness-audit` | Diverged at `59c103c`; two unique documentation commits; `90 / 2` | integrated-gameplay `0.7` readiness audit and queued audit prompt | `PROTECTED_REFERENCE` | active and future `0.7.0` readiness gates may inspect it read-only | never merge, rebase, force-update, or delete without a later accepted prompt or explicit user instruction |
+| `parallel/prompt-packaging-integrity-audit` | Diverged at `58a34e3`; one unique documentation commit; `37 / 1` | prompt-packaging integrity audit prompt | `PROTECTED_REFERENCE` | future prompt-packaging or workflow-integrity review | preserve untouched until a dedicated disposition pass proves promotion, supersession, or explicit abandonment |
 
 ## 3. Connector Audit Branches Awaiting Integration Review
 
-All eight branches below were created from:
+The first eight branches below were created from:
 
 `bcbe658d1be033cdc83d04acdca67ec8186c484d`
 
-At the first post-Codex comparison, each branch was exactly one unique documentation commit ahead of that source and one commit behind then-current `master`. Each changed exactly one unique new document and did not overlap the survey owner-contract commit.
-
-These branches are not implementation authority merely because they are low-conflict. Codex must reread each document against current authority before integration.
+Each is now `8 / 1` against current `master`, contains one unique documentation commit, and changes exactly one unique new document.
 
 | Branch | Head commit | Unique path | Current disposition | Recommended integration trigger | Post-integration action |
 | --- | --- | --- | --- | --- | --- |
@@ -41,45 +47,43 @@ These branches are not implementation authority merely because they are low-conf
 | `parallel/text-first-combat-view-model-audit` | `4f5d7162431ca0de75ee178f933e1339e1413887` | `docs/design/text-first-combat-presentation-view-model-readiness-audit.md` | `CANDIDATE_INTEGRATION` | before combat UI, tactics editor, combat log, or presentation adapter work | reconcile with the combat-AI/gambit audit and IA boundary; integrate accepted document; delete branch |
 | `parallel/research-artifact-retention-inventory` | `411740cd9b9e8cc48626fd7ea57a65c60765dc41` | `docs/dev/temporary-research-artifact-retention-inventory.md` | `CANDIDATE_INTEGRATION` | next research-retention cleanup or before deleting any surviving `tmp-*` artifact | refresh complete filesystem inventory, integrate current register, then delete branch |
 | `parallel/launcher-asset-pr-disposition` | `72726210fc5c4c30d55c5fc27bc09117d1e4bff9` | `docs/design/launcher-sidebar-asset-pr-disposition-audit.md` | `CANDIDATE_INTEGRATION` | before resolving PR #2 or doing launcher asset work | integrate audit or preserve equivalent disposition; then resolve PR #2 and delete branch |
-| `parallel/consumable-profile-coverage-audit` | `453697a663c7a135b6a0fb3fc9cd44cf48796cbd` | `docs/design/consumable-profile-coverage-and-effect-ownership-audit.md` | `CANDIDATE_INTEGRATION` | before consumable-profile cleanup, quantity/serving authority, or food-state work | integrate accepted audit before content edits; delete branch |
+| `parallel/consumable-profile-coverage-audit` | `453697a663c7a135b6a0fb3fc9cd44cf48796cbd` | `docs/design/consumable-profile-coverage-and-effect-ownership-audit.md` | `CANDIDATE_INTEGRATION` | before consumable-profile cleanup, quantity/serving authority, or food-state work | integrate accepted audit before content edits; delete branch after verification |
 | `parallel/rest-recovery-mutation-audit` | `1e6d049d88c9a9f7c1db5551cb7d0d3df19342fd` | `docs/design/rest-and-recovery-ui-mutation-source-audit.md` | `CANDIDATE_INTEGRATION` | before rest, lodging, recovery, care, or full-resource-reset implementation | integrate accepted audit before contract/implementation; delete branch |
 
-### Batch-integration posture
+Four additional one-document candidate branches were discovered. Each was created from `3006c968eb40b1d72f64fb2dc0263e227f869a7d` and is `10 / 1` against current `master`.
 
-Because these branches add independent documents on unique paths, a dedicated documentation integration pass may review and cherry-pick several together. That pass must:
+| Branch | Head commit | Unique path | Current disposition | Recommended integration trigger | Post-integration action |
+| --- | --- | --- | --- | --- | --- |
+| `parallel/connector-prep-freshness-audit` | `cadcc2a2280cb4a01f4d69c52bcbd607b3bb4c96` | `docs/dev/connector-prep-freshness-and-supersession-audit.md` | `CANDIDATE_INTEGRATION` | next connector-preparation freshness or supersession maintenance pass | reconcile against current workflow policies; integrate or supersede; delete only after equivalent preservation |
+| `parallel/recipe-production-maturity-audit` | `544519ce006e2b20814fac3e223b28c871b5cd46` | `docs/design/recipe-and-production-coverage-maturity-audit.md` | `CANDIDATE_INTEGRATION` | before reopening recipe, crafting execution, or production maturity work | reconcile with accepted `0.6.5`/`0.6.7`; integrate current findings; delete after proof |
+| `parallel/regional-bestiary-ecology-maturity-audit` | `e64574a9f887047f6eda1d9bcc9c11eec885d397` | `docs/design/regional-bestiary-and-ecology-coverage-maturity-audit.md` | `CANDIDATE_INTEGRATION` | before regional bestiary, ecology, spawning, or loot expansion | reconcile with accepted `0.6.6`/`0.6.7`; integrate only current static findings; delete after proof |
+| `parallel/regional-settlement-maturity-audit` | `eaedaeef10645b7952e3606eeb3e7708b45f5d3c` | `docs/design/regional-and-continental-settlement-maturity-evidence-audit.md` | `CANDIDATE_INTEGRATION` | before regional/continental settlement expansion or world-coverage reopening | reconcile with accepted `0.6.4`/`0.6.7`; integrate only current findings; delete after proof |
 
-1. refresh every comparison against current `master`;
-2. read every complete document;
-3. reconcile each conclusion against current prompt, handoff, focused decisions, and newer implementation;
-4. omit or revise stale claims rather than blindly cherry-picking;
-5. run documentation diff, conflict-marker, whitespace, and `git diff --check` validation;
-6. update this register;
-7. delete each integrated or superseded branch only after proof is recorded.
-
-Do not burden the active minimum-save decision with unrelated integrations unless one document materially affects that decision or a dedicated cleanup subpass is explicitly authorized.
+These branches are not implementation authority merely because they are low-conflict. A dedicated documentation integration pass may batch them only after complete semantic review against current authority.
 
 ## 4. Pull Requests And Legacy Branches
 
 | PR / branch | Live finding | Disposition | Required action |
 | --- | --- | --- | --- |
-| PR #2 — `main-menu-asset-contract-pass` | open, not mergeable at inspection; ten commits; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | inspect current diff and review state; preserve the typed asset-map/ratio/QA ideas through current-head re-authoring if desired; do not merge as-is; close PR after disposition is documented; delete branch after unique evidence is preserved |
-| PR #1 — `main-menu-refinement-pass` | merged and closed historically | `MERGED_RETIRE` | verify accepted changes are reachable or equivalently present on `master`; if the local/remote branch still exists and has no unmerged unique work, delete and prune it |
+| PR #2 — `main-menu-asset-contract-pass` | open, not mergeable; branch head `e78dc64`; ten unique commits; `602 / 10`; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | inspect current diff and review state at the launcher-asset trigger; preserve the typed asset-map/ratio/QA ideas through current-head re-authoring if desired; do not merge as-is; close PR after disposition is documented; delete branch after unique evidence is preserved |
+| PR #1 — `main-menu-refinement-pass` | merged and closed historically; remote branch head `986d635`; `609 / 2`; two commits are not directly reachable and require equivalent-patch review | `MERGED_RETIRE` pending equivalence proof | verify accepted changes are equivalently present on `master`; delete and prune only after the two-commit diff and linked PR state prove no unique value remains |
+| `feat/main-menu-assets` | remote head `b42d36f`; `674 / 0`; fully reachable from `master`; no open PR found | `MERGED_RETIRE` | retire during the next dedicated branch-hygiene or launcher integration pass after exact-ref recheck; no deletion inside the active save decision |
 
 ## 5. Current Active Route Interaction
 
-Active route at register creation:
+Active route:
 
-`Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`
+`Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`
 
 Branch handling during that route should be limited to:
 
 - required read-only inspection of `prep/integrated-gameplay-0-7-readiness-audit`;
 - complete branch/PR inventory and disposition refresh;
-- identifying overlap with save identity, persistence, publication, occurrence, or receipt ownership;
+- identifying overlap with Normal Stakes activation, first-mutation continuity, campaign publication, or account-value ownership;
 - integrating only a branch whose contents are directly required and whose validation fits the documentation-only scope;
 - otherwise preserving the candidate branch for the named trigger above.
 
-No listed connector audit branch authorizes survey implementation, save changes, gameplay mutation, or `0.7.0` entry.
+No listed connector audit branch authorizes campaign/save implementation, survey implementation, gameplay mutation, or `0.7.0` entry.
 
 ## 6. Mandatory Next Codex Branch Report
 

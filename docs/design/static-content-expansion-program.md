@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; post-foundation classification and survey owner contract complete; unversioned minimum save identity/publication decision active
+Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; survey owner and minimum save identity/publication contracts accepted; unversioned Normal activation/continuity/account-publication dependency closure active
 
 ## 1. Purpose
 
