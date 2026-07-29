@@ -2,7 +2,7 @@
 
 Date: 2026-07-28
 
-Source version/run: unversioned `Health Runtime Ownership And Dependency Closure Audit`
+Source version/run: unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`
 
 Label class: unversioned
 
@@ -10,100 +10,129 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `bd08669b30b1e0dce06fb67e8411463d8f168341`; this report describes the validated working tree before the run commit.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `48959ba636e8c6df071ae7c0ad9ce2920d1b35a0`; this report describes the validated working tree before the run commit.
 
 ## Result
 
-Created `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`.
+Created:
 
-Reconciled live health-adjacent authority with accepted process, care, crisis, observer, death/restoration, Stakes, occurrence, persistence, replay, and correction contracts.
+`docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`
 
-One narrower documentation prerequisite is ready:
+Accepted four exact definition/mutable-owner domains:
 
-`Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`
+- `hemorrhage_process`;
+- `airway_process`;
+- `respiratory_process`;
+- `thermal_process`.
 
-Static and executable implementation remain `NO_PACKAGE`.
+Accepted one collision-safe namespace:
 
-## Live Runtime Baseline
+`lethal_process.<owner_segment>.<slug>`
 
-Live authority:
+One bounded static foundation is `STATIC_PACKAGE_READY`, subject to a separate version-classification gate. Mutable and executable work remain `NO_PACKAGE`.
 
-- player HP/MP/stamina and resource-change state;
-- metabolic `PlayerBodyState` and player-engine advancement/recovery/consumable behavior;
-- combat HP, statuses, incapacitation, defeat, damage, and `heal.hp`;
-- inventory, spells/known spells, skills, roles, items, consumables, and services within their current owners;
-- engine-owned travel, quest acceptance/tracking, and activity-selection command patterns;
-- `SaveSnapshot` JSON persistence and version `0.6.0` local save handling;
-- generic event/delta transport;
-- notification, Chronicle, run-end, body-state, and combat presentation;
-- legacy HP-zero archive/delete and UI-owned full-resource rest behavior.
+## Exact First Scope
 
-Absent:
+| Definition id | Owner |
+| --- | --- |
+| `lethal_process.hemorrhage.external_hemorrhage` | `hemorrhage_process` |
+| `lethal_process.hemorrhage.internal_hemorrhage` | `hemorrhage_process` |
+| `lethal_process.airway.obstruction` | `airway_process` |
+| `lethal_process.respiratory.post_submersion_compromise` | `respiratory_process` |
+| `lethal_process.thermal.systemic_hypothermia` | `thermal_process` |
+| `lethal_process.thermal.hot_altered_crisis` | `thermal_process` |
 
-- functional state;
-- lethal-process definition owners/catalogs and instances;
-- care requirements, capabilities, availability/access, attempts, and receipts;
-- health assessment, urgency, Mortal Crisis, actual death, restoration, closure;
-- health persistence, replay, migration, correction, and safe projection.
+`confirmed` is an instance-admission/knowledge boundary, not part of the internal-hemorrhage definition id. Observer suspicion never becomes process truth.
 
-## Static And Runtime Inventory
+## Schema And Catalog Decision
 
-- Current combat-health vocabulary has exactly two planned status records: stagger and bind.
-- Its strict schema supports only status/condition/injury descriptive vocabulary and intentionally forbids relationships and runtime fields.
-- `future_health_runtime` is a compatibility owner label, not an accepted process owner.
-- Current static counts remain 55 spells, 12 healing-school spells, 10 `heal.hp` spells, 121 skills, 9 roles, 1,372 items, 9 metabolic consumable profiles, and 5 planned services.
-- Six care-like items still have no use profile or consumable profile.
+Exact future catalogs:
 
-The combined combat-health catalog cannot host lethal processes and must not be widened.
+- `packages/content/base/game/lethal_process_hemorrhage_definitions.json`;
+- `packages/content/base/game/lethal_process_airway_definitions.json`;
+- `packages/content/base/game/lethal_process_respiratory_definitions.json`;
+- `packages/content/base/game/lethal_process_thermal_definitions.json`.
 
-## Dependency Result
+Exact shared schema:
 
-Ordered dependency:
+- `packages/schemas/game/lethal-process-definition.schema.json`.
 
-1. definition owner namespaces and shared static envelope;
-2. owner-specific process-definition catalogs;
-3. source reference contracts and mutable process instances;
-4. functional-state assessment and care-requirement derivation;
-5. care capability, availability, and access;
-6. care attempts/results and affected-owner receipts;
-7. Mortal Crisis adapters/orchestration;
-8. actual death, restoration, closure, Stakes publication, and account settlement;
-9. health assessment, qualitative urgency, renderer-safe projection, validator isolation, and deterministic consumers.
+Exact strict record fields:
 
-Occurrence identity, named uncertainty, persistence, replay, migration, and correction must be designed into every mutable owner rather than reconstructed later.
+- `id`;
+- `slug`;
+- `name`;
+- `definitionOwner`;
+- `processFamily`;
+- `catalogLifecycle`;
+- `semanticVersion`;
+- `summary`;
+- `references`;
+- `tags`;
+- `sourceAuthorityNotes`;
+- `notes`.
 
-Rejected couplings:
+Catalog lifecycle is `planned | canonical | retired`; `active` is forbidden to avoid confusion with instance state. `semanticVersion` is a positive owner-governed definition-meaning version, not a package/save/release version.
 
-- combat-health vocabulary to lethal-process definitions;
-- HP zero to actual death;
-- rest/full HP to process resolution;
-- labels/roles/items/spells/services to capability;
-- save, UI, Chronicle, or Mortal Crisis to health mutation.
+## Reference Decision
+
+Directional relations:
+
+- `causal_source`;
+- `contributing_source`;
+- `coexisting_process`;
+- `transition_source`.
+
+Allowed target domains:
+
+- `injury`;
+- `body_state`;
+- `hazard`;
+- `environment`;
+- `poison`;
+- `respiratory_process`;
+- `magic`;
+- `lethal_process`.
+
+All six first records must use empty reference arrays because no safe exact target identity is currently accepted. Later non-empty references require canonical target ownership, explicit resolver wiring, focused tests, and no cross-owner mutation.
+
+## Exact Static Package
+
+Allowed future changes:
+
+- the four owner catalogs;
+- `packages/schemas/game/lethal-process-definition.schema.json`;
+- `tools/content-lint/lethal-process-definitions.mjs`;
+- `tools/content-lint/index.mjs`;
+- `tests/unit/schema-files.test.mjs`;
+- `tests/unit/lethal-process-definition-authority-validation.test.mjs`.
+
+The package contains exactly six static definitions, one strict shared schema, one pure cross-catalog validator, exact-once normal-lint/schema registration, and one focused test. It has no runtime consumer.
+
+No current combat-health content/schema/validator/test may change.
 
 ## Migration Boundary
 
-Current facts retain their current meanings and may later be bounded owner-certified inputs.
-
-No HP, body band, combat status, active-effect label, rest result, item, spell, skill, role, service, notification, Chronicle line, event/delta, save field, or terminal archive record may be backfilled as historical process, care, assessment, death, or correction truth.
-
-There is no canonical lethal-process data to alias or migrate.
+No current id, hook, status, body band, HP fact, active-effect label, item, spell, skill, role, service, event, delta, save field, archive reason, notification, Chronicle entry, or prose migrates or aliases into a lethal-process definition.
 
 ## Package Readiness
 
-`DOCUMENTATION_PACKAGE_READY`
+`STATIC_PACKAGE_READY`
 
-Exact next documentation package:
+The static package requires version classification before implementation. This run assigns no primary or support version.
 
-- unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`;
-- create `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`;
-- decide exact owner matrix, namespace, owner-specific catalogs, shared static fields, lifecycle, directional references, future paths, and validation plan;
-- authorize no implementation.
+`NO_PACKAGE` for:
 
-`NO_PACKAGE` for content, schema, validator, test, runtime, persistence, migration, diagnosis, care, death, UI, or gameplay implementation.
+- mutable instances;
+- progression, stages, balance, values, timers, probabilities, or formulas;
+- care, diagnosis, observer knowledge, or urgency;
+- persistence, migration, replay, or correction;
+- death, restoration, closure, or Stakes;
+- UI, narrative, Chronicle, or gameplay.
 
 ## Files Changed
 
-- added `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`;
+- added `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`;
 - updated `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-codex-prompt.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
@@ -117,34 +146,33 @@ Exact next documentation package:
 
 ## Checks Run
 
-- repository, branch, worktree, upstream, fetch, and tracking alignment;
-- four grounded-research consumer and artifact-retirement closure;
-- exact combat-health content/schema/validator/registration/test inspection;
-- exact spell/skill/role/item/consumable/service counts;
-- body/resource/combat/inventory/rest/save/archive command and mutation inspection;
-- command/result/event identity pattern inspection;
-- health presentation, observer, Knowledge, notification, Chronicle, and run-end inspection;
-- accepted process, care, Mortal Crisis, Stakes, restoration, occurrence, narrative, observer, replay, and correction reconciliation;
-- dependency graph, owner-readiness, migration, and package-boundary consistency checks;
-- referenced-path and documentation-only scope checks;
+- repository, branch, clean worktree, upstream, fetch, and divergence;
+- required durable-contract and coordination-source inspection;
+- current combat-health content/schema/validator/registration/focused-test inspection;
+- repository schema title, `$id`, wrapper, strict-record, local-reference, and parse-registration conventions;
+- pure validator, normal-lint helper, exact-once registration, and focused-test patterns;
+- owner attribution for all six accepted processes;
+- namespace and exact-id collision scans;
+- exact future-path absence/collision scans;
+- static/mutable, care, observer, death, persistence, and migration boundary reconciliation;
+- documentation-only changed-path inspection;
 - conflict-marker, trailing-whitespace, and `git diff --check` scans;
 - complete changed-path and full-diff review.
 
-No build, content lint, typecheck, test, generator, server, package installation, external research, medical protocol, treatment instruction, or gameplay command was run.
+No build, test, content lint, typecheck, generator, server, package installation, external research, medical protocol, treatment instruction, or gameplay command was run.
 
 ## Suggested Commit Message
 
-`docs(health): audit runtime dependency closure`
+`docs(health): plan lethal-process definition envelope`
 
 ## Risks / Follow-Up Notes
 
-- Current HP-zero archive/save-deletion remains rejected target behavior.
-- UI-owned full-resource rest remains a compatibility seam.
-- Process owner namespaces are not yet decided; the next documentation plan must fail closed if exact owner attribution is unsafe.
-- Poison families remain blocked by research and are outside the six-process first scope.
-- Shock-like and serious-burn ownership remain deferred.
+- The ready package is static and non-executing; it must not be treated as runtime health support.
+- Exact version class and label remain deliberately unassigned until the installed policy gate.
+- Poison families remain blocked by research.
+- Shock-like deterioration, serious burns, local freezing injury, and contextual heat illness remain outside the six-definition scope.
 - The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
 
 ## Next Recommended Run
 
-Unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`
+Unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`

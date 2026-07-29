@@ -7,9 +7,9 @@ Last reviewed: 2026-07-28
 - Latest completed primary: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`.
 - Latest completed support/audit run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Latest completed unversioned run: `Health Runtime Ownership And Dependency Closure Audit`.
-- Next run: unversioned `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`.
-- Activity selection remains accepted. `0.6.4`-`0.6.7`, Geography/recognition planning, the Activity Resolution reuse audit, the Mortal Crisis receipt-contract decision, bounded lethal-process research integration, the first catalog plan, the care-capability contract, observer-safe crisis assessment/presentation, and health-runtime dependency closure are complete. The audit selected a definition-owner/shared-envelope documentation prerequisite; implementation remains `NO_PACKAGE`.
+- Latest completed unversioned run: `Lethal-Process Definition Owner Namespace And Shared Envelope Schema Plan`.
+- Next run: unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+- Activity selection remains accepted. `0.6.4`-`0.6.7` and the complete health-planning chain through lethal-process definition owner/schema closure are accepted. Four exact owner catalogs and six identities form one static foundation ready for version classification; mutable implementation remains `NO_PACKAGE`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
