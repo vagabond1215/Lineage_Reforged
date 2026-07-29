@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-29
-Route: Codex local sequencing alignment after the post-lethal-process next-capability classification
+Route: Codex local sequencing alignment after the Ashen Reef survey owner-contract decision
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -29,11 +29,11 @@ Latest completed support/audit run:
 
 Latest completed unversioned run:
 
-- unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
+- unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`
 
 Immediate next run:
 
-- unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`
+- unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`
 
 ## Current Queue Override
 
@@ -61,10 +61,11 @@ Immediate next run:
 - `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is complete and accepted. All required inventories and owner/reference boundaries closed, normal lint passed at 67 files, the prescribed group passed 688/688, no production repair was needed, and all six remaining research artifacts were removed after durable-coverage conditions passed.
 - `Version 0.6.8 - Lethal-Process Definition Static Foundation` is implemented and accepted by parent-specific `Version 0.6.8.1`. It added exactly six canonical records across four owner catalogs, one strict shared schema, one pure validator, exact lint/schema registration, and focused validation; the prescribed focused/schema/combat-health tests and 71-file normal lint pass. Mutable health implementation remains `NO_PACKAGE`.
 - The unversioned post-foundation next-capability gate is complete. It found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and classified `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision` as the exact `UNVERSIONED_PREREQUISITE`. No implementation package or `0.6.9` label is active.
+- The unversioned Ashen Reef survey scope/owner decision is complete. It accepted one deterministic survey-shift occurrence, one shared preview/execution plan, typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic accepted-state application, and accepted-only UI. It returned `NO_PACKAGE` because stable campaign/continuity identity, durable receipt authority, and candidate-write/verification/publication semantics are absent.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain separate consumers. The active decision is limited to the Ashen Reef survey advancement branch and must reconcile preview/execution, command/result, occurrence/receipt, affected-owner, persistence/replay/correction, and accepted-only UI boundaries before any implementation label is assigned.
+- Activity advancement, rest, and quest turn-in remain separate consumers. The active decision is limited to the minimum Normal-only save identity and accepted-state publication prerequisite for the already-decided Ashen Reef survey boundary; it must not implement survey advancement or broaden into Committed/Ironbound Stakes, checkpoint/death, cloud, recovery, or generic activity behavior.
 
 Versioning note:
 

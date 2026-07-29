@@ -1,8 +1,8 @@
-# Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision
+# Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision
 
 ## Run Identity
 
-Unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`
+Unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`
 
 Label class: unversioned
 
@@ -12,18 +12,18 @@ Milestone impact: `supports_current_band`
 
 Suggested commit:
 
-`docs(activity): define survey advancement owner contract`
+`docs(save): define minimum survey persistence boundary`
 
 ## Purpose
 
-Decide the smallest owner-correct contract that could later move only the existing Ashen Reef survey advancement path from UI-authored mutation to an engine-owned deterministic plan/command/result boundary.
+Decide the smallest Normal-only save identity, provenance, migration, and accepted-state publication boundary required before the Ashen Reef survey can persist authoritative occurrence, result, and consequence receipts.
 
 This run is documentation and decision only. It must return either:
 
-- one exact dependency-closed later package and its policy-derived label class; or
+- one exact dependency-closed persistence foundation and its policy-derived label class; or
 - `NO_PACKAGE`.
 
-Do not assign `0.6.9`, `0.7.0`, or a support suffix in advance.
+Do not implement the survey command. Do not assign `0.6.9`, `0.7.0`, or a support suffix in advance.
 
 ## Required Reading
 
@@ -32,141 +32,109 @@ Read:
 - `AGENTS.md`;
 - `README.md`;
 - current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, and static-content program;
+- `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
 - `docs/design/post-lethal-process-static-foundation-next-capability-classification-gate.md`;
 - `docs/design/internal-versioning-and-release-milestone-policy.md`;
-- `docs/design/activity-resolution-existing-system-reuse-audit.md`;
-- `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md`;
-- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`;
+- `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`;
 - `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
 - `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
-- `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`;
-- `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
-- `docs/design/quest-event-chronicle-authority-boundary-decision.md`;
-- `docs/design/ui-information-architecture-boundary.md`;
-- accepted body/resource and skill-progression sources relevant to the current survey path;
-- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
-- `apps/rpg-ui/src/features/ActivityPanel.tsx`;
-- current engine-owned travel, quest acceptance/tracking, activity-selection, synchronization, save, and persistence contracts;
-- current focused survey, command, and roundtrip tests;
+- `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
+- `docs/design/difficulty-presets-grim-world-rules-and-stakes-separation-decision.md`;
+- current `SaveSnapshot`, session, player-save metadata, run-difficulty, account/run-history, persistence, local save-envelope, new-game, load, and save-control sources;
+- current save/load, account-storage, new-game, run-lifecycle, command-serialization, and roundtrip tests;
 - the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch through read-only Git inspection only.
 
 ## Execution Gate
 
 1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
-2. Confirm the classification gate selected this run as `UNVERSIONED_PREREQUISITE`.
-3. Confirm `0.7.0` remains `NOT_READY` and no exact primary implementation label is active.
-4. Reproduce the current Ashen Reef preview and execution path exactly.
-5. Reproduce the accepted engine command, synchronization, persistence, occurrence, and typed-effect boundaries.
-6. Stop without edits if the worktree is dirty, evidence conflicts, a required source is unavailable, or the current survey behavior cannot be characterized safely.
+2. Confirm the survey owner decision returned `NO_PACKAGE`.
+3. Confirm `0.7.0` remains `NOT_READY` and no primary implementation label is active.
+4. Reproduce the current version-6 save envelope, snapshot identity fields, account/run linkage, write/load validation, and current-data compatibility posture.
+5. Reproduce the accepted campaign/continuity/artifact/publication and occurrence-persistence boundaries.
+6. Stop without edits if the worktree is dirty, required evidence conflicts, or a required source cannot be inspected safely.
 
 ## Required Decisions
 
 Decide explicitly:
 
-1. the exact bounded survey intent and authoritative input facts;
-2. eligibility and rejection reasons;
-3. one preview/execution material-fact plan;
-4. deterministic command identity, snapshot revision, stale, malformed, wrong-player, and incoherent-state behavior;
-5. whether command, attempt, occurrence, result, event, and consequence-receipt identities are distinct or safely combined for this bounded deterministic slice;
-6. exact accepted-result and rejected-result fields;
-7. exact typed proposals and one authoritative affected owner for each applied consequence;
-8. atomic application order and rollback/no-mutation behavior;
-9. duplicate delivery, equivalent retry, replay, supersession, correction, and reconciliation posture;
-10. exact persistence and restart requirements, including whether current `SaveSnapshot` fields suffice;
-11. projection boundaries for notification, Chronicle, discovery-facing facts, and notice prose;
-12. accepted-only UI application and preview/readiness behavior;
-13. exact later files, tests, protected paths, and acceptance gates;
-14. whether the later package is dependency-closed and how the version policy classifies it.
+1. the minimum live Normal-only campaign-rules/Stakes identity needed by the survey slice;
+2. exact campaign, continuity, character, artifact, and publication identities required now, and which accepted identities may remain deferred;
+3. whether identity belongs in `SaveSnapshot`, the stored envelope, account profile, or a separate owner;
+4. identity creation for new games;
+5. deterministic, idempotent migration/default behavior for current version-6 active saves;
+6. why `accountId`, `playerId`, `sourceRunId`, slot id, timestamps, snapshot version, and ticks cannot substitute;
+7. minimum artifact provenance and accepted-state publication ordering;
+8. candidate write, validation/verification, publication, failure, and recovery behavior;
+9. the minimum persisted survey occurrence/result/consequence receipt container and its owner;
+10. duplicate delivery and restart lookup behavior;
+11. correction/supersession links required now versus deferred tooling;
+12. current-save compatibility, corruption, copied-slot, and stale-artifact behavior;
+13. exact later paths, tests, migration gates, and protected boundaries;
+14. whether one implementation package is dependency-closed and how policy classifies it.
 
-## Current Behavior To Characterize
+## Minimum-Slice Constraint
 
-Characterize without changing:
+The selected boundary must support:
 
-- active tracked `quest.ashen_reef_survey` and Ashen Reef location checks;
-- two-tick preview and execution;
-- survey metabolic mitigation and attribute profile;
-- stamina `-10` and MP `-3`;
-- three ordered survey-sector advances;
-- General Lore progression and breakthrough-gate behavior;
-- ruins confirmation and flora-identification progression;
-- discovery entry, operation updates, current-activity transition, notification, Chronicle, notice, and snapshot synchronization;
-- completion and already-complete behavior;
-- failure and no-mutation behavior;
-- save/load preservation of every current authoritative fact.
+- stable campaign and continuity scope for one active Normal campaign;
+- one authoritative current snapshot/artifact;
+- current manual and quick-save behavior;
+- accepted survey receipts surviving save/load/restart;
+- idempotent current-data migration;
+- failure that preserves the previously readable authoritative save;
+- UI success only after accepted publication.
 
-Do not include survey quest turn-in or rewards.
+It must not implement:
 
-## Deterministic Slice Boundary
+- Committed checkpoint selection or ladders;
+- Ironbound one-head enforcement;
+- cloud/offline conflict resolution;
+- a save browser redesign;
+- hidden multi-generation recovery beyond the minimum required for safe publication;
+- death, closure, settlement, succession, Legacy payout, estate, or account reward changes;
+- the survey command itself.
 
-The current survey advancement path has no difficulty check or uncertainty draw.
+If the accepted save authority proves any omitted element is a mandatory dependency, include only its minimum non-UI foundation or return `NO_PACKAGE`.
 
-Decide whether exact deterministic parity can proceed as a domain-specific command without first implementing the general `Competence, Difficulty, Familiarity, And Compression Authority Decision`.
+## Receipt Persistence Questions
 
-If yes:
+Decide whether the minimum foundation should reserve or implement:
 
-- state why this does not authorize a shared or uncertain activity resolver;
-- preserve the general decision as a prerequisite for later difficulty-, familiarity-, margin-, recovery-, aggregation-, or named-uncertainty behavior.
+- survey receipt collection location;
+- command, occurrence, result, consequence, correction, and projection-safe links;
+- semantic policy and material-normalization versions;
+- applied/pending/failed/rejected/superseded posture;
+- bounded retention for the four survey stages;
+- lookup by request and occurrence identity;
+- serialization and current-data defaulting;
+- no reconstruction from flags, events, notifications, Chronicle, ticks, hashes, or slot addresses.
 
-If no:
-
-- identify the exact current behavior that requires the broader authority;
-- return `NO_PACKAGE` or select that exact unversioned prerequisite.
-
-Do not invent difficulty, result bands, RNG, failure chance, familiarity, compression, recovery, or balance.
-
-## Owner Matrix Requirements
-
-Classify at minimum:
-
-- clock/time;
-- metabolic body state;
-- HP/MP/stamina resources;
-- skill progress and breakthrough gates;
-- quest sector/completion facts;
-- discovery fact;
-- operation state;
-- current-activity pointer;
-- synchronization;
-- notification and Chronicle projection;
-- save/persistence;
-- UI notice/readiness projection.
-
-For each, record:
-
-- current writer and fact source;
-- proposed owner;
-- proposal/application/receipt posture;
-- persisted identity or state;
-- retry/correction rule;
-- whether it is included, adapted, projected, or excluded.
-
-Do not create a generic effect owner. Typed effects remain owner-routed proposals.
+Do not create a generic gameplay event bus or generic effect engine.
 
 ## Required Evidence
 
 Inspect and record:
 
-- exact `gameplayLoop.ts` survey helpers and branch order;
-- current UI call site and unconditional snapshot application;
-- current command shapes, deterministic identity, revision/stale checks, event construction, atomic clone/apply, and accepted-only bridges;
-- synchronization coverage for every survey-mutated surface;
-- snapshot serialization and local save behavior;
-- focused skill-gating and command tests;
-- occurrence/result/receipt identity, commitment, replay, and correction rules;
-- generic event-id collision risk and why generic events cannot own the slice;
-- branch-isolated readiness recommendations after refresh, without treating them as controlling authority.
+- `SaveSnapshot`, `SessionState`, `PlayerSaveMetadata`, run-difficulty, and account/run-history types;
+- `serializeSnapshot(...)` and `deserializeSnapshot(...)`;
+- version-6 stored-save envelope, validation, write, load, inspect, delete, and account-index behavior;
+- new-game and inherited-start identity creation;
+- manual and quick-save UI/control paths;
+- current corruption/incompatibility behavior;
+- current save/load and command serialization tests;
+- accepted save identity graph, Normal branching, write/verify/publication ordering, occurrence links, migration, and copy protection;
+- the isolated readiness audit's minimum-save recommendation after refresh.
 
 ## Prohibited Scope
 
 Do not:
 
 - edit engine, app, shared contract, content, schema, validator, test, save, migration, dependency, generated, asset, or gameplay files;
-- implement a command, plan, resolver, result, event, receipt, adapter, effect, persistence field, or UI flow;
-- implement general activity resolution, competence, difficulty, familiarity, compression, uncertainty, RNG, recovery, or aggregation;
-- include survey turn-in, rewards, rivet cargo, generic quest completion, rest, gathering, crafting, inventory transactions, combat, health, care, death, Geography recognition, or map reveal;
-- change current survey balance or behavior;
-- use notification, Chronicle, event-envelope, tick, wall-clock, or projection identity as occurrence/result/receipt authority;
-- infer mutable health readiness;
+- implement identity fields, save envelopes, publication, migration, receipts, commands, UI, or storage;
+- implement the survey command or any survey consequence;
+- change save-slot behavior, delete saves, rewrite account history, or migrate live user data;
+- implement Committed, Ironbound, checkpoint, death, closure, settlement, succession, estate, reward, cloud, networking, encryption, anti-cheat, or broad recovery features;
+- infer occurrence identity from event, Chronicle, notification, tick, hash, timestamp, slot, or projection state;
 - merge, modify, delete, rebase, or cherry-pick the isolated readiness branch;
 - run broad workspace typecheck as a decision gate.
 
@@ -174,7 +142,7 @@ Do not:
 
 If the execution gate passes:
 
-- add `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
+- add `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
 - update current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven routing facts;
 - install exactly one later prompt only if one package or prerequisite is exact, dependency-closed, and safely classified;
 - otherwise set the current prompt result to `NO_NEXT_PROMPT`.
@@ -185,25 +153,26 @@ Run:
 
 - repository, branch, worktree, fetch, upstream, and divergence checks;
 - current-versus-isolated-readiness-branch read-only comparison;
-- exact source-call and writer inventory;
-- current survey behavior and focused-test inspection;
-- command-pattern, persistence, occurrence, effect-owner, and UI-boundary matrices;
+- exact save identity, writer, reader, publication, and migration inventory;
+- accepted-versus-live save contract matrix;
+- survey receipt persistence dependency matrix;
 - label and path collision scans;
 - documentation-only changed-path audit;
 - conflict-marker and trailing-whitespace scans;
 - `git diff --check`;
 - complete documentation diff review.
 
-Run focused tests only when necessary to resolve a disputed behavior claim. Do not run broad workspace typecheck.
+Run focused tests only when necessary to resolve a disputed current behavior claim. Do not run broad workspace typecheck.
 
 ## Completion Report
 
 Report:
 
 - starting commit and repository state;
-- exact current survey behavior;
-- accepted owner/identity/persistence/UI decisions;
-- deterministic/general-resolution boundary;
+- current save identity/publication reality;
+- accepted minimum Normal-only identity and provenance boundary;
+- migration and failure decisions;
+- survey receipt persistence decision;
 - dependency result;
 - exact later package or `NO_PACKAGE`;
 - label class and exact label only when supported;

@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-29 after the post-lethal-process next-capability classification gate.
+Updated 2026-07-29 after the Ashen Reef survey activity advancement scope/owner decision.
 
 ## Purpose
 
@@ -23,9 +23,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
-- Latest completed unversioned run: `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
+- Latest completed unversioned run: `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Active run: unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
+- Active run: unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -53,7 +53,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The exact `Version 0.6.8` static foundation is implemented with six canonical records, four owner catalogs, one shared schema, one pure validator, exact registration, and passing focused/schema/combat-health tests plus 71-file normal lint.
 - Parent-specific `Version 0.6.8.1` accepted the implementation without repair.
 - The post-foundation classification found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and assigned no implementation version.
-- The unversioned survey advancement scope/owner decision prompt is installed in `docs/dev/current-codex-prompt.md`; implementation remains `NO_PACKAGE`.
+- The unversioned survey advancement scope/owner decision accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI.
+- Survey implementation remains `NO_PACKAGE` because minimum campaign/continuity identity, durable receipt authority, and accepted-state publication are absent. Their exact Normal-only decision prompt is installed in `docs/dev/current-codex-prompt.md`.
 
 ## Validation Posture
 
@@ -69,8 +70,8 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run the unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`;
-2. characterize the deterministic survey branch and decide command/result, occurrence/receipt, owner, persistence, preview, and accepted-only UI boundaries;
+1. run the unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`;
+2. decide the minimum Normal-only identity, provenance, migration, receipt-container, candidate-write, verification, publication, restart, and correction boundary;
 3. return one exact dependency-closed later package and policy-derived label class, or `NO_PACKAGE`;
 4. keep implementation and `0.7.0` behind explicit acceptance evidence.
 

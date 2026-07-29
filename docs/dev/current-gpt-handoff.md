@@ -6,12 +6,13 @@ Date: 2026-07-29
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Latest completed unversioned run: `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
+- Latest completed unversioned run: `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
-- Active route: unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
-- Dependency result: `DOCUMENTATION_PREREQUISITE_READY`.
-- Implementation result: `NO_PACKAGE`.
+- Survey owner-contract result: `ACCEPTED`.
+- Survey implementation result: `NO_PACKAGE`.
+- Blocking dependency: `MINIMUM_SAVE_IDENTITY_AND_ACCEPTED_STATE_PUBLICATION`.
+- Active route: unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
 
 ## Current Planning Precedence
 
@@ -25,55 +26,61 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale historical-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-## Classification Result
+## Accepted Survey Boundary
 
-The accepted capability foundations are playable start-state, current snapshot save/load, engine-owned travel, quest acceptance, quest tracking, and activity selection.
+The deterministic Ashen Reef survey is the selected first activity-advancement consumer. One admitted shift is one occurrence. One pure plan must drive both preview and execution; typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic application, synchronized accepted state, and accepted-only UI application are required.
 
-The missing milestone boundary is authoritative advancement beyond selection. Current Ashen Reef survey advancement remains shell-owned and directly applies:
+The current implementation has four material defects:
 
-- time and metabolic/body advancement;
-- stamina and MP cost;
-- breakthrough-gated skill progression;
-- sector and completion flags;
-- operation and current-activity changes;
-- discovery facts;
-- notification, Chronicle, and notice projections;
-- snapshot synchronization.
+- preview/execution diverge after completion;
+- preview omits explicit stamina/MP and attribute-load effects;
+- malformed non-contiguous sector flags can repeat side effects without progress;
+- the UI applies the returned snapshot without an accepted/rejected discriminator.
 
-The route is the strongest next candidate because it is deterministic, inventory-free, based on authored content, and crosses several existing systems. It is not implementation-ready because exact command/result, occurrence/receipt, affected-owner, persistence/replay/correction, preview, and accepted-only UI contracts remain undecided.
+General activity resolution, uncertainty, result bands, and balance changes are not required for the deterministic parity slice.
+
+## Blocking Save Boundary
+
+Current persistence serializes existing snapshot fields, but it lacks:
+
+- stable campaign and continuity identity;
+- accepted campaign-rules/Stakes identity;
+- durable occurrence/result/consequence receipt authority;
+- candidate-write, verification, publication, and authoritative-head semantics;
+- restart duplicate handling and correction linkage.
+
+Those cross-cutting identities must not be invented inside the survey command. The next run decides the minimum Normal-only foundation and must either return one dependency-closed later package or `NO_PACKAGE`.
 
 ## Active Decision Guardrails
 
-Run unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
+Run unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
 
-- Characterize current survey preview/execution exactly.
-- Decide one bounded domain-specific command/result contract.
-- Decide occurrence/result/receipt identities and duplicate/replay/correction behavior.
-- Decide exact typed affected-owner proposals and application responsibility.
-- Decide persistence/restart requirements and whether current snapshot state suffices.
-- Decide accepted-only UI application.
-- Preserve deterministic parity.
+- Define the minimum Normal-only campaign-rules/Stakes, campaign, continuity, character, artifact, and publication identities.
+- Decide new-game identity creation and version-6 migration.
+- Decide candidate write, verification, accepted publication, and failure behavior.
+- Decide the minimum persisted receipt container required by the accepted survey contract.
+- Decide restart duplicate, replay, and correction-link behavior.
 - Return one exact later dependency-closed package and policy-derived label class, or `NO_PACKAGE`.
 - Do not preassign `0.6.9`, `0.7.0`, or a suffix.
 
 ## Preserved Boundaries
 
+- Do not implement the survey command, receipts, UI adapter, or gameplay changes in this decision.
+- Do not broaden into Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, recovery UI, slot redesign, or broad account work.
 - Do not build a generic activity resolver.
-- General competence/difficulty/familiarity/compression remains required for generalized or uncertain resolution, but current deterministic survey parity may be decided separately.
-- Do not add uncertainty, RNG, result bands, recovery, aggregation, or new balance.
-- Do not include survey turn-in/rewards, rivet cargo, rest, gathering, crafting, inventory transactions, combat, health, care, death, Geography recognition, or map reveal.
-- Static lethal-process definitions remain separate from mutable health.
 - Existing travel, quest acceptance/tracking, activity selection, save, and synchronization behavior remain protected.
+- Static lethal-process definitions remain separate from mutable health.
 - The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
 - Workspace typecheck remains a separate known-failing 173-diagnostic audit.
 
 ## Near-Term Sequence
 
-1. run the unversioned survey advancement scope/owner decision;
-2. return one exact dependency-closed package and label class, or `NO_PACKAGE`;
-3. only then install a later implementation or prerequisite prompt;
-4. reassess `0.7.0` only after an engine-owned persistent cross-system loop exists and every entry criterion is independently accepted.
+1. run the minimum save identity and accepted-state publication decision;
+2. if dependency-closed, implement only its exact minimum persistence foundation;
+3. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
+4. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
+5. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-Unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`
+Unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`

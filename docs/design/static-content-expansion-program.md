@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; post-foundation classification complete; unversioned survey owner-contract decision active
+Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; post-foundation classification and survey owner contract complete; unversioned minimum save identity/publication decision active
 
 ## 1. Purpose
 
@@ -160,6 +160,7 @@ Deep Research uses one gate and one artifact at a time.
 | `0.6.8` | Lethal-Process Definition Static Foundation | Implemented: exactly six canonical definitions, four owner catalogs, one strict shared schema, one pure validator, exact registration, and prescribed checks green. |
 | `0.6.8.1` | Lethal-Process Definition Static Foundation Acceptance Audit | Complete: parent accepted without repair; static-only and protected-authority boundaries preserved. |
 | unversioned gate | Post-Lethal-Process Static Foundation Next-Capability Classification Gate | Complete: found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement, classified its exact owner-contract decision as `UNVERSIONED_PREREQUISITE`, and kept implementation `NO_PACKAGE`. |
+| unversioned support | Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision | Complete: accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI; returned `NO_PACKAGE` pending minimum save identity/publication authority. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -171,4 +172,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`. Keep the deterministic survey slice separate from general activity resolution and do not authorize implementation, mutable health, diagnostic logic, treatment protocols, Geography recognition, rewards, or broader UI/runtime by inference.
+Run the unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`. Keep it Normal-only and limited to the minimum identity, provenance, migration, receipt-container, candidate-write, verification, publication, restart, and correction boundary required by the accepted survey contract. Do not authorize the survey command, broad Stakes modes, checkpoint/death, cloud/recovery, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.
