@@ -64,6 +64,18 @@
 - User-direction questions should be concrete and timely enough to prevent avoidable implementation assumptions; do not ask the user to decide facts already settled by accepted repository authority.
 - After completing a task, GPT should briefly reassess whether another authorized connector-safe pass would materially advance the same objective, while avoiding open-ended scope expansion or duplicate work without an independent-verification purpose.
 
+## Branch Lifecycle And Integration
+
+- `docs/dev/branch-lifecycle-and-integration-policy.md` is the durable detailed authority for branch inspection, integration, retention, supersession, and deletion.
+- `docs/dev/branch-disposition-register.md` is the current coordination surface for known non-default branches and pull requests; live refs must be reinspected before action.
+- Codex must fetch and prune, inventory relevant local and remote branches and open PRs, inspect each candidate's merge base, unique commits, changed paths, current authority, and semantic overlap, and assign or refresh a disposition at the checkpoints defined by the branch policy.
+- Do not merge branches merely because Git reports no textual conflict. Review semantic compatibility and run validation appropriate to the branch contents.
+- Integrate documentation-only unique-path branches only after rereading them against current authority. Rebase or re-author stale, mixed, implementation, schema, content, save, migration, asset, dependency, or generated-output branches as required before validation.
+- Delete local or remote branches only after accepted work is reachable or equivalently preserved on `master`, all named consumers are complete, linked PRs are resolved, and the exact ref and head SHA are verified.
+- Explicitly protected branches remain read-only and must not be merged, rebased, force-updated, or deleted unless a later accepted prompt or explicit user instruction changes that status.
+- Every Codex completion report must state the branches and PRs inspected, disposition changes, integrations or deletions performed, validation run, and exact review trigger for every retained branch. If no branch action was due, state that explicitly.
+- Branch cleanup must not silently broaden the active package. Record a decision-complete disposition and schedule the smallest dedicated integration pass when branch work is useful but not safe inside the active route.
+
 - Each detailed Codex output written to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) must state:
   - source version/run
   - date
@@ -73,6 +85,7 @@
   - milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`
   - files changed
   - checks run
+  - branch/PR lifecycle review and disposition changes
   - suggested commit message
   - risks/follow-up notes
   - next recommended version/run
