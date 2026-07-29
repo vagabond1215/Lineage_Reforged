@@ -1,8 +1,8 @@
-# Post-Lethal-Process Static Foundation Next-Capability Classification Gate
+# Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision
 
 ## Run Identity
 
-Unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
+Unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`
 
 Label class: unversioned
 
@@ -12,21 +12,18 @@ Milestone impact: `supports_current_band`
 
 Suggested commit:
 
-`docs(workflow): classify post-lethal-process next capability`
+`docs(activity): define survey advancement owner contract`
 
 ## Purpose
 
-Determine the smallest safe next route after accepted `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+Decide the smallest owner-correct contract that could later move only the existing Ashen Reef survey advancement path from UI-authored mutation to an engine-owned deterministic plan/command/result boundary.
 
-Reproduce current capability, authority, dependency, and maturity evidence. Classify one exact next route as:
+This run is documentation and decision only. It must return either:
 
-- a new-band entry candidate;
-- a current-band primary capability;
-- a parent-specific support suffix;
-- an unversioned prerequisite;
-- or `NO_NEXT_PROMPT`.
+- one exact dependency-closed later package and its policy-derived label class; or
+- `NO_PACKAGE`.
 
-This run is documentation and classification only. It must not implement the selected route.
+Do not assign `0.6.9`, `0.7.0`, or a support suffix in advance.
 
 ## Required Reading
 
@@ -35,88 +32,151 @@ Read:
 - `AGENTS.md`;
 - `README.md`;
 - current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, and static-content program;
+- `docs/design/post-lethal-process-static-foundation-next-capability-classification-gate.md`;
 - `docs/design/internal-versioning-and-release-milestone-policy.md`;
-- `docs/design/lethal-process-definition-static-foundation-acceptance-audit.md`;
-- `docs/design/health-runtime-ownership-and-dependency-closure-audit.md`;
-- `docs/design/lethal-process-definition-owner-namespace-and-shared-envelope-schema-plan.md`;
-- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`;
 - `docs/design/activity-resolution-existing-system-reuse-audit.md`;
-- `docs/design/functional-state-lethal-process-care-requirement-and-mortal-crisis-receipt-contract-decision.md`;
-- current engine-owned travel, quest, activity, save, synchronization, and persistence contracts relevant to the maturity gate;
+- `docs/design/activity-resolution-depth-and-attempt-state-contract-plan.md`;
+- `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md`;
+- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
+- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
+- `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`;
+- `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
+- `docs/design/quest-event-chronicle-authority-boundary-decision.md`;
+- `docs/design/ui-information-architecture-boundary.md`;
+- accepted body/resource and skill-progression sources relevant to the current survey path;
+- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
+- `apps/rpg-ui/src/features/ActivityPanel.tsx`;
+- current engine-owned travel, quest acceptance/tracking, activity-selection, synchronization, save, and persistence contracts;
+- current focused survey, command, and roundtrip tests;
 - the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch through read-only Git inspection only.
 
 ## Execution Gate
 
 1. Verify repository, branch, clean worktree, remote alignment, current head, and active route.
-2. Confirm `Version 0.6.8.1` is accepted and the static foundation has no unresolved parent defect.
-3. Confirm the project remains in `0.6.x` unless every `0.7.0` criterion is independently proven and explicitly accepted.
-4. Reproduce current completed runtime owners and remaining integrated-gameplay blockers.
-5. Reproduce the health dependency graph after static definition acceptance.
-6. Reproduce Geography/recognition and Activity Resolution decisions without treating them as implementation authority.
-7. Stop without edits if repository state is dirty, evidence conflicts, or a required source cannot be inspected safely.
+2. Confirm the classification gate selected this run as `UNVERSIONED_PREREQUISITE`.
+3. Confirm `0.7.0` remains `NOT_READY` and no exact primary implementation label is active.
+4. Reproduce the current Ashen Reef preview and execution path exactly.
+5. Reproduce the accepted engine command, synchronization, persistence, occurrence, and typed-effect boundaries.
+6. Stop without edits if the worktree is dirty, evidence conflicts, a required source is unavailable, or the current survey behavior cannot be characterized safely.
 
-## Classification Questions
+## Required Decisions
 
-Answer explicitly:
+Decide explicitly:
 
-1. Does current `master` satisfy every `0.7.0` integrated-gameplay entry criterion?
-2. Is any parent-specific repair or audit still required for `0.6.8`?
-3. Which one unresolved capability most directly advances current `0.6.x` maturity?
-4. Is that capability dependency-closed for implementation?
-5. If not, what is its smallest exact documentation, research, owner-contract, or persistence prerequisite?
-6. Does Geography/recognition, Activity Resolution, health-process ownership, or another current route have stronger evidence and fewer blockers?
-7. What exact label class follows from the policy?
-8. What exact paths and checks would a later package require?
-9. What current systems and files must remain protected?
-10. Should the result install one exact next prompt or return `NO_NEXT_PROMPT`?
+1. the exact bounded survey intent and authoritative input facts;
+2. eligibility and rejection reasons;
+3. one preview/execution material-fact plan;
+4. deterministic command identity, snapshot revision, stale, malformed, wrong-player, and incoherent-state behavior;
+5. whether command, attempt, occurrence, result, event, and consequence-receipt identities are distinct or safely combined for this bounded deterministic slice;
+6. exact accepted-result and rejected-result fields;
+7. exact typed proposals and one authoritative affected owner for each applied consequence;
+8. atomic application order and rollback/no-mutation behavior;
+9. duplicate delivery, equivalent retry, replay, supersession, correction, and reconciliation posture;
+10. exact persistence and restart requirements, including whether current `SaveSnapshot` fields suffice;
+11. projection boundaries for notification, Chronicle, discovery-facing facts, and notice prose;
+12. accepted-only UI application and preview/readiness behavior;
+13. exact later files, tests, protected paths, and acceptance gates;
+14. whether the later package is dependency-closed and how the version policy classifies it.
+
+## Current Behavior To Characterize
+
+Characterize without changing:
+
+- active tracked `quest.ashen_reef_survey` and Ashen Reef location checks;
+- two-tick preview and execution;
+- survey metabolic mitigation and attribute profile;
+- stamina `-10` and MP `-3`;
+- three ordered survey-sector advances;
+- General Lore progression and breakthrough-gate behavior;
+- ruins confirmation and flora-identification progression;
+- discovery entry, operation updates, current-activity transition, notification, Chronicle, notice, and snapshot synchronization;
+- completion and already-complete behavior;
+- failure and no-mutation behavior;
+- save/load preservation of every current authoritative fact.
+
+Do not include survey quest turn-in or rewards.
+
+## Deterministic Slice Boundary
+
+The current survey advancement path has no difficulty check or uncertainty draw.
+
+Decide whether exact deterministic parity can proceed as a domain-specific command without first implementing the general `Competence, Difficulty, Familiarity, And Compression Authority Decision`.
+
+If yes:
+
+- state why this does not authorize a shared or uncertain activity resolver;
+- preserve the general decision as a prerequisite for later difficulty-, familiarity-, margin-, recovery-, aggregation-, or named-uncertainty behavior.
+
+If no:
+
+- identify the exact current behavior that requires the broader authority;
+- return `NO_PACKAGE` or select that exact unversioned prerequisite.
+
+Do not invent difficulty, result bands, RNG, failure chance, familiarity, compression, recovery, or balance.
+
+## Owner Matrix Requirements
+
+Classify at minimum:
+
+- clock/time;
+- metabolic body state;
+- HP/MP/stamina resources;
+- skill progress and breakthrough gates;
+- quest sector/completion facts;
+- discovery fact;
+- operation state;
+- current-activity pointer;
+- synchronization;
+- notification and Chronicle projection;
+- save/persistence;
+- UI notice/readiness projection.
+
+For each, record:
+
+- current writer and fact source;
+- proposed owner;
+- proposal/application/receipt posture;
+- persisted identity or state;
+- retry/correction rule;
+- whether it is included, adapted, projected, or excluded.
+
+Do not create a generic effect owner. Typed effects remain owner-routed proposals.
 
 ## Required Evidence
 
 Inspect and record:
 
-- accepted engine-owned travel, quest acceptance/tracking, and activity-selection capability;
-- authoritative save/load and synchronization posture;
-- absence or presence of an authoritative attempt/result path that advances gameplay beyond selection;
-- typed cross-system consequence and accepted-only UI application posture;
-- representative integration and replay coverage;
-- remaining demo/UI-authored mutation in any candidate loop;
-- accepted static content and validation foundations through `0.6.8`;
-- health definition, instance, occurrence/result/receipt, persistence/correction, care, assessment, crisis, death, and projection owners;
-- Geography/recognition implementation prerequisites;
-- Activity Resolution reuse decisions and rejected generic-resolver inferences;
-- current branch and isolated-readiness-branch differences without merge or mutation;
-- label collisions and current prompt/roadmap ordering.
-
-## Decision Rules
-
-- Do not assign `0.7.0` unless every durable entry criterion passes and an explicit accepted readiness decision is recorded.
-- Do not allocate a three-segment primary for an audit, repair, retry, clarification, or ordinary planning pass.
-- Use a support suffix only when work is attached to one accepted primary.
-- Keep research, owner decisions, dependency audits, and held planning unversioned unless the document itself materially advances the active capability under the policy.
-- Prefer the smallest dependency-closing route.
-- Assign no implementation label to a package with unresolved owner, persistence, migration, reference, validation, or behavior decisions.
-- Do not infer mutable health readiness from accepted static definitions.
-- Do not merge, modify, delete, or rebase the isolated readiness branch.
+- exact `gameplayLoop.ts` survey helpers and branch order;
+- current UI call site and unconditional snapshot application;
+- current command shapes, deterministic identity, revision/stale checks, event construction, atomic clone/apply, and accepted-only bridges;
+- synchronization coverage for every survey-mutated surface;
+- snapshot serialization and local save behavior;
+- focused skill-gating and command tests;
+- occurrence/result/receipt identity, commitment, replay, and correction rules;
+- generic event-id collision risk and why generic events cannot own the slice;
+- branch-isolated readiness recommendations after refresh, without treating them as controlling authority.
 
 ## Prohibited Scope
 
 Do not:
 
-- edit content, schema, validator, test, engine, app, shared contract, save, migration, dependency, generated, or gameplay files;
-- implement a runtime command, result, event, receipt, owner, adapter, resolver, persistence field, UI flow, or content family;
-- widen lethal-process references or current combat-health authority;
-- create process stages, medical values, diagnosis, care behavior, death, restoration, or presentation;
-- run broad workspace typecheck as a classification gate;
-- assign `0.6.9`, `0.7.0`, or any suffix before policy evidence supports it;
-- rewrite accepted historical labels.
+- edit engine, app, shared contract, content, schema, validator, test, save, migration, dependency, generated, asset, or gameplay files;
+- implement a command, plan, resolver, result, event, receipt, adapter, effect, persistence field, or UI flow;
+- implement general activity resolution, competence, difficulty, familiarity, compression, uncertainty, RNG, recovery, or aggregation;
+- include survey turn-in, rewards, rivet cargo, generic quest completion, rest, gathering, crafting, inventory transactions, combat, health, care, death, Geography recognition, or map reveal;
+- change current survey balance or behavior;
+- use notification, Chronicle, event-envelope, tick, wall-clock, or projection identity as occurrence/result/receipt authority;
+- infer mutable health readiness;
+- merge, modify, delete, rebase, or cherry-pick the isolated readiness branch;
+- run broad workspace typecheck as a decision gate.
 
 ## Allowed Documentation Scope
 
-If the gate reaches a decision:
+If the execution gate passes:
 
-- add `docs/design/post-lethal-process-static-foundation-next-capability-classification-gate.md`;
+- add `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
 - update current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, and static-content program only for proven routing facts;
-- install exactly one next prompt only when its package or prerequisite is exact and safe;
+- install exactly one later prompt only if one package or prerequisite is exact, dependency-closed, and safely classified;
 - otherwise set the current prompt result to `NO_NEXT_PROMPT`.
 
 ## Required Checks
@@ -124,30 +184,31 @@ If the gate reaches a decision:
 Run:
 
 - repository, branch, worktree, fetch, upstream, and divergence checks;
-- accepted `0.6.8`/`0.6.8.1` commit and changed-path inspection;
 - current-versus-isolated-readiness-branch read-only comparison;
-- `0.7.0` criterion-by-criterion evidence matrix;
-- candidate dependency and owner matrix;
+- exact source-call and writer inventory;
+- current survey behavior and focused-test inspection;
+- command-pattern, persistence, occurrence, effect-owner, and UI-boundary matrices;
 - label and path collision scans;
 - documentation-only changed-path audit;
 - conflict-marker and trailing-whitespace scans;
 - `git diff --check`;
 - complete documentation diff review.
 
-Run focused tests only when necessary to verify a disputed current capability claim. Do not use broad workspace typecheck.
+Run focused tests only when necessary to resolve a disputed behavior claim. Do not run broad workspace typecheck.
 
 ## Completion Report
 
 Report:
 
 - starting commit and repository state;
-- `0.7.0` readiness result;
-- candidate comparison;
-- selected smallest next route;
-- label class and exact label when supported;
+- exact current survey behavior;
+- accepted owner/identity/persistence/UI decisions;
+- deterministic/general-resolution boundary;
 - dependency result;
+- exact later package or `NO_PACKAGE`;
+- label class and exact label only when supported;
 - exact later paths and checks;
-- files changed by this gate;
 - protected boundaries;
+- files changed;
 - risks and follow-up notes;
 - installed next prompt or `NO_NEXT_PROMPT`.

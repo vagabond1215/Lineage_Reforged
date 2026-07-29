@@ -2,63 +2,62 @@
 
 Date: 2026-07-29
 
-Source version/run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`
+Source version/run: unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
 
-Label class: support suffix
+Label class: unversioned
 
-Parent version: `Version 0.6.8 - Lethal-Process Definition Static Foundation`
+Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at audited parent commit `b07084055359aa4ba13eeac3ad63c2a8fad05477`; no pull was required.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `776bf06c881636db04db27ff6f327b1c680c76a6`; no pull was required.
 
 ## Result
 
-`ACCEPTED`
+`UNVERSIONED_PREREQUISITE`
 
 Created:
 
-`docs/design/lethal-process-definition-static-foundation-acceptance-audit.md`
+`docs/design/post-lethal-process-static-foundation-next-capability-classification-gate.md`
 
-The exact `Version 0.6.8` static foundation is accepted without repair. This audit changes documentation only.
+Selected next route:
 
-## Accepted Parent
+`Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`
 
-- Audited commit: `b07084055359aa4ba13eeac3ad63c2a8fad05477`.
-- Parent commit: `9e045e057ab659d67df500136530a059ab0bb351`.
-- Parent changed exactly nine implementation paths plus ten authorized coordination paths.
-- Exactly six records exist under four owners with two/one/one/two distribution.
-- Every record is canonical, semantic version `1`, and has empty references.
-- All accepted seed metadata matches the owner/schema plan.
-- The shared strict schema and import-free validator satisfy the accepted boundaries.
-- Normal lint and schema registration are exact-once.
-- No production engine/app/shared source imports or references the new authority.
-- Current combat-health authority remains unchanged.
+Dependency result:
 
-## Acceptance Criteria
+`DOCUMENTATION_PREREQUISITE_READY`
 
-All sixteen criteria in the active acceptance prompt passed:
+Implementation result:
 
-1. exact inventory and owners;
-2. exact distribution;
-3. exact seed values;
-4. lifecycle/version/reference posture;
-5. strict schema;
-6. exact enums;
-7. pure non-mutating validator;
-8. structure-before-semantics;
-9. owner/path/id/family/slug coherence;
-10. collision/reference/forbidden-field enforcement;
-11. normal-lint registration;
-12. schema registration;
-13. focused obligations;
-14. production isolation;
-15. combat-health separation;
-16. no executable or behavioral expansion.
+`NO_PACKAGE`
+
+## Readiness Verdict
+
+`0.7.0`: `NOT_READY`
+
+- Playable start and engine-owned travel are present.
+- Quest acceptance, quest tracking, and activity selection are engine-owned and accepted.
+- Current save/load preserves the current snapshot shape.
+- No engine-owned activity attempt/result path advances the representative loop beyond selection.
+- Ashen Reef survey advancement still mutates time/body/resources, skills, quest/discovery facts, operations, current activity, notifications, and Chronicle in `gameplayLoop.ts`.
+- Typed affected-owner receipts, survey persistence/replay/correction, and accepted-only UI application are absent.
+- UI-authored advancement still controls the strongest candidate loop.
+
+No `0.7.0` band entry is assigned.
+
+## Parent And Candidate Decision
+
+- `Version 0.6.8.1` accepted `0.6.8` without repair; no parent suffix is required.
+- Mutable health remains blocked by source-reference, instance, occurrence, persistence/migration, replay/correction, function/care, crisis, death, and closure dependencies.
+- Geography/recognition has accepted design authority but its later evidence closure does not directly close the integrated-gameplay gate.
+- The general competence/difficulty/familiarity lane remains required for generalized or uncertain activity resolution.
+- Current Ashen Reef survey advancement is deterministic and can be assessed as a narrower domain-specific parity slice without inventing a shared resolver.
+- Survey turn-in remains the fallback; reward eligibility and duplicate-delivery risk make it a weaker first route.
 
 ## Files Changed
 
-- added `docs/design/lethal-process-definition-static-foundation-acceptance-audit.md`;
+- added `docs/design/post-lethal-process-static-foundation-next-capability-classification-gate.md`;
 - updated `docs/dev/current-codex-output.md`;
 - updated `docs/dev/current-codex-prompt.md`;
 - updated `docs/dev/current-gpt-handoff.md`;
@@ -70,38 +69,36 @@ All sixteen criteria in the active acceptance prompt passed:
 - updated `docs/design/static-content-expansion-program.md`;
 - updated `docs/future_content_backlog.md`.
 
-No content, schema, validator, test, runtime, shared contract, save, migration, dependency, generated, UI, or gameplay path changed.
+No content, schema, validator, test, engine, shared contract, save, migration, dependency, generated, UI, asset, or gameplay path changed.
 
 ## Checks Run
 
-- `node --test tests/unit/lethal-process-definition-authority-validation.test.mjs`: 51/51 passed;
-- `node --test tests/unit/schema-files.test.mjs`: 106/106 passed;
-- `npm.cmd run tool:content-lint`: `content-lint: ok (71 files checked)`;
-- `node --test tests/unit/combat-status-condition-injury-authority-validation.test.mjs`: 90/90 passed;
-- repository, branch, worktree, fetch, remote alignment, parent, and parent-path inspection;
-- exact records, owners, distribution, lifecycle, semantic version, and empty-reference inspection;
-- exact-once registration scans;
-- reserved-id collision scan;
-- parent protected combat-health diff;
-- production engine/app/shared import/reference scan;
-- validator purity/prohibited-import scan;
-- parent conflict-marker and `git diff --check` scans;
-- complete parent path and implementation diff review.
-
-Two disposable ad hoc schema-summary commands were malformed by shell interpolation. They changed nothing; direct schema inspection and the passing schema suite supplied the required evidence.
+- repository, branch, worktree, fetch, remote-alignment, parent, and parent-path inspection;
+- read-only comparison with `origin/prep/integrated-gameplay-0-7-readiness-audit`;
+- criterion-by-criterion `0.7.0` readiness matrix;
+- candidate dependency and owner matrix;
+- exact survey preview/execution and UI call-site inspection;
+- engine command, synchronization, persistence, save, and test-surface inspection;
+- focused current-capability group: 40/40 passed;
+- label and path collision scans;
+- documentation-only changed-path audit;
+- conflict-marker and trailing-whitespace scans;
+- `git diff --check`;
+- complete documentation diff review.
 
 ## Suggested Commit Message
 
-`docs(health): accept lethal-process static foundation`
+`docs(workflow): classify post-lethal-process next capability`
 
 ## Risks / Follow-Up Notes
 
-- Acceptance is limited to static definition identity and validation authority.
-- Mutable or executable health work remains `NO_PACKAGE`.
-- Empty live references remain mandatory until later target authority and resolver registration are independently accepted.
-- No `0.6.9` or `0.7.0` label is assigned by this audit.
-- The broad workspace typecheck remains the separately classified 173-diagnostic baseline.
+- The selected prerequisite does not authorize implementation or assign `0.6.9`.
+- A new command alone is insufficient; occurrence/result/receipt identity, affected-owner application, persistence/replay/correction, preview parity, and accepted-only UI must be decided together.
+- The deterministic survey path does not authorize general competence, difficulty, familiarity, compression, uncertainty, or RNG behavior.
+- Mutable health, rest, quest turn-in, rewards, rivet cargo, inventory transactions, Geography recognition, and generic activity resolution remain out of scope.
+- The isolated readiness branch remains unmerged and untouched.
+- The broad workspace typecheck remains the separate known-failing 173-diagnostic baseline.
 
 ## Next Recommended Run
 
-Unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
+Unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`

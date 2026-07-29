@@ -7,9 +7,9 @@ Last reviewed: 2026-07-29
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Latest completed support/audit run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
-- Next run: unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
-- Activity selection remains accepted. `0.6.4`-`0.6.8` implementation is complete, and the exact six-record/four-owner lethal-process static foundation is accepted by `0.6.8.1` with focused/schema/combat-health validation and 71-file normal lint green. The next gate must classify one dependency-closed capability without presuming `0.6.9`, `0.7.0`, or mutable health readiness.
+- Latest completed unversioned run: `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
+- Next run: unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
+- Activity selection remains accepted. `0.6.4`-`0.6.8` implementation is complete, and the exact six-record/four-owner lethal-process static foundation is accepted by `0.6.8.1`. The post-foundation gate found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and classified its exact owner-contract decision as `UNVERSIONED_PREREQUISITE`; implementation remains `NO_PACKAGE` and no `0.6.9` label is assigned.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.

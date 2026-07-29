@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; unversioned next-capability classification active
+Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; post-foundation classification complete; unversioned survey owner-contract decision active
 
 ## 1. Purpose
 
@@ -159,6 +159,7 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned gate | Lethal-Process Static Foundation Version Classification And Implementation Gate | Complete: classified the dependency-closed static package `CURRENT_BAND_PRIMARY` and assigned `Version 0.6.8`. |
 | `0.6.8` | Lethal-Process Definition Static Foundation | Implemented: exactly six canonical definitions, four owner catalogs, one strict shared schema, one pure validator, exact registration, and prescribed checks green. |
 | `0.6.8.1` | Lethal-Process Definition Static Foundation Acceptance Audit | Complete: parent accepted without repair; static-only and protected-authority boundaries preserved. |
+| unversioned gate | Post-Lethal-Process Static Foundation Next-Capability Classification Gate | Complete: found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement, classified its exact owner-contract decision as `UNVERSIONED_PREREQUISITE`, and kept implementation `NO_PACKAGE`. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -170,4 +171,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`. Reapply the maturity policy and dependency evidence before assigning another route; do not authorize mutable content, diagnostic logic, treatment protocols, or UI/runtime by inference.
+Run the unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`. Keep the deterministic survey slice separate from general activity resolution and do not authorize implementation, mutable health, diagnostic logic, treatment protocols, Geography recognition, rewards, or broader UI/runtime by inference.

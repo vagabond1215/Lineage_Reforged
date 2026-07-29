@@ -6,10 +6,12 @@ Date: 2026-07-29
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Parent `0.6.8` is `ACCEPTED` at audited commit `b07084055359aa4ba13eeac3ad63c2a8fad05477`.
-- The parent required no repair.
-- The active route is unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
-- Mutable or executable health work remains `NO_PACKAGE`.
+- Latest completed unversioned run: `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
+- Parent `0.6.8` remains accepted without repair.
+- `0.7.0` readiness result: `NOT_READY`.
+- Active route: unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
+- Dependency result: `DOCUMENTATION_PREREQUISITE_READY`.
+- Implementation result: `NO_PACKAGE`.
 
 ## Current Planning Precedence
 
@@ -23,49 +25,55 @@ Use current execution sources in this order:
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale historical-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
-## Accepted Static Foundation
+## Classification Result
 
-- Four owner-specific catalogs contain exactly six canonical definitions.
-- Distribution is exactly two hemorrhage, one airway, one respiratory, and two thermal.
-- Every record uses semantic version `1` and empty references.
-- The strict shared schema and pure cross-catalog validator are accepted.
-- All four catalogs and the schema are registered exactly once.
-- Focused validation passed 51/51.
-- Schema validation passed 106/106.
-- Normal content lint passed at 71 files.
-- Existing combat-health validation passed 90/90.
-- Protected combat-health authority and production engine/app/shared sources remain isolated.
+The accepted capability foundations are playable start-state, current snapshot save/load, engine-owned travel, quest acceptance, quest tracking, and activity selection.
 
-## Active Classification Guardrails
+The missing milestone boundary is authoritative advancement beyond selection. Current Ashen Reef survey advancement remains shell-owned and directly applies:
 
-Run unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
+- time and metabolic/body advancement;
+- stamina and MP cost;
+- breakthrough-gated skill progression;
+- sector and completion flags;
+- operation and current-activity changes;
+- discovery facts;
+- notification, Chronicle, and notice projections;
+- snapshot synchronization.
 
-- Apply the internal maturity policy before assigning any new label.
-- Reproduce current `0.6.x` capability and dependency state.
-- Do not infer `0.7.0` readiness from static content.
-- Inspect health dependency closure, Geography/recognition, Activity Resolution reuse, current runtime-owner gaps, and the isolated integrated-gameplay readiness branch without merging it.
-- Distinguish a current-band primary capability from a parent support suffix, unversioned prerequisite, or `NO_NEXT_PROMPT`.
-- Assign no implementation label unless one exact package is dependency-closed.
-- Do not implement content, schema, validator, runtime, persistence, migration, care, diagnosis, death, UI, or gameplay in the classification run.
-- Preserve the isolated `prep/integrated-gameplay-0-7-readiness-audit` branch as unmerged and untouched.
+The route is the strongest next candidate because it is deterministic, inventory-free, based on authored content, and crosses several existing systems. It is not implementation-ready because exact command/result, occurrence/receipt, affected-owner, persistence/replay/correction, preview, and accepted-only UI contracts remain undecided.
+
+## Active Decision Guardrails
+
+Run unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
+
+- Characterize current survey preview/execution exactly.
+- Decide one bounded domain-specific command/result contract.
+- Decide occurrence/result/receipt identities and duplicate/replay/correction behavior.
+- Decide exact typed affected-owner proposals and application responsibility.
+- Decide persistence/restart requirements and whether current snapshot state suffices.
+- Decide accepted-only UI application.
+- Preserve deterministic parity.
+- Return one exact later dependency-closed package and policy-derived label class, or `NO_PACKAGE`.
+- Do not preassign `0.6.9`, `0.7.0`, or a suffix.
 
 ## Preserved Boundaries
 
-- Static lethal-process definitions are identities, not mutable instances.
-- Current combat-health vocabulary remains separate.
-- No non-empty live reference is accepted.
-- No migration or alias exists.
-- No poison, shock-like, burn, local-freezing, or contextual-heat definition is authorized.
-- No health process, care, assessment, urgency, death, restoration, closure, save, UI, or gameplay implementation is ready by inference.
-- Workspace typecheck remains a separate known-failing 173-diagnostic audit and is not a classification gate.
+- Do not build a generic activity resolver.
+- General competence/difficulty/familiarity/compression remains required for generalized or uncertain resolution, but current deterministic survey parity may be decided separately.
+- Do not add uncertainty, RNG, result bands, recovery, aggregation, or new balance.
+- Do not include survey turn-in/rewards, rivet cargo, rest, gathering, crafting, inventory transactions, combat, health, care, death, Geography recognition, or map reveal.
+- Static lethal-process definitions remain separate from mutable health.
+- Existing travel, quest acceptance/tracking, activity selection, save, and synchronization behavior remain protected.
+- The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched.
+- Workspace typecheck remains a separate known-failing 173-diagnostic audit.
 
 ## Near-Term Sequence
 
-1. run the unversioned next-capability classification gate;
-2. identify the smallest exact dependency-closed package or return `NO_NEXT_PROMPT`;
-3. classify the selected route under the durable maturity policy;
-4. only then install one exact implementation or documentation prerequisite prompt.
+1. run the unversioned survey advancement scope/owner decision;
+2. return one exact dependency-closed package and label class, or `NO_PACKAGE`;
+3. only then install a later implementation or prerequisite prompt;
+4. reassess `0.7.0` only after an engine-owned persistent cross-system loop exists and every entry criterion is independently accepted.
 
 ## Active Prompt
 
-Unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
+Unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`

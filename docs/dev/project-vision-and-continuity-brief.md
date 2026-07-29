@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-29 after acceptance of current-band primary `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+Updated 2026-07-29 after the post-lethal-process next-capability classification gate.
 
 ## Purpose
 
@@ -23,9 +23,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
-- Latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`.
+- Latest completed unversioned run: `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Active run: unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`.
+- Active run: unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -52,7 +52,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - All four grounded-research consumers are complete; the verified temporary artifact was retired.
 - The exact `Version 0.6.8` static foundation is implemented with six canonical records, four owner catalogs, one shared schema, one pure validator, exact registration, and passing focused/schema/combat-health tests plus 71-file normal lint.
 - Parent-specific `Version 0.6.8.1` accepted the implementation without repair.
-- The unversioned next-capability classification prompt is installed in `docs/dev/current-codex-prompt.md`.
+- The post-foundation classification found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and assigned no implementation version.
+- The unversioned survey advancement scope/owner decision prompt is installed in `docs/dev/current-codex-prompt.md`; implementation remains `NO_PACKAGE`.
 
 ## Validation Posture
 
@@ -68,10 +69,10 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run the unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`;
-2. compare current maturity and dependency evidence without presuming a label;
-3. install one exact dependency-closing route or return `NO_NEXT_PROMPT`;
-4. keep executable or balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
+1. run the unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`;
+2. characterize the deterministic survey branch and decide command/result, occurrence/receipt, owner, persistence, preview, and accepted-only UI boundaries;
+3. return one exact dependency-closed later package and policy-derived label class, or `NO_PACKAGE`;
+4. keep implementation and `0.7.0` behind explicit acceptance evidence.
 
 ## Current Implementation Reality
 

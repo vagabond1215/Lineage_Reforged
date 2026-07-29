@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-29
-Route: Codex local sequencing alignment after accepted lethal-process static-foundation implementation
+Route: Codex local sequencing alignment after the post-lethal-process next-capability classification
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -29,11 +29,11 @@ Latest completed support/audit run:
 
 Latest completed unversioned run:
 
-- unversioned `Lethal-Process Static Foundation Version Classification And Implementation Gate`
+- unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
 
 Immediate next run:
 
-- unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`
+- unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`
 
 ## Current Queue Override
 
@@ -59,11 +59,12 @@ Immediate next run:
 - The seven-gate cross-domain research program, production-authority audit, unversioned integration, and exact 16-row `0.6.5` recipe package are complete. Resolver quarantine held; the consumed Gate 6/audit artifacts were removed under synthesis conditions.
 - `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` is complete. It landed the exact nine-monster, nine-fauna-lineage, nine-ecology-addition, and 28-drop-row package with 147/147 prescribed focused tests and 67-file normal lint green.
 - `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` is complete and accepted. All required inventories and owner/reference boundaries closed, normal lint passed at 67 files, the prescribed group passed 688/688, no production repair was needed, and all six remaining research artifacts were removed after durable-coverage conditions passed.
-- `Version 0.6.8 - Lethal-Process Definition Static Foundation` is implemented and accepted by parent-specific `Version 0.6.8.1`. It added exactly six canonical records across four owner catalogs, one strict shared schema, one pure validator, exact lint/schema registration, and focused validation; the prescribed focused/schema/combat-health tests and 71-file normal lint pass. Mutable implementation remains `NO_PACKAGE`. The active route is the unversioned next-capability classification gate.
+- `Version 0.6.8 - Lethal-Process Definition Static Foundation` is implemented and accepted by parent-specific `Version 0.6.8.1`. It added exactly six canonical records across four owner catalogs, one strict shared schema, one pure validator, exact lint/schema registration, and focused validation; the prescribed focused/schema/combat-health tests and 71-file normal lint pass. Mutable health implementation remains `NO_PACKAGE`.
+- The unversioned post-foundation next-capability gate is complete. It found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and classified `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision` as the exact `UNVERSIONED_PREREQUISITE`. No implementation package or `0.6.9` label is active.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain later consumers. Do not bundle them into activity selection; advancement and rest also require their preview/execution boundaries to be reconciled.
+- Activity advancement, rest, and quest turn-in remain separate consumers. The active decision is limited to the Ashen Reef survey advancement branch and must reconcile preview/execution, command/result, occurrence/receipt, affected-owner, persistence/replay/correction, and accepted-only UI boundaries before any implementation label is assigned.
 
 Versioning note:
 

@@ -12,7 +12,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The roadmap top override and sequenced-plan current anchor are refreshed through accepted `Version 0.6.8` and completed parent-specific `Version 0.6.8.1`, with the unversioned next-capability classification gate active.
+The roadmap top override and sequenced-plan current anchor are refreshed through accepted `Version 0.6.8`, completed parent-specific `Version 0.6.8.1`, and the completed post-foundation next-capability classification, with the unversioned survey advancement owner-contract decision active.
 
 `docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution or invalidate the refreshed top override. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
 
@@ -31,9 +31,9 @@ Use the following precedence for current execution and routing:
 ## Accepted Current State
 
 - latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
-- latest completed unversioned run: `Lethal-Process Static Foundation Version Classification And Implementation Gate`;
+- latest completed unversioned run: `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`;
 - latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`;
-- next run: unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`;
+- next run: unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
@@ -54,15 +54,17 @@ Use the following precedence for current execution and routing:
 - the classification gate accepted `CURRENT_BAND_PRIMARY`, assigned `Version 0.6.8`, and installed the exact static implementation prompt;
 - the lethal-process static foundation is implemented with exactly six records across four owner catalogs, a strict shared schema, a pure validator, exact registration, and passing prescribed checks;
 - the parent-specific `0.6.8.1` acceptance audit accepted the static foundation without repair;
-- the unversioned next-capability classification gate is active next.
+- the post-foundation classification gate found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and classified its scope/owner decision as `UNVERSIONED_PREREQUISITE`;
+- no implementation package, `0.6.9`, support suffix, or band-entry label is assigned;
+- the unversioned Ashen Reef survey advancement scope/owner decision is active next.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. run the unversioned `Post-Lethal-Process Static Foundation Next-Capability Classification Gate`;
-2. compare current maturity and dependency evidence;
-3. install one exact dependency-closing route or return `NO_NEXT_PROMPT`;
+1. run the unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`;
+2. decide exact deterministic survey command/result, occurrence/receipt, affected-owner, persistence/replay/correction, preview, and accepted-only UI boundaries;
+3. install one exact dependency-closed later route or return `NO_NEXT_PROMPT`;
 4. keep executable and balance-bearing work behind explicit owner, persistence, migration, and validation authorization.
 
 ## Maintenance Rule
