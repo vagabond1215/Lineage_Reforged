@@ -12,9 +12,11 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The roadmap top override and sequenced-plan current anchor are refreshed through completed `Version 0.6.9.1`, which withheld parent acceptance and installed parent-specific `Version 0.6.9.2` repair.
+The current prompt, handoff, and output are refreshed through the connector accuracy correction following completed `Version 0.6.9.1`. Parent acceptance remains withheld and parent-specific `Version 0.6.9.2` remains active.
 
 `docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution or invalidate the refreshed top override. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
+
+The roadmap top override, sequenced-plan current queue, strategic continuity brief, historical register, and first backlog entry may still summarize only the four defects originally recorded by the local `0.6.9.1` audit. That count is superseded for execution. Subsequent complete source inspection proved two additional parent defects—`recovery_pending` admission and duplicate-mutation retained-result semantics—and required address-to-immutable-artifact verification. The current prompt, handoff, output, and updated acceptance audit control that complete scope.
 
 ## Controlling Current Anchor
 
@@ -61,7 +63,9 @@ Use the following precedence for current execution and routing:
 - the minimum save decision returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority;
 - the dependency-closure decision returned `PACKAGE_READY` and assigned atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - `0.6.9` includes campaign rules/identity, version-7 publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat/legacy repair, and publication-keyed account consumers;
-- `0.6.9` is implemented with 120/120 focused tests and a green RPG UI production build, but `0.6.9.1` withheld parent acceptance for exact recovery repair;
+- `0.6.9` is implemented with 120/120 focused tests and a green RPG UI production build, but parent acceptance is withheld;
+- six proven parent defects remain: post-head address recovery, durable account-consumer repair evidence, separately loaded migrated HP-zero repair, missing/invalid/closed control rejection, `recovery_pending` admission blocking, and duplicate-mutation retained-result semantics;
+- target-save admission and address recovery must additionally prove consistency with immutable artifact identity and bytes;
 - parent-specific support suffix `0.6.9.2` is active; no band-entry label is active and `0.7.0` remains `NOT_READY`.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
@@ -75,4 +79,4 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation as audit history unless a later dedicated maintenance pass supersedes it. The known lower roadmap anchor does not block the current prompt because its stale status and controlling precedence are explicit here.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation as audit history unless a later dedicated maintenance pass supersedes it. Known lower-precedence stale summaries do not block the current prompt because their stale status and controlling precedence are explicit here.
