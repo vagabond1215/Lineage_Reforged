@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-30 after Normal persistence implementation.
+Updated 2026-07-30 after Normal persistence audit correction.
 
 ## Purpose
 
@@ -56,7 +56,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The unversioned survey advancement scope/owner decision accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI.
 - The unversioned minimum save decision accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification, authoritative-head publication, and a typed persisted authority ledger.
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9` is implemented but not accepted. Its existing target rules/identity, publication, migration, first-mutation continuity, Normal defeat, account-consumer, and retirement suite passes 120/120 plus the RPG UI build, but `0.6.9.1` found four recovery-authority defects requiring exact `0.6.9.2` repair.
+- `Version 0.6.9` is implemented but not accepted. Its existing target rules/identity, publication, migration, first-mutation continuity, Normal defeat, account-consumer, and retirement suite passes 120/120 plus the RPG UI build.
+- Six parent defects require exact `0.6.9.2` repair: post-head address recovery, durable account-consumer repair evidence, separately loaded migrated HP-zero repair, missing/invalid/closed campaign-control rejection, `recovery_pending` gameplay admission, and duplicate-mutation retained-result semantics.
+- Playable address admission and recovery must additionally verify immutable artifact identity and serialized bytes.
 - `0.7.0` remains `NOT_READY`; the survey advancement/result/consequence loop remains later.
 
 ## Validation Posture
@@ -88,40 +90,3 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 - The integration script still produces climate arrays through `Split-List`, and UI compatibility normalization remains unchanged.
 - BOM-bearing JSON files must not be rewritten as cleanup.
 - Static content does not authorize spawning, encounters, AI, dynamic loot, harvesting, populations, migration, ecology simulation, inventory mutation, or rewards.
-- Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
-- Current hashes and random mechanisms are not accepted named uncertainty-channel authority.
-- Current HP zero may still enter legacy terminal archival and save deletion.
-- No active injury instance, mutable lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists; only the static definition foundation is implemented.
-
-## Research And Content Posture
-
-The bounded lethal-process research and all four named repository consumers are accepted. Coarse process families, stabilization semantics, reassessment triggers, observer-safe evidence, and unsafe-transfer rejections are durable; the verified temporary artifact was retired. Exact poison taxonomy, catalog ownership, mutable representation, persistence, and implementation remain gated. Do not import clinical protocols, exact real-world timers, medical advice, or proprietary game values.
-
-Keep broad typecheck cleanup, injury/care catalogs, dynamic ecology, NPC/faction/institution content without authored sources, dynamic economy/inventory/crafting, resurrection or rare-healer content, maps/recognition implementation, generic POIs, and activity-resolution implementation behind their recorded gates.
-
-## Parallel Preparation Posture
-
-The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch is noncontrolling and remains unmerged. Its findings require a fresh integration inspection after the active static and documentation sequence. The support pass must not merge, rebase, or modify that branch.
-
-## North Star
-
-Lineage: Reforged is a grounded medieval-fantasy, dynasty-driven systemic RPG. Its strongest identity is persistent history: characters live, struggle, earn status, create records, found or continue families, alter local standing, and pass limited but meaningful inheritance into future play.
-
-Every major system should answer at least one of these questions:
-
-- What did this character do?
-- Who remembers it?
-- Which family owns it?
-- Where is it recognized?
-- What can be carried forward?
-- What remains dangerous, limited, or uncertain despite inheritance?
-
-## Core Development Rules
-
-- Use current branch reality only.
-- Prefer the smallest coherent, owner-correct package.
-- Fail closed when a true green gate or audit-classification condition is red.
-- Do not misclassify known-failing audits as universal green gates.
-- Do not depend on missing validation artifacts when a fresh reproducible capture can provide stronger evidence.
-- Do not weaken validation or mix unrelated cleanup into narrow work.
-- Preserve historical chronology while keeping live execution pointers current.
