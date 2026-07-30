@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; survey owner and minimum save identity/publication contracts accepted; unversioned Normal activation/continuity/account-publication dependency closure active
+Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; survey/save contracts and dependency closure accepted; `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` active
 
 ## 1. Purpose
 

@@ -6,14 +6,14 @@ Date: 2026-07-29
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Latest completed unversioned run: `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
+- Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
-- Implementation result: `NO_PACKAGE`.
-- Blocking dependency: `NORMAL_STAKES_ACTIVATION_CONTINUITY_AND_ACCOUNT_VALUE_PUBLICATION`.
-- Active route: unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
+- Dependency-closure result: `PACKAGE_READY`.
+- Active implementation: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
+- Active-route class: `CURRENT_BAND_PRIMARY`.
 
 ## Current Planning Precedence
 
@@ -79,7 +79,7 @@ Do not treat the existing weighted AI as absent, and do not describe it as a com
 - one child continuity at the first accepted divergent mutation after loading a non-head artifact, never on load alone;
 - retained request/occurrence/result/consequence/correction authority across restart.
 
-Implementation remains `NO_PACKAGE` because campaign-rules activation still conflicts with terminal HP-zero archival, accepted-mutation admission has no complete current owner, and account value can publish before authoritative campaign state.
+The follow-up dependency decision closes those seams through atomic `Version 0.6.9`: campaign rules plus nonterminal defeat, one campaign session mutation gateway with first-divergence continuity, verified artifact publication, and publication-keyed account consumers.
 
 ## Branch Lifecycle Posture
 
@@ -105,22 +105,22 @@ Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. Th
 
 PR #2 / `main-menu-asset-contract-pass` is currently `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
 
-## Active Decision Guardrails
+## Active Implementation Guardrails
 
-Run unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
+Run `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
 
-- Decide the atomic boundary for campaign rules version 2, `normal_stakes`, nonterminal defeat, and active legacy HP-zero repair.
-- Decide the authoritative loaded-artifact session context and first-accepted-mutation fork owner.
-- Decide duplicate-fork protection and when a child continuity becomes durable.
-- Require authoritative campaign publication before account history, achievements, Legacy, estate, or other durable account value.
-- Preserve explicit retirement as terminal and ordinary HP zero as nonterminal.
-- Return one exact dependency-closed implementation package and policy-derived label class, or `NO_PACKAGE`.
-- Do not preassign `0.6.9`, `0.7.0`, or a suffix.
-- Complete branch/PR preflight and disposition reporting without allowing unrelated branch cleanup to broaden the decision.
+- Land campaign rules version 2, target identity, version-7 candidate publication, and version-6 migration.
+- Carry verified artifact/head context through the in-game session.
+- Create one child continuity at the first accepted persisted-snapshot mutation from non-head state.
+- Make ordinary Normal HP zero nonterminal and repair active legacy HP-zero sources before play.
+- Publish campaign state before durable account history, achievements, Legacy, preparation/inheritance use, retirement settlement, or estate consumers.
+- Preserve explicit retirement after verified terminal publication.
+- Add no survey implementation, Committed/Ironbound behavior, generic framework, or production dependency.
+- Install `Version 0.6.9.1` only after implementation and focused validation are green.
 
 ## Preserved Boundaries
 
-- Do not implement the survey command, receipts, UI adapter, or gameplay changes in this decision.
+- Do not implement the survey command, survey receipts, or survey UI adapter.
 - Do not broaden into Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, recovery UI, slot redesign, or broad account work.
 - Do not build a generic activity resolver.
 - Existing travel, quest acceptance/tracking, activity selection, save, and synchronization behavior remain protected.
@@ -132,14 +132,13 @@ Run unversioned `Normal Stakes Activation, First-Mutation Continuity, And Accoun
 
 ## Near-Term Sequence
 
-1. run the Normal Stakes activation, first-mutation continuity, and account-value publication dependency-closure decision;
-2. if dependency-closed, implement only its exact atomic campaign/save/account package;
-3. implement the accepted minimum save identity and publication contract only in the resulting authorized package;
-4. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
-5. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
-6. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
-7. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
+1. implement `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
+2. run parent-specific `Version 0.6.9.1` acceptance audit or the smallest required repair/audit chain;
+3. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
+4. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
+5. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
+6. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-Unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`
+`Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`

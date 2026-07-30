@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-29 after the Ashen Reef survey minimum save identity/publication decision.
+Updated 2026-07-29 after Normal persistence dependency closure.
 
 ## Purpose
 
@@ -23,9 +23,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
-- Latest completed unversioned run: `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`.
+- Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Active run: unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
+- Active run: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -55,7 +55,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The post-foundation classification found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and assigned no implementation version.
 - The unversioned survey advancement scope/owner decision accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI.
 - The unversioned minimum save decision accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification, authoritative-head publication, and a typed persisted authority ledger.
-- Implementation remains `NO_PACKAGE` because Normal activation conflicts with terminal HP-zero archival, first-mutation continuity admission has no complete owner, and account value can publish before authoritative campaign state. Their exact dependency-closure prompt is installed in `docs/dev/current-codex-prompt.md`.
+- The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
+- `0.7.0` remains `NOT_READY`; the survey advancement/result/consequence loop remains later.
 
 ## Validation Posture
 
@@ -71,9 +72,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run the unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`;
-2. decide the atomic Normal HP-zero, first-mutation continuity, and campaign-publication-before-account-value boundary;
-3. return one exact dependency-closed implementation package and policy-derived label class, or `NO_PACKAGE`;
+1. implement `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
+2. audit or repair the parent through a `0.6.9.S` support chain;
+3. continue the accepted survey occurrence/result/consequence sequence only after parent acceptance;
 4. keep implementation and `0.7.0` behind explicit acceptance evidence.
 
 ## Current Implementation Reality
