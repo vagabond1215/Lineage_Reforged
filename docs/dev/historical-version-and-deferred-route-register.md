@@ -1,6 +1,6 @@
 # Historical Version And Deferred Route Register
 
-Date: 2026-07-29
+Date: 2026-07-30
 Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
@@ -39,7 +39,8 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `0.6.7` | Cross-Content Coherence And Coverage Audit | Complete and accepted | Inventories and reference/lifecycle/static-runtime closure passed; no production repair required; six remaining research artifacts retired. | `docs/dev/current-codex-output.md` |
 | `0.6.8` | Lethal-Process Definition Static Foundation | Complete and accepted | Six canonical definitions, four owner catalogs, strict shared schema, pure validator, exact registration, and prescribed checks accepted. | `docs/design/lethal-process-definition-static-foundation-acceptance-audit.md` |
 | `0.6.8.1` | Lethal-Process Definition Static Foundation Acceptance Audit | Complete support suffix | Parent accepted without repair; mutable health remains `NO_PACKAGE`. | `docs/design/lethal-process-definition-static-foundation-acceptance-audit.md` |
-| `0.6.9` | Normal Stakes Campaign Persistence Foundation | Active authorized primary | Atomic campaign rules/identity, verified publication/migration, first-mutation continuity, nonterminal Normal defeat, and publication-keyed account consumers. | `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md` |
+| `0.6.9` | Normal Stakes Campaign Persistence Foundation | Implemented; parent audit pending | Atomic campaign rules/identity, verified publication/migration, first-mutation continuity, nonterminal Normal defeat, legacy repair, and publication-keyed account consumers pass 120/120 focused tests and the RPG UI production build. | `docs/dev/current-codex-output.md` |
+| `0.6.9.1` | Normal Stakes Campaign Persistence Foundation Acceptance Audit | Active support suffix | Independently audit failure ordering, migration retry, continuity, defeat, account consumers, retirement, build, and integration boundaries. | `docs/dev/current-codex-prompt.md` |
 
 ## Identity Rules
 
@@ -62,7 +63,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | Static monster/ecology/loot | expanded-and-validated | Accepted `0.6.6`: 33 monsters, 9 fauna lineages, 9 ecology additions, 77 drop rows | None | New proven defect | Complete | `docs/dev/current-codex-output.md` |
 | Cross-content coherence | complete maturity gate | Accepted `0.6.4`-`0.6.6`, static lint/validators, durable research synthesis | None | New proven defect | Accepted `0.6.7`; no production repair needed | `docs/dev/current-codex-output.md` |
 | Geographic Knowledge/recognition | accepted documentation design gate | Place/Knowledge authorities and accepted `0.6.7` | Implementation packages remain separate | New explicitly scheduled owner-specific package | Preserve accepted domain/taxonomy/profile/source/occurrence/legacy boundaries | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
-| Activity resolution reuse | survey/save contracts and persistence dependency closure accepted; `0.6.9` active | Selection, trial, quest, Knowledge, crafting, magic, occurrence foundations, exact survey owner contract, minimum save contract, and accepted atomic dependency closure | Implement and accept `0.6.9`; then exact survey receipt and command layers | Complete the active Normal campaign persistence primary and its acceptance chain | Keep general competence/difficulty/familiarity separate; do not implement survey inside `0.6.9` | `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md` |
+| Activity resolution reuse | survey/save contracts accepted; `0.6.9` implemented pending audit | Selection, trial, quest, Knowledge, crafting, magic, occurrence foundations, exact survey owner contract, minimum save contract, and implemented atomic persistence foundation | Accept `0.6.9`; then classify exact survey receipt and command layers | Complete `0.6.9.1` or the smallest parent repair chain | Keep general competence/difficulty/familiarity separate; do not implement survey during the parent audit | `docs/dev/current-codex-prompt.md` |
 | Injury/trauma/Mortal Crisis/restoration | accepted conceptual-contract lane; static foundation accepted | Injury, Mortal Crisis, save, occurrence, functional/lethal/care/crisis receipt authority, research integration, care/observer contracts, dependency audit, owner/schema plan, version classification, exact `0.6.8` implementation, and `0.6.8.1` acceptance | Source-reference contracts, mutable instances, occurrence, persistence/migration, replay/correction, and downstream owners | Explicit future health-route classification | Mutable implementation remains `NO_PACKAGE`; do not infer readiness from static acceptance | `docs/design/health-runtime-ownership-and-dependency-closure-audit.md` |
 | Generic `world.pois` | rejected | Specific owner families | None | Explicit decision | Never infer | `docs/design/discovery-poi-boundary-decision.md` |
 

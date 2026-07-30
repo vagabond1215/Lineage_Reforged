@@ -99,7 +99,11 @@ export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Que
 
                     const result = acceptQuest(snapshot, selectedItem.id);
                     if (result.accepted) {
-                      updateSnapshot(result.snapshot);
+                      updateSnapshot(result.snapshot, {
+                        ownerKind: 'engine_result',
+                        mutationId: result.commandId,
+                        resultId: result.resultId ?? result.commandId
+                      });
                       setActiveSection('active');
                     }
                     setPanelNotice(result.notice);
@@ -115,7 +119,11 @@ export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Que
 
                     const result = toggleTrackedQuest(snapshot, selectedItem.id);
                     if (result.accepted) {
-                      updateSnapshot(result.snapshot);
+                      updateSnapshot(result.snapshot, {
+                        ownerKind: 'engine_result',
+                        mutationId: result.commandId,
+                        resultId: result.resultId ?? result.commandId
+                      });
                     }
                     setPanelNotice(result.notice);
                   }}

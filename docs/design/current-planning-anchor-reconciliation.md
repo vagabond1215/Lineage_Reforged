@@ -1,6 +1,6 @@
 # Current Planning Anchor Reconciliation
 
-Date: 2026-07-29
+Date: 2026-07-30
 
 Status: accepted narrow documentation-only coordination authority
 
@@ -12,7 +12,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The roadmap top override and sequenced-plan current anchor are refreshed through accepted `Version 0.6.8`, completed parent-specific `Version 0.6.8.1`, the accepted survey and minimum-save contracts, and the completed dependency-closure decision, with primary `Version 0.6.9` active.
+The roadmap top override and sequenced-plan current anchor are refreshed through implemented `Version 0.6.9`, with parent-specific `Version 0.6.9.1` active for acceptance.
 
 `docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution or invalidate the refreshed top override. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
 
@@ -30,10 +30,10 @@ Use the following precedence for current execution and routing:
 
 ## Accepted Current State
 
-- latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`;
+- latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`;
 - latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`;
-- next run: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
+- next run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
@@ -61,14 +61,15 @@ Use the following precedence for current execution and routing:
 - the minimum save decision returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority;
 - the dependency-closure decision returned `PACKAGE_READY` and assigned atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - `0.6.9` includes campaign rules/identity, version-7 publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat/legacy repair, and publication-keyed account consumers;
-- no support suffix or band-entry label is active; `0.7.0` remains `NOT_READY`.
+- `0.6.9` is implemented with 120/120 focused tests and a green RPG UI production build, pending independent parent acceptance;
+- parent-specific support suffix `0.6.9.1` is active; no band-entry label is active and `0.7.0` remains `NOT_READY`.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. implement `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
-2. run a parent-specific `0.6.9.S` acceptance or repair chain;
+1. run `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`;
+2. run the smallest later `0.6.9.S` repair/audit only if evidence requires it;
 3. continue survey occurrence/result/consequence and command work only after parent acceptance;
 4. keep `0.7.0` behind explicit representative-loop evidence.
 

@@ -241,7 +241,7 @@ test("UI quest acceptance bridge contains no direct mutation and applies accepte
   assert.doesNotMatch(acceptBridge, /sessionState\.currentActivity\s*=/);
   assert.match(
     questsPanel,
-    /if \(result\.accepted\)\s*{\s*updateSnapshot\(result\.snapshot\);\s*setActiveSection\('active'\);\s*}/
+    /if \(result\.accepted\)\s*{\s*updateSnapshot\(result\.snapshot,\s*\{[\s\S]*?ownerKind: 'engine_result',[\s\S]*?mutationId: result\.commandId,[\s\S]*?resultId: result\.resultId \?\? result\.commandId[\s\S]*?\}\);\s*setActiveSection\('active'\);\s*}/
   );
   assert.doesNotMatch(engineModule, /node:/);
 });

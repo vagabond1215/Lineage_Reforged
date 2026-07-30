@@ -12,6 +12,37 @@ import {
   createEmptyPartyRuntimeState
 } from "./combat/state.js";
 export { createEmptySessionState, createSaveSnapshotFromGameContext } from "./save-snapshot.js";
+export {
+  CAMPAIGN_RULES_VERSION,
+  STAKES_POLICY_REVISION,
+  TARGET_SNAPSHOT_FORMAT,
+  createAuthorityId,
+  createCampaignIdentity,
+  createCampaignRules,
+  initializeTargetCampaignSnapshot,
+  isTargetCampaignSnapshot,
+  mapLegacyDifficulty
+} from "./campaign-rules.js";
+export {
+  admitCampaignMutation,
+  createCampaignSessionControl,
+  type CampaignMutationAdmission,
+  type CampaignMutationOwnerKind,
+  type CampaignMutationSubmission,
+  type CampaignSessionControl,
+  type CampaignSessionPosture
+} from "./campaign-session.js";
+export {
+  buildPublicationConsumerId,
+  findPublicationConsumerReceipt,
+  hasPendingMandatoryCampaignConsumers,
+  recordCampaignPublicationConsumer,
+  type VerifiedCampaignPublication
+} from "./account-publication.js";
+export {
+  resolveNormalDefeat,
+  type NormalDefeatResolution
+} from "./normal-defeat.js";
 export { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 export {
   PLAYER_ACTIVITY_SELECTED_EVENT_TYPE,
@@ -141,6 +172,7 @@ export {
   getAchievementDefinitionById,
   getAchievementDefinitions,
   markRunDeleted,
+  prepareCharacterAchievementProgress,
   refreshRunHistoryFromSnapshot,
   upsertActiveRunRecord,
   validateAchievementDefinitions

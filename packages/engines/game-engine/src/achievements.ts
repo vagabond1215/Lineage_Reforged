@@ -655,6 +655,53 @@ function applyCharacterAchievementUnlocks(
   return changed;
 }
 
+export function prepareCharacterAchievementProgress(
+  snapshot: SaveSnapshot,
+  recordedAt = new Date().toISOString()
+): {
+  snapshot: SaveSnapshot;
+  changed: boolean;
+} {
+  const nextSnapshot: SaveSnapshot = {
+    ...snapshot,
+    playerState: {
+      ...snapshot.playerState,
+      achievements: cloneCharacterAchievementsState(
+        snapshot.playerState.achievements
+      )
+    }
+  };
+  const unlockedIds = new Set(
+    nextSnapshot.playerState.achievements.unlocked.map(
+      (entry) => entry.achievementId
+    )
+  );
+  const snapshotMetrics = deriveSnapshotMetrics(nextSnapshot);
+  let changed = false;
+
+  for (const definition of getAchievementDefinitions()) {
+    if (
+      definition.layer !== "character" ||
+      snapshotMetrics[definition.metricId] < definition.targetValue ||
+      unlockedIds.has(definition.id)
+    ) {
+      continue;
+    }
+
+    nextSnapshot.playerState.achievements.unlocked.push({
+      achievementId: definition.id,
+      unlockedAt: recordedAt
+    });
+    unlockedIds.add(definition.id);
+    changed = true;
+  }
+
+  return {
+    snapshot: nextSnapshot,
+    changed
+  };
+}
+
 function applyAccountAchievementUnlocks(
   profile: AccountProfileState,
   snapshot: SaveSnapshot,

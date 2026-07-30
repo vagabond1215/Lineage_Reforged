@@ -216,7 +216,11 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
 
                       const result = travelToKnownLocation(snapshot, selectedWorldLocation.id);
                       if (result.accepted) {
-                        updateSnapshot(result.snapshot);
+                        updateSnapshot(result.snapshot, {
+                          ownerKind: 'engine_result',
+                          mutationId: result.commandId,
+                          resultId: result.resultId ?? result.commandId
+                        });
                       }
                       setPanelNotice(result.notice);
                     }}

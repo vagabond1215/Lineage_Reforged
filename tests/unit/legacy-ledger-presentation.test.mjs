@@ -1140,7 +1140,8 @@ test("launcher shell owns account meta navigation and exposes compact legacy and
   assert.match(characterCreationSource, /art\?\.selectedBackgroundPosition \?\? 'right bottom'/);
   assert.match(newGameSnapshotSource, /fillCoreResourcesToMax\(resolution\.resources\)/);
   assert.match(newGameSnapshotSource, /fillCoreResourcesToMax\(resources\.resources\)/);
-  assert.match(appSource, /persistProfile: false/);
+  assert.match(appSource, /prepareCharacterAchievementProgress/);
+  assert.match(appSource, /applyVerifiedPublicationToAccount/);
   assert.match(newGameSnapshotSource, /appliedLegacyPreparationIds\?: string\[\]/);
   assert.match(newGameSnapshotSource, /appliedLegacyPreparationChoices\?: Record<string, string>/);
   assert.match(newGameSnapshotSource, /sourceRunId\?: string/);

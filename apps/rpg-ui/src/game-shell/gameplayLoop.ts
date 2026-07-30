@@ -972,15 +972,19 @@ function createPlayerQuestAcceptanceNotice(result: PlayerQuestAcceptanceResult):
 export function acceptQuest(
   snapshot: SaveSnapshot,
   questId: string
-): GameplayActionResult & { accepted: boolean } {
-  const result = executePlayerQuestAcceptanceCommand(
-    snapshot,
-    createPlayerQuestAcceptanceCommand(snapshot, questId)
-  );
+): GameplayActionResult & {
+  accepted: boolean;
+  commandId: string;
+  resultId: string | null;
+} {
+  const command = createPlayerQuestAcceptanceCommand(snapshot, questId);
+  const result = executePlayerQuestAcceptanceCommand(snapshot, command);
   return {
     accepted: result.accepted,
     snapshot: result.snapshot,
-    notice: createPlayerQuestAcceptanceNotice(result)
+    notice: createPlayerQuestAcceptanceNotice(result),
+    commandId: command.commandId,
+    resultId: result.accepted ? result.emittedEvents[0].id : null
   };
 }
 
@@ -1018,15 +1022,19 @@ function createPlayerQuestTrackingNotice(result: PlayerQuestTrackingResult): Gam
 export function toggleTrackedQuest(
   snapshot: SaveSnapshot,
   questId: string
-): GameplayActionResult & { accepted: boolean } {
-  const result = executePlayerQuestTrackingCommand(
-    snapshot,
-    createPlayerQuestTrackingCommand(snapshot, questId)
-  );
+): GameplayActionResult & {
+  accepted: boolean;
+  commandId: string;
+  resultId: string | null;
+} {
+  const command = createPlayerQuestTrackingCommand(snapshot, questId);
+  const result = executePlayerQuestTrackingCommand(snapshot, command);
   return {
     accepted: result.accepted,
     snapshot: result.snapshot,
-    notice: createPlayerQuestTrackingNotice(result)
+    notice: createPlayerQuestTrackingNotice(result),
+    commandId: command.commandId,
+    resultId: result.accepted ? result.emittedEvents[0].id : null
   };
 }
 
@@ -1050,15 +1058,19 @@ function createPlayerActivitySelectionNotice(result: PlayerActivitySelectionResu
 export function setCurrentActivityFromRecord(
   snapshot: SaveSnapshot,
   recordId: string
-): GameplayActionResult & { accepted: boolean } {
-  const result = executePlayerActivitySelectionCommand(
-    snapshot,
-    createPlayerActivitySelectionCommand(snapshot, recordId)
-  );
+): GameplayActionResult & {
+  accepted: boolean;
+  commandId: string;
+  resultId: string | null;
+} {
+  const command = createPlayerActivitySelectionCommand(snapshot, recordId);
+  const result = executePlayerActivitySelectionCommand(snapshot, command);
   return {
     accepted: result.accepted,
     snapshot: result.snapshot,
-    notice: createPlayerActivitySelectionNotice(result)
+    notice: createPlayerActivitySelectionNotice(result),
+    commandId: command.commandId,
+    resultId: result.accepted ? result.emittedEvents[0].id : null
   };
 }
 
@@ -1085,15 +1097,19 @@ function createPlayerTravelNotice(result: PlayerTravelResult): GameShellNotice {
 export function travelToKnownLocation(
   snapshot: SaveSnapshot,
   locationId: string
-): GameplayActionResult & { accepted: boolean } {
-  const result = executePlayerTravelCommand(
-    snapshot,
-    createPlayerTravelCommand(snapshot, locationId)
-  );
+): GameplayActionResult & {
+  accepted: boolean;
+  commandId: string;
+  resultId: string | null;
+} {
+  const command = createPlayerTravelCommand(snapshot, locationId);
+  const result = executePlayerTravelCommand(snapshot, command);
   return {
     accepted: result.accepted,
     snapshot: result.snapshot,
-    notice: createPlayerTravelNotice(result)
+    notice: createPlayerTravelNotice(result),
+    commandId: command.commandId,
+    resultId: result.accepted ? result.emittedEvents[0].id : null
   };
 }
 

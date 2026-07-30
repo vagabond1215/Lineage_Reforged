@@ -245,7 +245,7 @@ test("UI tracking bridge contains no direct mutation and applies accepted state 
   assert.match(gameplayLoop, /const trackingPlan = resolvePlayerQuestTrackingPlan\(snapshot, questId\);/);
   assert.match(
     questsPanel,
-    /const result = toggleTrackedQuest\(snapshot, selectedItem\.id\);\s*if \(result\.accepted\) \{\s*updateSnapshot\(result\.snapshot\);\s*}/
+    /const result = toggleTrackedQuest\(snapshot, selectedItem\.id\);\s*if \(result\.accepted\) \{\s*updateSnapshot\(result\.snapshot,\s*\{[\s\S]*?ownerKind: 'engine_result',[\s\S]*?mutationId: result\.commandId,[\s\S]*?resultId: result\.resultId \?\? result\.commandId[\s\S]*?\}\);\s*}/
   );
   assert.doesNotMatch(engineModule, /node:/);
   assert.equal(jsPeer.trim(), 'export * from "./player-quest-tracking.ts";');

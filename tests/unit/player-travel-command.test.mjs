@@ -288,5 +288,8 @@ test("UI travel bridge contains no travel catalog or direct travel mutation", as
   }
   assert.match(gameplayLoop, /executePlayerTravelCommand/);
   assert.doesNotMatch(gameplayLoop, /function travelToKnownLocation[\s\S]*?playerState\.location\s*=/);
-  assert.match(worldPanel, /if \(result\.accepted\)\s*{\s*updateSnapshot\(result\.snapshot\)/);
+  assert.match(
+    worldPanel,
+    /if \(result\.accepted\)\s*{\s*updateSnapshot\(result\.snapshot,\s*\{[\s\S]*?ownerKind: 'engine_result',[\s\S]*?mutationId: result\.commandId,[\s\S]*?resultId: result\.resultId \?\? result\.commandId/
+  );
 });

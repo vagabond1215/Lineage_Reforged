@@ -9,6 +9,15 @@ import {
   archiveRunRecord,
   evaluateAchievementProgress
 } from '../../../../packages/engines/game-engine/src/achievements.js';
+import {
+  initializeTargetCampaignSnapshot
+} from '../../../../packages/engines/game-engine/src/campaign-rules.js';
+import type {
+  VerifiedCampaignPublication
+} from '../../../../packages/engines/game-engine/src/account-publication.js';
+import type {
+  CampaignSessionControl
+} from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import { grantLegacyReward } from '../../../../packages/engines/game-engine/src/legacy-account.js';
 import {
   depositEstateFromArchivedSnapshot,
@@ -20,7 +29,13 @@ import {
   type RunLegacyPayoutResolution
 } from '../../../../packages/engines/game-engine/src/run-legacy-payout.js';
 import { saveAccountProfile } from './accountProfileManager.js';
-import { deleteSave, listSaves, loadSave } from './saveManager.js';
+import {
+  buildSaveMetadata,
+  deleteSave,
+  listSaves,
+  loadSave,
+  publishSave
+} from './saveManager.js';
 import type { SaveSlotId, SaveSlotSummary } from './state.js';
 
 export type RunEndLegacyPayoutResolver = (
@@ -267,6 +282,13 @@ function resolveArchiveSlotIds(
 export function resolveTerminalArchiveReason(
   snapshot: SaveSnapshot
 ): AccountRunArchiveReason | null {
+  if (
+    snapshot.campaignRules?.version === 2 &&
+    snapshot.campaignRules.stakesRules === "normal_stakes"
+  ) {
+    return null;
+  }
+
   if (snapshot.playerState.resources.hp.current > 0) {
     return null;
   }
@@ -419,9 +441,61 @@ export function archiveActiveRun(params: {
   fallbackSlotId?: SaveSlotId;
   recordedAt?: string;
   payoutResolver?: RunEndLegacyPayoutResolver;
+  campaignSessionControl?: CampaignSessionControl;
+  verifiedTerminalPublication?: VerifiedCampaignPublication;
 }): ArchivedRunLifecycleResult {
   const recordedAt = params.recordedAt ?? new Date().toISOString();
-  const characterId = params.snapshot.playerState.playerId;
+  let terminalSnapshot = params.snapshot;
+  let verifiedTerminalPublication =
+    params.verifiedTerminalPublication ?? null;
+
+  if (!verifiedTerminalPublication) {
+    terminalSnapshot =
+      terminalSnapshot.campaignRules?.version === 2
+        ? terminalSnapshot
+        : initializeTargetCampaignSnapshot(terminalSnapshot, {
+            source: "developer_fixture",
+            recordedAt
+          });
+    const terminalSlotId =
+      params.fallbackSlotId ?? "quick-save";
+    const published = publishSave(
+      params.accountId,
+      terminalSlotId,
+      terminalSnapshot,
+      buildSaveMetadata(terminalSlotId, terminalSnapshot),
+      {
+        ...(params.campaignSessionControl
+          ? {
+              sessionControl:
+                params.campaignSessionControl
+            }
+          : {}),
+        terminal: true
+      }
+    );
+    if (!published.publication) {
+      throw new Error(
+        "Retirement requires a verified terminal campaign publication."
+      );
+    }
+    terminalSnapshot = published.snapshot;
+    verifiedTerminalPublication = published.publication;
+  }
+  if (
+    terminalSnapshot.campaignIdentity?.campaignId !==
+      verifiedTerminalPublication.campaignId ||
+    terminalSnapshot.campaignIdentity?.continuityId !==
+      verifiedTerminalPublication.continuityId ||
+    terminalSnapshot.playerState.playerId !==
+      verifiedTerminalPublication.characterId
+  ) {
+    throw new Error(
+      "Retirement publication does not match terminal campaign identity."
+    );
+  }
+
+  const characterId = terminalSnapshot.playerState.playerId;
   const existingRecord = findRunRecord(params.accountProfile, characterId);
 
   if (existingRecord && hasRunLegacyPayoutResolved(existingRecord)) {
@@ -441,12 +515,12 @@ export function archiveActiveRun(params: {
       slots: listSaves(params.accountId),
       clearedSlotIds,
       legacyGranted: 0,
-      snapshot: params.snapshot
+      snapshot: terminalSnapshot
     };
   }
 
   const evaluated = evaluateAchievementProgress(
-    params.snapshot,
+    terminalSnapshot,
     params.accountProfile,
     {
       ...(params.fallbackSlotId ? { slotId: params.fallbackSlotId } : {}),

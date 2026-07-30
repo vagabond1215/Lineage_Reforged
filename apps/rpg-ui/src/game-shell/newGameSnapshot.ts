@@ -25,6 +25,10 @@ import {
   syncPlayerRuntimeState
 } from '../../../../packages/engines/player-engine/src/index.js';
 import {
+  createAuthorityId,
+  initializeTargetCampaignSnapshot
+} from '../../../../packages/engines/game-engine/src/campaign-rules.js';
+import {
   createDefaultCharacterAchievementsState
 } from '../../../../packages/engines/game-engine/src/account-achievement-state.js';
 import {
@@ -76,7 +80,7 @@ import {
 import { resolveWorldSelection } from './worldSelectionCatalog.js';
 import { fillCoreResourcesToMax } from './newGameResourceInitialization.js';
 
-const CURRENT_SNAPSHOT_VERSION = '0.6.0';
+const CURRENT_SNAPSHOT_VERSION = 'lineage.save_snapshot.v2';
 
 function createDefaultPlayerCombatProfile() {
   return { preferredMode: 'normal' as const, memberPreferences: [] };
@@ -1062,20 +1066,31 @@ export function createNewGameSnapshot(
   const appliedLegacyPreparationChoices = derived.appliedLegacyPreparationChoices;
   const sourceRunId = options.sourceRunId?.trim();
 
-  return {
-    ...snapshot,
-    accountId,
-    playerState: {
-      ...snapshot.playerState,
-      saveMeta: {
-        ...snapshot.playerState.saveMeta,
-        ...(appliedLegacyPreparationIds.length > 0 ? { appliedLegacyPreparationIds } : {}),
-        ...(Object.keys(appliedLegacyPreparationChoices).length > 0
-          ? { appliedLegacyPreparationChoices }
-          : {}),
-        ...(sourceRunId ? { sourceRunId } : {}),
-        ...(sourceRunId && options.crossLineageStart ? { crossLineageStart: true } : {})
+  const characterId = createAuthorityId('character');
+  const targetSnapshot = initializeTargetCampaignSnapshot(
+    {
+      ...snapshot,
+      accountId,
+      playerState: {
+        ...snapshot.playerState,
+        playerId: characterId,
+        saveMeta: {
+          ...snapshot.playerState.saveMeta,
+          ...(appliedLegacyPreparationIds.length > 0 ? { appliedLegacyPreparationIds } : {}),
+          ...(Object.keys(appliedLegacyPreparationChoices).length > 0
+            ? { appliedLegacyPreparationChoices }
+            : {}),
+          ...(sourceRunId ? { sourceRunId } : {}),
+          ...(sourceRunId && options.crossLineageStart ? { crossLineageStart: true } : {})
+        }
       }
+    },
+    {
+      source: 'new_campaign'
     }
+  );
+
+  return {
+    ...targetSnapshot
   };
 }

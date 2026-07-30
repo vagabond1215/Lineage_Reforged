@@ -4,6 +4,9 @@ import type {
   AccountProfileState,
   SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
+import type {
+  CampaignSessionControl
+} from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import { SideNav } from '../components/SideNav';
 import { TopStatusBar } from '../components/TopStatusBar';
 import { AppLayout } from '../components/layout/AppLayout';
@@ -22,19 +25,26 @@ import type { GameShellNotice, SaveSlotId, SaveSlotSummary } from './state.js';
 type InGameShellProps = {
   accountProfile: AccountProfileState;
   snapshot: SaveSnapshot;
+  campaignSessionControl: CampaignSessionControl;
   slots: SaveSlotSummary[];
   activeSlotId: SaveSlotId;
   hasUnsavedChanges: boolean;
   notice: GameShellNotice | null;
   onDismissNotice: () => void;
-  onSnapshotChange: (snapshot: SaveSnapshot) => void;
+  onSnapshotChange: (
+    snapshot: SaveSnapshot,
+    campaignSessionControl: CampaignSessionControl
+  ) => void;
   onSave: () => void;
   onQuickSave: () => void;
   onRetireCharacter: () => void;
   onReturnToMainMenu: () => void;
 };
 
-type InGameShellContentProps = Omit<InGameShellProps, 'snapshot' | 'onSnapshotChange'>;
+type InGameShellContentProps = Omit<
+  InGameShellProps,
+  'accountProfile' | 'snapshot' | 'campaignSessionControl' | 'onSnapshotChange'
+>;
 
 function InGameShellContent({
   slots,
@@ -73,13 +83,18 @@ function InGameShellContent({
         ? pinnedIds.filter((itemId) => itemId !== id)
         : [...pinnedIds, id];
 
-      updateSnapshot({
-        ...snapshot,
-        sessionState: {
-          ...snapshot.sessionState,
-          pinnedRecordIds: nextPinnedIds
+      updateSnapshot(
+        {
+          ...snapshot,
+          sessionState: {
+            ...snapshot.sessionState,
+            pinnedRecordIds: nextPinnedIds
+          }
+        },
+        {
+          ownerKind: 'persisted_preference'
         }
-      });
+      );
     }
   };
 
@@ -178,6 +193,7 @@ function InGameShellContent({
 export function InGameShell({
   accountProfile,
   snapshot,
+  campaignSessionControl,
   slots,
   activeSlotId,
   hasUnsavedChanges,
@@ -193,6 +209,7 @@ export function InGameShell({
     <GameSessionProvider
       accountProfile={accountProfile}
       snapshot={snapshot}
+      campaignSessionControl={campaignSessionControl}
       onSnapshotChange={onSnapshotChange}
     >
       <InGameShellContent

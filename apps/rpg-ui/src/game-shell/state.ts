@@ -2,6 +2,9 @@ import type {
   AccountProfileState,
   SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
+import type {
+  CampaignSessionControl
+} from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import type { TagTone } from '../types.js';
 import type { CharacterCreationFormState } from './characterCreationForm.js';
 import type {
@@ -120,6 +123,7 @@ export type InGameState = SignedInGameShellBaseState & {
   screen: 'IN_GAME';
   activeSlotId: SaveSlotId;
   snapshot: SaveSnapshot;
+  campaignSessionControl: CampaignSessionControl;
   hasUnsavedChanges: boolean;
 };
 
@@ -187,6 +191,7 @@ export type GameShellAction =
       slots: SaveSlotSummary[];
       slotId: SaveSlotId;
       snapshot: SaveSnapshot;
+      campaignSessionControl: CampaignSessionControl;
       notice: GameShellNotice | null;
     }
   | {
@@ -195,6 +200,7 @@ export type GameShellAction =
       accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       snapshot: SaveSnapshot;
+      campaignSessionControl: CampaignSessionControl;
     }
   | {
       type: 'COMPLETE_IN_GAME_SAVE';
@@ -202,6 +208,8 @@ export type GameShellAction =
       accountProfile: AccountProfileState;
       slots: SaveSlotSummary[];
       activeSlotId: SaveSlotId;
+      snapshot: SaveSnapshot;
+      campaignSessionControl: CampaignSessionControl;
       notice: GameShellNotice | null;
     }
   | {
@@ -421,6 +429,7 @@ export function gameShellReducer(
         notice: action.notice,
         activeSlotId: action.slotId,
         snapshot: action.snapshot,
+        campaignSessionControl: action.campaignSessionControl,
         hasUnsavedChanges: false
       };
     case 'UPDATE_IN_GAME_SNAPSHOT':
@@ -442,6 +451,7 @@ export function gameShellReducer(
         accountProfile: action.accountProfile,
         slots: action.slots,
         snapshot: action.snapshot,
+        campaignSessionControl: action.campaignSessionControl,
         hasUnsavedChanges:
           action.snapshot === state.snapshot ? state.hasUnsavedChanges : true
       };
@@ -457,6 +467,8 @@ export function gameShellReducer(
         slots: action.slots,
         notice: action.notice,
         activeSlotId: action.activeSlotId,
+        snapshot: action.snapshot,
+        campaignSessionControl: action.campaignSessionControl,
         hasUnsavedChanges: false
       };
     case 'SET_NOTICE':

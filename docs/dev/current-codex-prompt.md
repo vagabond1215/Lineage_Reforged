@@ -1,248 +1,137 @@
-# Version 0.6.9 - Normal Stakes Campaign Persistence Foundation
+# Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit
 
 ## Run Identity
 
-`Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
+`Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`
 
-Label class: primary
+Label class: support suffix
 
-Parent version: not applicable
+Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
-Milestone impact: `advances_current_band`
+Milestone impact: `supports_current_band`
 
 Suggested commit:
 
-`feat(save): add Normal campaign persistence authority`
+`test(save): audit Normal campaign persistence foundation`
 
 ## Purpose
 
-Implement the accepted atomic Normal-only campaign persistence foundation:
+Independently audit the complete landed `0.6.9` parent. Accept it only if the campaign-rules, save-authority, migration, first-mutation continuity, Normal defeat, legacy repair, account-publication, and retirement boundaries are coherent together and all prescribed checks pass.
 
-1. campaign-rules semantic version 2 and stable campaign/continuity/character identity;
-2. storage envelope version 7 with verified candidate publication and version-6 migration;
-3. first-accepted-mutation child continuity after loading a non-head artifact;
-4. engine-owned nonterminal Normal Stakes defeat and active legacy HP-zero repair;
-5. publication-anchored, idempotent account history/achievement/Legacy/retirement consumers.
-
-This package must leave the repository with one coherent authority boundary. Do not land a partial state in which campaign rules activate while ordinary HP zero still archives/deletes, or account value can publish from an unpublished branch.
+This is an audit-first support run. Do not broaden into survey advancement, later Stakes modes, actual death/succession, checkpoint UI, cloud synchronization, or a generic command/transaction framework.
 
 ## Required Reading
 
 Read:
 
 - `AGENTS.md`;
-- `README.md`;
+- current output, prompt, handoff, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, static-content program, and branch register;
 - `docs/dev/branch-lifecycle-and-integration-policy.md`;
-- `docs/dev/branch-disposition-register.md`;
-- current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, and static-content program;
 - `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
 - `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
 - `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
 - `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
 - `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`;
-- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
-- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
-- `docs/design/internal-versioning-and-release-milestone-policy.md`;
-- every current snapshot writer, save/load/delete path, lifecycle path, achievement/account consumer, new-game path, and relevant focused test;
-- the isolated readiness branch through read-only Git inspection only.
+- every file changed by the parent;
+- the protected readiness branch through read-only Git inspection only.
 
 ## Execution Gate
 
-1. Verify branch, clean worktree, upstream, current head, and active prompt.
-2. Run `git fetch --all --prune`; inventory branches and open PRs; refresh the branch register for proven changes.
-3. Confirm the source decision is `PACKAGE_READY` for exact `Version 0.6.9`.
-4. Confirm no branch contains a newer overlapping implementation requiring integration.
-5. Reproduce the current 107-test focused baseline named in the source output.
-6. Reproduce the complete persisted-snapshot mutation matrix and current HP-zero/account-save ordering.
-7. Stop before production edits if the worktree is dirty, a required authority conflicts, or the atomic package cannot remain within the authorized boundary.
+1. Verify branch, clean worktree, upstream, current head, parent commit, and active prompt.
+2. Run `git fetch --all --prune`; inventory branches and open PRs; refresh dispositions only for proven live changes.
+3. Confirm the parent diff is one coherent authorized package and contains no generated output, dependency change, content/catalog change, survey implementation, or later-Stakes behavior.
+4. Reproduce the parent focused test and build evidence before deciding acceptance.
+5. Stop and install the smallest `0.6.9.2` repair prompt if a material defect cannot be safely fixed within this audit.
 
-## Required Implementation
+## Required Audit
 
-### A. Campaign and save contracts
+### A. Identity and rules
 
-- Add campaign-rules version 2 with Normal-only live activation, policy revision 1, canonical migrated Difficulty, `heroic_world`, typed provenance, and registered compatibility overrides only.
-- Add stable account/campaign/continuity/character/artifact/generation/publication/head-revision identities.
-- Add the versioned persisted authority-ledger container without inventing survey records or retroactive receipts for existing commands.
-- Use target snapshot-format identity `lineage.save_snapshot.v2`, and keep it, storage-schema version 7, campaign-rules version 2, Stakes policy revision 1, and workflow `0.6.9` distinct.
-- Use `crypto.randomUUID()` or fail closed. No weak fallback.
+- Verify snapshot format `lineage.save_snapshot.v2`, envelope version 7, campaign-rules version 2, policy revision 1, and workflow `0.6.9` remain distinct.
+- Verify live rules are Normal-only with canonical legacy difficulty mapping and typed provenance.
+- Verify account/campaign/continuity/character/artifact/generation/publication identities use `crypto.randomUUID()` and fail closed without it.
+- Verify the persisted authority-ledger container does not invent survey receipts or retroactive command records.
 
-### B. Envelope version 7 and publication
+### B. Publication authority
 
-- Introduce storage envelope version 7 and campaign-control/head records.
-- Preserve 128 manual addresses and quick-save.
-- Write candidates under non-head keys.
-- Read back exact bytes, run semantic validation, publish the head, then verify the publication.
-- Retain the immediately prior verified compatible artifact required for recovery.
-- Update address metadata and other projections after publication.
-- UI save success requires verified publication.
-- Saving an unchanged non-head artifact binds/copies that artifact and must not advance campaign head or create a child.
+- Inject candidate write/readback failure and campaign-control publication failure.
+- Prove no failed candidate becomes the head or updates address/account projections.
+- Prove successful publication retains immutable artifact authority and the immediately prior compatible head.
+- Prove UI success is conditioned on verified publication.
+- Prove saving an unchanged non-head artifact copies/binds the existing artifact identity without new generation/publication/head revision.
+- Prove stale-head sessions fail closed.
 
-### C. Version-6 migration
+### C. Version-6 migration and active repair
 
-- Preserve original version-6 bytes.
-- Write/reuse one pending owner-certified migration receipt with stable target ids and per-source artifact mapping.
-- Group sources only through complete account/history/player/start/rules/fingerprint evidence.
-- Certify the initial head only when there is one source artifact or one unique envelope `savedAt` exactly matching the account profile's `lastPlayedAt` inside the validated group.
-- Quarantine ambiguous multi-artifact groups.
-- Map legacy difficulty and Hardcore exactly as accepted.
-- Rekey active history to the target character only after target publication.
-- Keep migration idempotent across interruption and retry.
+- Test each accepted legacy difficulty/Hardcore mapping.
+- Prove original version-6 bytes remain retained and playable version-6 keys are removed only after verified target publication.
+- Prove one stable pending migration receipt is reused after injected interruption.
+- Prove one-source and unique exact `savedAt == account.lastPlayedAt` head certification.
+- Prove ambiguous multi-artifact groups remain quarantined and untouched.
+- Prove active HP-zero head and non-head sources receive exactly one `unknown_or_legacy` defeat repair before play.
+- Prove repaired head advances only its certified campaign head and repaired non-head remains non-head.
+- Prove blocked/deleted history cannot re-enter.
 
-### D. Campaign session and first mutation
+### D. Session admission and continuity
 
-- Carry `CampaignSessionControl` beside the in-game snapshot.
-- Load verified head/non-head posture from save authority.
-- Accept structured mutation submissions with stable ids, source revision, owner/bridge kind, accepted posture, and proposed snapshot.
-- Preserve engine-owned accepted discriminators and correlation.
-- Use explicit temporary legacy bridge admission; source-snapshot identity means rejection/no-change only where locked by tests.
-- Rejected, duplicate, or stale submissions must not mutate, fork, mark dirty, evaluate account state, or trigger defeat.
-- Create exactly one in-memory child continuity before the first accepted mutation from a non-head artifact.
-- Reuse that child for later accepted mutations.
-- Make it durable only on verified publication.
-- Discard it and every provisional account calculation when unsaved play exits.
+- Audit every persisted-snapshot writer.
+- Prove rejected, no-change, duplicate, stale-revision, and wrong-artifact submissions preserve snapshot/control identity and do not mark dirty, fork, defeat-resolve, or evaluate account state.
+- Prove engine results retain command/result correlation.
+- Prove legacy bridge and persisted preference changes use explicit owner kinds.
+- Prove the first accepted mutation from a non-head artifact creates exactly one child continuity before application and all later accepted mutations reuse it.
+- Prove abandoning unsaved play leaves no durable child or account value.
+- Prove a verified save makes the child durable.
 
-All persisted snapshot changes, including current pin/favorite preferences while they remain in the snapshot, participate in the same divergence rule.
+### E. Normal defeat
 
-### E. Normal Stakes defeat
+- Test combat and noncombat HP-zero admissions.
+- Verify exactly four playable recovery ticks, HP formula, Stamina formula, MP/body preservation, encounter/transient-combat clearing, destination chain, and recovery-pending behavior.
+- Verify inventory, equipment, currency, quests, party, attributes, injury/trauma, and permanent truth are unchanged.
+- Verify one typed retained receipt, one Chronicle projection, one notice, and duplicate idempotency.
+- Verify ordinary defeat remains unsaved and cannot reach terminal archive, payout, estate, or save deletion.
 
-- Add one engine-owned Normal defeat resolver and typed retained receipt/result.
-- Run it after accepted mutation admission when resulting HP is zero.
-- Clear active encounter and transient combat bindings.
-- Use the accepted destination chain.
-- For playable fallback, advance exactly four ticks.
-- Set HP to `min(maxHP, max(1, ceil(maxHP * 0.25)))`.
-- Set Stamina to `min(maxStamina, max(currentStamina, 12))`.
-- Preserve MP and body state.
-- Preserve inventory, equipment, currency, quests, party membership, attributes, injury/trauma, and permanent truth.
-- Produce one Chronicle projection and notice from the retained result.
-- Make duplicate resolution idempotent.
-- Keep ordinary defeat unsaved.
-- Keep `recovery_pending` nonterminal and diagnostic.
-- Remove ordinary HP-zero access to terminal archival, payout, estate, and save deletion.
+### F. Account and retirement consumers
 
-### F. Active legacy HP-zero repair
+- Prove character achievement preparation happens before campaign publication.
+- Prove account history/metrics/achievements, Legacy rewards, preparation consumption, inheritance consumption, `lastPlayedAt`, retirement settlement, and estate consume only verified publications.
+- Prove consumer ids are publication id plus registered kind, retries are idempotent, and conflicting payloads fail closed.
+- Inject post-publication account failure and prove gameplay authority remains published with a repairable pending receipt.
+- Prove mandatory new-game preparation/inheritance receipts block entry and further use until repaired on restart/account selection.
+- Prove retirement publishes and verifies terminal authority before settlement, removes playable addresses only after mandatory consumers, and retains hidden closed authority.
 
-- Block archived/deleted history first.
-- Migrate rules and identity.
-- Resolve one `unknown_or_legacy` defeat.
-- Publish the repaired target artifact at the loaded address before play.
-- Advance the campaign head only when the repaired source was the certified head.
-- Keep repaired non-head sources non-head.
-- Do not create a player-divergence child for owner-certified repair.
-- On any required write/consumer failure, preserve source, block entry, and retry from retained receipts.
+### G. Integration and mirrors
 
-### G. Account publication
+- Verify TypeScript/JavaScript owner mirrors and exports.
+- Verify browser imports remain narrow enough that the UI production build does not pull server-only `node:fs` content modules.
+- Verify existing travel, quest acceptance/tracking, activity selection, save roundtrip, combat, achievement, and lifecycle tests remain green.
+- Run a bounded TypeScript audit only as classified by repository policy; do not turn the known broad diagnostic backlog into the acceptance gate.
 
-- Stop persisting account progress from ordinary `onSnapshotChange`.
-- Prepare character-owned achievement state inside the campaign snapshot before publication.
-- Apply active history, account metrics, account achievements, Legacy rewards, preparation consumption, inheritance-use consumption, and `lastPlayedAt` only after verified publication.
-- Key each account consumer by publication id plus registered consumer kind.
-- Store applied/pending consumer receipts and make retries idempotent.
-- Conflicting payload under one consumer id fails closed.
-- A projection failure after publication leaves gameplay truth published and creates a repairable pending consumer.
-- Mandatory new-game preparation/inheritance consumers block entry and further preparation use until repaired.
-- Startup/account selection repairs mandatory pending consumers before exposing duplicable account value.
+## Prescribed Checks
 
-### H. Explicit retirement
-
-- Keep the current explicit confirmation and terminal semantics.
-- Publish and verify a terminal retirement campaign artifact/control result before existing account settlement.
-- Apply existing retirement history, payout, Legacy, and estate behavior through publication-keyed idempotent consumers.
-- Remove player-continuable address bindings only after mandatory consumers succeed.
-- Retain hidden closed authority for duplicate prevention.
-- Do not change retirement balance, estate contents, inheritance counts, or user-facing intent.
-
-## Authorized Production Scope
-
-Use only the necessary subset of:
-
-- `packages/shared/types/src/contracts.ts`;
-- `packages/shared/persistence/src/index.ts` and `.js`;
-- `packages/engines/game-engine/src/save-snapshot.ts` and `.js`;
-- `packages/engines/game-engine/src/index.ts` and `.js`;
-- new mirrored campaign-rules, save-authority, account-publication, and Normal-defeat owner modules;
-- `packages/engines/game-engine/src/achievements.ts` and `.js`;
-- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`;
-- `apps/rpg-ui/src/game-shell/saveManager.ts`;
-- `apps/rpg-ui/src/game-shell/runLifecycle.ts`;
-- `apps/rpg-ui/src/game-shell/state.ts`;
-- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
-- `apps/rpg-ui/src/runtime/GameSessionContext.tsx`;
-- `apps/rpg-ui/src/game-shell/InGameShell.tsx`;
-- `apps/rpg-ui/src/features/WorldPanel.tsx`;
-- `apps/rpg-ui/src/features/QuestsPanel.tsx`;
-- `apps/rpg-ui/src/features/ActivityPanel.tsx`;
-- `apps/rpg-ui/src/features/CharacterPanel.tsx`;
-- `apps/rpg-ui/src/App.tsx`;
-- focused existing and new tests beside the current save, migration, lifecycle, achievement, command, and combat tests.
-
-Adding a narrowly named owner or focused test beside these paths is allowed. Stop before using an unrelated production path.
-
-Keep tracked TypeScript/JavaScript mirrors aligned. Add no production dependency.
-
-## Prohibited Scope
-
-Do not:
-
-- implement Ashen Reef survey advancement or survey receipts;
-- rewrite quest turn-in, rest, equipment, inventory, or activity mechanics beyond required mutation-admission metadata;
-- implement Committed, Ironbound, checkpoint selection, or save-browser redesign;
-- implement actual death, succession, resurrection, injury, trauma, care, or estate redesign;
-- expose Story or Grim;
-- add a generic command bus, transaction framework, replay service, effect engine, cloud merge, encryption, anti-cheat, or telemetry;
-- edit content catalogs, schemas, assets, generated files, or unrelated UI;
-- merge or delete protected branches;
-- integrate unrelated candidate branches;
-- run broad workspace typecheck as the acceptance gate.
-
-## Required Tests
-
-Add focused tests for every obligation in Section 15 of the source dependency-closure decision, including:
-
-- target new-game/save/load roundtrip;
-- every migration mapping, retry, source retention, unique-head proof, and ambiguity quarantine;
-- head/non-head load and first-mutation behavior across engine, legacy, preference, rejected, duplicate, and stale submissions;
-- unchanged non-head save behavior;
-- candidate/readback/publication failures;
-- publication-before-account ordering and consumer retry/idempotency;
-- new-game preparation/inheritance repair;
-- combat and noncombat Normal defeat, exact fallback values, preservation, idempotency, and no forced save;
-- active legacy HP-zero head and non-head repair;
-- explicit retirement publication-before-settlement;
-- copied-artifact identity;
-- source guards for removed ordinary HP-zero archival and no eager account persistence;
-- TypeScript/JavaScript mirror/export parity.
-
-Re-run the existing focused baseline:
+Run:
 
 ```text
-node --test tests\simulation\save-load-roundtrip.test.mjs tests\unit\achievements.test.mjs tests\unit\account-profile-storage.test.mjs tests\unit\run-lifecycle.test.mjs tests\unit\player-travel-command.test.mjs tests\unit\player-quest-acceptance-command.test.mjs tests\unit\player-quest-tracking-command.test.mjs tests\unit\player-activity-selection-command.test.mjs tests\unit\combat-hook-support.test.mjs tests\unit\combat-spawn-foundation.test.mjs
+node --test tests\simulation\save-load-roundtrip.test.mjs tests\unit\achievements.test.mjs tests\unit\account-profile-storage.test.mjs tests\unit\run-lifecycle.test.mjs tests\unit\player-travel-command.test.mjs tests\unit\player-quest-acceptance-command.test.mjs tests\unit\player-quest-tracking-command.test.mjs tests\unit\player-activity-selection-command.test.mjs tests\unit\combat-hook-support.test.mjs tests\unit\combat-spawn-foundation.test.mjs tests\unit\campaign-persistence-foundation.test.mjs
 ```
 
-Run additional focused tests created by the package. Run a bounded TypeScript check only if it can target the changed project without turning the known 173-diagnostic workspace audit into a gate.
+Run the RPG UI Vite production build with temporary output outside tracked paths, then remove that output.
 
-## Documentation And Completion
+Run `git diff --check` and inspect the complete parent/audit diff.
 
-- Add a focused implementation document only if needed for durable field/path detail not already captured by the source decision.
-- Update current output, handoff, prompt, roadmap, sequenced plan, continuity brief, historical/deferred register, planning anchor, backlog, static-content program, and branch register for proven results.
-- Install a parent-specific `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit` prompt after implementation and green focused validation.
-- If implementation or a required gate fails, install the smallest exact parent-specific repair or audit prompt and do not claim parent acceptance.
-- Do not install a survey implementation prompt directly from this run.
+## Completion
 
-## Completion Report
+If all obligations pass:
 
-Report:
+- add a focused acceptance document;
+- mark `0.6.9` complete and accepted;
+- update all live coordination surfaces;
+- install the smallest unversioned post-parent route decision required before survey implementation;
+- do not install a survey implementation prompt unless that decision proves all remaining occurrence/result/consequence prerequisites closed.
 
-- starting and final commits;
-- repository/branch/PR actions and retained triggers;
-- exact files changed;
-- campaign/session/save identities and format revisions;
-- migration and unique-head behavior;
-- first-mutation behavior;
-- defeat and legacy-repair behavior;
-- account publication and retry behavior;
-- retirement ordering;
-- tests/checks run with counts;
-- any failed or skipped gate;
-- risks and follow-up notes;
-- installed support prompt.
+If any obligation fails:
+
+- make only a tiny obvious parent-specific repair when complete intent is already fixed by accepted authority and validation fits this support run;
+- otherwise stop, document the defect, and install exact `Version 0.6.9.2` repair work;
+- do not claim parent acceptance.
+
+Report starting/final commits, parent range, exact files changed, branch/PR lifecycle, all checks and counts, injected-failure evidence, acceptance criteria, risks, and the installed next prompt.

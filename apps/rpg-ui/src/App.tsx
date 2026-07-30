@@ -1,8 +1,20 @@
 import { useEffect, useReducer, useState } from 'react';
 import {
+  hasPendingMandatoryCampaignConsumers,
+  recordCampaignPublicationConsumer,
+  type VerifiedCampaignPublication
+} from '../../../packages/engines/game-engine/src/account-publication.js';
+import type {
+  CampaignSessionControl
+} from '../../../packages/engines/game-engine/src/campaign-session.js';
+import {
   evaluateAchievementProgress,
-  markRunDeleted
+  markRunDeleted,
+  prepareCharacterAchievementProgress
 } from '../../../packages/engines/game-engine/src/achievements.js';
+import type {
+  AccountProfileState
+} from '../../../packages/shared/types/src/index.js';
 import {
   createDefaultAccountProfileState
 } from '../../../packages/engines/game-engine/src/legacy-account.js';
@@ -50,16 +62,16 @@ import {
   consumeRetiredRunInheritanceUse,
   purgeBlockedRunSlot,
   resolveEligibleHeirSources,
-  resolveHeirSourceById,
-  resolveTerminalArchiveReason
+  resolveHeirSourceById
 } from './game-shell/runLifecycle.js';
 import {
   buildSaveMetadata,
-  createSave,
   deleteSave,
   listSaves,
   loadSave,
-  quickSave
+  loadSaveWithAuthority,
+  publishSave,
+  type LoadedCampaignSave
 } from './game-shell/saveManager';
 import {
   createAccountAccessState,
@@ -322,7 +334,9 @@ function listSignedInSlotsWithFallback(
   notice: GameShellNotice | null;
 } {
   try {
-    const accountProfile = loadAccountProfile(launcherSession.accountId);
+    const accountProfile = repairMandatoryCampaignConsumers(
+      loadAccountProfile(launcherSession.accountId)
+    );
     return {
       accountProfile,
       slots: listSaves(accountProfile.accountId),
@@ -342,10 +356,13 @@ function createAppState(_: undefined): GameShellState {
     const bootstrap = bootstrapLauncherAuth();
 
     if (bootstrap.mode === 'signed_in') {
+      const accountProfile = repairMandatoryCampaignConsumers(
+        bootstrap.accountProfile
+      );
       return createInitialGameShellState(
         bootstrap.session,
-        bootstrap.accountProfile,
-        listSaves(bootstrap.accountProfile.accountId),
+        accountProfile,
+        listSaves(accountProfile.accountId),
         bootstrap.notice
           ? buildAuthNotice('Local Sign-In Reset', bootstrap.notice)
           : null
@@ -366,40 +383,177 @@ function createAppState(_: undefined): GameShellState {
   }
 }
 
-function evaluateSnapshotWithAccount(
+function applyVerifiedPublicationToAccount(
   accountProfile: ReturnType<typeof createDefaultAccountProfileState>,
   snapshot: ReturnType<typeof createNewGameSnapshot>,
+  publication: VerifiedCampaignPublication,
   options: {
-    slotId?: SaveSlotId;
-    touchHistory?: boolean;
-    recordedAt?: string;
+    slotId: SaveSlotId;
     suppressLegacyRewards?: boolean;
-    persistProfile?: boolean;
-  } = {}
+  }
 ): {
   accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
   snapshot: ReturnType<typeof createNewGameSnapshot>;
 } {
-  const evaluated = evaluateAchievementProgress(snapshot, accountProfile, options);
+  const evaluated = evaluateAchievementProgress(snapshot, accountProfile, {
+    slotId: options.slotId,
+    touchHistory: true,
+    recordedAt: publication.publishedAt,
+    suppressLegacyRewards: options.suppressLegacyRewards ?? false
+  });
+  const payloadFingerprint = buildAccountPublicationFingerprint(
+    publication,
+    evaluated.nextSnapshot,
+    options.slotId
+  );
+  let nextProfile: AccountProfileState = {
+    ...evaluated.nextAccountProfile,
+    lastPlayedAt: publication.publishedAt
+  };
 
-  if (!evaluated.changed) {
-    return {
-      accountProfile,
-      snapshot: evaluated.nextSnapshot
-    };
-  }
-
-  if (options.persistProfile === false) {
-    return {
-      accountProfile: evaluated.nextAccountProfile,
-      snapshot: evaluated.nextSnapshot
-    };
+  for (const kind of [
+    'active_history',
+    'account_achievements',
+    'legacy_rewards',
+    'last_played'
+  ] as const) {
+    nextProfile = recordCampaignPublicationConsumer(
+      nextProfile,
+      publication,
+      kind,
+      payloadFingerprint,
+      {
+        status: 'applied'
+      }
+    );
   }
 
   return {
-    accountProfile: saveAccountProfile(evaluated.nextAccountProfile),
+    accountProfile: saveAccountProfile(nextProfile),
     snapshot: evaluated.nextSnapshot
   };
+}
+
+function buildAccountPublicationFingerprint(
+  publication: VerifiedCampaignPublication,
+  snapshot: ReturnType<typeof createNewGameSnapshot>,
+  slotId: SaveSlotId
+): string {
+  return JSON.stringify({
+    publicationId: publication.publicationId,
+    slotId,
+    capturedAtTick: snapshot.capturedAtTick,
+    characterAchievementIds:
+      snapshot.playerState.achievements.unlocked.map(
+        (entry) => entry.achievementId
+      )
+  });
+}
+
+function repairMandatoryCampaignConsumers(
+  accountProfile: ReturnType<typeof createDefaultAccountProfileState>
+): ReturnType<typeof createDefaultAccountProfileState> {
+  if (
+    !(accountProfile.campaignPublicationReceipts ?? []).some(
+      (receipt) => receipt.status === 'pending'
+    )
+  ) {
+    return accountProfile;
+  }
+
+  let nextProfile = accountProfile;
+  const pendingReceipts = (
+    accountProfile.campaignPublicationReceipts ?? []
+  ).filter((receipt) => receipt.status === 'pending');
+
+  for (const receipt of pendingReceipts) {
+    const loadedEntry = listSaves(accountProfile.accountId)
+      .filter((slot) => slot.status === 'ready')
+      .map((slot) => ({
+        slotId: slot.id,
+        loaded: loadSaveWithAuthority(
+          accountProfile.accountId,
+          slot.id,
+          { allowClosed: true }
+        )
+      }))
+      .find(
+        (candidate) =>
+          candidate.loaded?.publication.publicationId ===
+          receipt.publicationId
+      );
+
+    if (!loadedEntry?.loaded) {
+      continue;
+    }
+    const loaded = loadedEntry.loaded;
+
+    if (
+      receipt.kind === 'active_history' ||
+      receipt.kind === 'account_achievements' ||
+      receipt.kind === 'legacy_rewards' ||
+      receipt.kind === 'last_played'
+    ) {
+      nextProfile = applyVerifiedPublicationToAccount(
+        nextProfile,
+        loaded.snapshot,
+        loaded.publication,
+        {
+          slotId: loadedEntry.slotId
+        }
+      ).accountProfile;
+      continue;
+    }
+
+    if (receipt.kind === 'preparation_consumption') {
+      nextProfile =
+        consumeSelectedLegacyPreparations(nextProfile).profile;
+    } else if (receipt.kind === 'inheritance_consumption') {
+      const sourceRunId =
+        loaded.snapshot.playerState.saveMeta.sourceRunId;
+      const source = resolveHeirSourceById(
+        nextProfile,
+        sourceRunId
+      );
+      if (source) {
+        nextProfile = consumeRetiredRunInheritanceUse(
+          nextProfile,
+          {
+            characterId: source.characterId,
+            recordedAt: loaded.publication.publishedAt
+          }
+        ).accountProfile;
+      }
+    } else if (receipt.kind === 'retirement_settlement') {
+      const archived = archiveActiveRun({
+        accountId: accountProfile.accountId,
+        accountProfile: nextProfile,
+        snapshot: loaded.snapshot,
+        archiveReason: 'retired',
+        fallbackSlotId: loadedEntry.slotId,
+        verifiedTerminalPublication: loaded.publication
+      });
+      nextProfile = recordCampaignPublicationConsumer(
+        archived.accountProfile,
+        loaded.publication,
+        'estate',
+        receipt.payloadFingerprint,
+        { status: 'applied' }
+      );
+    } else {
+      continue;
+    }
+
+    nextProfile = recordCampaignPublicationConsumer(
+      nextProfile,
+      loaded.publication,
+      receipt.kind,
+      receipt.payloadFingerprint,
+      { status: 'applied' }
+    );
+  }
+
+  return saveAccountProfile(nextProfile);
 }
 
 function formatSaveNoticeTimestamp(savedAt: string | null, savedLabel: string | null): string {
@@ -667,6 +821,7 @@ export default function App() {
     accountProfile: ReturnType<typeof createDefaultAccountProfileState>,
     slotId: SaveSlotId,
     snapshot: ReturnType<typeof createNewGameSnapshot>,
+    campaignSessionControl: CampaignSessionControl,
     notice: GameShellNotice | null
   ) => {
     const next = listSignedInSlotsWithFallback(
@@ -674,6 +829,24 @@ export default function App() {
       'read launcher account data',
       accountProfile
     );
+    if (
+      !next.notice &&
+      hasPendingMandatoryCampaignConsumers(next.accountProfile)
+    ) {
+      dispatch({
+        type: 'SHOW_MAIN_MENU',
+        launcherSession,
+        accountProfile: next.accountProfile,
+        slots: next.slots,
+        notice: {
+          tone: 'warning',
+          title: 'Campaign Account Repair Pending',
+          detail:
+            'A published campaign still has mandatory preparation or inheritance account work. Repair that campaign before starting another character.'
+        }
+      });
+      return;
+    }
     dispatch({
       type: 'ENTER_GAME',
       launcherSession,
@@ -681,6 +854,7 @@ export default function App() {
       slots: next.slots,
       slotId,
       snapshot,
+      campaignSessionControl,
       notice: next.notice ?? notice
     });
   };
@@ -695,6 +869,24 @@ export default function App() {
       'read launcher account data',
       accountProfile
     );
+    if (
+      !next.notice &&
+      hasPendingMandatoryCampaignConsumers(next.accountProfile)
+    ) {
+      dispatch({
+        type: 'SHOW_MAIN_MENU',
+        launcherSession,
+        accountProfile: next.accountProfile,
+        slots: next.slots,
+        notice: {
+          tone: 'warning',
+          title: 'Campaign Account Repair Pending',
+          detail:
+            'Finish the pending published-campaign account repair before selecting preparations for another character.'
+        }
+      });
+      return;
+    }
     dispatch({
       type: 'OPEN_CHARACTER_CREATION',
       launcherSession,
@@ -871,22 +1063,27 @@ export default function App() {
   const resolveRunEntry = (
     accountProfile: ReturnType<typeof createDefaultAccountProfileState>,
     slotId: SaveSlotId,
-    snapshot: ReturnType<typeof createNewGameSnapshot>
+    loaded: LoadedCampaignSave
   ):
     | {
         kind: 'enter';
         accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
         snapshot: ReturnType<typeof createNewGameSnapshot>;
+        campaignSessionControl: CampaignSessionControl;
       }
     | {
         kind: 'blocked';
         accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
         slots: ReturnType<typeof createEmptySaveSlotSummaries>;
         notice: GameShellNotice;
-      } => {
+  } => {
+    const snapshot = loaded.snapshot;
+    const currentAccountProfile = loadAccountProfile(
+      accountProfile.accountId
+    );
     const blocked = purgeBlockedRunSlot({
-      accountId: accountProfile.accountId,
-      accountProfile,
+      accountId: currentAccountProfile.accountId,
+      accountProfile: currentAccountProfile,
       characterId: snapshot.playerState.playerId,
       slotId
     });
@@ -900,37 +1097,18 @@ export default function App() {
       };
     }
 
-    const prepared = evaluateSnapshotWithAccount(accountProfile, snapshot, {
-      slotId,
-      touchHistory: true
-    });
-    const deathReason = resolveTerminalArchiveReason(prepared.snapshot);
-
-    if (deathReason) {
-      const archived = archiveActiveRun({
-        accountId: prepared.accountProfile.accountId,
-        accountProfile: prepared.accountProfile,
-        snapshot: prepared.snapshot,
-        archiveReason: deathReason,
-        fallbackSlotId: slotId
-      });
-
-      return {
-        kind: 'blocked',
-        accountProfile: archived.accountProfile,
-        slots: archived.slots,
-        notice: buildArchivedRunNotice(
-          archived.snapshot,
-          deathReason,
-          archived.legacyGranted
-        )
-      };
-    }
+    const prepared = applyVerifiedPublicationToAccount(
+      currentAccountProfile,
+      snapshot,
+      loaded.publication,
+      { slotId }
+    );
 
     return {
       kind: 'enter',
       accountProfile: prepared.accountProfile,
-      snapshot: prepared.snapshot
+      snapshot: prepared.snapshot,
+      campaignSessionControl: loaded.sessionControl
     };
   };
 
@@ -955,9 +1133,12 @@ export default function App() {
     }
 
     try {
-      const snapshot = loadSave(next.accountProfile.accountId, slotId);
+      const loaded = loadSaveWithAuthority(
+        next.accountProfile.accountId,
+        slotId
+      );
 
-      if (!snapshot) {
+      if (!loaded) {
         dispatch({
           type: 'SHOW_MAIN_MENU',
           launcherSession: state.launcherSession,
@@ -972,7 +1153,11 @@ export default function App() {
         return;
       }
 
-      const resolved = resolveRunEntry(next.accountProfile, slotId, snapshot);
+      const resolved = resolveRunEntry(
+        next.accountProfile,
+        slotId,
+        loaded
+      );
 
       if (resolved.kind === 'blocked') {
         dispatch({
@@ -990,6 +1175,7 @@ export default function App() {
         resolved.accountProfile,
         slotId,
         resolved.snapshot,
+        resolved.campaignSessionControl,
         {
         tone: 'accent',
         title: 'Continuing Campaign',
@@ -1045,6 +1231,10 @@ export default function App() {
       return;
     }
 
+    let pendingNewGamePublication: VerifiedCampaignPublication | null = null;
+    let pendingNewGameFingerprint = '';
+    let pendingInheritanceConsumer = false;
+
     try {
       const preparationSelection = resolveLegacyPreparationSelection(state.accountProfile);
       const selectedSourceRunId = state.form.sourceRunId.trim();
@@ -1079,41 +1269,116 @@ export default function App() {
           ? { crossLineageStart: true }
           : {})
       });
-      const prepared = evaluateSnapshotWithAccount(state.accountProfile, snapshot, {
-        slotId: state.form.saveSlotId,
-        touchHistory: true,
-        suppressLegacyRewards: true,
-        persistProfile: false
-      });
-
-      const savedSlot = createSave(
+      const characterPrepared = prepareCharacterAchievementProgress(snapshot);
+      const published = publishSave(
         state.accountProfile.accountId,
         state.form.saveSlotId,
-        prepared.snapshot,
-        buildSaveMetadata(state.form.saveSlotId, prepared.snapshot)
+        characterPrepared.snapshot,
+        buildSaveMetadata(
+          state.form.saveSlotId,
+          characterPrepared.snapshot
+        )
       );
-      const accountProfileAfterSave = savedSlot.lastSavedAt
-        ? {
-            ...prepared.accountProfile,
-            lastPlayedAt: savedSlot.lastSavedAt
-          }
-        : prepared.accountProfile;
-      const consumed = consumeSelectedLegacyPreparations(accountProfileAfterSave);
+      if (!published.publication) {
+        throw new Error(
+          'New campaign publication did not create authoritative head.'
+        );
+      }
+
+      pendingNewGamePublication = published.publication;
+      pendingNewGameFingerprint = JSON.stringify({
+        selectedPreparationUnlockIds:
+          preparationSelection.selectedUnlockIds,
+        selectedPreparationChoicePayloads:
+          preparationSelection.selectedChoicePayloads,
+        sourceRunId: selectedHeirSource?.characterId ?? null
+      });
+      pendingInheritanceConsumer = selectedHeirSource !== null;
+
+      const projected = applyVerifiedPublicationToAccount(
+        state.accountProfile,
+        published.snapshot,
+        published.publication,
+        {
+          slotId: state.form.saveSlotId,
+          suppressLegacyRewards: true
+        }
+      );
+      const consumed = consumeSelectedLegacyPreparations(
+        projected.accountProfile
+      );
       const heirSourceConsumed = selectedHeirSource
         ? consumeRetiredRunInheritanceUse(consumed.profile, {
-            characterId: selectedHeirSource.characterId
+            characterId: selectedHeirSource.characterId,
+            recordedAt: published.publication.publishedAt
           })
         : null;
+      let accountAfterMandatoryConsumers =
+        heirSourceConsumed?.accountProfile ?? consumed.profile;
+      accountAfterMandatoryConsumers =
+        recordCampaignPublicationConsumer(
+          accountAfterMandatoryConsumers,
+          published.publication,
+          'preparation_consumption',
+          pendingNewGameFingerprint,
+          { status: 'applied' }
+        );
+      if (selectedHeirSource) {
+        accountAfterMandatoryConsumers =
+          recordCampaignPublicationConsumer(
+            accountAfterMandatoryConsumers,
+            published.publication,
+            'inheritance_consumption',
+            pendingNewGameFingerprint,
+            { status: 'applied' }
+          );
+      }
       const savedProfile = saveAccountProfile(
-        heirSourceConsumed?.accountProfile ?? consumed.profile
+        accountAfterMandatoryConsumers
       );
 
-      enterGame(state.launcherSession, savedProfile, state.form.saveSlotId, prepared.snapshot, {
+      enterGame(state.launcherSession, savedProfile, state.form.saveSlotId, projected.snapshot, published.sessionControl, {
         tone: 'success',
         title: 'Campaign Started',
         detail: `${playerName} was written to ${selectedSlot?.label ?? state.form.saveSlotId} and entered the world.`
       });
     } catch (error) {
+      if (pendingNewGamePublication) {
+        try {
+          let pendingProfile = recordCampaignPublicationConsumer(
+            loadAccountProfile(state.accountProfile.accountId),
+            pendingNewGamePublication,
+            'preparation_consumption',
+            pendingNewGameFingerprint,
+            {
+              status: 'pending',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : String(error)
+            }
+          );
+          if (pendingInheritanceConsumer) {
+            pendingProfile = recordCampaignPublicationConsumer(
+              pendingProfile,
+              pendingNewGamePublication,
+              'inheritance_consumption',
+              pendingNewGameFingerprint,
+              {
+                status: 'pending',
+                error:
+                  error instanceof Error
+                    ? error.message
+                    : String(error)
+              }
+            );
+          }
+          saveAccountProfile(pendingProfile);
+        } catch {
+          // The published campaign remains authoritative even when the
+          // account-repair receipt itself cannot be persisted.
+        }
+      }
       dispatch({
         type: 'SET_NOTICE',
         notice: buildStorageNotice('create or save a new game', error)
@@ -1139,9 +1404,12 @@ export default function App() {
     }
 
     try {
-      const snapshot = loadSave(state.accountProfile.accountId, state.selectedSlotId);
+      const loaded = loadSaveWithAuthority(
+        state.accountProfile.accountId,
+        state.selectedSlotId
+      );
 
-      if (!snapshot) {
+      if (!loaded) {
         const next = listSignedInSlotsWithFallback(
           state.launcherSession,
           'read launcher account data',
@@ -1165,7 +1433,7 @@ export default function App() {
       const resolved = resolveRunEntry(
         state.accountProfile,
         state.selectedSlotId,
-        snapshot
+        loaded
       );
 
       if (resolved.kind === 'blocked') {
@@ -1180,7 +1448,7 @@ export default function App() {
         return;
       }
 
-      enterGame(state.launcherSession, resolved.accountProfile, state.selectedSlotId, resolved.snapshot, {
+      enterGame(state.launcherSession, resolved.accountProfile, state.selectedSlotId, resolved.snapshot, resolved.campaignSessionControl, {
         tone: 'accent',
         title: 'Save Loaded',
         detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(state.selectedSlotId)}.`
@@ -1268,9 +1536,12 @@ export default function App() {
     }
 
     try {
-      const snapshot = loadSave(next.accountProfile.accountId, slotId);
+      const loaded = loadSaveWithAuthority(
+        next.accountProfile.accountId,
+        slotId
+      );
 
-      if (!snapshot) {
+      if (!loaded) {
         dispatch({
           type: 'SHOW_MAIN_MENU',
           launcherSession: state.launcherSession,
@@ -1285,7 +1556,11 @@ export default function App() {
         return;
       }
 
-      const resolved = resolveRunEntry(next.accountProfile, slotId, snapshot);
+      const resolved = resolveRunEntry(
+        next.accountProfile,
+        slotId,
+        loaded
+      );
 
       if (resolved.kind === 'blocked') {
         dispatch({
@@ -1298,7 +1573,7 @@ export default function App() {
         return;
       }
 
-      enterGame(state.launcherSession, resolved.accountProfile, slotId, resolved.snapshot, {
+      enterGame(state.launcherSession, resolved.accountProfile, slotId, resolved.snapshot, resolved.campaignSessionControl, {
         tone: 'accent',
         title: 'Save Loaded',
         detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
@@ -1366,32 +1641,78 @@ export default function App() {
       return;
     }
 
+    let verifiedPublication: VerifiedCampaignPublication | null = null;
+    let publicationFingerprint = '';
+
     try {
-      const prepared = evaluateSnapshotWithAccount(state.accountProfile, state.snapshot, {
-        slotId: state.activeSlotId,
-        touchHistory: true
-      });
-      const savedSlot = createSave(
-        prepared.accountProfile.accountId,
+      const prepared = prepareCharacterAchievementProgress(
+        state.snapshot
+      );
+      const published = publishSave(
+        state.accountProfile.accountId,
         state.activeSlotId,
         prepared.snapshot,
-        buildSaveMetadata(state.activeSlotId, prepared.snapshot)
+        buildSaveMetadata(state.activeSlotId, prepared.snapshot),
+        {
+          sessionControl: state.campaignSessionControl
+        }
       );
+      verifiedPublication = published.publication;
+      publicationFingerprint = published.publication
+        ? buildAccountPublicationFingerprint(
+            published.publication,
+            published.snapshot,
+            state.activeSlotId
+          )
+        : '';
+      const projected = published.publication
+        ? applyVerifiedPublicationToAccount(
+            state.accountProfile,
+            published.snapshot,
+            published.publication,
+            { slotId: state.activeSlotId }
+          )
+        : {
+            accountProfile: state.accountProfile,
+            snapshot: published.snapshot
+          };
 
       const next = listSignedInSlotsWithFallback(
         state.launcherSession,
         'read launcher account data',
-        prepared.accountProfile
+        projected.accountProfile
       );
       dispatch({
         type: 'COMPLETE_IN_GAME_SAVE',
         launcherSession: state.launcherSession,
-        accountProfile: next.notice ? prepared.accountProfile : next.accountProfile,
+        accountProfile: next.notice ? projected.accountProfile : next.accountProfile,
         slots: next.slots,
         activeSlotId: state.activeSlotId,
-        notice: next.notice ?? buildSaveStatusNotice(savedSlot)
+        snapshot: projected.snapshot,
+        campaignSessionControl: published.sessionControl,
+        notice: next.notice ?? buildSaveStatusNotice(published.slot)
       });
     } catch (error) {
+      if (verifiedPublication) {
+        try {
+          const pending = recordCampaignPublicationConsumer(
+            loadAccountProfile(state.accountProfile.accountId),
+            verifiedPublication,
+            'account_achievements',
+            publicationFingerprint,
+            {
+              status: 'pending',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : String(error)
+            }
+          );
+          saveAccountProfile(pending);
+        } catch {
+          // The verified gameplay publication remains authoritative.
+        }
+      }
       dispatch({
         type: 'SET_NOTICE',
         notice: buildStorageNotice('save the current game', error)
@@ -1404,27 +1725,77 @@ export default function App() {
       return;
     }
 
-    try {
-      const prepared = evaluateSnapshotWithAccount(state.accountProfile, state.snapshot, {
-        slotId: 'quick-save',
-        touchHistory: true
-      });
-      const savedSlot = quickSave(prepared.accountProfile.accountId, prepared.snapshot);
+    let verifiedPublication: VerifiedCampaignPublication | null = null;
+    let publicationFingerprint = '';
 
+    try {
+      const prepared = prepareCharacterAchievementProgress(
+        state.snapshot
+      );
+      const published = publishSave(
+        state.accountProfile.accountId,
+        'quick-save',
+        prepared.snapshot,
+        buildSaveMetadata('quick-save', prepared.snapshot),
+        {
+          sessionControl: state.campaignSessionControl
+        }
+      );
+      verifiedPublication = published.publication;
+      publicationFingerprint = published.publication
+        ? buildAccountPublicationFingerprint(
+            published.publication,
+            published.snapshot,
+            'quick-save'
+          )
+        : '';
+      const projected = published.publication
+        ? applyVerifiedPublicationToAccount(
+            state.accountProfile,
+            published.snapshot,
+            published.publication,
+            { slotId: 'quick-save' }
+          )
+        : {
+            accountProfile: state.accountProfile,
+            snapshot: published.snapshot
+          };
       const next = listSignedInSlotsWithFallback(
         state.launcherSession,
         'read launcher account data',
-        prepared.accountProfile
+        projected.accountProfile
       );
       dispatch({
         type: 'COMPLETE_IN_GAME_SAVE',
         launcherSession: state.launcherSession,
-        accountProfile: next.notice ? prepared.accountProfile : next.accountProfile,
+        accountProfile: next.notice ? projected.accountProfile : next.accountProfile,
         slots: next.slots,
         activeSlotId: state.activeSlotId,
-        notice: next.notice ?? buildSaveStatusNotice(savedSlot)
+        snapshot: projected.snapshot,
+        campaignSessionControl: published.sessionControl,
+        notice: next.notice ?? buildSaveStatusNotice(published.slot)
       });
     } catch (error) {
+      if (verifiedPublication) {
+        try {
+          const pending = recordCampaignPublicationConsumer(
+            loadAccountProfile(state.accountProfile.accountId),
+            verifiedPublication,
+            'account_achievements',
+            publicationFingerprint,
+            {
+              status: 'pending',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : String(error)
+            }
+          );
+          saveAccountProfile(pending);
+        } catch {
+          // The verified gameplay publication remains authoritative.
+        }
+      }
       dispatch({
         type: 'SET_NOTICE',
         notice: buildStorageNotice('quick-save the current game', error)
@@ -1447,19 +1818,75 @@ export default function App() {
       }
     }
 
+    let retirementPublication: VerifiedCampaignPublication | null =
+      null;
+    let retirementFingerprint = '';
+
     try {
+      const prepared = prepareCharacterAchievementProgress(
+        state.snapshot
+      );
+      const published = publishSave(
+        state.accountProfile.accountId,
+        state.activeSlotId,
+        prepared.snapshot,
+        buildSaveMetadata(
+          state.activeSlotId,
+          prepared.snapshot
+        ),
+        {
+          sessionControl: state.campaignSessionControl,
+          terminal: true
+        }
+      );
+      if (!published.publication) {
+        throw new Error(
+          'Retirement did not create a verified terminal publication.'
+        );
+      }
+      retirementPublication = published.publication;
+      retirementFingerprint = JSON.stringify({
+        archiveReason: 'retired',
+        capturedAtTick: published.snapshot.capturedAtTick
+      });
+      const projected = applyVerifiedPublicationToAccount(
+        state.accountProfile,
+        published.snapshot,
+        published.publication,
+        { slotId: state.activeSlotId }
+      );
       const archived = archiveActiveRun({
         accountId: state.accountProfile.accountId,
-        accountProfile: state.accountProfile,
-        snapshot: state.snapshot,
+        accountProfile: projected.accountProfile,
+        snapshot: projected.snapshot,
         archiveReason: 'retired',
-        fallbackSlotId: state.activeSlotId
+        fallbackSlotId: state.activeSlotId,
+        verifiedTerminalPublication: published.publication
       });
+      let archivedWithReceipts =
+        recordCampaignPublicationConsumer(
+          archived.accountProfile,
+          published.publication,
+          'retirement_settlement',
+          retirementFingerprint,
+          { status: 'applied' }
+        );
+      archivedWithReceipts =
+        recordCampaignPublicationConsumer(
+          archivedWithReceipts,
+          published.publication,
+          'estate',
+          retirementFingerprint,
+          { status: 'applied' }
+        );
+      const savedArchivedProfile = saveAccountProfile(
+        archivedWithReceipts
+      );
 
       dispatch({
         type: 'SHOW_MAIN_MENU',
         launcherSession: state.launcherSession,
-        accountProfile: archived.accountProfile,
+        accountProfile: savedArchivedProfile,
         slots: archived.slots,
         notice: buildArchivedRunNotice(
           archived.snapshot,
@@ -1468,6 +1895,26 @@ export default function App() {
         )
       });
     } catch (error) {
+      if (retirementPublication) {
+        try {
+          const pending = recordCampaignPublicationConsumer(
+            loadAccountProfile(state.accountProfile.accountId),
+            retirementPublication,
+            'retirement_settlement',
+            retirementFingerprint,
+            {
+              status: 'pending',
+              error:
+                error instanceof Error
+                  ? error.message
+                  : String(error)
+            }
+          );
+          saveAccountProfile(pending);
+        } catch {
+          // Terminal campaign truth remains published for repair.
+        }
+      }
       dispatch({
         type: 'SET_NOTICE',
         notice: buildStorageNotice('retire the current character', error)
@@ -1845,45 +2292,24 @@ export default function App() {
       <InGameShell
         accountProfile={state.accountProfile}
         snapshot={state.snapshot}
+        campaignSessionControl={state.campaignSessionControl}
         slots={state.slots}
         activeSlotId={state.activeSlotId}
         hasUnsavedChanges={state.hasUnsavedChanges}
         notice={state.notice}
         onDismissNotice={dismissNotice}
-        onSnapshotChange={(snapshot) => {
+        onSnapshotChange={(
+          snapshot,
+          campaignSessionControl
+        ) => {
           try {
-            const prepared = evaluateSnapshotWithAccount(state.accountProfile, snapshot);
-            const deathReason = resolveTerminalArchiveReason(prepared.snapshot);
-
-            if (deathReason) {
-              const archived = archiveActiveRun({
-                accountId: prepared.accountProfile.accountId,
-                accountProfile: prepared.accountProfile,
-                snapshot: prepared.snapshot,
-                archiveReason: deathReason,
-                fallbackSlotId: state.activeSlotId
-              });
-
-              dispatch({
-                type: 'SHOW_MAIN_MENU',
-                launcherSession: state.launcherSession,
-                accountProfile: archived.accountProfile,
-                slots: archived.slots,
-                notice: buildArchivedRunNotice(
-                  archived.snapshot,
-                  deathReason,
-                  archived.legacyGranted
-                )
-              });
-              return;
-            }
-
             dispatch({
               type: 'UPDATE_IN_GAME_SNAPSHOT',
               launcherSession: state.launcherSession,
-              accountProfile: prepared.accountProfile,
+              accountProfile: state.accountProfile,
               slots: state.slots,
-              snapshot: prepared.snapshot
+              snapshot,
+              campaignSessionControl
             });
           } catch (error) {
             dispatch({

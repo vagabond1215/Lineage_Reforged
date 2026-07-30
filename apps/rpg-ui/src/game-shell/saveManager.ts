@@ -2,7 +2,26 @@ import {
   deserializeSnapshot,
   serializeSnapshot
 } from "../../../../packages/shared/persistence/src/index.js";
-import type { SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
+import type {
+  CampaignIdentityState,
+  SaveSnapshot
+} from "../../../../packages/shared/types/src/index.js";
+import {
+  TARGET_SNAPSHOT_FORMAT,
+  createAuthorityId,
+  initializeTargetCampaignSnapshot,
+  isTargetCampaignSnapshot
+} from "../../../../packages/engines/game-engine/src/campaign-rules.js";
+import {
+  createCampaignSessionControl,
+  type CampaignSessionControl
+} from "../../../../packages/engines/game-engine/src/campaign-session.js";
+import {
+  resolveNormalDefeat
+} from "../../../../packages/engines/game-engine/src/normal-defeat.js";
+import type {
+  VerifiedCampaignPublication
+} from "../../../../packages/engines/game-engine/src/account-publication.js";
 import {
   createDefaultPlayerBodyState,
   createRunDifficultyState,
@@ -21,7 +40,7 @@ import {
   type SaveSlotSummary
 } from "./state.js";
 
-type StoredSaveEnvelope = {
+type LegacyStoredSaveEnvelope = {
   version: 6;
   accountId: string;
   slotId: SaveSlotId;
@@ -30,7 +49,78 @@ type StoredSaveEnvelope = {
   snapshot: string;
 };
 
-const STORAGE_PREFIX = "cataclysm-rpg-ui.saves.v6";
+type StoredSaveEnvelope = {
+  version: 7;
+  accountId: string;
+  slotId: SaveSlotId;
+  savedAt: string;
+  metadata: SaveSlotMetadata;
+  snapshotFormatId: typeof TARGET_SNAPSHOT_FORMAT;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  artifactId: string;
+  generationId: string;
+  publicationId: string;
+  headRevision: number;
+  terminal: boolean;
+  snapshot: string;
+};
+
+type StoredCampaignControl = {
+  version: 1;
+  accountId: string;
+  campaignId: string;
+  headArtifactId: string;
+  headPublicationId: string;
+  headRevision: number;
+  previousHeadArtifactId: string | null;
+  previousHeadPublicationId: string | null;
+  closed: boolean;
+  updatedAt: string;
+};
+
+type LegacyMigrationReceipt = {
+  version: 1;
+  accountId: string;
+  legacyCharacterId: string;
+  campaignIdentity: CampaignIdentityState;
+  groupFingerprint: string;
+  historyStartedAt: string;
+  sourceSlotIds: SaveSlotId[];
+  sourceFingerprints: Record<string, string>;
+  headSlotId: SaveSlotId;
+  artifacts: Record<
+    string,
+    {
+      artifactId: string;
+      generationId: string;
+      publicationId: string;
+    }
+  >;
+  status: "pending" | "applied";
+  createdAt: string;
+  appliedAt?: string;
+};
+
+export type LoadedCampaignSave = {
+  snapshot: SaveSnapshot;
+  sessionControl: CampaignSessionControl;
+  publication: VerifiedCampaignPublication;
+  migratedLegacy: boolean;
+  repairedLegacyDefeat: boolean;
+};
+
+export type PublishedCampaignSave = {
+  slot: SaveSlotSummary;
+  snapshot: SaveSnapshot;
+  sessionControl: CampaignSessionControl;
+  publication: VerifiedCampaignPublication | null;
+  boundExistingArtifact: boolean;
+};
+
+const STORAGE_PREFIX = "cataclysm-rpg-ui.saves.v7";
+const LEGACY_STORAGE_PREFIX = "cataclysm-rpg-ui.saves.v6";
 const OBSOLETE_STORAGE_PREFIXES = [
   "cataclysm-rpg-ui.saves.v5",
   "cataclysm-rpg-ui.saves.v4",
@@ -39,7 +129,7 @@ const OBSOLETE_STORAGE_PREFIXES = [
   "cataclysm-rpg-ui.saves.v1",
   "cataclysm-rpg-ui.save-slot"
 ] as const;
-const CURRENT_SNAPSHOT_VERSION = "0.6.0";
+const CURRENT_SNAPSHOT_VERSION = TARGET_SNAPSHOT_FORMAT;
 const monthNames = [
   "Deepfrost",
   "Thawrise",
@@ -64,7 +154,7 @@ type SaveInspectResult =
     }
   | {
       status: "ready";
-      envelope: StoredSaveEnvelope;
+      envelope: StoredSaveEnvelope | LegacyStoredSaveEnvelope;
       snapshot: SaveSnapshot;
     }
   | {
@@ -88,6 +178,37 @@ function getStorage(): Storage {
 
 function getStorageKey(accountId: string, slotId: SaveSlotId): string {
   return `${STORAGE_PREFIX}.account.${accountId}.slot.${slotId}`;
+}
+
+function getLegacyStorageKey(accountId: string, slotId: SaveSlotId): string {
+  return `${LEGACY_STORAGE_PREFIX}.account.${accountId}.slot.${slotId}`;
+}
+
+function getCampaignControlKey(accountId: string, campaignId: string): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.campaign.${campaignId}.control`;
+}
+
+function getArtifactStorageKey(accountId: string, artifactId: string): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.artifact.${artifactId}`;
+}
+
+function getCandidateStorageKey(accountId: string, generationId: string): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.candidate.${generationId}`;
+}
+
+function getMigrationReceiptKey(
+  accountId: string,
+  legacyCharacterId: string
+): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.migration.${legacyCharacterId}`;
+}
+
+function getMigrationSourceKey(
+  accountId: string,
+  legacyCharacterId: string,
+  slotId: SaveSlotId
+): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.migration-source.${legacyCharacterId}.${slotId}`;
 }
 
 function getObsoleteStorageKeys(slotId: SaveSlotId): string[] {
@@ -276,6 +397,32 @@ function isStoredSaveEnvelope(value: unknown): value is StoredSaveEnvelope {
   }
 
   return (
+    value.version === 7 &&
+    typeof value.accountId === "string" &&
+    typeof value.slotId === "string" &&
+    typeof value.savedAt === "string" &&
+    typeof value.snapshot === "string" &&
+    value.snapshotFormatId === TARGET_SNAPSHOT_FORMAT &&
+    typeof value.campaignId === "string" &&
+    typeof value.continuityId === "string" &&
+    typeof value.characterId === "string" &&
+    typeof value.artifactId === "string" &&
+    typeof value.generationId === "string" &&
+    typeof value.publicationId === "string" &&
+    typeof value.headRevision === "number" &&
+    typeof value.terminal === "boolean" &&
+    isSaveSlotMetadata(value.metadata)
+  );
+}
+
+function isLegacyStoredSaveEnvelope(
+  value: unknown
+): value is LegacyStoredSaveEnvelope {
+  if (!isRecord(value)) {
+    return false;
+  }
+
+  return (
     value.version === 6 &&
     typeof value.accountId === "string" &&
     typeof value.slotId === "string" &&
@@ -285,7 +432,32 @@ function isStoredSaveEnvelope(value: unknown): value is StoredSaveEnvelope {
   );
 }
 
+function isStoredCampaignControl(
+  value: unknown
+): value is StoredCampaignControl {
+  return (
+    isRecord(value) &&
+    value.version === 1 &&
+    typeof value.accountId === "string" &&
+    typeof value.campaignId === "string" &&
+    typeof value.headArtifactId === "string" &&
+    typeof value.headPublicationId === "string" &&
+    typeof value.headRevision === "number" &&
+    (typeof value.previousHeadArtifactId === "string" ||
+      value.previousHeadArtifactId === null) &&
+    (typeof value.previousHeadPublicationId === "string" ||
+      value.previousHeadPublicationId === null) &&
+    typeof value.closed === "boolean" &&
+    typeof value.updatedAt === "string"
+  );
+}
+
 function migrateSnapshotForEcho(snapshot: SaveSnapshot): SaveSnapshot {
+  const persistedResourceCurrent = {
+    hp: snapshot.playerState.resources.hp.current,
+    mp: snapshot.playerState.resources.mp.current,
+    stamina: snapshot.playerState.resources.stamina.current
+  };
   snapshot.gameState.runDifficulty = createRunDifficultyState(snapshot.gameState.runDifficulty);
   snapshot.playerState.bodyState = snapshot.playerState.bodyState ?? createDefaultPlayerBodyState({
     tick: snapshot.clock.tick,
@@ -300,6 +472,10 @@ function migrateSnapshotForEcho(snapshot: SaveSnapshot): SaveSnapshot {
     [],
     snapshot.gameState.runDifficulty
   );
+  snapshot.playerState.resources.hp.current = persistedResourceCurrent.hp;
+  snapshot.playerState.resources.mp.current = persistedResourceCurrent.mp;
+  snapshot.playerState.resources.stamina.current =
+    persistedResourceCurrent.stamina;
   return snapshot;
 }
 
@@ -365,7 +541,9 @@ function normalizeSaveMetadata(
 
 function inspectStoredSave(accountId: string, slotId: SaveSlotId): SaveInspectResult {
   const storage = getStorage();
-  const rawValue = storage.getItem(getStorageKey(accountId, slotId));
+  const targetRawValue = storage.getItem(getStorageKey(accountId, slotId));
+  const legacyRawValue = storage.getItem(getLegacyStorageKey(accountId, slotId));
+  const rawValue = targetRawValue ?? legacyRawValue;
 
   if (!rawValue) {
     if (getObsoleteStorageKeys(slotId).some((key) => storage.getItem(key) !== null)) {
@@ -386,8 +564,11 @@ function inspectStoredSave(accountId: string, slotId: SaveSlotId): SaveInspectRe
   try {
     const parsed = JSON.parse(rawValue) as unknown;
 
+    const isTargetEnvelope = isStoredSaveEnvelope(parsed);
+    const isLegacyEnvelope = isLegacyStoredSaveEnvelope(parsed);
+
     if (
-      !isStoredSaveEnvelope(parsed) ||
+      (!isTargetEnvelope && !isLegacyEnvelope) ||
       parsed.accountId !== accountId ||
       parsed.slotId !== slotId ||
       parsed.metadata.slotId !== slotId
@@ -409,7 +590,26 @@ function inspectStoredSave(accountId: string, slotId: SaveSlotId): SaveInspectRe
       };
     }
 
-    if (snapshot.snapshotVersion !== CURRENT_SNAPSHOT_VERSION) {
+    if (
+      isTargetEnvelope &&
+      (!isTargetCampaignSnapshot(snapshot) ||
+        snapshot.snapshotVersion !== CURRENT_SNAPSHOT_VERSION ||
+        parsed.snapshotFormatId !== snapshot.snapshotVersion ||
+        parsed.campaignId !== snapshot.campaignIdentity?.campaignId ||
+        parsed.continuityId !== snapshot.campaignIdentity?.continuityId ||
+        parsed.characterId !== snapshot.playerState.playerId)
+    ) {
+      return {
+        status: "corrupt",
+        envelope: null,
+        snapshot: null
+      };
+    }
+
+    if (
+      isLegacyEnvelope &&
+      snapshot.snapshotVersion !== "0.6.0"
+    ) {
       return {
         status: "incompatible",
         envelope: null,
@@ -484,58 +684,796 @@ export function listSaves(accountId: string): SaveSlotSummary[] {
   });
 }
 
-export function createSave(
+function writeAndVerify(storage: Storage, key: string, raw: string): void {
+  storage.setItem(key, raw);
+  if (storage.getItem(key) !== raw) {
+    throw new Error(`Save write verification failed for '${key}'.`);
+  }
+}
+
+function readCampaignControl(
+  accountId: string,
+  campaignId: string
+): StoredCampaignControl | null {
+  const raw = getStorage().getItem(
+    getCampaignControlKey(accountId, campaignId)
+  );
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    return isStoredCampaignControl(parsed) &&
+      parsed.accountId === accountId &&
+      parsed.campaignId === campaignId
+      ? parsed
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function buildVerifiedPublication(
+  envelope: StoredSaveEnvelope
+): VerifiedCampaignPublication {
+  return {
+    publicationId: envelope.publicationId,
+    campaignId: envelope.campaignId,
+    continuityId: envelope.continuityId,
+    characterId: envelope.characterId,
+    publishedAt: envelope.savedAt
+  };
+}
+
+function createStoredEnvelope(params: {
+  accountId: string;
+  slotId: SaveSlotId;
+  snapshot: SaveSnapshot;
+  metadata: SaveSlotMetadata;
+  artifactId: string;
+  generationId: string;
+  publicationId: string;
+  headRevision: number;
+  terminal: boolean;
+  savedAt: string;
+}): StoredSaveEnvelope {
+  if (!isTargetCampaignSnapshot(params.snapshot)) {
+    throw new Error("Cannot publish a non-target campaign snapshot.");
+  }
+
+  return {
+    version: 7,
+    accountId: params.accountId,
+    slotId: params.slotId,
+    savedAt: params.savedAt,
+    metadata: {
+      ...params.metadata,
+      slotId: params.slotId,
+      lastSavedAt: params.savedAt,
+      snapshotVersion: TARGET_SNAPSHOT_FORMAT
+    },
+    snapshotFormatId: TARGET_SNAPSHOT_FORMAT,
+    campaignId: params.snapshot.campaignIdentity!.campaignId,
+    continuityId: params.snapshot.campaignIdentity!.continuityId,
+    characterId: params.snapshot.playerState.playerId,
+    artifactId: params.artifactId,
+    generationId: params.generationId,
+    publicationId: params.publicationId,
+    headRevision: params.headRevision,
+    terminal: params.terminal,
+    snapshot: serializeSnapshot(params.snapshot)
+  };
+}
+
+function readLegacyEnvelope(
+  accountId: string,
+  slotId: SaveSlotId
+): {
+  raw: string;
+  envelope: LegacyStoredSaveEnvelope;
+  snapshot: SaveSnapshot;
+} | null {
+  const raw = getStorage().getItem(getLegacyStorageKey(accountId, slotId));
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const envelope = JSON.parse(raw) as unknown;
+    if (
+      !isLegacyStoredSaveEnvelope(envelope) ||
+      envelope.accountId !== accountId ||
+      envelope.slotId !== slotId
+    ) {
+      return null;
+    }
+
+    const snapshot = migrateSnapshotForEcho(
+      deserializeSnapshot(envelope.snapshot)
+    );
+    return isSaveSnapshot(snapshot) && snapshot.snapshotVersion === "0.6.0"
+      ? { raw, envelope, snapshot }
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function buildLegacyGroupFingerprint(snapshot: SaveSnapshot): string {
+  const startFlag =
+    snapshot.playerState.flags.find(
+      (flag) =>
+        flag.startsWith("player.start.") &&
+        !flag.startsWith("player.start_authority.") &&
+        !flag.startsWith("player.start_mode.")
+    ) ?? "";
+
+  return JSON.stringify({
+    accountId: snapshot.accountId,
+    playerId: snapshot.playerState.playerId,
+    playerName: snapshot.playerState.coreData.playerName,
+    lineageId: snapshot.playerState.coreData.lineageId,
+    regionId: snapshot.playerState.regionId,
+    startFlag,
+    runDifficulty: snapshot.gameState.runDifficulty
+  });
+}
+
+function resolveLegacyStartingSettlementId(snapshot: SaveSnapshot): string {
+  const startFlag = snapshot.playerState.flags.find(
+    (flag) =>
+      flag.startsWith("player.start.") &&
+      !flag.startsWith("player.start_authority.") &&
+      !flag.startsWith("player.start_mode.")
+  );
+  return (
+    startFlag?.slice("player.start.".length) ||
+    snapshot.playerState.location.settlementId ||
+    "unknown.start.settlement"
+  );
+}
+
+function resolveLegacyStartingContinentId(snapshot: SaveSnapshot): string {
+  return (
+    snapshot.playerState.geographicKnowledge.find(
+      (entry) => entry.scope === "continent" && entry.level > 0
+    )?.geographyId ?? "unknown.start.continent"
+  );
+}
+
+function readMigrationReceipt(
+  accountId: string,
+  legacyCharacterId: string
+): LegacyMigrationReceipt | null {
+  const raw = getStorage().getItem(
+    getMigrationReceiptKey(accountId, legacyCharacterId)
+  );
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as LegacyMigrationReceipt;
+    return parsed.version === 1 &&
+      parsed.accountId === accountId &&
+      parsed.legacyCharacterId === legacyCharacterId &&
+      parsed.campaignIdentity?.campaignId &&
+      parsed.campaignIdentity?.continuityId &&
+      parsed.campaignIdentity?.characterId
+      ? parsed
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function migrateLegacySaveGroup(
+  accountId: string,
+  loadedSlotId: SaveSlotId
+): LoadedCampaignSave | null {
+  const loadedSource = readLegacyEnvelope(accountId, loadedSlotId);
+  if (!loadedSource) {
+    return null;
+  }
+
+  const profile = loadAccountProfile(accountId);
+  const legacyCharacterId = loadedSource.snapshot.playerState.playerId;
+  const existingReceipt = readMigrationReceipt(
+    accountId,
+    legacyCharacterId
+  );
+  const matchingHistoryRecords = profile.history.runRecords.filter(
+    (record) =>
+      (record.characterId === legacyCharacterId ||
+        record.characterId ===
+          existingReceipt?.campaignIdentity.characterId) &&
+      record.outcome === "active" &&
+      record.name === loadedSource.snapshot.playerState.coreData.playerName &&
+      record.lineageId === loadedSource.snapshot.playerState.coreData.lineageId &&
+      record.startingRegionId === loadedSource.snapshot.playerState.regionId &&
+      record.startingSettlementId ===
+        resolveLegacyStartingSettlementId(loadedSource.snapshot) &&
+      record.startingContinentId ===
+        resolveLegacyStartingContinentId(loadedSource.snapshot)
+  );
+  if (matchingHistoryRecords.length !== 1) {
+    return null;
+  }
+  const activeHistory = matchingHistoryRecords[0]!;
+  const groupFingerprint = buildLegacyGroupFingerprint(loadedSource.snapshot);
+  const group = SAVE_SLOT_ORDER.flatMap((slot) => {
+    const source = readLegacyEnvelope(accountId, slot.id);
+    return source &&
+      buildLegacyGroupFingerprint(source.snapshot) === groupFingerprint
+      ? [{ slotId: slot.id, ...source }]
+      : [];
+  });
+  const exactLastPlayedMatches = group.filter(
+    (source) => source.envelope.savedAt === profile.lastPlayedAt
+  );
+  const headSource =
+    group.length === 1
+      ? group[0]
+      : exactLastPlayedMatches.length === 1
+        ? exactLastPlayedMatches[0]
+        : null;
+
+  if (!headSource) {
+    return null;
+  }
+
+  const now = new Date().toISOString();
+  const receipt: LegacyMigrationReceipt =
+    existingReceipt ?? {
+      version: 1,
+      accountId,
+      legacyCharacterId,
+      campaignIdentity: {
+        campaignId: createAuthorityId("campaign"),
+        continuityId: createAuthorityId("continuity"),
+        characterId: createAuthorityId("character")
+      },
+      groupFingerprint,
+      historyStartedAt: activeHistory.startedAt,
+      sourceSlotIds: group.map((source) => source.slotId),
+      sourceFingerprints: Object.fromEntries(
+        group.map((source) => [source.slotId, source.raw])
+      ),
+      headSlotId: headSource.slotId,
+      artifacts: Object.fromEntries(
+        group.map((source) => [
+          source.slotId,
+          {
+            artifactId: createAuthorityId("artifact"),
+            generationId: createAuthorityId("generation"),
+            publicationId: createAuthorityId("publication")
+          }
+        ])
+      ),
+      status: "pending",
+      createdAt: now
+    };
+
+  if (
+    receipt.groupFingerprint !== groupFingerprint ||
+    receipt.historyStartedAt !== activeHistory.startedAt ||
+    receipt.headSlotId !== headSource.slotId ||
+    group.some(
+      (source) =>
+        receipt.sourceFingerprints[source.slotId] !== source.raw
+    )
+  ) {
+    return null;
+  }
+
+  const storage = getStorage();
+  writeAndVerify(
+    storage,
+    getMigrationReceiptKey(accountId, legacyCharacterId),
+    JSON.stringify(receipt)
+  );
+
+  const migrated = group.map((source) => {
+    const ids = receipt.artifacts[source.slotId];
+    if (!ids) {
+      throw new Error(
+        `Legacy migration receipt lacks '${source.slotId}' identity.`
+      );
+    }
+
+    const retainedRaw =
+      storage.getItem(
+        getArtifactStorageKey(accountId, ids.artifactId)
+      ) ??
+      storage.getItem(
+        getCandidateStorageKey(accountId, ids.generationId)
+      );
+    if (retainedRaw) {
+      const retainedEnvelope = JSON.parse(retainedRaw) as unknown;
+      if (
+        !isStoredSaveEnvelope(retainedEnvelope) ||
+        retainedEnvelope.accountId !== accountId ||
+        retainedEnvelope.slotId !== source.slotId ||
+        retainedEnvelope.campaignId !==
+          receipt.campaignIdentity.campaignId ||
+        retainedEnvelope.continuityId !==
+          receipt.campaignIdentity.continuityId ||
+        retainedEnvelope.characterId !==
+          receipt.campaignIdentity.characterId ||
+        retainedEnvelope.artifactId !== ids.artifactId ||
+        retainedEnvelope.generationId !== ids.generationId ||
+        retainedEnvelope.publicationId !== ids.publicationId
+      ) {
+        throw new Error(
+          `Retained legacy migration artifact '${ids.artifactId}' conflicts with its receipt.`
+        );
+      }
+      const retainedSnapshot = deserializeSnapshot(
+        retainedEnvelope.snapshot
+      );
+      if (!isTargetCampaignSnapshot(retainedSnapshot)) {
+        throw new Error(
+          `Retained legacy migration artifact '${ids.artifactId}' is not a target snapshot.`
+        );
+      }
+      writeAndVerify(
+        storage,
+        getCandidateStorageKey(accountId, ids.generationId),
+        retainedRaw
+      );
+      writeAndVerify(
+        storage,
+        getArtifactStorageKey(accountId, ids.artifactId),
+        retainedRaw
+      );
+      return {
+        slotId: source.slotId,
+        envelope: retainedEnvelope,
+        snapshot: retainedSnapshot,
+        raw: retainedRaw,
+        repairedLegacyDefeat:
+          retainedSnapshot.normalDefeatReceipts?.some(
+            (entry) =>
+              entry.sourceMutationId ===
+              `legacy-migration.${ids.publicationId}`
+          ) ?? false
+      };
+    }
+
+    let snapshot = initializeTargetCampaignSnapshot(
+      {
+        ...structuredClone(source.snapshot),
+        accountId,
+        playerState: {
+          ...structuredClone(source.snapshot.playerState),
+          playerId: receipt.campaignIdentity.characterId
+        }
+      },
+      {
+        source: "legacy_migration",
+        identity: receipt.campaignIdentity,
+        recordedAt: receipt.createdAt
+      }
+    );
+    snapshot.authorityLedger = {
+      version: 1,
+      entries: [
+        ...(snapshot.authorityLedger?.entries ?? []),
+        {
+          entryId: `migration.${ids.publicationId}`,
+          kind: "migration",
+          sourceId: `${legacyCharacterId}.${source.slotId}`,
+          acceptedAtTick: snapshot.clock.tick
+        }
+      ]
+    };
+
+    let repairedLegacyDefeat = false;
+    if (
+      source.slotId === loadedSlotId &&
+      snapshot.playerState.resources.hp.current <= 0
+    ) {
+      snapshot = resolveNormalDefeat(snapshot, {
+        sourceMutationId: `legacy-migration.${ids.publicationId}`,
+        sourceKind: "unknown_or_legacy"
+      }).snapshot;
+      repairedLegacyDefeat = true;
+    }
+
+    const envelope = createStoredEnvelope({
+      accountId,
+      slotId: source.slotId,
+      snapshot,
+      metadata: normalizeSaveMetadata(
+        source.slotId,
+        snapshot,
+        source.envelope.metadata,
+        source.envelope.savedAt
+      ),
+      artifactId: ids.artifactId,
+      generationId: ids.generationId,
+      publicationId: ids.publicationId,
+      headRevision: source.slotId === receipt.headSlotId ? 1 : 0,
+      terminal: false,
+      savedAt: source.envelope.savedAt
+    });
+    const raw = JSON.stringify(envelope);
+    writeAndVerify(
+      storage,
+      getCandidateStorageKey(accountId, ids.generationId),
+      raw
+    );
+    writeAndVerify(
+      storage,
+      getArtifactStorageKey(accountId, ids.artifactId),
+      raw
+    );
+
+    return {
+      slotId: source.slotId,
+      envelope,
+      snapshot,
+      raw,
+      repairedLegacyDefeat
+    };
+  });
+  const head = migrated.find(
+    (entry) => entry.slotId === receipt.headSlotId
+  )!;
+  const control: StoredCampaignControl = {
+    version: 1,
+    accountId,
+    campaignId: receipt.campaignIdentity.campaignId,
+    headArtifactId: head.envelope.artifactId,
+    headPublicationId: head.envelope.publicationId,
+    headRevision: 1,
+    previousHeadArtifactId: null,
+    previousHeadPublicationId: null,
+    closed: false,
+    updatedAt: now
+  };
+  const controlRaw = JSON.stringify(control);
+  writeAndVerify(
+    storage,
+    getCampaignControlKey(accountId, control.campaignId),
+    controlRaw
+  );
+  if (
+    JSON.stringify(readCampaignControl(accountId, control.campaignId)) !==
+    controlRaw
+  ) {
+    throw new Error("Legacy campaign-head publication verification failed.");
+  }
+
+  const rekeyedProfile = {
+    ...profile,
+    history: {
+      ...profile.history,
+      runRecords: profile.history.runRecords.map((record) =>
+        record === activeHistory
+          ? {
+              ...record,
+              characterId: receipt.campaignIdentity.characterId
+            }
+          : record
+      )
+    }
+  };
+  saveAccountProfile(rekeyedProfile);
+
+  const projectedAddressKeys: string[] = [];
+  try {
+    for (const entry of migrated) {
+      const addressKey = getStorageKey(accountId, entry.slotId);
+      projectedAddressKeys.push(addressKey);
+      writeAndVerify(storage, addressKey, entry.raw);
+      const source = group.find(
+        (candidate) => candidate.slotId === entry.slotId
+      )!;
+      writeAndVerify(
+        storage,
+        getMigrationSourceKey(
+          accountId,
+          legacyCharacterId,
+          entry.slotId
+        ),
+        source.raw
+      );
+    }
+  } catch (error) {
+    for (const addressKey of projectedAddressKeys) {
+      storage.removeItem(addressKey);
+    }
+    throw error;
+  }
+  for (const entry of migrated) {
+    storage.removeItem(
+      getLegacyStorageKey(accountId, entry.slotId)
+    );
+  }
+
+  writeAndVerify(
+    storage,
+    getMigrationReceiptKey(accountId, legacyCharacterId),
+    JSON.stringify({
+      ...receipt,
+      status: "applied",
+      appliedAt: now
+    } satisfies LegacyMigrationReceipt)
+  );
+
+  const loaded = migrated.find((entry) => entry.slotId === loadedSlotId)!;
+  return {
+    snapshot: loaded.snapshot,
+    sessionControl: createCampaignSessionControl({
+      accountId,
+      campaignId: loaded.envelope.campaignId,
+      artifactId: loaded.envelope.artifactId,
+      publicationId: loaded.envelope.publicationId,
+      artifactRevision: loaded.envelope.headRevision,
+      continuityId: loaded.envelope.continuityId,
+      headArtifactId: control.headArtifactId,
+      headRevision: control.headRevision
+    }),
+    publication: buildVerifiedPublication(loaded.envelope),
+    migratedLegacy: true,
+    repairedLegacyDefeat: loaded.repairedLegacyDefeat
+  };
+}
+
+export function publishSave(
   accountId: string,
   slotId: SaveSlotId,
   snapshot: SaveSnapshot,
-  metadata: SaveSlotMetadata
-): SaveSlotSummary {
-  const savedAt = new Date().toISOString();
-  const profile = loadAccountProfile(accountId);
-  const snapshotToPersist =
-    snapshot.accountId === accountId ? snapshot : { ...snapshot, accountId };
-  const envelope: StoredSaveEnvelope = {
-    version: 6,
-    accountId,
-    slotId,
-    savedAt,
-    metadata: {
-      ...metadata,
-      slotId,
-      lastSavedAt: savedAt
-    },
-    snapshot: serializeSnapshot(snapshotToPersist)
-  };
+  metadata: SaveSlotMetadata,
+  options: {
+    sessionControl?: CampaignSessionControl;
+    terminal?: boolean;
+  } = {}
+): PublishedCampaignSave {
+  if (!isTargetCampaignSnapshot(snapshot)) {
+    throw new Error(
+      "Version 7 publication requires a target campaign snapshot."
+    );
+  }
 
   const storage = getStorage();
-  storage.setItem(getStorageKey(accountId, slotId), JSON.stringify(envelope));
+  const campaignId = snapshot.campaignIdentity!.campaignId;
+  const existingControl = readCampaignControl(accountId, campaignId);
+  const sessionControl = options.sessionControl;
 
+  if (
+    sessionControl?.posture === "non_head_unmutated" &&
+    !sessionControl.hasUnpublishedGameplayState
+  ) {
+    const artifactRaw = storage.getItem(
+      getArtifactStorageKey(accountId, sessionControl.loadedArtifactId)
+    );
+    if (!artifactRaw) {
+      throw new Error("Loaded non-head artifact is no longer available.");
+    }
+
+    const artifact = JSON.parse(artifactRaw) as unknown;
+    if (
+      !isStoredSaveEnvelope(artifact) ||
+      artifact.campaignId !== campaignId ||
+      artifact.artifactId !== sessionControl.loadedArtifactId
+    ) {
+      throw new Error("Loaded non-head artifact failed verification.");
+    }
+
+    const rebound: StoredSaveEnvelope = {
+      ...artifact,
+      slotId,
+      metadata: {
+        ...buildSaveMetadata(slotId, snapshot),
+        slotId,
+        lastSavedAt: new Date().toISOString(),
+        snapshotVersion: TARGET_SNAPSHOT_FORMAT
+      }
+    };
+    writeAndVerify(
+      storage,
+      getStorageKey(accountId, slotId),
+      JSON.stringify(rebound)
+    );
+    const slot = SAVE_SLOT_ORDER.find((entry) => entry.id === slotId) ?? {
+      id: slotId,
+      label: slotId,
+      kind: "manual" as const
+    };
+    return {
+      slot: createSlotSummary(slot, "ready", rebound.metadata),
+      snapshot,
+      sessionControl,
+      publication: null,
+      boundExistingArtifact: true
+    };
+  }
+
+  if (
+    sessionControl &&
+    existingControl &&
+    (sessionControl.campaignHeadArtifactId !==
+      existingControl.headArtifactId ||
+      sessionControl.campaignHeadRevision !== existingControl.headRevision)
+  ) {
+    throw new Error("Campaign head changed after this session was loaded.");
+  }
+
+  const savedAt = new Date().toISOString();
+  const artifactId = createAuthorityId("artifact");
+  const generationId = createAuthorityId("generation");
+  const publicationId = createAuthorityId("publication");
+  const headRevision = (existingControl?.headRevision ?? 0) + 1;
+  const envelope = createStoredEnvelope({
+    accountId,
+    slotId,
+    snapshot:
+      snapshot.accountId === accountId
+        ? snapshot
+        : { ...snapshot, accountId },
+    metadata,
+    artifactId,
+    generationId,
+    publicationId,
+    headRevision,
+    terminal: options.terminal === true,
+    savedAt
+  });
+  const raw = JSON.stringify(envelope);
+  writeAndVerify(
+    storage,
+    getCandidateStorageKey(accountId, generationId),
+    raw
+  );
+  const candidateReadback = storage.getItem(
+    getCandidateStorageKey(accountId, generationId)
+  );
+  if (candidateReadback !== raw) {
+    throw new Error("Candidate save readback did not match exact bytes.");
+  }
+  const candidate = JSON.parse(candidateReadback) as unknown;
+  if (
+    !isStoredSaveEnvelope(candidate) ||
+    !isTargetCampaignSnapshot(deserializeSnapshot(candidate.snapshot))
+  ) {
+    throw new Error("Candidate save failed semantic validation.");
+  }
+
+  writeAndVerify(
+    storage,
+    getArtifactStorageKey(accountId, artifactId),
+    raw
+  );
+  const nextControl: StoredCampaignControl = {
+    version: 1,
+    accountId,
+    campaignId,
+    headArtifactId: artifactId,
+    headPublicationId: publicationId,
+    headRevision,
+    previousHeadArtifactId: existingControl?.headArtifactId ?? null,
+    previousHeadPublicationId:
+      existingControl?.headPublicationId ?? null,
+    closed: options.terminal === true,
+    updatedAt: savedAt
+  };
+  const controlRaw = JSON.stringify(nextControl);
+  writeAndVerify(
+    storage,
+    getCampaignControlKey(accountId, campaignId),
+    controlRaw
+  );
+  if (
+    JSON.stringify(readCampaignControl(accountId, campaignId)) !==
+    controlRaw
+  ) {
+    throw new Error("Campaign-head publication verification failed.");
+  }
+
+  writeAndVerify(storage, getStorageKey(accountId, slotId), raw);
   for (const obsoleteKey of getObsoleteStorageKeys(slotId)) {
     storage.removeItem(obsoleteKey);
   }
-
-  saveAccountProfile({
-    ...profile,
-    lastPlayedAt: savedAt
-  });
 
   const slot = SAVE_SLOT_ORDER.find((entry) => entry.id === slotId) ?? {
     id: slotId,
     label: slotId,
     kind: "manual" as const
   };
+  const nextSessionControl = createCampaignSessionControl({
+    accountId,
+    campaignId,
+    artifactId,
+    publicationId,
+    artifactRevision: headRevision,
+    continuityId: envelope.continuityId,
+    headArtifactId: artifactId,
+    headRevision
+  });
 
-  return createSlotSummary(slot, "ready", envelope.metadata);
+  return {
+    slot: createSlotSummary(slot, "ready", envelope.metadata),
+    snapshot,
+    sessionControl: nextSessionControl,
+    publication: buildVerifiedPublication(envelope),
+    boundExistingArtifact: false
+  };
+}
+
+export function createSave(
+  accountId: string,
+  slotId: SaveSlotId,
+  snapshot: SaveSnapshot,
+  metadata: SaveSlotMetadata
+): SaveSlotSummary {
+  const targetSnapshot = isTargetCampaignSnapshot(snapshot)
+    ? snapshot
+    : initializeTargetCampaignSnapshot(snapshot, {
+        source: "developer_fixture"
+      });
+  return publishSave(
+    accountId,
+    slotId,
+    targetSnapshot,
+    metadata
+  ).slot;
 }
 
 export function loadSave(accountId: string, slotId: SaveSlotId): SaveSnapshot | null {
+  return loadSaveWithAuthority(accountId, slotId)?.snapshot ?? null;
+}
+
+export function loadSaveWithAuthority(
+  accountId: string,
+  slotId: SaveSlotId,
+  options: {
+    allowClosed?: boolean;
+  } = {}
+): LoadedCampaignSave | null {
   const inspected = inspectStoredSave(accountId, slotId);
-  return inspected.status === "ready" ? inspected.snapshot : null;
+  if (inspected.status !== "ready") {
+    return null;
+  }
+
+  if (inspected.envelope.version === 6) {
+    return migrateLegacySaveGroup(accountId, slotId);
+  }
+
+  const envelope = inspected.envelope;
+  const control = readCampaignControl(accountId, envelope.campaignId);
+  if (
+    !control ||
+    (!options.allowClosed &&
+      (control.closed || envelope.terminal))
+  ) {
+    return null;
+  }
+
+  return {
+    snapshot: inspected.snapshot,
+    sessionControl: createCampaignSessionControl({
+      accountId,
+      campaignId: envelope.campaignId,
+      artifactId: envelope.artifactId,
+      publicationId: envelope.publicationId,
+      artifactRevision: envelope.headRevision,
+      continuityId: envelope.continuityId,
+      headArtifactId: control.headArtifactId,
+      headRevision: control.headRevision
+    }),
+    publication: buildVerifiedPublication(envelope),
+    migratedLegacy: false,
+    repairedLegacyDefeat: false
+  };
 }
 
 export function deleteSave(accountId: string, slotId: SaveSlotId): void {
   const storage = getStorage();
   storage.removeItem(getStorageKey(accountId, slotId));
+  storage.removeItem(getLegacyStorageKey(accountId, slotId));
 
   for (const obsoleteKey of getObsoleteStorageKeys(slotId)) {
     storage.removeItem(obsoleteKey);
@@ -546,6 +1484,7 @@ export function resetAllSaves(accountId: string): void {
   const storage = getStorage();
   const keysToRemove: string[] = [];
   const currentAccountPrefix = `${STORAGE_PREFIX}.account.${accountId}.`;
+  const legacyAccountPrefix = `${LEGACY_STORAGE_PREFIX}.account.${accountId}.`;
 
   for (let index = 0; index < storage.length; index += 1) {
     const key = storage.key(index);
@@ -555,6 +1494,7 @@ export function resetAllSaves(accountId: string): void {
 
     if (
       key.startsWith(currentAccountPrefix) ||
+      key.startsWith(legacyAccountPrefix) ||
       OBSOLETE_STORAGE_PREFIXES.some((prefix) => key.startsWith(prefix))
     ) {
       keysToRemove.push(key);

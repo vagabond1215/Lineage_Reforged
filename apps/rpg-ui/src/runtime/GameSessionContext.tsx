@@ -12,6 +12,14 @@ import type {
   GameDelta,
   SaveSnapshot
 } from '../../../../packages/shared/types/src/index.js';
+import {
+  admitCampaignMutation,
+  type CampaignMutationOwnerKind,
+  type CampaignSessionControl
+} from '../../../../packages/engines/game-engine/src/campaign-session.js';
+import {
+  createAuthorityId
+} from '../../../../packages/engines/game-engine/src/campaign-rules.js';
 import { UiViewModelProvider } from './UiViewModelContext.js';
 import { createUiViewModel, type UiViewModel } from './uiViewModel.js';
 import {
@@ -29,7 +37,17 @@ export interface GameSessionState {
 }
 
 export interface GameSessionContextValue extends GameSessionState {
-  updateSnapshot: (snapshot: SaveSnapshot) => void;
+  campaignSessionControl: CampaignSessionControl;
+  updateSnapshot: (
+    snapshot: SaveSnapshot,
+    options?: {
+      accepted?: boolean;
+      ownerKind?: CampaignMutationOwnerKind;
+      mutationId?: string;
+      resultId?: string;
+      explicitRecoveryDestinationId?: string | null;
+    }
+  ) => void;
   dismissBodyStateToast: () => void;
 }
 
@@ -56,8 +74,12 @@ export function createGameSessionState(
 type GameSessionProviderProps = {
   accountProfile: AccountProfileState;
   snapshot: SaveSnapshot;
+  campaignSessionControl: CampaignSessionControl;
   gameDeltas?: readonly GameDelta[];
-  onSnapshotChange: (snapshot: SaveSnapshot) => void;
+  onSnapshotChange: (
+    snapshot: SaveSnapshot,
+    campaignSessionControl: CampaignSessionControl
+  ) => void;
   children: ReactNode;
 };
 
@@ -65,6 +87,7 @@ export function GameSessionProvider({
   accountProfile,
   gameDeltas = EMPTY_GAME_DELTAS,
   snapshot,
+  campaignSessionControl,
   onSnapshotChange,
   children
 }: GameSessionProviderProps) {
@@ -82,7 +105,13 @@ export function GameSessionProvider({
         dismissedToastIdSet,
         gameDeltas
       ),
-    [accountProfile, dismissedToastIdSet, gameDeltas, snapshot]
+    [
+      accountProfile,
+      campaignSessionControl,
+      dismissedToastIdSet,
+      gameDeltas,
+      snapshot
+    ]
   );
 
   useEffect(() => {
@@ -92,7 +121,39 @@ export function GameSessionProvider({
   const contextValue = useMemo<GameSessionContextValue>(
     () => ({
       ...sessionState,
-      updateSnapshot: onSnapshotChange,
+      campaignSessionControl,
+      updateSnapshot: (proposedSnapshot, options = {}) => {
+        const admission = admitCampaignMutation(campaignSessionControl, {
+          mutationId:
+            options.mutationId ?? createAuthorityId('mutation'),
+          sourceArtifactId:
+            campaignSessionControl.loadedArtifactId,
+          sourceRevision:
+            campaignSessionControl.sessionRevision,
+          ownerKind:
+            options.ownerKind ?? 'legacy_bridge',
+          accepted:
+            options.accepted ?? proposedSnapshot !== snapshot,
+          sourceSnapshot: snapshot,
+          proposedSnapshot,
+          ...(options.resultId
+            ? { resultId: options.resultId }
+            : {}),
+          ...(options.explicitRecoveryDestinationId !== undefined
+            ? {
+                explicitRecoveryDestinationId:
+                  options.explicitRecoveryDestinationId
+              }
+            : {})
+        });
+
+        if (admission.accepted) {
+          onSnapshotChange(
+            admission.snapshot,
+            admission.control
+          );
+        }
+      },
       dismissBodyStateToast: () => {
         const toastId = sessionState.bodyStatePresentation.toastId;
         if (!toastId) {
@@ -104,7 +165,12 @@ export function GameSessionProvider({
         );
       }
     }),
-    [onSnapshotChange, sessionState]
+    [
+      campaignSessionControl,
+      onSnapshotChange,
+      sessionState,
+      snapshot
+    ]
   );
 
   return (

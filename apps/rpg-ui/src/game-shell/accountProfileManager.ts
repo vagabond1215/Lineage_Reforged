@@ -10,6 +10,7 @@ import type {
   AccountHistoryState,
   AccountLegacyState,
   AccountProfileState,
+  CampaignPublicationConsumerReceiptState,
   AccountRunHistoryRecord,
   AchievementMetricId,
   FamilyPrestigeTransactionState,
@@ -417,7 +418,45 @@ function isAccountProfileState(value: unknown): value is AccountProfileState {
     (value.achievements === undefined || isAccountAchievementsState(value.achievements)) &&
     (value.history === undefined || isAccountHistoryState(value.history)) &&
     isAccountFamiliesState(value.families) &&
-    (value.estate === undefined || isAccountEstateState(value.estate))
+    (value.estate === undefined || isAccountEstateState(value.estate)) &&
+    (value.campaignPublicationReceipts === undefined ||
+      (Array.isArray(value.campaignPublicationReceipts) &&
+        value.campaignPublicationReceipts.every(
+          isCampaignPublicationConsumerReceipt
+        ) &&
+        new Set(
+          value.campaignPublicationReceipts.map(
+            (receipt) => receipt.consumerId
+          )
+        ).size === value.campaignPublicationReceipts.length))
+  );
+}
+
+function isCampaignPublicationConsumerReceipt(
+  value: unknown
+): value is CampaignPublicationConsumerReceiptState {
+  return (
+    isRecord(value) &&
+    isNonEmptyString(value.consumerId) &&
+    isNonEmptyString(value.publicationId) &&
+    isNonEmptyString(value.campaignId) &&
+    isNonEmptyString(value.continuityId) &&
+    isNonEmptyString(value.characterId) &&
+    (value.kind === "active_history" ||
+      value.kind === "account_achievements" ||
+      value.kind === "legacy_rewards" ||
+      value.kind === "preparation_consumption" ||
+      value.kind === "inheritance_consumption" ||
+      value.kind === "retirement_settlement" ||
+      value.kind === "estate" ||
+      value.kind === "last_played") &&
+    (value.status === "pending" || value.status === "applied") &&
+    isNonEmptyString(value.payloadFingerprint) &&
+    isNonEmptyString(value.createdAt) &&
+    (typeof value.appliedAt === "string" ||
+      value.appliedAt === undefined) &&
+    (typeof value.lastError === "string" ||
+      value.lastError === undefined)
   );
 }
 
@@ -723,7 +762,10 @@ function normalizeProfile(profile: AccountProfileState): AccountProfileState {
     achievements: normalizeAchievements(profile.achievements),
     history: normalizeHistory(profile.history),
     families: normalizeFamilies(profile.families),
-    estate: normalizeEstate(profile.estate)
+    estate: normalizeEstate(profile.estate),
+    campaignPublicationReceipts: (
+      profile.campaignPublicationReceipts ?? []
+    ).map((receipt) => ({ ...receipt }))
   };
   const selection = resolveLegacyPreparationSelection(normalized);
 

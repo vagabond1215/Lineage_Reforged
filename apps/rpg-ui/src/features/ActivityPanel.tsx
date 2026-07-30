@@ -171,7 +171,11 @@ export function ActivityPanel({
 
                       const result = setCurrentActivityFromRecord(snapshot, selectedItem.id);
                       if (result.accepted) {
-                        updateSnapshot(result.snapshot);
+                        updateSnapshot(result.snapshot, {
+                          ownerKind: 'engine_result',
+                          mutationId: result.commandId,
+                          resultId: result.resultId ?? result.commandId
+                        });
                       }
                       setPanelNotice(result.notice);
                     }}

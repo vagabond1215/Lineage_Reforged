@@ -1219,6 +1219,102 @@ export interface RunDifficultyState {
   hardcore: boolean;
 }
 
+export type CampaignDifficultyPresetId = "favored" | "mortal" | "forsaken";
+export type CampaignWorldRulesId = "heroic_world";
+export type CampaignStakesRulesId = "normal_stakes";
+export type CampaignRulesSource =
+  | "new_campaign"
+  | "legacy_migration"
+  | "developer_fixture";
+
+export interface CampaignRuleOverrideState {
+  owner: "difficulty";
+  key: "legacy_brutal";
+  value: boolean;
+  source: "legacy_migration" | "developer_fixture";
+  basePreset: CampaignDifficultyPresetId;
+  rulesVersion: 2;
+}
+
+export interface CampaignRuleMigrationProvenanceState {
+  source: "legacy_v6";
+  sourceDifficulty: RunDifficultyTierId | "missing_or_invalid";
+  legacyHardcore: boolean;
+  migratedAt: string;
+  targetRulesVersion: 2;
+}
+
+export interface CampaignRulesState {
+  version: 2;
+  policyRevision: 1;
+  difficultyPreset: CampaignDifficultyPresetId;
+  worldRules: CampaignWorldRulesId;
+  stakesRules: CampaignStakesRulesId;
+  source: CampaignRulesSource;
+  overrides: CampaignRuleOverrideState[];
+  migration?: CampaignRuleMigrationProvenanceState;
+}
+
+export interface CampaignIdentityState {
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  parentContinuityId?: string;
+  forkedFromArtifactId?: string;
+  forkedFromPublicationId?: string;
+  firstDivergentMutationId?: string;
+}
+
+export type CampaignAuthorityLedgerEntryKind =
+  | "migration"
+  | "continuity_fork"
+  | "normal_defeat"
+  | "retirement";
+
+export interface CampaignAuthorityLedgerEntryState {
+  entryId: string;
+  kind: CampaignAuthorityLedgerEntryKind;
+  sourceId: string;
+  acceptedAtTick: number;
+  supersedesEntryId?: string;
+}
+
+export interface CampaignAuthorityLedgerState {
+  version: 1;
+  entries: CampaignAuthorityLedgerEntryState[];
+}
+
+export type NormalDefeatSourceKind =
+  | "accepted_mutation"
+  | "unknown_or_legacy";
+export type NormalDefeatPosture = "playable" | "recovery_pending";
+
+export interface NormalDefeatReceiptState {
+  receiptId: string;
+  sourceMutationId: string;
+  sourceKind: NormalDefeatSourceKind;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  rulesVersion: 2;
+  policyRevision: 1;
+  sourceTick: number;
+  resolvedTick: number;
+  recoveryTicks: number;
+  destinationId: string | null;
+  destinationSource:
+    | "explicit_context"
+    | "current_settlement"
+    | "campaign_start"
+    | "none";
+  hpRestoredTo: number;
+  staminaRestoredTo: number;
+  mpPreservedAt: number;
+  posture: NormalDefeatPosture;
+  chronicleEntryId: string;
+  notificationId: string;
+}
+
 export interface DifficultyStatGrowthRuleState {
   loadThresholdScalar: number;
   saturationScalar: number;
@@ -2671,6 +2767,33 @@ export interface AccountProfileState {
   history: AccountHistoryState;
   families: AccountFamiliesState;
   estate: AccountEstateState;
+  campaignPublicationReceipts?: CampaignPublicationConsumerReceiptState[];
+}
+
+export type CampaignPublicationConsumerKind =
+  | "active_history"
+  | "account_achievements"
+  | "legacy_rewards"
+  | "preparation_consumption"
+  | "inheritance_consumption"
+  | "retirement_settlement"
+  | "estate"
+  | "last_played";
+
+export type CampaignPublicationConsumerStatus = "pending" | "applied";
+
+export interface CampaignPublicationConsumerReceiptState {
+  consumerId: string;
+  publicationId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  kind: CampaignPublicationConsumerKind;
+  payloadFingerprint: string;
+  status: CampaignPublicationConsumerStatus;
+  createdAt: string;
+  appliedAt?: string;
+  lastError?: string;
 }
 
 export interface CurrentActivityState {
@@ -2837,6 +2960,10 @@ export interface OverrideRule {
 export interface SaveSnapshot {
   accountId: string;
   snapshotVersion: string;
+  campaignRules?: CampaignRulesState;
+  campaignIdentity?: CampaignIdentityState;
+  authorityLedger?: CampaignAuthorityLedgerState;
+  normalDefeatReceipts?: NormalDefeatReceiptState[];
   capturedAtTick: number;
   clock: SimulationClock;
   gameState: GameState;

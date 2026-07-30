@@ -1,137 +1,103 @@
 # Current Codex Output
 
-Date: 2026-07-29
+Date: 2026-07-30
 
-Source version/run: unversioned `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`
+Source version/run: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
-Label class: unversioned
+Label class: primary
 
 Parent version: not applicable
 
-Milestone impact: `supports_current_band`
+Milestone impact: `advances_current_band`
 
-Branch/status assumption: `master` began clean and synchronized with `origin/master` at `d026befa13f25437b07187d36833bbd3a9db0eca`. Codex fetched all remotes with prune, confirmed zero divergence, refreshed all 17 non-default remote branch comparisons and the one open PR, and performed no integration or deletion.
+Branch/status assumption: `master` began clean and synchronized with `origin/master` at `fb9a2f9c2868d5789991e6d03401e8d8d609e47f`. Codex fetched all remotes with prune, confirmed zero divergence, inspected all 17 non-default remote branches and open PR #2, and found no overlapping implementation or branch action due.
 
 ## Result
 
-`PACKAGE_READY`
+`IMPLEMENTED_PENDING_PARENT_AUDIT`
 
-Created:
+Implemented the atomic Normal-only campaign persistence foundation:
 
-`docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`
-
-Selected implementation:
-
-`Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
-
-Implementation classification:
-
-`CURRENT_BAND_PRIMARY`
-
-Implementation milestone impact:
-
-`advances_current_band`
+- campaign-rules semantic version 2, Stakes policy revision 1, `heroic_world`, `normal_stakes`, target snapshot format `lineage.save_snapshot.v2`, and UUID-backed campaign/continuity/character identity;
+- storage envelope version 7 with candidate exact-byte readback, semantic validation, immutable artifact retention, verified head publication, prior-head retention, and manual/quick address projection;
+- owner-certified version-6 migration with retained original bytes, stable receipt identities, unique-head proof, ambiguity quarantine, exact legacy difficulty mapping, and retry-safe publication;
+- campaign session control with rejected/no-change/duplicate/stale admission, engine correlation, temporary legacy bridge ownership, persisted preferences, and exactly one first-accepted-mutation child continuity for non-head play;
+- engine-owned nonterminal Normal defeat with four-tick playable recovery, exact HP/Stamina restoration, MP/body/protected-truth preservation, retained receipts, Chronicle/notice projection, and idempotent duplicate handling;
+- active legacy HP-zero repair before play without promoting a repaired non-head source;
+- publication-anchored character preparation plus idempotent account history, achievement, Legacy, preparation, inheritance, last-played, retirement, and estate consumers;
+- terminal retirement publication before settlement and removal of ordinary Normal HP-zero access to archive, payout, estate, or save deletion.
 
 `0.7.0` remains `NOT_READY`.
 
-## Three-Dependency Closure
-
-### Normal activation
-
-Campaign-rules version 2, `normal_stakes`, engine-owned nonterminal defeat, and active legacy HP-zero repair form one atomic activation. Ordinary HP zero can no longer archive a run, grant terminal value, deposit an estate, or delete saves.
-
-### First-mutation continuity
-
-Verified save authority supplies loaded artifact/head context to one campaign session controller. Loading and saving an unchanged non-head artifact do not fork. The first accepted persisted-snapshot mutation mints one in-memory child continuity before application, and later mutations reuse it. The child becomes durable only after verified publication and disappears completely if unsaved play is abandoned.
-
-### Account publication
-
-Character truth may exist in unsaved campaign memory. Durable run history, account metrics/achievements, Legacy, preparation/inheritance use, retirement settlement, estate, and account indexes apply only from a verified publication through stable idempotent consumer receipts. Post-publication failure queues repair and cannot duplicate value.
-
-## Accepted Package Boundary
-
-- Storage envelope version 7 and a save-format-specific snapshot identity remain distinct from workflow `0.6.9`.
-- Version-6 sources migrate through one persisted owner-certified receipt and retain original bytes.
-- A legacy head is certified only from a single source or a unique exact `savedAt == account.lastPlayedAt` match inside a fully validated source group; ambiguity quarantines.
-- Candidate write, exact readback, semantic validation, head publication, and publication verification precede projections.
-- New-game preparation/inheritance consumers apply after first publication and block entry while mandatory repair is pending.
-- Normal defeat advances four ticks, restores HP to 25% with a minimum of one, restores Stamina to at least 12 within max, preserves MP/body/protected truth, and remains unsaved.
-- Active legacy HP-zero repair publishes the repaired loaded address before play and does not make a non-head source the campaign head.
-- Explicit retirement publishes terminal campaign authority before existing payout/Legacy/estate settlement.
-- No survey command, Committed/Ironbound behavior, checkpoint selection, actual death, succession, generic bus, broad account redesign, or production dependency is included.
-
-## Mutation Evidence
-
-Current persisted-snapshot writers are:
-
-- engine-owned accepted-only travel;
-- engine-owned accepted-only quest acceptance;
-- engine-owned accepted-only quest tracking;
-- engine-owned accepted-only activity selection;
-- shell-authored activity advancement, rest, and quest turn-in;
-- feature-authored equip, unequip, consume, favorite, and pin changes.
-
-All converge through `GameSessionContext.updateSnapshot(...)` and `App.tsx`. The target campaign session authority consumes explicit engine acceptance or temporary legacy accepted/no-change bridge evidence. Rejection, duplicate delivery, stale revision, load, save, and render create no continuity.
-
-## Branch And PR Disposition
-
-- Local branches: only `master`.
-- Non-default remote branches: 17.
-- Open PRs: one, PR #2; still unrelated and non-mergeable.
-- Protected references retained read-only: `prep/integrated-gameplay-0-7-readiness-audit` and `parallel/prompt-packaging-integrity-audit`.
-- Twelve audit branches remain `CANDIDATE_INTEGRATION` at their registered triggers.
-- `feat/main-menu-assets` remains fully reachable and `MERGED_RETIRE` for a dedicated hygiene pass.
-- PR #1's historical branch remains `MERGED_RETIRE` pending two-commit equivalence proof.
-- No branch has overlapping save implementation or supersedes the accepted package.
-- No branch or PR action was due.
-
 ## Files Changed
 
-- added `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
-- updated `docs/dev/current-codex-output.md`;
-- updated `docs/dev/current-codex-prompt.md`;
-- updated `docs/dev/current-gpt-handoff.md`;
-- updated `docs/dev/codex-sequenced-implementation-plan.md`;
-- updated `docs/dev/project-roadmap.md`;
-- updated `docs/dev/project-vision-and-continuity-brief.md`;
-- updated `docs/dev/historical-version-and-deferred-route-register.md`;
-- updated `docs/design/current-planning-anchor-reconciliation.md`;
-- updated `docs/design/static-content-expansion-program.md`;
-- updated `docs/future_content_backlog.md`;
-- updated `docs/dev/branch-disposition-register.md`.
+Production:
 
-No shared contract, engine, persistence, migration, test, dependency, generated, UI, account data, content, asset, or gameplay path changed.
+- `packages/shared/types/src/contracts.ts`;
+- `packages/engines/game-engine/src/account-publication.ts` and `.js`;
+- `packages/engines/game-engine/src/campaign-rules.ts` and `.js`;
+- `packages/engines/game-engine/src/campaign-session.ts` and `.js`;
+- `packages/engines/game-engine/src/normal-defeat.ts` and `.js`;
+- `packages/engines/game-engine/src/achievements.ts`;
+- `packages/engines/game-engine/src/index.ts`;
+- `packages/engines/game-engine/src/legacy-account.ts`;
+- `apps/rpg-ui/src/App.tsx`;
+- `apps/rpg-ui/src/features/ActivityPanel.tsx`;
+- `apps/rpg-ui/src/features/QuestsPanel.tsx`;
+- `apps/rpg-ui/src/features/WorldPanel.tsx`;
+- `apps/rpg-ui/src/game-shell/InGameShell.tsx`;
+- `apps/rpg-ui/src/game-shell/accountProfileManager.ts`;
+- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
+- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`;
+- `apps/rpg-ui/src/game-shell/runLifecycle.ts`;
+- `apps/rpg-ui/src/game-shell/saveManager.ts`;
+- `apps/rpg-ui/src/game-shell/state.ts`;
+- `apps/rpg-ui/src/runtime/GameSessionContext.tsx`.
+
+Tests:
+
+- added `tests/unit/campaign-persistence-foundation.test.mjs`;
+- updated the focused save/account and engine-command source guards for the new publication/admission boundary.
+
+Coordination:
+
+- updated current output, prompt, handoff, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, static-content program, and branch register.
+
+No content catalog, schema file, asset, generated output, dependency, survey command, Committed/Ironbound rule, checkpoint UI, actual-death flow, or broad framework changed.
 
 ## Checks Run
 
-- repository, branch, clean-worktree, fetch/prune, upstream, and divergence inspection;
-- complete branch and open-PR inventory;
-- all-branch merge-base, unique-commit, changed-path, protected-reference, and overlap review;
-- complete persisted-snapshot mutation/admission matrix;
-- HP-zero, retirement, blocked-run, payout, estate, and save-deletion matrix;
-- save/load/new-game/version-6 migration/publication ordering matrix;
-- achievement/history/Legacy/preparation/inheritance/account-profile write matrix;
-- legacy source grouping, head certification, ambiguity, repair, copy, retry, and failure matrix;
-- protected readiness-branch read-only comparison;
-- focused save/account/lifecycle/achievement/command/combat baseline: 107/107 passed;
-- label and path collision scans;
-- documentation-only changed-path audit;
-- conflict-marker and trailing-whitespace scans;
-- `git diff --check`;
-- complete documentation diff review.
+- repository clean-state, upstream, divergence, fetch/prune, branch, PR, merge-base, unique-commit, changed-path, protected-reference, and overlap inspection;
+- pre-edit required focused baseline: 107/107 passed;
+- post-edit required focused baseline plus new persistence suite: 120/120 passed;
+- focused persistence foundation suite independently: 13/13 passed;
+- RPG UI Vite production build: passed, 207 modules transformed;
+- bounded TypeScript audit: no new diagnostics in the changed persistence/session/lifecycle/account modules; the known broad audit remains non-green and outside the acceptance gate;
+- `git diff --check`: passed;
+- temporary build output removed.
+
+## Branch And PR Lifecycle
+
+- Local branches: only `master`.
+- Non-default remote branches inspected: 17.
+- Open PRs inspected: PR #2 only.
+- PR #2 is now reported mergeable by GitHub, but remains `SUPERSEDED_PRESERVE_EVIDENCE` because its ten-commit launcher/asset scope is unrelated and semantically conflicts with current asset authority.
+- Protected references `prep/integrated-gameplay-0-7-readiness-audit` and `parallel/prompt-packaging-integrity-audit` remain read-only.
+- Twelve one-document audit branches remain retained at their named review triggers.
+- `feat/main-menu-assets` remains fully reachable and eligible only for a dedicated branch-hygiene pass.
+- No integration, closure, rebase, or deletion was due or performed.
 
 ## Suggested Commit Message
 
-`docs(save): close Normal continuity activation dependencies`
+`feat(save): add Normal campaign persistence authority`
 
 ## Risks / Follow-Up Notes
 
-- `0.6.9` is an atomic multi-owner package; a partial implementation must fail closed and install a parent-specific repair prompt.
-- The target must preserve TypeScript/JavaScript mirrors and current manual/quick-save addresses.
-- Pending new-game account consumers must block duplicable preparation/inheritance use after restart.
-- The existing broad workspace typecheck remains a separate known-failing 173-diagnostic audit and is not the acceptance gate.
-- Parent acceptance requires a later `Version 0.6.9.1` audit.
+- The parent is implemented but not accepted until the installed `0.6.9.1` audit independently reproduces publication failure, migration interruption/retry, legacy HP-zero head/non-head repair, mandatory consumer repair, and terminal retirement ordering.
+- Candidate records and hidden closed authority intentionally remain retained for recovery and duplicate prevention; cleanup/retention policy is later work.
+- Temporary legacy bridge admission remains explicit technical debt until its remaining snapshot writers become engine-owned.
+- The broad TypeScript audit remains a separate known-failing route and was not weakened or used as this run's acceptance gate.
 
 ## Next Recommended Run
 
-`Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
+`Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`

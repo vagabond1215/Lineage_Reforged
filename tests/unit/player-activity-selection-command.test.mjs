@@ -330,7 +330,7 @@ test("UI activity selection bridge has no direct mutation and applies accepted s
   assert.doesNotMatch(gameplayLoop, /function humanizeId/);
   assert.match(
     activityPanel,
-    /const result = setCurrentActivityFromRecord\(snapshot, selectedItem\.id\);\s*if \(result\.accepted\) \{\s*updateSnapshot\(result\.snapshot\);\s*}\s*setPanelNotice\(result\.notice\);/
+    /const result = setCurrentActivityFromRecord\(snapshot, selectedItem\.id\);\s*if \(result\.accepted\) \{\s*updateSnapshot\(result\.snapshot,\s*\{[\s\S]*?ownerKind: 'engine_result',[\s\S]*?mutationId: result\.commandId,[\s\S]*?resultId: result\.resultId \?\? result\.commandId[\s\S]*?\}\);\s*}\s*setPanelNotice\(result\.notice\);/
   );
   assert.doesNotMatch(engineModule, /node:/);
   assert.equal(jsPeer.trim(), 'export * from "./player-activity-selection.ts";');

@@ -120,7 +120,8 @@ export function createDefaultAccountProfileState(params: {
     achievements: createDefaultAccountAchievementsState(),
     history: createDefaultAccountHistoryState(),
     families: params.families ?? createDefaultAccountFamiliesState(),
-    estate: createDefaultAccountEstateState()
+    estate: createDefaultAccountEstateState(),
+    campaignPublicationReceipts: []
   };
 }
 

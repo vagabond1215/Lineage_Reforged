@@ -1,10 +1,10 @@
 # Current GPT Handoff
 
-Date: 2026-07-29
+Date: 2026-07-30
 
 ## Status
 
-- Latest completed primary: `Version 0.6.8 - Lethal-Process Definition Static Foundation`.
+- Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
 - Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
@@ -12,8 +12,9 @@ Date: 2026-07-29
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
 - Dependency-closure result: `PACKAGE_READY`.
-- Active implementation: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Active-route class: `CURRENT_BAND_PRIMARY`.
+- Parent `0.6.9` status: `IMPLEMENTED_PENDING_PARENT_AUDIT`; 120/120 focused tests and the RPG UI production build pass.
+- Active audit: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
+- Active-route class: `PARENT_SPECIFIC_SUPPORT_SUFFIX`.
 
 ## Current Planning Precedence
 
@@ -105,18 +106,16 @@ Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. Th
 
 PR #2 / `main-menu-asset-contract-pass` is currently `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
 
-## Active Implementation Guardrails
+## Active Audit Guardrails
 
-Run `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
+Run `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
 
-- Land campaign rules version 2, target identity, version-7 candidate publication, and version-6 migration.
-- Carry verified artifact/head context through the in-game session.
-- Create one child continuity at the first accepted persisted-snapshot mutation from non-head state.
-- Make ordinary Normal HP zero nonterminal and repair active legacy HP-zero sources before play.
-- Publish campaign state before durable account history, achievements, Legacy, preparation/inheritance use, retirement settlement, or estate consumers.
-- Preserve explicit retirement after verified terminal publication.
+- Independently verify campaign rules version 2, target identity, version-7 candidate publication, and version-6 migration.
+- Inject publication and consumer failures and verify fail-closed ordering plus retry behavior.
+- Reproduce head/non-head first-mutation continuity, ordinary Normal defeat, active legacy HP-zero repair, and terminal retirement ordering.
+- Confirm narrow browser import surfaces and the green production build.
 - Add no survey implementation, Committed/Ironbound behavior, generic framework, or production dependency.
-- Install `Version 0.6.9.1` only after implementation and focused validation are green.
+- Accept the parent only after every prescribed audit obligation is independently green.
 
 ## Preserved Boundaries
 
@@ -132,8 +131,7 @@ Run `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
 
 ## Near-Term Sequence
 
-1. implement `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
-2. run parent-specific `Version 0.6.9.1` acceptance audit or the smallest required repair/audit chain;
+1. run parent-specific `Version 0.6.9.1` acceptance audit or the smallest required repair/audit chain;
 3. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
 4. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
 5. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
@@ -141,4 +139,4 @@ Run `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
 
 ## Active Prompt
 
-`Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
+`Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`

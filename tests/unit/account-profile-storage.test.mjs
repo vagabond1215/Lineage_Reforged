@@ -914,7 +914,7 @@ test("account-scoped saves roundtrip with accountId and remain invisible to othe
     assert.equal(accountBSlots.find((slot) => slot.id === "slot-2")?.status, "empty");
 
     const updatedProfile = loadAccountProfile(accountA);
-    assert.equal(typeof updatedProfile.lastPlayedAt, "string");
+    assert.equal(updatedProfile.lastPlayedAt, undefined);
   }));
 
 test("Legacy-created new game snapshots roundtrip start resources and modifiers", () =>
