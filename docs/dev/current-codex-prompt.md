@@ -1,181 +1,225 @@
-# Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision
+# Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion
 
 ## Run Identity
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
 
-Label class: unversioned
+Label class: support suffix
 
-Parent version: none
+Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
 Milestone impact: `supports_current_band`
 
 Suggested commit:
 
-`docs(survey): decide occurrence and consequence receipt foundation`
+`fix(save): complete new-campaign and pending-defeat recovery`
 
 ## Purpose
 
-Decide the smallest survey-specific persisted occurrence, deterministic result, affected-owner consequence receipt, projection repair, replay, restart, and correction contract required before the Ashen Reef survey command can be implemented.
+Repair the remaining parent-specific failure boundaries found after `0.6.9.2`:
 
-Reuse accepted `0.6.9` Normal campaign, continuity, immutable artifact, verified publication, mutation admission, and authority-ledger foundations. Do not implement the survey command or opportunistically create a generic activity resolver, transaction framework, or command replay service.
+- the real launcher new-campaign retry regenerates character, campaign, and continuity identity after a post-head address failure;
+- pending publication recovery can overwrite a newer valid campaign address in the same slot or resolve multiple recoveries by storage enumeration order;
+- `recovery_pending` blocks play but has no production-reachable, authority-valid completion owner.
+
+Preserve the accepted `0.6.9.2` immutable-artifact, publication recovery, account-consumer, migration, campaign-control, mutation replay, and Normal-defeat repairs. Do not implement the Ashen Reef survey receipt decision in this run.
 
 ## Required Reading
 
 Read:
 
 - `AGENTS.md`;
-- `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
-- `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
-- `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
+- `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
-- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
-- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
-- current campaign/session/save/publication/shared snapshot and authority-ledger contracts;
-- current survey behavior and its characterization coverage;
-- the current output, prompt, handoff, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, static-content program, branch policy, and branch register;
+- `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
+- `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
+- current campaign rules, session mutation, Normal defeat, account publication, save manager, character creation, launcher, lifecycle, shared snapshot, and focused persistence test surfaces;
+- current output, handoff, historical/deferred register, planning reconciliation, branch policy, and branch register;
 - the protected integrated-gameplay readiness branch through read-only Git inspection only.
 
 ## Execution Gate
 
-1. Verify clean synchronized `master`, upstream, current head, accepted `0.6.9`/`0.6.9.2` evidence, and this prompt.
-2. Run `git fetch --all --prune`; inventory all branches and open PRs; refresh dispositions only from live evidence.
-3. Inspect the complete current survey mutation path and the accepted occurrence/save decisions before drafting.
-4. Keep the run documentation-only.
-5. If repository evidence cannot decide an identity, owner, persistence, replay, correction, or package boundary without product direction, return `NO_PACKAGE` and ask the smallest exact user question.
+1. Verify clean synchronized `master`, upstream, current head, this prompt, and the post-repair audit.
+2. Run `git fetch --all --prune`; inventory all local and remote branches and open PRs; refresh dispositions from live evidence.
+3. Reproduce the actual character-creation retry sequence before editing. Do not substitute only direct repeated `publishSave(...)` calls.
+4. Reproduce a same-slot recovery collision and confirm current behavior.
+5. Confirm there is no production caller that completes `recovery_pending` through validated recovery admission.
+6. If any finding is not reproducible, stop and install a corrected audit route rather than broadening implementation.
+7. Keep every edit inside the parent-specific save/session/new-game/recovery boundary.
 
-## Required Decision
+## Required Implementation
 
-### A. Fix the persisted identity graph
+### A. Stable new-campaign attempt and retry authority
 
-Decide exact distinct identities and links for:
+Create the smallest owner-correct new-campaign attempt coordinator or equivalent bounded state that:
 
-- command/request;
-- admitted survey occurrence;
-- deterministic result;
-- affected-owner consequence receipt;
-- event;
-- notification and Chronicle projections;
-- projection repair;
-- correction/supersession.
+- establishes one stable attempt id before campaign authority is created;
+- retains the exact normalized character-creation inputs, selected slot, preparation selection, inheritance source, prepared consumer plans, and fingerprints;
+- creates character, campaign, and continuity identity once per attempt;
+- reuses the original prepared snapshot and identities after a post-head address failure;
+- never creates a second campaign merely because `publishSave(...)` threw after verified head publication;
+- survives the required retry/restart boundary once the publication has become durable;
+- fails closed on conflicting reuse of an attempt id or changed normalized input.
 
-State which identities are transient, snapshot-persisted, artifact-derived, publication-correlated, or account-projected. Do not reuse tick, event, notification, Chronicle, artifact, publication, or generic hash identity where the accepted contracts prohibit it.
+Do not introduce a general workflow framework. The coordinator may remain new-campaign-specific.
 
-### B. Select the smallest receipt owner and storage shape
+### B. Account-and-slot recovery inspection before new publication
 
-Decide:
+Before creating or publishing a new campaign into a slot, inspect durable publication recoveries for the account and target slot.
 
-- whether survey occurrence/result records share one survey-owned container or require separate bounded collections;
-- the exact owner-specific consequence receipt envelope;
-- required provenance, source revision, campaign, continuity, character, command, occurrence, result, and owner fields;
-- applied, blocked-at-gate, projection-pending, corrected, or superseded posture;
-- ordering, uniqueness, retention, and bounded-growth policy;
-- target snapshot format and migration/default posture for saves that predate survey receipts.
+Implement exact outcomes:
 
-Do not add the schema or fields in this run.
+- **one compatible pending new-campaign recovery:** recover the exact retained address and publication, resume its consumer work, and enter that campaign without generating new authority;
+- **one incompatible pending recovery:** block overwrite and present an explicit conflict/recovery diagnostic;
+- **multiple pending recoveries for the slot:** fail closed into deterministic quarantine or an explicit bounded resolution state; never select by local-storage enumeration order;
+- **existing newer valid address plus older pending recovery:** preserve the newer valid address unless exact equivalence or accepted supersession evidence proves the older recovery should control;
+- **terminal recovery:** preserve closed authority and existing terminal-consumer rules.
 
-### C. Define atomic admission and application
+Expose a bounded query or coordinator result for account/slot recovery posture. Do not make callers infer it by iterating raw storage.
 
-Specify the future order for:
+### C. Exact consumer and history replay
 
-1. normalized command validation;
-2. stale and conflicting-retry checks;
-3. pure shared preview/execution plan;
-4. campaign mutation admission and occurrence reservation;
-5. cloned candidate application;
-6. time/body/resource/stat-growth consequences;
-7. skill, quest, operation, discovery, and activity-owner applications;
-8. owner receipt creation;
-9. snapshot synchronization;
-10. notification, Chronicle, and typed event projections;
-11. verified campaign publication.
+For a recovered new-campaign publication:
 
-Define the exact failure boundary before acceptance and the repair boundary after accepted gameplay truth.
+- reuse the original consumer plans and fingerprints;
+- apply preparation and inheritance consumption at most once;
+- create or repair active history and account achievements at most once;
+- do not create a second active campaign record for one attempt;
+- preserve publication-keyed receipt conflict closure;
+- keep account failure repairable from durable publication evidence.
 
-### D. Define duplicate, restart, and correction behavior
+### D. Reachable validated `recovery_pending` completion
 
-Decide:
+Add one bounded production owner and shell path for pending Normal recovery.
 
-- exact equivalent retry fingerprint;
-- retained-result response after later mutations;
-- conflicting request-id reuse;
-- restart lookup and replay prevention;
-- projection-only repair;
-- owner-application repair;
-- correction/supersession evidence and reconciliation status;
-- what remains deliberately unsupported in the first package.
+The owner must:
 
-Reuse the bounded session duplicate-result semantics and durable publication recovery patterns where appropriate, but do not generalize them beyond survey need.
+1. find the single retained pending defeat receipt;
+2. derive or validate a safe recovery destination from current authoritative world/location facts;
+3. reject arbitrary, unknown, malformed, or unsafe destination ids;
+4. submit one `recovery_repair` mutation through campaign mutation admission;
+5. preserve the original defeat receipt identity and result;
+6. apply recovery time, location, HP/Stamina, Chronicle, notification, ledger, and session revision exactly once;
+7. return the retained accepted result on duplicate repair submission;
+8. keep ordinary commands, saving, and retirement blocked until repair succeeds;
+9. provide a clear shell notice and a bounded user action or automatic deterministic repair route;
+10. leave the repaired gameplay state unpublished until the normal explicit save path unless an already accepted parent rule requires otherwise.
 
-### E. Close the owner matrix
+Do not redesign the launcher or create a general recovery UI.
 
-For each effect, name proposal owner, application owner, receipt kind, required facts, and idempotency key:
+### E. Existing repair preservation
 
-- clock and total play ticks;
-- body/metabolic and attribute load;
-- HP/MP/Stamina resource changes;
-- General Lore gain or blocked breakthrough gate;
-- sector and ruins flags;
-- quest progress;
-- survey operation;
-- discovery;
-- current activity completion;
-- snapshot synchronization;
-- notification, Chronicle, notice, and event projection.
+Preserve and revalidate:
 
-Resolve whether every owner seam is implementation-ready from current code. If any seam lacks a bounded owner, return the smallest exact prerequisite rather than hiding it inside the command package.
+- exact candidate and immutable artifact verification;
+- publication recovery evidence written before head/address transitions;
+- same-publication address recovery without head advancement;
+- target-address/immutable-artifact consistency;
+- durable account-consumer plans outside account storage;
+- terminal publication and deferred address deletion ordering;
+- separately loaded migrated HP-zero head and non-head repair;
+- missing, malformed, closed, stale, changed, and wrong-artifact campaign-control rejection;
+- ordinary mutation and publication blocking under `recovery_pending`;
+- retained duplicate mutation snapshot/control/result correlation;
+- conflicting mutation-id rejection;
+- Normal defeat balance and preservation rules.
 
-### F. Classify the next package
+## Required Tests
 
-Return exactly one:
+Add focused executable tests for:
 
-- `PACKAGE_READY`: name one smallest current-band implementation package, exact files/surfaces, tests, exclusions, and acceptance gates;
-- `NO_PACKAGE`: name the smallest missing prerequisite or user decision.
+1. the actual character-creation handler or an extracted production coordinator with injected post-head address failure;
+2. a second user submission recovering the original character, campaign, continuity, artifact, publication, slot, consumer plan, and attempt identity;
+3. restart after a hidden new-campaign publication;
+4. exact prevention of a second active history record;
+5. preparation and inheritance consumption exactly once across failure, retry, and restart;
+6. an older pending recovery competing with a newer valid address in the same slot;
+7. multiple pending recoveries for one slot, proving deterministic fail-closed behavior independent of storage iteration order;
+8. one compatible and one incompatible pending recovery classification;
+9. production-reachable pending-defeat repair using a valid authoritative destination;
+10. rejection of unknown, unsafe, malformed, and conflicting recovery destinations;
+11. duplicate pending-defeat repair after later accepted mutations returning the retained result;
+12. ordinary mutation, save, quick-save, and retirement remaining blocked before repair;
+13. all existing `0.6.9.2` recovery, migration, control, duplicate, account-consumer, candidate-readback, immutable-address, and Normal-defeat cases;
+14. the prescribed Node group;
+15. the RPG UI production build;
+16. TypeScript/JavaScript mirror checks where both surfaces exist;
+17. `git diff --check` and complete diff inspection.
 
-Do not assign `0.7.0`. If a versioned implementation is ready, classify it under the repository version policy without assuming that a static type/container alone advances maturity.
+Report exact counts. Do not claim the known repository-wide TypeScript audit is green. Reproduce its baseline only when required by the existing validation policy and report whether changed files add diagnostics.
 
-## Required Deliverable
+## Allowed Production Surface
 
-Create one permanent decision document under `docs/design/` with:
+Expected bounded surfaces include only files needed within:
 
-- run identity, date, branch/head assumptions, label class, and milestone impact;
-- evidence inspected;
-- current survey mutation inventory;
-- exact identity graph;
-- persisted record and receipt contract;
-- atomic application and failure boundary;
-- duplicate/restart/correction matrix;
-- affected-owner matrix;
-- migration and retention posture;
-- explicit exclusions;
-- package classification and exact next route;
-- branch/PR lifecycle report.
+- `apps/rpg-ui/src/App.tsx`;
+- `apps/rpg-ui/src/game-shell/saveManager.ts`;
+- a narrowly extracted new-game/recovery coordinator under `apps/rpg-ui/src/game-shell/` when necessary;
+- `apps/rpg-ui/src/game-shell/state.ts` or one directly related shell component only when needed for the bounded recovery action;
+- `packages/engines/game-engine/src/campaign-session.ts`;
+- `packages/engines/game-engine/src/normal-defeat.ts`;
+- directly corresponding index exports;
+- `tests/unit/campaign-persistence-foundation.test.mjs` and narrowly related UI/coordinator tests;
+- the parent audit and live coordination documentation.
 
-Update all live coordination surfaces, including current output, prompt, handoff, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, static-content program, and branch register.
-
-## Validation
-
-Run:
-
-- focused existing survey characterization tests;
-- focused campaign persistence tests needed to verify assumptions;
-- JSON/Markdown/reference checks appropriate to documentation changes;
-- `git diff --check`;
-- complete diff inspection.
-
-Do not claim the workspace typecheck or production build was required for a documentation-only decision unless a changed surface makes it relevant.
+Any production path outside this list requires a fail-closed scope justification in the completion report. Do not edit shared content catalogs, schemas unrelated to the parent, dependencies, generated output, assets, or survey files.
 
 ## Scope Exclusions
 
 Do not:
 
-- implement survey behavior, receipts, schemas, migrations, UI, preview, command, event, or adapters;
-- change gameplay balance or current survey output;
-- introduce generalized activity uncertainty, competence, difficulty, familiarity, or compression;
-- add Committed/Ironbound Stakes, checkpoint selection, actual death/succession, cloud synchronization, recovery UI, mutable health, care, rewards, or new content;
+- run or implement the Ashen Reef survey receipt decision;
+- implement survey behavior, receipts, commands, UI, or migrations;
+- add Committed or Ironbound Stakes;
+- redesign save slots, character creation, account selection, or the launcher;
+- add cloud synchronization;
+- create a generic transaction, workflow, retry, event, command, or replay framework;
+- redesign actual death, succession, injury, trauma, care, rest, or resurrection;
+- alter accepted Normal recovery balance except to validate destination authority and complete the existing receipt;
 - add dependencies, assets, generated output, or unrelated cleanup;
-- merge, modify, rebase, force-update, or delete protected branches.
+- merge, modify, rebase, force-update, or delete protected branches;
+- merge PR #2.
+
+## Branch And PR Lifecycle
+
+Before edits, fetch and prune and inspect all live branches and open PRs. Update `docs/dev/branch-disposition-register.md` from the live starting head.
+
+No registered connector branch currently implements this repair. Integrate a branch only if fresh evidence proves its exact contents are required by this package and its validation fits the active scope. Otherwise preserve it for its named trigger.
+
+The completion report must list:
+
+- starting and final `master` SHAs;
+- local and remote branches and open PRs inspected;
+- merge bases, unique commits, changed paths, and semantic overlap for any branch considered relevant;
+- exact integration, closure, or deletion actions performed;
+- retained branches and next review triggers;
+- explicit confirmation when no lifecycle action was due.
+
+## Acceptance
+
+Accept `0.6.9.3` only when:
+
+- the actual launcher retry recovers the first verified campaign rather than creating a second one;
+- slot recovery cannot silently overwrite a newer valid campaign;
+- multiple same-slot recoveries fail closed deterministically;
+- preparation, inheritance, history, and account value remain exactly once;
+- pending Normal recovery has a reachable, validated, exactly-once completion path;
+- every required focused and prescribed test and build gate passes;
+- no parent repair regresses;
+- the parent acceptance audit is updated from `REPAIR_REQUIRED` to `ACCEPTED_AFTER_REPAIR` only after independent evidence.
+
+If any gate fails, keep the parent unaccepted and install the smallest exact `0.6.9.4` audit or repair. Do not advance to the survey receipt decision.
 
 ## Completion
 
-Report starting/final commits, exact files changed, decision result, branch/PR lifecycle, validation and counts, unresolved risks, and the installed next prompt.
+Report:
+
+- reproduced defects;
+- exact files changed;
+- implementation decisions and bounded owner locations;
+- test/build commands and counts;
+- changed-file TypeScript posture;
+- branch and PR lifecycle;
+- remaining risks;
+- parent acceptance status;
+- installed next prompt.
