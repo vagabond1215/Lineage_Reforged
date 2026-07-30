@@ -2,137 +2,132 @@
 
 Date: 2026-07-30
 
-Run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`
-
 Parent: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
 Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Status: `ACCEPTED_AFTER_REPAIR`
+Current status: `REPAIR_REQUIRED_AFTER_0.6.9.2`
 
 ## Decision
 
-The `0.6.9` parent, `0.6.9.1` audit, and `0.6.9.2` repair are accepted.
+The `0.6.9` parent is not accepted.
 
-`Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` repaired all six findings recorded by the original `0.6.9.1` audit and added immutable-artifact verification for playable addresses. The fresh prescribed group passes 127/127, the focused persistence suite passes 20/20, and the RPG UI production build passes with 207 modules transformed. The package remains bounded to campaign/save/account/Normal-defeat admission and retirement publication ordering.
+`Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` repaired the six findings recorded by `0.6.9.1` and added immutable playable-address verification. Its reported focused persistence suite passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes.
 
-The next route is the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`. Survey implementation and later Stakes modes remain unauthorized until that decision closes its prerequisites.
+Later inspection of the real launcher and recovery flow found three additional parent-specific authority failures:
 
-## Repair Acceptance Evidence
+1. the real new-campaign retry regenerates character, campaign, and continuity identities after a post-head address failure;
+2. a retained recovery can replace a newer valid same-slot address, while multiple same-slot recoveries have no accepted ordering authority;
+3. the blocked recovery posture has no production-reachable, authority-valid completion owner.
 
-- Repair source head: `b0057151c01d51d258d0695993489ef2e2d9dc32`.
-- Post-head address failure retains durable exact envelope, artifact, publication, head, slot, terminal, and consumer-plan evidence; retry rebinds the same artifact/publication without advancing the head.
-- Target address load and recovery verify immutable artifact identity, generation, publication, campaign, continuity, character, revision, terminal posture, timestamp, format, and serialized snapshot bytes.
-- Consumer plans and payload fingerprints are prepared before publication and retained outside account storage. Startup/account selection reconciles account receipts idempotently, including observed-failed writes.
-- Terminal publication remains closed while mandatory retirement/estate work is pending; address deletion occurs only after durable consumer application, while immutable artifact and closed control remain available as repair authority.
-- Separately loaded migrated HP-zero head and non-head artifacts repair exactly once. The head advances only itself; the non-head remains non-head.
-- Session-owned publication rejects missing, invalid, closed, changed, stale, or wrong-artifact control.
-- Live and loaded `recovery_pending` snapshots reject ordinary admission and publication until the explicit recovery owner repairs the single retained receipt.
-- Duplicate mutation delivery returns its retained accepted snapshot/control/result correlation after later accepted mutations; conflicting id reuse fails closed.
-- Prescribed Node group: 127/127 passed.
-- Focused persistence group: 20/20 passed.
-- RPG UI production build: passed with 207 modules transformed; temporary output was removed.
-- Bounded TypeScript audit reproduced the known 173-diagnostic repository baseline with no diagnostic in a file changed by `0.6.9.2`.
+The controlling post-repair audit is:
+
+`docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`
+
+The exact next repair is:
+
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
+
+The Ashen Reef survey receipt decision remains blocked until this repair is implemented and independently accepted.
+
+## Accepted `0.6.9.2` Evidence To Preserve
+
+- durable publication recovery evidence before campaign-head and address transitions;
+- same-prepared-snapshot low-level retry without advancing the head;
+- immutable artifact verification for playable addresses and recovery;
+- durable account-consumer plans outside account storage;
+- terminal consumer cleanup ordering;
+- separately loaded migrated zero-resource head and non-head repair;
+- missing, invalid, closed, stale, changed, and wrong-artifact campaign-control rejection;
+- ordinary mutation and publication blocking under the pending recovery posture;
+- retained duplicate mutation snapshot/control/result correlation;
+- conflicting mutation-id rejection;
+- focused persistence suite: 20/20;
+- prescribed Node group: 127/127;
+- RPG UI production build: passed with 207 modules transformed;
+- bounded TypeScript audit: known 173-diagnostic repository baseline with no diagnostic in a changed repair file;
 - `git diff --check`: passed.
 
-## Passing Evidence
+No hosted GitHub Actions run or commit status was attached to the repair commit; these are local Codex results.
 
-- Starting and parent head: `ca707f5e13cd38632beb71274a3772722e1cf12f`.
-- Parent range inspected: `fb9a2f9c2868d5789991e6d03401e8d8d609e47f..ca707f5e13cd38632beb71274a3772722e1cf12f`.
-- The parent changes 42 files as one campaign/save/Normal-defeat/account-publication package.
-- No dependency, generated-output, content-catalog, asset, survey, Committed/Ironbound, checkpoint, cloud, or generic command-framework change was found.
-- Prescribed Node group: 120/120 passed.
-- RPG UI production build: passed with 207 modules transformed; temporary output was removed.
-- Bounded TypeScript audit reproduced the known 173-diagnostic repository backlog with zero diagnostics in the changed core persistence/session/account/lifecycle modules.
-- Candidate write/readback failure and campaign-control write failure retain the prior verified head in the existing focused tests.
-- Migration interruption reuses stable identities and retains source bytes in the existing focused tests.
-- Normal defeat, first-mutation continuity, consumer-id conflict closure, and TypeScript/JavaScript mirror checks pass in the existing focused tests.
+## Original Findings Closed By `0.6.9.2`
 
-## Original `0.6.9.1` Blocking Findings, Repaired By `0.6.9.2`
+The six original findings remain historical evidence:
 
-### 1. Verified head publication can strand the caller before address projection
+1. post-head address projection failure lacked deterministic recovery;
+2. account-store failure could lose mandatory consumer repair evidence;
+3. a separately loaded migrated zero-resource slot could bypass repair;
+4. session publication did not fail closed when campaign control disappeared;
+5. pending recovery did not block ordinary mutation and publication;
+6. duplicate mutation delivery did not return the retained accepted result.
 
-`publishSave(...)` writes and verifies the new campaign control before writing the playable slot address. If the later address write fails, the campaign head has already advanced, but the function throws before returning the verified publication or updated session control.
+`0.6.9.2` added bounded repairs for each item. The new findings are application-level retry, same-slot collision, and reachable validated completion gaps.
 
-Consequences:
+## Post-Repair Finding 1: New-Campaign Retry Regenerates Authority
 
-- UI does not report save success, but durable gameplay authority changed;
-- the in-memory session remains based on the old head and becomes stale;
-- new-game publication can become hidden without a playable address;
-- the caller cannot create a publication-keyed repair receipt because it never receives the publication;
-- retry does not have a decision-complete recovery path.
+The low-level recovery test retries `publishSave(...)` with the same prepared snapshot. The actual character-creation handler creates a new target snapshot on every user submission.
 
-The repair must either complete/repair address projection after verified publication or persist enough stable pending projection evidence to recover the exact published artifact without rolling gameplay truth back.
+A new snapshot creates new character, campaign, and continuity identities. When address projection fails after head verification, the handler receives no returned publication and retains no prepared retry state. A second submission can create a second campaign rather than recover the first.
 
-### 2. Account-store failure can lose the mandatory repair receipt
+Required repair:
 
-New-game, ordinary-save, quick-save, and retirement catch paths attempt to write a pending consumer receipt back into the same account profile store after post-publication account work fails. If account persistence itself is the failing component, that second write can fail too; the code catches and discards that failure.
+- one stable new-campaign attempt identity;
+- retained normalized inputs, prepared snapshot, identities, target slot, consumer plans, and fingerprints;
+- retry and restart reuse of the exact hidden verified publication;
+- conflicting attempt reuse fails closed.
 
-The campaign artifact/control contains no durable `account_repair_pending` plan from which startup can reconstruct the mandatory consumers. A verified campaign may therefore survive without the preparation, inheritance, retirement, or other publication consumer receipt required to repair and block duplicate value.
+## Post-Repair Finding 2: Same-Slot Recovery Collision
 
-The repair must durably anchor the prepared consumer plan outside the failing account write, preserve stable publication-plus-kind ids and payload fingerprints, and prove restart/account-selection repair.
+Recovery records retain target slot ids and startup repair reprojects retained envelopes. An older hidden recovery can replace a newer valid address in the same slot.
 
-### 3. A legacy HP-zero slot can bypass same-slot repair after another slot migrates the group
+Multiple recoveries targeting one slot must not be resolved by storage enumeration order.
 
-Version-6 migration converts and projects every grouped slot but applies `unknown_or_legacy` defeat repair only to the slot that triggered migration. The other converted slots no longer pass through the version-6 migration path. A later `loadSaveWithAuthority(...)` of one of those version-7 HP-zero artifacts returns it without repair.
+Required repair:
 
-This contradicts the accepted same-slot rule: another slot should remain untouched until separately loaded, then receive exactly one persisted repair before play. The repair must preserve certified head/non-head posture: a repaired head may advance only its campaign head, while a repaired non-head must remain non-head.
+- account-and-slot recovery inspection before new publication;
+- compatible recovery resume;
+- incompatible recovery block and diagnostic;
+- deterministic quarantine or explicit bounded resolution for multiple recoveries;
+- newer valid address preservation unless exact equivalence or accepted supersession evidence exists.
 
-### 4. A session does not fail closed when its campaign control disappears
+## Post-Repair Finding 3: Pending Recovery Completion Is Not Reachable
 
-The stale-head guard compares the session with live control only when `existingControl` is non-null. If the control is removed or becomes unreadable after session admission, `publishSave(...)` treats the campaign as having no prior head and publishes revision 1.
+The engine exposes a bounded recovery mutation, but the production application only uses the pending check to block ordinary actions. It does not call the repair mutation.
 
-The repair must reject any session-owned publication when its certified campaign control is missing, invalid, closed, or mismatched.
+The helper accepts any nonempty destination id instead of validating a known safe destination from authoritative world facts.
 
-### 5. `recovery_pending` does not prove ordinary gameplay is blocked
+Required repair:
 
-Accepted defeat authority requires `recovery_pending` to retain one deterministic nonterminal result while ordinary gameplay remains blocked until repair. The landed resolver creates the posture and diagnostic receipt, but production admission does not consume that posture to reject ordinary commands or temporary legacy snapshot mutation bridges. HP and Stamina restoration also occur before the resolver returns the pending posture.
+- one bounded production-reachable completion owner;
+- authoritative destination derivation or validation;
+- unknown and unsafe destination rejection;
+- exactly-once campaign mutation admission using the retained pending receipt;
+- clear shell state and diagnostic;
+- duplicate completion returns the retained result.
 
-The repair must preserve the single accepted defeat result, block ordinary gameplay and save-success claims until deterministic repair completes, surface a clear diagnostic, and prevent reroll or duplicate application of time, destination, resources, Chronicle, and notice facts.
+## Required `0.6.9.3` Evidence
 
-### 6. Duplicate mutation ids do not return the retained accepted result
+Add executable coverage for:
 
-Accepted continuity authority requires duplicate mutation ids to return the retained result. The landed campaign-session controller stores only accepted ids. On duplicate submission it returns the caller-provided source snapshot and unchanged current control rather than the originally accepted snapshot/control/result correlation.
-
-The repair must retain or deterministically reconstruct the original accepted admission result, return it for duplicate replay even after later mutations, and fail closed when one mutation id is reused with conflicting owner, source, result, revision, or payload evidence.
-
-## Required Address Integrity Verification
-
-Target-save admission currently validates the playable address envelope and embedded snapshot but does not prove that the address remains byte- and identity-consistent with the immutable artifact named by `artifactId`.
-
-The repair must read and verify immutable artifact authority during target load and address recovery. A conflicting or missing artifact, publication, generation, campaign, continuity, character, revision, terminal posture, or serialized snapshot must reject or deterministically repair the address before ordinary play.
-
-## Required Repair Evidence
-
-`0.6.9.2` must add focused executable tests that inject:
-
-- address projection failure after verified campaign-control publication, followed by deterministic recovery of the exact artifact/publication;
-- target-address divergence from immutable artifact authority;
-- account profile persistence failure after publication, followed by durable pending-receipt discovery and idempotent restart repair;
-- migration through one slot followed by separate HP-zero head and non-head loads;
-- missing, invalid, closed, and mismatched campaign control for a live session;
-- live and loaded `recovery_pending` posture with ordinary mutation admission blocked until repair;
-- duplicate mutation replay after later accepted mutations, plus conflicting id reuse.
-
-It must also preserve the already-green candidate/control failure, migration interruption, ambiguity quarantine, first-mutation continuity, Normal defeat, retirement ordering, browser build, and mirror checks.
+- the actual character-creation handler or extracted production coordinator under injected post-head address failure;
+- retry and restart reusing the original character, campaign, continuity, artifact, publication, slot, and consumer plan;
+- exactly-once active history, preparation, inheritance, achievements, and account value;
+- older pending recovery versus newer valid same-slot address;
+- multiple same-slot recoveries with deterministic fail-closed behavior independent of storage iteration order;
+- compatible and incompatible pending recovery classification;
+- production-reachable pending recovery completion using validated destination evidence;
+- unknown or unsafe destination rejection;
+- duplicate completion replay and conflicting evidence;
+- preservation of every existing `0.6.9.2` test and build gate.
 
 ## Branch And PR Review
 
-Codex fetched and pruned before the audit and reinspected all live refs.
+The latest completed repair reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
 
-- Local branches: only `master`.
-- Non-default remote branches: 17.
-- Open PRs: PR #2 only.
-- No branch or PR overlaps the required persistence repair.
-- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE`; GitHub currently reports it non-mergeable.
-- Both protected branches remain read-only.
-- All twelve one-document audit branches remain retained for their named triggers.
-- No merge, rebase, cherry-pick, PR closure, or branch deletion was due or performed.
+`0.6.9.3` must refresh these facts after fetch/prune and report all integration, closure, and retirement decisions.
 
 ## Next Run
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
-
-Classification: unversioned documentation-only prerequisite.
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
