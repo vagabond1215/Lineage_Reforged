@@ -12,7 +12,7 @@ Date: 2026-07-30
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
 - Dependency-closure result: `PACKAGE_READY`.
-- Parent `0.6.9` status: `REPAIR_REQUIRED`; the existing 120/120 focused tests and RPG UI production build pass, but `0.6.9.1` found four untested recovery-authority defects.
+- Parent `0.6.9` status: `REPAIR_REQUIRED`; the existing 120/120 focused tests and RPG UI production build pass, but audit and follow-up inspection found six untested recovery/admission authority defects plus missing address-to-immutable-artifact verification.
 - Active repair: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 - Active-route class: `PARENT_SPECIFIC_SUPPORT_SUFFIX`.
 
@@ -80,7 +80,7 @@ Do not treat the existing weighted AI as absent, and do not describe it as a com
 - one child continuity at the first accepted divergent mutation after loading a non-head artifact, never on load alone;
 - retained request/occurrence/result/consequence/correction authority across restart.
 
-The follow-up dependency decision closes those seams through atomic `Version 0.6.9`: campaign rules plus nonterminal defeat, one campaign session mutation gateway with first-divergence continuity, verified artifact publication, and publication-keyed account consumers.
+The follow-up dependency decision closes those seams through atomic `Version 0.6.9`: campaign rules plus nonterminal defeat, one campaign session mutation gateway with first-divergence continuity, verified artifact publication, and publication-keyed account consumers. The parent remains unaccepted until `0.6.9.2` repairs every proven recovery and admission defect.
 
 ## Branch Lifecycle Posture
 
@@ -114,16 +114,19 @@ Run `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 - Persist discoverable account-consumer repair evidence even when the account profile store is the failing component.
 - Repair separately loaded migrated HP-zero head and non-head artifacts exactly once without promoting non-head truth.
 - Reject session publication when live campaign control is missing, invalid, closed, or mismatched.
+- Enforce `recovery_pending` as a nonterminal ordinary-gameplay block until deterministic repair completes; do not reroll already accepted recovery facts.
+- Return the originally retained accepted snapshot/control/result correlation for duplicate mutation ids and reject conflicting id reuse.
+- Verify target-save addresses against immutable artifact identity and serialized bytes before ordinary play or address recovery succeeds.
 - Add executable failure-injection coverage and preserve the green production build.
-- Add no survey implementation, Committed/Ironbound behavior, generic framework, or production dependency.
-- Accept the parent only after every original audit obligation and all repair regressions are independently green.
+- Add no survey implementation, Committed/Ironbound behavior, generic transaction/replay framework, or production dependency.
+- Accept the parent only after every original audit obligation and all additional proven repair regressions are independently green.
 
 ## Preserved Boundaries
 
 - Do not implement the survey command, survey receipts, or survey UI adapter.
-- Do not broaden into Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, recovery UI, slot redesign, or broad account work.
-- Do not build a generic activity resolver.
-- Existing travel, quest acceptance/tracking, activity selection, save, and synchronization behavior remain protected.
+- Do not broaden into Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, recovery UI redesign, slot redesign, or broad account work.
+- Do not build a generic activity resolver, transaction framework, or command replay service.
+- Existing travel, quest acceptance/tracking, activity selection, save, and synchronization behavior remain protected except for exact parent-specific admission and recovery fixes.
 - Static lethal-process definitions remain separate from mutable health.
 - The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched except for required read-only inspection.
 - The isolated `parallel/prompt-packaging-integrity-audit` branch remains protected and read-only.
