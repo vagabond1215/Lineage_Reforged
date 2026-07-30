@@ -15,7 +15,9 @@ Date: 2026-07-30
 - Parent `0.6.9` status: `REPAIR_REQUIRED` after connector post-repair inspection.
 - Active route: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
 - Active-route class: parent-specific support suffix.
-- The Ashen Reef survey occurrence/result/consequence receipt decision is blocked until `0.6.9.3` is independently accepted.
+- Mandatory green successor: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`.
+- The Ashen Reef survey occurrence/result/consequence receipt decision is blocked until the independent `0.6.9.4` audit accepts the parent.
+- The durable failure-pattern register is active and the current prompt identifies the exact applicable pattern IDs.
 
 ## Current Planning Precedence
 
@@ -32,6 +34,7 @@ Use current execution sources in this order:
 Repository workflow constraints also apply:
 
 - `AGENTS.md`;
+- `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/dev/gpt-connector-assistance-policy.md`;
 - `docs/dev/branch-lifecycle-and-integration-policy.md`;
 - `docs/dev/branch-disposition-register.md`.
@@ -69,6 +72,18 @@ The controlling audit is:
 
 `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`
 
+## Failure-Pattern Guardrail Posture
+
+The active implementation must report evidence for:
+
+- `FP-001` through `FP-006`;
+- `FP-008` through `FP-010`;
+- `FP-007` only if a large documentation file is rewritten.
+
+The highest-risk requirements are real-caller testing, failure-boundary and finding-to-test matrices, caller-state loss and restart, account-and-slot collision scope, stale-projection protection, reachable validated blocked-state completion, semantic branch review, exact head terminology, and full finding reconciliation.
+
+Green test totals alone cannot accept the parent.
+
 ## Accepted Survey Boundary
 
 The deterministic Ashen Reef survey remains the selected first activity-advancement consumer. One admitted shift is one occurrence. One pure plan must drive preview and execution; typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic application, synchronized accepted state, and accepted-only UI application are required.
@@ -82,7 +97,7 @@ The current survey implementation still has four material defects:
 
 General activity resolution, uncertainty, result bands, and balance changes are not required for the deterministic parity slice.
 
-Do not run the survey receipt decision while the parent persistence repair remains open.
+Do not run the survey receipt decision while the parent persistence repair and independent acceptance audit remain open.
 
 ## Combat AI And Gambit Posture
 
@@ -140,7 +155,11 @@ Run `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-
 - Preserve newer valid addresses and fail closed on ambiguous same-slot recovery collisions.
 - Keep preparation, inheritance, active history, achievements, and account value exactly once.
 - Add one production-reachable pending-defeat completion owner with validated safe-destination authority.
+- Exercise rerender or caller-state loss, restart, repeated submission, and competing recovery order.
+- Produce finding-to-test and failure-boundary matrices.
 - Preserve every accepted `0.6.9.2` repair and existing green test/build gate.
+- Report applicable failure-pattern IDs and evidence.
+- Do not accept the parent in the implementation run.
 - Do not implement survey behavior or the survey receipt decision.
 - Do not build generic workflow, transaction, retry, or replay frameworks.
 
@@ -157,9 +176,9 @@ Run `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-
 
 ## Near-Term Sequence
 
-1. implement `Version 0.6.9.3`;
-2. run a parent-specific acceptance audit if the implementation prompt does not itself provide independent acceptance evidence;
-3. only after parent acceptance, run the unversioned survey occurrence/result/consequence receipt foundation decision;
+1. implement `Version 0.6.9.3` and report `IMPLEMENTED_PENDING_PARENT_AUDIT` when green;
+2. run `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
+3. only after that independent audit accepts the parent, run the unversioned survey occurrence/result/consequence receipt foundation decision;
 4. implement only a dependency-closed receipt package selected by that decision;
 5. implement the bounded survey command and accepted-only UI after receipt prerequisites close;
 6. review and integrate candidate documentation branches at named triggers or through a dedicated branch-integration pass;
