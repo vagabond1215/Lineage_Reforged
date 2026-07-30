@@ -16,7 +16,7 @@ Status: `REPAIR_REQUIRED`
 
 The `0.6.9` parent is not accepted.
 
-The prescribed 120-test regression group and the RPG UI production build pass, and the implemented package remains correctly bounded. Independent inspection nevertheless found four parent-specific persistence failures not covered by the landed suite. They affect recovery after partial publication, mandatory account repair, active legacy HP-zero repair, and stale-session closure. These are authority defects rather than documentation-only gaps, so the next run is exact support repair `0.6.9.2`.
+The prescribed 120-test regression group and the RPG UI production build pass, and the implemented package remains correctly bounded. Independent inspection nevertheless found six parent-specific authority failures not covered by the landed suite. They affect recovery after partial publication, mandatory account repair, active legacy HP-zero repair, stale-session closure, `recovery_pending` admission, and duplicate-mutation replay. Address recovery must also verify that every playable address remains consistent with the immutable artifact it identifies. These are authority defects rather than documentation-only gaps, so the next run is exact support repair `0.6.9.2`.
 
 No survey implementation or later-Stakes work is authorized while this repair remains open.
 
@@ -69,14 +69,35 @@ The stale-head guard compares the session with live control only when `existingC
 
 The repair must reject any session-owned publication when its certified campaign control is missing, invalid, closed, or mismatched.
 
+### 5. `recovery_pending` does not prove ordinary gameplay is blocked
+
+Accepted defeat authority requires `recovery_pending` to retain one deterministic nonterminal result while ordinary gameplay remains blocked until repair. The landed resolver creates the posture and diagnostic receipt, but production admission does not consume that posture to reject ordinary commands or temporary legacy snapshot mutation bridges. HP and Stamina restoration also occur before the resolver returns the pending posture.
+
+The repair must preserve the single accepted defeat result, block ordinary gameplay and save-success claims until deterministic repair completes, surface a clear diagnostic, and prevent reroll or duplicate application of time, destination, resources, Chronicle, and notice facts.
+
+### 6. Duplicate mutation ids do not return the retained accepted result
+
+Accepted continuity authority requires duplicate mutation ids to return the retained result. The landed campaign-session controller stores only accepted ids. On duplicate submission it returns the caller-provided source snapshot and unchanged current control rather than the originally accepted snapshot/control/result correlation.
+
+The repair must retain or deterministically reconstruct the original accepted admission result, return it for duplicate replay even after later mutations, and fail closed when one mutation id is reused with conflicting owner, source, result, revision, or payload evidence.
+
+## Required Address Integrity Verification
+
+Target-save admission currently validates the playable address envelope and embedded snapshot but does not prove that the address remains byte- and identity-consistent with the immutable artifact named by `artifactId`.
+
+The repair must read and verify immutable artifact authority during target load and address recovery. A conflicting or missing artifact, publication, generation, campaign, continuity, character, revision, terminal posture, or serialized snapshot must reject or deterministically repair the address before ordinary play.
+
 ## Required Repair Evidence
 
 `0.6.9.2` must add focused executable tests that inject:
 
-- address projection failure after verified campaign-control publication, followed by deterministic recovery;
+- address projection failure after verified campaign-control publication, followed by deterministic recovery of the exact artifact/publication;
+- target-address divergence from immutable artifact authority;
 - account profile persistence failure after publication, followed by durable pending-receipt discovery and idempotent restart repair;
 - migration through one slot followed by separate HP-zero head and non-head loads;
-- missing, invalid, closed, and mismatched campaign control for a live session.
+- missing, invalid, closed, and mismatched campaign control for a live session;
+- live and loaded `recovery_pending` posture with ordinary mutation admission blocked until repair;
+- duplicate mutation replay after later accepted mutations, plus conflicting id reuse.
 
 It must also preserve the already-green candidate/control failure, migration interruption, ambiguity quarantine, first-mutation continuity, Normal defeat, retirement ordering, browser build, and mirror checks.
 
