@@ -29,6 +29,7 @@ Preserve the accepted `0.6.9.2` immutable-artifact, publication recovery, accoun
 Read:
 
 - `AGENTS.md`;
+- `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
 - `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
@@ -37,15 +38,34 @@ Read:
 - current output, handoff, historical/deferred register, planning reconciliation, branch policy, and branch register;
 - the protected integrated-gameplay readiness branch through read-only Git inspection only.
 
+## Applicable Failure-Pattern Guardrails
+
+Apply and report evidence for:
+
+- `FP-001` — exercise the real production caller path, not only direct save-manager or helper calls;
+- `FP-002` — provide a failure-boundary matrix in addition to green test counts;
+- `FP-003` — prove a production-reachable, restart-safe, validated completion owner for the blocked recovery posture;
+- `FP-004` — inspect recovery authority at the contended account-and-slot resource scope;
+- `FP-005` — test lost and regenerated caller state, rerender/retry, restart, and repeated user submission;
+- `FP-006` — prove stale or competing projection recovery cannot replace newer truth;
+- `FP-008` — apply semantic branch compatibility review if any branch or PR is considered for integration;
+- `FP-009` — distinguish inspected base, implementation starting head, final committed head, and live post-fetch head;
+- `FP-010` — map every confirmed finding to implementation, test evidence, and final disposition.
+
+Apply `FP-007` only if this run rewrites a large documentation file; otherwise avoid large-file replacement from partial content.
+
+The completion report must include a finding-to-test matrix and an `Applicable verification guardrails` section. Green counts alone do not satisfy acceptance.
+
 ## Execution Gate
 
-1. Verify clean synchronized `master`, upstream, current head, this prompt, and the post-repair audit.
+1. Verify clean synchronized `master`, upstream, current head, this prompt, the guardrail register, and the post-repair audit.
 2. Run `git fetch --all --prune`; inventory all local and remote branches and open PRs; refresh dispositions from live evidence.
 3. Reproduce the actual character-creation retry sequence before editing. Do not substitute only direct repeated `publishSave(...)` calls.
 4. Reproduce a same-slot recovery collision and confirm current behavior.
 5. Confirm there is no production caller that completes `recovery_pending` through validated recovery admission.
-6. If any finding is not reproducible, stop and install a corrected audit route rather than broadening implementation.
-7. Keep every edit inside the parent-specific save/session/new-game/recovery boundary.
+6. Build a numbered three-finding inventory and map each finding to current code paths and planned tests before editing.
+7. If any finding is not reproducible, stop and install a corrected audit route rather than broadening implementation.
+8. Keep every edit inside the parent-specific save/session/new-game/recovery boundary.
 
 ## Required Implementation
 
@@ -128,31 +148,53 @@ Preserve and revalidate:
 
 Add focused executable tests for:
 
-1. the actual character-creation handler or an extracted production coordinator with injected post-head address failure;
-2. a second user submission recovering the original character, campaign, continuity, artifact, publication, slot, consumer plan, and attempt identity;
-3. restart after a hidden new-campaign publication;
-4. exact prevention of a second active history record;
-5. preparation and inheritance consumption exactly once across failure, retry, and restart;
-6. an older pending recovery competing with a newer valid address in the same slot;
-7. multiple pending recoveries for one slot, proving deterministic fail-closed behavior independent of storage iteration order;
-8. one compatible and one incompatible pending recovery classification;
-9. production-reachable pending-defeat repair using a valid authoritative destination;
-10. rejection of unknown, unsafe, malformed, and conflicting recovery destinations;
-11. duplicate pending-defeat repair after later accepted mutations returning the retained result;
-12. ordinary mutation, save, quick-save, and retirement remaining blocked before repair;
-13. all existing `0.6.9.2` recovery, migration, control, duplicate, account-consumer, candidate-readback, immutable-address, and Normal-defeat cases;
-14. the prescribed Node group;
-15. the RPG UI production build;
-16. TypeScript/JavaScript mirror checks where both surfaces exist;
-17. `git diff --check` and complete diff inspection.
+1. the actual character-creation application path, using the production coordinator or lifecycle owner invoked by `App.tsx`, with injected post-head address failure;
+2. proof that the application handler reuses that owner and does not regenerate identities on repeated submission;
+3. a second user submission recovering the original character, campaign, continuity, artifact, publication, slot, consumer plan, and attempt identity;
+4. rerender or caller-state loss before retry;
+5. restart after a hidden new-campaign publication;
+6. exact prevention of a second active history record;
+7. preparation and inheritance consumption exactly once across failure, retry, and restart;
+8. an older pending recovery competing with a newer valid address in the same slot;
+9. multiple pending recoveries for one slot, proving deterministic fail-closed behavior independent of storage iteration order;
+10. one compatible and one incompatible pending recovery classification;
+11. production-reachable pending-defeat repair using a valid authoritative destination;
+12. rejection of unknown, unsafe, malformed, and conflicting recovery destinations;
+13. duplicate pending-defeat repair after later accepted mutations returning the retained result;
+14. ordinary mutation, save, quick-save, and retirement remaining blocked before repair;
+15. all existing `0.6.9.2` recovery, migration, control, duplicate, account-consumer, candidate-readback, immutable-address, and Normal-defeat cases;
+16. the prescribed Node group;
+17. the RPG UI production build;
+18. TypeScript/JavaScript mirror checks where both surfaces exist;
+19. `git diff --check` and complete diff inspection.
 
 Report exact counts. Do not claim the known repository-wide TypeScript audit is green. Reproduce its baseline only when required by the existing validation policy and report whether changed files add diagnostics.
+
+## Failure-Boundary Matrix
+
+The completion report must map executable evidence to at least:
+
+- failure before campaign-head publication;
+- failure after verified head publication but before address projection;
+- retry in the same process with retained caller state;
+- retry after caller-state loss or rerender;
+- retry after restart;
+- one compatible pending recovery;
+- one incompatible pending recovery;
+- multiple same-slot recoveries in different enumeration orders;
+- an older pending recovery versus a newer valid address;
+- account-consumer failure and retry;
+- valid pending-recovery completion;
+- invalid pending-recovery destination;
+- duplicate completion submission;
+- stale or conflicting attempt reuse.
 
 ## Allowed Production Surface
 
 Expected bounded surfaces include only files needed within:
 
 - `apps/rpg-ui/src/App.tsx`;
+- `apps/rpg-ui/src/game-shell/runLifecycle.ts`;
 - `apps/rpg-ui/src/game-shell/saveManager.ts`;
 - a narrowly extracted new-game/recovery coordinator under `apps/rpg-ui/src/game-shell/` when necessary;
 - `apps/rpg-ui/src/game-shell/state.ts` or one directly related shell component only when needed for the bounded recovery action;
@@ -188,7 +230,7 @@ No registered connector branch currently implements this repair. Integrate a bra
 
 The completion report must list:
 
-- starting and final `master` SHAs;
+- inspected base, implementation starting, final committed, and live post-fetch `master` SHAs as distinct facts;
 - local and remote branches and open PRs inspected;
 - merge bases, unique commits, changed paths, and semantic overlap for any branch considered relevant;
 - exact integration, closure, or deletion actions performed;
@@ -205,6 +247,8 @@ Accept `0.6.9.3` only when:
 - preparation, inheritance, history, and account value remain exactly once;
 - pending Normal recovery has a reachable, validated, exactly-once completion path;
 - every required focused and prescribed test and build gate passes;
+- every applicable failure-pattern guardrail has explicit evidence;
+- the finding-to-test and failure-boundary matrices contain no unexplained gap;
 - no parent repair regresses;
 - the parent acceptance audit is updated from `REPAIR_REQUIRED` to `ACCEPTED_AFTER_REPAIR` only after independent evidence.
 
@@ -217,8 +261,12 @@ Report:
 - reproduced defects;
 - exact files changed;
 - implementation decisions and bounded owner locations;
+- finding-to-test matrix;
+- failure-boundary matrix;
+- applicable verification guardrail IDs and evidence;
 - test/build commands and counts;
 - changed-file TypeScript posture;
+- inspected-base, starting, final, and live-head identities;
 - branch and PR lifecycle;
 - remaining risks;
 - parent acceptance status;
