@@ -1,8 +1,8 @@
-# Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit
+# Version 0.6.9.2 - Normal Campaign Publication Recovery Repair
 
 ## Run Identity
 
-`Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`
+`Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`
 
 Label class: support suffix
 
@@ -12,99 +12,88 @@ Milestone impact: `supports_current_band`
 
 Suggested commit:
 
-`test(save): audit Normal campaign persistence foundation`
+`fix(save): repair Normal campaign publication recovery`
 
 ## Purpose
 
-Independently audit the complete landed `0.6.9` parent. Accept it only if the campaign-rules, save-authority, migration, first-mutation continuity, Normal defeat, legacy repair, account-publication, and retirement boundaries are coherent together and all prescribed checks pass.
+Repair the four parent-specific authority defects found by `0.6.9.1`: post-publication address failure, durable account-consumer recovery, separately loaded legacy HP-zero repair, and missing/invalid/closed campaign-control rejection.
 
-This is an audit-first support run. Do not broaden into survey advancement, later Stakes modes, actual death/succession, checkpoint UI, cloud synchronization, or a generic command/transaction framework.
+This is a narrow repair. Do not add survey behavior, later Stakes modes, checkpoint UI, cloud synchronization, actual death/succession, a generic transaction framework, dependencies, content, assets, or unrelated cleanup.
 
 ## Required Reading
 
 Read:
 
 - `AGENTS.md`;
-- current output, prompt, handoff, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, static-content program, and branch register;
+- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
+- the current output, prompt, handoff, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, static-content program, and branch register;
 - `docs/dev/branch-lifecycle-and-integration-policy.md`;
 - `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
 - `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
 - `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
-- `docs/design/campaign-rules-identity-migration-story-and-normal-stakes-decision.md`;
-- `docs/design/stakes-identity-campaign-save-provenance-checkpoint-topology-and-technical-recovery-contract-decision.md`;
-- every file changed by the parent;
+- the complete `0.6.9` and `0.6.9.1` ranges;
 - the protected readiness branch through read-only Git inspection only.
 
 ## Execution Gate
 
-1. Verify branch, clean worktree, upstream, current head, parent commit, and active prompt.
-2. Run `git fetch --all --prune`; inventory branches and open PRs; refresh dispositions only for proven live changes.
-3. Confirm the parent diff is one coherent authorized package and contains no generated output, dependency change, content/catalog change, survey implementation, or later-Stakes behavior.
-4. Reproduce the parent focused test and build evidence before deciding acceptance.
-5. Stop and install the smallest `0.6.9.2` repair prompt if a material defect cannot be safely fixed within this audit.
+1. Verify clean `master`, upstream, current head, parent/audit commits, and this prompt.
+2. Run `git fetch --all --prune`; inventory all branches and open PRs; refresh dispositions only from live evidence.
+3. Reproduce the 120-test baseline before repair.
+4. Keep every production edit inside the campaign/save/account repair boundary.
+5. If a defect requires a broader account-store redesign or generic transaction system, stop and install the smallest exact follow-up support prompt instead of broadening.
 
-## Required Audit
+## Required Repair
 
-### A. Identity and rules
+### A. Recover publication after address failure
 
-- Verify snapshot format `lineage.save_snapshot.v2`, envelope version 7, campaign-rules version 2, policy revision 1, and workflow `0.6.9` remain distinct.
-- Verify live rules are Normal-only with canonical legacy difficulty mapping and typed provenance.
-- Verify account/campaign/continuity/character/artifact/generation/publication identities use `crypto.randomUUID()` and fail closed without it.
-- Verify the persisted authority-ledger container does not invent survey receipts or retroactive command records.
+- Inject failure after campaign-control publication verifies but before the selected slot address verifies.
+- Preserve the verified head; do not roll gameplay truth back.
+- Persist or deterministically reconstruct stable pending address/account projection evidence before the caller can lose the publication identity.
+- Make retry recover the exact artifact/publication without minting another gameplay head.
+- Return or reload coherent session control after recovery.
+- For new game, ordinary save, quick save, and terminal retirement, never strand a verified head without a discoverable recovery path.
+- Report success only when required playable-address projection completes; otherwise report a specific repair-pending result.
 
-### B. Publication authority
+### B. Make account repair durable across account-store failure
 
-- Inject candidate write/readback failure and campaign-control publication failure.
-- Prove no failed candidate becomes the head or updates address/account projections.
-- Prove successful publication retains immutable artifact authority and the immediately prior compatible head.
-- Prove UI success is conditioned on verified publication.
-- Prove saving an unchanged non-head artifact copies/binds the existing artifact identity without new generation/publication/head revision.
-- Prove stale-head sessions fail closed.
+- Prepare the exact registered consumer plan before campaign publication.
+- Anchor pending consumer kinds, stable publication-plus-kind ids, and payload fingerprints in campaign/save-owned durable evidence that does not depend on the failing account-profile write.
+- Do not duplicate account value when the account write actually committed but the caller observed failure.
+- On startup and account selection, discover pending work from durable campaign authority, reconcile it with any account receipts, apply each consumer idempotently, and mark it complete.
+- Mandatory preparation, inheritance, and retirement work must block ordinary entry and further preparation/inheritance use until repaired.
+- Preserve active history, account achievements, Legacy rewards, `lastPlayedAt`, retirement settlement, and estate as verified-publication-only consumers.
 
-### C. Version-6 migration and active repair
+### C. Repair legacy HP-zero slots only when separately loaded
 
-- Test each accepted legacy difficulty/Hardcore mapping.
-- Prove original version-6 bytes remain retained and playable version-6 keys are removed only after verified target publication.
-- Prove one stable pending migration receipt is reused after injected interruption.
-- Prove one-source and unique exact `savedAt == account.lastPlayedAt` head certification.
-- Prove ambiguous multi-artifact groups remain quarantined and untouched.
-- Prove active HP-zero head and non-head sources receive exactly one `unknown_or_legacy` defeat repair before play.
-- Prove repaired head advances only its certified campaign head and repaired non-head remains non-head.
-- Prove blocked/deleted history cannot re-enter.
+- Preserve the accepted rule that migration repairs only the loaded slot; other grouped slots remain unchanged until loaded.
+- When a separately loaded migrated target artifact still has HP zero and active history, apply exactly one typed `unknown_or_legacy` repair and persist it before ordinary play.
+- A repaired certified head may advance only that campaign head.
+- A repaired non-head must remain non-head and must not replace the campaign head.
+- Retry, reload, or interruption must not duplicate ticks, relocation, resources, receipt, Chronicle, or notice.
+- Archived/deleted history remains blocked and cannot re-enter.
 
-### D. Session admission and continuity
+### D. Fail closed on lost or invalid control
 
-- Audit every persisted-snapshot writer.
-- Prove rejected, no-change, duplicate, stale-revision, and wrong-artifact submissions preserve snapshot/control identity and do not mark dirty, fork, defeat-resolve, or evaluate account state.
-- Prove engine results retain command/result correlation.
-- Prove legacy bridge and persisted preference changes use explicit owner kinds.
-- Prove the first accepted mutation from a non-head artifact creates exactly one child continuity before application and all later accepted mutations reuse it.
-- Prove abandoning unsaved play leaves no durable child or account value.
-- Prove a verified save makes the child durable.
+- A session-owned publication must reject missing, invalid, closed, or mismatched live campaign control.
+- Preserve the current stale-revision and wrong-artifact guards.
+- Do not recreate revision 1 from a session that was admitted against an earlier verified head.
+- Developer-fixture creation without a prior session may retain its current bounded path only where it cannot reopen closed authority.
 
-### E. Normal defeat
+## Required Tests
 
-- Test combat and noncombat HP-zero admissions.
-- Verify exactly four playable recovery ticks, HP formula, Stamina formula, MP/body preservation, encounter/transient-combat clearing, destination chain, and recovery-pending behavior.
-- Verify inventory, equipment, currency, quests, party, attributes, injury/trauma, and permanent truth are unchanged.
-- Verify one typed retained receipt, one Chronicle projection, one notice, and duplicate idempotency.
-- Verify ordinary defeat remains unsaved and cannot reach terminal archive, payout, estate, or save deletion.
+Add executable focused tests for:
 
-### F. Account and retirement consumers
+- address write/readback failure after verified control publication and exact retry recovery;
+- new-game or equivalent mandatory consumer failure where account profile persistence rejects the first post-publication write and durable pending evidence remains discoverable;
+- restart/account-selection repair for preparation and inheritance, including already-applied-but-observed-failed idempotency;
+- terminal retirement repair with hidden closed authority retained and playable addresses removed only after mandatory consumers;
+- migrating through a healthy head, then separately loading an HP-zero non-head;
+- migrating through a healthy non-head, then separately loading an HP-zero head;
+- exactly-one repair receipts and preserved head/non-head posture;
+- missing, malformed, closed, and changed control rejection;
+- existing candidate failure, campaign-control failure, migration interruption/retry, ambiguity quarantine, and stale-head behavior.
 
-- Prove character achievement preparation happens before campaign publication.
-- Prove account history/metrics/achievements, Legacy rewards, preparation consumption, inheritance consumption, `lastPlayedAt`, retirement settlement, and estate consume only verified publications.
-- Prove consumer ids are publication id plus registered kind, retries are idempotent, and conflicting payloads fail closed.
-- Inject post-publication account failure and prove gameplay authority remains published with a repairable pending receipt.
-- Prove mandatory new-game preparation/inheritance receipts block entry and further use until repaired on restart/account selection.
-- Prove retirement publishes and verifies terminal authority before settlement, removes playable addresses only after mandatory consumers, and retains hidden closed authority.
-
-### G. Integration and mirrors
-
-- Verify TypeScript/JavaScript owner mirrors and exports.
-- Verify browser imports remain narrow enough that the UI production build does not pull server-only `node:fs` content modules.
-- Verify existing travel, quest acceptance/tracking, activity selection, save roundtrip, combat, achievement, and lifecycle tests remain green.
-- Run a bounded TypeScript audit only as classified by repository policy; do not turn the known broad diagnostic backlog into the acceptance gate.
+Prefer testing exported owner helpers over source-string ordering. Keep TypeScript/JavaScript mirrors and public exports aligned.
 
 ## Prescribed Checks
 
@@ -116,22 +105,23 @@ node --test tests\simulation\save-load-roundtrip.test.mjs tests\unit\achievement
 
 Run the RPG UI Vite production build with temporary output outside tracked paths, then remove that output.
 
-Run `git diff --check` and inspect the complete parent/audit diff.
+Run the bounded TypeScript audit only as classified by repository policy. Run `git diff --check` and inspect the complete repair diff.
 
 ## Completion
 
-If all obligations pass:
+If every repair and prescribed check passes:
 
-- add a focused acceptance document;
-- mark `0.6.9` complete and accepted;
+- update the existing acceptance audit with exact repaired evidence;
+- run a fresh parent-specific acceptance decision;
+- mark `0.6.9`, `0.6.9.1`, and `0.6.9.2` complete only if all original audit obligations are green;
 - update all live coordination surfaces;
 - install the smallest unversioned post-parent route decision required before survey implementation;
-- do not install a survey implementation prompt unless that decision proves all remaining occurrence/result/consequence prerequisites closed.
+- do not install survey implementation unless that decision closes its remaining prerequisites.
 
-If any obligation fails:
+If a material defect remains:
 
-- make only a tiny obvious parent-specific repair when complete intent is already fixed by accepted authority and validation fits this support run;
-- otherwise stop, document the defect, and install exact `Version 0.6.9.2` repair work;
-- do not claim parent acceptance.
+- do not accept the parent;
+- document the exact failure;
+- install the smallest further `0.6.9.S` repair or audit prompt.
 
-Report starting/final commits, parent range, exact files changed, branch/PR lifecycle, all checks and counts, injected-failure evidence, acceptance criteria, risks, and the installed next prompt.
+Report starting/final commits, exact files changed, branch/PR lifecycle, tests and counts, injected-failure evidence, remaining risks, and the installed next prompt.

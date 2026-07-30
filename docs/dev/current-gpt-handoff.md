@@ -5,15 +5,15 @@ Date: 2026-07-30
 ## Status
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
+- Latest completed support run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
 - Dependency-closure result: `PACKAGE_READY`.
-- Parent `0.6.9` status: `IMPLEMENTED_PENDING_PARENT_AUDIT`; 120/120 focused tests and the RPG UI production build pass.
-- Active audit: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
+- Parent `0.6.9` status: `REPAIR_REQUIRED`; the existing 120/120 focused tests and RPG UI production build pass, but `0.6.9.1` found four untested recovery-authority defects.
+- Active repair: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 - Active-route class: `PARENT_SPECIFIC_SUPPORT_SUFFIX`.
 
 ## Current Planning Precedence
@@ -106,16 +106,17 @@ Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. Th
 
 PR #2 / `main-menu-asset-contract-pass` is currently `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
 
-## Active Audit Guardrails
+## Active Repair Guardrails
 
-Run `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
+Run `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 
-- Independently verify campaign rules version 2, target identity, version-7 candidate publication, and version-6 migration.
-- Inject publication and consumer failures and verify fail-closed ordering plus retry behavior.
-- Reproduce head/non-head first-mutation continuity, ordinary Normal defeat, active legacy HP-zero repair, and terminal retirement ordering.
-- Confirm narrow browser import surfaces and the green production build.
+- Repair verified-head recovery when slot-address projection fails after campaign-control publication.
+- Persist discoverable account-consumer repair evidence even when the account profile store is the failing component.
+- Repair separately loaded migrated HP-zero head and non-head artifacts exactly once without promoting non-head truth.
+- Reject session publication when live campaign control is missing, invalid, closed, or mismatched.
+- Add executable failure-injection coverage and preserve the green production build.
 - Add no survey implementation, Committed/Ironbound behavior, generic framework, or production dependency.
-- Accept the parent only after every prescribed audit obligation is independently green.
+- Accept the parent only after every original audit obligation and all repair regressions are independently green.
 
 ## Preserved Boundaries
 
@@ -131,12 +132,12 @@ Run `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance 
 
 ## Near-Term Sequence
 
-1. run parent-specific `Version 0.6.9.1` acceptance audit or the smallest required repair/audit chain;
-3. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
-4. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
-5. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
-6. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
+1. run parent-specific `Version 0.6.9.2` repair and its required fresh acceptance decision;
+2. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
+3. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
+4. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
+5. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-`Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`
+`Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`

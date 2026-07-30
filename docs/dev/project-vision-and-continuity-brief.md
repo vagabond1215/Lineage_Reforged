@@ -24,8 +24,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
-- Latest completed support run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
-- Active run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
+- Latest completed support run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
+- Active run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -56,7 +56,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The unversioned survey advancement scope/owner decision accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI.
 - The unversioned minimum save decision accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification, authoritative-head publication, and a typed persisted authority ledger.
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9` is implemented pending parent audit. Its target rules/identity, version-7 publication, version-6 migration, first-mutation continuity, Normal defeat/legacy repair, publication-keyed account consumers, and terminal retirement ordering pass 120/120 focused tests and the RPG UI production build.
+- `Version 0.6.9` is implemented but not accepted. Its existing target rules/identity, publication, migration, first-mutation continuity, Normal defeat, account-consumer, and retirement suite passes 120/120 plus the RPG UI build, but `0.6.9.1` found four recovery-authority defects requiring exact `0.6.9.2` repair.
 - `0.7.0` remains `NOT_READY`; the survey advancement/result/consequence loop remains later.
 
 ## Validation Posture
@@ -73,7 +73,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`;
+1. run `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` and its fresh acceptance decision;
 2. audit or repair the parent through a `0.6.9.S` support chain;
 3. continue the accepted survey occurrence/result/consequence sequence only after parent acceptance;
 4. keep implementation and `0.7.0` behind explicit acceptance evidence.

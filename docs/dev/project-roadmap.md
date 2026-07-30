@@ -5,11 +5,11 @@ Last reviewed: 2026-07-30
 ## Current Runtime Transition Override
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support/audit run: `Version 0.6.8.1 - Lethal-Process Definition Static Foundation Acceptance Audit`.
+- Latest completed support/audit run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
-- Next run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
-- Activity selection remains accepted. `0.6.4`-`0.6.8` implementation and acceptance are complete. `0.6.9` now implements campaign rules version 2, version-7 verified publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat, active legacy HP-zero repair, and publication-keyed account consumers; 120/120 focused tests and the RPG UI production build pass. Parent acceptance remains reserved for `0.6.9.1`. `0.7.0` remains `NOT_READY`.
+- Next run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
+- Activity selection remains accepted. `0.6.4`-`0.6.8` implementation and acceptance are complete. `0.6.9` implements the Normal campaign persistence foundation and its existing 120-test group plus RPG UI build pass, but `0.6.9.1` found four recovery-authority defects. Parent acceptance is withheld pending exact `0.6.9.2` repair and fresh acceptance. `0.7.0` remains `NOT_READY`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.

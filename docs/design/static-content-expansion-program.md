@@ -2,7 +2,7 @@
 
 Date: 2026-07-30
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` implemented pending `0.6.9.1` audit
+Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; `Version 0.6.9` remains unaccepted after `0.6.9.1`, with exact `0.6.9.2` persistence recovery repair active
 
 ## 1. Purpose
 
