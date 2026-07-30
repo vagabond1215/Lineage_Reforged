@@ -20,7 +20,7 @@ Independent inspection found that parent acceptance remains premature because th
 
 The implementation also blocks `recovery_pending` play but exposes no production-reachable, authority-valid completion owner. The engine helper accepts any nonempty destination string rather than proving a valid safe destination from current world facts.
 
-The parent `0.6.9`, audit `0.6.9.1`, and repairs `0.6.9.2` remain unaccepted pending exact support repair `0.6.9.3`.
+The parent `0.6.9`, audit `0.6.9.1`, and repairs `0.6.9.2` remain unaccepted pending exact support repair `0.6.9.3` and its independent successor acceptance audit.
 
 ## Confirmed Passing `0.6.9.2` Evidence
 
@@ -69,9 +69,23 @@ Installed:
 
 - `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
 
-Corrected current acceptance and routing documentation so the Ashen Reef survey receipt decision is blocked until `0.6.9.3` is implemented and accepted.
+Corrected current acceptance and routing documentation so the Ashen Reef survey receipt decision is blocked until `0.6.9.3` is implemented and independently accepted.
 
 No production source or tests were changed by the connector inspection.
+
+## Subsequent Workflow Synchronization
+
+After the inspection:
+
+- `docs/dev/codex-failure-patterns-and-verification-guardrails.md` was added as durable project-specific workflow authority;
+- `AGENTS.md` now requires applicable pattern IDs and verification evidence in implementation, repair, and acceptance completion reports;
+- the active `0.6.9.3` prompt explicitly applies `FP-001` through `FP-006` and `FP-008` through `FP-010`, with `FP-007` conditional on large documentation replacement;
+- the prompt now includes `apps/rpg-ui/src/game-shell/runLifecycle.ts` in the bounded production surface because current new-game lifecycle authority resides there;
+- the prompt requires finding-to-test and failure-boundary matrices;
+- a green implementation must report `IMPLEMENTED_PENDING_PARENT_AUDIT` and install `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
+- the implementation run may not accept its own parent or advance to survey work.
+
+These workflow updates are documentation-only and did not rerun the prior implementation tests.
 
 ## Prior Validation Evidence
 
@@ -85,6 +99,19 @@ Codex reported for `0.6.9.2`:
 - `git diff --check`: passed.
 
 No hosted GitHub Actions run or commit status was attached to `cdfe4b51`; those are local Codex results.
+
+## Applicable Verification Guardrails For `0.6.9.3`
+
+- `FP-001`: actual application caller path;
+- `FP-002`: automated validation plus failure-boundary review;
+- `FP-003`: production-reachable validated blocked-state completion;
+- `FP-004`: account-and-slot recovery scope;
+- `FP-005`: lost or regenerated caller state and restart;
+- `FP-006`: stale and competing projection protection;
+- `FP-008`: semantic branch compatibility if integration is considered;
+- `FP-009`: exact inspected-base, starting, final, and live-head terminology;
+- `FP-010`: complete finding-to-test reconciliation;
+- `FP-007`: conditional only if a large documentation file is replaced.
 
 ## Branch And PR Lifecycle
 
@@ -105,6 +132,7 @@ The next run must fetch and prune, refresh all live facts, and report whether an
 - Existing local-storage recovery evidence may already contain same-slot collisions; the repair must define deterministic quarantine or explicit resolution rather than silently choosing one.
 - New-campaign attempt identity must remain bounded and must not become a generic workflow framework.
 - The pending-defeat completion owner must validate destination authority without broad recovery UI redesign.
+- Green implementation evidence does not independently accept the parent; `0.6.9.4` remains mandatory.
 - Workspace typecheck remains a separate known-failing 173-diagnostic audit.
 - `0.7.0` remains `NOT_READY`.
 
@@ -114,4 +142,8 @@ The next run must fetch and prune, refresh all live facts, and report whether an
 
 Classification: parent-specific support suffix.
 
-The Ashen Reef survey occurrence/result/consequence receipt decision must not run until the parent is independently accepted after this repair.
+On green implementation, install:
+
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
+
+The Ashen Reef survey occurrence/result/consequence receipt decision must not run until that independent audit accepts the parent.
