@@ -12,11 +12,13 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, and output are refreshed through accepted `Version 0.6.9.2`. The `0.6.9` parent is accepted, and the unversioned survey receipt-foundation decision is active.
+The current prompt, handoff, output, historical register, and parent acceptance audit are refreshed through the connector post-repair inspection of `Version 0.6.9.2`.
 
-`docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution or invalidate the refreshed top override. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
+The `0.6.9` parent is not accepted. Exact support repair `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is active. The unversioned Ashen Reef survey receipt-foundation decision is blocked until parent acceptance.
 
-The original `0.6.9.1` four-defect summary and later six-defect correction remain historical audit evidence. The accepted `0.6.9.2` repair and updated acceptance audit now control current posture.
+`docs/dev/project-roadmap.md` still contains lower current-anchor wording that may describe `0.6.9.2` as accepted and the survey decision as active. `docs/dev/codex-sequenced-implementation-plan.md`, the continuity brief, backlog, and static-content program may contain the same now-stale posture. Those lower-precedence summaries do not control execution.
+
+Correct large historical planning documents only in a safe complete-file maintenance pass or the next material roadmap update. Do not replace or rewrite them from truncated connector content.
 
 ## Controlling Current Anchor
 
@@ -26,7 +28,7 @@ Use the following precedence for current execution and routing:
 2. `docs/dev/current-gpt-handoff.md` for immediate guardrails and route order;
 3. `docs/dev/current-codex-output.md` for the latest completed inspection or implementation state;
 4. `docs/dev/historical-version-and-deferred-route-register.md` for canonical route identity, active/deferred posture, and reopening triggers;
-5. the most specific focused decision;
+5. the most specific focused decision or audit;
 6. this reconciliation for conflicts limited to stale current-anchor wording;
 7. the roadmap and sequenced plan for historical chronology, version-band meaning, and non-conflicting long-term context.
 
@@ -34,47 +36,37 @@ Use the following precedence for current execution and routing:
 
 - latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`;
-- latest completed support run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`;
-- next run: unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
+- latest completed support implementation: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`;
+- latest completed inspection: connector post-repair new-campaign and recovery-collision audit;
+- next run: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`;
+- parent `0.6.9` status: `REPAIR_REQUIRED`;
+- survey receipt-foundation decision: blocked pending parent acceptance;
+- `0.7.0`: `NOT_READY`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
 - exact `0.6.6.4` implementation commit: `232d3c2f466e3ec18e620e29a47f4466ae05b84d`, changing four authorized files;
 - `0.6.6.4` focused tests passed `5/5` and content lint passed `67`;
-- corrected `0.6.6.5` ran the workspace audit twice and reproduced an identical `173`-tuple baseline with exactly four proven-unrelated changed-file diagnostics and zero climate-contract mentions;
-- the deferred parent baseline passed `146/146`, and all content-diff and hygiene gates passed;
-- first unexecuted `0.6.6.5` prompt blob `ff436c355268d21783f2dd5d87835e75b7542d92` incorrectly required zero changed-file diagnostics;
-- second unexecuted prompt blob `b78d495068e41e4f8ed026fe194e0cafbe4b9b5f` required a complete prior capture that does not exist;
-- corrected `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance` is complete and accepted;
-- accepted `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion` completed its exact static package;
-- accepted `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` reproduced all static-package inventories, passed normal lint and 688 prescribed focused tests, and found no content/schema/validator/runtime repair need;
-- the six remaining cross-domain temporary research artifacts were removed after their durable-coverage conditions passed;
-- the Geography/recognition plan, Activity Resolution reuse audit, Mortal Crisis receipt-contract decision, bounded research integration, first lethal-process catalog plan, care-capability contract, and observer-safe crisis assessment/presentation contract are accepted;
-- all four grounded-research consumers are complete and the verified temporary artifact was retired;
-- the health-runtime ownership/dependency audit is accepted and selected definition owner namespaces plus a shared static-only envelope as the first dependency;
-- the lethal-process definition owner/schema plan accepted four owners, six ids, exact catalogs/envelope/references/paths, and one static package subject to version classification;
-- the classification gate accepted `CURRENT_BAND_PRIMARY`, assigned `Version 0.6.8`, and installed the exact static implementation prompt;
-- the lethal-process static foundation is implemented with exactly six records across four owner catalogs, a strict shared schema, a pure validator, exact registration, and passing prescribed checks;
-- the parent-specific `0.6.8.1` acceptance audit accepted the static foundation without repair;
-- the post-foundation classification gate found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement as the strongest next capability, and classified its scope/owner decision as `UNVERSIONED_PREREQUISITE`;
+- corrected `0.6.6.5` reproduced an identical `173`-tuple workspace baseline and accepted exact `0.6.6`;
+- accepted `Version 0.6.7 - Cross-Content Coherence And Coverage Audit` found no production repair need;
+- the lethal-process static foundation `0.6.8` and its `0.6.8.1` audit remain accepted;
 - the survey scope/owner decision accepted one deterministic shift occurrence, shared preview/execution planning, typed affected-owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI;
-- the survey decision returned `NO_PACKAGE` because stable campaign/continuity identity, durable receipt authority, and candidate-write/verification/publication semantics are absent;
-- the minimum save decision accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, verified candidate publication, and a typed persisted authority ledger;
-- the minimum save decision returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority;
-- the dependency-closure decision returned `PACKAGE_READY` and assigned atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
-- `0.6.9` includes campaign rules/identity, version-7 publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat/legacy repair, and publication-keyed account consumers;
-- `0.6.9` is implemented and accepted through `0.6.9.2`; all six proven defects plus immutable-address verification and terminal cleanup ordering are repaired;
-- the repaired focused persistence suite passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes;
-- the unversioned survey occurrence/result/consequence receipt decision is active; no band-entry label is active and `0.7.0` remains `NOT_READY`.
+- the minimum save decision accepted campaign/continuity/artifact/generation/publication identities, campaign rules version 2, version-6 migration receipts, verified candidate publication, and a typed authority ledger;
+- the dependency-closure decision assigned `Version 0.6.9`;
+- `0.6.9.2` repaired six original recovery/admission defects and immutable-address verification, with reported 20/20 focused persistence tests, 127/127 prescribed tests, and a passing UI build;
+- post-repair inspection proved the actual character-creation retry can mint a second campaign after hidden publication, pending recovery can collide with a newer same-slot address, and blocked recovery lacks a production-reachable validated completion owner;
+- `0.6.9.3` must close those exact defects without implementing survey work or a generic workflow framework.
 
-The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
+The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
 ## Accepted Near-Term Order
 
-1. run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
-2. implement only a dependency-closed survey receipt package selected by that decision;
-3. continue survey command and consequence-adapter work only after receipt acceptance;
-4. keep `0.7.0` behind explicit representative-loop evidence.
+1. implement `Version 0.6.9.3`;
+2. independently accept the parent only after all required retry, collision, consumer, and completion tests pass;
+3. then run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
+4. implement only a dependency-closed survey receipt package selected by that decision;
+5. continue survey command and consequence-adapter work only after receipt acceptance;
+6. keep `0.7.0` behind explicit representative-loop evidence.
 
 ## Maintenance Rule
 
