@@ -10,7 +10,7 @@ Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
 Codex ran `git fetch --all --prune`, complete local/remote ref enumeration, merge-base and unique-path comparison, protected-reference inspection, and open-PR inspection during `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 
-Inspected base head at the start of that audit:
+Inspected base head at the start of that run:
 
 `b0057151c01d51d258d0695993489ef2e2d9dc32` — `docs(vision): restore continuity brief after scope correction`
 
@@ -21,8 +21,8 @@ Inventory result at that snapshot:
 - one local branch: `master`, tracking synchronized `origin/master`;
 - seventeen non-default remote branches;
 - one open pull request: PR #2, `main-menu-asset-contract-pass`;
-- no branch with save, persistence, campaign identity, occurrence receipt, or publication implementation relevant to the completed repair or active receipt-decision route;
-- no integration, PR closure, or deletion due inside the completed repair or active unversioned decision.
+- no branch with save, persistence, campaign identity, new-campaign retry, occurrence receipt, or publication implementation relevant to the active parent repair;
+- no integration, PR closure, or deletion due inside the completed `0.6.9.2` run.
 
 Ahead/behind counts below are `inspected-base-only / branch-only commits` as observed at that snapshot. They are evidence of the review performed, not live action authority, and must be refreshed before any merge, deletion, closure, or disposition change.
 
@@ -67,25 +67,27 @@ These branches are not implementation authority merely because they are low-conf
 
 | PR / branch | Live finding at inspected snapshot | Disposition | Required action |
 | --- | --- | --- | --- |
-| PR #2 — `main-menu-asset-contract-pass` | open; GitHub reported non-mergeable; branch head `e78dc64`; ten unique commits; merge base `9a107a7`; `615 / 10`; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | mergeability does not resolve the semantic asset conflict or unrelated scope; inspect at the launcher-asset trigger, preserve useful evidence through current-head re-authoring, then close/delete only after proof |
+| PR #2 — `main-menu-asset-contract-pass` | open; GitHub reported non-mergeable; branch head `e78dc64`; ten unique commits; merge base `9a107a7`; `615 / 10`; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | inspect at the launcher-asset trigger, preserve useful evidence through current-head re-authoring, then close/delete only after proof |
 | PR #1 — `main-menu-refinement-pass` | merged and closed historically; remote branch head `986d635`; merge base `d03846e`; `622 / 2`; two commits are not directly reachable and require equivalent-patch review | `MERGED_RETIRE` pending equivalence proof | verify accepted changes are equivalently present on `master`; delete and prune only after the two-commit diff and linked PR state prove no unique value remains |
-| `feat/main-menu-assets` | remote head `b42d36f`; merge base is its head; `687 / 0`; fully reachable from the inspected base; no open PR found | `MERGED_RETIRE` | retire during the next dedicated branch-hygiene or launcher integration pass after exact-ref recheck; no deletion inside the active survey-decision route |
+| `feat/main-menu-assets` | remote head `b42d36f`; merge base is its head; `687 / 0`; fully reachable from the inspected base; no open PR found | `MERGED_RETIRE` | retire during the next dedicated branch-hygiene or launcher integration pass after exact-ref recheck; no deletion inside the active save repair |
 
 ## 5. Current Active Route Interaction
 
 Active route:
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
 
 Branch handling during that route should be limited to:
 
-- read-only evidence use from `prep/integrated-gameplay-0-7-readiness-audit`;
+- required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
-- identifying overlap with survey occurrence, deterministic result, owner-specific consequence receipts, persistence, replay, correction, or accepted-only application;
-- integrating only a branch whose contents are directly required and whose validation fits the active implementation scope;
-- otherwise preserving the candidate branch for the named trigger above.
+- identifying overlap with new-campaign attempt identity, slot-level publication recovery, account consumer idempotency, campaign session mutation admission, and bounded pending recovery completion;
+- integrating only a branch whose exact contents are directly required and whose validation fits the active parent-specific implementation scope;
+- otherwise preserving candidate branches for their named triggers.
 
-No listed connector audit branch implements or supersedes the active survey receipt decision. No candidate integration is due inside that documentation-only route unless fresh live evidence proves otherwise.
+No listed connector audit branch implements or supersedes `0.6.9.3`. No candidate integration is due inside the repair unless fresh live evidence proves otherwise.
+
+The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this repair.
 
 ## 6. Mandatory Next Codex Branch Report
 
