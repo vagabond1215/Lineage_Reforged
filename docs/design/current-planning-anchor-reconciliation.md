@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, and parent acceptance audit are refreshed through the connector post-repair inspection of `Version 0.6.9.2`.
+The current prompt, handoff, output, historical register, parent acceptance audit, and failure-pattern guardrail register are refreshed through the connector post-repair inspection and workflow synchronization following `Version 0.6.9.2`.
 
-The `0.6.9` parent is not accepted. Exact support repair `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is active. The unversioned Ashen Reef survey receipt-foundation decision is blocked until parent acceptance.
+The `0.6.9` parent is not accepted. Exact support implementation `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is active. A green implementation must be followed by `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`. The unversioned Ashen Reef survey receipt-foundation decision is blocked until that independent audit accepts the parent.
 
 `docs/dev/project-roadmap.md` still contains lower current-anchor wording that may describe `0.6.9.2` as accepted and the survey decision as active. `docs/dev/codex-sequenced-implementation-plan.md`, the continuity brief, backlog, and static-content program may contain the same now-stale posture. Those lower-precedence summaries do not control execution.
 
@@ -32,15 +32,19 @@ Use the following precedence for current execution and routing:
 6. this reconciliation for conflicts limited to stale current-anchor wording;
 7. the roadmap and sequenced plan for historical chronology, version-band meaning, and non-conflicting long-term context.
 
+Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-failure-patterns-and-verification-guardrails.md`.
+
 ## Accepted Current State
 
 - latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`;
 - latest completed support implementation: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`;
 - latest completed inspection: connector post-repair new-campaign and recovery-collision audit;
-- next run: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`;
+- active implementation: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`;
+- mandatory green successor: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
 - parent `0.6.9` status: `REPAIR_REQUIRED`;
-- survey receipt-foundation decision: blocked pending parent acceptance;
+- survey receipt-foundation decision: blocked pending independent parent acceptance;
+- failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
@@ -55,15 +59,17 @@ Use the following precedence for current execution and routing:
 - the dependency-closure decision assigned `Version 0.6.9`;
 - `0.6.9.2` repaired six original recovery/admission defects and immutable-address verification, with reported 20/20 focused persistence tests, 127/127 prescribed tests, and a passing UI build;
 - post-repair inspection proved the actual character-creation retry can mint a second campaign after hidden publication, pending recovery can collide with a newer same-slot address, and blocked recovery lacks a production-reachable validated completion owner;
-- `0.6.9.3` must close those exact defects without implementing survey work or a generic workflow framework.
+- `0.6.9.3` must close those exact defects without implementing survey work or a generic workflow framework;
+- `0.6.9.3` must report `IMPLEMENTED_PENDING_PARENT_AUDIT` when green and may not accept its own parent;
+- `0.6.9.4` must independently reproduce the real caller, restart, collision, exactly-once value, and reachable validated completion boundaries before restoring parent acceptance.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
 ## Accepted Near-Term Order
 
 1. implement `Version 0.6.9.3`;
-2. independently accept the parent only after all required retry, collision, consumer, and completion tests pass;
-3. then run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
+2. run `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
+3. only after that audit accepts the parent, run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
 4. implement only a dependency-closed survey receipt package selected by that decision;
 5. continue survey command and consequence-adapter work only after receipt acceptance;
 6. keep `0.7.0` behind explicit representative-loop evidence.
