@@ -1,96 +1,117 @@
 # Current Codex Output
 
-## Run Identity
+## Inspection Identity
 
-- Source version/run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`
+- Inspection: connector post-repair review of `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`
 - Date: 2026-07-30
-- Branch/status assumption: clean synchronized `master` at starting head `b0057151c01d51d258d0695993489ef2e2d9dc32`; implementation completed locally before final commit/push
-- Label class: support suffix
+- Inspected live head: `cdfe4b51c8c0e19517d02d3d11aa4c63f7d2cb6b`
+- Commit: `fix(save): repair Normal campaign publication recovery`
+- Label class: parent-support inspection
 - Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 - Milestone impact: `supports_current_band`
 
 ## Outcome
 
-Accepted. All six `0.6.9.1` recovery/admission findings plus immutable playable-address verification are repaired inside the parent boundary.
+`REPAIR_REQUIRED`
 
-The repair now:
+`0.6.9.2` repaired the six defects recorded by `0.6.9.1` and added immutable playable-address verification. The reported focused persistence suite passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes.
 
-- retains exact durable publication evidence before campaign-head and address transitions;
-- recovers a post-head address failure without minting a new artifact, publication, or head;
-- verifies every target address against its immutable artifact before load or recovery;
-- anchors account consumer plans and fingerprints outside the account store and reconciles observed-failed account writes idempotently;
-- keeps terminal campaigns closed while mandatory retirement/estate work repairs, deleting playable addresses only after durable consumer application;
-- repairs separately loaded migrated HP-zero head and non-head artifacts exactly once without promoting non-head truth;
-- rejects session publication on missing, invalid, closed, changed, stale, or wrong-artifact control;
-- blocks live and loaded `recovery_pending` gameplay and publication until explicit deterministic repair;
-- returns retained original mutation snapshot/control/result correlation for exact duplicates and rejects conflicting id reuse.
+Independent inspection found that parent acceptance remains premature because the real launcher character-creation retry path does not reuse the retained publication after a post-head address failure. The low-level same-snapshot retry test passes, but the application generates new character, campaign, and continuity ids on each user submission. A second click can therefore publish campaign B while campaign A remains hidden in durable recovery evidence. Startup recovery can later rewrite the same slot back to campaign A.
 
-The parent `0.6.9`, audit `0.6.9.1`, and repair `0.6.9.2` are complete and accepted.
+The implementation also blocks `recovery_pending` play but exposes no production-reachable, authority-valid completion owner. The engine helper accepts any nonempty destination string rather than proving a valid safe destination from current world facts.
 
-## Files Changed
+The parent `0.6.9`, audit `0.6.9.1`, and repairs `0.6.9.2` remain unaccepted pending exact support repair `0.6.9.3`.
 
-Production and tests:
+## Confirmed Passing `0.6.9.2` Evidence
 
-- `apps/rpg-ui/src/App.tsx`
-- `apps/rpg-ui/src/game-shell/runLifecycle.ts`
-- `apps/rpg-ui/src/game-shell/saveManager.ts`
-- `packages/engines/game-engine/src/campaign-session.ts`
-- `packages/engines/game-engine/src/index.ts`
-- `packages/engines/game-engine/src/normal-defeat.ts`
-- `tests/unit/campaign-persistence-foundation.test.mjs`
+The implementation provides:
 
-Acceptance and coordination:
+- durable publication recovery evidence before campaign-head and address transitions;
+- same-snapshot low-level retry without minting another head;
+- immutable artifact verification for target addresses and recovery;
+- durable account-consumer plans outside account storage;
+- terminal campaign closure while mandatory consumer work repairs;
+- deferred same-slot migrated HP-zero head and non-head repair;
+- missing, invalid, closed, stale, changed, and wrong-artifact campaign-control rejection;
+- ordinary mutation and publication blocking under `recovery_pending`;
+- retained duplicate mutation snapshot/control/result correlation;
+- conflicting mutation-id rejection.
 
-- `docs/design/current-planning-anchor-reconciliation.md`
-- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`
-- `docs/design/static-content-expansion-program.md`
-- `docs/dev/branch-disposition-register.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-codex-prompt.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/future_content_backlog.md`
+These foundations should be preserved by the next repair.
 
-## Checks Run
+## Blocking Findings
 
-- Baseline prescribed Node group before repair: 120/120 passed.
-- Focused persistence suite after repair: 20/20 passed.
-- Fresh prescribed Node group after repair: 127/127 passed.
-- RPG UI Vite production build: passed; 207 modules transformed; temporary output removed.
-- Bounded workspace TypeScript audit: reproduced the known 173-diagnostic failing baseline; zero diagnostics named a file changed by this run.
+### 1. New-campaign UI retry regenerates authority
+
+The character-creation handler calls `createNewGameSnapshot(...)` on every submission. That function creates a new character id and initializes new campaign and continuity ids.
+
+If publication verifies a campaign head and then address projection fails, `publishSave(...)` throws before returning. The handler retains no publication or prepared snapshot and only displays an error. The next click creates a distinct campaign rather than recovering the hidden verified publication.
+
+### 2. Pending recovery can overwrite a later valid slot address
+
+Publication recovery is keyed by campaign id but retains a slot id. Startup recovery enumerates pending recoveries and projects each retained envelope back to its slot.
+
+A later valid campaign in the same slot can therefore be replaced by an older hidden recovery. Multiple recoveries for one slot are effectively ordered by storage enumeration, which is not accepted authority.
+
+### 3. `recovery_pending` has no reachable validated completion path
+
+Campaign mutation admission blocks ordinary mutations while a pending defeat receipt exists. `App.tsx` blocks saving and retirement and displays a notice, but no production caller submits `recovery_repair`.
+
+The repair helper accepts any nonempty destination id and does not prove that it is a known, safe settlement. A real pending campaign can remain soft-locked or later be repaired with unvalidated destination input.
+
+## Repository Updates From This Inspection
+
+Added:
+
+- `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`
+
+Installed:
+
+- `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
+
+Corrected current acceptance and routing documentation so the Ashen Reef survey receipt decision is blocked until `0.6.9.3` is implemented and accepted.
+
+No production source or tests were changed by the connector inspection.
+
+## Prior Validation Evidence
+
+Codex reported for `0.6.9.2`:
+
+- baseline prescribed Node group before repair: 120/120;
+- focused persistence suite after repair: 20/20;
+- fresh prescribed Node group after repair: 127/127;
+- RPG UI Vite production build: passed with 207 modules transformed;
+- bounded TypeScript audit: known 173-diagnostic repository baseline, with zero diagnostics naming changed files;
 - `git diff --check`: passed.
-- Complete implementation and documentation diff inspected.
+
+No hosted GitHub Actions run or commit status was attached to `cdfe4b51`; those are local Codex results.
 
 ## Branch And PR Lifecycle
 
-- Fetched and pruned from starting head `b0057151c01d51d258d0695993489ef2e2d9dc32`; local and remote `master` remained `0 / 0`.
-- Local branches: only `master`.
-- Non-default remote branches: 17.
-- Open pull requests: PR #2 only, still open and non-mergeable.
-- Read-only protected readiness branch inspected at `59c103c3`; it remains stale/noncontrolling and `PROTECTED_REFERENCE`.
-- `parallel/prompt-packaging-integrity-audit` remains `PROTECTED_REFERENCE`.
-- Twelve one-document connector audit branches retain their named integration triggers.
-- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE`; `main-menu-refinement-pass` and `feat/main-menu-assets` retain their dedicated retirement/equivalence triggers.
-- No branch overlaps this repair or the installed survey receipt decision. No merge, cherry-pick, rebase, closure, deletion, or disposition change was due or performed.
+At the latest completed Codex inventory:
 
-## Suggested Commit
+- local branches: only `master`;
+- non-default remote branches: 17;
+- open pull requests: PR #2 only;
+- two protected references remain read-only;
+- twelve one-document connector audit branches retain named integration triggers;
+- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE`;
+- no registered branch implements the required `0.6.9.3` repair.
 
-`fix(save): repair Normal campaign publication recovery`
+The next run must fetch and prune, refresh all live facts, and report whether any integration, closure, or deletion is due. No unrelated branch work should be folded into the parent-specific repair.
 
 ## Risks And Follow-Up
 
-- Workspace typecheck remains a separate known-failing repository audit; no diagnostic was introduced in the changed repair surface.
-- Retained mutation results are intentionally session-scoped rather than a generic replay service.
-- Durable recovery is local-storage authority only; cloud synchronization and a recovery UI remain out of scope.
+- Existing local-storage recovery evidence may already contain same-slot collisions; the repair must define deterministic quarantine or explicit resolution rather than silently choosing one.
+- New-campaign attempt identity must remain bounded and must not become a generic workflow framework.
+- The pending-defeat completion owner must validate destination authority without broad recovery UI redesign.
+- Workspace typecheck remains a separate known-failing 173-diagnostic audit.
 - `0.7.0` remains `NOT_READY`.
 
-## Next Recommended Run
+## Next Required Run
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
 
-Classification: unversioned documentation-only prerequisite.
+Classification: parent-specific support suffix.
 
-This decision must select the smallest survey-specific persisted occurrence/result/owner-receipt contract or return `NO_PACKAGE`. It must not implement survey behavior.
+The Ashen Reef survey occurrence/result/consequence receipt decision must not run until the parent is independently accepted after this repair.
