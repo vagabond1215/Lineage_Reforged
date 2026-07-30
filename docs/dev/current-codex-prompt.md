@@ -16,7 +16,7 @@ Suggested commit:
 
 ## Purpose
 
-Repair the four parent-specific authority defects found by `0.6.9.1`: post-publication address failure, durable account-consumer recovery, separately loaded legacy HP-zero repair, and missing/invalid/closed campaign-control rejection.
+Repair every currently proven parent-specific authority defect found during and after `0.6.9.1`: post-publication address failure, durable account-consumer recovery, separately loaded legacy HP-zero repair, missing/invalid/closed campaign-control rejection, `recovery_pending` gameplay admission, and duplicate-mutation retained-result semantics. Address recovery must also verify the playable address against the immutable artifact it identifies.
 
 This is a narrow repair. Do not add survey behavior, later Stakes modes, checkpoint UI, cloud synchronization, actual death/succession, a generic transaction framework, dependencies, content, assets, or unrelated cleanup.
 
@@ -39,8 +39,8 @@ Read:
 1. Verify clean `master`, upstream, current head, parent/audit commits, and this prompt.
 2. Run `git fetch --all --prune`; inventory all branches and open PRs; refresh dispositions only from live evidence.
 3. Reproduce the 120-test baseline before repair.
-4. Keep every production edit inside the campaign/save/account repair boundary.
-5. If a defect requires a broader account-store redesign or generic transaction system, stop and install the smallest exact follow-up support prompt instead of broadening.
+4. Keep every production edit inside the campaign/save/account/Normal-defeat admission repair boundary.
+5. If a defect requires a broader account-store redesign, generic transaction system, general command replay service, or recovery UI redesign, stop and install the smallest exact follow-up support prompt instead of broadening.
 
 ## Required Repair
 
@@ -79,11 +79,35 @@ Read:
 - Do not recreate revision 1 from a session that was admitted against an earlier verified head.
 - Developer-fixture creation without a prior session may retain its current bounded path only where it cannot reopen closed authority.
 
+### E. Enforce `recovery_pending` admission and repair posture
+
+- Preserve `recovery_pending` as nonterminal authority when no valid recovery destination exists.
+- Retain one defeat receipt and all already-resolved deterministic facts without rerolling destination, time, resource, Chronicle, or notice results.
+- Block ordinary gameplay commands, legacy snapshot mutation bridges, and save-success claims until deterministic repair completes.
+- Surface a clear diagnostic before ordinary play can resume.
+- Do not archive, delete, settle terminal value, or reinterpret `recovery_pending` as actual death.
+- Keep the run recoverable; if the bounded package cannot provide a complete repair owner, fail closed and install the smallest exact follow-up instead of silently allowing play.
+
+### F. Return retained results for duplicate mutation submissions
+
+- Retain enough bounded accepted-admission data to return the original accepted snapshot/control/result correlation for a duplicate mutation id.
+- A duplicate submitted after later accepted mutations must not return the caller's current source snapshot as though it were the original result.
+- Reuse of one mutation id with a conflicting source revision, owner, result id, or proposed payload must fail closed.
+- Do not create a generic command replay framework; keep this storage scoped to campaign-session mutation admission.
+
+### G. Verify playable addresses against immutable artifact authority
+
+- On target-save load and post-publication recovery, read and verify the immutable artifact identified by the address envelope.
+- Reject or repair address records whose artifact identity, publication identity, generation identity, campaign/continuity/character identity, head revision, terminal posture, or serialized snapshot bytes conflict with immutable artifact authority.
+- Do not admit play from an address copy that cannot prove its immutable artifact.
+- Preserve the prior verified head and retained artifacts during any address repair.
+
 ## Required Tests
 
 Add executable focused tests for:
 
 - address write/readback failure after verified control publication and exact retry recovery;
+- target address tampering or divergence from its immutable artifact, including identity and serialized-byte mismatch;
 - new-game or equivalent mandatory consumer failure where account profile persistence rejects the first post-publication write and durable pending evidence remains discoverable;
 - restart/account-selection repair for preparation and inheritance, including already-applied-but-observed-failed idempotency;
 - terminal retirement repair with hidden closed authority retained and playable addresses removed only after mandatory consumers;
@@ -91,7 +115,10 @@ Add executable focused tests for:
 - migrating through a healthy non-head, then separately loading an HP-zero head;
 - exactly-one repair receipts and preserved head/non-head posture;
 - missing, malformed, closed, and changed control rejection;
-- existing candidate failure, campaign-control failure, migration interruption/retry, ambiguity quarantine, and stale-head behavior.
+- live and loaded `recovery_pending` states blocking ordinary commands and legacy mutation bridges until deterministic repair;
+- duplicate mutation replay returning the original accepted result after one or more later accepted mutations;
+- conflicting reuse of a mutation id failing closed;
+- existing candidate failure, campaign-control failure, migration interruption/retry, ambiguity quarantine, first-mutation continuity, Normal defeat, retirement ordering, browser build, mirror checks, and stale-head behavior.
 
 Prefer testing exported owner helpers over source-string ordering. Keep TypeScript/JavaScript mirrors and public exports aligned.
 
@@ -113,7 +140,7 @@ If every repair and prescribed check passes:
 
 - update the existing acceptance audit with exact repaired evidence;
 - run a fresh parent-specific acceptance decision;
-- mark `0.6.9`, `0.6.9.1`, and `0.6.9.2` complete only if all original audit obligations are green;
+- mark `0.6.9`, `0.6.9.1`, and `0.6.9.2` complete only if all original audit obligations and every additional proven defect above are green;
 - update all live coordination surfaces;
 - install the smallest unversioned post-parent route decision required before survey implementation;
 - do not install survey implementation unless that decision closes its remaining prerequisites.
