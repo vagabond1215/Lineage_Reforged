@@ -237,9 +237,9 @@ The completion report must list:
 - retained branches and next review triggers;
 - explicit confirmation when no lifecycle action was due.
 
-## Acceptance
+## Implementation Completion Gate
 
-Accept `0.6.9.3` only when:
+Mark the `0.6.9.3` implementation complete only when:
 
 - the actual launcher retry recovers the first verified campaign rather than creating a second one;
 - slot recovery cannot silently overwrite a newer valid campaign;
@@ -249,10 +249,23 @@ Accept `0.6.9.3` only when:
 - every required focused and prescribed test and build gate passes;
 - every applicable failure-pattern guardrail has explicit evidence;
 - the finding-to-test and failure-boundary matrices contain no unexplained gap;
-- no parent repair regresses;
-- the parent acceptance audit is updated from `REPAIR_REQUIRED` to `ACCEPTED_AFTER_REPAIR` only after independent evidence.
+- no parent repair regresses.
 
-If any gate fails, keep the parent unaccepted and install the smallest exact `0.6.9.4` audit or repair. Do not advance to the survey receipt decision.
+A green implementation run must report `IMPLEMENTED_PENDING_PARENT_AUDIT`. It must not set the `0.6.9` parent or the `0.6.9.3` support chain to `ACCEPTED_AFTER_REPAIR` in the same run.
+
+## Mandatory Successor Route
+
+If every implementation gate passes, install:
+
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
+
+Classification: parent-specific support suffix; documentation, inspection, and validation only unless the audit proves a new exact repair is required.
+
+The audit must independently reproduce the actual application retry, restart, same-slot collision, competing-recovery ordering, exactly-once account value, and reachable validated pending-recovery completion boundaries. It must apply `FP-001` through `FP-006`, `FP-008` through `FP-010`, and must not accept the parent from inherited test totals alone.
+
+If any implementation gate fails, keep the parent unaccepted and install the smallest exact `0.6.9.4` audit or repair title matching the remaining defect. Do not advance to the survey receipt decision.
+
+Only the independent successor audit may update the parent acceptance audit from `REPAIR_REQUIRED` to `ACCEPTED_AFTER_REPAIR`. The Ashen Reef survey receipt decision remains blocked until that audit accepts the parent.
 
 ## Completion
 
@@ -269,5 +282,6 @@ Report:
 - inspected-base, starting, final, and live-head identities;
 - branch and PR lifecycle;
 - remaining risks;
-- parent acceptance status;
-- installed next prompt.
+- implementation completion status;
+- parent acceptance status, which must remain unaccepted in this run;
+- installed `0.6.9.4` audit or exact remaining-repair prompt.
