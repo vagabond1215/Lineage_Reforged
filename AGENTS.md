@@ -76,6 +76,15 @@
 - Every Codex completion report must state the branches and PRs inspected, disposition changes, integrations or deletions performed, validation run, and exact review trigger for every retained branch. If no branch action was due, state that explicitly.
 - Branch cleanup must not silently broaden the active package. Record a decision-complete disposition and schedule the smallest dedicated integration pass when branch work is useful but not safe inside the active route.
 
+## Failure Patterns And Verification Guardrails
+
+- `docs/dev/codex-failure-patterns-and-verification-guardrails.md` is the durable project-specific register of reusable failure patterns and required prevention checks.
+- Codex must read the relevant entries before implementation, repair, parent acceptance, persistence/migration/publication work, real-caller UI workflow changes, branch integration, or workflow-authority maintenance.
+- Apply only entries relevant to the active surface; do not bloat trivial runs with unrelated history.
+- Green test counts do not replace the register's required caller-path, failure-boundary, restart, retry, conflict, and repair-completion checks.
+- Every applicable completion report must list the pattern IDs applied and the evidence satisfying them. If no entry applies, state that explicitly.
+- When a new independent inspection reveals a reusable omission, add or update one generalized entry and link the focused audit rather than duplicating the full defect narrative.
+
 - Each detailed Codex output written to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) must state:
   - source version/run
   - date
@@ -85,6 +94,7 @@
   - milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`
   - files changed
   - checks run
+  - applicable failure-pattern IDs and verification evidence, or an explicit statement that none apply
   - branch/PR lifecycle review and disposition changes
   - suggested commit message
   - risks/follow-up notes
