@@ -5,16 +5,17 @@ Date: 2026-07-30
 ## Status
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
+- Latest completed support implementation: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
 - Dependency-closure result: `PACKAGE_READY`.
-- Parent `0.6.9` status: `ACCEPTED_AFTER_REPAIR`; focused persistence passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes.
-- Active route: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
-- Active-route class: `UNVERSIONED_PREREQUISITE`.
+- Parent `0.6.9` status: `REPAIR_REQUIRED` after connector post-repair inspection.
+- Active route: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
+- Active-route class: parent-specific support suffix.
+- The Ashen Reef survey occurrence/result/consequence receipt decision is blocked until `0.6.9.3` is independently accepted.
 
 ## Current Planning Precedence
 
@@ -24,7 +25,7 @@ Use current execution sources in this order:
 2. this handoff;
 3. `docs/dev/current-codex-output.md`;
 4. `docs/dev/historical-version-and-deferred-route-register.md`;
-5. the most specific focused decision;
+5. the most specific focused decision or audit;
 6. `docs/design/current-planning-anchor-reconciliation.md` for stale historical-header conflicts;
 7. roadmap and sequenced plan for non-conflicting historical and long-term context.
 
@@ -35,11 +36,44 @@ Repository workflow constraints also apply:
 - `docs/dev/branch-lifecycle-and-integration-policy.md`;
 - `docs/dev/branch-disposition-register.md`.
 
+## Current Normal Persistence Posture
+
+`0.6.9.2` successfully repaired:
+
+- post-head address recovery for the same prepared snapshot;
+- immutable artifact verification for playable addresses;
+- durable account-consumer plans outside account storage;
+- terminal consumer cleanup ordering;
+- separately loaded migrated HP-zero head and non-head repair;
+- missing, malformed, closed, stale, changed, and wrong-artifact campaign-control rejection;
+- ordinary mutation and publication blocking under `recovery_pending`;
+- retained duplicate mutation results and conflicting-id rejection.
+
+Reported validation was 20/20 focused persistence tests, 127/127 prescribed tests, and a passing 207-module RPG UI build.
+
+Parent acceptance is withdrawn because three real application boundaries remain open.
+
+### New-campaign retry identity
+
+The real character-creation handler regenerates character, campaign, and continuity ids on each click. If the first campaign head verifies but address projection fails, the handler does not retain the original prepared snapshot or publication. A second click can create campaign B instead of recovering hidden campaign A.
+
+### Same-slot recovery collision
+
+Startup recovery can later project hidden campaign A back into the same slot and overwrite campaign B's valid address. Multiple recoveries for one slot currently lack deterministic conflict authority.
+
+### Pending-defeat completion
+
+`recovery_pending` blocks ordinary play, saving, and retirement, but no production application path completes the repair. The engine helper accepts any nonempty destination rather than validating a safe destination from authoritative world facts.
+
+The controlling audit is:
+
+`docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`
+
 ## Accepted Survey Boundary
 
-The deterministic Ashen Reef survey is the selected first activity-advancement consumer. One admitted shift is one occurrence. One pure plan must drive both preview and execution; typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic application, synchronized accepted state, and accepted-only UI application are required.
+The deterministic Ashen Reef survey remains the selected first activity-advancement consumer. One admitted shift is one occurrence. One pure plan must drive preview and execution; typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic application, synchronized accepted state, and accepted-only UI application are required.
 
-The current implementation has four material defects:
+The current survey implementation still has four material defects:
 
 - preview/execution diverge after completion;
 - preview omits explicit stamina/MP and attribute-load effects;
@@ -47,6 +81,8 @@ The current implementation has four material defects:
 - the UI applies the returned snapshot without an accepted/rejected discriminator.
 
 General activity resolution, uncertainty, result bands, and balance changes are not required for the deterministic parity slice.
+
+Do not run the survey receipt decision while the parent persistence repair remains open.
 
 ## Combat AI And Gambit Posture
 
@@ -68,23 +104,9 @@ Literal ordered `condition -> action` gambits remain deferred. No ordered-rule s
 
 Do not treat the existing weighted AI as absent, and do not describe it as a completed Final Fantasy XII-style gambit system.
 
-## Accepted Minimum Save Boundary
-
-`docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md` accepts the minimum Normal-only contract:
-
-- distinct account, campaign, continuity, character, artifact, generation, publication, revision, and occurrence identities;
-- campaign rules version 2 and an authoritative typed ledger in the snapshot;
-- artifact/publication control in the save envelope;
-- idempotent version-6 migration with an owner-certified persisted receipt;
-- candidate write, semantic readback verification, authoritative-head publication, and publication verification;
-- one child continuity at the first accepted divergent mutation after loading a non-head artifact, never on load alone;
-- retained request/occurrence/result/consequence/correction authority across restart.
-
-The follow-up dependency decision closes those seams through atomic `Version 0.6.9`: campaign rules plus nonterminal defeat, one campaign session mutation gateway with first-divergence continuity, verified artifact publication, and publication-keyed account consumers. `0.6.9.2` repaired every proven recovery/admission defect and the parent is accepted.
-
 ## Branch Lifecycle Posture
 
-Branch handling is now a required completion concern rather than optional cleanup.
+Branch handling is a required completion concern.
 
 The active Codex run must:
 
@@ -93,7 +115,7 @@ The active Codex run must:
 - inspect merge bases, unique commits, changed paths, semantic overlap, and current authority;
 - refresh `docs/dev/branch-disposition-register.md`;
 - state whether any integration, PR closure, or branch deletion is due inside the active run;
-- perform no integration or deletion without the policy-required review and validation;
+- perform no integration or deletion without policy-required review and validation;
 - preserve protected branches read-only;
 - leave exact next review triggers for retained branches.
 
@@ -102,41 +124,47 @@ Known protected branches:
 - `prep/integrated-gameplay-0-7-readiness-audit`;
 - `parallel/prompt-packaging-integrity-audit`.
 
-Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. They should be reviewed at the triggers named in the register or in a dedicated documentation integration pass, then deleted only after accepted content is reachable or equivalently preserved on `master`.
+Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. Review them at named triggers or in a dedicated documentation integration pass, then delete only after accepted content is reachable or equivalently preserved on `master`.
 
-PR #2 / `main-menu-asset-contract-pass` is currently `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
+PR #2 / `main-menu-asset-contract-pass` remains `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
 
-## Active Decision Guardrails
+No registered branch implements the required `0.6.9.3` repair.
 
-Run `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
+## Active Repair Guardrails
 
-- Decide the smallest survey-specific persisted occurrence/result/consequence-receipt foundation that reuses accepted campaign and publication authority.
-- Fix exact identity, owner-specific receipt, replay, restart, projection-repair, and correction/supersession boundaries.
-- Reconcile the general occurrence decisions with the accepted deterministic survey owner contract without creating a generic activity resolver.
-- Return one dependency-closed implementation package or `NO_PACKAGE`.
-- Add no production code, schema, content, test, UI, save migration, dependency, or survey behavior.
-- Keep Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, mutable health, reward delivery, and `0.7.0` outside scope.
+Run `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
+
+- Reproduce the actual character-creation retry, not only direct repeated save-manager calls.
+- Establish one stable new-campaign attempt and reuse original identities and consumer plans after a post-head failure.
+- Inspect pending recoveries by account and slot before creating a new campaign.
+- Preserve newer valid addresses and fail closed on ambiguous same-slot recovery collisions.
+- Keep preparation, inheritance, active history, achievements, and account value exactly once.
+- Add one production-reachable pending-defeat completion owner with validated safe-destination authority.
+- Preserve every accepted `0.6.9.2` repair and existing green test/build gate.
+- Do not implement survey behavior or the survey receipt decision.
+- Do not build generic workflow, transaction, retry, or replay frameworks.
 
 ## Preserved Boundaries
 
 - Do not implement the survey command, survey receipt storage, or survey UI adapter.
-- Do not broaden into Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, recovery UI redesign, slot redesign, or broad account work.
+- Do not broaden into Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, broad recovery UI redesign, slot redesign, or broad account work.
 - Do not build a generic activity resolver, transaction framework, or command replay service.
-- Existing travel, quest acceptance/tracking, activity selection, save, and synchronization behavior remain protected except for exact parent-specific admission and recovery fixes.
+- Existing travel, quest acceptance/tracking, activity selection, and unrelated save behavior remain protected except for exact parent-specific admission and recovery fixes.
 - Static lethal-process definitions remain separate from mutable health.
-- The isolated `prep/integrated-gameplay-0-7-readiness-audit` branch remains unmerged and untouched except for required read-only inspection.
-- The isolated `parallel/prompt-packaging-integrity-audit` branch remains protected and read-only.
+- Protected branches remain unmerged and untouched except for required read-only inspection.
 - Weighted combat tactics AI remains separate from any future ordered-gambit authority.
 - Workspace typecheck remains a separate known-failing 173-diagnostic audit.
 
 ## Near-Term Sequence
 
-1. run the unversioned survey occurrence/result/consequence receipt foundation decision;
-2. implement only a dependency-closed receipt foundation selected by that decision;
-3. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
-4. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
-5. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
+1. implement `Version 0.6.9.3`;
+2. run a parent-specific acceptance audit if the implementation prompt does not itself provide independent acceptance evidence;
+3. only after parent acceptance, run the unversioned survey occurrence/result/consequence receipt foundation decision;
+4. implement only a dependency-closed receipt package selected by that decision;
+5. implement the bounded survey command and accepted-only UI after receipt prerequisites close;
+6. review and integrate candidate documentation branches at named triggers or through a dedicated branch-integration pass;
+7. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
