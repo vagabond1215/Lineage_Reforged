@@ -30,7 +30,8 @@ export {
   type CampaignMutationOwnerKind,
   type CampaignMutationSubmission,
   type CampaignSessionControl,
-  type CampaignSessionPosture
+  type CampaignSessionPosture,
+  type RetainedCampaignMutationResult
 } from "./campaign-session.js";
 export {
   buildPublicationConsumerId,
@@ -40,6 +41,9 @@ export {
   type VerifiedCampaignPublication
 } from "./account-publication.js";
 export {
+  findPendingNormalDefeat,
+  hasPendingNormalDefeat,
+  repairPendingNormalDefeat,
   resolveNormalDefeat,
   type NormalDefeatResolution
 } from "./normal-defeat.js";

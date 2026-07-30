@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-07-30
-Route: Codex local sequencing alignment after Normal persistence acceptance audit
+Route: Codex local sequencing alignment after Normal persistence repair acceptance
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -25,7 +25,7 @@ Latest implemented primary:
 
 Latest completed support/audit run:
 
-- `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`
+- `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`
 
 Latest completed unversioned run:
 
@@ -33,7 +33,7 @@ Latest completed unversioned run:
 
 Immediate next run:
 
-- `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`
+- unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
 ## Current Queue Override
 
@@ -64,13 +64,14 @@ Immediate next run:
 - The unversioned Ashen Reef survey scope/owner decision is complete. It accepted one deterministic survey-shift occurrence, one shared preview/execution plan, typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic accepted-state application, and accepted-only UI. It returned `NO_PACKAGE` because stable campaign/continuity identity, durable receipt authority, and candidate-write/verification/publication semantics are absent.
 - The unversioned minimum save identity/publication decision is complete. It accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification and authoritative-head publication, and a typed persisted authority ledger. It returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority.
 - The unversioned Normal activation/continuity/account-publication dependency decision is complete and returned `PACKAGE_READY`. It selected atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: campaign rules version 2, version-7 verified publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat, legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` remains implemented but unaccepted. The existing target rules/identity, version-7 publication, migration, session admission, Normal defeat, account consumers, and retirement suite passes 120/120 plus the RPG UI build.
-- `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit` is complete with `REPAIR_REQUIRED`. It found stranded verified-head recovery after address failure, nondurable account-repair evidence when the account store fails, separately loaded migrated HP-zero bypass, and missing-control session reopening.
-- `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` is active. It must repair and executable-test those four exact authority failures before a fresh parent acceptance decision or survey work.
+- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` is implemented and accepted through `0.6.9.2`.
+- `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit` completed with `REPAIR_REQUIRED` and retained its six exact findings as historical acceptance evidence.
+- `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` is complete and accepted. It repaired exact post-head address recovery, immutable-address verification, durable account-consumer recovery, separately loaded migrated HP-zero repair, live-control fail-close, `recovery_pending` admission/publication, duplicate retained results, and terminal consumer-before-address-cleanup ordering. The focused persistence suite passes 20/20, the prescribed group passes 127/127, and the RPG UI build passes.
+- The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` is active. It must decide the smallest survey-specific persisted occurrence/result/owner-receipt package before any survey implementation.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain separate consumers. Active `0.6.9` implements only the accepted campaign/save/Normal-defeat/account-publication foundation; it must not implement survey advancement or broaden into Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
+- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns only campaign/save/Normal-defeat/account-publication foundations; the active unversioned decision must not implement survey advancement or broaden into Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
 
 Versioning note:
 

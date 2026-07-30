@@ -10,15 +10,32 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Status: `REPAIR_REQUIRED`
+Status: `ACCEPTED_AFTER_REPAIR`
 
 ## Decision
 
-The `0.6.9` parent is not accepted.
+The `0.6.9` parent, `0.6.9.1` audit, and `0.6.9.2` repair are accepted.
 
-The prescribed 120-test regression group and the RPG UI production build pass, and the implemented package remains correctly bounded. Independent inspection nevertheless found six parent-specific authority failures not covered by the landed suite. They affect recovery after partial publication, mandatory account repair, active legacy HP-zero repair, stale-session closure, `recovery_pending` admission, and duplicate-mutation replay. Address recovery must also verify that every playable address remains consistent with the immutable artifact it identifies. These are authority defects rather than documentation-only gaps, so the next run is exact support repair `0.6.9.2`.
+`Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` repaired all six findings recorded by the original `0.6.9.1` audit and added immutable-artifact verification for playable addresses. The fresh prescribed group passes 127/127, the focused persistence suite passes 20/20, and the RPG UI production build passes with 207 modules transformed. The package remains bounded to campaign/save/account/Normal-defeat admission and retirement publication ordering.
 
-No survey implementation or later-Stakes work is authorized while this repair remains open.
+The next route is the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`. Survey implementation and later Stakes modes remain unauthorized until that decision closes its prerequisites.
+
+## Repair Acceptance Evidence
+
+- Repair source head: `b0057151c01d51d258d0695993489ef2e2d9dc32`.
+- Post-head address failure retains durable exact envelope, artifact, publication, head, slot, terminal, and consumer-plan evidence; retry rebinds the same artifact/publication without advancing the head.
+- Target address load and recovery verify immutable artifact identity, generation, publication, campaign, continuity, character, revision, terminal posture, timestamp, format, and serialized snapshot bytes.
+- Consumer plans and payload fingerprints are prepared before publication and retained outside account storage. Startup/account selection reconciles account receipts idempotently, including observed-failed writes.
+- Terminal publication remains closed while mandatory retirement/estate work is pending; address deletion occurs only after durable consumer application, while immutable artifact and closed control remain available as repair authority.
+- Separately loaded migrated HP-zero head and non-head artifacts repair exactly once. The head advances only itself; the non-head remains non-head.
+- Session-owned publication rejects missing, invalid, closed, changed, stale, or wrong-artifact control.
+- Live and loaded `recovery_pending` snapshots reject ordinary admission and publication until the explicit recovery owner repairs the single retained receipt.
+- Duplicate mutation delivery returns its retained accepted snapshot/control/result correlation after later accepted mutations; conflicting id reuse fails closed.
+- Prescribed Node group: 127/127 passed.
+- Focused persistence group: 20/20 passed.
+- RPG UI production build: passed with 207 modules transformed; temporary output was removed.
+- Bounded TypeScript audit reproduced the known 173-diagnostic repository baseline with no diagnostic in a file changed by `0.6.9.2`.
+- `git diff --check`: passed.
 
 ## Passing Evidence
 
@@ -33,7 +50,7 @@ No survey implementation or later-Stakes work is authorized while this repair re
 - Migration interruption reuses stable identities and retains source bytes in the existing focused tests.
 - Normal defeat, first-mutation continuity, consumer-id conflict closure, and TypeScript/JavaScript mirror checks pass in the existing focused tests.
 
-## Blocking Findings
+## Original `0.6.9.1` Blocking Findings, Repaired By `0.6.9.2`
 
 ### 1. Verified head publication can strand the caller before address projection
 
@@ -116,4 +133,6 @@ Codex fetched and pruned before the audit and reinspected all live refs.
 
 ## Next Run
 
-`Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`
+`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+
+Classification: unversioned documentation-only prerequisite.

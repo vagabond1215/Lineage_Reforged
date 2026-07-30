@@ -5,16 +5,16 @@ Date: 2026-07-30
 ## Status
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`.
+- Latest completed support run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
 - Dependency-closure result: `PACKAGE_READY`.
-- Parent `0.6.9` status: `REPAIR_REQUIRED`; the existing 120/120 focused tests and RPG UI production build pass, but audit and follow-up inspection found six untested recovery/admission authority defects plus missing address-to-immutable-artifact verification.
-- Active repair: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
-- Active-route class: `PARENT_SPECIFIC_SUPPORT_SUFFIX`.
+- Parent `0.6.9` status: `ACCEPTED_AFTER_REPAIR`; focused persistence passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes.
+- Active route: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
+- Active-route class: `UNVERSIONED_PREREQUISITE`.
 
 ## Current Planning Precedence
 
@@ -80,7 +80,7 @@ Do not treat the existing weighted AI as absent, and do not describe it as a com
 - one child continuity at the first accepted divergent mutation after loading a non-head artifact, never on load alone;
 - retained request/occurrence/result/consequence/correction authority across restart.
 
-The follow-up dependency decision closes those seams through atomic `Version 0.6.9`: campaign rules plus nonterminal defeat, one campaign session mutation gateway with first-divergence continuity, verified artifact publication, and publication-keyed account consumers. The parent remains unaccepted until `0.6.9.2` repairs every proven recovery and admission defect.
+The follow-up dependency decision closes those seams through atomic `Version 0.6.9`: campaign rules plus nonterminal defeat, one campaign session mutation gateway with first-divergence continuity, verified artifact publication, and publication-keyed account consumers. `0.6.9.2` repaired every proven recovery/admission defect and the parent is accepted.
 
 ## Branch Lifecycle Posture
 
@@ -106,24 +106,20 @@ Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. Th
 
 PR #2 / `main-menu-asset-contract-pass` is currently `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
 
-## Active Repair Guardrails
+## Active Decision Guardrails
 
-Run `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
+Run `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
 
-- Repair verified-head recovery when slot-address projection fails after campaign-control publication.
-- Persist discoverable account-consumer repair evidence even when the account profile store is the failing component.
-- Repair separately loaded migrated HP-zero head and non-head artifacts exactly once without promoting non-head truth.
-- Reject session publication when live campaign control is missing, invalid, closed, or mismatched.
-- Enforce `recovery_pending` as a nonterminal ordinary-gameplay block until deterministic repair completes; do not reroll already accepted recovery facts.
-- Return the originally retained accepted snapshot/control/result correlation for duplicate mutation ids and reject conflicting id reuse.
-- Verify target-save addresses against immutable artifact identity and serialized bytes before ordinary play or address recovery succeeds.
-- Add executable failure-injection coverage and preserve the green production build.
-- Add no survey implementation, Committed/Ironbound behavior, generic transaction/replay framework, or production dependency.
-- Accept the parent only after every original audit obligation and all additional proven repair regressions are independently green.
+- Decide the smallest survey-specific persisted occurrence/result/consequence-receipt foundation that reuses accepted campaign and publication authority.
+- Fix exact identity, owner-specific receipt, replay, restart, projection-repair, and correction/supersession boundaries.
+- Reconcile the general occurrence decisions with the accepted deterministic survey owner contract without creating a generic activity resolver.
+- Return one dependency-closed implementation package or `NO_PACKAGE`.
+- Add no production code, schema, content, test, UI, save migration, dependency, or survey behavior.
+- Keep Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, mutable health, reward delivery, and `0.7.0` outside scope.
 
 ## Preserved Boundaries
 
-- Do not implement the survey command, survey receipts, or survey UI adapter.
+- Do not implement the survey command, survey receipt storage, or survey UI adapter.
 - Do not broaden into Committed/Ironbound Stakes, checkpoint/death policy, cloud synchronization, recovery UI redesign, slot redesign, or broad account work.
 - Do not build a generic activity resolver, transaction framework, or command replay service.
 - Existing travel, quest acceptance/tracking, activity selection, save, and synchronization behavior remain protected except for exact parent-specific admission and recovery fixes.
@@ -135,12 +131,12 @@ Run `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
 
 ## Near-Term Sequence
 
-1. run parent-specific `Version 0.6.9.2` repair and its required fresh acceptance decision;
-2. decide/implement survey occurrence/result/consequence receipt foundations in their accepted order;
+1. run the unversioned survey occurrence/result/consequence receipt foundation decision;
+2. implement only a dependency-closed receipt foundation selected by that decision;
 3. implement the bounded survey command, owner adapters, accepted-only UI, and persistence/integration coverage only after their prerequisites close;
 4. review and integrate candidate documentation branches at their named triggers or through a dedicated branch-integration pass;
 5. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-`Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`
+`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`

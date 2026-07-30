@@ -443,6 +443,8 @@ export function archiveActiveRun(params: {
   payoutResolver?: RunEndLegacyPayoutResolver;
   campaignSessionControl?: CampaignSessionControl;
   verifiedTerminalPublication?: VerifiedCampaignPublication;
+  persistAccountProfile?: boolean;
+  deferSlotDeletion?: boolean;
 }): ArchivedRunLifecycleResult {
   const recordedAt = params.recordedAt ?? new Date().toISOString();
   let terminalSnapshot = params.snapshot;
@@ -506,8 +508,10 @@ export function archiveActiveRun(params: {
       params.fallbackSlotId
     );
 
-    for (const slotId of clearedSlotIds) {
-      deleteSave(params.accountId, slotId);
+    if (!params.deferSlotDeletion) {
+      for (const slotId of clearedSlotIds) {
+        deleteSave(params.accountId, slotId);
+      }
     }
 
     return {
@@ -615,10 +619,15 @@ export function archiveActiveRun(params: {
         recordedAt
       )
     : archivedWithPayoutMetadata;
-  const archivedProfile = saveAccountProfile(archivedWithEstate);
+  const archivedProfile =
+    params.persistAccountProfile === false
+      ? archivedWithEstate
+      : saveAccountProfile(archivedWithEstate);
 
-  for (const slotId of clearedSlotIds) {
-    deleteSave(params.accountId, slotId);
+  if (!params.deferSlotDeletion) {
+    for (const slotId of clearedSlotIds) {
+      deleteSave(params.accountId, slotId);
+    }
   }
 
   return {

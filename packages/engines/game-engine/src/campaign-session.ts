@@ -1,6 +1,11 @@
 import type { SaveSnapshot } from "../../../shared/types/src/index.js";
+import { serializeSnapshot } from "../../../shared/persistence/src/index.js";
 import { createAuthorityId } from "./campaign-rules.js";
-import { resolveNormalDefeat } from "./normal-defeat.js";
+import {
+  hasPendingNormalDefeat,
+  repairPendingNormalDefeat,
+  resolveNormalDefeat
+} from "./normal-defeat.js";
 
 export type CampaignSessionPosture =
   | "at_head"
@@ -23,13 +28,29 @@ export interface CampaignSessionControl {
   firstDivergentMutationId: string | null;
   lastAcceptedMutationId: string | null;
   acceptedMutationIds: string[];
+  retainedMutationResults: RetainedCampaignMutationResult[];
   hasUnpublishedGameplayState: boolean;
 }
 
 export type CampaignMutationOwnerKind =
   | "engine_result"
   | "legacy_bridge"
-  | "persisted_preference";
+  | "persisted_preference"
+  | "recovery_repair";
+
+export interface RetainedCampaignMutationResult {
+  mutationId: string;
+  submissionFingerprint: string;
+  resultId: string | null;
+  snapshot: SaveSnapshot;
+  sessionRevision: number;
+  posture: CampaignSessionPosture;
+  pendingContinuityId: string | null;
+  firstDivergentMutationId: string | null;
+  lastAcceptedMutationId: string | null;
+  acceptedMutationIds: string[];
+  hasUnpublishedGameplayState: boolean;
+}
 
 export interface CampaignMutationSubmission {
   mutationId: string;
@@ -51,11 +72,47 @@ export type CampaignMutationAdmission = {
     | "rejected"
     | "no_change"
     | "duplicate"
+    | "recovery_pending"
     | "stale_revision"
     | "wrong_artifact";
   snapshot: SaveSnapshot;
   control: CampaignSessionControl;
+  resultId: string | null;
 };
+
+function buildMutationSubmissionFingerprint(
+  submission: CampaignMutationSubmission
+): string {
+  return JSON.stringify({
+    mutationId: submission.mutationId,
+    sourceArtifactId: submission.sourceArtifactId,
+    sourceRevision: submission.sourceRevision,
+    ownerKind: submission.ownerKind,
+    accepted: submission.accepted,
+    resultId: submission.resultId ?? null,
+    explicitRecoveryDestinationId:
+      submission.explicitRecoveryDestinationId ?? null,
+    sourceSnapshot: serializeSnapshot(submission.sourceSnapshot),
+    proposedSnapshot: serializeSnapshot(submission.proposedSnapshot)
+  });
+}
+
+function restoreRetainedControl(
+  current: CampaignSessionControl,
+  retained: RetainedCampaignMutationResult
+): CampaignSessionControl {
+  return {
+    ...current,
+    sessionRevision: retained.sessionRevision,
+    posture: retained.posture,
+    pendingContinuityId: retained.pendingContinuityId,
+    firstDivergentMutationId: retained.firstDivergentMutationId,
+    lastAcceptedMutationId: retained.lastAcceptedMutationId,
+    acceptedMutationIds: retained.acceptedMutationIds,
+    hasUnpublishedGameplayState:
+      retained.hasUnpublishedGameplayState
+  };
+}
 
 export function createCampaignSessionControl(params: {
   accountId: string;
@@ -86,6 +143,7 @@ export function createCampaignSessionControl(params: {
     firstDivergentMutationId: null,
     lastAcceptedMutationId: null,
     acceptedMutationIds: [],
+    retainedMutationResults: [],
     hasUnpublishedGameplayState: false
   };
 }
@@ -94,33 +152,49 @@ export function admitCampaignMutation(
   control: CampaignSessionControl,
   submission: CampaignMutationSubmission
 ): CampaignMutationAdmission {
+  const submissionFingerprint =
+    buildMutationSubmissionFingerprint(submission);
+  const retained = control.retainedMutationResults.find(
+    (entry) => entry.mutationId === submission.mutationId
+  );
+  if (retained) {
+    if (retained.submissionFingerprint !== submissionFingerprint) {
+      throw new Error(
+        `Campaign mutation '${submission.mutationId}' was reused with conflicting input.`
+      );
+    }
+    return {
+      accepted: false,
+      duplicate: true,
+      reason: "duplicate",
+      snapshot: retained.snapshot,
+      control: restoreRetainedControl(control, retained),
+      resultId: retained.resultId
+    };
+  }
+
   if (!submission.accepted) {
     return {
       accepted: false,
       duplicate: false,
       reason: "rejected",
       snapshot: submission.sourceSnapshot,
-      control
+      control,
+      resultId: submission.resultId ?? null
     };
   }
 
-  if (submission.proposedSnapshot === submission.sourceSnapshot) {
+  if (
+    submission.ownerKind !== "recovery_repair" &&
+    submission.proposedSnapshot === submission.sourceSnapshot
+  ) {
     return {
       accepted: false,
       duplicate: false,
       reason: "no_change",
       snapshot: submission.sourceSnapshot,
-      control
-    };
-  }
-
-  if (control.acceptedMutationIds.includes(submission.mutationId)) {
-    return {
-      accepted: false,
-      duplicate: true,
-      reason: "duplicate",
-      snapshot: submission.sourceSnapshot,
-      control
+      control,
+      resultId: submission.resultId ?? null
     };
   }
 
@@ -130,7 +204,8 @@ export function admitCampaignMutation(
       duplicate: false,
       reason: "wrong_artifact",
       snapshot: submission.sourceSnapshot,
-      control
+      control,
+      resultId: submission.resultId ?? null
     };
   }
 
@@ -140,7 +215,22 @@ export function admitCampaignMutation(
       duplicate: false,
       reason: "stale_revision",
       snapshot: submission.sourceSnapshot,
-      control
+      control,
+      resultId: submission.resultId ?? null
+    };
+  }
+
+  if (
+    hasPendingNormalDefeat(submission.sourceSnapshot) &&
+    submission.ownerKind !== "recovery_repair"
+  ) {
+    return {
+      accepted: false,
+      duplicate: false,
+      reason: "recovery_pending",
+      snapshot: submission.sourceSnapshot,
+      control,
+      resultId: submission.resultId ?? null
     };
   }
 
@@ -191,7 +281,12 @@ export function admitCampaignMutation(
     };
   }
 
-  if (nextSnapshot.playerState.resources.hp.current <= 0) {
+  if (submission.ownerKind === "recovery_repair") {
+    nextSnapshot = repairPendingNormalDefeat(
+      nextSnapshot,
+      submission.explicitRecoveryDestinationId
+    ).snapshot;
+  } else if (nextSnapshot.playerState.resources.hp.current <= 0) {
     nextSnapshot = resolveNormalDefeat(nextSnapshot, {
       sourceMutationId: submission.mutationId,
       sourceKind: "accepted_mutation",
@@ -205,11 +300,29 @@ export function admitCampaignMutation(
   }
 
   const nextRevision = control.sessionRevision + 1;
+  const nextAcceptedMutationIds = [
+    ...control.acceptedMutationIds,
+    submission.mutationId
+  ];
+  const retainedResult: RetainedCampaignMutationResult = {
+    mutationId: submission.mutationId,
+    submissionFingerprint,
+    resultId: submission.resultId ?? null,
+    snapshot: nextSnapshot,
+    sessionRevision: nextRevision,
+    posture,
+    pendingContinuityId,
+    firstDivergentMutationId,
+    lastAcceptedMutationId: submission.mutationId,
+    acceptedMutationIds: nextAcceptedMutationIds,
+    hasUnpublishedGameplayState: true
+  };
   return {
     accepted: true,
     duplicate: false,
     reason: "accepted",
     snapshot: nextSnapshot,
+    resultId: submission.resultId ?? null,
     control: {
       ...control,
       sessionRevision: nextRevision,
@@ -217,9 +330,10 @@ export function admitCampaignMutation(
       pendingContinuityId,
       firstDivergentMutationId,
       lastAcceptedMutationId: submission.mutationId,
-      acceptedMutationIds: [
-        ...control.acceptedMutationIds,
-        submission.mutationId
+      acceptedMutationIds: nextAcceptedMutationIds,
+      retainedMutationResults: [
+        ...control.retainedMutationResults,
+        retainedResult
       ],
       hasUnpublishedGameplayState: true
     }

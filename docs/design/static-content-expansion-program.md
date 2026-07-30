@@ -2,7 +2,7 @@
 
 Date: 2026-07-30
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.8` implementation and parent acceptance complete; `Version 0.6.9` remains unaccepted after `0.6.9.1`, with exact `0.6.9.2` persistence recovery repair active
+Status: `0.6.4`-`0.6.9` implementation and parent acceptance complete; unversioned Ashen Reef survey receipt-foundation decision active
 
 ## 1. Purpose
 
@@ -172,4 +172,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the unversioned `Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision`. Keep it Normal-only and limited to the minimum identity, provenance, migration, receipt-container, candidate-write, verification, publication, restart, and correction boundary required by the accepted survey contract. Do not authorize the survey command, broad Stakes modes, checkpoint/death, cloud/recovery, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.
+Run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`. Reuse the accepted Normal campaign/publication authority and decide the smallest survey-specific persisted occurrence/result/owner-receipt contract before implementation. Do not authorize the survey command, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.

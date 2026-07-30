@@ -12,11 +12,11 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, and output are refreshed through the connector accuracy correction following completed `Version 0.6.9.1`. Parent acceptance remains withheld and parent-specific `Version 0.6.9.2` remains active.
+The current prompt, handoff, and output are refreshed through accepted `Version 0.6.9.2`. The `0.6.9` parent is accepted, and the unversioned survey receipt-foundation decision is active.
 
 `docs/dev/project-roadmap.md` still contains one lower `## 1. Current Anchor` block with pre-`0.6.7` wording. That block is a known, lower-precedence stale header. It does not control execution or invalidate the refreshed top override. Correct it only in a safe complete-file roadmap maintenance pass; do not replace or rewrite the large roadmap from truncated content.
 
-The roadmap top override, sequenced-plan current queue, strategic continuity brief, historical register, and first backlog entry may still summarize only the four defects originally recorded by the local `0.6.9.1` audit. That count is superseded for execution. Subsequent complete source inspection proved two additional parent defects—`recovery_pending` admission and duplicate-mutation retained-result semantics—and required address-to-immutable-artifact verification. The current prompt, handoff, output, and updated acceptance audit control that complete scope.
+The original `0.6.9.1` four-defect summary and later six-defect correction remain historical audit evidence. The accepted `0.6.9.2` repair and updated acceptance audit now control current posture.
 
 ## Controlling Current Anchor
 
@@ -34,8 +34,8 @@ Use the following precedence for current execution and routing:
 
 - latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`;
-- latest completed support run: `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit`;
-- next run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`;
+- latest completed support run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`;
+- next run: unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
@@ -63,18 +63,17 @@ Use the following precedence for current execution and routing:
 - the minimum save decision returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority;
 - the dependency-closure decision returned `PACKAGE_READY` and assigned atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - `0.6.9` includes campaign rules/identity, version-7 publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat/legacy repair, and publication-keyed account consumers;
-- `0.6.9` is implemented with 120/120 focused tests and a green RPG UI production build, but parent acceptance is withheld;
-- six proven parent defects remain: post-head address recovery, durable account-consumer repair evidence, separately loaded migrated HP-zero repair, missing/invalid/closed control rejection, `recovery_pending` admission blocking, and duplicate-mutation retained-result semantics;
-- target-save admission and address recovery must additionally prove consistency with immutable artifact identity and bytes;
-- parent-specific support suffix `0.6.9.2` is active; no band-entry label is active and `0.7.0` remains `NOT_READY`.
+- `0.6.9` is implemented and accepted through `0.6.9.2`; all six proven defects plus immutable-address verification and terminal cleanup ordering are repaired;
+- the repaired focused persistence suite passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes;
+- the unversioned survey occurrence/result/consequence receipt decision is active; no band-entry label is active and `0.7.0` remains `NOT_READY`.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the static-content support chain.
 
 ## Accepted Near-Term Order
 
-1. run `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` and its fresh acceptance decision;
-2. run the smallest later `0.6.9.S` repair/audit only if evidence requires it;
-3. continue survey occurrence/result/consequence and command work only after parent acceptance;
+1. run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
+2. implement only a dependency-closed survey receipt package selected by that decision;
+3. continue survey command and consequence-adapter work only after receipt acceptance;
 4. keep `0.7.0` behind explicit representative-loop evidence.
 
 ## Maintenance Rule

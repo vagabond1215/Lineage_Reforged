@@ -4,6 +4,7 @@ import {
 } from "../../../../packages/shared/persistence/src/index.js";
 import type {
   CampaignIdentityState,
+  CampaignPublicationConsumerKind,
   SaveSnapshot
 } from "../../../../packages/shared/types/src/index.js";
 import {
@@ -17,6 +18,7 @@ import {
   type CampaignSessionControl
 } from "../../../../packages/engines/game-engine/src/campaign-session.js";
 import {
+  hasPendingNormalDefeat,
   resolveNormalDefeat
 } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
 import type {
@@ -80,6 +82,29 @@ type StoredCampaignControl = {
   updatedAt: string;
 };
 
+export type CampaignPublicationConsumerPlan = {
+  kind: CampaignPublicationConsumerKind;
+  payloadFingerprint: string;
+};
+
+type StoredPublicationRecovery = {
+  version: 1;
+  accountId: string;
+  campaignId: string;
+  slotId: SaveSlotId;
+  artifactId: string;
+  generationId: string;
+  publicationId: string;
+  headRevision: number;
+  terminal: boolean;
+  envelopeRaw: string;
+  status: "artifact_verified" | "head_verified" | "address_verified";
+  consumerPlans: CampaignPublicationConsumerPlan[];
+  completedConsumerKinds: CampaignPublicationConsumerKind[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 type LegacyMigrationReceipt = {
   version: 1;
   accountId: string;
@@ -117,6 +142,14 @@ export type PublishedCampaignSave = {
   sessionControl: CampaignSessionControl;
   publication: VerifiedCampaignPublication | null;
   boundExistingArtifact: boolean;
+};
+
+export type PendingCampaignPublicationRecovery = {
+  publication: VerifiedCampaignPublication;
+  slotId: SaveSlotId;
+  terminal: boolean;
+  snapshot: SaveSnapshot;
+  consumerPlans: CampaignPublicationConsumerPlan[];
 };
 
 const STORAGE_PREFIX = "cataclysm-rpg-ui.saves.v7";
@@ -186,6 +219,13 @@ function getLegacyStorageKey(accountId: string, slotId: SaveSlotId): string {
 
 function getCampaignControlKey(accountId: string, campaignId: string): string {
   return `${STORAGE_PREFIX}.account.${accountId}.campaign.${campaignId}.control`;
+}
+
+function getPublicationRecoveryKey(
+  accountId: string,
+  campaignId: string
+): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.campaign.${campaignId}.publication-recovery`;
 }
 
 function getArtifactStorageKey(accountId: string, artifactId: string): string {
@@ -452,6 +492,137 @@ function isStoredCampaignControl(
   );
 }
 
+function isCampaignPublicationConsumerKind(
+  value: unknown
+): value is CampaignPublicationConsumerKind {
+  return (
+    value === "active_history" ||
+    value === "account_achievements" ||
+    value === "legacy_rewards" ||
+    value === "preparation_consumption" ||
+    value === "inheritance_consumption" ||
+    value === "retirement_settlement" ||
+    value === "estate" ||
+    value === "last_played"
+  );
+}
+
+function isStoredPublicationRecovery(
+  value: unknown
+): value is StoredPublicationRecovery {
+  return (
+    isRecord(value) &&
+    value.version === 1 &&
+    typeof value.accountId === "string" &&
+    typeof value.campaignId === "string" &&
+    typeof value.slotId === "string" &&
+    typeof value.artifactId === "string" &&
+    typeof value.generationId === "string" &&
+    typeof value.publicationId === "string" &&
+    typeof value.headRevision === "number" &&
+    typeof value.terminal === "boolean" &&
+    typeof value.envelopeRaw === "string" &&
+    (value.status === "artifact_verified" ||
+      value.status === "head_verified" ||
+      value.status === "address_verified") &&
+    Array.isArray(value.consumerPlans) &&
+    value.consumerPlans.every(
+      (plan) =>
+        isRecord(plan) &&
+        isCampaignPublicationConsumerKind(plan.kind) &&
+        typeof plan.payloadFingerprint === "string"
+    ) &&
+    Array.isArray(value.completedConsumerKinds) &&
+    value.completedConsumerKinds.every(isCampaignPublicationConsumerKind) &&
+    typeof value.createdAt === "string" &&
+    typeof value.updatedAt === "string"
+  );
+}
+
+function readPublicationRecovery(
+  accountId: string,
+  campaignId: string
+): StoredPublicationRecovery | null {
+  const raw = getStorage().getItem(
+    getPublicationRecoveryKey(accountId, campaignId)
+  );
+  if (!raw) {
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (
+      !isStoredPublicationRecovery(parsed) ||
+      parsed.accountId !== accountId ||
+      parsed.campaignId !== campaignId
+    ) {
+      throw new Error("Campaign publication recovery evidence is invalid.");
+    }
+    return parsed;
+  } catch (error) {
+    throw error instanceof Error
+      ? error
+      : new Error("Campaign publication recovery evidence is invalid.");
+  }
+}
+
+function writePublicationRecovery(
+  storage: Storage,
+  recovery: StoredPublicationRecovery
+): void {
+  writeAndVerify(
+    storage,
+    getPublicationRecoveryKey(
+      recovery.accountId,
+      recovery.campaignId
+    ),
+    JSON.stringify(recovery)
+  );
+}
+
+function readVerifiedArtifactForAddress(
+  storage: Storage,
+  accountId: string,
+  address: StoredSaveEnvelope
+): {
+  envelope: StoredSaveEnvelope;
+  snapshot: SaveSnapshot;
+  raw: string;
+} | null {
+  const raw = storage.getItem(
+    getArtifactStorageKey(accountId, address.artifactId)
+  );
+  if (!raw) {
+    return null;
+  }
+  try {
+    const artifact = JSON.parse(raw) as unknown;
+    if (
+      !isStoredSaveEnvelope(artifact) ||
+      artifact.accountId !== accountId ||
+      artifact.artifactId !== address.artifactId ||
+      artifact.generationId !== address.generationId ||
+      artifact.publicationId !== address.publicationId ||
+      artifact.campaignId !== address.campaignId ||
+      artifact.continuityId !== address.continuityId ||
+      artifact.characterId !== address.characterId ||
+      artifact.headRevision !== address.headRevision ||
+      artifact.terminal !== address.terminal ||
+      artifact.savedAt !== address.savedAt ||
+      artifact.snapshotFormatId !== address.snapshotFormatId ||
+      artifact.snapshot !== address.snapshot
+    ) {
+      return null;
+    }
+    const snapshot = deserializeSnapshot(artifact.snapshot);
+    return isTargetCampaignSnapshot(snapshot)
+      ? { envelope: artifact, snapshot, raw }
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 function migrateSnapshotForEcho(snapshot: SaveSnapshot): SaveSnapshot {
   const persistedResourceCurrent = {
     hp: snapshot.playerState.resources.hp.current,
@@ -572,6 +743,17 @@ function inspectStoredSave(accountId: string, slotId: SaveSlotId): SaveInspectRe
       parsed.accountId !== accountId ||
       parsed.slotId !== slotId ||
       parsed.metadata.slotId !== slotId
+    ) {
+      return {
+        status: "corrupt",
+        envelope: null,
+        snapshot: null
+      };
+    }
+
+    if (
+      isTargetEnvelope &&
+      !readVerifiedArtifactForAddress(storage, accountId, parsed)
     ) {
       return {
         status: "corrupt",
@@ -764,6 +946,210 @@ function createStoredEnvelope(params: {
     terminal: params.terminal,
     snapshot: serializeSnapshot(params.snapshot)
   };
+}
+
+function readRecoveryEnvelope(
+  recovery: StoredPublicationRecovery
+): StoredSaveEnvelope {
+  const parsed = JSON.parse(recovery.envelopeRaw) as unknown;
+  if (
+    !isStoredSaveEnvelope(parsed) ||
+    parsed.accountId !== recovery.accountId ||
+    parsed.slotId !== recovery.slotId ||
+    parsed.campaignId !== recovery.campaignId ||
+    parsed.artifactId !== recovery.artifactId ||
+    parsed.generationId !== recovery.generationId ||
+    parsed.publicationId !== recovery.publicationId ||
+    parsed.headRevision !== recovery.headRevision ||
+    parsed.terminal !== recovery.terminal
+  ) {
+    throw new Error("Publication recovery evidence is inconsistent.");
+  }
+  return parsed;
+}
+
+function recoverPublicationAddress(
+  storage: Storage,
+  recovery: StoredPublicationRecovery
+): StoredPublicationRecovery {
+  if (
+    recovery.status !== "head_verified" &&
+    recovery.status !== "address_verified"
+  ) {
+    throw new Error("Publication recovery has no verified campaign head.");
+  }
+  const envelope = readRecoveryEnvelope(recovery);
+  const control = readCampaignControl(
+    recovery.accountId,
+    recovery.campaignId
+  );
+  if (
+    !control ||
+    control.headArtifactId !== recovery.artifactId ||
+    control.headPublicationId !== recovery.publicationId ||
+    control.headRevision !== recovery.headRevision ||
+    control.closed !== recovery.terminal
+  ) {
+    throw new Error(
+      "Publication recovery no longer matches campaign-head authority."
+    );
+  }
+  if (
+    !readVerifiedArtifactForAddress(
+      storage,
+      recovery.accountId,
+      envelope
+    )
+  ) {
+    throw new Error(
+      "Publication recovery artifact failed immutable verification."
+    );
+  }
+
+  writeAndVerify(
+    storage,
+    getStorageKey(recovery.accountId, recovery.slotId),
+    recovery.envelopeRaw
+  );
+  const projectedRaw = storage.getItem(
+    getStorageKey(recovery.accountId, recovery.slotId)
+  );
+  const projected = projectedRaw
+    ? (JSON.parse(projectedRaw) as unknown)
+    : null;
+  if (
+    !isStoredSaveEnvelope(projected) ||
+    !readVerifiedArtifactForAddress(
+      storage,
+      recovery.accountId,
+      projected
+    )
+  ) {
+    throw new Error(
+      "Recovered playable address failed immutable artifact verification."
+    );
+  }
+
+  const next: StoredPublicationRecovery = {
+    ...recovery,
+    status: "address_verified",
+    updatedAt: new Date().toISOString()
+  };
+  writePublicationRecovery(storage, next);
+  return next;
+}
+
+function listStoredPublicationRecoveries(
+  accountId: string
+): StoredPublicationRecovery[] {
+  const storage = getStorage();
+  const prefix = `${STORAGE_PREFIX}.account.${accountId}.campaign.`;
+  const suffix = ".publication-recovery";
+  const recoveries: StoredPublicationRecovery[] = [];
+  for (let index = 0; index < storage.length; index += 1) {
+    const key = storage.key(index);
+    if (!key?.startsWith(prefix) || !key.endsWith(suffix)) {
+      continue;
+    }
+    const raw = storage.getItem(key);
+    if (!raw) {
+      continue;
+    }
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      throw new Error(
+        "Campaign publication recovery evidence is malformed."
+      );
+    }
+    if (
+      !isStoredPublicationRecovery(parsed) ||
+      parsed.accountId !== accountId
+    ) {
+      throw new Error(
+        "Campaign publication recovery evidence is invalid."
+      );
+    }
+    recoveries.push(parsed);
+  }
+  return recoveries;
+}
+
+export function recoverPendingCampaignPublications(
+  accountId: string
+): PendingCampaignPublicationRecovery[] {
+  const storage = getStorage();
+  const recovered: PendingCampaignPublicationRecovery[] = [];
+  for (const stored of listStoredPublicationRecoveries(accountId)) {
+    if (stored.status === "artifact_verified") {
+      continue;
+    }
+    const recovery = recoverPublicationAddress(storage, stored);
+    const envelope = readRecoveryEnvelope(recovery);
+    const verified = readVerifiedArtifactForAddress(
+      storage,
+      accountId,
+      envelope
+    );
+    if (!verified) {
+      throw new Error(
+        "Recovered publication lost immutable artifact authority."
+      );
+    }
+    const consumerPlans = recovery.consumerPlans.filter(
+      (plan) =>
+        !recovery.completedConsumerKinds.includes(plan.kind)
+    );
+    recovered.push({
+      publication: buildVerifiedPublication(envelope),
+      slotId: recovery.slotId,
+      terminal: recovery.terminal,
+      snapshot: migrateSnapshotForEcho(verified.snapshot),
+      consumerPlans
+    });
+    if (consumerPlans.length === 0) {
+      storage.removeItem(
+        getPublicationRecoveryKey(accountId, recovery.campaignId)
+      );
+    }
+  }
+  return recovered;
+}
+
+export function completeCampaignPublicationConsumers(
+  accountId: string,
+  publicationId: string,
+  kinds: CampaignPublicationConsumerKind[]
+): void {
+  const storage = getStorage();
+  const recovery = listStoredPublicationRecoveries(accountId).find(
+    (entry) => entry.publicationId === publicationId
+  );
+  if (!recovery) {
+    return;
+  }
+  const completedConsumerKinds = Array.from(
+    new Set([
+      ...recovery.completedConsumerKinds,
+      ...kinds
+    ])
+  );
+  if (
+    recovery.consumerPlans.every((plan) =>
+      completedConsumerKinds.includes(plan.kind)
+    )
+  ) {
+    storage.removeItem(
+      getPublicationRecoveryKey(accountId, recovery.campaignId)
+    );
+    return;
+  }
+  writePublicationRecovery(storage, {
+    ...recovery,
+    completedConsumerKinds,
+    updatedAt: new Date().toISOString()
+  });
 }
 
 function readLegacyEnvelope(
@@ -1230,6 +1616,7 @@ export function publishSave(
   options: {
     sessionControl?: CampaignSessionControl;
     terminal?: boolean;
+    consumerPlans?: CampaignPublicationConsumerPlan[];
   } = {}
 ): PublishedCampaignSave {
   if (!isTargetCampaignSnapshot(snapshot)) {
@@ -1237,11 +1624,115 @@ export function publishSave(
       "Version 7 publication requires a target campaign snapshot."
     );
   }
+  if (hasPendingNormalDefeat(snapshot)) {
+    throw new Error(
+      "Campaign publication is blocked while Normal defeat recovery is pending."
+    );
+  }
 
   const storage = getStorage();
   const campaignId = snapshot.campaignIdentity!.campaignId;
   const existingControl = readCampaignControl(accountId, campaignId);
   const sessionControl = options.sessionControl;
+  const consumerPlans = options.consumerPlans ?? [];
+  const duplicatePlanKind = consumerPlans.find(
+    (plan, index) =>
+      consumerPlans.findIndex(
+        (candidate) => candidate.kind === plan.kind
+      ) !== index
+  );
+  if (duplicatePlanKind) {
+    throw new Error(
+      `Duplicate campaign consumer plan '${duplicatePlanKind.kind}'.`
+    );
+  }
+
+  const pendingRecovery = readPublicationRecovery(
+    accountId,
+    campaignId
+  );
+  if (
+    pendingRecovery &&
+    pendingRecovery.status !== "artifact_verified"
+  ) {
+    const recoveryEnvelope = readRecoveryEnvelope(pendingRecovery);
+    const requestedSnapshot =
+      snapshot.accountId === accountId
+        ? snapshot
+        : { ...snapshot, accountId };
+    const requestedPlans = JSON.stringify(consumerPlans);
+    const retainedPlans = JSON.stringify(
+      pendingRecovery.consumerPlans
+    );
+    const sessionMatchesPriorHead =
+      !sessionControl ||
+      (sessionControl.campaignHeadArtifactId ===
+        existingControl?.previousHeadArtifactId &&
+        sessionControl.campaignHeadRevision ===
+          pendingRecovery.headRevision - 1);
+    if (
+      pendingRecovery.slotId !== slotId ||
+      pendingRecovery.terminal !== (options.terminal === true) ||
+      recoveryEnvelope.snapshot !==
+        serializeSnapshot(requestedSnapshot) ||
+      (consumerPlans.length > 0 &&
+        requestedPlans !== retainedPlans) ||
+      !sessionMatchesPriorHead
+    ) {
+      throw new Error(
+        "Pending campaign publication conflicts with this retry."
+      );
+    }
+    const recovered = recoverPublicationAddress(
+      storage,
+      pendingRecovery
+    );
+    const envelope = readRecoveryEnvelope(recovered);
+    const slot = SAVE_SLOT_ORDER.find(
+      (entry) => entry.id === slotId
+    ) ?? {
+      id: slotId,
+      label: slotId,
+      kind: "manual" as const
+    };
+    return {
+      slot: createSlotSummary(slot, "ready", envelope.metadata),
+      snapshot: requestedSnapshot,
+      sessionControl: createCampaignSessionControl({
+        accountId,
+        campaignId,
+        artifactId: envelope.artifactId,
+        publicationId: envelope.publicationId,
+        artifactRevision: envelope.headRevision,
+        continuityId: envelope.continuityId,
+        headArtifactId: envelope.artifactId,
+        headRevision: envelope.headRevision
+      }),
+      publication: buildVerifiedPublication(envelope),
+      boundExistingArtifact: false
+    };
+  }
+
+  if (sessionControl) {
+    if (!existingControl) {
+      throw new Error(
+        "Campaign control is missing or invalid for this session."
+      );
+    }
+    if (existingControl.closed) {
+      throw new Error("Campaign control is closed for this session.");
+    }
+    if (
+      sessionControl.campaignHeadArtifactId !==
+        existingControl.headArtifactId ||
+      sessionControl.campaignHeadRevision !==
+        existingControl.headRevision
+    ) {
+      throw new Error("Campaign head changed after this session was loaded.");
+    }
+  } else if (existingControl?.closed) {
+    throw new Error("Closed campaign authority cannot be reopened.");
+  }
 
   if (
     sessionControl?.posture === "non_head_unmutated" &&
@@ -1292,16 +1783,6 @@ export function publishSave(
     };
   }
 
-  if (
-    sessionControl &&
-    existingControl &&
-    (sessionControl.campaignHeadArtifactId !==
-      existingControl.headArtifactId ||
-      sessionControl.campaignHeadRevision !== existingControl.headRevision)
-  ) {
-    throw new Error("Campaign head changed after this session was loaded.");
-  }
-
   const savedAt = new Date().toISOString();
   const artifactId = createAuthorityId("artifact");
   const generationId = createAuthorityId("generation");
@@ -1347,6 +1828,24 @@ export function publishSave(
     getArtifactStorageKey(accountId, artifactId),
     raw
   );
+  const recovery: StoredPublicationRecovery = {
+    version: 1,
+    accountId,
+    campaignId,
+    slotId,
+    artifactId,
+    generationId,
+    publicationId,
+    headRevision,
+    terminal: options.terminal === true,
+    envelopeRaw: raw,
+    status: "artifact_verified",
+    consumerPlans,
+    completedConsumerKinds: [],
+    createdAt: savedAt,
+    updatedAt: savedAt
+  };
+  writePublicationRecovery(storage, recovery);
   const nextControl: StoredCampaignControl = {
     version: 1,
     accountId,
@@ -1373,9 +1872,25 @@ export function publishSave(
     throw new Error("Campaign-head publication verification failed.");
   }
 
-  writeAndVerify(storage, getStorageKey(accountId, slotId), raw);
+  const headRecovery: StoredPublicationRecovery = {
+    ...recovery,
+    status: "head_verified",
+    updatedAt: new Date().toISOString()
+  };
+  writePublicationRecovery(storage, headRecovery);
+  const addressRecovery = recoverPublicationAddress(
+    storage,
+    headRecovery
+  );
   for (const obsoleteKey of getObsoleteStorageKeys(slotId)) {
     storage.removeItem(obsoleteKey);
+  }
+  if (consumerPlans.length === 0) {
+    storage.removeItem(
+      getPublicationRecoveryKey(accountId, campaignId)
+    );
+  } else if (addressRecovery.status !== "address_verified") {
+    throw new Error("Campaign address projection remains pending.");
   }
 
   const slot = SAVE_SLOT_ORDER.find((entry) => entry.id === slotId) ?? {
@@ -1426,6 +1941,108 @@ export function loadSave(accountId: string, slotId: SaveSlotId): SaveSnapshot | 
   return loadSaveWithAuthority(accountId, slotId)?.snapshot ?? null;
 }
 
+function repairLoadedMigratedDefeat(
+  accountId: string,
+  slotId: SaveSlotId,
+  envelope: StoredSaveEnvelope,
+  snapshot: SaveSnapshot,
+  control: StoredCampaignControl
+): LoadedCampaignSave {
+  const repaired = resolveNormalDefeat(snapshot, {
+    sourceMutationId: `legacy-migration.${envelope.publicationId}`,
+    sourceKind: "unknown_or_legacy"
+  }).snapshot;
+  const loadedControl = createCampaignSessionControl({
+    accountId,
+    campaignId: envelope.campaignId,
+    artifactId: envelope.artifactId,
+    publicationId: envelope.publicationId,
+    artifactRevision: envelope.headRevision,
+    continuityId: envelope.continuityId,
+    headArtifactId: control.headArtifactId,
+    headRevision: control.headRevision
+  });
+
+  if (envelope.artifactId === control.headArtifactId) {
+    const published = publishSave(
+      accountId,
+      slotId,
+      repaired,
+      buildSaveMetadata(slotId, repaired),
+      { sessionControl: loadedControl }
+    );
+    if (!published.publication) {
+      throw new Error(
+        "Legacy head repair did not create verified authority."
+      );
+    }
+    return {
+      snapshot: published.snapshot,
+      sessionControl: published.sessionControl,
+      publication: published.publication,
+      migratedLegacy: false,
+      repairedLegacyDefeat: true
+    };
+  }
+
+  const storage = getStorage();
+  const savedAt = new Date().toISOString();
+  const artifactId = createAuthorityId("artifact");
+  const generationId = createAuthorityId("generation");
+  const publicationId = createAuthorityId("publication");
+  const repairedEnvelope = createStoredEnvelope({
+    accountId,
+    slotId,
+    snapshot: repaired,
+    metadata: buildSaveMetadata(slotId, repaired),
+    artifactId,
+    generationId,
+    publicationId,
+    headRevision: envelope.headRevision,
+    terminal: false,
+    savedAt
+  });
+  const raw = JSON.stringify(repairedEnvelope);
+  writeAndVerify(
+    storage,
+    getCandidateStorageKey(accountId, generationId),
+    raw
+  );
+  writeAndVerify(
+    storage,
+    getArtifactStorageKey(accountId, artifactId),
+    raw
+  );
+  writeAndVerify(storage, getStorageKey(accountId, slotId), raw);
+  if (
+    !readVerifiedArtifactForAddress(
+      storage,
+      accountId,
+      repairedEnvelope
+    )
+  ) {
+    throw new Error(
+      "Legacy non-head repair failed immutable artifact verification."
+    );
+  }
+  return {
+    snapshot: repaired,
+    sessionControl: createCampaignSessionControl({
+      accountId,
+      campaignId: repairedEnvelope.campaignId,
+      artifactId,
+      publicationId,
+      artifactRevision: repairedEnvelope.headRevision,
+      continuityId: repairedEnvelope.continuityId,
+      headArtifactId: control.headArtifactId,
+      headRevision: control.headRevision
+    }),
+    publication: buildVerifiedPublication(repairedEnvelope),
+    migratedLegacy: false,
+    repairedLegacyDefeat: true
+  };
+}
+
 export function loadSaveWithAuthority(
   accountId: string,
   slotId: SaveSlotId,
@@ -1450,6 +2067,37 @@ export function loadSaveWithAuthority(
       (control.closed || envelope.terminal))
   ) {
     return null;
+  }
+
+  if (
+    envelope.headRevision > control.headRevision ||
+    (envelope.artifactId === control.headArtifactId &&
+      (envelope.publicationId !== control.headPublicationId ||
+        envelope.headRevision !== control.headRevision))
+  ) {
+    return null;
+  }
+
+  if (
+    inspected.snapshot.campaignRules?.source ===
+      "legacy_migration" &&
+    inspected.snapshot.playerState.resources.hp.current <= 0
+  ) {
+    const profile = loadAccountProfile(accountId);
+    const active = profile.history.runRecords.some(
+      (record) =>
+        record.characterId === envelope.characterId &&
+        record.outcome === "active"
+    );
+    if (active) {
+      return repairLoadedMigratedDefeat(
+        accountId,
+        slotId,
+        envelope,
+        inspected.snapshot,
+        control
+      );
+    }
   }
 
   return {

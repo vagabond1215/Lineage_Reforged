@@ -53,6 +53,99 @@ function resolveDestination(
   return { id: null, source: "none" };
 }
 
+export function findPendingNormalDefeat(
+  snapshot: SaveSnapshot
+): NormalDefeatReceiptState | null {
+  return (
+    (snapshot.normalDefeatReceipts ?? []).find(
+      (receipt) => receipt.posture === "recovery_pending"
+    ) ?? null
+  );
+}
+
+export function hasPendingNormalDefeat(
+  snapshot: SaveSnapshot
+): boolean {
+  return findPendingNormalDefeat(snapshot) !== null;
+}
+
+export function repairPendingNormalDefeat(
+  snapshot: SaveSnapshot,
+  explicitDestinationId?: string | null
+): NormalDefeatResolution {
+  const pending = findPendingNormalDefeat(snapshot);
+  const destinationId = explicitDestinationId?.trim();
+  if (!pending) {
+    throw new Error("Normal defeat recovery repair requires a pending receipt.");
+  }
+  if (!destinationId) {
+    throw new Error(
+      "Normal defeat recovery repair requires an explicit safe destination."
+    );
+  }
+
+  const nextSnapshot = cloneSnapshot(snapshot);
+  for (let index = 0; index < 4; index += 1) {
+    nextSnapshot.clock = advanceClock(nextSnapshot.clock, 1);
+    nextSnapshot.capturedAtTick = nextSnapshot.clock.tick;
+    nextSnapshot.playerState.saveMeta.totalPlayTicks += 1;
+  }
+  nextSnapshot.playerState.location = {
+    ...nextSnapshot.playerState.location,
+    settlementId: destinationId,
+    siteLabel:
+      nextSnapshot.sessionState.knownLocations.find(
+        (location) => location.settlementId === destinationId
+      )?.name ?? nextSnapshot.playerState.location.siteLabel
+  };
+
+  const repaired: NormalDefeatReceiptState = {
+    ...pending,
+    resolvedTick: nextSnapshot.clock.tick,
+    recoveryTicks: 4,
+    destinationId,
+    destinationSource: "explicit_context",
+    posture: "playable"
+  };
+  nextSnapshot.normalDefeatReceipts = (
+    nextSnapshot.normalDefeatReceipts ?? []
+  ).map((receipt) =>
+    receipt.receiptId === repaired.receiptId ? repaired : receipt
+  );
+  nextSnapshot.sessionState.chronicle =
+    nextSnapshot.sessionState.chronicle.map((entry) =>
+      entry.id === repaired.chronicleEntryId
+        ? {
+            ...entry,
+            timeLabel: `Tick ${nextSnapshot.clock.tick}`,
+            summary: `Recovered at ${destinationId} after deterministic recovery repair.`,
+            statusLabel: "Recovered",
+            tags: entry.tags.map((tag) =>
+              tag === "recovery_pending" ? "playable" : tag
+            )
+          }
+        : entry
+    );
+  nextSnapshot.sessionState.notifications =
+    nextSnapshot.sessionState.notifications.map((entry) =>
+      entry.id === repaired.notificationId
+        ? {
+            ...entry,
+            title: "Defeat Recovery Repaired",
+            detail: `You recovered at ${destinationId}. The campaign remains active and unsaved.`,
+            timeLabel: `Tick ${nextSnapshot.clock.tick}`,
+            tone: "warning"
+          }
+        : entry
+    );
+
+  return {
+    snapshot: nextSnapshot,
+    receipt: repaired,
+    duplicate: false
+  };
+}
+
 export function resolveNormalDefeat(
   snapshot: SaveSnapshot,
   params: {
