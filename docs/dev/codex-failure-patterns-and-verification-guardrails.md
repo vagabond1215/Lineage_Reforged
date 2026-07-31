@@ -1,6 +1,6 @@
 # Codex Failure Patterns And Verification Guardrails
 
-Date: 2026-07-30
+Date: 2026-07-31
 
 Status: active durable workflow authority; documentation only
 
@@ -141,6 +141,26 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Verification:** Completion report must include a finding-to-test matrix and state whether any finding was deferred, superseded, or remains open.
 - **Applies to:** repair prompts, acceptance audits, post-incident follow-ups, multi-commit support chains.
 - **Evidence:** `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`; repository history for the four-to-six finding correction.
+- **Status:** active.
+
+### FP-011 — Authority Precedence And Provenance Validation Must Control Mutation Order
+
+- **Pattern:** A higher-priority explicit authority claim is rejected because lower-priority fallback evidence is inspected first, or retained provenance is checked only after identity or state has already been rewritten.
+- **Why it escaped:** Tests covered each authority source independently but did not combine a valid controlling source with corrupt lower-priority evidence or a provenance-sensitive repair with a pre-validation identity transition.
+- **Guardrail:** Follow the accepted authority chain as a strict short-circuit. Validate the controlling source and retained source provenance before cloning, identity rewrite, continuity fork, relocation, time advancement, correction append, or projection mutation.
+- **Verification:** Pair valid explicit authority with every corrupt lower-priority source; exercise provenance-sensitive repair from head and non-head control; prove rejected cases leave source snapshot and control byte-stable and accepted cases apply the required identity transition exactly once.
+- **Applies to:** destination resolution, continuity admission, migration correction, recovery repair, command fallback chains, authority projection.
+- **Evidence:** `docs/dev/version-0.6.9.7-pre-implementation-source-review-2026-07-31.md`.
+- **Status:** active.
+
+### FP-012 — Duplicate Results Require Unique Complete Durable Evidence
+
+- **Pattern:** First, last, latest, or `.find(...)` array selection treats ambiguous or partial retained state as a completed duplicate result.
+- **Why it escaped:** Idempotency tests exercised one clean retained result but did not reverse arrays, duplicate identities, remove associated ledger/projection evidence, or restart without in-memory retained results.
+- **Guardrail:** Duplicate handling must target stable identity and prove exactly one complete internally consistent evidence set. Ambiguous, missing, duplicated, orphaned, or conflicting evidence fails closed before effects.
+- **Verification:** Reverse receipt and ledger order; inject duplicate same-source receipts, missing/duplicate original entries, orphan corrections and projections, multiple historical results, caller-state loss, and explicit save/reload. An exact duplicate returns current state without rollback or repeated effects.
+- **Applies to:** defeat receipts, recovery completion, publication consumers, migrations, command retries, correction ledgers, durable replay.
+- **Evidence:** `docs/dev/version-0.6.9.7-pre-implementation-source-review-2026-07-31.md`; `docs/dev/current-codex-output.md`.
 - **Status:** active.
 
 ## Completion Report Format
