@@ -30,6 +30,7 @@ Read:
 - `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
+- `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
 - `docs/dev/current-codex-output.md`;
 - the new-campaign coordinator, `App.tsx`, save manager, run lifecycle, campaign session, Normal defeat, account publication, and focused persistence tests;
 - current handoff, historical/deferred register, planning reconciliation, branch policy, and branch register;
@@ -45,6 +46,16 @@ Apply and report:
 
 Green totals alone are insufficient. Include fresh finding-to-test and failure-boundary matrices.
 
+## Post-Commit Connector Audit Targets
+
+Independent connector inspection of committed head `13b79279d07f6e1d06bf44b5b6ddba011694d57c` identified three additional boundaries that must be decided explicitly before acceptance:
+
+1. `completePendingNormalDefeatRecovery(...)` selects the first pending receipt and does not visibly fail closed when more than one pending defeat receipt exists;
+2. safe-destination enumeration includes the current `playerState.location.settlementId` by nonempty string alone, so malformed or non-settlement current-location authority may bypass the intended validation;
+3. pending-defeat completion updates the retained receipt, Chronicle, notification, time, location, and session revision, but no distinct repair/correction ledger append is visible even though the implementation contract required ledger effects exactly once.
+
+These are audit targets, not preassigned failure conclusions. Reproduce them against the accepted dependency-closure contract and current types. If any target violates accepted authority, report `AUDIT_REPAIR_REQUIRED` and install the smallest exact `0.6.9.5` repair.
+
 ## Execution Gate
 
 1. Verify clean synchronized `master`, upstream, current head, and this prompt.
@@ -58,10 +69,13 @@ Green totals alone are insufficient. Include fresh finding-to-test and failure-b
 9. Independently construct one compatible pending recovery, one incompatible pending recovery, an older hidden recovery versus a newer verified same-slot address, and multiple same-slot recoveries in different storage orders.
 10. Prove active history, achievements/account value, preparation consumption, and inheritance consumption remain at most once across failure, retry, and restart.
 11. Reproduce a retained `recovery_pending` defeat with a valid authoritative known settlement and exercise the production completion owner called by the launcher.
-12. Prove malformed, unknown, unsafe non-settlement, and conflicting destinations reject.
+12. Prove malformed, unknown, unsafe non-settlement, and conflicting destinations reject, including malformed or non-settlement ids present in the current-location `settlementId` field.
 13. Submit duplicate repair after a later accepted mutation and prove the retained result returns without rolling back newer snapshot/control state.
-14. Prove ordinary mutation, manual save, quick-save, and retirement remain blocked before repair and normal explicit save remains required afterward.
-15. Re-run all `0.6.9.2` preservation cases, the focused suite, prescribed Node group, production build, bounded TypeScript audit, mirror checks, `git diff --check`, and complete diff inspection.
+14. Construct more than one pending defeat receipt and prove completion fails closed without selecting by receipt-array order or partially repairing one receipt.
+15. Prove recovery completion has one accepted provenance trail: the original defeat receipt remains stable, completion state is exactly once, and the authority ledger or accepted correction mechanism records the repair without duplicate append.
+16. Prove HP, Stamina, recovery ticks, relocation, Chronicle, notification, and session revision occur exactly once across initial pending resolution plus completion; no effect may be silently applied twice.
+17. Prove ordinary mutation, manual save, quick-save, and retirement remain blocked before repair and normal explicit save remains required afterward.
+18. Re-run all `0.6.9.2` preservation cases, the focused suite, prescribed Node group, production build, bounded TypeScript audit, mirror checks, `git diff --check`, and complete diff inspection.
 
 If any required boundary is not independently reproducible or fails, keep the parent unaccepted and install the smallest exact `0.6.9.5` repair route. Do not broaden the package.
 
@@ -81,6 +95,10 @@ Map executable evidence to every confirmed finding and at least:
 - account-consumer failure/retry;
 - valid pending repair;
 - invalid and conflicting destinations;
+- malformed or unsafe current-location settlement authority;
+- multiple pending defeat receipts;
+- repair receipt and ledger/correction provenance exactly once;
+- resource, time, relocation, Chronicle, notification, and session-revision effects exactly once across pending resolution and completion;
 - duplicate repair after later mutation;
 - stale or conflicting attempt input;
 - terminal recovery and existing `0.6.9.2` preservation.
@@ -103,7 +121,7 @@ Run the RPG UI production build and the existing bounded TypeScript audit. Repor
 
 ## Acceptance Decision
 
-Accept the parent only if all boundaries independently pass and every original `0.6.9.1` plus post-`0.6.9.2` finding has executable closure.
+Accept the parent only if all boundaries independently pass and every original `0.6.9.1`, post-`0.6.9.2`, and post-commit connector audit target has executable closure.
 
 On acceptance:
 
