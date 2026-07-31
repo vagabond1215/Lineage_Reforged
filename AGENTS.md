@@ -8,6 +8,17 @@
 - Character model: classless character development where the active system supports it; avoid adding hard class gates unless a dedicated design pass approves them.
 - Design priority: durable world state, authored content integrity, and validated systems before broad runtime expansion.
 
+## Repository-First Agent Workflow
+
+- `docs/dev/repository-first-agent-work-protocol.md` is the durable detailed authority for repository orientation, agent delegation, execution, validation, and handoff.
+- All substantive source, test, schema, migration, content, asset, dependency, generated-output, build, typecheck, or multi-file coordination work must be performed in an authenticated repository checkout through Codex or another repository-capable agent.
+- Before narrowing to an edit surface, complete the protocol's whole-repository orientation: live head and worktree, all branches and open PRs, current prompt/handoff/output, historical and planning reconciliation, relevant focused authority, manifests/configuration, architecture and caller paths, tests/build/CI, mirrors/generated output, and known blockers.
+- Read the complete current versions of `docs/dev/current-codex-prompt.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/current-codex-output.md`, `docs/dev/historical-version-and-deferred-route-register.md`, `docs/design/current-planning-anchor-reconciliation.md`, the failure-pattern register, branch policy/register, and the most specific accepted decision or audit before implementation.
+- Use repository agents or subagents for independent bounded inspections when useful, but give each one an exact source head, scope, required authorities, exclusions, and output contract. The coordinating agent must reconcile all reports against the same live repository head.
+- Connector-prepared source replacements, patches, probes, and repair bundles are evidence only. They must be independently compared against live source, implemented in the repository, covered by repository tests, and validated before they can become implementation authority.
+- A chat response is not a repository handoff. Complete substantive runs by updating the current output, handoff, prompt when routing changes, branch register, focused authority, and exact commit/push identities required by the protocol.
+- If a synchronized authenticated checkout, required tooling, or prescribed validation is unavailable, report incomplete work and do not claim implementation or acceptance.
+
 ## Version And Run Labels
 
 - Use `Version X.Y.Z - Short Name` for primary Codex workflow labels. Do not use old `Step N` labels for new work.
