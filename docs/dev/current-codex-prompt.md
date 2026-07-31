@@ -31,6 +31,8 @@ Read:
 - `AGENTS.md`;
 - `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
+- `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
+- `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
 - `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`;
 - `docs/dev/current-codex-output.md`;
 - `packages/shared/types/src/contracts.ts` around campaign identity, authority ledger, Normal defeat receipts, resources, locations, and save snapshots;
@@ -51,23 +53,56 @@ Apply and report `FP-001` through `FP-010`. Apply `FP-007` when rewriting the la
 3. Reproduce all three findings against untouched source before editing.
 4. Distinguish inspected base, implementation starting head, final committed head, and live post-fetch head.
 5. Stop and install a narrower support prompt if the required repair would change shared types, save format, dependencies, or unrelated owners.
+6. Preserve the accepted distinction between a rejected explicit authority claim and an automatically resolved `recovery_pending` defeat. Do not erase retained defeat truth merely because automatic destination authority is invalid.
 
 ## Finding 1 - Initial Automatic Destination Authority
 
-Initial `resolveNormalDefeat(...)` automatic destination selection must use the same exact settlement-evidence rules as pending recovery completion.
+Initial `resolveNormalDefeat(...)` destination selection must use the same exact settlement-evidence predicate as pending recovery completion while preserving the accepted initial defeat sequence.
 
-Required behavior:
+### Shared validation
 
-- explicit context, current location, and campaign-start candidates require exact, unpadded, nonblank ids;
-- each accepted candidate must have exactly one matching `known === true`, `type === "settlement"` location record with an exact `settlementId`;
-- unknown, known-false, non-settlement, duplicate, or contradictory evidence fails closed;
-- corrupt current authority cannot fall through to campaign-start or another known settlement;
-- corrupt campaign-start authority cannot fall through;
-- valid precedence remains explicit context, valid current settlement, valid campaign-start settlement, then `recovery_pending`;
-- initial resolution must not add the sole-known-settlement fallback used only by bounded pending completion;
-- no invalid initial destination may produce four recovery ticks, relocation, or a playable receipt.
+- Explicit context, current-location, and campaign-start candidates require exact, unpadded, nonblank ids.
+- Each accepted candidate must have exactly one matching location record with `known === true`, `type === "settlement"`, and an exact `settlementId`.
+- Unknown, known-false, non-settlement, duplicate, or contradictory evidence is invalid.
+- Refactor only enough internal code to share validation and prevent subtly different authority rules.
 
-Refactor only enough internal code to share validation and avoid two subtly different authority rules.
+### Explicit destination behavior
+
+When an explicit context destination is supplied:
+
+- validate it before any defeat-resolution side effect;
+- if valid, use it and record `destinationSource: "explicit_context"`;
+- if malformed, unknown, non-settlement, duplicated, or contradictory, reject deterministically before encounter cleanup, resource restoration, clock change, receipt creation, ledger append, Chronicle/notification projection, relocation, or source-snapshot mutation;
+- never ignore an invalid explicit authority claim and fall through to current, campaign-start, or another location.
+
+### Automatic destination behavior
+
+When no explicit destination is supplied:
+
+1. If a current-location settlement id is present, validate that exact candidate.
+   - If valid, use it and record `destinationSource: "current_settlement"`.
+   - If invalid, do not fall through to campaign start or another known settlement. Resolve the defeat once into `recovery_pending`.
+2. Only when the current-location settlement id is absent may campaign-start authority be considered.
+   - If valid, use it and record `destinationSource: "campaign_start"`.
+   - If present but invalid, do not fall through. Resolve the defeat once into `recovery_pending`.
+3. If both current and campaign-start authority are absent, resolve once into `recovery_pending`.
+4. Initial defeat resolution must not add the sole-known-settlement fallback used by bounded pending completion.
+
+### Required `recovery_pending` result
+
+Invalid or absent automatic destination authority must not abort or erase the accepted defeat occurrence. It must produce exactly one retained nonterminal `recovery_pending` result:
+
+- clear the accepted encounter and transient combat bindings once;
+- restore HP and Stamina once using the accepted Normal formula;
+- preserve MP and body state;
+- retain one defeat receipt, one original `normal_defeat` ledger entry, one Chronicle entry, and one notification;
+- set `destinationId: null`, `destinationSource: "none"`, `recoveryTicks: 0`, and `posture: "recovery_pending"`;
+- do not advance the clock or total-play ticks;
+- do not relocate or invent a site label;
+- do not mutate the input snapshot;
+- block ordinary gameplay and publication through the existing pending posture until validated completion.
+
+A valid playable initial destination still advances exactly four recovery ticks and applies the accepted relocation once. An invalid automatic destination may never produce a playable receipt, relocation, or recovery-time advancement.
 
 ## Finding 2 - Restart-Safe Duplicate Completion
 
@@ -75,12 +110,14 @@ A completed repair must carry enough durable evidence for an exact replay after 
 
 Required behavior:
 
-- an exact replay identifies the intended receipt through a stable receipt identity or equivalently explicit replay evidence; never select the first or latest completed receipt by array order;
-- one exact completed receipt, original ledger entry, deterministic correction entry, campaign/continuity/character identity, destination, and source mutation must agree;
+- an exact replay identifies the intended receipt through an explicit stable receipt id or equivalently exact replay evidence; never select the first, last, or latest completed receipt by array order;
+- one exact completed receipt, original ledger entry, deterministic correction entry, campaign/continuity/character identity, destination, and recovery mutation source must agree;
 - an exact replay returns `duplicate: true` with the current snapshot and control unchanged;
 - replay after a later accepted mutation and replay after explicit save/reload cannot roll state back, change session revision, append ledger entries, advance ticks, relocate, restore resources, or reproject Chronicle/notification;
-- missing target identity, zero matches, multiple matches, conflicting destination, conflicting correction, or ambiguous completed history fails closed with stable diagnostics;
-- ordinary production entry continues to invoke repair only when recovery is pending.
+- reversed receipt and ledger order must not change the result;
+- multiple historical completed repairs are permitted only when the exact target identity disambiguates one result;
+- missing target identity where completed history is ambiguous, zero matches, multiple matches, conflicting destination, conflicting correction, or conflicting campaign identity fails closed with stable diagnostics;
+- ordinary production entry continues to invoke repair only when recovery is pending; the explicit replay surface exists for idempotency verification and exact retry, not as a new ordinary UI action.
 
 Do not persist the in-memory retained-mutation-result array or add a generic replay framework. Use the existing durable receipt and authority-ledger evidence.
 
@@ -92,30 +129,51 @@ At minimum validate:
 
 - campaign, continuity, character, rules, policy, source mutation, source kind, and pending posture;
 - `recoveryTicks === 0`, `destinationId === null`, and `destinationSource === "none"`;
-- integer, ordered source/resolution ticks and the pending snapshot's unchanged current tick posture;
-- `hpRestoredTo`, `staminaRestoredTo`, and `mpPreservedAt` against current resource facts, valid maxima, and the deterministic HP floor/formula where derivable;
-- exactly one original `normal_defeat` ledger entry with the same source mutation and `acceptedAtTick` equal to the original resolved tick;
-- exactly one matching receipt, Chronicle entry, and notification, and no retained correction/supersession entry.
+- integer and ordered source/resolution ticks;
+- `sourceTick <= resolvedTick`;
+- the pending snapshot clock and `capturedAtTick` equal the retained pending `resolvedTick`, because ordinary mutation and time advancement are blocked while recovery is pending;
+- `hpRestoredTo` equals current HP and the deterministic Normal HP restoration formula for the retained maximum;
+- `staminaRestoredTo` equals current Stamina and the deterministic Normal Stamina restoration formula for the retained maximum and preexisting result;
+- `mpPreservedAt` equals current MP and remains within the retained maximum;
+- current HP, Stamina, and MP are finite integers within valid bounds;
+- exactly one original `normal_defeat` ledger entry has the same receipt id, source mutation, no supersession, and `acceptedAtTick === resolvedTick`;
+- exactly one matching receipt, Chronicle entry, and notification exists;
+- no retained correction or supersession entry already exists for a pending receipt.
 
 Corrupt any one resource fact, tick fact, ledger tick, identity, posture, receipt count, Chronicle count, notification count, or correction fact and prove rejection occurs before cloning or effects.
+
+Do not invent unavailable pre-defeat facts. Validate only facts deterministically derivable from the retained snapshot, receipt, ledger, and accepted Normal formulas. If one required invariant cannot be established without changing a shared contract or save format, stop and install a narrower contract decision instead of weakening validation.
 
 ## Required Tests
 
 Extend the focused persistence suite with executable coverage for:
 
-- initial valid explicit/current/campaign-start destinations;
-- initial blank, padded, unknown, known-false, ruin, wilderness, duplicate, contradictory, corrupt-current-with-safe-fallback, and corrupt-start cases;
-- proof invalid initial authority creates no time, relocation, receipt, projection, ledger, session, or source-snapshot effect;
-- exact duplicate completion after later mutation;
+### Initial resolution
+
+- valid explicit, current, and campaign-start destinations with correct `destinationSource`;
+- invalid explicit blank, padded, unknown, known-false, ruin, wilderness, duplicate, and contradictory authority rejecting before every side effect;
+- automatic blank, padded, unknown, known-false, ruin, wilderness, duplicate, contradictory, corrupt-current-with-valid-start, and corrupt-start cases producing one exact `recovery_pending` result;
+- automatic absence of current and campaign-start authority producing one exact `recovery_pending` result;
+- proof every automatic invalid/absent case restores HP/Stamina and creates receipt, original ledger, Chronicle, and notification exactly once while applying zero recovery ticks and zero relocation;
+- proof the input snapshot remains byte-equivalent after both rejected explicit and automatically resolved cases;
+- duplicate source-mutation replay returning the retained initial result without repeating any effect.
+
+### Durable duplicate completion
+
+- exact duplicate completion after a later accepted mutation;
 - exact duplicate completion after explicit save/reload using stable receipt identity;
 - reversed completed-receipt and ledger ordering;
 - multiple historical repaired defeats without first/latest selection;
-- missing, unknown, and conflicting replay identity/destination/provenance;
-- corrupted HP, Stamina, MP, source tick, resolved tick, original ledger tick, identity, posture, Chronicle, notification, and correction evidence;
+- missing, unknown, duplicate, and conflicting replay identity, destination, campaign identity, original entry, and correction entry;
+- byte-stable current snapshot/control, session revision, clock, resources, location, projections, and ledger on duplicate replay.
+
+### Original provenance and preservation
+
+- corrupted HP, Stamina, MP, source tick, resolved tick, snapshot clock, captured tick, original ledger tick, identity, posture, Chronicle, notification, and correction evidence;
 - one valid pending completion still performs exactly one four-tick relocation, receipt update, Chronicle update, notification update, correction append, and session revision;
 - pending ordinary mutation, publication, manual save, quick-save, and retirement blocking;
 - production `App.tsx` caller and explicit-save-after-repair roundtrip;
-- all existing new-campaign retry, restart, slot-collision, account-consumer, migration, control, and terminal behavior.
+- all existing new-campaign retry, restart, slot-collision, account-consumer, migration, control, immutable-address, and terminal behavior.
 
 ## Authorized Surface
 
