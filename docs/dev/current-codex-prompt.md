@@ -26,9 +26,11 @@ Preserve every accepted `0.6.9.2` through `0.6.9.5` boundary. Do not implement t
 
 ## Required Reading
 
-Read:
+Read the complete current versions of:
 
 - `AGENTS.md`;
+- `docs/dev/repository-first-agent-work-protocol.md`;
+- `docs/dev/repository-wide-review-2026-07-31.md`;
 - `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
 - `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
@@ -42,6 +44,31 @@ Read:
 - current handoff, historical/deferred register, planning reconciliation, branch policy, and branch register;
 - the protected integrated-gameplay readiness branch through read-only Git inspection only.
 
+## Required Evidence Input
+
+During the mandatory live branch and pull-request inventory, inspect draft PR #3:
+
+`Evidence only: associate 0.6.9.7 repair bundle with active Codex route`
+
+Required identity at prompt installation:
+
+- PR: `#3`;
+- branch: `parallel/0.6.9.7-repair-bundle`;
+- branch head: `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`;
+- source base: `b6422118567a79a23be3377f035dd3a6905d4d8b`;
+- repository path: `docs/dev/repair-bundles/version-0.6.9.7/`;
+- reconstructed ZIP SHA-256: `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`.
+
+Handling requirements:
+
+1. Resolve the live PR and branch identities after fetch/prune and report any drift from the installed identities above.
+2. Read the branch README before reconstructing the bundle and verify the reconstructed ZIP hash before inspection.
+3. Treat the candidate source replacements, probes, matrices, and report as evidence only.
+4. Independently reproduce all three findings against untouched live source before applying any candidate change.
+5. Compare every candidate change against current `master`, current contracts, current callers, and current tests; do not assume the source-base snapshot is still authoritative.
+6. Do not merge, cherry-pick, rebase, force-update, or close PR #3 or its branch as part of implementation. Its divergence from current `master` is intentional evidence posture, not a request to make it merge-ready.
+7. Implement only independently reviewed changes in the synchronized repository worktree and leave the evidence branch under `HOLD_NAMED_CONSUMER` until the active implementation and its independent successor audit complete.
+
 ## Applicable Verification Guardrails
 
 Apply and report `FP-001` through `FP-010`. Apply `FP-007` when rewriting the large current output or prompt and verify each complete replacement after writing.
@@ -49,11 +76,12 @@ Apply and report `FP-001` through `FP-010`. Apply `FP-007` when rewriting the la
 ## Execution Gate
 
 1. Verify clean synchronized `master`, upstream, current head, and this exact prompt.
-2. Fetch/prune and refresh every branch and open PR disposition.
-3. Reproduce all three findings against untouched source before editing.
-4. Distinguish inspected base, implementation starting head, final committed head, and live post-fetch head.
-5. Stop and install a narrower support prompt if the required repair would change shared types, save format, dependencies, or unrelated owners.
-6. Preserve the accepted distinction between a rejected explicit authority claim and an automatically resolved `recovery_pending` defeat. Do not erase retained defeat truth merely because automatic destination authority is invalid.
+2. Fetch/prune and refresh every branch and open PR disposition, including draft PR #3 and its evidence-only branch.
+3. Complete the whole-repository orientation required by `docs/dev/repository-first-agent-work-protocol.md` before narrowing to the edit surface.
+4. Reproduce all three findings against untouched source before editing.
+5. Distinguish inspected base, implementation starting head, final committed head, and live post-fetch head.
+6. Stop and install a narrower support prompt if the required repair would change shared types, save format, dependencies, or unrelated owners.
+7. Preserve the accepted distinction between a rejected explicit authority claim and an automatically resolved `recovery_pending` defeat. Do not erase retained defeat truth merely because automatic destination authority is invalid.
 
 ## Finding 1 - Initial Automatic Destination Authority
 
@@ -229,6 +257,7 @@ Do not:
 - add a generic workflow, transaction, replay, event, command, correction, or effect framework;
 - merge, modify, rebase, force-update, or delete protected branches;
 - merge or close PR #2;
+- merge, cherry-pick, rebase, force-update, or close PR #3 or `parallel/0.6.9.7-repair-bundle` during implementation;
 - perform unrelated cleanup.
 
 ## Completion Report
@@ -238,6 +267,7 @@ Report:
 - pre-edit reproduction for all three findings;
 - numbered finding-to-code-to-test matrix;
 - failure-boundary and receipt/provenance/effect matrices;
+- PR #3 evidence identity, hash verification, candidate reconciliation, and retained disposition;
 - applicable guardrail IDs and evidence;
 - exact commands and counts;
 - TypeScript posture;
