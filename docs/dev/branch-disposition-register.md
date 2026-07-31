@@ -6,11 +6,45 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
-## 0. Version 0.6.9.6 Live Refresh
+## 0. Repository Coordination Refresh After PR #3
+
+A connector-side repository review and coordination repair inspected live `master` immediately before this register write at:
+
+`bd9222ae189f13ec1b769b5fb0ddae686c86af4f` — `docs(handoff): refresh repository evidence posture`
+
+Live inventory at that snapshot:
+
+- total branches: nineteen;
+- default branch: `master`;
+- non-default remote branches: eighteen;
+- open pull requests: two;
+- PR #2: open, non-draft, non-mergeable, head `e78dc645cfb658685be12f45f46d34b7c0da1119`;
+- PR #3: open, draft, non-mergeable after current `master` advanced, head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`;
+- `feat/main-menu-assets`: `715 / 0`;
+- `main-menu-asset-contract-pass`: `643 / 10`, four changed paths;
+- `main-menu-refinement-pass`: `650 / 2`, two changed paths;
+- the eight `bcbe658d` one-document branches: `49 / 1` each;
+- the four `3006c968` one-document branches: `51 / 1` each;
+- `parallel/prompt-packaging-integrity-audit`: `78 / 1`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `131 / 2`;
+- `parallel/0.6.9.7-repair-bundle`: `9 / 7`, merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`, seven evidence-only files under `docs/dev/repair-bundles/version-0.6.9.7/`.
+
+Counts are `master-only / branch-only` at the inspected pre-write snapshot. This register commit itself advances `master`, so all future action must resolve live counts again rather than treating this snapshot as merge or deletion authority.
+
+Disposition result:
+
+- PR #3 and `parallel/0.6.9.7-repair-bundle` are `HOLD_NAMED_CONSUMER` for `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` and its independent successor audit;
+- the bundle branch is intentionally allowed to diverge and must not be merged, cherry-picked, rebased, force-updated, or closed as implementation;
+- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE`;
+- the twelve one-document audit branches remain `CANDIDATE_INTEGRATION` at their named triggers;
+- both protected references remain read-only;
+- no integration, branch deletion, rebase, force update, or PR closure was due during this coordination repair.
+
+## 0A. Version 0.6.9.6 Historical Live Refresh
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` fetched and pruned all refs from synchronized audit starting head `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`.
 
-Live result:
+Historical result at that audit:
 
 - local branches: only synchronized `master`;
 - non-default remote branches: seventeen;
@@ -23,7 +57,7 @@ Live result:
 - `parallel/prompt-packaging-integrity-audit`: `73 / 1`, one prompt-packaging document;
 - `prep/integrated-gameplay-0-7-readiness-audit`: `126 / 2`, the two protected readiness documents.
 
-The merge bases, unique heads, and paths remain those recorded in the tables below. Fresh semantic review found no branch overlapping the initial-defeat destination, restart-duplicate, or original-effect-provenance findings. No disposition changed, no integration or deletion was due, and both protected branches remained read-only. Review triggers and retirement rules below remain controlling.
+The merge bases, unique heads, and paths remain those recorded in the tables below. That audit found no branch overlapping the initial-defeat destination, restart-duplicate, or original-effect-provenance findings. No disposition changed, no integration or deletion was due, and both protected branches remained read-only.
 
 ## 1. Complete Inventory Snapshot
 
@@ -86,9 +120,10 @@ These branches are not implementation authority merely because they are low-conf
 
 | PR / branch | Live finding at inspected snapshot | Disposition | Required action |
 | --- | --- | --- | --- |
-| PR #2 — `main-menu-asset-contract-pass` | open; GitHub reported non-mergeable; branch head `e78dc64`; ten unique commits; merge base `9a107a7`; `615 / 10`; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | inspect at the launcher-asset trigger, preserve useful evidence through current-head re-authoring, then close/delete only after proof |
-| PR #1 — `main-menu-refinement-pass` | merged and closed historically; remote branch head `986d635`; merge base `d03846e`; `622 / 2`; two commits are not directly reachable and require equivalent-patch review | `MERGED_RETIRE` pending equivalence proof | verify accepted changes are equivalently present on `master`; delete and prune only after the two-commit diff and linked PR state prove no unique value remains |
-| `feat/main-menu-assets` | remote head `b42d36f`; merge base is its head; `687 / 0`; fully reachable from the inspected base; no open PR found | `MERGED_RETIRE` | retire during the next dedicated branch-hygiene or launcher integration pass after exact-ref recheck; no deletion inside the active save repair |
+| PR #3 — `parallel/0.6.9.7-repair-bundle` | open draft; head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; source base and merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`; seven unique evidence files; `9 / 7` at the latest pre-write snapshot; reconstructed ZIP SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe` | `HOLD_NAMED_CONSUMER` | active `0.6.9.7` must inspect, reconstruct, verify, reproduce, and independently reconcile; do not merge, cherry-pick, rebase, force-update, or close; review retirement only after `0.6.9.7` and its independent acceptance audit complete |
+| PR #2 — `main-menu-asset-contract-pass` | open; head `e78dc64`; ten unique commits; merge base `9a107a7`; launcher-only; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | inspect at the launcher-asset trigger, preserve useful evidence through current-head re-authoring, then close/delete only after proof |
+| PR #1 — `main-menu-refinement-pass` | merged and closed historically; remote branch head `986d635`; merge base `d03846e`; two commits are not directly reachable and require equivalent-patch review | `MERGED_RETIRE` pending equivalence proof | verify accepted changes are equivalently present on `master`; delete and prune only after the two-commit diff and linked PR state prove no unique value remains |
+| `feat/main-menu-assets` | remote head `b42d36f`; merge base is its head; fully reachable from the inspected base; no open PR found | `MERGED_RETIRE` | retire during the next dedicated branch-hygiene or launcher integration pass after exact-ref recheck; no deletion inside the active save repair |
 
 ## 5. Current Active Route Interaction
 
@@ -96,15 +131,19 @@ Active route:
 
 `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
-Branch handling during that route should be limited to:
+Branch handling during that route is limited to:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
+- required evidence inspection of PR #3 and `parallel/0.6.9.7-repair-bundle`;
+- bundle reconstruction and SHA-256 verification before candidate inspection;
+- independent reproduction of all three findings against untouched current source;
+- semantic reconciliation of candidate source replacements, probes, and matrices against current `master`;
 - identifying overlap with the completed new-campaign attempt, slot-level publication recovery, account consumer idempotency, campaign session mutation admission, and bounded pending recovery completion repair;
-- integrating only a branch whose exact contents are directly required and whose validation fits the active parent-specific implementation scope;
+- integrating only independently reviewed changes authored in the normal repository worktree and validated under the active prompt;
 - otherwise preserving candidate branches for their named triggers.
 
-No listed connector audit branch implements or supersedes the three `0.6.9.6` findings. No candidate integration is due inside the repair unless fresh live evidence proves otherwise.
+No one-document connector audit branch implements or supersedes the three `0.6.9.6` findings. PR #3 is evidence only and must not become implementation through branch integration. No candidate integration, branch deletion, or PR closure is due inside the repair unless fresh live evidence changes the controlling disposition.
 
 The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this repair.
 
@@ -117,6 +156,7 @@ The next Codex completion report must include:
 - open PR inventory;
 - refreshed ahead/behind and merge-base facts for every branch in this register;
 - any newly discovered branches;
+- PR #3 live head, source/merge base, reconstructed bundle hash, candidate reconciliation, and retained disposition;
 - disposition changes;
 - exact merge, cherry-pick, rebase, closure, or deletion actions performed;
 - validation for each integration;
