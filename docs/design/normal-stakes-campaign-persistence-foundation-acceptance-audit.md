@@ -14,7 +14,7 @@ Current status: `IMPLEMENTED_PENDING_0.6.9.4_AUDIT`
 
 The `0.6.9` parent is not accepted.
 
-`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is now implemented with reported local evidence of 23/23 focused persistence tests, 130/130 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed production files. The implementation adds a durable production new-campaign attempt coordinator, account-and-slot recovery collision authority, and a reachable validated exactly-once pending-defeat repair owner.
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is implemented at `13b79279d07f6e1d06bf44b5b6ddba011694d57c` with reported local evidence of 23/23 focused persistence tests, 130/130 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed production files. The implementation adds a durable production new-campaign attempt coordinator, account-and-slot recovery collision authority, and a reachable validated exactly-once pending-defeat repair owner.
 
 This evidence does not accept the parent. Independent acceptance is assigned to:
 
@@ -24,19 +24,23 @@ This evidence does not accept the parent. Independent acceptance is assigned to:
 
 Later inspection of the real launcher and recovery flow found three additional parent-specific authority failures:
 
-1. the real new-campaign retry regenerates character, campaign, and continuity identities after a post-head address failure;
-2. a retained recovery can replace a newer valid same-slot address, while multiple same-slot recoveries have no accepted ordering authority;
-3. the blocked recovery posture has no production-reachable, authority-valid completion owner.
+1. the real new-campaign retry regenerated character, campaign, and continuity identities after a post-head address failure;
+2. a retained recovery could replace a newer valid same-slot address, while multiple same-slot recoveries had no accepted ordering authority;
+3. the blocked recovery posture had no production-reachable, authority-valid completion owner.
 
 The controlling post-repair audit is:
 
 `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`
 
-The exact next repair is:
+The completed support implementation is:
 
 `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
 
-The Ashen Reef survey receipt decision remains blocked until this repair is implemented and independently accepted.
+The active independent route is:
+
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
+
+The Ashen Reef survey receipt decision remains blocked until `0.6.9.4` independently accepts the parent.
 
 ## Accepted `0.6.9.2` Evidence To Preserve
 
@@ -69,28 +73,30 @@ The six original findings remain historical evidence:
 5. pending recovery did not block ordinary mutation and publication;
 6. duplicate mutation delivery did not return the retained accepted result.
 
-`0.6.9.2` added bounded repairs for each item. The new findings are application-level retry, same-slot collision, and reachable validated completion gaps.
+`0.6.9.2` added bounded repairs for each item. The later findings are application-level retry, same-slot collision, and reachable validated completion gaps.
 
-## Post-Repair Finding 1: New-Campaign Retry Regenerates Authority
+## Post-Repair Finding 1: New-Campaign Retry Regenerated Authority
 
-The low-level recovery test retries `publishSave(...)` with the same prepared snapshot. The actual character-creation handler creates a new target snapshot on every user submission.
+The low-level recovery test retried `publishSave(...)` with the same prepared snapshot. The actual character-creation handler created a new target snapshot on every user submission.
 
-A new snapshot creates new character, campaign, and continuity identities. When address projection fails after head verification, the handler receives no returned publication and retains no prepared retry state. A second submission can create a second campaign rather than recover the first.
+A new snapshot created new character, campaign, and continuity identities. When address projection failed after head verification, the handler received no returned publication and retained no prepared retry state. A second submission could create a second campaign rather than recover the first.
 
-Required repair:
+Required closure:
 
 - one stable new-campaign attempt identity;
 - retained normalized inputs, prepared snapshot, identities, target slot, consumer plans, and fingerprints;
 - retry and restart reuse of the exact hidden verified publication;
 - conflicting attempt reuse fails closed.
 
+`0.6.9.3` reports this closure; `0.6.9.4` must reproduce it independently.
+
 ## Post-Repair Finding 2: Same-Slot Recovery Collision
 
-Recovery records retain target slot ids and startup repair reprojects retained envelopes. An older hidden recovery can replace a newer valid address in the same slot.
+Recovery records retain target slot ids and startup repair reprojects retained envelopes. An older hidden recovery could replace a newer valid address in the same slot.
 
 Multiple recoveries targeting one slot must not be resolved by storage enumeration order.
 
-Required repair:
+Required closure:
 
 - account-and-slot recovery inspection before new publication;
 - compatible recovery resume;
@@ -98,13 +104,15 @@ Required repair:
 - deterministic quarantine or explicit bounded resolution for multiple recoveries;
 - newer valid address preservation unless exact equivalence or accepted supersession evidence exists.
 
-## Post-Repair Finding 3: Pending Recovery Completion Is Not Reachable
+`0.6.9.3` reports this closure; `0.6.9.4` must reproduce it independently.
 
-The engine exposes a bounded recovery mutation, but the production application only uses the pending check to block ordinary actions. It does not call the repair mutation.
+## Post-Repair Finding 3: Pending Recovery Completion Was Not Reachable
 
-The helper accepts any nonempty destination id instead of validating a known safe destination from authoritative world facts.
+The engine exposed a bounded recovery mutation, but the production application only used the pending check to block ordinary actions. It did not call the repair mutation.
 
-Required repair:
+The helper accepted any nonempty destination id instead of validating a known safe destination from authoritative world facts.
+
+Required closure:
 
 - one bounded production-reachable completion owner;
 - authoritative destination derivation or validation;
@@ -113,9 +121,23 @@ Required repair:
 - clear shell state and diagnostic;
 - duplicate completion returns the retained result.
 
-## Required `0.6.9.3` Evidence
+`0.6.9.3` reports this closure; `0.6.9.4` must reproduce it independently.
 
-Add executable coverage for:
+## Post-Commit Audit Targets For `0.6.9.4`
+
+Connector inspection of the committed implementation identified three additional boundaries requiring explicit independent evidence before acceptance:
+
+1. more than one pending defeat receipt must fail closed rather than selecting the first receipt by array order;
+2. a malformed or non-settlement current-location `settlementId` must not become safe recovery authority merely because it is nonempty;
+3. recovery completion must have an exactly-once accepted provenance trail, including the retained receipt and the authority ledger or accepted correction mechanism.
+
+The audit must also prove HP, Stamina, recovery ticks, relocation, Chronicle, notification, and session revision occur exactly once across initial pending resolution plus completion.
+
+These targets remain audit questions until executable evidence decides them. Any violation requires the smallest exact `0.6.9.5` repair; it must not be waived to advance the survey route.
+
+## Required `0.6.9.4` Evidence
+
+Add or execute independent coverage for:
 
 - the actual character-creation handler or extracted production coordinator under injected post-head address failure;
 - retry and restart reusing the original character, campaign, continuity, artifact, publication, slot, and consumer plan;
@@ -124,16 +146,19 @@ Add executable coverage for:
 - multiple same-slot recoveries with deterministic fail-closed behavior independent of storage iteration order;
 - compatible and incompatible pending recovery classification;
 - production-reachable pending recovery completion using validated destination evidence;
-- unknown or unsafe destination rejection;
+- unknown, unsafe, malformed, and conflicting destination rejection, including malformed current-location settlement authority;
+- multiple pending defeat receipts failing closed;
+- repair provenance and ledger/correction evidence exactly once;
+- all resource, time, relocation, projection, and session effects exactly once across pending resolution and completion;
 - duplicate completion replay and conflicting evidence;
-- preservation of every existing `0.6.9.2` test and build gate.
+- preservation of every existing `0.6.9.2` and `0.6.9.3` test and build gate.
 
 ## Branch And PR Review
 
-The latest completed repair reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
+The completed `0.6.9.3` run reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
 
-`0.6.9.3` must refresh these facts after fetch/prune and report all integration, closure, and retirement decisions.
+`0.6.9.4` must refresh these facts after fetch/prune and report all integration, closure, and retirement decisions.
 
 ## Next Run
 
-`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
