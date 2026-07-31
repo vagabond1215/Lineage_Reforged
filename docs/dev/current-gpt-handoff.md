@@ -5,17 +5,17 @@ Date: 2026-07-30
 ## Status
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support implementation: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
+- Latest completed support implementation: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
 - Dependency-closure result: `PACKAGE_READY`.
-- Parent `0.6.9` status: `REPAIR_REQUIRED` after connector post-repair inspection.
-- Active route: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
+- Parent `0.6.9` status: `IMPLEMENTED_PENDING_0.6.9.4_AUDIT`.
+- Active route: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`.
 - Active-route class: parent-specific support suffix.
-- Mandatory green successor: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`.
+- Mandatory green successor: the unversioned Ashen Reef survey occurrence/result/consequence receipt foundation decision, only if `0.6.9.4` accepts the parent.
 - The Ashen Reef survey occurrence/result/consequence receipt decision is blocked until the independent `0.6.9.4` audit accepts the parent.
 - The durable failure-pattern register is active and the current prompt identifies the exact applicable pattern IDs.
 
@@ -54,19 +54,19 @@ Repository workflow constraints also apply:
 
 Reported validation was 20/20 focused persistence tests, 127/127 prescribed tests, and a passing 207-module RPG UI build.
 
-Parent acceptance is withdrawn because three real application boundaries remain open.
+`0.6.9.3` reports implementation closure for the three real application boundaries, but parent acceptance remains deferred to independent `0.6.9.4`.
 
 ### New-campaign retry identity
 
-The real character-creation handler regenerates character, campaign, and continuity ids on each click. If the first campaign head verifies but address projection fails, the handler does not retain the original prepared snapshot or publication. A second click can create campaign B instead of recovering hidden campaign A.
+The real character-creation handler now uses a durable account-and-slot attempt coordinator that retains normalized input, the prepared snapshot, identities, consumer plans, and attempt correlation across retry and restart.
 
 ### Same-slot recovery collision
 
-Startup recovery can later project hidden campaign A back into the same slot and overwrite campaign B's valid address. Multiple recoveries for one slot currently lack deterministic conflict authority.
+Startup recovery now inspects at account-and-slot scope, preserves a different verified address, admits only proven same-campaign forward supersession, and deterministically rejects multiple contenders.
 
 ### Pending-defeat completion
 
-`recovery_pending` blocks ordinary play, saving, and retirement, but no production application path completes the repair. The engine helper accepts any nonempty destination rather than validating a safe destination from authoritative world facts.
+The launcher now calls a campaign-admitted exactly-once repair owner. Recovery destinations must be authoritative current, campaign-start, or known settlement facts; invalid locations remain blocked.
 
 The controlling audit is:
 
@@ -143,25 +143,20 @@ Twelve one-document audit branches are registered as `CANDIDATE_INTEGRATION`. Re
 
 PR #2 / `main-menu-asset-contract-pass` remains `SUPERSEDED_PRESERVE_EVIDENCE` and must not be merged as-is. PR #1 is historically merged and should be verified for branch retirement.
 
-No registered branch implements the required `0.6.9.3` repair.
+No registered branch contributed to or overlaps the completed `0.6.9.3` repair.
 
-## Active Repair Guardrails
+## Active Acceptance-Audit Guardrails
 
-Run `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
+Run `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`.
 
-- Reproduce the actual character-creation retry, not only direct repeated save-manager calls.
-- Establish one stable new-campaign attempt and reuse original identities and consumer plans after a post-head failure.
-- Inspect pending recoveries by account and slot before creating a new campaign.
-- Preserve newer valid addresses and fail closed on ambiguous same-slot recovery collisions.
-- Keep preparation, inheritance, active history, achievements, and account value exactly once.
-- Add one production-reachable pending-defeat completion owner with validated safe-destination authority.
-- Exercise rerender or caller-state loss, restart, repeated submission, and competing recovery order.
-- Produce finding-to-test and failure-boundary matrices.
-- Preserve every accepted `0.6.9.2` repair and existing green test/build gate.
-- Report applicable failure-pattern IDs and evidence.
-- Do not accept the parent in the implementation run.
+- Independently reproduce the actual application caller, pre-head and post-head failures, caller-state loss, restart, and changed-input rejection.
+- Independently reproduce compatible, incompatible, newer-address, and reordered multiple-contender slot recovery.
+- Prove preparation, inheritance, active history, achievements, and account value remain exactly once.
+- Exercise the launcher-reachable pending-defeat completion owner with valid, malformed, unknown, unsafe, conflicting, and duplicate inputs.
+- Produce fresh finding-to-test and failure-boundary matrices.
+- Preserve every accepted `0.6.9.2` repair and report `FP-001` through `FP-006`, `FP-008` through `FP-010`.
+- Accept the parent only from fresh complete evidence; otherwise install the smallest exact `0.6.9.5` repair.
 - Do not implement survey behavior or the survey receipt decision.
-- Do not build generic workflow, transaction, retry, or replay frameworks.
 
 ## Preserved Boundaries
 
@@ -172,18 +167,17 @@ Run `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-
 - Static lethal-process definitions remain separate from mutable health.
 - Protected branches remain unmerged and untouched except for required read-only inspection.
 - Weighted combat tactics AI remains separate from any future ordered-gambit authority.
-- Workspace typecheck remains a separate known-failing 173-diagnostic audit.
+- Workspace typecheck remains a separate known-failing 137-diagnostic audit.
 
 ## Near-Term Sequence
 
-1. implement `Version 0.6.9.3` and report `IMPLEMENTED_PENDING_PARENT_AUDIT` when green;
-2. run `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
-3. only after that independent audit accepts the parent, run the unversioned survey occurrence/result/consequence receipt foundation decision;
-4. implement only a dependency-closed receipt package selected by that decision;
-5. implement the bounded survey command and accepted-only UI after receipt prerequisites close;
-6. review and integrate candidate documentation branches at named triggers or through a dedicated branch-integration pass;
-7. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
+1. run `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
+2. only after that independent audit accepts the parent, run the unversioned survey occurrence/result/consequence receipt foundation decision;
+3. implement only a dependency-closed receipt package selected by that decision;
+4. implement the bounded survey command and accepted-only UI after receipt prerequisites close;
+5. review and integrate candidate documentation branches at named triggers or through a dedicated branch-integration pass;
+6. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`

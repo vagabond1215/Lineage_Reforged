@@ -101,6 +101,7 @@ type StoredPublicationRecovery = {
   status: "artifact_verified" | "head_verified" | "address_verified";
   consumerPlans: CampaignPublicationConsumerPlan[];
   completedConsumerKinds: CampaignPublicationConsumerKind[];
+  newCampaignAttemptId?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -150,7 +151,37 @@ export type PendingCampaignPublicationRecovery = {
   terminal: boolean;
   snapshot: SaveSnapshot;
   consumerPlans: CampaignPublicationConsumerPlan[];
+  newCampaignAttemptId: string | null;
 };
+
+export type CampaignPublicationSlotRecoveryPosture =
+  | {
+      kind: "none";
+      slotId: SaveSlotId;
+    }
+  | {
+      kind: "compatible";
+      slotId: SaveSlotId;
+      campaignId: string;
+      publicationId: string;
+      newCampaignAttemptId: string;
+      terminal: boolean;
+    }
+  | {
+      kind: "incompatible";
+      slotId: SaveSlotId;
+      campaignId: string;
+      publicationId: string;
+      newCampaignAttemptId: string | null;
+      terminal: boolean;
+      reason: string;
+    }
+  | {
+      kind: "multiple";
+      slotId: SaveSlotId;
+      campaignIds: string[];
+      reason: string;
+    };
 
 const STORAGE_PREFIX = "cataclysm-rpg-ui.saves.v7";
 const LEGACY_STORAGE_PREFIX = "cataclysm-rpg-ui.saves.v6";
@@ -534,6 +565,8 @@ function isStoredPublicationRecovery(
     ) &&
     Array.isArray(value.completedConsumerKinds) &&
     value.completedConsumerKinds.every(isCampaignPublicationConsumerKind) &&
+    (value.newCampaignAttemptId === undefined ||
+      typeof value.newCampaignAttemptId === "string") &&
     typeof value.createdAt === "string" &&
     typeof value.updatedAt === "string"
   );
@@ -1006,9 +1039,58 @@ function recoverPublicationAddress(
     );
   }
 
+  const addressKey = getStorageKey(recovery.accountId, recovery.slotId);
+  const currentRaw = storage.getItem(addressKey);
+  if (currentRaw && currentRaw !== recovery.envelopeRaw) {
+    let current: unknown = null;
+    try {
+      current = JSON.parse(currentRaw);
+    } catch {
+      throw new Error(
+        `Save slot '${recovery.slotId}' contains malformed address data; publication recovery cannot overwrite it.`
+      );
+    }
+
+    if (isStoredSaveEnvelope(current)) {
+      const sameAuthority =
+        current.campaignId === recovery.campaignId &&
+        current.artifactId === recovery.artifactId &&
+        current.publicationId === recovery.publicationId;
+      const acceptedSupersession =
+        current.campaignId === recovery.campaignId &&
+        current.headRevision < recovery.headRevision &&
+        control.headArtifactId === recovery.artifactId &&
+        control.headPublicationId === recovery.publicationId;
+      const currentVerified = readVerifiedArtifactForAddress(
+        storage,
+        recovery.accountId,
+        current
+      );
+      if (!sameAuthority && !acceptedSupersession && currentVerified) {
+        throw new Error(
+          `Save slot '${recovery.slotId}' contains a different verified publication; retained recovery cannot replace it.`
+        );
+      }
+      if (
+        !sameAuthority &&
+        !acceptedSupersession &&
+        (current.campaignId !== recovery.campaignId ||
+          current.artifactId !== recovery.artifactId)
+      ) {
+        throw new Error(
+          `Save slot '${recovery.slotId}' contains incompatible address authority; retained recovery cannot replace it.`
+        );
+      }
+    } else {
+      throw new Error(
+        `Save slot '${recovery.slotId}' contains invalid address data; publication recovery cannot overwrite it.`
+      );
+    }
+  }
+
   writeAndVerify(
     storage,
-    getStorageKey(recovery.accountId, recovery.slotId),
+    addressKey,
     recovery.envelopeRaw
   );
   const projectedRaw = storage.getItem(
@@ -1076,15 +1158,91 @@ function listStoredPublicationRecoveries(
   return recoveries;
 }
 
+export function inspectCampaignPublicationRecoveryForSlot(
+  accountId: string,
+  slotId: SaveSlotId,
+  expectedNewCampaignAttemptId: string | null = null
+): CampaignPublicationSlotRecoveryPosture {
+  const recoveries = listStoredPublicationRecoveries(accountId)
+    .filter(
+      (recovery) =>
+        recovery.slotId === slotId &&
+        recovery.status !== "artifact_verified"
+    )
+    .sort((left, right) =>
+      `${left.campaignId}\u0000${left.publicationId}`.localeCompare(
+        `${right.campaignId}\u0000${right.publicationId}`
+      )
+    );
+
+  if (recoveries.length === 0) {
+    return { kind: "none", slotId };
+  }
+  if (recoveries.length > 1) {
+    const campaignIds = recoveries.map((recovery) => recovery.campaignId);
+    return {
+      kind: "multiple",
+      slotId,
+      campaignIds,
+      reason:
+        `Save slot '${slotId}' has multiple pending campaign recoveries: ` +
+        campaignIds.join(", ")
+    };
+  }
+
+  const recovery = recoveries[0]!;
+  if (
+    expectedNewCampaignAttemptId &&
+    recovery.newCampaignAttemptId === expectedNewCampaignAttemptId &&
+    !recovery.terminal
+  ) {
+    return {
+      kind: "compatible",
+      slotId,
+      campaignId: recovery.campaignId,
+      publicationId: recovery.publicationId,
+      newCampaignAttemptId: recovery.newCampaignAttemptId,
+      terminal: false
+    };
+  }
+
+  return {
+    kind: "incompatible",
+    slotId,
+    campaignId: recovery.campaignId,
+    publicationId: recovery.publicationId,
+    newCampaignAttemptId: recovery.newCampaignAttemptId ?? null,
+    terminal: recovery.terminal,
+    reason: recovery.terminal
+      ? `Save slot '${slotId}' has retained terminal campaign authority.`
+      : `Save slot '${slotId}' has a pending campaign recovery that does not belong to this new-campaign attempt.`
+  };
+}
+
 export function recoverPendingCampaignPublications(
   accountId: string
 ): PendingCampaignPublicationRecovery[] {
   const storage = getStorage();
   const recovered: PendingCampaignPublicationRecovery[] = [];
-  for (const stored of listStoredPublicationRecoveries(accountId)) {
-    if (stored.status === "artifact_verified") {
-      continue;
+  const pending = listStoredPublicationRecoveries(accountId).filter(
+    (stored) => stored.status !== "artifact_verified"
+  );
+  const slotIds = [...new Set(pending.map((stored) => stored.slotId))].sort();
+  for (const slotId of slotIds) {
+    const contenders = pending
+      .filter((stored) => stored.slotId === slotId)
+      .sort((left, right) =>
+        `${left.campaignId}\u0000${left.publicationId}`.localeCompare(
+          `${right.campaignId}\u0000${right.publicationId}`
+        )
+      );
+    if (contenders.length > 1) {
+      throw new Error(
+        `Save slot '${slotId}' has multiple pending campaign recoveries: ` +
+          contenders.map((entry) => entry.campaignId).join(", ")
+      );
     }
+    const stored = contenders[0]!;
     const recovery = recoverPublicationAddress(storage, stored);
     const envelope = readRecoveryEnvelope(recovery);
     const verified = readVerifiedArtifactForAddress(
@@ -1106,7 +1264,8 @@ export function recoverPendingCampaignPublications(
       slotId: recovery.slotId,
       terminal: recovery.terminal,
       snapshot: migrateSnapshotForEcho(verified.snapshot),
-      consumerPlans
+      consumerPlans,
+      newCampaignAttemptId: recovery.newCampaignAttemptId ?? null
     });
     if (consumerPlans.length === 0) {
       storage.removeItem(
@@ -1617,6 +1776,7 @@ export function publishSave(
     sessionControl?: CampaignSessionControl;
     terminal?: boolean;
     consumerPlans?: CampaignPublicationConsumerPlan[];
+    newCampaignAttemptId?: string;
   } = {}
 ): PublishedCampaignSave {
   if (!isTargetCampaignSnapshot(snapshot)) {
@@ -1677,6 +1837,8 @@ export function publishSave(
         serializeSnapshot(requestedSnapshot) ||
       (consumerPlans.length > 0 &&
         requestedPlans !== retainedPlans) ||
+      pendingRecovery.newCampaignAttemptId !==
+        options.newCampaignAttemptId ||
       !sessionMatchesPriorHead
     ) {
       throw new Error(
@@ -1842,6 +2004,9 @@ export function publishSave(
     status: "artifact_verified",
     consumerPlans,
     completedConsumerKinds: [],
+    ...(options.newCampaignAttemptId
+      ? { newCampaignAttemptId: options.newCampaignAttemptId }
+      : {}),
     createdAt: savedAt,
     updatedAt: savedAt
   };

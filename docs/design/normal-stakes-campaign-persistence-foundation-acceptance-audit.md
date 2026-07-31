@@ -8,11 +8,17 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `REPAIR_REQUIRED_AFTER_0.6.9.2`
+Current status: `IMPLEMENTED_PENDING_0.6.9.4_AUDIT`
 
 ## Decision
 
 The `0.6.9` parent is not accepted.
+
+`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is now implemented with reported local evidence of 23/23 focused persistence tests, 130/130 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed production files. The implementation adds a durable production new-campaign attempt coordinator, account-and-slot recovery collision authority, and a reachable validated exactly-once pending-defeat repair owner.
+
+This evidence does not accept the parent. Independent acceptance is assigned to:
+
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
 
 `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` repaired the six findings recorded by `0.6.9.1` and added immutable playable-address verification. Its reported focused persistence suite passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes.
 

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
   admitCampaignMutation,
+  completePendingNormalDefeatRecovery,
   createCampaignSessionControl,
   createDefaultAccountProfileState,
   evaluateAchievementProgress,
@@ -23,10 +24,28 @@ import {
   buildSaveMetadata,
   completeCampaignPublicationConsumers,
   deleteSave,
+  inspectCampaignPublicationRecoveryForSlot,
   loadSaveWithAuthority,
   publishSave,
   recoverPendingCampaignPublications
 } from "../../apps/rpg-ui/src/game-shell/saveManager.ts";
+import {
+  completeNewCampaignAttempt,
+  prepareNewCampaignAttempt
+} from "../../apps/rpg-ui/src/game-shell/newCampaignAttemptCoordinator.ts";
+import {
+  createDefaultCharacterCreationFormState
+} from "../../apps/rpg-ui/src/game-shell/characterCreationForm.ts";
+import {
+  createDefaultStartingBundleChoiceSelections,
+  getLineageIdentityCatalog
+} from "../../apps/rpg-ui/src/game-shell/characterCreationCatalog.ts";
+import {
+  createNewGameSnapshot
+} from "../../apps/rpg-ui/src/game-shell/newGameSnapshot.ts";
+import {
+  getDefaultWorldSelection
+} from "../../apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts";
 import {
   archiveActiveRun
 } from "../../apps/rpg-ui/src/game-shell/runLifecycle.ts";
@@ -103,6 +122,28 @@ function createTargetSnapshot(accountId) {
     createLegacySnapshot(accountId),
     { source: "new_campaign" }
   );
+}
+
+function createCompleteCharacterForm(playerName = "Retry Test") {
+  const identity = getLineageIdentityCatalog("lineage.human");
+  assert.ok(identity);
+  const startingBundleId = "starting_bundle.traveler";
+  const backstoryId = "backstory.local";
+  const world = getDefaultWorldSelection(backstoryId);
+  return {
+    ...createDefaultCharacterCreationFormState("slot-1"),
+    playerName,
+    hairColorId: identity.hairColorOptions[0]?.id ?? "",
+    eyeColorId: identity.eyeColorOptions[0]?.id ?? "",
+    skinToneId: identity.skinToneOptions[0]?.id ?? "",
+    startingBundleId,
+    startingBundleChoiceSelections:
+      createDefaultStartingBundleChoiceSelections(startingBundleId),
+    backstoryId,
+    continentId: world.continentId,
+    regionId: world.regionId,
+    startingSettlementId: world.settlementId
+  };
 }
 
 function legacyEnvelope(accountId, slotId, snapshot, savedAt) {
@@ -350,6 +391,32 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
   source.playerState.flags = source.playerState.flags.filter(
     (flag) => !flag.startsWith("player.start.")
   );
+  source.sessionState.knownLocations = [
+    {
+      id: "location.repair_haven",
+      name: "Repair Haven",
+      regionLabel: "Test March",
+      settlementId: "settlement.repair_haven",
+      regionId: "region.test_march",
+      type: "settlement",
+      x: 1,
+      y: 1,
+      note: "Authoritative recovery test settlement.",
+      known: true
+    },
+    {
+      id: "location.unsafe_ruin",
+      name: "Unsafe Ruin",
+      regionLabel: "Test March",
+      settlementId: "settlement.unsafe_ruin",
+      regionId: "region.test_march",
+      type: "ruin",
+      x: 2,
+      y: 2,
+      note: "Not a safe recovery settlement.",
+      known: true
+    }
+  ];
   const control = createCampaignSessionControl({
     accountId: source.accountId,
     campaignId: source.campaignIdentity.campaignId,
@@ -383,17 +450,29 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
   assert.equal(blocked.reason, "recovery_pending");
   assert.equal(blocked.control, admitted.control);
 
-  const repaired = admitCampaignMutation(admitted.control, {
-    mutationId: "mutation.recovery_repair",
-    sourceArtifactId: admitted.control.loadedArtifactId,
-    sourceRevision: admitted.control.sessionRevision,
-    ownerKind: "recovery_repair",
-    accepted: true,
-    sourceSnapshot: admitted.snapshot,
-    proposedSnapshot: admitted.snapshot,
-    explicitRecoveryDestinationId: "settlement.repair_haven",
-    resultId: "result.recovery_repair"
-  });
+  assert.throws(
+    () =>
+      completePendingNormalDefeatRecovery(
+        admitted.control,
+        admitted.snapshot,
+        "settlement.unsafe_ruin"
+      ),
+    /not an authoritative known safe settlement/
+  );
+  assert.throws(
+    () =>
+      completePendingNormalDefeatRecovery(
+        admitted.control,
+        admitted.snapshot,
+        " "
+      ),
+    /malformed/
+  );
+  const repaired = completePendingNormalDefeatRecovery(
+    admitted.control,
+    admitted.snapshot,
+    "settlement.repair_haven"
+  );
   assert.equal(repaired.accepted, true);
   assert.equal(
     repaired.snapshot.normalDefeatReceipts.length,
@@ -415,6 +494,24 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
     repaired.snapshot.clock.tick,
     admitted.snapshot.clock.tick + 4
   );
+
+  const laterSnapshot = structuredClone(repaired.snapshot);
+  laterSnapshot.playerState.currency.copper += 1;
+  const later = mutation(
+    repaired.control,
+    repaired.snapshot,
+    laterSnapshot,
+    "mutation.after_recovery"
+  );
+  const duplicateRepair = completePendingNormalDefeatRecovery(
+    later.control,
+    later.snapshot,
+    "settlement.repair_haven"
+  );
+  assert.equal(duplicateRepair.duplicate, true);
+  assert.equal(duplicateRepair.snapshot, later.snapshot);
+  assert.equal(duplicateRepair.control, later.control);
+  assert.equal(duplicateRepair.resultId, repaired.resultId);
 
   withMockWindow((storage) => {
     const persistedSource = createTargetSnapshot(
@@ -710,6 +807,395 @@ test("post-head address failure retries the exact publication without minting an
         "cataclysm-rpg-ui.saves.v7.account.account.address_recovery.slot.slot-2"
     ) {
       throw new Error("injected post-head address failure");
+    }
+    return raw;
+  });
+});
+
+test("production new-campaign coordinator retains exact authority across retry caller loss and restart", () => {
+  let failAddress = true;
+  withMockWindow((storage) => {
+    const accountId = "account.new_campaign_attempt";
+    const form = createCompleteCharacterForm("Stable Retry");
+    const consumerPlans = [
+      {
+        kind: "active_history",
+        payloadFingerprint: "payload.stable-retry"
+      },
+      {
+        kind: "preparation_consumption",
+        payloadFingerprint: "payload.stable-retry"
+      },
+      {
+        kind: "inheritance_consumption",
+        payloadFingerprint: "payload.stable-retry"
+      }
+    ];
+    let preparationCount = 0;
+    const prepare = () => {
+      preparationCount += 1;
+      return {
+        snapshot: createNewGameSnapshot(form, accountId),
+        consumerPlans
+      };
+    };
+    const first = prepareNewCampaignAttempt({
+      accountId,
+      slotId: "slot-1",
+      normalizedInput: { form, preparation: [] },
+      prepare
+    });
+    const originalIdentity = {
+      attemptId: first.attemptId,
+      characterId: first.snapshot.playerState.playerId,
+      campaignId: first.snapshot.campaignIdentity.campaignId,
+      continuityId: first.snapshot.campaignIdentity.continuityId
+    };
+
+    assert.throws(
+      () =>
+        publishSave(
+          accountId,
+          "slot-1",
+          first.snapshot,
+          buildSaveMetadata("slot-1", first.snapshot),
+          {
+            consumerPlans: first.consumerPlans,
+            newCampaignAttemptId: first.attemptId
+          }
+        ),
+      /injected post-head address failure/
+    );
+    const recoveryKey = Array.from(
+      { length: storage.length },
+      (_, index) => storage.key(index)
+    ).find((key) => key?.endsWith(".publication-recovery"));
+    assert.ok(recoveryKey);
+    const retainedRecovery = JSON.parse(storage.getItem(recoveryKey));
+
+    const compatible = inspectCampaignPublicationRecoveryForSlot(
+      accountId,
+      "slot-1",
+      first.attemptId
+    );
+    assert.equal(compatible.kind, "compatible");
+    assert.equal(
+      inspectCampaignPublicationRecoveryForSlot(
+        accountId,
+        "slot-1",
+        "new_campaign_attempt.conflict"
+      ).kind,
+      "incompatible"
+    );
+
+    const afterCallerLoss = prepareNewCampaignAttempt({
+      accountId,
+      slotId: "slot-1",
+      normalizedInput: { preparation: [], form },
+      prepare
+    });
+    assert.equal(preparationCount, 1);
+    assert.deepEqual(
+      {
+        attemptId: afterCallerLoss.attemptId,
+        characterId: afterCallerLoss.snapshot.playerState.playerId,
+        campaignId: afterCallerLoss.snapshot.campaignIdentity.campaignId,
+        continuityId: afterCallerLoss.snapshot.campaignIdentity.continuityId
+      },
+      originalIdentity
+    );
+    assert.deepEqual(afterCallerLoss.consumerPlans, consumerPlans);
+    assert.throws(
+      () =>
+        prepareNewCampaignAttempt({
+          accountId,
+          slotId: "slot-1",
+          normalizedInput: { form: { ...form, playerName: "Changed" } },
+          prepare
+        }),
+      /different normalized input/
+    );
+
+    failAddress = false;
+    const retried = publishSave(
+      accountId,
+      "slot-1",
+      afterCallerLoss.snapshot,
+      buildSaveMetadata("slot-1", afterCallerLoss.snapshot),
+      {
+        consumerPlans: afterCallerLoss.consumerPlans,
+        newCampaignAttemptId: afterCallerLoss.attemptId
+      }
+    );
+    assert.equal(
+      retried.sessionControl.loadedArtifactId,
+      retainedRecovery.artifactId
+    );
+    assert.equal(
+      retried.publication.publicationId,
+      retainedRecovery.publicationId
+    );
+    assert.equal(retried.slot.id, "slot-1");
+
+    let profile = createDefaultAccountProfileState({ accountId });
+    for (let index = 0; index < 2; index += 1) {
+      profile = evaluateAchievementProgress(
+        retried.snapshot,
+        profile,
+        {
+          slotId: "slot-1",
+          touchHistory: true,
+          recordedAt: retried.publication.publishedAt,
+          suppressLegacyRewards: true
+        }
+      ).nextAccountProfile;
+      for (const plan of consumerPlans) {
+        profile = recordCampaignPublicationConsumer(
+          profile,
+          retried.publication,
+          plan.kind,
+          plan.payloadFingerprint,
+          { status: "applied" }
+        );
+      }
+    }
+    assert.equal(
+      profile.history.runRecords.filter(
+        (record) =>
+          record.characterId === retried.snapshot.playerState.playerId &&
+          record.outcome === "active"
+      ).length,
+      1
+    );
+    assert.equal(
+      profile.campaignPublicationReceipts.filter(
+        (receipt) =>
+          receipt.publicationId === retried.publication.publicationId
+      ).length,
+      consumerPlans.length
+    );
+
+    const afterRestart = prepareNewCampaignAttempt({
+      accountId,
+      slotId: "slot-1",
+      normalizedInput: { form, preparation: [] },
+      prepare
+    });
+    assert.equal(afterRestart.recoveredPublication.publication.publicationId,
+      retainedRecovery.publicationId);
+    assert.equal(preparationCount, 1);
+
+    completeCampaignPublicationConsumers(
+      accountId,
+      retried.publication.publicationId,
+      consumerPlans.map((plan) => plan.kind)
+    );
+    completeNewCampaignAttempt(accountId, "slot-1", first.attemptId);
+  }, (key, raw) => {
+    if (
+      failAddress &&
+      key ===
+        "cataclysm-rpg-ui.saves.v7.account.account.new_campaign_attempt.slot.slot-1"
+    ) {
+      throw new Error("injected post-head address failure");
+    }
+    return raw;
+  });
+});
+
+test("new-campaign attempt retains campaign identity across a pre-head candidate failure", () => {
+  let failCandidate = true;
+  withMockWindow(() => {
+    const accountId = "account.new_campaign_pre_head";
+    const form = createCompleteCharacterForm("Pre-Head Retry");
+    let preparationCount = 0;
+    const params = {
+      accountId,
+      slotId: "slot-1",
+      normalizedInput: { form },
+      prepare: () => {
+        preparationCount += 1;
+        return {
+          snapshot: createNewGameSnapshot(form, accountId),
+          consumerPlans: []
+        };
+      }
+    };
+    const first = prepareNewCampaignAttempt(params);
+    assert.throws(
+      () =>
+        publishSave(
+          accountId,
+          "slot-1",
+          first.snapshot,
+          buildSaveMetadata("slot-1", first.snapshot),
+          { newCampaignAttemptId: first.attemptId }
+        ),
+      /write verification|exact readback|semantic validation/
+    );
+    failCandidate = false;
+    const retriedAttempt = prepareNewCampaignAttempt(params);
+    assert.equal(preparationCount, 1);
+    assert.equal(
+      retriedAttempt.snapshot.campaignIdentity.campaignId,
+      first.snapshot.campaignIdentity.campaignId
+    );
+    assert.equal(
+      retriedAttempt.snapshot.campaignIdentity.continuityId,
+      first.snapshot.campaignIdentity.continuityId
+    );
+    assert.equal(
+      retriedAttempt.snapshot.playerState.playerId,
+      first.snapshot.playerState.playerId
+    );
+    const published = publishSave(
+      accountId,
+      "slot-1",
+      retriedAttempt.snapshot,
+      buildSaveMetadata("slot-1", retriedAttempt.snapshot),
+      { newCampaignAttemptId: retriedAttempt.attemptId }
+    );
+    assert.ok(published.publication);
+    completeNewCampaignAttempt(
+      accountId,
+      "slot-1",
+      retriedAttempt.attemptId
+    );
+  }, (key, raw) => {
+    if (failCandidate && key.includes(".candidate.")) {
+      return `${raw} `;
+    }
+    return raw;
+  });
+});
+
+test("slot recovery preserves newer verified authority and multiple contenders fail closed deterministically", () => {
+  let hiddenAddressAccounts = new Set(["account.slot_collision", "account.multiple"]);
+  withMockWindow((storage) => {
+    const olderAccountId = "account.slot_collision";
+    const older = createTargetSnapshot(olderAccountId);
+    assert.throws(
+      () =>
+        publishSave(
+          olderAccountId,
+          "slot-1",
+          older,
+          buildSaveMetadata("slot-1", older),
+          {
+            consumerPlans: [
+              {
+                kind: "active_history",
+                payloadFingerprint: "payload.older"
+              }
+            ],
+            newCampaignAttemptId: "new_campaign_attempt.older"
+          }
+        ),
+      /hidden address/
+    );
+    let incompatiblePreparationCount = 0;
+    assert.throws(
+      () =>
+        prepareNewCampaignAttempt({
+          accountId: olderAccountId,
+          slotId: "slot-1",
+          normalizedInput: { playerName: "Must Not Replace" },
+          prepare: () => {
+            incompatiblePreparationCount += 1;
+            return {
+              snapshot: createTargetSnapshot(olderAccountId),
+              consumerPlans: []
+            };
+          }
+        }),
+      /does not belong to this new-campaign attempt/
+    );
+    assert.equal(incompatiblePreparationCount, 0);
+    hiddenAddressAccounts.delete(olderAccountId);
+
+    const newer = createTargetSnapshot(olderAccountId);
+    const newerPublished = publishSave(
+      olderAccountId,
+      "slot-1",
+      newer,
+      buildSaveMetadata("slot-1", newer)
+    );
+    assert.throws(
+      () => recoverPendingCampaignPublications(olderAccountId),
+      /different verified publication/
+    );
+    assert.equal(
+      loadSaveWithAuthority(olderAccountId, "slot-1").publication.publicationId,
+      newerPublished.publication.publicationId
+    );
+
+    const multipleAccountId = "account.multiple";
+    for (const suffix of ["z", "a"]) {
+      const snapshot = createTargetSnapshot(multipleAccountId);
+      assert.throws(
+        () =>
+          publishSave(
+            multipleAccountId,
+            "slot-2",
+            snapshot,
+            buildSaveMetadata("slot-2", snapshot),
+            {
+              consumerPlans: [
+                {
+                  kind: "active_history",
+                  payloadFingerprint: `payload.${suffix}`
+                }
+              ],
+              newCampaignAttemptId: `new_campaign_attempt.${suffix}`
+            }
+          ),
+        /hidden address/
+      );
+    }
+    const posture = inspectCampaignPublicationRecoveryForSlot(
+      multipleAccountId,
+      "slot-2"
+    );
+    assert.equal(posture.kind, "multiple");
+    assert.deepEqual(posture.campaignIds, [...posture.campaignIds].sort());
+    let firstMessage = "";
+    try {
+      recoverPendingCampaignPublications(multipleAccountId);
+      assert.fail("Expected multiple recovery collision.");
+    } catch (error) {
+      firstMessage = error.message;
+    }
+    const recoveryEntries = Array.from(
+      { length: storage.length },
+      (_, index) => storage.key(index)
+    )
+      .filter(
+        (key) =>
+          key?.includes(`account.${multipleAccountId}.campaign.`) &&
+          key.endsWith(".publication-recovery")
+      )
+      .map((key) => [key, storage.getItem(key)]);
+    for (const [key] of recoveryEntries) {
+      storage.removeItem(key);
+    }
+    for (const [key, value] of recoveryEntries.reverse()) {
+      storage.setItem(key, value);
+    }
+    let secondMessage = "";
+    try {
+      recoverPendingCampaignPublications(multipleAccountId);
+      assert.fail("Expected reordered multiple recovery collision.");
+    } catch (error) {
+      secondMessage = error.message;
+    }
+    assert.equal(secondMessage, firstMessage);
+  }, (key, raw) => {
+    const accountId = [...hiddenAddressAccounts].find((candidate) =>
+      key ===
+      `cataclysm-rpg-ui.saves.v7.account.${candidate}.slot.${candidate === "account.multiple" ? "slot-2" : "slot-1"}`
+    );
+    if (accountId) {
+      throw new Error("injected hidden address");
     }
     return raw;
   });
@@ -1452,6 +1938,9 @@ test("UI ordering and source guards prevent eager account writes and ordinary HP
     /onSnapshotChange[\s\S]{0,500}evaluateAchievementProgress/
   );
   assert.match(sessionSource, /admitCampaignMutation/);
+  assert.match(appSource, /prepareNewCampaignAttempt/);
+  assert.match(appSource, /completeNewCampaignAttempt/);
+  assert.match(appSource, /completePendingNormalDefeatRecovery/);
   assert.match(lifecycleSource, /normal_stakes/);
   assert.match(lifecycleSource, /return null/);
   assert.doesNotMatch(defeatSource, /publishSave|archiveActiveRun|deleteSave/);
@@ -1475,6 +1964,17 @@ test("new campaign owner modules keep JavaScript mirrors and public exports alig
     );
     assert.equal(mirror.trim(), `export * from "./${name}.ts";`);
   }
+  const coordinatorMirror = readFileSync(
+    new URL(
+      "../../apps/rpg-ui/src/game-shell/newCampaignAttemptCoordinator.js",
+      import.meta.url
+    ),
+    "utf8"
+  );
+  assert.equal(
+    coordinatorMirror.trim(),
+    'export * from "./newCampaignAttemptCoordinator.ts";'
+  );
 
   const indexSource = readFileSync(
     new URL("../../packages/engines/game-engine/src/index.ts", import.meta.url),

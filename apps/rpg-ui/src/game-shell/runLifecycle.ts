@@ -34,6 +34,7 @@ import {
   deleteSave,
   listSaves,
   loadSave,
+  loadSaveWithAuthority,
   publishSave
 } from './saveManager.js';
 import type { SaveSlotId, SaveSlotSummary } from './state.js';
@@ -452,25 +453,63 @@ export function archiveActiveRun(params: {
     params.verifiedTerminalPublication ?? null;
 
   if (!verifiedTerminalPublication) {
-    terminalSnapshot =
-      terminalSnapshot.campaignRules?.version === 2
-        ? terminalSnapshot
-        : initializeTargetCampaignSnapshot(terminalSnapshot, {
-            source: "developer_fixture",
-            recordedAt
-          });
     const terminalSlotId =
       params.fallbackSlotId ?? "quick-save";
+    let publicationSessionControl = params.campaignSessionControl;
+    if (terminalSnapshot.campaignRules?.version !== 2) {
+      const retained = loadSaveWithAuthority(
+        params.accountId,
+        terminalSlotId
+      );
+      if (retained) {
+        if (
+          !retained.snapshot.campaignRules ||
+          !retained.snapshot.campaignIdentity ||
+          !retained.snapshot.authorityLedger
+        ) {
+          throw new Error(
+            "Retirement recovery requires retained target campaign authority."
+          );
+        }
+        const retainedNormalDefeatReceipts =
+          terminalSnapshot.normalDefeatReceipts ??
+          retained.snapshot.normalDefeatReceipts;
+        terminalSnapshot = {
+          ...terminalSnapshot,
+          accountId: retained.snapshot.accountId,
+          snapshotVersion: retained.snapshot.snapshotVersion,
+          campaignRules: retained.snapshot.campaignRules,
+          campaignIdentity: retained.snapshot.campaignIdentity,
+          authorityLedger: retained.snapshot.authorityLedger,
+          ...(retainedNormalDefeatReceipts
+            ? { normalDefeatReceipts: retainedNormalDefeatReceipts }
+            : {}),
+          playerState: {
+            ...terminalSnapshot.playerState,
+            playerId: retained.snapshot.playerState.playerId
+          }
+        };
+        publicationSessionControl = retained.sessionControl;
+      } else {
+        terminalSnapshot = initializeTargetCampaignSnapshot(
+          terminalSnapshot,
+          {
+            source: "developer_fixture",
+            recordedAt
+          }
+        );
+      }
+    }
     const published = publishSave(
       params.accountId,
       terminalSlotId,
       terminalSnapshot,
       buildSaveMetadata(terminalSlotId, terminalSnapshot),
       {
-        ...(params.campaignSessionControl
+        ...(publicationSessionControl
           ? {
               sessionControl:
-                params.campaignSessionControl
+                publicationSessionControl
             }
           : {}),
         terminal: true

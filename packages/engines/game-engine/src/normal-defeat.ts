@@ -29,6 +29,51 @@ function resolveCampaignStartSettlement(snapshot: SaveSnapshot): string | null {
   return startFlag?.slice("player.start.".length) || null;
 }
 
+function listSafeRecoveryDestinationIds(snapshot: SaveSnapshot): string[] {
+  const knownSettlements = snapshot.sessionState.knownLocations
+    .filter(
+      (location) =>
+        location.known === true &&
+        location.type === "settlement" &&
+        Boolean(location.settlementId?.trim())
+    )
+    .map((location) => location.settlementId!.trim());
+  const candidates = [
+    snapshot.playerState.location.settlementId?.trim() || null,
+    resolveCampaignStartSettlement(snapshot),
+    ...knownSettlements
+  ].filter((candidate): candidate is string => Boolean(candidate));
+  return [...new Set(candidates)].sort();
+}
+
+export function resolvePendingNormalDefeatRecoveryDestination(
+  snapshot: SaveSnapshot,
+  explicitDestinationId?: string | null
+): string {
+  const safeDestinationIds = listSafeRecoveryDestinationIds(snapshot);
+  const requested = explicitDestinationId?.trim();
+  if (explicitDestinationId !== undefined && !requested) {
+    throw new Error(
+      "Normal defeat recovery destination is malformed."
+    );
+  }
+  if (requested) {
+    if (!safeDestinationIds.includes(requested)) {
+      throw new Error(
+        `Normal defeat recovery destination '${requested}' is not an authoritative known safe settlement.`
+      );
+    }
+    return requested;
+  }
+  const destinationId = safeDestinationIds[0];
+  if (!destinationId) {
+    throw new Error(
+      "Normal defeat recovery has no authoritative known safe settlement."
+    );
+  }
+  return destinationId;
+}
+
 function resolveDestination(
   snapshot: SaveSnapshot,
   explicitDestinationId?: string | null
@@ -36,8 +81,14 @@ function resolveDestination(
   id: string | null;
   source: NormalDefeatReceiptState["destinationSource"];
 } {
-  if (explicitDestinationId?.trim()) {
-    return { id: explicitDestinationId.trim(), source: "explicit_context" };
+  if (explicitDestinationId !== undefined) {
+    return {
+      id: resolvePendingNormalDefeatRecoveryDestination(
+        snapshot,
+        explicitDestinationId
+      ),
+      source: "explicit_context"
+    };
   }
 
   const currentSettlement = snapshot.playerState.location.settlementId;
@@ -74,15 +125,13 @@ export function repairPendingNormalDefeat(
   explicitDestinationId?: string | null
 ): NormalDefeatResolution {
   const pending = findPendingNormalDefeat(snapshot);
-  const destinationId = explicitDestinationId?.trim();
   if (!pending) {
     throw new Error("Normal defeat recovery repair requires a pending receipt.");
   }
-  if (!destinationId) {
-    throw new Error(
-      "Normal defeat recovery repair requires an explicit safe destination."
-    );
-  }
+  const destinationId = resolvePendingNormalDefeatRecoveryDestination(
+    snapshot,
+    explicitDestinationId
+  );
 
   const nextSnapshot = cloneSnapshot(snapshot);
   for (let index = 0; index < 4; index += 1) {

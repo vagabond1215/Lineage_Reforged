@@ -2,8 +2,10 @@ import type { SaveSnapshot } from "../../../shared/types/src/index.js";
 import { serializeSnapshot } from "../../../shared/persistence/src/index.js";
 import { createAuthorityId } from "./campaign-rules.js";
 import {
+  findPendingNormalDefeat,
   hasPendingNormalDefeat,
   repairPendingNormalDefeat,
+  resolvePendingNormalDefeatRecoveryDestination,
   resolveNormalDefeat
 } from "./normal-defeat.js";
 
@@ -338,4 +340,72 @@ export function admitCampaignMutation(
       hasUnpublishedGameplayState: true
     }
   };
+}
+
+export function completePendingNormalDefeatRecovery(
+  control: CampaignSessionControl,
+  snapshot: SaveSnapshot,
+  explicitDestinationId?: string | null
+): CampaignMutationAdmission {
+  const pending = findPendingNormalDefeat(snapshot);
+  const receipts = snapshot.normalDefeatReceipts ?? [];
+  const latestReceipt = receipts[receipts.length - 1] ?? null;
+  const receipt = pending ?? latestReceipt;
+  if (!receipt) {
+    throw new Error(
+      "Normal defeat recovery completion requires a retained defeat receipt."
+    );
+  }
+
+  const mutationId = `mutation.recovery_repair.${receipt.receiptId}`;
+  const retained = control.retainedMutationResults.find(
+    (entry) => entry.mutationId === mutationId
+  );
+  if (retained) {
+    const retainedDestinationId = receipt.destinationId;
+    if (!retainedDestinationId) {
+      throw new Error(
+        "Retained Normal defeat recovery result has no safe destination."
+      );
+    }
+    const requestedDestinationId =
+      explicitDestinationId === undefined
+        ? retainedDestinationId
+        : resolvePendingNormalDefeatRecoveryDestination(
+            snapshot,
+            explicitDestinationId
+          );
+    if (requestedDestinationId !== retainedDestinationId) {
+      throw new Error(
+        `Normal defeat recovery '${mutationId}' was reused with a conflicting destination.`
+      );
+    }
+    return {
+      accepted: false,
+      duplicate: true,
+      reason: "duplicate",
+      snapshot,
+      control,
+      resultId: retained.resultId
+    };
+  }
+  if (!pending) {
+    throw new Error("Normal defeat recovery has already completed.");
+  }
+
+  const destinationId = resolvePendingNormalDefeatRecoveryDestination(
+    snapshot,
+    explicitDestinationId
+  );
+  return admitCampaignMutation(control, {
+    mutationId,
+    sourceArtifactId: control.loadedArtifactId,
+    sourceRevision: control.sessionRevision,
+    ownerKind: "recovery_repair",
+    accepted: true,
+    sourceSnapshot: snapshot,
+    proposedSnapshot: snapshot,
+    resultId: `result.recovery_repair.${receipt.receiptId}`,
+    explicitRecoveryDestinationId: destinationId
+  });
 }

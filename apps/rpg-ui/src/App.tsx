@@ -4,8 +4,9 @@ import {
   recordCampaignPublicationConsumer,
   type VerifiedCampaignPublication
 } from '../../../packages/engines/game-engine/src/account-publication.js';
-import type {
-  CampaignSessionControl
+import {
+  completePendingNormalDefeatRecovery,
+  type CampaignSessionControl
 } from '../../../packages/engines/game-engine/src/campaign-session.js';
 import {
   hasPendingNormalDefeat
@@ -43,6 +44,10 @@ import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAc
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen';
 import { SettingsScreen } from './game-shell/components/SettingsScreen';
 import { createNewGameSnapshot } from './game-shell/newGameSnapshot';
+import {
+  completeNewCampaignAttempt,
+  prepareNewCampaignAttempt
+} from './game-shell/newCampaignAttemptCoordinator.js';
 import {
   loadAccountProfile,
   saveAccountProfile
@@ -468,6 +473,19 @@ function buildAccountPublicationConsumerPlans(
       'last_played'
     ] as const
   ).map((kind) => ({ kind, payloadFingerprint }));
+}
+
+function hasAppliedCampaignPublicationConsumer(
+  profile: AccountProfileState,
+  publicationId: string,
+  kind: CampaignPublicationConsumerPlan['kind']
+): boolean {
+  return (profile.campaignPublicationReceipts ?? []).some(
+    (receipt) =>
+      receipt.publicationId === publicationId &&
+      receipt.kind === kind &&
+      receipt.status === 'applied'
+  );
 }
 
 function buildRecoveryPendingNotice(): GameShellNotice {
@@ -1163,6 +1181,7 @@ export default function App() {
         accountProfile: ReturnType<typeof createDefaultAccountProfileState>;
         snapshot: ReturnType<typeof createNewGameSnapshot>;
         campaignSessionControl: CampaignSessionControl;
+        notice?: GameShellNotice;
       }
     | {
         kind: 'blocked';
@@ -1170,7 +1189,9 @@ export default function App() {
         slots: ReturnType<typeof createEmptySaveSlotSummaries>;
         notice: GameShellNotice;
   } => {
-    const snapshot = loaded.snapshot;
+    let snapshot = loaded.snapshot;
+    let campaignSessionControl = loaded.sessionControl;
+    let recoveryNotice: GameShellNotice | undefined;
     const currentAccountProfile = loadAccountProfile(
       accountProfile.accountId
     );
@@ -1191,17 +1212,37 @@ export default function App() {
     }
 
     if (hasPendingNormalDefeat(snapshot)) {
-      return {
-        kind: 'blocked',
-        accountProfile: currentAccountProfile,
-        slots: listSaves(currentAccountProfile.accountId),
-        notice: buildRecoveryPendingNotice()
-      };
+      try {
+        const repaired = completePendingNormalDefeatRecovery(
+          campaignSessionControl,
+          snapshot
+        );
+        snapshot = repaired.snapshot;
+        campaignSessionControl = repaired.control;
+        recoveryNotice = {
+          tone: 'warning',
+          title: 'Defeat Recovery Repaired',
+          detail:
+            'A retained nonterminal defeat was repaired at an authoritative known settlement. The repaired state remains unsaved until you save normally.'
+        };
+      } catch (error) {
+        return {
+          kind: 'blocked',
+          accountProfile: currentAccountProfile,
+          slots: listSaves(currentAccountProfile.accountId),
+          notice: {
+            ...buildRecoveryPendingNotice(),
+            detail:
+              `${buildRecoveryPendingNotice().detail} ` +
+              (error instanceof Error ? error.message : String(error))
+          }
+        };
+      }
     }
 
     const prepared = applyVerifiedPublicationToAccount(
       currentAccountProfile,
-      snapshot,
+      loaded.snapshot,
       loaded.publication,
       { slotId }
     );
@@ -1209,8 +1250,9 @@ export default function App() {
     return {
       kind: 'enter',
       accountProfile: prepared.accountProfile,
-      snapshot: prepared.snapshot,
-      campaignSessionControl: loaded.sessionControl
+      snapshot,
+      campaignSessionControl,
+      ...(recoveryNotice ? { notice: recoveryNotice } : {})
     };
   };
 
@@ -1278,10 +1320,10 @@ export default function App() {
         slotId,
         resolved.snapshot,
         resolved.campaignSessionControl,
-        {
-        tone: 'accent',
-        title: 'Continuing Campaign',
-        detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
+        resolved.notice ?? {
+          tone: 'accent',
+          title: 'Continuing Campaign',
+          detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`
         }
       );
     } catch (error) {
@@ -1344,70 +1386,103 @@ export default function App() {
       const selectedHeirSource = selectedSourceRunId
         ? resolveHeirSourceById(state.accountProfile, selectedSourceRunId)
         : null;
-
-      if (selectedSourceRunId && !selectedHeirSource) {
-        dispatch({
-          type: 'SET_NOTICE',
-          notice: {
-            tone: 'warning',
-            title: 'Lineage Source Unavailable',
-            detail: 'Choose Fresh Start or select another available source line before beginning the campaign.'
-          }
-        });
-        return;
-      }
-
-      const snapshot = createNewGameSnapshot({
+      const normalizedForm = {
         ...state.form,
-        playerName
-      }, state.accountProfile.accountId, {
-        appliedLegacyPreparationIds: preparationSelection.selectedUnlockIds,
-        appliedLegacyPreparationChoices: preparationSelection.selectedChoicePayloads,
-        accountProfile: state.accountProfile,
-        ...(typeof options.hasSelectableBackstories === 'boolean'
-          ? { hasSelectableBackstories: options.hasSelectableBackstories }
-          : {}),
-        ...(selectedHeirSource ? { sourceRunId: selectedSourceRunId } : {}),
-        ...(selectedHeirSource && selectedHeirSource.lineageId !== state.form.lineageId
-          ? { crossLineageStart: true }
-          : {})
-      });
-      const characterPrepared = prepareCharacterAchievementProgress(snapshot);
-      pendingNewGameFingerprint = JSON.stringify({
+        playerName,
+        sourceRunId: selectedSourceRunId
+      };
+      const newGameFingerprint = JSON.stringify({
         selectedPreparationUnlockIds:
           preparationSelection.selectedUnlockIds,
         selectedPreparationChoicePayloads:
           preparationSelection.selectedChoicePayloads,
-        sourceRunId: selectedHeirSource?.characterId ?? null
+        sourceRunId: selectedSourceRunId || null
       });
-      pendingInheritanceConsumer = selectedHeirSource !== null;
-      pendingNewGameConsumerPlans = [
-        ...buildAccountPublicationConsumerPlans(
-          characterPrepared.snapshot,
-          state.form.saveSlotId
-        ),
-        {
-          kind: 'preparation_consumption',
-          payloadFingerprint: pendingNewGameFingerprint
+      const attempt = prepareNewCampaignAttempt({
+        accountId: state.accountProfile.accountId,
+        slotId: state.form.saveSlotId,
+        normalizedInput: {
+          form: normalizedForm,
+          preparationSelection: {
+            unlockIds: preparationSelection.selectedUnlockIds,
+            choices: preparationSelection.selectedChoicePayloads
+          },
+          hasSelectableBackstories:
+            options.hasSelectableBackstories ?? null
         },
-        ...(selectedHeirSource
-          ? [
-              {
-                kind: 'inheritance_consumption' as const,
-                payloadFingerprint: pendingNewGameFingerprint
-              }
-            ]
-          : [])
-      ];
-      const published = publishSave(
+        prepare: () => {
+          if (selectedSourceRunId && !selectedHeirSource) {
+            throw new Error(
+              'The selected lineage source is no longer available for this new-campaign attempt.'
+            );
+          }
+          const snapshot = createNewGameSnapshot(
+            normalizedForm,
+            state.accountProfile.accountId,
+            {
+              appliedLegacyPreparationIds:
+                preparationSelection.selectedUnlockIds,
+              appliedLegacyPreparationChoices:
+                preparationSelection.selectedChoicePayloads,
+              accountProfile: state.accountProfile,
+              ...(typeof options.hasSelectableBackstories === 'boolean'
+                ? { hasSelectableBackstories: options.hasSelectableBackstories }
+                : {}),
+              ...(selectedHeirSource
+                ? { sourceRunId: selectedSourceRunId }
+                : {}),
+              ...(selectedHeirSource &&
+              selectedHeirSource.lineageId !== state.form.lineageId
+                ? { crossLineageStart: true }
+                : {})
+            }
+          );
+          const characterPrepared =
+            prepareCharacterAchievementProgress(snapshot);
+          const consumerPlans = [
+            ...buildAccountPublicationConsumerPlans(
+              characterPrepared.snapshot,
+              state.form.saveSlotId
+            ),
+            {
+              kind: 'preparation_consumption' as const,
+              payloadFingerprint: newGameFingerprint
+            },
+            ...(selectedHeirSource
+              ? [
+                  {
+                    kind: 'inheritance_consumption' as const,
+                    payloadFingerprint: newGameFingerprint
+                  }
+                ]
+              : [])
+          ];
+          return {
+            snapshot: characterPrepared.snapshot,
+            consumerPlans
+          };
+        }
+      });
+      pendingNewGameConsumerPlans = attempt.consumerPlans;
+      pendingNewGameFingerprint =
+        attempt.consumerPlans.find(
+          (plan) => plan.kind === 'preparation_consumption'
+        )?.payloadFingerprint ?? newGameFingerprint;
+      pendingInheritanceConsumer = attempt.consumerPlans.some(
+        (plan) => plan.kind === 'inheritance_consumption'
+      );
+      const published = attempt.recoveredPublication ?? publishSave(
         state.accountProfile.accountId,
         state.form.saveSlotId,
-        characterPrepared.snapshot,
+        attempt.snapshot,
         buildSaveMetadata(
           state.form.saveSlotId,
-          characterPrepared.snapshot
+          attempt.snapshot
         ),
-        { consumerPlans: pendingNewGameConsumerPlans }
+        {
+          consumerPlans: pendingNewGameConsumerPlans,
+          newCampaignAttemptId: attempt.attemptId
+        }
       );
       if (!published.publication) {
         throw new Error(
@@ -1426,17 +1501,53 @@ export default function App() {
           suppressLegacyRewards: true
         }
       );
-      const consumed = consumeSelectedLegacyPreparations(
-        projected.accountProfile
-      );
-      const heirSourceConsumed = selectedHeirSource
-        ? consumeRetiredRunInheritanceUse(consumed.profile, {
-            characterId: selectedHeirSource.characterId,
-            recordedAt: published.publication.publishedAt
-          })
+      const preparationAlreadyApplied =
+        hasAppliedCampaignPublicationConsumer(
+          projected.accountProfile,
+          published.publication.publicationId,
+          'preparation_consumption'
+        );
+      const consumed = preparationAlreadyApplied
+        ? { profile: projected.accountProfile }
+        : consumeSelectedLegacyPreparations(projected.accountProfile);
+      let accountAfterMandatoryConsumers = consumed.profile;
+      const retainedSourceRunId =
+        published.snapshot.playerState.saveMeta.sourceRunId;
+      const retainedHeirSource = retainedSourceRunId
+        ? resolveHeirSourceById(
+            accountAfterMandatoryConsumers,
+            retainedSourceRunId
+          )
         : null;
-      let accountAfterMandatoryConsumers =
-        heirSourceConsumed?.accountProfile ?? consumed.profile;
+      const inheritanceAlreadyApplied =
+        hasAppliedCampaignPublicationConsumer(
+          accountAfterMandatoryConsumers,
+          published.publication.publicationId,
+          'inheritance_consumption'
+        );
+      if (
+        pendingInheritanceConsumer &&
+        !inheritanceAlreadyApplied &&
+        !retainedHeirSource
+      ) {
+        throw new Error(
+          'The retained inheritance source is unavailable; new-campaign consumer repair remains pending.'
+        );
+      }
+      if (
+        pendingInheritanceConsumer &&
+        !inheritanceAlreadyApplied &&
+        retainedHeirSource
+      ) {
+        accountAfterMandatoryConsumers =
+          consumeRetiredRunInheritanceUse(
+            accountAfterMandatoryConsumers,
+            {
+              characterId: retainedHeirSource.characterId,
+              recordedAt: published.publication.publishedAt
+            }
+          ).accountProfile;
+      }
       accountAfterMandatoryConsumers =
         recordCampaignPublicationConsumer(
           accountAfterMandatoryConsumers,
@@ -1462,6 +1573,11 @@ export default function App() {
         state.accountProfile.accountId,
         published.publication.publicationId,
         pendingNewGameConsumerPlans.map((plan) => plan.kind)
+      );
+      completeNewCampaignAttempt(
+        state.accountProfile.accountId,
+        state.form.saveSlotId,
+        attempt.attemptId
       );
 
       enterGame(state.launcherSession, savedProfile, state.form.saveSlotId, projected.snapshot, published.sessionControl, {
@@ -1575,7 +1691,7 @@ export default function App() {
         return;
       }
 
-      enterGame(state.launcherSession, resolved.accountProfile, state.selectedSlotId, resolved.snapshot, resolved.campaignSessionControl, {
+      enterGame(state.launcherSession, resolved.accountProfile, state.selectedSlotId, resolved.snapshot, resolved.campaignSessionControl, resolved.notice ?? {
         tone: 'accent',
         title: 'Save Loaded',
         detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(state.selectedSlotId)}.`
@@ -1700,7 +1816,7 @@ export default function App() {
         return;
       }
 
-      enterGame(state.launcherSession, resolved.accountProfile, slotId, resolved.snapshot, resolved.campaignSessionControl, {
+      enterGame(state.launcherSession, resolved.accountProfile, slotId, resolved.snapshot, resolved.campaignSessionControl, resolved.notice ?? {
         tone: 'accent',
         title: 'Save Loaded',
         detail: `Continuing ${resolved.snapshot.playerState.coreData.playerName} from ${getSaveSlotLabel(slotId)}.`

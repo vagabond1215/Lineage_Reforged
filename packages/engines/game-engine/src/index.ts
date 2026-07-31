@@ -25,6 +25,7 @@ export {
 } from "./campaign-rules.js";
 export {
   admitCampaignMutation,
+  completePendingNormalDefeatRecovery,
   createCampaignSessionControl,
   type CampaignMutationAdmission,
   type CampaignMutationOwnerKind,
@@ -44,6 +45,7 @@ export {
   findPendingNormalDefeat,
   hasPendingNormalDefeat,
   repairPendingNormalDefeat,
+  resolvePendingNormalDefeatRecoveryDestination,
   resolveNormalDefeat,
   type NormalDefeatResolution
 } from "./normal-defeat.js";
