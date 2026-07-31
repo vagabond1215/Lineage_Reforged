@@ -4,13 +4,15 @@
 
 - Source run: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
 - Date: 2026-07-30
-- Branch/status assumption: clean synchronized `master` at inspection and implementation start; implementation completed locally pending commit
+- Branch/status: committed and synchronized on `master`
 - Inspected base: `e873f45159a460f917ecf53b4b26091efe358764`
 - Implementation starting head: `e873f45159a460f917ecf53b4b26091efe358764`
+- Final committed head: `13b79279d07f6e1d06bf44b5b6ddba011694d57c`
+- Live post-fetch head: `13b79279d07f6e1d06bf44b5b6ddba011694d57c`
+- Commit: `fix(save): complete new-campaign and pending-defeat recovery`
 - Label class: support suffix
 - Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 - Milestone impact: `supports_current_band`
-- Suggested commit: `fix(save): complete new-campaign and pending-defeat recovery`
 
 ## Outcome
 
@@ -95,7 +97,7 @@ The Ashen Reef survey receipt decision remains blocked until that audit accepts 
 - `FP-006`: distinct verified addresses cannot be replaced; same-campaign forward replacement requires current-head supersession evidence; multiple contenders fail closed deterministically.
 - `FP-007`: this full current-output replacement was performed only after reading the complete source, and the written file is reread during final documentation verification.
 - `FP-008`: all seventeen non-default remote branches and PR #2 were semantically reviewed; none overlaps the repair and none was integrated.
-- `FP-009`: inspected base and implementation start are recorded above; the final committed and live post-fetch heads are reported after commit/push.
+- `FP-009`: inspected base, implementation start, final committed head, and live post-fetch head are recorded as distinct facts above.
 - `FP-010`: every confirmed finding maps to an implementation owner, executable evidence, and disposition above.
 
 ## Checks Run
@@ -108,6 +110,8 @@ The Ashen Reef survey receipt decision remains blocked until that audit accepts 
 - `git diff --check`: passed;
 - complete diff and scope inspection: passed;
 - TypeScript/JavaScript mirrors: campaign owner mirrors and the new coordinator mirror verified by tests.
+
+No GitHub Actions workflow run is attached to the final commit. The validation above is local Codex evidence and remains subject to the independent `0.6.9.4` audit.
 
 ## Branch And PR Lifecycle
 
