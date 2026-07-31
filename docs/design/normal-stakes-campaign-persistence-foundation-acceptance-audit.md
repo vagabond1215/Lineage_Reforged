@@ -1,6 +1,6 @@
 # Normal Stakes Campaign Persistence Foundation Acceptance Audit
 
-Date: 2026-07-30
+Date: 2026-07-31
 
 Parent: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
@@ -8,17 +8,31 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `IMPLEMENTED_PENDING_0.6.9.4_AUDIT`
+Current status: `REPAIR_REQUIRED_AFTER_0.6.9.4`
 
 ## Decision
 
 The `0.6.9` parent is not accepted.
 
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit` independently preserved the reported 23/23 focused tests, 130/130 prescribed tests, 209-module production build, and bounded TypeScript posture. It nevertheless proved all three post-commit audit targets fail:
+
+1. more than one pending defeat receipt is accepted and the first receipt is repaired by array order while another remains pending;
+2. a current-location `settlementId` backed only by a known non-settlement location is accepted as safe recovery authority;
+3. completion appends no repair/correction authority-ledger provenance.
+
+The required exact repair is:
+
+`Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
+
+The Ashen Reef survey receipt decision remains blocked. Parent acceptance requires implementation of `0.6.9.5` followed by a separate independent audit.
+
 `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is implemented at `13b79279d07f6e1d06bf44b5b6ddba011694d57c` with reported local evidence of 23/23 focused persistence tests, 130/130 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed production files. The implementation adds a durable production new-campaign attempt coordinator, account-and-slot recovery collision authority, and a reachable validated exactly-once pending-defeat repair owner.
 
-This evidence does not accept the parent. Independent acceptance is assigned to:
+This evidence did not accept the parent. Independent acceptance was assigned to:
 
 `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
+
+That audit preserved the implementation baseline but found the three additional blocking completion-authority defects recorded above.
 
 `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` repaired the six findings recorded by `0.6.9.1` and added immutable playable-address verification. Its reported focused persistence suite passes 20/20, the prescribed group passes 127/127, and the RPG UI production build passes.
 
@@ -36,11 +50,15 @@ The completed support implementation is:
 
 `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`
 
-The active independent route is:
+The completed independent route was:
 
 `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
 
-The Ashen Reef survey receipt decision remains blocked until `0.6.9.4` independently accepts the parent.
+The active repair route is:
+
+`Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
+
+The Ashen Reef survey receipt decision remains blocked until the repair is independently accepted.
 
 ## Accepted `0.6.9.2` Evidence To Preserve
 
@@ -88,7 +106,7 @@ Required closure:
 - retry and restart reuse of the exact hidden verified publication;
 - conflicting attempt reuse fails closed.
 
-`0.6.9.3` reports this closure; `0.6.9.4` must reproduce it independently.
+`0.6.9.3` reported this closure; `0.6.9.4` independently reproduced it successfully.
 
 ## Post-Repair Finding 2: Same-Slot Recovery Collision
 
@@ -104,7 +122,7 @@ Required closure:
 - deterministic quarantine or explicit bounded resolution for multiple recoveries;
 - newer valid address preservation unless exact equivalence or accepted supersession evidence exists.
 
-`0.6.9.3` reports this closure; `0.6.9.4` must reproduce it independently.
+`0.6.9.3` reported this closure; `0.6.9.4` independently reproduced it successfully.
 
 ## Post-Repair Finding 3: Pending Recovery Completion Was Not Reachable
 
@@ -121,9 +139,9 @@ Required closure:
 - clear shell state and diagnostic;
 - duplicate completion returns the retained result.
 
-`0.6.9.3` reports this closure; `0.6.9.4` must reproduce it independently.
+`0.6.9.3` reported the reachable owner; `0.6.9.4` confirmed reachability but proved its multiple-receipt, current-location, and ledger validation incomplete.
 
-## Post-Commit Audit Targets For `0.6.9.4`
+## Post-Commit Audit Targets Decided By `0.6.9.4`
 
 Connector inspection of the committed implementation identified three additional boundaries requiring explicit independent evidence before acceptance:
 
@@ -133,11 +151,11 @@ Connector inspection of the committed implementation identified three additional
 
 The audit must also prove HP, Stamina, recovery ticks, relocation, Chronicle, notification, and session revision occur exactly once across initial pending resolution plus completion.
 
-These targets remain audit questions until executable evidence decides them. Any violation requires the smallest exact `0.6.9.5` repair; it must not be waived to advance the survey route.
+Fresh executable evidence decided all three as blocking violations. The audit constructed multiple pending receipts, a current-location ruin masquerading through `settlementId`, and a valid repair whose ledger remained unchanged. No target is waived or deferred.
 
-## Required `0.6.9.4` Evidence
+## Required `0.6.9.5` Repair And Successor Evidence
 
-Add or execute independent coverage for:
+The repair and its independent successor audit must cover:
 
 - the actual character-creation handler or extracted production coordinator under injected post-head address failure;
 - retry and restart reusing the original character, campaign, continuity, artifact, publication, slot, and consumer plan;
@@ -153,12 +171,14 @@ Add or execute independent coverage for:
 - duplicate completion replay and conflicting evidence;
 - preservation of every existing `0.6.9.2` and `0.6.9.3` test and build gate.
 
+The repair must also prove multiple-pending rejection is order-independent and side-effect-free, current-location authority requires exact known settlement evidence, the original defeat ledger entry is preserved, and exactly one deterministic superseding repair entry is appended.
+
 ## Branch And PR Review
 
 The completed `0.6.9.3` run reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
 
-`0.6.9.4` must refresh these facts after fetch/prune and report all integration, closure, and retirement decisions.
+`0.6.9.4` refreshed these facts after fetch/prune: one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. No disposition or lifecycle action changed. `0.6.9.5` must refresh them again before implementation.
 
 ## Next Run
 
-`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
+`Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`

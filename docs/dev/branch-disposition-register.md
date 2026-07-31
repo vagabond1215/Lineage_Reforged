@@ -1,29 +1,29 @@
 # Branch Disposition Register
 
-Date: 2026-07-30
+Date: 2026-07-31
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
-## 0. Version 0.6.9.3 Live Refresh
+## 0. Version 0.6.9.4 Live Refresh
 
-`Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` fetched and pruned all refs from implementation starting head `e873f45159a460f917ecf53b4b26091efe358764`.
+`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit` fetched and pruned all refs, then fast-forwarded the clean local branch from pre-sync inspected head `13b79279d07f6e1d06bf44b5b6ddba011694d57c` to audit starting head `2b4090b161b4e1d4f56f40e5eb8a799c3190ef46`.
 
 Live result:
 
 - local branches: only synchronized `master`;
 - non-default remote branches: seventeen;
-- open pull requests: PR #2 only, head `e78dc645cfb658685be12f45f46d34b7c0da1119`, still non-mergeable and unrelated to the repair;
-- `feat/main-menu-assets`: `704 / 0`;
-- `main-menu-asset-contract-pass`: `632 / 10`, four changed paths;
-- `main-menu-refinement-pass`: `639 / 2`, two changed paths;
-- the eight `bcbe658d` connector branches: `38 / 1` each, one previously registered documentation path each;
-- the four `3006c968` connector branches: `40 / 1` each, one previously registered documentation path each;
-- `parallel/prompt-packaging-integrity-audit`: `67 / 1`, one prompt-packaging document;
-- `prep/integrated-gameplay-0-7-readiness-audit`: `120 / 2`, the two protected readiness documents.
+- open pull requests: PR #2 only, head `e78dc645cfb658685be12f45f46d34b7c0da1119`, base `master`, open, non-draft, non-mergeable, and unrelated to the repair;
+- `feat/main-menu-assets`: `708 / 0`;
+- `main-menu-asset-contract-pass`: `636 / 10`, four changed paths;
+- `main-menu-refinement-pass`: `643 / 2`, two changed paths;
+- the eight `bcbe658d` connector branches: `42 / 1` each, one previously registered documentation path each;
+- the four `3006c968` connector branches: `44 / 1` each, one previously registered documentation path each;
+- `parallel/prompt-packaging-integrity-audit`: `71 / 1`, one prompt-packaging document;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `124 / 2`, the two protected readiness documents.
 
-The merge bases, unique heads, and paths remain those recorded in the tables below. Fresh semantic review found no save, campaign retry, slot recovery, consumer replay, or Normal-defeat completion implementation on any branch. No disposition changed, no integration or deletion was due, and both protected branches remained read-only. Review triggers and retirement rules below remain controlling.
+The merge bases, unique heads, and paths remain those recorded in the tables below. Fresh semantic review found no pending-defeat ambiguity, destination-validation, or repair-provenance implementation on any branch. No disposition changed, no integration or deletion was due, and both protected branches remained read-only. Review triggers and retirement rules below remain controlling.
 
 ## 1. Complete Inventory Snapshot
 
@@ -94,7 +94,7 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
+`Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
 
 Branch handling during that route should be limited to:
 
@@ -104,7 +104,7 @@ Branch handling during that route should be limited to:
 - integrating only a branch whose exact contents are directly required and whose validation fits the active parent-specific implementation scope;
 - otherwise preserving candidate branches for their named triggers.
 
-No listed connector audit branch implements, supersedes, or independently audits `0.6.9.3`. No candidate integration is due inside the acceptance audit unless fresh live evidence proves otherwise.
+No listed connector audit branch implements, supersedes, or independently audits the three `0.6.9.4` repair findings. No candidate integration is due inside the repair unless fresh live evidence proves otherwise.
 
 The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this repair.
 
