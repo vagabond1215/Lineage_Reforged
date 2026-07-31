@@ -8,11 +8,19 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `REPAIR_REQUIRED_AFTER_0.6.9.4`
+Current status: `IMPLEMENTED_PENDING_0.6.9.6_AUDIT`
 
 ## Decision
 
 The `0.6.9` parent is not accepted.
+
+`Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair` is implemented with reported local evidence of 26/26 focused persistence tests, 133/133 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed repair files.
+
+The implementation requires one pending receipt, exact nonconflicting known-settlement authority, one stable original defeat ledger entry, and one deterministic superseding repair entry. It also proves completion effects once and explicit publication afterward.
+
+This implementation does not accept its own parent. Independent acceptance is assigned to:
+
+`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
 
 `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit` independently preserved the reported 23/23 focused tests, 130/130 prescribed tests, 209-module production build, and bounded TypeScript posture. It nevertheless proved all three post-commit audit targets fail:
 
@@ -20,11 +28,11 @@ The `0.6.9` parent is not accepted.
 2. a current-location `settlementId` backed only by a known non-settlement location is accepted as safe recovery authority;
 3. completion appends no repair/correction authority-ledger provenance.
 
-The required exact repair is:
+The completed exact repair is:
 
 `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
 
-The Ashen Reef survey receipt decision remains blocked. Parent acceptance requires implementation of `0.6.9.5` followed by a separate independent audit.
+The Ashen Reef survey receipt decision remains blocked. Parent acceptance requires the separate `0.6.9.6` audit.
 
 `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is implemented at `13b79279d07f6e1d06bf44b5b6ddba011694d57c` with reported local evidence of 23/23 focused persistence tests, 130/130 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed production files. The implementation adds a durable production new-campaign attempt coordinator, account-and-slot recovery collision authority, and a reachable validated exactly-once pending-defeat repair owner.
 
@@ -54,9 +62,13 @@ The completed independent route was:
 
 `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`
 
-The active repair route is:
+The completed repair route is:
 
 `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
+
+The active independent route is:
+
+`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
 
 The Ashen Reef survey receipt decision remains blocked until the repair is independently accepted.
 
@@ -153,9 +165,11 @@ The audit must also prove HP, Stamina, recovery ticks, relocation, Chronicle, no
 
 Fresh executable evidence decided all three as blocking violations. The audit constructed multiple pending receipts, a current-location ruin masquerading through `settlementId`, and a valid repair whose ledger remained unchanged. No target is waived or deferred.
 
-## Required `0.6.9.5` Repair And Successor Evidence
+`0.6.9.5` reports implementation closure for all three: unique pending-receipt admission at both owners, shared exact settlement validation, and one deterministic superseding ledger entry. `0.6.9.6` must decide that closure independently.
 
-The repair and its independent successor audit must cover:
+## Required `0.6.9.6` Independent Evidence
+
+The independent audit must cover:
 
 - the actual character-creation handler or extracted production coordinator under injected post-head address failure;
 - retry and restart reusing the original character, campaign, continuity, artifact, publication, slot, and consumer plan;
@@ -171,14 +185,14 @@ The repair and its independent successor audit must cover:
 - duplicate completion replay and conflicting evidence;
 - preservation of every existing `0.6.9.2` and `0.6.9.3` test and build gate.
 
-The repair must also prove multiple-pending rejection is order-independent and side-effect-free, current-location authority requires exact known settlement evidence, the original defeat ledger entry is preserved, and exactly one deterministic superseding repair entry is appended.
+The audit must prove multiple-pending rejection is order-independent and side-effect-free, current-location authority requires exact known settlement evidence, the original defeat ledger entry is preserved, and exactly one deterministic superseding repair entry is appended.
 
 ## Branch And PR Review
 
 The completed `0.6.9.3` run reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
 
-`0.6.9.4` refreshed these facts after fetch/prune: one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. No disposition or lifecycle action changed. `0.6.9.5` must refresh them again before implementation.
+`0.6.9.5` refreshed these facts after fetch/prune: one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. No disposition or lifecycle action changed. `0.6.9.6` must refresh them again before audit.
 
 ## Next Run
 
-`Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
+`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`

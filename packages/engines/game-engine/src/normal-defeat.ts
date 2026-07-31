@@ -18,54 +18,155 @@ function cloneSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
   return structuredClone(snapshot);
 }
 
-function resolveCampaignStartSettlement(snapshot: SaveSnapshot): string | null {
-  const startFlag = snapshot.playerState.flags.find(
+function readCampaignStartSettlement(snapshot: SaveSnapshot): string | null {
+  const startFlags = snapshot.playerState.flags.filter(
     (flag) =>
       flag.startsWith("player.start.") &&
       !flag.startsWith("player.start_authority.") &&
       !flag.startsWith("player.start_mode.")
   );
+  if (startFlags.length > 1) {
+    throw new Error(
+      "Normal defeat recovery campaign-start settlement authority is conflicting."
+    );
+  }
 
-  return startFlag?.slice("player.start.".length) || null;
+  return startFlags[0]?.slice("player.start.".length) ?? null;
 }
 
-function listSafeRecoveryDestinationIds(snapshot: SaveSnapshot): string[] {
-  const knownSettlements = snapshot.sessionState.knownLocations
+function normalizeRecoveryDestinationId(
+  value: string | null | undefined,
+  sourceLabel: string
+): string | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  const normalized = value.trim();
+  if (!normalized || normalized !== value) {
+    throw new Error(
+      `Normal defeat recovery ${sourceLabel} settlement authority is malformed.`
+    );
+  }
+  return normalized;
+}
+
+function requireKnownSafeSettlement(
+  snapshot: SaveSnapshot,
+  destinationId: string,
+  sourceLabel: string
+): string {
+  const matches = snapshot.sessionState.knownLocations.filter(
+    (location) =>
+      location.settlementId?.trim() === destinationId
+  );
+  if (
+    matches.length !== 1 ||
+    matches[0]!.known !== true ||
+    matches[0]!.type !== "settlement" ||
+    matches[0]!.settlementId !== destinationId
+  ) {
+    throw new Error(
+      `Normal defeat recovery ${sourceLabel} '${destinationId}' is not an authoritative known safe settlement.`
+    );
+  }
+  return destinationId;
+}
+
+function resolveCurrentRecoverySettlement(
+  snapshot: SaveSnapshot
+): string | null {
+  const current = normalizeRecoveryDestinationId(
+    snapshot.playerState.location.settlementId,
+    "current-location"
+  );
+  return current
+    ? requireKnownSafeSettlement(snapshot, current, "current-location")
+    : null;
+}
+
+function resolveCampaignStartRecoverySettlement(
+  snapshot: SaveSnapshot
+): string | null {
+  const campaignStart = normalizeRecoveryDestinationId(
+    readCampaignStartSettlement(snapshot),
+    "campaign-start"
+  );
+  return campaignStart
+    ? requireKnownSafeSettlement(
+        snapshot,
+        campaignStart,
+        "campaign-start settlement"
+      )
+    : null;
+}
+
+function listKnownSafeRecoverySettlements(
+  snapshot: SaveSnapshot
+): string[] {
+  const candidates = snapshot.sessionState.knownLocations
     .filter(
       (location) =>
         location.known === true &&
         location.type === "settlement" &&
-        Boolean(location.settlementId?.trim())
+        location.settlementId !== null &&
+        location.settlementId !== undefined
     )
-    .map((location) => location.settlementId!.trim());
-  const candidates = [
-    snapshot.playerState.location.settlementId?.trim() || null,
-    resolveCampaignStartSettlement(snapshot),
-    ...knownSettlements
-  ].filter((candidate): candidate is string => Boolean(candidate));
-  return [...new Set(candidates)].sort();
+    .map((location) =>
+      normalizeRecoveryDestinationId(
+        location.settlementId,
+        "known-location"
+      )
+    )
+    .filter((candidate): candidate is string => candidate !== null);
+  return [...new Set(candidates)]
+    .map((candidate) =>
+      requireKnownSafeSettlement(
+        snapshot,
+        candidate,
+        "destination"
+      )
+    )
+    .sort();
 }
 
 export function resolvePendingNormalDefeatRecoveryDestination(
   snapshot: SaveSnapshot,
   explicitDestinationId?: string | null
 ): string {
-  const safeDestinationIds = listSafeRecoveryDestinationIds(snapshot);
-  const requested = explicitDestinationId?.trim();
-  if (explicitDestinationId !== undefined && !requested) {
+  const currentSettlement =
+    resolveCurrentRecoverySettlement(snapshot);
+  const requested = normalizeRecoveryDestinationId(
+    explicitDestinationId,
+    "destination"
+  );
+  if (requested) {
+    return requireKnownSafeSettlement(
+      snapshot,
+      requested,
+      "destination"
+    );
+  }
+  if (explicitDestinationId !== undefined) {
     throw new Error(
       "Normal defeat recovery destination is malformed."
     );
   }
-  if (requested) {
-    if (!safeDestinationIds.includes(requested)) {
-      throw new Error(
-        `Normal defeat recovery destination '${requested}' is not an authoritative known safe settlement.`
-      );
-    }
-    return requested;
+  if (currentSettlement) {
+    return currentSettlement;
   }
-  const destinationId = safeDestinationIds[0];
+  const campaignStartSettlement =
+    resolveCampaignStartRecoverySettlement(snapshot);
+  if (campaignStartSettlement) {
+    return campaignStartSettlement;
+  }
+  const knownSettlements =
+    listKnownSafeRecoverySettlements(snapshot);
+  if (knownSettlements.length > 1) {
+    throw new Error(
+      "Normal defeat recovery has multiple authoritative known safe settlements and no accepted precedence."
+    );
+  }
+  const destinationId = knownSettlements[0];
   if (!destinationId) {
     throw new Error(
       "Normal defeat recovery has no authoritative known safe settlement."
@@ -96,7 +197,7 @@ function resolveDestination(
     return { id: currentSettlement, source: "current_settlement" };
   }
 
-  const campaignStart = resolveCampaignStartSettlement(snapshot);
+  const campaignStart = readCampaignStartSettlement(snapshot);
   if (campaignStart) {
     return { id: campaignStart, source: "campaign_start" };
   }
@@ -124,9 +225,63 @@ export function repairPendingNormalDefeat(
   snapshot: SaveSnapshot,
   explicitDestinationId?: string | null
 ): NormalDefeatResolution {
-  const pending = findPendingNormalDefeat(snapshot);
-  if (!pending) {
-    throw new Error("Normal defeat recovery repair requires a pending receipt.");
+  const pendingReceipts = (
+    snapshot.normalDefeatReceipts ?? []
+  ).filter((receipt) => receipt.posture === "recovery_pending");
+  if (pendingReceipts.length !== 1) {
+    throw new Error(
+      `Normal defeat recovery repair requires exactly one pending receipt; found ${pendingReceipts.length}.`
+    );
+  }
+  const pending = pendingReceipts[0]!;
+  const receiptMatches = (
+    snapshot.normalDefeatReceipts ?? []
+  ).filter((receipt) => receipt.receiptId === pending.receiptId);
+  const originalLedgerMatches = (
+    snapshot.authorityLedger?.entries ?? []
+  ).filter(
+    (entry) =>
+      entry.entryId === pending.receiptId &&
+      entry.kind === "normal_defeat" &&
+      entry.sourceId === pending.sourceMutationId &&
+      entry.supersedesEntryId === undefined
+  );
+  const repairLedgerEntryId =
+    `normal_defeat_recovery.${pending.receiptId}`;
+  const retainedRepairEntries = (
+    snapshot.authorityLedger?.entries ?? []
+  ).filter(
+    (entry) =>
+      entry.entryId === repairLedgerEntryId ||
+      entry.supersedesEntryId === pending.receiptId
+  );
+  const chronicleMatches =
+    snapshot.sessionState.chronicle.filter(
+      (entry) => entry.id === pending.chronicleEntryId
+    );
+  const notificationMatches =
+    snapshot.sessionState.notifications.filter(
+      (entry) => entry.id === pending.notificationId
+    );
+  const campaignIdentity = snapshot.campaignIdentity;
+  if (
+    !campaignIdentity ||
+    pending.campaignId !== campaignIdentity.campaignId ||
+    pending.continuityId !== campaignIdentity.continuityId ||
+    pending.characterId !== campaignIdentity.characterId ||
+    pending.rulesVersion !== 2 ||
+    pending.policyRevision !== 1 ||
+    pending.recoveryTicks !== 0 ||
+    pending.destinationId !== null ||
+    receiptMatches.length !== 1 ||
+    originalLedgerMatches.length !== 1 ||
+    retainedRepairEntries.length !== 0 ||
+    chronicleMatches.length !== 1 ||
+    notificationMatches.length !== 1
+  ) {
+    throw new Error(
+      "Normal defeat recovery repair provenance is missing, duplicated, or conflicting."
+    );
   }
   const destinationId = resolvePendingNormalDefeatRecoveryDestination(
     snapshot,
@@ -187,6 +342,20 @@ export function repairPendingNormalDefeat(
           }
         : entry
     );
+  nextSnapshot.authorityLedger = {
+    version: 1,
+    entries: [
+      ...(nextSnapshot.authorityLedger?.entries ?? []),
+      {
+        entryId: repairLedgerEntryId,
+        kind: "normal_defeat",
+        sourceId:
+          `mutation.recovery_repair.${pending.receiptId}`,
+        acceptedAtTick: nextSnapshot.clock.tick,
+        supersedesEntryId: pending.receiptId
+      }
+    ]
+  };
 
   return {
     snapshot: nextSnapshot,

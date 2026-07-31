@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, parent acceptance audit, and failure-pattern guardrail register are refreshed through `Version 0.6.9.4`.
+The current prompt, handoff, output, historical register, parent acceptance audit, and failure-pattern guardrail register are refreshed through `Version 0.6.9.5`.
 
-The `0.6.9` parent is not accepted. Exact support implementation `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` remains green at its inherited gates, but `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit` independently proved three remaining defects. `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair` is active. The unversioned Ashen Reef survey receipt-foundation decision remains blocked until the repair is independently accepted.
+The `0.6.9` parent is not accepted. `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit` proved three remaining defects, and `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair` reports them implemented with complete local gates. `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` is active. The unversioned Ashen Reef survey receipt-foundation decision remains blocked until that audit independently accepts the parent.
 
 `docs/dev/project-roadmap.md` still contains lower current-anchor wording that may describe `0.6.9.2` as accepted and the survey decision as active. `docs/dev/codex-sequenced-implementation-plan.md`, the continuity brief, backlog, and static-content program may contain the same now-stale posture. Those lower-precedence summaries do not control execution.
 
@@ -40,9 +40,10 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`;
 - latest completed support implementation: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`;
 - latest completed support audit: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
-- active repair: `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`;
-- parent `0.6.9` status: `REPAIR_REQUIRED_AFTER_0.6.9.4`;
-- survey receipt-foundation decision: blocked pending repair and independent parent acceptance;
+- latest completed repair implementation: `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`;
+- active audit: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`;
+- parent `0.6.9` status: `IMPLEMENTED_PENDING_0.6.9.6_AUDIT`;
+- survey receipt-foundation decision: blocked pending independent parent acceptance;
 - failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -60,18 +61,18 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - post-repair inspection proved the actual character-creation retry can mint a second campaign after hidden publication, pending recovery can collide with a newer same-slot address, and blocked recovery lacks a production-reachable validated completion owner;
 - `0.6.9.3` implemented those exact application-level defects without survey work or a generic workflow framework;
 - `0.6.9.4` preserved the implementation baseline but proved multiple pending receipts, unsafe current-location authority, and missing repair-ledger provenance remain blocking;
-- `0.6.9.5` must repair those three boundaries and install a separate independent acceptance audit.
+- `0.6.9.5` reports those three boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, and a passing build;
+- `0.6.9.6` must independently reconstruct receipt ambiguity, destination authority, provenance, exactly-once effects, publication, duplicate, restart, and preservation before accepting the parent.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
 ## Accepted Near-Term Order
 
-1. run `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`;
-2. independently audit that repair through `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`;
-3. only after that audit accepts the parent, run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
-4. implement only a dependency-closed survey receipt package selected by that decision;
-5. continue survey command and consequence-adapter work only after receipt acceptance;
-6. keep `0.7.0` behind explicit representative-loop evidence.
+1. independently audit the repair through `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`;
+2. only after that audit accepts the parent, run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
+3. implement only a dependency-closed survey receipt package selected by that decision;
+4. continue survey command and consequence-adapter work only after receipt acceptance;
+5. keep `0.7.0` behind explicit representative-loop evidence.
 
 ## Maintenance Rule
 

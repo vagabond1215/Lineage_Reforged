@@ -11,7 +11,9 @@ import {
   initializeTargetCampaignSnapshot,
   isTargetCampaignSnapshot,
   mapLegacyDifficulty,
+  repairPendingNormalDefeat,
   recordCampaignPublicationConsumer,
+  resolvePendingNormalDefeatRecoveryDestination,
   resolveNormalDefeat
 } from "../../packages/engines/game-engine/src/index.ts";
 import { serializeSnapshot } from "../../packages/shared/persistence/src/index.ts";
@@ -122,6 +124,39 @@ function createTargetSnapshot(accountId) {
     createLegacySnapshot(accountId),
     { source: "new_campaign" }
   );
+}
+
+function createRecoveryLocation(
+  settlementId,
+  type = "settlement",
+  known = true
+) {
+  return {
+    id: `location.${settlementId}.${type}`,
+    name: settlementId,
+    regionLabel: "Recovery Test",
+    settlementId,
+    regionId: "region.recovery_test",
+    type,
+    x: 1,
+    y: 1,
+    note: "Recovery authority fixture.",
+    known
+  };
+}
+
+function createPendingDefeatSnapshot(accountId, sourceMutationId) {
+  const source = createTargetSnapshot(accountId);
+  source.playerState.location.settlementId = null;
+  source.playerState.flags = source.playerState.flags.filter(
+    (flag) => !flag.startsWith("player.start.")
+  );
+  source.sessionState.knownLocations = [];
+  source.playerState.resources.hp.current = 0;
+  return resolveNormalDefeat(source, {
+    sourceMutationId,
+    sourceKind: "accepted_mutation"
+  }).snapshot;
 }
 
 function createCompleteCharacterForm(playerName = "Retry Test") {
@@ -438,6 +473,18 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
   );
   const pendingReceipt = admitted.snapshot.normalDefeatReceipts[0];
   assert.equal(pendingReceipt.posture, "recovery_pending");
+  const beforeRepair = {
+    hp: admitted.snapshot.playerState.resources.hp.current,
+    stamina:
+      admitted.snapshot.playerState.resources.stamina.current,
+    tick: admitted.snapshot.clock.tick,
+    totalPlayTicks:
+      admitted.snapshot.playerState.saveMeta.totalPlayTicks,
+    chronicleCount: admitted.snapshot.sessionState.chronicle.length,
+    notificationCount:
+      admitted.snapshot.sessionState.notifications.length,
+    sessionRevision: admitted.control.sessionRevision
+  };
 
   const ordinary = structuredClone(admitted.snapshot);
   ordinary.playerState.currency.copper += 1;
@@ -494,6 +541,50 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
     repaired.snapshot.clock.tick,
     admitted.snapshot.clock.tick + 4
   );
+  assert.equal(
+    repaired.snapshot.playerState.resources.hp.current,
+    beforeRepair.hp
+  );
+  assert.equal(
+    repaired.snapshot.playerState.resources.stamina.current,
+    beforeRepair.stamina
+  );
+  assert.equal(
+    repaired.snapshot.playerState.saveMeta.totalPlayTicks,
+    beforeRepair.totalPlayTicks + 4
+  );
+  assert.equal(
+    repaired.snapshot.sessionState.chronicle.length,
+    beforeRepair.chronicleCount
+  );
+  assert.equal(
+    repaired.snapshot.sessionState.notifications.length,
+    beforeRepair.notificationCount
+  );
+  assert.equal(
+    repaired.control.sessionRevision,
+    beforeRepair.sessionRevision + 1
+  );
+  const originalLedgerEntries =
+    repaired.snapshot.authorityLedger.entries.filter(
+      (entry) => entry.entryId === pendingReceipt.receiptId
+    );
+  const repairLedgerEntries =
+    repaired.snapshot.authorityLedger.entries.filter(
+      (entry) =>
+        entry.supersedesEntryId === pendingReceipt.receiptId
+    );
+  assert.equal(originalLedgerEntries.length, 1);
+  assert.equal(repairLedgerEntries.length, 1);
+  assert.deepEqual(repairLedgerEntries[0], {
+    entryId:
+      `normal_defeat_recovery.${pendingReceipt.receiptId}`,
+    kind: "normal_defeat",
+    sourceId:
+      `mutation.recovery_repair.${pendingReceipt.receiptId}`,
+    acceptedAtTick: repaired.snapshot.clock.tick,
+    supersedesEntryId: pendingReceipt.receiptId
+  });
 
   const laterSnapshot = structuredClone(repaired.snapshot);
   laterSnapshot.playerState.currency.copper += 1;
@@ -512,6 +603,14 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
   assert.equal(duplicateRepair.snapshot, later.snapshot);
   assert.equal(duplicateRepair.control, later.control);
   assert.equal(duplicateRepair.resultId, repaired.resultId);
+  assert.equal(
+    duplicateRepair.snapshot.authorityLedger.entries.filter(
+      (entry) =>
+        entry.entryId === pendingReceipt.receiptId ||
+        entry.supersedesEntryId === pendingReceipt.receiptId
+    ).length,
+    2
+  );
 
   withMockWindow((storage) => {
     const persistedSource = createTargetSnapshot(
@@ -522,6 +621,9 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
       persistedSource.playerState.flags.filter(
         (flag) => !flag.startsWith("player.start.")
       );
+    persistedSource.sessionState.knownLocations = [
+      createRecoveryLocation("settlement.loaded_repair")
+    ];
     const published = publishSave(
       persistedSource.accountId,
       "slot-1",
@@ -577,7 +679,250 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
       ).reason,
       "recovery_pending"
     );
+    const completed =
+      completePendingNormalDefeatRecovery(
+        loaded.sessionControl,
+        loaded.snapshot,
+        "settlement.loaded_repair"
+      );
+    const explicitlySaved = publishSave(
+      persistedSource.accountId,
+      "slot-1",
+      completed.snapshot,
+      buildSaveMetadata("slot-1", completed.snapshot),
+      { sessionControl: completed.control }
+    );
+    assert.ok(explicitlySaved.publication);
+    const completedReceipt =
+      completed.snapshot.normalDefeatReceipts[0];
+    assert.equal(
+      explicitlySaved.snapshot.authorityLedger.entries.filter(
+        (entry) =>
+          entry.entryId === completedReceipt.receiptId ||
+          entry.supersedesEntryId === completedReceipt.receiptId
+      ).length,
+      2
+    );
   });
+});
+
+test("pending-defeat completion rejects multiple receipts before any effect", () => {
+  const first = createPendingDefeatSnapshot(
+    "account.multiple_pending_defeats",
+    "mutation.multiple_pending.first"
+  );
+  first.playerState.resources.hp.current = 0;
+  const multiple = resolveNormalDefeat(first, {
+    sourceMutationId: "mutation.multiple_pending.second",
+    sourceKind: "accepted_mutation"
+  }).snapshot;
+  multiple.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.multiple_pending_safe")
+  ];
+  const control = createCampaignSessionControl({
+    accountId: multiple.accountId,
+    campaignId: multiple.campaignIdentity.campaignId,
+    artifactId: "artifact.multiple_pending",
+    publicationId: "publication.multiple_pending",
+    artifactRevision: 1,
+    continuityId: multiple.campaignIdentity.continuityId,
+    headArtifactId: "artifact.multiple_pending",
+    headRevision: 1
+  });
+  const reversed = structuredClone(multiple);
+  reversed.normalDefeatReceipts.reverse();
+  const expectedError =
+    /requires exactly one pending receipt; found 2/;
+
+  for (const candidate of [multiple, reversed]) {
+    const before = serializeSnapshot(candidate);
+    assert.throws(
+      () =>
+        completePendingNormalDefeatRecovery(
+          control,
+          candidate,
+          "settlement.multiple_pending_safe"
+        ),
+      expectedError
+    );
+    assert.throws(
+      () =>
+        repairPendingNormalDefeat(
+          candidate,
+          "settlement.multiple_pending_safe"
+        ),
+      expectedError
+    );
+    assert.equal(serializeSnapshot(candidate), before);
+    assert.equal(control.sessionRevision, 1);
+    assert.equal(control.retainedMutationResults.length, 0);
+  }
+});
+
+test("pending-defeat repair rejects missing duplicate and conflicting provenance", () => {
+  const pending = createPendingDefeatSnapshot(
+    "account.recovery_provenance_conflict",
+    "mutation.recovery_provenance_conflict"
+  );
+  pending.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.provenance_safe")
+  ];
+  const receipt = pending.normalDefeatReceipts[0];
+
+  const missingLedger = structuredClone(pending);
+  missingLedger.authorityLedger.entries = [];
+  assert.throws(
+    () =>
+      repairPendingNormalDefeat(
+        missingLedger,
+        "settlement.provenance_safe"
+      ),
+    /provenance is missing, duplicated, or conflicting/
+  );
+
+  const duplicateLedger = structuredClone(pending);
+  duplicateLedger.authorityLedger.entries.push(
+    structuredClone(duplicateLedger.authorityLedger.entries[0])
+  );
+  assert.throws(
+    () =>
+      repairPendingNormalDefeat(
+        duplicateLedger,
+        "settlement.provenance_safe"
+      ),
+    /provenance is missing, duplicated, or conflicting/
+  );
+
+  const conflictingReceipt = structuredClone(pending);
+  conflictingReceipt.normalDefeatReceipts[0].campaignId =
+    "campaign.conflicting";
+  assert.throws(
+    () =>
+      repairPendingNormalDefeat(
+        conflictingReceipt,
+        "settlement.provenance_safe"
+      ),
+    /provenance is missing, duplicated, or conflicting/
+  );
+
+  const retainedCorrection = structuredClone(pending);
+  retainedCorrection.authorityLedger.entries.push({
+    entryId: `normal_defeat_recovery.${receipt.receiptId}`,
+    kind: "normal_defeat",
+    sourceId:
+      `mutation.recovery_repair.${receipt.receiptId}`,
+    acceptedAtTick: retainedCorrection.clock.tick,
+    supersedesEntryId: receipt.receiptId
+  });
+  assert.throws(
+    () =>
+      repairPendingNormalDefeat(
+        retainedCorrection,
+        "settlement.provenance_safe"
+      ),
+    /provenance is missing, duplicated, or conflicting/
+  );
+});
+
+test("pending-defeat destinations require exact nonconflicting settlement authority", () => {
+  const pending = createPendingDefeatSnapshot(
+    "account.recovery_destination_authority",
+    "mutation.recovery_destination_authority"
+  );
+  const safe = createRecoveryLocation(
+    "settlement.recovery_safe"
+  );
+  pending.sessionState.knownLocations = [safe];
+
+  assert.equal(
+    resolvePendingNormalDefeatRecoveryDestination(
+      pending,
+      "settlement.recovery_safe"
+    ),
+    "settlement.recovery_safe"
+  );
+  const automatic = structuredClone(pending);
+  automatic.playerState.location.settlementId =
+    "settlement.recovery_safe";
+  assert.equal(
+    resolvePendingNormalDefeatRecoveryDestination(automatic),
+    "settlement.recovery_safe"
+  );
+
+  const malformedValues = [
+    "",
+    " ",
+    " settlement.recovery_safe",
+    "settlement.recovery_safe "
+  ];
+  for (const value of malformedValues) {
+    const candidate = structuredClone(pending);
+    candidate.playerState.location.settlementId = value;
+    assert.throws(
+      () =>
+        resolvePendingNormalDefeatRecoveryDestination(candidate),
+      /current-location settlement authority is malformed/
+    );
+  }
+  assert.throws(
+    () =>
+      resolvePendingNormalDefeatRecoveryDestination(
+        pending,
+        "settlement.recovery_safe "
+      ),
+    /destination settlement authority is malformed/
+  );
+
+  for (const type of ["ruin", "wilderness"]) {
+    const candidate = structuredClone(pending);
+    candidate.playerState.location.settlementId =
+      `settlement.unsafe_${type}`;
+    candidate.sessionState.knownLocations = [
+      createRecoveryLocation(
+        `settlement.unsafe_${type}`,
+        type
+      ),
+      safe
+    ];
+    assert.throws(
+      () =>
+        resolvePendingNormalDefeatRecoveryDestination(candidate),
+      /current-location.*not an authoritative known safe settlement/
+    );
+  }
+
+  const unknown = structuredClone(pending);
+  unknown.playerState.location.settlementId =
+    "settlement.unknown";
+  assert.throws(
+    () =>
+      resolvePendingNormalDefeatRecoveryDestination(unknown),
+    /current-location.*not an authoritative known safe settlement/
+  );
+
+  const conflicting = structuredClone(pending);
+  conflicting.playerState.location.settlementId =
+    "settlement.conflicting";
+  conflicting.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.conflicting"),
+    createRecoveryLocation("settlement.conflicting", "ruin")
+  ];
+  assert.throws(
+    () =>
+      resolvePendingNormalDefeatRecoveryDestination(conflicting),
+    /current-location.*not an authoritative known safe settlement/
+  );
+
+  const ambiguous = structuredClone(pending);
+  ambiguous.sessionState.knownLocations = [
+    safe,
+    createRecoveryLocation("settlement.recovery_other")
+  ];
+  assert.throws(
+    () =>
+      resolvePendingNormalDefeatRecoveryDestination(ambiguous),
+    /multiple authoritative known safe settlements/
+  );
 });
 
 test("version 7 publication verifies head state and unchanged non-head save copies identity", () =>

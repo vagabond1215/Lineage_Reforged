@@ -2,7 +2,6 @@ import type { SaveSnapshot } from "../../../shared/types/src/index.js";
 import { serializeSnapshot } from "../../../shared/persistence/src/index.js";
 import { createAuthorityId } from "./campaign-rules.js";
 import {
-  findPendingNormalDefeat,
   hasPendingNormalDefeat,
   repairPendingNormalDefeat,
   resolvePendingNormalDefeatRecoveryDestination,
@@ -347,8 +346,16 @@ export function completePendingNormalDefeatRecovery(
   snapshot: SaveSnapshot,
   explicitDestinationId?: string | null
 ): CampaignMutationAdmission {
-  const pending = findPendingNormalDefeat(snapshot);
   const receipts = snapshot.normalDefeatReceipts ?? [];
+  const pendingReceipts = receipts.filter(
+    (receipt) => receipt.posture === "recovery_pending"
+  );
+  if (pendingReceipts.length > 1) {
+    throw new Error(
+      `Normal defeat recovery completion requires exactly one pending receipt; found ${pendingReceipts.length}.`
+    );
+  }
+  const pending = pendingReceipts[0] ?? null;
   const latestReceipt = receipts[receipts.length - 1] ?? null;
   const receipt = pending ?? latestReceipt;
   if (!receipt) {
