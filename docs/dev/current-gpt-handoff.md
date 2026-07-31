@@ -8,7 +8,7 @@ Date: 2026-07-31
 - Latest completed support implementation: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
 - Latest completed support audit: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`.
 - Latest completed repair implementation: `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`.
-- Latest completed acceptance audit: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
+- Latest completed acceptance audit: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`, committed at `0c69ef295874eb6227d2062e3a6b2d9db97a9d61`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
@@ -18,9 +18,9 @@ Date: 2026-07-31
 - Parent `0.6.9` status: `REPAIR_REQUIRED_AFTER_0.6.9.6`.
 - Active route: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
 - Active-route class: parent-specific support suffix.
-- Mandatory green successor: a separate independent parent acceptance audit installed by `0.6.9.7`.
+- Mandatory green successor: `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`.
 - The unversioned Ashen Reef survey occurrence/result/consequence receipt decision remains blocked until the repair is independently accepted.
-- The durable failure-pattern register is active and the current prompt identifies the exact applicable pattern IDs.
+- The durable failure-pattern register is active and the current prompt requires `FP-001` through `FP-010`.
 
 ## Current Planning Precedence
 
@@ -71,13 +71,19 @@ Startup recovery now inspects at account-and-slot scope, preserves a different v
 
 The launcher now calls a campaign-admitted exactly-once repair owner. Recovery destinations must be authoritative current, campaign-start, or known settlement facts; invalid locations remain blocked.
 
-`0.6.9.4` proved the implementation does not yet satisfy that claim at all boundaries:
+`0.6.9.4` proved the implementation did not satisfy that claim at all boundaries:
 
-- multiple pending receipts select the first receipt and partially repair;
-- a current-location id backed by a `ruin` is accepted;
-- repair completion appends no correction/supersession ledger entry.
+- multiple pending receipts selected the first receipt and partially repaired;
+- a current-location id backed by a `ruin` was accepted;
+- repair completion appended no correction/supersession ledger entry.
 
-`0.6.9.5` reports those boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, a passing 209-module build, and explicit-save-after-repair evidence. Independent `0.6.9.6` preserved that baseline and the three exact repairs but proved three further gaps: initial automatic current/start destinations bypass exact settlement validation, completed repair cannot return retained duplicate state after restart, and original receipt resource/tick plus ledger-tick facts are not validated.
+`0.6.9.5` reports those boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, a passing 209-module build, and explicit-save-after-repair evidence. Independent `0.6.9.6` preserved that baseline and the three exact repairs but proved three further gaps:
+
+- initial automatic current/start destinations bypass exact settlement validation;
+- completed repair cannot return retained duplicate state after restart;
+- original receipt resource/tick plus ledger-tick facts are not validated.
+
+The `0.6.9.7` prompt was connector-hardened after the audit so invalid automatic current/start authority cannot be “repaired” by deleting defeat truth. Such cases must create one retained `recovery_pending` defeat result with restored HP/Stamina, receipt, original ledger entry, Chronicle, and notification, but no relocation or recovery-time advancement. A malformed or invalid explicitly supplied destination must reject before partial effects and may not fall through.
 
 The controlling audit is:
 
@@ -85,11 +91,7 @@ The controlling audit is:
 
 ## Failure-Pattern Guardrail Posture
 
-The active implementation must report evidence for:
-
-- `FP-001` through `FP-006`;
-- `FP-008` through `FP-010`;
-- `FP-007` only if a large documentation file is rewritten.
+The active implementation must report evidence for `FP-001` through `FP-010`.
 
 The highest-risk requirements are real-caller testing, failure-boundary and finding-to-test matrices, caller-state loss and restart, account-and-slot collision scope, stale-projection protection, reachable validated blocked-state completion, semantic branch review, exact head terminology, and full finding reconciliation.
 
@@ -108,7 +110,7 @@ The current survey implementation still has four material defects:
 
 General activity resolution, uncertainty, result bands, and balance changes are not required for the deterministic parity slice.
 
-Do not run the survey receipt decision while `0.6.9.7` and its independent successor audit remain open.
+Do not run the survey receipt decision while `0.6.9.7` and `0.6.9.8` remain open.
 
 ## Combat AI And Gambit Posture
 
@@ -160,13 +162,15 @@ No registered branch contributed to or overlaps the completed `0.6.9.3` repair.
 
 Run `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
 
-- Route initial automatic current and campaign-start destinations through the same exact known-safe-settlement validator used by pending completion.
-- Make completed-repair duplicate handling restart-safe and deterministic without selecting completed history by array order.
-- Validate pending receipt HP, Stamina, MP, source/resolution tick, and original ledger acceptance-tick facts before repair effects.
+- Route initial explicit, current, and campaign-start candidates through one exact known-safe-settlement validator.
+- Reject an invalid explicitly supplied destination before partial effects and never fall through from that claimed authority.
+- Resolve invalid or absent automatic current/start authority once into `recovery_pending`: retain the defeat receipt, original ledger entry, HP/Stamina restoration, Chronicle, and notification, while applying no relocation and no recovery ticks.
+- Make completed-repair duplicate handling restart-safe and deterministic through exact receipt identity, without selecting completed history by array order.
+- Validate pending receipt HP, Stamina, MP, source/resolution tick, snapshot/captured tick, and original ledger acceptance-tick facts before repair effects.
 - Preserve the accepted multiple-pending, completion-destination, original/correction ledger, exactly-once, publication, and launcher boundaries.
 - Preserve all new-campaign, slot-collision, consumer-idempotency, migration, immutable-address, and control-guard behavior.
-- Report `FP-001` through `FP-006`, `FP-008` through `FP-010`.
-- Do not accept the parent during implementation; install a separate exact independent audit.
+- Report `FP-001` through `FP-010`.
+- Do not accept the parent during implementation; install `0.6.9.8` as a separate independent audit.
 - Do not implement survey behavior or the survey receipt decision.
 
 ## Preserved Boundaries
@@ -183,7 +187,7 @@ Run `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-P
 ## Near-Term Sequence
 
 1. run `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`;
-2. run the separate independent parent audit installed by that repair;
+2. run `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`;
 3. only after that audit accepts the parent, run the unversioned survey occurrence/result/consequence receipt foundation decision;
 4. implement only a dependency-closed receipt package selected by that decision;
 5. implement the bounded survey command and accepted-only UI after receipt prerequisites close;
