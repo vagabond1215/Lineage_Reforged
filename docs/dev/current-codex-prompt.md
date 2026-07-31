@@ -1,8 +1,8 @@
-# Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit
+# Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair
 
 ## Run Identity
 
-`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
 Label class: support suffix
 
@@ -12,15 +12,17 @@ Milestone impact: `supports_current_band`
 
 Suggested commit:
 
-`docs(save): audit pending-defeat completion authority`
+`fix(save): close defeat recovery restart authority`
 
 ## Purpose
 
-Independently audit `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`.
+Repair only the three findings independently proved by `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`:
 
-Do not accept the parent from inherited totals. Reconstruct the pending-receipt ambiguity, destination-authority, correction-provenance, exactly-once effect, production-caller, publication, duplicate, and restart boundaries from fresh snapshots and storage.
+1. initial automatic defeat resolution bypasses exact current-location and campaign-start settlement validation;
+2. a completed recovery cannot return retained duplicate state after restart;
+3. pending repair accepts corrupted original resource/tick receipt facts and a conflicting original ledger acceptance tick.
 
-This run is read-only inspection and validation unless independent reproduction proves one exact remaining defect. Do not implement the Ashen Reef survey receipt decision.
+Preserve every accepted `0.6.9.2` through `0.6.9.5` boundary. Do not implement the Ashen Reef survey receipt decision and do not accept the parent during this implementation run.
 
 ## Required Reading
 
@@ -30,76 +32,102 @@ Read:
 - `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
 - `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`;
-- `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
 - `docs/dev/current-codex-output.md`;
-- `packages/shared/types/src/contracts.ts`;
-- Normal-defeat, campaign-session, save-manager, `App.tsx`, coordinator, run-lifecycle, account-publication, and focused persistence code/tests;
+- `packages/shared/types/src/contracts.ts` around campaign identity, authority ledger, Normal defeat receipts, resources, locations, and save snapshots;
+- `packages/engines/game-engine/src/normal-defeat.ts` and its JavaScript mirror;
+- `packages/engines/game-engine/src/campaign-session.ts` and its JavaScript mirror;
+- save-manager, `App.tsx`, new-campaign coordinator, account-publication, lifecycle, and focused persistence tests;
 - current handoff, historical/deferred register, planning reconciliation, branch policy, and branch register;
 - the protected integrated-gameplay readiness branch through read-only Git inspection only.
 
 ## Applicable Verification Guardrails
 
-Apply and report:
-
-- `FP-001` through `FP-006`;
-- `FP-008` through `FP-010`;
-- `FP-007` only if a large documentation file is rewritten.
+Apply and report `FP-001` through `FP-010`. Apply `FP-007` when rewriting the large current output or prompt and verify each complete replacement after writing.
 
 ## Execution Gate
 
 1. Verify clean synchronized `master`, upstream, current head, and this exact prompt.
-2. Fetch/prune and refresh all branches and open PR dispositions.
-3. Distinguish inspected base, audit starting head, any final committed head, and live post-fetch head.
-4. Independently construct every required boundary below; do not reuse the implementation run's in-memory fixtures or accept only its totals.
+2. Fetch/prune and refresh every branch and open PR disposition.
+3. Reproduce all three findings against untouched source before editing.
+4. Distinguish inspected base, implementation starting head, final committed head, and live post-fetch head.
+5. Stop and install a narrower support prompt if the required repair would change shared types, save format, dependencies, or unrelated owners.
 
-## Required Independent Boundaries
+## Finding 1 - Initial Automatic Destination Authority
 
-### Pending-receipt uniqueness
+Initial `resolveNormalDefeat(...)` automatic destination selection must use the same exact settlement-evidence rules as pending recovery completion.
 
-- Construct two distinct pending receipts and test original and reversed receipt-array order.
-- Prove both the production completion owner and lower-level repair reject with the same stable diagnostic.
-- Prove rejection occurs before destination selection, cloning, receipt mutation, clock/resource/relocation changes, Chronicle/notification changes, ledger append, retained mutation result, or session revision.
-- Construct zero pending receipts, one pending receipt, and completed historical receipts; verify no first/last-array fallback creates authority.
+Required behavior:
 
-### Settlement authority
+- explicit context, current location, and campaign-start candidates require exact, unpadded, nonblank ids;
+- each accepted candidate must have exactly one matching `known === true`, `type === "settlement"` location record with an exact `settlementId`;
+- unknown, known-false, non-settlement, duplicate, or contradictory evidence fails closed;
+- corrupt current authority cannot fall through to campaign-start or another known settlement;
+- corrupt campaign-start authority cannot fall through;
+- valid precedence remains explicit context, valid current settlement, valid campaign-start settlement, then `recovery_pending`;
+- initial resolution must not add the sole-known-settlement fallback used only by bounded pending completion;
+- no invalid initial destination may produce four recovery ticks, relocation, or a playable receipt.
 
-- Test blank, whitespace-padded, unknown, known non-settlement, known-but-false, duplicate, and contradictory current-location ids.
-- Test the same malformed/unsafe classes as explicit destinations.
-- Independently prove explicit and automatic validation use the same accepted known-settlement evidence.
-- Prove one exact valid current settlement, one exact valid campaign-start settlement, and one exact sole known-settlement fallback.
-- Prove corrupt current authority does not fall through to another otherwise-safe candidate.
-- Prove multiple safe fallback settlements without current/start precedence fail closed independent of location-array order.
+Refactor only enough internal code to share validation and avoid two subtly different authority rules.
 
-### Provenance and effects
+## Finding 2 - Restart-Safe Duplicate Completion
 
-- Require exactly one receipt matching campaign, continuity, character, rules, policy, pending posture, and original effect facts.
-- Require exactly one original `normal_defeat` ledger entry with matching source mutation.
-- Reject missing, duplicate, conflicting, or already-superseded provenance before effects.
-- Complete one valid pending receipt and prove the original receipt and original ledger entry remain stable.
-- Prove exactly one deterministic `normal_defeat_recovery.<receiptId>` ledger entry exists, uses the stable recovery mutation source, and supersedes the original entry.
-- Prove HP and Stamina were restored only at original defeat resolution; completion does not restore them again.
-- Prove completion advances four ticks, relocates, updates the retained receipt, Chronicle, notification, ledger, and session revision exactly once.
-- Submit duplicate repair after a later accepted mutation and after restart; prove current snapshot/control are not rolled back and no second effect or ledger entry appears.
+A completed repair must carry enough durable evidence for an exact replay after save/load or process restart.
 
-### Production and publication
+Required behavior:
 
-- Exercise the completion owner called by the launcher and inspect the actual `App.tsx` caller.
-- Prove invalid or ambiguous authority remains blocked with diagnostic state.
-- Prove ordinary mutation, manual save, quick-save, and retirement remain blocked before repair.
-- Prove repaired state remains unpublished until an explicit save.
-- Perform a normal explicit save and reload after repair; verify the correction entry, receipt, projections, session facts, and exactly-once effects survive roundtrip.
-- Preserve the production new-campaign coordinator, pre-head/post-head failures, caller loss, restart, changed input, account-and-slot collisions, consumer idempotency, immutable addresses, migration, control guards, and terminal behavior.
+- an exact replay identifies the intended receipt through a stable receipt identity or equivalently explicit replay evidence; never select the first or latest completed receipt by array order;
+- one exact completed receipt, original ledger entry, deterministic correction entry, campaign/continuity/character identity, destination, and source mutation must agree;
+- an exact replay returns `duplicate: true` with the current snapshot and control unchanged;
+- replay after a later accepted mutation and replay after explicit save/reload cannot roll state back, change session revision, append ledger entries, advance ticks, relocate, restore resources, or reproject Chronicle/notification;
+- missing target identity, zero matches, multiple matches, conflicting destination, conflicting correction, or ambiguous completed history fails closed with stable diagnostics;
+- ordinary production entry continues to invoke repair only when recovery is pending.
 
-## Required Matrices
+Do not persist the in-memory retained-mutation-result array or add a generic replay framework. Use the existing durable receipt and authority-ledger evidence.
 
-Provide fresh:
+## Finding 3 - Original Effect Provenance
 
-- finding-to-test matrix;
-- failure-boundary matrix;
-- receipt/provenance/effect matrix;
-- branch/PR disposition summary.
+Before repair effects, validate the pending receipt and original ledger as one internally consistent original defeat result.
 
-Green totals without those matrices are insufficient.
+At minimum validate:
+
+- campaign, continuity, character, rules, policy, source mutation, source kind, and pending posture;
+- `recoveryTicks === 0`, `destinationId === null`, and `destinationSource === "none"`;
+- integer, ordered source/resolution ticks and the pending snapshot's unchanged current tick posture;
+- `hpRestoredTo`, `staminaRestoredTo`, and `mpPreservedAt` against current resource facts, valid maxima, and the deterministic HP floor/formula where derivable;
+- exactly one original `normal_defeat` ledger entry with the same source mutation and `acceptedAtTick` equal to the original resolved tick;
+- exactly one matching receipt, Chronicle entry, and notification, and no retained correction/supersession entry.
+
+Corrupt any one resource fact, tick fact, ledger tick, identity, posture, receipt count, Chronicle count, notification count, or correction fact and prove rejection occurs before cloning or effects.
+
+## Required Tests
+
+Extend the focused persistence suite with executable coverage for:
+
+- initial valid explicit/current/campaign-start destinations;
+- initial blank, padded, unknown, known-false, ruin, wilderness, duplicate, contradictory, corrupt-current-with-safe-fallback, and corrupt-start cases;
+- proof invalid initial authority creates no time, relocation, receipt, projection, ledger, session, or source-snapshot effect;
+- exact duplicate completion after later mutation;
+- exact duplicate completion after explicit save/reload using stable receipt identity;
+- reversed completed-receipt and ledger ordering;
+- multiple historical repaired defeats without first/latest selection;
+- missing, unknown, and conflicting replay identity/destination/provenance;
+- corrupted HP, Stamina, MP, source tick, resolved tick, original ledger tick, identity, posture, Chronicle, notification, and correction evidence;
+- one valid pending completion still performs exactly one four-tick relocation, receipt update, Chronicle update, notification update, correction append, and session revision;
+- pending ordinary mutation, publication, manual save, quick-save, and retirement blocking;
+- production `App.tsx` caller and explicit-save-after-repair roundtrip;
+- all existing new-campaign retry, restart, slot-collision, account-consumer, migration, control, and terminal behavior.
+
+## Authorized Surface
+
+Production changes are limited to the smallest coherent subset of:
+
+- `packages/engines/game-engine/src/normal-defeat.ts`;
+- `packages/engines/game-engine/src/campaign-session.ts`;
+- their exact JavaScript re-export mirrors only if required;
+- `tests/unit/campaign-persistence-foundation.test.mjs`;
+- required current coordination documents.
+
+Do not change shared contracts, save formats, dependencies, account schemas, content, assets, generated output, or unrelated UI behavior. If a shared contract change becomes necessary, stop and report the exact blocker.
 
 ## Validation Commands
 
@@ -115,26 +143,23 @@ Run the prescribed group:
 node --test tests\simulation\save-load-roundtrip.test.mjs tests\unit\achievements.test.mjs tests\unit\account-profile-storage.test.mjs tests\unit\run-lifecycle.test.mjs tests\unit\player-travel-command.test.mjs tests\unit\player-quest-acceptance-command.test.mjs tests\unit\player-quest-tracking-command.test.mjs tests\unit\player-activity-selection-command.test.mjs tests\unit\combat-hook-support.test.mjs tests\unit\combat-spawn-foundation.test.mjs tests\unit\campaign-persistence-foundation.test.mjs
 ```
 
-Run the RPG UI production build, bounded TypeScript audit, mirror checks, `git diff --check`, and complete diff inspection. Report the repository diagnostic total and whether any diagnostic names an audited repair file; do not claim the known repository-wide baseline is green.
+Run the RPG UI production build, bounded UI TypeScript audit, mirror checks, fresh adversarial replay, `git diff --check`, and complete diff inspection. Report the TypeScript diagnostic total and whether any diagnostic names a changed repair file; do not claim the known repository-wide baseline is green.
 
-## Acceptance Decision
+## Completion Decision
 
-Accept the parent only if every original `0.6.9.1`, post-`0.6.9.2`, post-`0.6.9.3`, and post-`0.6.9.4` boundary has fresh executable closure.
+On complete implementation:
 
-On acceptance:
-
-- update the parent audit to `ACCEPTED_AFTER_REPAIR`;
-- record `0.6.9.5` as accepted by independent `0.6.9.6`;
-- report `AUDIT_ACCEPTED`;
-- unlock, but do not run, the unversioned Ashen Reef survey occurrence/result/consequence receipt foundation decision;
-- install that exact unversioned decision prompt as the next route.
-
-On failure:
-
-- report `AUDIT_REPAIR_REQUIRED`;
+- report `IMPLEMENTED_PENDING_PARENT_AUDIT`;
 - leave the parent unaccepted;
-- install the smallest exact `Version 0.6.9.7 - ...` repair prompt;
-- keep the survey route blocked.
+- update the parent audit and current coordination documents;
+- install `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit` as a separate read-only audit unless fresh evidence requires a narrower exact successor;
+- keep the Ashen Reef survey receipt decision blocked.
+
+If any finding remains:
+
+- report `IMPLEMENTATION_INCOMPLETE`;
+- do not accept or partially waive it;
+- install the smallest exact successor repair prompt.
 
 ## Scope Exclusions
 
@@ -142,23 +167,24 @@ Do not:
 
 - implement survey behavior, receipts, commands, UI, or migrations;
 - add Committed or Ironbound Stakes;
-- redesign slots, launcher, recovery UI, defeat, death, succession, injury, care, or account systems;
-- add a generic workflow, transaction, retry, correction, event, command, or replay framework;
-- add dependencies, assets, generated output, or unrelated cleanup;
+- redesign slots, launcher, recovery UI, defeat, death, succession, injury, care, account, or retirement systems;
+- add a generic workflow, transaction, replay, event, command, correction, or effect framework;
 - merge, modify, rebase, force-update, or delete protected branches;
-- merge or close PR #2.
+- merge or close PR #2;
+- perform unrelated cleanup.
 
 ## Completion Report
 
 Report:
 
-- independently reproduced boundaries and matrices;
+- pre-edit reproduction for all three findings;
+- numbered finding-to-code-to-test matrix;
+- failure-boundary and receipt/provenance/effect matrices;
 - applicable guardrail IDs and evidence;
 - exact commands and counts;
 - TypeScript posture;
 - inspected-base, starting, final, and live-head identities;
-- branch/PR lifecycle and retained review triggers;
-- remaining risks;
-- `AUDIT_ACCEPTED` or `AUDIT_REPAIR_REQUIRED`;
-- parent acceptance status;
+- branch/PR lifecycle and exact retained review triggers;
+- files changed, risks, and suggested commit;
+- `IMPLEMENTED_PENDING_PARENT_AUDIT` or `IMPLEMENTATION_INCOMPLETE`;
 - installed next route.

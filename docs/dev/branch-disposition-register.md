@@ -6,24 +6,24 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
-## 0. Version 0.6.9.5 Live Refresh
+## 0. Version 0.6.9.6 Live Refresh
 
-`Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair` fetched and pruned all refs from synchronized implementation starting head `75d2223b191dd32b9c07dcd35cf8691e04cc1e4a`.
+`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` fetched and pruned all refs from synchronized audit starting head `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`.
 
 Live result:
 
 - local branches: only synchronized `master`;
 - non-default remote branches: seventeen;
 - open pull requests: PR #2 only, head `e78dc645cfb658685be12f45f46d34b7c0da1119`, base `master`, open, non-draft, non-mergeable, and unrelated to the repair;
-- `feat/main-menu-assets`: `709 / 0`;
-- `main-menu-asset-contract-pass`: `637 / 10`, four changed paths;
-- `main-menu-refinement-pass`: `644 / 2`, two changed paths;
-- the eight `bcbe658d` connector branches: `43 / 1` each, one previously registered documentation path each;
-- the four `3006c968` connector branches: `45 / 1` each, one previously registered documentation path each;
-- `parallel/prompt-packaging-integrity-audit`: `72 / 1`, one prompt-packaging document;
-- `prep/integrated-gameplay-0-7-readiness-audit`: `125 / 2`, the two protected readiness documents.
+- `feat/main-menu-assets`: `710 / 0`;
+- `main-menu-asset-contract-pass`: `638 / 10`, four changed paths;
+- `main-menu-refinement-pass`: `645 / 2`, two changed paths;
+- the eight `bcbe658d` connector branches: `44 / 1` each, one previously registered documentation path each;
+- the four `3006c968` connector branches: `46 / 1` each, one previously registered documentation path each;
+- `parallel/prompt-packaging-integrity-audit`: `73 / 1`, one prompt-packaging document;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `126 / 2`, the two protected readiness documents.
 
-The merge bases, unique heads, and paths remain those recorded in the tables below. Fresh semantic review found no branch overlapping the pending-defeat uniqueness, destination-validation, or repair-provenance implementation. No disposition changed, no integration or deletion was due, and both protected branches remained read-only. Review triggers and retirement rules below remain controlling.
+The merge bases, unique heads, and paths remain those recorded in the tables below. Fresh semantic review found no branch overlapping the initial-defeat destination, restart-duplicate, or original-effect-provenance findings. No disposition changed, no integration or deletion was due, and both protected branches remained read-only. Review triggers and retirement rules below remain controlling.
 
 ## 1. Complete Inventory Snapshot
 
@@ -94,7 +94,7 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
 Branch handling during that route should be limited to:
 
@@ -104,7 +104,7 @@ Branch handling during that route should be limited to:
 - integrating only a branch whose exact contents are directly required and whose validation fits the active parent-specific implementation scope;
 - otherwise preserving candidate branches for their named triggers.
 
-No listed connector audit branch implements, supersedes, or independently audits the `0.6.9.5` repair. No candidate integration is due inside the acceptance audit unless fresh live evidence proves otherwise.
+No listed connector audit branch implements or supersedes the three `0.6.9.6` findings. No candidate integration is due inside the repair unless fresh live evidence proves otherwise.
 
 The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this repair.
 

@@ -8,16 +8,17 @@ Date: 2026-07-31
 - Latest completed support implementation: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`.
 - Latest completed support audit: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`.
 - Latest completed repair implementation: `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`.
+- Latest completed acceptance audit: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
 - Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
 - Parent `0.6.8` remains accepted without repair.
 - `0.7.0` readiness result: `NOT_READY`.
 - Survey owner-contract result: `ACCEPTED`.
 - Minimum save-contract result: `ACCEPTED`.
 - Dependency-closure result: `PACKAGE_READY`.
-- Parent `0.6.9` status: `IMPLEMENTED_PENDING_0.6.9.6_AUDIT`.
-- Active route: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
+- Parent `0.6.9` status: `REPAIR_REQUIRED_AFTER_0.6.9.6`.
+- Active route: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
 - Active-route class: parent-specific support suffix.
-- Mandatory green successor: the unversioned Ashen Reef survey occurrence/result/consequence receipt foundation decision, only if `0.6.9.6` accepts the parent.
+- Mandatory green successor: a separate independent parent acceptance audit installed by `0.6.9.7`.
 - The unversioned Ashen Reef survey occurrence/result/consequence receipt decision remains blocked until the repair is independently accepted.
 - The durable failure-pattern register is active and the current prompt identifies the exact applicable pattern IDs.
 
@@ -76,7 +77,7 @@ The launcher now calls a campaign-admitted exactly-once repair owner. Recovery d
 - a current-location id backed by a `ruin` is accepted;
 - repair completion appends no correction/supersession ledger entry.
 
-`0.6.9.5` reports those boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, a passing 209-module build, and explicit-save-after-repair evidence. Parent acceptance remains deferred to `0.6.9.6`.
+`0.6.9.5` reports those boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, a passing 209-module build, and explicit-save-after-repair evidence. Independent `0.6.9.6` preserved that baseline and the three exact repairs but proved three further gaps: initial automatic current/start destinations bypass exact settlement validation, completed repair cannot return retained duplicate state after restart, and original receipt resource/tick plus ledger-tick facts are not validated.
 
 The controlling audit is:
 
@@ -107,7 +108,7 @@ The current survey implementation still has four material defects:
 
 General activity resolution, uncertainty, result bands, and balance changes are not required for the deterministic parity slice.
 
-Do not run the survey receipt decision while the independent `0.6.9.6` audit remains open.
+Do not run the survey receipt decision while `0.6.9.7` and its independent successor audit remain open.
 
 ## Combat AI And Gambit Posture
 
@@ -155,17 +156,17 @@ PR #2 / `main-menu-asset-contract-pass` remains `SUPERSEDED_PRESERVE_EVIDENCE` a
 
 No registered branch contributed to or overlaps the completed `0.6.9.3` repair.
 
-## Active Acceptance-Audit Guardrails
+## Active Repair Guardrails
 
-Run `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
+Run `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
 
-- Independently reconstruct multiple pending receipts in both orders and prove production/lower-level rejection before effects.
-- Exercise explicit, current, campaign-start, sole-known, corrupt, contradictory, and ambiguous settlement authority.
-- Prove original and superseding ledger provenance, including missing/duplicate/conflicting rejection.
-- Prove every receipt, resource, time, relocation, Chronicle, notification, ledger, session, publication, duplicate, and restart boundary exactly once.
+- Route initial automatic current and campaign-start destinations through the same exact known-safe-settlement validator used by pending completion.
+- Make completed-repair duplicate handling restart-safe and deterministic without selecting completed history by array order.
+- Validate pending receipt HP, Stamina, MP, source/resolution tick, and original ledger acceptance-tick facts before repair effects.
+- Preserve the accepted multiple-pending, completion-destination, original/correction ledger, exactly-once, publication, and launcher boundaries.
 - Preserve all new-campaign, slot-collision, consumer-idempotency, migration, immutable-address, and control-guard behavior.
 - Report `FP-001` through `FP-006`, `FP-008` through `FP-010`.
-- Accept the parent only from fresh complete evidence; otherwise install the smallest exact `0.6.9.7` repair.
+- Do not accept the parent during implementation; install a separate exact independent audit.
 - Do not implement survey behavior or the survey receipt decision.
 
 ## Preserved Boundaries
@@ -181,13 +182,14 @@ Run `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Accept
 
 ## Near-Term Sequence
 
-1. run `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`;
-2. only after that independent audit accepts the parent, run the unversioned survey occurrence/result/consequence receipt foundation decision;
-3. implement only a dependency-closed receipt package selected by that decision;
-4. implement the bounded survey command and accepted-only UI after receipt prerequisites close;
-5. review and integrate candidate documentation branches at named triggers or through a dedicated branch-integration pass;
-6. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
+1. run `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`;
+2. run the separate independent parent audit installed by that repair;
+3. only after that audit accepts the parent, run the unversioned survey occurrence/result/consequence receipt foundation decision;
+4. implement only a dependency-closed receipt package selected by that decision;
+5. implement the bounded survey command and accepted-only UI after receipt prerequisites close;
+6. review and integrate candidate documentation branches at named triggers or through a dedicated branch-integration pass;
+7. reassess `0.7.0` only after the representative loop and every entry criterion are independently accepted.
 
 ## Active Prompt
 
-`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`

@@ -8,11 +8,21 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `IMPLEMENTED_PENDING_0.6.9.6_AUDIT`
+Current status: `REPAIR_REQUIRED_AFTER_0.6.9.6`
 
 ## Decision
 
 The `0.6.9` parent is not accepted.
+
+`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` independently preserved the 26/26 focused persistence tests, 133/133 prescribed tests, 209-module production build, and bounded TypeScript posture. Fresh adversarial execution nevertheless proved three blocking gaps:
+
+1. initial automatic defeat resolution still accepts a nonempty current or campaign-start settlement id without the exact known-safe-settlement validation used by pending recovery completion;
+2. a completed repair loaded after restart cannot return retained duplicate state and instead reports that recovery already completed;
+3. pending repair accepts corrupted restoration ticks/resources and a conflicting original ledger acceptance tick because those original effect facts are not validated.
+
+The exact repair is:
+
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
 `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair` is implemented with reported local evidence of 26/26 focused persistence tests, 133/133 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed repair files.
 
@@ -32,7 +42,7 @@ The completed exact repair is:
 
 `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
 
-The Ashen Reef survey receipt decision remains blocked. Parent acceptance requires the separate `0.6.9.6` audit.
+The Ashen Reef survey receipt decision remains blocked. The separate `0.6.9.6` audit completed with the further repair requirement recorded above.
 
 `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion` is implemented at `13b79279d07f6e1d06bf44b5b6ddba011694d57c` with reported local evidence of 23/23 focused persistence tests, 130/130 prescribed tests, a passing 209-module production build, and zero bounded TypeScript diagnostics naming changed production files. The implementation adds a durable production new-campaign attempt coordinator, account-and-slot recovery collision authority, and a reachable validated exactly-once pending-defeat repair owner.
 
@@ -66,9 +76,13 @@ The completed repair route is:
 
 `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`
 
-The active independent route is:
+The completed independent route is:
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
+
+The active repair route is:
+
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
 The Ashen Reef survey receipt decision remains blocked until the repair is independently accepted.
 
@@ -165,11 +179,11 @@ The audit must also prove HP, Stamina, recovery ticks, relocation, Chronicle, no
 
 Fresh executable evidence decided all three as blocking violations. The audit constructed multiple pending receipts, a current-location ruin masquerading through `settlementId`, and a valid repair whose ledger remained unchanged. No target is waived or deferred.
 
-`0.6.9.5` reports implementation closure for all three: unique pending-receipt admission at both owners, shared exact settlement validation, and one deterministic superseding ledger entry. `0.6.9.6` must decide that closure independently.
+`0.6.9.5` reports implementation closure for all three: unique pending-receipt admission at both owners, shared exact settlement validation, and one deterministic superseding ledger entry. `0.6.9.6` independently accepted those three exact repaired boundaries but found the initial-resolution, restart-duplicate, and original-effect-provenance gaps above.
 
-## Required `0.6.9.6` Independent Evidence
+## Required `0.6.9.7` Repair And Successor Evidence
 
-The independent audit must cover:
+The repair and its independent successor audit must preserve the prior evidence and additionally cover:
 
 - the actual character-creation handler or extracted production coordinator under injected post-head address failure;
 - retry and restart reusing the original character, campaign, continuity, artifact, publication, slot, and consumer plan;
@@ -185,14 +199,16 @@ The independent audit must cover:
 - duplicate completion replay and conflicting evidence;
 - preservation of every existing `0.6.9.2` and `0.6.9.3` test and build gate.
 
+The repair must route initial automatic current and campaign-start destinations through the exact shared validator; retain or reconstruct one unambiguous completed-repair identity across restart without array-order selection; and validate HP, Stamina, MP, source/resolution ticks, original ledger acceptance tick, and related pending receipt facts before effects.
+
 The audit must prove multiple-pending rejection is order-independent and side-effect-free, current-location authority requires exact known settlement evidence, the original defeat ledger entry is preserved, and exactly one deterministic superseding repair entry is appended.
 
 ## Branch And PR Review
 
 The completed `0.6.9.3` run reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
 
-`0.6.9.5` refreshed these facts after fetch/prune: one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. No disposition or lifecycle action changed. `0.6.9.6` must refresh them again before audit.
+`0.6.9.6` refreshed these facts after fetch/prune at starting head `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`: one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. No disposition or lifecycle action changed. `0.6.9.7` must refresh them again before implementation.
 
 ## Next Run
 
-`Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
