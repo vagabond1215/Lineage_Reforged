@@ -31,7 +31,7 @@ Status: parent `0.6.9` accepted; Ashen Reef survey receipt-foundation decision a
 - Independent lineage audit: `15/15` cases passed.
 - RPG UI production build: passed, `209` modules; existing chunk warning only.
 - Bounded TypeScript posture: `137` known diagnostics, `0` in repaired production files.
-- No hosted combined statuses or pull-request-triggered workflow runs were available at the last checked GPT head; final coordination head must be checked after push.
+- GitHub returned no combined statuses or pull-request-triggered workflow runs for repair `cbad987`, acceptance `f68d878`, or recorded handoff `254959b`.
 
 ## Branch And PR Posture
 
