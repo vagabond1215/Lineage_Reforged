@@ -30,6 +30,7 @@ Read the complete current versions of:
 - `docs/dev/repository-first-agent-work-protocol.md`;
 - `docs/dev/current-gpt-handoff.md`;
 - `docs/dev/current-codex-output.md`;
+- `docs/dev/repository-roadmap-pipeline-backlog-active-prompt-reconciliation-audit-2026-08-02.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
 - `docs/design/current-planning-anchor-reconciliation.md`;
 - `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
@@ -99,11 +100,12 @@ A supplied explicit claim never falls back. Valid explicit authority never inspe
 Before editing:
 
 1. fetch/prune and verify clean synchronized `master`, upstream, head, and this exact prompt;
-2. inventory every local/remote branch and open PR with merge bases, unique commits, paths, semantic overlap, and dispositions;
-3. read and hash-verify PR #3 evidence as required;
-4. trace the complete real caller, engine, shared contract, persistence/migration, save/load/publication, export/mirror, and test paths;
-5. reproduce all nine findings below against untouched source and record exact effect boundary plus serialized source/control stability;
-6. distinguish inspected base, implementation starting head, final committed head, and live post-fetch head.
+2. confirm completed reconciliation-audit commit `a10e70a9f033337d460d2d312b58ddfb2496af2b` is present in the live ancestry; if `master` has advanced, enumerate every successor commit and prove none implements, supersedes, narrows, or broadens this prompt;
+3. inventory every local/remote branch and open PR with merge bases, unique commits, paths, semantic overlap, and dispositions;
+4. read and hash-verify PR #3 evidence as required;
+5. trace the complete real caller, engine, shared contract, persistence/migration, save/load/publication, export/mirror, and test paths;
+6. reproduce all nine findings below against untouched source and record exact effect boundary plus serialized source/control stability;
+7. distinguish inspected base, implementation starting head, final committed head, live post-fetch head, and the completed documentation-only reconciliation baseline.
 
 If the correct implementation requires a new snapshot-format/envelope revision, new dependency, new ledger kind, broad schema/migration rewrite, generic replay/event/transaction framework, or another unlisted production owner, stop and report `IMPLEMENTATION_INCOMPLETE` rather than guessing.
 
@@ -249,7 +251,8 @@ Also run:
 - real `App.tsx` caller execution/inspection;
 - target serialization/deserialization compatibility and public export/mirror checks;
 - `git diff --check`;
-- complete unstaged, staged, post-commit, and hygiene review.
+- complete unstaged, staged, post-commit, and hygiene review;
+- after commit/push, query and report combined status and workflow-run availability for the final commit; absence of hosted checks must be stated and never substituted for the required local validation.
 
 ## Applicable Verification Guardrails
 
@@ -297,6 +300,7 @@ Report:
 - compatibility and migration evidence;
 - test/build/type/probe/mirror/diff results with exact counts;
 - `FP-001` through `FP-012` evidence;
+- completed reconciliation-audit identity `a10e70a9f033337d460d2d312b58ddfb2496af2b`, any successor commits before implementation, and whether any successor changed runtime scope;
 - live branch/PR inventory, dispositions, actions, and retained triggers;
-- files changed, risks, exact final commit, and live remote head;
+- files changed, risks, exact final commit, live remote head, combined status, and hosted workflow-run availability;
 - exact installed next route.
