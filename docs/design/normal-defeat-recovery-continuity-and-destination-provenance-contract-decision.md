@@ -10,6 +10,8 @@ Milestone impact: `supports_current_band`
 
 Status: `DECISION_ACCEPTED_REPAIR_REAUTHORIZED`
 
+Lineage amendment: `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md` supersedes only this decision's conclusion that the receipt field alone proves arbitrary-depth completion ancestry without linked fork-ledger fields. All original receipt-continuity and destination-provenance decisions remain accepted.
+
 ## 1. Decision
 
 The two shared-contract blockers from the stopped `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` are decided as follows:

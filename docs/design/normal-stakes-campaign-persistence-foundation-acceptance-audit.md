@@ -8,11 +8,27 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `IMPLEMENTED_PENDING_0.6.9.8_ACCEPTANCE`
+Current status: `PARENT_ACCEPTED`
 
 ## Decision
 
-The `0.6.9` parent is not yet accepted. Revised `0.6.9.7` is implemented and pushed; independent `0.6.9.8` acceptance is active.
+Parent `0.6.9` is accepted after the completion-lineage repair and committed-head post-repair audit.
+
+`Version 0.6.9.8` independently confirmed the connector-side concern: original-continuity substitution could pass and valid replay after two later forks could fail because the ledger did not retain a provable parent-to-child chain. It concluded `REPAIR_REQUIRED`.
+
+The focused `Normal Defeat Recovery Completion Lineage Repair Decision` authorized an additive linked-fork contract at `551d14bc483054aac129f7a081489b70efb46521`. `Version 0.6.9.9` implemented it at `cbad987028d81c5ecdc35403333ec920d0ea5e53` by recording parent continuity, child continuity, source artifact, and source publication on new fork entries and validating a unique arbitrary-depth chain during completed replay.
+
+`Version 0.6.9.10` reran the acceptance gate from the committed repair head and reports:
+
+- focused persistence `33/33`;
+- prescribed regression group `140/140`;
+- fresh lineage probe `15/15`;
+- RPG UI build passed at `209` modules;
+- bounded TypeScript posture remained `137` known diagnostics with zero in repaired production files;
+- original substitution and every required fork/identity corruption rejected byte-stably;
+- valid `C0 -> C1 -> C2 -> C3` and copied/reversed replay returned the current state without effects.
+
+Final disposition: `PARENT_ACCEPTED`.
 
 The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt ran against synchronized `master` at `6820ab8175f6b4d0b447b589045bc0a934663257`, independently reproduced all nine hardened findings, and stopped before production edits under its required contract gates.
 
@@ -27,7 +43,7 @@ The completed repair route was:
 
 `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
-Its revised prompt included all nine findings, exact source-first head/non-head ordering, owner-certified version-6 behavior, stable completed targeting, the bounded contract surface, and the complete evidence matrix. Implementation commit `ba35dacd852304cd0804b131c8d3045c1f74b755` reports `IMPLEMENTED_PENDING_PARENT_AUDIT`; `0.6.9.8` is now active.
+Its revised prompt included all nine findings, exact source-first head/non-head ordering, owner-certified version-6 behavior, stable completed targeting, the bounded contract surface, and the complete evidence matrix. Implementation commit `ba35dacd852304cd0804b131c8d3045c1f74b755` reported `IMPLEMENTED_PENDING_PARENT_AUDIT`; `0.6.9.8` was then activated.
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` independently preserved the 26/26 focused persistence tests, 133/133 prescribed tests, 209-module production build, and bounded TypeScript posture. Fresh adversarial execution nevertheless proved three blocking gaps:
 
@@ -95,11 +111,11 @@ The completed independent route is:
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
 
-The active repair route is:
+The repair route active at that historical point was:
 
 `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
-The Ashen Reef survey receipt decision remains blocked until the repair is independently accepted.
+The Ashen Reef survey receipt decision remained blocked at that point pending independent acceptance.
 
 ## Accepted `0.6.9.2` Evidence To Preserve
 
@@ -248,6 +264,6 @@ The completed `0.6.9.3` run reported one local branch, seventeen non-default rem
 
 ## Next Run
 
-`Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`
+`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
-Run the exact current prompt as an independent production-read-only audit. Parent `0.6.9`, the survey route, and `0.7.0` remain blocked until that audit accepts every gate.
+Run the exact current documentation-only prompt. Survey implementation remains blocked pending that decision, and `0.7.0` remains `NOT_READY`.

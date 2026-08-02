@@ -25,19 +25,19 @@ Latest implemented primary:
 
 Latest completed support implementation:
 
-- `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` at `ba35dacd`
+- `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`
 
 Latest completed unversioned run:
 
 - unversioned `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit`, outcome `AUDIT_ALIGNED_CURRENT_ROUTE`
 
+Latest completed support audit:
+
+- `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`, `PARENT_ACCEPTED`
+
 Active run:
 
-- `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`
-
-Conditional successor route:
-
-- unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, only after accepted `0.6.9.8`
+- unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
 ## Current Queue Override
 
@@ -68,12 +68,12 @@ Conditional successor route:
 - The unversioned Ashen Reef survey scope/owner decision is complete. It accepted one deterministic survey-shift occurrence, one shared preview/execution plan, typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic accepted-state application, and accepted-only UI. It returned `NO_PACKAGE` because stable campaign/continuity identity, durable receipt authority, and candidate-write/verification/publication semantics are absent.
 - The unversioned minimum save identity/publication decision is complete. It accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification and authoritative-head publication, and a typed persisted authority ledger. It returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority.
 - The unversioned Normal activation/continuity/account-publication dependency decision is complete and returned `PACKAGE_READY`. It selected atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: campaign rules version 2, version-7 verified publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat, legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` is implemented, but parent acceptance remains pending active `0.6.9.8`.
+- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` is complete and accepted.
 - `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit` completed with `REPAIR_REQUIRED` and retained its six exact findings as historical acceptance evidence.
 - `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` remains accepted evidence for its exact publication, migration, and account-consumer seams, but later real-caller and independent audits reopened the parent.
 - `0.6.9.3` through `0.6.9.6` implemented and audited retry, recovery-completion, authority, and provenance boundaries. The independent `0.6.9.6` audit proved the remaining initial-resolution, restart-duplicate, and effect-provenance defects.
-- Revised `Version 0.6.9.7` is implemented at `ba35dacd` with all nine hardened findings reported closed. `0.6.9.8` is the active independent acceptance audit.
-- The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` remains blocked until `0.6.9.8` independently accepts the parent.
+- Revised `Version 0.6.9.7` closed its nine findings; `0.6.9.8` then found the deep-lineage gap, `0.6.9.9` repaired it at `cbad987`, and `0.6.9.10` accepted the parent.
+- The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` is active; implementation remains blocked pending its classification.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
@@ -572,7 +572,7 @@ Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Ite
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The live order is revised `0.6.9.7`, conditional `0.6.9.8`, and only then the blocked Ashen Reef survey receipt decision. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, and static packages remain unchanged.
+The live order is the active Ashen Reef survey receipt decision followed only by the bounded package it selects. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, and Normal persistence remain unchanged.
 
 ## Default Prompt Pattern
 
@@ -588,7 +588,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is revised `Version 0.6.9.7`; `0.6.9.8` is conditional on successful implementation, and the survey receipt decision remains blocked until independent parent acceptance. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
+- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is the unversioned survey receipt-foundation decision after accepted `0.6.9`. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

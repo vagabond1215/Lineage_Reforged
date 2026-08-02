@@ -6,6 +6,29 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-02 Lineage Repair And Parent Acceptance Refresh
+
+The lineage repair and committed-head acceptance run fetched/pruned from hosted head `5fe11910e6b4951483994ee23529150a697f78cc`, inspected one local branch, eighteen non-default remote branches, and open PRs #2 and #3. Fresh starting-head counts were:
+
+- `feat/main-menu-assets`: `737 / 0`;
+- `main-menu-asset-contract-pass`: `665 / 10`;
+- `main-menu-refinement-pass`: `672 / 2`;
+- `parallel/0.6.9.7-repair-bundle`: `24 / 7`;
+- eight `bcbe658d` one-document branches: `71 / 1` each;
+- four `3006c968` one-document branches: `73 / 1` each;
+- `parallel/prompt-packaging-integrity-audit`: `100 / 1`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `153 / 2`.
+
+PR #2 remained open, non-draft, non-mergeable at `e78dc645cfb658685be12f45f46d34b7c0da1119`. PR #3 remained open draft, non-mergeable at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; its expected archive SHA-256 remained `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`.
+
+Disposition result:
+
+- PR #3 and `parallel/0.6.9.7-repair-bundle` move from `HOLD_NAMED_CONSUMER` to `SUPERSEDED_PRESERVE_EVIDENCE`; their save-repair consumer window is complete, but a dedicated exact-ref hygiene pass must prove safe closure/deletion;
+- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE` for the launcher trigger;
+- twelve one-document branches retain their named `CANDIDATE_INTEGRATION` triggers;
+- both protected references remain read-only;
+- no merge, cherry-pick, rebase, force update, PR mutation, closure, or deletion occurred.
+
 ## 2026-08-02 Version 0.6.9.7 Implementation Refresh
 
 The `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` run fetched/pruned and inspected live refs from clean synchronized starting head `814d4dfa725627c8a0660c08a7146fdbf69bb2ac`. It completed and pushed implementation commit:
@@ -258,20 +281,19 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`
+`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
-Branch handling during the independent audit requires:
+Branch handling during the documentation-only survey decision requires:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
-- required evidence inspection and hash verification of PR #3 and `parallel/0.6.9.7-repair-bundle`;
-- independent reproduction and audit of all nine findings under the accepted continuity/provenance decision;
-- retaining PR #3 as evidence through the audit conclusion;
+- preserving PR #3 and `parallel/0.6.9.7-repair-bundle` as superseded evidence pending dedicated hygiene;
+- inspecting the protected integrated-gameplay readiness branch read-only;
 - otherwise preserving candidate branches for their named triggers.
 
-No one-document connector audit branch decides or supersedes the accepted repair contract. PR #3 is evidence only and must not become acceptance authority through branch integration. No candidate integration, branch deletion, or PR closure is due inside the audit unless fresh live evidence changes the controlling disposition.
+No one-document connector audit branch decides the survey receipt contract. No candidate integration, branch deletion, or PR closure is due inside the survey decision unless fresh live evidence changes the controlling disposition.
 
-The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this focused decision.
+The survey receipt decision is active, but implementation remains blocked until it returns a bounded package.
 
 ## 6. Mandatory Next Codex Branch Report
 
