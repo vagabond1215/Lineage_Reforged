@@ -52,6 +52,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 
 | Run | Status | Required disposition | Primary source |
 | --- | --- | --- | --- |
+| `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` | Complete; aligned | `AUDIT_ALIGNED_CURRENT_ROUTE`; revised `0.6.9.7` remains active and lower-precedence live headers are reconciled. | `docs/dev/repository-roadmap-pipeline-backlog-active-prompt-reconciliation-audit-2026-08-02.md` |
 | `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision` | Complete; accepted | `DECISION_ACCEPTED_REPAIR_REAUTHORIZED`; revised `0.6.9.7` installed, parent remains unaccepted, and `0.6.9.8` remains reserved. | `docs/design/normal-defeat-recovery-continuity-and-destination-provenance-contract-decision.md` |
 
 ## Identity Rules
@@ -68,7 +69,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 
 | Lane | Classification | Completed foundation | Missing layer | Reopening trigger | Near-term posture | Primary source |
 | --- | --- | --- | --- | --- | --- | --- |
-| Planning-anchor maintenance | accepted correction; full refresh deferred | Current handoff/output/register and refreshed continuity brief | Full roadmap and sequenced-plan current-header maintenance | Dedicated documentation maintenance or next material roadmap rewrite | Do not treat stale headers as execution authority | `docs/design/current-planning-anchor-reconciliation.md` |
+| Planning-anchor maintenance | accepted and reconciled | Current prompt/handoff/output/register plus refreshed roadmap, sequenced plan, continuity brief, backlog, and static-content status | No current blocking drift | A later route change creates a false live pointer | Preserve historical chronology; update only live-current routing | `docs/dev/repository-roadmap-pipeline-backlog-active-prompt-reconciliation-audit-2026-08-02.md` |
 | Validation/typecheck | known-failing audit with separate cleanup tracks | Approved command matrix, source map, blocker triage, and reproduced identical `173`-tuple captures | Dedicated JSON import, environment typing, root-config/JSX, target/lib, module, and strict optional cleanup | Explicit tooling/typecheck route | Preserve the accepted audit classification; do not mix broad cleanup into static content | `docs/design/validation-command-matrix-plan.md` |
 | Static world/settlement | expanded-and-validated | Accepted `0.6.4`; exact repair commit `232d3c2f`; focused `5/5`; lint `67`; parent baseline `146/146`; diff/hygiene accepted | None | New proven defect | Complete | `docs/dev/current-codex-output.md` |
 | Static item/material/recipe | expanded-and-validated | Accepted `0.6.5`: 28 recipes/10 families | None | New proven gap | Complete | `docs/design/cross-domain-production-research-synthesis.md` |

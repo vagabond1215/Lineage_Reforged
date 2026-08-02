@@ -2,7 +2,7 @@
 
 Date: 2026-08-02
 
-Status: accepted narrow documentation-only coordination authority
+Status: accepted documentation-only coordination authority; live current headers reconciled by the 2026-08-02 repository roadmap/pipeline/backlog/active-prompt audit
 
 Milestone impact: `supports_current_band`
 
@@ -12,13 +12,13 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, parent acceptance audit, and failure-pattern guardrail register are refreshed through the accepted `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`.
+The current prompt, handoff, output, historical register, parent acceptance audit, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through the unversioned `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` with outcome `AUDIT_ALIGNED_CURRENT_ROUTE`.
 
 The `0.6.9` parent is not accepted. The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt reproduced all nine hardened findings at synchronized head `6820ab8175f6b4d0b447b589045bc0a934663257` but stopped before production edits. The focused decision now preserves original receipt continuity, adds typed completion continuity, adds truthful sole-known-settlement provenance, and reports `DECISION_ACCEPTED_REPAIR_REAUTHORIZED`. Revised `0.6.9.7` is active. The unversioned Ashen Reef survey receipt-foundation decision remains blocked until the repair and a separate independent audit accept the parent.
 
-`docs/dev/project-roadmap.md` still contains lower current-anchor wording that may describe `0.6.9.2` as accepted and the survey decision as active. `docs/dev/codex-sequenced-implementation-plan.md`, the continuity brief, backlog, and static-content program may contain the same now-stale posture. Those lower-precedence summaries do not control execution.
+The audit corrected live-current pointers in `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`. Older dated rows and completed-run narratives remain historical chronology and do not control execution.
 
-Correct large historical planning documents only in a safe complete-file maintenance pass or the next material roadmap update. Do not replace or rewrite them from truncated connector content.
+Future corrections must remain limited to false live pointers, broken references, or material route changes. Do not rewrite historical chronology merely because its original next-run wording has been consumed.
 
 ## Controlling Current Anchor
 
@@ -81,4 +81,4 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation as audit history unless a later dedicated maintenance pass supersedes it. Known lower-precedence stale summaries do not block the current prompt because their stale status and controlling precedence are explicit here.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that revised `0.6.9.7` is active, `0.6.9.8` is conditional, and the survey route remains blocked.

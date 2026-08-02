@@ -6,6 +6,34 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-02 Roadmap/Pipeline/Backlog/Active-Prompt Audit Refresh
+
+The unversioned `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` fetched and pruned from clean synchronized `master` at:
+
+`f62a59804f88527a297966a3b7c9ad5f4f9425f1` - `docs(save): decide defeat recovery continuity provenance`
+
+Post-fetch local `master` and `origin/master` remained identical. Fresh inventory found one local branch, eighteen non-default remote branches, and two open pull requests. Counts below are `master-only / branch-only`:
+
+- `feat/main-menu-assets`: `729 / 0`;
+- `main-menu-asset-contract-pass`: `657 / 10`, merge base `9a107a7eed54b6d0cd2f161c236fbe163282bba7`;
+- `main-menu-refinement-pass`: `664 / 2`, merge base `d03846e89d1a4fd07a1ea86d02951559f617df74`;
+- `parallel/0.6.9.7-repair-bundle`: `16 / 7`, merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`;
+- eight `bcbe658d` one-document branches: `63 / 1` each;
+- four `3006c968` one-document branches: `65 / 1` each;
+- `parallel/prompt-packaging-integrity-audit`: `92 / 1`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `145 / 2`.
+
+The GitHub connector reports PR #2 open, non-draft, non-mergeable at head `e78dc645cfb658685be12f45f46d34b7c0da1119`, and PR #3 open draft, non-mergeable at head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Mechanical mergeability remains non-authoritative for disposition.
+
+Disposition result is unchanged:
+
+- PR #3 and its repair-bundle branch remain `HOLD_NAMED_CONSUMER` evidence for revised `0.6.9.7` and conditional `0.6.9.8`;
+- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE` for a dedicated launcher trigger;
+- twelve single-document audit branches remain `CANDIDATE_INTEGRATION` at their named triggers;
+- the prompt-packaging and integrated-gameplay readiness branches remain `PROTECTED_REFERENCE` and read-only;
+- merged/superseded launcher branches retain their recorded retirement gates;
+- no merge, rebase, deletion, force update, PR mutation, or lifecycle action was due.
+
 ## 0. Focused Decision And Revised 0.6.9.7 Live Refresh
 
 The unversioned `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision` fetched/pruned and inspected live refs from synchronized decision starting head:

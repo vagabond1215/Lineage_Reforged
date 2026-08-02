@@ -1,8 +1,8 @@
 # Static Content Expansion Program
 
-Date: 2026-07-30
+Date: 2026-08-02
 Program versions: `0.6.4`-`0.6.8`
-Status: `0.6.4`-`0.6.9` implementation and parent acceptance complete; unversioned Ashen Reef survey receipt-foundation decision active
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence parent `0.6.9` implemented with revised `0.6.9.7` repair active; Ashen Reef survey receipt decision blocked
 
 ## 1. Purpose
 
@@ -161,6 +161,12 @@ Deep Research uses one gate and one artifact at a time.
 | `0.6.8.1` | Lethal-Process Definition Static Foundation Acceptance Audit | Complete: parent accepted without repair; static-only and protected-authority boundaries preserved. |
 | unversioned gate | Post-Lethal-Process Static Foundation Next-Capability Classification Gate | Complete: found `0.7.0` `NOT_READY`, selected deterministic Ashen Reef survey advancement, classified its exact owner-contract decision as `UNVERSIONED_PREREQUISITE`, and kept implementation `NO_PACKAGE`. |
 | unversioned support | Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision | Complete: accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI; returned `NO_PACKAGE` pending minimum save identity/publication authority. |
+| unversioned support | Ashen Reef Survey Minimum Save Identity And Accepted-State Publication Decision | Complete: accepted minimum identity, migration, candidate-verification, publication, and ledger contracts; returned `NO_PACKAGE` pending Normal activation/continuity/account-publication closure. |
+| unversioned support | Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision | Complete: returned `PACKAGE_READY` and assigned current-band primary `0.6.9`. |
+| `0.6.9` | Normal Stakes Campaign Persistence Foundation | Implemented; parent acceptance reopened by later independent recovery evidence. |
+| `0.6.9.1`-`0.6.9.6` | Parent-specific acceptance and repair chain | Complete historical support chain; later audits supersede earlier acceptance claims and culminate in the nine hardened findings. |
+| `0.6.9.7` | Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair | Active revised support implementation; exact prompt installed and parent remains unaccepted. |
+| `0.6.9.8` | Initial Defeat And Durable Recovery Completion Acceptance Audit | Reserved conditional support audit; do not activate before successful `0.6.9.7`. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -172,4 +178,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`. Reuse the accepted Normal campaign/publication authority and decide the smallest survey-specific persisted occurrence/result/owner-receipt contract before implementation. Do not authorize the survey command, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.
+Complete revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`, then run the independent `Version 0.6.9.8` acceptance audit. Only if that audit accepts the Normal persistence parent may the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` run. Do not authorize the survey command, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.

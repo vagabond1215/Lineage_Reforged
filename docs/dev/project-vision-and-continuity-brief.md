@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-07-30 after Normal persistence repair acceptance.
+Updated 2026-08-02 by the repository roadmap/pipeline/backlog/active-prompt reconciliation audit.
 
 ## Purpose
 
@@ -23,9 +23,10 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
-- Latest completed support run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
-- Active run: unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
+- Latest completed unversioned run: `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit`, outcome `AUDIT_ALIGNED_CURRENT_ROUTE`.
+- Latest completed support/audit run: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
+- Active run: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
+- Conditional successor: `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`, only after successful `0.6.9.7`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -56,7 +57,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The unversioned survey advancement scope/owner decision accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI.
 - The unversioned minimum save decision accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification, authoritative-head publication, and a typed persisted authority ledger.
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9` is implemented and accepted through `0.6.9.2`. Exact publication recovery, durable account-consumer plans, deferred migrated HP-zero repair, closed-control guards, `recovery_pending` admission, retained duplicate results, and immutable-address verification are executable-tested; the prescribed group passes 127/127 plus the RPG UI build.
+- `Version 0.6.9` is implemented, but parent acceptance is reopened. Exact publication recovery, durable account-consumer plans, migrated HP-zero repair, closed-control guards, `recovery_pending` admission, retained duplicate results, and immutable-address verification remain implemented evidence; later audits proved additional initial-resolution, restart-duplicate, and effect-provenance defects now routed to revised `0.6.9.7`.
 - `0.7.0` remains `NOT_READY`; the survey advancement/result/consequence loop remains later.
 
 ## Validation Posture
@@ -73,10 +74,11 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
-2. implement only a dependency-closed survey receipt foundation selected by that decision;
-3. continue to the bounded survey command and adapters only after receipt acceptance;
-4. keep `0.7.0` behind explicit representative-loop acceptance evidence.
+1. implement revised `Version 0.6.9.7` under the accepted focused continuity/provenance contract;
+2. run `Version 0.6.9.8` as an independent parent acceptance audit only after successful implementation;
+3. run the unversioned Ashen Reef survey occurrence/result/consequence receipt-foundation decision only after the parent is accepted;
+4. implement only a dependency-closed survey package selected by that decision;
+5. keep `0.7.0` behind explicit representative-loop acceptance evidence.
 
 ## Current Implementation Reality
 
@@ -90,7 +92,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 - Static content does not authorize spawning, encounters, AI, dynamic loot, harvesting, populations, migration, ecology simulation, inventory mutation, or rewards.
 - Generic event ids remain collision-prone compatibility projections; occurrence authority is accepted but not implemented.
 - Current hashes and random mechanisms are not accepted named uncertainty-channel authority.
-- Normal target authority no longer treats ordinary HP zero as terminal, and `0.6.9` is accepted after the bounded `0.6.9.2` repair.
+- Normal target authority no longer treats ordinary HP zero as terminal. Parent `0.6.9` remains implemented but unaccepted until revised `0.6.9.7` and independent `0.6.9.8` close the recovery findings.
 - No active injury instance, mutable lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists; only the static definition foundation is implemented.
 
 ## Research And Content Posture

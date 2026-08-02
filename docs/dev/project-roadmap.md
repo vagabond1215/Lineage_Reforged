@@ -1,15 +1,15 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-07-30
+Last reviewed: 2026-08-02 by the repository roadmap/pipeline/backlog/active-prompt reconciliation audit
 
 ## Current Runtime Transition Override
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support/audit run: `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair`.
+- Latest completed support/audit run: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Latest completed unversioned run: `Normal Stakes Activation, First-Mutation Continuity, And Account-Value Publication Dependency Closure Decision`.
-- Next run: unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
-- Activity selection remains accepted. `0.6.4`-`0.6.9` implementation and acceptance are complete. `0.6.9.2` repaired all six audited recovery/admission defects plus immutable-address verification; the prescribed group passes 127/127 and the RPG UI build passes. `0.7.0` remains `NOT_READY`.
+- Latest completed unversioned run: `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` with outcome `AUDIT_ALIGNED_CURRENT_ROUTE`.
+- Active run: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
+- Activity selection remains accepted. `0.6.4`-`0.6.8.1` are accepted. Parent `0.6.9` is implemented but `REPAIR_REAUTHORIZED_PENDING_0.6.9.7`; `0.6.9.8` is reserved for independent acceptance. The Ashen Reef survey receipt decision remains blocked and `0.7.0` remains `NOT_READY`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -35,11 +35,12 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest completed version: `Version 0.6.6 - Monster, Ecology, And Loot Static Content Expansion`
-- Latest support/audit run: `Version 0.6.6.5 - Workspace Typecheck Baseline Classification And BOM Acceptance`
-- Next recommended run: `Version 0.6.7 - Cross-Content Coherence And Coverage Audit`
+- Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`, with parent acceptance reopened.
+- Latest completed support/audit run: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
+- Active support implementation: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
+- Next conditional support audit: `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`, only after successful `0.6.9.7`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; all three static expansion packages and cross-domain research integration are complete; `0.6.7` is active; UI information architecture remains durably bounded
+- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the static expansion, coherence, and lethal-process static-foundation packages are accepted; the Normal persistence parent requires the active bounded repair before independent acceptance; the survey route and `0.7.0` remain blocked.
 
 Versioning rule:
 
@@ -359,6 +360,8 @@ These are internal development maturity markers, not public release promises. Pa
 | `v1.0+` | Public release maturity. | Reserved. Not relevant to current planning. |
 
 ## 3. Active Pipeline
+
+Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: revised `0.6.9.7` is active, `0.6.9.8` is conditional, and the survey route remains blocked.
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |
@@ -848,7 +851,7 @@ Timing guardrails:
 
 ## 7. Sequenced Near-Term Codex Queue
 
-Use `docs/dev/codex-sequenced-implementation-plan.md` as the source of truth for the ordered near-term queue after the current handoff. Summary:
+Use `docs/dev/codex-sequenced-implementation-plan.md` and its refreshed Current Anchor for the live queue. The table below is retained as historical sequencing evidence and is not a current execution pointer.
 
 | Order | Version | Topic | Primary Source | Status |
 | ---: | --- | --- | --- | --- |
