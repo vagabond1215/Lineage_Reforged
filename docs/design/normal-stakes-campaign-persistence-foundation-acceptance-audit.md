@@ -8,24 +8,26 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `REPAIR_BLOCKED_PENDING_FOCUSED_DECISION`
+Current status: `REPAIR_REAUTHORIZED_PENDING_0.6.9.7`
 
 ## Decision
 
 The `0.6.9` parent is not accepted.
 
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` ran against synchronized `master` at `6820ab8175f6b4d0b447b589045bc0a934663257` and independently reproduced all nine hardened findings. It stopped before production edits under its required contract gates.
+The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt ran against synchronized `master` at `6820ab8175f6b4d0b447b589045bc0a934663257`, independently reproduced all nine hardened findings, and stopped before production edits under its required contract gates.
 
-Two accepted-contract questions remain unresolved:
+`docs/design/normal-defeat-recovery-continuity-and-destination-provenance-contract-decision.md` now reports `DECISION_ACCEPTED_REPAIR_REAUTHORIZED` and decides both questions:
 
-1. a persisted non-head pending receipt names the loaded source continuity, while the first accepted mutation must create one child continuity; authority does not decide whether completion preserves, rewrites, or separately links the receipt continuity;
-2. automatic exactly-one-known-safe-settlement completion has no truthful value in the current `destinationSource` union.
+1. original `receipt.continuityId` is immutable defeat provenance; additive `recoveryCompletionContinuityId?: string | null` records the continuity that accepted playable completion, including the non-head child;
+2. automatic exactly-one-known-safe-settlement completion records additive `destinationSource: "sole_known_settlement"`.
 
-The active route is:
+Both additions remain compatible with target snapshot format `lineage.save_snapshot.v2`; existing missing completion fields use the decision's exact pending/playable inference, no target snapshot rewrite is required, and new writes must emit explicit truthful values.
 
-`Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`
+The active route is again:
 
-That decision must reauthorize the exact shared-contract, compatibility, migration, ordering, and test surface before revised `0.6.9.7` resumes. `0.6.9.8` remains reserved for the later independent audit and is not active.
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+
+Its revised prompt includes all nine findings, exact source-first head/non-head ordering, owner-certified version-6 behavior, stable completed targeting, the bounded contract surface, and the complete evidence matrix. `0.6.9.8` remains reserved for the later independent audit and is not active.
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` independently preserved the 26/26 focused persistence tests, 133/133 prescribed tests, 209-module production build, and bounded TypeScript posture. Fresh adversarial execution nevertheless proved three blocking gaps:
 
@@ -224,6 +226,6 @@ The completed `0.6.9.3` run reported one local branch, seventeen non-default rem
 
 ## Next Run
 
-`Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
-After an accepted decision, reinstall revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
+Run the revised prompt under the accepted continuity and destination-provenance contract. Do not install `0.6.9.8` until the implementation and complete validation succeed.
