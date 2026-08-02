@@ -11,6 +11,7 @@ Status: parent `0.6.9` accepted; Ashen Reef survey receipt-foundation decision a
 - Focused lineage decision: `551d14bc483054aac129f7a081489b70efb46521`.
 - `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair`: implemented at `cbad987028d81c5ecdc35403333ec920d0ea5e53`.
 - `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`: `PARENT_ACCEPTED`.
+- Acceptance coordination commit: `f68d878cd1969e861f4fe7a793412876ba48b3a8`.
 - Active route: unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
 - Survey behavior remains unimplemented; `0.7.0` remains `NOT_READY`.
 
