@@ -1332,14 +1332,19 @@ test("non-head recovery validates before one fork and durable replay never rolls
     completed.snapshot.campaignIdentity.firstDivergentMutationId,
     `mutation.recovery_repair.${receiptId}`
   );
+  const recoveryFork = completed.snapshot.authorityLedger.entries.find(
+    (entry) =>
+      entry.kind === "continuity_fork" &&
+      entry.sourceId === `mutation.recovery_repair.${receiptId}`
+  );
+  assert.ok(recoveryFork);
+  assert.equal(recoveryFork.acceptedAtTick, pending.clock.tick);
+  assert.equal(recoveryFork.parentContinuityId, sourceContinuityId);
+  assert.equal(recoveryFork.childContinuityId, childContinuityId);
+  assert.equal(recoveryFork.forkedFromArtifactId, control.loadedArtifactId);
   assert.equal(
-    completed.snapshot.authorityLedger.entries.filter(
-      (entry) =>
-        entry.kind === "continuity_fork" &&
-        entry.sourceId === `mutation.recovery_repair.${receiptId}` &&
-        entry.acceptedAtTick === pending.clock.tick
-    ).length,
-    1
+    recoveryFork.forkedFromPublicationId,
+    control.loadedPublicationId
   );
 
   const restartedControl = createRecoveryControl(completed.snapshot);
@@ -1408,6 +1413,55 @@ test("non-head recovery validates before one fork and durable replay never rolls
       candidate.normalDefeatReceipts[0].recoveryCompletionContinuityId =
         "continuity.conflicting_completion";
     },
+    (candidate) => {
+      candidate.normalDefeatReceipts[0].recoveryCompletionContinuityId =
+        sourceContinuityId;
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries =
+        candidate.authorityLedger.entries.filter(
+          (entry) => entry.sourceId !== `mutation.recovery_repair.${receiptId}` ||
+            entry.kind !== "continuity_fork"
+        );
+    },
+    (candidate) => {
+      const fork = candidate.authorityLedger.entries.find(
+        (entry) =>
+          entry.kind === "continuity_fork" &&
+          entry.sourceId === `mutation.recovery_repair.${receiptId}`
+      );
+      candidate.authorityLedger.entries.push(structuredClone(fork));
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries.find(
+        (entry) => entry.kind === "continuity_fork"
+      ).sourceId = "mutation.unrelated_fork";
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries.find(
+        (entry) => entry.kind === "continuity_fork"
+      ).acceptedAtTick += 1;
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries.find(
+        (entry) => entry.kind === "continuity_fork"
+      ).parentContinuityId = "continuity.wrong_parent";
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries.find(
+        (entry) => entry.kind === "continuity_fork"
+      ).childContinuityId = "continuity.wrong_child";
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries.find(
+        (entry) => entry.kind === "continuity_fork"
+      ).forkedFromArtifactId = "artifact.wrong";
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries.find(
+        (entry) => entry.kind === "continuity_fork"
+      ).forkedFromPublicationId = "publication.wrong";
+    },
     (candidate) => { candidate.sessionState.notifications[0].detail = "corrupt"; }
   ]) {
     const candidate = structuredClone(completed.snapshot);
@@ -1421,6 +1475,121 @@ test("non-head recovery validates before one fork and durable replay never rolls
       ),
       /completed receipt provenance/
     );
+  }
+});
+
+test("completed recovery replay proves arbitrary-depth continuity lineage", () => {
+  const pending = createPendingDefeatSnapshot(
+    "account.deep_recovery_lineage",
+    "mutation.deep_recovery_lineage"
+  );
+  pending.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.deep_recovery_lineage")
+  ];
+  const c0 = pending.campaignIdentity.continuityId;
+  const completed = completePendingNormalDefeatRecovery(
+    createRecoveryControl(pending, "non_head_unmutated"),
+    pending
+  );
+  const receiptId = completed.snapshot.normalDefeatReceipts[0].receiptId;
+  const c1 = completed.snapshot.campaignIdentity.continuityId;
+
+  const c2Proposed = structuredClone(completed.snapshot);
+  c2Proposed.playerState.currency.copper += 1;
+  const c2 = mutation(
+    createRecoveryControl(completed.snapshot, "non_head_unmutated"),
+    completed.snapshot,
+    c2Proposed,
+    "mutation.deep_recovery_lineage.c2"
+  );
+  const c2Id = c2.snapshot.campaignIdentity.continuityId;
+
+  const c3Proposed = structuredClone(c2.snapshot);
+  c3Proposed.playerState.currency.copper += 1;
+  const c3 = mutation(
+    createRecoveryControl(c2.snapshot, "non_head_unmutated"),
+    c2.snapshot,
+    c3Proposed,
+    "mutation.deep_recovery_lineage.c3"
+  );
+  const c3Id = c3.snapshot.campaignIdentity.continuityId;
+
+  assert.notEqual(c0, c1);
+  assert.notEqual(c1, c2Id);
+  assert.notEqual(c2Id, c3Id);
+  assert.equal(c3.snapshot.normalDefeatReceipts[0].continuityId, c0);
+  assert.equal(
+    c3.snapshot.normalDefeatReceipts[0].recoveryCompletionContinuityId,
+    c1
+  );
+
+  const replayControl = createRecoveryControl(c3.snapshot);
+  const beforeSnapshot = serializeSnapshot(c3.snapshot);
+  const beforeControl = JSON.stringify(replayControl);
+  const replay = completePendingNormalDefeatRecovery(
+    replayControl,
+    c3.snapshot,
+    undefined,
+    receiptId
+  );
+  assert.equal(replay.duplicate, true);
+  assert.equal(replay.snapshot, c3.snapshot);
+  assert.equal(replay.control, replayControl);
+  assert.equal(serializeSnapshot(replay.snapshot), beforeSnapshot);
+  assert.equal(JSON.stringify(replay.control), beforeControl);
+
+  const copied = structuredClone(c3.snapshot);
+  copied.normalDefeatReceipts.reverse();
+  copied.authorityLedger.entries.reverse();
+  copied.sessionState.chronicle.reverse();
+  copied.sessionState.notifications.reverse();
+  assert.equal(
+    completePendingNormalDefeatRecovery(
+      createRecoveryControl(copied),
+      copied,
+      undefined,
+      receiptId
+    ).duplicate,
+    true
+  );
+
+  for (const mutate of [
+    (candidate) => {
+      candidate.authorityLedger.entries.find(
+        (entry) => entry.childContinuityId === c3Id
+      ).parentContinuityId = c1;
+    },
+    (candidate) => {
+      candidate.campaignIdentity.parentContinuityId = c1;
+    },
+    (candidate) => {
+      candidate.campaignIdentity.firstDivergentMutationId =
+        "mutation.wrong_divergence";
+    },
+    (candidate) => {
+      candidate.campaignIdentity.forkedFromArtifactId = "artifact.wrong";
+    },
+    (candidate) => {
+      candidate.campaignIdentity.forkedFromPublicationId =
+        "publication.wrong";
+    }
+  ]) {
+    const candidate = structuredClone(c3.snapshot);
+    mutate(candidate);
+    const candidateControl = createRecoveryControl(candidate);
+    const snapshotBefore = serializeSnapshot(candidate);
+    const controlBefore = JSON.stringify(candidateControl);
+    assert.throws(
+      () => completePendingNormalDefeatRecovery(
+        candidateControl,
+        candidate,
+        undefined,
+        receiptId
+      ),
+      /completed receipt provenance/
+    );
+    assert.equal(serializeSnapshot(candidate), snapshotBefore);
+    assert.equal(JSON.stringify(candidateControl), controlBefore);
   }
 });
 

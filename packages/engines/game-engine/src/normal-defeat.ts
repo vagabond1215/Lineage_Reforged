@@ -468,6 +468,113 @@ function listCorrectionEntries(
   );
 }
 
+function hasExactCompletedRecoveryContinuityLineage(
+  snapshot: SaveSnapshot,
+  receipt: NormalDefeatReceiptState,
+  completionContinuityId: string
+): boolean {
+  const identity = snapshot.campaignIdentity;
+  if (!identity) {
+    return false;
+  }
+  const entries = snapshot.authorityLedger?.entries ?? [];
+  const recoveryMutationId =
+    `mutation.recovery_repair.${receipt.receiptId}`;
+  const recoveryForks = entries.filter(
+    (entry) =>
+      entry.kind === "continuity_fork" &&
+      entry.sourceId === recoveryMutationId
+  );
+  const completionForked = completionContinuityId !== receipt.continuityId;
+
+  if (completionForked) {
+    const recoveryFork = recoveryForks[0];
+    if (
+      recoveryForks.length !== 1 ||
+      !recoveryFork ||
+      recoveryFork.acceptedAtTick !== receipt.sourceTick ||
+      recoveryFork.parentContinuityId !== receipt.continuityId ||
+      recoveryFork.childContinuityId !== completionContinuityId ||
+      !isExactNonblankId(recoveryFork.forkedFromArtifactId) ||
+      !isExactNonblankId(recoveryFork.forkedFromPublicationId)
+    ) {
+      return false;
+    }
+  } else if (recoveryForks.length !== 0) {
+    return false;
+  }
+
+  if (identity.continuityId === completionContinuityId) {
+    if (!completionForked) {
+      return true;
+    }
+    const recoveryFork = recoveryForks[0]!;
+    return (
+      identity.parentContinuityId === recoveryFork.parentContinuityId &&
+      identity.firstDivergentMutationId === recoveryFork.sourceId &&
+      identity.forkedFromArtifactId ===
+        recoveryFork.forkedFromArtifactId &&
+      identity.forkedFromPublicationId ===
+        recoveryFork.forkedFromPublicationId
+    );
+  }
+
+  const path = [];
+  const visited = new Set<string>();
+  let cursor = identity.continuityId;
+  while (cursor !== completionContinuityId) {
+    if (visited.has(cursor) || path.length > entries.length) {
+      return false;
+    }
+    visited.add(cursor);
+    const incoming = entries.filter(
+      (entry) =>
+        entry.kind === "continuity_fork" &&
+        entry.childContinuityId === cursor
+    );
+    const edge = incoming[0];
+    if (
+      incoming.length !== 1 ||
+      !edge ||
+      !isExactNonblankId(edge.sourceId) ||
+      !isExactNonblankId(edge.parentContinuityId) ||
+      !isExactNonblankId(edge.childContinuityId) ||
+      !isExactNonblankId(edge.forkedFromArtifactId) ||
+      !isExactNonblankId(edge.forkedFromPublicationId) ||
+      !Number.isInteger(edge.acceptedAtTick) ||
+      edge.acceptedAtTick < receipt.resolvedTick ||
+      edge.parentContinuityId === edge.childContinuityId
+    ) {
+      return false;
+    }
+    path.push(edge);
+    cursor = edge.parentContinuityId;
+  }
+
+  const currentEdge = path[0];
+  if (
+    !currentEdge ||
+    identity.parentContinuityId !== currentEdge.parentContinuityId ||
+    identity.firstDivergentMutationId !== currentEdge.sourceId ||
+    identity.forkedFromArtifactId !== currentEdge.forkedFromArtifactId ||
+    identity.forkedFromPublicationId !==
+      currentEdge.forkedFromPublicationId
+  ) {
+    return false;
+  }
+
+  const forwardPath = [...path].reverse();
+  for (let index = 1; index < forwardPath.length; index += 1) {
+    if (
+      forwardPath[index]!.acceptedAtTick <
+      forwardPath[index - 1]!.acceptedAtTick
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export function validatePendingNormalDefeatRecoveryProvenance(
   snapshot: SaveSnapshot,
   targetReceiptId?: string
@@ -538,11 +645,6 @@ export function validateCompletedNormalDefeatRecoveryProvenance(
     receipt?.recoveryCompletionContinuityId === undefined
       ? receipt?.continuityId
       : receipt.recoveryCompletionContinuityId;
-  const compatibleCompletionContinuities = new Set([
-    receipt?.continuityId,
-    snapshot.campaignIdentity?.continuityId,
-    snapshot.campaignIdentity?.parentContinuityId
-  ]);
   const correction = receipt ? listCorrectionEntries(snapshot, receipt) : [];
   const entry = correction[0] ?? null;
   const validDestinationSource =
@@ -572,7 +674,11 @@ export function validateCompletedNormalDefeatRecoveryProvenance(
     !isExactNonblankId(receipt.destinationId) ||
     !validDestinationSource ||
     !isExactNonblankId(completionContinuity) ||
-    !compatibleCompletionContinuities.has(completionContinuity) ||
+    !hasExactCompletedRecoveryContinuityLineage(
+      snapshot,
+      receipt,
+      completionContinuity
+    ) ||
     !isFiniteIntegerResource(hp, true) ||
     !isFiniteIntegerResource(stamina) ||
     !isFiniteIntegerResource(mp) ||

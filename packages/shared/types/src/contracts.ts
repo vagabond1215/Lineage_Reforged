@@ -1277,6 +1277,10 @@ export interface CampaignAuthorityLedgerEntryState {
   sourceId: string;
   acceptedAtTick: number;
   supersedesEntryId?: string;
+  parentContinuityId?: string;
+  childContinuityId?: string;
+  forkedFromArtifactId?: string;
+  forkedFromPublicationId?: string;
 }
 
 export interface CampaignAuthorityLedgerState {

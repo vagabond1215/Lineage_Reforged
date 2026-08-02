@@ -416,7 +416,11 @@ export function admitCampaignMutation(
           entryId: createAuthorityId("continuity_fork"),
           kind: "continuity_fork",
           sourceId: submission.mutationId,
-          acceptedAtTick: nextSnapshot.clock.tick
+          acceptedAtTick: nextSnapshot.clock.tick,
+          parentContinuityId: control.loadedContinuityId,
+          childContinuityId: pendingContinuityId,
+          forkedFromArtifactId: control.loadedArtifactId,
+          forkedFromPublicationId: control.loadedPublicationId
         }
       ]
     };
