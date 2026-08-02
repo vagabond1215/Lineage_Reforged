@@ -14,7 +14,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 The current prompt, handoff, output, historical register, parent acceptance audit, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through the unversioned `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` with outcome `AUDIT_ALIGNED_CURRENT_ROUTE`.
 
-The `0.6.9` parent is not accepted. The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt reproduced all nine hardened findings at synchronized head `6820ab8175f6b4d0b447b589045bc0a934663257` but stopped before production edits. The focused decision now preserves original receipt continuity, adds typed completion continuity, adds truthful sole-known-settlement provenance, and reports `DECISION_ACCEPTED_REPAIR_REAUTHORIZED`. Revised `0.6.9.7` is active. The unversioned Ashen Reef survey receipt-foundation decision remains blocked until the repair and a separate independent audit accept the parent.
+The `0.6.9` parent is not yet accepted. The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt reproduced all nine hardened findings and stopped at its former contract gate; the focused decision then accepted completion continuity and truthful sole-known provenance. Revised `0.6.9.7` is now implemented at `ba35dacd852304cd0804b131c8d3045c1f74b755` with result `IMPLEMENTED_PENDING_PARENT_AUDIT`. Independent `0.6.9.8` is active. The unversioned Ashen Reef survey receipt-foundation decision remains blocked until that audit accepts the parent.
 
 The audit corrected live-current pointers in `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`. Older dated rows and completed-run narratives remain historical chronology and do not control execution.
 
@@ -44,8 +44,9 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - latest completed acceptance audit: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`;
 - stopped repair attempt: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`, `IMPLEMENTATION_INCOMPLETE` at the former shared-contract gate;
 - latest focused decision: `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`, `DECISION_ACCEPTED_REPAIR_REAUTHORIZED`;
-- active route: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`;
-- parent `0.6.9` status: `REPAIR_REAUTHORIZED_PENDING_0.6.9.7`;
+- completed repair: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`, `IMPLEMENTED_PENDING_PARENT_AUDIT` at `ba35dacd`;
+- active route: `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`;
+- parent `0.6.9` status: `IMPLEMENTED_PENDING_0.6.9.8_ACCEPTANCE`;
 - survey receipt-foundation decision: blocked pending independent parent acceptance;
 - failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
@@ -66,14 +67,14 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - `0.6.9.4` preserved the implementation baseline but proved multiple pending receipts, unsafe current-location authority, and missing repair-ledger provenance remain blocking;
 - `0.6.9.5` reports those three boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, and a passing build;
 - `0.6.9.6` independently preserved the green baseline and the three exact `0.6.9.5` targets, but proved three additional initial-resolution, restart-duplicate, and original-effect-provenance gaps;
-- revised `0.6.9.7` must reconcile all nine hardened findings under the accepted exact continuity and destination-provenance semantics; `0.6.9.8` remains the separate independent acceptance audit.
+- revised `0.6.9.7` reports all nine hardened findings implemented under the accepted exact continuity and destination-provenance semantics; active `0.6.9.8` must independently reproduce and accept them.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
 ## Accepted Near-Term Order
 
-1. run revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` under the accepted focused contract;
-2. independently audit that repair through `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`;
+1. independently audit implemented `Version 0.6.9.7` through active `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`;
+2. accept parent `0.6.9` only if every independent gate passes;
 3. only after that audit accepts the parent, run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
 4. implement only a dependency-closed survey receipt package selected by that decision;
 5. continue survey command and consequence-adapter work only after receipt acceptance;
@@ -81,4 +82,4 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that revised `0.6.9.7` is active, `0.6.9.8` is conditional, and the survey route remains blocked.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that revised `0.6.9.7` is implemented, `0.6.9.8` is active, and the survey route remains blocked.

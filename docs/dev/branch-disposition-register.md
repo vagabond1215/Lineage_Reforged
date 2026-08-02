@@ -6,6 +6,35 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-02 Version 0.6.9.7 Implementation Refresh
+
+The `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` run fetched/pruned and inspected live refs from clean synchronized starting head `814d4dfa725627c8a0660c08a7146fdbf69bb2ac`. It completed and pushed implementation commit:
+
+`ba35dacd852304cd0804b131c8d3045c1f74b755` - `fix(save): harden defeat recovery authority`
+
+Starting-head counts were `master-only / branch-only`:
+
+- `feat/main-menu-assets`: `732 / 0`;
+- `main-menu-asset-contract-pass`: `660 / 10`, merge base `9a107a7eed54b6d0cd2f161c236fbe163282bba7`;
+- `main-menu-refinement-pass`: `667 / 2`, merge base `d03846e89d1a4fd07a1ea86d02951559f617df74`;
+- `parallel/0.6.9.7-repair-bundle`: `19 / 7`, merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`;
+- eight `bcbe658d` one-document branches: `66 / 1` each;
+- four `3006c968` one-document branches: `68 / 1` each;
+- `parallel/prompt-packaging-integrity-audit`: `95 / 1`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `148 / 2`.
+
+PR #2 remained open, non-draft, non-mergeable at `e78dc645cfb658685be12f45f46d34b7c0da1119`. PR #3 remained open draft, non-mergeable at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. The PR #3 archive was re-read as evidence only; its expected ZIP SHA-256 remained `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`, and its candidates were confirmed incomplete for the revised nine-finding contract.
+
+Disposition result:
+
+- PR #3 and `parallel/0.6.9.7-repair-bundle` remain `HOLD_NAMED_CONSUMER` for active independent `0.6.9.8`; implementation did not merge or copy the candidate replacements;
+- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE` for its dedicated launcher trigger;
+- twelve one-document branches retain their named `CANDIDATE_INTEGRATION` triggers;
+- prompt-packaging and integrated-gameplay readiness branches remain `PROTECTED_REFERENCE` and read-only;
+- no merge, rebase, deletion, force update, PR mutation, or other lifecycle action was due.
+
+PR #3 retirement review is next due after `0.6.9.8` concludes and proves whether every remaining useful artifact is reachable or equivalently recorded on `master`.
+
 ## 2026-08-02 Roadmap/Pipeline/Backlog/Active-Prompt Audit Refresh
 
 The unversioned `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` fetched and pruned from clean synchronized `master` at:
@@ -229,18 +258,18 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+`Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`
 
-Branch handling during the revised implementation route requires:
+Branch handling during the independent audit requires:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
 - required evidence inspection and hash verification of PR #3 and `parallel/0.6.9.7-repair-bundle`;
-- independent reproduction and implementation of all nine findings under the accepted continuity/provenance decision;
-- retaining PR #3 as evidence through the repair and independent successor audit;
+- independent reproduction and audit of all nine findings under the accepted continuity/provenance decision;
+- retaining PR #3 as evidence through the audit conclusion;
 - otherwise preserving candidate branches for their named triggers.
 
-No one-document connector audit branch decides or supersedes the accepted repair contract. PR #3 is evidence only and must not become implementation authority through branch integration. No candidate integration, branch deletion, or PR closure is due inside the repair unless fresh live evidence changes the controlling disposition.
+No one-document connector audit branch decides or supersedes the accepted repair contract. PR #3 is evidence only and must not become acceptance authority through branch integration. No candidate integration, branch deletion, or PR closure is due inside the audit unless fresh live evidence changes the controlling disposition.
 
 The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this focused decision.
 

@@ -23,9 +23,9 @@ Latest implemented primary:
 
 - `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
-Latest completed support/audit run:
+Latest completed support implementation:
 
-- `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
+- `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` at `ba35dacd`
 
 Latest completed unversioned run:
 
@@ -33,11 +33,11 @@ Latest completed unversioned run:
 
 Active run:
 
-- revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+- `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`
 
-Conditional successor:
+Conditional successor route:
 
-- `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`, only after successful `0.6.9.7`
+- unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, only after accepted `0.6.9.8`
 
 ## Current Queue Override
 
@@ -68,11 +68,11 @@ Conditional successor:
 - The unversioned Ashen Reef survey scope/owner decision is complete. It accepted one deterministic survey-shift occurrence, one shared preview/execution plan, typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic accepted-state application, and accepted-only UI. It returned `NO_PACKAGE` because stable campaign/continuity identity, durable receipt authority, and candidate-write/verification/publication semantics are absent.
 - The unversioned minimum save identity/publication decision is complete. It accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification and authoritative-head publication, and a typed persisted authority ledger. It returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority.
 - The unversioned Normal activation/continuity/account-publication dependency decision is complete and returned `PACKAGE_READY`. It selected atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: campaign rules version 2, version-7 verified publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat, legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` is implemented, but parent acceptance is reopened and the focused decision records `REPAIR_REAUTHORIZED_PENDING_0.6.9.7`.
+- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` is implemented, but parent acceptance remains pending active `0.6.9.8`.
 - `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit` completed with `REPAIR_REQUIRED` and retained its six exact findings as historical acceptance evidence.
 - `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` remains accepted evidence for its exact publication, migration, and account-consumer seams, but later real-caller and independent audits reopened the parent.
 - `0.6.9.3` through `0.6.9.6` implemented and audited retry, recovery-completion, authority, and provenance boundaries. The independent `0.6.9.6` audit proved the remaining initial-resolution, restart-duplicate, and effect-provenance defects.
-- Revised `Version 0.6.9.7` is active and must reconcile all nine hardened findings. `0.6.9.8` remains the separate independent acceptance audit.
+- Revised `Version 0.6.9.7` is implemented at `ba35dacd` with all nine hardened findings reported closed. `0.6.9.8` is the active independent acceptance audit.
 - The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` remains blocked until `0.6.9.8` independently accepts the parent.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.

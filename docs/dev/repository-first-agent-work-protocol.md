@@ -153,4 +153,4 @@ Evidence bundles may accelerate review but never bypass it.
 
 ## Current Application
 
-The active `0.6.9.7` route must consume draft PR #3 and `parallel/0.6.9.7-repair-bundle` only as evidence. The implementation must occur in a synchronized authenticated repository checkout, preserve the controlling prompt, complete all repository tests/build/type/mirror/adversarial/diff gates, update the handoff chain, and install `0.6.9.8` only after successful implementation. The Ashen Reef survey route remains blocked.
+Implemented `0.6.9.7` consumed draft PR #3 and `parallel/0.6.9.7-repair-bundle` only as evidence. Active independent `0.6.9.8` must continue to treat them as evidence, verify the synchronized implementation commit and every repository test/build/type/mirror/adversarial/diff gate independently, update the handoff chain, and accept the parent only on complete proof. The Ashen Reef survey route remains blocked.

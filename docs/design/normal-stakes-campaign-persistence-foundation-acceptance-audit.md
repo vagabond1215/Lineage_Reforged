@@ -8,11 +8,11 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `REPAIR_REAUTHORIZED_PENDING_0.6.9.7`
+Current status: `IMPLEMENTED_PENDING_0.6.9.8_ACCEPTANCE`
 
 ## Decision
 
-The `0.6.9` parent is not accepted.
+The `0.6.9` parent is not yet accepted. Revised `0.6.9.7` is implemented and pushed; independent `0.6.9.8` acceptance is active.
 
 The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt ran against synchronized `master` at `6820ab8175f6b4d0b447b589045bc0a934663257`, independently reproduced all nine hardened findings, and stopped before production edits under its required contract gates.
 
@@ -23,11 +23,11 @@ The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Ef
 
 Both additions remain compatible with target snapshot format `lineage.save_snapshot.v2`; existing missing completion fields use the decision's exact pending/playable inference, no target snapshot rewrite is required, and new writes must emit explicit truthful values.
 
-The active route is again:
+The completed repair route was:
 
 `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
 
-Its revised prompt includes all nine findings, exact source-first head/non-head ordering, owner-certified version-6 behavior, stable completed targeting, the bounded contract surface, and the complete evidence matrix. `0.6.9.8` remains reserved for the later independent audit and is not active.
+Its revised prompt included all nine findings, exact source-first head/non-head ordering, owner-certified version-6 behavior, stable completed targeting, the bounded contract surface, and the complete evidence matrix. Implementation commit `ba35dacd852304cd0804b131c8d3045c1f74b755` reports `IMPLEMENTED_PENDING_PARENT_AUDIT`; `0.6.9.8` is now active.
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` independently preserved the 26/26 focused persistence tests, 133/133 prescribed tests, 209-module production build, and bounded TypeScript posture. Fresh adversarial execution nevertheless proved three blocking gaps:
 
@@ -218,6 +218,28 @@ The repair must route initial automatic current and campaign-start destinations 
 
 The audit must prove multiple-pending rejection is order-independent and side-effect-free, current-location authority requires exact known settlement evidence, the original defeat ledger entry is preserved, and exactly one deterministic superseding repair entry is appended.
 
+## `0.6.9.7` Implementation Result
+
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` is implemented at:
+
+`ba35dacd852304cd0804b131c8d3045c1f74b755` - `fix(save): harden defeat recovery authority`
+
+Reported result: `IMPLEMENTED_PENDING_PARENT_AUDIT`.
+
+The implementation added the accepted optional completion-continuity field and sole-known destination literal, exact initial resource and destination admission, exact pending and duplicate evidence validation, source-aware completion precedence, explicit completed targeting, durable restart replay, source-before-fork control validation, one-child non-head completion, and the bounded owner-certified version-6 safe-destination path.
+
+Reported validation:
+
+- focused persistence `32/32`;
+- prescribed regression group `139/139`;
+- fresh adversarial probe `10/10`;
+- RPG UI production build passed at 209 modules;
+- bounded TypeScript audit retained 137 known diagnostics with zero naming changed production files;
+- diff, staging, post-commit, mirror, serialization, caller, and hygiene checks passed;
+- GitHub exposed no combined statuses or pull-request-triggered workflow runs for the implementation commit.
+
+This evidence does not accept the parent. Independent reproduction and acceptance remain assigned to `0.6.9.8`.
+
 ## Branch And PR Review
 
 The completed `0.6.9.3` run reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
@@ -226,6 +248,6 @@ The completed `0.6.9.3` run reported one local branch, seventeen non-default rem
 
 ## Next Run
 
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+`Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`
 
-Run the revised prompt under the accepted continuity and destination-provenance contract. Do not install `0.6.9.8` until the implementation and complete validation succeed.
+Run the exact current prompt as an independent production-read-only audit. Parent `0.6.9`, the survey route, and `0.7.0` remain blocked until that audit accepts every gate.

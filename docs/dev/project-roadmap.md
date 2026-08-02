@@ -5,11 +5,11 @@ Last reviewed: 2026-08-02 by the repository roadmap/pipeline/backlog/active-prom
 ## Current Runtime Transition Override
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support/audit run: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
+- Latest completed support implementation: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` at `ba35dacd`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
 - Latest completed unversioned run: `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` with outcome `AUDIT_ALIGNED_CURRENT_ROUTE`.
-- Active run: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
-- Activity selection remains accepted. `0.6.4`-`0.6.8.1` are accepted. Parent `0.6.9` is implemented but `REPAIR_REAUTHORIZED_PENDING_0.6.9.7`; `0.6.9.8` is reserved for independent acceptance. The Ashen Reef survey receipt decision remains blocked and `0.7.0` remains `NOT_READY`.
+- Active run: `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`.
+- Activity selection remains accepted. `0.6.4`-`0.6.8.1` are accepted. Parent `0.6.9` is implemented but `IMPLEMENTED_PENDING_0.6.9.8_ACCEPTANCE`. The Ashen Reef survey receipt decision remains blocked and `0.7.0` remains `NOT_READY`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -36,11 +36,11 @@ The current Codex handoff controls exact current version state. The current GPT 
 Current live anchor:
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`, with parent acceptance reopened.
-- Latest completed support/audit run: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`.
-- Active support implementation: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
-- Next conditional support audit: `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`, only after successful `0.6.9.7`.
+- Latest completed support implementation: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` at `ba35dacd`.
+- Active support audit: `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`.
+- Next conditional route: the unversioned Ashen Reef survey receipt-foundation decision, only after accepted `0.6.9.8`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the static expansion, coherence, and lethal-process static-foundation packages are accepted; the Normal persistence parent requires the active bounded repair before independent acceptance; the survey route and `0.7.0` remain blocked.
+- Current phase: player travel, quest acceptance, repaired quest tracking, and activity selection are engine-owned and accepted; the static expansion, coherence, and lethal-process static-foundation packages are accepted; the Normal persistence repair is implemented and undergoing independent acceptance; the survey route and `0.7.0` remain blocked.
 
 Versioning rule:
 
@@ -361,7 +361,7 @@ These are internal development maturity markers, not public release promises. Pa
 
 ## 3. Active Pipeline
 
-Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: revised `0.6.9.7` is active, `0.6.9.8` is conditional, and the survey route remains blocked.
+Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: revised `0.6.9.7` is implemented, `0.6.9.8` is active, and the survey route remains blocked.
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |

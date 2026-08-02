@@ -1,8 +1,6 @@
-# Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair
+# Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit
 
-## Run Identity
-
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+Date: 2026-08-02
 
 Label class: support suffix
 
@@ -10,75 +8,74 @@ Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
 Milestone impact: `supports_current_band`
 
-Suggested commit:
+Execution posture: independent read-only production audit; coordination documents may be updated only after the conclusion
 
-`fix(save): harden Normal defeat recovery authority`
+## Objective
 
-## Purpose
+Independently audit `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` at implementation commit:
 
-Implement the complete nine-finding repair independently reproduced by the stopped `0.6.9.7` attempt, using the accepted contract in:
+`ba35dacd852304cd0804b131c8d3045c1f74b755`
 
-`docs/design/normal-defeat-recovery-continuity-and-destination-provenance-contract-decision.md`
+Accept parent `0.6.9` only if every contract, caller, failure-boundary, restart, persistence, compatibility, and validation gate is independently proven. Do not use the `0.6.9.7` implementation report, green counts, or connector repair bundle as acceptance authority.
 
-This revised route is reauthorized to add the exact completion-continuity field and sole-known destination-source literal decided there. Preserve all accepted `0.6.9.2` through `0.6.9.5` behavior. Do not accept parent `0.6.9`; install `0.6.9.8` only after complete implementation and validation.
+## Required Repository Orientation
 
-## Required Reading
+Follow `AGENTS.md` and `docs/dev/repository-first-agent-work-protocol.md` completely before narrowing scope.
+
+Fetch/prune and record:
+
+- local/remote head and worktree status;
+- ancestry of `ba35dacd852304cd0804b131c8d3045c1f74b755`;
+- every successor commit and whether it changes the audited runtime/test surface;
+- all local and remote branches, open PRs, merge bases, unique commits, changed paths, semantic overlap, and current disposition;
+- hosted combined status and workflow-run availability for the implementation and final audit commits.
 
 Read the complete current versions of:
 
-- `AGENTS.md`;
-- `docs/dev/repository-first-agent-work-protocol.md`;
+- `docs/dev/current-codex-prompt.md`;
 - `docs/dev/current-gpt-handoff.md`;
 - `docs/dev/current-codex-output.md`;
-- `docs/dev/repository-roadmap-pipeline-backlog-active-prompt-reconciliation-audit-2026-08-02.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
 - `docs/design/current-planning-anchor-reconciliation.md`;
 - `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/dev/branch-lifecycle-and-integration-policy.md`;
 - `docs/dev/branch-disposition-register.md`;
-- `docs/dev/version-0.6.9.7-pre-implementation-source-review-2026-07-31.md`;
-- `docs/design/normal-defeat-recovery-continuity-and-destination-provenance-contract-decision.md`;
-- `docs/design/normal-stakes-defeat-fallback-and-recovery-receipt-decision.md`;
-- `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
+- `docs/dev/repository-roadmap-pipeline-backlog-active-prompt-reconciliation-audit-2026-08-02.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
-- the complete current receipt, campaign identity, continuity, authority-ledger, save snapshot, migration, load, repair, publication, and real `App.tsx` caller paths;
-- focused and adjacent tests, manifests, build scripts, TypeScript configuration, and JavaScript/TypeScript mirror posture.
+- `docs/design/normal-defeat-recovery-continuity-and-destination-provenance-contract-decision.md`;
+- the hardened `0.6.9.7` preimplementation source review and all focused Normal persistence decisions/audits it cites.
 
-## Evidence Bundle
+Inspect PR #3 and its reconstructed archive as evidence only. Verify its hashes again if it remains a named consumer; never merge, cherry-pick, or substitute its candidate files for live source.
 
-Inspect draft PR #3 and `parallel/0.6.9.7-repair-bundle` during the mandatory live branch/PR inventory.
+## Audit Boundary
 
-- Read its README before reconstruction.
-- Verify branch head, source/merge base, ZIP SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`, and member hashes.
-- Treat every candidate file, probe, and report as evidence only.
-- Independently reproduce all nine findings against untouched synchronized source.
-- Compare every candidate line against live contracts, callers, and tests.
-- Do not merge, cherry-pick, rebase, force-update, modify, or close the PR/branch as implementation.
-- Keep disposition `HOLD_NAMED_CONSUMER` through this repair and its independent successor audit.
+Do not edit production source, tests, schemas, persistence formats, content, assets, dependencies, or generated outputs in this run.
 
-## Accepted Contract To Implement
+If a blocking defect is found:
 
-### Original and completion continuity
+1. reproduce it independently against untouched live source;
+2. identify the exact caller, authority mismatch, failure boundary, and smallest repair surface;
+3. report `REPAIR_REQUIRED`;
+4. install a decision-complete support repair prompt without implementing it.
 
-- `NormalDefeatReceiptState.continuityId` always remains the original defeat continuity.
-- Add `recoveryCompletionContinuityId?: string | null` for stored compatibility.
-- Every new pending receipt explicitly writes `null`.
-- Every new playable receipt explicitly writes the continuity that completed recovery.
-- Existing missing-field pending receipts infer `null`; existing missing-field playable receipts infer `receipt.continuityId` only after all other exact durable facts validate.
-- At-head completion records the current continuity and creates no fork.
-- Non-head ordinary completion validates against untouched source first, creates exactly one child, retains the receipt source continuity, and records the child as completion continuity.
-- Later descendants and copied artifacts preserve both receipt fields unchanged.
-- Owner-certified version-6 repair creates no child; original and completion continuity remain the migrated continuity, and completed repair must be verified in the loaded slot before play.
+If every gate passes, report `PARENT_ACCEPTED`, update the focused parent acceptance authority and current coordination surfaces, and install the already-planned unversioned Ashen Reef survey receipt-foundation decision as the next route. Do not implement survey behavior in this audit.
 
-### Completion correction authority
+## Exact Contract To Verify
 
-- Use one correction entry with id `normal_defeat_recovery.<receiptId>`.
-- Its kind is `normal_defeat`, source id is `mutation.recovery_repair.<receiptId>`, `supersedesEntryId` is the original `receiptId`, and accepted tick equals completed `resolvedTick`.
-- Do not add a new receipt kind, ledger kind, or generic correction framework.
+### Continuity
 
-### Destination source
+- `NormalDefeatReceiptState.continuityId` is immutable original defeat continuity.
+- New pending receipts write `recoveryCompletionContinuityId: null`.
+- New immediately playable receipts write original/current completion continuity.
+- Missing-field stored pending receipts infer null without byte rewrite.
+- Missing-field stored playable receipts infer original receipt continuity only after every other durable fact validates.
+- At-head completion creates no fork and records the current continuity.
+- Non-head ordinary completion validates untouched source first, creates exactly one child and one source-tick fork entry, preserves original receipt continuity, and records child completion continuity.
+- Later accepted mutations and copied artifacts preserve both receipt continuity fields.
 
-Add `sole_known_settlement` to the shared union. Strict completion precedence is:
+### Destination authority
+
+Completion precedence must be strict and source-aware:
 
 1. supplied and exactly validated explicit -> `explicit_context`;
 2. exactly validated current -> `current_settlement`;
@@ -86,221 +83,128 @@ Add `sole_known_settlement` to the shared union. Strict completion precedence is
 4. exactly one known safe settlement -> `sole_known_settlement`;
 5. none or multiple -> fail closed.
 
-A supplied explicit claim never falls back. Valid explicit authority never inspects or is vetoed by lower-priority corruption. The new literal is authorized for pending completion, not as a new automatic initial-resolution fallback.
+A valid explicit claim must not inspect or be vetoed by lower-priority corruption. An invalid explicit claim must not fall back. Initial automatic resolution must not use the sole-known fallback and must become deterministic pending on malformed, padded, unknown, duplicate, contradictory, ruin, wilderness, or other non-settlement current/campaign-start evidence.
 
-### Stable targeting
+### Original and completed evidence
 
-- Infer a target only when exactly one pending receipt exists.
-- Completed replay after restart requires an explicit target receipt id.
-- Never choose first, last, latest, slot order, or array order.
-- Exact duplicate replay returns current snapshot/control and the targeted receipt without rollback, fork, tick, resource, relocation, projection, ledger, revision, or publication effects.
+Verify exact finite integer resource admission and every derivable receipt, rules, policy, source, tick, destination, posture, original ledger, correction ledger, Chronicle, notification, campaign, character, account, artifact, publication/revision, loaded continuity, pending continuity, and mutation identity fact.
 
-## Pre-Edit Gate
+The correction entry must be uniquely:
 
-Before editing:
+- id `normal_defeat_recovery.<receiptId>`;
+- kind `normal_defeat`;
+- source `mutation.recovery_repair.<receiptId>`;
+- superseding the original receipt;
+- accepted at completed `resolvedTick`.
 
-1. fetch/prune and verify clean synchronized `master`, upstream, head, and this exact prompt;
-2. confirm completed reconciliation-audit commit `a10e70a9f033337d460d2d312b58ddfb2496af2b` is present in the live ancestry; if `master` has advanced, enumerate every successor commit and prove none implements, supersedes, narrows, or broadens this prompt;
-3. inventory every local/remote branch and open PR with merge bases, unique commits, paths, semantic overlap, and dispositions;
-4. read and hash-verify PR #3 evidence as required;
-5. trace the complete real caller, engine, shared contract, persistence/migration, save/load/publication, export/mirror, and test paths;
-6. reproduce all nine findings below against untouched source and record exact effect boundary plus serialized source/control stability;
-7. distinguish inspected base, implementation starting head, final committed head, live post-fetch head, and the completed documentation-only reconciliation baseline.
+Completed replay after caller-state loss/restart requires an explicit receipt id, exact durable evidence, and a compatible control/snapshot. It returns the current snapshot/control without rolling back later mutations, repeating effects, creating a fork, or depending on array order. Pending targeting may be inferred only when exactly one pending receipt exists.
 
-If the correct implementation requires a new snapshot-format/envelope revision, new dependency, new ledger kind, broad schema/migration rewrite, generic replay/event/transaction framework, or another unlisted production owner, stop and report `IMPLEMENTATION_INCOMPLETE` rather than guessing.
+### Transaction and persistence boundary
 
-## Nine Findings
+Every rejection must occur before clone effects and non-head child-id creation. Accepted ordinary completion advances exactly four ticks, relocates once, updates only the target receipt/projections, appends one correction, advances session revision once, retains one result, and remains unsaved until explicit manual/quick save.
 
-### Finding 1 - Unsafe automatic initial destination authority
+Owner-certified version-6 repair creates no child, retains source bytes, uses exact safe destination authority, verifies repaired head or non-head persistence before play, retries idempotently, and never promotes a repaired non-head artifact to head.
 
-Initial automatic current and campaign-start candidates must use the exact known-safe-settlement predicate. Malformed, padded, unknown, duplicate, non-settlement, ruin, wilderness, or contradictory evidence must produce the accepted deterministic `recovery_pending` result, not playable relocation. Valid explicit initial authority short-circuits lower evidence and records `explicit_context`.
+Snapshot format remains `lineage.save_snapshot.v2`. No envelope version, ledger kind, dependency, generic replay/event/transaction framework, survey behavior, or unrelated runtime authority may have changed.
 
-### Finding 2 - Restart-safe completed duplicate
+## Independent Evidence Matrix
 
-After in-memory retained mutation results are lost, a caller that explicitly targets a completed receipt must reconstruct one exact durable duplicate from the receipt, original ledger, correction ledger, projections, completion continuity, control, and snapshot. It must return current state without rolling back later accepted mutations.
+At minimum reproduce and verify:
 
-### Finding 3 - Pending original-effect provenance
-
-Before completion effects, validate the unique pending receipt and all derivable original facts:
-
-- rules version 2, policy revision 1, `normal_stakes`;
-- `sourceTick === resolvedTick === clock.tick === capturedAtTick`;
-- destination null, source `none`, zero recovery ticks, and completion continuity null/inferred null;
-- finite integer resource maxima/currents within bounds;
-- HP current equals retained restored HP and is positive;
-- MP current equals retained preserved MP;
-- Stamina equals retained restored Stamina and satisfies the accepted bounded formula without inventing pre-defeat Stamina;
-- exactly one original ledger, Chronicle entry, and notification with matching ids/ticks/posture;
-- no duplicate receipt, orphan correction, or supersession.
-
-### Finding 4 - Strict explicit completion precedence
-
-A supplied explicit destination is normalized and validated before current, campaign-start, or sole-known evidence. A valid explicit destination succeeds with corrupt lower-priority evidence; an invalid explicit destination fails without fallback. Rejection is byte-stable.
-
-### Finding 5 - Initial duplicate integrity
-
-A duplicate initial source mutation returns only one uniquely complete receipt/original-ledger/projection evidence set. Missing, duplicate, conflicting, orphaned, or order-dependent evidence fails before effects. Reversed arrays cannot change the result.
-
-### Finding 6 - Exact initial resource admission
-
-Before cloning or effects require finite integer `hp.current === 0`, finite integer maxima/currents, `hp.max >= 1`, nonnegative Stamina/MP maxima, and every current within bounds. Preserve accepted HP/Stamina formulas and MP/body truth. Negative, fractional, nonfinite, or out-of-bounds input fails before cleanup or mutation.
-
-### Finding 7 - Campaign-control identity
-
-Recovery and replay must reconcile control account, campaign, loaded artifact, publication/revision, loaded continuity, pending continuity, source snapshot, receipt campaign/character/continuity, and target mutation id. Matching artifact/revision alone is insufficient.
-
-### Finding 8 - Non-head provenance-before-fork ordering
-
-Validate the exact target, source authority, pending facts, and destination against the untouched source before child-id creation. An accepted non-head ordinary completion creates one child with:
-
-- parent = loaded source continuity;
-- current continuity = new child;
-- forked artifact/publication from control;
-- first mutation = `mutation.recovery_repair.<receiptId>`;
-- one matching continuity-fork ledger entry at source tick;
-- receipt source continuity unchanged;
-- receipt completion continuity = child.
-
-Every rejection creates no child and leaves snapshot/control byte-stable.
-
-### Finding 9 - Truthful completion destination provenance
-
-Carry a source-aware resolved destination through completion. Record explicit/current/campaign-start/sole-known exactly. Do not pre-resolve an automatic destination and pass it back as explicit. Preserve historical pre-decision stored literals without guessing; all new writes must be truthful.
-
-## Exact Transaction Order
-
-For target-format ordinary completion:
-
-1. uniquely select pending target or explicitly target completed replay;
-2. validate control, artifact, revision, account, campaign, character, loaded continuity, and mutation identity;
-3. validate all retained receipt/ledger/projection/resource/tick facts against untouched source;
-4. resolve and classify destination against untouched source;
-5. return an exact completed duplicate before any fork;
-6. for accepted pending work, clone; create one child only for non-head ordinary completion;
-7. update only the target receipt and append one correction entry;
-8. advance four ticks, relocate, and apply accepted resources once;
-9. update the target Chronicle and notification once;
-10. advance session revision and retain result once;
-11. leave ordinary result unsaved until explicit manual/quick save.
-
-Every rejection is before child creation and effect application. A thrown partial clone is never returned or persisted.
-
-Owner-certified version-6 repair follows the accepted special path: no child, source-first validation, same continuity, repaired head or non-head address verification before play, and no head replacement from a non-head source.
-
-## Required Tests
-
-Extend `tests/unit/campaign-persistence-foundation.test.mjs` to cover at least:
-
-- all nine untouched-source reproductions becoming closed tests;
-- valid explicit/current/campaign-start initial resolution and invalid automatic initial evidence becoming pending;
-- initial exact resources, complete duplicate, partial/orphan/duplicate evidence, and reversed arrays;
-- at-head pending completion;
-- non-head completion through the real run-entry caller;
-- every rejection before child creation and one exact accepted child/completion;
-- restart before completion, restart after completion, and explicit completed target replay;
-- duplicate after later accepted mutation without rollback;
-- multiple historical receipts, explicit stable targeting, copied artifacts, and reversed receipt/ledger arrays;
-- missing/duplicate/conflicting original and correction ledger evidence;
-- corrupt control account/campaign/artifact/revision/continuity and receipt campaign/character/continuity;
-- every pending tick, resource, rules, policy, source, posture, Chronicle, notification, and completion-continuity corruption;
-- explicit with each corrupt lower source; invalid explicit without fallback;
-- current, campaign-start, sole-known, no-known, and multiple-known completion cases with exact source labels;
-- old target snapshots with missing completion field in pending and playable postures;
-- version-6 head and non-head HP-zero repair, pending block, no-child correction, verified persistence, retry, and source-byte retention;
+- all nine `0.6.9.7` findings against the repaired behavior;
+- valid explicit/current/campaign-start initial resolution and every invalid automatic initial class becoming pending;
+- negative, fractional, nonfinite, zero/negative maximum, and out-of-bounds resource rejection before effects;
+- complete initial duplicate plus missing, duplicate, orphaned, conflicting, and reversed evidence;
+- pending source corruption across rules, policy, stakes, ticks, resources, receipt fields, ledger, Chronicle, notification, posture, and completion continuity;
+- explicit completion with every corrupt lower source and invalid explicit without fallback;
+- current, campaign-start, sole-known, none, and ambiguous completion with exact source labels;
+- at-head and non-head completion through the real run-entry route;
+- rejection before non-head child creation and one exact child/completion sequence;
+- restart before completion, restart after completion, and completed replay after later accepted mutation;
+- multiple historical receipts, stable explicit targeting, copied artifacts, and reversed receipt/ledger/projection arrays;
+- corrupt account/campaign/artifact/publication/revision/loaded-continuity/pending-continuity/control and receipt campaign/character/original/completion continuity;
+- old target snapshots missing the additive completion field in pending and playable postures;
+- version-6 head and non-head HP-zero repair, blocked pending, retry, source-byte retention, verified persistence, and no child;
 - publication blocked pending, ordinary completion unsaved, explicit later save, and exactly-once account publication;
-- all existing accepted persistence, migration, collision, publication, lifecycle, terminal, and command regressions.
+- JavaScript mirror/public export parity and serialization compatibility.
 
-Fresh adversarial probes must independently vary array order, caller-state loss, restart, copied artifacts, identity conflicts, partial evidence, and rejection boundaries. Green focused tests alone do not accept the repair.
+Use fresh probes that are independent of the focused test additions. Vary array order, copied caller state, restart boundaries, identity conflicts, partial evidence, and failure-before-fork behavior.
 
-## Authorized Surface
+## Required Validation
 
-Production changes are limited to the smallest coherent subset of:
-
-- `packages/shared/types/src/contracts.ts`;
-- `packages/engines/game-engine/src/normal-defeat.ts`;
-- `packages/engines/game-engine/src/campaign-session.ts`;
-- `packages/engines/game-engine/src/index.ts` and the exact `.js` re-export mirror only if a new public helper is required;
-- `apps/rpg-ui/src/game-shell/saveManager.ts` only for the exact owner-certified version-6 completion/persistence path;
-- `apps/rpg-ui/src/App.tsx` only for the real caller and legacy-owner routing required by this contract;
-- `tests/unit/campaign-persistence-foundation.test.mjs`;
-- exact current coordination and focused authority documents required by repository protocol.
-
-Do not change `packages/shared/persistence/src/index.ts`, snapshot format identity, envelope version, ledger kinds, dependencies, content, assets, survey behavior, or unrelated UI.
-
-## Validation Commands
-
-Run:
+Run focused persistence:
 
 ```powershell
 node --test tests\unit\campaign-persistence-foundation.test.mjs
 ```
 
+Run the prescribed regression group:
+
 ```powershell
 node --test tests\simulation\save-load-roundtrip.test.mjs tests\unit\achievements.test.mjs tests\unit\account-profile-storage.test.mjs tests\unit\run-lifecycle.test.mjs tests\unit\player-travel-command.test.mjs tests\unit\player-quest-acceptance-command.test.mjs tests\unit\player-quest-tracking-command.test.mjs tests\unit\player-activity-selection-command.test.mjs tests\unit\combat-hook-support.test.mjs tests\unit\combat-spawn-foundation.test.mjs tests\unit\campaign-persistence-foundation.test.mjs
 ```
+
+Run the RPG UI production build:
 
 ```powershell
 npx.cmd vite build
 ```
 
-Run the repository's prescribed bounded TypeScript audit and report total diagnostics plus whether any changed production file is named. Do not weaken configuration or absorb the known broad baseline into this repair.
+Run a bounded TypeScript audit using the installed RPG UI compiler. Report total diagnostics and whether any audited production file is named; do not repair the broad backlog or weaken configuration.
 
 Also run:
 
-- fresh adversarial probes for every finding and contract row;
-- real `App.tsx` caller execution/inspection;
-- target serialization/deserialization compatibility and public export/mirror checks;
+- fresh independent adversarial probes;
+- real `App.tsx` caller/source inspection;
+- version-6 owner and persistence inspection;
+- serialization/export/mirror checks;
 - `git diff --check`;
-- complete unstaged, staged, post-commit, and hygiene review;
-- after commit/push, query and report combined status and workflow-run availability for the final commit; absence of hosted checks must be stated and never substituted for the required local validation.
+- complete diff/staged/post-commit inspection;
+- generated/log/temp/build-output hygiene;
+- post-push combined-status and workflow-run availability checks.
 
-## Applicable Verification Guardrails
+Apply and report `FP-001` through `FP-012` with exact evidence.
 
-Apply and report `FP-001` through `FP-012`, with special attention to:
+## Completion Outcomes
 
-- `FP-001`: real `App.tsx` caller;
-- `FP-002`: independent failure-boundary matrix beyond green totals;
-- `FP-003`: reachable completion and blocked legacy exit;
-- `FP-005`: caller loss and restart;
-- `FP-006`: no newer-truth rollback;
-- `FP-008`: semantic PR/branch review;
-- `FP-009`: exact head terminology;
-- `FP-010`: all nine findings mapped;
-- `FP-011`: strict precedence and provenance before child/effects;
-- `FP-012`: stable target plus unique complete durable evidence.
+### Accepted
 
-## Completion Decision
+Use only if every gate passes:
 
-On complete implementation:
+`PARENT_ACCEPTED`
 
-- report `IMPLEMENTED_PENDING_PARENT_AUDIT`;
-- preserve parent `0.6.9` as unaccepted;
-- update focused acceptance authority and all current coordination files;
-- install `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit` as the next prompt;
-- retain PR #3 through that independent audit;
-- keep the Ashen Reef survey route blocked.
+Then:
 
-If any finding, caller, compatibility row, migration row, validation gate, or contract remains incomplete:
+- mark `Version 0.6.9` accepted in the focused authority and current coordination surfaces;
+- record exact audit commit/push identity and validation evidence;
+- refresh branch/PR dispositions and named-consumer triggers;
+- install the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` as the next prompt;
+- keep `0.7.0` blocked until its separate readiness criteria are satisfied.
 
-- report `IMPLEMENTATION_INCOMPLETE`;
-- do not install `0.6.9.8`;
-- record the exact smallest blocker and preserve the current repair route.
+### Rejected
 
-## Scope Exclusions
+Use if any blocking defect remains:
 
-Do not implement survey behavior, Committed/Ironbound Stakes, injury/trauma/death/succession, broad recovery UI, slot redesign, cloud synchronization, generic replay/event/transaction/correction frameworks, dependency changes, content/assets, protected-branch changes, unrelated cleanup, or broad TypeScript repair.
+`REPAIR_REQUIRED`
+
+Then:
+
+- keep parent `0.6.9`, the survey route, and `0.7.0` blocked;
+- document every independently reproduced defect and its exact source/caller boundary;
+- install the smallest decision-complete support repair prompt;
+- do not implement the repair during this audit.
 
 ## Completion Report
 
 Report:
 
-- all nine pre-edit reproductions and finding-to-code-to-test dispositions;
-- exact continuity and destination-source behavior;
-- head/non-head/legacy ordering and rollback evidence;
-- compatibility and migration evidence;
-- test/build/type/probe/mirror/diff results with exact counts;
-- `FP-001` through `FP-012` evidence;
-- completed reconciliation-audit identity `a10e70a9f033337d460d2d312b58ddfb2496af2b`, any successor commits before implementation, and whether any successor changed runtime scope;
-- live branch/PR inventory, dispositions, actions, and retained triggers;
-- files changed, risks, exact final commit, live remote head, combined status, and hosted workflow-run availability;
-- exact installed next route.
+1. source and final commit identities;
+2. successor/runtime-scope classification;
+3. branch/PR inventory and every disposition change or retained trigger;
+4. findings mapped to exact files/callers;
+5. independent probe matrix and results;
+6. focused/regression/build/type/mirror/serialization/diff/hygiene results;
+7. applicable failure-pattern ids and proof;
+8. hosted combined-status/workflow availability;
+9. exact conclusion: `PARENT_ACCEPTED` or `REPAIR_REQUIRED`;
+10. files changed, suggested commit message, risks, and next run.
