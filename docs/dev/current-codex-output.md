@@ -1,104 +1,103 @@
 # Current Codex Output
 
-Source version/run: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`
+Source run: connector-side inspection and acceptance-reopening coordination
 
 Date: 2026-08-02
 
-Branch/status assumption: direct `master` workflow; repair implementation committed at `cbad987028d81c5ecdc35403333ec920d0ea5e53`
+Inspected head: `26c70f2114bf99714d2711eaf5a7653a57bf09cb`
 
-Label class: support suffix
+Durable reopening review commit: `b7297b7bada58dd7b01835435c87da95bafbec8f`
 
-Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
+Active-prompt installation commit: `6f9db22a9f50daa4b4c3b7559be779db14dbbf02`
 
-Milestone impact: `supports_current_band`
+Result: `ACCEPTANCE_REOPENED_FOCUSED_DECISION_REQUIRED`
 
-Result: `PARENT_ACCEPTED`
+## Current Disposition
 
-Acceptance coordination commit: `f68d878cd1969e861f4fe7a793412876ba48b3a8`
+- Parent `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: `ACCEPTANCE_REOPENED_PENDING_FOCUSED_DECISION`.
+- `Version 0.6.9.8`: historical independent evidence; conclusion `REPAIR_REQUIRED` remains useful.
+- Focused lineage decision commit: `551d14bc483054aac129f7a081489b70efb46521`.
+- Lineage implementation commit `cbad987028d81c5ecdc35403333ec920d0ea5e53`: `IMPLEMENTED_PENDING_AUTHORITY_RECONCILIATION_AND_REAUDIT`.
+- Prior claimed `Version 0.6.9.10` acceptance and survey activation: superseded pending the active decision and a properly installed successor.
+- Ashen Reef survey receipt-foundation decision: blocked.
+- Survey behavior: unimplemented.
+- `0.7.0`: `NOT_READY`.
 
-## GPT Change Review And Audit Sequence
+No production revert or new production repair was performed.
 
-The run fetched/pruned and began from synchronized hosted head `5fe11910e6b4951483994ee23529150a697f78cc`.
+## Inspection Findings
 
-GPT's three successor commits after the prior handoff were documentation-only and internally accurate:
+### 1. Prompt-transition authority was skipped
 
-- `679a61efdef88b8231e18ba7f260426e70d7a5f3` recorded an audit-critical completion-lineage concern;
-- `cbce222e6206d85fe91a274d3bc6475d96095090` hardened the `0.6.9.8` audit prompt;
-- `5fe11910e6b4951483994ee23529150a697f78cc` updated the handoff.
+At `551d14bc483054aac129f7a081489b70efb46521`, the live current prompt still installed the production-read-only `Version 0.6.9.8` audit. That audit required a blocking finding to install a complete repair prompt and stop.
 
-Executable reproduction confirmed the concern. `0.6.9.8` therefore reached `REPAIR_REQUIRED`: original-continuity substitution was accepted, valid replay after two later forks was rejected, and the old fork ledger could not prove arbitrary-depth ancestry.
+The decision commit added only `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`. It did not install a runnable `0.6.9.9` implementation prompt or update the current route.
 
-The focused decision at `551d14bc483054aac129f7a081489b70efb46521` authorized `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair`. Implementation commit `cbad987028d81c5ecdc35403333ec920d0ea5e53` completed that repair. A fresh committed-head acceptance pass is classified as `0.6.9.10` and accepts parent `0.6.9`.
+The immediately following `cbad987028d81c5ecdc35403333ec920d0ea5e53` commit modified production source, shared contracts, and tests while the live prompt still prohibited those changes.
 
-## Files Changed
+The later coordination described a committed-head `0.6.9.10` audit, but no separate runnable `0.6.9.10` prompt was installed before `PARENT_ACCEPTED` was recorded.
 
-Repair implementation:
+The implementation and reported validations remain evidence. They do not independently satisfy the repository's installed-route and independent-acceptance requirements.
 
-- `packages/shared/types/src/contracts.ts`;
-- `packages/engines/game-engine/src/campaign-session.ts`;
-- `packages/engines/game-engine/src/normal-defeat.ts`;
-- `tests/unit/campaign-persistence-foundation.test.mjs`.
+### 2. Historical fork metadata proof is narrower than reported
 
-Decision and coordination:
+The lineage implementation proves:
 
-- `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`;
-- current prompt, output, and handoff;
-- focused parent acceptance authority;
-- historical/planning/roadmap/backlog/static-program/branch coordination surfaces.
+- exact original and recovery-completion continuities;
+- one recovery fork with exact recovery mutation, tick, parent, and child;
+- a unique acyclic parent-linked continuity path;
+- current campaign identity agreement with the final/current fork edge.
 
-## Patch Summary
+After the lineage advances to deeper descendants, the validator visibly checks historical source mutation, tick, source artifact, and source publication primarily for shape, minimum/monotonic ordering, or nonblankness. Those historical values are not all cross-checked against an independent durable counterpart.
 
-- Added optional stored-compatibility linkage to every new `continuity_fork`: parent continuity, child continuity, source artifact, and source publication.
-- Replaced loose original/current/immediate-parent completion checks with exact recovery-fork validation and a unique backward lineage walk from the current continuity to the recorded recovery-completion continuity.
-- Required current campaign fork metadata to match the final lineage edge.
-- Made missing, duplicate, wrong-source, wrong-tick, wrong-parent, wrong-child, wrong-artifact, wrong-publication, cyclic, malformed, and identity-conflicting lineage fail closed.
-- Preserved snapshot format `lineage.save_snapshot.v2`, old at-head/missing-receipt-field compatibility, JavaScript mirror parity, and all previous Normal persistence behavior.
+The focused tests prove immediate recovery-edge artifact/publication conflicts and current-edge deep-descendant identity conflicts. Static inspection did not find focused cases that mutate recovery-edge artifact/publication or intermediate historical source/tick/artifact/publication while preserving a valid parent/child continuity path.
 
-## Checks Run
+Therefore the prior claim that every wrong source, tick, artifact, and publication on every historical edge is detected is not currently accepted authority.
 
-- Pre-repair focused reproduction: `0/2` as expected, proving absent fork linkage and deep-descendant replay failure.
-- Focused persistence after repair and again from committed head: `33/33` passed.
-- Prescribed eleven-file regression group after repair and again from committed head: `140/140` passed.
-- Fresh standalone lineage audit: `LINEAGE_AUDIT_PASS cases=15`; temporary probe removed.
-- Mandatory lineage gate: original substitution and every recovery-fork corruption rejected byte-stably; valid `C0 -> C1 -> C2 -> C3` replay and copied/reversed replay succeeded without effects.
-- RPG UI production build: passed, `209` modules transformed; existing large-chunk warning only.
-- Bounded RPG UI TypeScript audit: `137` known diagnostics; `0` named repaired production files.
-- Real `App.tsx` caller, version-6 repair owner, JSON serialization, public exports, and JavaScript re-export mirrors inspected and preserved.
-- `git diff --check`, staged checks, post-commit source status, and generated/temp hygiene passed.
-- GitHub returned no combined statuses and no pull-request-triggered workflow runs for repair `cbad987`, acceptance `f68d878`, or recorded handoff `254959b`.
+The active focused decision must execute those exact cases and decide which historical fields are independently authoritative, structurally verifiable, current-edge-only, self-asserted ledger evidence, or not durably provable.
 
-## Failure-Pattern Evidence
+## Durable Review
 
-Applied `FP-001` through `FP-012`:
+Created:
 
-- real caller and blocking completion owner remained production reachable;
-- acceptance did not rely on green implementation tests alone;
-- pre-effect, restart, caller-loss, retry, duplicate, copied, reversed, corrupt, and deep-descendant boundaries were exercised;
-- durable authority now records and validates the exact lineage facts needed for replay;
-- branch dispositions were based on semantic overlap and named consumers, not textual mergeability;
-- GPT's prompt-authoring head, inspected head, repair head, and audit head are distinguished.
+`docs/dev/version-0.6.9-parent-acceptance-reopening-and-historical-fork-verifiability-review-2026-08-02.md`
 
-## Branch And PR Lifecycle Review
+Disposition:
 
-Fetch/prune found one local branch, eighteen non-default remote branches, and two open PRs.
+`ACCEPTANCE_REOPENED_FOCUSED_DECISION_REQUIRED`
 
-- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE` for the launcher trigger.
-- PR #3 and `parallel/0.6.9.7-repair-bundle` completed their named `0.6.9.7`/`0.6.9.8` consumer window and are now `SUPERSEDED_PRESERVE_EVIDENCE`; retain until a dedicated branch-hygiene pass proves safe closure/deletion.
-- Twelve one-document branches retain their named candidate-integration triggers.
-- Prompt-packaging and integrated-gameplay readiness branches remain protected read-only references.
-- No merge, cherry-pick, rebase, force update, PR mutation, or deletion occurred.
+The review preserves `cbad987` as implemented evidence, blocks Ashen Reef, and prohibits another production edit until the historical-edge contract and route authority are reconciled.
 
-## Risks And Follow-Up
+## Installed Route
 
-- Existing old non-head completed recoveries that lack linked fork evidence remain readable but fail closed on completed replay because ancestry cannot be invented.
-- The repository-wide TypeScript backlog remains `137` diagnostics.
-- The production build retains its existing large-chunk warning.
-- `0.7.0` remains `NOT_READY`; accepting `0.6.9` does not advance the maturity band.
+`Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`
 
-## Next Recommended Run
+This is an unversioned documentation-only decision with read-only executable characterization.
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+It must:
 
-Use the exact documentation-only prompt in `docs/dev/current-codex-prompt.md`.
+- verify the skipped prompt-transition history;
+- inventory independent durable evidence for every historical fork field;
+- execute recovery-edge and intermediate-edge corruption probes after deep descent;
+- select an exact continuity-graph, fully authenticated, or bounded mixed authority model;
+- classify `cbad987`;
+- install either a properly separated independent re-audit, a bounded repair prompt, or `NO_PACKAGE` with one exact user question;
+- update all lower-precedence acceptance and planning surfaces after the decision.
 
-Suggested commit message: `docs(handoff): accept 0.6.9 and activate survey decision`
+It may not accept parent `0.6.9`, edit production or tests, or run the Ashen Reef decision.
+
+## Validation And Repository State
+
+This connector-side coordination run performed repository and commit inspection only. It did not execute local tests, builds, typechecks, or probes and does not replace the active decision's required executable verification.
+
+GitHub exposed no combined statuses and no pull-request-triggered workflow runs for inspected head `26c70f2114bf99714d2711eaf5a7653a57bf09cb`.
+
+PR #2 and PR #3 remain open and unmerged. No branch or pull-request lifecycle mutation occurred.
+
+## Next Action
+
+Run the exact current prompt from a freshly fetched synchronized checkout at or after the prompt-installation commit:
+
+`6f9db22a9f50daa4b4c3b7559be779db14dbbf02`
+
+Do not run the Ashen Reef survey receipt-foundation decision until a properly installed successor independently reaccepts parent `0.6.9`.
