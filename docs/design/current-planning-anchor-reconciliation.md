@@ -1,6 +1,6 @@
 # Current Planning Anchor Reconciliation
 
-Date: 2026-07-31
+Date: 2026-08-02
 
 Status: accepted narrow documentation-only coordination authority
 
@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, parent acceptance audit, and failure-pattern guardrail register are refreshed through `Version 0.6.9.6`.
+The current prompt, handoff, output, historical register, parent acceptance audit, and failure-pattern guardrail register are refreshed through the stopped `Version 0.6.9.7` implementation attempt.
 
-The `0.6.9` parent is not accepted. `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair` closed its three named repair targets, but independent `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` proved initial automatic destination validation, restart duplicate recovery, and original effect provenance remain incomplete. `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` is active. The unversioned Ashen Reef survey receipt-foundation decision remains blocked until the repair and a separate independent audit accept the parent.
+The `0.6.9` parent is not accepted. `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` reproduced all nine hardened findings at synchronized head `6820ab8175f6b4d0b447b589045bc0a934663257` but stopped before production edits. Accepted authority does not decide non-head pending-receipt continuity ownership or truthful sole-known-settlement destination provenance. The active route is `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`. Revised `0.6.9.7` remains required after that focused decision, and the unversioned Ashen Reef survey receipt-foundation decision remains blocked until the repair and a separate independent audit accept the parent.
 
 `docs/dev/project-roadmap.md` still contains lower current-anchor wording that may describe `0.6.9.2` as accepted and the survey decision as active. `docs/dev/codex-sequenced-implementation-plan.md`, the continuity brief, backlog, and static-content program may contain the same now-stale posture. Those lower-precedence summaries do not control execution.
 
@@ -42,8 +42,9 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - latest completed support audit: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
 - latest completed repair implementation: `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`;
 - latest completed acceptance audit: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`;
-- active repair: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`;
-- parent `0.6.9` status: `REPAIR_REQUIRED_AFTER_0.6.9.6`;
+- stopped repair: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`, `IMPLEMENTATION_INCOMPLETE` at the shared-contract gate;
+- active focused decision: `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`;
+- parent `0.6.9` status: `REPAIR_BLOCKED_PENDING_FOCUSED_DECISION`;
 - survey receipt-foundation decision: blocked pending independent parent acceptance;
 - failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
@@ -64,18 +65,19 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - `0.6.9.4` preserved the implementation baseline but proved multiple pending receipts, unsafe current-location authority, and missing repair-ledger provenance remain blocking;
 - `0.6.9.5` reports those three boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, and a passing build;
 - `0.6.9.6` independently preserved the green baseline and the three exact `0.6.9.5` targets, but proved three additional initial-resolution, restart-duplicate, and original-effect-provenance gaps;
-- `0.6.9.7` must repair only those three findings and install a separate independent acceptance audit.
+- revised `0.6.9.7` must reconcile all nine hardened findings after the active focused decision authorizes exact continuity and destination-provenance semantics; `0.6.9.8` remains the separate independent acceptance audit.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
 ## Accepted Near-Term Order
 
-1. run `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`;
-2. independently audit that repair through the exact successor installed by `0.6.9.7`;
-3. only after that audit accepts the parent, run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
-4. implement only a dependency-closed survey receipt package selected by that decision;
-5. continue survey command and consequence-adapter work only after receipt acceptance;
-6. keep `0.7.0` behind explicit representative-loop evidence.
+1. run `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`;
+2. reinstall and run revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` only after that decision accepts the exact contract surface;
+3. independently audit that repair through `Version 0.6.9.8 - Initial Defeat And Durable Recovery Completion Acceptance Audit`;
+4. only after that audit accepts the parent, run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
+5. implement only a dependency-closed survey receipt package selected by that decision;
+6. continue survey command and consequence-adapter work only after receipt acceptance;
+7. keep `0.7.0` behind explicit representative-loop evidence.
 
 ## Maintenance Rule
 

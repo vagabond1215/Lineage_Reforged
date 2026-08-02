@@ -1,12 +1,48 @@
 # Branch Disposition Register
 
-Date: 2026-07-31
+Date: 2026-08-02
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
-## 0. Repository Coordination Refresh After PR #3
+## 0. Version 0.6.9.7 Contract-Stop Live Refresh
+
+The stopped `Version 0.6.9.7` repository run fetched/pruned, fast-forwarded clean local `master`, and inspected live refs from synchronized implementation starting head:
+
+`6820ab8175f6b4d0b447b589045bc0a934663257` — `docs(handoff): record hardened 0.6.9.7 scope`
+
+Live inventory at that pre-coordination snapshot:
+
+- one local branch: synchronized `master`;
+- eighteen non-default remote branches;
+- two open pull requests;
+- PR #2: open, non-draft, head `e78dc645cfb658685be12f45f46d34b7c0da1119`, four changed paths, ten commits;
+- PR #3: open draft, head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`, seven evidence-only paths, seven commits;
+- `feat/main-menu-assets`: `727 / 0`;
+- `main-menu-asset-contract-pass`: `655 / 10`, merge base `9a107a7eed54b6d0cd2f161c236fbe163282bba7`;
+- `main-menu-refinement-pass`: `662 / 2`, merge base `d03846e89d1a4fd07a1ea86d02951559f617df74`;
+- `parallel/0.6.9.7-repair-bundle`: `14 / 7`, merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`;
+- eight `bcbe658d` one-document branches: `61 / 1` each;
+- four `3006c968` one-document branches: `63 / 1` each;
+- `parallel/prompt-packaging-integrity-audit`: `90 / 1`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `143 / 2`.
+
+Counts are `master-only / branch-only`. The GitHub connector reported both open PRs mechanically mergeable at inspection time; that dynamic fact does not change their semantic dispositions.
+
+PR #3's README was read before reconstruction. The reconstructed ZIP and all member hashes matched `MANIFEST.sha256`. Candidate source, probes, and report were inspected as evidence only. The bundle did not resolve the non-head receipt-continuity or sole-known destination-provenance contract blockers.
+
+Disposition result:
+
+- PR #3 and `parallel/0.6.9.7-repair-bundle` remain `HOLD_NAMED_CONSUMER` for the active focused decision, revised `0.6.9.7`, and its independent successor audit;
+- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE` for the launcher trigger;
+- twelve one-document audit branches remain `CANDIDATE_INTEGRATION` at their named triggers;
+- both protected references remain read-only;
+- no integration, deletion, rebase, force update, or PR closure was due.
+
+The active route is now the unversioned `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`. Live refs must be refreshed again before any branch or PR action.
+
+## 0A. Repository Coordination Refresh After PR #3
 
 A connector-side repository review and coordination repair inspected live `master` immediately before this register write at:
 
@@ -40,7 +76,7 @@ Disposition result:
 - both protected references remain read-only;
 - no integration, branch deletion, rebase, force update, or PR closure was due during this coordination repair.
 
-## 0A. Version 0.6.9.6 Historical Live Refresh
+## 0B. Version 0.6.9.6 Historical Live Refresh
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` fetched and pruned all refs from synchronized audit starting head `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`.
 
@@ -120,7 +156,7 @@ These branches are not implementation authority merely because they are low-conf
 
 | PR / branch | Live finding at inspected snapshot | Disposition | Required action |
 | --- | --- | --- | --- |
-| PR #3 — `parallel/0.6.9.7-repair-bundle` | open draft; head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; source base and merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`; seven unique evidence files; `9 / 7` at the latest pre-write snapshot; reconstructed ZIP SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe` | `HOLD_NAMED_CONSUMER` | active `0.6.9.7` must inspect, reconstruct, verify, reproduce, and independently reconcile; do not merge, cherry-pick, rebase, force-update, or close; review retirement only after `0.6.9.7` and its independent acceptance audit complete |
+| PR #3 — `parallel/0.6.9.7-repair-bundle` | open draft; head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; source base and merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`; seven unique evidence files; latest refresh `14 / 7`; reconstructed ZIP SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe` | `HOLD_NAMED_CONSUMER` | focused decision and revised `0.6.9.7` may inspect it as evidence only; do not merge, cherry-pick, rebase, force-update, or close; review retirement only after revised `0.6.9.7` and its independent acceptance audit complete |
 | PR #2 — `main-menu-asset-contract-pass` | open; head `e78dc64`; ten unique commits; merge base `9a107a7`; launcher-only; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | inspect at the launcher-asset trigger, preserve useful evidence through current-head re-authoring, then close/delete only after proof |
 | PR #1 — `main-menu-refinement-pass` | merged and closed historically; remote branch head `986d635`; merge base `d03846e`; two commits are not directly reachable and require equivalent-patch review | `MERGED_RETIRE` pending equivalence proof | verify accepted changes are equivalently present on `master`; delete and prune only after the two-commit diff and linked PR state prove no unique value remains |
 | `feat/main-menu-assets` | remote head `b42d36f`; merge base is its head; fully reachable from the inspected base; no open PR found | `MERGED_RETIRE` | retire during the next dedicated branch-hygiene or launcher integration pass after exact-ref recheck; no deletion inside the active save repair |
@@ -129,23 +165,21 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+`Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`
 
-Branch handling during that route is limited to:
+Branch handling during that documentation-only route is limited to:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
 - required evidence inspection of PR #3 and `parallel/0.6.9.7-repair-bundle`;
-- bundle reconstruction and SHA-256 verification before candidate inspection;
-- independent reproduction of all three findings against untouched current source;
-- semantic reconciliation of candidate source replacements, probes, and matrices against current `master`;
-- identifying overlap with the completed new-campaign attempt, slot-level publication recovery, account consumer idempotency, campaign session mutation admission, and bounded pending recovery completion repair;
-- integrating only independently reviewed changes authored in the normal repository worktree and validated under the active prompt;
+- retaining the already hash-verified PR #3 evidence posture and reinspecting it only when needed to decide the two contract questions;
+- comparing the stopped nine-finding reproduction and candidate gaps against current shared contracts, persistence compatibility, migration, and real callers;
+- no source, test, shared-contract, save-format, migration, dependency, or branch integration work;
 - otherwise preserving candidate branches for their named triggers.
 
-No one-document connector audit branch implements or supersedes the three `0.6.9.6` findings. PR #3 is evidence only and must not become implementation through branch integration. No candidate integration, branch deletion, or PR closure is due inside the repair unless fresh live evidence changes the controlling disposition.
+No one-document connector audit branch decides or supersedes the two active contract blockers. PR #3 is evidence only and must not become implementation authority through branch integration. No candidate integration, branch deletion, or PR closure is due inside the focused decision unless fresh live evidence changes the controlling disposition.
 
-The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this repair.
+The Ashen Reef survey receipt decision remains blocked and must not be used as a reason to integrate survey-related preparation into this focused decision.
 
 ## 6. Mandatory Next Codex Branch Report
 

@@ -2,163 +2,136 @@
 
 ## Run Identity
 
-- Source run: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`
-- Date: 2026-07-31
-- Branch/status assumption: synchronized `master`; audit coordination changes pending commit at report write
-- Inspected base: `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`
-- Audit starting head: `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`
-- Live post-fetch head before audit commit: `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`
-- Final committed head: resolve after this self-referential report is committed; the completion response must state the exact SHA
+- Source run: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+- Date: 2026-08-02
+- Branch/status assumption: synchronized `master`; coordination-only stop report pending commit at report write
+- Inspected local base before synchronization: `2f05f59d8db6f030427ceec3fb4e21e2243b9da7`
+- Implementation starting head: `6820ab8175f6b4d0b447b589045bc0a934663257`
+- Live post-fetch head before coordination commit: `6820ab8175f6b4d0b447b589045bc0a934663257`
+- Final committed head: resolve after this coordination report is committed; the completion response must state the exact SHA
 - Label class: support suffix
 - Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 - Milestone impact: `supports_current_band`
-- Suggested commit: `docs(save): audit pending-defeat completion authority`
+- Suggested commit: `docs(save): route defeat provenance blockers`
 
 ## Outcome
 
-`AUDIT_REPAIR_REQUIRED`
+`IMPLEMENTATION_INCOMPLETE`
 
-The `0.6.9` parent remains unaccepted.
+The hardened prompt was updated, internally coherent, and safe to run. The repository was clean, fetched/pruned, fast-forwarded by four coordination commits, and synchronized before execution.
 
-Fresh execution accepted the three exact `0.6.9.5` repair targets: multiple pending receipts reject without effects, pending completion uses exact settlement authority, and one valid completion retains the original ledger entry plus one deterministic superseding entry.
+All nine numbered findings reproduced against untouched source. Production implementation then stopped before editing because two prompt-defined contract gates are genuinely unresolved:
 
-Independent adversarial inspection nevertheless proved three further blocking defects:
+1. a persisted non-head pending receipt names the loaded source continuity, while the accepted first-mutation rule requires one child continuity before applying recovery; current authority does not decide whether completion preserves, rewrites, or separately links the receipt continuity;
+2. automatic sole-known-settlement completion has no truthful value in the current `destinationSource` union.
 
-1. initial automatic defeat resolution uses nonempty current and campaign-start ids directly instead of the shared exact known-safe-settlement validator;
-2. exact completed-repair replay after explicit save/load cannot return retained duplicate state and throws `Normal defeat recovery has already completed.`;
-3. pending repair accepts corrupted HP, Stamina, MP, source tick, resolved tick, and original ledger acceptance-tick facts.
+The evidence bundle does not resolve either blocker. Its candidate validates pending provenance before the fork but then repairs the child snapshot using a receipt that still names the source continuity, and it continues to label every completion `explicit_context`.
 
-No finding is waived, deferred, or treated as accepted by green totals. The installed repair is:
+No production source, shared type, save format, migration, test, dependency, content, asset, generated output, or protected branch changed. The smallest successor is installed:
 
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+`Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`
 
-The Ashen Reef survey receipt-foundation decision remains blocked.
+Parent `0.6.9` remains unaccepted. `0.6.9.8` is not installed. The Ashen Reef survey route remains blocked.
 
 ## Files Changed
 
-- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`
-- `docs/design/current-planning-anchor-reconciliation.md`
-- `docs/dev/branch-disposition-register.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-codex-prompt.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/historical-version-and-deferred-route-register.md`
+- `docs/design/current-planning-anchor-reconciliation.md`
+- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`
+- `docs/dev/branch-disposition-register.md`
 
-No production code, shared type, schema, save format, test, dependency, content, asset, generated file, or retained temporary audit file changed.
+Temporary ignored bundle and reproduction files were created only for inspection and removed before completion.
 
-## Finding-To-Test Matrix
+## Pre-Edit Finding Reproduction
 
-| Finding | Fresh evidence | Production surface | Disposition |
-| --- | --- | --- | --- |
-| Initial automatic destination bypass | ruin-backed current id returned a playable initial defeat instead of rejecting; source inspection shows campaign-start takes the same unchecked direct path | `normal-defeat.ts` `resolveDestination(...)` | blocking repair required |
-| Restart duplicate unavailable | one valid completion was explicitly saved/reloaded; exact completion replay threw `already completed` rather than returning current snapshot/control as duplicate | `campaign-session.ts` `completePendingNormalDefeatRecovery(...)` | blocking repair required |
-| Original effect provenance incomplete | six independent corruptions—HP, Stamina, MP, source tick, resolved tick, original ledger accepted tick—were all accepted by lower-level repair | `normal-defeat.ts` `repairPendingNormalDefeat(...)` | blocking repair required |
-| Multiple pending receipt ambiguity | original and reversed two-pending arrays rejected at both owners with stable count diagnostics and byte-stable input | both repair owners | independently accepted |
-| Pending destination authority | explicit/current/start/sole-known valid cases passed; blank, padded, unknown, known-false, non-settlement, duplicate, contradictory, corrupt-current, and ambiguous fallback cases rejected | shared pending destination resolver | independently accepted |
-| Correction provenance and exactly-once effects | one valid repair preserved the original entry, appended one exact correction, advanced four ticks once, preserved HP/Stamina during completion, and updated receipt/projections/session once | both repair owners | independently accepted |
-| Publication boundary | pending publication rejected; repair remained unpublished until explicit save; receipt, correction, location, clock, and publication survived reload | save manager plus production caller | independently accepted |
-| Existing launcher/retry/collision/consumer/migration behavior | fresh focused and prescribed groups | existing owners | preserved |
+| Finding | Untouched-source result | Mutation boundary |
+| --- | --- | --- |
+| 1. Initial automatic authority bypass | ruin-backed current authority produced playable recovery at the ruin | accepted effects occurred; blocking |
+| 2. Restart duplicate unavailable | completed replay with cleared in-memory retained results threw `already completed` | current state remained byte-stable; required duplicate result absent |
+| 3. Pending effect provenance | six of six receipt/resource/tick/original-ledger corruptions were accepted | repair effects remained reachable; blocking |
+| 4. Explicit precedence contamination | valid explicit settlement was vetoed by corrupt lower-priority current authority | rejected input remained byte-stable |
+| 5. Initial duplicate integrity | receipt with its original ledger removed still returned as duplicate | partial retained evidence trusted |
+| 6. Initial resource admission | negative HP, nonfinite HP, invalid HP maximum, and out-of-bounds MP all entered defeat resolution | invalid state reached effects |
+| 7. Control identity | conflicting control account and campaign ids were admitted | mutation accepted under mismatched control |
+| 8. Non-head ordering | non-head completion forked the cloned snapshot before lower-level provenance validation, then rejected on continuity mismatch | source/control stayed unchanged only because mutation was not returned; contract remains unresolved |
+| 9. Completion source provenance | automatic validated current settlement completed with `destinationSource: "explicit_context"` | receipt provenance was false |
 
-## Failure-Boundary Matrix
+The temporary repository-importing probe reported `9 / 9` reproduced. Rejected cases in the probe compared serialized source snapshots before and after and remained byte-stable.
 
-| Boundary | Independent result |
-| --- | --- |
-| Zero pending and no history | stable retained-receipt rejection |
-| Two pending, original/reversed order | stable rejection before effects at production and lower-level owners |
-| Completed-only history after restart | no array fallback, but exact replay cannot return durable duplicate state; blocking |
-| Valid pending explicit/current/start/sole-known destination | accepted under exact pending-completion rules |
-| Blank/padded/unknown/known-false/ruin/wilderness destination | rejected under pending-completion rules |
-| Duplicate or contradictory location rows | rejected |
-| Corrupt current plus otherwise-safe fallback | rejected without fallback |
-| Multiple safe fallback rows in both orders | rejected without array-order winner |
-| Initial ruin-backed current id | accepted as playable; blocking |
-| Missing/duplicate/conflicting receipt or original ledger identity | rejected before effects |
-| Corrupted resource/tick/original-ledger-tick facts | accepted; blocking |
-| One valid completion | exactly one four-tick relocation and correction append |
-| Duplicate after later accepted mutation | current snapshot/control retained; no rollback or append |
-| Duplicate after explicit save/reload | throws instead of returning retained duplicate state; blocking |
-| Pending ordinary mutation/publication/manual/quick/retirement | blocked |
-| Explicit save after repair | succeeds and roundtrips exact repaired authority |
-| New-campaign pre-head/post-head retry, caller loss, restart, changed input, and slot collision | preserved by fresh regression execution |
-| Account consumer, migration, control, and terminal behavior | preserved by fresh regression execution |
+## Contract Blockers
 
-## Receipt / Provenance / Effect Matrix
+### Non-head continuity
 
-| Fact | Fresh result |
-| --- | --- |
-| campaign / continuity / character / rules / policy | conflicting identity rejects |
-| exactly one pending receipt | zero/two reject; one admits |
-| original ledger id / kind / source / count | missing, duplicate, or conflicting identity rejects |
-| Chronicle / notification count | duplicate evidence rejects |
-| preexisting correction / supersession | rejects |
-| HP restored fact | corruption accepted; repair required |
-| Stamina restored fact | corruption accepted; repair required |
-| MP preserved fact | corruption accepted; repair required |
-| source / resolved tick facts | corruption accepted; repair required |
-| original ledger accepted tick | corruption accepted; repair required |
-| valid original plus correction | original stable; one deterministic correction with exact source and supersession |
-| completion resource effects | HP/Stamina unchanged during completion; four ticks and relocation once |
-| duplicate current-session effects | no rollback, tick, relocation, resource, projection, ledger, or revision effect |
-| duplicate restarted-session effects | fail-closed error; no effects, but required retained duplicate result absent |
+Accepted authority requires validation against the source snapshot before identity rewrite and exactly one child continuity for the first accepted non-head mutation. It does not specify whether the updated defeat receipt remains ancestor/source truth, moves to the child, or needs a separate completion identity. Implementing any choice would invent shared persistence semantics.
+
+### Sole-known destination provenance
+
+The accepted pending destination resolver includes a bounded exactly-one-known-settlement fallback, but the shared union contains only `explicit_context`, `current_settlement`, `campaign_start`, and `none`. The production `App.tsx` caller supplies no explicit destination. Calling that automatic fallback explicit is not truthful, while adding an enum value crosses the active prompt's shared-contract stop gate.
+
+## Evidence Bundle Review
+
+- PR #3: open draft, head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`, base `master`, installed identity unchanged.
+- Branch merge base/source base: `b6422118567a79a23be3377f035dd3a6905d4d8b`; live divergence `14 master-only / 7 branch-only`.
+- README read before reconstruction.
+- Reconstructed ZIP SHA-256: `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`, exact match.
+- All five member hashes matched `MANIFEST.sha256`.
+- Candidate replacements, pre-edit probe, 48-case probe, and report were inspected as evidence only.
+- Candidate useful subset: strict automatic initial destination inspection, stronger resource/tick provenance helpers, and stable completed-receipt targeting.
+- Candidate gaps: incomplete Findings 4 through 9 coverage; no valid non-head completion contract; no truthful sole-known provenance; incomplete initial duplicate/control matrices.
+- Disposition remains `HOLD_NAMED_CONSUMER`; no merge, cherry-pick, rebase, force update, modification, or closure performed.
 
 ## Applicable Verification Guardrails
 
-- `FP-001`: inspected the actual `App.tsx` run-entry caller; fresh execution exercised production completion and explicit publication owners.
-- `FP-002`: used fresh adversarial matrices in addition to 26/26 and 133/133 totals; the matrices reopened the parent.
-- `FP-003`: production completion remains reachable and exits valid pending state, but restart duplicate completion is incomplete.
-- `FP-004`: account-and-slot collision tests and contender ordering passed freshly.
-- `FP-005`: new-campaign caller loss, retry, restart, regenerated input, and repair restart paths ran freshly; completed-repair replay failed.
-- `FP-006`: older/newer and multiple slot recoveries remain protected; pending destination arrays have no winner; initial destination validation remains incomplete.
-- `FP-007`: current output and prompt are complete replacements based on confirmed complete prior reads and must be reread before commit.
-- `FP-008`: every remote branch and PR #2 received live merge-base, divergence, path, authority, and semantic-overlap review; none contains this repair.
-- `FP-009`: inspected base, audit start, pre-commit live head, and final committed head are distinguished.
-- `FP-010`: all three independent findings map to exact code, tests, and an explicit repair disposition above.
+- `FP-001`: inspected the real `App.tsx` run-entry caller; it invokes automatic completion with no explicit destination.
+- `FP-002`: green baseline tests were not treated as acceptance; a separate nine-finding adversarial reproduction reopened the path.
+- `FP-003`: completion is production-reachable, but truthful non-head completion remains contract-blocked.
+- `FP-004`: slot-recovery owners and existing collision tests were inspected and left unchanged.
+- `FP-005`: restart duplicate behavior was reproduced with in-memory retained results removed.
+- `FP-006`: order-independent authority remains required; no branch or array-order winner was accepted.
+- `FP-007`: complete current coordination files were read before bounded updates; replacement files are reread before commit.
+- `FP-008`: every live branch received merge-base, divergence, unique-commit, changed-path, authority, and overlap review; PRs #2 and #3 were inspected through the authenticated GitHub connector.
+- `FP-009`: inspected local base, synchronized starting head, pre-commit live head, and final commit are distinguished.
+- `FP-010`: all nine findings are mapped above; none is waived.
+- `FP-011`: the run stopped because authority precedence and provenance-before-mutation cannot be completed truthfully without the focused decision.
+- `FP-012`: first-match and restart duplicate defects reproduced; no partial durable evidence was accepted as a repair design.
 
 ## Checks Run
 
-- clean synchronized execution gate: passed at `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`;
-- independent adversarial boundary replay: `7 / 9` accepted; the two failing assertions proved initial unsafe-current acceptance and missing restart duplicate return;
-- independent original-effect corruption probe: `6 / 6` corrupted variants were incorrectly accepted;
-- focused persistence suite: `26 / 26`;
-- prescribed Node regression group: `133 / 133`;
-- RPG UI production build: passed, `209` modules transformed; generated audit build directory removed afterward;
-- bounded RPG UI TypeScript audit: known-failing with `137` diagnostics and exit code `1`; `0` diagnostics name `normal-defeat`, `campaign-session`, or the focused persistence test;
-- root workspace TypeScript inspection also reproduced the historical broader `173`-diagnostic posture; it is not an acceptance gate;
-- JavaScript mirrors: Normal-defeat, campaign-session, and new-campaign coordinator remain exact TypeScript re-exports; focused public-export checks passed;
-- `git diff --check`: passed before coordination updates; final staged check required before commit;
-- production caller, save/publication owner, repair owners, contracts, focused tests, protected readiness reference, and complete live branch paths inspected.
+- `git fetch --prune origin`: passed; `origin/master` advanced from `2f05f59` to `6820ab8`.
+- `git pull --ff-only origin master`: passed; clean fast-forward by four coordination commits.
+- complete local/remote branch inventory and semantic path review: passed.
+- authenticated open-PR search and PR metadata reads: two open PRs confirmed.
+- bundle reconstruction, ZIP hash, member hash, and content inspection: passed.
+- temporary untouched-source adversarial reproduction: `9 / 9` findings reproduced.
+- `node --test tests\unit\campaign-persistence-foundation.test.mjs`: `26 / 26` passed.
+- documentation `git diff --check`: passed; complete unstaged diff reread completed; post-commit status and post-push head verification remain required before completion.
 
-No hosted GitHub Actions run was requested or attached. These are local audit results.
+The prescribed regression group, RPG UI build, and TypeScript audits were not run because the prompt required a pre-edit stop at the shared-contract gate and no production implementation was attempted. Historical green totals are not claimed as current implementation evidence.
 
 ## Branch And PR Lifecycle
 
-- Fetch/prune completed at audit starting head `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`.
 - Local branches: only synchronized `master`.
-- Non-default remote branches: seventeen.
-- Open PRs: PR #2 only; head `e78dc645cfb658685be12f45f46d34b7c0da1119`, open, non-draft, non-mergeable, and unrelated.
-- Live inspected-base/branch-only counts:
-  - `feat/main-menu-assets`: `710 / 0`;
-  - `main-menu-asset-contract-pass`: `638 / 10`;
-  - `main-menu-refinement-pass`: `645 / 2`;
-  - eight `bcbe658d` one-document branches: `44 / 1` each;
-  - four `3006c968` one-document branches: `46 / 1` each;
-  - `parallel/prompt-packaging-integrity-audit`: `73 / 1`;
-  - `prep/integrated-gameplay-0-7-readiness-audit`: `126 / 2`.
-- The protected integrated-readiness branch was inspected read-only and remains historical/noncontrolling; the prompt-packaging protected reference remained read-only.
-- No branch contains overlapping initial-destination, restart-duplicate, or effect-provenance work.
-- No disposition changed and no merge, cherry-pick, rebase, PR closure, or branch deletion was due.
-- Twelve candidate-document branches retain their owner-specific triggers; protected references retain future `0.7.0` readiness and workflow-integrity triggers; launcher branches and PR #2 retain the launcher-hygiene trigger.
+- Non-default remote branches: eighteen.
+- Open PRs: two.
+- PR #2 / `main-menu-asset-contract-pass`: open, non-draft, head `e78dc645cfb658685be12f45f46d34b7c0da1119`; remains `SUPERSEDED_PRESERVE_EVIDENCE` for the launcher trigger.
+- PR #3 / `parallel/0.6.9.7-repair-bundle`: open draft, head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; remains `HOLD_NAMED_CONSUMER` through revised `0.6.9.7` and its independent audit.
+- Twelve one-document audit branches remain `CANDIDATE_INTEGRATION` at their registered owner-specific triggers.
+- `prep/integrated-gameplay-0-7-readiness-audit` and `parallel/prompt-packaging-integrity-audit` were inspected read-only and remain `PROTECTED_REFERENCE`.
+- `feat/main-menu-assets` and `main-menu-refinement-pass` retain their dedicated branch-hygiene triggers.
+- No integration, deletion, rebase, force update, or PR closure was due.
 
 ## Risks And Follow-Up
 
-- Initial unsafe location evidence can bypass `recovery_pending` entirely and create a playable initial receipt, so completion-only validation is insufficient.
-- Durable completed-repair replay needs explicit stable receipt targeting or equivalent exact evidence; it must not choose completed history by array order.
-- Resource/tick validation must remain narrow and derivable from retained snapshot/receipt/ledger facts; do not invent a generic receipt framework.
-- The repository-wide TypeScript baseline remains nonzero and outside this support chain.
-- Parent acceptance and the Ashen Reef survey decision remain blocked.
+- A partial repair would leave either non-head completion impossible or receipt provenance false.
+- Adding a destination enum or completion identity without an explicit compatibility decision can change persisted target-snapshot meaning.
+- The current production defects remain live until the decision reauthorizes and revised `0.6.9.7` completes.
+- The known broad TypeScript baseline remains separate and unchanged.
 
 ## Next Recommended Run
 
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+`Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`
 
-Classification: parent-specific support suffix; exact three-finding implementation followed by a separate independent audit.
+Classification: unversioned focused documentation decision. It must settle both blockers, authorize the exact contract/migration surface, and reinstall revised `0.6.9.7`; it must not install `0.6.9.8`.

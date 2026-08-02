@@ -1,6 +1,6 @@
 # Normal Stakes Campaign Persistence Foundation Acceptance Audit
 
-Date: 2026-07-31
+Date: 2026-08-02
 
 Parent: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
@@ -8,11 +8,24 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `REPAIR_REQUIRED_AFTER_0.6.9.6`
+Current status: `REPAIR_BLOCKED_PENDING_FOCUSED_DECISION`
 
 ## Decision
 
 The `0.6.9` parent is not accepted.
+
+`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` ran against synchronized `master` at `6820ab8175f6b4d0b447b589045bc0a934663257` and independently reproduced all nine hardened findings. It stopped before production edits under its required contract gates.
+
+Two accepted-contract questions remain unresolved:
+
+1. a persisted non-head pending receipt names the loaded source continuity, while the first accepted mutation must create one child continuity; authority does not decide whether completion preserves, rewrites, or separately links the receipt continuity;
+2. automatic exactly-one-known-safe-settlement completion has no truthful value in the current `destinationSource` union.
+
+The active route is:
+
+`Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`
+
+That decision must reauthorize the exact shared-contract, compatibility, migration, ordering, and test surface before revised `0.6.9.7` resumes. `0.6.9.8` remains reserved for the later independent audit and is not active.
 
 `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit` independently preserved the 26/26 focused persistence tests, 133/133 prescribed tests, 209-module production build, and bounded TypeScript posture. Fresh adversarial execution nevertheless proved three blocking gaps:
 
@@ -207,8 +220,10 @@ The audit must prove multiple-pending rejection is order-independent and side-ef
 
 The completed `0.6.9.3` run reported one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. Two protected references and twelve one-document audit branches were retained. No lifecycle action overlapped the persistence repair.
 
-`0.6.9.6` refreshed these facts after fetch/prune at starting head `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`: one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. No disposition or lifecycle action changed. `0.6.9.7` must refresh them again before implementation.
+`0.6.9.6` refreshed these facts after fetch/prune at starting head `e6da77c8495d8b5cbffc966cdc3db5753b7cc89a`: one local branch, seventeen non-default remote branches, and PR #2 as the only open PR. The stopped `0.6.9.7` run refreshed live state again at `6820ab8175f6b4d0b447b589045bc0a934663257`: one local branch, eighteen non-default remote branches, and open PRs #2 and #3. No disposition or lifecycle action changed.
 
 ## Next Run
 
-`Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`
+`Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`
+
+After an accepted decision, reinstall revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`.
