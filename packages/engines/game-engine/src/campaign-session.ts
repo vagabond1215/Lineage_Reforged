@@ -1,11 +1,17 @@
-import type { SaveSnapshot } from "../../../shared/types/src/index.js";
+import type {
+  NormalDefeatReceiptState,
+  SaveSnapshot
+} from "../../../shared/types/src/index.js";
 import { serializeSnapshot } from "../../../shared/persistence/src/index.js";
 import { createAuthorityId } from "./campaign-rules.js";
 import {
+  applyValidatedPendingNormalDefeatRecovery,
   hasPendingNormalDefeat,
-  repairPendingNormalDefeat,
   resolvePendingNormalDefeatRecoveryDestination,
-  resolveNormalDefeat
+  resolvePendingNormalDefeatRecoveryDestinationWithSource,
+  resolveNormalDefeat,
+  validateCompletedNormalDefeatRecoveryProvenance,
+  validatePendingNormalDefeatRecoveryProvenance
 } from "./normal-defeat.js";
 
 export type CampaignSessionPosture =
@@ -113,6 +119,112 @@ function restoreRetainedControl(
     hasUnpublishedGameplayState:
       retained.hasUnpublishedGameplayState
   };
+}
+
+function isExactNonblankId(value: unknown): value is string {
+  return (
+    typeof value === "string" &&
+    value.length > 0 &&
+    value.trim() === value
+  );
+}
+
+function normalizeRecoveryReceiptId(
+  value: string | null | undefined
+): string | null {
+  if (value === null || value === undefined) {
+    return null;
+  }
+  if (!isExactNonblankId(value)) {
+    throw new Error(
+      "Normal defeat recovery completion receipt identity is malformed."
+    );
+  }
+  return value;
+}
+
+function requireRecoveryControlAuthority(
+  control: CampaignSessionControl,
+  snapshot: SaveSnapshot,
+  receipt: NormalDefeatReceiptState,
+  mutationId: string,
+  completed: boolean
+): void {
+  const identity = snapshot.campaignIdentity;
+  const currentContinuityId = identity?.continuityId ?? null;
+  const expectedCurrentContinuityId =
+    control.pendingContinuityId ?? control.loadedContinuityId;
+  const acceptedMatches = control.acceptedMutationIds.filter(
+    (candidate) => candidate === mutationId
+  );
+  const retainedMatches = control.retainedMutationResults.filter(
+    (candidate) => candidate.mutationId === mutationId
+  );
+  const loadedAtHead =
+    control.loadedArtifactId === control.campaignHeadArtifactId &&
+    control.loadedHeadRevision === control.campaignHeadRevision;
+  const postureIsConsistent =
+    control.posture === "at_head"
+      ? loadedAtHead &&
+        control.pendingContinuityId === null &&
+        control.firstDivergentMutationId === null
+      : control.posture === "non_head_unmutated"
+        ? !loadedAtHead &&
+          control.pendingContinuityId === null &&
+          control.firstDivergentMutationId === null
+        : control.posture === "head_unpublished"
+          ? loadedAtHead &&
+            control.pendingContinuityId === null &&
+            control.firstDivergentMutationId === null
+          : !loadedAtHead &&
+            isExactNonblankId(control.pendingContinuityId) &&
+            isExactNonblankId(control.firstDivergentMutationId) &&
+            identity?.parentContinuityId === control.loadedContinuityId &&
+            identity.forkedFromArtifactId === control.loadedArtifactId &&
+            identity.forkedFromPublicationId ===
+              control.loadedPublicationId &&
+            identity.firstDivergentMutationId ===
+              control.firstDivergentMutationId;
+  const lastAcceptedMutationId =
+    control.acceptedMutationIds[
+      control.acceptedMutationIds.length - 1
+    ] ?? null;
+
+  if (
+    !identity ||
+    control.accountId !== snapshot.accountId ||
+    control.campaignId !== identity.campaignId ||
+    receipt.campaignId !== identity.campaignId ||
+    receipt.characterId !== identity.characterId ||
+    receipt.characterId !== snapshot.playerState.playerId ||
+    !isExactNonblankId(control.loadedArtifactId) ||
+    !isExactNonblankId(control.loadedPublicationId) ||
+    !isExactNonblankId(control.loadedContinuityId) ||
+    !isExactNonblankId(control.campaignHeadArtifactId) ||
+    !Number.isInteger(control.loadedHeadRevision) ||
+    control.loadedHeadRevision < 0 ||
+    !Number.isInteger(control.campaignHeadRevision) ||
+    control.campaignHeadRevision < 0 ||
+    !Number.isInteger(control.sessionRevision) ||
+    control.sessionRevision < control.loadedHeadRevision ||
+    currentContinuityId !== expectedCurrentContinuityId ||
+    !postureIsConsistent ||
+    new Set(control.acceptedMutationIds).size !==
+      control.acceptedMutationIds.length ||
+    control.lastAcceptedMutationId !== lastAcceptedMutationId ||
+    acceptedMatches.length > 1 ||
+    retainedMatches.length > 1 ||
+    (!completed &&
+      (acceptedMatches.length !== 0 || retainedMatches.length !== 0)) ||
+    (completed &&
+      retainedMatches.length === 1 &&
+      retainedMatches[0]!.resultId !==
+        `result.recovery_repair.${receipt.receiptId}`)
+  ) {
+    throw new Error(
+      "Normal defeat recovery campaign-control authority is missing, duplicated, or conflicting."
+    );
+  }
 }
 
 export function createCampaignSessionControl(params: {
@@ -235,6 +347,42 @@ export function admitCampaignMutation(
     };
   }
 
+  let validatedPendingReceipt: NormalDefeatReceiptState | null = null;
+  let validatedRecoveryDestination: ReturnType<
+    typeof resolvePendingNormalDefeatRecoveryDestinationWithSource
+  > | null = null;
+  if (submission.ownerKind === "recovery_repair") {
+    if (submission.proposedSnapshot !== submission.sourceSnapshot) {
+      throw new Error(
+        "Normal defeat recovery repair requires the untouched source snapshot."
+      );
+    }
+    validatedPendingReceipt =
+      validatePendingNormalDefeatRecoveryProvenance(
+        submission.sourceSnapshot
+      );
+    requireRecoveryControlAuthority(
+      control,
+      submission.sourceSnapshot,
+      validatedPendingReceipt,
+      submission.mutationId,
+      false
+    );
+    if (
+      submission.mutationId !==
+      `mutation.recovery_repair.${validatedPendingReceipt.receiptId}`
+    ) {
+      throw new Error(
+        "Normal defeat recovery mutation identity is conflicting."
+      );
+    }
+    validatedRecoveryDestination =
+      resolvePendingNormalDefeatRecoveryDestinationWithSource(
+        submission.sourceSnapshot,
+        submission.explicitRecoveryDestinationId
+      );
+  }
+
   let nextSnapshot = structuredClone(submission.proposedSnapshot);
   let pendingContinuityId = control.pendingContinuityId;
   let firstDivergentMutationId = control.firstDivergentMutationId;
@@ -282,10 +430,21 @@ export function admitCampaignMutation(
     };
   }
 
-  if (submission.ownerKind === "recovery_repair") {
-    nextSnapshot = repairPendingNormalDefeat(
+  if (
+    submission.ownerKind === "recovery_repair" &&
+    validatedPendingReceipt &&
+    validatedRecoveryDestination
+  ) {
+    const completionContinuityId =
+      nextSnapshot.campaignIdentity?.continuityId;
+    if (!completionContinuityId) {
+      throw new Error("Normal defeat recovery lost campaign continuity.");
+    }
+    nextSnapshot = applyValidatedPendingNormalDefeatRecovery(
       nextSnapshot,
-      submission.explicitRecoveryDestinationId
+      validatedPendingReceipt.receiptId,
+      validatedRecoveryDestination,
+      completionContinuityId
     ).snapshot;
   } else if (nextSnapshot.playerState.resources.hp.current <= 0) {
     nextSnapshot = resolveNormalDefeat(nextSnapshot, {
@@ -344,7 +503,8 @@ export function admitCampaignMutation(
 export function completePendingNormalDefeatRecovery(
   control: CampaignSessionControl,
   snapshot: SaveSnapshot,
-  explicitDestinationId?: string | null
+  explicitDestinationId?: string | null,
+  targetReceiptId?: string | null
 ): CampaignMutationAdmission {
   const receipts = snapshot.normalDefeatReceipts ?? [];
   const pendingReceipts = receipts.filter(
@@ -355,9 +515,33 @@ export function completePendingNormalDefeatRecovery(
       `Normal defeat recovery completion requires exactly one pending receipt; found ${pendingReceipts.length}.`
     );
   }
-  const pending = pendingReceipts[0] ?? null;
-  const latestReceipt = receipts[receipts.length - 1] ?? null;
-  const receipt = pending ?? latestReceipt;
+  const normalizedTargetReceiptId = normalizeRecoveryReceiptId(
+    targetReceiptId
+  );
+  if (targetReceiptId !== undefined && !normalizedTargetReceiptId) {
+    throw new Error(
+      "Normal defeat recovery completion receipt identity is malformed."
+    );
+  }
+
+  let receipt: NormalDefeatReceiptState | null = null;
+  if (normalizedTargetReceiptId) {
+    const targetMatches = receipts.filter(
+      (candidate) => candidate.receiptId === normalizedTargetReceiptId
+    );
+    if (targetMatches.length !== 1) {
+      throw new Error(
+        `Normal defeat recovery completion requires exactly one receipt matching '${normalizedTargetReceiptId}'; found ${targetMatches.length}.`
+      );
+    }
+    receipt = targetMatches[0]!;
+  } else if (pendingReceipts.length === 1) {
+    receipt = pendingReceipts[0]!;
+  } else if (receipts.some((candidate) => candidate.posture === "playable")) {
+    throw new Error(
+      "Normal defeat recovery completed replay requires an exact receipt identity."
+    );
+  }
   if (!receipt) {
     throw new Error(
       "Normal defeat recovery completion requires a retained defeat receipt."
@@ -365,27 +549,29 @@ export function completePendingNormalDefeatRecovery(
   }
 
   const mutationId = `mutation.recovery_repair.${receipt.receiptId}`;
-  const retained = control.retainedMutationResults.find(
-    (entry) => entry.mutationId === mutationId
-  );
-  if (retained) {
-    const retainedDestinationId = receipt.destinationId;
-    if (!retainedDestinationId) {
-      throw new Error(
-        "Retained Normal defeat recovery result has no safe destination."
-      );
-    }
-    const requestedDestinationId =
-      explicitDestinationId === undefined
-        ? retainedDestinationId
-        : resolvePendingNormalDefeatRecoveryDestination(
-            snapshot,
-            explicitDestinationId
-          );
-    if (requestedDestinationId !== retainedDestinationId) {
-      throw new Error(
-        `Normal defeat recovery '${mutationId}' was reused with a conflicting destination.`
-      );
+  if (receipt.posture === "playable") {
+    const completed = validateCompletedNormalDefeatRecoveryProvenance(
+      snapshot,
+      receipt.receiptId
+    );
+    requireRecoveryControlAuthority(
+      control,
+      snapshot,
+      completed,
+      mutationId,
+      true
+    );
+    if (explicitDestinationId !== undefined) {
+      const requestedDestinationId =
+        resolvePendingNormalDefeatRecoveryDestination(
+          snapshot,
+          explicitDestinationId
+        );
+      if (requestedDestinationId !== completed.destinationId) {
+        throw new Error(
+          `Normal defeat recovery '${mutationId}' was reused with a conflicting destination.`
+        );
+      }
     }
     return {
       accepted: false,
@@ -393,14 +579,31 @@ export function completePendingNormalDefeatRecovery(
       reason: "duplicate",
       snapshot,
       control,
-      resultId: retained.resultId
+      resultId: `result.recovery_repair.${receipt.receiptId}`
     };
   }
-  if (!pending) {
-    throw new Error("Normal defeat recovery has already completed.");
+  if (
+    receipt.posture !== "recovery_pending" ||
+    pendingReceipts.length !== 1 ||
+    pendingReceipts[0]!.receiptId !== receipt.receiptId
+  ) {
+    throw new Error(
+      "Normal defeat recovery completion target is not the retained pending receipt."
+    );
   }
 
-  const destinationId = resolvePendingNormalDefeatRecoveryDestination(
+  validatePendingNormalDefeatRecoveryProvenance(
+    snapshot,
+    receipt.receiptId
+  );
+  requireRecoveryControlAuthority(
+    control,
+    snapshot,
+    receipt,
+    mutationId,
+    false
+  );
+  resolvePendingNormalDefeatRecoveryDestination(
     snapshot,
     explicitDestinationId
   );
@@ -413,6 +616,8 @@ export function completePendingNormalDefeatRecovery(
     sourceSnapshot: snapshot,
     proposedSnapshot: snapshot,
     resultId: `result.recovery_repair.${receipt.receiptId}`,
-    explicitRecoveryDestinationId: destinationId
+    ...(explicitDestinationId !== undefined
+      ? { explicitRecoveryDestinationId: explicitDestinationId }
+      : {})
   });
 }

@@ -230,6 +230,22 @@ function mutation(control, source, proposed, mutationId, overrides = {}) {
   });
 }
 
+function createRecoveryControl(snapshot, posture = "at_head") {
+  const atHead = posture === "at_head";
+  return createCampaignSessionControl({
+    accountId: snapshot.accountId,
+    campaignId: snapshot.campaignIdentity.campaignId,
+    artifactId: "artifact.recovery_source",
+    publicationId: "publication.recovery_source",
+    artifactRevision: 4,
+    continuityId: snapshot.campaignIdentity.continuityId,
+    headArtifactId: atHead
+      ? "artifact.recovery_source"
+      : "artifact.recovery_head",
+    headRevision: atHead ? 4 : 9
+  });
+}
+
 test("campaign rules v2 map legacy difficulty and keep format identities distinct", () => {
   assert.equal(mapLegacyDifficulty({ tier: "easy", hardcore: false }), "favored");
   assert.equal(mapLegacyDifficulty({ tier: "normal", hardcore: false }), "mortal");
@@ -370,6 +386,9 @@ test("Normal defeat is nonterminal, exact, preserving, and idempotent for combat
   source.playerState.resources.stamina.max = 10;
   source.playerState.resources.mp.current = 7;
   source.playerState.location.settlementId = "settlement.test_haven";
+  source.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.test_haven")
+  ];
   const preserved = {
     body: structuredClone(source.playerState.body),
     inventory: structuredClone(source.playerState.inventory),
@@ -597,7 +616,8 @@ test("recovery-pending defeats block ordinary admission and repair exactly once"
   const duplicateRepair = completePendingNormalDefeatRecovery(
     later.control,
     later.snapshot,
-    "settlement.repair_haven"
+    "settlement.repair_haven",
+    pendingReceipt.receiptId
   );
   assert.equal(duplicateRepair.duplicate, true);
   assert.equal(duplicateRepair.snapshot, later.snapshot);
@@ -922,6 +942,568 @@ test("pending-defeat destinations require exact nonconflicting settlement author
     () =>
       resolvePendingNormalDefeatRecoveryDestination(ambiguous),
     /multiple authoritative known safe settlements/
+  );
+});
+
+test("initial defeat validates automatic authority resources and complete duplicate evidence", () => {
+  const explicit = createTargetSnapshot("account.initial_explicit_authority");
+  explicit.playerState.resources.hp.current = 0;
+  explicit.playerState.location.settlementId = " malformed.current";
+  explicit.playerState.flags.push(
+    "player.start.settlement.conflict_one",
+    "player.start.settlement.conflict_two"
+  );
+  explicit.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.explicit_safe")
+  ];
+  const explicitResult = resolveNormalDefeat(explicit, {
+    sourceMutationId: "mutation.initial.explicit",
+    sourceKind: "accepted_mutation",
+    explicitDestinationId: "settlement.explicit_safe"
+  });
+  assert.equal(explicitResult.receipt.posture, "playable");
+  assert.equal(explicitResult.receipt.destinationSource, "explicit_context");
+  assert.equal(
+    explicitResult.receipt.recoveryCompletionContinuityId,
+    explicit.campaignIdentity.continuityId
+  );
+
+  const current = createTargetSnapshot("account.initial_current_authority");
+  current.playerState.resources.hp.current = 0;
+  current.playerState.location.settlementId = "settlement.current_safe";
+  current.playerState.flags.push(
+    "player.start.settlement.conflict_one",
+    "player.start.settlement.conflict_two"
+  );
+  current.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.current_safe")
+  ];
+  assert.equal(
+    resolveNormalDefeat(current, {
+      sourceMutationId: "mutation.initial.current",
+      sourceKind: "accepted_mutation"
+    }).receipt.destinationSource,
+    "current_settlement"
+  );
+
+  const campaignStart = createTargetSnapshot(
+    "account.initial_campaign_start_authority"
+  );
+  campaignStart.playerState.resources.hp.current = 0;
+  campaignStart.playerState.location.settlementId = null;
+  campaignStart.playerState.flags = [
+    "player.start.settlement.campaign_safe"
+  ];
+  campaignStart.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.campaign_safe")
+  ];
+  assert.equal(
+    resolveNormalDefeat(campaignStart, {
+      sourceMutationId: "mutation.initial.campaign_start",
+      sourceKind: "accepted_mutation"
+    }).receipt.destinationSource,
+    "campaign_start"
+  );
+
+  for (const [label, mutate] of [
+    ["padded", (candidate) => {
+      candidate.playerState.location.settlementId = " settlement.safe";
+    }],
+    ["unknown", (candidate) => {
+      candidate.playerState.location.settlementId = "settlement.unknown";
+    }],
+    ["ruin", (candidate) => {
+      candidate.playerState.location.settlementId = "settlement.unsafe";
+      candidate.sessionState.knownLocations = [
+        createRecoveryLocation("settlement.unsafe", "ruin")
+      ];
+    }],
+    ["duplicate", (candidate) => {
+      candidate.playerState.location.settlementId = "settlement.duplicate";
+      candidate.sessionState.knownLocations = [
+        createRecoveryLocation("settlement.duplicate"),
+        createRecoveryLocation("settlement.duplicate")
+      ];
+    }]
+  ]) {
+    const candidate = createTargetSnapshot(`account.initial_invalid.${label}`);
+    candidate.playerState.resources.hp.current = 0;
+    candidate.playerState.flags = candidate.playerState.flags.filter(
+      (flag) => !flag.startsWith("player.start.")
+    );
+    mutate(candidate);
+    const result = resolveNormalDefeat(candidate, {
+      sourceMutationId: `mutation.initial_invalid.${label}`,
+      sourceKind: "accepted_mutation"
+    });
+    assert.equal(result.receipt.posture, "recovery_pending");
+    assert.equal(result.receipt.destinationSource, "none");
+    assert.equal(result.receipt.recoveryCompletionContinuityId, null);
+  }
+
+  const invalidResources = [
+    ["negative hp", (candidate) => { candidate.playerState.resources.hp.current = -1; }],
+    ["fractional hp", (candidate) => { candidate.playerState.resources.hp.current = 0.5; }],
+    ["zero hp max", (candidate) => { candidate.playerState.resources.hp.max = 0; }],
+    ["stamina overflow", (candidate) => {
+      candidate.playerState.resources.stamina.current =
+        candidate.playerState.resources.stamina.max + 1;
+    }],
+    ["negative mp max", (candidate) => { candidate.playerState.resources.mp.max = -1; }],
+    ["nonfinite mp", (candidate) => { candidate.playerState.resources.mp.current = Number.NaN; }]
+  ];
+  for (const [label, mutate] of invalidResources) {
+    const candidate = createTargetSnapshot(`account.invalid_resource.${label}`);
+    candidate.playerState.resources.hp.current = 0;
+    mutate(candidate);
+    const before = structuredClone(candidate);
+    assert.throws(
+      () => resolveNormalDefeat(candidate, {
+        sourceMutationId: `mutation.invalid_resource.${label}`,
+        sourceKind: "accepted_mutation"
+      }),
+      /exact finite integer resource authority/
+    );
+    assert.deepEqual(candidate, before);
+  }
+
+  const duplicateSource = structuredClone(explicitResult.snapshot);
+  duplicateSource.normalDefeatReceipts.reverse();
+  duplicateSource.authorityLedger.entries.reverse();
+  duplicateSource.sessionState.chronicle.reverse();
+  duplicateSource.sessionState.notifications.reverse();
+  assert.equal(
+    resolveNormalDefeat(duplicateSource, {
+      sourceMutationId: "mutation.initial.explicit",
+      sourceKind: "accepted_mutation",
+      explicitDestinationId: "settlement.explicit_safe"
+    }).duplicate,
+    true
+  );
+  for (const mutate of [
+    (candidate) => { candidate.sessionState.chronicle = []; },
+    (candidate) => {
+      candidate.normalDefeatReceipts.push(
+        structuredClone(candidate.normalDefeatReceipts[0])
+      );
+    },
+    (candidate) => {
+      candidate.authorityLedger.entries.push({
+        ...structuredClone(candidate.authorityLedger.entries.at(-1)),
+        entryId: "normal_defeat.orphan"
+      });
+    }
+  ]) {
+    const candidate = structuredClone(explicitResult.snapshot);
+    mutate(candidate);
+    assert.throws(
+      () => resolveNormalDefeat(candidate, {
+        sourceMutationId: "mutation.initial.explicit",
+        sourceKind: "accepted_mutation",
+        explicitDestinationId: "settlement.explicit_safe"
+      }),
+      /duplicate provenance/
+    );
+  }
+});
+
+test("pending recovery validates every original effect fact before destination or fork", () => {
+  const pending = createPendingDefeatSnapshot(
+    "account.pending_effect_provenance",
+    "mutation.pending_effect_provenance"
+  );
+  pending.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.pending_effect_safe")
+  ];
+  const control = createRecoveryControl(pending, "non_head_unmutated");
+  const corruptions = [
+    (candidate) => { candidate.campaignRules.version = 1; },
+    (candidate) => { candidate.campaignRules.policyRevision = 2; },
+    (candidate) => { candidate.campaignRules.stakesRules = "wrong"; },
+    (candidate) => { candidate.clock.tick += 1; },
+    (candidate) => { candidate.capturedAtTick += 1; },
+    (candidate) => { candidate.normalDefeatReceipts[0].sourceTick -= 1; },
+    (candidate) => { candidate.normalDefeatReceipts[0].destinationId = "settlement.pending_effect_safe"; },
+    (candidate) => { candidate.normalDefeatReceipts[0].recoveryCompletionContinuityId = "continuity.false"; },
+    (candidate) => { candidate.playerState.resources.hp.current += 1; },
+    (candidate) => { candidate.normalDefeatReceipts[0].hpRestoredTo += 1; },
+    (candidate) => { candidate.normalDefeatReceipts[0].staminaRestoredTo = -1; },
+    (candidate) => { candidate.normalDefeatReceipts[0].mpPreservedAt += 1; },
+    (candidate) => { candidate.authorityLedger.entries[0].acceptedAtTick += 1; },
+    (candidate) => { candidate.sessionState.chronicle[0].summary = "corrupt"; },
+    (candidate) => { candidate.sessionState.notifications[0].tone = "info"; }
+  ];
+  for (const mutate of corruptions) {
+    const candidate = structuredClone(pending);
+    mutate(candidate);
+    const beforeSnapshot = structuredClone(candidate);
+    const beforeControl = structuredClone(control);
+    assert.throws(
+      () => completePendingNormalDefeatRecovery(
+        control,
+        candidate,
+        "settlement.pending_effect_safe"
+      ),
+      /provenance|authority/
+    );
+    assert.deepEqual(candidate, beforeSnapshot);
+    assert.deepEqual(control, beforeControl);
+  }
+});
+
+test("recovery completion records strict truthful destination precedence", () => {
+  function completeWith(label, prepare, explicitDestinationId) {
+    const pending = createPendingDefeatSnapshot(
+      `account.destination_source.${label}`,
+      `mutation.destination_source.${label}`
+    );
+    prepare(pending);
+    const control = createRecoveryControl(pending);
+    return completePendingNormalDefeatRecovery(
+      control,
+      pending,
+      explicitDestinationId
+    );
+  }
+
+  const explicit = completeWith("explicit", (pending) => {
+    pending.playerState.location.settlementId = " malformed.lower";
+    pending.playerState.flags.push(
+      "player.start.settlement.conflict_one",
+      "player.start.settlement.conflict_two"
+    );
+    pending.sessionState.knownLocations = [
+      createRecoveryLocation("settlement.explicit_completion")
+    ];
+  }, "settlement.explicit_completion");
+  assert.equal(
+    explicit.snapshot.normalDefeatReceipts[0].destinationSource,
+    "explicit_context"
+  );
+
+  const current = completeWith("current", (pending) => {
+    pending.playerState.location.settlementId = "settlement.current_completion";
+    pending.playerState.flags.push(
+      "player.start.settlement.conflict_one",
+      "player.start.settlement.conflict_two"
+    );
+    pending.sessionState.knownLocations = [
+      createRecoveryLocation("settlement.current_completion")
+    ];
+  });
+  assert.equal(
+    current.snapshot.normalDefeatReceipts[0].destinationSource,
+    "current_settlement"
+  );
+
+  const campaignStart = completeWith("campaign", (pending) => {
+    pending.playerState.flags = [
+      "player.start.settlement.campaign_completion"
+    ];
+    pending.sessionState.knownLocations = [
+      createRecoveryLocation("settlement.campaign_completion")
+    ];
+  });
+  assert.equal(
+    campaignStart.snapshot.normalDefeatReceipts[0].destinationSource,
+    "campaign_start"
+  );
+
+  const sole = completeWith("sole", (pending) => {
+    pending.sessionState.knownLocations = [
+      createRecoveryLocation("settlement.sole_completion")
+    ];
+  });
+  assert.equal(
+    sole.snapshot.normalDefeatReceipts[0].destinationSource,
+    "sole_known_settlement"
+  );
+
+  const noKnown = createPendingDefeatSnapshot(
+    "account.destination_source.none",
+    "mutation.destination_source.none"
+  );
+  const noKnownControl = createRecoveryControl(noKnown);
+  const noKnownBefore = serializeSnapshot(noKnown);
+  assert.throws(
+    () => completePendingNormalDefeatRecovery(noKnownControl, noKnown),
+    /no authoritative known safe settlement/
+  );
+  assert.equal(serializeSnapshot(noKnown), noKnownBefore);
+
+  const ambiguous = createPendingDefeatSnapshot(
+    "account.destination_source.ambiguous",
+    "mutation.destination_source.ambiguous"
+  );
+  ambiguous.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.ambiguous_one"),
+    createRecoveryLocation("settlement.ambiguous_two")
+  ];
+  assert.throws(
+    () => completePendingNormalDefeatRecovery(
+      createRecoveryControl(ambiguous),
+      ambiguous
+    ),
+    /multiple authoritative known safe settlements/
+  );
+
+  const invalidExplicit = createPendingDefeatSnapshot(
+    "account.destination_source.invalid_explicit",
+    "mutation.destination_source.invalid_explicit"
+  );
+  invalidExplicit.playerState.location.settlementId =
+    "settlement.valid_lower";
+  invalidExplicit.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.valid_lower")
+  ];
+  const invalidBefore = serializeSnapshot(invalidExplicit);
+  assert.throws(
+    () => completePendingNormalDefeatRecovery(
+      createRecoveryControl(invalidExplicit),
+      invalidExplicit,
+      "settlement.invalid_explicit"
+    ),
+    /not an authoritative known safe settlement/
+  );
+  assert.equal(serializeSnapshot(invalidExplicit), invalidBefore);
+});
+
+test("non-head recovery validates before one fork and durable replay never rolls back", () => {
+  const pending = createPendingDefeatSnapshot(
+    "account.non_head_recovery",
+    "mutation.non_head_recovery"
+  );
+  pending.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.non_head_recovery")
+  ];
+  const receiptId = pending.normalDefeatReceipts[0].receiptId;
+  const sourceContinuityId = pending.campaignIdentity.continuityId;
+  const control = createRecoveryControl(pending, "non_head_unmutated");
+
+  for (const mutate of [
+    (candidate) => { candidate.accountId = "account.wrong"; },
+    (candidate) => { candidate.campaignId = "campaign.wrong"; },
+    (candidate) => {
+      candidate.loadedArtifactId = candidate.campaignHeadArtifactId;
+      candidate.loadedHeadRevision = candidate.campaignHeadRevision;
+    },
+    (candidate) => { candidate.loadedPublicationId = ""; },
+    (candidate) => { candidate.loadedHeadRevision += 1; },
+    (candidate) => { candidate.loadedContinuityId = "continuity.wrong"; },
+    (candidate) => { candidate.pendingContinuityId = "continuity.false_child"; }
+  ]) {
+    const corruptControl = structuredClone(control);
+    mutate(corruptControl);
+    const beforePending = serializeSnapshot(pending);
+    assert.throws(
+      () => completePendingNormalDefeatRecovery(
+        corruptControl,
+        pending,
+        "settlement.non_head_recovery"
+      ),
+      /campaign-control authority/
+    );
+    assert.equal(serializeSnapshot(pending), beforePending);
+  }
+  assert.equal(control.pendingContinuityId, null);
+
+  const completed = completePendingNormalDefeatRecovery(control, pending);
+  const completedReceipt = completed.snapshot.normalDefeatReceipts[0];
+  const childContinuityId = completed.snapshot.campaignIdentity.continuityId;
+  assert.notEqual(childContinuityId, sourceContinuityId);
+  assert.equal(completedReceipt.continuityId, sourceContinuityId);
+  assert.equal(
+    completedReceipt.recoveryCompletionContinuityId,
+    childContinuityId
+  );
+  assert.equal(
+    completed.snapshot.campaignIdentity.parentContinuityId,
+    sourceContinuityId
+  );
+  assert.equal(
+    completed.snapshot.campaignIdentity.forkedFromArtifactId,
+    control.loadedArtifactId
+  );
+  assert.equal(
+    completed.snapshot.campaignIdentity.forkedFromPublicationId,
+    control.loadedPublicationId
+  );
+  assert.equal(
+    completed.snapshot.campaignIdentity.firstDivergentMutationId,
+    `mutation.recovery_repair.${receiptId}`
+  );
+  assert.equal(
+    completed.snapshot.authorityLedger.entries.filter(
+      (entry) =>
+        entry.kind === "continuity_fork" &&
+        entry.sourceId === `mutation.recovery_repair.${receiptId}` &&
+        entry.acceptedAtTick === pending.clock.tick
+    ).length,
+    1
+  );
+
+  const restartedControl = createRecoveryControl(completed.snapshot);
+  const restartedDuplicate = completePendingNormalDefeatRecovery(
+    restartedControl,
+    completed.snapshot,
+    undefined,
+    receiptId
+  );
+  assert.equal(restartedDuplicate.duplicate, true);
+  assert.equal(restartedDuplicate.snapshot, completed.snapshot);
+  assert.equal(restartedDuplicate.control, restartedControl);
+
+  assert.throws(
+    () => completePendingNormalDefeatRecovery(
+      restartedControl,
+      completed.snapshot
+    ),
+    /exact receipt identity/
+  );
+
+  const laterSnapshot = structuredClone(completed.snapshot);
+  laterSnapshot.playerState.currency.copper += 7;
+  const later = mutation(
+    restartedControl,
+    completed.snapshot,
+    laterSnapshot,
+    "mutation.after_durable_recovery"
+  );
+  const laterBefore = serializeSnapshot(later.snapshot);
+  const durableAfterLater = completePendingNormalDefeatRecovery(
+    later.control,
+    later.snapshot,
+    undefined,
+    receiptId
+  );
+  assert.equal(durableAfterLater.duplicate, true);
+  assert.equal(durableAfterLater.snapshot, later.snapshot);
+  assert.equal(serializeSnapshot(durableAfterLater.snapshot), laterBefore);
+
+  const reversed = structuredClone(later.snapshot);
+  reversed.normalDefeatReceipts.reverse();
+  reversed.authorityLedger.entries.reverse();
+  reversed.sessionState.chronicle.reverse();
+  reversed.sessionState.notifications.reverse();
+  assert.equal(
+    completePendingNormalDefeatRecovery(
+      later.control,
+      reversed,
+      undefined,
+      receiptId
+    ).duplicate,
+    true
+  );
+
+  for (const mutate of [
+    (candidate) => { candidate.authorityLedger.entries.pop(); },
+    (candidate) => {
+      candidate.authorityLedger.entries.push(
+        structuredClone(candidate.authorityLedger.entries.find(
+          (entry) => entry.supersedesEntryId === receiptId
+        ))
+      );
+    },
+    (candidate) => {
+      candidate.normalDefeatReceipts[0].recoveryCompletionContinuityId =
+        "continuity.conflicting_completion";
+    },
+    (candidate) => { candidate.sessionState.notifications[0].detail = "corrupt"; }
+  ]) {
+    const candidate = structuredClone(completed.snapshot);
+    mutate(candidate);
+    assert.throws(
+      () => completePendingNormalDefeatRecovery(
+        createRecoveryControl(candidate),
+        candidate,
+        undefined,
+        receiptId
+      ),
+      /completed receipt provenance/
+    );
+  }
+});
+
+test("old target receipts infer completion continuity without load-time rewrite", () => {
+  const pending = createPendingDefeatSnapshot(
+    "account.compatible_pending_receipt",
+    "mutation.compatible_pending_receipt"
+  );
+  pending.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.compatible_receipt")
+  ];
+  delete pending.normalDefeatReceipts[0].recoveryCompletionContinuityId;
+  const pendingBytes = serializeSnapshot(pending);
+  assert.equal(
+    JSON.parse(pendingBytes).normalDefeatReceipts[0]
+      .recoveryCompletionContinuityId,
+    undefined
+  );
+  const completed = completePendingNormalDefeatRecovery(
+    createRecoveryControl(pending),
+    pending
+  );
+  assert.equal(
+    completed.snapshot.normalDefeatReceipts[0]
+      .recoveryCompletionContinuityId,
+    pending.campaignIdentity.continuityId
+  );
+
+  const compatibleCompleted = structuredClone(completed.snapshot);
+  const receiptId = compatibleCompleted.normalDefeatReceipts[0].receiptId;
+  delete compatibleCompleted.normalDefeatReceipts[0]
+    .recoveryCompletionContinuityId;
+  const beforeReplay = serializeSnapshot(compatibleCompleted);
+  const replay = completePendingNormalDefeatRecovery(
+    createRecoveryControl(compatibleCompleted),
+    compatibleCompleted,
+    undefined,
+    receiptId
+  );
+  assert.equal(replay.duplicate, true);
+  assert.equal(serializeSnapshot(replay.snapshot), beforeReplay);
+});
+
+test("completed replay uses stable identity across multiple history copied artifacts and reversed arrays", () => {
+  const pending = createPendingDefeatSnapshot(
+    "account.multiple_recovery_history",
+    "mutation.multiple_recovery_history.first"
+  );
+  pending.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.multiple_history")
+  ];
+  const first = completePendingNormalDefeatRecovery(
+    createRecoveryControl(pending),
+    pending
+  ).snapshot;
+  const firstReceiptId = first.normalDefeatReceipts[0].receiptId;
+
+  const secondSource = structuredClone(first);
+  secondSource.playerState.resources.hp.current = 0;
+  const history = resolveNormalDefeat(secondSource, {
+    sourceMutationId: "mutation.multiple_recovery_history.second",
+    sourceKind: "accepted_mutation",
+    explicitDestinationId: "settlement.multiple_history"
+  }).snapshot;
+  assert.equal(history.normalDefeatReceipts.length, 2);
+
+  const copiedArtifact = structuredClone(history);
+  copiedArtifact.normalDefeatReceipts.reverse();
+  copiedArtifact.authorityLedger.entries.reverse();
+  copiedArtifact.sessionState.chronicle.reverse();
+  copiedArtifact.sessionState.notifications.reverse();
+  const control = createRecoveryControl(copiedArtifact);
+  const duplicate = completePendingNormalDefeatRecovery(
+    control,
+    copiedArtifact,
+    undefined,
+    firstReceiptId
+  );
+  assert.equal(duplicate.duplicate, true);
+  assert.equal(duplicate.snapshot, copiedArtifact);
+  assert.throws(
+    () => completePendingNormalDefeatRecovery(control, copiedArtifact),
+    /exact receipt identity/
   );
 });
 

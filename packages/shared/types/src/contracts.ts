@@ -1295,6 +1295,7 @@ export interface NormalDefeatReceiptState {
   sourceKind: NormalDefeatSourceKind;
   campaignId: string;
   continuityId: string;
+  recoveryCompletionContinuityId?: string | null;
   characterId: string;
   rulesVersion: 2;
   policyRevision: 1;
@@ -1306,6 +1307,7 @@ export interface NormalDefeatReceiptState {
     | "explicit_context"
     | "current_settlement"
     | "campaign_start"
+    | "sole_known_settlement"
     | "none";
   hpRestoredTo: number;
   staminaRestoredTo: number;

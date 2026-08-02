@@ -368,6 +368,27 @@ function getStartingSettlementId(snapshot: SaveSnapshot): string | null {
   return startFlag.slice("player.start.".length) || null;
 }
 
+function getOwnerCertifiedLegacyRecoveryDestinationId(
+  snapshot: SaveSnapshot
+): string | undefined {
+  const safe = snapshot.sessionState.knownLocations.filter(
+    (location) =>
+      location.known === true &&
+      location.type === "settlement" &&
+      typeof location.settlementId === "string" &&
+      location.settlementId.length > 0 &&
+      location.settlementId.trim() === location.settlementId
+  );
+  if (safe.length !== 1) {
+    return undefined;
+  }
+  const destinationId = safe[0]!.settlementId!;
+  const matchingClaims = snapshot.sessionState.knownLocations.filter(
+    (location) => location.settlementId?.trim() === destinationId
+  );
+  return matchingClaims.length === 1 ? destinationId : undefined;
+}
+
 function getStartingSettlementLabel(snapshot: SaveSnapshot): string | null {
   const startingSettlementId = getStartingSettlementId(snapshot);
 
@@ -1619,9 +1640,16 @@ function migrateLegacySaveGroup(
       source.slotId === loadedSlotId &&
       snapshot.playerState.resources.hp.current <= 0
     ) {
+      const legacyRecoveryDestinationId =
+        getOwnerCertifiedLegacyRecoveryDestinationId(snapshot);
       snapshot = resolveNormalDefeat(snapshot, {
         sourceMutationId: `legacy-migration.${ids.publicationId}`,
-        sourceKind: "unknown_or_legacy"
+        sourceKind: "unknown_or_legacy",
+        ...(legacyRecoveryDestinationId
+          ? {
+              explicitDestinationId: legacyRecoveryDestinationId
+            }
+          : {})
       }).snapshot;
       repairedLegacyDefeat = true;
     }
@@ -2113,9 +2141,16 @@ function repairLoadedMigratedDefeat(
   snapshot: SaveSnapshot,
   control: StoredCampaignControl
 ): LoadedCampaignSave {
+  const legacyRecoveryDestinationId =
+    getOwnerCertifiedLegacyRecoveryDestinationId(snapshot);
   const repaired = resolveNormalDefeat(snapshot, {
     sourceMutationId: `legacy-migration.${envelope.publicationId}`,
-    sourceKind: "unknown_or_legacy"
+    sourceKind: "unknown_or_legacy",
+    ...(legacyRecoveryDestinationId
+      ? {
+          explicitDestinationId: legacyRecoveryDestinationId
+        }
+      : {})
   }).snapshot;
   const loadedControl = createCampaignSessionControl({
     accountId,
