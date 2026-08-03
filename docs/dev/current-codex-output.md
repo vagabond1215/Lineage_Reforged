@@ -1,103 +1,148 @@
 # Current Codex Output
 
-Source run: connector-side inspection and acceptance-reopening coordination
+Source run: connector-side current-repository inspection, active-prompt hardening, and parallel-run classification
 
-Date: 2026-08-02
+Date: 2026-08-03
 
-Inspected head: `26c70f2114bf99714d2711eaf5a7653a57bf09cb`
+Inspected head: `70ddef40c3087be7cf66d68ca8704e3334d3b7f5`
 
-Durable reopening review commit: `b7297b7bada58dd7b01835435c87da95bafbec8f`
+Hardened prompt commit: `11a18dbeb373d024907f1e0f18ab1716b701930c`
 
-Active-prompt installation commit: `6f9db22a9f50daa4b4c3b7559be779db14dbbf02`
+Parallel-run inventory commit: `3bc3093e46966a9bd85b4df14ceba9eb0427177c`
 
-Result: `ACCEPTANCE_REOPENED_FOCUSED_DECISION_REQUIRED`
+Result: `PROMPT_HARDENED_TEN_PARALLEL_CONNECTOR_RUNS_VALIDATED`
 
 ## Current Disposition
 
 - Parent `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: `ACCEPTANCE_REOPENED_PENDING_FOCUSED_DECISION`.
 - `Version 0.6.9.8`: historical independent evidence; conclusion `REPAIR_REQUIRED` remains useful.
-- Focused lineage decision commit: `551d14bc483054aac129f7a081489b70efb46521`.
-- Lineage implementation commit `cbad987028d81c5ecdc35403333ec920d0ea5e53`: `IMPLEMENTED_PENDING_AUTHORITY_RECONCILIATION_AND_REAUDIT`.
-- Prior claimed `Version 0.6.9.10` acceptance and survey activation: superseded pending the active decision and a properly installed successor.
+- Existing lineage implementation `cbad987028d81c5ecdc35403333ec920d0ea5e53`: `IMPLEMENTED_PENDING_AUTHORITY_RECONCILIATION_AND_REAUDIT`.
+- Prior claimed `Version 0.6.9.10` acceptance: superseded pending the active decision and a properly installed successor.
+- Active route: unversioned `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`.
 - Ashen Reef survey receipt-foundation decision: blocked.
 - Survey behavior: unimplemented.
 - `0.7.0`: `NOT_READY`.
 
-No production revert or new production repair was performed.
+No production, test, schema, content, asset, dependency, branch, or pull-request change was made.
 
 ## Inspection Findings
 
-### 1. Prompt-transition authority was skipped
+### 1. Active prompt remained directionally correct
 
-At `551d14bc483054aac129f7a081489b70efb46521`, the live current prompt still installed the production-read-only `Version 0.6.9.8` audit. That audit required a blocking finding to install a complete repair prompt and stop.
+The active prompt correctly preserved the acceptance reopening, prohibited production edits, required historical-edge characterization, and required a separately installed successor before parent acceptance.
 
-The decision commit added only `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`. It did not install a runnable `0.6.9.9` implementation prompt or update the current route.
+### 2. Successor label assignment was underspecified
 
-The immediately following `cbad987028d81c5ecdc35403333ec920d0ea5e53` commit modified production source, shared contracts, and tests while the live prompt still prohibited those changes.
+The prompt referred to the “next valid support suffix” without naming it. Repository policy preserves historical multi-digit support labels and prohibits reuse or renumbering. Because historical `0.6.9.10` exists even though its acceptance claim is superseded, the next support suffix is `0.6.9.11`.
 
-The later coordination described a committed-head `0.6.9.10` audit, but no separate runnable `0.6.9.10` prompt was installed before `PARENT_ACCEPTED` was recorded.
+The prompt now fixes exact successors:
 
-The implementation and reported validations remain evidence. They do not independently satisfy the repository's installed-route and independent-acceptance requirements.
+- conforming implementation -> `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`;
+- repair/replacement required -> `Version 0.6.9.11 - Historical Recovery Fork Authority Repair`;
+- reserved post-repair audit -> `Version 0.6.9.12 - Historical Recovery Fork Authority Post-Repair Acceptance Audit`.
 
-### 2. Historical fork metadata proof is narrower than reported
+### 3. Durable protocol contained a stale current-application pointer
 
-The lineage implementation proves:
+`docs/dev/repository-first-agent-work-protocol.md` still ends by naming `0.6.9.8` as active. The current prompt now explicitly classifies only that `Current Application` paragraph as stale current-state text, preserves the rest of the protocol as authority, and requires the decision run to update the paragraph after selecting its outcome.
 
-- exact original and recovery-completion continuities;
-- one recovery fork with exact recovery mutation, tick, parent, and child;
-- a unique acyclic parent-linked continuity path;
-- current campaign identity agreement with the final/current fork edge.
+### 4. Guarantee language needed narrowing
 
-After the lineage advances to deeper descendants, the validator visibly checks historical source mutation, tick, source artifact, and source publication primarily for shape, minimum/monotonic ordering, or nonblankness. Those historical values are not all cross-checked against an independent durable counterpart.
+The prompt previously risked conflating:
 
-The focused tests prove immediate recovery-edge artifact/publication conflicts and current-edge deep-descendant identity conflicts. Static inspection did not find focused cases that mutate recovery-edge artifact/publication or intermediate historical source/tick/artifact/publication while preserving a valid parent/child continuity path.
+- deterministic semantic consistency inside the accepted save-authority model; and
+- independently authenticated or cryptographic tamper detection for every historical metadata field.
 
-Therefore the prior claim that every wrong source, tick, artifact, and publication on every historical edge is detected is not currently accepted authority.
+The hardened prompt requires the decision to distinguish those guarantees explicitly and prohibits a generic integrity framework solely to preserve overbroad historical wording.
 
-The active focused decision must execute those exact cases and decide which historical fields are independently authoritative, structurally verifiable, current-edge-only, self-asserted ledger evidence, or not durably provable.
+### 5. Parallel-branch collision needed an explicit lock
 
-## Durable Review
+The prompt now prohibits integrating, rewriting, or advancing any `parallel/*` branch during the active decision. Parallel connector evidence is coordinated separately.
+
+## Hardened Active Prompt
+
+The current prompt now:
+
+- uses exact authority precedence;
+- names every required repository document by exact path;
+- quarantines the stale protocol current-application paragraph;
+- requires route-history inspection at `5fe11910`, `551d14bc`, `cbad987`, and `f68d878`;
+- requires field-by-field durable-evidence classification;
+- requires recovery-edge, intermediate-edge, current-edge, and structural-corruption characterization;
+- distinguishes semantic consistency from tamper authentication;
+- assigns exact `0.6.9.11` and `0.6.9.12` successor labels;
+- requires the protocol current-application paragraph and all affected coordination surfaces to be reconciled after the decision;
+- keeps parent `0.6.9`, Ashen Reef, survey implementation, and `0.7.0` blocked.
+
+## Ten Valid Parallel GPT Connector-Only Runs
 
 Created:
 
-`docs/dev/version-0.6.9-parent-acceptance-reopening-and-historical-fork-verifiability-review-2026-08-02.md`
+`docs/dev/parallel-gpt-connector-only-run-candidates-2026-08-03.md`
 
 Disposition:
 
-`ACCEPTANCE_REOPENED_FOCUSED_DECISION_REQUIRED`
+`TEN_PARALLEL_CONNECTOR_RUNS_VALID_WITH_ISOLATION`
 
-The review preserves `cbad987` as implemented evidence, blocks Ashen Reef, and prohibits another production edit until the historical-edge contract and route authority are reconciled.
+The selected branches are:
 
-## Installed Route
+1. `parallel/consumable-profile-coverage-audit`;
+2. `parallel/equipment-profile-readiness-audit`;
+3. `parallel/gameplay-shell-ui-state-audit`;
+4. `parallel/quest-turn-in-reward-source-audit`;
+5. `parallel/recipe-production-maturity-audit`;
+6. `parallel/regional-bestiary-ecology-maturity-audit`;
+7. `parallel/regional-settlement-maturity-audit`;
+8. `parallel/research-artifact-retention-inventory`;
+9. `parallel/rest-recovery-mutation-audit`;
+10. `parallel/text-first-combat-view-model-audit`.
 
-`Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`
+Each branch is a one-document, connector-only, read-only evidence lane. Each must refresh facts against live master, update only its unique existing document, make no controlling coordination or implementation change, remain unmerged, and report its exact later review trigger.
 
-This is an unversioned documentation-only decision with read-only executable characterization.
+The batch must not update the shared branch register from ten concurrent runs. One later coordinator should reconcile all ten exact branch heads and update the register once.
 
-It must:
+## Deferred Parallel Candidates
 
-- verify the skipped prompt-transition history;
-- inventory independent durable evidence for every historical fork field;
-- execute recovery-edge and intermediate-edge corruption probes after deep descent;
-- select an exact continuity-graph, fully authenticated, or bounded mixed authority model;
-- classify `cbad987`;
-- install either a properly separated independent re-audit, a bounded repair prompt, or `NO_PACKAGE` with one exact user question;
-- update all lower-precedence acceptance and planning surfaces after the decision.
+- `parallel/connector-prep-freshness-audit`: overlaps the active prompt/handoff/output and route-authority surface; do not run concurrently.
+- `parallel/prompt-packaging-integrity-audit`: protected prompt-packaging reference and direct overlap with the active prompt; do not modify now.
+- `parallel/launcher-asset-pr-disposition`: valid as an optional eleventh audit, but lower priority because PR #2 already has a durable evidence-only disposition and advancement requires a user-facing asset decision plus local UI/asset validation.
 
-It may not accept parent `0.6.9`, edit production or tests, or run the Ashen Reef decision.
+## Branch And PR State
 
-## Validation And Repository State
+Live inspection found the same nineteen branches and two open PRs:
 
-This connector-side coordination run performed repository and commit inspection only. It did not execute local tests, builds, typechecks, or probes and does not replace the active decision's required executable verification.
+- PR #2 remains open, unmerged, non-draft, and mechanically non-mergeable at `e78dc645cfb658685be12f45f46d34b7c0da1119`;
+- PR #3 remains open, draft, unmerged, and mechanically non-mergeable at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`;
+- the ten selected parallel branches each contain one unique documentation file relative to their old merge base;
+- no branch or PR lifecycle mutation occurred.
 
-GitHub exposed no combined statuses and no pull-request-triggered workflow runs for inspected head `26c70f2114bf99714d2711eaf5a7653a57bf09cb`.
+## Validation And Limits
 
-PR #2 and PR #3 remain open and unmerged. No branch or pull-request lifecycle mutation occurred.
+This was a GitHub Connector inspection and documentation-coordination run.
+
+Performed:
+
+- live recent-commit inspection;
+- current prompt, output, handoff, AGENTS, version policy, repository protocol, connector policy, backlog, branch register, and open-PR inspection;
+- live branch enumeration;
+- per-branch changed-path comparison for candidate parallel branches;
+- selected candidate-document scope inspection;
+- complete-file verification through connector readback/write responses.
+
+Not performed:
+
+- local tests;
+- builds;
+- typechecking;
+- local Git worktree checks;
+- executable lineage probes;
+- branch rebases or integration validation.
+
+Those remain owned by the active Codex decision or later local integration work.
 
 ## Next Action
 
-Run the exact current prompt from a freshly fetched synchronized checkout at or after the prompt-installation commit:
+Run the exact hardened prompt in `docs/dev/current-codex-prompt.md` from a freshly fetched synchronized checkout containing at least:
 
-`6f9db22a9f50daa4b4c3b7559be779db14dbbf02`
+`11a18dbeb373d024907f1e0f18ab1716b701930c`
 
-Do not run the Ashen Reef survey receipt-foundation decision until a properly installed successor independently reaccepts parent `0.6.9`.
+The ten connector-only branches may be refreshed concurrently under the isolation contract in `docs/dev/parallel-gpt-connector-only-run-candidates-2026-08-03.md`. They must not modify the active-route files or be merged automatically.
