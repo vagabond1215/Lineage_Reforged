@@ -1,6 +1,8 @@
 # Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision
 
-Date: 2026-08-02
+Date: 2026-08-03
+
+Revision: connector inspection hardening after live-head, workflow-policy, and parallel-branch review
 
 Label class: unversioned focused decision
 
@@ -8,7 +10,7 @@ Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
 Milestone impact: `supports_current_band`
 
-Execution posture: documentation-only decision with read-only executable verification
+Execution posture: documentation-only decision with read-only executable characterization
 
 Suggested commit:
 
@@ -16,14 +18,14 @@ Suggested commit:
 
 ## Purpose
 
-Resolve the reopened `0.6.9` acceptance boundary after inspection found:
+Resolve the reopened `0.6.9` acceptance boundary after repository inspection established two unresolved issues:
 
-1. required `0.6.9.9` implementation and `0.6.9.10` independent-audit prompt transitions were not installed before production repair and parent acceptance were recorded;
-2. the linked-fork implementation proves arbitrary-depth parent/child continuity ancestry and the current edge, but historical mutation, tick, source-artifact, and source-publication fields may not have independent durable corroboration once their edge is no longer current.
+1. no runnable `0.6.9.9` implementation prompt was installed before production commit `cbad987028d81c5ecdc35403333ec920d0ea5e53`, and no separately installed `0.6.9.10` independent-audit prompt preceded the later parent-acceptance claim;
+2. the linked-fork implementation proves arbitrary-depth parent/child continuity ancestry and authenticates the current edge, but historical mutation, tick, source-artifact, and source-publication fields may not retain independent durable corroboration after later descendant forks.
 
-Decide the exact historical-edge authority contract, classify the existing implementation commit `cbad987028d81c5ecdc35403333ec920d0ea5e53` under that contract, and install the smallest valid successor route.
+Decide the exact historical-edge authority contract, classify the existing implementation under that contract, and install the smallest valid successor route.
 
-Do not repair production, accept parent `0.6.9`, or run the Ashen Reef survey decision in this route.
+Do not repair or revert production, accept parent `0.6.9`, or run the Ashen Reef survey decision in this route.
 
 ## Current Disposition
 
@@ -37,22 +39,37 @@ Treat the repository as follows until this decision completes:
 - survey behavior: unimplemented;
 - `0.7.0`: `NOT_READY`.
 
-Do not revert the existing implementation by inference. It remains repository evidence and may become the accepted implementation only after the contract is decided and a separately installed independent re-audit passes.
+Do not revert the existing implementation by inference. It remains candidate implemented evidence and may become accepted only after this contract decision and a separately installed independent audit.
 
-## Mandatory Repository Orientation
+## Authority And Precedence
 
 Follow `AGENTS.md` and `docs/dev/repository-first-agent-work-protocol.md` completely.
+
+For current execution, use this precedence:
+
+1. this current prompt;
+2. `docs/dev/current-gpt-handoff.md`;
+3. `docs/dev/current-codex-output.md`;
+4. the durable reopening review and focused design decisions;
+5. the historical/deferred register and planning-anchor reconciliation;
+6. lower-precedence roadmap, plan, brief, backlog, and static-program summaries.
+
+The `## Current Application` paragraph at the end of `docs/dev/repository-first-agent-work-protocol.md` still describes `0.6.9.8` as active. Treat that paragraph as a stale current-state pointer, not as an override of this prompt. Update it after this decision so the durable protocol no longer names a superseded route.
+
+Do not infer route authority from commit messages alone.
+
+## Mandatory Repository Orientation
 
 Fetch and prune all remotes. Record:
 
 - clean worktree and current branch/upstream;
-- inspected base, starting head, live remote head, and final documentation head;
+- inspected base, starting head, live remote head, decision commit, final coordination head, and post-push live head;
 - ancestry from `5fe11910e6b4951483994ee23529150a697f78cc` through the current head;
-- all commits after the hardened `0.6.9.8` prompt and their exact changed files;
-- all local and remote branches, open PRs, merge bases, divergence, unique paths, semantic overlap, and current dispositions;
-- hosted combined-status and workflow-run availability for `cbad987`, `f68d878`, the starting head, and the final documentation commit.
+- every commit after the hardened `0.6.9.8` prompt and its exact changed files;
+- every local and remote branch and every open PR, including merge bases, divergence, unique paths, semantic overlap, current disposition, and named review trigger;
+- hosted combined-status and workflow-run availability for `cbad987`, `f68d878`, the starting head, the decision commit, and the final coordination head.
 
-Read complete current versions of:
+Read the complete current versions of:
 
 - `docs/dev/current-codex-prompt.md`;
 - `docs/dev/current-gpt-handoff.md`;
@@ -64,20 +81,25 @@ Read complete current versions of:
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
 - `docs/design/internal-versioning-and-release-milestone-policy.md`;
 - `docs/dev/repository-first-agent-work-protocol.md`;
+- `docs/dev/gpt-connector-assistance-policy.md`;
 - `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
 - `docs/design/current-planning-anchor-reconciliation.md`;
-- current roadmap, sequenced plan, continuity brief, backlog, static-content program, branch policy, and branch register;
-- the live shared ledger contract, campaign-session fork emitter, completed-replay validator, focused persistence tests, save serialization, publication owners, and any durable campaign-control or artifact records that might corroborate historical edges.
+- `docs/dev/project-roadmap.md`;
+- `docs/dev/codex-sequenced-implementation-plan.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/future_content_backlog.md`;
+- `docs/design/static-content-expansion-program.md`;
+- `docs/dev/branch-lifecycle-and-integration-policy.md`;
+- `docs/dev/branch-disposition-register.md`;
+- the live shared ledger contract, campaign-session fork emitter, completed-replay validator, focused persistence tests, serialization/publication owners, and every durable record that might corroborate a historical edge.
 
-Use `git show` or equivalent repository inspection to read the exact current prompt, handoff, and output at:
+Use `git show` or equivalent repository inspection to read the exact prompt, handoff, and output at:
 
 - `5fe11910e6b4951483994ee23529150a697f78cc`;
 - `551d14bc483054aac129f7a081489b70efb46521`;
 - `cbad987028d81c5ecdc35403333ec920d0ea5e53`;
 - `f68d878cd1969e861f4fe7a793412876ba48b3a8`.
-
-Do not infer route authority from commit messages alone.
 
 ## Decision Boundary
 
@@ -86,7 +108,7 @@ This run may:
 - inspect source, tests, history, branches, PRs, and persisted contracts;
 - create temporary read-only probes and remove them before completion;
 - run focused existing tests needed to characterize behavior;
-- update design, audit, prompt, handoff, output, planning, and branch-coordination documents after the decision.
+- update design, audit, prompt, handoff, output, protocol-current-application, planning, and branch-coordination documents after the decision.
 
 This run must not modify:
 
@@ -99,6 +121,8 @@ This run must not modify:
 - content, assets, UI, or survey behavior;
 - branches or PRs.
 
+Do not integrate, rewrite, or advance any `parallel/*` branch in this run. Parallel connector branches remain isolated evidence and will be coordinated separately.
+
 If a production change is required, install a complete successor repair prompt and stop.
 
 ## Question 1 - Route-Authority Reconciliation
@@ -107,15 +131,15 @@ Determine and document:
 
 1. whether a runnable `0.6.9.9` implementation prompt was installed before `cbad987`;
 2. whether a runnable independent `0.6.9.10` prompt was installed before `f68d878`;
-3. which repository workflow requirements were bypassed, if any;
-4. whether the existing implementation may be retained as candidate implemented evidence or must be reverted before a valid route can proceed;
-5. what exact independent successor is required before parent acceptance can be reconsidered.
+3. which repository workflow requirements were bypassed;
+4. whether `cbad987` may be retained as candidate implemented evidence or must be reverted through a later authorized repair route;
+5. the exact independently installed successor required before parent acceptance can be reconsidered.
 
-Do not retroactively claim that a focused decision document was itself the installed implementation prompt unless the repository's established route protocol explicitly proves that equivalence.
+Do not retroactively treat a focused decision document as the installed executable implementation prompt unless the repository's established route protocol explicitly proves equivalence.
 
 ## Question 2 - Durable Evidence Inventory
 
-For every field on a historical `continuity_fork` edge, identify all independent durable corroboration available after at least two later descendant forks:
+For every field on a historical `continuity_fork` edge, identify all durable corroboration available after at least two later descendant forks:
 
 - `sourceId`;
 - `acceptedAtTick`;
@@ -124,7 +148,7 @@ For every field on a historical `continuity_fork` edge, identify all independent
 - `forkedFromArtifactId`;
 - `forkedFromPublicationId`.
 
-For each field classify its current proof as exactly one of:
+Classify each field as exactly one:
 
 - `INDEPENDENTLY_CROSS_VERIFIABLE`;
 - `CHAIN_STRUCTURALLY_VERIFIABLE`;
@@ -137,24 +161,19 @@ Inspect, but do not assume, possible corroboration from:
 - current campaign identity;
 - retained fork entries;
 - receipt and correction entries;
-- artifact and publication records;
-- slot addresses;
-- campaign control state;
-- mutation-result retention;
+- immutable artifacts and verified publications;
+- slot addresses and campaign control;
+- retained mutation results;
 - save metadata;
-- Chronicle or notification projections;
+- Chronicle and notification projections;
 - account publication receipts;
-- branch or caller state.
+- caller or branch state.
 
-A value repeated only within the same mutable snapshot evidence family is not automatically independent corroboration.
+A value repeated only inside the same mutable snapshot evidence family is not automatically independent corroboration.
 
 ## Question 3 - Executable Characterization Matrix
 
-Using untouched synchronized production source, create temporary probes or focused test invocations that characterize at least:
-
-### Recovery edge after deep descent
-
-Create valid lineage:
+Using untouched synchronized production source, create temporary probes or focused test invocations for this valid lineage:
 
 ```text
 C0 original defeat
@@ -167,14 +186,10 @@ At `C3`, change exactly one historical recovery-edge field at a time while prese
 
 - source artifact;
 - source publication;
-- source mutation, if target selection can remain stable;
+- source mutation, when receipt targeting remains stable;
 - accepted tick to another valid monotonic integer.
 
-Attempt explicit completed replay and record exact behavior.
-
-### Intermediate historical edge
-
-At `C3`, change exactly one field on the `C1 -> C2` edge:
+Then change exactly one field on the intermediate `C1 -> C2` edge:
 
 - source mutation;
 - accepted tick;
@@ -183,53 +198,46 @@ At `C3`, change exactly one field on the `C1 -> C2` edge:
 - parent continuity;
 - child continuity.
 
-Record which changes fail and which pass.
+Also confirm:
 
-### Current edge control
+- current-edge source mutation, parent, source artifact, and source publication remain cross-checked against current campaign identity;
+- duplicate incoming child edges, cycles, disconnected paths, missing recovery edge, wrong recovery mutation, wrong recovery tick, and original-continuity substitution remain rejected;
+- every rejection is byte-stable and produces no effects, child, revision, or publication.
 
-Confirm current-edge source mutation, parent, source artifact, and source publication remain cross-checked against current campaign identity and fail closed when changed.
-
-### Structural corruption
-
-Confirm duplicate incoming child edges, cycles, disconnected paths, missing recovery edge, wrong recovery mutation, wrong recovery tick, and original-continuity substitution remain rejected.
-
-All probes must be removed before commit. Do not add tests in this decision run.
+Remove every temporary probe before commit. Do not add or edit tests in this decision run.
 
 ## Question 4 - Exact Historical-Edge Contract
 
-Decide, field by field, what completed replay is required to prove after an edge becomes historical.
+Distinguish two different guarantees:
 
-Choose one coherent contract, or a precisely bounded hybrid:
+1. **semantic consistency and deterministic replay validation** within the accepted save-authority model;
+2. **cryptographic or independently authenticated tamper detection** for every retained historical metadata field.
+
+The repository must not claim the second guarantee unless persisted authority actually provides it. The decision must not introduce a generic integrity framework merely to preserve overbroad wording.
+
+Choose one coherent model or a precisely bounded hybrid.
 
 ### Model A - Continuity graph authority
 
-- parent/child continuity linkage and unique acyclic descent are acceptance-critical;
-- the recovery edge remains bound to receipt identity and required recovery mutation/tick facts;
+- unique acyclic parent/child continuity linkage is acceptance-critical;
+- the recovery edge is bound to receipt identity and the exact recovery mutation/tick/continuities that remain durably corroborated;
 - current campaign identity authenticates the final/current edge;
-- historical source mutation, tick, artifact, and publication fields beyond independently corroborated facts are descriptive retained provenance subject to shape and ordering checks, not claims of tamper detection.
+- historical source mutation, tick, artifact, and publication fields beyond independently corroborated facts are retained descriptive provenance subject to explicit shape/order rules, not universal tamper-detection claims.
 
 ### Model B - Fully authenticated historical edges
 
 - every named field remains acceptance-critical on every historical edge;
-- additional durable evidence, chained integrity, or another bounded persisted contract is required;
-- existing implementation is insufficient until repaired.
+- additional bounded durable evidence or chained integrity is required;
+- `cbad987` is insufficient until a separately authorized repair closes the gap.
 
 ### Model C - Bounded mixed authority
 
 - name every historical field that remains exact authority;
 - name every field that becomes descriptive or structural evidence;
-- provide the independent corroboration for each exact field;
-- prohibit broader wording than the persisted format can prove.
+- identify the independent corroboration for every exact field;
+- prohibit documentation, tests, and completion reports from claiming more than the persisted format proves.
 
-The decision must explain why its model is compatible with:
-
-- immutable artifact and verified publication principles;
-- copied artifacts and slot independence;
-- restart and caller-state loss;
-- old format-v2 snapshots;
-- failure-before-effects requirements;
-- bounded save growth;
-- no generic framework expansion.
+Explain compatibility with immutable artifacts, verified publication, copied artifacts, slot independence, restart/caller loss, old format-v2 snapshots, failure-before-effects, bounded growth, and the no-generic-framework boundary.
 
 ## Question 5 - Existing Implementation Classification
 
@@ -240,104 +248,107 @@ Classify `cbad987028d81c5ecdc35403333ec920d0ea5e53` as exactly one:
 - `IMPLEMENTATION_CONTRACT_INDETERMINATE_NO_PACKAGE`;
 - `IMPLEMENTATION_MUST_BE_REVERTED_BEFORE_SUCCESSOR`.
 
-A conforming classification does not accept parent `0.6.9`. It authorizes installation of a separate independent acceptance audit only.
+A conforming classification does not accept parent `0.6.9`; it authorizes only the separately installed independent audit below.
 
-A repair-required classification must identify the smallest production and test surface and install a complete repair prompt. Do not implement it here.
+A repair or revert classification must install a complete repair/replacement prompt and stop without changing production.
 
-## Mandatory Outcome
+## Mandatory Outcome And Exact Successors
 
-Return exactly one decision outcome.
+Return exactly one outcome.
 
 ### `DECISION_ACCEPTED_REAUDIT_AUTHORIZED`
 
-Use only when the exact contract is decided and the existing implementation conforms without production changes.
+Use only when the exact contract is decided and `cbad987` conforms without production changes.
 
-Then:
+Then install exactly:
 
-1. amend the lineage decision and parent acceptance authority to state the exact historical-field semantics;
-2. preserve prior claimed acceptance as superseded history;
-3. install a complete independent support audit prompt using the next valid support suffix under repository policy;
-4. require that audit to begin from a synchronized checkout containing `cbad987` and this decision;
-5. require fresh characterization, focused tests, regression group, build, bounded TypeScript audit, serialization/mirror checks, branch review, diff checks, and hosted-status reporting;
-6. keep parent `0.6.9`, Ashen Reef, and `0.7.0` blocked until that audit passes.
+`Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
+
+This is the next valid support suffix. Historical `0.6.9.10` must not be reused or renumbered even though its acceptance claim is superseded.
+
+The audit must begin from a synchronized checkout containing `cbad987` and this decision, independently reproduce the characterization matrix, run focused persistence, the prescribed regression group, build, bounded TypeScript audit, serialization/mirror checks, branch review, diff checks, and hosted-status reporting, and keep `0.6.9`, Ashen Reef, and `0.7.0` blocked until it passes.
 
 ### `DECISION_ACCEPTED_REPAIR_AUTHORIZED`
 
-Use when the exact contract is decided but `cbad987` does not satisfy it.
+Use when the contract is decided but `cbad987` does not satisfy it or must be replaced/reverted.
 
-Then:
+Then install exactly:
 
-1. identify the smallest exact repair surface;
-2. install a complete versioned support-repair prompt under repository policy;
-3. include a mandatory independent post-repair audit successor;
-4. prohibit production implementation in this decision run;
-5. keep parent `0.6.9`, Ashen Reef, and `0.7.0` blocked.
+`Version 0.6.9.11 - Historical Recovery Fork Authority Repair`
+
+Reserve exactly:
+
+`Version 0.6.9.12 - Historical Recovery Fork Authority Post-Repair Acceptance Audit`
+
+The repair prompt must define the smallest source/test surface, preserve format and owner boundaries unless a new decision is required, prohibit unrelated changes, and require installation of the reserved independent audit only after implementation succeeds.
 
 ### `NO_PACKAGE`
 
-Use only when repository evidence cannot select the authority model without product direction.
-
-Then ask one smallest exact user question and preserve this decision as the active route.
+Use only when repository evidence cannot select the authority model without product direction. Ask one smallest exact user question and preserve this decision as active.
 
 ## Required Deliverable
 
 Create one permanent decision document under `docs/design/` containing:
 
-- run identity, date, heads, label class, and milestone impact;
-- route-authority timeline and conclusion;
+- run identity, date, inspected/starting/decision/final/live heads, label class, and milestone impact;
+- route-authority timeline and skipped-transition conclusion;
 - complete durable-evidence inventory;
-- executable characterization matrix and results;
+- executable characterization matrix and exact results;
 - field-by-field authority classification;
+- semantic-consistency versus tamper-authentication distinction;
 - selected contract model;
 - compatibility and migration posture;
 - existing implementation classification;
-- exact decision outcome;
-- exact successor prompt or smallest user question;
+- exact outcome and exact successor prompt;
 - branch/PR and hosted-validation report.
 
-After deciding, update all current coordination surfaces that currently claim parent acceptance or an active Ashen Reef route, including:
+After deciding, update every live current-state surface affected by the result:
 
-- current prompt;
-- current output;
-- current handoff;
-- parent acceptance audit;
-- lineage decision;
-- historical/deferred register;
-- planning-anchor reconciliation;
-- roadmap;
-- sequenced plan;
-- continuity brief;
-- backlog;
-- static-content program;
-- branch register when its named consumer status changes.
+- `docs/dev/current-codex-prompt.md`;
+- `docs/dev/current-codex-output.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/repository-first-agent-work-protocol.md` current-application paragraph;
+- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
+- `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/current-planning-anchor-reconciliation.md`;
+- `docs/dev/project-roadmap.md`;
+- `docs/dev/codex-sequenced-implementation-plan.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/future_content_backlog.md`;
+- `docs/design/static-content-expansion-program.md`;
+- `docs/dev/branch-disposition-register.md` only when a named branch/PR consumer or disposition actually changes.
 
-Preserve dated historical chronology. Mark prior acceptance as superseded rather than deleting it.
+Preserve dated history. Mark prior acceptance as superseded rather than deleting it.
 
 ## Validation
 
 Run at minimum:
 
-- focused executable characterization described above;
-- `node --test tests\unit\campaign-persistence-foundation.test.mjs` to preserve the current baseline, without editing tests;
+- the focused executable characterization above;
+- `node --test tests\unit\campaign-persistence-foundation.test.mjs` without editing tests;
 - documentation path/reference checks;
 - `git diff --check`;
-- complete unstaged, staged, and post-commit diff inspection;
+- complete unstaged, staged, committed, and post-push diff inspection;
 - final worktree, branch/upstream, remote-head, combined-status, and workflow-run checks.
 
-A production build or full regression group is not required for this documentation-only decision unless needed to resolve a disputed claim. The installed successor must require the full validation appropriate to its class.
+A production build or full regression group is not required for this documentation-only decision unless needed to resolve a disputed claim. The installed successor must require the complete validation appropriate to its class.
+
+Apply the relevant repository failure-pattern guardrails and report their exact IDs and evidence.
 
 ## Scope Exclusions
 
 Do not:
 
 - accept parent `0.6.9`;
-- implement or revert lineage production code;
+- implement, revert, or rewrite lineage production code;
 - edit tests;
 - run the Ashen Reef survey decision;
 - implement survey receipts or behavior;
 - change snapshot or envelope versions;
 - add a generic lineage, integrity, replay, event, or transaction framework;
 - add dependencies, content, assets, UI, or unrelated cleanup;
+- integrate or modify parallel connector branches;
 - merge, close, delete, rebase, or force-update branches or PRs.
 
 ## Completion Report
@@ -346,13 +357,14 @@ Report:
 
 1. inspected, starting, decision, final, and live remote heads;
 2. route-authority timeline and skipped-transition conclusion;
-3. historical-field evidence classification;
+3. historical-field evidence classifications;
 4. characterization cases and exact results;
-5. selected contract model;
-6. existing implementation classification;
+5. selected authority model and guarantee boundary;
+6. `cbad987` classification;
 7. exact decision outcome;
-8. successor prompt identity and class;
+8. exact successor prompt identity and reserved follow-up when applicable;
 9. files changed;
 10. checks and counts;
-11. branch/PR and hosted-validation state;
-12. exact status of parent `0.6.9`, Ashen Reef, and `0.7.0`.
+11. applicable failure-pattern IDs and evidence;
+12. branch/PR and hosted-validation state;
+13. exact status of parent `0.6.9`, Ashen Reef, survey behavior, and `0.7.0`.
