@@ -1,148 +1,127 @@
 # Current Codex Output
 
-Source run: connector-side current-repository inspection, active-prompt hardening, and parallel-run classification
+Source run: sequential GPT Connector-only evidence refreshes and coordinator indexing
 
 Date: 2026-08-03
 
-Inspected head: `70ddef40c3087be7cf66d68ca8704e3334d3b7f5`
+Execution source head: `91bd8c2c89c85fb9ea7257b2c96b68ab41231b04`
 
-Hardened prompt commit: `11a18dbeb373d024907f1e0f18ab1716b701930c`
+Completed result-index commit: `676bf131f7fb0b215e0bc76f706f833693fcc379`
 
-Parallel-run inventory commit: `3bc3093e46966a9bd85b4df14ceba9eb0427177c`
+Completed candidate-pointer commit: `97c70cb7fd0a5d3223b6e37a56bc90f0e4f8c047`
 
-Result: `PROMPT_HARDENED_TEN_PARALLEL_CONNECTOR_RUNS_VALIDATED`
+Handoff coordination commit: `2d618e27fa75cb4edb2d055ae6d1cf34eb3c2ab9`
+
+Result: `TEN_CONNECTOR_EVIDENCE_RUNS_COMPLETE_AND_INDEXED`
 
 ## Current Disposition
 
 - Parent `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: `ACCEPTANCE_REOPENED_PENDING_FOCUSED_DECISION`.
-- `Version 0.6.9.8`: historical independent evidence; conclusion `REPAIR_REQUIRED` remains useful.
 - Existing lineage implementation `cbad987028d81c5ecdc35403333ec920d0ea5e53`: `IMPLEMENTED_PENDING_AUTHORITY_RECONCILIATION_AND_REAUDIT`.
 - Prior claimed `Version 0.6.9.10` acceptance: superseded pending the active decision and a properly installed successor.
 - Active route: unversioned `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`.
-- Ashen Reef survey receipt-foundation decision: blocked.
-- Survey behavior: unimplemented.
+- Hardened prompt: `11a18dbeb373d024907f1e0f18ab1716b701930c`.
+- Ashen Reef survey decision: blocked.
+- Survey implementation: unimplemented.
 - `0.7.0`: `NOT_READY`.
 
-No production, test, schema, content, asset, dependency, branch, or pull-request change was made.
+No production, test, schema, content, asset, dependency, branch-lifecycle, or pull-request mutation occurred.
 
-## Inspection Findings
+## Completed Sequential Runs
 
-### 1. Active prompt remained directionally correct
+The ten isolated connector-only audits were executed one at a time against the same inspected master head.
 
-The active prompt correctly preserved the acceptance reopening, prohibited production edits, required historical-edge characterization, and required a separately installed successor before parent acceptance.
+| # | Branch head | Result |
+| ---: | --- | --- |
+| 1 | `parallel/consumable-profile-coverage-audit` at `510251f77431b694591d4cbbd8127ed0ef5d3185` | profile/link evidence refreshed; defects and missing quantity/execution owners preserved |
+| 2 | `parallel/equipment-profile-readiness-audit` at `6a98bd0b1eca74cee93dca16e0e3a32d9fe595e3` | schema foundation preserved; live seed/link/consumer gap clarified |
+| 3 | `parallel/gameplay-shell-ui-state-audit` at `882cba46578b49468bcbe624765d9dec0481eace` | mutation gateway improvement recorded; Home, pins, empty pane, and legacy bridges remain open |
+| 4 | `parallel/quest-turn-in-reward-source-audit` at `470e8aca48510f68824f7a5aa8f603d0b13bbc1f` | engine-owned acceptance/tracking separated from UI-owned turn-in and missing reward receipts |
+| 5 | `parallel/recipe-production-maturity-audit` at `3db3c0f52456b4007dedc43817ecca5c06edd239` | static production counts preserved; executable owner gaps clarified |
+| 6 | `parallel/regional-bestiary-ecology-maturity-audit` at `2bafdb21a24535394c3cb32e946315c2c51eaa74` | static ecology coverage preserved; population/spawn/dynamic owner gaps clarified |
+| 7 | `parallel/regional-settlement-maturity-audit` at `e96c3841d4e54f9bf6e2c40de8df5011bbbb4986` | static settlement coverage preserved; density/demographic/runtime gaps clarified |
+| 8 | `parallel/research-artifact-retention-inventory` at `feaeedd8d9585e9a100699d640a893bc578e900c` | retention refreshed; Normal-defeat artifact moved to retirement review without deletion authority |
+| 9 | `parallel/rest-recovery-mutation-audit` at `0e32703c410b1172b6078346353a0adfb99debbc` | generic admission improvement recorded; rest remains UI legacy bridge without service/recovery receipts |
+| 10 | `parallel/text-first-combat-view-model-audit` at `b605175e6edce6889171e067a5c899e4c7a59788` | read-only view-model readiness preserved; gambit, party, and visibility gaps clarified |
 
-### 2. Successor label assignment was underspecified
+All ten branches remain:
 
-The prompt referred to the “next valid support suffix” without naming it. Repository policy preserves historical multi-digit support labels and prohibits reuse or renumbering. Because historical `0.6.9.10` exists even though its acceptance claim is superseded, the next support suffix is `0.6.9.11`.
+`CANDIDATE_INTEGRATION`
 
-The prompt now fixes exact successors:
+They are isolated, unmerged, and noncontrolling.
 
-- conforming implementation -> `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`;
-- repair/replacement required -> `Version 0.6.9.11 - Historical Recovery Fork Authority Repair`;
-- reserved post-repair audit -> `Version 0.6.9.12 - Historical Recovery Fork Authority Post-Repair Acceptance Audit`.
-
-### 3. Durable protocol contained a stale current-application pointer
-
-`docs/dev/repository-first-agent-work-protocol.md` still ends by naming `0.6.9.8` as active. The current prompt now explicitly classifies only that `Current Application` paragraph as stale current-state text, preserves the rest of the protocol as authority, and requires the decision run to update the paragraph after selecting its outcome.
-
-### 4. Guarantee language needed narrowing
-
-The prompt previously risked conflating:
-
-- deterministic semantic consistency inside the accepted save-authority model; and
-- independently authenticated or cryptographic tamper detection for every historical metadata field.
-
-The hardened prompt requires the decision to distinguish those guarantees explicitly and prohibits a generic integrity framework solely to preserve overbroad historical wording.
-
-### 5. Parallel-branch collision needed an explicit lock
-
-The prompt now prohibits integrating, rewriting, or advancing any `parallel/*` branch during the active decision. Parallel connector evidence is coordinated separately.
-
-## Hardened Active Prompt
-
-The current prompt now:
-
-- uses exact authority precedence;
-- names every required repository document by exact path;
-- quarantines the stale protocol current-application paragraph;
-- requires route-history inspection at `5fe11910`, `551d14bc`, `cbad987`, and `f68d878`;
-- requires field-by-field durable-evidence classification;
-- requires recovery-edge, intermediate-edge, current-edge, and structural-corruption characterization;
-- distinguishes semantic consistency from tamper authentication;
-- assigns exact `0.6.9.11` and `0.6.9.12` successor labels;
-- requires the protocol current-application paragraph and all affected coordination surfaces to be reconciled after the decision;
-- keeps parent `0.6.9`, Ashen Reef, survey implementation, and `0.7.0` blocked.
-
-## Ten Valid Parallel GPT Connector-Only Runs
+## Durable Discovery And Routing
 
 Created:
 
+`docs/dev/parallel-gpt-connector-only-run-results-2026-08-03.md`
+
+This is the central result index. It records every exact branch head, evidence path, principal finding, mandatory named consumer, discovery rule, precedence rule, integration condition, and retirement condition.
+
+Updated:
+
 `docs/dev/parallel-gpt-connector-only-run-candidates-2026-08-03.md`
 
-Disposition:
+It now marks the batch completed and points to the result index.
 
-`TEN_PARALLEL_CONNECTOR_RUNS_VALID_WITH_ISOLATION`
+Updated:
 
-The selected branches are:
+`docs/dev/current-gpt-handoff.md`
 
-1. `parallel/consumable-profile-coverage-audit`;
-2. `parallel/equipment-profile-readiness-audit`;
-3. `parallel/gameplay-shell-ui-state-audit`;
-4. `parallel/quest-turn-in-reward-source-audit`;
-5. `parallel/recipe-production-maturity-audit`;
-6. `parallel/regional-bestiary-ecology-maturity-audit`;
-7. `parallel/regional-settlement-maturity-audit`;
-8. `parallel/research-artifact-retention-inventory`;
-9. `parallel/rest-recovery-mutation-audit`;
-10. `parallel/text-first-combat-view-model-audit`.
+It now contains all exact branch heads and requires future routes to inspect applicable index entries.
 
-Each branch is a one-document, connector-only, read-only evidence lane. Each must refresh facts against live master, update only its unique existing document, make no controlling coordination or implementation change, remain unmerged, and report its exact later review trigger.
+## Applicability Rule
 
-The batch must not update the shared branch register from ten concurrent runs. One later coordinator should reconcile all ten exact branch heads and update the register once.
+A future run must inspect the applicable branch evidence when:
 
-## Deferred Parallel Candidates
+1. its prompt names a mandatory consumer from the result index;
+2. it changes a file, owner, contract, or behavior analyzed by the audit;
+3. it claims that domain is mature, engine-owned, replay-safe, presentation-ready, or deletion-ready;
+4. it proposes branch integration, supersession, or deletion;
+5. a representative-loop or maturity-band audit relies on that domain.
 
-- `parallel/connector-prep-freshness-audit`: overlaps the active prompt/handoff/output and route-authority surface; do not run concurrently.
-- `parallel/prompt-packaging-integrity-audit`: protected prompt-packaging reference and direct overlap with the active prompt; do not modify now.
-- `parallel/launcher-asset-pr-disposition`: valid as an optional eleventh audit, but lower priority because PR #2 already has a durable evidence-only disposition and advancement requires a user-facing asset decision plus local UI/asset validation.
+A run may omit unrelated audits. Its completion report must state which result-index entries were applicable and whether they were inspected.
 
-## Branch And PR State
+The branch evidence never overrides newer accepted authority.
 
-Live inspection found the same nineteen branches and two open PRs:
+## Branch Register Posture
 
-- PR #2 remains open, unmerged, non-draft, and mechanically non-mergeable at `e78dc645cfb658685be12f45f46d34b7c0da1119`;
-- PR #3 remains open, draft, unmerged, and mechanically non-mergeable at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`;
-- the ten selected parallel branches each contain one unique documentation file relative to their old merge base;
-- no branch or PR lifecycle mutation occurred.
+The large `docs/dev/branch-disposition-register.md` was not rewritten through the connector because safe complete-file replacement would require a fresh complete-content reconciliation beyond this bounded batch.
+
+Until a dedicated coordinator absorbs the exact heads into that register, the following are the controlling discovery pointers for this batch:
+
+1. `docs/dev/current-gpt-handoff.md`;
+2. `docs/dev/parallel-gpt-connector-only-run-results-2026-08-03.md`;
+3. `docs/dev/parallel-gpt-connector-only-run-candidates-2026-08-03.md`.
+
+The next branch-disposition or documentation-integration coordinator must read the result index and update the branch register once from complete live evidence.
 
 ## Validation And Limits
 
-This was a GitHub Connector inspection and documentation-coordination run.
+Performed through GitHub Connector:
 
-Performed:
-
-- live recent-commit inspection;
-- current prompt, output, handoff, AGENTS, version policy, repository protocol, connector policy, backlog, branch register, and open-PR inspection;
-- live branch enumeration;
-- per-branch changed-path comparison for candidate parallel branches;
-- selected candidate-document scope inspection;
-- complete-file verification through connector readback/write responses.
+- live master identity verification;
+- baseline-to-master changed-path comparisons;
+- current source inspection for changed UI/runtime domains;
+- complete-file replacement on each isolated branch;
+- exact branch commit capture;
+- central result-index publication;
+- current handoff and output reconciliation.
 
 Not performed:
 
 - local tests;
 - builds;
-- typechecking;
-- local Git worktree checks;
-- executable lineage probes;
-- branch rebases or integration validation.
-
-Those remain owned by the active Codex decision or later local integration work.
+- typechecks;
+- linters;
+- simulations;
+- generated-output checks;
+- worktree or authenticated local Git commands;
+- branch rebases, merges, or deletion;
+- executable lineage probes.
 
 ## Next Action
 
-Run the exact hardened prompt in `docs/dev/current-codex-prompt.md` from a freshly fetched synchronized checkout containing at least:
+Run the exact active prompt from a freshly synchronized checkout containing the latest handoff and this output.
 
-`11a18dbeb373d024907f1e0f18ab1716b701930c`
-
-The ten connector-only branches may be refreshed concurrently under the isolation contract in `docs/dev/parallel-gpt-connector-only-run-candidates-2026-08-03.md`. They must not modify the active-route files or be merged automatically.
+The active `0.6.9` decision should inventory the ten branches and preserve their dispositions, but it should not integrate or rewrite their documents. Their substantive use begins only at the named consumers in the result index.
