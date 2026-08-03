@@ -88,3 +88,17 @@ At a named consumer or dedicated documentation integration pass:
 The active historical recovery-fork authority decision does not require any of these ten domain audits as substantive input. It should inventory the branches and preserve their dispositions, but it must not integrate or rewrite them inside the active `0.6.9` decision.
 
 Their value begins at the named future consumers above or a dedicated branch/document coordination pass.
+
+## Second-Wave Candidate Pointer
+
+A second inspection identified ten additional reasonable connector-only lanes without creating or advancing their branches:
+
+`docs/dev/parallel-gpt-connector-only-second-wave-candidates-2026-08-03.md`
+
+Candidate inventory commit:
+
+`54318c669d5f664395a386934c494167b313e641`
+
+The second wave covers economy transactions, progression rewards, Chronicle/notification provenance, UI accessibility/input, NPC-party readiness, item-use effect ownership, travel/service availability, Knowledge/discovery visibility, JS/TS mirror/export integrity, and content-lint/schema/validator coverage.
+
+The candidates remain noncontrolling and must use the same isolation, named-consumer, and later-coordination rules before any branch is created or run.
