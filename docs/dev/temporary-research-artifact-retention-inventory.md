@@ -1,204 +1,111 @@
 # Temporary Research Artifact Retention Inventory
 
-Date: 2026-07-29
+Date: 2026-08-03
 
 Source route: ChatGPT via GitHub Connector
 
-Source commit: `bcbe658d1be033cdc83d04acdca67ec8186c484d`
+Original branch baseline: `bcbe658d1be033cdc83d04acdca67ec8186c484d`
 
-Status: connector-only retention inventory; no artifact deletion, promotion, route advancement, implementation, or roadmap change
+Inspected live master: `91bd8c2c89c85fb9ea7257b2c96b68ab41231b04`
 
-## 1. Purpose
+Branch: `parallel/research-artifact-retention-inventory`
 
-Inventory confirmed surviving temporary research and audit artifacts under `docs/dev/`, record their durable consumers and remaining value, and prevent both accidental deletion and indefinite retention without a clear reason.
+Status: `REFRESHED_CONNECTOR_RETENTION_EVIDENCE_CANDIDATE_INTEGRATION`
 
-This document is a classification aid. It does not make temporary evidence canonical and does not override focused design decisions.
+Execution posture: connector-only retention refresh; no artifact deletion, promotion, route advancement, implementation, branch cleanup, roadmap, or active-prompt change
 
-## 2. Governing Retention Rule
+## Purpose
 
-The durable GPT Deep Research tracking policy requires:
+Refresh the surviving temporary-research artifact inventory, named consumers, and retirement triggers after the Normal campaign persistence and defeat-recovery sequence advanced.
 
-1. temporary research remains non-canonical;
-2. the first integration pass names the artifact and corrects stale repository claims;
-3. useful conclusions are promoted into permanent decisions;
-4. the artifact is either retired after complete durable promotion or retained with a named remaining consumer;
-5. research completion alone never authorizes implementation.
+Temporary artifacts remain noncanonical evidence. Their existence does not authorize implementation.
 
-Deletion requires more than the existence of a design decision. It requires proof that:
+## Freshness Review
 
-- every still-needed conclusion is durable elsewhere;
-- no active or named future consumer requires source-level detail;
-- source identity and integrity evidence remain sufficient;
-- no current prompt or contract requires the exact artifact path;
-- deletion will not remove the only detailed citation or repository-evidence ledger needed by deferred work.
+The baseline-to-master comparison spans 84 commits and contains no deletion of the eleven artifact paths recorded by the prior inventory.
 
-## 3. Classification Vocabulary
+Therefore those paths remain presumed present on inspected master through Git ancestry. This connector refresh did not download and recompute every artifact hash. Previously recorded SHA-256 or blob identities remain historical integrity evidence and must be reverified before deletion, transport, or a consumer that depends on exact bytes.
+
+The active route is now the historical recovery-fork authority decision. None of the retained temporary artifacts is an execution input for that route.
+
+## Classification Vocabulary
 
 | Classification | Meaning |
 | --- | --- |
-| `RETAIN_NAMED_CONSUMER` | Durable authority explicitly names later implementation or adapter consumers. |
-| `RETAIN_DETAILED_EVIDENCE` | Permanent decisions exist, but the artifact still contains the only detailed source/evidence ledger needed by a deferred contract. |
-| `READY_FOR_RETIREMENT_REVIEW` | All useful conclusions appear durable and no remaining consumer was found; deletion still requires a focused confirmation pass. |
-| `HISTORICAL_ONLY` | No current authority role; retain only if project history policy requires it. |
-| `UNCLEAR` | Existence is confirmed, but consumer or deletion posture needs a fresh focused audit. |
+| `RETAIN_NAMED_CONSUMER` | A durable future consumer still explicitly needs the artifact. |
+| `RETAIN_DETAILED_EVIDENCE` | Durable conclusions exist, but source-level detail remains uniquely useful to deferred work. |
+| `READY_FOR_RETIREMENT_REVIEW` | The former named consumer appears complete; deletion still requires a dedicated proof pass. |
+| `HISTORICAL_ONLY` | No current authority or named consumer; history policy decides retention. |
+| `UNCLEAR` | Consumer or durable-promotion posture requires further inspection. |
 
-## 4. Confirmed Surviving Artifact Matrix
+## Mortality, Narrative, And Elemental Evidence
 
-### Mortality, narrative, and elemental evidence set
+| Artifact | Refreshed disposition | Named use or next review |
+| --- | --- | --- |
+| `docs/dev/tmp-comparative-checkpoint-mortality-rescue-and-stakes-research-2026-07-23.md` | `RETAIN_NAMED_CONSUMER` | checkpoint/commitment, Mortal Crisis, resurrection, settlement, and succession implementation remain deferred |
+| `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md` | `READY_FOR_RETIREMENT_REVIEW` | Normal nonterminal defeat and HP-zero repair consumers have now run through `0.6.9`; verify whether any injury/restoration consumer still needs source-level detail before deletion |
+| `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md` | `RETAIN_NAMED_CONSUMER` | later narrative-engine and crisis-presentation adapter |
+| `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md` | `RETAIN_NAMED_CONSUMER` | later narrative-engine implementation |
+| `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md` | `RETAIN_NAMED_CONSUMER` | elemental ecology/spawn, magic-stimulus/AI, and crisis-capability consumers |
+| `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md` | `RETAIN_NAMED_CONSUMER` | later elemental implementation and crisis-capability implementation |
 
-These six artifacts were explicitly preserved together by the accepted functional-state/lethal-process/care/Mortal-Crisis contract. That decision records exact SHA-256 identities and outstanding implementation consumers.
+The Normal-defeat artifact is not deletion-authorized. Its status changed only because the previously named Normal fallback/HP-zero consumer has executed. A focused retirement review must prove that injury, trauma, restoration, or broader mortality decisions do not still require its detailed evidence.
 
-| Artifact | Durable integrity identity | Current durable consumers | Outstanding named consumers | Disposition |
-| --- | --- | --- | --- | --- |
-| `docs/dev/tmp-comparative-checkpoint-mortality-rescue-and-stakes-research-2026-07-23.md` | SHA-256 `A0496AFB7C76AD3FF08F4FFD36F2A2F1C9B086577E8505AC88274EF244E81FEC`; current Git blob `26ce50958f348f316ab98bcafe31282393709fd6` | checkpoint/Stakes, defeat fallback, Mortal Crisis, health contracts | checkpoint/commitment, Mortal Crisis, resurrection, settlement, succession implementations | `RETAIN_NAMED_CONSUMER` |
-| `docs/dev/tmp-normal-stakes-defeat-injury-trauma-and-restoration-audit-2026-07-22.md` | SHA-256 `53FDEAB2D202F1A581748A2DC313EA83F5EF96034F5FDD34C6B6498EE4627C91`; current Git blob `ad5b66157f61e25223e2abd7b2a7f4ef560366e3` | Normal Stakes fallback, injury/restoration, functional/lethal/care decisions | first relevant Normal fallback/runtime replacement or HP-zero archival repair | `RETAIN_NAMED_CONSUMER` |
-| `docs/dev/tmp-narrative-realization-and-mortal-crisis-presentation-audit-2026-07-23.md` | SHA-256 `463397774F83E61E02984BAF8B3E9CB7169E292EFB1906E224BE12693BE5030D`; current Git blob `6cb28305a3b2c67601568103c6309f33956ecd31` | narrative realization and observer-safe crisis decisions | later narrative-engine implementation and crisis-presentation adapter | `RETAIN_NAMED_CONSUMER` |
-| `docs/dev/tmp-grounded-narrative-realization-research-2026-07-23.md` | SHA-256 `8ED92324ABF81D35CA7B269A6B53DFC9C19C7BB77900B50436592474AFEDF19E`; current Git blob `878219b57342430a47021c45e343ad27e1db95ac` | narrative realization, grammar, observer projection, deterministic fallback | later narrative-engine implementation | `RETAIN_NAMED_CONSUMER` |
-| `docs/dev/tmp-elemental-alignment-temperament-and-magic-stimulus-audit-2026-07-23.md` | SHA-256 `A9752D9E546BD685C32C2BC1CF574F37E402FB0ECFD29738EBEAB90FB5ABA448`; current Git blob `974e84f89805ba3e6789331183b474fce7f30d36` | elemental alignment/temperament/magic-stimulus decision; crisis capability boundary | elemental ecology/spawn, magic-stimulus/AI, crisis-capability implementations; held static route only when explicitly selected | `RETAIN_NAMED_CONSUMER` |
-| `docs/dev/tmp-grounded-elemental-affinity-ecology-and-magic-stimulus-research-2026-07-24.md` | SHA-256 `8F3855AAF50BF81493663BC77244C6496F1D226E423DE175EBE8324128A27F94`; current Git blob `909b2bc1d36539880780f2a48b473ccc725333dd` | elemental ecology/response decision; functional/lethal/care capability boundaries | later elemental implementation and crisis-capability implementation | `RETAIN_NAMED_CONSUMER` |
+## Culinary And Provision Evidence
 
-### Culinary and provision evidence set
+| Artifact | Refreshed disposition | Remaining value |
+| --- | --- | --- |
+| `docs/dev/tmp-rich-culinary-dietary-system-research-2026-07-19.md` | `RETAIN_DETAILED_EVIDENCE` | profile mismatches, taxonomy, prepared-food topology, and future integrity decisions |
+| `docs/dev/tmp-rich-culinary-dietary-source-index-2026-07-19.md` | `RETAIN_DETAILED_EVIDENCE` | external source provenance and limitations |
+| `docs/dev/tmp-culinary-preparation-portion-meal-integration-2026-07-20.md` | `RETAIN_DETAILED_EVIDENCE` | quantity, state, owner, meal, and deferred package synthesis |
+| `docs/dev/tmp-culinary-historical-energy-ration-source-index-2026-07-20.md` | `RETAIN_DETAILED_EVIDENCE` | historical/physiology source provenance and abstraction limits |
+| `docs/dev/tmp-culinary-quantity-container-knowledge-audit-2026-07-20.json` | `RETAIN_DETAILED_EVIDENCE` | machine-readable owner/evidence matrix for quantity, container, knowledge, and food-state work |
 
-These five artifacts support the accepted culinary quantity, food-state, portion, container, manifest, knowledge, and nutrition design chain.
+No post-baseline consumable-profile, portion, food-instance, or meal-composition implementation consumed these artifacts. Their retention posture remains unchanged.
 
-| Artifact | Current Git blob | Durable consumer or use | Remaining value | Disposition |
-| --- | --- | --- | --- | --- |
-| `docs/dev/tmp-rich-culinary-dietary-system-research-2026-07-19.md` | `354dd2a6be4a542816ea42fea243bb6db91a67a0` | repaired culinary research findings; accepted culinary and ration decisions | detailed baseline, orphan-profile findings, taxonomy collisions, prepared-food topology, and exact blockers for Food-Named Taxonomy/Consumable-Profile Integrity | `RETAIN_DETAILED_EVIDENCE` |
-| `docs/dev/tmp-rich-culinary-dietary-source-index-2026-07-19.md` | `33b577f8d5ec415f205a03e5b3f27440d7bde4b8` | source ledger for the repaired culinary research | detailed external source provenance and limitations not duplicated in the permanent decision | `RETAIN_DETAILED_EVIDENCE` |
-| `docs/dev/tmp-culinary-preparation-portion-meal-integration-2026-07-20.md` | `5acddd175c39425c67e18676891b2963b0da375f` | integration input to `culinary-preparation-portion-meal-composition-and-food-knowledge-decision.md` and focused ration/container decisions | exact live inventory, quantity-state-owner synthesis, and deferred contract prerequisites | `RETAIN_DETAILED_EVIDENCE` |
-| `docs/dev/tmp-culinary-historical-energy-ration-source-index-2026-07-20.md` | `1ad41bc2715238661475886c5badf3a91aeb0229` | historical/physiology source ledger referenced by the culinary integration artifact | direct source provenance, scope, and limitations for later quantity/energy/ration abstraction | `RETAIN_DETAILED_EVIDENCE` |
-| `docs/dev/tmp-culinary-quantity-container-knowledge-audit-2026-07-20.json` | `07d859e16f09bab5e33a25b4d87aebea3ff48935` | machine-readable owner/evidence input to the culinary integration and controlling decision | exact repository evidence, accepted dimensions, owner matrix, and package blockers for the deferred quantity/food-state/instance decision | `RETAIN_DETAILED_EVIDENCE` |
+## Active-Route Isolation
 
-## 5. Confirmed Retired Artifact Families
+The current `0.6.9` acceptance-reopening decision must use permanent save, lineage, prompt, handoff, and audit authorities. It should not read or cite these temporary artifacts unless it discovers an exact, relevant dependency not already durable elsewhere.
 
-The following families are recorded as deleted after durable promotion and should not be recreated merely because older documents mention them:
+This inventory must not become a shadow authority over focused design decisions.
 
-- initial settlement-space research;
-- crafting/production systems research;
-- combat/encounter systems research;
-- item/equipment/inventory systems research;
-- quest/event/Chronicle systems research;
-- NPC/social systems research;
-- magic-study systems research;
-- civic authority systems research;
-- family/lineage systems research;
-- economy systems research;
-- world-map spatial systems research;
-- travel/exploration systems research;
-- UI information-architecture research;
-- living-character manuscript research;
-- the four-consumer lethal-process/stabilization research artifact;
-- the six Gate 1–5/Gate 7 production research artifacts retired by `0.6.7`;
-- consumed Gate 6 and production-authority audit artifacts retired by `0.6.5`.
+## Retirement Gate
 
-Historical references to these paths are provenance, not evidence that a live file should exist.
+No artifact may be deleted until a dedicated retirement pass proves:
 
-## 6. Active-Prompt Reference Posture
+1. every still-useful conclusion is durable elsewhere;
+2. no current or named future consumer needs source-level detail;
+3. exact path and integrity identity are reverified;
+4. no prompt, decision, audit, or branch references the path as a required input;
+5. detailed citations or machine-readable evidence will not be lost;
+6. equivalent preservation is reachable on master;
+7. deletion is recorded in the handoff and branch register when required.
 
-The current active development route does not need any of the eleven confirmed surviving artifact paths as an execution input.
+## Named Consumers And Reference Rule
 
-That does not make the artifacts deletion-ready. Their remaining consumers are deferred implementation or contract lanes rather than the current Ashen Reef/save-identity lane.
+The following future runs must consult this inventory before deciding artifact use or deletion:
 
-The correct posture is:
+- checkpoint, mortality, Mortal Crisis, resurrection, settlement, or succession implementation;
+- narrative realization or crisis-presentation implementation;
+- elemental ecology, spawn, AI, magic-stimulus, or crisis-capability work;
+- culinary quantity, portion, container, food-state, meal-composition, consumable-profile integrity, or body-intake work;
+- any dedicated repository hygiene or temporary-artifact retirement pass.
 
-- keep current routing independent of temporary evidence;
-- use permanent decisions for present authority;
-- read a retained artifact only when its named future consumer opens;
-- revalidate repository claims at that time;
-- delete only after the final consumer proves complete durable retention.
+A consuming run must cite this branch head or an integrated successor and reverify the exact artifact paths and hashes it depends on.
 
-## 7. Retention Risks
+## Branch Disposition
 
-### Accidental deletion
+`CANDIDATE_INTEGRATION`
 
-Deleting the six named-consumer artifacts now would remove the accepted source-level evidence intentionally reserved for later mortality, narrative, elemental, AI, restoration, and crisis-capability implementation.
+Integration condition:
 
-Deleting the culinary set now would remove detailed source provenance and the machine-readable owner matrix before the deferred quantity/instance/food-state contract has consumed it.
+- compare this refreshed inventory against live artifact paths and durable consumers;
+- integrate or re-author it during the next artifact consumer or dedicated parallel-document coordinator pass.
 
-### Indefinite retention
+Retirement condition:
 
-Temporary artifacts should not become permanent shadow authority. Every future consumer should record:
+- the inventory is durably integrated or superseded;
+- no named consumer depends on this branch-only classification;
+- exact branch head and preservation are verified.
 
-- which conclusions it consumed;
-- which source-level details remain uniquely useful;
-- whether any later consumer remains;
-- whether the artifact may be retired;
-- the exact integrity identity at consumption time.
-
-### Stale repository claims
-
-Every retained artifact describes a historical source commit. Future consumers must reproduce live counts, paths, APIs, owners, and tests instead of treating old repository observations as current facts.
-
-## 8. Recommended Retirement Sequence
-
-### Mortality/narrative/elemental set
-
-Retirement should be owner-family specific rather than one bulk deletion:
-
-1. consume the Normal-Stakes audit in the first HP-zero/fallback runtime replacement;
-2. consume comparative mortality evidence across checkpoint, crisis, restoration, settlement, and succession implementation decisions;
-3. consume narrative audit/research in narrative-engine and crisis-presentation adapter work;
-4. consume elemental audit/research in elemental ecology, response AI, and crisis-capability work;
-5. after each family’s last named consumer, run one focused retention audit and delete only that family’s artifacts.
-
-### Culinary set
-
-Retain through at least:
-
-1. `Culinary Quantity, Food-State, And Instance Contract Acceptance Decision`;
-2. exact taxonomy/consumable-profile integrity decision if it still depends on orphan-profile and topology evidence;
-3. any first quantity/container schema plan that needs the machine-readable owner matrix or source ledgers.
-
-After those consumers, promote any still-needed citations or exact matrices into durable authority and run a focused culinary artifact retirement audit.
-
-## 9. Integrity Policy
-
-For the six mortality/narrative/elemental artifacts, use the durable SHA-256 values recorded in the accepted functional-state/lethal-process/care decision as the integrity authority.
-
-For the culinary artifacts, this inventory records current Git blob identities. A later consuming run should compute and record SHA-256 before deletion or transport if exact byte-level integrity becomes required.
-
-Git blob SHA and SHA-256 serve different purposes and must not be presented as interchangeable.
-
-## 10. Unconfirmed Scope Limitation
-
-This inventory directly confirmed the eleven paths above and reconciled them against durable decisions and backlog retirement records.
-
-The GitHub Connector did not expose a repository-directory listing action during this pass. Therefore this document does not claim that no other `docs/dev/tmp-*` path exists.
-
-A future local maintenance run may perform an exact filesystem enumeration such as:
-
-```text
-find docs/dev -maxdepth 1 -type f -name 'tmp-*' -print
-```
-
-or its platform equivalent, then compare the result to this inventory. Any additional live path should be added as `UNCLEAR` until its source and consumer posture are proven.
-
-This limitation does not weaken the retention decisions for the eleven directly confirmed artifacts.
-
-## 11. User Input Posture
-
-No user direction is required to retain these artifacts safely.
-
-User input becomes useful when choosing whether to:
-
-- prioritize mortality/narrative/elemental implementation versus culinary quantity/instance work;
-- preserve unusually detailed research ledgers for long-term design history even after all implementation consumers complete;
-- adopt an archive directory instead of deletion for fully consumed research.
-
-Those are project-retention preferences rather than current authority questions.
-
-## 12. Final Disposition
-
-Confirmed live artifacts:
-
-`11`
-
-- `6` classified `RETAIN_NAMED_CONSUMER`;
-- `5` classified `RETAIN_DETAILED_EVIDENCE`;
-- `0` classified ready for immediate deletion.
-
-Result:
-
-`NO_ARTIFACT_DELETION_AUTHORIZED`
-
-The next useful maintenance action is a local exact-path enumeration when convenient, not a deletion pass.
+No files were deleted, downloaded, decoded, or hash-recomputed. No local tests, scripts, builds, typechecks, or repository-hygiene commands were run.
