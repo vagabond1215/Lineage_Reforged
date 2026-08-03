@@ -1,219 +1,104 @@
 # Regional And Continental Settlement Maturity Evidence Audit
 
-Date: 2026-07-29
+Date: 2026-08-03
 
 Source route: ChatGPT via GitHub Connector
 
-Source commit: `3006c968eb40b1d72f64fb2dc0263e227f869a7d`
+Original branch baseline: `3006c968eb40b1d72f64fb2dc0263e227f869a7d`
 
-Status: connector-only, read-only evidence audit; no roadmap advancement, content authorization, implementation, generated output, or runtime change
+Inspected live master: `91bd8c2c89c85fb9ea7257b2c96b68ab41231b04`
 
-## 1. Purpose
+Branch: `parallel/regional-settlement-maturity-audit`
 
-Determine whether the accepted `Version 0.6.4 - World And Settlement Static Content Expansion` represents reasonable continent- and region-scale settlement maturity for the world currently described by the repository.
+Status: `REFRESHED_CONNECTOR_EVIDENCE_CANDIDATE_INTEGRATION`
 
-This audit distinguishes:
+Execution posture: connector-only, read-only evidence refresh; no settlement, region, locality, district, site, route, map, population, economy, generated-output, runtime, roadmap, or active-route change
 
-- completion of the exact `0.6.4` batch;
-- sufficiency of the current authored settlement anchors;
-- implied minor settlements that need not be individually authored;
-- missing region-level density and population-center planning authority;
-- the smallest later evidence and planning steps needed before another settlement content package.
+## Purpose
 
-This document does not authorize new settlements, target-count edits, routes, map markers, economy behavior, population simulation, or runtime work.
+Refresh settlement and regional authoring-maturity evidence without authorizing new content, target counts, routes, demographic simulation, or runtime behavior.
 
-## 2. Current Reproducible Inventory
+## Freshness Review
 
-The accepted static-content program records the following current authorities:
+The baseline-to-master comparison spans 86 commits. No changed path in that range belongs to settlement, region, locality, district, site, semantic map-feature, route, or world-map content.
 
-| Authority | Current inventory | Coverage posture |
-| --- | ---: | --- |
-| Settlements | 88 | 14 types across 9 macro regions |
-| Regions | 41 | established hierarchy |
-| Region localities | 47 | established locality anchors |
-| Settlement districts | 14 | active |
-| Settlement sites | 20 | active |
-| Semantic map features | 8 | planned named identities |
-| Visual world-map aggregate | 1 | geometry/reference owner |
+The intervening work changes campaign persistence and route coordination, not authored geographic coverage.
 
-Derived coverage ratios are approximately:
+Result:
 
-- 2.15 settlements per region record;
-- 9.78 settlements per macro region;
-- 0.34 districts per region;
-- 0.49 sites per region;
-- one district per 6.29 settlements;
-- one site per 4.40 settlements.
+`SETTLEMENT_COVERAGE_EVIDENCE_UNCHANGED`
 
-These ratios are useful as authoring-density indicators only. They are not demographic simulation and do not imply that every minor settlement should become a canonical record.
+## Retained Inventory Posture
 
-## 3. What `0.6.4` Actually Completed
+The accepted planning baseline remains:
 
-The accepted package enriched nine existing settlements across three clusters:
+- 88 settlements across 14 settlement types and nine macro regions;
+- 41 region records;
+- 47 regional locality anchors;
+- 14 settlement districts;
+- 20 settlement sites;
+- eight planned semantic map features;
+- one visual world-map aggregate.
 
-| Cluster | Existing parent settlements | Added depth |
-| --- | --- | --- |
-| Verdant Thalos | Aurelis, Vinecross, Redcliff Quay | 4 districts, 6 sites, 2 features, 4 snippets |
-| Heart Basin | Riverthrone, Granary Crown, Millrun | 4 districts, 6 sites, 2 features, 4 snippets |
-| Stormcap Coast | Breaksail, Stormwatch Citadel, Cliffsalt Priory | 4 districts, 6 sites, 2 features, 4 snippets |
+These counts describe canonical static records. They do not establish population, settlement simulation, demographic density, services, routes, travel availability, or economic activity.
 
-The package added no settlement, region, locality, visual geometry, service, resource, or commodity identity.
+## Maturity Finding
 
-Therefore `0.6.4` proved that selected settlement anchors can receive coherent district, site, geographic-feature, and Knowledge depth. It did not expand the worldwide settlement network or establish a complete regional density model.
+`Version 0.6.4` remains a successful bounded static-content expansion. It does not prove continent-scale settlement maturity.
 
-## 4. World-Scale Evidence
+Current gaps include:
 
-Direct inspection of the top-level continent records shows a world described at very large demographic scale. Examples include:
+- region-level authoring-density targets;
+- classification of which minor settlements should remain implied rather than canonical;
+- district/site depth beyond selected anchors;
+- route and accessibility authority;
+- population-center hierarchy and demographic abstraction;
+- service, market, workplace, law, faction, and civic runtime ownership;
+- dynamic settlement condition and persistence;
+- player knowledge and recognition boundaries for undiscovered places.
 
-- Kaelvar: population capacity and estimated population of approximately 40 million;
-- Valtherion: approximately 140 million;
-- Serathyl: approximately 55 million in the accepted world model.
+Record-count ratios are useful evidence indicators only and must not be treated as simulated demographics.
 
-The inspected continent records describe differentiated settlement patterns such as dense river corridors, coastal estates and ports, caravan forts, maritime trade centers, and sparse frontier or island settlement.
+## Current Classification
 
-However, the inspected top-level continent records retain zero values for all five `settlementDistributionModel.targetCounts` buckets:
+| Boundary | Classification |
+| --- | --- |
+| Settlement identity foundation | `BROAD_STATIC_FOUNDATION` |
+| Regional anchor coverage | `PARTIAL_AND_UNEVEN_BY_DESIGN` |
+| District/site depth | `LIMITED_SELECTED_ANCHORS` |
+| Density planning authority | `ABSENT` |
+| Population/demographic authority | `ABSENT` |
+| Route/service/economy runtime | `ABSENT_OR_SEPARATE_FOUNDATION` |
+| Further content expansion | `REQUIRES_REGION_LEVEL_EVIDENCE_PLAN` |
 
-- city;
-- town;
-- village;
-- outpost;
-- strategic site.
+## Smallest Safe Future Work
 
-This means the world has narrative and demographic scale, but not yet an accepted quantitative or minimum-coverage target for authored population centers.
+Before another settlement package, a dedicated evidence plan should decide:
 
-## 5. Maturity Finding
+1. macro-region coverage goals without imposing arbitrary uniform counts;
+2. which settlement classes and regional roles are underrepresented;
+3. which minor places remain implied rather than individually authored;
+4. where districts, sites, services, workplaces, routes, or map features need deeper anchors;
+5. knowledge/recognition and undiscovered-location presentation boundaries;
+6. whether the next work is static content, geographic knowledge, route authority, or settlement-runtime planning.
 
-Decision:
+## Named Consumer And Review Trigger
 
-`BATCH_COMPLETE_WORLDWIDE_MATURITY_NOT_REACHED`
+This audit must be read by:
 
-`0.6.4` is accepted and complete for its exact package. It is not a reasonable claim of fully developed worldwide settlement coverage.
+- a settlement-density or regional-content evidence plan;
+- a bounded settlement/district/site expansion package;
+- a route, travel, map, geographic-knowledge, service, or civic-owner decision;
+- a representative-loop or `0.7.0` audit claiming regional world maturity.
 
-The current 88 settlements can function as important named anchors. They cannot plausibly represent the complete meaningful population-center network implied by the continent populations, travel scale, political geography, economic descriptions, and settlement-pattern prose.
+The consuming run must cite this branch head or an integrated successor, reproduce live counts from its own head, and state which gaps are content gaps versus runtime-owner gaps.
 
-The appropriate abstraction is not to author every hamlet. The appropriate target is a deliberate hierarchy in which:
+## Branch Disposition
 
-- major political, administrative, religious, military, trade, port, production, and frontier centers are explicit;
-- selected secondary towns and regional hubs support travel and economic structure;
-- representative villages, extraction sites, forts, waystations, and institutional sites establish regional character;
-- thousands of minor farms, hamlets, seasonal camps, and unnamed villages may remain implied;
-- each region has an explicit reason for being dense, moderate, sparse, frontier, wilderness-dominant, maritime, or institution-centered.
+`CANDIDATE_INTEGRATION`
 
-## 6. Principal Coverage Gaps
+Integration condition: compare against then-current world and settlement authority and integrate or re-author during a named consumer or dedicated parallel-document coordinator pass.
 
-### 6.1 Region-level targets are not operational planning authority
+Retirement condition: all findings are integrated or superseded, named consumers can reach equivalent evidence on master, and the exact branch head is verified.
 
-The world schema exposes target-count fields, but the inspected top-level continent records use zero targets. A later decision must determine whether targets are:
-
-- minimum authored anchors;
-- desired totals;
-- aspirational density guidance;
-- or a mixed policy by region type.
-
-Zero must not be interpreted as an intentional target of no settlements.
-
-### 6.2 Internal settlement depth is highly uneven
-
-Nine settlements received most of the accepted district/site expansion. The repository now has 14 districts and 20 sites for 88 settlements.
-
-This is sufficient for seed-depth validation, but not for consistent world presentation. Later enrichment should be selective: capitals, great ports, fortress cities, pilgrimage centers, trade hubs, and other high-value anchors warrant deeper district/site structure; ordinary villages do not need artificial district inflation.
-
-### 6.3 Population and authored-anchor scale are not reconciled
-
-The world contains continent-scale populations measured in tens or hundreds of millions. A future maturity program must state what fraction of population centers are canonical named records and what remains implied.
-
-Without that policy, record counts cannot be interpreted consistently as either:
-
-- exhaustive settlement lists;
-- representative anchors;
-- or a partial work-in-progress catalog.
-
-### 6.4 Regional functional diversity is not yet proven
-
-The current inventory count does not independently prove that every region has suitable representation of:
-
-- political or administrative centers;
-- market and production towns;
-- agricultural support centers;
-- ports and river hubs where geography supports them;
-- forts, outposts, and frontier support;
-- mines, fisheries, timber, pastoral, or other resource settlements;
-- religious, scholarly, magical, or institutional centers;
-- culturally distinct settlement forms.
-
-A region-by-region evidence matrix is still needed.
-
-### 6.5 Distance and route context remain separate authorities
-
-Settlement maturity must eventually be checked against travel distance, route convergence, barriers, freshwater, coastal access, locality suitability, and hex anchors.
-
-This audit does not recalculate routes or place settlements. It records that a settlement-count expansion without spatial and route evidence would create disconnected canon.
-
-## 7. Reasonable Regional And Continental Completion Standard
-
-A later program should consider settlement coverage reasonably mature when all of the following are true:
-
-1. Every region has an explicit settlement-density posture.
-2. Every top-level continent or macro region has nonzero or explicitly exempted population-center planning targets.
-3. Existing and planned centers cover the region's major political, economic, religious, military, travel, and resource functions.
-4. Major centers have appropriate district/site depth; minor settlements are not padded with unnecessary structure.
-5. Population scale and the implied-minor-settlement policy are documented.
-6. Named centers agree with locality suitability, hex anchors, freshwater, terrain, hazards, routes, and trade context.
-7. Regions are intentionally asymmetric rather than normalized to equal counts.
-8. Remaining sparsity is an accepted world-design choice rather than an unmeasured content gap.
-9. A final cross-region audit verifies cultural and functional diversity and reference closure.
-
-## 8. Recommended Later Sequence
-
-### Pass A: settlement target and current-count source audit
-
-Read actual region, locality, settlement, hex, and route records and produce deterministic current counts by region and settlement class.
-
-No content edits.
-
-### Pass B: regional target policy decision
-
-Decide target semantics, dependent-site counting, implied-minor-settlement policy, and region-type exemptions.
-
-No target values or content edits until the policy is accepted.
-
-### Pass C: regional and continental gap report
-
-Produce a committed Markdown matrix of:
-
-- current counts;
-- accepted targets;
-- class gaps;
-- population context;
-- locality and route context;
-- ambiguous or unclassified records.
-
-The report must not generate settlements.
-
-### Pass D: pilot-region selection
-
-Select one low-ambiguity region with strong locality, hex, route, and economy evidence. Prefer a small varied batch of two to six additions.
-
-### Pass E: pilot settlement draft and content package
-
-Author one bounded, validator-backed content package only after exact identities, placement, roles, population bands, dependencies, and checks are documented.
-
-### Pass F: repeated region packages and final maturity audit
-
-Expand by region or coherent cluster, then run a final continental diversity and sufficiency audit.
-
-## 9. Relationship To The Active Route
-
-The current active route is the unversioned `Ashen Reef Survey Activity Advancement Scope And Owner Contract Decision`.
-
-This settlement audit is parallel evidence only. It does not compete with the active runtime-ownership route, assign a version, update current coordination files, or install a prompt.
-
-## 10. Non-Implementation Confirmation
-
-This pass:
-
-- creates one documentation file only;
-- changes no current prompt, handoff, output, roadmap, sequence, backlog, or planning-anchor file;
-- changes no content, schema, validator, test, engine, app, shared contract, save, migration, dependency, generated output, asset, UI, or gameplay path;
-- runs no settlement generation or route calculation;
-- authorizes no new population center.
+No local content lint, schema validation, generated-output checks, map rendering, tests, builds, or runtime execution were performed.
