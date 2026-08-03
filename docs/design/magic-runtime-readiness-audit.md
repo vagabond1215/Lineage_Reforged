@@ -1,140 +1,172 @@
 # Magic Runtime Readiness Audit
 
-Source route: ChatGPT via GitHub Connector
-Date: 2026-05-19
-Status: promoted readiness audit; no runtime/source/UI/content changes
+Date: 2026-08-03
 
-0.5.83 sequencing note: this audit has been promoted into `docs/design/known-spell-ownership-plan.md`, which is the active source for `Version 0.5.83 - Known Spell Ownership Plan`. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
+Execution surface: ChatGPT through GitHub Connector only
 
-## Purpose
+Source head inspected: `8214327906fbc2edf7ab4d02168cf94b3abc7e6f`
 
-This audit checks what is already safe for magic presentation and what remains blocked before any runtime magic expansion.
+Status: `CANDIDATE_INTEGRATION`; documentation-only evidence; no runtime permission
 
-It exists to prevent the project from jumping from metadata/read-only UI into broad spell execution, catalyst behavior, acquisition, or Magic Legacy power without owner boundaries.
+## Executive Result
 
-This document does not:
+The repository has progressed beyond metadata-only magic planning. It now has character-scoped known-spell records, acquisition evidence validation, read-only projections, hook-support classification, cast-readiness evaluation, resolver-readiness evaluation, and inert resolver envelopes.
 
-- add spells
-- edit spell metadata
-- add known-spell ownership
-- add cast commands
-- add catalyst effects
-- add scroll/tome behavior
-- add magic skill gain
-- add Magic Legacy power
-- expand combat magic runtime
-- edit UI
-- update generated UI output
-- update `docs/dev/current-codex-output.md`
+It still does not have a general executable magic resolver that applies costs and effects across combat and noncombat contexts.
 
-## Sources Inspected
+Classification:
 
-- `docs/design/magic-system-charter.md`
-- `docs/design/future-system-design-ledger.md`
-- `apps/rpg-ui/src/runtime/spellCompatibilityPresentation.ts`
-- search results for Arcane Compendium / spell compatibility surfaces
+`KNOWN_SPELL_AND_CAST_READINESS_FOUNDATION_EXISTS; GENERAL_MAGIC_RESOLUTION_DEFERRED`
 
-## Current Safe Foundation
+## Current Accepted Foundation
 
-The project already has a strong metadata/read-only base:
+Current game-engine exports include:
 
-- magic charter defines classless magic and the primary model: known spell + equipped conduit/casting tags + optional catalyst + control capacity
-- compatibility tags are explicitly metadata and must not directly execute effects
-- catalyst tiers are design-only modifiers, not runtime effects
-- spell acquisition is future-only
-- magic skill gain must later route through `resolveSkillRankGainPolicy(...)`
-- Magic Legacy direct power is forbidden early
-- Arcane Compendium presentation is read-only and explicitly says it does not create player spell state, loadouts, command buttons, or runtime effects
-- `spellCompatibilityPresentation.ts` classifies spell hooks into runtime, classifier, deferred, and unknown groups for presentation warnings
-- warnings already block unknown/deferred hooks in presentation copy rather than pretending runtime support exists
+- known-spell owner scopes;
+- acquisition routes;
+- availability states;
+- known-spell record creation and normalization;
+- training-event acquisition evidence creation and validation;
+- known-spell collection validation;
+- read-only known-spell projections;
+- spell-catalog identity collection;
+- character-knows-spell checks;
+- magic-hook support projections;
+- cast-readiness blocker classification;
+- resolver-readiness issue classification;
+- inert resolver envelopes that explicitly report no applied effects.
 
-## Runtime Readiness Levels
+This is meaningful ownership and readiness authority. It is not merely Arcane Compendium copy.
 
-Use these levels when reviewing magic work:
+## Readiness Layers
 
-| Level | Meaning | Allowed work |
-| --- | --- | --- |
-| 0 | Design-only | docs, charter, taxonomy, vocabulary |
-| 1 | Metadata validation | tags, families, catalyst metadata, lint/tests |
-| 2 | Read-only presentation | Arcane Compendium, compatibility display, warnings |
-| 3 | Ownership model | known-spell state, acquisition source, character/account boundaries |
-| 4 | Narrow cast lane | one deterministic cast path with explicit effect owner |
-| 5 | Catalyst modifier lane | bounded catalyst interaction for already-owned narrow cast path |
-| 6 | Progression lane | policy-routed magic skill gain with source caps |
-| 7 | Document lane | scroll/tome/inscription ownership |
-| 8 | Legacy lane | access/support only, not direct spell power |
+| Layer | Current posture |
+| --- | --- |
+| Charter and vocabulary | established |
+| Spell and hook metadata | established with ready, partial, deferred, and unknown support distinctions |
+| Known-spell ownership | bounded character-scoped records and acquisition evidence exist |
+| Read-only availability | supported through projections and readiness checks |
+| Cast admission/readiness | pure evaluation exists |
+| Resolver readiness | pure issue classification exists |
+| Inert result envelope | exists and must remain nonapplying |
+| General cost application | absent |
+| General effect execution | absent |
+| Cross-owner consequence routing | absent |
+| General replay/correction receipt | absent |
+| Broad catalyst runtime | absent |
+| Scroll, tome, inscription, and document use | absent |
 
-Current repo is strongest at Levels 0-2. Do not skip Levels 3-4.
+## Ownership Boundary
 
-## Blockers Before Runtime Casting
+Known spell identity proves that a character has accepted acquisition evidence for a spell under the known-spell contract. It does not prove:
 
-Before any new runtime magic execution, the project needs explicit answers for:
+- a conduit is equipped;
+- a catalyst is available or consumed;
+- the actor can currently pay MP, stamina, strain, item, or other costs;
+- a target is valid;
+- the current context permits casting;
+- all required hooks are executable;
+- the spell succeeds;
+- any effect was applied;
+- a combat or noncombat owner accepted the result.
 
-- where known spells live
-- how a spell becomes known
-- whether known spells are character-scoped, family-scoped, account-scoped, or item/document-scoped
-- which equipped conduits are inspected
-- how conduit tags are resolved from item instances or item profiles
-- how control capacity is calculated
-- how MP/stamina/strain costs are paid
-- what failure/backlash/collateral states exist
-- which exact spell/effect is in scope
-- how the UI issues a cast command
-- how combat/noncombat contexts differ
-- which tests prove unsupported hooks remain blocked
+The cast-readiness and resolver-readiness layers must remain nonmutating and must not promote descriptive metadata into effect authority.
 
-## What Can Safely Happen Next
+## Hook-Support Boundary
 
-Safe next passes:
+Magic hook support is a compatibility classification, not a generic tag interpreter.
 
-1. Read-only Arcane Compendium polish.
-2. Compatibility metadata audit for missing profiles, unknown hooks, deferred hooks, and catalyst metadata gaps.
-3. Known-spell ownership design, planning-only.
-4. Conduit ownership design, planning-only.
-5. One-spell runtime plan, planning-only.
+A future executable lane must name:
 
-Potential first runtime candidate should be narrow, deterministic, and already hook-supported. Avoid broad families such as summoning, enchantment, scrolls, ritual magic, affinity/resistance matrices, or generated-item spells.
+- exact spell ids;
+- exact hook ids;
+- exact actor, target, and context owners;
+- exact costs and payment owners;
+- exact effect owners;
+- exact unsupported hooks that remain blocked;
+- exact result, event, receipt, replay, and correction posture.
 
-## Forbidden Near-Term Work
+No prompt should authorize broad execution based only on hook strings, school tags, catalyst tiers, or compatibility labels.
 
-- broad runtime spell execution
-- generic tag-driven effect execution
-- catalyst effects without cast lane owner
-- magic acquisition without ownership model
-- direct magic skill-rank grants
-- Magic Legacy spell power
-- free starter spell bundles that bypass acquisition
-- scroll/tome behavior before document systems
-- affinity/resistance matrix before narrow runtime slices
-- spell additions disguised as readiness work
+## Combat Relationship
 
-## Recommended First Planning Target
+Combat already realizes bounded spell-like action grants and supported combat hooks inside combat authority. That does not create a general shared magic resolver.
 
-The next good magic planning target is not runtime. Current prompt generation should use `docs/design/known-spell-ownership-plan.md` and the sequenced queue, not historical version examples in this audit.
+Combat consumers must continue to distinguish:
 
-Goal:
+- known-spell acquisition;
+- action grant availability;
+- combat action eligibility;
+- combat resource affordability;
+- target selection;
+- combat-hook realization;
+- post-combat ownership.
 
-- define where known spells live
-- define acquisition source records
-- define character/account/family/item/document scope boundaries
-- define what the read-only compendium can and cannot do with known-spell state
-- keep casting disabled
+The combat-AI and item-use evidence branches are applicable when magic actions are selected or sourced through grants:
 
-## Minimum Acceptance Criteria For Any Runtime Magic Prompt
+- `parallel/combat-ai-scoring-test-coverage-refresh` at `e4e7a85bb356fb9d1ba143ac0edecf9532071698`;
+- `parallel/item-use-profile-effect-ownership-audit` at `d0d67520d06c1172b2b8830955330b26110dee39`.
 
-Any future prompt that touches runtime magic must state:
+## Remaining Gaps Before Executable General Casting
 
-- exact spell(s) in scope
-- exact hook(s) in scope
-- exact command path
-- exact cost path
-- exact ownership path for known spell state
-- exact conduit/catalyst assumptions
-- explicit unsupported hooks that remain blocked
-- focused tests
-- no Magic Legacy direct power
-- no generic tag execution
+A bounded implementation decision must still establish:
 
-## Current Prompt Authority
+1. command and occurrence identity;
+2. actor and target facts;
+3. context ownership for combat, exploration, care, crafting, or other uses;
+4. cost reservation and atomic payment;
+5. conduit and catalyst ownership;
+6. resolver authority for each named hook;
+7. typed result and rejection codes;
+8. cross-owner effect proposals and acceptance receipts;
+9. replay, duplicate, stale, and correction behavior;
+10. persistence and migration where required;
+11. observer-safe presentation;
+12. exact focused tests and local verification.
 
-Use `docs/design/known-spell-ownership-plan.md` and `docs/dev/codex-sequenced-implementation-plan.md` for current prompt generation. This audit remains a source-detail reference only.
+The first executable lane should be one deterministic spell or one tightly related hook family. It should not be a generic spell engine.
+
+## Forbidden Generalizations
+
+Do not infer or implement:
+
+- direct Magic Legacy spell power;
+- generic tag-driven effect execution;
+- automatic spell acquisition from catalog visibility;
+- catalyst behavior without a named cast lane;
+- scroll/tome behavior without document ownership;
+- direct skill-rank grants from casting;
+- free starter spell bundles that bypass acquisition evidence;
+- broad affinity or resistance matrices;
+- unsupported hook fallback that silently applies approximate effects.
+
+## Mandatory Consumers
+
+Future work must inspect this audit when it concerns:
+
+- known-spell acquisition or ownership;
+- Arcane Compendium availability claims;
+- magic cast buttons or command surfaces;
+- combat or noncombat spell execution;
+- catalyst, conduit, scroll, tome, or inscription behavior;
+- magic skill progression;
+- magic-related care or crafting;
+- claims that magic runtime is generally ready.
+
+## Review Trigger
+
+Re-review when:
+
+- a general or noncombat cast command is proposed;
+- one executable spell lane lands;
+- cost reservation or effect-routing contracts land;
+- catalyst or document ownership changes;
+- known-spell acquisition changes;
+- hook support classifications change;
+- a milestone claims executable magic maturity.
+
+## Validation Limits
+
+This refresh used GitHub Connector source and document inspection only. It ran no tests, builds, typechecks, content lint, simulations, or local Git commands.
+
+No source, tests, schemas, content, UI, prompt, handoff, roadmap, or branch register changed.
