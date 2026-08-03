@@ -2,7 +2,7 @@
 
 Date: 2026-08-03
 
-Status: parent `0.6.9` acceptance reopened; hardened historical recovery-fork authority decision active; twenty isolated connector-only evidence lanes complete and indexed across two waves
+Status: parent `0.6.9` acceptance reopened; hardened historical recovery-fork authority decision active; twenty-eight isolated connector-only evidence lanes complete and indexed across three waves
 
 ## Current Route
 
@@ -28,110 +28,93 @@ The active prompt:
 5. distinguishes semantic consistency from authenticated or cryptographic tamper detection;
 6. prohibits integration or modification of `parallel/*` evidence branches during the active decision.
 
-The active decision may not accept parent `0.6.9`, edit/revert production, edit tests, or run Ashen Reef.
+The active decision may not accept parent `0.6.9`, edit or revert production, edit tests, or run Ashen Reef.
 
 ## Connector Evidence Indexes
 
 ### First wave
 
-Result index:
-
 `docs/dev/parallel-gpt-connector-only-run-results-2026-08-03.md`
 
-Indexed branch domains:
-
-- consumable profiles;
-- equipment-profile readiness;
-- gameplay-shell UI state;
-- quest turn-in/reward ownership;
-- recipe/production maturity;
-- bestiary/ecology maturity;
-- settlement maturity;
-- temporary research-artifact retention;
-- rest/recovery mutation;
-- text-first combat view-model readiness.
+Domains: consumables, equipment profiles, gameplay shell, quest turn-in, production, bestiary/ecology, settlements, research artifacts, rest/recovery, and text-first combat presentation.
 
 ### Second wave
 
-Result index:
-
 `docs/dev/parallel-gpt-connector-only-second-wave-results-2026-08-03.md`
+
+Domains: economy commands, progression rewards, Chronicle/notification provenance, accessibility, NPC parties, item-use ownership, travel/services, Knowledge visibility, JS/TS module integrity, and content validation.
+
+### Third wave
+
+`docs/dev/parallel-gpt-connector-only-third-wave-results-2026-08-03.md`
 
 Result-index publication commit:
 
-`851e0406fa611ea9426bd9d9f9823248176b451a`
+`905cfb1c0b3224cbfa072af3d3c2a70f954b29b2`
 
-Candidate-list completion commit:
+Exact third-wave branch heads:
 
-`7ec987579f2884649cf065ab76f9b20af081b69a`
+1. `parallel/combat-ai-scoring-test-coverage-refresh` — `e4e7a85bb356fb9d1ba143ac0edecf9532071698`
+2. `parallel/magic-runtime-readiness-refresh` — `891090af4d3739ae235b570b778029bed0f21893`
+3. `parallel/activity-advancement-audit` — `b4cbaea5f4292904bba62f60a0108bb84f2bd405`
+4. `parallel/quest-action-tree-audit` — `4d6c622b2b39b7e0ca1839e19473b4c772d0a762`
+5. `parallel/civilization-tick-audit` — `859aadea20efaf88b49183491b08181bdea463db`
+6. `parallel/world-spawn-admission-audit` — `fb42f01bc91d6b31e8e20533c28935404f2c918c`
+7. `parallel/game-tick-orchestration-audit` — `95d64e9e56cd65ecad237f3101adef6812f7b020`
+8. `parallel/character-panel-mutation-audit` — `23d61f36f871d2426b53915a632df6168f2848d3`
 
-Exact second-wave branch heads:
-
-1. `parallel/economy-command-surface-refresh` — `c98199dc8069099dbf52ded5fffcbf715fc08522`
-2. `parallel/player-progression-reward-mutation-audit` — `387f2491d0d671ee7834656c28183e72a798f1ca`
-3. `parallel/chronicle-notification-provenance-audit` — `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`
-4. `parallel/ui-accessibility-input-source-audit` — `adbf2cef04b8423a9eedc2921e862b4c3e5f1410`
-5. `parallel/npc-party-companion-readiness-audit` — `c3092bcd02ff8530481f8cd4d16819f0a275c4a6`
-6. `parallel/item-use-profile-effect-ownership-audit` — `d0d67520d06c1172b2b8830955330b26110dee39`
-7. `parallel/travel-route-service-availability-audit` — `d308d5c571b6c4739fecf4213f5a3152857e97ee`
-8. `parallel/knowledge-discovery-visibility-audit` — `46434f31f8b06d49aad9a516543fbe36d188d519`
-9. `parallel/js-ts-mirror-export-integrity-audit` — `6304ebf8ab00bbf74e81cd85099dea236373c2af`
-10. `parallel/content-lint-schema-validator-coverage-audit` — `82ce2bfa12efa3cfa6810d3841c655b6a3635334`
-
-All twenty evidence branches remain isolated, unmerged, and noncontrolling as:
+All twenty-eight evidence branches remain isolated, unmerged, and noncontrolling as:
 
 `CANDIDATE_INTEGRATION`
 
 ## Mandatory Discovery Rule
 
-A future run must inspect the applicable entry across both result indexes when:
+A future run must inspect the applicable entry across all three indexes when:
 
 1. its prompt names a mandatory consumer from an index;
 2. it changes a file, owner, contract, behavior, or verification surface analyzed by an audit;
-3. it claims the corresponding domain is mature, engine-owned, replay-safe, accessible, party-ready, effect-ready, world-integrated, provenance-aware, module-integrated, content-validated, presentation-ready, or deletion-ready;
+3. it claims the corresponding domain is mature, complete, engine-owned, replay-safe, deterministic, accessible, party-ready, effect-ready, world-integrated, provenance-aware, module-integrated, content-validated, presentation-only, simulation-mature, migration-ready, or deletion-ready;
 4. it proposes integrating, superseding, retiring, or deleting an evidence branch;
-5. a representative-loop or milestone/maturity audit relies on the domain.
+5. a representative-loop, milestone, or maturity audit relies on the domain.
 
 The completion report must state which indexed entries were applicable and whether they were inspected. Unrelated entries may be omitted.
 
-Evidence branches never override newer accepted authority. Preserve a conflicting branch as historical evidence and follow the higher-precedence current decision.
+Evidence branches never override newer accepted authority. Preserve conflicting evidence as historical and follow the higher-precedence current decision.
 
-## Principal Second-Wave Findings
+## Principal Third-Wave Findings
 
-- Economy: static projections exist, while current quest/rest currency and inventory changes remain UI-assembled legacy transactions without economy-specific receipts.
-- Progression/rewards: player-engine calculation helpers exist; multi-owner reward orchestration remains in the UI gameplay bridge.
-- Chronicle/notifications: persisted narrative and notice rows lack exact accepted-result provenance, replay, and correction authority.
-- Accessibility: native controls and focus/label evidence exist; browser, focus-return, live-region, contrast, reflow, reduced-motion, and assistive-technology behavior remain unproven.
-- NPC party: tactics and party shapes exist; durable companion roster, persistence, health/equipment reconciliation, and per-member lifecycle authority remain incomplete.
-- Item use: grants, profiles, stacks, doses/charges, hooks, and effect owners are separate; no universal item-activation authority exists.
-- Travel/services: bounded engine travel exists over a compatibility table; authored routes, geographic recognition, services, and rest admission remain separate.
-- Knowledge/visibility: known locations, Knowledge, discovery, Codex, flags, observations, hidden truth, and map projections are specialized authorities.
-- JS/TS integration: TypeScript sources, JavaScript forwarding shims, public exports, and `.js` specifiers require one local integration gate on module changes.
-- Content validation: schema existence, registration, live wrappers, semantic validation, references, hooks, focused tests, and normal lint are separate proof layers.
+- Combat AI: weighted scoring is real, but complete preference/target-rule effect, deterministic ties, manual resumption, and ordered gambits lack focused proof.
+- Magic: known-spell and cast-readiness foundations exist; general cost and effect execution remains absent.
+- Activity advancement: selection is engine-owned, while advancement remains a UI-owned multi-domain mutation without complete preview parity or typed receipts.
+- Quest action trees: validated graphs exist; runtime attempt identity, cursor state, formulas, typed effects, persistence, replay, and correction do not.
+- Civilization: active economy/market/transport/trade/settlement/quest-offer simulation exists; occurrence, replay, and correction evidence is incomplete.
+- World spawn: candidates flow into combat, but identity, consumption, duplicate admission, seed evidence, persistence, and correction require an exact boundary.
+- Game tick: fixed domain order and event/warning aggregation exist; noncombat delta omission and whole-tick atomicity remain unclear.
+- Character panel: consumable, equipment, body, and persisted-flag mutations remain UI-owned compatibility behavior requiring named commands and typed preferences.
 
 ## Integration And Branch Lifecycle
 
-Do not merge either wave as a batch.
+Do not merge any wave as a batch.
 
 At a named consumer or dedicated documentation coordinator:
 
 - resolve the exact branch head;
 - compare its document against then-current master;
-- classify each finding as current, superseded, narrowed, or historical;
+- classify findings as current, superseded, narrowed, or historical;
 - integrate, re-author, hold, or retire independently;
 - update `docs/dev/branch-disposition-register.md` once from complete live evidence;
 - verify equivalent preservation before branch deletion.
 
-Until the large branch register is safely reconciled, this handoff and the two result indexes are the controlling discovery pointers for all twenty connector evidence branches.
+Until the large branch register is safely reconciled, this handoff and the three result indexes are the controlling discovery pointers for all twenty-eight connector evidence branches.
 
 ## Validation Posture
 
-The twenty audits used GitHub Connector inspection only. They ran no local tests, builds, typechecks, linters, generators, simulations, browser checks, worktree commands, or executable lineage probes.
+The twenty-eight audits used GitHub Connector inspection only. They ran no local tests, builds, typechecks, linters, generators, simulations, browser checks, worktree commands, or executable lineage probes.
 
-Each second-wave branch was verified as exactly one commit and one documentation path ahead of the shared baseline `8a0065b7a72a6fc8193b502251e9020a1e4ca360`.
+Every third-wave branch was verified as exactly one commit and one documentation path ahead of shared baseline `8214327906fbc2edf7ab4d02168cf94b3abc7e6f`.
 
 ## Next Action
 
 Run the exact current prompt in `docs/dev/current-codex-prompt.md` from a freshly synchronized checkout containing this handoff.
 
-The active `0.6.9` decision should inventory and preserve all twenty evidence branch dispositions, but must not integrate or rewrite them. Their substantive use begins only at the named consumers in the two result indexes.
+The active `0.6.9` decision should inventory and preserve all twenty-eight evidence branch dispositions, but must not integrate or rewrite them. Their substantive use begins only at named consumers in the three result indexes.
