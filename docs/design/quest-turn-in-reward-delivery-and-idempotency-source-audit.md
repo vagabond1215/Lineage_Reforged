@@ -1,511 +1,183 @@
 # Quest Turn-In Reward Delivery And Idempotency Source Audit
 
-Date: 2026-07-29
+Date: 2026-08-03
 
 Source route: ChatGPT via GitHub Connector
 
-Source commit: `bcbe658d1be033cdc83d04acdca67ec8186c484d`
+Original branch baseline: `bcbe658d1be033cdc83d04acdca67ec8186c484d`
 
-Status: connector-only, read-only source audit; no quest, reward, engine, UI, save, content, schema, test, or roadmap change
+Inspected live master: `91bd8c2c89c85fb9ea7257b2c96b68ab41231b04`
 
-## 1. Purpose
+Branch: `parallel/quest-turn-in-reward-source-audit`
 
-Characterize the current quest turn-in path before any engine-owned command, reward-delivery receipt, duplicate-protection, correction, or accepted-only UI transition is planned.
+Status: `REFRESHED_CONNECTOR_EVIDENCE_CANDIDATE_INTEGRATION`
 
-This pass is intentionally narrower than a future owner-contract decision. It records current behavior and missing authority only.
+Execution posture: connector-only, read-only source audit; no quest, reward, engine, UI, save, content, schema, test, roadmap, or active-route change
 
-It does not include:
+## Purpose
 
-- quest acceptance;
-- quest tracking;
-- Ashen Reef survey advancement;
-- generic quest action-tree execution;
-- new reward types;
-- balance changes;
-- implementation authorization.
+Refresh the quest turn-in and reward-delivery source map after quest acceptance, tracking, campaign-session mutation admission, and save publication changed.
 
-## 2. Live Entry Points
+This document records current behavior and missing authority only. It does not authorize a quest command or reward implementation.
 
-The live turn-in path is split across:
+## Material Post-Baseline Changes
 
-- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`
-  - `isQuestReadyToTurnIn(...)`;
-  - `getQuestCommandState(...)`;
-  - `turnInQuest(...)`;
-  - direct reward and projection helpers;
-- `apps/rpg-ui/src/features/QuestsPanel.tsx`
-  - button readiness;
-  - direct call to `turnInQuest(...)`;
-  - snapshot application;
-  - section and panel-notice transitions.
+Quest acceptance and quest tracking now use dedicated engine-owned commands and results:
 
-No game-engine turn-in module exists alongside the accepted engine-owned travel, quest-acceptance, quest-tracking, and activity-selection packages.
+- `createPlayerQuestAcceptanceCommand(...)` / `executePlayerQuestAcceptanceCommand(...)`;
+- `createPlayerQuestTrackingCommand(...)` / `executePlayerQuestTrackingCommand(...)`;
+- accepted UI application with `ownerKind: engine_result`, command identity, and result identity.
 
-## 3. Supported Turn-In Definitions
+Quest turn-in did not receive the same transition.
 
-Only two hard-coded quest IDs have a ready-to-turn-in path:
+## Current Turn-In Owner
 
-1. `quest.ashen_reef_survey`;
-2. `quest.rivet_shortfall_relief`.
+The live turn-in path remains in:
 
-All other quest IDs return not ready.
+- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
+- `apps/rpg-ui/src/features/QuestsPanel.tsx`.
 
-### Ashen Reef readiness
+`turnInQuest(snapshot, questId)`:
 
-Requires:
+1. checks quest existence and active posture;
+2. evaluates hard-coded readiness;
+3. clones the snapshot;
+4. marks the quest completed;
+5. applies quest-specific rewards and side effects directly;
+6. synchronizes the snapshot;
+7. returns only a snapshot and notice.
 
-- a matching quest journal entry;
-- category `active`;
-- three survey-sector flags;
-- the ruins-confirmed flag;
-- current location `location.saltmere`.
+`QuestsPanel` then calls `updateSnapshot(result.snapshot)` without `engine_result`, command identity, or result identity. The generic session gateway therefore treats the turn-in as a default `legacy_bridge` proposal.
 
-### Rivet shortfall readiness
+Result:
 
-Requires:
+`TURN_IN_REMAINS_UI_GAMEPLAY_LOOP_OWNED_AND_GENERICALLY_ADMISSION_GATED`
 
-- a matching quest journal entry;
-- category `active`;
-- the secured-rivet-cargo flag;
-- current location `location.saltmere`.
+## Supported Turn-Ins
 
-The readiness helper is deterministic and reads current snapshot facts. It is not a command plan and carries no revision, occurrence, eligibility receipt, or commitment identity.
+Exactly two quest IDs have hard-coded readiness and reward behavior:
 
-## 4. Rejection Behavior
+- `quest.ashen_reef_survey`;
+- `quest.rivet_shortfall_relief`.
 
-`turnInQuest(...)` rejects before cloning for:
+Ashen Reef readiness requires the active quest, three survey sectors, ruins confirmation, and Saltmere location.
 
-- missing quest;
-- quest not active;
-- ready-to-turn-in check failing.
+Rivet readiness requires the active quest, secured cargo, and Saltmere location.
 
-Each rejection returns:
+All other quest IDs are not ready for turn-in.
 
-- the original snapshot object;
-- a warning notice.
+## Reward Mutation Surface
 
-No mutation occurs inside the function before those returns.
+The current helper directly mutates combinations of:
 
-### Missing rejection contract
-
-The result type is the generic local:
-
-`GameplayActionResult`
-
-with only:
-
-- `snapshot`;
-- `notice`.
-
-It has no:
-
-- `accepted` discriminator;
-- stable reason code;
-- command ID;
-- expected snapshot revision;
-- actual snapshot revision;
-- wrong-player or malformed-command posture;
-- stale-state result;
-- duplicate-delivery result;
-- retry equivalence result.
-
-The notice title and prose are therefore the only human-readable rejection distinction.
-
-## 5. Atomicity Posture
-
-After eligibility passes, the function deep-clones the snapshot through serialize/deserialize and performs all mutations on the clone.
-
-It returns only after:
-
-- quest journal mutation;
-- rewards and consumption;
-- standing and reputation changes;
-- operation removal;
-- current-activity update;
-- flag changes where applicable;
-- notification and Chronicle projection;
-- tracked-quest reassignment;
-- snapshot synchronization.
-
-This provides useful in-function clone-then-apply behavior.
-
-However, it is not an accepted atomic multi-owner transaction because:
-
-- no command/result boundary names the accepted occurrence;
-- no owner accepts a typed proposal;
-- no delivery receipt records which rewards were applied;
-- no persisted transaction identity prevents reapplication;
-- no correction or reconciliation contract exists.
-
-The current implementation is atomically assembled by one UI-owned helper, not owner-certified through explicit consequence receipts.
-
-## 6. Quest Completion Mutation
-
-For any supported accepted turn-in, the matching journal entry changes from:
-
-- category `active`;
-
-to:
-
-- category `completed`;
-- status label `Turned in`.
-
-This journal mutation is the practical duplicate guard during ordinary single-session use because a second call sees a non-active quest and rejects.
-
-### Limit
-
-The completed category is not a delivery receipt. It proves only the current journal state after mutation. It does not independently prove:
-
-- which reward bundle was applied;
-- whether every affected owner accepted it;
-- whether item consumption occurred;
-- whether a crash happened between consequences;
-- whether an imported or corrected snapshot contains a completed quest without rewards;
-- whether duplicate delivery occurred before completion state was persisted;
-- whether a later correction should reverse or supersede rewards.
-
-## 7. Ashen Reef Reward Bundle
-
-Accepted Ashen Reef turn-in applies:
-
-### Currency
-
-- gold `+5`;
-- silver `+8`.
-
-### Skill progression
-
-- attempts General Lore gain of `+1` through the existing breakthrough-gated helper;
-- the helper may apply less than one rank gain when blocked by a progression gate.
-
-### Standing
-
-Adds or updates:
-
-- ID `rep.harbor_office`;
-- label `Saltmere Harbor Office`;
-- score `+8`;
-- unlock/effect tags `survey_priority`, `harbor_access`.
-
-### Reputation
-
-Applies the hard-coded award:
-
-- fame axis;
-- commercial branch;
-- regional direct-earned scope;
-- base value `6`;
-- origin settlement `settlement.aurelis`;
-- fixed meaningful/exposure/attribution/social-value evidence set to true;
-- source ID equal to the quest ID;
-- tick equal to the current snapshot tick.
-
-### Operation and activity
-
-- removes `operation.quest.ashen_reef_survey`;
-- sets current activity to `activity.harbor.turn_in` with local display text.
-
-### Notification and Chronicle
-
-Adds:
-
-- success notification `Survey payout received`;
-- a reputation-category Chronicle entry;
-- effect text for payout, skill result, Harbor Office standing, and regional fame.
-
-### Boundary finding
-
-The reward bundle is hard-coded in UI game-shell source rather than sourced from an accepted quest reward definition, typed reward proposal, or delivery contract.
-
-## 8. Rivet Shortfall Reward Bundle
-
-Accepted rivet turn-in applies:
-
-### Inventory consumption
-
-Removes quantity `6` of item key:
-
-`deepiron_rivet_crate`
-
-through a direct inventory helper.
-
-The readiness check uses a secured-cargo flag rather than rechecking exact inventory quantity at turn-in admission.
-
-### Currency
-
-- gold `+4`;
-- silver `+1`.
-
-### Skill progression
-
-- attempts Mineral Lore gain of `+1` through the breakthrough-gated helper.
-
-### Standing
-
-Adds or updates:
-
-- ID `rep.guild_consortium`;
-- label `Guild Consortium`;
-- score `+6`;
-- tags `priority_bids`, `drydock_discount`.
-
-### Reputation
-
-Applies the hard-coded award:
-
-- fame axis;
-- trade branch;
-- local direct-earned scope;
-- base value `4`;
-- origin settlement `settlement.aurelis`;
-- fixed qualification evidence set to true;
-- source ID equal to the quest ID;
-- current tick.
-
-### Operation, activity, and flag
-
-- removes `operation.quest.rivet_shortfall_relief`;
-- sets current activity to `activity.drydock.turn_in`;
-- removes the secured-cargo flag.
-
-### Notification and Chronicle
-
-Adds:
-
-- success notification `Rivet contract paid`;
-- trade-category Chronicle entry;
-- effect text for payout, skill result, standing, and fame.
-
-### Boundary finding
-
-Inventory consumption and all rewards are coupled in one UI helper. No inventory reservation, consumption receipt, quest-completion receipt, or reward-delivery receipt exists.
-
-## 9. Affected-Owner Matrix
-
-| Consequence | Current direct writer | Proper owner or acceptance boundary | Current receipt |
-| --- | --- | --- | --- |
-| Quest completed state | UI gameplay loop | quest runtime/journal owner | none |
-| Currency grant | UI gameplay loop | currency/wallet owner | none |
-| Skill gain | UI gameplay loop calling progression helper | progression owner | helper result only, not persisted delivery receipt |
-| Standing change | UI gameplay loop | standing owner | none |
-| Reputation award | UI gameplay loop calling reputation helper | reputation owner | resulting state only |
-| Rivet item consumption | UI gameplay loop | inventory owner | none |
-| Operation removal | UI gameplay loop | operation owner | none |
-| Current activity transition | UI gameplay loop | activity owner | none |
-| Quest-specific flag removal | UI gameplay loop | quest/session fact owner | none |
-| Notification | UI gameplay loop | presentation projection | no authority intended |
-| Chronicle entry | UI gameplay loop | Chronicle projection owner | no authority intended |
-| Tracked quest reassignment | UI gameplay loop | quest-tracking owner | direct mutation, bypasses accepted tracking command |
-| Snapshot synchronization | game-engine helper invoked by UI loop | synchronization projection | no turn-in occurrence identity |
-
-The turn-in path crosses more owners than the current deterministic survey advancement slice and additionally includes irreversible reward delivery and item consumption.
-
-## 10. Tracked-Quest Boundary
-
-After any accepted turn-in, the helper selects the first other active quest and directly assigns its ID to `sessionState.trackedQuestId`, or clears tracking when none remains.
-
-This bypasses the accepted engine-owned quest-tracking command.
-
-A future turn-in contract must decide whether:
-
-- completion automatically clears only the completed quest;
-- selecting a fallback tracked quest is an internal quest-owner consequence;
-- fallback selection should use a deterministic policy;
-- the accepted tracking owner should accept a proposal;
-- no replacement should be selected automatically.
-
-The current “first active quest” array-order rule is behavior to characterize, not automatically promote as durable design.
-
-## 11. UI Application Boundary
-
-`QuestsPanel.tsx` disables the Turn In button unless the current pre-click `questCommandState.canTurnIn` is true.
-
-On click, it:
-
-1. calls `turnInQuest(snapshot, selectedItem.id)`;
-2. unconditionally calls `updateSnapshot(result.snapshot)`;
-3. unconditionally changes the active section to `completed`;
-4. shows the returned notice.
-
-### Risk
-
-There is no accepted discriminator. A stale, incoherent, or otherwise rejected call still causes the panel to switch to `completed`, even though the returned snapshot may be unchanged.
-
-The disabled button makes this unlikely in a single synchronous render, but it is not an accepted-only bridge and would become unsafe under asynchronous command delivery, stale revisions, replay, or cross-tab state.
-
-### Required later behavior
-
-A future result must expose `accepted: true | false` and stable reason codes. The UI should:
-
-- apply the returned snapshot only when accepted;
-- switch to the completed section only when accepted;
-- preserve selection and show a safe rejection notice otherwise;
-- never infer acceptance from notice prose or resulting category inspection.
-
-## 12. Identity And Idempotency Gaps
-
-The current path has no stable identity for:
-
-- command;
-- eligibility plan;
-- turn-in attempt;
-- accepted occurrence;
-- completion result;
-- reward bundle;
-- item-consumption delivery;
-- currency delivery;
-- skill progression delivery;
-- standing delivery;
-- reputation delivery;
-- operation removal;
-- tracked-quest consequence;
-- aggregate consequence receipt.
-
-Generic notification IDs and Chronicle IDs are tick/list-position projections and must not become transaction identity.
-
-The quest ID alone is also insufficient because:
-
-- a quest definition may be repeatable later;
-- a corrected or reopened quest could have more than one lifecycle occurrence;
-- imported snapshots may disagree across journal and reward owners;
-- one quest can propose multiple owner-specific consequences.
-
-## 13. Persistence And Restart
-
-The current save snapshot can persist the post-turn-in facts:
-
-- completed journal category;
+- quest category and status;
 - currency;
-- skill state;
+- skills;
 - standing;
 - reputation;
 - inventory quantity;
 - operations;
 - current activity;
 - flags;
+- tracked quest selection;
 - notifications;
-- Chronicle;
-- tracked quest.
+- Chronicle entries;
+- synchronized derived snapshot state.
 
-It does not persist a turn-in occurrence or reward-delivery receipt.
+These effects have multiple domain owners, but no turn-in plan, occurrence, accepted result, reward receipt, or owner-specific consequence receipt binds them together.
 
-### Consequence
+## Idempotency And Replay Boundary
 
-Ordinary save/load after successful completion preserves the final state, but the repository cannot prove or reconcile:
+Current protection is limited:
 
-- partial delivery;
-- repeated delivery from duplicate messages;
-- equivalence of retries;
-- correction of a malformed reward bundle;
-- supersession of a quest result;
-- replay from an accepted occurrence;
-- whether current state was produced by the accepted turn-in path or manual/legacy mutation.
+- a completed quest is no longer active, so a later call returns the original snapshot with a warning;
+- the session admission gateway will normally reject an unchanged snapshot proposal;
+- current quest facts prevent the two hard-coded turn-ins from ordinarily applying twice in one live state.
 
-## 14. Correction And Rollback
+Missing durable authority includes:
 
-No correction model exists.
+- command/request identity;
+- exact equivalent retry fingerprint;
+- retained accepted result;
+- conflicting request-ID reuse detection;
+- reward-delivery receipt;
+- restart duplicate lookup;
+- correction/supersession posture;
+- owner-specific applied versus projection-pending state;
+- response replay after later unrelated mutations.
 
-A future owner contract must decide:
+Therefore category change is a practical guard, not a complete idempotency contract.
 
-- whether accepted turn-in is terminal and append-only;
-- whether corrections can supersede reward receipts;
-- whether consumed items can be restored;
-- whether currency, skill, standing, and reputation corrections are compensating consequences rather than state rollback;
-- whether Chronicle emits a correction entry while preserving historical output;
-- how a completed quest with missing or conflicting delivery receipts is reconciled;
-- whether technical recovery may repair state without pretending the original event never occurred.
+## Accepted-Only UI Boundary
 
-Do not implement direct snapshot rollback as the default correction model.
+Acceptance and tracking already apply only accepted engine results.
 
-## 15. Definition Versus Runtime Authority
+Turn-in differs:
 
-Current reward facts are source-code constants and branch logic. The quest journal entries display objectives and reward-facing summaries, but no accepted static reward bundle is proven to own these exact values as runtime inputs.
+- the helper returns no explicit `accepted` field;
+- `QuestsPanel` calls `updateSnapshot(...)` unconditionally after invoking the helper;
+- it switches the visible section to `completed` even when the helper returned an unchanged snapshot and warning.
 
-A future decision must classify each reward fact as one of:
+The campaign gateway prevents an unchanged snapshot from becoming an accepted mutation, but panel transition semantics remain coupled to button readiness and helper assumptions rather than a typed accepted result.
 
-- authored quest-definition authority;
-- runtime rule;
-- current-behavior compatibility constant;
-- progression-owner policy;
-- reputation-owner policy;
-- UI prose only.
+## Current Classification
 
-The owner contract should not silently migrate hard-coded UI constants into content without a separate content/schema decision.
+| Boundary | Classification |
+| --- | --- |
+| Quest acceptance | `ENGINE_OWNED_COMMAND` |
+| Quest tracking | `ENGINE_OWNED_COMMAND` |
+| Turn-in readiness | `UI_GAMEPLAY_LOOP_STATIC_RULES` |
+| Turn-in mutation | `UI_GAMEPLAY_LOOP_LEGACY_BRIDGE` |
+| Generic campaign admission | `PRESENT` |
+| Turn-in result identity | `ABSENT` |
+| Durable reward receipt | `ABSENT` |
+| Restart/equivalent-retry replay | `ABSENT` |
+| Correction/supersession | `ABSENT` |
+| Accepted-only panel transition | `INCOMPLETE` |
 
-## 16. Smallest Safe Next Pass
+## Smallest Safe Future Decision
 
-Recommended future route after the active survey owner decision:
+A dedicated quest turn-in owner decision must fix:
 
-`Quest Turn-In Completion And Reward Receipt Owner Contract Decision`
+1. normalized command identity and source revision;
+2. readiness and stale-state rules;
+3. deterministic reward plan;
+4. quest completion occurrence/result identity;
+5. atomic multi-owner consequence application;
+6. inventory, currency, skill, reputation, standing, operation, activity, Chronicle, and notification receipts;
+7. equivalent retry, conflict, restart, later-state replay, and correction behavior;
+8. campaign mutation and verified publication integration;
+9. accepted-only UI transition;
+10. exact scope for the two current quests without inventing a generic quest-action framework.
 
-Classification:
+Do not combine Ashen Reef survey advancement implementation into this audit or infer that generic campaign persistence already supplies quest-domain receipts.
 
-`UNVERSIONED_PREREQUISITE`
+## Named Consumer And Review Trigger
 
-The decision should define:
+This audit must be read by:
 
-1. normalized turn-in intent and authoritative eligibility plan;
-2. deterministic command identity and snapshot revision;
-3. accepted/rejected result contract;
-4. one turn-in occurrence identity;
-5. quest-completion commitment;
-6. owner-routed typed consequence proposals;
-7. inventory consumption/admission semantics;
-8. per-owner consequence receipts plus aggregate completion receipt;
-9. duplicate, retry, replay, correction, and reconciliation policy;
-10. persistence requirements;
-11. accepted-only UI bridge;
-12. exact later implementation paths and tests;
-13. whether hard-coded reward values remain compatibility behavior or require a separate definition package.
+- a quest turn-in and reward-delivery owner-contract decision;
+- an Ashen Reef quest completion/turn-in package;
+- a representative-loop audit that claims quest rewards are engine-owned and replay-safe;
+- a cleanup proposing removal of quest `legacy_bridge` paths;
+- a `0.7.0` readiness review using quest completion as evidence.
 
-## 17. Implementation Readiness
+The consuming run must cite this branch head or an integrated successor and re-inspect `gameplayLoop.ts`, `QuestsPanel.tsx`, campaign-session admission, save publication, and current tests from its own head.
 
-Result:
+## Branch Disposition
 
-`OWNER_CONTRACT_PREREQUISITE_READY`
+`CANDIDATE_INTEGRATION`
 
-Implementation result:
+Integration condition:
 
-`NO_PACKAGE`
+- compare against current quest and persistence authority;
+- confirm no later turn-in implementation supersedes it;
+- integrate or re-author during the named owner decision or a dedicated parallel-document coordinator pass.
 
-The current path is deterministic and clone-then-apply, but the irreversible cross-owner consequences make direct extraction into an engine module unsafe without explicit receipt and persistence decisions.
+Retirement condition:
 
-## 18. Recommended Focused Tests For A Later Package
+- all findings are integrated or superseded by accepted quest authority;
+- named consumers can reach equivalent evidence on master;
+- exact branch head and preservation are verified.
 
-A later implementation prompt should require at minimum:
-
-- accepted Ashen Reef parity;
-- accepted rivet parity;
-- exact reward values and owner receipts;
-- skill-gate parity;
-- inventory quantity and insufficient-cargo rejection;
-- missing, inactive, wrong-location, incomplete, malformed, wrong-player, and stale rejection;
-- zero mutation on every rejection;
-- duplicate delivery does not duplicate any reward or consumption;
-- equivalent retry returns the same accepted result/receipt;
-- conflicting retry fails closed;
-- completed quest cannot pay again;
-- accepted-only UI snapshot and section transition;
-- save/load persistence of occurrence and receipts;
-- synchronization parity;
-- direct UI turn-in mutation removed;
-- accepted quest-tracking owner boundary preserved;
-- notification and Chronicle remain projections.
-
-## 19. User Direction Needed Later
-
-Before reward definitions are promoted from compatibility constants, ask the user:
-
-- whether quest rewards should remain authored fixed bundles or support contextual scaling;
-- whether automatic fallback tracking should continue after turn-in;
-- whether quest turn-in should be terminal, reversible through administrative correction, or support narrative reopening;
-- whether item handoff must require exact physical cargo at admission even when a quest flag says it was secured;
-- whether standing and reputation rewards are guaranteed contract terms or can be reduced by outcome quality in later quests.
-
-These choices affect future system behavior and should not be inferred from the current two demo quests.
-
-## 20. Final Disposition
-
-The current turn-in implementation is a useful bounded compatibility path but not accepted runtime authority.
-
-It should remain unchanged until the active Ashen Reef advancement decision completes and a separate turn-in owner-contract route is selected. The immediate value of this audit is to prevent a future extraction from treating journal completion as sufficient idempotency or treating a cloned UI helper as an owner-certified transaction.
+No local tests, builds, typechecks, runtime probes, save/restart execution, or UI interaction were run in this connector-only refresh.
