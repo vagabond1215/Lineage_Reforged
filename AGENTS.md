@@ -11,9 +11,10 @@
 ## Repository-First Agent Workflow
 
 - `docs/dev/repository-first-agent-work-protocol.md` is the durable detailed authority for repository orientation, agent delegation, execution, validation, and handoff.
+- `docs/dev/prompt-execution-platform-tool-selection-policy.md` is the durable authority for platform, tool, mode, model/version, token/quota, plugin, connector, compatibility, and staged-workflow recommendations whenever a prompt is created or revised.
 - All substantive source, test, schema, migration, content, asset, dependency, generated-output, build, typecheck, or multi-file coordination work must be performed in an authenticated repository checkout through Codex or another repository-capable agent.
 - Before narrowing to an edit surface, complete the protocol's whole-repository orientation: live head and worktree, all branches and open PRs, current prompt/handoff/output, historical and planning reconciliation, relevant focused authority, manifests/configuration, architecture and caller paths, tests/build/CI, mirrors/generated output, and known blockers.
-- Read the complete current versions of `docs/dev/current-codex-prompt.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/current-codex-output.md`, `docs/dev/historical-version-and-deferred-route-register.md`, `docs/design/current-planning-anchor-reconciliation.md`, the failure-pattern register, branch policy/register, and the most specific accepted decision or audit before implementation.
+- Read the complete current versions of `docs/dev/current-codex-prompt.md`, `docs/dev/current-gpt-handoff.md`, `docs/dev/current-codex-output.md`, `docs/dev/historical-version-and-deferred-route-register.md`, `docs/design/current-planning-anchor-reconciliation.md`, the prompt-execution platform/tool selection policy, the failure-pattern register, branch policy/register, and the most specific accepted decision or audit before implementation.
 - Use repository agents or subagents for independent bounded inspections when useful, but give each one an exact source head, scope, required authorities, exclusions, and output contract. The coordinating agent must reconcile all reports against the same live repository head.
 - Connector-prepared source replacements, patches, probes, and repair bundles are evidence only. They must be independently compared against live source, implemented in the repository, covered by repository tests, and validated before they can become implementation authority.
 - A chat response is not a repository handoff. Complete substantive runs by updating the current output, handoff, prompt when routing changes, branch register, focused authority, and exact commit/push identities required by the protocol.
@@ -25,7 +26,7 @@
 - Use `Version X.Y.Z.S - Short Name` only for a support run attached to exactly one primary version, where `S` is the support-run counter.
 - Use a stable unversioned run name for cross-cutting research, coordination, source indexing, held planning, or read-only work that does not itself advance a primary capability and is not narrowly attached to one primary.
 - Each Codex prompt should include a version label when it is part of the ongoing primary or support workflow.
-- Internal workflow versions are development maturity markers, not public game release versions, package versions, save-format versions, protocol versions, or compatibility promises.
+- Internal workflow versions are development maturity markers, not public game release versions, package versions, save-format versions, protocol versions, model versions, or compatibility promises.
 - `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable detailed authority for label classification, maturity-band entry, and the reserved `0.7.0`, `0.8.0`, `0.9.0`, and `1.0.0` gates.
 - Patch numbers may be multi-digit, such as `Version 0.5.10 - Workflow Baseline Review`; do not roll from `v0.5.9` to `v0.6.0` automatically.
 - Minor-band advancement means project maturity has changed, not that the patch count reached 9, 99, or any other visual threshold.
@@ -50,18 +51,18 @@
 - Use later `v0.8.x` labels only when a narrow playable path is being stabilized as a pre-alpha slice.
 - Reserve `v0.9.x` until sustained alpha testing is viable; reserve `1.0.0` until release-readiness acceptance is recorded.
 - Platform/tool recommendations belong outside and before copy-paste prompt bodies, not inside the prompt itself.
-- Accepted platform/tool labels:
-  - ChatGPT via GitHub Connector
-  - ChatGPT Deep Research
-  - ChatGPT Agent Mode
-  - Codex 5.6 Sol Plan Mode
-  - Codex 5.6 Sol Local, with reasoning level selected according to task complexity
-  - Codex 5.6 Sol Cloud, only when justified by larger multi-file work
-- Do not default every task to the same execution mode or reasoning level. Use High for broad evidence synthesis, risky multi-owner decisions, and substantial multi-file work; use a lighter supported level for trivial narrow edits when quality is preserved.
-- Codex Plan Mode is non-mutating: do not write files, update [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md), stage changes, untrack files, clean up artifacts, or otherwise implement work while still in Plan Mode.
-- If an implementation or cleanup request arrives while still in Codex Plan Mode, return a decision-complete proposed plan instead of editing files.
-- Prefer ChatGPT via GitHub Connector for small repo-aware docs, handoff, audit, prompt-file, or tiny GitHub file edits when quality will not be sacrificed.
-- Use Codex for local validation, multi-file code/content changes, commands, tests, or edits that need the local working tree.
+- Before every prompt, perform the fresh capability inventory required by `docs/dev/prompt-execution-platform-tool-selection-policy.md`. Consider regular ChatGPT, Deep Research, ChatGPT via GitHub Connector, Agent Mode, GPT Work or successor workspaces, all current Codex modes, and every relevant installed or potentially installable plugin, connector, skill, and specialized tool.
+- Required access and completion authority are hard gates. Do not recommend a platform that lacks required repository, local-worktree, web, application, connector, execution, validation, commit, or push capabilities.
+- Do not assume tools from separate platforms can be combined. State cross-platform incompatibilities, manual handoffs, and provisional conclusions explicitly.
+- Recommend an exact platform, mode, model/version, and reasoning level only when currently visible or confirmed. Otherwise recommend a capability class and disclose the uncertainty. Fixed model/version lists in older documents are historical examples only.
+- Balance quality, research depth, validation authority, token/quota consumption, coordination overhead, latency, privacy, and plugin availability. Do not default every task to the same execution mode or reasoning level.
+- Use higher reasoning for broad evidence synthesis, risky multi-owner decisions, persistence or acceptance work, adversarial audits, and substantial multi-file changes; use a lighter supported level only for narrow low-risk work when quality is preserved.
+- Codex Plan Mode or any read-only successor mode is non-mutating: do not write files, update [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md), stage changes, untrack files, clean up artifacts, or otherwise implement work while still in that mode.
+- If an implementation or cleanup request arrives while still in a non-mutating mode, return a decision-complete proposed plan and state the required mode change instead of editing files.
+- Prefer ChatGPT via GitHub Connector for small repo-aware docs, handoff, audit, prompt-file, or tiny GitHub file edits when quality will not be sacrificed and local execution is not required.
+- Use Codex or another authenticated repository-capable implementation surface for local validation, multi-file code/content changes, commands, tests, builds, migrations, generated output, or edits that need the real worktree.
+- Use staged workflows when no single platform has both the required research depth and repository or execution access. Name the owner, handoff artifact, token/quota posture, and validation boundary for every stage.
+- If a materially useful plugin or connector may be available but is not installed or activated, tell the user before the prompt, explain its value and platform, state whether the prompt can proceed without it, and offer the supported installation or activation path. Never word a prompt as though an unavailable capability is active.
 
 ## GPT Connector Active Assistance
 
@@ -113,14 +114,16 @@
 
 ## Prompt Packaging
 
-- Copy-paste prompts should not include the platform/tool label inside the prompt body.
-- State the platform/tool label outside and before the copy-paste prompt.
-- [docs/dev/current-codex-prompt.md](docs/dev/current-codex-prompt.md) stores the authoritative active prompt body and should not include the platform/tool/mode line.
-- When GPT generates, advances, or revises the next Codex prompt, it must update `docs/dev/current-codex-prompt.md`, fetch the file to verify the write, and give the selected platform/tool/mode line directly in chat.
-- Do not store a run-specific platform/tool/mode line in this durable instruction file; select it for the active prompt in chat so this file cannot become a stale execution pointer.
+- Copy-paste prompts should not include a platform, tool, mode, model/version, plugin, or token/quota recommendation inside the prompt body.
+- State the fresh recommendation outside and before the copy-paste prompt using the recommendation block in `docs/dev/prompt-execution-platform-tool-selection-policy.md`.
+- [docs/dev/current-codex-prompt.md](docs/dev/current-codex-prompt.md) stores the authoritative active prompt body and should not include the run-specific platform/tool/mode/model line.
+- When GPT generates, advances, or revises the next Codex prompt, it must update `docs/dev/current-codex-prompt.md`, fetch the file to verify the write, and give the selected platform, mode, model/version or capability class, reasoning level, required tools/connectors, plugin status, token/quota posture, manual preflight, known incompatibilities, alternative route, and capability-check date directly in chat.
+- Before presenting the prompt, disclose materially useful plugins or connectors that are available but not installed or activated, unavailable on the recommended surface, or of unknown availability.
+- Do not store a run-specific platform/tool/mode/model recommendation in this durable instruction file; select it from the current capability inventory so repository documentation cannot become a stale execution pointer.
+- Prompt wording must match the selected surface. Deep Research prompts must not claim private-repository access; connector prompts must not claim local execution; non-mutating Codex prompts must not authorize edits; implementation prompts must name worktree, validation, branch, commit, and handoff requirements; staged workflows must define transfer boundaries.
 - Do not include phrases like "I have included necessary files" unless the user must manually attach, move, upload, or provide files for that run.
-- Tell the user explicitly when they should include files, move files, upload files, pull/sync/push, or otherwise change files manually before running a prompt.
-- If no manual file action is needed, omit file-inclusion language entirely.
+- Tell the user explicitly when they should include files, move files, upload files, transfer a research brief, pull/sync/push, activate a plugin, authorize a connector, or otherwise change files or access before running a prompt.
+- If no manual file, access, plugin, authorization, or transfer action is needed, omit that language entirely.
 
 ## Development Discipline
 
