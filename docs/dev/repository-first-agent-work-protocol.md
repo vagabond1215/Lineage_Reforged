@@ -2,25 +2,28 @@
 
 Date: 2026-07-31
 
+Updated: 2026-08-05
+
 Status: durable repository workflow authority
 
-Applies to: Codex, ChatGPT Agent Mode, ChatGPT via GitHub Connector, human maintainers, and any delegated repository agent unless a more specific accepted prompt imposes stricter requirements
+Applies to: Codex, regular ChatGPT, ChatGPT Deep Research, ChatGPT Agent Mode, GPT Work or successor workspaces, ChatGPT via GitHub Connector, human maintainers, and any delegated repository agent unless a more specific accepted prompt imposes stricter requirements
 
 ## Purpose
 
-All substantive Lineage: Reforged work must be performed from the repository, through repository-aware agents, using the current handoff chain and the applicable design, contract, branch, and verification documentation. External scratch work, connector-only candidate code, generated bundles, chat summaries, and local notes are evidence inputs only until independently reconciled, implemented, validated, committed, and pushed from an authenticated repository checkout.
+All substantive Lineage: Reforged work must be performed from the repository, through repository-aware agents, using the current handoff chain and the applicable design, contract, branch, and verification documentation. External scratch work, connector-only candidate code, generated bundles, chat summaries, Deep Research reports, plugin outputs, and local notes are evidence inputs only until independently reconciled, implemented, validated, committed, and pushed from an authenticated repository checkout.
 
-This protocol does not replace the active Codex prompt or a focused accepted decision. It defines the mandatory repository orientation, execution, validation, and handoff discipline surrounding those authorities.
+This protocol does not replace the active Codex prompt or a focused accepted decision. It defines the mandatory repository orientation, execution, validation, prompt-routing, and handoff discipline surrounding those authorities.
 
 ## 1. Repository Is The Source Of Truth
 
 - Begin substantive work from an authenticated local checkout of `vagabond1215/Lineage_Reforged`.
 - Fetch and prune before relying on branch, pull-request, commit, or coordination state.
 - Resolve the live default-branch head, current branch, upstream, worktree status, and divergence before editing.
-- Use repository files, live Git history, branches, pull requests, tests, and generated diagnostics as authority. Do not treat chat context, an exported bundle, or an earlier connector inspection as current merely because it was accurate when produced.
+- Use repository files, live Git history, branches, pull requests, tests, and generated diagnostics as authority. Do not treat chat context, an exported bundle, a Deep Research report, plugin output, or an earlier connector inspection as current merely because it was accurate when produced.
 - Production source, tests, schemas, migrations, content, assets, generated output, dependency changes, and multi-file coordination edits must be made and validated in the repository checkout through Codex or another repository-capable agent.
 - ChatGPT via GitHub Connector remains appropriate for small complete-file documentation updates, handoff maintenance, audit preparation, branch/PR inspection, and tiny obvious changes that do not materially require local execution.
 - Connector-prepared implementation candidates and repair bundles must remain explicitly marked as evidence until a repository agent independently reviews and applies them.
+- External research and application-workflow outputs must identify their source platform, access limits, and transfer boundary before a repository agent relies on them.
 
 ## 2. Mandatory Authority Reading
 
@@ -30,14 +33,15 @@ Before narrowing to an implementation surface, read the complete current version
 2. `docs/dev/current-codex-prompt.md`;
 3. `docs/dev/current-gpt-handoff.md`;
 4. `docs/dev/current-codex-output.md`;
-5. `docs/dev/historical-version-and-deferred-route-register.md`;
-6. `docs/design/current-planning-anchor-reconciliation.md`;
-7. `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
-8. `docs/dev/branch-lifecycle-and-integration-policy.md`;
-9. `docs/dev/branch-disposition-register.md`;
-10. the most specific accepted design decision, contract, audit, migration rule, or acceptance document for the active route.
+5. `docs/dev/prompt-execution-platform-tool-selection-policy.md`;
+6. `docs/dev/historical-version-and-deferred-route-register.md`;
+7. `docs/design/current-planning-anchor-reconciliation.md`;
+8. `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
+9. `docs/dev/branch-lifecycle-and-integration-policy.md`;
+10. `docs/dev/branch-disposition-register.md`;
+11. the most specific accepted design decision, contract, audit, migration rule, or acceptance document for the active route.
 
-Use the precedence declared by the current handoff and planning reconciliation. Long-lived roadmap, backlog, and sequenced-plan headers may contain preserved historical wording and cannot override the current prompt, handoff, output, historical register, or focused authority.
+Use the precedence declared by the current handoff and planning reconciliation. Long-lived roadmap, backlog, prompt-template examples, and sequenced-plan headers may contain preserved historical wording and cannot override the current prompt, handoff, output, platform/tool selection policy, historical register, or focused authority.
 
 ## 3. Complete Repository Orientation
 
@@ -52,27 +56,65 @@ Every primary implementation, support repair, acceptance audit, multi-owner chan
 - the production caller path, engine/service owner, shared contracts, persistence/migration owners, projections, UI adapters, and JavaScript/TypeScript mirror posture relevant to the route;
 - focused tests, adjacent regressions, integration/simulation coverage, and known baseline failures;
 - generated-output, asset, temporary-artifact, and repository-hygiene rules;
-- active route blockers, protected branches, deferred work, and explicit scope exclusions.
+- active route blockers, protected branches, deferred work, and explicit scope exclusions;
+- the capability and access assumptions carried into the prompt, including which platform owns repository inspection, external research, application access, implementation, validation, commit, and push.
 
-A complete review does not require rereading every historical line in the repository. It does require enough live inspection to prove that the active authority, architecture, caller path, branch state, validation surface, and known risks are understood before implementation begins.
+A complete review does not require rereading every historical line in the repository. It does require enough live inspection to prove that the active authority, architecture, caller path, branch state, validation surface, tool boundaries, and known risks are understood before implementation begins.
 
-## 4. Agent Use And Delegation
+## 4. Platform, Tool, Mode, Model, And Plugin Routing
 
-- Use Codex Local for multi-file source/content changes, commands, tests, builds, typechecking, migrations, and work that requires the real worktree.
-- Use Codex Cloud only when the larger repository task justifies it and the environment can run the required validation.
-- Use Plan Mode only for non-mutating analysis. Switch to an implementation-capable mode before writing or claiming repository changes.
+`docs/dev/prompt-execution-platform-tool-selection-policy.md` controls prompt-routing decisions.
+
+Before every prompt is created or revised:
+
+- inventory the platforms, modes, models, reasoning levels, connectors, plugins, skills, and tools actually available at that time;
+- consider regular ChatGPT, Deep Research, ChatGPT via GitHub Connector, Agent Mode, GPT Work or successor workspaces, all current Codex modes, and relevant installed or potentially installable plugins;
+- treat repository, local-worktree, web, application, execution, validation, authentication, commit, and push access as hard gates;
+- identify tools that cannot operate together in the same surface or session;
+- distinguish installed and active plugins from potentially available but inactive, unavailable, or unknown plugins;
+- balance quality, research depth, token/quota use, latency, privacy, coordination overhead, and validation authority;
+- recommend an exact model/version only when currently visible or confirmed;
+- use an explicit staged workflow when no single surface has all required access and tools.
+
+Do not assume:
+
+- Deep Research has private-repository access;
+- Codex has the same Deep Research, browser, application, connector, or plugin surface as regular ChatGPT;
+- GPT Work, Agent Mode, regular ChatGPT, and Codex share token pools, file state, connectors, or installed plugins;
+- a connector can run local tests or inspect an unsynced worktree;
+- a cloud agent can see local-only files, credentials, or changes;
+- an available plugin is installed or authorized.
+
+If a materially useful plugin or connector may be available but is not installed or activated, tell the user before the prompt, explain why it would help, state whether the prompt can proceed without it, and offer the supported activation or installation route. Do not write the prompt as if that capability is active.
+
+The platform, mode, model/version, reasoning, tool, plugin, token/quota, incompatibility, manual-preflight, and alternative-route recommendation belongs outside the copy-paste prompt body.
+
+## 5. Agent Use And Delegation
+
+- Use the least-powerful safe execution surface that preserves quality and completion authority.
+- Use ChatGPT Deep Research for source-heavy external research when repository mutation is not required, then transfer its cited output into a repository-aware stage when necessary.
+- Use ChatGPT via GitHub Connector for bounded remote repository inspection, complete-file documentation updates, prompt/handoff maintenance, and isolated evidence passes that do not require local execution.
+- Use GPT Work, Agent Mode, or successor workspaces for connected application or browser workflows when their active tools match the task.
+- Use Codex or another authenticated repository-capable implementation surface for multi-file source/content changes, commands, tests, builds, typechecking, migrations, generated output, and work that requires the real worktree.
+- Use cloud execution only when remote state is synchronized and the required validation, assets, credentials, and dependencies are available there.
+- Use Plan Mode or any read-only successor mode only for non-mutating analysis. Switch to an implementation-capable mode before writing or claiming repository changes.
 - Use repository agents or subagents for independent bounded inspections when the task spans distinct domains, such as branch review, production caller tracing, persistence authority, test coverage, or documentation reconciliation.
-- Give each delegated agent an exact source head, scope, required documents, exclusions, and output contract.
-- The coordinating agent must reconcile all delegated findings against the same live repository head. Agent reports are evidence, not automatically accepted authority.
+- Give each delegated agent an exact source head, platform/mode, available tools, scope, required documents, exclusions, and output contract.
+- The coordinating agent must reconcile all delegated findings against the same live repository head. Agent, research, and plugin reports are evidence, not automatically accepted authority.
 - Never allow parallel agents to edit overlapping source or coordination files without an explicit integration plan.
+- For staged workflows, name which stage owns research, repository comparison, implementation, executable validation, commit, push, and final handoff.
 
-## 5. Pre-Edit Gate
+## 6. Pre-Edit Gate
 
 Before changing files, record:
 
 - inspected base head and implementation starting head;
 - active version/run and label class;
 - controlling prompt and focused authority;
+- selected execution platform, mode, model/version or capability class, and reasoning level;
+- required tools/connectors and their active availability;
+- materially relevant plugins that are active, inactive, unavailable, or unknown;
+- known cross-platform incompatibilities and manual handoffs;
 - numbered finding or requirement inventory;
 - production callers and owners;
 - authorized files and explicit exclusions;
@@ -83,7 +125,9 @@ Before changing files, record:
 
 Stop and install a narrower decision or support route when the necessary fix would cross an unauthorized shared contract, save format, schema, dependency, migration, content, asset, or owner boundary.
 
-## 6. Implementation Discipline
+Stop and reroute when the selected platform cannot access required evidence or perform required validation. Do not downgrade an implementation or acceptance claim merely to fit the current tool surface.
+
+## 7. Implementation Discipline
 
 - Make the smallest coherent repository patch that satisfies the active authority.
 - Preserve exact accepted behavior outside the numbered findings.
@@ -92,8 +136,9 @@ Stop and install a narrower decision or support route when the necessary fix wou
 - Reproduce failure-before-acceptance, failure-after-acceptance, retry, restart, stale state, conflicting state, duplicate submission, order reversal, and repair completion whenever applicable.
 - Do not weaken validation, delete retained truth, invent unavailable provenance, or create generic frameworks to avoid a narrow repair.
 - Do not write production code outside the repository and later describe it as implemented.
+- Do not promote external research or connector evidence into runtime authority without repository comparison and the required executable proof.
 
-## 7. Validation And Diff Review
+## 8. Validation And Diff Review
 
 Run all validation required by the active prompt and the changed surfaces. The completion evidence must normally include:
 
@@ -108,15 +153,16 @@ Run all validation required by the active prompt and the changed surfaces. The c
 - complete unstaged and staged diff inspection;
 - final `git status`, branch/upstream state, and live post-fetch head verification.
 
-Do not infer validation from earlier runs. State exactly what ran in the current repository checkout and what did not.
+Do not infer validation from earlier runs, another platform, or a research stage. State exactly what ran in the current repository checkout and what did not.
 
-## 8. Coordination And Handoff
+## 9. Coordination And Handoff
 
 Before completing a substantive run:
 
 - update `docs/dev/current-codex-output.md` with exact findings, files, checks, counts, guardrail evidence, branch/PR review, risks, and final disposition;
-- update `docs/dev/current-gpt-handoff.md` when current route, blockers, accepted boundaries, branch posture, or near-term order changes;
+- update `docs/dev/current-gpt-handoff.md` when current route, blockers, accepted boundaries, branch posture, near-term order, or execution-stage assumptions change;
 - update `docs/dev/current-codex-prompt.md` only when installing or revising the next executable route;
+- when a prompt is installed or revised, verify that its wording matches the intended execution surface and give the fresh outside-prompt recommendation required by `docs/dev/prompt-execution-platform-tool-selection-policy.md`;
 - update `docs/dev/branch-disposition-register.md` for created, changed, integrated, retained, superseded, protected, or deleted branches and PRs;
 - update focused decisions, acceptance audits, historical/deferred routing, and planning reconciliation when their authority changes;
 - verify every complete-file documentation write after writing;
@@ -124,7 +170,7 @@ Before completing a substantive run:
 
 A chat response is not a substitute for a repository handoff.
 
-## 9. Completion Report Requirements
+## 10. Completion Report Requirements
 
 The final report must distinguish:
 
@@ -133,20 +179,22 @@ The final report must distinguish:
 - final committed head;
 - live remote head after fetch/prune;
 - repository files changed;
+- platform, mode, model/version or capability class, and tools actually used;
+- plugins/connectors used and material unavailable capabilities;
 - checks actually run and exact results;
 - applicable failure-pattern IDs and evidence;
 - branch/PR actions and retained review triggers;
 - unresolved risks or blockers;
 - exact completion disposition and next route.
 
-If repository access, authentication, a local checkout, required tooling, or validation is unavailable, report `IMPLEMENTATION_INCOMPLETE`. Preserve useful evidence in the repository when safely possible, but do not claim implementation, acceptance, or a green successor.
+If repository access, authentication, a local checkout, required tooling, plugin, connector, or validation is unavailable, report `IMPLEMENTATION_INCOMPLETE`. Preserve useful evidence in the repository when safely possible, but do not claim implementation, acceptance, or a green successor.
 
-## 10. Evidence Bundles
+## 11. Evidence Bundles
 
 Evidence bundles may accelerate review but never bypass it.
 
 - Store them on an explicitly classified branch or artifact path.
-- Record source head, contents, hashes, reconstruction steps, validation already performed, and validation not performed.
+- Record source head, producing platform/mode, accessible sources, contents, hashes, reconstruction steps, validation already performed, and validation not performed.
 - Mark candidate replacements as non-authoritative.
 - Require the consuming repository agent to reproduce findings, compare candidates against live source, extend repository tests, run the complete validation gate, and implement through an ordinary reviewed branch.
 - Do not cherry-pick an evidence-only branch into production as a substitute for implementation.
