@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Date: 2026-08-03
+Date: 2026-08-05
 
-Status: parent `0.6.9` acceptance reopened; hardened historical recovery-fork authority decision active; twenty-eight isolated connector-only evidence lanes complete and indexed across three waves
+Status: parent `0.6.9` acceptance reopened; hardened historical recovery-fork authority decision active; twenty-eight isolated connector-only evidence lanes complete and indexed across three waves; dynamic platform/tool/model/plugin prompt-routing authority installed
 
 ## Current Route
 
@@ -29,6 +29,56 @@ The active prompt:
 6. prohibits integration or modification of `parallel/*` evidence branches during the active decision.
 
 The active decision may not accept parent `0.6.9`, edit or revert production, edit tests, or run Ashen Reef.
+
+## Prompt Execution Routing Authority
+
+Durable policy:
+
+`docs/dev/prompt-execution-platform-tool-selection-policy.md`
+
+Installation and enforcement commits:
+
+- `e52e1fb2a213dfb3aeb472d8bc9b4289928a250b` — dynamic platform/tool/mode/model/plugin selection policy;
+- `b4eb481331e3d5e0fc314a1ae1712b0446b6cab6` — root `AGENTS.md` enforcement;
+- `9f5a0246b53a74aaba9008bd829788eecbae1180` — repository-first routing and pre-edit gate.
+
+Before every prompt is created, revised, or presented, the prompt creator must freshly inspect and compare:
+
+- regular ChatGPT;
+- ChatGPT Deep Research;
+- ChatGPT via GitHub Connector;
+- ChatGPT Agent Mode;
+- GPT Work or successor workspaces;
+- every available Codex mode and environment;
+- selectable models and reasoning levels;
+- installed plugins, connectors, skills, and specialized tools;
+- materially useful plugins or connectors that may be available but are not installed or activated;
+- repository, local-worktree, web, application, execution, validation, commit, and push access;
+- token, quota, latency, privacy, and coordination tradeoffs;
+- tool combinations that are unavailable on the same platform or session.
+
+Required access and completion authority are hard gates. A platform that lacks required repository evidence, local execution, validation, or commit/push capability cannot be recommended as the sole implementation or acceptance surface.
+
+The user currently reports that ChatGPT Deep Research can provide deeper external research without consuming Codex or GPT Work tokens, but cannot be granted private GitHub repository access through that surface. Treat this as a current user-specific constraint and re-verify it when platform capabilities change. Use a staged Deep Research → repository-aware comparison → Codex implementation workflow when both external depth and private-repository execution are required.
+
+Every copy-paste prompt must be preceded in chat by a fresh outside-prompt recommendation covering:
+
+- recommended platform or staged workflow;
+- mode;
+- confirmed model/version or capability class;
+- reasoning depth;
+- access and quality rationale;
+- required tools and connectors;
+- plugin status, including useful inactive or uninstalled capabilities;
+- token/quota posture when known;
+- manual preflight or transfer requirements;
+- known incompatibilities;
+- alternative route and tradeoff;
+- capability-check date.
+
+Do not store this transient recommendation inside `docs/dev/current-codex-prompt.md`. Prompt wording must match the selected surface: Deep Research cannot claim private-repository access; connector work cannot claim local tests or worktree evidence; read-only modes cannot authorize edits; Codex implementation prompts must name repository, validation, branch, commit, and handoff requirements.
+
+Older fixed ChatGPT or Codex model/version lists are historical examples only unless freshly confirmed.
 
 ## Connector Evidence Indexes
 
@@ -109,12 +159,12 @@ Until the large branch register is safely reconciled, this handoff and the three
 
 ## Validation Posture
 
-The twenty-eight audits used GitHub Connector inspection only. They ran no local tests, builds, typechecks, linters, generators, simulations, browser checks, worktree commands, or executable lineage probes.
-
-Every third-wave branch was verified as exactly one commit and one documentation path ahead of shared baseline `8214327906fbc2edf7ab4d02168cf94b3abc7e6f`.
+The twenty-eight audits and this routing-policy installation used GitHub Connector inspection and complete-file documentation writes only. No local tests, builds, typechecks, linters, generators, simulations, browser checks, worktree commands, or executable lineage probes were run.
 
 ## Next Action
 
-Run the exact current prompt in `docs/dev/current-codex-prompt.md` from a freshly synchronized checkout containing this handoff.
+Before presenting the active prompt to the user, run the fresh capability inventory and provide the outside-prompt recommendation required by `docs/dev/prompt-execution-platform-tool-selection-policy.md`.
 
-The active `0.6.9` decision should inventory and preserve all twenty-eight evidence branch dispositions, but must not integrate or rewrite them. Their substantive use begins only at named consumers in the three result indexes.
+Then run the exact current prompt in `docs/dev/current-codex-prompt.md` from a freshly synchronized authenticated repository checkout containing this handoff.
+
+The active `0.6.9` decision should inventory and preserve all twenty-eight evidence branch dispositions, but must not integrate or rewrite them. Its successor prompt must apply the same dynamic execution-routing policy before it is presented.
