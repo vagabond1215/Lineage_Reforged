@@ -1,16 +1,12 @@
 # Current Codex Output
 
-Source run: third-wave sequential GPT Connector-only evidence audits and coordinator indexing
+Source run: dynamic prompt execution platform/tool/mode/model/plugin routing authority installation
 
-Date: 2026-08-03
+Date: 2026-08-05
 
-Execution source head: `8214327906fbc2edf7ab4d02168cf94b3abc7e6f`
+Execution source head: `59cbe11ed6ed19de2f10a4d698fe4a6121ce8c04`
 
-Third-wave result-index commit: `905cfb1c0b3224cbfa072af3d3c2a70f954b29b2`
-
-Handoff coordination commit: `174d277cf1fc291f64b0f4c9310575dacc512f99`
-
-Result: `TWENTY_EIGHT_CONNECTOR_EVIDENCE_RUNS_COMPLETE_AND_INDEXED_ACROSS_THREE_WAVES`
+Result: `DYNAMIC_PROMPT_EXECUTION_ROUTING_AUTHORITY_INSTALLED`
 
 ## Current Disposition
 
@@ -18,85 +14,126 @@ Result: `TWENTY_EIGHT_CONNECTOR_EVIDENCE_RUNS_COMPLETE_AND_INDEXED_ACROSS_THREE_
 - Existing lineage implementation `cbad987028d81c5ecdc35403333ec920d0ea5e53`: `IMPLEMENTED_PENDING_AUTHORITY_RECONCILIATION_AND_REAUDIT`.
 - Historical `0.6.9.10` acceptance: superseded pending the active decision and a properly installed successor.
 - Active route: unversioned `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`.
-- Hardened prompt: `11a18dbeb373d024907f1e0f18ab1716b701930c`.
 - Ashen Reef survey decision: blocked.
 - Survey implementation: unimplemented.
 - `0.7.0`: `NOT_READY`.
+- Twenty-eight connector evidence branches remain isolated and unmerged across three indexed waves.
 
-No production, test, schema, content, asset, dependency, generated-output, branch-lifecycle, or pull-request mutation occurred.
+The active prompt body was not changed. Its execution and successor-prompt packaging are now governed by the new durable routing policy through `AGENTS.md`, the repository-first protocol, and the current handoff.
 
-## Third-Wave Sequential Runs
+## Durable Routing Policy
 
-The following eight audits were executed one at a time from the same master baseline:
+Created:
 
-| # | Branch head | Result |
-| ---: | --- | --- |
-| 1 | `parallel/combat-ai-scoring-test-coverage-refresh` at `e4e7a85bb356fb9d1ba143ac0edecf9532071698` | weighted scoring preserved; complete field-effect, deterministic tie, manual resumption, and ordered-gambit proof gaps recorded |
-| 2 | `parallel/magic-runtime-readiness-refresh` at `891090af4d3739ae235b570b778029bed0f21893` | known-spell and readiness foundation recognized; general cost/effect execution remains deferred |
-| 3 | `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405` | engine-owned selection separated from UI-owned multi-domain advancement and incomplete preview parity |
-| 4 | `parallel/quest-action-tree-audit` at `4d6c622b2b39b7e0ca1839e19473b4c772d0a762` | validated graphs separated from missing runtime attempt, formula, typed-effect, persistence, replay, and correction authority |
-| 5 | `parallel/civilization-tick-audit` at `859aadea20efaf88b49183491b08181bdea463db` | active civilization simulation recorded; durable occurrence, replay, and correction boundaries remain incomplete |
-| 6 | `parallel/world-spawn-admission-audit` at `fb42f01bc91d6b31e8e20533c28935404f2c918c` | candidate resolution and combat handoff recorded; identity, consumption, duplicate, seed, persistence, and correction gaps isolated |
-| 7 | `parallel/game-tick-orchestration-audit` at `95d64e9e56cd65ecad237f3101adef6812f7b020` | fixed order and aggregate events/warnings recorded; noncombat delta omission and whole-tick atomicity remain unresolved |
-| 8 | `parallel/character-panel-mutation-audit` at `23d61f36f871d2426b53915a632df6168f2848d3` | live panel mutations and flag-backed compatibility storage recorded; named commands, typed preferences, and migration remain open |
+`docs/dev/prompt-execution-platform-tool-selection-policy.md`
 
-Every branch was verified as exactly one commit and one documentation path ahead of baseline `8214327906fbc2edf7ab4d02168cf94b3abc7e6f`.
+Policy commit:
 
-All eight remain isolated and unmerged as:
+`e52e1fb2a213dfb3aeb472d8bc9b4289928a250b`
 
-`CANDIDATE_INTEGRATION`
+The policy requires a fresh capability inventory before every prompt is created, revised, or presented. It covers:
 
-## Durable Discovery And Routing
+- regular ChatGPT;
+- ChatGPT Deep Research;
+- ChatGPT via GitHub Connector;
+- ChatGPT Agent Mode;
+- GPT Work or successor workspaces;
+- every currently available Codex mode and environment;
+- selectable models and reasoning levels;
+- installed plugins, connectors, skills, and specialized tools;
+- potentially useful plugins or connectors that are available but not installed or activated;
+- repository, local-worktree, web, application, execution, validation, commit, and push access;
+- quality, research depth, token/quota use, latency, privacy, and coordination overhead;
+- tools and capabilities that cannot operate together on the same surface or session.
 
-First-wave result index:
+Required access and completion authority are hard gates. A platform without required repository access, local execution, validation, or commit/push capability cannot be recommended as the sole implementation or acceptance surface.
 
-`docs/dev/parallel-gpt-connector-only-run-results-2026-08-03.md`
+The policy treats fixed model/version names in older prompt templates as historical examples. Exact models and modes must be freshly confirmed at prompt-generation time.
 
-Second-wave result index:
+## Platform-Specific Prompt Requirements
 
-`docs/dev/parallel-gpt-connector-only-second-wave-results-2026-08-03.md`
+Prompt wording must match the selected surface:
 
-Third-wave result index:
+- Deep Research prompts define external-source research and cannot assume private-repository access.
+- GitHub Connector prompts define exact remote repository evidence and cannot claim local tests, builds, typechecks, or worktree state.
+- Codex Plan or read-only prompts cannot authorize edits or implementation claims.
+- Codex implementation prompts must define repository synchronization, allowed and forbidden files, validation, branch, commit, push, and handoff requirements.
+- GPT Work, Agent Mode, or application-workflow prompts must name enabled applications, plugins, permission boundaries, user-confirmation gates, and repository-transfer requirements.
+- Staged workflows must identify which platform owns research, repository comparison, implementation, executable validation, commit, push, and final handoff.
 
-`docs/dev/parallel-gpt-connector-only-third-wave-results-2026-08-03.md`
+## Plugin And Connector Disclosure
 
-The current handoff references all three waves, exact third-wave heads, applicability rules, and integration constraints.
+Before a prompt is presented, materially relevant plugins, connectors, or skills must be classified as:
 
-## Applicability Rule
+- `AVAILABLE_AND_ACTIVE`;
+- `AVAILABLE_NOT_INSTALLED_OR_NOT_ACTIVATED`;
+- `UNAVAILABLE_ON_RECOMMENDED_SURFACE`;
+- `AVAILABILITY_UNKNOWN`;
+- `NOT_RELEVANT`.
 
-A future run must inspect applicable evidence across all three indexes when:
+When a useful capability may exist but is not installed or activated, the user must be told before the prompt. The recommendation must explain its value, identify the platform that would use it, state whether the prompt can proceed without it, and offer the supported activation or installation route. Prompts must not assume missing capabilities are active.
 
-1. its prompt names a mandatory consumer;
-2. it changes a file, owner, contract, behavior, or verification surface covered by an audit;
-3. it claims the domain is mature, complete, engine-owned, replay-safe, deterministic, accessible, party-ready, effect-ready, world-integrated, provenance-aware, module-integrated, content-validated, presentation-only, simulation-mature, migration-ready, or deletion-ready;
-4. it proposes branch integration, supersession, retirement, or deletion;
-5. a representative-loop, milestone, or maturity audit relies on the domain.
+## Required Outside-Prompt Recommendation
 
-A completion report must identify applicable entries and state whether they were inspected. Unrelated entries may be omitted. Branch evidence never overrides newer accepted authority.
+Every copy-paste prompt must be preceded in chat by a fresh block covering:
 
-## Branch Register Posture
+- recommended platform or staged workflow;
+- mode;
+- confirmed model/version or capability class;
+- reasoning depth;
+- route rationale;
+- required tools/connectors;
+- plugin availability status;
+- token/quota posture when known;
+- manual preflight or transfer requirements;
+- known incompatibilities;
+- alternative route and tradeoff;
+- capability-check date.
 
-The large `docs/dev/branch-disposition-register.md` was not rewritten through the connector. Safe replacement requires complete live-content reconciliation and should occur once in a dedicated branch/document coordinator.
+The recommendation remains outside `docs/dev/current-codex-prompt.md` so transient model, mode, token, and plugin availability cannot become a stale repository execution pointer.
 
-Until then, controlling discovery pointers for the twenty-eight evidence branches are:
+## User-Specific Deep Research Constraint
 
-1. `docs/dev/current-gpt-handoff.md`;
-2. `docs/dev/parallel-gpt-connector-only-run-results-2026-08-03.md`;
-3. `docs/dev/parallel-gpt-connector-only-second-wave-results-2026-08-03.md`;
-4. `docs/dev/parallel-gpt-connector-only-third-wave-results-2026-08-03.md`.
+The user reports that ChatGPT Deep Research can be used without consuming Codex or GPT Work tokens but cannot currently be granted private GitHub repository access through that platform.
+
+This is recorded as a current user-specific constraint, not a permanent product guarantee. It must be re-verified whenever platform capabilities change.
+
+When external research depth and private-repository implementation are both required, use an explicit staged route such as:
+
+1. Deep Research for cited external evidence;
+2. ChatGPT via GitHub Connector or Codex for current repository comparison;
+3. Codex implementation mode for edits, tests, validation, commit, and push.
+
+## Repository Enforcement Changes
+
+Updated:
+
+- `AGENTS.md` at `b4eb481331e3d5e0fc314a1ae1712b0446b6cab6`;
+- `docs/dev/repository-first-agent-work-protocol.md` at `9f5a0246b53a74aaba9008bd829788eecbae1180`;
+- `docs/dev/current-gpt-handoff.md` at `f08569c2f736eabcdf5beb733443efb623607a16`;
+- this output.
+
+`AGENTS.md` now requires the capability inventory and plugin disclosure before every prompt. The repository-first protocol now includes platform routing in mandatory authority reading, repository orientation, delegation, the pre-edit gate, validation reporting, and prompt handoff.
+
+## Files Changed
+
+- `docs/dev/prompt-execution-platform-tool-selection-policy.md`
+- `AGENTS.md`
+- `docs/dev/repository-first-agent-work-protocol.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/current-codex-output.md`
+
+No production source, tests, schemas, migrations, content, assets, dependencies, generated output, current prompt body, branches, or pull requests changed.
 
 ## Validation And Limits
 
 Performed through GitHub Connector:
 
-- live master identity verification;
-- targeted current source and authority inspection;
-- eight isolated branch creations;
-- complete one-document writes;
-- exact branch commit capture;
-- eight baseline-to-branch changed-path comparisons;
-- third-wave result-index publication;
-- handoff and output reconciliation.
+- live default-branch identity inspection;
+- complete-file reads of the root workflow authority, repository-first protocol, current prompt, handoff, output, connector policy, and historical prompt-template guidance;
+- complete-file documentation writes;
+- sequential commit capture;
+- post-write file verification and final diff review.
 
 Not performed:
 
@@ -106,13 +143,14 @@ Not performed:
 - content lint;
 - generators;
 - simulations;
-- browser or accessibility execution;
+- browser execution;
 - local Git/worktree commands;
-- branch rebases, merges, or deletion;
+- plugin installation or activation;
+- branch, PR, or evidence-lane integration;
 - executable lineage probes.
 
 ## Next Action
 
-Run the exact active prompt from a freshly synchronized checkout containing the latest handoff and this output.
+Before presenting the active prompt in `docs/dev/current-codex-prompt.md`, perform the fresh capability inventory and provide the outside-prompt recommendation required by `docs/dev/prompt-execution-platform-tool-selection-policy.md`.
 
-The active `0.6.9` decision should inventory and preserve all twenty-eight branch dispositions, but must not integrate or rewrite the branch documents. Substantive use begins only at mandatory consumers in the three result indexes.
+Then run the active prompt from a freshly synchronized authenticated repository checkout. Its successor prompt must use the same dynamic routing and disclosure policy.
