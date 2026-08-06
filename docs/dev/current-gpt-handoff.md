@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Date: 2026-08-05
+Date: 2026-08-06
 
-Status: parent `0.6.9` acceptance reopened; hardened historical recovery-fork authority decision active; twenty-eight isolated connector-only evidence lanes complete and indexed across three waves; dynamic platform/tool/model/plugin prompt-routing authority installed
+Status: parent `0.6.9` acceptance reopened; hardened historical recovery-fork authority decision active; twenty-eight isolated connector-only evidence lanes indexed across three waves; dynamic prompt-routing authority installed; token-reset waiting-period prestage complete
 
 ## Current Route
 
@@ -29,6 +29,31 @@ The active prompt:
 6. prohibits integration or modification of `parallel/*` evidence branches during the active decision.
 
 The active decision may not accept parent `0.6.9`, edit or revert production, edit tests, or run Ashen Reef.
+
+## Token-Reset Waiting-Period Prestage
+
+Current connector prestage:
+
+`docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`
+
+Publication commit:
+
+`93a97f92062b58ecd929a05a4aa4dc3dd7c50a49`
+
+The prestage records:
+
+- a fresh hosted branch and pull-request inventory at source head `d23afddf5fecae470d1ff3988250b379a8513bfb`;
+- current divergence and unique paths for the eight non-evidence branches;
+- continued existence and routing pointers for all twenty-eight indexed evidence branches;
+- PR #2 and PR #3 current heads and dispositions;
+- correction of PR #3's stale `HOLD_NAMED_CONSUMER` body to `SUPERSEDED_PRESERVE_EVIDENCE` without changing its branch or lifecycle state;
+- an exact active-decision source map covering shared contracts, campaign-session fork emission, completed-replay validation, serialization, and focused tests;
+- a pre-staged C0 → C1 → C2 → C3 characterization matrix and six-field evidence worksheet;
+- an explicit Codex resume checklist.
+
+This document is connector evidence, not implementation or acceptance authority. Codex must re-fetch, re-prune, and verify every dynamic fact against the synchronized checkout. The active decision should read it to reduce rediscovery but must still perform its required independent history, branch, source, and executable characterization.
+
+The large `docs/dev/branch-disposition-register.md` remains a 2026-08-02 snapshot. Do not replace it from partial connector content. The active decision or a later repository-capable coordinator must reconcile it from complete live evidence.
 
 ## Prompt Execution Routing Authority
 
@@ -131,20 +156,9 @@ The completion report must state which indexed entries were applicable and wheth
 
 Evidence branches never override newer accepted authority. Preserve conflicting evidence as historical and follow the higher-precedence current decision.
 
-## Principal Third-Wave Findings
-
-- Combat AI: weighted scoring is real, but complete preference/target-rule effect, deterministic ties, manual resumption, and ordered gambits lack focused proof.
-- Magic: known-spell and cast-readiness foundations exist; general cost and effect execution remains absent.
-- Activity advancement: selection is engine-owned, while advancement remains a UI-owned multi-domain mutation without complete preview parity or typed receipts.
-- Quest action trees: validated graphs exist; runtime attempt identity, cursor state, formulas, typed effects, persistence, replay, and correction do not.
-- Civilization: active economy/market/transport/trade/settlement/quest-offer simulation exists; occurrence, replay, and correction evidence is incomplete.
-- World spawn: candidates flow into combat, but identity, consumption, duplicate admission, seed evidence, persistence, and correction require an exact boundary.
-- Game tick: fixed domain order and event/warning aggregation exist; noncombat delta omission and whole-tick atomicity remain unclear.
-- Character panel: consumable, equipment, body, and persisted-flag mutations remain UI-owned compatibility behavior requiring named commands and typed preferences.
-
 ## Integration And Branch Lifecycle
 
-Do not merge any wave as a batch.
+Do not merge any evidence wave as a batch.
 
 At a named consumer or dedicated documentation coordinator:
 
@@ -155,16 +169,16 @@ At a named consumer or dedicated documentation coordinator:
 - update `docs/dev/branch-disposition-register.md` once from complete live evidence;
 - verify equivalent preservation before branch deletion.
 
-Until the large branch register is safely reconciled, this handoff and the three result indexes are the controlling discovery pointers for all twenty-eight connector evidence branches.
+Until the large branch register is safely reconciled, this handoff, the waiting-period prestage, and the three result indexes are the controlling discovery pointers for the hosted evidence branches.
 
 ## Validation Posture
 
-The twenty-eight audits and this routing-policy installation used GitHub Connector inspection and complete-file documentation writes only. No local tests, builds, typechecks, linters, generators, simulations, browser checks, worktree commands, or executable lineage probes were run.
+The twenty-eight audits, routing-policy installation, and waiting-period prestage used GitHub Connector inspection and complete-file documentation writes only. No local tests, builds, typechecks, linters, generators, simulations, browser checks, worktree commands, or executable lineage probes were run.
 
 ## Next Action
 
 Before presenting the active prompt to the user, run the fresh capability inventory and provide the outside-prompt recommendation required by `docs/dev/prompt-execution-platform-tool-selection-policy.md`.
 
-Then run the exact current prompt in `docs/dev/current-codex-prompt.md` from a freshly synchronized authenticated repository checkout containing this handoff.
+After token reset, run the exact current prompt in `docs/dev/current-codex-prompt.md` from a freshly synchronized authenticated repository checkout. Read `docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md` during orientation, verify it against live state, and use it to reduce branch/source/probe rediscovery.
 
-The active `0.6.9` decision should inventory and preserve all twenty-eight evidence branch dispositions, but must not integrate or rewrite them. Its successor prompt must apply the same dynamic execution-routing policy before it is presented.
+The active `0.6.9` decision should inventory and preserve all twenty-eight evidence branch dispositions, reconcile the full branch register, and avoid integrating or rewriting the parallel documents. Its successor prompt must apply the same dynamic execution-routing policy before it is presented.
