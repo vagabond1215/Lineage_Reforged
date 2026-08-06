@@ -1,12 +1,16 @@
 # Current Codex Output
 
-Source run: dynamic prompt execution platform/tool/mode/model/plugin routing authority installation
+Source run: connector-only token-reset waiting-period prestage and branch/PR metadata refresh
 
-Date: 2026-08-05
+Date: 2026-08-06
 
-Execution source head: `59cbe11ed6ed19de2f10a4d698fe4a6121ce8c04`
+Execution source head: `d23afddf5fecae470d1ff3988250b379a8513bfb`
 
-Result: `DYNAMIC_PROMPT_EXECUTION_ROUTING_AUTHORITY_INSTALLED`
+Prestage publication commit: `93a97f92062b58ecd929a05a4aa4dc3dd7c50a49`
+
+Handoff coordination commit: `0a6ceb1a49bfab640b02a9ba04f24445d110c15c`
+
+Result: `CONNECTOR_PRESTAGE_COMPLETE_NO_ACTIVE_ROUTE_ADVANCEMENT`
 
 ## Current Disposition
 
@@ -19,138 +23,150 @@ Result: `DYNAMIC_PROMPT_EXECUTION_ROUTING_AUTHORITY_INSTALLED`
 - `0.7.0`: `NOT_READY`.
 - Twenty-eight connector evidence branches remain isolated and unmerged across three indexed waves.
 
-The active prompt body was not changed. Its execution and successor-prompt packaging are now governed by the new durable routing policy through `AGENTS.md`, the repository-first protocol, and the current handoff.
+The active prompt body, production source, tests, contracts, persistence formats, serializers, migrations, content, assets, and dependencies were not changed.
 
-## Durable Routing Policy
+## Waiting-Period Prestage
 
 Created:
 
+`docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`
+
+The document provides:
+
+- a live hosted branch and pull-request snapshot;
+- current divergence and unique paths for the eight non-evidence branches;
+- continued discovery pointers for all twenty-eight indexed evidence branches;
+- a live addendum to the stale 2026-08-02 branch register without attempting an unsafe partial replacement;
+- an exact active-decision repository source map;
+- a pre-staged C0 → C1 → C2 → C3 characterization matrix;
+- a six-field durable-evidence worksheet;
+- a post-reset Codex resume checklist.
+
+The prestage is connector evidence only. Codex must independently refresh and verify every dynamic fact in the synchronized checkout.
+
+## Hosted Branch Inventory
+
+At source head `d23afddf5fecae470d1ff3988250b379a8513bfb`, GitHub exposed:
+
+- 37 total branches;
+- 36 non-default branches;
+- 32 `parallel/*` branches;
+- 28 indexed connector evidence branches;
+- two open pull requests.
+
+Current non-evidence branch comparisons against that master head:
+
+| Branch | Branch-only / master-only | Current posture |
+| --- | ---: | --- |
+| `feat/main-menu-assets` | `0 / 769` | fully behind; exact-ref retirement review required before deletion |
+| `main-menu-asset-contract-pass` | `10 / 697` | launcher evidence through PR #2; no active-route integration |
+| `main-menu-refinement-pass` | `2 / 704` | overlapping historical launcher evidence |
+| `parallel/connector-prep-freshness-audit` | `1 / 105` | stale one-document evidence for a dedicated supersession pass |
+| `parallel/launcher-asset-pr-disposition` | `1 / 103` | optional launcher decision evidence |
+| `parallel/prompt-packaging-integrity-audit` | `1 / 132` | `PROTECTED_REFERENCE` |
+| `parallel/0.6.9.7-repair-bundle` | `7 / 56` | `SUPERSEDED_PRESERVE_EVIDENCE` |
+| `prep/integrated-gameplay-0-7-readiness-audit` | `2 / 185` | `PROTECTED_REFERENCE`; `0.7.0` remains not ready |
+
+No branch was merged, rebased, force-updated, deleted, or advanced.
+
+## Pull-Request Metadata Repair
+
+PR #3 remained open and draft at head:
+
+`10afdef7d85a3010b5afadd20c0cd014ceac5fcc`
+
+Its body still described the repair bundle as `HOLD_NAMED_CONSUMER`, conflicting with later repository authority. The connector updated only the PR description to:
+
+`SUPERSEDED_PRESERVE_EVIDENCE`
+
+The corrected description now:
+
+- states that the original consumer window is complete;
+- links the reopened historical recovery-fork decision;
+- retains the do-not-merge and do-not-cherry-pick rules;
+- preserves the bundle path, expected archive hash, source base, and exact branch head;
+- requires equivalent preservation before closure or deletion.
+
+The PR remained open and draft. Its branch content, head, base, and lifecycle state did not change.
+
+PR #2 remained open and non-draft at head:
+
+`e78dc645cfb658685be12f45f46d34b7c0da1119`
+
+No PR #2 mutation occurred. Its launcher evidence still requires a dedicated product/asset decision and local UI/build validation before any re-authored consumer.
+
+## Active-Decision Source Map
+
+The prestage identifies the main current code and evidence surfaces:
+
+- `packages/shared/types/src/contracts.ts` — snapshot, campaign identity, authority ledger, continuity-fork, receipt, and completion-continuity contracts;
+- `packages/engines/game-engine/src/campaign-session.ts` — session control, first-divergent fork emission, recovery completion, retained mutation results, and current identity/control cross-checks;
+- `packages/engines/game-engine/src/normal-defeat.ts` — completed replay provenance and arbitrary-depth continuity-lineage validation;
+- `packages/shared/persistence/src/index.ts` — snapshot serialization boundary used by mutation fingerprinting and save persistence;
+- `tests/unit/campaign-persistence-foundation.test.mjs` — focused existing persistence evidence;
+- the active prompt and focused 0.6.9 decisions, reviews, acceptance audit, and failure-pattern register.
+
+Static connector inspection confirms the exact unresolved boundary the active prompt must decide:
+
+- the recovery edge has receipt-linked mutation/tick/continuity checks and nonblank artifact/publication checks;
+- the current edge is cross-checked against current campaign identity;
+- intermediate historical edges are structurally checked for unique incoming linkage, nonblank fields, integer and monotonic ticks, and non-self linkage;
+- connector inspection did not identify independent retained artifact/publication corroboration for every intermediate edge.
+
+This is a characterization target, not an acceptance conclusion. The active decision must verify it through live history, durable-owner inspection, and temporary executable probes.
+
+## Dynamic Prompt Routing Authority
+
+Before the active prompt is presented after token reset, apply:
+
 `docs/dev/prompt-execution-platform-tool-selection-policy.md`
 
-Policy commit:
+The recommendation must be generated from a fresh capability inventory and placed outside the prompt body. Because the active route requires private-repository history, local Git state, temporary executable probes, documentation writes, commit, and push, the sole completion surface must be an authenticated repository-capable implementation environment. Any external Deep Research stage would be supplementary evidence only and would require an explicit handoff.
 
-`e52e1fb2a213dfb3aeb472d8bc9b4289928a250b`
+## Files And Metadata Changed
 
-The policy requires a fresh capability inventory before every prompt is created, revised, or presented. It covers:
+Repository files:
 
-- regular ChatGPT;
-- ChatGPT Deep Research;
-- ChatGPT via GitHub Connector;
-- ChatGPT Agent Mode;
-- GPT Work or successor workspaces;
-- every currently available Codex mode and environment;
-- selectable models and reasoning levels;
-- installed plugins, connectors, skills, and specialized tools;
-- potentially useful plugins or connectors that are available but not installed or activated;
-- repository, local-worktree, web, application, execution, validation, commit, and push access;
-- quality, research depth, token/quota use, latency, privacy, and coordination overhead;
-- tools and capabilities that cannot operate together on the same surface or session.
-
-Required access and completion authority are hard gates. A platform without required repository access, local execution, validation, or commit/push capability cannot be recommended as the sole implementation or acceptance surface.
-
-The policy treats fixed model/version names in older prompt templates as historical examples. Exact models and modes must be freshly confirmed at prompt-generation time.
-
-## Platform-Specific Prompt Requirements
-
-Prompt wording must match the selected surface:
-
-- Deep Research prompts define external-source research and cannot assume private-repository access.
-- GitHub Connector prompts define exact remote repository evidence and cannot claim local tests, builds, typechecks, or worktree state.
-- Codex Plan or read-only prompts cannot authorize edits or implementation claims.
-- Codex implementation prompts must define repository synchronization, allowed and forbidden files, validation, branch, commit, push, and handoff requirements.
-- GPT Work, Agent Mode, or application-workflow prompts must name enabled applications, plugins, permission boundaries, user-confirmation gates, and repository-transfer requirements.
-- Staged workflows must identify which platform owns research, repository comparison, implementation, executable validation, commit, push, and final handoff.
-
-## Plugin And Connector Disclosure
-
-Before a prompt is presented, materially relevant plugins, connectors, or skills must be classified as:
-
-- `AVAILABLE_AND_ACTIVE`;
-- `AVAILABLE_NOT_INSTALLED_OR_NOT_ACTIVATED`;
-- `UNAVAILABLE_ON_RECOMMENDED_SURFACE`;
-- `AVAILABILITY_UNKNOWN`;
-- `NOT_RELEVANT`.
-
-When a useful capability may exist but is not installed or activated, the user must be told before the prompt. The recommendation must explain its value, identify the platform that would use it, state whether the prompt can proceed without it, and offer the supported activation or installation route. Prompts must not assume missing capabilities are active.
-
-## Required Outside-Prompt Recommendation
-
-Every copy-paste prompt must be preceded in chat by a fresh block covering:
-
-- recommended platform or staged workflow;
-- mode;
-- confirmed model/version or capability class;
-- reasoning depth;
-- route rationale;
-- required tools/connectors;
-- plugin availability status;
-- token/quota posture when known;
-- manual preflight or transfer requirements;
-- known incompatibilities;
-- alternative route and tradeoff;
-- capability-check date.
-
-The recommendation remains outside `docs/dev/current-codex-prompt.md` so transient model, mode, token, and plugin availability cannot become a stale repository execution pointer.
-
-## User-Specific Deep Research Constraint
-
-The user reports that ChatGPT Deep Research can be used without consuming Codex or GPT Work tokens but cannot currently be granted private GitHub repository access through that platform.
-
-This is recorded as a current user-specific constraint, not a permanent product guarantee. It must be re-verified whenever platform capabilities change.
-
-When external research depth and private-repository implementation are both required, use an explicit staged route such as:
-
-1. Deep Research for cited external evidence;
-2. ChatGPT via GitHub Connector or Codex for current repository comparison;
-3. Codex implementation mode for edits, tests, validation, commit, and push.
-
-## Repository Enforcement Changes
-
-Updated:
-
-- `AGENTS.md` at `b4eb481331e3d5e0fc314a1ae1712b0446b6cab6`;
-- `docs/dev/repository-first-agent-work-protocol.md` at `9f5a0246b53a74aaba9008bd829788eecbae1180`;
-- `docs/dev/current-gpt-handoff.md` at `f08569c2f736eabcdf5beb733443efb623607a16`;
-- this output.
-
-`AGENTS.md` now requires the capability inventory and plugin disclosure before every prompt. The repository-first protocol now includes platform routing in mandatory authority reading, repository orientation, delegation, the pre-edit gate, validation reporting, and prompt handoff.
-
-## Files Changed
-
-- `docs/dev/prompt-execution-platform-tool-selection-policy.md`
-- `AGENTS.md`
-- `docs/dev/repository-first-agent-work-protocol.md`
+- `docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/dev/current-codex-output.md`
 
-No production source, tests, schemas, migrations, content, assets, dependencies, generated output, current prompt body, branches, or pull requests changed.
+Pull-request metadata:
+
+- PR #3 body only.
+
+No production, test, type, schema, persistence, migration, content, asset, dependency, generated-output, prompt-body, branch-head, or PR lifecycle change occurred.
 
 ## Validation And Limits
 
 Performed through GitHub Connector:
 
 - live default-branch identity inspection;
-- complete-file reads of the root workflow authority, repository-first protocol, current prompt, handoff, output, connector policy, and historical prompt-template guidance;
-- complete-file documentation writes;
-- sequential commit capture;
-- post-write file verification and final diff review.
+- hosted branch inventory;
+- open pull-request inventory;
+- eight master-to-branch comparisons with changed-path review;
+- current prompt, handoff, output, branch register, workflow policy, source, and focused authority inspection;
+- PR #3 body correction and verification;
+- complete-file prestage, handoff, and output writes.
 
 Not performed:
 
-- local tests;
-- builds;
-- typechecks;
-- content lint;
-- generators;
-- simulations;
-- browser execution;
-- local Git/worktree commands;
-- plugin installation or activation;
-- branch, PR, or evidence-lane integration;
-- executable lineage probes.
+- local fetch/prune or worktree inspection;
+- Git history commands unavailable through the connector workflow;
+- tests, builds, typechecks, content lint, generators, or simulations;
+- temporary executable probes;
+- browser or accessibility execution;
+- branch integration, rebase, deletion, or register replacement;
+- parent acceptance, production repair, revert, or successor installation.
 
 ## Next Action
 
-Before presenting the active prompt in `docs/dev/current-codex-prompt.md`, perform the fresh capability inventory and provide the outside-prompt recommendation required by `docs/dev/prompt-execution-platform-tool-selection-policy.md`.
+After token reset:
 
-Then run the active prompt from a freshly synchronized authenticated repository checkout. Its successor prompt must use the same dynamic routing and disclosure policy.
+1. perform the fresh platform/tool/model/plugin capability inventory;
+2. synchronize the authenticated repository checkout and verify live head, branches, and PRs;
+3. read `docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md` during orientation;
+4. independently verify its source map and dynamic facts;
+5. execute `docs/dev/current-codex-prompt.md` exactly;
+6. reconcile the complete branch register after the decision outcome is known;
+7. install the exact `0.6.9.11` successor required by the decision and stop without accepting the parent inside the decision route.
