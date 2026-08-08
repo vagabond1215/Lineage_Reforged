@@ -14,9 +14,23 @@ Latest accepted primary:
 
 `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
+Survey decision inspected/source head:
+
+`25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`
+
 Survey decision authority:
 
 `86a13b05b8f5c74ad488e612bf5d302e7033ec81`
+
+Survey route-install/coordination commit and hosted head observed after that push:
+
+`ad2032e37bf87603bfb453a0238c9423fcde2c70`
+
+Connector bookkeeping correction to `current-codex-output.md`:
+
+`5c11248c0fa7e95e7df0e16af4660918a4201cb2`
+
+The `0.6.10` implementation starting head is not `25ede537...` and is not precommitted in this handoff. Codex must freshly synchronize `master`/`origin/master` and record the then-live starting head before editing.
 
 `0.7.0`: `NOT_READY`
 
@@ -98,7 +112,7 @@ The protected readiness artifact at `59c103c3a06d55f35bffa735fd4b7814dffb583e` r
 
 ## Branch And PR State
 
-At inspected source head `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`:
+At the decision inspected/source head `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`:
 
 - one local branch;
 - 36 non-default remote branches;
@@ -108,7 +122,7 @@ At inspected source head `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`:
 - four survey-applicable evidence branches remain `CANDIDATE_INTEGRATION` for broader consumers;
 - protected refs remain `PROTECTED_REFERENCE`.
 
-No disposition changed and no lifecycle mutation occurred. Reinspect live refs during `0.6.10` orientation.
+These are decision-time facts, not the `0.6.10` implementation starting inventory. Reinspect all live refs during `0.6.10` orientation. No disposition changed and no lifecycle mutation occurred during the decision.
 
 ## Validation Baseline
 
@@ -128,6 +142,6 @@ Routine Connector interruption is not needed. The installed implementation requi
 
 ## Next Action
 
-Execute the complete current prompt from a freshly synchronized authenticated checkout:
+From a freshly synchronized authenticated checkout, first record the then-live implementation starting head, then execute the complete current prompt:
 
 `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
