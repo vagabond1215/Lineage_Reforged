@@ -6,11 +6,17 @@ Source run: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Found
 
 Date: 2026-08-08
 
-Inspected base and implementation starting head: `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`
+Decision inspected/source head: `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`
 
 Decision authority commit: `86a13b05b8f5c74ad488e612bf5d302e7033ec81`
 
-Branch/status assumption: clean synchronized `master`; documentation-only decision; no production mutation
+Route-install/coordination commit: `ad2032e37bf87603bfb453a0238c9423fcde2c70`
+
+Hosted route-install head independently observed before this bookkeeping correction: `ad2032e37bf87603bfb453a0238c9423fcde2c70`
+
+`Version 0.6.10` implementation starting head is deliberately not precommitted here. The implementation run must freshly synchronize `master`/`origin/master` and record the then-live starting head before editing.
+
+Branch/status assumption for the completed decision: clean synchronized `master`; documentation-only decision; no production mutation
 
 Label class: unversioned
 
@@ -98,7 +104,7 @@ The workspace typecheck and production build were not required for this document
 - `FP-006`: prohibited stale projection repair from replacing newer truth.
 - `FP-007`: used complete local reads and bounded patches for large coordination files.
 - `FP-008`: semantically inspected every branch/PR class and exact evidence ref.
-- `FP-009`: separated inspected base, decision commit, coordination commit, and live post-push head.
+- `FP-009`: the completed package distinguishes the decision inspected/source head (`25ede537...`), decision authority (`86a13b05...`), route-install/coordination commit (`ad2032e...`), and the hosted route-install head observed after push (`ad2032e...`). The future `0.6.10` implementation starting head is a separate dynamic identity that must be freshly resolved by that run.
 - `FP-011`: requires artifact/revision/continuity provenance validation before fork binding or effects.
 - `FP-012`: requires one unique complete durable request/occurrence/result/receipt set and adversarial ambiguity tests.
 
