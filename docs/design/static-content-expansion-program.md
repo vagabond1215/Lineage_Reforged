@@ -171,6 +171,8 @@ Deep Research uses one gate and one artifact at a time.
 | `0.6.9.10` | Durable Recovery Completion Lineage Post-Repair Acceptance Audit | Historical acceptance claim superseded because no separately installed audit prompt preceded it. |
 | unversioned decision | Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision | Complete; selected bounded Model C and classified `cbad987` conforming with re-audit required. |
 | `0.6.9.11` | Historical Recovery Fork Authority Acceptance Audit | Complete; parent `0.6.9` accepted, survey receipt decision reactivated, `0.7.0` remains `NOT_READY`. |
+| unversioned support | Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision | Complete with `PACKAGE_READY`: accepted one bounded survey-owned persisted authority, continuity-before-receipt admission, exact retry/repair/correction boundaries, and selected active `Version 0.6.10`; no static-content route changed. |
+| `0.6.10` | Ashen Reef Survey Advancement Authority | Active current-band runtime primary; static catalogs/content remain unchanged and `0.7.0` remains `NOT_READY`. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -182,4 +184,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`. Keep it documentation-only; do not authorize the survey command, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.
+Run only `Version 0.6.10 - Ashen Reef Survey Advancement Authority` under the accepted receipt decision. Do not broaden it into static content, survey turn-in/rewards, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7` and is not reopened by the survey route.

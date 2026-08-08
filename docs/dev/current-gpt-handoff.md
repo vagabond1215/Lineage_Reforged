@@ -2,116 +2,132 @@
 
 Date: 2026-08-08
 
-Status: `0.6.9.11` complete; parent `0.6.9` accepted; Ashen Reef survey receipt decision active; Connector prestage complete
+Status: survey receipt decision complete with `PACKAGE_READY`; `Version 0.6.10 - Ashen Reef Survey Advancement Authority` active
 
 ## Current Route
 
 Active prompt:
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
-Parent `0.6.9`: `PARENT_ACCEPTED`
+Latest accepted primary:
 
-Completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
+`Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
-Audited implementation: `cbad987028d81c5ecdc35403333ec920d0ea5e53`
+Survey decision authority:
 
-Acceptance authority commit: `0262285e9f19c954ab1693838e27c8a7ea349640`
-
-Handoff publication and first verified post-push live head: `e3f8a71bfd58938bab939b3d83b6c9cfb83bd935`
-
-Historical `0.6.9.10`: superseded acceptance claim; retain as evidence only
-
-Survey behavior: unimplemented
+`86a13b05b8f5c74ad488e612bf5d302e7033ec81`
 
 `0.7.0`: `NOT_READY`
 
-## Acceptance Evidence
+## Decision Result
 
-The independent audit recreated a temporary `C0 -> C1 -> C2 -> C3` probe from untouched production and removed it before commit. All `30/30` cases matched bounded Model C: `8` accepted descriptive/equivalent cases and `22` byte-stable structural, receipt-bound, current-edge, shape, ordering, projection, and control corruptions rejected.
+The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` returned exactly:
 
-Validation passed:
+`PACKAGE_READY`
 
-- focused persistence `33/33`;
-- prescribed regression group `140/140`;
-- production Vite build at `209` modules;
-- bounded TypeScript baseline exactly `137` known diagnostics across `28` files, zero in acceptance-critical files;
-- mirror/export, serialization/format-v2, version-7 publication, version-6 readability, real caller, diff, hygiene, and hosted checks.
+It selected one current-band primary:
 
-The composite `npm run ui:build` stopped at its TypeScript pre-step on the known 137-diagnostic backlog. The historical gate separates that bounded audit from production bundling, and direct Vite production bundling passed.
+`Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
-## Accepted Authority Boundary
+The package must implement the persisted survey-specific authority container together with the one command that proves it. A types-only or empty-container patch is not completion.
 
-- parent/child graph: structural acceptance authority;
-- recovery mutation/tick/parent/child: exact receipt-bound authority;
-- current-edge mutation/parent/artifact/publication: exact current-identity authority;
-- ordinary historical mutation/artifact/publication: descriptive once no longer current;
-- ordinary historical accepted tick: descriptive with integer, floor, and monotonic constraints;
-- no universal cryptographic or independently authenticated tamper-detection claim.
+## Controlling Focused Authority
 
-## Reactivated Decision Guardrails
+Read first:
 
-The current prompt is the unversioned documentation-only Ashen Reef survey occurrence/result/consequence-receipt decision. It must reuse accepted `0.6.9`, inspect the real survey path and owner seams, and return exactly `PACKAGE_READY` or `NO_PACKAGE`.
+- `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md`;
+- `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
+- `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
+- accepted `0.6.9` campaign/session/save/publication and recovery-lineage authority;
+- occurrence taxonomy and correction authority;
+- current prompt, output, branch register, and failure-pattern register.
 
-Do not implement survey behavior, receipts, schemas, migrations, UI, preview, commands, events, or adapters during that decision. Do not assign `0.7.0`; survey behavior remains unimplemented and `0.7.0` remains `NOT_READY`.
+The newest focused decision controls conflicts at the survey receipt seam.
 
-## Connector Ashen Reef Prestage
+## Exact Implementation Boundary
 
-Permanent prestage:
+`0.6.10` owns only:
 
-`docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md`
+- one optional `authorityLedger.ashenReefSurvey` version-1 container with typed baseline/request/occurrence/result/consequence/repair/correction collections;
+- stable survey request identity and exact normalized retry equivalence;
+- continuity selection before occurrence/result/receipt authorship;
+- one shared four-stage Ashen Reef preview/execution plan;
+- affected-owner application and receipts for time, body, attribute load, resources, skill, survey/quest progress, operation, discovery/flag/Codex projection, final activity, notification, Chronicle, and typed event;
+- durable duplicate/restart behavior;
+- projection-only repair and correction-pending validation;
+- accepted-only Activity-panel application;
+- exact save/publication roundtrip and focused regressions.
 
-Prestage commit:
+Target snapshot remains `lineage.save_snapshot.v2`, save envelope remains `7`, and campaign ledger remains `1`.
 
-`dea17939c5362a122c93d44e7be1d12e4654d6d3`
+## Critical Guardrails
 
-Disposition:
+- Current campaign admission may create a child continuity after receiving a proposed snapshot. The survey package must add the smallest bounded prepare/commit seam so every persisted survey record uses the accepted child continuity.
+- Look up request identity before stale-state rejection. A complete exact duplicate returns the retained result with current state; conflicting or incomplete evidence fails closed.
+- Pre-admission rejection remains non-mutating and non-persisted in the first package.
+- All gameplay owner applications and complete receipts precede acceptance. Missing gameplay receipts invalidate the candidate; only result-derived projections may be pending/repaired afterward.
+- A blocked skill breakthrough accepts the survey stage with a `blocked_at_gate` receipt and zero applied delta.
+- Discovery entry, compatibility flag, Codex reference/conditional unlock, flora skill, Knowledge, known location/map, notification, and Chronicle are distinct.
+- Entry/flag disagreement, duplicate discovery identity, or conflicting source/reference data rejects before mutation.
+- A fresh character-created snapshot has no matching Codex row; the survey must not invent one.
+- Do not let completed survey execution fall through to generic advancement.
+- Do not infer historical receipts from legacy flags or narrative projections.
+- Preserve manual/quick-save unsaved-gameplay semantics.
 
-`CONNECTOR_PRESTAGE_COMPLETE_NO_DECISION`
+## Explicit Exclusions
 
-The prestage consolidates the current live survey mutation inventory and the four existing evidence lanes whose mandatory-consumer triggers now apply:
+No survey turn-in/reward, rivet cargo, rest, inventory, economy, standing/reputation, gathering, crafting, combat, health, care, death/succession, content, geographic Knowledge/map/recognition, Committed/Ironbound Stakes, checkpoint/cloud work, generic activity/effect/transaction/replay/correction/lineage framework, dependencies, assets, generated output, or unrelated cleanup.
 
-- `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
-- `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`;
-- `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
-- `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`.
-
-The active prompt was hardened at:
-
-`cb5257a447435dcf5044dc32be0e4402a0f772c1` — `docs(prompt): harden Ashen Reef survey decision evidence`
-
-The prompt now requires read-only exact-ref inspection of those four artifacts, local re-verification against current source, explicit treatment of both current survey skill consequences (`skill.knowledge.general_lore` and `skill.resource.identify.flora`), and separation of discovery Chronicle, discovery flag, Codex/reference, Knowledge/progression, and presentation visibility facts.
-
-PR #3 metadata was also corrected to the current route: parent `0.6.9` is accepted, the repair bundle remains `SUPERSEDED_PRESERVE_EVIDENCE`, and it must not reopen acceptance or widen the active survey decision.
-
-This Connector prestage is reusable orientation evidence only. It must not be used as the survey decision itself or as executable validation. After synchronizing, Codex should verify the source and branch facts, consume the applicable evidence, and complete the decision without a routine Connector interruption.
-
-## Branch And PR Posture
-
-At audit starting head `3f87c8c51de506839c9408d4df07ccd97d6be278`: one local `master`, 36 non-default remote branches, and exactly PR #2 and PR #3 open.
-
-- 28 indexed Connector evidence branches plus two one-document candidates: `CANDIDATE_INTEGRATION`, named triggers unchanged;
-- prompt-packaging and integrated-gameplay readiness refs: `PROTECTED_REFERENCE`;
-- PR #2 / launcher contract: `SUPERSEDED_PRESERVE_EVIDENCE`;
-- PR #3 / repair bundle: `SUPERSEDED_PRESERVE_EVIDENCE`;
-- no branch/PR integration, close, rebase, force update, or deletion was due or performed.
-
-PR #3 body metadata has since been refreshed to current acceptance and route language; its branch/head/disposition/lifecycle state remain unchanged.
-
-Refresh all live refs and hosted metadata in the survey decision. Do not copy these counts or mechanical mergeability as action authority.
+Do not merge or mutate the Connector evidence branches or protected readiness branch.
 
 ## Evidence Reuse
 
-`docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`, `docs/dev/connector-post-run-review-0.6.9.11-readiness-2026-08-08.md`, and `docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md` remain useful evidence. They do not replace local inspection or execution.
+The Connector prestage remains reusable orientation evidence, not implementation authority:
 
-For the active survey decision, only the new Ashen Reef prestage and the evidence artifacts explicitly named by the current prompt should be treated as mandatory Connector orientation; older persistence prestages are historical context unless a current authority makes them applicable.
+`docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md`
 
-## Platform And Tool Posture
+The four immutable evidence artifacts were classified `CURRENTLY_CONFIRMED` after current-source comparison:
 
-The active decision is documentation-only but still requires an authenticated repository-capable surface for synchronized branch/PR inspection, source verification, focused tests, and repository coordination. Exact selectable model/version was not exposed; use the strongest current repository agent with high reasoning. Local Git and the active GitHub connector are sufficient; no additional plugin is required. Token/quota accounting is unknown.
+- `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
+- `387f2491d0d671ee7834656c28183e72a798f1ca`;
+- `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
+- `46434f31f8b06d49aad9a516543fbe36d188d519`.
+
+The protected readiness artifact at `59c103c3a06d55f35bffa735fd4b7814dffb583e` remains read-only. Its survey architecture claims are useful; its old save/static route facts are historical.
+
+## Branch And PR State
+
+At inspected source head `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`:
+
+- one local branch;
+- 36 non-default remote branches;
+- two open pull requests;
+- PR #2 open non-draft and non-mergeable, `SUPERSEDED_PRESERVE_EVIDENCE`;
+- PR #3 open draft and non-mergeable, `SUPERSEDED_PRESERVE_EVIDENCE`;
+- four survey-applicable evidence branches remain `CANDIDATE_INTEGRATION` for broader consumers;
+- protected refs remain `PROTECTED_REFERENCE`.
+
+No disposition changed and no lifecycle mutation occurred. Reinspect live refs during `0.6.10` orientation.
+
+## Validation Baseline
+
+Before this decision completed:
+
+- survey skill-gating: `5/5` passed;
+- campaign persistence: `33/33` passed;
+- no hosted combined status contexts were present on the inspected head.
+
+The implementation prompt requires characterization before extraction, full command/receipt/restart/repair/correction/caller tests, adjacent focused regressions, production build, bounded TypeScript and mirror/export validation, serialization/browser probes, diff/hygiene, commit, push, and post-push hosted verification.
+
+The known broad 137-diagnostic TypeScript baseline remains separate and must not be weakened or opportunistically repaired.
+
+## Connector Assistance Posture
+
+Routine Connector interruption is not needed. The installed implementation requires the authenticated local checkout, execution, tests, build, commit, and push. Connector-side work may inspect hosted PR/status/file state or perform a separately authorized read-only exact-ref audit, but it must not edit the active production surface or present candidate source as authority.
 
 ## Next Action
 
-Run, but do not broaden beyond, the exact current prompt from a freshly synchronized authenticated checkout. Read the Ashen Reef Connector prestage during orientation and independently verify its dynamic claims:
+Execute the complete current prompt from a freshly synchronized authenticated checkout:
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.10 - Ashen Reef Survey Advancement Authority`

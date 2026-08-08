@@ -1,104 +1,125 @@
 # Current Codex Output
 
-Source version/run: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
+## Run Identity
+
+Source run: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
 Date: 2026-08-08
 
-Branch/status assumption: clean synchronized local `master` and `origin/master` at starting head `3f87c8c51de506839c9408d4df07ccd97d6be278`; audited production implementation `cbad987028d81c5ecdc35403333ec920d0ea5e53`; controlling Model C decision `907706bb782dbfa70b2eb229d4813e2209b21ab6`; acceptance authority commit `0262285e9f19c954ab1693838e27c8a7ea349640`; handoff publication and first verified post-push live head `e3f8a71bfd58938bab939b3d83b6c9cfb83bd935`
+Inspected base and implementation starting head: `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`
 
-Label class: support suffix
+Decision authority commit: `86a13b05b8f5c74ad488e612bf5d302e7033ec81`
 
-Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
+Branch/status assumption: clean synchronized `master`; documentation-only decision; no production mutation
+
+Label class: unversioned
+
+Parent version: none
 
 Milestone impact: `supports_current_band`
 
-Result: `PARENT_ACCEPTED`
+Decision result: `PACKAGE_READY`
+
+Next route: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
 ## Outcome
 
-Independent inspection and execution accepted the implemented parent. The audit recreated the `C0 -> C1 -> C2 -> C3` probe from untouched production, exercised the full bounded Model C matrix, and completed the focused, regression, build, bounded TypeScript, serialization, mirror/export, caller/publication, branch/PR, diff, and hygiene gates.
+The persisted survey identity, storage, continuity-admission, atomic application, duplicate/restart, projection-repair, correction, migration, retention, owner, and implementation boundaries are decision-complete.
 
-`Version 0.6.9.11` is complete and `Version 0.6.9` is accepted. The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` is reactivated but was not executed. Survey behavior remains unimplemented and `0.7.0` remains `NOT_READY`.
+The next package is one bounded current-band primary, not a static type/container pass. It must implement the survey-specific authority container together with the one four-stage command, narrow continuity-before-receipt admission seam, affected-owner applications, complete shared preview, persisted replay behavior, projection repair, and accepted-only Activity-panel caller.
 
-## Independent Lineage Matrix
+`0.7.0` remains `NOT_READY`. No representative-loop or band-entry acceptance is claimed.
 
-A fresh temporary probe used actual later distinct ticks: recovery `1438`, intermediate `1450`/`1454`, and current `1458`. It ran 30 exact cases and was removed before commit.
+## Material Findings
 
-- accepted `8/30`: valid deep replay; copied/order-reversed artifact replay; changed recovery artifact/publication; changed ordinary intermediate source mutation, another valid monotonic tick, artifact, and publication;
-- rejected byte-stably `22/30`: recovery source/tick/parent/child; intermediate parent/child; current source/parent/artifact/publication; duplicate incoming child; cycle; disconnect; missing recovery; original-continuity substitution; blank id; noninteger tick; below-floor tick; reversed tick order; self edge; projection corruption; and control corruption;
-- every rejection preserved exact serialized snapshot/control bytes and produced no child, effect, revision, retained result, or publication;
-- every acceptance returned the exact candidate snapshot/control references without mutating their bytes.
+1. `previewAdvanceCurrentActivity(...)` exposes only body/timeline facts; the live execution also changes time, attribute load, natural and explicit resources, skill state, progress flags, operation, discovery, current activity, notification, Chronicle, and synchronized projections.
+2. The live caller supplies no stable survey request/result identity. Generic campaign duplicate retention is transient and empty after reload.
+3. Current campaign admission receives an already-mutated snapshot and may then mint a child continuity. Survey occurrence/result/receipt records must instead bind after the accepted continuity is selected.
+4. The existing campaign ledger has only a narrow entry array. It cannot represent the required normalized request, occurrence, result, owner receipt, projection repair, or correction facts.
+5. One optional `authorityLedger.ashenReefSurvey` version-1 container with separate typed collections is sufficient without changing target snapshot `lineage.save_snapshot.v2`, envelope version `7`, or ledger version `1`.
+6. Admitted requests use a UUID; occurrence, result, owner, event, notification, and Chronicle identities derive through distinct namespaces. Exact normalized structural fields, not a whole-snapshot hash, define equivalent retry.
+7. Pre-admission rejection remains non-mutating and transient in the first package. Durable replay applies to admitted requests and complete accepted evidence.
+8. All gameplay owner effects and complete receipts exist before acceptance. Only result-derived projection failure is repairable afterward; missing gameplay receipts invalidate the candidate.
+9. Stormglass discovery entry, compatibility flag, Codex reference/conditional unlock, flora skill, derived progression, Knowledge, known-location/map, notification, and Chronicle facts are distinct. Entry/flag disagreement rejects before mutation.
+10. A static container alone does not close the capability. `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is the smallest coherent implementation package.
 
-The result was `INDEPENDENT_LINEAGE_AUDIT_PASS` with `30/30` expected outcomes.
+## Evidence Reconciled
+
+- current survey caller, preview, mutation helpers, synchronization path, new-game/demo discovery posture, and focused tests;
+- accepted survey scope/owner, minimum save, Normal activation/publication, campaign acceptance, recovery-lineage, occurrence, and taxonomy authorities;
+- Connector prestage, reverified against the synchronized checkout;
+- exact `CURRENTLY_CONFIRMED` evidence artifacts:
+  - `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
+  - `387f2491d0d671ee7834656c28183e72a798f1ca`;
+  - `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
+  - `46434f31f8b06d49aad9a516543fbe36d188d519`;
+- protected readiness evidence at `59c103c3a06d55f35bffa735fd4b7814dffb583e`, with its old save/static route facts classified historical and its survey architecture claims reverified;
+- all local/remote branches and open PRs #2 and #3.
+
+Subagent inspections were read-only evidence. The primary agent independently rechecked the material caller, continuity, ledger, discovery, exact-ref, branch, test, and hosted claims before deciding.
 
 ## Files Changed
 
-- `docs/dev/current-codex-prompt.md`;
+- `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md`;
 - `docs/dev/current-codex-output.md`;
+- `docs/dev/current-codex-prompt.md`;
 - `docs/dev/current-gpt-handoff.md`;
-- `docs/design/historical-recovery-fork-evidence-verifiability-and-parent-acceptance-reopening-decision.md`;
-- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
-- `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`;
-- `docs/dev/repository-first-agent-work-protocol.md`;
-- `docs/dev/historical-version-and-deferred-route-register.md`;
-- `docs/design/current-planning-anchor-reconciliation.md`;
 - `docs/dev/project-roadmap.md`;
 - `docs/dev/codex-sequenced-implementation-plan.md`;
 - `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/current-planning-anchor-reconciliation.md`;
 - `docs/future_content_backlog.md`;
 - `docs/design/static-content-expansion-program.md`;
 - `docs/dev/branch-disposition-register.md`;
-- `docs/dev/connector-post-run-review-0.6.9.11-readiness-2026-08-08.md`.
+- `docs/dev/repository-first-agent-work-protocol.md`.
 
-No production source, shared type, test, serializer, migration, format, dependency, content, asset, UI, or survey behavior changed.
+No production source, test, schema, migration, content, dependency, asset, generated output, or gameplay behavior changed.
 
 ## Checks Run
 
-- fetch/prune, clean worktree, synchronized head, and complete branch/PR orientation: passed;
-- independent Model C probe: `30/30` expected outcomes;
+- `node --test tests\unit\gameplay-loop-skill-gating.test.mjs`: `5/5` passed;
 - `node --test tests\unit\campaign-persistence-foundation.test.mjs`: `33/33` passed;
-- prescribed eleven-file regression group: `140/140` passed;
-- `npx.cmd vite build` in `apps/rpg-ui`: passed, Vite `5.4.21`, `209` modules, existing chunk-size warning only;
-- bounded `tsc --noEmit`: reproduced exactly `137` known diagnostics across `28` files, with zero diagnostics in acceptance-critical implementation or decision files;
-- `npm.cmd run ui:build`: its TypeScript pre-step stopped on that known baseline; the production Vite build was therefore run and passed separately, matching the historical acceptance gate;
-- TypeScript/JavaScript mirror and public-export inspection: passed;
-- raw JSON serialization, target format `lineage.save_snapshot.v2`, version-7 envelope, immutable artifact verification, and version-6 migration/readability inspection: passed;
-- real `App.tsx` recovery caller and verified publication ordering inspection: passed;
-- temporary-probe removal, generated ignored build-output cleanup, documentation reference/stale-pointer checks, complete diff inspection, and `git diff --check`: passed.
+- exact-ref path/blob inspection for all four Connector artifacts and the protected readiness branch;
+- local/remote branch merge-base, divergence, unique-commit, and changed-path inventory;
+- GitHub repository, open-PR, source-file, and source-head status inspection;
+- documentation reference/route checks;
+- `git diff --check`;
+- complete staged and post-write diff inspection.
 
-## Applicable Verification Guardrails
+The workspace typecheck and production build were not required for this documentation-only decision. The known broad 137-diagnostic TypeScript baseline remains separate; the installed implementation prompt requires the production build and applicable bounded type validation.
 
-- FP-002: acceptance did not rely on green regression counts; the independent 30-case matrix covered exact authority and byte-stable failure boundaries.
-- FP-007: controlling files were read completely, bounded edits were used, and rewritten current coordination files were reread.
-- FP-008: every live branch and both open PRs were inspected semantically; mechanical mergeability did not change dispositions.
-- FP-009: starting, implementation, decision, audit, coordination, and post-push identities are distinguished.
-- FP-010: the exact independent audit was installed and executed before parent acceptance; no repair prompt was installed because every gate passed.
-- FP-011: recovery and current-edge authority were verified before completed replay could return.
-- FP-012: duplicate, cycle, disconnect, missing-lineage, stable targeting, arbitrary-depth replay, and no-effect duplicate behavior were exercised.
+## Failure-Pattern Evidence
 
-## Branch And PR Lifecycle Review
+- `FP-001`: traced the real ActivityPanel -> GameSessionContext -> App/reducer caller.
+- `FP-002`: wrote an explicit pre-/post-acceptance and restart/repair matrix beyond the green baseline.
+- `FP-003`: required production-reachable projection and pending-correction completion/diagnostic owners.
+- `FP-005`: installed rerender, caller-loss, restart, and regenerated-transient tests.
+- `FP-006`: prohibited stale projection repair from replacing newer truth.
+- `FP-007`: used complete local reads and bounded patches for large coordination files.
+- `FP-008`: semantically inspected every branch/PR class and exact evidence ref.
+- `FP-009`: separated inspected base, decision commit, coordination commit, and live post-push head.
+- `FP-011`: requires artifact/revision/continuity provenance validation before fork binding or effects.
+- `FP-012`: requires one unique complete durable request/occurrence/result/receipt set and adversarial ambiguity tests.
 
-Fresh starting-head inventory found one local `master`, 36 non-default remote branches, and exactly two open PRs.
+`FP-004` and `FP-010` were not applicable to this decision.
 
-- 28 indexed Connector evidence branches and two additional one-document candidates retain their named `CANDIDATE_INTEGRATION` triggers;
-- `parallel/prompt-packaging-integrity-audit` and `prep/integrated-gameplay-0-7-readiness-audit` remain read-only `PROTECTED_REFERENCE`;
-- PR #2 / `main-menu-asset-contract-pass` remains `SUPERSEDED_PRESERVE_EVIDENCE` at `e78dc645cfb658685be12f45f46d34b7c0da1119`;
-- PR #3 / `parallel/0.6.9.7-repair-bundle` remains `SUPERSEDED_PRESERVE_EVIDENCE` at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`, with archive SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`;
-- legacy launcher refs retain their existing dedicated review triggers.
+## Branch And PR Lifecycle
 
-No disposition changed and no branch integration, mutation, close, rebase, force update, or deletion was due or performed. The 2026-08-06 prestage and Connector post-run review were verified as reusable evidence only; neither substituted for independent execution.
+Fresh inventory at the inspected source head found one local branch, 36 non-default remote branches, and two open PRs. The four survey-applicable Connector branches remain `CANDIDATE_INTEGRATION` because their artifacts have broader named consumers. The integrated-gameplay and prompt-packaging refs remain `PROTECTED_REFERENCE`.
 
-## Hosted Validation
+PR #2 remains open non-draft `SUPERSEDED_PRESERVE_EVIDENCE`. PR #3 remains open draft `SUPERSEDED_PRESERVE_EVIDENCE`. No disposition changed, and no merge, cherry-pick, rebase, force update, PR mutation, closure, or branch deletion occurred.
 
-GitHub reported no combined statuses and no pull-request-triggered workflow runs for implementation `cbad987`, decision `907706b`, or starting head `3f87c8c`. After push and fetch-back verification, it also reported no combined statuses and no pull-request-triggered workflow runs for acceptance authority `0262285e9f19c954ab1693838e27c8a7ea349640` or handoff publication `e3f8a71bfd58938bab939b3d83b6c9cfb83bd935`. GitHub served the reactivated Ashen Reef prompt from `master`. Open-PR inventory remained exactly PR #2 and PR #3, with both mechanically non-mergeable and no lifecycle action due.
+Every retained branch keeps the exact review trigger recorded in `docs/dev/branch-disposition-register.md`.
 
 ## Risks And Follow-Up
 
-- Historical ordinary mutation/tick/artifact/publication metadata retains only the bounded Model C guarantee; it is not independently authenticated universal tamper detection.
-- The workspace TypeScript backlog remains exactly the separate known 137-diagnostic baseline. The passing Vite build is the production-build acceptance evidence.
-- The reactivated survey decision is documentation-only. It must not implement survey behavior and must return `PACKAGE_READY` or the smallest exact `NO_PACKAGE` prerequisite.
-- `0.7.0` remains `NOT_READY`.
+- `0.6.10` is a high-coupling owner transition and must not be split into an inert schema-only patch.
+- The narrow campaign prepare/commit seam must preserve all existing Normal defeat/recovery callers.
+- Existing pre-receipt survey state may be baselined only when coherent; no historical receipt may be invented.
+- Projection repair and pending correction must have a reachable production path before the implementation can be accepted.
+- An independent parent-specific acceptance audit is expected after implementation; no `0.7.0` promotion is automatic.
 
-Suggested commit message: `docs(save): accept historical recovery fork authority`
+Suggested commit message: `docs(survey): install advancement authority route`
 
-Next recommended version/run: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+Next recommended version/run: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`

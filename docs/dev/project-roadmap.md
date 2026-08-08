@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-08-08 by `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
+Last reviewed: 2026-08-08 by `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
 ## Current Runtime Transition Override
 
@@ -8,8 +8,9 @@ Last reviewed: 2026-08-08 by `Version 0.6.9.11 - Historical Recovery Fork Author
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
 - Latest completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`.
-- Active run: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
-- Activity selection and `0.6.4`-`0.6.9` are accepted. The Ashen Reef decision is documentation-only, survey implementation remains blocked, and `0.7.0` remains `NOT_READY`.
+- Latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, outcome `PACKAGE_READY`.
+- Active run: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
+- Activity selection and `0.6.4`-`0.6.9` are accepted. `0.6.10` is the bounded next engine-owned survey package; survey implementation is not yet complete and `0.7.0` remains `NOT_READY`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -38,9 +39,10 @@ Current live anchor:
 - Latest accepted primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`; independently accepted by completed `0.6.9.11`.
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
-- Active route: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
+- Latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`.
+- Active route: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, and Normal persistence are accepted; the survey receipt decision is active, survey implementation remains blocked, and `0.7.0` remains `NOT_READY`.
+- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, and Normal persistence are accepted; the survey receipt contract is decided, `0.6.10` implementation is active, and `0.7.0` remains `NOT_READY`.
 
 Versioning rule:
 
@@ -361,7 +363,7 @@ These are internal development maturity markers, not public release promises. Pa
 
 ## 3. Active Pipeline
 
-Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9` is accepted and the survey receipt-foundation decision is active.
+Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9` is accepted, the survey receipt decision returned `PACKAGE_READY`, and `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is active.
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |

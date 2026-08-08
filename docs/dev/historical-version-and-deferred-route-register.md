@@ -1,6 +1,6 @@
 # Historical Version And Deferred Route Register
 
-Date: 2026-08-02
+Date: 2026-08-08
 Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
@@ -51,6 +51,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `0.6.9.9` | Durable Recovery Completion Lineage Repair | Complete support suffix | Added linked continuity-fork authority and exact arbitrary-depth replay validation at `cbad987028d81c5ecdc35403333ec920d0ea5e53`. | `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md` |
 | `0.6.9.10` | Durable Recovery Completion Lineage Post-Repair Acceptance Audit | Historical claim superseded | Reported green evidence remains useful, but no separately installed runnable audit prompt preceded the acceptance claim. | `docs/dev/version-0.6.9-parent-acceptance-reopening-and-historical-fork-verifiability-review-2026-08-02.md` |
 | `0.6.9.11` | Historical Recovery Fork Authority Acceptance Audit | Complete support audit; parent accepted | Independent `30/30` lineage matrix, `33/33` focused, `140/140` regression, production build, bounded type, mirror/serialization, caller/publication, diff, hygiene, and hosted gates passed. | `docs/dev/current-codex-output.md` |
+| `0.6.10` | Ashen Reef Survey Advancement Authority | Active current-band primary | Implement the accepted survey-specific persisted authority together with one four-stage engine command, continuity-before-receipt admission, owner receipts, complete preview, durable duplicate/restart behavior, projection repair, accepted-only UI, and publication regression evidence. No `0.7.0` claim. | `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md` |
 
 ## Latest Unversioned Decision
 
@@ -60,6 +61,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision` | Complete; accepted with narrow later lineage amendment | Its receipt/destination contract remains accepted; the later lineage decision supersedes only its no-ledger-extension conclusion. | `docs/design/normal-defeat-recovery-continuity-and-destination-provenance-contract-decision.md` |
 | `Normal Defeat Recovery Completion Lineage Repair Decision` | Complete; accepted | `DECISION_ACCEPTED_REPAIR_AUTHORIZED`; superseded only the earlier assumption that receipt continuity alone proved arbitrary-depth ancestry. | `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md` |
 | `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision` | Complete; re-audit authorized | Selected bounded Model C, classified `cbad987` `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED`, and installed exact `0.6.9.11`. | `docs/design/historical-recovery-fork-evidence-verifiability-and-parent-acceptance-reopening-decision.md` |
+| `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` | Complete; package ready | Fixed one optional survey-owned ledger container, exact identities and retry equality, continuity-before-receipt admission, atomic owner application, projection repair, correction, legacy baseline, and retention; selected `Version 0.6.10 - Ashen Reef Survey Advancement Authority`. | `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md` |
 
 ## Identity Rules
 
@@ -82,7 +84,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | Static monster/ecology/loot | expanded-and-validated | Accepted `0.6.6`: 33 monsters, 9 fauna lineages, 9 ecology additions, 77 drop rows | None | New proven defect | Complete | `docs/dev/current-codex-output.md` |
 | Cross-content coherence | complete maturity gate | Accepted `0.6.4`-`0.6.6`, static lint/validators, durable research synthesis | None | New proven defect | Accepted `0.6.7`; no production repair needed | `docs/dev/current-codex-output.md` |
 | Geographic Knowledge/recognition | accepted documentation design gate | Place/Knowledge authorities and accepted `0.6.7` | Implementation packages remain separate | New explicitly scheduled owner-specific package | Preserve accepted domain/taxonomy/profile/source/occurrence/legacy boundaries | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
-| Activity resolution reuse | survey/save contracts and accepted Normal persistence foundation | Selection, trial, quest, Knowledge, crafting, magic, occurrence foundations, exact survey owner contract, bounded historical-fork decision, and accepted `0.6.9` | Decide the persisted survey occurrence/result/consequence-receipt foundation | Documentation-only survey decision active | Keep survey implementation blocked until the decision returns a bounded package | `docs/dev/current-codex-prompt.md` |
+| Activity resolution reuse | bounded survey implementation active | Selection, trial, quest, Knowledge, crafting, magic, occurrence foundations, exact survey owner and receipt decisions, bounded historical-fork decision, and accepted `0.6.9` | Implement and independently accept the exact `0.6.10` survey package | Active `Version 0.6.10 - Ashen Reef Survey Advancement Authority` | Keep rest, turn-in, generic activity, rewards, and `0.7.0` outside the package | `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md` |
 | Injury/trauma/Mortal Crisis/restoration | accepted conceptual-contract lane; static foundation accepted | Injury, Mortal Crisis, save, occurrence, functional/lethal/care/crisis receipt authority, research integration, care/observer contracts, dependency audit, owner/schema plan, version classification, exact `0.6.8` implementation, and `0.6.8.1` acceptance | Source-reference contracts, mutable instances, occurrence, persistence/migration, replay/correction, and downstream owners | Explicit future health-route classification | Mutable implementation remains `NO_PACKAGE`; do not infer readiness from static acceptance | `docs/design/health-runtime-ownership-and-dependency-closure-audit.md` |
 | Generic `world.pois` | rejected | Specific owner families | None | Explicit decision | Never infer | `docs/design/discovery-poi-boundary-decision.md` |
 

@@ -6,6 +6,41 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-08 Ashen Reef Survey Receipt Decision Refresh
+
+The unversioned survey receipt decision fetched/pruned and synchronized clean local `master` at inspected base and implementation starting head `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`. Fresh inventory found one local branch, 36 non-default remote branches, and exactly two open pull requests. Counts below are `master-only / branch-only` at that inspected source head.
+
+Legacy/evidence/protected summary:
+
+- `feat/main-menu-assets`: `788 / 0`, head/merge base `b42d36f3241f99874606ad1e24c09849715affe5`;
+- `main-menu-asset-contract-pass`: `716 / 10`, merge base `9a107a7eed54b6d0cd2f161c236fbe163282bba7`;
+- `main-menu-refinement-pass`: `723 / 2`, merge base `d03846e89d1a4fd07a1ea86d02951559f617df74`;
+- `parallel/0.6.9.7-repair-bundle`: `75 / 7`, merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`;
+- `parallel/prompt-packaging-integrity-audit`: `151 / 1`, merge base `3d77171ca2034c8b2fb8d19f374cef5df9605053`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `204 / 2`, merge base `895c02df40332c813a8403bd489af6184111ccba`.
+
+The 28 indexed Connector evidence branches were rechecked by exact head, merge base, divergence, unique commits, changed paths, and semantic trigger:
+
+- the eight `8214327...` branches are `27 / 1`;
+- the ten `8a0065b...` branches are `32 / 1`;
+- the seven `bcbe658...` branches are `122 / 2`;
+- the three `3006c96...` branches are `124 / 2`.
+
+The two additional one-document candidates remain `parallel/connector-prep-freshness-audit` at `124 / 1` and `parallel/launcher-asset-pr-disposition` at `122 / 1`.
+
+The four prompt-mandated evidence refs were read exactly and reverified against current source:
+
+- `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
+- `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`;
+- `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
+- `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`.
+
+Their survey-applicable claims were re-authored into the permanent decision, but each artifact has broader named consumers. They therefore remain `CANDIDATE_INTEGRATION` rather than being retired inside this run. The protected readiness branch remains `PROTECTED_REFERENCE`; its survey architecture was used read-only and its old route facts were treated as historical.
+
+GitHub reported PR #2 open, non-draft, unmerged, mechanically non-mergeable at `e78dc645cfb658685be12f45f46d34b7c0da1119`, and PR #3 open draft, unmerged, mechanically non-mergeable at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+No disposition changed. No merge, cherry-pick, rebase, force update, PR mutation, closure, or branch deletion occurred. Every retained branch keeps the exact review/retirement trigger in its register row. Active `Version 0.6.10` must reinspect the four evidence refs read-only; it must not merge them as implementation.
+
 ## 2026-08-08 Version 0.6.9.11 Acceptance Refresh
 
 The independent audit fetched/pruned and synchronized clean local `master` at starting head `3f87c8c51de506839c9408d4df07ccd97d6be278`. Fresh inventory found one local branch, 36 non-default remote branches, and exactly two open pull requests. Counts below are `master-only / branch-only` at that starting head.
@@ -324,9 +359,9 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
-Branch handling during the documentation-only survey decision requires:
+Branch handling during the bounded survey implementation requires:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
@@ -334,9 +369,9 @@ Branch handling during the documentation-only survey decision requires:
 - inspecting the protected integrated-gameplay readiness branch read-only;
 - otherwise preserving candidate branches for their named triggers.
 
-No one-document connector audit branch decides the survey receipt contract. No candidate integration, branch deletion, or PR closure is due inside the survey decision unless fresh live evidence changes the controlling disposition.
+The permanent survey receipt decision is authoritative on `master`. No one-document Connector audit branch is implementation authority. No candidate integration, branch deletion, or PR closure is due inside `0.6.10` unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
 
-The survey receipt decision is active, but implementation remains blocked until it returns a bounded package. Parent `0.6.9` is accepted through completed `0.6.9.11`; that acceptance creates no branch integration trigger.
+The survey receipt decision returned `PACKAGE_READY`, and `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is active. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
 
 ## 6. Mandatory Next Codex Branch Report
 

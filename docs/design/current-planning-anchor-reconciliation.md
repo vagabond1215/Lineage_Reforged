@@ -2,7 +2,7 @@
 
 Date: 2026-08-08
 
-Status: accepted documentation-only coordination authority; live current headers refreshed through `Version 0.6.9.11`
+Status: accepted documentation-only coordination authority; live current headers refreshed through the Ashen Reef survey receipt decision
 
 Milestone impact: `supports_current_band`
 
@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, parent acceptance audit, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through the unversioned `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` with outcome `AUDIT_ALIGNED_CURRENT_ROUTE`.
+The current prompt, handoff, output, historical register, focused survey receipt decision, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` with outcome `PACKAGE_READY`.
 
-Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently passed bounded Model C and the complete parent validation gate. Parent `0.6.9` is accepted. The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` is active but unexecuted; survey implementation remains blocked and `0.7.0` remains `NOT_READY`.
+Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision is now complete and selected `Version 0.6.10 - Ashen Reef Survey Advancement Authority` as the active current-band primary. Survey implementation remains incomplete and `0.7.0` remains `NOT_READY`.
 
 The audit corrected live-current pointers in `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`. Older dated rows and completed-run narratives remain historical chronology and do not control execution.
 
@@ -36,20 +36,12 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 
 ## Accepted Current State
 
-- latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
-- latest completed unversioned run: `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`, `DECISION_ACCEPTED_REAUDIT_AUTHORIZED`;
-- latest completed support implementation: `Version 0.6.9.3 - New-Campaign Retry, Slot-Recovery Collision, And Pending-Defeat Repair Completion`;
-- latest completed support audit: `Version 0.6.9.4 - Normal Campaign Retry And Recovery Completion Acceptance Audit`;
-- latest completed repair implementation: `Version 0.6.9.5 - Pending-Defeat Completion Authority And Provenance Repair`;
-- latest completed acceptance audit: `Version 0.6.9.6 - Pending-Defeat Completion Authority And Provenance Acceptance Audit`;
-- stopped repair attempt: `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`, `IMPLEMENTATION_INCOMPLETE` at the former shared-contract gate;
-- latest focused decision: `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision`, `DECISION_ACCEPTED_REPAIR_REAUTHORIZED`;
-- completed repair: revised `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair`, `IMPLEMENTED_PENDING_PARENT_AUDIT` at `ba35dacd`;
-- completed lineage audit: `Version 0.6.9.8`, `REPAIR_REQUIRED`;
-- completed lineage repair: `Version 0.6.9.9` at `cbad987028d81c5ecdc35403333ec920d0ea5e53`;
+- latest implemented and accepted primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
+- latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987028d81c5ecdc35403333ec920d0ea5e53`;
 - historical parent audit: `Version 0.6.9.10`, acceptance claim superseded because no separately installed runnable audit prompt preceded it;
-- parent `0.6.9` status: `PARENT_ACCEPTED` through completed `0.6.9.11`;
-- active route: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`;
+- latest completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`;
+- latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`;
+- active route: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`;
 - failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -70,6 +62,7 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - `0.6.9.5` reports those three boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, and a passing build;
 - `0.6.9.6` independently preserved the green baseline and the three exact `0.6.9.5` targets, but proved three additional initial-resolution, restart-duplicate, and original-effect-provenance gaps;
 - the accepted `0.6.9` persistence chain retains linked arbitrary-depth completion lineage under bounded Model C.
+- the survey receipt decision selected one optional survey-ledger container, continuity-before-receipt admission, exact normalized retries, atomic owner receipts, projection repair, legacy baseline, and correction posture, then activated `0.6.10` without promoting `0.7.0`.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
