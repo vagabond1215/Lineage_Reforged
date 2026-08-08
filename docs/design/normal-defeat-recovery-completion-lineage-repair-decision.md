@@ -10,6 +10,8 @@ Milestone impact: `supports_current_band`
 
 Status: `DECISION_ACCEPTED_REPAIR_AUTHORIZED`
 
+Historical-edge authority amendment: `docs/design/historical-recovery-fork-evidence-verifiability-and-parent-acceptance-reopening-decision.md` supersedes only claims that every mutation, tick, artifact, and publication field remains independently authenticated after an edge becomes historical. The linked parent/child graph, exact recovery mutation/tick/continuities, current-edge identity checks, and bounded shape/order validation remain accepted.
+
 ## Decision
 
 Fresh executable reproduction confirmed both risks recorded in
@@ -49,4 +51,4 @@ The repair must reproduce and close:
 - current campaign identity conflicts with the final fork edge;
 - byte-stable rejection and no child/effect/revision/publication change.
 
-After the repair is committed, execute a fresh acceptance pass against the committed head. Parent `0.6.9`, the Ashen Reef survey route, and `0.7.0` remain blocked until that pass is green.
+The historical `0.6.9.10` acceptance claim is superseded because its executable prompt was not independently installed. Active `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` must re-audit the conforming implementation under the bounded mixed contract. Parent `0.6.9`, the Ashen Reef survey route, and `0.7.0` remain blocked until that pass is green.

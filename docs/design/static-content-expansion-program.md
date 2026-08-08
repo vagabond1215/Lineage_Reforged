@@ -1,8 +1,8 @@
 # Static Content Expansion Program
 
-Date: 2026-08-02
+Date: 2026-08-08
 Program versions: `0.6.4`-`0.6.8`
-Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey receipt decision active
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` acceptance reopened pending `0.6.9.11`; Ashen Reef blocked
 
 ## 1. Purpose
 
@@ -168,7 +168,9 @@ Deep Research uses one gate and one artifact at a time.
 | `0.6.9.7` | Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair | Implemented at `ba35dacd`; result `IMPLEMENTED_PENDING_PARENT_AUDIT`. |
 | `0.6.9.8` | Initial Defeat And Durable Recovery Completion Acceptance Audit | Complete; found durable completion-lineage repair required. |
 | `0.6.9.9` | Durable Recovery Completion Lineage Repair | Complete at `cbad987`; linked fork authority implemented. |
-| `0.6.9.10` | Durable Recovery Completion Lineage Post-Repair Acceptance Audit | Complete; parent `0.6.9` accepted. |
+| `0.6.9.10` | Durable Recovery Completion Lineage Post-Repair Acceptance Audit | Historical acceptance claim superseded because no separately installed audit prompt preceded it. |
+| unversioned decision | Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision | Complete; selected bounded Model C and classified `cbad987` conforming with re-audit required. |
+| `0.6.9.11` | Historical Recovery Fork Authority Acceptance Audit | Active; parent, Ashen Reef, and `0.7.0` remain blocked. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -180,4 +182,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`. Do not authorize the survey command, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.
+Run `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`. Do not run the blocked Ashen Reef decision or authorize the survey command, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, rewards, or broader UI/runtime by inference.

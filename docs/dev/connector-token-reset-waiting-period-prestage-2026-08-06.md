@@ -1,5 +1,7 @@
 # Connector Token-Reset Waiting-Period Prestage
 
+Final consumption status (2026-08-08): verified against synchronized starting head `260e800b584103393a25f6bc5c0599d9289b5356`; source map, route timeline, characterization matrix, and branch index consumed by the historical-fork authority decision. Live branch/PR facts were refreshed and the previously unexecuted matrix was run locally. This document remains historically useful Connector evidence and is no longer an unfinished controlling package.
+
 Date: 2026-08-06
 
 Inspected source head: `d23afddf5fecae470d1ff3988250b379a8513bfb`
@@ -265,4 +267,4 @@ After token reset:
 
 ## Review And Retirement
 
-This prestage remains useful until the active decision completes. After completion, the coordinator should classify each section as consumed, superseded, or historically useful, fold any durable branch facts into `docs/dev/branch-disposition-register.md`, and then retire or retain this document according to the repository artifact policy.
+The active decision consumed the route timeline, source map, matrix, and branch index after live verification. Superseded branch counts remain dated evidence; the reasoning worksheet and platform preflight remain historically useful. Current live facts now reside in the decision, branch register, output, and handoff, so this document is retained as noncontrolling evidence.

@@ -201,4 +201,4 @@ Evidence bundles may accelerate review but never bypass it.
 
 ## Current Application
 
-Implemented `0.6.9.7` consumed draft PR #3 and `parallel/0.6.9.7-repair-bundle` only as evidence. Active independent `0.6.9.8` must continue to treat them as evidence, verify the synchronized implementation commit and every repository test/build/type/mirror/adversarial/diff gate independently, update the handoff chain, and accept the parent only on complete proof. The Ashen Reef survey route remains blocked.
+The unversioned historical-fork authority decision selected bounded Model C and classified `cbad987028d81c5ecdc35403333ec920d0ea5e53` as `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED`. Active `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` must independently reproduce the deep-lineage matrix and complete every repository test/regression/build/type/mirror/adversarial/diff gate before parent acceptance. PR #3 and `parallel/0.6.9.7-repair-bundle` remain superseded evidence only. Parent `0.6.9`, Ashen Reef, survey behavior, and `0.7.0` remain blocked until the audit passes.

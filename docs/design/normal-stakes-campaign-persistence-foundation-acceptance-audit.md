@@ -8,11 +8,11 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `PARENT_ACCEPTED`
+Current status: `ACCEPTANCE_REOPENED_PENDING_0.6.9.11`
 
 ## Decision
 
-Parent `0.6.9` is accepted after the completion-lineage repair and committed-head post-repair audit.
+The former `PARENT_ACCEPTED` conclusion is superseded. The historical-fork authority decision selected bounded Model C, retained `cbad987` as `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED`, and installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`. Parent `0.6.9` remains reopened until that independently installed audit passes.
 
 `Version 0.6.9.8` independently confirmed the connector-side concern: original-continuity substitution could pass and valid replay after two later forks could fail because the ledger did not retain a provable parent-to-child chain. It concluded `REPAIR_REQUIRED`.
 
@@ -28,7 +28,7 @@ The focused `Normal Defeat Recovery Completion Lineage Repair Decision` authoriz
 - original substitution and every required fork/identity corruption rejected byte-stably;
 - valid `C0 -> C1 -> C2 -> C3` and copied/reversed replay returned the current state without effects.
 
-Final disposition: `PARENT_ACCEPTED`.
+Historical disposition: `PARENT_ACCEPTED`; superseded by `ACCEPTANCE_REOPENED_PENDING_0.6.9.11`.
 
 The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt ran against synchronized `master` at `6820ab8175f6b4d0b447b589045bc0a934663257`, independently reproduced all nine hardened findings, and stopped before production edits under its required contract gates.
 
@@ -264,6 +264,8 @@ The completed `0.6.9.3` run reported one local branch, seventeen non-default rem
 
 ## Next Run
 
-`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
+`Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
 
-Run the exact current documentation-only prompt. Survey implementation remains blocked pending that decision, and `0.7.0` remains `NOT_READY`.
+The Ashen Reef survey decision remains blocked and survey behavior remains unimplemented.
+
+Run the exact current independent audit prompt. Survey implementation remains blocked pending parent acceptance, and `0.7.0` remains `NOT_READY`.

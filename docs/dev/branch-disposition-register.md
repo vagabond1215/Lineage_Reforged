@@ -1,10 +1,36 @@
 # Branch Disposition Register
 
-Date: 2026-08-02
+Date: 2026-08-08
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-08-08 Historical-Fork Authority Decision Refresh
+
+The unversioned historical-fork authority decision fetched/pruned and synchronized clean local `master` at inspected base and starting head `260e800b584103393a25f6bc5c0599d9289b5356`. Fresh inventory found one local branch, 36 non-default remote branches, and two open pull requests. Counts below are `master-only / branch-only` at that starting head.
+
+Legacy and protected refs:
+
+- `feat/main-menu-assets`: `776 / 0`, head/merge base `b42d36f3241f99874606ad1e24c09849715affe5`, `MERGED_RETIRE` at its dedicated launcher hygiene trigger;
+- `main-menu-asset-contract-pass`: `704 / 10`, merge base `9a107a7eed54b6d0cd2f161c236fbe163282bba7`, four launcher paths, `SUPERSEDED_PRESERVE_EVIDENCE` with PR #2;
+- `main-menu-refinement-pass`: `711 / 2`, merge base `d03846e89d1a4fd07a1ea86d02951559f617df74`, two launcher paths, `MERGED_RETIRE` pending equivalence proof;
+- `parallel/0.6.9.7-repair-bundle`: `63 / 7`, merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`, seven bundle paths, `SUPERSEDED_PRESERVE_EVIDENCE` with PR #3;
+- `parallel/prompt-packaging-integrity-audit`: `139 / 1`, merge base `3d77171ca2034c8b2fb8d19f374cef5df9605053`, one prompt-audit path, `PROTECTED_REFERENCE`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `192 / 2`, merge base `895c02df40332c813a8403bd489af6184111ccba`, two readiness paths, `PROTECTED_REFERENCE`.
+
+The 28 indexed Connector evidence branches were refreshed from their live heads. Every branch changes only its named audit/source-map document, has no semantic overlap requiring integration into the historical-fork decision, and remains `CANDIDATE_INTEGRATION` for the trigger recorded in the three parallel results indexes:
+
+- `15 / 1` from merge base `8214327906fbc2edf7ab4d02168cf94b3abc7e6f`: `activity-advancement-audit`, `character-panel-mutation-audit`, `civilization-tick-audit`, `combat-ai-scoring-test-coverage-refresh`, `game-tick-orchestration-audit`, `magic-runtime-readiness-refresh`, `quest-action-tree-audit`, and `world-spawn-admission-audit`;
+- `20 / 1` from merge base `8a0065b7a72a6fc8193b502251e9020a1e4ca360`: `chronicle-notification-provenance-audit`, `content-lint-schema-validator-coverage-audit`, `economy-command-surface-refresh`, `item-use-profile-effect-ownership-audit`, `js-ts-mirror-export-integrity-audit`, `knowledge-discovery-visibility-audit`, `npc-party-companion-readiness-audit`, `player-progression-reward-mutation-audit`, `travel-route-service-availability-audit`, and `ui-accessibility-input-source-audit`;
+- from merge base `bcbe658d1be033cdc83d04acdca67ec8186c484d`: `consumable-profile-coverage-audit` (`110 / 2`), `equipment-profile-readiness-audit` (`110 / 2`), `gameplay-shell-ui-state-audit` (`110 / 2`), `quest-turn-in-reward-source-audit` (`110 / 2`), `research-artifact-retention-inventory` (`110 / 2`), `rest-recovery-mutation-audit` (`110 / 2`), and `text-first-combat-view-model-audit` (`110 / 2`);
+- from merge base `3006c968eb40b1d72f64fb2dc0263e227f869a7d`: `recipe-production-maturity-audit`, `regional-bestiary-ecology-maturity-audit`, and `regional-settlement-maturity-audit` (`112 / 2` each).
+
+Two additional one-document candidate branches remain outside that 28-lane index: `parallel/connector-prep-freshness-audit` (`112 / 1`, merge base `3006c968...`) and `parallel/launcher-asset-pr-disposition` (`110 / 1`, merge base `bcbe658d...`). Their existing freshness and launcher triggers remain unchanged.
+
+GitHub reported PR #2 open, non-draft, unmerged, currently mechanically mergeable at head `e78dc645cfb658685be12f45f46d34b7c0da1119`; it remains `SUPERSEDED_PRESERVE_EVIDENCE`. PR #3 is open draft, unmerged, currently mechanically mergeable at head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; its body correctly identifies `SUPERSEDED_PRESERVE_EVIDENCE` and the expected archive SHA-256 remains `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`.
+
+`docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md` was verified, consumed for the decision's orientation and matrix, and remains historically useful rather than an unfinished controlling package. No branch/PR disposition changed, no integration or retirement trigger arrived, and no merge, cherry-pick, rebase, force update, close, or deletion occurred.
 
 ## 2026-08-02 Lineage Repair And Parent Acceptance Refresh
 
