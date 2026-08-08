@@ -12,6 +12,8 @@ Current status: `PARENT_ACCEPTED`
 
 Independent acceptance authority commit: `0262285e9f19c954ab1693838e27c8a7ea349640`
 
+Handoff publication and first verified post-push live head: `e3f8a71bfd58938bab939b3d83b6c9cfb83bd935`
+
 ## Decision
 
 `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently passed every bounded Model C and parent validation gate on 2026-08-08. Parent `0.6.9` is accepted.

@@ -18,6 +18,8 @@ Audited implementation: `cbad987028d81c5ecdc35403333ec920d0ea5e53`
 
 Acceptance authority commit: `0262285e9f19c954ab1693838e27c8a7ea349640`
 
+Handoff publication and first verified post-push live head: `e3f8a71bfd58938bab939b3d83b6c9cfb83bd935`
+
 Historical `0.6.9.10`: superseded acceptance claim; retain as evidence only
 
 Survey behavior: unimplemented
