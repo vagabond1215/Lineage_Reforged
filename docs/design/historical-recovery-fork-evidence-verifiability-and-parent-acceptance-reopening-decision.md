@@ -18,7 +18,9 @@ Inspected base and synchronized starting head: `260e800b584103393a25f6bc5c0599d9
 
 Decision authority commit: `907706bb782dbfa70b2eb229d4813e2209b21ab6`
 
-Final coordination and post-push live heads: recorded by `docs/dev/current-codex-output.md` and `docs/dev/current-gpt-handoff.md` after publication; they are intentionally not guessed inside the pre-commit decision artifact.
+Final coordination commit: `2ae21d13c6fb670450837a81a499de30bdf1454d`
+
+Post-push live head observed for the decision package: `2ae21d13c6fb670450837a81a499de30bdf1454d`
 
 ## Decision
 
@@ -142,4 +144,4 @@ Historical `0.6.9.10` remains a superseded acceptance claim and is not reused. P
 
 Fresh inventory found only local `master`, 36 non-default remote branches, and open PRs #2 and #3. All 28 indexed Connector evidence branches remain isolated `CANDIDATE_INTEGRATION`; the two workflow/readiness references remain `PROTECTED_REFERENCE`; PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`. No branch or PR was merged, rebased, updated, closed, or deleted. No branch has semantic overlap that requires integration into this decision.
 
-GitHub exposed no combined statuses and no pull-request-triggered workflow runs for `cbad987`, `f68d878`, or the synchronized starting head. Decision and coordination commit status is recorded after push in the current output and handoff.
+GitHub exposed no combined statuses and no pull-request-triggered workflow runs for `cbad987`, `f68d878`, or the synchronized starting head. The post-push review likewise exposed no combined statuses and no pull-request-triggered workflow runs for decision commit `907706bb782dbfa70b2eb229d4813e2209b21ab6` or final coordination commit `2ae21d13c6fb670450837a81a499de30bdf1454d`.

@@ -4,7 +4,7 @@ Source version/run: `Historical Recovery Fork Evidence Verifiability And Parent 
 
 Date: 2026-08-08
 
-Branch/status assumption: synchronized local `master` started clean at `260e800b584103393a25f6bc5c0599d9289b5356`, tracking `origin/master`; decision authority committed at `907706bb782dbfa70b2eb229d4813e2209b21ab6`
+Branch/status assumption: synchronized local `master` started clean at `260e800b584103393a25f6bc5c0599d9289b5356`, tracking `origin/master`; decision authority committed at `907706bb782dbfa70b2eb229d4813e2209b21ab6`; final coordination and first verified post-push live head were `2ae21d13c6fb670450837a81a499de30bdf1454d`
 
 Label class: unversioned focused decision
 
@@ -94,7 +94,7 @@ A production build, full regression group, and TypeScript audit were not require
 - FP-002: did not infer acceptance from the existing `33/33`; ran a separate 26-case adversarial matrix and kept parent reopened.
 - FP-007: read complete controlling files and used bounded patches; verified rewritten prompt/decision/prestage files by line count, hash, and terminal content.
 - FP-008: inspected every live branch by merge base, divergence, unique path, and semantic trigger; mechanical mergeability did not alter dispositions.
-- FP-009: distinguished inspected/starting head `260e800`, decision commit `907706b`, coordination publication, and later post-push live head.
+- FP-009: distinguished inspected/starting head `260e800`, decision commit `907706b`, final coordination commit `2ae21d1`, and its verified post-push live identity.
 - FP-010: installed an audit rather than repair because the complete evidence matrix showed no production defect under the selected contract.
 - FP-011: confirmed recovery and current-edge authority is validated before replay returns, with byte-stable rejection.
 - FP-012: exercised duplicate incoming edges, missing/duplicate/contradictory lineage, stable receipt targeting, deep replay, and no-effect duplicate return.
@@ -113,7 +113,7 @@ No branch or PR integration, mutation, close, rebase, force update, or deletion 
 
 ## Hosted Validation
 
-Initial GitHub inspection found no combined statuses and no pull-request-triggered workflow runs for `cbad987`, `f68d878`, or starting head `260e800`. Decision and final coordination status/workflow availability are recorded after push.
+Initial GitHub inspection found no combined statuses and no pull-request-triggered workflow runs for `cbad987`, `f68d878`, or starting head `260e800`. The post-push review found none for decision commit `907706bb782dbfa70b2eb229d4813e2209b21ab6` or final coordination commit `2ae21d13c6fb670450837a81a499de30bdf1454d`. GitHub served the installed `0.6.9.11` prompt, controlling decision, current output, and current handoff from `master`; open-PR inventory remained exactly PR #2 and PR #3 with no lifecycle action due.
 
 ## Execution Surface
 
