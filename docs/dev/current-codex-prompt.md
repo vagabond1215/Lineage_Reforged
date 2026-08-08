@@ -75,9 +75,9 @@ Using untouched synchronized production, create and remove a fresh temporary pro
 
 ```text
 C0 original defeat
-â””â”€ C1 recovery completion
-   â””â”€ C2 later fork
-      â””â”€ C3 later fork
+-> C1 recovery completion
+   -> C2 later fork
+      -> C3 later fork
 ```
 
 Make later edge ticks distinct enough to test another valid monotonic intermediate tick. Change exactly one field at a time and prove the expected result:
