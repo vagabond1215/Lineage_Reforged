@@ -16,7 +16,7 @@ Existing implementation classification: `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRE
 
 Inspected base and synchronized starting head: `260e800b584103393a25f6bc5c0599d9289b5356`
 
-Decision authority commit: recorded by the immediate coordination publication after this document is committed.
+Decision authority commit: `907706bb782dbfa70b2eb229d4813e2209b21ab6`
 
 Final coordination and post-push live heads: recorded by `docs/dev/current-codex-output.md` and `docs/dev/current-gpt-handoff.md` after publication; they are intentionally not guessed inside the pre-commit decision artifact.
 

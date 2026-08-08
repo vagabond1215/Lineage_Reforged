@@ -1,182 +1,130 @@
 # Current Codex Output
 
-Source run: Connector-only Codex segmentation-policy installation and current untracked bug/issue triage
+Source version/run: `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`
 
-Date: 2026-08-06
+Date: 2026-08-08
 
-Execution source head: `cc8807b284b4fac6dc8d3a5e83a87aee7ed51fc7`
+Branch/status assumption: synchronized local `master` started clean at `260e800b584103393a25f6bc5c0599d9289b5356`, tracking `origin/master`; decision authority committed at `907706bb782dbfa70b2eb229d4813e2209b21ab6`
 
-Segmentation-policy commit: `c0fc4f175b66a21c8b14314ff113411fc4570ba7`
+Label class: unversioned focused decision
 
-Issue-triage commit: `0da777605d54f3547fa1b6054f8449651154be2e`
+Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
-Handoff coordination commit: `564d0d1ee01640b2beadbcca3d5c9b9b88e3cce5`
+Milestone impact: `supports_current_band`
 
-Result: `BOUNDED_CODEX_CONNECTOR_SEGMENTATION_INSTALLED_ONE_DEFERRED_ASSET_VARIANT_ISSUE_RECORDED`
+Result: `DECISION_ACCEPTED_REAUDIT_AUTHORIZED`
 
-## Current Disposition
+Existing implementation: `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED`
 
-- Parent `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: `ACCEPTANCE_REOPENED_PENDING_FOCUSED_DECISION`.
-- Existing lineage implementation `cbad987028d81c5ecdc35403333ec920d0ea5e53`: `IMPLEMENTED_PENDING_AUTHORITY_RECONCILIATION_AND_REAUDIT`.
-- Historical `0.6.9.10` acceptance: superseded.
-- Active route: `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`.
-- Ashen Reef survey decision: blocked.
-- Survey implementation: unimplemented.
-- `0.7.0`: `NOT_READY`.
-- Twenty-eight Connector evidence branches remain isolated and unmerged.
+## Outcome
 
-The active prompt, production source, tests, contracts, persistence formats, serializers, migrations, content, assets, dependencies, branches, and pull-request lifecycle state were not changed.
+The decision selected bounded Model C. The linked ledger is authoritative for unique, acyclic parent/child continuity structure. Receipt authority independently binds the recovery mutation, recovery tick, and recovery parent/child continuities. Current campaign identity independently cross-checks the final edge's source mutation, parent, source artifact, and source publication.
 
-## Codex And Connector Segmentation Policy
+Once an ordinary edge is historical, its mutation, accepted tick, source artifact, and source publication are not all independently authenticated. They remain bounded descriptive ledger evidence under nonblank, integer, floor, and monotonic-order rules. This is deterministic semantic validation, not universal cryptographic tamper detection.
 
-Created:
+Parent `0.6.9` remains `ACCEPTANCE_REOPENED_PENDING_0.6.9.11`. Ashen Reef remains blocked, survey behavior remains unimplemented, and `0.7.0` remains `NOT_READY`.
 
-`docs/dev/codex-connector-segmentation-and-independent-review-policy.md`
+## Route-Authority Finding
 
-The policy defines a default ceiling of:
+- `551d14bc483054aac129f7a081489b70efb46521` added only the focused lineage decision; current prompt/handoff/output still named production-read-only `0.6.9.8`.
+- No runnable `0.6.9.9` implementation prompt preceded production commit `cbad987028d81c5ecdc35403333ec920d0ea5e53`.
+- No separately installed runnable `0.6.9.10` audit prompt preceded `f68d878cd1969e861f4fe7a793412876ba48b3a8` and its parent-acceptance claim.
+- The installed-prompt gate, audit/implementation separation, independent committed-head audit installation, and complete repository handoff sequence were bypassed.
+- `cbad987` is retained as candidate implemented evidence because it conforms to the decided contract; it is not accepted by this decision.
 
-1. one optional Connector or external-research prepass;
-2. one complete uninterrupted Codex run;
-3. one optional Connector independent post-run review.
+## Historical Field Classifications
 
-The purpose is to reduce Codex token use without turning one coherent repository run into repeated GPT/Codex handoffs.
+| Field | Classification |
+| --- | --- |
+| `sourceId` | `CURRENT_EDGE_ONLY_VERIFIABLE`, with the deterministic recovery edge independently receipt-bound |
+| `acceptedAtTick` | `SELF_ASSERTED_LEDGER_EVIDENCE`, with the recovery edge independently receipt-tick-bound |
+| `parentContinuityId` | `CHAIN_STRUCTURALLY_VERIFIABLE` |
+| `childContinuityId` | `CHAIN_STRUCTURALLY_VERIFIABLE` |
+| `forkedFromArtifactId` | `CURRENT_EDGE_ONLY_VERIFIABLE` |
+| `forkedFromPublicationId` | `CURRENT_EDGE_ONLY_VERIFIABLE` |
 
-### Connector-owned work
+## Executable Evidence
 
-Connector can fully own bounded current work such as:
+A fresh temporary probe constructed `C0 -> C1 -> C2 -> C3`, ran 26 exact cases, compared complete serialized snapshot and control state before/after, and was removed before commit.
 
-- remote branch, PR, commit, and issue inventories;
-- source/owner/caller maps;
-- prompt hardening and acceptance matrices;
-- cross-document consistency and stale-pointer audits;
-- evidence indexing and named-consumer registration;
-- external research briefs without private-repository claims;
-- PR metadata corrections;
-- tiny complete-file documentation corrections;
-- independent post-run prompt-compliance and claim-to-evidence review.
+- accepted `7/26`: valid deep replay; changed deep recovery artifact/publication; changed intermediate source mutation, another valid monotonic tick, artifact, and publication;
+- rejected byte-stably `19/26`: recovery mutation/tick/parent/child; intermediate parent/child; current-edge mutation/parent/artifact/publication; duplicate incoming child; cycle; disconnect; missing recovery; wrong recovery mutation/tick; original substitution; blank identifier; reversed tick ordering;
+- every rejection left snapshot/control bytes unchanged and produced no effects, child, revision, retained result, or publication.
 
-Codex should refresh dynamic facts before acting but normally should not recreate the complete stable Connector artifact.
-
-### Codex-owned coherent package
-
-Keep these together inside Codex:
-
-- repository synchronization, local history, branches, and worktree truth;
-- implementation, executable decisions, tests, and temporary probes;
-- builds, typechecks, lint, generators, simulations, browser checks, and generated output;
-- source/test/schema/migration/content/asset/dependency coordination;
-- large shared coordination updates driven by actual run results;
-- run-specific output based on commands executed;
-- final diff/status review, commit, push, and post-push verification;
-- acceptance or parent promotion requiring executable evidence.
-
-### Anti-ping-pong rule
-
-Do not use routine mid-run Connector checkpoints. Batch review findings and return at most one consolidated follow-up prompt unless a finding is immediately acceptance-critical, scope-invalidating, evidence of a production/test defect affecting the active work, or proof that the selected platform cannot complete the task.
-
-### Current route
-
-The optional prepass is already complete through:
-
-`docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`
-
-The next Codex run should execute the active decision end to end. After the committed result is pushed, one Connector independent review should inspect the package and return one consolidated follow-up only when required.
-
-## Current Bug And Issue Triage
-
-Created:
-
-`docs/dev/connector-current-untracked-bug-and-issue-triage-2026-08-06.md`
-
-Triage result:
-
-`CONNECTOR_TRIAGE_COMPLETE_ONE_NEW_BOUNDED_ASSET_VARIANT_ISSUE`
-
-### LR-UI-ASSET-001
-
-The character-creator continent catalog defines and the UI consumes separate normal and selected image paths for nine continent cards. GitHub content metadata shows that every selected/default pair has the same Git blob SHA and size.
-
-Confirmed narrow effect:
-
-- the selected-image path cannot provide distinct image content because it resolves to byte-identical assets;
-- this does not prove that card selection lacks CSS, text, focus, or accessible state;
-- repository evidence does not establish whether distinct art is unfinished or whether CSS is intended to own the selected state and the duplicate variant contract should be removed.
-
-Disposition:
-
-`HOLD_NAMED_CONSUMER_CHARACTER_CREATOR_VISUAL_ASSET_UI_CONTRACT_PASS`
-
-The issue must not widen or interrupt the active persistence decision. A later pass should choose between:
-
-1. intentionally distinct selected artwork for all nine cards; or
-2. removal of the redundant selected-image contract and files after proving CSS/semantic selection is the intended owner.
-
-That consumer requires product/visual direction, local UI production build, browser visual checks, responsive checks, and preservation of keyboard/focus/accessibility behavior.
-
-## Triage Coverage
-
-The Connector also checked:
-
-- open GitHub issues;
-- repository-indexed `TODO` and `FIXME` markers;
-- indexed skipped-test patterns;
-- indexed `Math.random` and `Date.now` use;
-- recursive repository tree and relevant character-creator source/assets;
-- existing issue/audit coverage.
-
-Observed at the inspected source head:
-
-- no open GitHub issues;
-- no indexed `TODO` or `FIXME` markers;
-- no indexed skipped-test markers;
-- no indexed `Math.random` or `Date.now` use;
-- no existing document or issue recording LR-UI-ASSET-001.
-
-No second issue met the Connector-only proof threshold. Search absence is not proof that no other bug exists, and runtime/build/browser/environment defects require local execution.
+The unchanged focused persistence suite passed `33/33`.
 
 ## Files Changed
 
-- `docs/dev/codex-connector-segmentation-and-independent-review-policy.md`
-- `docs/dev/connector-current-untracked-bug-and-issue-triage-2026-08-06.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/current-codex-output.md`
+- `docs/design/historical-recovery-fork-evidence-verifiability-and-parent-acceptance-reopening-decision.md`;
+- `docs/dev/current-codex-prompt.md`;
+- `docs/dev/current-codex-output.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/repository-first-agent-work-protocol.md`;
+- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
+- `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/current-planning-anchor-reconciliation.md`;
+- `docs/dev/project-roadmap.md`;
+- `docs/dev/codex-sequenced-implementation-plan.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/future_content_backlog.md`;
+- `docs/design/static-content-expansion-program.md`;
+- `docs/dev/branch-disposition-register.md`;
+- `docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`.
 
-No production, test, asset, content, schema, persistence, migration, dependency, generated-output, prompt-body, branch-head, or PR metadata change occurred.
+No production source, shared type, test, serializer, migration, format, dependency, content, asset, UI, or survey file changed.
 
-## Validation And Limits
+## Checks Run
 
-Performed through GitHub Connector:
+- fetch/prune and clean synchronized head verification: passed;
+- exact prompt/handoff/output history at `5fe1191`, `551d14b`, `cbad987`, and `f68d878`: inspected;
+- complete `5fe1191..260e800` commit and changed-path inventory: inspected;
+- live contract, emitter, validator, persistence/publication, caller, and focused-test source map: inspected;
+- fresh 26-case characterization: `26/26` expected results, all rejection byte-stability checks passed;
+- `node --test tests\unit\campaign-persistence-foundation.test.mjs`: `33/33` passed;
+- documentation path/reference and stale-live-pointer checks: passed;
+- complete unstaged and staged diff inspection: passed;
+- `git diff --check` and staged equivalent: passed;
+- temporary probe cleanup and worktree hygiene: passed.
 
-- live default-branch and recent-commit inspection;
-- workflow-policy comparison;
-- open issue and PR inspection;
-- repository code and marker searches;
-- recursive tree inspection;
-- complete continent catalog, consumer, and asset-metadata inspection;
-- exact Git blob SHA and size comparison for all nine selected/default asset pairs;
-- prior-coverage search;
-- complete-file policy, triage, handoff, and output writes.
+A production build, full regression group, and TypeScript audit were not required by this documentation-only decision. They are mandatory in installed `0.6.9.11`.
 
-Not performed:
+## Applicable Verification Guardrails
 
-- local fetch/prune or worktree inspection;
-- tests, builds, typechecks, content lint, generators, or simulations;
-- image decoding or visual comparison;
-- packaged-output size measurement;
-- browser, responsive, keyboard, focus, contrast, or assistive-technology execution;
-- source, test, asset, or content repair;
-- branch integration or lifecycle mutation;
-- parent acceptance or successor execution.
+- FP-002: did not infer acceptance from the existing `33/33`; ran a separate 26-case adversarial matrix and kept parent reopened.
+- FP-007: read complete controlling files and used bounded patches; verified rewritten prompt/decision/prestage files by line count, hash, and terminal content.
+- FP-008: inspected every live branch by merge base, divergence, unique path, and semantic trigger; mechanical mergeability did not alter dispositions.
+- FP-009: distinguished inspected/starting head `260e800`, decision commit `907706b`, coordination publication, and later post-push live head.
+- FP-010: installed an audit rather than repair because the complete evidence matrix showed no production defect under the selected contract.
+- FP-011: confirmed recovery and current-edge authority is validated before replay returns, with byte-stable rejection.
+- FP-012: exercised duplicate incoming edges, missing/duplicate/contradictory lineage, stable receipt targeting, deep replay, and no-effect duplicate return.
 
-## Next Action
+## Branch And PR Lifecycle Review
 
-After token reset:
+Fresh inventory: one local `master`, 36 non-default remote branches, two open PRs.
 
-1. perform the fresh platform/tool/model/plugin capability inventory;
-2. synchronize the authenticated repository checkout;
-3. read and verify the waiting-period prestage;
-4. execute `docs/dev/current-codex-prompt.md` end to end without a routine Connector interruption;
-5. reconcile the complete branch register and required coordination surfaces from the decision outcome;
-6. install the exact `0.6.9.11` successor and stop without accepting the parent in the decision route;
-7. run one Connector independent post-run review of the pushed package;
-8. retain LR-UI-ASSET-001 for its later named visual asset/UI consumer rather than fixing it in the persistence route.
+- 28 indexed Connector evidence branches remain isolated `CANDIDATE_INTEGRATION` at their named owner triggers;
+- `parallel/prompt-packaging-integrity-audit` and `prep/integrated-gameplay-0-7-readiness-audit` remain read-only `PROTECTED_REFERENCE`;
+- PR #2 / `main-menu-asset-contract-pass` remains `SUPERSEDED_PRESERVE_EVIDENCE` at head `e78dc645...`;
+- PR #3 / `parallel/0.6.9.7-repair-bundle` remains `SUPERSEDED_PRESERVE_EVIDENCE` at head `10afdef...`, archive SHA-256 `c5d536b...`;
+- legacy launcher and two additional one-document candidates retain their existing triggers.
+
+No branch or PR integration, mutation, close, rebase, force update, or deletion was due or performed. The prestage was verified and consumed as reusable evidence; it remains historically useful and noncontrolling.
+
+## Hosted Validation
+
+Initial GitHub inspection found no combined statuses and no pull-request-triggered workflow runs for `cbad987`, `f68d878`, or starting head `260e800`. Decision and final coordination status/workflow availability are recorded after push.
+
+## Execution Surface
+
+Used an authenticated repository-capable Codex implementation surface with local PowerShell, Git, Node, and the active GitHub connector for PR/status evidence. Exact model/version was not exposed; the capability class was a high-reasoning repository implementation agent. GitHub plugin was `AVAILABLE_AND_ACTIVE`; no uninstalled plugin was materially useful. Token/quota accounting was unknown. Connector evidence could not substitute for local tests or the unsynced worktree, so substantive execution remained local.
+
+## Risks And Follow-Up
+
+- Historical ordinary mutation/tick/artifact/publication metadata is not independently authenticated after later forks; future docs/tests must preserve the bounded guarantee language.
+- This run does not accept parent `0.6.9`.
+- The next run must independently recreate the probe and complete focused, regression, build, bounded type, serialization/mirror, branch, diff, and hosted gates.
+
+Suggested commit message: `docs(save): decide historical recovery fork authority`
+
+Next recommended version/run: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
