@@ -32,16 +32,22 @@ Read:
 - `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`;
 - `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
 - `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
+- `docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md` as reusable Connector orientation evidence, verifying every dynamic claim locally;
 - current campaign/session/save/publication/shared snapshot and authority-ledger contracts;
 - current survey behavior and its characterization coverage;
 - the current output, prompt, handoff, roadmap, sequenced plan, continuity brief, historical/deferred register, planning-anchor reconciliation, backlog, static-content program, branch policy, and branch register;
-- the protected integrated-gameplay readiness branch through read-only Git inspection only.
+- through read-only exact-ref Git inspection, these applicable `CANDIDATE_INTEGRATION` evidence artifacts, without merging or modifying their branches:
+  - `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, `docs/design/activity-advancement-command-result-and-effect-routing-audit.md`;
+  - `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`, `docs/design/player-progression-and-reward-mutation-source-audit.md`;
+  - `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, `docs/design/chronicle-notification-operation-and-projection-provenance-audit.md`;
+  - `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`, `docs/design/knowledge-discovery-observation-and-visibility-ownership-audit.md`;
+- the protected `prep/integrated-gameplay-0-7-readiness-audit` branch through read-only Git inspection only, treating its old live-route facts as historical and re-verifying architecture claims against current source.
 
 ## Execution Gate
 
 1. Verify clean synchronized `master`, upstream, current head, accepted `0.6.9` evidence, and this prompt.
 2. Run `git fetch --all --prune`; inventory all branches and open PRs; refresh dispositions only from live evidence.
-3. Inspect the complete current survey mutation path and the accepted occurrence/save decisions before drafting.
+3. Inspect the complete current survey mutation path, the accepted occurrence/save decisions, the Connector prestage, and all four applicable evidence artifacts before drafting. Re-verify their claims against current source rather than copying them as current authority.
 4. Keep the run documentation-only.
 5. If repository evidence cannot decide an identity, owner, persistence, replay, correction, or package boundary without product direction, return `NO_PACKAGE` and ask the smallest exact user question.
 
@@ -115,12 +121,13 @@ For each effect, name proposal owner, application owner, receipt kind, required 
 - clock and total play ticks;
 - body/metabolic and attribute load;
 - HP/MP/Stamina resource changes;
-- General Lore gain or blocked breakthrough gate;
+- `skill.knowledge.general_lore` gain or blocked breakthrough gate during sector logging;
+- `skill.resource.identify.flora` gain or blocked breakthrough gate during final survey discovery;
 - sector and ruins flags;
 - quest progress;
 - survey operation;
-- discovery;
-- current activity completion;
+- Stormglass Bloom discovery owner facts, explicitly distinguishing the discovery Chronicle entry, discovery flag, Codex/reference linkage, Knowledge/progression facts, and any presentation visibility rather than treating them as interchangeable;
+- current activity completion/replacement;
 - snapshot synchronization;
 - notification, Chronicle, notice, and event projection.
 
@@ -140,7 +147,7 @@ Do not assign `0.7.0`. If a versioned implementation is ready, classify it under
 Create one permanent decision document under `docs/design/` with:
 
 - run identity, date, branch/head assumptions, label class, and milestone impact;
-- evidence inspected;
+- evidence inspected, including the four applicable Connector evidence artifacts and the protected readiness branch with explicit current-source re-verification;
 - current survey mutation inventory;
 - exact identity graph;
 - persisted record and receipt contract;
@@ -175,8 +182,8 @@ Do not:
 - introduce generalized activity uncertainty, competence, difficulty, familiarity, or compression;
 - add Committed/Ironbound Stakes, checkpoint selection, actual death/succession, cloud synchronization, recovery UI, mutable health, care, rewards, or new content;
 - add dependencies, assets, generated output, or unrelated cleanup;
-- merge, modify, rebase, force-update, or delete protected branches.
+- merge, modify, rebase, force-update, or delete protected branches or the applicable Connector evidence branches.
 
 ## Completion
 
-Report starting/final commits, exact files changed, decision result, branch/PR lifecycle, validation and counts, unresolved risks, and the installed next prompt.
+Report starting/final commits, exact files changed, decision result, branch/PR lifecycle, applicable evidence inspected and how it was re-verified, validation and counts, unresolved risks, and the installed next prompt.
