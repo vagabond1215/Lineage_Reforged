@@ -2,7 +2,7 @@
 
 Date: 2026-08-08
 
-Status: `0.6.9.11` complete; parent `0.6.9` accepted; Ashen Reef survey receipt decision active
+Status: `0.6.9.11` complete; parent `0.6.9` accepted; Ashen Reef survey receipt decision active; Connector prestage complete
 
 ## Current Route
 
@@ -55,6 +55,37 @@ The current prompt is the unversioned documentation-only Ashen Reef survey occur
 
 Do not implement survey behavior, receipts, schemas, migrations, UI, preview, commands, events, or adapters during that decision. Do not assign `0.7.0`; survey behavior remains unimplemented and `0.7.0` remains `NOT_READY`.
 
+## Connector Ashen Reef Prestage
+
+Permanent prestage:
+
+`docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md`
+
+Prestage commit:
+
+`dea17939c5362a122c93d44e7be1d12e4654d6d3`
+
+Disposition:
+
+`CONNECTOR_PRESTAGE_COMPLETE_NO_DECISION`
+
+The prestage consolidates the current live survey mutation inventory and the four existing evidence lanes whose mandatory-consumer triggers now apply:
+
+- `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
+- `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`;
+- `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
+- `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`.
+
+The active prompt was hardened at:
+
+`cb5257a447435dcf5044dc32be0e4402a0f772c1` — `docs(prompt): harden Ashen Reef survey decision evidence`
+
+The prompt now requires read-only exact-ref inspection of those four artifacts, local re-verification against current source, explicit treatment of both current survey skill consequences (`skill.knowledge.general_lore` and `skill.resource.identify.flora`), and separation of discovery Chronicle, discovery flag, Codex/reference, Knowledge/progression, and presentation visibility facts.
+
+PR #3 metadata was also corrected to the current route: parent `0.6.9` is accepted, the repair bundle remains `SUPERSEDED_PRESERVE_EVIDENCE`, and it must not reopen acceptance or widen the active survey decision.
+
+This Connector prestage is reusable orientation evidence only. It must not be used as the survey decision itself or as executable validation. After synchronizing, Codex should verify the source and branch facts, consume the applicable evidence, and complete the decision without a routine Connector interruption.
+
 ## Branch And PR Posture
 
 At audit starting head `3f87c8c51de506839c9408d4df07ccd97d6be278`: one local `master`, 36 non-default remote branches, and exactly PR #2 and PR #3 open.
@@ -63,20 +94,24 @@ At audit starting head `3f87c8c51de506839c9408d4df07ccd97d6be278`: one local `ma
 - prompt-packaging and integrated-gameplay readiness refs: `PROTECTED_REFERENCE`;
 - PR #2 / launcher contract: `SUPERSEDED_PRESERVE_EVIDENCE`;
 - PR #3 / repair bundle: `SUPERSEDED_PRESERVE_EVIDENCE`;
-- no branch/PR integration, mutation, close, rebase, force update, or deletion was due or performed.
+- no branch/PR integration, close, rebase, force update, or deletion was due or performed.
+
+PR #3 body metadata has since been refreshed to current acceptance and route language; its branch/head/disposition/lifecycle state remain unchanged.
 
 Refresh all live refs and hosted metadata in the survey decision. Do not copy these counts or mechanical mergeability as action authority.
 
 ## Evidence Reuse
 
-`docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md` and `docs/dev/connector-post-run-review-0.6.9.11-readiness-2026-08-08.md` remain useful historical evidence. They do not replace local inspection or execution.
+`docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`, `docs/dev/connector-post-run-review-0.6.9.11-readiness-2026-08-08.md`, and `docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md` remain useful evidence. They do not replace local inspection or execution.
+
+For the active survey decision, only the new Ashen Reef prestage and the evidence artifacts explicitly named by the current prompt should be treated as mandatory Connector orientation; older persistence prestages are historical context unless a current authority makes them applicable.
 
 ## Platform And Tool Posture
 
-The active decision is documentation-only but still requires an authenticated repository-capable surface for synchronized branch/PR inspection and repository coordination. Exact selectable model/version was not exposed; use the strongest current repository agent with high reasoning. Local Git and the active GitHub connector are sufficient; no additional plugin is required. Token/quota accounting is unknown.
+The active decision is documentation-only but still requires an authenticated repository-capable surface for synchronized branch/PR inspection, source verification, focused tests, and repository coordination. Exact selectable model/version was not exposed; use the strongest current repository agent with high reasoning. Local Git and the active GitHub connector are sufficient; no additional plugin is required. Token/quota accounting is unknown.
 
 ## Next Action
 
-Run, but do not broaden beyond, the exact current prompt:
+Run, but do not broaden beyond, the exact current prompt from a freshly synchronized authenticated checkout. Read the Ashen Reef Connector prestage during orientation and independently verify its dynamic claims:
 
 `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
