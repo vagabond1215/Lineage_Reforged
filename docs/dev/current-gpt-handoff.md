@@ -16,6 +16,8 @@ Completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority 
 
 Audited implementation: `cbad987028d81c5ecdc35403333ec920d0ea5e53`
 
+Acceptance authority commit: `0262285e9f19c954ab1693838e27c8a7ea349640`
+
 Historical `0.6.9.10`: superseded acceptance claim; retain as evidence only
 
 Survey behavior: unimplemented

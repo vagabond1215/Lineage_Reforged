@@ -16,6 +16,8 @@ Existing implementation classification: `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRE
 
 Independent acceptance audit: `Version 0.6.9.11`, `PARENT_ACCEPTED`
 
+Independent acceptance authority commit: `0262285e9f19c954ab1693838e27c8a7ea349640`
+
 Inspected base and synchronized starting head: `260e800b584103393a25f6bc5c0599d9289b5356`
 
 Decision authority commit: `907706bb782dbfa70b2eb229d4813e2209b21ab6`
