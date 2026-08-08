@@ -1,67 +1,45 @@
 # Current Codex Output
 
-Source version/run: `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`
+Source version/run: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
 
 Date: 2026-08-08
 
-Branch/status assumption: synchronized local `master` started clean at `260e800b584103393a25f6bc5c0599d9289b5356`, tracking `origin/master`; decision authority committed at `907706bb782dbfa70b2eb229d4813e2209b21ab6`; final coordination and first verified post-push live head were `2ae21d13c6fb670450837a81a499de30bdf1454d`
+Branch/status assumption: clean synchronized local `master` and `origin/master` at starting head `3f87c8c51de506839c9408d4df07ccd97d6be278`; audited production implementation `cbad987028d81c5ecdc35403333ec920d0ea5e53`; controlling Model C decision `907706bb782dbfa70b2eb229d4813e2209b21ab6`
 
-Label class: unversioned focused decision
+Label class: support suffix
 
 Parent version: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
 
 Milestone impact: `supports_current_band`
 
-Result: `DECISION_ACCEPTED_REAUDIT_AUTHORIZED`
-
-Existing implementation: `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED`
+Result: `PARENT_ACCEPTED`
 
 ## Outcome
 
-The decision selected bounded Model C. The linked ledger is authoritative for unique, acyclic parent/child continuity structure. Receipt authority independently binds the recovery mutation, recovery tick, and recovery parent/child continuities. Current campaign identity independently cross-checks the final edge's source mutation, parent, source artifact, and source publication.
+Independent inspection and execution accepted the implemented parent. The audit recreated the `C0 -> C1 -> C2 -> C3` probe from untouched production, exercised the full bounded Model C matrix, and completed the focused, regression, build, bounded TypeScript, serialization, mirror/export, caller/publication, branch/PR, diff, and hygiene gates.
 
-Once an ordinary edge is historical, its mutation, accepted tick, source artifact, and source publication are not all independently authenticated. They remain bounded descriptive ledger evidence under nonblank, integer, floor, and monotonic-order rules. This is deterministic semantic validation, not universal cryptographic tamper detection.
+`Version 0.6.9.11` is complete and `Version 0.6.9` is accepted. The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` is reactivated but was not executed. Survey behavior remains unimplemented and `0.7.0` remains `NOT_READY`.
 
-Parent `0.6.9` remains `ACCEPTANCE_REOPENED_PENDING_0.6.9.11`. Ashen Reef remains blocked, survey behavior remains unimplemented, and `0.7.0` remains `NOT_READY`.
+## Independent Lineage Matrix
 
-## Route-Authority Finding
+A fresh temporary probe used actual later distinct ticks: recovery `1438`, intermediate `1450`/`1454`, and current `1458`. It ran 30 exact cases and was removed before commit.
 
-- `551d14bc483054aac129f7a081489b70efb46521` added only the focused lineage decision; current prompt/handoff/output still named production-read-only `0.6.9.8`.
-- No runnable `0.6.9.9` implementation prompt preceded production commit `cbad987028d81c5ecdc35403333ec920d0ea5e53`.
-- No separately installed runnable `0.6.9.10` audit prompt preceded `f68d878cd1969e861f4fe7a793412876ba48b3a8` and its parent-acceptance claim.
-- The installed-prompt gate, audit/implementation separation, independent committed-head audit installation, and complete repository handoff sequence were bypassed.
-- `cbad987` is retained as candidate implemented evidence because it conforms to the decided contract; it is not accepted by this decision.
+- accepted `8/30`: valid deep replay; copied/order-reversed artifact replay; changed recovery artifact/publication; changed ordinary intermediate source mutation, another valid monotonic tick, artifact, and publication;
+- rejected byte-stably `22/30`: recovery source/tick/parent/child; intermediate parent/child; current source/parent/artifact/publication; duplicate incoming child; cycle; disconnect; missing recovery; original-continuity substitution; blank id; noninteger tick; below-floor tick; reversed tick order; self edge; projection corruption; and control corruption;
+- every rejection preserved exact serialized snapshot/control bytes and produced no child, effect, revision, retained result, or publication;
+- every acceptance returned the exact candidate snapshot/control references without mutating their bytes.
 
-## Historical Field Classifications
-
-| Field | Classification |
-| --- | --- |
-| `sourceId` | `CURRENT_EDGE_ONLY_VERIFIABLE`, with the deterministic recovery edge independently receipt-bound |
-| `acceptedAtTick` | `SELF_ASSERTED_LEDGER_EVIDENCE`, with the recovery edge independently receipt-tick-bound |
-| `parentContinuityId` | `CHAIN_STRUCTURALLY_VERIFIABLE` |
-| `childContinuityId` | `CHAIN_STRUCTURALLY_VERIFIABLE` |
-| `forkedFromArtifactId` | `CURRENT_EDGE_ONLY_VERIFIABLE` |
-| `forkedFromPublicationId` | `CURRENT_EDGE_ONLY_VERIFIABLE` |
-
-## Executable Evidence
-
-A fresh temporary probe constructed `C0 -> C1 -> C2 -> C3`, ran 26 exact cases, compared complete serialized snapshot and control state before/after, and was removed before commit.
-
-- accepted `7/26`: valid deep replay; changed deep recovery artifact/publication; changed intermediate source mutation, another valid monotonic tick, artifact, and publication;
-- rejected byte-stably `19/26`: recovery mutation/tick/parent/child; intermediate parent/child; current-edge mutation/parent/artifact/publication; duplicate incoming child; cycle; disconnect; missing recovery; wrong recovery mutation/tick; original substitution; blank identifier; reversed tick ordering;
-- every rejection left snapshot/control bytes unchanged and produced no effects, child, revision, retained result, or publication.
-
-The unchanged focused persistence suite passed `33/33`.
+The result was `INDEPENDENT_LINEAGE_AUDIT_PASS` with `30/30` expected outcomes.
 
 ## Files Changed
 
-- `docs/design/historical-recovery-fork-evidence-verifiability-and-parent-acceptance-reopening-decision.md`;
 - `docs/dev/current-codex-prompt.md`;
 - `docs/dev/current-codex-output.md`;
 - `docs/dev/current-gpt-handoff.md`;
-- `docs/dev/repository-first-agent-work-protocol.md`;
+- `docs/design/historical-recovery-fork-evidence-verifiability-and-parent-acceptance-reopening-decision.md`;
 - `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
 - `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`;
+- `docs/dev/repository-first-agent-work-protocol.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
 - `docs/design/current-planning-anchor-reconciliation.md`;
 - `docs/dev/project-roadmap.md`;
@@ -70,61 +48,57 @@ The unchanged focused persistence suite passed `33/33`.
 - `docs/future_content_backlog.md`;
 - `docs/design/static-content-expansion-program.md`;
 - `docs/dev/branch-disposition-register.md`;
-- `docs/dev/connector-token-reset-waiting-period-prestage-2026-08-06.md`.
+- `docs/dev/connector-post-run-review-0.6.9.11-readiness-2026-08-08.md`.
 
-No production source, shared type, test, serializer, migration, format, dependency, content, asset, UI, or survey file changed.
+No production source, shared type, test, serializer, migration, format, dependency, content, asset, UI, or survey behavior changed.
 
 ## Checks Run
 
-- fetch/prune and clean synchronized head verification: passed;
-- exact prompt/handoff/output history at `5fe1191`, `551d14b`, `cbad987`, and `f68d878`: inspected;
-- complete `5fe1191..260e800` commit and changed-path inventory: inspected;
-- live contract, emitter, validator, persistence/publication, caller, and focused-test source map: inspected;
-- fresh 26-case characterization: `26/26` expected results, all rejection byte-stability checks passed;
+- fetch/prune, clean worktree, synchronized head, and complete branch/PR orientation: passed;
+- independent Model C probe: `30/30` expected outcomes;
 - `node --test tests\unit\campaign-persistence-foundation.test.mjs`: `33/33` passed;
-- documentation path/reference and stale-live-pointer checks: passed;
-- complete unstaged and staged diff inspection: passed;
-- `git diff --check` and staged equivalent: passed;
-- temporary probe cleanup and worktree hygiene: passed.
-
-A production build, full regression group, and TypeScript audit were not required by this documentation-only decision. They are mandatory in installed `0.6.9.11`.
+- prescribed eleven-file regression group: `140/140` passed;
+- `npx.cmd vite build` in `apps/rpg-ui`: passed, Vite `5.4.21`, `209` modules, existing chunk-size warning only;
+- bounded `tsc --noEmit`: reproduced exactly `137` known diagnostics across `28` files, with zero diagnostics in acceptance-critical implementation or decision files;
+- `npm.cmd run ui:build`: its TypeScript pre-step stopped on that known baseline; the production Vite build was therefore run and passed separately, matching the historical acceptance gate;
+- TypeScript/JavaScript mirror and public-export inspection: passed;
+- raw JSON serialization, target format `lineage.save_snapshot.v2`, version-7 envelope, immutable artifact verification, and version-6 migration/readability inspection: passed;
+- real `App.tsx` recovery caller and verified publication ordering inspection: passed;
+- temporary-probe removal, generated ignored build-output cleanup, documentation reference/stale-pointer checks, complete diff inspection, and `git diff --check`: passed.
 
 ## Applicable Verification Guardrails
 
-- FP-002: did not infer acceptance from the existing `33/33`; ran a separate 26-case adversarial matrix and kept parent reopened.
-- FP-007: read complete controlling files and used bounded patches; verified rewritten prompt/decision/prestage files by line count, hash, and terminal content.
-- FP-008: inspected every live branch by merge base, divergence, unique path, and semantic trigger; mechanical mergeability did not alter dispositions.
-- FP-009: distinguished inspected/starting head `260e800`, decision commit `907706b`, final coordination commit `2ae21d1`, and its verified post-push live identity.
-- FP-010: installed an audit rather than repair because the complete evidence matrix showed no production defect under the selected contract.
-- FP-011: confirmed recovery and current-edge authority is validated before replay returns, with byte-stable rejection.
-- FP-012: exercised duplicate incoming edges, missing/duplicate/contradictory lineage, stable receipt targeting, deep replay, and no-effect duplicate return.
+- FP-002: acceptance did not rely on green regression counts; the independent 30-case matrix covered exact authority and byte-stable failure boundaries.
+- FP-007: controlling files were read completely, bounded edits were used, and rewritten current coordination files were reread.
+- FP-008: every live branch and both open PRs were inspected semantically; mechanical mergeability did not change dispositions.
+- FP-009: starting, implementation, decision, audit, coordination, and post-push identities are distinguished.
+- FP-010: the exact independent audit was installed and executed before parent acceptance; no repair prompt was installed because every gate passed.
+- FP-011: recovery and current-edge authority were verified before completed replay could return.
+- FP-012: duplicate, cycle, disconnect, missing-lineage, stable targeting, arbitrary-depth replay, and no-effect duplicate behavior were exercised.
 
 ## Branch And PR Lifecycle Review
 
-Fresh inventory: one local `master`, 36 non-default remote branches, two open PRs.
+Fresh starting-head inventory found one local `master`, 36 non-default remote branches, and exactly two open PRs.
 
-- 28 indexed Connector evidence branches remain isolated `CANDIDATE_INTEGRATION` at their named owner triggers;
+- 28 indexed Connector evidence branches and two additional one-document candidates retain their named `CANDIDATE_INTEGRATION` triggers;
 - `parallel/prompt-packaging-integrity-audit` and `prep/integrated-gameplay-0-7-readiness-audit` remain read-only `PROTECTED_REFERENCE`;
-- PR #2 / `main-menu-asset-contract-pass` remains `SUPERSEDED_PRESERVE_EVIDENCE` at head `e78dc645...`;
-- PR #3 / `parallel/0.6.9.7-repair-bundle` remains `SUPERSEDED_PRESERVE_EVIDENCE` at head `10afdef...`, archive SHA-256 `c5d536b...`;
-- legacy launcher and two additional one-document candidates retain their existing triggers.
+- PR #2 / `main-menu-asset-contract-pass` remains `SUPERSEDED_PRESERVE_EVIDENCE` at `e78dc645cfb658685be12f45f46d34b7c0da1119`;
+- PR #3 / `parallel/0.6.9.7-repair-bundle` remains `SUPERSEDED_PRESERVE_EVIDENCE` at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`, with archive SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`;
+- legacy launcher refs retain their existing dedicated review triggers.
 
-No branch or PR integration, mutation, close, rebase, force update, or deletion was due or performed. The prestage was verified and consumed as reusable evidence; it remains historically useful and noncontrolling.
+No disposition changed and no branch integration, mutation, close, rebase, force update, or deletion was due or performed. The 2026-08-06 prestage and Connector post-run review were verified as reusable evidence only; neither substituted for independent execution.
 
 ## Hosted Validation
 
-Initial GitHub inspection found no combined statuses and no pull-request-triggered workflow runs for `cbad987`, `f68d878`, or starting head `260e800`. The post-push review found none for decision commit `907706bb782dbfa70b2eb229d4813e2209b21ab6` or final coordination commit `2ae21d13c6fb670450837a81a499de30bdf1454d`. GitHub served the installed `0.6.9.11` prompt, controlling decision, current output, and current handoff from `master`; open-PR inventory remained exactly PR #2 and PR #3 with no lifecycle action due.
-
-## Execution Surface
-
-Used an authenticated repository-capable Codex implementation surface with local PowerShell, Git, Node, and the active GitHub connector for PR/status evidence. Exact model/version was not exposed; the capability class was a high-reasoning repository implementation agent. GitHub plugin was `AVAILABLE_AND_ACTIVE`; no uninstalled plugin was materially useful. Token/quota accounting was unknown. Connector evidence could not substitute for local tests or the unsynced worktree, so substantive execution remained local.
+GitHub reported no combined statuses and no pull-request-triggered workflow runs for implementation `cbad987`, decision `907706b`, or starting head `3f87c8c`. Post-push audit and coordination identities are recorded after publication verification. Open-PR inventory remained exactly PR #2 and PR #3, with both currently mechanically non-mergeable and no lifecycle action due.
 
 ## Risks And Follow-Up
 
-- Historical ordinary mutation/tick/artifact/publication metadata is not independently authenticated after later forks; future docs/tests must preserve the bounded guarantee language.
-- This run does not accept parent `0.6.9`.
-- The next run must independently recreate the probe and complete focused, regression, build, bounded type, serialization/mirror, branch, diff, and hosted gates.
+- Historical ordinary mutation/tick/artifact/publication metadata retains only the bounded Model C guarantee; it is not independently authenticated universal tamper detection.
+- The workspace TypeScript backlog remains exactly the separate known 137-diagnostic baseline. The passing Vite build is the production-build acceptance evidence.
+- The reactivated survey decision is documentation-only. It must not implement survey behavior and must return `PACKAGE_READY` or the smallest exact `NO_PACKAGE` prerequisite.
+- `0.7.0` remains `NOT_READY`.
 
-Suggested commit message: `docs(save): decide historical recovery fork authority`
+Suggested commit message: `docs(save): accept historical recovery fork authority`
 
-Next recommended version/run: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
+Next recommended version/run: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`

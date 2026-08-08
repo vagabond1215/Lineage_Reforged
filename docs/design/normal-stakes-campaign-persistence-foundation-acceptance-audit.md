@@ -8,11 +8,13 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Current status: `ACCEPTANCE_REOPENED_PENDING_0.6.9.11`
+Current status: `PARENT_ACCEPTED`
 
 ## Decision
 
-The former `PARENT_ACCEPTED` conclusion is superseded. The historical-fork authority decision selected bounded Model C, retained `cbad987` as `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED`, and installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`. Parent `0.6.9` remains reopened until that independently installed audit passes.
+`Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently passed every bounded Model C and parent validation gate on 2026-08-08. Parent `0.6.9` is accepted.
+
+The audit recreated `C0 -> C1 -> C2 -> C3` from untouched production and produced `30/30` expected results: eight conforming descriptive/equivalent cases accepted and 22 structural, receipt-bound, current-edge, shape, ordering, projection, and control corruptions rejected byte-stably. Focused persistence passed `33/33`, the prescribed regression group passed `140/140`, the production Vite build passed at 209 modules, the bounded TypeScript audit reproduced exactly 137 known diagnostics with zero in acceptance-critical files, and mirror/export, serialization, publication, real-caller, diff, hygiene, and hosted checks passed.
 
 `Version 0.6.9.8` independently confirmed the connector-side concern: original-continuity substitution could pass and valid replay after two later forks could fail because the ledger did not retain a provable parent-to-child chain. It concluded `REPAIR_REQUIRED`.
 
@@ -28,7 +30,7 @@ The focused `Normal Defeat Recovery Completion Lineage Repair Decision` authoriz
 - original substitution and every required fork/identity corruption rejected byte-stably;
 - valid `C0 -> C1 -> C2 -> C3` and copied/reversed replay returned the current state without effects.
 
-Historical disposition: `PARENT_ACCEPTED`; superseded by `ACCEPTANCE_REOPENED_PENDING_0.6.9.11`.
+Historical `0.6.9.10` disposition: superseded acceptance claim. Current independent disposition: `PARENT_ACCEPTED` through installed `0.6.9.11`.
 
 The first `Version 0.6.9.7 - Initial Defeat Authority, Durable Duplicate, And Effect-Provenance Repair` attempt ran against synchronized `master` at `6820ab8175f6b4d0b447b589045bc0a934663257`, independently reproduced all nine hardened findings, and stopped before production edits under its required contract gates.
 
@@ -264,8 +266,6 @@ The completed `0.6.9.3` run reported one local branch, seventeen non-default rem
 
 ## Next Run
 
-`Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
+`Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
-The Ashen Reef survey decision remains blocked and survey behavior remains unimplemented.
-
-Run the exact current independent audit prompt. Survey implementation remains blocked pending parent acceptance, and `0.7.0` remains `NOT_READY`.
+The documentation-only decision is reactivated but has not been executed. Survey behavior remains unimplemented, and `0.7.0` remains `NOT_READY`.

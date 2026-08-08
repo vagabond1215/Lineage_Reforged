@@ -6,6 +6,23 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-08 Version 0.6.9.11 Acceptance Refresh
+
+The independent audit fetched/pruned and synchronized clean local `master` at starting head `3f87c8c51de506839c9408d4df07ccd97d6be278`. Fresh inventory found one local branch, 36 non-default remote branches, and exactly two open pull requests. Counts below are `master-only / branch-only` at that starting head.
+
+- `feat/main-menu-assets`: `782 / 0`;
+- `main-menu-asset-contract-pass`: `710 / 10`;
+- `main-menu-refinement-pass`: `717 / 2`;
+- `parallel/0.6.9.7-repair-bundle`: `69 / 7`;
+- `parallel/prompt-packaging-integrity-audit`: `145 / 1`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `198 / 2`.
+
+All 28 indexed Connector evidence branches and the two additional one-document candidates were rechecked by merge base, divergence, unique commits, paths, and semantic trigger. They retain their existing `CANDIDATE_INTEGRATION` dispositions. The two protected references remain `PROTECTED_REFERENCE` and were not mutated.
+
+PR #2 remained open, non-draft, unmerged, and mechanically non-mergeable at `e78dc645cfb658685be12f45f46d34b7c0da1119`; it remains `SUPERSEDED_PRESERVE_EVIDENCE`. PR #3 remained open draft, unmerged, and mechanically non-mergeable at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; it remains `SUPERSEDED_PRESERVE_EVIDENCE`, and its expected archive SHA-256 remains `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`.
+
+No branch/PR disposition changed, no integration or retirement trigger arrived, and no merge, cherry-pick, rebase, force update, close, or deletion occurred. The next review trigger for every retained branch remains the one recorded in its register row.
+
 ## 2026-08-08 Historical-Fork Authority Decision Refresh
 
 The unversioned historical-fork authority decision fetched/pruned and synchronized clean local `master` at inspected base and starting head `260e800b584103393a25f6bc5c0599d9289b5356`. Fresh inventory found one local branch, 36 non-default remote branches, and two open pull requests. Counts below are `master-only / branch-only` at that starting head.
@@ -298,7 +315,7 @@ These branches are not implementation authority merely because they are low-conf
 
 | PR / branch | Live finding at inspected snapshot | Disposition | Required action |
 | --- | --- | --- | --- |
-| PR #3 — `parallel/0.6.9.7-repair-bundle` | open draft; head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; source base and merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`; seven unique evidence files; latest refresh `14 / 7`; reconstructed ZIP SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe` | `HOLD_NAMED_CONSUMER` | focused decision and revised `0.6.9.7` may inspect it as evidence only; do not merge, cherry-pick, rebase, force-update, or close; review retirement only after revised `0.6.9.7` and its independent acceptance audit complete |
+| PR #3 — `parallel/0.6.9.7-repair-bundle` | open draft; head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; source base and merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`; seven unique evidence files; latest refresh `69 / 7`; reconstructed ZIP SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe` | `SUPERSEDED_PRESERVE_EVIDENCE` | preserve until a dedicated exact-ref hygiene pass proves safe closure/deletion; do not merge, cherry-pick, rebase, force-update, or close inside the active survey decision |
 | PR #2 — `main-menu-asset-contract-pass` | open; head `e78dc64`; ten unique commits; merge base `9a107a7`; launcher-only; proposed contract says no baked readable labels while both Bloodlines SVGs embed readable `Bloodlines` text | `SUPERSEDED_PRESERVE_EVIDENCE` | inspect at the launcher-asset trigger, preserve useful evidence through current-head re-authoring, then close/delete only after proof |
 | PR #1 — `main-menu-refinement-pass` | merged and closed historically; remote branch head `986d635`; merge base `d03846e`; two commits are not directly reachable and require equivalent-patch review | `MERGED_RETIRE` pending equivalence proof | verify accepted changes are equivalently present on `master`; delete and prune only after the two-commit diff and linked PR state prove no unique value remains |
 | `feat/main-menu-assets` | remote head `b42d36f`; merge base is its head; fully reachable from the inspected base; no open PR found | `MERGED_RETIRE` | retire during the next dedicated branch-hygiene or launcher integration pass after exact-ref recheck; no deletion inside the active save repair |
@@ -319,7 +336,7 @@ Branch handling during the documentation-only survey decision requires:
 
 No one-document connector audit branch decides the survey receipt contract. No candidate integration, branch deletion, or PR closure is due inside the survey decision unless fresh live evidence changes the controlling disposition.
 
-The survey receipt decision is active, but implementation remains blocked until it returns a bounded package.
+The survey receipt decision is active, but implementation remains blocked until it returns a bounded package. Parent `0.6.9` is accepted through completed `0.6.9.11`; that acceptance creates no branch integration trigger.
 
 ## 6. Mandatory Next Codex Branch Report
 

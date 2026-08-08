@@ -51,4 +51,4 @@ The repair must reproduce and close:
 - current campaign identity conflicts with the final fork edge;
 - byte-stable rejection and no child/effect/revision/publication change.
 
-The historical `0.6.9.10` acceptance claim is superseded because its executable prompt was not independently installed. Active `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` must re-audit the conforming implementation under the bounded mixed contract. Parent `0.6.9`, the Ashen Reef survey route, and `0.7.0` remain blocked until that pass is green.
+The historical `0.6.9.10` acceptance claim remains superseded because its executable prompt was not independently installed. Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently passed the bounded mixed contract and accepted parent `0.6.9` on 2026-08-08. The Ashen Reef survey receipt decision is reactivated but unexecuted; survey behavior remains unimplemented and `0.7.0` remains `NOT_READY`.

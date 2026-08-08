@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-08-08
-Route: historical recovery-fork authority acceptance re-audit
+Route: Ashen Reef survey occurrence/result/consequence-receipt foundation decision
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -35,9 +35,13 @@ Latest historical support audit:
 
 - `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded
 
+Latest accepted support audit:
+
+- `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`
+
 Active run:
 
-- `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
+- `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`
 
 ## Current Queue Override
 
@@ -68,16 +72,16 @@ Active run:
 - The unversioned Ashen Reef survey scope/owner decision is complete. It accepted one deterministic survey-shift occurrence, one shared preview/execution plan, typed affected-owner proposals and receipts, distinct command/occurrence/result/event/projection identities, atomic accepted-state application, and accepted-only UI. It returned `NO_PACKAGE` because stable campaign/continuity identity, durable receipt authority, and candidate-write/verification/publication semantics are absent.
 - The unversioned minimum save identity/publication decision is complete. It accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification and authoritative-head publication, and a typed persisted authority ledger. It returned `NO_PACKAGE` because Normal activation still conflicts with terminal HP-zero behavior, first-mutation continuity admission has no complete owner, and account value can publish before campaign authority.
 - The unversioned Normal activation/continuity/account-publication dependency decision is complete and returned `PACKAGE_READY`. It selected atomic current-band primary `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`: campaign rules version 2, version-7 verified publication and version-6 migration, first-accepted-mutation continuity, nonterminal Normal defeat, legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` is implemented; acceptance is reopened pending `0.6.9.11`.
+- `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation` is implemented and independently accepted through completed `0.6.9.11`.
 - `Version 0.6.9.1 - Normal Stakes Campaign Persistence Foundation Acceptance Audit` completed with `REPAIR_REQUIRED` and retained its six exact findings as historical acceptance evidence.
 - `Version 0.6.9.2 - Normal Campaign Publication Recovery Repair` remains accepted evidence for its exact publication, migration, and account-consumer seams, but later real-caller and independent audits reopened the parent.
 - `0.6.9.3` through `0.6.9.6` implemented and audited retry, recovery-completion, authority, and provenance boundaries. The independent `0.6.9.6` audit proved the remaining initial-resolution, restart-duplicate, and effect-provenance defects.
 - Revised `Version 0.6.9.7` closed its nine findings; `0.6.9.8` found the deep-lineage gap and `0.6.9.9` repaired it at `cbad987`. The uninstalled `0.6.9.10` acceptance claim is superseded; the bounded historical-fork decision classified `cbad987` conforming with re-audit required.
-- `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` is active. The unversioned Ashen Reef decision and implementation remain blocked.
+- `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` is complete with `PARENT_ACCEPTED`. The unversioned Ashen Reef survey receipt decision is active; implementation remains blocked.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain separate consumers. Implemented `0.6.9` owns only campaign/save/Normal-defeat/account-publication foundations; active `0.6.9.11` must not implement survey advancement or broaden into Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
+- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns only campaign/save/Normal-defeat/account-publication foundations; the active survey decision must remain documentation-only and must not broaden into Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
 
 Versioning note:
 

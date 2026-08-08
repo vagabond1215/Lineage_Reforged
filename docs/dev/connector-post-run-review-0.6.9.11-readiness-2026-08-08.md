@@ -61,7 +61,7 @@ C0 original defeat
 
 No audit requirement, expected result, authority classification, validation gate, outcome, scope exclusion, model, or route changed.
 
-A repository search after the correction found no remaining indexed `â”` mojibake pattern.
+A repository search after the correction found no remaining unintended box-drawing mojibake outside historical evidence describing the defect.
 
 ## Current-Authority Consistency Review
 

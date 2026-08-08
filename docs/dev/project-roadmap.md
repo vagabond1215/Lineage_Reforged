@@ -1,15 +1,15 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-08-08 by the historical recovery-fork authority decision
+Last reviewed: 2026-08-08 by `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
 
 ## Current Runtime Transition Override
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Latest completed unversioned run: `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`, `DECISION_ACCEPTED_REAUDIT_AUTHORIZED`.
-- Active run: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`.
-- Activity selection and `0.6.4`-`0.6.8.1` remain accepted. `0.6.9` is implemented with acceptance reopened; Ashen Reef and survey implementation remain blocked, and `0.7.0` remains `NOT_READY`.
+- Latest completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`.
+- Active run: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
+- Activity selection and `0.6.4`-`0.6.9` are accepted. The Ashen Reef decision is documentation-only, survey implementation remains blocked, and `0.7.0` remains `NOT_READY`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -35,12 +35,12 @@ The current Codex handoff controls exact current version state. The current GPT 
 
 Current live anchor:
 
-- Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`; acceptance reopened pending `0.6.9.11`.
+- Latest accepted primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`; independently accepted by completed `0.6.9.11`.
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
-- Active route: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`.
+- Active route: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, and lethal-process static foundations are accepted; Normal persistence awaits re-audit, and the survey decision plus `0.7.0` remain blocked.
+- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, and Normal persistence are accepted; the survey receipt decision is active, survey implementation remains blocked, and `0.7.0` remains `NOT_READY`.
 
 Versioning rule:
 

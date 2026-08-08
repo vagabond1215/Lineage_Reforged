@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-08-08 by the historical recovery-fork authority decision.
+Updated 2026-08-08 by `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`.
 
 ## Purpose
 
@@ -23,10 +23,10 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed unversioned run: `Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision`, outcome `DECISION_ACCEPTED_REAUDIT_AUTHORIZED`.
+- Latest completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, outcome `PARENT_ACCEPTED`.
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
-- Active run: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`.
+- Active run: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -57,7 +57,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The unversioned survey advancement scope/owner decision accepted one deterministic shift occurrence, shared preview/execution planning, typed owner receipts, distinct identities, atomic accepted-state application, and accepted-only UI.
 - The unversioned minimum save decision accepted distinct campaign/continuity/artifact/generation/publication identities, campaign rules version 2, idempotent version-6 migration receipts, candidate verification, authoritative-head publication, and a typed persisted authority ledger.
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
-- `Version 0.6.9` is implemented with linked arbitrary-depth fork-lineage support; acceptance is reopened pending independent `0.6.9.11` under bounded Model C.
+- `Version 0.6.9` is implemented and accepted with linked arbitrary-depth fork-lineage support under bounded Model C.
 - `0.7.0` remains `NOT_READY`; the survey advancement/result/consequence loop remains later.
 
 ## Validation Posture

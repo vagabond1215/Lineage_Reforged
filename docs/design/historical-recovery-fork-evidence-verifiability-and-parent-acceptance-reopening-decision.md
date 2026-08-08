@@ -14,6 +14,8 @@ Outcome: `DECISION_ACCEPTED_REAUDIT_AUTHORIZED`
 
 Existing implementation classification: `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED`
 
+Independent acceptance audit: `Version 0.6.9.11`, `PARENT_ACCEPTED`
+
 Inspected base and synchronized starting head: `260e800b584103393a25f6bc5c0599d9289b5356`
 
 Decision authority commit: `907706bb782dbfa70b2eb229d4813e2209b21ab6`
@@ -136,7 +138,7 @@ Install exactly:
 
 `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`
 
-Historical `0.6.9.10` remains a superseded acceptance claim and is not reused. Parent `0.6.9` remains `ACCEPTANCE_REOPENED_PENDING_0.6.9.11`; Ashen Reef remains blocked; survey behavior remains unimplemented; `0.7.0` remains `NOT_READY`.
+Historical `0.6.9.10` remains a superseded acceptance claim and is not reused. At decision completion, parent `0.6.9` was `ACCEPTANCE_REOPENED_PENDING_0.6.9.11` and Ashen Reef was blocked; the independent result is recorded below.
 
 ## Prestage, Branch, PR, And Hosted Posture
 
@@ -145,3 +147,9 @@ Historical `0.6.9.10` remains a superseded acceptance claim and is not reused. P
 Fresh inventory found only local `master`, 36 non-default remote branches, and open PRs #2 and #3. All 28 indexed Connector evidence branches remain isolated `CANDIDATE_INTEGRATION`; the two workflow/readiness references remain `PROTECTED_REFERENCE`; PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`. No branch or PR was merged, rebased, updated, closed, or deleted. No branch has semantic overlap that requires integration into this decision.
 
 GitHub exposed no combined statuses and no pull-request-triggered workflow runs for `cbad987`, `f68d878`, or the synchronized starting head. The post-push review likewise exposed no combined statuses and no pull-request-triggered workflow runs for decision commit `907706bb782dbfa70b2eb229d4813e2209b21ab6` or final coordination commit `2ae21d13c6fb670450837a81a499de30bdf1454d`.
+
+## Independent Acceptance Audit Result
+
+`Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently recreated the deep-lineage probe from untouched production and returned `PARENT_ACCEPTED` on 2026-08-08. Its `30/30` matrix accepted all eight bounded Model C descriptive/equivalent cases, rejected all 22 structural, receipt-bound, current-edge, shape, ordering, projection, and control corruptions byte-stably, and passed the `33/33` focused suite, `140/140` regression group, 209-module production Vite build, bounded TypeScript baseline, serialization/mirror, real-caller/publication, diff, hygiene, and hosted gates.
+
+The audit closes `IMPLEMENTATION_CONFORMS_REAUDIT_REQUIRED` as accepted implementation evidence for parent `0.6.9`. It does not broaden Model C, authenticate ordinary historical descriptive fields, implement survey behavior, or make `0.7.0` ready. The next active route is the unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
