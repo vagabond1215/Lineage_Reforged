@@ -1,10 +1,45 @@
 # Branch Disposition Register
 
-Date: 2026-08-08
+Date: 2026-08-09
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-08-09 Version 0.6.10 Implementation Refresh
+
+The implementation run fetched/pruned and began from clean synchronized `master == origin/master` at `85ad4ea9371b81f2e72d54449b6ce31c908118db`. Fresh orientation found one local branch, 36 non-default remote branches, and exactly two open pull requests. Counts below are the immutable `master-only / branch-only` snapshot at that implementation starting head, not post-run live counts.
+
+Legacy/evidence/protected summary:
+
+- `feat/main-menu-assets`: `792 / 0`, head/merge base `b42d36f3241f99874606ad1e24c09849715affe5`;
+- `main-menu-asset-contract-pass`: `720 / 10`, merge base `9a107a7eed54b6d0cd2f161c236fbe163282bba7`;
+- `main-menu-refinement-pass`: `727 / 2`, merge base `d03846e89d1a4fd07a1ea86d02951559f617df74`;
+- `parallel/0.6.9.7-repair-bundle`: `79 / 7`, merge base `b6422118567a79a23be3377f035dd3a6905d4d8b`;
+- `parallel/prompt-packaging-integrity-audit`: `155 / 1`, merge base `3d77171ca2034c8b2fb8d19f374cef5df9605053`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `208 / 2`, merge base `895c02df40332c813a8403bd489af6184111ccba`.
+
+All 28 indexed Connector evidence branches were refreshed by exact head, merge base, divergence, unique commits, changed paths, authority, and semantic trigger:
+
+- the eight `8214327...` branches are `31 / 1`;
+- the ten `8a0065b...` branches are `36 / 1`;
+- the seven `bcbe658...` branches are `126 / 2`;
+- the three `3006c96...` branches are `128 / 2`.
+
+The additional one-document candidates remain `parallel/connector-prep-freshness-audit` at `128 / 1` and `parallel/launcher-asset-pr-disposition` at `126 / 1`.
+
+The four prompt-mandated survey evidence refs were inspected read-only at their exact unchanged heads and reverified against the synchronized checkout:
+
+- `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
+- `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`;
+- `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
+- `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`.
+
+They remain `CANDIDATE_INTEGRATION` for broader named consumers. The integrated-gameplay readiness ref at `59c103c3a06d55f35bffa735fd4b7814dffb583e` and prompt-packaging ref remain `PROTECTED_REFERENCE`; neither was modified or used as direct implementation authority.
+
+PR #2 remained open non-draft at head `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remained open draft at head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both were dynamically mechanically mergeable at inspection time but remain `SUPERSEDED_PRESERVE_EVIDENCE`. Mechanical status does not override semantic disposition.
+
+No disposition changed. No merge, cherry-pick, rebase, force update, PR mutation, closure, or branch deletion occurred. Every retained branch keeps its existing review/retirement trigger. The next required review is the active `0.6.10.1` audit orientation or any earlier explicit lifecycle action.
 
 ## 2026-08-08 Ashen Reef Survey Receipt Decision Refresh
 

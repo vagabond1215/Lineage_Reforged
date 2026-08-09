@@ -163,6 +163,16 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Evidence:** `docs/dev/version-0.6.9.7-pre-implementation-source-review-2026-07-31.md`; `docs/dev/current-codex-output.md`.
 - **Status:** active.
 
+### FP-013 — Parent Authority Rewrites Must Preserve Nested Owner State
+
+- **Pattern:** A mutation or migration rebuilds a parent authority object from selected legacy fields and silently drops a newer optional nested owner container.
+- **Why it escaped:** The new container round-tripped through ordinary serialization, but separate fork, migration, defeat, or recovery paths reconstructed `{ version, entries }` instead of preserving the full parent object.
+- **Guardrail:** Inventory every assignment that replaces a parent authority object. Preserve all existing nested owner state before changing the owned fields, and initialize new emptiness only at an authorized creation/migration boundary.
+- **Verification:** Exercise the new owner container through first non-head mutation, same-command downstream mutation, later downstream mutation, recovery/repair, migration, save/load, and publication; prove exact nested authority survives each rewrite and that existing absent-container targets remain valid without load-time rewrite.
+- **Applies to:** additive ledgers, save migrations, campaign/session forks, defeat/recovery, publication metadata, correction/reconciliation containers.
+- **Evidence:** `docs/dev/current-codex-output.md`; `tests/unit/player-survey-activity-advancement-persistence.test.mjs`.
+- **Status:** active.
+
 ## Completion Report Format
 
 For applicable runs include:

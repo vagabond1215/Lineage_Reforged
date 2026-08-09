@@ -1,272 +1,123 @@
-# Version 0.6.10 - Ashen Reef Survey Advancement Authority
+# Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit
 
-## Run Identity
+Date: 2026-08-09
 
-`Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+Label class: support suffix
 
-Label class: primary
+Parent version: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
-Parent version: none
+Milestone impact: `supports_current_band`
 
-Milestone impact: `advances_current_band`
+Execution posture: independent production-read-only audit with removable temporary probes
 
 Suggested commit:
 
-`feat(survey): establish advancement authority`
+`docs(survey): audit advancement authority`
 
-## Purpose
+## Objective
 
-Implement the accepted Ashen Reef survey occurrence/result/consequence-receipt contract together with the one bounded engine-owned survey advancement command that proves it. Replace only the current Ashen Reef advancement and preview branch with a persisted, continuity-correct, replay-safe, four-stage command/result path and accepted-only UI application.
+Independently audit committed implementation `008db9c93eb8818aea51652be07fd196df41c45f` against the accepted Ashen Reef survey occurrence/result/consequence-receipt decisions. Decide whether parent `0.6.10` is accepted and whether it establishes the representative engine-owned integrated-gameplay loop needed before a separate `0.7.0` band-entry decision.
 
-Do not implement a types-only container. Do not generalize an activity resolver, command bus, effect engine, transaction framework, replay service, correction service, lineage framework, or event bus.
+Do not accept from the implementation report, its green focused tests, or prior subagent findings alone. Begin from a freshly synchronized checkout containing the implementation and its coordination commit, reproduce material cases independently, and reconcile current source against repository precedence.
 
-## Required Reading
+## Starting Disposition
 
-Read completely before editing:
+- `0.6.10`: `IMPLEMENTED_PENDING_PARENT_AUDIT`;
+- survey receipt decision: `PACKAGE_READY`, now implemented but not independently accepted;
+- accepted `0.6.9`: unchanged;
+- survey turn-in/rewards and generic activity infrastructure: excluded;
+- `0.7.0`: `NOT_READY` pending this audit and a later explicit band-entry decision.
 
-- `AGENTS.md`;
-- `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md`;
-- `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
-- `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
-- `docs/design/normal-stakes-activation-first-mutation-continuity-and-account-value-publication-dependency-closure-decision.md`;
-- `docs/design/normal-stakes-campaign-persistence-foundation-acceptance-audit.md`;
-- `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md`;
-- `docs/design/occurrence-contract-taxonomy-and-commitment-clarification.md`;
-- `docs/design/occurrence-identity-named-uncertainty-channels-outcome-commitment-and-correction-contract-decision.md`;
-- `docs/dev/codex-failure-patterns-and-verification-guardrails.md`;
-- `docs/dev/repository-first-agent-work-protocol.md`;
-- `docs/dev/prompt-execution-platform-tool-selection-policy.md`;
-- `docs/dev/branch-lifecycle-and-integration-policy.md`;
-- `docs/dev/branch-disposition-register.md`;
-- the complete current output, prompt, handoff, historical/deferred register, planning reconciliation, roadmap, sequenced plan, continuity brief, backlog, and static-content program;
-- current campaign rules/session, shared snapshot/event contracts, save/publication, survey caller, gameplay synchronization, player body/resource/stat/skill owners, JS mirrors, and focused tests;
-- `docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md` as historical orientation evidence only;
-- through read-only exact-ref Git inspection, without merging or modifying the branches:
-  - `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
-  - `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`;
-  - `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
-  - `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`;
-- the protected `prep/integrated-gameplay-0-7-readiness-audit` branch at `59c103c3a06d55f35bffa735fd4b7814dffb583e`, read-only, with historical route facts ignored.
+## Authority And Orientation
 
-## Execution Gate
+Follow `AGENTS.md`, the complete repository-first protocol, prompt-execution platform/tool policy, branch policy/register, and relevant failure-pattern guardrails.
 
-1. Synchronize clean authenticated `master` with `origin/master`; record inspected base and implementation starting head.
-2. Run `git fetch --all --prune`; inventory every local/remote branch and open PR; recheck merge bases, divergence, unique commits, changed paths, current authority, and semantic overlap.
-3. Re-run the existing five survey skill-gating tests and the 33 campaign-persistence tests before editing.
-4. Add and pass a focused current-behavior characterization for all four survey stages before removing the legacy branch.
-5. Build one numbered implementation-finding matrix from the permanent decision and map every row to source, test, and acceptance evidence.
-6. Keep all evidence and protected branches read-only. Do not merge, cherry-pick, rebase, force-update, close, or delete them.
-7. If the live checkout contradicts the permanent decision on an owner, continuity, persistence, or caller boundary, stop fail-closed with the exact contradiction. Do not guess or broaden.
+Fetch/prune and synchronize clean `master`. Record inspected base, audit starting head, implementation commit, coordination commit, audit commit, final coordination head, pushed remote head, and post-fetch hosted head distinctly. Inventory every local/remote branch and open PR; inspect merge bases, divergence, unique commits/paths, semantic overlap, dispositions, and review triggers. Keep all evidence and protected refs read-only.
 
-## Required Implementation
+Read completely:
 
-### A. Add the bounded persisted survey authority
+- current prompt, handoff, and output;
+- all three focused Ashen Reef survey decisions;
+- accepted `0.6.9` campaign persistence, activation/publication, recovery, and historical-fork authority;
+- occurrence taxonomy and correction authority;
+- repository protocol, prompt policy, failure-pattern register, branch policy/register, historical/deferred register, and planning reconciliation;
+- implementation commit `008db9c...`, every changed production/test file, its real callers, serializers/public exports/JS peers, and current save/publication/defeat seams;
+- the four exact Connector evidence refs and protected integrated-gameplay readiness ref named by the parent prompt, read-only and reverified against current source.
 
-Add the optional `CampaignAuthorityLedgerState.ashenReefSurvey` version-1 container with exactly the accepted:
+## Audit Boundary
 
-- optional legacy baseline;
-- admitted request records;
-- occurrences;
-- deterministic results;
-- affected-owner consequence receipts;
-- projection-repair records;
-- correction/supersession and per-owner reconciliation records.
+This audit is production-read-only. Do not modify production source, shared contracts, tracked tests, serializers, migrations, formats, dependencies, content, assets, UI, or behavior. Temporary executable probes may exist only outside tracked tests and must be removed before commit.
 
-Keep target snapshot `lineage.save_snapshot.v2`, envelope version `7`, and campaign ledger version `1`.
+Do not merge, cherry-pick, rebase, force-update, close, delete, or otherwise mutate evidence branches or PRs. If any material contract or required validation fails, return `REPAIR_REQUIRED`, install a decision-complete `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` prompt, and stop without repairing production in this audit.
 
-Implement strict deep validation for identity uniqueness, campaign/character scope, reachable continuity, referential completeness, unique `(resultId, owner, kind)` tuples, required stage receipt sets, correction acyclicity, projection-repair provenance, and material state coherence.
+## Contract To Verify
 
-New/migrated target snapshots may initialize the empty container. Existing target snapshots without it remain valid and must not be rewritten merely to add emptiness. On the first accepted survey command, record a coherent pre-receipt baseline when current survey state predates the container; never infer past requests, occurrences, results, or receipts from flags, notifications, Chronicle rows, ticks, or hashes.
+Verify all of the following against live source and independent execution:
 
-### B. Implement exact identities and retry equivalence
+1. The optional survey container remains backward compatible while admitted authority is strict, uniquely linked, canonically ordered, semantically exact, no-throw on malformed persisted JSON, and preserved across every parent-ledger rewrite.
+2. Request lookup precedes stale rejection; exact durable duplicates return original evidence with current state and no repeated effect/projection; changed intent or ambiguous evidence fails closed.
+3. Normalized intent covers every bounded input consumed by metabolic mitigation, body, stat growth, natural resources, skill policy, progression/reputation synchronization, quest/operation/discovery/Codex/activity results, and versioned content policy without using a whole-snapshot fingerprint as retry authority.
+4. Campaign preparation validates unchanged source/control, chooses or creates one accepted continuity before receipts, proves exact request-created fork provenance, and commits complete candidate authority atomically.
+5. One pure plan drives preview and execution for sector 1, sector 2, sector 3, and ruins confirmation, preserving two full one-tick metabolic/body/stat/resource steps and established visible content.
+6. Every required gameplay receipt is complete before acceptance; blocked skill gates accept with exact zero-delta facts; final discovery/flag/Codex/activity consequences and all explicit non-effects remain distinct.
+7. Coherent legacy progress produces exactly one source-bound baseline; incoherent or removable/mismatched history cannot validate.
+8. Notification, Chronicle, and event facts derive from the result; pending projection repair is production-reachable, restart/duplicate safe, retention aware, exact-source only, and cannot re-emit an applied event or overwrite newer truth.
+9. Correction records are append-only, acyclic, unique per superseded result, reconcile the complete affected-owner set, and block later survey work while any owner is pending; correction execution remains absent.
+10. The real ActivityPanel/GameSessionContext path retains identity only for a true technical pre-accept retry, disables unavailable work, never invokes legacy survey mutation, and applies snapshot/control only for an accepted command/repair.
 
-Use:
+## Independent Adversarial Matrix
 
-- `survey_request.<uuid>`;
-- `survey_occurrence.<request-uuid>`;
-- `survey_result.<request-uuid>`;
-- `survey_consequence.<request-uuid>.<kind>`;
-- result-derived event, notification, and Chronicle ids;
-- namespaced repair and correction ids.
+At minimum independently reproduce:
 
-Persist the full normalized request facts and their versioned canonical serialization. Exact structural equality of the named material fields defines an equivalent retry. Whole-snapshot hashes, tick, event ids, projection ids, slot ids, and array position do not.
-
-Look up request identity before stale-state rejection. An exact persisted duplicate returns the original result/receipt evidence with the current authoritative snapshot and performs no effect or projection. Conflicting, missing, duplicated, orphaned, reordered, or incomplete retained evidence fails closed.
-
-Pre-admission rejections return the original snapshot/control and create no persisted request, occurrence, result, or consequence in this package.
-
-### C. Fix the continuity-before-receipt seam
-
-The current `admitCampaignMutation(...)` accepts an already-mutated snapshot and may then create a child continuity. Do not author survey records against the source continuity and let admission rewrite only `campaignIdentity`.
-
-Implement the smallest bounded campaign prepare/commit seam needed so the survey path:
-
-1. validates source artifact/publication/revision and campaign control;
-2. selects or creates the accepted continuity exactly once;
-3. builds occurrence/result/receipt records against that accepted continuity;
-4. atomically commits the candidate and campaign control.
-
-Preserve current callers and Normal-defeat/recovery behavior. Do not turn the seam into a generic workflow framework.
-
-### D. Implement one pure four-stage plan
-
-One resolver must drive preview and execution for:
-
-- `sector_1`;
-- `sector_2`;
-- `sector_3`;
-- `ruins_confirmation`.
-
-Preserve the current intended two ticks, body/metabolic profile, attribute load, natural resource/runtime resolution, explicit Stamina `-10`, MP `-3`, exact skill ids and breakthrough policy, sector/ruins facts, operation values, discovery content, current-activity replacement, text, and presentation caps.
-
-Reject without mutation:
-
-- malformed command;
-- wrong account/player/campaign/control;
-- wrong artifact or stale revision;
-- missing, inactive, or untracked survey quest;
-- wrong location;
-- unknown/noncontiguous/ruins-before-sectors progress;
-- already-complete survey;
-- duplicate or mismatched Stormglass discovery entry/flag/source/reference state;
-- conflicting retry or pending unresolved correction;
-- transition/validation failure.
-
-After completion, preview and execution both report `survey_already_complete`; neither falls through to generic activity advancement.
-
-### E. Apply every owner and record every receipt
-
-Implement the permanent decision's exact owner matrix:
-
-- time;
-- body/metabolic state;
-- attribute load/stat growth;
-- natural and explicit resources;
-- General Lore or flora-identification skill progression, including `blocked_at_gate`;
-- survey progress and quest synchronization;
-- survey operation;
-- Stormglass discovery record and compatibility flag;
-- conditional existing Codex-row visibility projection;
-- final current-activity transition;
-- snapshot synchronization postcondition;
-- notification, session Chronicle, and typed event projections.
-
-The final survey shift grants no geographic Knowledge, known location, map visibility, travel access, currency, standing, reputation, inventory, or turn-in reward.
-
-All gameplay owner applications and their complete receipts must exist before acceptance. Missing gameplay receipts invalidate the candidate; do not retry a subset of gameplay effects.
-
-### F. Implement bounded projection repair and correction posture
-
-Derive notification, session Chronicle, event, and safe notice facts from the accepted result. Preserve notification cap 8 and session Chronicle cap 48.
-
-If projection work fails after accepted gameplay truth, retain `projection_pending`. Provide a production-reachable, validated repair owner that:
-
-- verifies the source result and current destination;
-- replaces only a same-id/same-source malformed row;
-- inserts only a still-retention-eligible missing row at deterministic order;
-- never resurrects an expired row or overwrites newer/unrelated truth;
-- appends a projection-repair record;
-- is restart-safe and duplicate-safe.
-
-Implement and validate the correction/supersession record shape and pending-correction block. Do not add correction execution, rollback, reroll, compensating gameplay effects, or a correction UI.
-
-### G. Migrate the real caller
-
-Move only Ashen Reef survey preview/execution authority out of `gameplayLoop.ts`.
-
-`ActivityPanel` must:
-
-- consume the complete shared plan preview;
-- show a safe unavailable reason;
-- invoke the bounded engine/campaign path;
-- apply state only for an accepted result;
-- retain the request id across same-delivery rerender/retry;
-- never regenerate identity for a technical retry;
-- surface safe duplicate, conflict, pending-projection, and correction-pending facts without exposing hidden authority.
-
-Add source guards proving the direct survey mutation branch is gone while unrelated generic activity, procurement, rest, and turn-in behavior remains unchanged.
-
-## Authorized Production Surface
-
-Required:
-
-- `packages/shared/types/src/contracts.ts`;
-- `packages/shared/events/src/index.ts` and `index.js`;
-- `packages/engines/game-engine/src/campaign-rules.ts` and `.js`;
-- `packages/engines/game-engine/src/campaign-session.ts` and `.js`;
-- new `packages/engines/game-engine/src/player-survey-activity-advancement.ts` and `.js`;
-- `packages/engines/game-engine/src/index.ts` and `.js`;
-- `apps/rpg-ui/src/runtime/GameSessionContext.tsx`;
-- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
-- `apps/rpg-ui/src/features/ActivityPanel.tsx`;
-- focused test and required coordination files.
-
-Conditionally allowed only with direct evidence recorded before editing:
-
-- `packages/engines/game-engine/src/gameplay-snapshot-sync.ts` and `.js`;
-- `apps/rpg-ui/src/game-shell/saveManager.ts`.
-
-Any other production path requires a fail-closed scope decision.
+- all four stages and full preview/result/receipt/material parity;
+- malformed, wrong identity/control/artifact/publication/revision/tick/location/quest/activity, noncontiguous/duplicate/early-ruins, complete, discovery mismatch, correction-pending, and transition-failure rejections with exact original snapshot/control identity and bytes;
+- same-process, later-state, lost caller plan, rerender identity, restart, copied artifact, and conflicting retry;
+- head, first non-head, later child, unrelated fork edge, fork-provenance tamper, changed control/source/retained result, and candidate-without-authority cases;
+- missing, duplicate, reversed, orphaned, null, well-shaped-but-semantically-wrong receipt/result/baseline/repair/correction evidence;
+- natural resource resolution before explicit costs, changing maxima, blocked General Lore/flora gates, and exact two-step body/stat sequence;
+- projection failure after gameplay truth, missing/malformed same-source repair, newer destination, deterministic multiple repair order, cap expiry, applied-event rejection, pending-event single re-emission, and terminal retry;
+- absent container, coherent legacy baseline, fresh missing Codex row, demo locked Codex row, v6 migration, version-7 publish/reload, and same-command/later Normal defeat/recovery preservation;
+- unchanged geographic Knowledge, known locations/map/travel access, currency, standing, reputation beyond ordinary time synchronization, inventory, and turn-in rewards.
 
 ## Required Validation
 
-Add and run:
+Run and report exact counts/results for:
 
-- `tests/unit/player-survey-activity-advancement-characterization.test.mjs`;
-- `tests/unit/player-survey-activity-advancement-command.test.mjs`;
-- focused survey receipt/save/publication coverage;
-- `tests/unit/gameplay-loop-skill-gating.test.mjs`;
-- `tests/unit/campaign-persistence-foundation.test.mjs`;
-- `tests/simulation/save-load-roundtrip.test.mjs`;
-- adjacent travel, quest acceptance/tracking, activity selection, body/resource, progression, campaign publication, and UI caller/source-guard tests selected from the validation matrix;
-- JS/TS mirror and public export checks;
-- the RPG UI production build;
-- the applicable bounded TypeScript check, without weakening or claiming the known broad workspace backlog as green;
-- serialization/browser-safety probes for every persisted shape;
-- `git diff --check`, complete diff inspection, and repository hygiene checks.
+1. fresh independent temporary characterization/adversarial probes;
+2. all three survey test files;
+3. `gameplay-loop-skill-gating`, `campaign-persistence-foundation`, and `save-load-roundtrip`;
+4. adjacent travel, quest acceptance/tracking, activity selection, body/resources, stat/progression, publication, and real-caller/source-guard coverage selected from the repository matrix;
+5. RPG UI production build;
+6. bounded TypeScript audit with total baseline count and every touched-file diagnostic;
+7. raw serialization, version-7 publication/readback/restart, version-6 migration, browser safety, JS/TS mirror, and public export checks;
+8. `git diff --check`, complete diff and hygiene inspection, clean final worktree, branch/upstream, fetch/remote-head, hosted file/status, and workflow availability checks.
 
-The test matrix must include:
+Treat the registered broad full-suite and TypeScript baselines accurately; do not weaken checks or claim them green. Apply at minimum `FP-001`, `FP-002`, `FP-003`, `FP-005`, `FP-006`, `FP-008`, `FP-009`, `FP-011`, `FP-012`, and `FP-013`, plus any newly relevant guardrail.
 
-- all four stages;
-- preview/execution parity;
-- every rejection;
-- head and non-head first/later mutation;
-- exact accepted-continuity binding;
-- same-process duplicate, later-state duplicate, caller-state loss, UI rerender, save/restart duplicate, and regenerated-transient conflict;
-- reversed arrays, duplicate ids, missing links, orphan correction/repair, copied artifact, and conflicting evidence;
-- failure before acceptance and projection failure after gameplay truth;
-- older repair versus newer destination and multiple repair ordering;
-- absent-container, coherent legacy baseline, and incoherent legacy state;
-- fresh-character missing Codex row and demo existing locked Codex row;
-- correction/supersession validation and pending block;
-- accepted-only real UI caller behavior.
+## Outcomes
+
+Return exactly one primary result.
+
+### `PARENT_ACCEPTED`
+
+Use only if every contract and required gate passes independently. Then:
+
+- create/update the permanent survey advancement acceptance record with exact audit evidence;
+- mark `0.6.10.1` complete and parent `0.6.10` accepted;
+- classify the implementation as either `REPRESENTATIVE_LOOP_ACCEPTED` or `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`, with exact evidence;
+- if representative-loop evidence is accepted, install an unversioned docs-first `Integrated Gameplay 0.7 Band-Entry Readiness Decision`; do not assign or implement `0.7.0` in this audit;
+- otherwise install the smallest current-band evidence/repair route and keep `0.7.0` `NOT_READY`.
+
+### `REPAIR_REQUIRED`
+
+Use if any material contract or validation gate fails. Do not repair production. Install `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` with one numbered finding-to-owner-to-test matrix and the smallest authorized surface. Parent acceptance, representative-loop acceptance, and `0.7.0` remain blocked.
+
+## Required Coordination
+
+Update current prompt/output/handoff, the focused survey authority and acceptance record, repository-first Current Application, historical register, planning reconciliation, roadmap, sequenced plan, continuity brief, backlog, static program, failure-pattern register when warranted, and branch register. Preserve dated history and exact supersession language.
+
+Commit, push, fetch/verify, inspect hosted files/status/workflow availability, and report exact final/live identities. A chat response does not replace repository coordination.
 
 ## Scope Exclusions
 
-Do not add:
-
-- survey turn-in or rewards;
-- rivet cargo, procurement rewrite, rest, gathering, crafting, combat, health, injury, care, death, succession, or content;
-- generic activity, effect, command, replay, correction, transaction, lineage, or event infrastructure;
-- uncertainty, RNG, competence, difficulty, familiarity, or compression semantics;
-- geographic Knowledge, recognition, map, POI, route, or travel-access effects;
-- Committed/Ironbound Stakes, checkpoint selection, cloud sync, recovery UI, or account projections;
-- snapshot/envelope/ledger version bumps, dependencies, assets, generated output, or unrelated cleanup.
-
-Do not merge, modify, rebase, force-update, close, or delete the protected/read-only evidence refs.
-
-## Completion
-
-Update the permanent focused authority only if implementation evidence requires a narrow clarification. Update current output, handoff, prompt, branch register, roadmap, sequenced plan, continuity brief, historical/deferred register, planning reconciliation, backlog, static-content program, repository protocol current application, and other genuinely live coordination surfaces.
-
-Report:
-
-- inspected base, implementation starting head, implementation commit, coordination commit, pushed remote head, and post-push hosted file/status verification;
-- exact files changed and why;
-- finding-to-source-to-test matrix;
-- branch/PR lifecycle inspection and every disposition change or explicit no-change;
-- failure-pattern ids and evidence;
-- validation commands and exact counts;
-- remaining risks and the installed independent acceptance route.
-
-Commit, push, fetch, and verify the hosted repository before reporting. Do not interrupt for routine GPT/Connector assistance.
+Do not repair production in the audit; implement survey turn-in/rewards; change generic activity, effect, transaction, replay, correction, lineage, or event infrastructure; add geographic Knowledge/map/recognition; add other Stakes modes, checkpoint/cloud/death/succession work; change versions, dependencies, content, assets, generated output, or unrelated UI/runtime; or mutate/integrate/close/delete/rebase/force-update branches or PRs.

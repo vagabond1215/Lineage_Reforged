@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-08-08 by `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`.
+Updated 2026-08-09 by `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
 
 ## Purpose
 
@@ -27,7 +27,8 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
 - Latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`.
-- Active run: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
+- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, pending independent acceptance.
+- Active run: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -60,7 +61,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
 - `Version 0.6.9` is implemented and accepted with linked arbitrary-depth fork-lineage support under bounded Model C.
 - The survey receipt decision fixed the persisted identity/container, continuity-before-receipt, retry, owner, projection-repair, correction, migration, and retention contract and selected one bounded `0.6.10` package.
-- `0.7.0` remains `NOT_READY`; `0.6.10` is active but unimplemented and requires independent acceptance before any band-entry audit.
+- `0.7.0` remains `NOT_READY`; `0.6.10` is implemented with bounded persisted survey authority and requires independent `0.6.10.1` acceptance before any band-entry decision.
 
 ## Validation Posture
 
@@ -76,9 +77,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. implement only `Version 0.6.10 - Ashen Reef Survey Advancement Authority` under the accepted receipt decision;
-2. run an independently installed parent-specific acceptance audit after implementation;
-3. keep `0.7.0` behind explicit representative-loop acceptance evidence.
+1. independently audit committed `Version 0.6.10 - Ashen Reef Survey Advancement Authority` through `0.6.10.1`;
+2. classify parent and representative-loop acceptance without repairing production inside the audit;
+3. keep `0.7.0` behind a later explicit docs-first band-entry decision.
 
 ## Current Implementation Reality
 
@@ -90,7 +91,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 - The integration script still produces climate arrays through `Split-List`, and UI compatibility normalization remains unchanged.
 - BOM-bearing JSON files must not be rewritten as cleanup.
 - Static content does not authorize spawning, encounters, AI, dynamic loot, harvesting, populations, migration, ecology simulation, inventory mutation, or rewards.
-- Generic event ids remain collision-prone compatibility projections. The survey receipt contract is accepted, but its dedicated occurrence/result/event/receipt implementation is active work in `0.6.10`.
+- Generic event ids remain collision-prone compatibility projections. The implemented survey path uses request-derived dedicated occurrence/result/event/receipt identities without changing the generic event factory.
 - Current hashes and random mechanisms are not accepted named uncertainty-channel authority.
 - Normal target authority no longer treats ordinary HP zero as terminal. Parent `0.6.9`, including durable recovery completion lineage, is accepted.
 - No active injury instance, mutable lethal-process owner, care receipt, assessment/urgency owner, body/restoration runtime, or correction tool exists; only the static definition foundation is implemented.

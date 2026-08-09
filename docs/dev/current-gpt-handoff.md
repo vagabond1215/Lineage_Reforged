@@ -1,147 +1,84 @@
 # Current GPT Handoff
 
-Date: 2026-08-08
+Date: 2026-08-09
 
-Status: survey receipt decision complete with `PACKAGE_READY`; `Version 0.6.10 - Ashen Reef Survey Advancement Authority` active
+Status: `Version 0.6.10` implemented at `008db9c93eb8818aea51652be07fd196df41c45f`; independent parent audit active
 
 ## Current Route
 
 Active prompt:
 
+`Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`
+
+Parent implementation:
+
 `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
-Latest accepted primary:
+Inspected base and implementation starting head:
 
-`Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`
+`85ad4ea9371b81f2e72d54449b6ce31c908118db`
 
-Survey decision inspected/source head:
+Implementation commit:
 
-`25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`
+`008db9c93eb8818aea51652be07fd196df41c45f`
 
-Survey decision authority:
+Coordination identity:
 
-`86a13b05b8f5c74ad488e612bf5d302e7033ec81`
+The commit containing this handoff and `docs/dev/current-codex-prompt.md`; resolve its exact SHA from the synchronized history before the audit.
 
-Survey route-install/coordination commit and hosted head observed after that push:
-
-`ad2032e37bf87603bfb453a0238c9423fcde2c70`
-
-Connector bookkeeping correction to `current-codex-output.md`:
-
-`5c11248c0fa7e95e7df0e16af4660918a4201cb2`
-
-The `0.6.10` implementation starting head is not `25ede537...` and is not precommitted in this handoff. Codex must freshly synchronize `master`/`origin/master` and record the then-live starting head before editing.
+Implementation posture: `IMPLEMENTED_PENDING_PARENT_AUDIT`
 
 `0.7.0`: `NOT_READY`
 
-## Decision Result
+## What Landed
 
-The unversioned `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision` returned exactly:
+- optional version-1 `authorityLedger.ashenReefSurvey` baseline/request/occurrence/result/receipt/repair/correction authority;
+- strict canonical, referential, semantic, continuity, fork-provenance, repair, correction, and live monotonic validation;
+- source-first campaign preparation and atomic commit against the accepted continuity;
+- one pure four-stage plan preserving the established two one-tick body/stat/resource sequence;
+- complete owner receipts, deterministic result-derived projections, durable duplicate replay, and projection repair;
+- coherent legacy baseline and absent-container compatibility;
+- real accepted-only ActivityPanel/GameSessionContext caller with stable technical-retry identity;
+- v6 migration and Normal defeat/recovery preservation of nested authority;
+- characterization, command, persistence, caller, serialization, publication, migration, and adjacent regression coverage.
 
-`PACKAGE_READY`
+The final focused/adjacent gate passed `167/167`; command/persistence passed `24/24`; the Vite production build passed with 211 modules. Bounded TypeScript remained at the exact 137-diagnostic baseline with only the same two pre-existing touched `ActivityPanel` diagnostics.
 
-It selected one current-band primary:
+## Independent Audit Priorities
 
-`Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+Do not accept from the implementation report alone. Reproduce and adversarially inspect:
 
-The package must implement the persisted survey-specific authority container together with the one command that proves it. A types-only or empty-container patch is not completion.
+1. all four exact stage effects and plan/execution parity;
+2. every pre-admission rejection with source/control identity stability;
+3. complete normalized owner inputs, exact retry, restart, later-state duplicate, and conflicting reuse;
+4. head/non-head accepted continuity and exact request-created fork provenance;
+5. semantic receipt integrity, baseline provenance, correction completeness, and malformed no-throw load rejection;
+6. projection pending/repair/expiry/event terminal behavior and duplicate safety;
+7. v6 migration, version-7 publication/restart, and same-command/later Normal defeat preservation;
+8. accepted-only real caller, stable technical retry, completion no-fallthrough, and explicit non-effects.
 
-## Controlling Focused Authority
+If any material gate fails, return `REPAIR_REQUIRED` and install `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` without repairing production in the audit. If every gate passes, return `PARENT_ACCEPTED`, classify whether this is the representative integrated-gameplay loop, and keep direct `0.7.0` entry behind a separate docs-first readiness decision.
 
-Read first:
+## Scope And Authority
+
+The controlling focused authority remains:
 
 - `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md`;
 - `docs/design/ashen-reef-survey-activity-advancement-scope-and-owner-contract-decision.md`;
 - `docs/design/ashen-reef-survey-minimum-save-identity-and-accepted-state-publication-decision.md`;
 - accepted `0.6.9` campaign/session/save/publication and recovery-lineage authority;
-- occurrence taxonomy and correction authority;
-- current prompt, output, branch register, and failure-pattern register.
+- occurrence/correction taxonomy, repository protocol, branch policy/register, and failure-pattern register.
 
-The newest focused decision controls conflicts at the survey receipt seam.
+No survey turn-in/reward, generic activity/effect/transaction/replay/correction/lineage framework, geographic Knowledge/map effect, other Stakes mode, dependency, content, asset, or unrelated cleanup is authorized.
 
-## Exact Implementation Boundary
+## Branch And Evidence Posture
 
-`0.6.10` owns only:
+At starting head `85ad4ea...`, orientation found one local branch, 36 non-default remote branches, and two open PRs. PR #2 and PR #3 were dynamically mechanically mergeable but remain `SUPERSEDED_PRESERVE_EVIDENCE`. The four exact survey Connector refs remain `CANDIDATE_INTEGRATION`; prompt-packaging and integrated-gameplay readiness refs remain `PROTECTED_REFERENCE`. No lifecycle action occurred.
 
-- one optional `authorityLedger.ashenReefSurvey` version-1 container with typed baseline/request/occurrence/result/consequence/repair/correction collections;
-- stable survey request identity and exact normalized retry equivalence;
-- continuity selection before occurrence/result/receipt authorship;
-- one shared four-stage Ashen Reef preview/execution plan;
-- affected-owner application and receipts for time, body, attribute load, resources, skill, survey/quest progress, operation, discovery/flag/Codex projection, final activity, notification, Chronicle, and typed event;
-- durable duplicate/restart behavior;
-- projection-only repair and correction-pending validation;
-- accepted-only Activity-panel application;
-- exact save/publication roundtrip and focused regressions.
-
-Target snapshot remains `lineage.save_snapshot.v2`, save envelope remains `7`, and campaign ledger remains `1`.
-
-## Critical Guardrails
-
-- Current campaign admission may create a child continuity after receiving a proposed snapshot. The survey package must add the smallest bounded prepare/commit seam so every persisted survey record uses the accepted child continuity.
-- Look up request identity before stale-state rejection. A complete exact duplicate returns the retained result with current state; conflicting or incomplete evidence fails closed.
-- Pre-admission rejection remains non-mutating and non-persisted in the first package.
-- All gameplay owner applications and complete receipts precede acceptance. Missing gameplay receipts invalidate the candidate; only result-derived projections may be pending/repaired afterward.
-- A blocked skill breakthrough accepts the survey stage with a `blocked_at_gate` receipt and zero applied delta.
-- Discovery entry, compatibility flag, Codex reference/conditional unlock, flora skill, Knowledge, known location/map, notification, and Chronicle are distinct.
-- Entry/flag disagreement, duplicate discovery identity, or conflicting source/reference data rejects before mutation.
-- A fresh character-created snapshot has no matching Codex row; the survey must not invent one.
-- Do not let completed survey execution fall through to generic advancement.
-- Do not infer historical receipts from legacy flags or narrative projections.
-- Preserve manual/quick-save unsaved-gameplay semantics.
-
-## Explicit Exclusions
-
-No survey turn-in/reward, rivet cargo, rest, inventory, economy, standing/reputation, gathering, crafting, combat, health, care, death/succession, content, geographic Knowledge/map/recognition, Committed/Ironbound Stakes, checkpoint/cloud work, generic activity/effect/transaction/replay/correction/lineage framework, dependencies, assets, generated output, or unrelated cleanup.
-
-Do not merge or mutate the Connector evidence branches or protected readiness branch.
-
-## Evidence Reuse
-
-The Connector prestage remains reusable orientation evidence, not implementation authority:
-
-`docs/dev/connector-ashen-reef-survey-decision-prestage-2026-08-08.md`
-
-The four immutable evidence artifacts were classified `CURRENTLY_CONFIRMED` after current-source comparison:
-
-- `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
-- `387f2491d0d671ee7834656c28183e72a798f1ca`;
-- `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
-- `46434f31f8b06d49aad9a516543fbe36d188d519`.
-
-The protected readiness artifact at `59c103c3a06d55f35bffa735fd4b7814dffb583e` remains read-only. Its survey architecture claims are useful; its old save/static route facts are historical.
-
-## Branch And PR State
-
-At the decision inspected/source head `25ede537bcfe78ee28c93ffb9ee7b9f71b2bfac9`:
-
-- one local branch;
-- 36 non-default remote branches;
-- two open pull requests;
-- PR #2 open non-draft and non-mergeable, `SUPERSEDED_PRESERVE_EVIDENCE`;
-- PR #3 open draft and non-mergeable, `SUPERSEDED_PRESERVE_EVIDENCE`;
-- four survey-applicable evidence branches remain `CANDIDATE_INTEGRATION` for broader consumers;
-- protected refs remain `PROTECTED_REFERENCE`.
-
-These are decision-time facts, not the `0.6.10` implementation starting inventory. Reinspect all live refs during `0.6.10` orientation. No disposition changed and no lifecycle mutation occurred during the decision.
-
-## Validation Baseline
-
-Before this decision completed:
-
-- survey skill-gating: `5/5` passed;
-- campaign persistence: `33/33` passed;
-- no hosted combined status contexts were present on the inspected head.
-
-The implementation prompt requires characterization before extraction, full command/receipt/restart/repair/correction/caller tests, adjacent focused regressions, production build, bounded TypeScript and mirror/export validation, serialization/browser probes, diff/hygiene, commit, push, and post-push hosted verification.
-
-The known broad 137-diagnostic TypeScript baseline remains separate and must not be weakened or opportunistically repaired.
-
-## Connector Assistance Posture
-
-Routine Connector interruption is not needed. The installed implementation requires the authenticated local checkout, execution, tests, build, commit, and push. Connector-side work may inspect hosted PR/status/file state or perform a separately authorized read-only exact-ref audit, but it must not edit the active production surface or present candidate source as authority.
+Subagent work was bounded read-only evidence only. The primary agent independently reconciled the permanent decision, current source, tests, and every material audit finding before committing.
 
 ## Next Action
 
-From a freshly synchronized authenticated checkout, first record the then-live implementation starting head, then execute the complete current prompt:
+Freshly synchronize and execute the complete current prompt:
 
-`Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+`Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`
