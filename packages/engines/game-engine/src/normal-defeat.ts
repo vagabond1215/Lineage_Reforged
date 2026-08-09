@@ -862,6 +862,7 @@ export function applyValidatedPendingNormalDefeatRecovery(
         : entry
     );
   nextSnapshot.authorityLedger = {
+    ...nextSnapshot.authorityLedger,
     version: 1,
     entries: [
       ...(nextSnapshot.authorityLedger?.entries ?? []),
@@ -1014,6 +1015,7 @@ export function resolveNormalDefeat(
     receipt
   ];
   nextSnapshot.authorityLedger = {
+    ...nextSnapshot.authorityLedger,
     version: 1,
     entries: [
       ...(nextSnapshot.authorityLedger?.entries ?? []),

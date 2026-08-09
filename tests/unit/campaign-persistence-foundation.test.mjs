@@ -2453,6 +2453,15 @@ test("version 6 migration retains source, proves one unique head, repairs HP zer
     assert.equal(loaded.repairedLegacyDefeat, true);
     assert.equal(loaded.sessionControl.posture, "non_head_unmutated");
     assert.equal(loaded.snapshot.playerState.resources.hp.current > 0, true);
+    assert.deepEqual(loaded.snapshot.authorityLedger.ashenReefSurvey, {
+      version: 1,
+      requests: [],
+      occurrences: [],
+      results: [],
+      consequenceReceipts: [],
+      projectionRepairs: [],
+      corrections: []
+    });
     const migratedProfile = loadAccountProfile(accountId);
     assert.equal(
       migratedProfile.history.runRecords.some(

@@ -10,6 +10,17 @@ import {
   createPlayerProgressionState,
   resolvePlayerEchoProgression
 } from "../../packages/engines/player-engine/src/index.ts";
+import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
+import {
+  initializeTargetCampaignSnapshot,
+  createCampaignSessionControl,
+  createPlayerSurveyActivityAdvancementCommand,
+  executePlayerSurveyActivityAdvancementCommand
+} from "../../packages/engines/game-engine/src/index.ts";
+import {
+  deserializeSnapshot,
+  serializeSnapshot
+} from "../../packages/shared/persistence/src/index.ts";
 
 const sampleSnapshot = {
   accountId: DEFAULT_ACCOUNT_ID,
@@ -454,5 +465,46 @@ test("default game state includes locked normal non-hardcore run difficulty", ()
     tier: "normal",
     hardcore: false
   });
+});
+
+test("accepted Ashen Reef request, result, and consequence receipts roundtrip exactly", () => {
+  const legacy = structuredClone(demoSnapshot);
+  legacy.sessionState.trackedQuestId = "quest.ashen_reef_survey";
+  legacy.sessionState.questJournal = legacy.sessionState.questJournal.map((entry) => ({
+    ...entry,
+    category: entry.id === "quest.ashen_reef_survey" ? "active" : entry.category,
+    tracked: entry.id === "quest.ashen_reef_survey"
+  }));
+  legacy.playerState.location = {
+    ...legacy.playerState.location,
+    settlementId: "settlement.starfall_port",
+    siteLabel: "Ashen Reef"
+  };
+  legacy.sessionState.flags = legacy.sessionState.flags.filter(
+    (flag) => !flag.startsWith("gameplay.quest.ashen_reef_survey.sector.")
+  );
+  const snapshot = initializeTargetCampaignSnapshot(legacy, { source: "developer_fixture" });
+  const control = createCampaignSessionControl({
+    accountId: snapshot.accountId,
+    campaignId: snapshot.campaignIdentity.campaignId,
+    artifactId: "artifact.roundtrip.survey",
+    publicationId: "publication.roundtrip.survey",
+    artifactRevision: 1,
+    continuityId: snapshot.campaignIdentity.continuityId,
+    headArtifactId: "artifact.roundtrip.survey",
+    headRevision: 1
+  });
+  const command = createPlayerSurveyActivityAdvancementCommand(
+    snapshot,
+    control,
+    "survey_request.00000000-0000-4000-8000-00000000e001"
+  );
+  const accepted = executePlayerSurveyActivityAdvancementCommand(snapshot, control, command);
+  assert.equal(accepted.accepted, true);
+  const restored = deserializeSnapshot(serializeSnapshot(accepted.snapshot));
+  assert.deepEqual(
+    restored.authorityLedger.ashenReefSurvey,
+    accepted.snapshot.authorityLedger.ashenReefSurvey
+  );
 });
 

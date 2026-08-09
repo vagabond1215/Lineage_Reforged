@@ -13,27 +13,55 @@ import {
 } from "./combat/state.js";
 export { createEmptySessionState, createSaveSnapshotFromGameContext } from "./save-snapshot.js";
 export {
+  ASHEN_REEF_SURVEY_COMMON_RECEIPT_KINDS,
+  ASHEN_REEF_SURVEY_FINAL_RECEIPT_KINDS,
   CAMPAIGN_RULES_VERSION,
   STAKES_POLICY_REVISION,
   TARGET_SNAPSHOT_FORMAT,
   createAuthorityId,
+  createEmptyAshenReefSurveyAuthority,
   createCampaignIdentity,
   createCampaignRules,
   initializeTargetCampaignSnapshot,
   isTargetCampaignSnapshot,
-  mapLegacyDifficulty
+  mapLegacyDifficulty,
+  serializeAshenReefSurveyNormalizedIntent
 } from "./campaign-rules.js";
 export {
   admitCampaignMutation,
+  commitPreparedPlayerSurveyCampaignMutation,
   completePendingNormalDefeatRecovery,
   createCampaignSessionControl,
+  preparePlayerSurveyCampaignMutation,
   type CampaignMutationAdmission,
   type CampaignMutationOwnerKind,
   type CampaignMutationSubmission,
   type CampaignSessionControl,
   type CampaignSessionPosture,
+  type PlayerSurveyCampaignPreparation,
   type RetainedCampaignMutationResult
 } from "./campaign-session.js";
+export {
+  PLAYER_SURVEY_ADVANCED_EVENT_TYPE,
+  createPlayerSurveyActivityAdvancementCommand,
+  executePlayerSurveyActivityAdvancementCommand,
+  isAshenReefSurveyActivityAdvancementIntent,
+  listPendingPlayerSurveyProjectionRepairs,
+  repairPlayerSurveyActivityProjection,
+  resolvePlayerSurveyActivityAdvancementPlan,
+  shouldRetainPlayerSurveyRequestIdentity,
+  type AcceptedPlayerSurveyActivityAdvancementPlan,
+  type PlayerSurveyActivityAdvancementCommand,
+  type PlayerSurveyActivityAdvancementNoticeFacts,
+  type PlayerSurveyActivityAdvancementPlan,
+  type PlayerSurveyActivityAdvancementRejectionCode,
+  type PlayerSurveyActivityAdvancementResult,
+  type PendingPlayerSurveyProjectionRepair,
+  type PlayerSurveyAdvancedEvent,
+  type PlayerSurveyAdvancedEventPayload,
+  type PlayerSurveyProjectionRepairResult,
+  type RejectedPlayerSurveyActivityAdvancementPlan
+} from "./player-survey-activity-advancement.js";
 export {
   buildPublicationConsumerId,
   findPublicationConsumerReceipt,

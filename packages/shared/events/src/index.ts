@@ -13,6 +13,7 @@ export const EVENT_TYPES = {
   PLAYER_QUEST_ACCEPTED: "player.quest.accepted",
   PLAYER_QUEST_TRACKING_CHANGED: "player.quest.tracking.changed",
   PLAYER_ACTIVITY_SELECTED: "player.activity.selected",
+  PLAYER_SURVEY_ADVANCED: "player.activity.survey.advanced",
   COMBAT_ENCOUNTER_STARTED: "combat.encounter.started",
   COMBAT_ACTION_QUEUED: "combat.action.queued",
   COMBAT_ACTION_RESOLVED: "combat.action.resolved",

@@ -1283,9 +1283,417 @@ export interface CampaignAuthorityLedgerEntryState {
   forkedFromPublicationId?: string;
 }
 
+export type AshenReefSurveyStage =
+  | "sector_1"
+  | "sector_2"
+  | "sector_3"
+  | "ruins_confirmation";
+
+export type AshenReefSurveyResultCode =
+  | "survey_sector_logged"
+  | "survey_packet_completed";
+
+export interface AshenReefSurveyMaterialVersionsState {
+  resolver: 1;
+  bodyBalance: number;
+  statGrowth: number;
+  skillPolicy: 1;
+  synchronization: 1;
+  surveyContent: 1;
+}
+
+export interface AshenReefSurveyMaterialFactsState {
+  sectorFlags: string[];
+  sectorCount: number;
+  ruinsConfirmed: boolean;
+  discoveryEntryState: "absent" | "matching";
+  discoveryFlagPresent: boolean;
+  codexRowState: "source_record_absent" | "locked" | "unlocked";
+  operationProgress: number | null;
+  currentActivityId: string | null;
+}
+
+export interface AshenReefSurveyOwnerInputsState {
+  clock: SimulationClock;
+  totalPlayTicks: number;
+  lastReputationDecayDay: number | null;
+  questPosture: {
+    category: "active";
+    tracked: true;
+  };
+  runDifficulty: RunDifficultyState;
+  playerName: string;
+  lineageId: string;
+  bodyState: PlayerBodyState;
+  resources: PlayerResources;
+  resourceRuntime: PlayerResourceRuntimeState;
+  attributes: PlayerAttributes;
+  statGrowth: PlayerStatGrowthState;
+  skills: PlayerSkillState[];
+  relevantSkills: [PlayerSkillState | null, PlayerSkillState | null];
+  progression: PlayerProgression;
+  reputation: PlayerReputationState;
+  originProfile: PlayerOriginProfileState;
+  equipment: EquipmentState;
+  currentActivity: CurrentActivityState | null;
+  surveyOperation: OperationState | null;
+  stormglassDiscovery: PlayerDiscoveryChronicleEntryState | null;
+  stormglassCodexEntry: CodexEntryState | null;
+}
+
+export interface AshenReefSurveyLegacyBaselineState {
+  version: 1;
+  baselineId: string;
+  accountId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  sourceArtifactId: string;
+  sourcePublicationId: string;
+  sourceRevision: number;
+  observedAtTick: number;
+  materialFacts: AshenReefSurveyMaterialFactsState;
+}
+
+export interface AshenReefSurveyNormalizedIntentState {
+  version: 1;
+  intent: "advance_ashen_reef_survey_shift";
+  accountId: string;
+  campaignId: string;
+  sourceContinuityId: string;
+  characterId: string;
+  questId: "quest.ashen_reef_survey";
+  activityId: string | null;
+  locationId: "location.ashen_reef";
+  sourceArtifactId: string;
+  sourcePublicationId: string;
+  sourceRevision: number;
+  expectedRevision: number;
+  expectedTick: number;
+  snapshotFormat: "lineage.save_snapshot.v2";
+  stage: AshenReefSurveyStage;
+  materialFacts: AshenReefSurveyMaterialFactsState;
+  ownerInputs: AshenReefSurveyOwnerInputsState;
+  materialVersions: AshenReefSurveyMaterialVersionsState;
+}
+
+export interface AshenReefSurveyRequestState {
+  version: 1;
+  normalizationVersion: 1;
+  requestId: string;
+  normalizedIntent: AshenReefSurveyNormalizedIntentState;
+  canonicalIntent: string;
+  acceptedContinuityId: string;
+  occurrenceId: string;
+  posture: "admitted";
+}
+
+export interface AshenReefSurveyOccurrenceState {
+  version: 1;
+  occurrenceId: string;
+  requestId: string;
+  accountId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  stage: AshenReefSurveyStage;
+  acceptedStartTick: number;
+  sourceArtifactId: string;
+  sourcePublicationId: string;
+  sourceRevision: number;
+  materialVersions: AshenReefSurveyMaterialVersionsState;
+}
+
+export type AshenReefSurveyReceiptKind =
+  | "time_advance"
+  | "body_advance"
+  | "attribute_load"
+  | "resource_cost"
+  | "skill_progress"
+  | "survey_progress"
+  | "quest_progress_sync"
+  | "survey_operation"
+  | "player_discovery"
+  | "discovery_flag"
+  | "codex_visibility_projection"
+  | "activity_transition"
+  | "notification_projection"
+  | "chronicle_projection"
+  | "event_projection";
+
+export type AshenReefSurveyReceiptOwner =
+  | "shared_time"
+  | "player_body"
+  | "player_stat_growth"
+  | "player_resources"
+  | "player_skill"
+  | "player_activity.survey"
+  | "quest_journal_sync"
+  | "survey_operation"
+  | "player_discovery"
+  | "survey_discovery_compatibility"
+  | "codex_visibility_sync"
+  | "activity_state"
+  | "survey_notification_projection"
+  | "survey_chronicle_projection"
+  | "survey_event_projection";
+
+export type AshenReefSurveyReceiptPosture =
+  | "applied"
+  | "blocked_at_gate"
+  | "projection_pending";
+
+export interface AshenReefSurveyConsequenceReceiptBaseState {
+  version: 1;
+  receiptId: string;
+  requestId: string;
+  occurrenceId: string;
+  resultId: string;
+  accountId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  sourceRevision: number;
+  stage: AshenReefSurveyStage;
+  appliedTick: number;
+}
+
+export type AshenReefSurveyConsequenceReceiptState =
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "shared_time";
+      kind: "time_advance";
+      posture: "applied";
+      effect: {
+        startClock: SimulationClock;
+        endClock: SimulationClock;
+        tickCount: 2;
+        totalPlayTicksBefore: number;
+        totalPlayTicksAfter: number;
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "player_body";
+      kind: "body_advance";
+      posture: "applied";
+      effect: {
+        profile: ActionMetabolicProfileState;
+        before: PlayerBodyState;
+        after: PlayerBodyState;
+        timeline: PlayerBodyState[];
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "player_stat_growth";
+      kind: "attribute_load";
+      posture: "applied";
+      effect: {
+        profile: ActionAttributeLoadProfileState;
+        before: PlayerStatGrowthState;
+        after: PlayerStatGrowthState;
+        applications: 2;
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "player_resources";
+      kind: "resource_cost";
+      posture: "applied";
+      effect: {
+        before: PlayerResources;
+        afterNaturalResolution: PlayerResources;
+        after: PlayerResources;
+        explicitStaminaCost: 10;
+        explicitMpCost: 3;
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "player_skill";
+      kind: "skill_progress";
+      posture: "applied" | "blocked_at_gate";
+      effect: {
+        skillId: "skill.knowledge.general_lore" | "skill.resource.identify.flora";
+        requestedDelta: 1;
+        appliedDelta: number;
+        rankBefore: number;
+        rankAfter: number;
+        blockedGate: number | null;
+        requiredBand: string | null;
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "player_activity.survey";
+      kind: "survey_progress";
+      posture: "applied";
+      effect: {
+        before: AshenReefSurveyMaterialFactsState;
+        after: AshenReefSurveyMaterialFactsState;
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "quest_journal_sync";
+      kind: "quest_progress_sync";
+      posture: "applied";
+      effect: {
+        questId: "quest.ashen_reef_survey";
+        category: "active";
+        tracked: true;
+        statusLabel: string;
+        objectives: string[];
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "survey_operation";
+      kind: "survey_operation";
+      posture: "applied";
+      effect: { before: OperationState | null; after: OperationState };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "player_discovery";
+      kind: "player_discovery";
+      posture: "applied";
+      effect: {
+        before: PlayerDiscoveryChronicleEntryState | null;
+        after: PlayerDiscoveryChronicleEntryState;
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "survey_discovery_compatibility";
+      kind: "discovery_flag";
+      posture: "applied";
+      effect: { before: boolean; after: true };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "codex_visibility_sync";
+      kind: "codex_visibility_projection";
+      posture: "applied";
+      effect: {
+        codexEntryId: "flora.unknown_bloom";
+        outcome: "unlocked_existing" | "already_unlocked" | "source_record_absent";
+      };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "activity_state";
+      kind: "activity_transition";
+      posture: "applied";
+      effect: { before: CurrentActivityState | null; after: CurrentActivityState };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "survey_notification_projection";
+      kind: "notification_projection";
+      posture: "applied" | "projection_pending";
+      effect: { projectionId: string; row: NotificationState; cap: 8 };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "survey_chronicle_projection";
+      kind: "chronicle_projection";
+      posture: "applied" | "projection_pending";
+      effect: { projectionId: string; row: ChronicleEventState; cap: 48 };
+    })
+  | (AshenReefSurveyConsequenceReceiptBaseState & {
+      owner: "survey_event_projection";
+      kind: "event_projection";
+      posture: "applied" | "projection_pending";
+      effect: {
+        projectionId: string;
+        eventType: "player.activity.survey.advanced";
+        payload: Record<string, unknown>;
+      };
+    });
+
+export interface AshenReefSurveyResultState {
+  version: 1;
+  resultId: string;
+  requestId: string;
+  occurrenceId: string;
+  accountId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  questId: "quest.ashen_reef_survey";
+  code: AshenReefSurveyResultCode;
+  stage: AshenReefSurveyStage;
+  startTick: number;
+  appliedTick: number;
+  tickCount: 2;
+  materialBefore: AshenReefSurveyMaterialFactsState;
+  materialAfter: AshenReefSurveyMaterialFactsState;
+  resourceCosts: { stamina: 10; mp: 3; hp: 0 };
+  skill: {
+    skillId: "skill.knowledge.general_lore" | "skill.resource.identify.flora";
+    requestedDelta: 1;
+    appliedDelta: number;
+    blockedGate: number | null;
+    requiredBand: string | null;
+  };
+  discoveryOutcome: "not_applicable" | "created" | "retained_existing";
+  codexOutcome: "not_applicable" | "unlocked_existing" | "already_unlocked" | "source_record_absent";
+  operation: OperationState;
+  currentActivityOutcome: CurrentActivityState | null;
+  requiredReceiptIds: string[];
+  projectionIds: { event: string; notification: string; chronicle: string };
+  synchronizationVersion: 1;
+  synchronizationPostcondition: "coherent";
+  notice: { tone: UiTone; title: string; detail: string };
+}
+
+export type AshenReefSurveyProjectionKind = "notification" | "chronicle" | "event";
+
+export interface AshenReefSurveyProjectionRepairState {
+  version: 1;
+  repairId: string;
+  requestId: string;
+  resultId: string;
+  receiptId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  projectionKind: AshenReefSurveyProjectionKind;
+  ordinal: number;
+  observed: "missing" | "malformed";
+  outcome: "inserted" | "replaced" | "retention_expired" | "event_reemitted";
+  appliedTick: number;
+}
+
+export type AshenReefSurveyCorrectionReconciliationStatus =
+  | "pending"
+  | "confirmed_no_change"
+  | "superseded";
+
+export interface AshenReefSurveyCorrectionReconciliationState {
+  owner: AshenReefSurveyReceiptOwner;
+  kind: AshenReefSurveyReceiptKind;
+  status: AshenReefSurveyCorrectionReconciliationStatus;
+  evidenceId?: string;
+}
+
+export interface AshenReefSurveyCorrectionState {
+  version: 1;
+  correctionId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  supersededResultId: string;
+  replacementResultId: string | null;
+  reason: string;
+  evidenceIds: string[];
+  createdAtTick: number;
+  reconciliations: AshenReefSurveyCorrectionReconciliationState[];
+}
+
+export interface AshenReefSurveyAuthorityState {
+  version: 1;
+  legacyBaseline?: AshenReefSurveyLegacyBaselineState;
+  requests: AshenReefSurveyRequestState[];
+  occurrences: AshenReefSurveyOccurrenceState[];
+  results: AshenReefSurveyResultState[];
+  consequenceReceipts: AshenReefSurveyConsequenceReceiptState[];
+  projectionRepairs: AshenReefSurveyProjectionRepairState[];
+  corrections: AshenReefSurveyCorrectionState[];
+}
+
 export interface CampaignAuthorityLedgerState {
   version: 1;
   entries: CampaignAuthorityLedgerEntryState[];
+  ashenReefSurvey?: AshenReefSurveyAuthorityState;
 }
 
 export type NormalDefeatSourceKind =

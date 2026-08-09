@@ -18,6 +18,16 @@ import {
   type CampaignSessionControl
 } from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import {
+  createPlayerSurveyActivityAdvancementCommand,
+  executePlayerSurveyActivityAdvancementCommand,
+  repairPlayerSurveyActivityProjection,
+  shouldRetainPlayerSurveyRequestIdentity,
+  type PlayerSurveyActivityAdvancementCommand,
+  type PlayerSurveyActivityAdvancementResult,
+  type PlayerSurveyProjectionRepairResult
+} from '../../../../packages/engines/game-engine/src/player-survey-activity-advancement.js';
+import type { AshenReefSurveyProjectionKind } from '../../../../packages/shared/types/src/index.js';
+import {
   createAuthorityId
 } from '../../../../packages/engines/game-engine/src/campaign-rules.js';
 import { UiViewModelProvider } from './UiViewModelContext.js';
@@ -48,6 +58,13 @@ export interface GameSessionContextValue extends GameSessionState {
       explicitRecoveryDestinationId?: string | null;
     }
   ) => void;
+  advanceAshenReefSurvey: (
+    requestId: string
+  ) => PlayerSurveyActivityAdvancementResult | null;
+  repairAshenReefSurveyProjection: (
+    resultId: string,
+    projectionKind: AshenReefSurveyProjectionKind
+  ) => PlayerSurveyProjectionRepairResult;
   dismissBodyStateToast: () => void;
 }
 
@@ -94,6 +111,7 @@ export function GameSessionProvider({
   const presentationMemoryRef = useRef<BodyStatePresentationMemory>(
     createInitialBodyStatePresentationMemory()
   );
+  const surveyCommandRef = useRef<Map<string, PlayerSurveyActivityAdvancementCommand>>(new Map());
   const [dismissedToastIds, setDismissedToastIds] = useState<string[]>([]);
   const dismissedToastIdSet = useMemo(() => new Set(dismissedToastIds), [dismissedToastIds]);
   const sessionState = useMemo(
@@ -153,6 +171,45 @@ export function GameSessionProvider({
             admission.control
           );
         }
+      },
+      advanceAshenReefSurvey: (requestId) => {
+        let command = surveyCommandRef.current.get(requestId);
+        if (!command) {
+          try {
+            command = createPlayerSurveyActivityAdvancementCommand(
+              snapshot,
+              campaignSessionControl,
+              requestId
+            );
+          } catch {
+            return null;
+          }
+          surveyCommandRef.current.set(requestId, command);
+        }
+        const result = executePlayerSurveyActivityAdvancementCommand(
+          snapshot,
+          campaignSessionControl,
+          command
+        );
+        if (!shouldRetainPlayerSurveyRequestIdentity(result)) {
+          surveyCommandRef.current.delete(requestId);
+        }
+        if (result.accepted) {
+          onSnapshotChange(result.snapshot, result.control);
+        }
+        return result;
+      },
+      repairAshenReefSurveyProjection: (resultId, projectionKind) => {
+        const result = repairPlayerSurveyActivityProjection(
+          snapshot,
+          campaignSessionControl,
+          resultId,
+          projectionKind
+        );
+        if (result.accepted) {
+          onSnapshotChange(result.snapshot, result.control);
+        }
+        return result;
       },
       dismissBodyStateToast: () => {
         const toastId = sessionState.bodyStatePresentation.toastId;

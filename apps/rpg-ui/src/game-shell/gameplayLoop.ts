@@ -22,6 +22,10 @@ import {
   type PlayerActivitySelectionResult
 } from '../../../../packages/engines/game-engine/src/player-activity-selection.js';
 import {
+  isAshenReefSurveyActivityAdvancementIntent,
+  resolvePlayerSurveyActivityAdvancementPlan
+} from '../../../../packages/engines/game-engine/src/player-survey-activity-advancement.js';
+import {
   createPlayerTravelCommand,
   executePlayerTravelCommand,
   type PlayerTravelResult
@@ -94,7 +98,6 @@ const WATCH_LABELS: Record<number, string> = {
 const FLAG_SURVEY_SECTOR_PREFIX = 'gameplay.quest.ashen_reef_survey.sector.';
 const FLAG_SURVEY_RUINS_CONFIRMED = 'gameplay.quest.ashen_reef_survey.ruins_confirmed';
 const FLAG_PORTER_CRATES_SECURED = 'gameplay.quest.rivet_shortfall_relief.crates_secured';
-const FLAG_DISCOVERY_STORMGLASS_BLOOM = 'gameplay.discovery.stormglass_bloom';
 const RIVET_CRATE_ITEM_KEY = 'deepiron_rivet_crate';
 const RIVET_CRATE_ITEM_ID = 'item.deepiron_rivet_crate';
 const OPERATION_SURVEY_ID = 'operation.quest.ashen_reef_survey';
@@ -132,26 +135,6 @@ const DEFAULT_SHIFT_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
     CON: 0.6,
     VIT: 0.5,
     WIS: 0.2
-  },
-  meaningfulInteraction: true
-};
-
-const SURVEY_SHIFT_PROFILE: ActionMetabolicProfileState = {
-  intensity: 'high',
-  fatigueGain: 14,
-  energyDemand: 16,
-  hydrationDemand: 12,
-  highIntensityLoad: 2
-};
-
-const SURVEY_SHIFT_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
-  intensity: 'high',
-  sourceTag: 'survey',
-  weights: {
-    AGI: 0.7,
-    CON: 0.6,
-    VIT: 0.4,
-    WIS: 0.3
   },
   meaningfulInteraction: true
 };
@@ -731,26 +714,6 @@ function removeOperation(operations: OperationState[], operationId: string): Ope
   return operations.filter((entry) => entry.id !== operationId);
 }
 
-function buildSurveyOperation(snapshot: SaveSnapshot): OperationState {
-  const sectors = getSurveySectorCount(snapshot);
-  const ruinsConfirmed = hasFlag(snapshot, FLAG_SURVEY_RUINS_CONFIRMED);
-  const progress = ruinsConfirmed ? 100 : sectors * 25;
-  const stage = ruinsConfirmed
-    ? 'Chart packet ready for harbor turn-in'
-    : `Survey sectors logged: ${sectors} / 3`;
-
-  return {
-    id: OPERATION_SURVEY_ID,
-    title: 'Ashen Reef Survey',
-    stage,
-    progress,
-    etaLabel: ruinsConfirmed ? 'Ready now' : `${Math.max(1, 4 - sectors)} shift(s)`,
-    owner: snapshot.playerState.coreData.playerName,
-    output: ruinsConfirmed ? 'Verified reef chart packet' : 'Field chart updates',
-    priority: 'High'
-  };
-}
-
 function buildPorterOperation(snapshot: SaveSnapshot): OperationState {
   const secured = hasRivetCargo(snapshot);
   const inSaltmere = getCurrentLocationId(snapshot) === 'location.saltmere';
@@ -773,37 +736,6 @@ function buildPorterOperation(snapshot: SaveSnapshot): OperationState {
 
 function syncSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
   return synchronizeGameplaySnapshot(snapshot);
-}
-
-function addDiscoveryEntry(snapshot: SaveSnapshot) {
-  const exists = snapshot.playerState.discoveryChronicle.entries.some(
-    (entry) => entry.id === 'discovery.stormglass_bloom'
-  );
-
-  if (exists) {
-    return;
-  }
-
-  snapshot.playerState.discoveryChronicle.entries = [
-    {
-      id: 'discovery.stormglass_bloom',
-      codexEntryId: 'flora.unknown_bloom',
-      category: 'flora',
-      title: 'Stormglass Bloom',
-      discoveredAtTick: snapshot.clock.tick,
-      discoveredAtLabel: formatTickTime(snapshot),
-      regionLabel: 'Glasswater',
-      sourceType: 'survey',
-      sourceId: 'quest.ashen_reef_survey',
-      notes: [
-        'Logged during the Ashen Reef survey while the crew marked ruin shelves.',
-        'The petals refract storm light and dry into brittle crystalline veins.'
-      ]
-    },
-    ...snapshot.playerState.discoveryChronicle.entries
-  ];
-  snapshot.playerState.discoveryChronicle.lastUpdatedTick = snapshot.clock.tick;
-  snapshot.sessionState.flags = ensureFlag(snapshot.sessionState.flags, FLAG_DISCOVERY_STORMGLASS_BLOOM);
 }
 
 function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandState {
@@ -1116,26 +1048,22 @@ export function travelToKnownLocation(
 export function previewAdvanceCurrentActivity(snapshot: SaveSnapshot): GameplayBodyStatePreview {
   const trackedQuestId = snapshot.sessionState.trackedQuestId;
 
-  if (trackedQuestId === 'quest.ashen_reef_survey' && findQuest(snapshot, trackedQuestId)?.category === 'active') {
-    if (getCurrentLocationId(snapshot) !== 'location.ashen_reef') {
-      return {
-        available: false,
-        reason: 'Travel to Ashen Reef before advancing the survey work.',
-        tickCount: 0,
-        projectedBodyState: null,
-        timeline: []
-      };
-    }
-
-    return previewSnapshotClock(snapshot, 2, {
-      metabolicProfile: mitigateActionProfile(
-        snapshot,
-        SURVEY_SHIFT_PROFILE,
-        'survey',
-        ['AGI', 'WIS', 'INT'],
-        ['skill.knowledge.general_lore', 'skill.resource.identify.flora']
-      )
-    });
+  if (isAshenReefSurveyActivityAdvancementIntent(snapshot)) {
+    const plan = resolvePlayerSurveyActivityAdvancementPlan(snapshot);
+    return plan.accepted
+      ? {
+          available: true,
+          tickCount: plan.tickCount,
+          projectedBodyState: plan.projectedBodyState,
+          timeline: plan.timeline
+        }
+      : {
+          available: false,
+          reason: plan.reason,
+          tickCount: 0,
+          projectedBodyState: null,
+          timeline: []
+        };
   }
 
   if (trackedQuestId === 'quest.rivet_shortfall_relief' && findQuest(snapshot, trackedQuestId)?.category === 'active') {
@@ -1194,121 +1122,18 @@ export function previewAdvanceCurrentActivity(snapshot: SaveSnapshot): GameplayB
 export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionResult {
   const trackedQuestId = snapshot.sessionState.trackedQuestId;
 
-  if (trackedQuestId === 'quest.ashen_reef_survey' && findQuest(snapshot, trackedQuestId)?.category === 'active') {
-    if (getCurrentLocationId(snapshot) !== 'location.ashen_reef') {
-      return {
-        snapshot,
-        notice: createNotice('warning', 'Wrong Location', 'Travel to Ashen Reef before advancing the survey work.')
-      };
-    }
-
-    const nextSnapshot = cloneSnapshot(snapshot);
-    advanceSnapshotClock(nextSnapshot, 2, {
-      metabolicProfile: mitigateActionProfile(
-        snapshot,
-        SURVEY_SHIFT_PROFILE,
-        'survey',
-        ['AGI', 'WIS', 'INT'],
-        ['skill.knowledge.general_lore', 'skill.resource.identify.flora']
-      ),
-      attributeProfile: SURVEY_SHIFT_ATTRIBUTE_PROFILE
-    });
-    applyResourceDelta(nextSnapshot, { stamina: -10, mp: -3 });
-
-    const sectorsComplete = getSurveySectorCount(nextSnapshot);
-
-    if (sectorsComplete < 3) {
-      nextSnapshot.sessionState.flags = ensureFlag(
-        nextSnapshot.sessionState.flags,
-        `${FLAG_SURVEY_SECTOR_PREFIX}${sectorsComplete + 1}`
-      );
-      const skillGain = addOrUpdateSkill(
-        nextSnapshot.playerState.skills,
-        'skill.knowledge.general_lore',
-        1,
-        'Ashen Reef survey sector'
-      );
-      nextSnapshot.playerState.skills = skillGain.skills;
-      nextSnapshot.sessionState.operations = upsertOperation(
-        nextSnapshot.sessionState.operations,
-        buildSurveyOperation(nextSnapshot)
-      );
-      appendNotification(
-        nextSnapshot,
-        'Survey sector logged',
-        `Ashen Reef sector ${sectorsComplete + 1} is now charted and filed into the packet.`,
-        'success'
-      );
-      appendChronicle(
-        nextSnapshot,
-        makeChronicleEntry(
-          nextSnapshot,
-          'discovery',
-          `Survey sector ${sectorsComplete + 1} logged at Ashen Reef`,
-          'The crew marked channels, breakers, and draft-safe approaches for the charter packet.',
-          `Sector ${sectorsComplete + 1} / 3`,
-          [nextSnapshot.playerState.coreData.playerName, 'Ashen Reef'],
-          ['Survey packet expanded'],
-          [formatSkillGainEffect(skillGain, 'Navigation'), 'Stamina -10', 'MP -3'],
-          ['Exploration', 'Survey']
-        )
-      );
-
-      return {
-        snapshot: syncSnapshot(nextSnapshot),
-        notice: createNotice('success', 'Survey Progress', `Ashen Reef sector ${sectorsComplete + 1} is now charted.`)
-      };
-    }
-
-    if (!hasFlag(nextSnapshot, FLAG_SURVEY_RUINS_CONFIRMED)) {
-      nextSnapshot.sessionState.flags = ensureFlag(
-        nextSnapshot.sessionState.flags,
-        FLAG_SURVEY_RUINS_CONFIRMED
-      );
-      const skillGain = addOrUpdateSkill(
-        nextSnapshot.playerState.skills,
-        'skill.resource.identify.flora',
-        1,
-        'Ashen Reef survey discovery'
-      );
-      nextSnapshot.playerState.skills = skillGain.skills;
-      addDiscoveryEntry(nextSnapshot);
-      nextSnapshot.sessionState.operations = upsertOperation(
-        nextSnapshot.sessionState.operations,
-        buildSurveyOperation(nextSnapshot)
-      );
-      nextSnapshot.sessionState.currentActivity = {
-        id: 'activity.return.survey_packet',
-        label: 'Returning Chart Packet',
-        category: 'Contract',
-        detail: 'The field chart is complete and ready to be taken back to Saltmere Harbor Office.'
-      };
-      appendNotification(
-        nextSnapshot,
-        'Survey packet complete',
-        'All sectors and ruin markers are logged. Return to Saltmere for payment and codex credit.',
-        'accent'
-      );
-      appendChronicle(
-        nextSnapshot,
-        makeChronicleEntry(
-          nextSnapshot,
-          'discovery',
-          'Ashen Reef survey packet completed',
-          'The crew verified the ruin markers and logged a new flora sample for the reef archive.',
-          'Packet complete',
-          [nextSnapshot.playerState.coreData.playerName, 'Ashen Reef', 'Stormglass Bloom'],
-          ['Chart packet finalized', 'New discovery recorded'],
-          [formatSkillGainEffect(skillGain, 'Survival'), 'Stamina -10', 'MP -3'],
-          ['Exploration', 'Discovery', 'Survey']
-        )
-      );
-
-      return {
-        snapshot: syncSnapshot(nextSnapshot),
-        notice: createNotice('accent', 'Survey Packet Ready', 'Return to Saltmere Harbor Office to turn in the completed chart packet.')
-      };
-    }
+  if (isAshenReefSurveyActivityAdvancementIntent(snapshot)) {
+    const plan = resolvePlayerSurveyActivityAdvancementPlan(snapshot);
+    return {
+      snapshot,
+      notice: createNotice(
+        'warning',
+        'Engine-owned survey command required',
+        plan.accepted
+          ? 'Advance the Ashen Reef survey through the campaign-authoritative activity control.'
+          : plan.reason
+      )
+    };
   }
 
   if (trackedQuestId === 'quest.rivet_shortfall_relief' && findQuest(snapshot, trackedQuestId)?.category === 'active') {

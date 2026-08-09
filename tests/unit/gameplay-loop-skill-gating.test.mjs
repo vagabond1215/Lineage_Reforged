@@ -5,6 +5,15 @@ import {
   turnInQuest
 } from "../../apps/rpg-ui/src/game-shell/gameplayLoop.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
+import {
+  initializeTargetCampaignSnapshot,
+  isTargetCampaignSnapshot
+} from "../../packages/engines/game-engine/src/campaign-rules.ts";
+import { createCampaignSessionControl } from "../../packages/engines/game-engine/src/campaign-session.ts";
+import {
+  createPlayerSurveyActivityAdvancementCommand,
+  executePlayerSurveyActivityAdvancementCommand
+} from "../../packages/engines/game-engine/src/player-survey-activity-advancement.ts";
 
 const SURVEY_QUEST_ID = "quest.ashen_reef_survey";
 const RIVET_QUEST_ID = "quest.rivet_shortfall_relief";
@@ -152,11 +161,36 @@ function createRivetTurnInSnapshot(skillRankValue, progression = undefined) {
   return snapshot;
 }
 
+let surveyCommandOrdinal = 100;
+
+function advanceSurvey(snapshotValue, existingControl = null) {
+  const snapshot = isTargetCampaignSnapshot(snapshotValue)
+    ? snapshotValue
+    : initializeTargetCampaignSnapshot(snapshotValue, { source: "developer_fixture" });
+  const identity = snapshot.campaignIdentity;
+  const control = existingControl ?? createCampaignSessionControl({
+    accountId: snapshot.accountId,
+    campaignId: identity.campaignId,
+    artifactId: "artifact.skill-gating",
+    publicationId: "publication.skill-gating",
+    artifactRevision: 1,
+    continuityId: identity.continuityId,
+    headArtifactId: "artifact.skill-gating",
+    headRevision: 1
+  });
+  surveyCommandOrdinal += 1;
+  const requestId = `survey_request.00000000-0000-4000-8000-${surveyCommandOrdinal
+    .toString(16)
+    .padStart(12, "0")}`;
+  const command = createPlayerSurveyActivityAdvancementCommand(snapshot, control, requestId);
+  return executePlayerSurveyActivityAdvancementCommand(snapshot, control, command);
+}
+
 test("noncombat activity skill gains below rank 30 still apply without touching unrelated skills", () => {
   const snapshot = createSurveyActivitySnapshot(20);
   const unrelatedBefore = otherSkillSignature(snapshot, "skill.knowledge.general_lore");
 
-  const result = advanceCurrentActivity(snapshot);
+  const result = advanceSurvey(snapshot);
 
   assert.equal(result.notice.tone, "success");
   assert.equal(skillRank(result.snapshot, "skill.knowledge.general_lore"), 21);
@@ -167,11 +201,11 @@ test("noncombat activity skill gains below rank 30 still apply without touching 
 test("noncombat repeated gains clamp at rank 30 without familiar unlocked", () => {
   const snapshot = createSurveyActivitySnapshot(29);
 
-  const firstGain = advanceCurrentActivity(snapshot);
+  const firstGain = advanceSurvey(snapshot);
   assert.equal(skillRank(firstGain.snapshot, "skill.knowledge.general_lore"), 30);
   assert.deepEqual(latestChronicle(firstGain.snapshot)?.statChanges, ["Navigation +1", "Stamina -10", "MP -3"]);
 
-  const secondGain = advanceCurrentActivity(firstGain.snapshot);
+  const secondGain = advanceSurvey(firstGain.snapshot, firstGain.control);
   assert.equal(secondGain.notice.tone, "success");
   assert.equal(skillRank(secondGain.snapshot, "skill.knowledge.general_lore"), 30);
   assert.deepEqual(latestChronicle(secondGain.snapshot)?.statChanges, [
@@ -187,18 +221,18 @@ test("noncombat skill gains honor unlocked and locked breakthrough bands", () =>
     unlockedBandIds: ["familiar"],
     breakthroughProgress: 0
   };
-  const familiarUnlocked = advanceCurrentActivity(createSurveyActivitySnapshot(30, familiarProgression));
+  const familiarUnlocked = advanceSurvey(createSurveyActivitySnapshot(30, familiarProgression));
   assert.equal(skillRank(familiarUnlocked.snapshot, "skill.knowledge.general_lore"), 31);
   assert.deepEqual(getSkill(familiarUnlocked.snapshot, "skill.knowledge.general_lore")?.progression, familiarProgression);
 
-  const proficientLocked = advanceCurrentActivity(createSurveyActivitySnapshot(55, familiarProgression));
+  const proficientLocked = advanceSurvey(createSurveyActivitySnapshot(55, familiarProgression));
   assert.equal(skillRank(proficientLocked.snapshot, "skill.knowledge.general_lore"), 55);
   assert.equal(
     latestChronicle(proficientLocked.snapshot)?.statChanges.includes("Navigation progress requires a breakthrough"),
     true
   );
 
-  const skilledLocked = advanceCurrentActivity(
+  const skilledLocked = advanceSurvey(
     createSurveyActivitySnapshot(80, {
       unlockedBandIds: ["familiar", "proficient"],
       breakthroughProgress: 0
@@ -206,7 +240,7 @@ test("noncombat skill gains honor unlocked and locked breakthrough bands", () =>
   );
   assert.equal(skillRank(skilledLocked.snapshot, "skill.knowledge.general_lore"), 80);
 
-  const masteryLocked = advanceCurrentActivity(
+  const masteryLocked = advanceSurvey(
     createSurveyActivitySnapshot(100, {
       unlockedBandIds: ["familiar", "proficient", "skilled"],
       breakthroughProgress: 0
@@ -214,7 +248,7 @@ test("noncombat skill gains honor unlocked and locked breakthrough bands", () =>
   );
   assert.equal(skillRank(masteryLocked.snapshot, "skill.knowledge.general_lore"), 100);
 
-  const maximumRank = advanceCurrentActivity(
+  const maximumRank = advanceSurvey(
     createSurveyActivitySnapshot(125, {
       unlockedBandIds: ["familiar", "proficient", "skilled", "mastery"],
       breakthroughProgress: 0
@@ -249,7 +283,7 @@ test("quest turn-in and procurement skill gains use the same noncombat gate poli
 });
 
 test("survey discovery and rivet turn-in messages reflect blocked skill gates", () => {
-  const blockedSurveyDiscovery = advanceCurrentActivity(createSurveyDiscoverySnapshot(30));
+  const blockedSurveyDiscovery = advanceSurvey(createSurveyDiscoverySnapshot(30));
   assert.equal(blockedSurveyDiscovery.notice.tone, "accent");
   assert.equal(skillRank(blockedSurveyDiscovery.snapshot, "skill.resource.identify.flora"), 30);
   assert.deepEqual(latestChronicle(blockedSurveyDiscovery.snapshot)?.statChanges, [

@@ -1623,6 +1623,7 @@ function migrateLegacySaveGroup(
       }
     );
     snapshot.authorityLedger = {
+      ...snapshot.authorityLedger,
       version: 1,
       entries: [
         ...(snapshot.authorityLedger?.entries ?? []),

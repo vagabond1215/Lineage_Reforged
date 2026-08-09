@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActionOutcomePreview } from '../components/body-state/ActionOutcomePreview';
 import { useUiViewModel } from '../runtime/UiViewModelContext';
 import { matchesQuery } from '../utils';
@@ -21,6 +21,13 @@ import {
 } from '../game-shell/gameplayLoop';
 import type { GameShellNotice } from '../game-shell/state';
 import { buildActionOutcomePreview } from '../runtime/bodyStatePresentation';
+import { createAuthorityId } from '../../../../packages/engines/game-engine/src/campaign-rules.js';
+import {
+  isAshenReefSurveyActivityAdvancementIntent,
+  listPendingPlayerSurveyProjectionRepairs,
+  resolvePlayerSurveyActivityAdvancementPlan,
+  shouldRetainPlayerSurveyRequestIdentity
+} from '../../../../packages/engines/game-engine/src/player-survey-activity-advancement.js';
 
 type ActivityPanelProps = {
   accent: string;
@@ -36,7 +43,13 @@ export function ActivityPanel({
   onTogglePin
 }: ActivityPanelProps) {
   const activityData = useUiViewModel().activity;
-  const { snapshot, updateSnapshot, bodyStatePresentation } = useGameSession();
+  const {
+    snapshot,
+    updateSnapshot,
+    advanceAshenReefSurvey,
+    repairAshenReefSurveyProjection,
+    bodyStatePresentation
+  } = useGameSession();
   const [activeSection, setActiveSection] = useState('employment');
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({
     employment: activityData.lists.employment?.[0]?.id ?? '',
@@ -50,6 +63,7 @@ export function ActivityPanel({
   });
   const [panelNotice, setPanelNotice] = useState<GameShellNotice | null>(null);
   const [confirmAction, setConfirmAction] = useState<'advance' | 'rest' | null>(null);
+  const surveyRequestIdRef = useRef<string | null>(null);
 
   const listItems = activityData.lists[activeSection] ?? [];
   const filteredItems = listItems.filter((item) =>
@@ -66,8 +80,33 @@ export function ActivityPanel({
         groups: selectedItem.detailGroups ?? []
       }
     : undefined;
-  const advancePreview = useMemo(() => previewAdvanceCurrentActivity(snapshot), [snapshot]);
+  const surveyIntent = isAshenReefSurveyActivityAdvancementIntent(snapshot);
+  const surveyPlan = useMemo(
+    () => surveyIntent ? resolvePlayerSurveyActivityAdvancementPlan(snapshot) : null,
+    [snapshot, surveyIntent]
+  );
+  const advancePreview = useMemo(() => {
+    if (!surveyPlan) return previewAdvanceCurrentActivity(snapshot);
+    return surveyPlan.accepted
+      ? {
+          available: true,
+          tickCount: surveyPlan.tickCount,
+          projectedBodyState: surveyPlan.projectedBodyState,
+          timeline: surveyPlan.timeline
+        }
+      : {
+          available: false,
+          reason: surveyPlan.reason,
+          tickCount: 0,
+          projectedBodyState: null,
+          timeline: []
+        };
+  }, [snapshot, surveyPlan]);
   const restPreview = useMemo(() => previewRestAtCurrentSettlement(snapshot), [snapshot]);
+  const pendingSurveyRepair = useMemo(
+    () => listPendingPlayerSurveyProjectionRepairs(snapshot)[0] ?? null,
+    [snapshot]
+  );
   const advanceOutcome = useMemo(
     () =>
       advancePreview.available && advancePreview.projectedBodyState
@@ -194,11 +233,56 @@ export function ActivityPanel({
                         return;
                       }
 
+                      if (surveyIntent) {
+                        if (!surveyPlan?.accepted) {
+                          setPanelNotice({
+                            tone: 'warning',
+                            title: 'Survey not advanced',
+                            detail: surveyPlan?.reason ?? 'The survey plan is unavailable.'
+                          });
+                          return;
+                        }
+                        surveyRequestIdRef.current ??= createAuthorityId('survey_request');
+                        const result = advanceAshenReefSurvey(surveyRequestIdRef.current);
+                        if (!result) {
+                          setPanelNotice({
+                            tone: 'warning',
+                            title: 'Survey not advanced',
+                            detail: 'The campaign-authoritative survey command could not be prepared.'
+                          });
+                          return;
+                        }
+                        if (!shouldRetainPlayerSurveyRequestIdentity(result)) {
+                          surveyRequestIdRef.current = null;
+                        }
+                        setPanelNotice(result.notice);
+                        return;
+                      }
+
                       const result = advanceCurrentActivity(snapshot);
                       updateSnapshot(result.snapshot);
                       setPanelNotice(result.notice);
                     }}
+                    disabled={!advancePreview.available}
                   />
+                  {pendingSurveyRepair && (
+                    <GameActionButton
+                      label="Repair Survey Projection"
+                      onClick={() => {
+                        const result = repairAshenReefSurveyProjection(
+                          pendingSurveyRepair.resultId,
+                          pendingSurveyRepair.projectionKind
+                        );
+                        setPanelNotice({
+                          tone: result.accepted ? 'success' : result.duplicate ? 'neutral' : 'warning',
+                          title: result.accepted ? 'Survey projection repaired' : 'Survey projection unchanged',
+                          detail: result.accepted
+                            ? 'The retained survey result was re-projected without repeating gameplay effects.'
+                            : 'The retained projection is already correct, expired, or controlled by newer authority.'
+                        });
+                      }}
+                    />
+                  )}
                   <GameActionButton
                     label={
                       restOutcome?.riskTier === 'risky' && confirmAction === 'rest'
@@ -221,7 +305,23 @@ export function ActivityPanel({
               </div>
               <div className="grid gap-4 xl:grid-cols-2">
                 {advanceOutcome ? (
-                  <ActionOutcomePreview title="Advance Shift Outlook" preview={advanceOutcome} />
+                  <div className="space-y-3">
+                    <ActionOutcomePreview title="Advance Shift Outlook" preview={advanceOutcome} />
+                    {surveyPlan?.accepted && (
+                      <div className={`${mutedInsetCardClass} text-sm text-[color:var(--color-text-secondary)]`}>
+                        <div>Survey stage: {surveyPlan.stage.replace(/_/g, ' ')}</div>
+                        <div>
+                          Explicit costs: Stamina -{surveyPlan.resourceCosts.stamina}, MP -{surveyPlan.resourceCosts.mp}
+                        </div>
+                        <div>
+                          Skill: {surveyPlan.skill.skillId} {surveyPlan.skill.appliedDelta > 0
+                            ? `+${surveyPlan.skill.appliedDelta}`
+                            : 'blocked at breakthrough gate'}
+                        </div>
+                        <div>Operation progress: {surveyPlan.operation.progress}%</div>
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <div className={`${mutedInsetCardClass} text-sm text-[color:var(--color-text-secondary)]`}>
                     {advancePreview.reason ??
