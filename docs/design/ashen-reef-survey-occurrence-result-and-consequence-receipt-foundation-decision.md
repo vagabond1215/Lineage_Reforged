@@ -18,6 +18,10 @@ Decision: `PACKAGE_READY`
 
 Selected next route: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
+Implementation audit status: `Version 0.6.10.1` returned `REPAIR_REQUIRED` on 2026-08-10; parent `0.6.10` remains unaccepted
+
+Active repair: `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`
+
 ## 1. Executive Decision
 
 The Ashen Reef survey occurrence, deterministic result, affected-owner receipt, persistence, retry, projection-repair, and correction boundary is decision-complete.
@@ -27,6 +31,8 @@ The smallest coherent implementation is not a static receipt type or an empty co
 `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is therefore `PACKAGE_READY`. It advances the current `0.6.x` runtime-ownership transition but does not assign or accept `0.7.0`. A later independent audit must decide whether the completed package satisfies any representative-loop or band-entry criterion.
 
 No product, canon, balance, or broad-system question remains open for this bounded package.
+
+The independent implementation audit is recorded in `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`. It does not reopen this design decision; it proves the first implementation does not yet satisfy the accepted contract and routes the six bounded findings through `0.6.10.2`.
 
 ## 2. Evidence And Reverification
 

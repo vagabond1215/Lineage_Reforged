@@ -1,6 +1,6 @@
 # Codex Failure Patterns And Verification Guardrails
 
-Date: 2026-07-31
+Date: 2026-08-10
 
 Status: active durable workflow authority; documentation only
 
@@ -98,9 +98,9 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Pattern:** An older retained recovery or projection can overwrite a newer valid destination state.
 - **Why it escaped:** Recovery verified its own retained artifact but did not compare destination authority or define ordering among multiple recoveries.
 - **Guardrail:** Projection repair must inspect current destination authority, reject stale replacement, define deterministic ordering, and explicitly resolve or quarantine competing recoveries.
-- **Verification:** Test older recovery versus newer destination, newer recovery versus older destination, and multiple pending recoveries in different enumeration orders.
+- **Verification:** Test older recovery versus newer destination, newer recovery versus older destination, reordered capped destinations, same-tick recoveries with stable-identity tie breaking, and multiple pending recoveries in different enumeration orders. Prove truncation cannot evict newer retained truth.
 - **Applies to:** save addresses, indexes, caches, account projections, generated manifests, branch promotion.
-- **Evidence:** `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`.
+- **Evidence:** `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`; `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`.
 - **Status:** active.
 
 ### FP-007 — Never Rewrite Large Files From Partial Fetches
@@ -171,6 +171,16 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Verification:** Exercise the new owner container through first non-head mutation, same-command downstream mutation, later downstream mutation, recovery/repair, migration, save/load, and publication; prove exact nested authority survives each rewrite and that existing absent-container targets remain valid without load-time rewrite.
 - **Applies to:** additive ledgers, save migrations, campaign/session forks, defeat/recovery, publication metadata, correction/reconciliation containers.
 - **Evidence:** `docs/dev/current-codex-output.md`; `tests/unit/player-survey-activity-advancement-persistence.test.mjs`.
+- **Status:** active.
+
+### FP-014 — Container Shape And Recomputed Strings Are Not Semantic Authority
+
+- **Pattern:** Shallow object or array checks, or a caller-recomputed serialization string, admit missing required fields, empty required evidence, noncanonical nested ordering, or well-shaped but semantically false owner facts.
+- **Why it escaped:** Validation proved outer container shape and self-consistency with a recomputed string without independently validating every nested field, required collection cardinality, or one insertion-order-independent canonical representation.
+- **Guardrail:** Deeply validate every authority-bearing nested value, require nonempty collections where evidence is mandatory, and compute canonical serialization with recursively stable key ordering owned by the validator rather than trusted caller ordering.
+- **Verification:** Replace nested states with `{}`, `[]`, `null`, or well-shaped wrong values; remove required evidence identifiers; permute nested object keys; recompute every exposed canonical string; require no-throw rejection before duplicate resolution, mutation, repair, migration, or publication.
+- **Applies to:** normalized commands, retained results, owner receipts, corrections, migrations, save/load, replay, and publication authority.
+- **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`.
 - **Status:** active.
 
 ## Completion Report Format

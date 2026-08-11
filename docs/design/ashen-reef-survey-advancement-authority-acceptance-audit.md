@@ -1,0 +1,93 @@
+# Ashen Reef Survey Advancement Authority Acceptance Audit
+
+Date: 2026-08-10
+
+Source run: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`
+
+Parent version: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+
+Label class: support suffix
+
+Milestone impact: `supports_current_band`
+
+Inspected implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
+
+Audit starting head: `5f018b499b9e8c2feb31a75beec6b1f1b9b4e5e1`
+
+Decision: `REPAIR_REQUIRED`
+
+Representative-loop classification: blocked; no acceptance classification is made while parent authority is unaccepted
+
+## 1. Decision
+
+Parent `0.6.10` is not accepted. The bounded engine-owned survey path, persistence, duplicate handling, owner application, and positive recovery behavior are substantially implemented and their prescribed regressions remain green, but independent adversarial execution proved three authority defects. Source inspection also confirmed three caller/contract omissions. The active repair is `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`.
+
+No production source, shared contract, tracked test, serializer, migration, content, asset, dependency, branch, or pull-request state was changed by this audit. Temporary probes were removed before coordination commit.
+
+## 2. Confirmed Findings
+
+| ID | Contract | Finding | Exact current seam | Required repair evidence |
+| --- | --- | --- | --- | --- |
+| AR-001 | 1, 3 | Persisted normalized owner inputs are not deeply validated or fully canonicalized. Replacing `progression` and `reputation` with `{}` and recomputing the stored canonical string still validates as target authority. Nested object key order is also preserved rather than normalized. | `campaign-rules.ts` owner-input validation and canonical serializer | Deep semantic validation for every retained owner input; recursively deterministic canonical serialization; malformed and reordered-key probes. |
+| AR-002 | 9 | A correction with the complete owner reconciliation set but `evidenceIds: []` validates, despite the accepted explicit reason/evidence contract. | `campaign-rules.ts` correction validation | Require one or more unique nonblank evidence ids and reject empty/malformed evidence without mutation. |
+| AR-003 | 8 | Projection repair assumes destination order. At a capped, valid-but-reordered notification destination, same-tick repair prepends and truncates, evicting a newer retained row. The helper also lacks the required `(appliedTick, stable resultId)` tie-break. | `player-survey-activity-advancement.ts` projection ordering, retention, and insertion helpers | Order from derived authority rather than array position; stable result-id tie-break; reordered-cap, same-tick, newer-destination, and permutation tests for notification and Chronicle. |
+| AR-004 | 10 | The real caller mints and retains a request id before command creation, but `GameSessionContext` collapses every creation exception to `null`; `ActivityPanel` returns without classifying or clearing that id. Invalid-authority/domain failures therefore retain identity as though they were technical pre-accept retries. | `ActivityPanel.tsx` and `GameSessionContext.tsx` | Typed preparation rejection/result; retain identity only for the explicit technical retry code; real-caller invalid-authority and technical-failure tests. |
+| AR-005 | 6 | The permanent affected-owner matrix requires explicit `no_proposal` for geographic Knowledge/known-location/map authority. Current plan/result/receipt authority proves selected state stayed unchanged but carries no explicit non-effect fact. | survey plan/result contracts and command result construction/validation | Add one explicit result-level non-effect contract without inventing owner receipts; validate exact no-proposal scope and unchanged Knowledge/location/map/travel/reward surfaces. |
+| AR-006 | 5, 10 | The panel renders every zero skill delta as “blocked at breakthrough gate,” although maximum-rank policy can return zero delta with `blockedGate: null`; engine projection correctly calls that case unchanged. | `ActivityPanel.tsx` survey preview detail | Render applied, blocked, and unchanged as distinct states and test the maximum-rank caller presentation. |
+
+`AR-001`, `AR-002`, and `AR-003` were reproduced in an independent removable executable probe. `AR-004` through `AR-006` were reverified directly against the real caller, accepted decision, and current source. These are material under the active prompt; green implementation tests do not override them.
+
+## 3. Evidence That Passed
+
+The same independent probe confirmed:
+
+- all four coherent stages use one plan and preserve source bytes;
+- exact two-tick body/resource projection parity;
+- a durable duplicate after a later accepted mutation returns original evidence with the latest snapshot and emits nothing;
+- malformed receipt data fails closed without throwing;
+- an unrelated continuity edge cannot authorize a legacy baseline;
+- preparation cannot commit a candidate without its exact survey graph;
+- pending event repair emits once and terminal retry is idempotent;
+- non-empty survey authority survives later pending Normal defeat and completed recovery.
+
+Repository validation reproduced:
+
+- survey characterization/command/persistence: `25/25` passed;
+- the required focused and adjacent group: `167/167` passed;
+- additional Knowledge evidence boundary coverage: `76/76` passed;
+- RPG UI production build: Vite `5.4.21`, `211` modules transformed, success with only the existing large-chunk advisory;
+- bounded TypeScript audit: exact registered baseline `137` diagnostics, with only the same two pre-existing touched `ActivityPanel` diagnostics and no survey/campaign/contract/save/context/defeat diagnostic;
+- raw serialization, version-7 publication/restart, version-6 migration, forwarding/public exports, browser build, real-caller guards, and Normal-defeat preservation through the focused suites.
+
+The positive matrix establishes that the repair should be narrow. It does not make the failed contracts acceptable.
+
+## 4. Branch, Pull Request, And Evidence Disposition
+
+The audit fetched/pruned and began from clean synchronized `master == origin/master` at `5f018b499b9e8c2feb31a75beec6b1f1b9b4e5e1`. It inspected one local branch, 36 non-default remote branches, the four exact survey evidence refs, the protected integrated-gameplay readiness ref, and both open pull requests.
+
+PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`. The four Connector refs remain `CANDIDATE_INTEGRATION` for their broader consumers; the readiness and prompt-packaging refs remain `PROTECTED_REFERENCE`. No integration, mutation, closure, or deletion was due.
+
+## 5. Representative-Loop And Milestone Posture
+
+No `REPRESENTATIVE_LOOP_ACCEPTED` or `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` classification is issued because the parent contract failed. Independently, current creator state does not organically supply the survey quest/activity/location eligibility chain; the fresh-character survey test injects those facts. That reachability limitation must be reconsidered only after `0.6.10.2` is implemented and independently accepted.
+
+`0.7.0` remains `NOT_READY`. Survey turn-in/rewards, inventory, rest, generic activity infrastructure, other Stakes modes, cloud/checkpoint/death/succession work, and geographic Knowledge/map implementation remain excluded.
+
+## 6. Applicable Failure Patterns
+
+- `FP-001`: the real caller exposed request-retention and presentation defects absent from helper tests.
+- `FP-002`: green prescribed tests did not accept the parent after adversarial authority failures.
+- `FP-003`: projection repair remains reachable; its ordering contract requires repair.
+- `FP-005`: caller-loss and pre-command identity classification remain part of the repair gate.
+- `FP-006`: reordered capped destinations proved an older repair can replace newer truth.
+- `FP-008`: mechanically mergeable evidence branches and PRs remained semantically protected.
+- `FP-009`: inspected, implementation, coordination, final, remote, and hosted identities remain distinct.
+- `FP-010`: the installed repair prompt maps every confirmed finding.
+- `FP-011`: source/control/provenance validation passed and remains required before mutation.
+- `FP-012`: unique complete evidence passed, but semantically weak nested authority did not.
+- `FP-013`: nested survey authority survived every independently exercised rewrite.
+- `FP-014`: newly recorded deep semantic/canonical validation guardrail applies to the repair.
+
+## 7. Next Route
+
+Execute only `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`. After implementation, install a separate production-read-only `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`. Parent and representative-loop acceptance remain blocked until that audit passes every repaired contract and the retained positive matrix.

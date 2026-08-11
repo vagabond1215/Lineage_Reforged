@@ -1,16 +1,17 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-08-09 by `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+Last reviewed: 2026-08-10 by `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`
 
 ## Current Runtime Transition Override
 
-- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, pending independent parent audit.
+- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`; independent audit requires six repairs and the parent is not accepted.
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
-- Latest completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`.
+- Latest accepted support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`.
+- Latest completed support audit: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`, `REPAIR_REQUIRED`.
 - Latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, outcome `PACKAGE_READY`.
-- Active run: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`.
-- Activity selection and `0.6.4`-`0.6.9` are accepted. `0.6.10` is implemented with its bounded persisted engine-owned survey loop and awaits independent acceptance; `0.7.0` remains `NOT_READY` pending that audit and a separate band-entry decision.
+- Active run: `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`.
+- Activity selection and `0.6.4`-`0.6.9` are accepted. `0.6.10` is implemented but unaccepted after six authority/caller findings; `0.6.10.2` owns only their bounded repair. `0.7.0` remains `NOT_READY` pending repair, post-repair acceptance, and a separate band-entry decision.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -40,10 +41,10 @@ Current live anchor:
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
 - Latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`.
-- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, pending audit.
-- Active route: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`.
+- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repair required and unaccepted.
+- Active route: `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, and Normal persistence are accepted; the survey receipt contract is implemented at `008db9c...`, independent `0.6.10.1` acceptance is active, and `0.7.0` remains `NOT_READY`.
+- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, and Normal persistence are accepted; the survey receipt contract is implemented at `008db9c...`, `0.6.10.1` returned `REPAIR_REQUIRED`, active `0.6.10.2` is bounded to six findings, and `0.7.0` remains `NOT_READY`.
 
 Versioning rule:
 
@@ -364,7 +365,7 @@ These are internal development maturity markers, not public release promises. Pa
 
 ## 3. Active Pipeline
 
-Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9` is accepted, `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is implemented at `008db9c...`, and `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` is active.
+Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9` is accepted, `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is implemented at `008db9c...` but unaccepted, `0.6.10.1` returned `REPAIR_REQUIRED`, and `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` is active.
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |

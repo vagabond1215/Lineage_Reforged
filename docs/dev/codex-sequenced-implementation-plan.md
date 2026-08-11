@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-08-09
-Route: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`
+Date: 2026-08-10
+Route: `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,7 +21,7 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest implemented primary:
 
-- `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, pending independent parent audit
+- `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repair required and unaccepted
 
 Latest completed support implementation:
 
@@ -39,9 +39,13 @@ Latest accepted support audit:
 
 - `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`
 
+Latest completed support audit:
+
+- `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`, `REPAIR_REQUIRED`
+
 Active run:
 
-- `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`
+- `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`
 
 ## Current Queue Override
 
@@ -79,12 +83,13 @@ Active run:
 - Revised `Version 0.6.9.7` closed its nine findings; `0.6.9.8` found the deep-lineage gap and `0.6.9.9` repaired it at `cbad987`. The uninstalled `0.6.9.10` acceptance claim is superseded; the bounded historical-fork decision classified `cbad987` conforming with re-audit required.
 - `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` is complete with `PARENT_ACCEPTED`.
 - The unversioned Ashen Reef survey receipt decision is complete with `PACKAGE_READY`. It fixed the optional survey-ledger container, continuity-before-receipt admission, exact normalized retry, affected-owner receipts, projection repair, legacy baseline, and correction posture, then selected current-band primary `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
-- `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is implemented at `008db9c93eb8818aea51652be07fd196df41c45f` with the persisted receipt contract, one four-stage command/plan, bounded owner adapters, restart-safe duplicates, projection repair, accepted-only UI, and save/publication regression evidence. It remains `IMPLEMENTED_PENDING_PARENT_AUDIT`.
-- `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` is active as a production-read-only support suffix. It must independently decide parent and representative-loop acceptance; direct `0.7.0` entry remains prohibited without a later docs-first gate.
+- `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is implemented at `008db9c93eb8818aea51652be07fd196df41c45f` with the persisted receipt contract, one four-stage command/plan, bounded owner adapters, restart-safe duplicates, projection repair, accepted-only UI, and save/publication regression evidence. Parent remains unaccepted.
+- `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` is complete with `REPAIR_REQUIRED`. It preserved the positive matrix but proved six deep-validation, correction-evidence, projection-order, caller-identity, explicit-non-effect, and presentation findings.
+- `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` is active. It owns only those six findings and must install separate production-read-only `0.6.10.3` if implementation succeeds.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; implemented `0.6.10` owns only Ashen Reef survey advancement, and active `0.6.10.1` must audit without broadening into turn-in/rewards, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
+- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; implemented `0.6.10` owns only Ashen Reef survey advancement, and active `0.6.10.2` must repair without broadening into turn-in/rewards, geographic Knowledge implementation, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
 
 Versioning note:
 
@@ -579,7 +584,7 @@ Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Ite
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The live order is active `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` against implementation `008db9c...`. If parent and representative-loop evidence are accepted, install a separate unversioned integrated-gameplay `0.7` band-entry readiness decision; otherwise install the smallest parent repair/evidence route. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, and Normal persistence remain unchanged.
+The live order is active `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` against the six findings in the permanent `0.6.10.1` audit. If every repair and preservation gate passes, install separate production-read-only `0.6.10.3`; parent and representative-loop acceptance cannot occur inside the repair. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, and Normal persistence remain unchanged.
 
 ## Default Prompt Pattern
 
@@ -595,7 +600,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` after implemented `0.6.10`, accepted `0.6.9`, and the completed survey receipt decision. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
+- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` after `0.6.10.1` returned `REPAIR_REQUIRED` against implemented `0.6.10`; accepted `0.6.9` and the completed survey receipt design decision remain unchanged. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

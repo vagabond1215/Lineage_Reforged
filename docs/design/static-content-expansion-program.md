@@ -1,8 +1,8 @@
 # Static Content Expansion Program
 
-Date: 2026-08-09
+Date: 2026-08-10
 Program versions: `0.6.4`-`0.6.8`
-Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef `0.6.10` implemented pending `0.6.10.1` audit
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef `0.6.10.1` returned `REPAIR_REQUIRED`, with `0.6.10.2` active
 
 ## 1. Purpose
 
@@ -172,8 +172,9 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned decision | Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision | Complete; selected bounded Model C and classified `cbad987` conforming with re-audit required. |
 | `0.6.9.11` | Historical Recovery Fork Authority Acceptance Audit | Complete; parent `0.6.9` accepted, survey receipt decision reactivated, `0.7.0` remains `NOT_READY`. |
 | unversioned support | Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision | Complete with `PACKAGE_READY`: accepted one bounded survey-owned persisted authority, continuity-before-receipt admission, exact retry/repair/correction boundaries, and selected active `Version 0.6.10`; no static-content route changed. |
-| `0.6.10` | Ashen Reef Survey Advancement Authority | Implemented at `008db9c...` pending independent parent audit; static catalogs/content remain unchanged and `0.7.0` remains `NOT_READY`. |
-| `0.6.10.1` | Ashen Reef Survey Advancement Acceptance Audit | Active production-read-only support suffix; decides parent and representative-loop evidence without reopening static content. |
+| `0.6.10` | Ashen Reef Survey Advancement Authority | Implemented at `008db9c...`; independent audit requires six bounded repairs, so parent remains unaccepted; static catalogs/content remain unchanged and `0.7.0` remains `NOT_READY`. |
+| `0.6.10.1` | Ashen Reef Survey Advancement Acceptance Audit | Complete with `REPAIR_REQUIRED`; preserved the positive matrix and did not reopen static content. |
+| `0.6.10.2` | Ashen Reef Survey Advancement Authority Repair | Active parent-specific support repair; owns six exact authority/caller findings and may not add or change static content. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -185,4 +186,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run only `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` against committed implementation `008db9c...`. Do not broaden the audit into static content, production repair, survey turn-in/rewards, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, Geography recognition, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7` and is not reopened by the survey route.
+Run only `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` against the six findings in the permanent `0.6.10.1` audit. Do not broaden the repair into static content, parent acceptance, representative-loop classification, survey turn-in/rewards, geographic Knowledge implementation, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7` and is not reopened by the survey route.

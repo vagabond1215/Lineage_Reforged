@@ -1,8 +1,8 @@
 # Current Planning Anchor Reconciliation
 
-Date: 2026-08-09
+Date: 2026-08-10
 
-Status: accepted documentation-only coordination authority; live current headers refreshed through implemented `0.6.10` and active `0.6.10.1`
+Status: accepted documentation-only coordination authority; live current headers refreshed through `0.6.10.1` `REPAIR_REQUIRED` and active `0.6.10.2`
 
 Milestone impact: `supports_current_band`
 
@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, focused survey receipt decision, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through implemented `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`.
+The current prompt, handoff, output, historical register, focused survey receipt decision, permanent acceptance audit, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through completed `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`.
 
-Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`, which is now `IMPLEMENTED_PENDING_PARENT_AUDIT`; active `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` must decide parent and representative-loop acceptance. `0.7.0` remains `NOT_READY` pending a separate docs-first band-entry decision.
+Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, but independent `0.6.10.1` returned `REPAIR_REQUIRED` on six bounded authority/caller findings. Active `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` may implement those findings but may not accept the parent or classify representative-loop evidence. `0.7.0` remains `NOT_READY` pending repair, separate post-repair acceptance, and a later docs-first band-entry decision.
 
 The audit corrected live-current pointers in `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`. Older dated rows and completed-run narratives remain historical chronology and do not control execution.
 
@@ -36,13 +36,14 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 
 ## Accepted Current State
 
-- latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, pending independent acceptance;
+- latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, with repair required and parent unaccepted;
 - latest accepted primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987028d81c5ecdc35403333ec920d0ea5e53`;
 - historical parent audit: `Version 0.6.9.10`, acceptance claim superseded because no separately installed runnable audit prompt preceded it;
-- latest completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`;
+- latest accepted support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`;
+- latest completed support audit: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`, `REPAIR_REQUIRED`;
 - latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`;
-- active route: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`;
+- active route: `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`;
 - failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -63,16 +64,16 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - `0.6.9.5` reports those three boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, and a passing build;
 - `0.6.9.6` independently preserved the green baseline and the three exact `0.6.9.5` targets, but proved three additional initial-resolution, restart-duplicate, and original-effect-provenance gaps;
 - the accepted `0.6.9` persistence chain retains linked arbitrary-depth completion lineage under bounded Model C.
-- the survey receipt decision selected one optional survey-ledger container, continuity-before-receipt admission, exact normalized retries, atomic owner receipts, projection repair, legacy baseline, and correction posture; `0.6.10` implemented that package at `008db9c...` without claiming parent or `0.7.0` acceptance.
+- the survey receipt decision selected one optional survey-ledger container, continuity-before-receipt admission, exact normalized retries, atomic owner receipts, projection repair, legacy baseline, and correction posture; `0.6.10` implemented that package at `008db9c...`, and `0.6.10.1` proved six bounded repairs are required before parent acceptance.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
 ## Accepted Near-Term Order
 
-1. run independent `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` against `008db9c...`;
-2. if parent and representative-loop evidence are accepted, install a separate unversioned integrated-gameplay `0.7` band-entry readiness decision;
-3. otherwise install the smallest parent repair/evidence route and keep `0.7.0` `NOT_READY`.
+1. execute `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` against the six permanent audit findings;
+2. if every repair and preservation gate passes, run separate production-read-only `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`;
+3. only after parent and representative-loop evidence are accepted may a separate unversioned integrated-gameplay `0.7` band-entry readiness decision be installed; otherwise keep `0.7.0` `NOT_READY`.
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that parent `0.6.9` is accepted, `0.6.10` is implemented pending audit, `0.6.10.1` is active, and `0.7.0` remains `NOT_READY`.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that parent `0.6.9` is accepted, `0.6.10` is implemented but unaccepted, `0.6.10.1` returned `REPAIR_REQUIRED`, `0.6.10.2` is active, and `0.7.0` remains `NOT_READY`.

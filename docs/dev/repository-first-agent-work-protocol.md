@@ -2,7 +2,7 @@
 
 Date: 2026-07-31
 
-Updated: 2026-08-05
+Updated: 2026-08-10
 
 Status: durable repository workflow authority
 
@@ -201,4 +201,4 @@ Evidence bundles may accelerate review but never bypass it.
 
 ## Current Application
 
-Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The unversioned survey receipt decision remains `PACKAGE_READY`, and `Version 0.6.10 - Ashen Reef Survey Advancement Authority` implemented its bounded persisted receipt/command/owner/UI package at `008db9c93eb8818aea51652be07fd196df41c45f`. Active work is production-read-only `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`; it must independently decide parent and representative-loop acceptance without repairing production. PR #2, PR #3, and their superseded branches remain evidence only; the four survey-applicable Connector refs and protected readiness branch remain read-only; `0.7.0` remains `NOT_READY` pending a separate docs-first band-entry decision.
+Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The unversioned survey receipt decision remains `PACKAGE_READY`, and `Version 0.6.10 - Ashen Reef Survey Advancement Authority` implemented its bounded persisted receipt/command/owner/UI package at `008db9c93eb8818aea51652be07fd196df41c45f`. Independent `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` returned `REPAIR_REQUIRED` on six exact authority/caller findings. Active work is bounded `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`; parent and representative-loop acceptance remain blocked until a separate `0.6.10.3` audit. PR #2, PR #3, their superseded branches, the four survey-applicable Connector refs, and the protected readiness branch remain read-only evidence; `0.7.0` remains `NOT_READY` pending repaired parent acceptance and a later docs-first band-entry decision.

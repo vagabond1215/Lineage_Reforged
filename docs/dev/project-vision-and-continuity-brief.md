@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-08-09 by `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
+Updated 2026-08-10 by `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`.
 
 ## Purpose
 
@@ -23,12 +23,13 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 ## Current Repository Anchor
 
 - Latest implemented primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest completed support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, outcome `PARENT_ACCEPTED`.
+- Latest accepted support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, outcome `PARENT_ACCEPTED`.
+- Latest completed support audit: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`, outcome `REPAIR_REQUIRED`.
 - Latest completed support implementation: `Version 0.6.9.9 - Durable Recovery Completion Lineage Repair` at `cbad987`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
 - Latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`.
-- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, pending independent acceptance.
-- Active run: `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit`.
+- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repair required and unaccepted.
+- Active run: `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -61,7 +62,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
 - `Version 0.6.9` is implemented and accepted with linked arbitrary-depth fork-lineage support under bounded Model C.
 - The survey receipt decision fixed the persisted identity/container, continuity-before-receipt, retry, owner, projection-repair, correction, migration, and retention contract and selected one bounded `0.6.10` package.
-- `0.7.0` remains `NOT_READY`; `0.6.10` is implemented with bounded persisted survey authority and requires independent `0.6.10.1` acceptance before any band-entry decision.
+- `0.7.0` remains `NOT_READY`; `0.6.10.1` proved six bounded repairs are required, active `0.6.10.2` cannot accept the parent, and separate `0.6.10.3` acceptance must precede any band-entry decision.
 
 ## Validation Posture
 

@@ -1,10 +1,33 @@
 # Branch Disposition Register
 
-Date: 2026-08-09
+Date: 2026-08-10
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-08-10 Version 0.6.10.1 Acceptance Audit Refresh
+
+The production-read-only audit fetched/pruned and began from clean synchronized `master == origin/master` at `5f018b499b9e8c2feb31a75beec6b1f1b9b4e5e1`. Fresh orientation found one local branch, 36 non-default remote branches, and exactly two open pull requests. Counts below are the immutable `master-only / branch-only` snapshot at that audit starting head.
+
+Legacy/evidence/protected summary:
+
+- `feat/main-menu-assets`: `796 / 0`;
+- `main-menu-asset-contract-pass`: `724 / 10`;
+- `main-menu-refinement-pass`: `731 / 2`;
+- `parallel/0.6.9.7-repair-bundle`: `83 / 7`;
+- `parallel/prompt-packaging-integrity-audit`: `159 / 1`;
+- `prep/integrated-gameplay-0-7-readiness-audit`: `212 / 2`;
+- the eight `8214327...` evidence branches: `35 / 1`;
+- the ten `8a0065b...` evidence branches: `40 / 1`;
+- the seven `bcbe658...` evidence branches: `130 / 2`, except one-document `parallel/launcher-asset-pr-disposition` at `130 / 1`;
+- the three `3006c96...` evidence branches: `132 / 2`, with one-document `parallel/connector-prep-freshness-audit` at `132 / 1`.
+
+The four prompt-mandated survey evidence refs were inspected read-only at their exact unchanged heads: `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`, `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, and `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`. They remain `CANDIDATE_INTEGRATION` only for their broader named consumers. The integrated-gameplay readiness ref at `59c103c3a06d55f35bffa735fd4b7814dffb583e` and prompt-packaging ref remain `PROTECTED_REFERENCE`.
+
+PR #2 remained open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remained open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`; mechanical mergeability did not change semantic disposition.
+
+No disposition changed. No merge, cherry-pick, rebase, force update, PR mutation, closure, or branch deletion occurred. Every retained branch keeps its registered review/retirement trigger. The next required review is active `0.6.10.2` orientation or an earlier explicit lifecycle instruction.
 
 ## 2026-08-09 Version 0.6.10 Implementation Refresh
 
@@ -394,9 +417,9 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+`Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`
 
-Branch handling during the bounded survey implementation requires:
+Branch handling during the bounded survey repair requires:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
@@ -404,9 +427,9 @@ Branch handling during the bounded survey implementation requires:
 - inspecting the protected integrated-gameplay readiness branch read-only;
 - otherwise preserving candidate branches for their named triggers.
 
-The permanent survey receipt decision is authoritative on `master`. No one-document Connector audit branch is implementation authority. No candidate integration, branch deletion, or PR closure is due inside `0.6.10` unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
+The permanent survey receipt decision and `0.6.10.1` acceptance audit are authoritative on `master`. No one-document Connector audit branch is implementation authority. No candidate integration, branch deletion, or PR closure is due inside `0.6.10.2` unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
 
-The survey receipt decision returned `PACKAGE_READY`, and `Version 0.6.10 - Ashen Reef Survey Advancement Authority` is active. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
+The survey receipt decision remains `PACKAGE_READY`, implementation `0.6.10` remains unaccepted after `0.6.10.1` returned `REPAIR_REQUIRED`, and `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` is active. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
 
 ## 6. Mandatory Next Codex Branch Report
 
