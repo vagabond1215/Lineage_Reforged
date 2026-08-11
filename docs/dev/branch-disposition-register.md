@@ -1,10 +1,20 @@
 # Branch Disposition Register
 
-Date: 2026-08-10
+Date: 2026-08-11
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-08-11 Version 0.6.10.2 Repair Refresh
+
+The repair fetched/pruned and began from clean synchronized `master == origin/master` at `4daa6f997de34108e71231c5b0b0e8f5f861c310`. Fresh orientation inventoried one local branch, 36 non-default remote branches, and exactly two open pull requests. Every candidate retained its prior semantic disposition.
+
+The four prompt-mandated survey evidence refs remained unchanged and were inspected read-only: `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`, `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, and `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`. They remain `CANDIDATE_INTEGRATION` only for their broader named consumers. The integrated-gameplay readiness ref at `59c103c3a06d55f35bffa735fd4b7814dffb583e` and prompt-packaging ref remain `PROTECTED_REFERENCE`.
+
+PR #2 remained open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remained open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+No disposition changed. No merge, cherry-pick, rebase, force update, PR mutation, closure, branch deletion, or remote evidence mutation occurred. Every retained branch keeps its registered review/retirement trigger. The next required review is production-read-only `0.6.10.3` orientation or an earlier explicit lifecycle instruction.
 
 ## 2026-08-10 Version 0.6.10.1 Acceptance Audit Refresh
 
@@ -417,9 +427,9 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`
+`Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`
 
-Branch handling during the bounded survey repair requires:
+Branch handling during the production-read-only post-repair audit requires:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
@@ -427,9 +437,9 @@ Branch handling during the bounded survey repair requires:
 - inspecting the protected integrated-gameplay readiness branch read-only;
 - otherwise preserving candidate branches for their named triggers.
 
-The permanent survey receipt decision and `0.6.10.1` acceptance audit are authoritative on `master`. No one-document Connector audit branch is implementation authority. No candidate integration, branch deletion, or PR closure is due inside `0.6.10.2` unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
+The permanent survey receipt decision, `0.6.10.1` acceptance audit, and `0.6.10.2` implementation appendix are authoritative on `master`. No one-document Connector audit branch is implementation or acceptance authority. No candidate integration, branch deletion, or PR closure is due inside `0.6.10.3` unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
 
-The survey receipt decision remains `PACKAGE_READY`, implementation `0.6.10` remains unaccepted after `0.6.10.1` returned `REPAIR_REQUIRED`, and `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` is active. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
+The survey receipt decision remains `PACKAGE_READY`; implementation `0.6.10` is repaired at `59af92629a79e95fa20247959159e336a8dbc88e` but remains unaccepted; production-read-only `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit` is active. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
 
 ## 6. Mandatory Next Codex Branch Report
 

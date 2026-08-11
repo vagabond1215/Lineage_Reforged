@@ -91,3 +91,26 @@ No `REPRESENTATIVE_LOOP_ACCEPTED` or `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` c
 ## 7. Next Route
 
 Execute only `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`. After implementation, install a separate production-read-only `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`. Parent and representative-loop acceptance remain blocked until that audit passes every repaired contract and the retained positive matrix.
+
+## 8. Version 0.6.10.2 Implementation Appendix
+
+Date: 2026-08-11
+
+Repair implementation: `59af92629a79e95fa20247959159e336a8dbc88e`
+
+Repair disposition: `IMPLEMENTED_PENDING_POST_REPAIR_AUDIT`
+
+This appendix records implementation evidence only. It does not revise the historical `0.6.10.1` decision or accept parent `0.6.10`.
+
+| Finding | Implemented closure | Focused evidence |
+| --- | --- | --- |
+| `AR-001` | Validator-owned deep semantic certification for every retained owner input, recursive stable canonical serialization, valid month 13, and no caller-controlled collision path before durable duplicate resolution. | Malformed `{}`/`[]`/`null`/missing/undefined/non-finite values; forged Echo/progression, reputation, and origin facts; nested-key permutation; persisted equivalent retry and duplicate. |
+| `AR-002` | Corrections require nonempty unique valid evidence, exact affected-owner reconciliation, and evidence linkage while preserving cycle, uniqueness, and pending-work gates. | Missing, empty, duplicate, malformed, unlinked, incomplete/conflicting, and valid persisted correction cases. |
+| `AR-003` | One total `(appliedTick, stable resultId)` order controls initial insertion and repair; complete destinations are inspected before cap truncation; opaque authority fails closed; applied or prior-repaired drift is rediscovered; event repair remains pending-only and terminal. | Reordered caps, newer-tail truth, same-tick genuine results in both invocation orders, notification/Chronicle parity, opaque rows, expiry, repeat drift/repair ordinal, correction, and event cases. |
+| `AR-004` | Exception-total typed preparation and an extracted production caller retain request identity only for a classified technical retry and apply state only on acceptance. | Domain/invalid/unclassified/technical/accepted/duplicate outcomes, second-invocation same-id retry, disabled unavailable posture, and accepted-only state. |
+| `AR-005` | Plan and result persist the exact nine-field `no_proposal` contract without inventing owner receipts. | Byte-stable Knowledge, location/map/travel, currency, standing, inventory, reputation, active unturned-in quest/reward, and General Lore boundaries. |
+| `AR-006` | Shared panel facts distinguish applied, breakthrough-blocked, and unchanged skill outcomes. | Actual positive, blocked, and maximum-rank survey plans through the panel-facing adapter. |
+
+Validation after the final repair passed the removable adversarial probe `6/6`, focused survey suite `35/35`, prescribed adjacent matrix `177/177`, Knowledge matrix `132/132`, clock/schema matrix `107/107`, Vite production build at 212 transformed modules, and the exact bounded TypeScript baseline of 137 diagnostics with only the same two pre-existing `ActivityPanel` findings. Three bounded read-only re-audits found no residual material blocker; the primary agent reverified their material claims against the settled checkout.
+
+The active route is now production-read-only `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`. Parent acceptance, representative-loop classification, and any `0.7.0` decision remain outside this appendix.

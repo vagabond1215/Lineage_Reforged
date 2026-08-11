@@ -18,9 +18,9 @@ Decision: `PACKAGE_READY`
 
 Selected next route: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
-Implementation audit status: `Version 0.6.10.1` returned `REPAIR_REQUIRED` on 2026-08-10; parent `0.6.10` remains unaccepted
+Implementation audit status: `Version 0.6.10.1` returned `REPAIR_REQUIRED`; `Version 0.6.10.2` implemented all six repairs at `59af92629a79e95fa20247959159e336a8dbc88e`; parent `0.6.10` remains unaccepted pending independent audit
 
-Active repair: `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair`
+Active audit: `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`
 
 ## 1. Executive Decision
 
@@ -32,7 +32,7 @@ The smallest coherent implementation is not a static receipt type or an empty co
 
 No product, canon, balance, or broad-system question remains open for this bounded package.
 
-The independent implementation audit is recorded in `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`. It does not reopen this design decision; it proves the first implementation does not yet satisfy the accepted contract and routes the six bounded findings through `0.6.10.2`.
+The independent implementation audit and repair appendix are recorded in `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`. They do not reopen this design decision. The first implementation failed six bounded contracts; `0.6.10.2` reports those repairs implemented, and separate production-read-only `0.6.10.3` now owns acceptance.
 
 ## 2. Evidence And Reverification
 

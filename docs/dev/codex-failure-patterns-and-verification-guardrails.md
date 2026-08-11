@@ -178,9 +178,9 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Pattern:** Shallow object or array checks, or a caller-recomputed serialization string, admit missing required fields, empty required evidence, noncanonical nested ordering, or well-shaped but semantically false owner facts.
 - **Why it escaped:** Validation proved outer container shape and self-consistency with a recomputed string without independently validating every nested field, required collection cardinality, or one insertion-order-independent canonical representation.
 - **Guardrail:** Deeply validate every authority-bearing nested value, require nonempty collections where evidence is mandatory, and compute canonical serialization with recursively stable key ordering owned by the validator rather than trusted caller ordering.
-- **Verification:** Replace nested states with `{}`, `[]`, `null`, or well-shaped wrong values; remove required evidence identifiers; permute nested object keys; recompute every exposed canonical string; require no-throw rejection before duplicate resolution, mutation, repair, migration, or publication.
+- **Verification:** Replace nested states with `{}`, `[]`, `null`, missing/undefined/non-finite values, or well-shaped wrong owner semantics; forge progression rule/math, reputation ordering/signatures, and origin-derived facts; remove, empty, duplicate, or unlink required evidence identifiers; permute nested object keys; recompute every exposed canonical string; require no-throw rejection before duplicate resolution, mutation, repair, migration, or publication, while equivalent key-order retries remain exact duplicates.
 - **Applies to:** normalized commands, retained results, owner receipts, corrections, migrations, save/load, replay, and publication authority.
-- **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`.
+- **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`; `tests/unit/player-survey-activity-advancement-command.test.mjs`; `tests/unit/player-survey-activity-advancement-persistence.test.mjs`.
 - **Status:** active.
 
 ## Completion Report Format
