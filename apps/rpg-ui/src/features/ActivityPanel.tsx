@@ -21,12 +21,16 @@ import {
 } from '../game-shell/gameplayLoop';
 import type { GameShellNotice } from '../game-shell/state';
 import { buildActionOutcomePreview } from '../runtime/bodyStatePresentation';
+import {
+  isAshenReefSurveyAdvanceDisabled,
+  resolveAshenReefSurveyPanelFacts,
+  shouldRetainAshenReefSurveyCallerRequestId
+} from '../runtime/ashenReefSurveyCaller';
 import { createAuthorityId } from '../../../../packages/engines/game-engine/src/campaign-rules.js';
 import {
   isAshenReefSurveyActivityAdvancementIntent,
   listPendingPlayerSurveyProjectionRepairs,
-  resolvePlayerSurveyActivityAdvancementPlan,
-  shouldRetainPlayerSurveyRequestIdentity
+  resolvePlayerSurveyActivityAdvancementPlan
 } from '../../../../packages/engines/game-engine/src/player-survey-activity-advancement.js';
 
 type ActivityPanelProps = {
@@ -85,6 +89,10 @@ export function ActivityPanel({
     () => surveyIntent ? resolvePlayerSurveyActivityAdvancementPlan(snapshot) : null,
     [snapshot, surveyIntent]
   );
+  const surveyPanelFacts = useMemo(
+    () => surveyPlan ? resolveAshenReefSurveyPanelFacts(surveyPlan) : null,
+    [surveyPlan]
+  );
   const advancePreview = useMemo(() => {
     if (!surveyPlan) return previewAdvanceCurrentActivity(snapshot);
     return surveyPlan.accepted
@@ -102,6 +110,9 @@ export function ActivityPanel({
           timeline: []
         };
   }, [snapshot, surveyPlan]);
+  const advanceDisabled = surveyPlan
+    ? isAshenReefSurveyAdvanceDisabled(surveyPlan)
+    : !advancePreview.available;
   const restPreview = useMemo(() => previewRestAtCurrentSettlement(snapshot), [snapshot]);
   const pendingSurveyRepair = useMemo(
     () => listPendingPlayerSurveyProjectionRepairs(snapshot)[0] ?? null,
@@ -243,19 +254,11 @@ export function ActivityPanel({
                           return;
                         }
                         surveyRequestIdRef.current ??= createAuthorityId('survey_request');
-                        const result = advanceAshenReefSurvey(surveyRequestIdRef.current);
-                        if (!result) {
-                          setPanelNotice({
-                            tone: 'warning',
-                            title: 'Survey not advanced',
-                            detail: 'The campaign-authoritative survey command could not be prepared.'
-                          });
-                          return;
-                        }
-                        if (!shouldRetainPlayerSurveyRequestIdentity(result)) {
+                        const outcome = advanceAshenReefSurvey(surveyRequestIdRef.current);
+                        if (!shouldRetainAshenReefSurveyCallerRequestId(outcome)) {
                           surveyRequestIdRef.current = null;
                         }
-                        setPanelNotice(result.notice);
+                        setPanelNotice(outcome.notice);
                         return;
                       }
 
@@ -263,7 +266,7 @@ export function ActivityPanel({
                       updateSnapshot(result.snapshot);
                       setPanelNotice(result.notice);
                     }}
-                    disabled={!advancePreview.available}
+                    disabled={advanceDisabled}
                   />
                   {pendingSurveyRepair && (
                     <GameActionButton
@@ -273,11 +276,22 @@ export function ActivityPanel({
                           pendingSurveyRepair.resultId,
                           pendingSurveyRepair.projectionKind
                         );
+                        const retentionExpired = result.code === 'projection_retention_expired';
                         setPanelNotice({
-                          tone: result.accepted ? 'success' : result.duplicate ? 'neutral' : 'warning',
-                          title: result.accepted ? 'Survey projection repaired' : 'Survey projection unchanged',
-                          detail: result.accepted
+                          tone: result.accepted && !retentionExpired
+                            ? 'success'
+                            : result.duplicate || retentionExpired
+                              ? 'neutral'
+                              : 'warning',
+                          title: result.accepted && !retentionExpired
+                            ? 'Survey projection repaired'
+                            : retentionExpired
+                              ? 'Survey projection retention expired'
+                              : 'Survey projection unchanged',
+                          detail: result.accepted && !retentionExpired
                             ? 'The retained survey result was re-projected without repeating gameplay effects.'
+                            : retentionExpired
+                              ? 'The retained destination cannot accept this older projection without displacing newer or ambiguous evidence.'
                             : 'The retained projection is already correct, expired, or controlled by newer authority.'
                         });
                       }}
@@ -307,18 +321,16 @@ export function ActivityPanel({
                 {advanceOutcome ? (
                   <div className="space-y-3">
                     <ActionOutcomePreview title="Advance Shift Outlook" preview={advanceOutcome} />
-                    {surveyPlan?.accepted && (
+                    {surveyPanelFacts && (
                       <div className={`${mutedInsetCardClass} text-sm text-[color:var(--color-text-secondary)]`}>
-                        <div>Survey stage: {surveyPlan.stage.replace(/_/g, ' ')}</div>
+                        <div>Survey stage: {surveyPanelFacts.stageLabel}</div>
                         <div>
-                          Explicit costs: Stamina -{surveyPlan.resourceCosts.stamina}, MP -{surveyPlan.resourceCosts.mp}
+                          Explicit costs: Stamina -{surveyPanelFacts.staminaCost}, MP -{surveyPanelFacts.mpCost}
                         </div>
                         <div>
-                          Skill: {surveyPlan.skill.skillId} {surveyPlan.skill.appliedDelta > 0
-                            ? `+${surveyPlan.skill.appliedDelta}`
-                            : 'blocked at breakthrough gate'}
+                          Skill: {surveyPanelFacts.skillId} {surveyPanelFacts.skillDetail}
                         </div>
-                        <div>Operation progress: {surveyPlan.operation.progress}%</div>
+                        <div>Operation progress: {surveyPanelFacts.operationProgress}%</div>
                       </div>
                     )}
                   </div>

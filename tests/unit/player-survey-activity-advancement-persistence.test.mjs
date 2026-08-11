@@ -288,6 +288,10 @@ test("real caller source guards enforce engine-result admission, accepted-only s
     new URL("../../apps/rpg-ui/src/runtime/GameSessionContext.tsx", import.meta.url),
     "utf8"
   );
+  const caller = readFileSync(
+    new URL("../../apps/rpg-ui/src/runtime/ashenReefSurveyCaller.ts", import.meta.url),
+    "utf8"
+  );
   const surveyModule = readFileSync(
     new URL("../../packages/engines/game-engine/src/player-survey-activity-advancement.ts", import.meta.url),
     "utf8"
@@ -307,13 +311,32 @@ test("real caller source guards enforce engine-result admission, accepted-only s
   assert.doesNotMatch(surveyAdapter, /advanceSnapshotClock|applyResourceDelta|addOrUpdateSkill|addDiscoveryEntry|buildSurveyOperation/);
   assert.match(surveyAdapter, /resolvePlayerSurveyActivityAdvancementPlan/);
   assert.match(panel, /surveyRequestIdRef\.current \?\?= createAuthorityId\('survey_request'\)/);
-  assert.match(panel, /shouldRetainPlayerSurveyRequestIdentity\(result\)/);
-  assert.match(panel, /disabled=\{!advancePreview\.available\}/);
-  assert.match(panel, /surveyPlan\.resourceCosts\.stamina/);
-  assert.match(context, /executePlayerSurveyActivityAdvancementCommand/);
-  assert.match(context, /shouldRetainPlayerSurveyRequestIdentity\(result\)/);
-  assert.match(context, /if \(result\.accepted\) \{\s*onSnapshotChange\(result\.snapshot, result\.control\)/);
+  assert.match(panel, /shouldRetainAshenReefSurveyCallerRequestId\(outcome\)/);
+  assert.match(panel, /surveyRequestIdRef\.current = null/);
+  assert.doesNotMatch(panel, /shouldRetainPlayerSurveyRequestIdentity/);
+  assert.match(panel, /disabled=\{advanceDisabled\}/);
+  assert.match(panel, /isAshenReefSurveyAdvanceDisabled\(surveyPlan\)/);
+  assert.match(panel, /resolveAshenReefSurveyPanelFacts\(surveyPlan\)/);
+  assert.match(panel, /surveyPanelFacts\.staminaCost/);
+  assert.match(panel, /surveyPanelFacts\.skillDetail/);
+  assert.match(caller, /executePlayerSurveyActivityAdvancementCommand/);
+  assert.match(caller, /preparePlayerSurveyActivityAdvancementCommand/);
+  assert.match(caller, /shouldRetainPlayerSurveyRequestIdentity\(result\)/);
+  assert.match(caller, /export function advanceAshenReefSurveyCaller/);
+  assert.match(caller, /export function shouldRetainAshenReefSurveyCallerRequestId/);
+  assert.match(caller, /export function isAshenReefSurveyAdvanceDisabled/);
+  assert.match(caller, /export function resolveAshenReefSurveyPanelFacts/);
+  assert.match(context, /advanceAshenReefSurveyCaller\(/);
+  assert.match(context, /if \(transition\.acceptedState\) \{\s*onSnapshotChange\(/);
+  assert.match(caller, /acceptedState: null/);
+  assert.match(caller, /kind: 'technical_retry'/);
+  assert.match(caller, /kind: 'terminal_result'/);
+  assert.doesNotMatch(context, /advanceAshenReefSurvey:[\s\S]{0,250}=> PlayerSurveyActivityAdvancementResult \| null/);
+  assert.doesNotMatch(context, /catch \{\s*return null/);
   assert.doesNotMatch(surveyModule, /notification\.\$\{.*clock\.tick|chronicle\.\$\{.*length/);
+  assert.match(surveyModule, /compareProjectionAuthority/);
+  assert.match(surveyModule, /stableId: result\.resultId/);
+  assert.match(surveyModule, /inspectPlayerSurveyProjectionRepair/);
   assert.doesNotMatch(surveyModule, /createEvent\(/);
   assert.match(surveyModule, /event\.player\.activity\.survey\.\$\{uuid\}/);
   assert.equal(surveyMirror.trim(), 'export * from "./player-survey-activity-advancement.ts";');

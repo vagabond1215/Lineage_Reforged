@@ -3,20 +3,31 @@ import type {
   ActionMetabolicProfileState,
   AshenReefSurveyAuthorityState,
   AshenReefSurveyMaterialFactsState,
+  AshenReefSurveyNonProposalsState,
   AshenReefSurveyNormalizedIntentState,
   AshenReefSurveyOwnerInputsState,
   AshenReefSurveyReceiptKind,
   CampaignIdentityState,
   CampaignRulesState,
+  NotorietyModifierId,
+  PlayerProgression,
+  PlayerReputationState,
+  ReputationScope,
   RunDifficultyState,
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
-import { resolvePlayerResources } from "../../../shared/types/src/index.js";
+import {
+  resolvePlayerOriginProfile,
+  resolvePlayerResources
+} from "../../../shared/types/src/index.js";
 import { advanceClock } from "../../../shared/time/src/index.js";
 import {
   advancePlayerBodyState,
   applyActionAttributeLoad,
   applyAttributeTensionToActionProfile,
+  loadEchoBalanceRule,
+  normalizePlayerBodyState,
+  normalizePlayerStatGrowth,
   resolveSkillRankGainPolicy,
   syncPlayerBodyState,
   syncPlayerStatGrowth
@@ -55,6 +66,18 @@ export const ASHEN_REEF_SURVEY_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileStat
     WIS: 0.3
   },
   meaningfulInteraction: true
+};
+
+export const ASHEN_REEF_SURVEY_NON_PROPOSALS: AshenReefSurveyNonProposalsState = {
+  geographicKnowledge: "no_proposal",
+  knownLocationAuthority: "no_proposal",
+  mapAuthority: "no_proposal",
+  travelAccess: "no_proposal",
+  currency: "no_proposal",
+  standing: "no_proposal",
+  inventory: "no_proposal",
+  reputationBeyondOrdinarySynchronization: "no_proposal",
+  turnInRewards: "no_proposal"
 };
 
 export const ASHEN_REEF_SURVEY_COMMON_RECEIPT_KINDS = [
@@ -300,6 +323,547 @@ function isJsonSafe(value: unknown, seen = new Set<object>()): boolean {
   return valid;
 }
 
+const SURVEY_ATTRIBUTE_KEYS = ["STR", "DEX", "AGI", "CON", "VIT", "INT", "WIS", "SPT", "CHA"] as const;
+const SURVEY_EQUIPMENT_SLOTS = [
+  "slot.weapon.left",
+  "slot.weapon.right",
+  "slot.armor.head",
+  "slot.armor.shoulder",
+  "slot.armor.chest",
+  "slot.armor.arm",
+  "slot.armor.hand",
+  "slot.armor.waist",
+  "slot.armor.leg",
+  "slot.armor.foot",
+  "slot.accessory.ear",
+  "slot.accessory.eyes",
+  "slot.accessory.neck",
+  "slot.accessory.arms",
+  "slot.accessory.fingers",
+  "slot.accessory.waist",
+  "slot.accessory.ankle"
+] as const;
+const SURVEY_RESOURCE_KEYS = ["hp", "mp", "stamina"] as const;
+const SURVEY_RESOURCE_MODIFIER_SOURCES = new Set([
+  "origin", "class", "equipment", "buff", "debuff", "food", "aura", "trait", "spell", "environment", "system"
+]);
+const SURVEY_RESOURCE_CHANGE_KINDS = new Set([
+  "natural_regen", "assisted_regen", "degeneration", "damage", "heal", "potion", "spell_cost", "food", "aura", "scripted"
+]);
+const SURVEY_SKILL_BANDS = new Set(["clumsy", "familiar", "proficient", "skilled", "mastery"]);
+const SURVEY_REPUTATION_SCOPE_ORDER = ["local", "regional", "continental", "world"] as const;
+const SURVEY_REPUTATION_SCOPES = new Set<string>(SURVEY_REPUTATION_SCOPE_ORDER);
+const SURVEY_FAME_BRANCHES = new Set([
+  "civic", "folk", "trade", "martial", "heroic", "political", "commercial", "historical", "legendary", "mythic"
+]);
+const SURVEY_NOTORIETY_CATEGORIES = new Set([
+  "theft", "fraud", "violent", "murder", "arson", "banditry", "treason", "sacrilege", "smuggling"
+]);
+const SURVEY_NOTORIETY_SEVERITY_ORDER = ["minor", "standard", "major"] as const;
+const SURVEY_NOTORIETY_SEVERITIES = new Set<string>(SURVEY_NOTORIETY_SEVERITY_ORDER);
+const SURVEY_NOTORIETY_MODIFIER_ORDER = [
+  "mass", "organized", "repeat", "public", "against_nobility", "against_temple", "wartime", "ritual"
+] as const;
+const SURVEY_NOTORIETY_MODIFIERS = new Set<string>(SURVEY_NOTORIETY_MODIFIER_ORDER);
+const SURVEY_NOTORIETY_EXPOSURES = new Set(["hidden", "public", "witnessed_or_reported", "evidenced"]);
+const SURVEY_NOTORIETY_ATTRIBUTIONS = new Set(["unknown", "identified", "credible_link"]);
+
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+  if (!isRecord(value)) return false;
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === Object.prototype || prototype === null;
+}
+
+function hasExactKeys(
+  value: Record<string, unknown>,
+  required: readonly string[],
+  optional: readonly string[] = []
+): boolean {
+  const allowed = new Set([...required, ...optional]);
+  return required.every((key) => Object.prototype.hasOwnProperty.call(value, key)) &&
+    Object.keys(value).every((key) => allowed.has(key));
+}
+
+function isFiniteNumber(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value);
+}
+
+function isNonnegativeNumber(value: unknown): value is number {
+  return isFiniteNumber(value) && value >= 0;
+}
+
+function isNonnegativeInteger(value: unknown): value is number {
+  return Number.isInteger(value) && Number(value) >= 0;
+}
+
+function roundCanonicalNumber(value: number, digits = 4): number {
+  return Number(value.toFixed(digits));
+}
+
+function isNullableNonnegativeInteger(value: unknown): value is number | null {
+  return value === null || isNonnegativeInteger(value);
+}
+
+function isStringArray(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((entry) => typeof entry === "string");
+}
+
+function validateClock(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, ["tick", "subday", "day", "month", "season", "year"]) &&
+    isNonnegativeInteger(value.tick) &&
+    Number.isInteger(value.subday) && Number(value.subday) >= 1 && Number(value.subday) <= 4 &&
+    Number.isInteger(value.day) && Number(value.day) >= 1 &&
+    Number.isInteger(value.month) && Number(value.month) >= 1 && Number(value.month) <= 13 &&
+    (value.season === "Winter" || value.season === "Thaw" || value.season === "Spring" ||
+      value.season === "Summer" || value.season === "Harvest" || value.season === "Withering") &&
+    Number.isInteger(value.year) && Number(value.year) >= 1;
+}
+
+function validateRunDifficulty(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, ["tier", "hardcore"]) &&
+    (value.tier === "easy" || value.tier === "normal" || value.tier === "hard" || value.tier === "brutal") &&
+    typeof value.hardcore === "boolean";
+}
+
+function validateAttributes(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, SURVEY_ATTRIBUTE_KEYS) &&
+    SURVEY_ATTRIBUTE_KEYS.every((key) => isFiniteNumber(value[key]));
+}
+
+function validateResourcePool(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, ["current", "max"]) &&
+    isNonnegativeNumber(value.current) &&
+    isNonnegativeNumber(value.max) &&
+    value.current <= value.max;
+}
+
+function validateResources(value: unknown): boolean {
+  if (!isPlainRecord(value) || !hasExactKeys(value, ["hp", "mp", "stamina", "xp"])) return false;
+  if (!validateResourcePool(value.hp) || !validateResourcePool(value.mp) || !validateResourcePool(value.stamina)) return false;
+  return isPlainRecord(value.xp) &&
+    hasExactKeys(value.xp, ["current", "total", "toNextLevel"]) &&
+    isNonnegativeNumber(value.xp.current) &&
+    isNonnegativeNumber(value.xp.total) &&
+    isNonnegativeNumber(value.xp.toNextLevel);
+}
+
+function validatePartialResourceVector(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    Object.keys(value).every(
+      (key) => SURVEY_RESOURCE_KEYS.includes(key as (typeof SURVEY_RESOURCE_KEYS)[number]) && isFiniteNumber(value[key])
+    );
+}
+
+function validateResourceModifier(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(
+      value,
+      ["id", "label", "sourceType", "sourceId", "maxFlat", "maxPercent", "tickDeltaFlat", "notes"],
+      ["expiresAtTick"]
+    ) &&
+    isExactNonblank(value.id) &&
+    isExactNonblank(value.label) &&
+    SURVEY_RESOURCE_MODIFIER_SOURCES.has(String(value.sourceType)) &&
+    (value.sourceId === null || isExactNonblank(value.sourceId)) &&
+    validatePartialResourceVector(value.maxFlat) &&
+    validatePartialResourceVector(value.maxPercent) &&
+    validatePartialResourceVector(value.tickDeltaFlat) &&
+    (value.expiresAtTick === undefined || isNullableNonnegativeInteger(value.expiresAtTick)) &&
+    isStringArray(value.notes);
+}
+
+function validateResourceChange(value: unknown, applied: boolean): boolean {
+  const required = ["id", "label", "resource", "amount", "kind", "sourceType", "sourceId"];
+  if (applied) required.push("appliedTick", "before", "after");
+  return isPlainRecord(value) &&
+    hasExactKeys(value, required) &&
+    isExactNonblank(value.id) &&
+    isExactNonblank(value.label) &&
+    SURVEY_RESOURCE_KEYS.includes(value.resource as (typeof SURVEY_RESOURCE_KEYS)[number]) &&
+    isFiniteNumber(value.amount) &&
+    SURVEY_RESOURCE_CHANGE_KINDS.has(String(value.kind)) &&
+    SURVEY_RESOURCE_MODIFIER_SOURCES.has(String(value.sourceType)) &&
+    (value.sourceId === null || isExactNonblank(value.sourceId)) &&
+    (!applied || (
+      isNonnegativeInteger(value.appliedTick) &&
+      isNonnegativeNumber(value.before) &&
+      isNonnegativeNumber(value.after)
+    ));
+}
+
+function validateResourceTickEntry(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, [
+      "max", "before", "after", "naturalRegen", "assistedRegen", "degeneration", "directChange", "clampAdjustment"
+    ]) &&
+    isNonnegativeNumber(value.max) &&
+    isFiniteNumber(value.before) &&
+    isFiniteNumber(value.after) &&
+    isFiniteNumber(value.naturalRegen) &&
+    isFiniteNumber(value.assistedRegen) &&
+    isFiniteNumber(value.degeneration) &&
+    isFiniteNumber(value.directChange) &&
+    isFiniteNumber(value.clampAdjustment);
+}
+
+function validateResourceRuntime(value: unknown): boolean {
+  if (!isPlainRecord(value) || !hasExactKeys(value, ["modifiers", "pendingChanges", "lastBreakdown", "history"])) return false;
+  if (!Array.isArray(value.modifiers) || !value.modifiers.every(validateResourceModifier)) return false;
+  if (new Set(value.modifiers.map((entry) => entry.id)).size !== value.modifiers.length) return false;
+  if (!Array.isArray(value.pendingChanges) || !value.pendingChanges.every((entry) => validateResourceChange(entry, false))) return false;
+  if (new Set(value.pendingChanges.map((entry) => entry.id)).size !== value.pendingChanges.length) return false;
+  if (!Array.isArray(value.history) || !value.history.every((entry) => validateResourceChange(entry, true))) return false;
+  if (value.lastBreakdown === null) return true;
+  const breakdown = value.lastBreakdown;
+  if (!isPlainRecord(breakdown) || !hasExactKeys(breakdown, ["appliedTick", "activeModifierIds", "resources"])) {
+    return false;
+  }
+  const breakdownResources = breakdown.resources;
+  return isNonnegativeInteger(breakdown.appliedTick) &&
+    isStringArray(breakdown.activeModifierIds) &&
+    hasUniqueStrings(breakdown.activeModifierIds) &&
+    isPlainRecord(breakdownResources) &&
+    hasExactKeys(breakdownResources, SURVEY_RESOURCE_KEYS) &&
+    SURVEY_RESOURCE_KEYS.every((key) => validateResourceTickEntry(breakdownResources[key]));
+}
+
+function validateSkill(value: unknown): boolean {
+  if (!isPlainRecord(value) || !hasExactKeys(value, ["id", "rank", "source"], ["progression"])) return false;
+  if (!isExactNonblank(value.id) || !Number.isInteger(value.rank) || Number(value.rank) < 0 || Number(value.rank) > 125) return false;
+  if (value.source !== "innate" && value.source !== "trained") return false;
+  if (value.progression === undefined) return true;
+  const progression = value.progression;
+  return isPlainRecord(progression) &&
+    hasExactKeys(
+      progression,
+      ["unlockedBandIds", "breakthroughProgress"],
+      ["progressionTrackId", "currentBandId", "lastBreakthroughRank"]
+    ) &&
+    (progression.progressionTrackId === undefined || isExactNonblank(progression.progressionTrackId)) &&
+    (progression.currentBandId === undefined || SURVEY_SKILL_BANDS.has(String(progression.currentBandId))) &&
+    Array.isArray(progression.unlockedBandIds) &&
+    progression.unlockedBandIds.every((entry) => SURVEY_SKILL_BANDS.has(String(entry))) &&
+    new Set(progression.unlockedBandIds).size === progression.unlockedBandIds.length &&
+    isNonnegativeNumber(progression.breakthroughProgress) &&
+    (progression.lastBreakthroughRank === undefined || progression.lastBreakthroughRank === null ||
+      (Number.isInteger(progression.lastBreakthroughRank) && Number(progression.lastBreakthroughRank) >= 0 && Number(progression.lastBreakthroughRank) <= 125));
+}
+
+function validateProgression(value: unknown): value is PlayerProgression {
+  if (!isPlainRecord(value) || !hasExactKeys(value, ["level", "echo", "legacyGrowth"])) return false;
+  if (!isNonnegativeInteger(value.level)) return false;
+  const echo = value.echo;
+  if (!isPlainRecord(echo) || !hasExactKeys(echo, [
+    "balanceRuleId", "balanceRuleVersion", "skillContribution", "statContribution", "knowledgeContribution",
+    "echoBase", "diversityCount", "diversityBonus", "echoAdjusted"
+  ])) return false;
+  const rule = loadEchoBalanceRule();
+  if (echo.balanceRuleId !== "rule.echo_balance" || echo.balanceRuleVersion !== rule.version) return false;
+  if (!["skillContribution", "statContribution", "knowledgeContribution", "echoBase", "diversityBonus", "echoAdjusted"]
+    .every((key) => isNonnegativeNumber(echo[key]))) return false;
+  if (!["skillContribution", "statContribution", "knowledgeContribution"].every(
+    (key) => Number(echo[key]) <= 100
+  )) return false;
+  if (!isNonnegativeInteger(echo.diversityCount)) return false;
+  const expectedEchoBase = roundCanonicalNumber(
+    Number(echo.skillContribution) * rule.weights.skills +
+      Number(echo.statContribution) * rule.weights.stats +
+      Number(echo.knowledgeContribution) * rule.weights.knowledge
+  );
+  const expectedDiversityBonus = roundCanonicalNumber(
+    Math.min(
+      rule.diversity.maxMultiplier,
+      1 + Number(echo.diversityCount) * rule.diversity.bonusPerSkill
+    )
+  );
+  const expectedEchoAdjusted = roundCanonicalNumber(expectedEchoBase * expectedDiversityBonus);
+  const expectedLevel = Math.floor(rule.levelScale * Math.sqrt(Math.max(expectedEchoAdjusted, 0)));
+  if (
+    echo.echoBase !== expectedEchoBase ||
+    echo.diversityBonus !== expectedDiversityBonus ||
+    echo.echoAdjusted !== expectedEchoAdjusted ||
+    value.level !== expectedLevel
+  ) return false;
+  const legacyGrowth = value.legacyGrowth;
+  if (!isPlainRecord(legacyGrowth) || !hasExactKeys(legacyGrowth, [
+    "resourceGrowthLevel", "classLevel", "unspentAttributePoints", "unspentSkillPoints"
+  ])) return false;
+  if (!["resourceGrowthLevel", "classLevel", "unspentAttributePoints", "unspentSkillPoints"]
+    .every((key) => isNonnegativeInteger(legacyGrowth[key]))) return false;
+  return Number(legacyGrowth.resourceGrowthLevel) >= 1;
+}
+
+function validateReputationRowNumbers(value: Record<string, unknown>): boolean {
+  return isNonnegativeNumber(value.earned) &&
+    isNonnegativeNumber(value.currentEarned) &&
+    isNonnegativeNumber(value.historical) &&
+    isNullableNonnegativeInteger(value.lastMeaningfulGainTick);
+}
+
+function compareCanonicalText(left: string, right: string): number {
+  return left.localeCompare(right);
+}
+
+function compareCanonicalScope(left: ReputationScope, right: ReputationScope): number {
+  return SURVEY_REPUTATION_SCOPE_ORDER.indexOf(left) -
+    SURVEY_REPUTATION_SCOPE_ORDER.indexOf(right);
+}
+
+function canonicalNotorietyModifiers(
+  modifiers: readonly NotorietyModifierId[]
+): NotorietyModifierId[] {
+  return Array.from(new Set(modifiers)).sort(
+    (left, right) => SURVEY_NOTORIETY_MODIFIER_ORDER.indexOf(left) -
+      SURVEY_NOTORIETY_MODIFIER_ORDER.indexOf(right)
+  );
+}
+
+function hasCanonicalReputationNumbers(value: {
+  earned: number;
+  currentEarned: number;
+  historical: number;
+}): boolean {
+  return value.earned === roundCanonicalNumber(value.earned) &&
+    value.currentEarned === roundCanonicalNumber(value.currentEarned) &&
+    value.historical === roundCanonicalNumber(value.historical);
+}
+
+function isCanonicallyOrdered<T>(
+  values: readonly T[],
+  compare: (left: T, right: T) => number
+): boolean {
+  return values.every(
+    (entry, index) => index === 0 || compare(values[index - 1]!, entry) <= 0
+  );
+}
+
+function validateCanonicalReputation(value: PlayerReputationState): boolean {
+  const fameCanonical = value.fame.every(
+    (entry) =>
+      (entry.scope !== "world" || entry.scopeId === "world") &&
+      hasCanonicalReputationNumbers(entry)
+  );
+  const notorietyCanonical = value.notoriety.every((entry) => {
+    const modifiers = canonicalNotorietyModifiers(entry.modifiers);
+    return (entry.scope !== "world" || entry.scopeId === "world") &&
+      deepEqual(entry.modifiers, modifiers) &&
+      entry.modifiersSignature === (modifiers.length === 0 ? "none" : modifiers.join("|")) &&
+      hasCanonicalReputationNumbers(entry) &&
+      entry.repeatCount === Math.max(0, Math.round(entry.repeatCount));
+  });
+  const eventsCanonical = value.notorietyEvents.every((entry) =>
+    (entry.scope !== "world" || entry.scopeId === "world") &&
+    deepEqual(entry.modifiers, canonicalNotorietyModifiers(entry.modifiers)) &&
+    hasCanonicalReputationNumbers(entry)
+  );
+  return fameCanonical && notorietyCanonical && eventsCanonical &&
+    isCanonicallyOrdered(value.fame, (left, right) =>
+      compareCanonicalScope(left.scope, right.scope) ||
+      compareCanonicalText(left.scopeId, right.scopeId) ||
+      compareCanonicalText(left.branchId, right.branchId)
+    ) &&
+    isCanonicallyOrdered(value.notoriety, (left, right) =>
+      compareCanonicalScope(left.scope, right.scope) ||
+      compareCanonicalText(left.scopeId, right.scopeId) ||
+      compareCanonicalText(left.categoryId, right.categoryId) ||
+      SURVEY_NOTORIETY_SEVERITY_ORDER.indexOf(left.severity) -
+        SURVEY_NOTORIETY_SEVERITY_ORDER.indexOf(right.severity) ||
+      compareCanonicalText(left.modifiersSignature, right.modifiersSignature)
+    ) &&
+    isCanonicallyOrdered(value.notorietyEvents, (left, right) =>
+      compareCanonicalScope(left.scope, right.scope) ||
+      compareCanonicalText(left.scopeId, right.scopeId) ||
+      left.occurredAtTick - right.occurredAtTick ||
+      compareCanonicalText(left.id, right.id)
+    );
+}
+
+function validateReputation(value: unknown): value is PlayerReputationState {
+  if (!isPlainRecord(value) || !hasExactKeys(value, ["fame", "notoriety", "notorietyEvents"])) return false;
+  if (!Array.isArray(value.fame) || !Array.isArray(value.notoriety) || !Array.isArray(value.notorietyEvents)) return false;
+  if (!value.fame.every((entry) =>
+    isPlainRecord(entry) &&
+    hasExactKeys(entry, ["scope", "scopeId", "branchId", "earned", "currentEarned", "historical", "lastMeaningfulGainTick"]) &&
+    SURVEY_REPUTATION_SCOPES.has(String(entry.scope)) &&
+    isExactNonblank(entry.scopeId) &&
+    SURVEY_FAME_BRANCHES.has(String(entry.branchId)) &&
+    validateReputationRowNumbers(entry)
+  )) return false;
+  if (!value.notoriety.every((entry) =>
+    isPlainRecord(entry) &&
+    hasExactKeys(entry, [
+      "scope", "scopeId", "categoryId", "severity", "modifiers", "modifiersSignature", "earned",
+      "currentEarned", "historical", "lastMeaningfulGainTick", "repeatCount"
+    ]) &&
+    SURVEY_REPUTATION_SCOPES.has(String(entry.scope)) &&
+    isExactNonblank(entry.scopeId) &&
+    SURVEY_NOTORIETY_CATEGORIES.has(String(entry.categoryId)) &&
+    SURVEY_NOTORIETY_SEVERITIES.has(String(entry.severity)) &&
+    Array.isArray(entry.modifiers) &&
+    entry.modifiers.every((modifier) => SURVEY_NOTORIETY_MODIFIERS.has(String(modifier))) &&
+    new Set(entry.modifiers).size === entry.modifiers.length &&
+    isExactNonblank(entry.modifiersSignature) &&
+    validateReputationRowNumbers(entry) &&
+    isNonnegativeInteger(entry.repeatCount)
+  )) return false;
+  if (!value.notorietyEvents.every((entry) =>
+    isPlainRecord(entry) &&
+    hasExactKeys(entry, [
+      "id", "scope", "scopeId", "settlementId", "categoryId", "severity", "modifiers", "earned",
+      "currentEarned", "historical", "occurredAtTick", "lastMeaningfulGainTick", "exposureState", "attributionState", "unresolved"
+    ]) &&
+    isExactNonblank(entry.id) &&
+    SURVEY_REPUTATION_SCOPES.has(String(entry.scope)) &&
+    isExactNonblank(entry.scopeId) &&
+    isExactNonblank(entry.settlementId) &&
+    SURVEY_NOTORIETY_CATEGORIES.has(String(entry.categoryId)) &&
+    SURVEY_NOTORIETY_SEVERITIES.has(String(entry.severity)) &&
+    Array.isArray(entry.modifiers) &&
+    entry.modifiers.every((modifier) => SURVEY_NOTORIETY_MODIFIERS.has(String(modifier))) &&
+    new Set(entry.modifiers).size === entry.modifiers.length &&
+    validateReputationRowNumbers(entry) &&
+    isNonnegativeInteger(entry.occurredAtTick) &&
+    SURVEY_NOTORIETY_EXPOSURES.has(String(entry.exposureState)) &&
+    SURVEY_NOTORIETY_ATTRIBUTIONS.has(String(entry.attributionState)) &&
+    typeof entry.unresolved === "boolean"
+  )) return false;
+  const fameKeys = value.fame.map((entry) => `${entry.scope}|${entry.scopeId}|${entry.branchId}`);
+  const notorietyKeys = value.notoriety.map(
+    (entry) => `${entry.scope}|${entry.scopeId}|${entry.categoryId}|${entry.severity}|${entry.modifiersSignature}`
+  );
+  return new Set(fameKeys).size === fameKeys.length &&
+    new Set(notorietyKeys).size === notorietyKeys.length &&
+    new Set(value.notorietyEvents.map((entry) => entry.id)).size === value.notorietyEvents.length &&
+    validateCanonicalReputation(value as unknown as PlayerReputationState);
+}
+
+function validateResourceVector(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, SURVEY_RESOURCE_KEYS) &&
+    SURVEY_RESOURCE_KEYS.every((key) => isFiniteNumber(value[key]));
+}
+
+function validateOriginProfile(
+  value: unknown,
+  lineageId: string,
+  progression: PlayerProgression
+): boolean {
+  if (!isPlainRecord(value) || !hasExactKeys(value, [
+      "lineageId", "lineageLabel", "classId", "classLabel", "sexId", "attributeAdjustments",
+      "resourceBaseAdjustments", "lineageResourceGrowthPerLevel", "classResourceGrowthPerClassLevel",
+      "resolvedResourceMaxima", "notes"
+    ])) return false;
+  const attributeAdjustments = value.attributeAdjustments;
+  if (!(value.lineageId === lineageId &&
+    isExactNonblank(value.lineageLabel) &&
+    (value.classId === null || isExactNonblank(value.classId)) &&
+    (value.classLabel === null || isExactNonblank(value.classLabel)) &&
+    (value.sexId === "male" || value.sexId === "female" || value.sexId === "neutral") &&
+    isPlainRecord(attributeAdjustments) &&
+    Object.keys(attributeAdjustments).every(
+      (key) => SURVEY_ATTRIBUTE_KEYS.includes(key as (typeof SURVEY_ATTRIBUTE_KEYS)[number]) && isFiniteNumber(attributeAdjustments[key])
+    ) &&
+    validateResourceVector(value.resourceBaseAdjustments) &&
+    validateResourceVector(value.lineageResourceGrowthPerLevel) &&
+    validateResourceVector(value.classResourceGrowthPerClassLevel) &&
+    validateResourceVector(value.resolvedResourceMaxima) &&
+    isStringArray(value.notes))) return false;
+  return deepEqual(
+    value,
+    resolvePlayerOriginProfile(
+      {
+        lineageId,
+        classId: value.classId,
+        sexId: value.sexId
+      },
+      progression
+    )
+  );
+}
+
+function validateEquipment(value: unknown): boolean {
+  if (!isPlainRecord(value) || !hasExactKeys(value, SURVEY_EQUIPMENT_SLOTS)) return false;
+  return SURVEY_EQUIPMENT_SLOTS.every((slot) => {
+    const item = value[slot];
+    if (item === null) return true;
+    return isPlainRecord(item) &&
+      hasExactKeys(item, ["itemId", "itemKey", "quantity"], ["durability", "resourceModifiers"]) &&
+      isExactNonblank(item.itemId) &&
+      isExactNonblank(item.itemKey) &&
+      Number.isInteger(item.quantity) && Number(item.quantity) > 0 &&
+      (item.durability === undefined || isNonnegativeNumber(item.durability)) &&
+      (item.resourceModifiers === undefined ||
+        (Array.isArray(item.resourceModifiers) && item.resourceModifiers.every(validateResourceModifier)));
+  });
+}
+
+function validateCurrentActivity(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, ["id", "label", "category"], ["detail"]) &&
+    isExactNonblank(value.id) &&
+    isExactNonblank(value.label) &&
+    isExactNonblank(value.category) &&
+    (value.detail === undefined || typeof value.detail === "string");
+}
+
+function validateOperation(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, ["id", "title", "stage", "progress", "etaLabel", "owner", "output", "priority"]) &&
+    isExactNonblank(value.id) &&
+    isExactNonblank(value.title) &&
+    isExactNonblank(value.stage) &&
+    isFiniteNumber(value.progress) && Number(value.progress) >= 0 && Number(value.progress) <= 100 &&
+    isExactNonblank(value.etaLabel) &&
+    isExactNonblank(value.owner) &&
+    isExactNonblank(value.output) &&
+    (value.priority === "Low" || value.priority === "Normal" || value.priority === "High");
+}
+
+function validateDiscovery(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(value, [
+      "id", "codexEntryId", "category", "title", "discoveredAtTick", "discoveredAtLabel",
+      "regionLabel", "sourceType", "sourceId", "notes"
+    ]) &&
+    isExactNonblank(value.id) &&
+    isExactNonblank(value.codexEntryId) &&
+    (value.category === "flora" || value.category === "fauna" || value.category === "minerals" ||
+      value.category === "items" || value.category === "recipes" || value.category === "factions" ||
+      value.category === "notes") &&
+    isExactNonblank(value.title) &&
+    isNonnegativeInteger(value.discoveredAtTick) &&
+    isExactNonblank(value.discoveredAtLabel) &&
+    isExactNonblank(value.regionLabel) &&
+    isExactNonblank(value.sourceType) &&
+    (value.sourceId === null || isExactNonblank(value.sourceId)) &&
+    isStringArray(value.notes);
+}
+
+function validateCodexEntry(value: unknown): boolean {
+  return isPlainRecord(value) &&
+    hasExactKeys(
+      value,
+      ["id", "category", "title", "summary", "tags", "habitat", "uses", "valueDescription", "regionTags"],
+      ["subtitle", "status", "locked"]
+    ) &&
+    isExactNonblank(value.id) &&
+    isExactNonblank(value.category) &&
+    isExactNonblank(value.title) &&
+    (value.subtitle === undefined || typeof value.subtitle === "string") &&
+    (value.status === undefined || typeof value.status === "string") &&
+    typeof value.summary === "string" &&
+    isStringArray(value.tags) &&
+    typeof value.habitat === "string" &&
+    typeof value.uses === "string" &&
+    typeof value.valueDescription === "string" &&
+    isStringArray(value.regionTags) &&
+    (value.locked === undefined || typeof value.locked === "boolean");
+}
+
 function surveyRequestUuid(requestId: string): string | null {
   return SURVEY_REQUEST_PATTERN.test(requestId)
     ? requestId.slice(SURVEY_REQUEST_PREFIX.length)
@@ -334,52 +898,57 @@ function validateSurveyMaterialFacts(value: unknown): value is AshenReefSurveyMa
 }
 
 function validateSurveyOwnerInputs(value: unknown): value is AshenReefSurveyOwnerInputsState {
-  if (!isRecord(value) || !isRecord(value.clock) || !isRecord(value.questPosture)) return false;
-  const clock = value.clock;
+  if (!isPlainRecord(value) || !hasExactKeys(value, [
+    "clock", "totalPlayTicks", "lastReputationDecayDay", "questPosture", "runDifficulty",
+    "playerName", "lineageId", "bodyState", "resources", "resourceRuntime", "attributes",
+    "statGrowth", "skills", "relevantSkills", "progression", "reputation", "originProfile",
+    "equipment", "currentActivity", "surveyOperation", "stormglassDiscovery", "stormglassCodexEntry"
+  ])) return false;
+  if (!isPlainRecord(value.questPosture) || !hasExactKeys(value.questPosture, ["category", "tracked"])) return false;
   const skills = value.skills;
   const relevantSkills = value.relevantSkills;
   if (!Array.isArray(skills) || !Array.isArray(relevantSkills)) return false;
+  if (!validateClock(value.clock) || !validateRunDifficulty(value.runDifficulty) || !validateAttributes(value.attributes)) {
+    return false;
+  }
+  if (!isExactNonblank(value.lineageId)) return false;
+  const normalizedBody = isPlainRecord(value.bodyState)
+    ? normalizePlayerBodyState(value.bodyState, {
+        tick: value.bodyState.lastAdvancedTick as number | undefined,
+        day: value.bodyState.lastDailyRolloverDay as number | undefined,
+        lineageId: value.lineageId,
+        runDifficulty: value.runDifficulty as RunDifficultyState
+      })
+    : null;
+  const normalizedStatGrowth = isPlainRecord(value.statGrowth)
+    ? normalizePlayerStatGrowth(
+        value.statGrowth,
+        isNonnegativeInteger(value.statGrowth.lastDailyResetDay)
+          ? value.statGrowth.lastDailyResetDay
+          : 0
+      )
+    : null;
+  const surveyOperation = value.surveyOperation;
+  const stormglassDiscovery = value.stormglassDiscovery;
+  const stormglassCodexEntry = value.stormglassCodexEntry;
   return (
-    Number.isInteger(clock.tick) && Number(clock.tick) >= 0 &&
-    Number.isInteger(clock.subday) && Number(clock.subday) >= 1 &&
-    Number.isInteger(clock.day) && Number(clock.day) >= 1 &&
-    Number.isInteger(clock.month) && Number(clock.month) >= 1 &&
-    Number.isInteger(clock.year) && Number(clock.year) >= 1 &&
-    isExactNonblank(clock.season) &&
     Number.isInteger(value.totalPlayTicks) && Number(value.totalPlayTicks) >= 0 &&
     (value.lastReputationDecayDay === null ||
       (Number.isInteger(value.lastReputationDecayDay) && Number(value.lastReputationDecayDay) >= 0)) &&
     value.questPosture.category === "active" &&
     value.questPosture.tracked === true &&
-    isRecord(value.runDifficulty) &&
-    (value.runDifficulty.tier === "easy" ||
-      value.runDifficulty.tier === "normal" ||
-      value.runDifficulty.tier === "hard" ||
-      value.runDifficulty.tier === "brutal") &&
-    typeof value.runDifficulty.hardcore === "boolean" &&
     isExactNonblank(value.playerName) &&
-    isExactNonblank(value.lineageId) &&
-    isRecord(value.bodyState) &&
-    isRecord(value.resources) &&
-    isRecord(value.resourceRuntime) &&
-    isRecord(value.attributes) &&
-    isRecord(value.statGrowth) &&
-    skills.every(
-      (entry) => isRecord(entry) &&
-        isExactNonblank(entry.id) &&
-        Number.isInteger(entry.rank) &&
-        Number(entry.rank) >= 0 &&
-        (entry.source === "innate" || entry.source === "trained")
-    ) &&
-    new Set(skills.map((entry) => isRecord(entry) ? entry.id : null)).size === skills.length &&
+    normalizedBody !== null && deepEqual(value.bodyState, normalizedBody) &&
+    validateResources(value.resources) &&
+    validateResourceRuntime(value.resourceRuntime) &&
+    normalizedStatGrowth !== null && deepEqual(value.statGrowth, normalizedStatGrowth) &&
+    skills.every(validateSkill) &&
+    new Set(skills.map((entry) => entry.id)).size === skills.length &&
     relevantSkills.length === 2 &&
     relevantSkills.every(
       (entry, index) => entry === null ||
-        (isRecord(entry) &&
-          entry.id === SURVEY_RELEVANT_SKILL_IDS[index] &&
-          Number.isInteger(entry.rank) &&
-          Number(entry.rank) >= 0 &&
-          (entry.source === "innate" || entry.source === "trained"))
+        (validateSkill(entry) &&
+          entry.id === SURVEY_RELEVANT_SKILL_IDS[index])
     ) &&
     relevantSkills.every(
       (entry, index) => deepEqual(
@@ -389,28 +958,38 @@ function validateSurveyOwnerInputs(value: unknown): value is AshenReefSurveyOwne
         ) ?? null
       )
     ) &&
-    isRecord(value.progression) &&
-    isRecord(value.reputation) &&
-    isRecord(value.originProfile) &&
-    isRecord(value.equipment) &&
+    validateProgression(value.progression) &&
+    validateReputation(value.reputation) &&
+    validateOriginProfile(
+      value.originProfile,
+      value.lineageId,
+      value.progression as PlayerProgression
+    ) &&
+    validateEquipment(value.equipment) &&
     (value.currentActivity === null ||
-      (isRecord(value.currentActivity) && isExactNonblank(value.currentActivity.id))) &&
-    (value.surveyOperation === null ||
-      (isRecord(value.surveyOperation) &&
-        value.surveyOperation.id === "operation.quest.ashen_reef_survey")) &&
-    (value.stormglassDiscovery === null ||
-      (isRecord(value.stormglassDiscovery) &&
-        value.stormglassDiscovery.id === "discovery.stormglass_bloom" &&
-        value.stormglassDiscovery.codexEntryId === "flora.unknown_bloom" &&
-        value.stormglassDiscovery.category === "flora" &&
-        value.stormglassDiscovery.title === "Stormglass Bloom" &&
-        value.stormglassDiscovery.sourceType === "survey" &&
-        value.stormglassDiscovery.sourceId === "quest.ashen_reef_survey")) &&
-    (value.stormglassCodexEntry === null ||
-      (isRecord(value.stormglassCodexEntry) &&
-        value.stormglassCodexEntry.id === "flora.unknown_bloom" &&
-        typeof value.stormglassCodexEntry.locked === "boolean"))
+      validateCurrentActivity(value.currentActivity)) &&
+    (surveyOperation === null ||
+      (validateOperation(surveyOperation) && isPlainRecord(surveyOperation) &&
+        surveyOperation.id === "operation.quest.ashen_reef_survey")) &&
+    (stormglassDiscovery === null ||
+      (validateDiscovery(stormglassDiscovery) && isPlainRecord(stormglassDiscovery) &&
+        stormglassDiscovery.id === "discovery.stormglass_bloom" &&
+        stormglassDiscovery.codexEntryId === "flora.unknown_bloom" &&
+        stormglassDiscovery.category === "flora" &&
+        stormglassDiscovery.title === "Stormglass Bloom" &&
+        stormglassDiscovery.sourceType === "survey" &&
+        stormglassDiscovery.sourceId === "quest.ashen_reef_survey")) &&
+    (stormglassCodexEntry === null ||
+      (validateCodexEntry(stormglassCodexEntry) && isPlainRecord(stormglassCodexEntry) &&
+        stormglassCodexEntry.id === "flora.unknown_bloom" &&
+        typeof stormglassCodexEntry.locked === "boolean"))
   );
+}
+
+export function isAshenReefSurveyOwnerInputsState(
+  value: unknown
+): value is AshenReefSurveyOwnerInputsState {
+  return validateSurveyOwnerInputs(value);
 }
 
 function normalizeSurveyIntentForCanonical(
@@ -458,7 +1037,10 @@ function normalizeSurveyIntentForCanonical(
 export function serializeAshenReefSurveyNormalizedIntent(
   value: AshenReefSurveyNormalizedIntentState
 ): string {
-  return JSON.stringify(normalizeSurveyIntentForCanonical(value));
+  if (!validateSurveyIntent(value)) {
+    throw new TypeError("Ashen Reef survey intent is not valid canonical authority.");
+  }
+  return stableJsonStringify(normalizeSurveyIntentForCanonical(value));
 }
 
 function validateMaterialVersions(value: unknown): boolean {
@@ -513,8 +1095,9 @@ function validateSurveyIntent(value: unknown): value is AshenReefSurveyNormalize
           ? "unlocked"
           : "locked") &&
     validateMaterialVersions(value.materialVersions) &&
-    JSON.stringify(value) === serializeAshenReefSurveyNormalizedIntent(
-      value as unknown as AshenReefSurveyNormalizedIntentState
+    deepEqual(
+      value,
+      normalizeSurveyIntentForCanonical(value as unknown as AshenReefSurveyNormalizedIntentState)
     )
   );
 }
@@ -529,7 +1112,21 @@ function expectedSurveyStage(facts: AshenReefSurveyMaterialFactsState): string |
 }
 
 function deepEqual(left: unknown, right: unknown): boolean {
-  return JSON.stringify(left) === JSON.stringify(right);
+  return stableJsonStringify(left) === stableJsonStringify(right);
+}
+
+function stableJsonStringify(value: unknown): string {
+  const normalize = (entry: unknown): unknown => {
+    if (Array.isArray(entry)) return entry.map(normalize);
+    if (!isPlainRecord(entry)) return entry;
+    return Object.keys(entry)
+      .sort()
+      .reduce<Record<string, unknown>>((result, key) => {
+        result[key] = normalize(entry[key]);
+        return result;
+      }, {});
+  };
+  return JSON.stringify(normalize(value));
 }
 
 function expectedSurveyMaterialAfter(
@@ -742,6 +1339,7 @@ function validateResultTransition(
         : "unlocked_existing";
   return (
     result.code === (result.stage === "ruins_confirmation" ? "survey_packet_completed" : "survey_sector_logged") &&
+    deepEqual(result.nonProposals, ASHEN_REEF_SURVEY_NON_PROPOSALS) &&
     deepEqual(result.resourceCosts, { stamina: 10, mp: 3, hp: 0 }) &&
     deepEqual(result.skill, {
       skillId: expectedOwner.skill.skillId,
@@ -1012,7 +1610,7 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
       occurrence.sourceArtifactId !== request.normalizedIntent.sourceArtifactId ||
       occurrence.sourcePublicationId !== request.normalizedIntent.sourcePublicationId ||
       occurrence.sourceRevision !== request.normalizedIntent.sourceRevision ||
-      JSON.stringify(occurrence.materialVersions) !== JSON.stringify(request.normalizedIntent.materialVersions)
+      !deepEqual(occurrence.materialVersions, request.normalizedIntent.materialVersions)
     ) return false;
     if (
       result.version !== 1 ||
@@ -1040,7 +1638,7 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
       result.skill.appliedDelta > 1 ||
       result.skill.requestedDelta !== 1 ||
       !validateResultTransition(result, request) ||
-      JSON.stringify(result.materialBefore) !== JSON.stringify(request.normalizedIntent.materialFacts) ||
+      !deepEqual(result.materialBefore, request.normalizedIntent.materialFacts) ||
       (priorFacts !== null && !isSequentialSurveyHistory(priorFacts, result.materialBefore))
     ) return false;
 
@@ -1145,6 +1743,8 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
       (correction.replacementResultId !== null && !resultIds.includes(correction.replacementResultId)) ||
       correction.replacementResultId === correction.supersededResultId ||
       !isExactNonblank(correction.reason) ||
+      !Array.isArray(correction.evidenceIds) ||
+      correction.evidenceIds.length === 0 ||
       !hasUniqueStrings(correction.evidenceIds) ||
       !Number.isInteger(correction.createdAtTick) ||
       correction.createdAtTick < 0 ||
@@ -1169,7 +1769,8 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
             (receipt) => receipt.owner === entry.owner && receipt.kind === entry.kind
           ) ||
           (entry.status !== "pending" && entry.status !== "confirmed_no_change" && entry.status !== "superseded") ||
-          (entry.evidenceId !== undefined && !isExactNonblank(entry.evidenceId))
+          (entry.evidenceId !== undefined &&
+            (!isExactNonblank(entry.evidenceId) || !correction.evidenceIds.includes(entry.evidenceId)))
       )
     ) return false;
     if (correction.replacementResultId !== null) {

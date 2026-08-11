@@ -15,6 +15,7 @@ export { createEmptySessionState, createSaveSnapshotFromGameContext } from "./sa
 export {
   ASHEN_REEF_SURVEY_COMMON_RECEIPT_KINDS,
   ASHEN_REEF_SURVEY_FINAL_RECEIPT_KINDS,
+  ASHEN_REEF_SURVEY_NON_PROPOSALS,
   CAMPAIGN_RULES_VERSION,
   STAKES_POLICY_REVISION,
   TARGET_SNAPSHOT_FORMAT,
@@ -48,10 +49,13 @@ export {
   isAshenReefSurveyActivityAdvancementIntent,
   listPendingPlayerSurveyProjectionRepairs,
   repairPlayerSurveyActivityProjection,
+  preparePlayerSurveyActivityAdvancementCommand,
   resolvePlayerSurveyActivityAdvancementPlan,
+  resolvePlayerSurveySkillPresentation,
   shouldRetainPlayerSurveyRequestIdentity,
   type AcceptedPlayerSurveyActivityAdvancementPlan,
   type PlayerSurveyActivityAdvancementCommand,
+  type PlayerSurveyActivityAdvancementCommandPreparation,
   type PlayerSurveyActivityAdvancementNoticeFacts,
   type PlayerSurveyActivityAdvancementPlan,
   type PlayerSurveyActivityAdvancementRejectionCode,
@@ -60,6 +64,7 @@ export {
   type PlayerSurveyAdvancedEvent,
   type PlayerSurveyAdvancedEventPayload,
   type PlayerSurveyProjectionRepairResult,
+  type PlayerSurveySkillPresentation,
   type RejectedPlayerSurveyActivityAdvancementPlan
 } from "./player-survey-activity-advancement.js";
 export {

@@ -18,12 +18,8 @@ import {
   type CampaignSessionControl
 } from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import {
-  createPlayerSurveyActivityAdvancementCommand,
-  executePlayerSurveyActivityAdvancementCommand,
   repairPlayerSurveyActivityProjection,
-  shouldRetainPlayerSurveyRequestIdentity,
   type PlayerSurveyActivityAdvancementCommand,
-  type PlayerSurveyActivityAdvancementResult,
   type PlayerSurveyProjectionRepairResult
 } from '../../../../packages/engines/game-engine/src/player-survey-activity-advancement.js';
 import type { AshenReefSurveyProjectionKind } from '../../../../packages/shared/types/src/index.js';
@@ -38,6 +34,12 @@ import {
   type BodyStatePresentationMemory,
   type BodyStatePresentationViewModel
 } from './bodyStatePresentation.js';
+import {
+  advanceAshenReefSurveyCaller,
+  type AshenReefSurveyCallerOutcome
+} from './ashenReefSurveyCaller.js';
+
+export type { AshenReefSurveyCallerOutcome } from './ashenReefSurveyCaller.js';
 
 export interface GameSessionState {
   accountProfile: AccountProfileState;
@@ -60,7 +62,7 @@ export interface GameSessionContextValue extends GameSessionState {
   ) => void;
   advanceAshenReefSurvey: (
     requestId: string
-  ) => PlayerSurveyActivityAdvancementResult | null;
+  ) => AshenReefSurveyCallerOutcome;
   repairAshenReefSurveyProjection: (
     resultId: string,
     projectionKind: AshenReefSurveyProjectionKind
@@ -173,31 +175,19 @@ export function GameSessionProvider({
         }
       },
       advanceAshenReefSurvey: (requestId) => {
-        let command = surveyCommandRef.current.get(requestId);
-        if (!command) {
-          try {
-            command = createPlayerSurveyActivityAdvancementCommand(
-              snapshot,
-              campaignSessionControl,
-              requestId
-            );
-          } catch {
-            return null;
-          }
-          surveyCommandRef.current.set(requestId, command);
-        }
-        const result = executePlayerSurveyActivityAdvancementCommand(
+        const transition = advanceAshenReefSurveyCaller(
           snapshot,
           campaignSessionControl,
-          command
+          requestId,
+          surveyCommandRef.current
         );
-        if (!shouldRetainPlayerSurveyRequestIdentity(result)) {
-          surveyCommandRef.current.delete(requestId);
+        if (transition.acceptedState) {
+          onSnapshotChange(
+            transition.acceptedState.snapshot,
+            transition.acceptedState.control
+          );
         }
-        if (result.accepted) {
-          onSnapshotChange(result.snapshot, result.control);
-        }
-        return result;
+        return transition.outcome;
       },
       repairAshenReefSurveyProjection: (resultId, projectionKind) => {
         const result = repairPlayerSurveyActivityProjection(

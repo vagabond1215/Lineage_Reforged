@@ -9,6 +9,14 @@ import {
 import { createNewGameSnapshot } from "../../apps/rpg-ui/src/game-shell/newGameSnapshot.ts";
 import { getDefaultWorldSelection } from "../../apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts";
 import {
+  advanceAshenReefSurveyCaller,
+  isAshenReefSurveyAdvanceDisabled,
+  resolveAshenReefSurveyPanelFacts,
+  shouldRetainAshenReefSurveyCallerRequestId
+} from "../../apps/rpg-ui/src/runtime/ashenReefSurveyCaller.ts";
+import { resolvePlayerOriginProfile } from "../../packages/shared/types/src/player-origins.ts";
+import { normalizePlayerBodyState } from "../../packages/engines/player-engine/src/body-state.ts";
+import {
   initializeTargetCampaignSnapshot,
   isTargetCampaignSnapshot,
   serializeAshenReefSurveyNormalizedIntent
@@ -24,8 +32,10 @@ import {
   executePlayerSurveyActivityAdvancementCommand,
   isAshenReefSurveyActivityAdvancementIntent,
   listPendingPlayerSurveyProjectionRepairs,
+  preparePlayerSurveyActivityAdvancementCommand,
   repairPlayerSurveyActivityProjection,
   resolvePlayerSurveyActivityAdvancementPlan,
+  resolvePlayerSurveySkillPresentation,
   shouldRetainPlayerSurveyRequestIdentity
 } from "../../packages/engines/game-engine/src/player-survey-activity-advancement.ts";
 
@@ -41,6 +51,17 @@ function nextRequestId() {
   return `survey_request.00000000-0000-4000-8000-${requestOrdinal
     .toString(16)
     .padStart(12, "0")}`;
+}
+
+function reverseObjectKeyOrder(value) {
+  if (Array.isArray(value)) return value.map(reverseObjectKeyOrder);
+  if (!value || typeof value !== "object") return value;
+  return Object.keys(value)
+    .reverse()
+    .reduce((result, key) => {
+      result[key] = reverseObjectKeyOrder(value[key]);
+      return result;
+    }, {});
 }
 
 function prepareSnapshot(stage = 1, { codex = "locked", initialize = true } = {}) {
@@ -163,6 +184,18 @@ test("one pure plan drives complete preview and accepted execution for all four 
     assert.deepEqual(result.snapshot.playerState.bodyState, plan.projectedBodyState);
     assert.deepEqual(result.snapshot.playerState.resources, plan.projectedResources);
     assert.deepEqual(result.result.resourceCosts, plan.resourceCosts);
+    assert.deepEqual(result.result.nonProposals, plan.nonProposals);
+    assert.deepEqual(plan.nonProposals, {
+      geographicKnowledge: "no_proposal",
+      knownLocationAuthority: "no_proposal",
+      mapAuthority: "no_proposal",
+      travelAccess: "no_proposal",
+      currency: "no_proposal",
+      standing: "no_proposal",
+      inventory: "no_proposal",
+      reputationBeyondOrdinarySynchronization: "no_proposal",
+      turnInRewards: "no_proposal"
+    });
     assert.deepEqual(result.receipts.find((entry) => entry.kind === "body_advance").effect.profile, plan.metabolicProfile);
     assert.deepEqual(result.receipts.find((entry) => entry.kind === "attribute_load").effect.profile, plan.attributeLoadProfile);
     assert.deepEqual(result.result.skill, plan.skill);
@@ -206,7 +239,7 @@ test("command rejects malformed identity and wrong account/player/campaign/contr
   ]) {
     const command = structuredClone(valid);
     command.normalizedIntent[field] = value;
-    command.canonicalIntent = JSON.stringify(command.normalizedIntent);
+    command.canonicalIntent = serializeAshenReefSurveyNormalizedIntent(command.normalizedIntent);
     const result = executePlayerSurveyActivityAdvancementCommand(snapshot, control, command);
     assertIdentityStableRejection(snapshot, control, result, code);
   }
@@ -245,7 +278,18 @@ test("normalized intent certifies every bounded owner input consumed by the shif
   const control = createControl(source);
   const command = createPlayerSurveyActivityAdvancementCommand(source, control, nextRequestId());
   const mutations = [
-    (snapshot) => { snapshot.playerState.bodyState.fatigue += 1; },
+    (snapshot) => {
+      snapshot.playerState.bodyState.fatigue += 1;
+      snapshot.playerState.bodyState = normalizePlayerBodyState(
+        snapshot.playerState.bodyState,
+        {
+          tick: snapshot.playerState.bodyState.lastAdvancedTick,
+          day: snapshot.playerState.bodyState.lastDailyRolloverDay,
+          lineageId: snapshot.playerState.coreData.lineageId,
+          runDifficulty: snapshot.gameState.runDifficulty
+        }
+      );
+    },
     (snapshot) => { snapshot.playerState.resources.stamina.current -= 1; },
     (snapshot) => { snapshot.playerState.resourceRuntime.history.reverse(); },
     (snapshot) => { snapshot.playerState.attributes.AGI += 1; },
@@ -262,17 +306,60 @@ test("normalized intent certifies every bounded owner input consumed by the shif
           : entry
       );
     },
-    (snapshot) => { snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel += 1; },
-    (snapshot) => { snapshot.playerState.reputation.fame.reverse(); },
+    (snapshot) => {
+      snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel += 1;
+      snapshot.playerState.originProfile = resolvePlayerOriginProfile(
+        {
+          lineageId: snapshot.playerState.originProfile.lineageId,
+          classId: snapshot.playerState.originProfile.classId,
+          sexId: snapshot.playerState.originProfile.sexId
+        },
+        snapshot.playerState.progression
+      );
+    },
+    (snapshot) => {
+      snapshot.playerState.reputation.fame[0].earned += 1;
+      snapshot.playerState.reputation.fame[0].historical += 1;
+    },
     (snapshot) => { snapshot.playerState.saveMeta.lastReputationDecayDay = 0; },
-    (snapshot) => { snapshot.gameState.runDifficulty = { tier: "easy", hardcore: false }; },
-    (snapshot) => { snapshot.playerState.originProfile.resolvedResourceMaxima.stamina += 1; }
+    (snapshot) => {
+      snapshot.gameState.runDifficulty = { tier: "easy", hardcore: false };
+      snapshot.playerState.bodyState = normalizePlayerBodyState(
+        snapshot.playerState.bodyState,
+        {
+          tick: snapshot.playerState.bodyState.lastAdvancedTick,
+          day: snapshot.playerState.bodyState.lastDailyRolloverDay,
+          lineageId: snapshot.playerState.coreData.lineageId,
+          runDifficulty: snapshot.gameState.runDifficulty
+        }
+      );
+    },
+    (snapshot) => {
+      snapshot.playerState.coreData.lineageId = "lineage.elf";
+      snapshot.playerState.originProfile = resolvePlayerOriginProfile(
+        {
+          lineageId: snapshot.playerState.coreData.lineageId,
+          classId: snapshot.playerState.originProfile.classId,
+          sexId: snapshot.playerState.originProfile.sexId
+        },
+        snapshot.playerState.progression
+      );
+      snapshot.playerState.bodyState = normalizePlayerBodyState(
+        snapshot.playerState.bodyState,
+        {
+          tick: snapshot.playerState.bodyState.lastAdvancedTick,
+          day: snapshot.playerState.bodyState.lastDailyRolloverDay,
+          lineageId: snapshot.playerState.coreData.lineageId,
+          runDifficulty: snapshot.gameState.runDifficulty
+        }
+      );
+    }
   ];
-  for (const mutate of mutations) {
+  for (const [mutationIndex, mutate] of mutations.entries()) {
     const changed = structuredClone(source);
     mutate(changed);
     const rejected = executePlayerSurveyActivityAdvancementCommand(changed, control, command);
-    assert.equal(rejected.code, "stale_snapshot");
+    assert.equal(rejected.code, "stale_snapshot", `owner-input mutation ${mutationIndex}`);
     assert.equal(rejected.snapshot, changed);
   }
 
@@ -286,19 +373,451 @@ test("normalized intent certifies every bounded owner input consumed by the shif
   );
 
   const accepted = executePlayerSurveyActivityAdvancementCommand(source, control, command);
-  const conflictingOwnerInput = structuredClone(command);
-  conflictingOwnerInput.normalizedIntent.ownerInputs.bodyState.fatigue += 1;
-  conflictingOwnerInput.canonicalIntent = serializeAshenReefSurveyNormalizedIntent(
-    conflictingOwnerInput.normalizedIntent
-  );
+  for (const mutate of [
+    (intent) => {
+      intent.ownerInputs.bodyState.fatigue += 1;
+      intent.ownerInputs.bodyState = normalizePlayerBodyState(
+        intent.ownerInputs.bodyState,
+        {
+          tick: intent.ownerInputs.bodyState.lastAdvancedTick,
+          day: intent.ownerInputs.bodyState.lastDailyRolloverDay,
+          lineageId: intent.ownerInputs.lineageId,
+          runDifficulty: intent.ownerInputs.runDifficulty
+        }
+      );
+    },
+    (intent) => {
+      intent.ownerInputs.progression.legacyGrowth.resourceGrowthLevel += 1;
+      intent.ownerInputs.originProfile = resolvePlayerOriginProfile(
+        {
+          lineageId: intent.ownerInputs.lineageId,
+          classId: intent.ownerInputs.originProfile.classId,
+          sexId: intent.ownerInputs.originProfile.sexId
+        },
+        intent.ownerInputs.progression
+      );
+    },
+    (intent) => { intent.ownerInputs.reputation.fame[0].earned += 1; }
+  ]) {
+    const conflictingOwnerInput = structuredClone(command);
+    mutate(conflictingOwnerInput.normalizedIntent);
+    conflictingOwnerInput.canonicalIntent = serializeAshenReefSurveyNormalizedIntent(
+      conflictingOwnerInput.normalizedIntent
+    );
+    assert.equal(
+      executePlayerSurveyActivityAdvancementCommand(
+        accepted.snapshot,
+        accepted.control,
+        conflictingOwnerInput
+      ).code,
+      "conflicting_retry"
+    );
+  }
+});
+
+test("normalized intent is recursively canonical while malformed deep owner inputs fail closed", () => {
+  const source = prepareSnapshot();
+  const control = createControl(source);
+  const command = createPlayerSurveyActivityAdvancementCommand(source, control, nextRequestId());
+  const reordered = {
+    ...command,
+    normalizedIntent: reverseObjectKeyOrder(command.normalizedIntent)
+  };
   assert.equal(
-    executePlayerSurveyActivityAdvancementCommand(
-      accepted.snapshot,
-      accepted.control,
-      conflictingOwnerInput
-    ).code,
-    "conflicting_retry"
+    serializeAshenReefSurveyNormalizedIntent(reordered.normalizedIntent),
+    command.canonicalIntent
   );
+  const accepted = executePlayerSurveyActivityAdvancementCommand(source, control, reordered);
+  assert.equal(accepted.accepted, true, accepted.notice.detail);
+  const reorderedRetry = {
+    ...command,
+    normalizedIntent: reverseObjectKeyOrder(command.normalizedIntent)
+  };
+  const durableDuplicate = executePlayerSurveyActivityAdvancementCommand(
+    structuredClone(accepted.snapshot),
+    structuredClone(accepted.control),
+    reorderedRetry
+  );
+  assert.equal(durableDuplicate.code, "duplicate");
+  assert.equal(durableDuplicate.duplicate, true);
+
+  for (const mutate of [
+    (snapshot) => { snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression = {}; },
+    (snapshot) => { snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression = []; },
+    (snapshot) => { snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression = null; },
+    (snapshot) => { delete snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression.legacyGrowth; },
+    (snapshot) => { snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.reputation = {}; },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.resourceRuntime.lastBreakdown = {};
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression.unexpected = undefined;
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.stormglassDiscovery = Number.NaN;
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.originProfile.lineageLabel = "Fabricated Lineage";
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression.echo.balanceRuleId = "rule.fabricated_echo";
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression.echo.diversityBonus = 0;
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.progression.legacyGrowth.resourceGrowthLevel = 0;
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.reputation.fame.reverse();
+    },
+    (snapshot) => {
+      snapshot.authorityLedger.ashenReefSurvey.requests[0].normalizedIntent.ownerInputs.reputation.notoriety.push({
+        scope: "local",
+        scopeId: "settlement.aurelis",
+        categoryId: "theft",
+        severity: "minor",
+        modifiers: ["organized", "mass"],
+        modifiersSignature: "organized|mass",
+        earned: 2,
+        currentEarned: 2,
+        historical: 2,
+        lastMeaningfulGainTick: null,
+        repeatCount: 1
+      });
+    }
+  ]) {
+    const corrupted = structuredClone(accepted.snapshot);
+    mutate(corrupted);
+    const retained = corrupted.authorityLedger.ashenReefSurvey.requests[0];
+    assert.throws(() => serializeAshenReefSurveyNormalizedIntent(retained.normalizedIntent));
+    assert.doesNotThrow(() => isTargetCampaignSnapshot(corrupted));
+    assert.equal(isTargetCampaignSnapshot(corrupted), false);
+  }
+
+  for (const mutate of [
+    (intent) => { intent.ownerInputs.progression.unexpected = undefined; },
+    (intent) => { intent.ownerInputs.stormglassDiscovery = Number.NaN; }
+  ]) {
+    const collidingRetry = structuredClone(command);
+    mutate(collidingRetry.normalizedIntent);
+    assert.equal(collidingRetry.canonicalIntent, command.canonicalIntent);
+    assert.equal(
+      executePlayerSurveyActivityAdvancementCommand(
+        accepted.snapshot,
+        accepted.control,
+        collidingRetry
+      ).code,
+      "malformed_command"
+    );
+  }
+});
+
+test("command preparation classifies terminal, technical-retry, and unclassified outcomes", () => {
+  const source = prepareSnapshot();
+  const control = createControl(source);
+
+  const wrongLocation = structuredClone(source);
+  wrongLocation.playerState.location = {
+    ...wrongLocation.playerState.location,
+    settlementId: "settlement.aurelis",
+    siteLabel: "Harbor Quarter"
+  };
+  const expected = preparePlayerSurveyActivityAdvancementCommand(
+    wrongLocation,
+    control,
+    nextRequestId()
+  );
+  assert.equal(expected.kind, "expected_rejection");
+  assert.equal(expected.code, "survey_wrong_location");
+
+  const invalidResources = structuredClone(source);
+  invalidResources.playerState.resources = null;
+  const invalidAuthority = preparePlayerSurveyActivityAdvancementCommand(
+    invalidResources,
+    control,
+    nextRequestId()
+  );
+  assert.equal(invalidAuthority.kind, "expected_rejection");
+  assert.equal(invalidAuthority.code, "invalid_authority");
+
+  const missingIdentity = structuredClone(source);
+  delete missingIdentity.campaignIdentity;
+  const invalidIdentity = preparePlayerSurveyActivityAdvancementCommand(
+    missingIdentity,
+    control,
+    nextRequestId()
+  );
+  assert.equal(invalidIdentity.kind, "expected_rejection");
+  assert.equal(invalidIdentity.code, "invalid_authority");
+
+  const thrownSource = new Proxy(source, {
+    get(target, property, receiver) {
+      if (property === "authorityLedger") throw new Error("Injected preparation access failure.");
+      return Reflect.get(target, property, receiver);
+    }
+  });
+  const unclassified = preparePlayerSurveyActivityAdvancementCommand(
+    thrownSource,
+    control,
+    nextRequestId()
+  );
+  assert.equal(unclassified.kind, "unclassified_failure");
+
+  const cryptoDescriptor = Object.getOwnPropertyDescriptor(globalThis, "crypto");
+  Object.defineProperty(globalThis, "crypto", {
+    configurable: true,
+    enumerable: true,
+    value: undefined
+  });
+  try {
+    const unavailableIdentity = preparePlayerSurveyActivityAdvancementCommand(
+      source,
+      control
+    );
+    assert.equal(unavailableIdentity.kind, "unclassified_failure");
+  } finally {
+    Object.defineProperty(globalThis, "crypto", cryptoDescriptor);
+  }
+
+  const transientSource = structuredClone(source);
+  const stableResources = structuredClone(transientSource.playerState.resources);
+  let resourceReads = 0;
+  Object.defineProperty(transientSource.playerState, "resources", {
+    configurable: true,
+    enumerable: true,
+    get() {
+      resourceReads += 1;
+      if (resourceReads === 1) throw new Error("Injected transient plan failure.");
+      return stableResources;
+    }
+  });
+  const technical = preparePlayerSurveyActivityAdvancementCommand(
+    transientSource,
+    control,
+    nextRequestId()
+  );
+  assert.equal(technical.kind, "technical_retry");
+  assert.equal(technical.code, "transition_failed");
+
+  const accepted = execute(source, control).result;
+  const unavailableRetry = structuredClone(accepted.snapshot);
+  unavailableRetry.sessionState.questJournal = unavailableRetry.sessionState.questJournal.filter(
+    (entry) => entry.id !== QUEST_ID
+  );
+  const retained = preparePlayerSurveyActivityAdvancementCommand(
+    unavailableRetry,
+    accepted.control,
+    accepted.result.requestId
+  );
+  assert.equal(retained.kind, "prepared");
+  assert.equal(retained.command.requestId, accepted.result.requestId);
+});
+
+test("production caller keeps only technical retries and exposes accepted state only after acceptance", () => {
+  const source = prepareSnapshot();
+  const control = createControl(source);
+  const requestId = nextRequestId();
+  const cache = new Map();
+
+  const wrongLocation = structuredClone(source);
+  wrongLocation.playerState.location = {
+    ...wrongLocation.playerState.location,
+    settlementId: "settlement.aurelis",
+    siteLabel: "Harbor Quarter"
+  };
+  const expected = advanceAshenReefSurveyCaller(
+    wrongLocation,
+    control,
+    requestId,
+    cache
+  );
+  assert.equal(expected.outcome.kind, "expected_rejection");
+  assert.equal(shouldRetainAshenReefSurveyCallerRequestId(expected.outcome), false);
+  assert.equal(expected.acceptedState, null);
+  assert.equal(cache.has(requestId), false);
+
+  const invalidResources = structuredClone(source);
+  invalidResources.playerState.resources = null;
+  const invalidAuthority = advanceAshenReefSurveyCaller(
+    invalidResources,
+    control,
+    requestId,
+    cache
+  );
+  assert.equal(invalidAuthority.outcome.kind, "expected_rejection");
+  assert.equal(invalidAuthority.outcome.notice.title, "Survey not advanced");
+  assert.equal(shouldRetainAshenReefSurveyCallerRequestId(invalidAuthority.outcome), false);
+  assert.equal(invalidAuthority.acceptedState, null);
+  assert.equal(cache.has(requestId), false);
+
+  const thrownSource = new Proxy(source, {
+    get(target, property, receiver) {
+      if (property === "authorityLedger") throw new Error("Injected caller preparation failure.");
+      return Reflect.get(target, property, receiver);
+    }
+  });
+  const unclassified = advanceAshenReefSurveyCaller(
+    thrownSource,
+    control,
+    requestId,
+    cache
+  );
+  assert.equal(unclassified.outcome.kind, "unclassified_failure");
+  assert.equal(shouldRetainAshenReefSurveyCallerRequestId(unclassified.outcome), false);
+  assert.equal(unclassified.acceptedState, null);
+  assert.equal(cache.has(requestId), false);
+
+  const transientSource = structuredClone(source);
+  const stableResources = structuredClone(transientSource.playerState.resources);
+  let resourceReads = 0;
+  Object.defineProperty(transientSource.playerState, "resources", {
+    configurable: true,
+    enumerable: true,
+    get() {
+      resourceReads += 1;
+      if (resourceReads === 1) throw new Error("Injected transient caller failure.");
+      return stableResources;
+    }
+  });
+  const technical = advanceAshenReefSurveyCaller(
+    transientSource,
+    control,
+    requestId,
+    cache
+  );
+  assert.equal(technical.outcome.kind, "technical_retry");
+  assert.equal(shouldRetainAshenReefSurveyCallerRequestId(technical.outcome), true);
+  assert.equal(technical.acceptedState, null);
+  assert.equal(cache.has(requestId), false);
+
+  const accepted = advanceAshenReefSurveyCaller(source, control, requestId, cache);
+  assert.equal(accepted.outcome.kind, "accepted");
+  assert.equal(shouldRetainAshenReefSurveyCallerRequestId(accepted.outcome), false);
+  assert.notEqual(accepted.acceptedState, null);
+  assert.equal(cache.has(requestId), false);
+
+  const duplicate = advanceAshenReefSurveyCaller(
+    accepted.acceptedState.snapshot,
+    accepted.acceptedState.control,
+    requestId,
+    cache
+  );
+  assert.equal(duplicate.outcome.kind, "terminal_result");
+  assert.equal(shouldRetainAshenReefSurveyCallerRequestId(duplicate.outcome), false);
+  assert.equal(duplicate.outcome.result.code, "duplicate");
+  assert.equal(duplicate.acceptedState, null);
+  assert.equal(cache.has(requestId), false);
+});
+
+test("month thirteen is valid survey clock authority", () => {
+  const source = prepareSnapshot();
+  source.clock = { ...source.clock, month: 13, season: "Thaw" };
+  const plan = resolvePlayerSurveyActivityAdvancementPlan(source);
+  assert.equal(plan.accepted, true);
+  const accepted = execute(source).result;
+  assert.equal(accepted.accepted, true, accepted.notice.detail);
+  assert.equal(accepted.result.startTick, source.clock.tick);
+  assert.equal(isTargetCampaignSnapshot(accepted.snapshot), true);
+});
+
+test("survey skill presentation distinguishes applied, blocked, and unchanged", () => {
+  assert.deepEqual(
+    resolvePlayerSurveySkillPresentation({ appliedDelta: 1, blockedGate: null }),
+    { status: "applied", detail: "+1" }
+  );
+  assert.deepEqual(
+    resolvePlayerSurveySkillPresentation({ appliedDelta: 0, blockedGate: 30 }),
+    { status: "blocked_at_gate", detail: "blocked at breakthrough gate 30" }
+  );
+  assert.deepEqual(
+    resolvePlayerSurveySkillPresentation({ appliedDelta: 0, blockedGate: null }),
+    { status: "unchanged", detail: "unchanged" }
+  );
+
+  const positivePlan = resolvePlayerSurveyActivityAdvancementPlan(prepareSnapshot());
+  assert.equal(positivePlan.accepted, true);
+  assert.equal(positivePlan.skill.appliedDelta, 1);
+  assert.equal(resolveAshenReefSurveyPanelFacts(positivePlan).skillDetail, "+1");
+
+  const gateBlocked = prepareSnapshot();
+  gateBlocked.playerState.skills = gateBlocked.playerState.skills.map((skill) =>
+    skill.id === "skill.knowledge.general_lore"
+      ? {
+          ...skill,
+          rank: 30,
+          progression: {
+            progressionTrackId: "progression.knowledge",
+            currentBandId: "clumsy",
+            unlockedBandIds: ["clumsy"],
+            breakthroughProgress: 0,
+            lastBreakthroughRank: null
+          }
+        }
+      : skill
+  );
+  const blockedPlan = resolvePlayerSurveyActivityAdvancementPlan(gateBlocked);
+  assert.equal(blockedPlan.accepted, true);
+  assert.equal(blockedPlan.skill.appliedDelta, 0);
+  assert.equal(blockedPlan.skill.blockedGate, 30);
+  assert.equal(
+    resolveAshenReefSurveyPanelFacts(blockedPlan).skillDetail,
+    "blocked at breakthrough gate 30"
+  );
+
+  const maxRank = prepareSnapshot();
+  maxRank.playerState.skills = maxRank.playerState.skills.map((skill) =>
+    skill.id === "skill.knowledge.general_lore"
+      ? {
+          ...skill,
+          rank: 125,
+          progression: {
+            progressionTrackId: "progression.knowledge",
+            currentBandId: "mastery",
+            unlockedBandIds: ["clumsy", "familiar", "proficient", "skilled", "mastery"],
+            breakthroughProgress: 0,
+            lastBreakthroughRank: 120
+          }
+        }
+      : skill
+  );
+  const plan = resolvePlayerSurveyActivityAdvancementPlan(maxRank);
+  assert.equal(plan.accepted, true);
+  assert.equal(isAshenReefSurveyAdvanceDisabled(plan), false);
+  assert.equal(plan.skill.appliedDelta, 0);
+  assert.equal(plan.skill.blockedGate, null);
+  assert.equal(resolvePlayerSurveySkillPresentation(plan.skill).status, "unchanged");
+  assert.deepEqual(resolveAshenReefSurveyPanelFacts(plan), {
+    stageLabel: "sector 1",
+    staminaCost: 10,
+    mpCost: 3,
+    skillId: "skill.knowledge.general_lore",
+    skillDetail: "unchanged",
+    operationProgress: 25
+  });
+});
+
+test("survey non-proposals are required persisted authority and unavailable plans propose nothing", () => {
+  const unavailable = prepareSnapshot();
+  unavailable.playerState.location = {
+    ...unavailable.playerState.location,
+    settlementId: "settlement.aurelis",
+    siteLabel: "Harbor Quarter"
+  };
+  const rejectedPlan = resolvePlayerSurveyActivityAdvancementPlan(unavailable);
+  assert.equal(rejectedPlan.accepted, false);
+  assert.equal(isAshenReefSurveyAdvanceDisabled(rejectedPlan), true);
+  assert.equal(resolveAshenReefSurveyPanelFacts(rejectedPlan), null);
+  assert.equal(rejectedPlan.nonProposals, null);
+
+  const accepted = execute(prepareSnapshot()).result;
+  const corrupted = structuredClone(accepted.snapshot);
+  corrupted.authorityLedger.ashenReefSurvey.results[0].nonProposals.mapAuthority = "proposed";
+  assert.equal(isTargetCampaignSnapshot(corrupted), false);
+
+  const missing = structuredClone(accepted.snapshot);
+  delete missing.authorityLedger.ashenReefSurvey.results[0].nonProposals;
+  assert.equal(isTargetCampaignSnapshot(missing), false);
 });
 
 test("quest, location, progress, completion, discovery, and activity rejections are fail-closed", () => {
@@ -469,8 +988,8 @@ test("durable exact duplicates never repeat effects or roll back a later authori
   );
 
   const conflict = structuredClone(command);
-  conflict.normalizedIntent.expectedTick += 1;
-  conflict.canonicalIntent = JSON.stringify(conflict.normalizedIntent);
+  conflict.normalizedIntent.sourceArtifactId = "artifact.survey.conflicting";
+  conflict.canonicalIntent = serializeAshenReefSurveyNormalizedIntent(conflict.normalizedIntent);
   const conflicting = executePlayerSurveyActivityAdvancementCommand(
     accepted.snapshot,
     accepted.control,
@@ -815,6 +1334,103 @@ test("projection repair replaces only same-id malformed rows and records determi
   assert.equal(isTargetCampaignSnapshot(secondRepair.snapshot), true);
 });
 
+test("production repair discovery finds applied notification and Chronicle drift deterministically", () => {
+  const accepted = execute(prepareSnapshot()).result;
+  assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(accepted.snapshot), []);
+
+  for (const projectionKind of ["notification", "chronicle"]) {
+    const destinationName = projectionKind === "notification" ? "notifications" : "chronicle";
+    const projectionId = accepted.result.projectionIds[projectionKind];
+
+    const missing = structuredClone(accepted.snapshot);
+    missing.sessionState[destinationName] = missing.sessionState[destinationName].filter(
+      (entry) => entry.id !== projectionId
+    );
+    assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(missing), [
+      { resultId: accepted.result.resultId, projectionKind }
+    ]);
+    const inserted = repairPlayerSurveyActivityProjection(
+      missing,
+      accepted.control,
+      accepted.result.resultId,
+      projectionKind
+    );
+    assert.equal(inserted.accepted, true);
+    assert.equal(inserted.repair.outcome, "inserted");
+
+    const driftedAgain = structuredClone(inserted.snapshot);
+    driftedAgain.sessionState[destinationName] = driftedAgain.sessionState[destinationName].map(
+      (entry) => entry.id === projectionId ? { ...entry, title: "drifted after repair" } : entry
+    );
+    assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(driftedAgain), [
+      { resultId: accepted.result.resultId, projectionKind }
+    ]);
+    const replacedAgain = repairPlayerSurveyActivityProjection(
+      driftedAgain,
+      inserted.control,
+      accepted.result.resultId,
+      projectionKind
+    );
+    assert.equal(replacedAgain.accepted, true);
+    assert.equal(replacedAgain.repair.outcome, "replaced");
+    assert.equal(replacedAgain.repair.ordinal, 2);
+
+    const malformed = structuredClone(accepted.snapshot);
+    malformed.sessionState[destinationName] = malformed.sessionState[destinationName].map(
+      (entry) => entry.id === projectionId ? { ...entry, detail: "malformed applied row" } : entry
+    );
+    assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(malformed), [
+      { resultId: accepted.result.resultId, projectionKind }
+    ]);
+    const replaced = repairPlayerSurveyActivityProjection(
+      malformed,
+      accepted.control,
+      accepted.result.resultId,
+      projectionKind
+    );
+    assert.equal(replaced.repair.outcome, "replaced");
+
+    const reorderedProperties = structuredClone(accepted.snapshot);
+    reorderedProperties.sessionState[destinationName] = reorderedProperties.sessionState[destinationName].map(
+      (entry) => entry.id === projectionId ? reverseObjectKeyOrder(entry) : entry
+    );
+    assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(reorderedProperties), []);
+
+    const duplicated = structuredClone(accepted.snapshot);
+    const row = duplicated.sessionState[destinationName].find((entry) => entry.id === projectionId);
+    duplicated.sessionState[destinationName].push(structuredClone(row));
+    assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(duplicated), []);
+    assert.equal(
+      repairPlayerSurveyActivityProjection(
+        duplicated,
+        accepted.control,
+        accepted.result.resultId,
+        projectionKind
+      ).code,
+      "projection_invalid"
+    );
+  }
+
+  const pendingSource = prepareSnapshot();
+  const pendingControl = createControl(pendingSource);
+  const pendingCommand = createPlayerSurveyActivityAdvancementCommand(
+    pendingSource,
+    pendingControl,
+    nextRequestId()
+  );
+  const pendingBoth = executePlayerSurveyActivityAdvancementCommand(
+    pendingSource,
+    pendingControl,
+    pendingCommand,
+    { failProjections: ["notification", "chronicle"] }
+  );
+  assert.equal(pendingBoth.accepted, true);
+  assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(pendingBoth.snapshot), [
+    { resultId: pendingBoth.result.resultId, projectionKind: "notification" },
+    { resultId: pendingBoth.result.resultId, projectionKind: "chronicle" }
+  ]);
+});
+
 test("older projection repair preserves newer survey order and never resurrects expired rows", () => {
   const first = execute(prepareSnapshot()).result;
   const second = execute(first.snapshot, first.control).result;
@@ -872,6 +1488,162 @@ test("older projection repair preserves newer survey order and never resurrects 
     duplicateExpired.snapshot.authorityLedger.ashenReefSurvey.projectionRepairs.length,
     expiredRepairCount
   );
+  assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(expired.snapshot), [
+    { resultId: second.result.resultId, projectionKind: "notification" }
+  ]);
+});
+
+test("opaque capped projection rows fail closed without evicting a genuine newer tail", () => {
+  const first = execute(prepareSnapshot()).result;
+  const second = execute(first.snapshot, first.control).result;
+
+  for (const projectionKind of ["notification", "chronicle"]) {
+    const destinationName = projectionKind === "notification" ? "notifications" : "chronicle";
+    const cap = projectionKind === "notification" ? 8 : 48;
+    const newerRow = structuredClone(
+      second.snapshot.sessionState[destinationName].find(
+        (entry) => entry.id === second.result.projectionIds[projectionKind]
+      )
+    );
+    const template = structuredClone(
+      first.receipts.find((entry) => entry.kind === `${projectionKind}_projection`).effect.row
+    );
+    const capped = structuredClone(second.snapshot);
+    const opaqueRows = Array.from({ length: cap - 1 }, (_, index) => ({
+      ...structuredClone(template),
+      id: `${projectionKind}.${first.result.appliedTick + 10 + index}.${index}`
+    }));
+    capped.sessionState[destinationName] = [...opaqueRows, newerRow];
+    const beforeRows = structuredClone(capped.sessionState[destinationName]);
+    assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(capped), [
+      { resultId: first.result.resultId, projectionKind }
+    ]);
+    const expired = repairPlayerSurveyActivityProjection(
+      capped,
+      second.control,
+      first.result.resultId,
+      projectionKind
+    );
+    assert.equal(expired.accepted, true);
+    assert.equal(expired.code, "projection_retention_expired");
+    assert.deepEqual(expired.snapshot.sessionState[destinationName], beforeRows);
+    assert.equal(
+      expired.snapshot.sessionState[destinationName].at(-1).id,
+      second.result.projectionIds[projectionKind]
+    );
+    assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(expired.snapshot), []);
+  }
+});
+
+test("initial survey publication leaves full opaque destinations byte-equivalent and records pending projections", () => {
+  const source = prepareSnapshot();
+  const notificationTemplate = structuredClone(source.sessionState.notifications[0]);
+  const chronicleTemplate = structuredClone(source.sessionState.chronicle[0]);
+  source.sessionState.notifications = Array.from({ length: 8 }, (_, index) => ({
+    ...structuredClone(notificationTemplate),
+    id: `notification.${source.clock.tick + 100 + index}.opaque`
+  })).reverse();
+  source.sessionState.chronicle = Array.from({ length: 48 }, (_, index) => ({
+    ...structuredClone(chronicleTemplate),
+    id: `chronicle.${source.clock.tick + 100 + index}.opaque`
+  })).reverse();
+  const beforeNotifications = structuredClone(source.sessionState.notifications);
+  const beforeChronicle = structuredClone(source.sessionState.chronicle);
+
+  const accepted = execute(source).result;
+  assert.equal(accepted.accepted, true, accepted.notice.detail);
+  assert.deepEqual(accepted.projectionPending, ["notification", "chronicle"]);
+  assert.deepEqual(accepted.snapshot.sessionState.notifications, beforeNotifications);
+  assert.deepEqual(accepted.snapshot.sessionState.chronicle, beforeChronicle);
+  for (const projectionKind of ["notification", "chronicle"]) {
+    assert.equal(
+      accepted.receipts.find((entry) => entry.kind === `${projectionKind}_projection`).posture,
+      "projection_pending"
+    );
+  }
+  assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(accepted.snapshot), [
+    { resultId: accepted.result.resultId, projectionKind: "notification" },
+    { resultId: accepted.result.resultId, projectionKind: "chronicle" }
+  ]);
+
+  for (const projectionKind of ["notification", "chronicle"]) {
+    const destinationName = projectionKind === "notification" ? "notifications" : "chronicle";
+    const repaired = repairPlayerSurveyActivityProjection(
+      accepted.snapshot,
+      accepted.control,
+      accepted.result.resultId,
+      projectionKind
+    );
+    assert.equal(repaired.accepted, true);
+    assert.equal(repaired.code, "projection_retention_expired");
+    assert.deepEqual(
+      repaired.snapshot.sessionState[destinationName],
+      projectionKind === "notification" ? beforeNotifications : beforeChronicle
+    );
+  }
+});
+
+test("genuine same-tick survey projections converge across both repair invocation orders", () => {
+  const source = prepareSnapshot();
+  const first = execute(source).result;
+  const rewoundCandidate = structuredClone(first.snapshot);
+  rewoundCandidate.clock = structuredClone(source.clock);
+  rewoundCandidate.capturedAtTick = source.capturedAtTick;
+  rewoundCandidate.playerState = structuredClone(source.playerState);
+  const rewind = admitCampaignMutation(first.control, {
+    mutationId: "mutation.survey.same_tick.reconciliation",
+    sourceArtifactId: first.control.loadedArtifactId,
+    sourceRevision: first.control.sessionRevision,
+    ownerKind: "engine_result",
+    accepted: true,
+    sourceSnapshot: first.snapshot,
+    proposedSnapshot: rewoundCandidate,
+    resultId: "result.survey.same_tick.reconciliation"
+  });
+  assert.equal(rewind.accepted, true);
+  assert.equal(isTargetCampaignSnapshot(rewind.snapshot), true);
+  const second = execute(rewind.snapshot, rewind.control).result;
+  assert.equal(second.accepted, true, second.notice.detail);
+  assert.equal(second.result.appliedTick, first.result.appliedTick);
+
+  for (const projectionKind of ["notification", "chronicle"]) {
+    const destinationName = projectionKind === "notification" ? "notifications" : "chronicle";
+    const missingBoth = structuredClone(second.snapshot);
+    const projectionIds = new Set([
+      first.result.projectionIds[projectionKind],
+      second.result.projectionIds[projectionKind]
+    ]);
+    missingBoth.sessionState[destinationName] = missingBoth.sessionState[destinationName].filter(
+      (entry) => !projectionIds.has(entry.id)
+    );
+    const finalDestinations = [];
+    for (const order of [
+      [first.result.resultId, second.result.resultId],
+      [second.result.resultId, first.result.resultId]
+    ]) {
+      let currentSnapshot = structuredClone(missingBoth);
+      let currentControl = structuredClone(second.control);
+      for (const resultId of order) {
+        const repaired = repairPlayerSurveyActivityProjection(
+          currentSnapshot,
+          currentControl,
+          resultId,
+          projectionKind
+        );
+        assert.equal(repaired.accepted, true);
+        currentSnapshot = repaired.snapshot;
+        currentControl = repaired.control;
+      }
+      finalDestinations.push(currentSnapshot.sessionState[destinationName]);
+    }
+    assert.deepEqual(finalDestinations[0], finalDestinations[1]);
+    assert.deepEqual(
+      finalDestinations[0].filter((entry) => projectionIds.has(entry.id)).map((entry) => entry.id),
+      [first, second]
+        .sort((left, right) => left.result.resultId < right.result.resultId ? -1 : 1)
+        .map((entry) => entry.result.projectionIds[projectionKind])
+    );
+  }
 });
 
 test("coherent pre-receipt progress creates one baseline without inventing history", () => {
@@ -907,10 +1679,17 @@ test("final survey keeps missing Codex rows absent, unlocks existing rows, and g
     const before = {
       geographicKnowledge: structuredClone(source.playerState.geographicKnowledge),
       knownLocations: structuredClone(source.sessionState.knownLocations),
+      location: structuredClone(source.playerState.location),
       currency: structuredClone(source.playerState.currency),
       standing: structuredClone(source.playerState.standing),
       reputation: structuredClone(source.playerState.reputation),
-      inventory: structuredClone(source.playerState.inventory)
+      inventory: structuredClone(source.playerState.inventory),
+      generalLore: structuredClone(
+        source.playerState.skills.find((entry) => entry.id === "skill.knowledge.general_lore")
+      ),
+      quest: structuredClone(
+        source.sessionState.questJournal.find((entry) => entry.id === QUEST_ID)
+      )
     };
     const accepted = execute(source).result;
     assert.equal(accepted.accepted, true);
@@ -926,10 +1705,24 @@ test("final survey keeps missing Codex rows absent, unlocks existing rows, and g
     }
     assert.deepEqual(accepted.snapshot.playerState.geographicKnowledge, before.geographicKnowledge);
     assert.deepEqual(accepted.snapshot.sessionState.knownLocations, before.knownLocations);
+    assert.deepEqual(accepted.snapshot.playerState.location, before.location);
     assert.deepEqual(accepted.snapshot.playerState.currency, before.currency);
     assert.deepEqual(accepted.snapshot.playerState.standing, before.standing);
     assert.deepEqual(accepted.snapshot.playerState.reputation, before.reputation);
     assert.deepEqual(accepted.snapshot.playerState.inventory, before.inventory);
+    assert.deepEqual(
+      accepted.snapshot.playerState.skills.find(
+        (entry) => entry.id === "skill.knowledge.general_lore"
+      ),
+      before.generalLore
+    );
+    const questAfter = accepted.snapshot.sessionState.questJournal.find(
+      (entry) => entry.id === QUEST_ID
+    );
+    assert.equal(questAfter.category, "active");
+    assert.notEqual(questAfter.statusLabel, "Turned in");
+    assert.equal(questAfter.rewardLabel, before.quest.rewardLabel);
+    assert.deepEqual(questAfter.rewards, before.quest.rewards);
   }
 });
 
@@ -969,7 +1762,45 @@ test("valid pending correction loads but blocks a later survey command; cycles a
   const pending = structuredClone(first.snapshot);
   pending.authorityLedger.ashenReefSurvey.corrections.push(correction);
   assert.equal(isTargetCampaignSnapshot(pending), true);
+  assert.equal(
+    isTargetCampaignSnapshot(JSON.parse(JSON.stringify(pending))),
+    true
+  );
   assert.equal(resolvePlayerSurveyActivityAdvancementPlan(pending).code, "correction_pending");
+  const pendingWithDrift = structuredClone(pending);
+  pendingWithDrift.sessionState.notifications = pendingWithDrift.sessionState.notifications.filter(
+    (entry) => entry.id !== first.result.projectionIds.notification
+  );
+  assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(pendingWithDrift), []);
+
+  const invalidEvidenceSets = [
+    undefined,
+    null,
+    {},
+    [],
+    ["evidence.audit.1", "evidence.audit.1"],
+    [""],
+    [" evidence.audit.1"],
+    [42]
+  ];
+  for (const evidenceIds of invalidEvidenceSets) {
+    const malformedEvidence = structuredClone(first.snapshot);
+    const malformedCorrection = structuredClone(correction);
+    if (evidenceIds === undefined) delete malformedCorrection.evidenceIds;
+    else malformedCorrection.evidenceIds = evidenceIds;
+    malformedEvidence.authorityLedger.ashenReefSurvey.corrections.push(malformedCorrection);
+    assert.doesNotThrow(() => isTargetCampaignSnapshot(malformedEvidence));
+    assert.equal(isTargetCampaignSnapshot(malformedEvidence), false);
+  }
+
+  const undeclaredReconciliationEvidence = structuredClone(first.snapshot);
+  undeclaredReconciliationEvidence.authorityLedger.ashenReefSurvey.corrections.push({
+    ...structuredClone(correction),
+    reconciliations: correction.reconciliations.map((entry, index) =>
+      index === 0 ? { ...entry, evidenceId: "evidence.audit.undeclared" } : entry
+    )
+  });
+  assert.equal(isTargetCampaignSnapshot(undeclaredReconciliationEvidence), false);
 
   const control = first.control;
   const command = createPlayerSurveyActivityAdvancementCommand(first.snapshot, control, nextRequestId());

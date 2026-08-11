@@ -36,8 +36,10 @@ import {
   ASHEN_REEF_SURVEY_COMMON_RECEIPT_KINDS,
   ASHEN_REEF_SURVEY_FINAL_RECEIPT_KINDS,
   ASHEN_REEF_SURVEY_ATTRIBUTE_PROFILE,
+  ASHEN_REEF_SURVEY_NON_PROPOSALS,
   createAuthorityId,
   createEmptyAshenReefSurveyAuthority,
+  isAshenReefSurveyOwnerInputsState,
   isTargetCampaignSnapshot,
   resolveAshenReefSurveyMetabolicProfile,
   serializeAshenReefSurveyNormalizedIntent
@@ -111,6 +113,7 @@ export interface AcceptedPlayerSurveyActivityAdvancementPlan {
   timeline: PlayerBodyState[];
   projectedResources: SaveSnapshot["playerState"]["resources"];
   resourceCosts: AshenReefSurveyResultState["resourceCosts"];
+  nonProposals: AshenReefSurveyResultState["nonProposals"];
   skill: AshenReefSurveyResultState["skill"];
   materialBefore: AshenReefSurveyMaterialFactsState;
   materialAfter: AshenReefSurveyMaterialFactsState;
@@ -145,6 +148,7 @@ export interface RejectedPlayerSurveyActivityAdvancementPlan {
   timeline: [];
   projectedResources: null;
   resourceCosts: null;
+  nonProposals: null;
   skill: null;
   materialBefore: AshenReefSurveyMaterialFactsState | null;
   materialAfter: null;
@@ -170,6 +174,28 @@ export interface PlayerSurveyActivityAdvancementCommand {
   normalizedIntent: AshenReefSurveyNormalizedIntentState;
   canonicalIntent: string;
 }
+
+export type PlayerSurveyActivityAdvancementCommandPreparation =
+  | {
+      kind: "prepared";
+      command: PlayerSurveyActivityAdvancementCommand;
+      notice: PlayerSurveyActivityAdvancementNoticeFacts;
+    }
+  | {
+      kind: "expected_rejection";
+      code: Exclude<PlayerSurveyActivityAdvancementRejectionCode, "transition_failed">;
+      notice: PlayerSurveyActivityAdvancementNoticeFacts;
+    }
+  | {
+      kind: "technical_retry";
+      code: "transition_failed";
+      notice: PlayerSurveyActivityAdvancementNoticeFacts;
+    }
+  | {
+      kind: "unclassified_failure";
+      code: "unclassified_failure";
+      notice: PlayerSurveyActivityAdvancementNoticeFacts;
+    };
 
 export interface PlayerSurveyAdvancedEventPayload extends Record<string, unknown> {
   requestId: string;
@@ -225,6 +251,26 @@ export function shouldRetainPlayerSurveyRequestIdentity(
   result: PlayerSurveyActivityAdvancementResult
 ): boolean {
   return !result.accepted && !result.duplicate && result.code === "transition_failed";
+}
+
+export type PlayerSurveySkillPresentation =
+  | { status: "applied"; detail: string }
+  | { status: "blocked_at_gate"; detail: string }
+  | { status: "unchanged"; detail: string };
+
+export function resolvePlayerSurveySkillPresentation(
+  skill: Pick<AshenReefSurveyResultState["skill"], "appliedDelta" | "blockedGate">
+): PlayerSurveySkillPresentation {
+  if (skill.appliedDelta > 0) {
+    return { status: "applied", detail: `+${skill.appliedDelta}` };
+  }
+  if (skill.blockedGate !== null) {
+    return {
+      status: "blocked_at_gate",
+      detail: `blocked at breakthrough gate ${skill.blockedGate}`
+    };
+  }
+  return { status: "unchanged", detail: "unchanged" };
 }
 
 type SkillApplication = {
@@ -393,6 +439,7 @@ function rejectPlan(
     timeline: [],
     projectedResources: null,
     resourceCosts: null,
+    nonProposals: null,
     skill: null,
     materialBefore,
     materialAfter: null,
@@ -803,6 +850,7 @@ export function resolvePlayerSurveyActivityAdvancementPlan(
       timeline: preview.bodyTimeline,
       projectedResources: preview.snapshot.playerState.resources,
       resourceCosts: { stamina: 10, mp: 3, hp: 0 },
+      nonProposals: clone(ASHEN_REEF_SURVEY_NON_PROPOSALS),
       skill: {
         skillId: preview.skill.skillId,
         requestedDelta: 1,
@@ -891,29 +939,145 @@ export function createPlayerSurveyActivityAdvancementCommand(
   control: CampaignSessionControl,
   requestId = createAuthorityId("survey_request")
 ): PlayerSurveyActivityAdvancementCommand {
+  const preparation = preparePlayerSurveyActivityAdvancementCommand(
+    snapshot,
+    control,
+    requestId
+  );
+  if (preparation.kind !== "prepared") {
+    throw new Error(preparation.notice.detail);
+  }
+  return preparation.command;
+}
+
+export function preparePlayerSurveyActivityAdvancementCommand(
+  snapshot: SaveSnapshot,
+  control: CampaignSessionControl,
+  requestId?: string
+): PlayerSurveyActivityAdvancementCommandPreparation {
+  try {
+    return preparePlayerSurveyActivityAdvancementCommandUnchecked(
+      snapshot,
+      control,
+      requestId ?? createAuthorityId("survey_request")
+    );
+  } catch {
+    return {
+      kind: "unclassified_failure",
+      code: "unclassified_failure",
+      notice: {
+        tone: "warning",
+        title: "Survey not advanced",
+        detail: "The campaign-authoritative survey command could not be prepared."
+      }
+    };
+  }
+}
+
+function preparePlayerSurveyActivityAdvancementCommandUnchecked(
+  snapshot: SaveSnapshot,
+  control: CampaignSessionControl,
+  requestId: string
+): PlayerSurveyActivityAdvancementCommandPreparation {
   const retained = snapshot.authorityLedger?.ashenReefSurvey?.requests.filter(
     (entry) => entry?.requestId === requestId
   ) ?? [];
   if (retained.length === 1) {
     return {
-      version: 1,
-      type: "player.activity.survey.advance",
-      requestId,
-      normalizedIntent: clone(retained[0]!.normalizedIntent),
-      canonicalIntent: retained[0]!.canonicalIntent
+      kind: "prepared",
+      command: {
+        version: 1,
+        type: "player.activity.survey.advance",
+        requestId,
+        normalizedIntent: clone(retained[0]!.normalizedIntent),
+        canonicalIntent: retained[0]!.canonicalIntent
+      },
+      notice: {
+        tone: "neutral",
+        title: "Survey result retained",
+        detail: "The retained survey request will be resolved before current-state availability checks."
+      }
     };
   }
-  if (retained.length > 1) throw new Error("Survey request authority is duplicated.");
+  if (retained.length > 1) {
+    return {
+      kind: "expected_rejection",
+      code: "invalid_authority",
+      notice: {
+        tone: "warning",
+        title: "Survey not advanced",
+        detail: "Survey request authority is duplicated."
+      }
+    };
+  }
+  if (!isTargetCampaignSnapshot(snapshot)) {
+    return {
+      kind: "expected_rejection",
+      code: "invalid_authority",
+      notice: {
+        tone: "warning",
+        title: "Survey not advanced",
+        detail: "The campaign snapshot is not valid survey authority."
+      }
+    };
+  }
   const plan = resolvePlayerSurveyActivityAdvancementPlan(snapshot);
-  if (!plan.accepted) throw new Error(plan.reason);
-  const normalizedIntent = buildNormalizedIntent(snapshot, control, plan);
-  return {
-    version: 1,
-    type: "player.activity.survey.advance",
-    requestId,
-    normalizedIntent,
-    canonicalIntent: serializeAshenReefSurveyNormalizedIntent(normalizedIntent)
-  };
+  if (!plan.accepted) {
+    if (plan.code !== "transition_failed") {
+      return { kind: "expected_rejection", code: plan.code, notice: clone(plan.notice) };
+    }
+    if (!isAshenReefSurveyOwnerInputsState(collectOwnerInputs(snapshot))) {
+      return {
+        kind: "expected_rejection",
+        code: "invalid_authority",
+        notice: {
+          tone: "warning",
+          title: "Survey not advanced",
+          detail: "The survey owner inputs are not valid command authority."
+        }
+      };
+    }
+    return { kind: "technical_retry", code: "transition_failed", notice: clone(plan.notice) };
+  }
+  if (!isAshenReefSurveyOwnerInputsState(collectOwnerInputs(snapshot))) {
+    return {
+      kind: "expected_rejection",
+      code: "invalid_authority",
+      notice: {
+        tone: "warning",
+        title: "Survey not advanced",
+        detail: "The survey owner inputs are not valid command authority."
+      }
+    };
+  }
+  try {
+    const normalizedIntent = buildNormalizedIntent(snapshot, control, plan);
+    return {
+      kind: "prepared",
+      command: {
+        version: 1,
+        type: "player.activity.survey.advance",
+        requestId,
+        normalizedIntent,
+        canonicalIntent: serializeAshenReefSurveyNormalizedIntent(normalizedIntent)
+      },
+      notice: {
+        tone: "neutral",
+        title: "Survey command prepared",
+        detail: "The campaign-authoritative survey command is ready for admission."
+      }
+    };
+  } catch {
+    return {
+      kind: "unclassified_failure",
+      code: "unclassified_failure",
+      notice: {
+        tone: "warning",
+        title: "Survey not advanced",
+        detail: "The campaign-authoritative survey command could not be prepared."
+      }
+    };
+  }
 }
 
 function isCommandShape(value: unknown): value is PlayerSurveyActivityAdvancementCommand {
@@ -982,19 +1146,38 @@ function createSurveyEvent(
 function appendProjectionRows(
   snapshot: SaveSnapshot,
   application: MaterialApplication,
-  failures: ReadonlySet<AshenReefSurveyProjectionKind>
+  failures: Set<AshenReefSurveyProjectionKind>,
+  resultId: string
 ): void {
   if (!failures.has("notification")) {
-    snapshot.sessionState.notifications = [
+    const insertion = inspectProjectionDestination(
+      snapshot,
+      snapshot.sessionState.notifications,
       application.notification,
-      ...snapshot.sessionState.notifications
-    ].slice(0, 8);
+      { appliedTick: snapshot.clock.tick, stableId: resultId },
+      "notification",
+      8
+    );
+    if (insertion.code === "inserted") {
+      snapshot.sessionState.notifications = insertion.rows;
+    } else {
+      failures.add("notification");
+    }
   }
   if (!failures.has("chronicle")) {
-    snapshot.sessionState.chronicle = [
+    const insertion = inspectProjectionDestination(
+      snapshot,
+      snapshot.sessionState.chronicle,
       application.chronicle,
-      ...snapshot.sessionState.chronicle
-    ].slice(0, 48);
+      { appliedTick: snapshot.clock.tick, stableId: resultId },
+      "chronicle",
+      48
+    );
+    if (insertion.code === "inserted") {
+      snapshot.sessionState.chronicle = insertion.rows;
+    } else {
+      failures.add("chronicle");
+    }
   }
 }
 
@@ -1270,7 +1453,7 @@ export function executePlayerSurveyActivityAdvancementCommand(
   const ids = deriveIds(command.requestId)!;
   let serializedCommandIntent: string;
   try {
-    serializedCommandIntent = JSON.stringify(command.normalizedIntent);
+    serializedCommandIntent = serializeAshenReefSurveyNormalizedIntent(command.normalizedIntent);
   } catch {
     return rejectedResult(snapshot, control, "malformed_command", command.requestId, "The survey command intent is not serializable.");
   }
@@ -1378,8 +1561,21 @@ export function executePlayerSurveyActivityAdvancementCommand(
   if (!plan.accepted) {
     return rejectedResult(snapshot, control, plan.code, command.requestId, plan.reason);
   }
-  const expectedIntent = buildNormalizedIntent(snapshot, control, plan);
-  if (serializeAshenReefSurveyNormalizedIntent(expectedIntent) !== command.canonicalIntent) {
+  let expectedCanonicalIntent: string;
+  try {
+    expectedCanonicalIntent = serializeAshenReefSurveyNormalizedIntent(
+      buildNormalizedIntent(snapshot, control, plan)
+    );
+  } catch {
+    return rejectedResult(
+      snapshot,
+      control,
+      "invalid_authority",
+      command.requestId,
+      "The current survey owner inputs are not valid command authority."
+    );
+  }
+  if (expectedCanonicalIntent !== command.canonicalIntent) {
     return rejectedResult(snapshot, control, "stale_snapshot", command.requestId, "The survey request no longer matches the current material state.");
   }
 
@@ -1414,11 +1610,11 @@ export function executePlayerSurveyActivityAdvancementCommand(
       { notification: ids.notificationId, chronicle: ids.chronicleId }
     );
     if (
-      JSON.stringify(application.materialBefore) !== JSON.stringify(intent.materialFacts) ||
-      JSON.stringify(application.materialVersions) !== JSON.stringify(intent.materialVersions)
+      !projectionRowsEqual(application.materialBefore, intent.materialFacts) ||
+      !projectionRowsEqual(application.materialVersions, intent.materialVersions)
     ) throw new Error("Prepared survey state diverged from the normalized request.");
 
-    appendProjectionRows(application.snapshot, application, projectionFailures);
+    appendProjectionRows(application.snapshot, application, projectionFailures, ids.resultId);
     const occurrenceId = ids.occurrenceId;
     const receipts = buildConsequenceReceipts(
       snapshot,
@@ -1452,6 +1648,7 @@ export function executePlayerSurveyActivityAdvancementCommand(
       materialBefore: clone(application.materialBefore),
       materialAfter: clone(application.materialAfter),
       resourceCosts: { stamina: 10, mp: 3, hp: 0 },
+      nonProposals: clone(plan.nonProposals),
       skill: {
         skillId: application.skill.skillId,
         requestedDelta: 1,
@@ -1566,37 +1763,247 @@ export function executePlayerSurveyActivityAdvancementCommand(
   }
 }
 
-function projectionDestinationTick(
-  snapshot: SaveSnapshot,
-  id: string,
-  kind: "notification" | "chronicle"
-): number {
-  const authority = snapshot.authorityLedger?.ashenReefSurvey;
-  const surveyResult = authority?.results.find(
-    (entry) => entry.projectionIds[kind] === id
-  );
-  if (surveyResult) return surveyResult.appliedTick;
-  const legacy = new RegExp(`^${kind}\\.(\\d+)\\.`).exec(id);
-  return legacy ? Number(legacy[1]) : Number.POSITIVE_INFINITY;
+type OrderedSurveyProjectionKind = "notification" | "chronicle";
+
+type ProjectionAuthorityKey = {
+  appliedTick: number;
+  stableId: string;
+};
+
+type ProjectionDestinationInspection<T extends { id: string }> =
+  | { code: "already_correct"; observed: null; rows: T[] }
+  | { code: "inserted"; observed: "missing"; rows: T[] }
+  | { code: "replaced"; observed: "malformed"; rows: T[] }
+  | { code: "retention_expired"; observed: "missing"; rows: T[] }
+  | { code: "invalid"; observed: null; rows: T[] };
+
+function canonicalProjectionValue(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(canonicalProjectionValue);
+  if (typeof value !== "object" || value === null) return value;
+  return Object.keys(value as Record<string, unknown>)
+    .sort()
+    .reduce<Record<string, unknown>>((result, key) => {
+      result[key] = canonicalProjectionValue((value as Record<string, unknown>)[key]);
+      return result;
+    }, {});
 }
 
-function insertProjectionAtAuthorityOrder<T extends { id: string }>(
-  rows: T[],
-  row: T,
-  resultTick: number,
-  kind: "notification" | "chronicle",
+function projectionRowsEqual(left: unknown, right: unknown): boolean {
+  return JSON.stringify(canonicalProjectionValue(left)) === JSON.stringify(canonicalProjectionValue(right));
+}
+
+function compareProjectionAuthority(left: ProjectionAuthorityKey, right: ProjectionAuthorityKey): number {
+  if (left.appliedTick !== right.appliedTick) return left.appliedTick > right.appliedTick ? -1 : 1;
+  return left.stableId < right.stableId ? -1 : left.stableId > right.stableId ? 1 : 0;
+}
+
+function resolveProjectionAuthorityKey(
   snapshot: SaveSnapshot,
-  cap: number
-): T[] {
-  if (snapshot.clock.tick === resultTick) {
-    return [row, ...rows].slice(0, cap);
+  id: string,
+  kind: OrderedSurveyProjectionKind,
+  targetId: string,
+  targetKey: ProjectionAuthorityKey
+): { code: "known"; key: ProjectionAuthorityKey } | { code: "opaque" } | { code: "invalid" } {
+  if (id === targetId) return { code: "known", key: targetKey };
+  const matches = snapshot.authorityLedger?.ashenReefSurvey?.results.filter(
+    (entry) => entry.projectionIds[kind] === id
+  ) ?? [];
+  if (matches.length > 1) return { code: "invalid" };
+  if (matches.length === 1) {
+    return {
+      code: "known",
+      key: { appliedTick: matches[0]!.appliedTick, stableId: matches[0]!.resultId }
+    };
   }
-  const insertionIndex = rows.findIndex(
-    (candidate) => projectionDestinationTick(snapshot, candidate.id, kind) < resultTick
+  return { code: "opaque" };
+}
+
+function mergeOrderedProjectionRows<T extends { id: string }>(
+  original: Array<{ row: T; key: ProjectionAuthorityKey | null }>,
+  orderedKnownRows: T[]
+): T[] {
+  const opaqueRows = original.filter((entry) => entry.key === null).map((entry) => entry.row);
+  return [...orderedKnownRows, ...opaqueRows];
+}
+
+function inspectProjectionDestination<T extends { id: string }>(
+  snapshot: SaveSnapshot,
+  rows: readonly T[],
+  expectedRow: T,
+  targetKey: ProjectionAuthorityKey,
+  kind: OrderedSurveyProjectionKind,
+  cap: number
+): ProjectionDestinationInspection<T> {
+  const unchanged = [...rows];
+  if (!Number.isSafeInteger(cap) || cap < 1 || rows.length > cap) {
+    return { code: "invalid", observed: null, rows: unchanged };
+  }
+  if (typeof expectedRow.id !== "string" || expectedRow.id.trim() !== expectedRow.id || expectedRow.id.length === 0) {
+    return { code: "invalid", observed: null, rows: unchanged };
+  }
+  const ids = rows.map((entry) => entry?.id);
+  if (
+    ids.some((id) => typeof id !== "string" || id.trim() !== id || id.length === 0) ||
+    new Set(ids).size !== ids.length
+  ) {
+    return { code: "invalid", observed: null, rows: unchanged };
+  }
+
+  const matchingIndex = rows.findIndex((entry) => entry.id === expectedRow.id);
+  const descriptors: Array<{ row: T; key: ProjectionAuthorityKey | null }> = [];
+  for (let index = 0; index < rows.length; index += 1) {
+    const original = rows[index]!;
+    const row = index === matchingIndex ? clone(expectedRow) : original;
+    const resolution = resolveProjectionAuthorityKey(
+      snapshot,
+      row.id,
+      kind,
+      expectedRow.id,
+      targetKey
+    );
+    if (resolution.code === "invalid") {
+      return { code: "invalid", observed: null, rows: unchanged };
+    }
+    descriptors.push({ row, key: resolution.code === "known" ? resolution.key : null });
+  }
+
+  if (matchingIndex >= 0 && projectionRowsEqual(rows[matchingIndex], expectedRow)) {
+    return { code: "already_correct", observed: null, rows: unchanged };
+  }
+
+  if (matchingIndex < 0) {
+    if (rows.length >= cap && descriptors.some((entry) => entry.key === null)) {
+      return { code: "retention_expired", observed: "missing", rows: unchanged };
+    }
+    descriptors.push({ row: clone(expectedRow), key: targetKey });
+  }
+
+  const orderedKnown = descriptors
+    .filter((entry): entry is { row: T; key: ProjectionAuthorityKey } => entry.key !== null)
+    .sort((left, right) => compareProjectionAuthority(left.key, right.key))
+    .map((entry) => entry.row);
+  let nextRows = mergeOrderedProjectionRows(descriptors, orderedKnown);
+
+  if (nextRows.length > cap) {
+    if (descriptors.some((entry) => entry.key === null)) {
+      return { code: "retention_expired", observed: "missing", rows: unchanged };
+    }
+    nextRows = nextRows.slice(0, cap);
+    if (!nextRows.some((entry) => entry.id === expectedRow.id)) {
+      return { code: "retention_expired", observed: "missing", rows: unchanged };
+    }
+  }
+
+  return matchingIndex < 0
+    ? { code: "inserted", observed: "missing", rows: nextRows }
+    : { code: "replaced", observed: "malformed", rows: nextRows };
+}
+
+type SurveyProjectionRepairInspection =
+  | { code: "invalid" | "already_correct" | "retention_terminal" | "newer_authority" }
+  | {
+      code: "actionable";
+      result: AshenReefSurveyResultState;
+      receipt: AshenReefSurveyConsequenceReceiptState;
+      priorRepairs: AshenReefSurveyProjectionRepairState[];
+      observed: "missing" | "malformed";
+      outcome: AshenReefSurveyProjectionRepairState["outcome"];
+      rows: NotificationState[] | ChronicleEventState[] | null;
+    };
+
+function inspectPlayerSurveyProjectionRepair(
+  snapshot: SaveSnapshot,
+  resultId: string,
+  projectionKind: AshenReefSurveyProjectionKind
+): SurveyProjectionRepairInspection {
+  const authority = snapshot.authorityLedger?.ashenReefSurvey;
+  if (!authority) return { code: "invalid" };
+  const resultMatches = authority.results.filter((entry) => entry.resultId === resultId);
+  if (resultMatches.length !== 1) return { code: "invalid" };
+  const result = resultMatches[0]!;
+  if (
+    authority.corrections.some(
+      (entry) =>
+        entry.supersededResultId === resultId ||
+        entry.reconciliations.some((reconciliation) => reconciliation.status === "pending")
+    )
+  ) return { code: "newer_authority" };
+
+  const receiptKind = `${projectionKind}_projection` as
+    | "notification_projection"
+    | "chronicle_projection"
+    | "event_projection";
+  const receiptMatches = authority.consequenceReceipts.filter(
+    (entry) => entry.resultId === resultId && entry.kind === receiptKind
   );
-  const next = [...rows];
-  next.splice(insertionIndex < 0 ? next.length : insertionIndex, 0, row);
-  return next.slice(0, cap);
+  if (receiptMatches.length !== 1) return { code: "invalid" };
+  const receipt = receiptMatches[0]!;
+  const priorRepairs = authority.projectionRepairs.filter(
+    (entry) => entry.resultId === resultId && entry.projectionKind === projectionKind
+  );
+  const latestRepair = priorRepairs[priorRepairs.length - 1];
+  if (latestRepair?.outcome === "retention_expired") return { code: "retention_terminal" };
+
+  if (projectionKind === "event") {
+    if (
+      receipt.kind !== "event_projection" ||
+      receipt.posture !== "projection_pending" ||
+      latestRepair?.outcome === "event_reemitted"
+    ) return { code: "already_correct" };
+    return {
+      code: "actionable",
+      result,
+      receipt,
+      priorRepairs,
+      observed: "missing",
+      outcome: "event_reemitted",
+      rows: null
+    };
+  }
+
+  if (projectionKind === "notification") {
+    if (receipt.kind !== "notification_projection") return { code: "invalid" };
+    const destination = inspectProjectionDestination(
+      snapshot,
+      snapshot.sessionState.notifications,
+      receipt.effect.row,
+      { appliedTick: result.appliedTick, stableId: result.resultId },
+      "notification",
+      receipt.effect.cap
+    );
+    if (destination.code === "invalid") return { code: "invalid" };
+    if (destination.code === "already_correct") return { code: "already_correct" };
+    return {
+      code: "actionable",
+      result,
+      receipt,
+      priorRepairs,
+      observed: destination.observed,
+      outcome: destination.code === "retention_expired" ? "retention_expired" : destination.code,
+      rows: destination.rows
+    };
+  }
+
+  if (receipt.kind !== "chronicle_projection") return { code: "invalid" };
+  const destination = inspectProjectionDestination(
+    snapshot,
+    snapshot.sessionState.chronicle,
+    receipt.effect.row,
+    { appliedTick: result.appliedTick, stableId: result.resultId },
+    "chronicle",
+    receipt.effect.cap
+  );
+  if (destination.code === "invalid") return { code: "invalid" };
+  if (destination.code === "already_correct") return { code: "already_correct" };
+  return {
+    code: "actionable",
+    result,
+    receipt,
+    priorRepairs,
+    observed: destination.observed,
+    outcome: destination.code === "retention_expired" ? "retention_expired" : destination.code,
+    rows: destination.rows
+  };
 }
 
 export function repairPlayerSurveyActivityProjection(
@@ -1616,179 +2023,107 @@ export function repairPlayerSurveyActivityProjection(
       control
     });
   try {
-  if (!isTargetCampaignSnapshot(snapshot)) return invalid();
-  const authority = snapshot.authorityLedger?.ashenReefSurvey;
-  if (!authority) return invalid();
-  const resultMatches = authority.results.filter((entry) => entry.resultId === resultId);
-  if (resultMatches.length !== 1) return invalid();
-  const result = resultMatches[0]!;
-  if (
-    authority.corrections.some(
-      (entry) =>
-        entry.supersededResultId === resultId ||
-        entry.reconciliations.some((reconciliation) => reconciliation.status === "pending")
-    )
-  ) return invalid("projection_newer_authority");
-
-  const receiptKind = `${projectionKind}_projection` as
-    | "notification_projection"
-    | "chronicle_projection"
-    | "event_projection";
-  const receiptMatches = authority.consequenceReceipts.filter(
-    (entry) => entry.resultId === resultId && entry.kind === receiptKind
-  );
-  if (receiptMatches.length !== 1) return invalid();
-  const receipt = receiptMatches[0]!;
-  const priorRepairs = authority.projectionRepairs.filter(
-    (entry) => entry.resultId === resultId && entry.projectionKind === projectionKind
-  );
-  const latestRepair = priorRepairs[priorRepairs.length - 1];
-  if (projectionKind === "event") {
-    if (receipt.posture !== "projection_pending" || latestRepair?.outcome === "event_reemitted") {
+    if (!isTargetCampaignSnapshot(snapshot)) return invalid();
+    const inspection = inspectPlayerSurveyProjectionRepair(snapshot, resultId, projectionKind);
+    if (inspection.code === "invalid") return invalid();
+    if (inspection.code === "newer_authority") return invalid("projection_newer_authority");
+    if (inspection.code === "already_correct") {
       return { ...invalid("projection_already_correct"), duplicate: true };
     }
-  } else if (latestRepair?.outcome === "retention_expired") {
-    return { ...invalid("projection_retention_expired"), duplicate: true };
-  }
-  const projectionId = result.projectionIds[projectionKind];
-  let observed: "missing" | "malformed" = "missing";
-  let outcome: AshenReefSurveyProjectionRepairState["outcome"];
-  let emittedEvents: PlayerSurveyAdvancedEvent[] = [];
+    if (inspection.code === "retention_terminal") {
+      return { ...invalid("projection_retention_expired"), duplicate: true };
+    }
+    if (inspection.code !== "actionable") return invalid();
 
-  if (projectionKind === "notification") {
-    if (receipt.kind !== "notification_projection") return invalid();
-    const matches = snapshot.sessionState.notifications.filter((entry) => entry.id === projectionId);
-    if (matches.length > 1) return invalid();
-    if (matches.length === 1 && JSON.stringify(matches[0]) === JSON.stringify(receipt.effect.row)) {
-      return { ...invalid("projection_already_correct"), duplicate: true };
+    const { result, receipt, priorRepairs, observed, outcome } = inspection;
+    const ordinal = priorRepairs.length + 1;
+    const ids = deriveIds(result.requestId);
+    if (!ids) return invalid();
+    const repairId = `survey_projection_repair.${ids.uuid}.${projectionKind}.${ordinal}`;
+    let preparation: ReturnType<typeof preparePlayerSurveyCampaignMutation>;
+    try {
+      preparation = preparePlayerSurveyCampaignMutation(control, {
+        mutationId: repairId,
+        sourceArtifactId: control.loadedArtifactId,
+        sourcePublicationId: control.loadedPublicationId,
+        sourceRevision: control.sessionRevision,
+        sourceSnapshot: snapshot
+      });
+    } catch {
+      return invalid();
     }
-    observed = matches.length === 0 ? "missing" : "malformed";
-    outcome = matches.length === 0 ? "inserted" : "replaced";
-  } else if (projectionKind === "chronicle") {
-    if (receipt.kind !== "chronicle_projection") return invalid();
-    const matches = snapshot.sessionState.chronicle.filter((entry) => entry.id === projectionId);
-    if (matches.length > 1) return invalid();
-    if (matches.length === 1 && JSON.stringify(matches[0]) === JSON.stringify(receipt.effect.row)) {
-      return { ...invalid("projection_already_correct"), duplicate: true };
-    }
-    observed = matches.length === 0 ? "missing" : "malformed";
-    outcome = matches.length === 0 ? "inserted" : "replaced";
-  } else {
-    if (receipt.kind !== "event_projection") return invalid();
-    outcome = "event_reemitted";
-    emittedEvents = [{
-      id: projectionId,
-      type: PLAYER_SURVEY_ADVANCED_EVENT_TYPE,
-      domain: "player",
-      atTick: result.appliedTick,
-      payload: receipt.effect.payload as unknown as PlayerSurveyAdvancedEventPayload
-    }];
-  }
+    if (!preparation.accepted) return invalid();
+    const candidate = preparation.candidateSnapshot;
+    const preparedInspection = inspectPlayerSurveyProjectionRepair(candidate, resultId, projectionKind);
+    if (
+      preparedInspection.code !== "actionable" ||
+      preparedInspection.receipt.receiptId !== receipt.receiptId ||
+      preparedInspection.priorRepairs.length !== priorRepairs.length ||
+      preparedInspection.observed !== observed ||
+      preparedInspection.outcome !== outcome
+    ) return invalid();
 
-  const ordinal = priorRepairs.length + 1;
-  const ids = deriveIds(result.requestId);
-  if (!ids) return invalid();
-  const repairId = `survey_projection_repair.${ids.uuid}.${projectionKind}.${ordinal}`;
-  let preparation: ReturnType<typeof preparePlayerSurveyCampaignMutation>;
-  try {
-    preparation = preparePlayerSurveyCampaignMutation(control, {
-      mutationId: repairId,
-      sourceArtifactId: control.loadedArtifactId,
-      sourcePublicationId: control.loadedPublicationId,
-      sourceRevision: control.sessionRevision,
-      sourceSnapshot: snapshot
-    });
-  } catch {
-    return invalid();
-  }
-  if (!preparation.accepted) return invalid();
-  const candidate = preparation.candidateSnapshot;
+    if (
+      projectionKind === "notification" &&
+      receipt.kind === "notification_projection" &&
+      outcome !== "retention_expired" &&
+      preparedInspection.rows !== null
+    ) {
+      candidate.sessionState.notifications = preparedInspection.rows as NotificationState[];
+    }
+    if (
+      projectionKind === "chronicle" &&
+      receipt.kind === "chronicle_projection" &&
+      outcome !== "retention_expired" &&
+      preparedInspection.rows !== null
+    ) {
+      candidate.sessionState.chronicle = preparedInspection.rows as ChronicleEventState[];
+    }
 
-  if (projectionKind === "notification" && receipt.kind === "notification_projection") {
-    const matches = candidate.sessionState.notifications.filter((entry) => entry.id === projectionId);
-    if (matches.length === 0 && candidate.sessionState.notifications.length >= receipt.effect.cap) {
-      const oldestRetainedTick = Math.min(
-        ...candidate.sessionState.notifications.map((entry) =>
-          projectionDestinationTick(candidate, entry.id, "notification")
-        )
-      );
-      if (oldestRetainedTick > result.appliedTick) outcome = "retention_expired";
-    }
-    if (outcome === "replaced") {
-      candidate.sessionState.notifications = candidate.sessionState.notifications.map((entry) =>
-        entry.id === projectionId ? clone(receipt.effect.row) : entry
-      );
-    } else if (outcome === "inserted") {
-      candidate.sessionState.notifications = insertProjectionAtAuthorityOrder(
-        candidate.sessionState.notifications,
-        clone(receipt.effect.row),
-        result.appliedTick,
-        "notification",
-        candidate,
-        receipt.effect.cap
-      );
-    }
-  }
-  if (projectionKind === "chronicle" && receipt.kind === "chronicle_projection") {
-    const matches = candidate.sessionState.chronicle.filter((entry) => entry.id === projectionId);
-    if (matches.length === 0 && candidate.sessionState.chronicle.length >= receipt.effect.cap) {
-      const oldestRetainedTick = Math.min(
-        ...candidate.sessionState.chronicle.map((entry) =>
-          projectionDestinationTick(candidate, entry.id, "chronicle")
-        )
-      );
-      if (oldestRetainedTick > result.appliedTick) outcome = "retention_expired";
-    }
-    if (outcome === "replaced") {
-      candidate.sessionState.chronicle = candidate.sessionState.chronicle.map((entry) =>
-        entry.id === projectionId ? clone(receipt.effect.row) : entry
-      );
-    } else if (outcome === "inserted") {
-      candidate.sessionState.chronicle = insertProjectionAtAuthorityOrder(
-        candidate.sessionState.chronicle,
-        clone(receipt.effect.row),
-        result.appliedTick,
-        "chronicle",
-        candidate,
-        receipt.effect.cap
-      );
-    }
-  }
-
-  const repair: AshenReefSurveyProjectionRepairState = {
-    version: 1,
-    repairId,
-    requestId: result.requestId,
-    resultId,
-    receiptId: receipt.receiptId,
-    campaignId: result.campaignId,
-    continuityId: preparation.acceptedContinuityId,
-    characterId: result.characterId,
-    projectionKind,
-    ordinal,
-    observed,
-    outcome,
-    appliedTick: candidate.clock.tick
-  };
-  candidate.authorityLedger!.ashenReefSurvey!.projectionRepairs.push(repair);
-  if (!isTargetCampaignSnapshot(candidate)) return invalid();
-  const admission = commitPreparedPlayerSurveyCampaignMutation(
-    control,
-    snapshot,
-    preparation,
-    candidate,
-    `survey_projection_repair_result.${ids.uuid}.${projectionKind}.${ordinal}`
-  );
-  if (!admission.accepted) return invalid();
-  return {
-    accepted: true,
-    duplicate: false,
-    code: outcome === "retention_expired" ? "projection_retention_expired" : "projection_repaired",
-    repair,
-    emittedEvents,
-    snapshot: admission.snapshot,
-    control: admission.control
-  };
+    const repair: AshenReefSurveyProjectionRepairState = {
+      version: 1,
+      repairId,
+      requestId: result.requestId,
+      resultId,
+      receiptId: receipt.receiptId,
+      campaignId: result.campaignId,
+      continuityId: preparation.acceptedContinuityId,
+      characterId: result.characterId,
+      projectionKind,
+      ordinal,
+      observed,
+      outcome,
+      appliedTick: candidate.clock.tick
+    };
+    candidate.authorityLedger!.ashenReefSurvey!.projectionRepairs.push(repair);
+    if (!isTargetCampaignSnapshot(candidate)) return invalid();
+    const admission = commitPreparedPlayerSurveyCampaignMutation(
+      control,
+      snapshot,
+      preparation,
+      candidate,
+      `survey_projection_repair_result.${ids.uuid}.${projectionKind}.${ordinal}`
+    );
+    if (!admission.accepted) return invalid();
+    const emittedEvents: PlayerSurveyAdvancedEvent[] =
+      projectionKind === "event" && receipt.kind === "event_projection"
+        ? [{
+            id: result.projectionIds.event,
+            type: PLAYER_SURVEY_ADVANCED_EVENT_TYPE,
+            domain: "player",
+            atTick: result.appliedTick,
+            payload: receipt.effect.payload as unknown as PlayerSurveyAdvancedEventPayload
+          }]
+        : [];
+    return {
+      accepted: true,
+      duplicate: false,
+      code: outcome === "retention_expired" ? "projection_retention_expired" : "projection_repaired",
+      repair,
+      emittedEvents,
+      snapshot: admission.snapshot,
+      control: admission.control
+    };
   } catch {
     return invalid();
   }
@@ -1802,24 +2137,24 @@ export function listPendingPlayerSurveyProjectionRepairs(
     const authority = snapshot.authorityLedger?.ashenReefSurvey;
     if (!authority) return [];
     return authority.consequenceReceipts
-      .filter((receipt) => receipt.posture === "projection_pending")
+      .filter(
+        (receipt) =>
+          receipt.kind === "notification_projection" ||
+          receipt.kind === "chronicle_projection" ||
+          receipt.kind === "event_projection"
+      )
       .map((receipt) => ({
         resultId: receipt.resultId,
         projectionKind: receipt.kind.replace("_projection", "") as AshenReefSurveyProjectionKind
       }))
-      .filter((pending) => {
-        const repairs = authority.projectionRepairs.filter(
-          (repair) =>
-            repair.resultId === pending.resultId &&
-            repair.projectionKind === pending.projectionKind
-        );
-        const latest = repairs[repairs.length - 1];
-        return !latest ||
-          (latest.outcome !== "inserted" &&
-            latest.outcome !== "replaced" &&
-            latest.outcome !== "event_reemitted" &&
-            latest.outcome !== "retention_expired");
-      });
+      .filter(
+        (candidate) =>
+          inspectPlayerSurveyProjectionRepair(
+            snapshot,
+            candidate.resultId,
+            candidate.projectionKind
+          ).code === "actionable"
+      );
   } catch {
     return [];
   }

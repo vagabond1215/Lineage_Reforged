@@ -1313,6 +1313,18 @@ export interface AshenReefSurveyMaterialFactsState {
   currentActivityId: string | null;
 }
 
+export interface AshenReefSurveyNonProposalsState {
+  geographicKnowledge: "no_proposal";
+  knownLocationAuthority: "no_proposal";
+  mapAuthority: "no_proposal";
+  travelAccess: "no_proposal";
+  currency: "no_proposal";
+  standing: "no_proposal";
+  inventory: "no_proposal";
+  reputationBeyondOrdinarySynchronization: "no_proposal";
+  turnInRewards: "no_proposal";
+}
+
 export interface AshenReefSurveyOwnerInputsState {
   clock: SimulationClock;
   totalPlayTicks: number;
@@ -1616,6 +1628,7 @@ export interface AshenReefSurveyResultState {
   tickCount: 2;
   materialBefore: AshenReefSurveyMaterialFactsState;
   materialAfter: AshenReefSurveyMaterialFactsState;
+  nonProposals: AshenReefSurveyNonProposalsState;
   resourceCosts: { stamina: 10; mp: 3; hp: 0 };
   skill: {
     skillId: "skill.knowledge.general_lore" | "skill.resource.identify.flora";
@@ -1674,7 +1687,7 @@ export interface AshenReefSurveyCorrectionState {
   supersededResultId: string;
   replacementResultId: string | null;
   reason: string;
-  evidenceIds: string[];
+  evidenceIds: [string, ...string[]];
   createdAtTick: number;
   reconciliations: AshenReefSurveyCorrectionReconciliationState[];
 }
