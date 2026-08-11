@@ -73,15 +73,21 @@ A complete correction currently validates with `evidenceIds: []`.
 - Reject missing, empty, duplicate, malformed, and conflicting evidence before later survey work or publication can proceed.
 - Add focused persistence/validator tests for each case and one valid correction round trip.
 
-### AR-003 - Retention-safe deterministic projection ordering
+### AR-003 - Retention-safe deterministic projection ordering and production repair discovery
 
-Notification and Chronicle repair currently order only by tick, prepend on ties, and truncate a capped destination that may be valid but reordered, allowing repair to evict a newer row.
+Notification and Chronicle repair currently order only by tick, prepend on ties, and truncate a capped destination that may be valid but reordered, allowing repair to evict a newer retained row. Post-run reconciliation also confirmed that the production discovery helper currently starts only from receipts whose original posture is `projection_pending`, even though the accepted direct repair API supports eligible notification/Chronicle rows that were originally `applied` and later become missing or malformed.
 
 - Define and apply one total authority order using `(appliedTick, stable resultId)` for survey-derived notification and Chronicle rows.
 - Inspect or normalize the entire retained destination before insertion; never assume array order proves authority order.
 - Prove cap truncation cannot evict newer retained truth. Unknown, malformed, or ambiguous ordering must fail closed or resolve through the accepted retention-expired posture rather than overwrite evidence.
 - Keep projection IDs result-derived and retry-stable. Do not change legitimate cap semantics or manufacture missing gameplay truth.
+- Make `listPendingPlayerSurveyProjectionRepairs(snapshot)` mean "list the currently actionable survey projection repairs that the production caller can safely offer now," rather than "list only projections whose original receipt posture was pending."
+- For notification and Chronicle receipts, derive current repairability from the retained result/receipt/correction graph plus the current destination: an originally `applied` row that is now missing or same-id malformed must be discoverable when the direct repair API would accept repair; a row previously repaired with `inserted` or `replaced` must become discoverable again if the destination later drifts and a later repair ordinal is valid; an exactly correct row must not be listed; terminal `retention_expired`, stale correction/newer-authority control, duplicate destination ids, and invalid authority must not be offered as unsafe repair work.
+- Preserve the stricter event rule: only an event receipt originally `projection_pending` may be listed for re-emission; an originally applied event is never re-emitted, and `event_reemitted` is terminal.
+- Keep the discovery helper pure: it must not mutate the snapshot, rerun gameplay, mint results/receipts, emit events, change corrections, or alter campaign continuity.
+- Return multiple actionable repair candidates in deterministic owner-defined result/receipt order, not wall clock, UI state, destination insertion order, or an unrelated global sequence.
 - Add permutation tests, reordered-cap tests with a newer row at the tail, same-tick stable-result-ID tie tests in both invocation orders, notification/Chronicle parity, duplicate repair, and legitimate retention-expiry cases.
+- Add explicit production-discovery regressions for: applied notification -> missing -> listed -> repaired; applied notification -> malformed -> listed -> repaired; Chronicle equivalents; correct applied rows not listed; pending notification/Chronicle still listed; repaired notification/Chronicle drifting again -> listed and repaired at the next ordinal; retention-expired not relisted; pending event listed once; originally applied event never listed; event after `event_reemitted` not listed; correction/newer-authority and duplicated/malformed authority not offered.
 
 ### AR-004 - Caller request identity retention only for typed technical retry
 
@@ -134,7 +140,7 @@ Run and report exact counts/results for:
 7. targeted source guards that prove semantics rather than identifier presence alone;
 8. `git diff --check`, full diff and hygiene review, clean final worktree, branch/upstream, fetch/remote-head, hosted file/status, and workflow availability checks.
 
-Apply at minimum `FP-001`, `FP-002`, `FP-003`, `FP-005`, `FP-006`, `FP-008`, `FP-009`, `FP-011`, `FP-012`, `FP-013`, and `FP-014`. A green test count does not replace caller, restart, retry, conflict, malformed-authority, and retention-order evidence.
+Apply at minimum `FP-001`, `FP-002`, `FP-003`, `FP-005`, `FP-006`, `FP-008`, `FP-009`, `FP-011`, `FP-012`, `FP-013`, and `FP-014`. A green test count does not replace caller, restart, retry, conflict, malformed-authority, retention-order, or production-repair-discovery evidence.
 
 ## Outcome And Coordination
 
