@@ -166,3 +166,38 @@ Post-repair validation passed the adversarial selection `6/6`, focused survey fi
 No new failure-pattern row is required: this implementation directly closes the reusable `FP-015` owner-recomputation and `FP-016` projection-placement omissions while satisfying the retained `FP-003`, `FP-006`, `FP-011`, `FP-012`, `FP-013`, and `FP-014` gates.
 
 This appendix is implementation evidence, not parent acceptance. Active next is production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`. Only that audit may return `PARENT_ACCEPTED` or `REPAIR_REQUIRED` and, after a parent acceptance, issue the required representative-loop classification. `0.7.0` remains `NOT_READY`.
+
+## 11. Version 0.6.10.5 Post-Repair Acceptance Appendix
+
+Date: 2026-08-13
+
+Original implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
+
+First repair: `59af92629a79e95fa20247959159e336a8dbc88e`
+
+Residual audit authority: `ad4a080acc3d05a4a790c4b219780db11a1be1a1`
+
+Progression/placement repair: `07c57392c8078927e4f9e12efe18d8d89bb1fc70`
+
+Repair coordination and audit starting head: `fd40571bb0802177bd776fd3cd445b6b487716fd`
+
+Parent decision: `PARENT_ACCEPTED`
+
+Representative-loop classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
+
+The production-read-only audit independently accepted every repaired and retained parent contract. `AR-007` now recomputes the complete retained progression with the repository-authoritative Echo resolver before canonical retry or durable duplicate trust. `AR-008` now inspects content and placement, records exact `misordered` / `reordered` repair authority, sorts only survey-known rows in `(appliedTick desc, resultId asc)` order, and preserves opaque slots, caps, retention, correction, and pending-event boundaries. No production, contract, tracked-test, format, migration, content, dependency, asset, UI, or gameplay file changed during this audit.
+
+Independent evidence included:
+
+- a primary removable combined probe passed `16/16`, covering forged command and retained progression, atomic pre-duplicate rejection, raw quarantine, two genuine accepted results, restart drift discovery, explicit notification/Chronicle reorder, opaque index/byte preservation, repaired restart validation, and idempotent retry;
+- a separate progression inspection passed a fresh `20/20` command/retained/publication matrix and focused command/persistence `40/40`;
+- a separate projection inspection passed `176/176` two-result assertions plus `64/64` arbitrary four-result permutation assertions and focused command/persistence `40/40`;
+- retained `AR-001` through `AR-006`, four-stage behavior, caller retry, correction, duplicate, publication, and Normal defeat/recovery evidence passed a separate 18-assertion probe;
+- the primary prescribed matrix passed `175/175`, achievements passed `8/8`, Knowledge passed `132/132`, and clock/schema passed `107/107`;
+- Vite `5.4.21` transformed `212` modules successfully with only the registered chunk advisory;
+- bounded TypeScript remained at the exact registered `137` diagnostics, with only the same two pre-existing `ActivityPanel` TS2375 findings on the relevant surface and no repaired engine, contract, persistence, caller, or recovery diagnostic;
+- JavaScript pass-through/type-only mirrors, public exports, raw serialization, version-6 migration, version-7 publication/readback/restart, browser storage, nested survey-ledger preservation, diff hygiene, and temporary-artifact cleanup remained valid.
+
+Parent acceptance does not establish ordinary reachability. A fresh production `createNewGameSnapshot(...) -> publishSave(...) -> loadSaveWithAuthority(...)` probe produced zero quest-journal rows, `trackedQuestId: null`, only `settlement.stonevein` as known location, and only `activity.start.settlement.stonevein` as an activity record. Without injected facts, the Ashen Reef chain returned `quest_missing`, `destination_not_known`, `activity_missing`, and `survey_quest_missing`. The existing fresh-character survey test injects the demo quest, tracked state, Ashen Reef activity/location, and sector evidence; it cannot prove the ordinary representative loop.
+
+Therefore parent `0.6.10` is accepted as the bounded engine-owned survey advancement authority, while `0.7.0` remains `NOT_READY`. The smallest next route is the unversioned docs-first `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`. It must decide the quest-offer source, Ashen Reef known-location authority, activity activation/selection boundary, publication/restart order, and one injection-free creator-to-restart evidence path without inventing canon or weakening the persisted nine-field survey `no_proposal` boundary. Turn-in and rewards remain excluded.

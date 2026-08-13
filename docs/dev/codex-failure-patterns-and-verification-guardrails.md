@@ -203,6 +203,16 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`; `docs/dev/current-codex-output.md`.
 - **Status:** active.
 
+### FP-017 — Injected Eligibility Does Not Prove Representative Reachability
+
+- **Pattern:** A focused test starts from demo or manually injected quest, location, activity, or progress state and is then cited as proof that an ordinary player can reach the tested loop from production character creation.
+- **Why it escaped:** The command and persistence behavior is valid once eligible, so downstream green tests conceal missing offer, discovery, access, activation, or acquisition owners upstream.
+- **Guardrail:** Separate owner correctness from production reachability. A representative-loop claim must begin at the ordinary creator, cross production publication/load, and acquire every prerequisite through its actual owner without fixture injection.
+- **Verification:** Start from `createNewGameSnapshot(...)`; publish and reload through the production save path; exercise quest availability/acceptance/tracking, known-location acquisition, travel, activity activation/selection, every advancement stage, accepted-only application, republish, and restart. Report the first missing owner explicitly and do not reverse a valid bounded owner decision merely because reachability evidence is incomplete.
+- **Applies to:** milestone loops, vertical slices, quest/activity integration, travel/discovery access, save/load end-to-end evidence, and band-entry decisions.
+- **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`; `tests/unit/player-survey-activity-advancement-command.test.mjs`.
+- **Status:** active.
+
 ## Completion Report Format
 
 For applicable runs include:
