@@ -79,7 +79,7 @@ The active route is now the unversioned docs-first reachability dependency-closu
 - RPG UI Vite `5.4.21` production build: `212` modules transformed, pass with only the registered large-chunk advisory; output removed;
 - bounded TypeScript: expected exit `2`, exact baseline `137` diagnostics; only the same two pre-existing `ActivityPanel` TS2375 findings touched the relevant surface;
 - production creator -> version-7 publish/load -> reachability probe: passed its expected incomplete outcome and recorded the four missing edges;
-- raw serialization, version-6 migration, version-7 publication/readback/restart, browser safety, public export/JavaScript mirror posture, campaign/defeat ledger preservation, correction gates, cap/opaque behavior, branch/PR inventory, evidence-ref inspection, `git diff --check`, and temporary-artifact cleanup passed.
+- raw serialization, version-6 migration, version-7 publication/readback/restart, browser safety, public export/JavaScript mirror posture, campaign/defeat ledger preservation, correction gates, cap/opaque behavior, branch/PR inventory, evidence-ref inspection, post-push new-ref inspection, `git diff --check`, and temporary-artifact cleanup passed.
 
 ## D. Risks / Follow-Up Notes
 
@@ -100,7 +100,7 @@ Applicable failure-pattern evidence:
 
 Risks: ordinary quest-offer and Ashen Reef access provenance are not decided by current production authority. The next decision must not seed demo state, infer authored canon, or move access ownership into survey advancement. The registered broad TypeScript baseline remains separate.
 
-Branch/PR review: one local branch, 36 non-default remote branches, and open PRs #2 and #3 were inspected. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four exact survey Connector refs remain `CANDIDATE_INTEGRATION` for broader consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`. No disposition changed and no branch/PR action was due.
+Branch/PR review: orientation inspected one local branch, 36 non-default remote branches, and open PRs #2 and #3. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four exact survey Connector refs remain `CANDIDATE_INTEGRATION` for broader consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`. Post-push fetch discovered a 37th non-default remote branch, `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`; its single future-administration evidence file is initially `HOLD_NAMED_CONSUMER` for a later administration/template or repository-governance review. No existing disposition changed and no branch/PR mutation was due.
 
 Suggested coordination commit message: `docs(survey): route ordinary reachability decision`
 

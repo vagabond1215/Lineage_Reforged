@@ -66,6 +66,8 @@ Return `PACKAGE_READY` only if repository authority settles every choice. Otherw
 
 Fresh orientation found one local branch, 36 non-default remote branches, and two open pull requests. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
 
+Post-push fetch discovered one additional remote branch, `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`. It adds one evidence-only future administration/template research document from base `fd40571...`, explicitly disclaims current Lineage authority, and is `HOLD_NAMED_CONSUMER` for a later administration or repository-governance review. Do not merge it into the active reachability route.
+
 Exact read-only evidence refs remain:
 
 - activity: `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
