@@ -8,6 +8,15 @@
 - Character model: classless character development where the active system supports it; avoid adding hard class gates unless a dedicated design pass approves them.
 - Design priority: durable world state, authored content integrity, and validated systems before broad runtime expansion.
 
+## Repository Scope Isolation
+
+- This project context is authorized to work only on the Git repository `vagabond1215/Lineage_Reforged` and on files, issues, pull requests, branches, workflows, and declared dependencies that belong to or are explicitly associated with this repository.
+- Do not inspect, search, read, compare, modify, commit to, open or update issues or pull requests in, or otherwise perform Git-repository work on any unrelated repository from this project context, even if the connected account or connector can access it.
+- If the user asks for work on another Git repository, refuse that repository operation in this project and direct the user to open or switch to the project/context attached to that repository. Do not carry out the unrelated repository work here.
+- Another repository is associated only when this repository or the project configuration explicitly declares it as a required dependency or integration. Shared ownership, organization membership, connector access, conversation history, or the same user account does not make another repository associated.
+- Never carry requirements, screenshots, code assumptions, branch state, commit identities, prompts, issues, product decisions, test results, or implementation conclusions from another repository into Lineage: Reforged unless the material is explicitly reintroduced in the correct project and is relevant to an accepted Lineage integration boundary.
+- If cross-repository contamination is detected, stop using the foreign repository context, restate that the active repository is `vagabond1215/Lineage_Reforged`, and continue only from Lineage repository authority and user instructions given in this project.
+
 ## Repository-First Agent Workflow
 
 - `docs/dev/repository-first-agent-work-protocol.md` is the durable detailed authority for repository orientation, agent delegation, execution, validation, and handoff.
