@@ -17,8 +17,8 @@ Exact authority chain:
 - implementation: `008db9c93eb8818aea51652be07fd196df41c45f`;
 - first repair: `59af92629a79e95fa20247959159e336a8dbc88e`;
 - `0.6.10.3` starting head: `bc9783803c08ab403cad0302727d5b701291da40`;
-- `0.6.10.3` audit authority: `<AUDIT_AUTHORITY_COMMIT>`;
-- final coordination: `<FINAL_COORDINATION_COMMIT>`.
+- `0.6.10.3` audit authority: `ad4a080acc3d05a4a790c4b219780db11a1be1a1`;
+- final coordination: resolve from pushed `master` HEAD; its exact identity is reported in the completion response because the commit cannot contain its own SHA.
 
 ## Immediate Guardrails
 

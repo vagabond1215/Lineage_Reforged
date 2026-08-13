@@ -10,7 +10,7 @@ Milestone impact: `supports_current_band`
 
 Starting source before `0.6.10.3` coordination: `bc9783803c08ab403cad0302727d5b701291da40`
 
-`0.6.10.3` audit authority commit: `<AUDIT_AUTHORITY_COMMIT>`
+`0.6.10.3` audit authority commit: `ad4a080acc3d05a4a790c4b219780db11a1be1a1`
 
 Inspected implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
 

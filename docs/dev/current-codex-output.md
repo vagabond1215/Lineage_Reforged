@@ -16,9 +16,9 @@ Inspected implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
 
 Inspected repair: `59af92629a79e95fa20247959159e336a8dbc88e`
 
-Audit authority commit: `<AUDIT_AUTHORITY_COMMIT>`
+Audit authority commit: `ad4a080acc3d05a4a790c4b219780db11a1be1a1`
 
-Final coordination commit: `<FINAL_COORDINATION_COMMIT>`
+Final coordination commit: the exact pushed follow-up HEAD is reported in the completion response because a commit cannot contain its own identity
 
 Decision: `REPAIR_REQUIRED`
 
