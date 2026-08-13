@@ -6,6 +6,16 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-13 Version 0.6.10.4 Repair Refresh
+
+The bounded repair fetched/pruned and began from clean synchronized `master == origin/master` at `2c760eedd41e221fdfbd4caba9611cf0156af0b8`. Fresh orientation inventoried one local branch, 36 non-default remote branches, and exactly two open pull requests. The two commits after the preceding audit coordination were repository-governance documentation only and did not alter any candidate disposition or the active repair surface.
+
+The four prompt-mandated survey evidence refs remained exact and were inspected read-only: `parallel/activity-advancement-audit` at `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, `parallel/player-progression-reward-mutation-audit` at `387f2491d0d671ee7834656c28183e72a798f1ca`, `parallel/chronicle-notification-provenance-audit` at `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, and `parallel/knowledge-discovery-visibility-audit` at `46434f31f8b06d49aad9a516543fbe36d188d519`. Their generic evidence-class warnings remain reusable; bounded survey implementation claims superseded by current source remain stale. They remain `CANDIDATE_INTEGRATION` only for broader named consumers. The integrated-gameplay readiness ref at `59c103c3a06d55f35bffa735fd4b7814dffb583e` and prompt-packaging ref remain `PROTECTED_REFERENCE`.
+
+PR #2 remained open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remained open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+No disposition changed. No merge, cherry-pick, rebase, force update, PR mutation, closure, branch deletion, or remote evidence mutation occurred. Every retained branch keeps its registered review/retirement trigger. The next required review is production-read-only `0.6.10.5` orientation or an earlier explicit lifecycle instruction.
+
 ## 2026-08-13 Version 0.6.10.3 Post-Repair Audit Refresh
 
 The production-read-only audit began from clean synchronized `master == origin/master` at `bc9783803c08ab403cad0302727d5b701291da40`. Fresh orientation inventoried one local branch, 36 non-default remote branches, and exactly two open pull requests. Every candidate retained its prior semantic disposition.
@@ -437,9 +447,9 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`
+`Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`
 
-Branch handling during the bounded residual repair requires:
+Branch handling during the production-read-only re-audit requires:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
@@ -447,9 +457,9 @@ Branch handling during the bounded residual repair requires:
 - inspecting the protected integrated-gameplay readiness branch read-only;
 - otherwise preserving candidate branches for their named triggers.
 
-The permanent survey receipt decision, `0.6.10.1` acceptance audit, `0.6.10.2` implementation appendix, and `0.6.10.3` post-repair audit appendix are authoritative on `master`. No one-document Connector audit branch is implementation or acceptance authority. No candidate integration, branch deletion, or PR closure is due inside `0.6.10.4` unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
+The permanent survey receipt decision, `0.6.10.1` acceptance audit, `0.6.10.2` implementation appendix, `0.6.10.3` post-repair audit appendix, and `0.6.10.4` repair appendix are authoritative on `master`. No one-document Connector audit branch is implementation or acceptance authority. No candidate integration, branch deletion, or PR closure is due inside `0.6.10.5` unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
 
-The survey receipt decision remains `PACKAGE_READY`; implementation `0.6.10` is repaired once at `59af92629a79e95fa20247959159e336a8dbc88e` but remains unaccepted after `0.6.10.3`; bounded `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` is active. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
+The survey receipt decision remains `PACKAGE_READY`; implementation `0.6.10` is repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70` but remains unaccepted pending active production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
 
 ## 6. Mandatory Next Codex Branch Report
 

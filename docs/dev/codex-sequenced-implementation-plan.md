@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-08-13
-Route: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`
+Route: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -21,11 +21,11 @@ Use this file as the ordered table of what to implement or plan next, then inspe
 
 Latest implemented primary:
 
-- `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repaired once at `59af92629a79e95fa20247959159e336a8dbc88e` but still requiring two residual repairs and independent acceptance
+- `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70` but still pending independent acceptance
 
 Latest completed support implementation:
 
-- `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` at `59af92629a79e95fa20247959159e336a8dbc88e`, `IMPLEMENTED_PENDING_POST_REPAIR_AUDIT`
+- `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, `IMPLEMENTED_PENDING_REAUDIT`
 
 Latest completed unversioned run:
 
@@ -45,7 +45,7 @@ Latest completed support audit:
 
 Active run:
 
-- `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`
+- `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`
 
 ## Current Queue Override
 
@@ -87,11 +87,12 @@ Active run:
 - `Version 0.6.10.1 - Ashen Reef Survey Advancement Acceptance Audit` is complete with `REPAIR_REQUIRED`. It preserved the positive matrix but proved six deep-validation, correction-evidence, projection-order, caller-identity, explicit-non-effect, and presentation findings.
 - `Version 0.6.10.2 - Ashen Reef Survey Advancement Authority Repair` is complete at `59af92629a79e95fa20247959159e336a8dbc88e` with `IMPLEMENTED_PENDING_POST_REPAIR_AUDIT`.
 - `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit` is complete with `REPAIR_REQUIRED`; it proved residual owner-derived progression and projection-placement defects and issued no representative classification.
-- `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` is active and owns only those two residual repairs.
+- `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` is complete at `07c57392c8078927e4f9e12efe18d8d89bb1fc70` with `IMPLEMENTED_PENDING_REAUDIT`; it repairs only those two residual seams.
+- `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` is active and production-read-only. It must decide parent acceptance before issuing the exact representative-loop classification.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; implemented but unaccepted `0.6.10` owns only Ashen Reef survey advancement, and active `0.6.10.4` must repair only owner-derived progression coherence and projection placement without broadening into turn-in/rewards, geographic Knowledge implementation, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, creator reachability, or generic activity behavior.
+- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; implemented but unaccepted `0.6.10` owns only Ashen Reef survey advancement, and active production-read-only `0.6.10.5` must audit the twice-repaired parent without broadening into turn-in/rewards, geographic Knowledge implementation, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior. Creator reachability is inspected only for the post-parent representative classification.
 
 Versioning note:
 
@@ -586,7 +587,7 @@ Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Ite
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The live order is active bounded `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` after production-read-only `0.6.10.3` returned `REPAIR_REQUIRED` against repair commit `59af92629a79e95fa20247959159e336a8dbc88e`. Parent and representative-loop acceptance remain outside the repair and require a later independent audit. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, and Normal persistence remain unchanged.
+The live order is active production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` after `0.6.10.4` repaired the two residual findings at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`. Parent acceptance must be decided before representative-loop classification. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, and Normal persistence remain unchanged.
 
 ## Default Prompt Pattern
 
@@ -602,7 +603,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is bounded `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` after `0.6.10.3` found two residual defects in the first repair; accepted `0.6.9` and the completed survey receipt design decision remain unchanged. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
+- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` after `0.6.10.4` implemented the bounded residual repair; accepted `0.6.9` and the completed survey receipt design decision remain unchanged. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.

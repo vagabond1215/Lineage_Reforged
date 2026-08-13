@@ -141,3 +141,28 @@ Primary reexecution passed the focused and adjacent matrix `177/177`, Knowledge 
 No formal representative-loop classification is made. Separately observed creator-to-survey reachability remains incomplete because ordinary new-game state does not organically supply the survey quest, tracked state, activity, or Ashen Reef known-location chain; reconsider that evidence only after the parent is accepted.
 
 The next route is `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`. It may repair only `AR-007` and `AR-008`, must preserve every passing contract, and cannot self-accept parent `0.6.10`. A separate production-read-only `0.6.10.5` audit remains required. `0.7.0` stays `NOT_READY`.
+
+## 10. Version 0.6.10.4 Progression And Placement Repair Appendix
+
+Date: 2026-08-13
+
+Synchronized starting head: `2c760eedd41e221fdfbd4caba9611cf0156af0b8`
+
+Implementation commit: `07c57392c8078927e4f9e12efe18d8d89bb1fc70`
+
+Disposition: `IMPLEMENTED_PENDING_REAUDIT`
+
+The bounded implementation repairs only the two residual findings:
+
+| ID | Implemented owner repair | Persisted/behavior posture | Direct evidence |
+| --- | --- | --- | --- |
+| `AR-007` | `validateSurveyOwnerInputs(...)` retains its structural and arithmetic checks, then requires full deep equality with `resolvePlayerEchoProgression(...)` applied to the retained attributes, complete skills, and progression inputs. | Internally coherent but owner-inconsistent progression is invalid before duplicate lookup, mutation, repair, or publication; legitimate derived variants and clean retries remain valid. | Forged zero, alternate-attribute, alternate-skill, and diversity-derived states fail in commands and retained authority even after unchecked recursive canonical recomputation; valid publication remains authoritative and reload retry remains duplicate. |
+| `AR-008` | Destination inspection evaluates exact content and total survey-known placement. Explicit `misordered` / `reordered` authority sorts known rows by `(appliedTick desc, resultId asc)` and scatters only into known slots. | Opaque objects, serialized bytes, and indices remain exact; no placement repair evicts truth; reordered history is nonterminal, event-ineligible, correction-gated, restart-safe, and idempotent. | Notification and Chronicle cases pass at different/equal ticks, both invocation orders, interspersed opaque capped rows, inserted/replaced/reordered histories, correction boundaries, raw serialization, and version-7 publish/load/re-repair. |
+
+The implementation changes only the survey semantic validator, survey projection owner, persisted repair literals, two focused survey test files, and the adjacent skill-gating fixture required to keep deliberately mutated skills owner-coherent. TypeScript re-export/type-only JavaScript mirrors remain unchanged and covered. It does not change UI/context/gameplay-loop production code, balance, save versions, migrations, Normal defeat/recovery, content, dependencies, generic projections, or representative reachability.
+
+Post-repair validation passed the adversarial selection `6/6`, focused survey files `41/41`, prescribed focused/adjacent matrix `175/175` plus achievements `8/8` (`183/183`), additional account/run/legacy/deterministic coverage `72/72`, Knowledge `132/132`, clock/schema `107/107`, and the 212-module Vite production build. Bounded TypeScript retained the exact 137-diagnostic baseline with no repaired-surface diagnostic and only the same two relevant pre-existing `ActivityPanel` findings. Raw and version-7 persistence proved valid duplicate durability, forged-authority quarantine, drift discovery, explicit reorder persistence, opaque-slot stability, and restart idempotency.
+
+No new failure-pattern row is required: this implementation directly closes the reusable `FP-015` owner-recomputation and `FP-016` projection-placement omissions while satisfying the retained `FP-003`, `FP-006`, `FP-011`, `FP-012`, `FP-013`, and `FP-014` gates.
+
+This appendix is implementation evidence, not parent acceptance. Active next is production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`. Only that audit may return `PARENT_ACCEPTED` or `REPAIR_REQUIRED` and, after a parent acceptance, issue the required representative-loop classification. `0.7.0` remains `NOT_READY`.

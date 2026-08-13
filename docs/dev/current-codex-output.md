@@ -2,7 +2,7 @@
 
 Date: 2026-08-13
 
-Source run: `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`
+Source run: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`
 
 Parent version: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
@@ -10,31 +10,33 @@ Label class: support suffix
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: clean synchronized `master == origin/master` at audit start `bc9783803c08ab403cad0302727d5b701291da40`; production and tracked tests remained read-only
+Branch/status assumption: clean synchronized `master == origin/master` at start `2c760eedd41e221fdfbd4caba9611cf0156af0b8`; direct-to-`master` implementation workflow authorized by the active prompt
 
-Inspected implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
-
-Inspected repair: `59af92629a79e95fa20247959159e336a8dbc88e`
-
-Audit authority commit: `ad4a080acc3d05a4a790c4b219780db11a1be1a1`
+Implementation commit: `07c57392c8078927e4f9e12efe18d8d89bb1fc70`
 
 Final coordination commit: the exact pushed follow-up HEAD is reported in the completion response because a commit cannot contain its own identity
 
-Decision: `REPAIR_REQUIRED`
+Disposition: `IMPLEMENTED_PENDING_REAUDIT`
 
-Representative-loop classification: blocked; no classification issued while parent authority remains unaccepted
-
-Next route: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`
+Next route: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`
 
 ## A. Files Changed
 
-Documentation and coordination only:
+Production and focused tests:
+
+- `packages/engines/game-engine/src/campaign-rules.ts`
+- `packages/engines/game-engine/src/player-survey-activity-advancement.ts`
+- `packages/shared/types/src/contracts.ts`
+- `tests/unit/gameplay-loop-skill-gating.test.mjs`
+- `tests/unit/player-survey-activity-advancement-command.test.mjs`
+- `tests/unit/player-survey-activity-advancement-persistence.test.mjs`
+
+Repository coordination:
 
 - `docs/dev/current-codex-prompt.md`
 - `docs/dev/current-codex-output.md`
 - `docs/dev/current-gpt-handoff.md`
 - `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`
-- `docs/design/ashen-reef-survey-occurrence-result-and-consequence-receipt-foundation-decision.md`
 - `docs/dev/repository-first-agent-work-protocol.md`
 - `docs/dev/historical-version-and-deferred-route-register.md`
 - `docs/design/current-planning-anchor-reconciliation.md`
@@ -43,62 +45,61 @@ Documentation and coordination only:
 - `docs/dev/project-vision-and-continuity-brief.md`
 - `docs/future_content_backlog.md`
 - `docs/design/static-content-expansion-program.md`
-- `docs/dev/codex-failure-patterns-and-verification-guardrails.md`
 - `docs/dev/branch-disposition-register.md`
 
-No production source, shared contract, tracked test, schema, migration, save format, content, asset, dependency, branch, pull request, or evidence ref changed.
+No UI/context/gameplay-loop production path, JavaScript pass-through mirror, index, save format, migration, Normal defeat/recovery owner, content, canon, asset, dependency, generic projection system, branch, pull request, or evidence ref changed.
 
-## B. Patch And Decision Summary
+## B. Patch Summary
 
-Parent `0.6.10` remains unaccepted. Direct inspection and removable adversarial execution reproduced two residual failures inside the repaired authority:
+`AR-007` is closed at the shared survey semantic gate. Retained progression still passes its existing deep structural and arithmetic checks, then must equal the authoritative `resolvePlayerEchoProgression(...)` result derived from the retained attributes, complete skills, and progression inputs. Forged but internally coherent Echo, contribution, diversity, or level facts now fail before durable duplicate resolution, repair, publication, or mutation. Legitimate owner-derived variants and exact clean retries remain accepted/duplicate as appropriate.
 
-- `AR-007` / residual `AR-001`: `campaign-rules.ts` accepts an internally self-consistent retained progression/Echo state without recomputing it from retained attributes and skills. A forged zero-Echo progression with a caller-recomputed canonical intent remains valid target authority; the legitimate retry becomes `conflicting_retry`, while the forged retry becomes a durable `duplicate`.
-- `AR-008` / residual `AR-003`: projection inspection treats exact row bytes as sufficient and does not validate their persisted authority position. Reversing two genuine notification rows and two Chronicle rows remains undiscoverable, direct repair returns `projection_already_correct`, and version-7 publish/load preserves the wrong order.
+`AR-008` is closed with explicit persisted placement authority. Notification and Chronicle inspection now validates exact content and exact order among survey-known rows. Repair sorts those known rows by `(appliedTick desc, resultId asc)` and scatters them only into their existing known-row slots, preserving every opaque row's object, bytes, and index. Exact misplaced rows record `misordered` / `reordered`; the pairing is deep-validated, nonterminal for later drift, invalid for events, restart-safe, and idempotent. Missing-at-full-with-opaque retention expiry, pending-only event repair, correction gates, caps, and initial accepted projection behavior remain unchanged.
 
-`AR-002`, `AR-004`, `AR-005`, and `AR-006` passed independent inspection. Positive four-stage, caller, duplicate, fork, save/load, publication, defeat/recovery, correction, non-proposal, and skill-presentation evidence also passed. Those facts narrow the repair but do not override either durable-authority failure.
+The tracked `.js` counterparts remain intentionally unchanged because the two game-engine mirrors re-export their TypeScript source and `contracts.js` is type-erased. The adjacent skill-gating fixture now recomputes owner-derived progression after deliberate skill mutation; no gameplay balance changed.
 
-No formal representative-loop classification is made. A separate observation found ordinary new-game creator state does not organically provide the survey quest, tracked state, selected survey activity, or known Ashen Reef destination; current "fresh" survey tests inject those prerequisites. Reconsider that evidence only after parent acceptance.
-
-Installed `Version 0.6.10.4` as a support repair limited to owner-derived progression coherence and byte-correct projection placement. It must preserve every passing contract and install separate production-read-only `0.6.10.5` on success. `0.7.0` remains `NOT_READY`.
+This implementation does not accept parent `0.6.10`, issue a representative-loop classification, or advance the project to `0.7.0`. It installs a separate production-read-only re-audit.
 
 ## C. Tests And Checks Run
 
-- synchronized identity: clean `master == origin/master == bc9783803c08ab403cad0302727d5b701291da40` before audit;
-- full repair diff inspection: `4daa6f997de34108e71231c5b0b0e8f5f861c310..59af92629a79e95fa20247959159e336a8dbc88e`; `git diff --check` passed;
-- focused survey plus adjacent runtime/caller/persistence matrix: `169/169` passed;
-- prescribed historical companion `achievements.test.mjs`: `8/8` passed, for the recorded `177/177` grouping;
-- additional account/run/legacy/deterministic coverage: `36/36` passed;
-- Knowledge boundary matrix: `132/132` passed;
+- fresh pre-repair probes reproduced both blockers: owner-incoherent progression validated and controlled durable retry identity; reversed byte-correct notification/Chronicle rows were undiscoverable and survived restart;
+- post-repair adversarial selection: `6/6` passed for owner-derived progression, different/equal-tick placement, repair-history ordinals, and version-7 quarantine/restart repair;
+- focused survey characterization/command/persistence: `41/41` passed;
+- prescribed focused and adjacent runtime/caller/persistence matrix: `175/175` passed; companion `achievements.test.mjs`: `8/8`, for `183/183` total;
+- additional account/run/legacy/deterministic coverage: `72/72` passed;
+- Knowledge evidence matrix: `132/132` passed; an additional all-knowledge run passed `764/764`;
 - clock/schema matrix: `107/107` passed;
-- RPG UI production build: Vite `5.4.21`, `212` modules transformed, passed with only the registered large-chunk advisory;
-- bounded TypeScript audit: exit `2`, exact registered baseline `137` diagnostics; only the same two pre-existing touched-file `ActivityPanel` TS2375 diagnostics appeared;
-- removable adversarial audit: nine cases executed; eight positive/rejection assertions passed and the byte-correct placement assertion failed against current behavior, reproducing `AR-008`; the separate `AR-007` case proved the forged authority validates and controls retry identity;
-- independent persistence probes confirmed non-empty survey authority survives pending defeat and completed recovery, and confirmed row-placement drift survives version-7 publication/readback/restart;
-- temporary probe and build-output artifacts were removed;
-- starting hosted prompt matched local; no combined status contexts or PR-triggered workflow runs existed on the repair or audit-start heads.
+- RPG UI Vite `5.4.21` production build: passed with `212` transformed modules and only the registered large-chunk advisory; temporary output removed;
+- bounded application TypeScript: exit `2`, exact registered baseline `137` diagnostics; the repaired engine/contracts surface introduced no diagnostic and only the same two pre-existing `ActivityPanel` TS2375 findings appeared in the relevant caller surface;
+- `npm run build` stopped at that registered TypeScript baseline before Vite, while the controlling direct Vite production build passed;
+- one optional exploratory legacy-ledger source-guard grouping was `40/41` because its pre-existing App-copy regex expects `Lineage Source Unavailable`; the required matrices and changed surfaces do not use or alter that stale guard;
+- `git diff --check`, staged diff inspection, source/mirror guards, raw serialization, version-7 publication/readback/restart, correction gating, cap/opaque preservation, and final temporary-artifact hygiene passed.
 
 ## D. Applicable Failure Patterns, Risks, And Follow-Up
 
-- `FP-001`: executable production caller and panel-facing adapter evidence passed; creator reachability remains only an observation because the parent failed first.
-- `FP-002`: green prescribed tests did not accept a parent after independent semantic failures.
-- `FP-003`: repair remains production-reachable, but exact placement drift has no completion posture.
-- `FP-005`: technical retry identity, caller-state retention, and all terminal clearing paths passed.
-- `FP-006`: no repair may evict newer or opaque truth; the next repair must preserve caps and indices.
-- `FP-008`: mechanically reusable branches and PRs remained read-only evidence.
-- `FP-009`: inspected implementation, repair, audit-start, local, remote, hosted, and coordination identities are recorded separately.
-- `FP-011`: semantic validation must precede durable duplicate lookup and mutation.
-- `FP-012`: complete graph shape is insufficient when retained derived authority is owner-incoherent.
-- `FP-013`: nested survey authority passed migration, fork, defeat, recovery, save, and publication preservation.
-- `FP-014`: caller-recomputed canonical strings do not make forged owner semantics authoritative.
-- `FP-015`: newly recorded; derived progression must be recomputed from its retained owner inputs.
-- `FP-016`: newly recorded; exact projection bytes do not prove exact authority placement.
+- `FP-001`: executable caller/source guards remained green; caller production code was unchanged.
+- `FP-002`: green implementation evidence installs, but does not replace, independent `0.6.10.5` acceptance.
+- `FP-003`: placement drift is now discoverable, repairable, persisted, restart-safe, and completion-idempotent.
+- `FP-005`: technical-retry request identity and accepted-only state application remain unchanged and covered.
+- `FP-006`: repair preserves opaque indices/bytes and does not evict retained truth.
+- `FP-008`: all Connector and protected refs remained read-only evidence.
+- `FP-009`: start, implementation, coordination, remote, and hosted identities are reported separately.
+- `FP-011`: semantic progression validation runs before duplicate resolution or mutation.
+- `FP-012`: well-shaped but owner-incoherent derived authority now fails closed.
+- `FP-013`: raw and version-7 persistence/restart retain valid survey and repair authority; forged authority cannot replace the valid published head.
+- `FP-014`: caller-recomputed canonical strings cannot authorize false owner semantics.
+- `FP-015`: authoritative progression is recomputed from retained owner inputs.
+- `FP-016`: exact row bytes no longer bypass placement inspection.
 
-Risk: the `0.6.10.4` repair must not broaden into generic projection cleanup, UI work, save-version change, balance change, or representative-loop reachability work. If preserving opaque indices and total known-row order cannot be made decision-complete inside the bounded owner, it must return `REPAIR_INCOMPLETE` rather than improvise.
+No new generalized failure pattern was warranted; the active repair directly closes `FP-015` and `FP-016` while preserving the others.
+
+Risk: parent `0.6.10` remains unaccepted until production-read-only `0.6.10.5` independently reproduces both repaired boundaries and the retained contract matrix. Ordinary creator-to-quest-to-travel-to-survey reachability remains outside this repair and must not be inferred from injected fixtures. The broad TypeScript baseline and one unrelated stale exploratory source guard remain repository limitations, not repaired claims.
 
 ## Branch And Pull-Request Lifecycle Review
 
-Fresh orientation inspected one local branch, 36 non-default remote branches, both open pull requests, the four exact survey evidence refs, and the protected readiness ref. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`. The four Connector refs remain `CANDIDATE_INTEGRATION` only for broader named consumers; the readiness ref remains `PROTECTED_REFERENCE`. No disposition changed and no merge, cherry-pick, rebase, force update, PR mutation, closure, deletion, or evidence-ref mutation was due. Reinspect at `0.6.10.4` orientation or an earlier explicit lifecycle trigger.
+Fresh orientation fetched/pruned and inspected one local branch, 36 non-default remote branches, both open pull requests, all four exact Connector evidence refs, and the protected readiness ref. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`. The four Connector refs remain `CANDIDATE_INTEGRATION` only for their broader named consumers; the readiness ref remains `PROTECTED_REFERENCE`.
 
-Suggested commit message: `docs(survey): record post-repair audit failure`
+No disposition changed and no merge, cherry-pick, rebase, force update, PR mutation, closure, deletion, or evidence-ref mutation was due. Reinspect during `0.6.10.5` orientation or an earlier explicit lifecycle trigger.
 
-Next recommended version/run: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`
+Suggested coordination commit message: `docs(survey): install progression and projection re-audit`
+
+Next recommended version/run: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`
