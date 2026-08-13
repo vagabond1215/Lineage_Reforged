@@ -28,6 +28,7 @@ import {
   loadEchoBalanceRule,
   normalizePlayerBodyState,
   normalizePlayerStatGrowth,
+  resolvePlayerEchoProgression,
   resolveSkillRankGainPolicy,
   syncPlayerBodyState,
   syncPlayerStatGrowth
@@ -931,6 +932,24 @@ function validateSurveyOwnerInputs(value: unknown): value is AshenReefSurveyOwne
   const surveyOperation = value.surveyOperation;
   const stormglassDiscovery = value.stormglassDiscovery;
   const stormglassCodexEntry = value.stormglassCodexEntry;
+  const skillsValid = skills.every(validateSkill) &&
+    new Set(skills.map((entry) => entry.id)).size === skills.length;
+  const progressionValid = validateProgression(value.progression);
+  let progressionOwnerCoherent = false;
+  if (skillsValid && progressionValid) {
+    try {
+      progressionOwnerCoherent = deepEqual(
+        value.progression,
+        resolvePlayerEchoProgression({
+          attributes: value.attributes as AshenReefSurveyOwnerInputsState["attributes"],
+          skills: skills as AshenReefSurveyOwnerInputsState["skills"],
+          progression: value.progression as PlayerProgression
+        })
+      );
+    } catch {
+      return false;
+    }
+  }
   return (
     Number.isInteger(value.totalPlayTicks) && Number(value.totalPlayTicks) >= 0 &&
     (value.lastReputationDecayDay === null ||
@@ -942,8 +961,7 @@ function validateSurveyOwnerInputs(value: unknown): value is AshenReefSurveyOwne
     validateResources(value.resources) &&
     validateResourceRuntime(value.resourceRuntime) &&
     normalizedStatGrowth !== null && deepEqual(value.statGrowth, normalizedStatGrowth) &&
-    skills.every(validateSkill) &&
-    new Set(skills.map((entry) => entry.id)).size === skills.length &&
+    skillsValid &&
     relevantSkills.length === 2 &&
     relevantSkills.every(
       (entry, index) => entry === null ||
@@ -958,7 +976,8 @@ function validateSurveyOwnerInputs(value: unknown): value is AshenReefSurveyOwne
         ) ?? null
       )
     ) &&
-    validateProgression(value.progression) &&
+    progressionValid &&
+    progressionOwnerCoherent &&
     validateReputation(value.reputation) &&
     validateOriginProfile(
       value.originProfile,
@@ -1709,14 +1728,16 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
       terminalRepairs.has(ordinalKey) ||
       repair.ordinal !== expectedOrdinal ||
       repair.repairId !== `survey_projection_repair.${uuid}.${repair.projectionKind}.${repair.ordinal}` ||
-      (repair.observed !== "missing" && repair.observed !== "malformed") ||
-      (repair.outcome !== "inserted" && repair.outcome !== "replaced" && repair.outcome !== "retention_expired" && repair.outcome !== "event_reemitted") ||
+      (repair.observed !== "missing" && repair.observed !== "malformed" && repair.observed !== "misordered") ||
+      (repair.outcome !== "inserted" && repair.outcome !== "replaced" && repair.outcome !== "reordered" && repair.outcome !== "retention_expired" && repair.outcome !== "event_reemitted") ||
       (repair.projectionKind === "event" &&
         (receipt.posture !== "projection_pending" ||
           repair.observed !== "missing" ||
           repair.outcome !== "event_reemitted")) ||
       (repair.projectionKind !== "event" && repair.outcome === "event_reemitted") ||
       (repair.outcome === "replaced" && repair.observed !== "malformed") ||
+      (repair.outcome === "reordered" && repair.observed !== "misordered") ||
+      (repair.observed === "misordered" && repair.outcome !== "reordered") ||
       ((repair.outcome === "inserted" || repair.outcome === "retention_expired") &&
         repair.observed !== "missing") ||
       !Number.isInteger(repair.appliedTick) ||

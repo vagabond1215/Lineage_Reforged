@@ -1774,6 +1774,7 @@ type ProjectionDestinationInspection<T extends { id: string }> =
   | { code: "already_correct"; observed: null; rows: T[] }
   | { code: "inserted"; observed: "missing"; rows: T[] }
   | { code: "replaced"; observed: "malformed"; rows: T[] }
+  | { code: "reordered"; observed: "misordered"; rows: T[] }
   | { code: "retention_expired"; observed: "missing"; rows: T[] }
   | { code: "invalid"; observed: null; rows: T[] };
 
@@ -1818,10 +1819,30 @@ function resolveProjectionAuthorityKey(
   return { code: "opaque" };
 }
 
-function mergeOrderedProjectionRows<T extends { id: string }>(
-  original: Array<{ row: T; key: ProjectionAuthorityKey | null }>,
-  orderedKnownRows: T[]
+function placeOrderedProjectionRows<T extends { id: string }>(
+  original: Array<{ row: T; key: ProjectionAuthorityKey | null }>
 ): T[] {
+  const knownSlots = original
+    .map((entry, index) => entry.key === null ? -1 : index)
+    .filter((index) => index >= 0);
+  const orderedKnownRows = original
+    .filter((entry): entry is { row: T; key: ProjectionAuthorityKey } => entry.key !== null)
+    .sort((left, right) => compareProjectionAuthority(left.key, right.key))
+    .map((entry) => entry.row);
+  const nextRows = original.map((entry) => entry.row);
+  knownSlots.forEach((slot, index) => {
+    nextRows[slot] = orderedKnownRows[index]!;
+  });
+  return nextRows;
+}
+
+function mergeOrderedProjectionRows<T extends { id: string }>(
+  original: Array<{ row: T; key: ProjectionAuthorityKey | null }>
+): T[] {
+  const orderedKnownRows = original
+    .filter((entry): entry is { row: T; key: ProjectionAuthorityKey } => entry.key !== null)
+    .sort((left, right) => compareProjectionAuthority(left.key, right.key))
+    .map((entry) => entry.row);
   const opaqueRows = original.filter((entry) => entry.key === null).map((entry) => entry.row);
   return [...orderedKnownRows, ...opaqueRows];
 }
@@ -1832,7 +1853,8 @@ function inspectProjectionDestination<T extends { id: string }>(
   expectedRow: T,
   targetKey: ProjectionAuthorityKey,
   kind: OrderedSurveyProjectionKind,
-  cap: number
+  cap: number,
+  preserveOpaqueSlots = false
 ): ProjectionDestinationInspection<T> {
   const unchanged = [...rows];
   if (!Number.isSafeInteger(cap) || cap < 1 || rows.length > cap) {
@@ -1850,10 +1872,14 @@ function inspectProjectionDestination<T extends { id: string }>(
   }
 
   const matchingIndex = rows.findIndex((entry) => entry.id === expectedRow.id);
+  const matchingRowIsExact = matchingIndex >= 0 &&
+    projectionRowsEqual(rows[matchingIndex], expectedRow);
   const descriptors: Array<{ row: T; key: ProjectionAuthorityKey | null }> = [];
   for (let index = 0; index < rows.length; index += 1) {
     const original = rows[index]!;
-    const row = index === matchingIndex ? clone(expectedRow) : original;
+    const row = index === matchingIndex && !matchingRowIsExact
+      ? clone(expectedRow)
+      : original;
     const resolution = resolveProjectionAuthorityKey(
       snapshot,
       row.id,
@@ -1867,10 +1893,6 @@ function inspectProjectionDestination<T extends { id: string }>(
     descriptors.push({ row, key: resolution.code === "known" ? resolution.key : null });
   }
 
-  if (matchingIndex >= 0 && projectionRowsEqual(rows[matchingIndex], expectedRow)) {
-    return { code: "already_correct", observed: null, rows: unchanged };
-  }
-
   if (matchingIndex < 0) {
     if (rows.length >= cap && descriptors.some((entry) => entry.key === null)) {
       return { code: "retention_expired", observed: "missing", rows: unchanged };
@@ -1878,11 +1900,9 @@ function inspectProjectionDestination<T extends { id: string }>(
     descriptors.push({ row: clone(expectedRow), key: targetKey });
   }
 
-  const orderedKnown = descriptors
-    .filter((entry): entry is { row: T; key: ProjectionAuthorityKey } => entry.key !== null)
-    .sort((left, right) => compareProjectionAuthority(left.key, right.key))
-    .map((entry) => entry.row);
-  let nextRows = mergeOrderedProjectionRows(descriptors, orderedKnown);
+  let nextRows = preserveOpaqueSlots
+    ? placeOrderedProjectionRows(descriptors)
+    : mergeOrderedProjectionRows(descriptors);
 
   if (nextRows.length > cap) {
     if (descriptors.some((entry) => entry.key === null)) {
@@ -1894,9 +1914,15 @@ function inspectProjectionDestination<T extends { id: string }>(
     }
   }
 
-  return matchingIndex < 0
-    ? { code: "inserted", observed: "missing", rows: nextRows }
-    : { code: "replaced", observed: "malformed", rows: nextRows };
+  if (matchingIndex < 0) {
+    return { code: "inserted", observed: "missing", rows: nextRows };
+  }
+  if (!matchingRowIsExact) {
+    return { code: "replaced", observed: "malformed", rows: nextRows };
+  }
+  return projectionRowsEqual(rows, nextRows)
+    ? { code: "already_correct", observed: null, rows: unchanged }
+    : { code: "reordered", observed: "misordered", rows: nextRows };
 }
 
 type SurveyProjectionRepairInspection =
@@ -1906,7 +1932,7 @@ type SurveyProjectionRepairInspection =
       result: AshenReefSurveyResultState;
       receipt: AshenReefSurveyConsequenceReceiptState;
       priorRepairs: AshenReefSurveyProjectionRepairState[];
-      observed: "missing" | "malformed";
+      observed: "missing" | "malformed" | "misordered";
       outcome: AshenReefSurveyProjectionRepairState["outcome"];
       rows: NotificationState[] | ChronicleEventState[] | null;
     };
@@ -1969,7 +1995,8 @@ function inspectPlayerSurveyProjectionRepair(
       receipt.effect.row,
       { appliedTick: result.appliedTick, stableId: result.resultId },
       "notification",
-      receipt.effect.cap
+      receipt.effect.cap,
+      true
     );
     if (destination.code === "invalid") return { code: "invalid" };
     if (destination.code === "already_correct") return { code: "already_correct" };
@@ -1991,7 +2018,8 @@ function inspectPlayerSurveyProjectionRepair(
     receipt.effect.row,
     { appliedTick: result.appliedTick, stableId: result.resultId },
     "chronicle",
-    receipt.effect.cap
+    receipt.effect.cap,
+    true
   );
   if (destination.code === "invalid") return { code: "invalid" };
   if (destination.code === "already_correct") return { code: "already_correct" };

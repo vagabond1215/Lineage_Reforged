@@ -10,6 +10,7 @@ import {
   isTargetCampaignSnapshot
 } from "../../packages/engines/game-engine/src/campaign-rules.ts";
 import { createCampaignSessionControl } from "../../packages/engines/game-engine/src/campaign-session.ts";
+import { resolvePlayerEchoProgression } from "../../packages/engines/player-engine/src/progression.ts";
 import {
   createPlayerSurveyActivityAdvancementCommand,
   executePlayerSurveyActivityAdvancementCommand
@@ -76,6 +77,7 @@ function setSkill(snapshot, skillId, rank, progression = undefined) {
   };
   const withoutSkill = snapshot.playerState.skills.filter((entry) => entry.id !== skillId);
   snapshot.playerState.skills = [...withoutSkill, nextSkill].sort((left, right) => left.id.localeCompare(right.id));
+  snapshot.playerState.progression = resolvePlayerEchoProgression(snapshot.playerState);
 }
 
 function getSkill(snapshot, skillId) {

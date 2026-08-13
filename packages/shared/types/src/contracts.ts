@@ -1661,8 +1661,8 @@ export interface AshenReefSurveyProjectionRepairState {
   characterId: string;
   projectionKind: AshenReefSurveyProjectionKind;
   ordinal: number;
-  observed: "missing" | "malformed";
-  outcome: "inserted" | "replaced" | "retention_expired" | "event_reemitted";
+  observed: "missing" | "malformed" | "misordered";
+  outcome: "inserted" | "replaced" | "reordered" | "retention_expired" | "event_reemitted";
   appliedTick: number;
 }
 

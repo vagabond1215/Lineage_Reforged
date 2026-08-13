@@ -17,6 +17,10 @@ import {
 import { resolvePlayerOriginProfile } from "../../packages/shared/types/src/player-origins.ts";
 import { normalizePlayerBodyState } from "../../packages/engines/player-engine/src/body-state.ts";
 import {
+  createPlayerProgressionState,
+  resolvePlayerEchoProgression
+} from "../../packages/engines/player-engine/src/progression.ts";
+import {
   initializeTargetCampaignSnapshot,
   isTargetCampaignSnapshot,
   serializeAshenReefSurveyNormalizedIntent
@@ -62,6 +66,20 @@ function reverseObjectKeyOrder(value) {
       result[key] = reverseObjectKeyOrder(value[key]);
       return result;
     }, {});
+}
+
+function uncheckedCanonicalIntent(value) {
+  const normalize = (entry) => {
+    if (Array.isArray(entry)) return entry.map(normalize);
+    if (!entry || typeof entry !== "object") return entry;
+    return Object.keys(entry)
+      .sort()
+      .reduce((result, key) => {
+        result[key] = normalize(entry[key]);
+        return result;
+      }, {});
+  };
+  return JSON.stringify(normalize(value));
 }
 
 function prepareSnapshot(stage = 1, { codex = "locked", initialize = true } = {}) {
@@ -292,12 +310,16 @@ test("normalized intent certifies every bounded owner input consumed by the shif
     },
     (snapshot) => { snapshot.playerState.resources.stamina.current -= 1; },
     (snapshot) => { snapshot.playerState.resourceRuntime.history.reverse(); },
-    (snapshot) => { snapshot.playerState.attributes.AGI += 1; },
+    (snapshot) => {
+      snapshot.playerState.attributes.AGI += 1;
+      snapshot.playerState.progression = resolvePlayerEchoProgression(snapshot.playerState);
+    },
     (snapshot) => { snapshot.playerState.statGrowth.load.AGI += 0.25; },
     (snapshot) => {
       snapshot.playerState.skills = snapshot.playerState.skills.map((entry) =>
         entry.id === "skill.knowledge.general_lore" ? { ...entry, rank: entry.rank + 1 } : entry
       );
+      snapshot.playerState.progression = resolvePlayerEchoProgression(snapshot.playerState);
     },
     (snapshot) => {
       snapshot.playerState.skills = snapshot.playerState.skills.map((entry, index) =>
@@ -305,6 +327,7 @@ test("normalized intent certifies every bounded owner input consumed by the shif
           ? { ...entry, rank: entry.rank + 1 }
           : entry
       );
+      snapshot.playerState.progression = resolvePlayerEchoProgression(snapshot.playerState);
     },
     (snapshot) => {
       snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel += 1;
@@ -511,6 +534,103 @@ test("normalized intent is recursively canonical while malformed deep owner inpu
       "malformed_command"
     );
   }
+});
+
+test("retained survey progression must equal the authoritative owner-derived Echo result", () => {
+  const source = prepareSnapshot();
+  const control = createControl(source);
+  const requestId = nextRequestId();
+  const command = createPlayerSurveyActivityAdvancementCommand(source, control, requestId);
+  const accepted = executePlayerSurveyActivityAdvancementCommand(source, control, command);
+  assert.equal(accepted.accepted, true);
+
+  const ownerInputs = command.normalizedIntent.ownerInputs;
+  const alternateAttributes = structuredClone(ownerInputs);
+  alternateAttributes.attributes.STR += 7;
+  const alternateSkills = structuredClone(ownerInputs);
+  alternateSkills.skills[0].rank = Math.min(125, alternateSkills.skills[0].rank + 17);
+  const alternateDiversity = structuredClone(ownerInputs);
+  alternateDiversity.skills = alternateDiversity.skills.map((skill, index) => ({
+    ...skill,
+    rank: index < 3 ? Math.max(skill.rank, 25) : skill.rank
+  }));
+  const forgedProgressions = [
+    createPlayerProgressionState({
+      legacyGrowth: ownerInputs.progression.legacyGrowth
+    }),
+    resolvePlayerEchoProgression(alternateAttributes),
+    resolvePlayerEchoProgression(alternateSkills),
+    resolvePlayerEchoProgression(alternateDiversity)
+  ];
+
+  for (const progression of forgedProgressions) {
+    const forgedCommand = structuredClone(command);
+    forgedCommand.normalizedIntent.ownerInputs.progression = progression;
+    forgedCommand.canonicalIntent = uncheckedCanonicalIntent(forgedCommand.normalizedIntent);
+    const before = JSON.stringify(accepted.snapshot);
+    const rejected = executePlayerSurveyActivityAdvancementCommand(
+      accepted.snapshot,
+      accepted.control,
+      forgedCommand
+    );
+    assert.equal(rejected.code, "malformed_command");
+    assert.equal(rejected.snapshot, accepted.snapshot);
+    assert.equal(rejected.control, accepted.control);
+    assert.equal(JSON.stringify(accepted.snapshot), before);
+
+    const corrupted = structuredClone(accepted.snapshot);
+    const retained = corrupted.authorityLedger.ashenReefSurvey.requests[0];
+    retained.normalizedIntent.ownerInputs.progression = structuredClone(progression);
+    retained.canonicalIntent = uncheckedCanonicalIntent(retained.normalizedIntent);
+    assert.equal(isTargetCampaignSnapshot(corrupted), false);
+    const invalidAuthority = executePlayerSurveyActivityAdvancementCommand(
+      corrupted,
+      accepted.control,
+      command
+    );
+    assert.equal(invalidAuthority.code, "invalid_authority");
+    assert.equal(invalidAuthority.snapshot, corrupted);
+  }
+
+  const staleAttributes = structuredClone(command);
+  staleAttributes.normalizedIntent.ownerInputs.attributes.WIS += 1;
+  staleAttributes.canonicalIntent = uncheckedCanonicalIntent(staleAttributes.normalizedIntent);
+  assert.equal(
+    executePlayerSurveyActivityAdvancementCommand(
+      accepted.snapshot,
+      accepted.control,
+      staleAttributes
+    ).code,
+    "malformed_command"
+  );
+
+  for (const mutate of [
+    (snapshot) => { snapshot.playerState.attributes.INT += 2; },
+    (snapshot) => {
+      snapshot.playerState.skills[0].rank = Math.min(
+        125,
+        snapshot.playerState.skills[0].rank + 1
+      );
+    }
+  ]) {
+    const legitimate = prepareSnapshot();
+    mutate(legitimate);
+    legitimate.playerState.progression = resolvePlayerEchoProgression(legitimate.playerState);
+    const legitimateResult = execute(
+      legitimate,
+      createControl(legitimate),
+      nextRequestId()
+    ).result;
+    assert.equal(legitimateResult.accepted, true, legitimateResult.notice.detail);
+  }
+
+  const duplicate = executePlayerSurveyActivityAdvancementCommand(
+    structuredClone(accepted.snapshot),
+    structuredClone(accepted.control),
+    structuredClone(command)
+  );
+  assert.equal(duplicate.code, "duplicate");
+  assert.equal(duplicate.duplicate, true);
 });
 
 test("command preparation classifies terminal, technical-retry, and unclassified outcomes", () => {
@@ -1228,6 +1348,7 @@ test("owner failure is atomic while projection failure retains gameplay truth fo
     { resultId: pending.result.resultId, projectionKind: "event" }
   ]);
 
+  const opaqueNotifications = structuredClone(pending.snapshot.sessionState.notifications);
   const repairedNotification = repairPlayerSurveyActivityProjection(
     pending.snapshot,
     pending.control,
@@ -1237,8 +1358,12 @@ test("owner failure is atomic while projection failure retains gameplay truth fo
   assert.equal(repairedNotification.accepted, true);
   assert.equal(repairedNotification.repair.outcome, "inserted");
   assert.equal(
-    repairedNotification.snapshot.sessionState.notifications[0].id,
+    repairedNotification.snapshot.sessionState.notifications.at(-1).id,
     pending.result.projectionIds.notification
+  );
+  assert.deepEqual(
+    repairedNotification.snapshot.sessionState.notifications.slice(0, -1),
+    opaqueNotifications
   );
   assert.equal(repairedNotification.snapshot.clock.tick, pending.snapshot.clock.tick);
   assert.equal(
@@ -1429,6 +1554,258 @@ test("production repair discovery finds applied notification and Chronicle drift
     { resultId: pendingBoth.result.resultId, projectionKind: "notification" },
     { resultId: pendingBoth.result.resultId, projectionKind: "chronicle" }
   ]);
+});
+
+test("byte-correct survey rows repair total placement without moving or evicting opaque rows", () => {
+  const first = execute(prepareSnapshot()).result;
+  const second = execute(first.snapshot, first.control).result;
+
+  for (const projectionKind of ["notification", "chronicle"]) {
+    const destinationName = projectionKind === "notification" ? "notifications" : "chronicle";
+    const cap = projectionKind === "notification" ? 8 : 48;
+    const olderRow = structuredClone(
+      second.snapshot.sessionState[destinationName].find(
+        (entry) => entry.id === first.result.projectionIds[projectionKind]
+      )
+    );
+    const newerRow = structuredClone(
+      second.snapshot.sessionState[destinationName].find(
+        (entry) => entry.id === second.result.projectionIds[projectionKind]
+      )
+    );
+    const knownSlots = [1, cap - 2];
+    const drifted = structuredClone(second.snapshot);
+    drifted.sessionState[destinationName] = Array.from({ length: cap }, (_, index) => ({
+      ...structuredClone(olderRow),
+      id: `${projectionKind}.opaque.${index}`,
+      title: `Opaque ${projectionKind} ${index}`
+    }));
+    drifted.sessionState[destinationName][knownSlots[0]] = olderRow;
+    drifted.sessionState[destinationName][knownSlots[1]] = newerRow;
+    const opaqueByIndex = drifted.sessionState[destinationName]
+      .map((row, index) => knownSlots.includes(index) ? null : [index, JSON.stringify(row)])
+      .filter(Boolean);
+
+    assert.deepEqual(
+      listPendingPlayerSurveyProjectionRepairs(drifted)
+        .filter((entry) => entry.projectionKind === projectionKind),
+      [
+        { resultId: first.result.resultId, projectionKind },
+        { resultId: second.result.resultId, projectionKind }
+      ]
+    );
+
+    const finalDestinations = [];
+    for (const order of [
+      [first.result.resultId, second.result.resultId],
+      [second.result.resultId, first.result.resultId]
+    ]) {
+      const repaired = repairPlayerSurveyActivityProjection(
+        structuredClone(drifted),
+        structuredClone(second.control),
+        order[0],
+        projectionKind
+      );
+      assert.equal(repaired.accepted, true);
+      assert.equal(repaired.repair.observed, "misordered");
+      assert.equal(repaired.repair.outcome, "reordered");
+      assert.equal(repaired.snapshot.sessionState[destinationName].length, cap);
+      for (const [index, bytes] of opaqueByIndex) {
+        assert.equal(JSON.stringify(repaired.snapshot.sessionState[destinationName][index]), bytes);
+      }
+      assert.deepEqual(
+        repaired.snapshot.sessionState[destinationName]
+          .filter((entry) =>
+            entry.id === newerRow.id || entry.id === olderRow.id
+          )
+          .map((entry) => entry.id),
+        [newerRow.id, olderRow.id]
+      );
+      const repairCount = repaired.snapshot.authorityLedger.ashenReefSurvey.projectionRepairs.length;
+      const duplicate = repairPlayerSurveyActivityProjection(
+        repaired.snapshot,
+        repaired.control,
+        order[1],
+        projectionKind
+      );
+      assert.equal(duplicate.accepted, false);
+      assert.equal(duplicate.duplicate, true);
+      assert.equal(duplicate.code, "projection_already_correct");
+      assert.equal(
+        duplicate.snapshot.authorityLedger.ashenReefSurvey.projectionRepairs.length,
+        repairCount
+      );
+      finalDestinations.push(duplicate.snapshot.sessionState[destinationName]);
+    }
+    assert.deepEqual(finalDestinations[0], finalDestinations[1]);
+  }
+});
+
+test("projection placement repairs remain nonterminal after inserted and replaced histories", () => {
+  const first = execute(prepareSnapshot()).result;
+  const second = execute(first.snapshot, first.control).result;
+  const projectionId = first.result.projectionIds.notification;
+  const missing = structuredClone(second.snapshot);
+  missing.sessionState.notifications = missing.sessionState.notifications.filter(
+    (entry) => entry.id !== projectionId
+  );
+  const inserted = repairPlayerSurveyActivityProjection(
+    missing,
+    second.control,
+    first.result.resultId,
+    "notification"
+  );
+  assert.equal(inserted.repair.outcome, "inserted");
+  assert.equal(inserted.repair.ordinal, 1);
+
+  const reverseKnownRows = (snapshot) => {
+    const next = structuredClone(snapshot);
+    const ids = new Set([
+      first.result.projectionIds.notification,
+      second.result.projectionIds.notification
+    ]);
+    const indices = next.sessionState.notifications
+      .map((entry, index) => ids.has(entry.id) ? index : -1)
+      .filter((index) => index >= 0);
+    const firstRow = next.sessionState.notifications[indices[0]];
+    next.sessionState.notifications[indices[0]] = next.sessionState.notifications[indices[1]];
+    next.sessionState.notifications[indices[1]] = firstRow;
+    return next;
+  };
+
+  const reordered = repairPlayerSurveyActivityProjection(
+    reverseKnownRows(inserted.snapshot),
+    inserted.control,
+    first.result.resultId,
+    "notification"
+  );
+  assert.equal(reordered.repair.outcome, "reordered");
+  assert.equal(reordered.repair.ordinal, 2);
+
+  const malformed = structuredClone(reordered.snapshot);
+  malformed.sessionState.notifications = malformed.sessionState.notifications.map((entry) =>
+    entry.id === projectionId ? { ...entry, detail: "malformed after reorder" } : entry
+  );
+  const replaced = repairPlayerSurveyActivityProjection(
+    malformed,
+    reordered.control,
+    first.result.resultId,
+    "notification"
+  );
+  assert.equal(replaced.repair.outcome, "replaced");
+  assert.equal(replaced.repair.ordinal, 3);
+
+  const reorderedAgain = repairPlayerSurveyActivityProjection(
+    reverseKnownRows(replaced.snapshot),
+    replaced.control,
+    first.result.resultId,
+    "notification"
+  );
+  assert.equal(reorderedAgain.repair.outcome, "reordered");
+  assert.equal(reorderedAgain.repair.ordinal, 4);
+  assert.equal(isTargetCampaignSnapshot(reorderedAgain.snapshot), true);
+
+  const duplicate = repairPlayerSurveyActivityProjection(
+    reorderedAgain.snapshot,
+    reorderedAgain.control,
+    first.result.resultId,
+    "notification"
+  );
+  assert.equal(duplicate.code, "projection_already_correct");
+  assert.equal(duplicate.duplicate, true);
+
+  for (const mutate of [
+    (repair) => { repair.observed = "missing"; },
+    (repair) => { repair.outcome = "inserted"; },
+    (repair) => {
+      repair.projectionKind = "event";
+      repair.repairId = repair.repairId.replace(".notification.", ".event.");
+      repair.receiptId = reorderedAgain.snapshot.authorityLedger.ashenReefSurvey.consequenceReceipts.find(
+        (entry) => entry.resultId === repair.resultId && entry.kind === "event_projection"
+      ).receiptId;
+    }
+  ]) {
+    const invalid = structuredClone(reorderedAgain.snapshot);
+    mutate(invalid.authorityLedger.ashenReefSurvey.projectionRepairs.at(-1));
+    assert.equal(isTargetCampaignSnapshot(invalid), false);
+  }
+});
+
+test("projection placement repair blocks on pending correction and resumes through unaffected authority", () => {
+  const first = execute(prepareSnapshot()).result;
+  const second = execute(first.snapshot, first.control).result;
+  const drifted = structuredClone(second.snapshot);
+  const ids = new Set([
+    first.result.projectionIds.notification,
+    second.result.projectionIds.notification
+  ]);
+  const indices = drifted.sessionState.notifications
+    .map((entry, index) => ids.has(entry.id) ? index : -1)
+    .filter((index) => index >= 0);
+  const firstRow = drifted.sessionState.notifications[indices[0]];
+  drifted.sessionState.notifications[indices[0]] = drifted.sessionState.notifications[indices[1]];
+  drifted.sessionState.notifications[indices[1]] = firstRow;
+  const receipts = drifted.authorityLedger.ashenReefSurvey.consequenceReceipts.filter(
+    (entry) => entry.resultId === first.result.resultId
+  );
+  const correction = {
+    version: 1,
+    correctionId: "survey_correction.00000000-0000-4000-8000-00000000c101",
+    campaignId: first.result.campaignId,
+    continuityId: first.result.continuityId,
+    characterId: first.result.characterId,
+    supersededResultId: first.result.resultId,
+    replacementResultId: null,
+    reason: "Projection placement correction authority probe.",
+    evidenceIds: ["evidence.projection.order.1"],
+    createdAtTick: drifted.clock.tick,
+    reconciliations: receipts.map((receipt) => ({
+      owner: receipt.owner,
+      kind: receipt.kind,
+      status: "pending"
+    }))
+  };
+  const pending = structuredClone(drifted);
+  pending.authorityLedger.ashenReefSurvey.corrections.push(correction);
+  assert.equal(isTargetCampaignSnapshot(pending), true);
+  assert.deepEqual(listPendingPlayerSurveyProjectionRepairs(pending), []);
+  assert.equal(
+    repairPlayerSurveyActivityProjection(
+      pending,
+      second.control,
+      second.result.resultId,
+      "notification"
+    ).code,
+    "projection_newer_authority"
+  );
+
+  const completed = structuredClone(drifted);
+  completed.authorityLedger.ashenReefSurvey.corrections.push({
+    ...correction,
+    reconciliations: correction.reconciliations.map((entry) => ({
+      ...entry,
+      status: "confirmed_no_change",
+      evidenceId: correction.evidenceIds[0]
+    }))
+  });
+  assert.equal(isTargetCampaignSnapshot(completed), true);
+  assert.equal(
+    repairPlayerSurveyActivityProjection(
+      completed,
+      second.control,
+      first.result.resultId,
+      "notification"
+    ).code,
+    "projection_newer_authority"
+  );
+  const repaired = repairPlayerSurveyActivityProjection(
+    completed,
+    second.control,
+    second.result.resultId,
+    "notification"
+  );
+  assert.equal(repaired.accepted, true);
+  assert.equal(repaired.repair.outcome, "reordered");
 });
 
 test("older projection repair preserves newer survey order and never resurrects expired rows", () => {
@@ -1639,6 +2016,48 @@ test("genuine same-tick survey projections converge across both repair invocatio
     assert.deepEqual(finalDestinations[0], finalDestinations[1]);
     assert.deepEqual(
       finalDestinations[0].filter((entry) => projectionIds.has(entry.id)).map((entry) => entry.id),
+      [first, second]
+        .sort((left, right) => left.result.resultId < right.result.resultId ? -1 : 1)
+        .map((entry) => entry.result.projectionIds[projectionKind])
+    );
+
+    const reversed = structuredClone(second.snapshot);
+    const knownIndices = reversed.sessionState[destinationName]
+      .map((entry, index) => projectionIds.has(entry.id) ? index : -1)
+      .filter((index) => index >= 0);
+    const firstKnown = reversed.sessionState[destinationName][knownIndices[0]];
+    reversed.sessionState[destinationName][knownIndices[0]] =
+      reversed.sessionState[destinationName][knownIndices[1]];
+    reversed.sessionState[destinationName][knownIndices[1]] = firstKnown;
+    const reorderedDestinations = [];
+    for (const order of [
+      [first.result.resultId, second.result.resultId],
+      [second.result.resultId, first.result.resultId]
+    ]) {
+      const repaired = repairPlayerSurveyActivityProjection(
+        structuredClone(reversed),
+        structuredClone(second.control),
+        order[0],
+        projectionKind
+      );
+      assert.equal(repaired.accepted, true);
+      assert.equal(repaired.repair.observed, "misordered");
+      assert.equal(repaired.repair.outcome, "reordered");
+      const duplicate = repairPlayerSurveyActivityProjection(
+        repaired.snapshot,
+        repaired.control,
+        order[1],
+        projectionKind
+      );
+      assert.equal(duplicate.code, "projection_already_correct");
+      assert.equal(duplicate.duplicate, true);
+      reorderedDestinations.push(duplicate.snapshot.sessionState[destinationName]);
+    }
+    assert.deepEqual(reorderedDestinations[0], reorderedDestinations[1]);
+    assert.deepEqual(
+      reorderedDestinations[0]
+        .filter((entry) => projectionIds.has(entry.id))
+        .map((entry) => entry.id),
       [first, second]
         .sort((left, right) => left.result.resultId < right.result.resultId ? -1 : 1)
         .map((entry) => entry.result.projectionIds[projectionKind])
