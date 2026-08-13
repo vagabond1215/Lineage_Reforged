@@ -2,7 +2,7 @@
 
 Date: 2026-08-13
 Program versions: `0.6.4`-`0.6.8`
-Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef `0.6.10.4` repair complete pending production-read-only `0.6.10.5`
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted through `0.6.10.5`; ordinary reachability decision active
 
 ## 1. Purpose
 
@@ -172,12 +172,13 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned decision | Historical Recovery Fork Evidence Verifiability And Parent Acceptance Reopening Decision | Complete; selected bounded Model C and classified `cbad987` conforming with re-audit required. |
 | `0.6.9.11` | Historical Recovery Fork Authority Acceptance Audit | Complete; parent `0.6.9` accepted, survey receipt decision reactivated, `0.7.0` remains `NOT_READY`. |
 | unversioned support | Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision | Complete with `PACKAGE_READY`: accepted one bounded survey-owned persisted authority, continuity-before-receipt admission, exact retry/repair/correction boundaries, and selected active `Version 0.6.10`; no static-content route changed. |
-| `0.6.10` | Ashen Reef Survey Advancement Authority | Implemented at `008db9c...` and repaired at `59af926...` plus `07c5739...`; parent remains unaccepted pending `0.6.10.5`; static catalogs/content remain unchanged and `0.7.0` remains `NOT_READY`. |
+| `0.6.10` | Ashen Reef Survey Advancement Authority | Implemented at `008db9c...`, repaired at `59af926...` plus `07c5739...`, and accepted through `0.6.10.5`; static catalogs/content remain unchanged and `0.7.0` remains `NOT_READY`. |
 | `0.6.10.1` | Ashen Reef Survey Advancement Acceptance Audit | Complete with `REPAIR_REQUIRED`; preserved the positive matrix and did not reopen static content. |
 | `0.6.10.2` | Ashen Reef Survey Advancement Authority Repair | Complete at `59af926...` with `IMPLEMENTED_PENDING_POST_REPAIR_AUDIT`; did not add or change static content. |
 | `0.6.10.3` | Ashen Reef Survey Advancement Post-Repair Acceptance Audit | Complete with `REPAIR_REQUIRED`; proved two residual authority defects without changing production, tests, or static content. |
 | `0.6.10.4` | Ashen Reef Survey Progression Coherence And Projection Placement Repair | Complete at `07c5739...` with `IMPLEMENTED_PENDING_REAUDIT`; repaired only the two residual authority seams and added/changed no static content. |
-| `0.6.10.5` | Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit | Active production-read-only support audit; may decide parent and representative evidence but may not add/change static content. |
+| `0.6.10.5` | Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit | Complete with `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`; added/changed no static content. |
+| unversioned decision | Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision | Active documentation-only route; may decide a bounded quest/access/activity/evidence package but may not add/change static content or canon. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -189,4 +190,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run only production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` against the twice-repaired parent and retained positive matrix. Do not broaden the audit into production repair, static content, survey turn-in/rewards, geographic Knowledge implementation, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, or unrelated UI/runtime work. Creator reachability is inspected only for the post-parent representative classification. Static-content expansion remains complete through accepted `0.6.7` and is not reopened by the survey route.
+Run only the unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`. Do not broaden it into production implementation, static content/canon, survey turn-in/rewards, geographic Knowledge implementation, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7` and is not reopened by the survey route.

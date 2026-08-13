@@ -2,7 +2,7 @@
 
 Date: 2026-08-13
 
-Status: accepted documentation-only coordination authority; live current headers refreshed through completed `0.6.10.4` repair and active production-read-only audit `0.6.10.5`
+Status: accepted documentation-only coordination authority; live current headers refreshed through accepted parent `0.6.10`, completed support audit `0.6.10.5`, and the active ordinary-reachability decision
 
 Milestone impact: `supports_current_band`
 
@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, focused survey receipt decision, permanent acceptance audit and appendices, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through completed `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`.
+The current prompt, handoff, output, historical register, focused survey receipt decision, permanent acceptance audit and appendices, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through completed `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`.
 
-Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, independent `0.6.10.1` returned `REPAIR_REQUIRED`, bounded `0.6.10.2` implemented the first six findings at `59af92629a79e95fa20247959159e336a8dbc88e`, and production-read-only `0.6.10.3` proved two residual owner-derived progression and projection-placement failures. Bounded `0.6.10.4` repaired those seams at `07c57392c8078927e4f9e12efe18d8d89bb1fc70` with `IMPLEMENTED_PENDING_REAUDIT`. Active `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` is production-read-only and must decide parent acceptance before representative-loop evidence. `0.7.0` remains `NOT_READY` pending that audit and a later docs-first band-entry decision.
+Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a` and classified ordinary creator-to-survey evidence `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`. Active work is the unversioned documentation-only `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`. `0.7.0` remains `NOT_READY` pending reachability implementation/evidence, independent acceptance, and a later docs-first band-entry decision.
 
 The audit corrected live-current pointers in `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`. Older dated rows and completed-run narratives remain historical chronology and do not control execution.
 
@@ -36,14 +36,13 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 
 ## Accepted Current State
 
-- latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70` but still pending independent parent acceptance;
-- latest accepted primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
+- latest implemented and accepted primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, accepted through `0.6.10.5` at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`;
+- prior accepted primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`;
 - latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, `IMPLEMENTED_PENDING_REAUDIT`;
 - historical parent audit: `Version 0.6.9.10`, acceptance claim superseded because no separately installed runnable audit prompt preceded it;
-- latest accepted support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, `PARENT_ACCEPTED`;
-- latest completed support audit: `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`, `REPAIR_REQUIRED`;
+- latest accepted and completed support audit: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`, `PARENT_ACCEPTED` with `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`;
 - latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`;
-- active route: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`;
+- active route: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`;
 - failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -64,16 +63,16 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - `0.6.9.5` reports those three boundaries repaired with 26/26 focused tests, 133/133 prescribed tests, and a passing build;
 - `0.6.9.6` independently preserved the green baseline and the three exact `0.6.9.5` targets, but proved three additional initial-resolution, restart-duplicate, and original-effect-provenance gaps;
 - the accepted `0.6.9` persistence chain retains linked arbitrary-depth completion lineage under bounded Model C.
-- the survey receipt decision selected one optional survey-ledger container, continuity-before-receipt admission, exact normalized retries, atomic owner receipts, projection repair, legacy baseline, and correction posture; `0.6.10` implemented that package at `008db9c...`, `0.6.10.1` proved six bounded repairs, `0.6.10.2` implemented them at `59af926...`, `0.6.10.3` proved two residual defects, and `0.6.10.4` repaired them at `07c5739...` pending independent re-audit.
+- the survey receipt decision selected one optional survey-ledger container, continuity-before-receipt admission, exact normalized retries, atomic owner receipts, projection repair, legacy baseline, and correction posture; `0.6.10` implemented that package at `008db9c...`, the two bounded repairs landed at `59af926...` and `07c5739...`, and `0.6.10.5` independently accepted the parent at `950e851...` while separating ordinary reachability from owner validity.
 
 The broad TypeScript backlog remains a separate tooling/config cleanup route. It must not be repaired or weakened inside the parent persistence support chain.
 
 ## Accepted Near-Term Order
 
-1. execute production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` against the complete twice-repaired parent;
-2. decide parent acceptance first and issue the exact representative-loop classification only after a passing parent decision;
-3. only after parent and representative-loop evidence are accepted may a separate unversioned integrated-gameplay `0.7` band-entry readiness decision be installed; otherwise keep `0.7.0` `NOT_READY` and route the smallest current-band repair or reachability prerequisite.
+1. execute the unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`;
+2. decide whether quest-offer, known-location, travel/activity activation, persistence, and injection-free representative evidence form one authority-complete current-band package;
+3. keep `0.7.0` behind successful reachability implementation/evidence, independent acceptance, and a later explicit docs-first band-entry decision.
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that parent `0.6.9` is accepted, `0.6.10` is implemented and repaired twice but unaccepted, `0.6.10.4` is complete pending re-audit, `0.6.10.5` is active, and `0.7.0` remains `NOT_READY`.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that `0.6.9` and `0.6.10` are accepted, `0.6.10.5` is complete with representative evidence incomplete, the unversioned reachability decision is active, and `0.7.0` remains `NOT_READY`.

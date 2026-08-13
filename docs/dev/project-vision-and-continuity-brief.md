@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-08-13 by `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`.
+Updated 2026-08-13 by `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`.
 
 ## Purpose
 
@@ -22,14 +22,13 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 
 ## Current Repository Anchor
 
-- Latest accepted primary: `Version 0.6.9 - Normal Stakes Campaign Persistence Foundation`.
-- Latest accepted support audit: `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit`, outcome `PARENT_ACCEPTED`.
-- Latest completed support audit: `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`, outcome `REPAIR_REQUIRED`.
+- Latest accepted primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
+- Latest accepted and completed support audit: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`, outcome `PARENT_ACCEPTED` with `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`.
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, outcome `IMPLEMENTED_PENDING_REAUDIT`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
 - Latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`.
-- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70` but still pending independent acceptance.
-- Active run: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`.
+- Latest implemented primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority` at `008db9c93eb8818aea51652be07fd196df41c45f`, repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, accepted through `0.6.10.5` at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`.
+- Active run: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -62,7 +61,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
 - `Version 0.6.9` is implemented and accepted with linked arbitrary-depth fork-lineage support under bounded Model C.
 - The survey receipt decision fixed the persisted identity/container, continuity-before-receipt, retry, owner, projection-repair, correction, migration, and retention contract and selected one bounded `0.6.10` package.
-- `0.7.0` remains `NOT_READY`; `0.6.10.4` repaired the residual owner-derived progression and projection-placement seams, active production-read-only `0.6.10.5` must independently decide parent acceptance and representative evidence, and a separate docs-first band-entry decision must still follow.
+- `0.7.0` remains `NOT_READY`; `0.6.10.5` accepted the repaired survey parent but found ordinary creator-to-survey evidence incomplete, so the active docs-first reachability decision must settle quest-offer, known-location, activity-activation, persistence, and injection-free test authority before implementation or band-entry review.
 
 ## Validation Posture
 
@@ -78,9 +77,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. execute production-read-only `0.6.10.5` against the complete twice-repaired survey parent;
-2. decide parent acceptance before issuing the exact representative-loop classification from ordinary production reachability;
-3. keep `0.7.0` behind accepted parent and representative evidence plus a later explicit docs-first band-entry decision.
+1. execute `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`;
+2. return `PACKAGE_READY` only if repository authority settles every missing ordinary-reachability edge without invented canon;
+3. keep `0.7.0` behind successful reachability implementation/evidence, independent acceptance, and a later explicit docs-first band-entry decision.
 
 ## Current Implementation Reality
 
