@@ -114,3 +114,30 @@ This appendix records implementation evidence only. It does not revise the histo
 Validation after the final repair passed the removable adversarial probe `6/6`, focused survey suite `35/35`, prescribed adjacent matrix `177/177`, Knowledge matrix `132/132`, clock/schema matrix `107/107`, Vite production build at 212 transformed modules, and the exact bounded TypeScript baseline of 137 diagnostics with only the same two pre-existing `ActivityPanel` findings. Three bounded read-only re-audits found no residual material blocker; the primary agent reverified their material claims against the settled checkout.
 
 The active route is now production-read-only `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit`. Parent acceptance, representative-loop classification, and any `0.7.0` decision remain outside this appendix.
+
+## 9. Version 0.6.10.3 Post-Repair Audit Appendix
+
+Date: 2026-08-13
+
+Inspected repair: `59af92629a79e95fa20247959159e336a8dbc88e`
+
+Audit starting head: `bc9783803c08ab403cad0302727d5b701291da40`
+
+Decision: `REPAIR_REQUIRED`
+
+Representative-loop classification: blocked; no classification is issued while parent authority remains unaccepted
+
+The six named `0.6.10.1` repair rows passed their direct matrices, but independent adversarial inspection found two residual authority failures within those same accepted contracts:
+
+| ID | Contract | Finding | Exact seam | Required repair evidence |
+| --- | --- | --- | --- | --- |
+| `AR-007` | residual `AR-001`; contracts 1 and 3 | Progression validation proves only internally consistent Echo arithmetic. It does not recompute the retained progression from the retained attributes and skills. A forged, internally consistent zero-Echo state with a recomputed canonical intent remains valid target authority, turns the legitimate retry into `conflicting_retry`, and makes the forged retry a durable `duplicate`. | `campaign-rules.ts` progression and survey-owner validation before durable duplicate lookup | Recompute with the authoritative progression/Echo resolver and require exact semantic equality; reject forged zero/stale/contribution variants before duplicate resolution in-process and after restart. |
+| `AR-008` | residual `AR-003`; contract 8 | Projection inspection returns `projection_already_correct` as soon as matching row bytes are present. Reversing two genuine, byte-correct notification and Chronicle rows is therefore undiscoverable, survives version-7 publish/load byte-for-byte, and cannot be repaired into total `(appliedTick, resultId)` authority order. | `player-survey-activity-advancement.ts` destination inspection and repair discovery | Detect content-correct placement drift, deterministically reorder survey-known rows without evicting or moving opaque rows, persist an explicit repair posture, and prove convergence/idempotency at different and equal ticks through restart and both invocation orders. |
+
+Primary reexecution passed the focused and adjacent matrix `177/177`, Knowledge matrix `132/132`, clock/schema matrix `107/107`, the 212-module production build, and the registered bounded TypeScript baseline of 137 diagnostics with only the same two pre-existing `ActivityPanel` findings. A removable nine-case adversarial probe reproduced both blockers; eight cases passed and the row-placement acceptance assertion failed as expected. The probe and build output were removed.
+
+`AR-002`, `AR-004`, `AR-005`, and `AR-006` passed independent inspection. Survey authority also survived non-empty save/load, publication/readback, duplicate retry, first fork, Normal defeat, and recovery checks. Those positive facts narrow the repair but cannot accept a parent whose durable duplicate and projection-repair authority remain forgeable or incomplete.
+
+No formal representative-loop classification is made. Separately observed creator-to-survey reachability remains incomplete because ordinary new-game state does not organically supply the survey quest, tracked state, activity, or Ashen Reef known-location chain; reconsider that evidence only after the parent is accepted.
+
+The next route is `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair`. It may repair only `AR-007` and `AR-008`, must preserve every passing contract, and cannot self-accept parent `0.6.10`. A separate production-read-only `0.6.10.5` audit remains required. `0.7.0` stays `NOT_READY`.

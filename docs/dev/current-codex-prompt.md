@@ -1,6 +1,6 @@
-# Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit
+# Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair
 
-Date: 2026-08-11
+Date: 2026-08-13
 
 Label class: support suffix
 
@@ -8,108 +8,117 @@ Parent version: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
 Milestone impact: `supports_current_band`
 
-Execution posture: independent production-read-only audit with removable temporary probes
+Starting source before `0.6.10.3` coordination: `bc9783803c08ab403cad0302727d5b701291da40`
 
-Suggested commit:
+`0.6.10.3` audit authority commit: `<AUDIT_AUTHORITY_COMMIT>`
 
-`docs(survey): audit repaired advancement authority`
+Inspected implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
+
+Inspected first repair: `59af92629a79e95fa20247959159e336a8dbc88e`
 
 ## Objective
 
-Independently audit repair implementation `59af92629a79e95fa20247959159e336a8dbc88e` against the permanent `0.6.10.1` findings and the accepted Ashen Reef survey occurrence/result/consequence-receipt decisions. Decide whether parent `0.6.10` is accepted and, only after that decision, whether the package supplies representative integrated-gameplay evidence.
+Repair only the two residual authority defects independently reproduced by `Version 0.6.10.3`:
 
-Do not accept from the repair report, green focused tests, or subagent findings alone. Begin from a freshly synchronized checkout containing the repair and coordination commit, independently reproduce every repaired negative case, and reconcile all results against repository precedence and current source.
+- `AR-007`: persisted survey progression/Echo authority is internally validated but is not recomputed from its retained owner inputs before durable duplicate resolution;
+- `AR-008`: byte-correct notification and Chronicle rows can occupy the wrong total-authority position, survive restart, and remain undiscoverable by projection repair.
 
-## Starting Disposition
+Preserve every passing `0.6.10`/`0.6.10.2` contract. This support run cannot accept parent `0.6.10`, cannot issue a representative-loop classification, and cannot make a `0.7.0` band-entry decision.
 
-- `0.6.10`: implemented and repaired, but not independently accepted;
-- `0.6.10.1`: complete with `REPAIR_REQUIRED`;
-- `0.6.10.2`: complete with `IMPLEMENTED_PENDING_POST_REPAIR_AUDIT` at `59af92629a79e95fa20247959159e336a8dbc88e`;
-- survey receipt design decision: remains `PACKAGE_READY`;
-- accepted `0.6.9`: unchanged;
-- representative-loop classification: not yet issued;
-- `0.7.0`: `NOT_READY` pending this audit and a later explicit docs-first band-entry decision.
+## Orientation And Coordination
 
-## Authority And Orientation
+Read `AGENTS.md` completely, then follow the repository-first protocol, prompt-execution platform/tool policy, branch policy/register, and applicable failure-pattern guardrails. Read the complete current prompt, handoff, output, historical register, planning reconciliation, focused survey receipt decision, permanent acceptance audit including the `0.6.10.3` appendix, accepted occurrence/correction authority, and relevant `0.6.9` persistence/recovery authorities.
 
-Read `AGENTS.md` completely and follow the repository-first protocol, prompt-execution platform/tool policy, branch policy/register, and applicable failure-pattern guardrails. Read the complete current prompt, handoff, output, permanent `0.6.10.1` audit record and implementation appendix, all focused Ashen Reef decisions, accepted occurrence/correction and `0.6.9` persistence authorities, historical register, planning reconciliation, and every production/test file changed by `59af926...`.
+Fetch/prune, fast-forward a clean `master` if necessary, and verify local, remote, prompt, and hosted identities before editing. Preserve unrelated worktree changes; stop if synchronization, required tooling, or the exact authority chain is unavailable.
 
-Fetch/prune and synchronize clean `master`. Record the original parent implementation `008db9c93eb8818aea51652be07fd196df41c45f`, `0.6.10.1` coordination head `4daa6f997de34108e71231c5b0b0e8f5f861c310`, repair commit `59af92629a79e95fa20247959159e336a8dbc88e`, repair coordination commit, audit starting head, final audit/coordination heads, pushed remote head, and post-fetch hosted head distinctly.
+Use multi-agent work only for bounded, separable read-only inspection. The primary agent must make every implementation and authority decision and must reverify material subagent claims against the synchronized checkout. Do not pause for a routine GPT/Connector pass.
 
-Inventory every local/remote branch and open PR. Reinspect the four exact Connector evidence refs and protected integrated-gameplay readiness ref named by the parent prompt, but keep all evidence and protected refs read-only. Prior probes and agent reports are evidence, not acceptance authority.
+Inspect the four exact read-only Connector evidence refs and the protected readiness ref only as reusable evidence:
 
-## Audit Boundary
+- activity advancement: `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
+- progression/reward mutation: `387f2491d0d671ee7834656c28183e72a798f1ca`;
+- Chronicle/notification provenance: `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
+- Knowledge/discovery visibility: `46434f31f8b06d49aad9a516543fbe36d188d519`;
+- protected integrated-gameplay readiness: `59c103c3a06d55f35bffa735fd4b7814dffb583e`.
 
-This audit is production-read-only. Do not modify production source, shared contracts, tracked tests, serializers, migrations, formats, dependencies, content, assets, UI, or behavior. Temporary executable probes may exist only outside tracked tests and must be removed before coordination commit.
+Do not merge, rebase, mutate, or delete those refs. Reinspect both open pull requests and every registered lifecycle trigger; perform no lifecycle action unless fresh evidence and the controlling policy make it due.
 
-Do not merge, cherry-pick, rebase, force-update, close, delete, or otherwise mutate evidence branches or PRs. If any material contract or required validation fails, return `REPAIR_REQUIRED`, install the smallest decision-complete parent-specific support repair, and stop without repairing production in this audit.
+## Required Repair 1: Owner-Derived Progression Coherence
 
-## Post-Repair Contract To Verify
+At the semantic authority gate used before durable duplicate lookup, recompute the exact retained progression/Echo result from the retained authoritative attributes, skills, and progression inputs by using `resolvePlayerEchoProgression(...)` or the exact repository-authoritative equivalent. Require exact semantic equality between the retained progression facts and the owner-derived result.
 
-Verify every retained positive contract from `0.6.10.1` plus all six repaired rows:
+The repair must:
 
-1. `AR-001`: every normalized owner input is deeply and semantically certified, including progression, reputation, origin, resource runtime, and all stage-consumed material facts; canonical intent is validator-owned, recursively insertion-order independent, collision resistant, and admits the repository's valid 13-month clock.
-2. `AR-002`: every correction has a nonempty unique valid evidence set, exact affected-owner reconciliation coverage, evidence linkage, acyclicity, one correction per superseded result, and later-work blocking while any owner remains pending.
-3. `AR-003`: notification and Chronicle insertion/repair use one total `(appliedTick, stable resultId)` order, inspect complete retained destinations, never evict newer truth, fail closed on opaque/ambiguous capped state, rediscover later drift after applied or prior repaired projections, and preserve pending-only single event re-emission.
-4. `AR-004`: command preparation is exception-total and typed; durable duplicate lookup still precedes stale/domain checks; the real caller retains request identity only for a classified technical pre-accept retry, clears it for all other outcomes, survives rerender-equivalent retry, and applies snapshot/control only on acceptance.
-5. `AR-005`: plan and persisted result carry the exact explicit `no_proposal` contract for geographic Knowledge, known location, map, travel access, currency, standing, inventory, reputation beyond ordinary synchronization, and turn-in rewards; no excluded store or General Lore turn-in reward changes.
-6. `AR-006`: shared plan/UI presentation distinguishes positive gain, genuine breakthrough block, and unblocked unchanged maximum-rank outcomes using actual production caller facts.
+1. retain the existing deep structural, arithmetic, origin, reputation, clock-month-13, and recursively canonical serialization checks;
+2. reject an internally self-consistent zero/stale/alternate Echo state when it contradicts retained attributes or skills;
+3. reject forged contribution, diversity, adjusted-Echo, level, or legacy-growth combinations even when the caller recomputes every exposed canonical string;
+4. run before durable duplicate resolution, mutation, repair, migration, and publication authority can trust the graph;
+5. preserve legitimate owner-derived progressions, canonical key-order-equivalent retries, current-state duplicates, and restart behavior;
+6. avoid a second independent formula: import or call the authoritative owner resolver unless a proven dependency boundary requires one exact shared extraction.
 
-Also verify the optional survey container, exact durable duplicate/restart behavior, continuity-before-receipt prepare/commit, four-stage pure-plan parity, two full one-tick owner applications, complete receipts, coherent legacy baseline, final discovery/Codex/activity behavior, projection-only repair, correction posture, save/publication, defeat/recovery preservation, and accepted-only UI application remain intact.
+Add same-process and save/reload regressions proving that legitimate original retries remain duplicates and forged retries fail closed without mutation or rollback.
 
-## Independent Adversarial Matrix
+## Required Repair 2: Projection Placement Authority
 
-At minimum independently reproduce:
+Use one total `(appliedTick, stable resultId)` authority order for survey-known notification and Chronicle projections. Destination inspection must validate both exact row bytes and exact placement among survey-known rows; content equality alone cannot return `projection_already_correct`.
 
-- `{}`, `[]`, `null`, deleted nested fields, `undefined`, non-finite numbers, forged but well-shaped Echo/progression, noncanonical reputation modifiers/signatures/order, forged origin, and caller-recomputed canonical strings; prove no-throw rejection before duplicate or mutation;
-- deeply permuted equivalent owner objects across same-process and persisted/restarted exact retry; prove one canonical intent and one durable duplicate result;
-- valid month 13 and every four-stage material input owner;
-- missing, empty, duplicate, malformed, unlinked, incomplete-owner, cyclic, and conflicting correction evidence plus one valid persisted correction and pending block;
-- reordered capped notification and Chronicle destinations, newer truth at the tail, same-tick stable-result ties with two genuine accepted results repaired in both invocation orders, opaque rows, legitimate expiry, later drift after applied/inserted/replaced repair, duplicate repair, corrected/superseded authority, applied-event rejection, and pending-event single re-emission;
-- real-caller domain/invalid-authority rejection, thrown unclassified preparation, technical retry across a second invocation with the same request id, normal empty-cache acceptance, terminal duplicate, unavailable disabled posture, and accepted-only state application;
-- exact no-proposal bytes for every named excluded store, including map/current-world-map, travel access, active unturned-in survey quest, rewards, and General Lore;
-- actual positive, gate-blocked, and maximum-rank unchanged survey skill plans through the panel-facing facts;
-- all four survey stages, source immutability, natural resources before explicit costs, changing maxima, fresh missing Codex row, locked demo Codex row, head/non-head/later continuity, durable later-state duplicate, legacy baseline, v6 migration, v7 publication/restart, and same-command/later Normal defeat/recovery preservation.
+Implement one decision-complete repair posture for byte-correct placement drift. Prefer explicit typed states such as observed `misordered` and accepted repair outcome `reordered`, but use repository-consistent exact names. Deep validators, persisted repair authority, correction gates, restart behavior, and public contracts must agree.
+
+The repair must:
+
+1. discover reversed or otherwise permuted byte-correct survey-known rows after initial application or a prior repair;
+2. deterministically place survey-known rows into their authority order while preserving every opaque row's exact bytes and index;
+3. never evict a retained row merely to repair placement;
+4. retain terminal `retention_expired` behavior for a full capped destination whose missing target cannot be restored without displacing opaque truth;
+5. converge when repair is invoked through either affected result and in either invocation order;
+6. make subsequent repair an idempotent duplicate/already-correct result;
+7. preserve pending-only event repair, correction-pending blocks, repair ordinals, caps, malformed-row fail-closed behavior, and legitimate retention eviction.
+
+Cover notification and Chronicle destinations at different ticks and the same tick, with reversed known rows, opaque rows, capped destinations, applied/inserted/replaced/reordered histories, both repair invocation orders, version-7 publish/readback/restart, correction pending/completion, and duplicate event/repair calls.
+
+## Allowed Source And Test Surface
+
+Prefer the smallest coherent patch. The expected production surface is:
+
+- `packages/engines/game-engine/src/campaign-rules.ts` and its tracked JavaScript mirror;
+- `packages/engines/game-engine/src/player-survey-activity-advancement.ts` and its tracked JavaScript mirror;
+- `packages/shared/types/src/contracts.ts` and its tracked JavaScript mirror only if the explicit repair posture changes persisted contracts;
+- game-engine/shared index mirrors only if an actual export is required;
+- `tests/unit/player-survey-activity-advancement-command.test.mjs`;
+- `tests/unit/player-survey-activity-advancement-persistence.test.mjs`.
+
+Do not touch UI/context/gameplay-loop, save format version, migrations, Normal defeat/recovery, content, canon, assets, dependencies, unrelated formatting, generic projection infrastructure, or other owner systems unless compilation or a reproduced authority path proves the smallest repair cannot be complete without that file. If scope must expand materially, stop with `REPAIR_INCOMPLETE` and record the exact blocker instead of guessing.
+
+Preserve TS/JS mirror parity. Do not introduce a production dependency, version bump, migration, broad refactor, or balance change.
 
 ## Required Validation
 
-Run and report exact counts/results for:
+At minimum run and report:
 
-1. fresh independent removable adversarial probes for all six repaired rows and retained high-risk contracts;
-2. all three focused survey test files;
-3. `gameplay-loop-skill-gating`, campaign persistence, save/load round trip, and the same adjacent travel, quest acceptance/tracking, activity selection, body/resources, stat/progression/reputation, publication, and caller matrix used by `0.6.10.2`;
-4. additional Knowledge and clock/schema evidence matrices;
-5. RPG UI production build;
-6. bounded TypeScript audit with total registered baseline and every changed-surface diagnostic;
-7. raw serialization, version-6 migration, version-7 publication/readback/restart, browser safety, public exports, and parent-ledger preservation;
-8. `git diff --check`, complete diff/hygiene inspection, clean final worktree, branch/upstream, fetch/remote-head, hosted file/status, and workflow-availability checks.
+1. focused survey characterization, command, and persistence tests;
+2. adversarial progression tests for well-shaped forged derived states, canonical-string recomputation, legitimate variants, durable duplicate behavior, and restart;
+3. adversarial projection tests for content-correct row permutation, equal/different ticks, opaque rows, caps, both repair orders, correction, event, and restart;
+4. `gameplay-loop-skill-gating`, campaign persistence, save/load round trip, and the same adjacent travel, quest acceptance/tracking, activity selection, body/resources, stat/progression/reputation, publication, and caller matrix used by `0.6.10.3`;
+5. the Knowledge boundary matrix and clock/schema matrix;
+6. RPG UI production build;
+7. bounded TypeScript audit classified against the exact registered baseline;
+8. `git diff --check`, production/test diff inspection, source/mirror guards, and final worktree hygiene.
 
-Treat registered broad-suite and TypeScript baselines accurately. A green test count does not replace independent semantic, caller, retry, restart, repair-order, or retention evidence. Apply at minimum `FP-001`, `FP-002`, `FP-003`, `FP-005`, `FP-006`, `FP-008`, `FP-009`, `FP-011`, `FP-012`, `FP-013`, and `FP-014`.
+Apply at minimum `FP-001`, `FP-002`, `FP-003`, `FP-005`, `FP-006`, `FP-008`, `FP-009`, `FP-011`, `FP-012`, `FP-013`, `FP-014`, `FP-015`, and `FP-016`. Green counts do not replace adversarial owner recomputation, duplicate-order, destination-placement, restart, retention, or repair-completion proof.
 
-## Outcomes
+## Outcome And Stop Conditions
 
-Return exactly one primary result.
+Return exactly one implementation disposition:
 
-### `PARENT_ACCEPTED`
+- `IMPLEMENTED_PENDING_REAUDIT`: both residual defects are repaired, every retained contract passes, coordination is complete, and a separate production-read-only `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` is installed;
+- `REPAIR_INCOMPLETE`: either defect remains, required scope expands materially, validation is unavailable or fails materially, or repository/hosted state cannot be verified.
 
-Use only if every repaired row, retained positive contract, and required gate passes independently. Then:
+Do not return `PARENT_ACCEPTED`, `REPRESENTATIVE_LOOP_ACCEPTED`, `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`, or any `0.7.0` acceptance classification from this implementation run.
 
-- append the independent post-repair acceptance evidence to the permanent audit record;
-- mark `0.6.10.3` complete and parent `0.6.10` accepted;
-- issue exactly one representative-loop classification: `REPRESENTATIVE_LOOP_ACCEPTED` or `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`, with exact creator-to-eligibility-to-survey evidence;
-- if representative-loop evidence is accepted, install an unversioned docs-first `Integrated Gameplay 0.7 Band-Entry Readiness Decision`; do not assign or implement `0.7.0` in this audit;
-- otherwise install the smallest current-band reachability/evidence route and keep `0.7.0` `NOT_READY`.
+## Completion And Publication
 
-### `REPAIR_REQUIRED`
+Update current prompt/output/handoff, this focused acceptance audit, repository-first Current Application, historical register, planning reconciliation, roadmap, sequenced plan, continuity brief, backlog, static program, failure-pattern register if new reusable evidence warrants it, and branch register. Preserve dated history and exact supersession language.
 
-Use if any material contract or validation gate fails. Do not repair production. Record one numbered finding-to-owner-to-test matrix and install the smallest parent-specific support repair. Parent acceptance, representative-loop acceptance, and `0.7.0` remain blocked.
+On `IMPLEMENTED_PENDING_REAUDIT`, install the complete `0.6.10.5` production-read-only audit prompt. On `REPAIR_INCOMPLETE`, install only the smallest decision-complete retry or prerequisite route justified by evidence.
 
-## Required Coordination
-
-Update current prompt/output/handoff, the focused survey authority and permanent acceptance record, repository-first Current Application, historical register, planning reconciliation, roadmap, sequenced plan, continuity brief, backlog, static program, failure-pattern register when warranted, and branch register. Preserve dated history and exact supersession language.
-
-Commit, push, fetch/verify, inspect hosted files/status/workflow availability, and report exact final/live identities. A chat response does not replace repository coordination.
-
-## Scope Exclusions
-
-Do not repair production in the audit; implement survey turn-in/rewards; add geographic Knowledge/map/recognition behavior; change generic activity, effect, transaction, replay, correction-execution, lineage, or event infrastructure; add other Stakes modes, checkpoint/cloud/death/succession work; change versions, dependencies, content, assets, generated output, or unrelated UI/runtime; or mutate/integrate/close/delete/rebase/force-update branches or PRs.
+Commit only intended files, push `master`, fetch again, verify `HEAD == origin/master`, retrieve the hosted prompt/output/handoff, inspect hosted status/check/workflow evidence, and finish with a clean worktree. Report exact implementation and coordination commit identities, branch/PR dispositions, checks, failure-pattern evidence, risks, and next route.

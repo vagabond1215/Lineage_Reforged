@@ -183,6 +183,26 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`; `tests/unit/player-survey-activity-advancement-command.test.mjs`; `tests/unit/player-survey-activity-advancement-persistence.test.mjs`.
 - **Status:** active.
 
+### FP-015 — Derived Owner Facts Must Be Recomputed From Their Inputs
+
+- **Pattern:** A persisted derived owner state is internally self-consistent but contradicts the authoritative inputs from which that owner computes it.
+- **Why it escaped:** Validation checked the derived object's local arithmetic and canonical serialization without recomputing the owner result from the retained attributes, skills, progression, or other source inputs.
+- **Guardrail:** At every authority, duplicate, replay, migration, and publication gate, recompute derived owner facts with the authoritative resolver and require exact semantic equality with the retained state. Local self-consistency is necessary but not sufficient.
+- **Verification:** Forge internally coherent zero, stale, or alternate derived states; vary each material source input independently; recompute exposed canonical strings; require rejection before duplicate resolution and mutation in the same process and after save/reload, while legitimate owner-derived variants remain accepted.
+- **Applies to:** progression and Echo, reputation, origin profiles, resource projections, stat growth, normalized command inputs, retained results, and replay authority.
+- **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`; `docs/dev/current-codex-output.md`.
+- **Status:** active.
+
+### FP-016 — Correct Projection Bytes Do Not Prove Correct Placement
+
+- **Pattern:** A repair destination contains the exact expected row bytes, but the row occupies the wrong authority-defined position and repair discovery reports it as already correct.
+- **Why it escaped:** Destination inspection returned after content equality and never evaluated the persisted sequence against the total authority order.
+- **Guardrail:** Validate both row content and authoritative placement. Repair known rows with one deterministic total order while preserving opaque rows, caps, and retention boundaries without eviction.
+- **Verification:** Permute byte-correct known rows at different and equal ticks, mix opaque rows, save/reload, invoke repair through each affected result in both orders, and require convergence followed by idempotent duplicate repair. Full capped missing-plus-opaque destinations must remain terminal rather than evicting truth.
+- **Applies to:** notification and Chronicle repair, persisted projections, event mirrors, capped feeds, replay, and publication/readback.
+- **Evidence:** `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`; `docs/dev/current-codex-output.md`.
+- **Status:** active.
+
 ## Completion Report Format
 
 For applicable runs include:
