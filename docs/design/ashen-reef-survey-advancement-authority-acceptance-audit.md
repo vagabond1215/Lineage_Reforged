@@ -201,3 +201,19 @@ Independent evidence included:
 Parent acceptance does not establish ordinary reachability. A fresh production `createNewGameSnapshot(...) -> publishSave(...) -> loadSaveWithAuthority(...)` probe produced zero quest-journal rows, `trackedQuestId: null`, only `settlement.stonevein` as known location, and only `activity.start.settlement.stonevein` as an activity record. Without injected facts, the Ashen Reef chain returned `quest_missing`, `destination_not_known`, `activity_missing`, and `survey_quest_missing`. The existing fresh-character survey test injects the demo quest, tracked state, Ashen Reef activity/location, and sector evidence; it cannot prove the ordinary representative loop.
 
 Therefore parent `0.6.10` is accepted as the bounded engine-owned survey advancement authority, while `0.7.0` remains `NOT_READY`. The smallest next route is the unversioned docs-first `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`. It must decide the quest-offer source, Ashen Reef known-location authority, activity activation/selection boundary, publication/restart order, and one injection-free creator-to-restart evidence path without inventing canon or weakening the persisted nine-field survey `no_proposal` boundary. Turn-in and rewards remain excluded.
+
+## 12. Ordinary Reachability Dependency Closure Appendix
+
+Date: 2026-08-20
+
+Decision starting head: `cf46fc885c870c252bc587b853baa67435b07465`
+
+Outcome: `NO_PACKAGE`
+
+Representative-loop classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
+
+The documentation-only dependency decision reverified that accepted downstream authority is sufficient after valid upstream admission. Quest acceptance/tracking consume an existing `contracts` row; travel consumes an existing known-location row; tracked-quest travel to Ashen Reef already creates the survey operation and exact current activity; and the accepted survey, campaign, publication/restart, duplicate, correction/repair, and Normal defeat/recovery seams remain reusable. No separate activity-selection edge, save-format change, migration, or generic persistence framework is required for the straight representative path.
+
+The package remains blocked upstream. Ordinary creation and version-7 reload produce no exact survey offer/journal row and no known `location.ashen_reef`. Production has no writer for either fact. Demo presentation, runtime Starfall destination facts, the distinct Brineharbor reef charter, and generic civilization offers are non-equivalent; no accepted authority chooses among them or maps them together. Existing “fresh character” and survey persistence tests inject the missing eligibility and therefore remain downstream-owner evidence only.
+
+The active prerequisite is `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`. It must obtain explicit quest/place identity, issuer, availability/eligibility/recurrence, stable journal-admission, and travel-access occurrence facts. It must fail closed rather than seed demo state, infer access from Knowledge/map/Codex/prose, alias the Brineharbor charter, or change any accepted survey `no_proposal` field. Provisional `0.6.11` is not authorized, and `0.7.0` remains `NOT_READY`.

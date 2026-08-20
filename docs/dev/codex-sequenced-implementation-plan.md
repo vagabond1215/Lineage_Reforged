@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
-Date: 2026-08-13
-Route: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
+Date: 2026-08-20
+Route: `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -29,7 +29,7 @@ Latest completed support implementation:
 
 Latest completed unversioned run:
 
-- `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, outcome `PACKAGE_READY`
+- `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`, outcome `NO_PACKAGE`
 
 Latest historical support audit:
 
@@ -41,7 +41,7 @@ Latest accepted and completed support audit:
 
 Active run:
 
-- `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
+- `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
 
 ## Current Queue Override
 
@@ -85,11 +85,12 @@ Active run:
 - `Version 0.6.10.3 - Ashen Reef Survey Advancement Post-Repair Acceptance Audit` is complete with `REPAIR_REQUIRED`; it proved residual owner-derived progression and projection-placement defects and issued no representative classification.
 - `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` is complete at `07c57392c8078927e4f9e12efe18d8d89bb1fc70` with `IMPLEMENTED_PENDING_REAUDIT`; it repairs only those two residual seams.
 - `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` is complete with `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`.
-- The unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision` is active. It must decide quest-offer, known-location, travel/activity activation, publication/restart, and injection-free representative-test authority without inventing canon or weakening survey non-proposals.
+- The unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision` is complete with `NO_PACKAGE`. It proved travel-owned activity activation and version-7 persistence reusable but found no authoritative exact quest-offer/journal-admission writer or Ashen access grant.
+- The unversioned `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision` is active. It must obtain explicit product/canon answers for quest/place identity, issuer, availability/recurrence, journal admission, and the access occurrence, or return `AUTHORED_INPUT_REQUIRED` without implementation.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; accepted `0.6.10` owns only bounded Ashen Reef survey advancement. The active reachability decision must not broaden into turn-in/rewards, geographic Knowledge implementation, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
+- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; accepted `0.6.10` owns only bounded Ashen Reef survey advancement. The active authored-canon decision must not broaden into production implementation, turn-in/rewards, geographic Knowledge implementation, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
 
 Versioning note:
 
@@ -584,7 +585,7 @@ Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Ite
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The live order is the unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision` after `0.6.10.5` accepted the complete twice-repaired survey parent and classified representative evidence incomplete. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, and bounded survey advancement remain unchanged.
+The live order is the unversioned `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision` after the reachability dependency decision returned `NO_PACKAGE`. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, and bounded survey advancement remain unchanged. Provisional `0.6.11` is not authorized.
 
 ## Default Prompt Pattern
 

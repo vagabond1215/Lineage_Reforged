@@ -1,8 +1,8 @@
 # Current Planning Anchor Reconciliation
 
-Date: 2026-08-13
+Date: 2026-08-20
 
-Status: accepted documentation-only coordination authority; live current headers refreshed through accepted parent `0.6.10`, completed support audit `0.6.10.5`, and the active ordinary-reachability decision
+Status: accepted documentation-only coordination authority; live current headers refreshed through accepted parent `0.6.10`, completed support audit `0.6.10.5`, completed ordinary-reachability `NO_PACKAGE`, and the active authored-canon decision
 
 Milestone impact: `supports_current_band`
 
@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, focused survey receipt decision, permanent acceptance audit and appendices, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through completed `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`.
+The current prompt, handoff, output, historical register, focused survey decisions, permanent acceptance audit and appendices, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through the completed `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`.
 
-Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a` and classified ordinary creator-to-survey evidence `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`. Active work is the unversioned documentation-only `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`. `0.7.0` remains `NOT_READY` pending reachability implementation/evidence, independent acceptance, and a later docs-first band-entry decision.
+Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a` and classified ordinary creator-to-survey evidence `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`. The completed reachability decision returned `NO_PACKAGE`: no production owner creates the exact Ashen survey journal offer or Ashen travel-access row, and current demo/runtime/content facts conflict materially. Active work is the unversioned documentation-only `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`. `0.7.0` remains `NOT_READY` pending authored input, a later implementation package, successful implementation/evidence, independent acceptance, and a docs-first band-entry decision.
 
 The audit corrected live-current pointers in `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`. Older dated rows and completed-run narratives remain historical chronology and do not control execution.
 
@@ -41,8 +41,8 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, `IMPLEMENTED_PENDING_REAUDIT`;
 - historical parent audit: `Version 0.6.9.10`, acceptance claim superseded because no separately installed runnable audit prompt preceded it;
 - latest accepted and completed support audit: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`, `PARENT_ACCEPTED` with `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`;
-- latest completed unversioned decision: `Ashen Reef Survey Occurrence, Result, And Consequence Receipt Foundation Decision`, `PACKAGE_READY`;
-- active route: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`;
+- latest completed unversioned decision: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`, `NO_PACKAGE`;
+- active route: `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`;
 - failure-pattern guardrail register: active durable workflow authority;
 - `0.7.0`: `NOT_READY`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -69,10 +69,10 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Accepted Near-Term Order
 
-1. execute the unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`;
-2. decide whether quest-offer, known-location, travel/activity activation, persistence, and injection-free representative evidence form one authority-complete current-band package;
-3. keep `0.7.0` behind successful reachability implementation/evidence, independent acceptance, and a later explicit docs-first band-entry decision.
+1. obtain explicit authored decisions through `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`;
+2. if and only if every authored input is accepted, install a separate unversioned ordinary-reachability implementation-package decision;
+3. keep provisional `0.6.11` unauthorized and keep `0.7.0` behind successful reachability implementation/evidence, independent acceptance, and a later explicit docs-first band-entry decision.
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that `0.6.9` and `0.6.10` are accepted, `0.6.10.5` is complete with representative evidence incomplete, the unversioned reachability decision is active, and `0.7.0` remains `NOT_READY`.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that `0.6.9` and `0.6.10` are accepted, `0.6.10.5` is complete with representative evidence incomplete, the reachability decision returned `NO_PACKAGE`, the authored-canon decision is active, and `0.7.0` remains `NOT_READY`.

@@ -1,43 +1,41 @@
 # Current Codex Output
 
-Date: 2026-08-13
+Date: 2026-08-20
 
-Source run: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`
+Source run: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
 
-Parent version: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+Label class: unversioned documentation-only decision
 
-Label class: support suffix
+Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: fetched/pruned clean synchronized `master == origin/master` at audit start `fd40571bb0802177bd776fd3cd445b6b487716fd`; direct-to-`master` documentation workflow authorized by the installed prompt
+Branch/status assumption: fetched/pruned clean synchronized `master == origin/master` at decision start `cf46fc885c870c252bc587b853baa67435b07465`; direct-to-`master` documentation workflow authorized by the installed prompt
 
-Original implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
+Accepted parent implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
 
-First repair: `59af92629a79e95fa20247959159e336a8dbc88e`
+Accepted parent repairs: `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70`
 
-Residual audit authority: `ad4a080acc3d05a4a790c4b219780db11a1be1a1`
+Parent acceptance authority: `950e851446fb75bfbdb717d0ea33e33ec2907d4a`
 
-Second repair: `07c57392c8078927e4f9e12efe18d8d89bb1fc70`
-
-Repair coordination/audit starting head: `fd40571bb0802177bd776fd3cd445b6b487716fd`
-
-Audit authority commit: `950e851446fb75bfbdb717d0ea33e33ec2907d4a`
+Reachability-decision starting head: `cf46fc885c870c252bc587b853baa67435b07465`
 
 Final coordination commit: reported in the completion response because a commit cannot contain its own identity
 
-Parent result: `PARENT_ACCEPTED`
+Outcome: `NO_PACKAGE`
 
 Representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
 
-Next route: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
+Provisional `Version 0.6.11`: not authorized
+
+Next route: `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
 
 ## A. Files Changed
 
-Audit authority and reusable guardrail:
+Focused authority:
 
+- `docs/design/ashen-reef-survey-ordinary-reachability-and-representative-loop-dependency-closure-decision.md`
 - `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`
-- `docs/dev/codex-failure-patterns-and-verification-guardrails.md`
 
 Repository coordination:
 
@@ -54,54 +52,47 @@ Repository coordination:
 - `docs/design/static-content-expansion-program.md`
 - `docs/dev/branch-disposition-register.md`
 
-No production source, shared contract, tracked test, serializer, migration, format, dependency, content, asset, UI, or gameplay file changed. Both temporary probes were removed.
+No production source, shared contract, tracked test, schema, serializer, migration, format, dependency, content, asset, UI, save, or gameplay file changed. The removable creator/publication/load probe was deleted.
 
 ## B. Patch Summary
 
-Independent audit accepted the complete twice-repaired parent. `AR-007` rejects internally coherent but owner-inconsistent progression before canonical retry, durable duplicate, mutation, repair, publication, or load trust. `AR-008` detects byte-correct placement drift, records `misordered` / `reordered`, orders only survey-known rows by `(appliedTick desc, resultId asc)`, preserves opaque indices/bytes and caps, and remains restart-safe and idempotent. All retained `AR-001` through `AR-006`, four-stage, caller, persistence, correction, duplicate, and Normal defeat/recovery contracts passed.
+The dependency decision returns `NO_PACKAGE`. Ordinary creation and version-7 publication/load are sound, but they produce no exact Ashen survey offer, no journal row, no tracked quest, and no Ashen known-location/travel-access row. Production contains no writer for either missing state. Existing tests inject those prerequisites and therefore do not prove representative reachability.
 
-The parent decision is therefore `PARENT_ACCEPTED`.
+The downstream route is otherwise coherent. Existing quest commands consume an admitted `contracts` row. Travel consumes an admitted known-location row. Successful travel to `location.ashen_reef` while the survey is tracked already creates the survey operation and exact current activity, so the straight path does not require a separate activity-record selection edge. The accepted survey owner, caller, campaign admission, publication/restart, duplicate, projection repair, correction, and Normal defeat/recovery seams can be reused unchanged.
 
-The representative classification is separately `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`. A production creator published and loaded through version 7 has no quest-journal rows, no tracked quest, only its starting settlement known, and no survey activity record. The first ordinary Ashen Reef edges return `quest_missing`, `destination_not_known`, `activity_missing`, and `survey_quest_missing`. Existing survey tests inject those prerequisites.
-
-The active route is now the unversioned docs-first reachability dependency-closure decision. It must decide quest-offer provenance, known-location authority, activity activation, publication/restart order, and an injection-free creator-to-restart test without weakening the survey's exact nine-field `no_proposal` boundary or inventing canon. `0.7.0` remains `NOT_READY`.
+Repository evidence cannot choose the missing canon. Demo copy says Glasswater/Saltmere, runtime travel maps Ashen Reef to Starfall Port/Starfall Isle, the authored Brineharbor reef charter is materially different, and generic civilization offers have distinct identities with no session-journal bridge. The next active route therefore requires explicit authored decisions for quest/place identity, issuer and offer timing, eligibility/recurrence, stable journal admission, and the exact accepted occurrence that grants travel access. It is not an implementation prompt. `0.7.0` remains `NOT_READY`.
 
 ## C. Tests And Checks Run
 
-- primary removable combined authority/repair probe: `16/16` passed;
-- independent AR-007 probe: `20/20`; focused command/persistence: `40/40`;
-- independent AR-008 probe: `176/176` plus four-result permutations `64/64`; focused command/persistence: `40/40`;
-- independent retained-parent probe: 18 grouped assertions passed;
-- prescribed focused/adjacent runtime, caller, persistence, travel, quest, activity, body/resource, stat/progression/reputation matrix: `175/175`;
-- achievements: `8/8`, for prescribed total `183/183`;
-- Knowledge evidence matrix: `132/132`;
-- clock/schema matrix: `107/107`;
-- RPG UI Vite `5.4.21` production build: `212` modules transformed, pass with only the registered large-chunk advisory; output removed;
-- bounded TypeScript: expected exit `2`, exact baseline `137` diagnostics; only the same two pre-existing `ActivityPanel` TS2375 findings touched the relevant surface;
-- production creator -> version-7 publish/load -> reachability probe: passed its expected incomplete outcome and recorded the four missing edges;
-- raw serialization, version-6 migration, version-7 publication/readback/restart, browser safety, public export/JavaScript mirror posture, campaign/defeat ledger preservation, correction gates, cap/opaque behavior, branch/PR inventory, evidence-ref inspection, post-push new-ref inspection, `git diff --check`, and temporary-artifact cleanup passed.
+- production creator -> version-7 publish/load -> reachability probe reproduced `quest_missing`, `destination_not_known`, `activity_missing`, and `survey_quest_missing`; the temporary probe was removed;
+- primary quest acceptance/tracking/travel/activity command group: `33/33` passed;
+- primary survey command/persistence/characterization/skill-gating group: `46/46` passed;
+- bounded independent persistence/restart inspection: `114/114` relevant checks passed and reproduced the missing upstream edges;
+- bounded independent quest/canon inspection: quest acceptance/tracking `16/16` passed and found no exact authored offer or production journal writer;
+- bounded independent travel/activity inspection reverified the missing access writer and proved the accepted travel-owned activity/operation seam with a removable diagnostic;
+- complete source/writer searches, public caller and persistence inspection, exact Connector/protected-ref reconciliation, full branch/PR inventory, PR #3 bundle hash verification, diff hygiene, hosted-file verification, and temporary-artifact cleanup were performed.
+- the repository has no `.github/workflows` directory, so no hosted workflow run exists for this documentation-only decision.
 
 ## D. Risks / Follow-Up Notes
 
 Applicable failure-pattern evidence:
 
-- `FP-001`: exercised the actual caller adapter and production creator/publication path;
-- `FP-002`: independent probes and source reconciliation, not implementation evidence alone, accepted the parent;
-- `FP-003`: projection and recovery completion paths remained reachable and idempotent;
-- `FP-005`: technical retry and same-id rerender-equivalent behavior remained covered;
-- `FP-006`: repair preserved opaque/newer truth and cap boundaries;
-- `FP-008`: Connector/protected branches remained evidence only;
-- `FP-009`: implementation, repair, starting, audit-authority, coordination, remote, and hosted identities are separated;
-- `FP-011` / `FP-012`: semantic and unique complete evidence gates precede duplicate or mutation;
-- `FP-013`: nested survey authority survived migration, fork, defeat, and recovery rewrites;
-- `FP-014` / `FP-015`: canonical strings and local arithmetic cannot replace owner recomputation;
-- `FP-016`: exact bytes no longer bypass placement authority;
+- `FP-001`: used production creator, publication/load, acceptance, travel, activity, and survey seams rather than helper-only assumptions;
+- `FP-002`: green fixture suites were classified as downstream-owner evidence, not ordinary reachability;
+- `FP-005`: the held representative contract preserves stable technical-retry and durable duplicate identity;
+- `FP-008`: Connector, candidate, superseded, and protected refs remained evidence only;
+- `FP-009`: accepted implementation/repairs, parent audit, decision start, coordination commit, remote head, and hosted head remain distinct;
+- `FP-011`: missing offer/access occurrences and provenance block state projection;
+- `FP-013`: existing nested survey authority and recovery preservation remain sufficient after valid upstream admission;
+- `FP-014`: demo prose, generic offers, content definitions, runtime destinations, and owner projections were not treated as semantically interchangeable;
 - `FP-017`: fixture eligibility was explicitly separated from ordinary representative reachability.
 
-Risks: ordinary quest-offer and Ashen Reef access provenance are not decided by current production authority. The next decision must not seed demo state, infer authored canon, or move access ownership into survey advancement. The registered broad TypeScript baseline remains separate.
+No new failure-pattern entry is required.
 
-Branch/PR review: orientation inspected one local branch, 36 non-default remote branches, and open PRs #2 and #3. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four exact survey Connector refs remain `CANDIDATE_INTEGRATION` for broader consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`. Post-push fetch discovered a 37th non-default remote branch, `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`; its single future-administration evidence file is initially `HOLD_NAMED_CONSUMER` for a later administration/template or repository-governance review. No existing disposition changed and no branch/PR mutation was due.
+Risks: the next route needs explicit product/canon input. It must not seed demo state, alias the Brineharbor charter, infer access from Knowledge/map/Codex/prose, or let survey advancement grant access. Turn-in/rewards remain excluded. The accepted survey parent must not be reopened merely because its upstream offer/access owners are missing.
 
-Suggested coordination commit message: `docs(survey): route ordinary reachability decision`
+Branch/PR review: orientation inspected one local branch, 37 non-default remote branches, and exactly two open PRs. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four exact survey Connector refs remain `CANDIDATE_INTEGRATION` for broader named consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`; `admin/genesis-research-evidence-2026-08-13` remains `HOLD_NAMED_CONSUMER`. No disposition changed and no integration, deletion, closure, rebase, or ref mutation was due.
 
-Next recommended run: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
+Suggested coordination commit message: `docs(survey): record authored reachability prerequisite`
+
+Next recommended run: `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`

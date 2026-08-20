@@ -1,99 +1,93 @@
 # Current GPT Handoff
 
-Date: 2026-08-13
+Date: 2026-08-20
 
-Status: `Version 0.6.10.5` complete; parent `0.6.10` accepted; representative evidence incomplete
+Status: accepted survey parent preserved; ordinary-reachability decision complete with `NO_PACKAGE`
 
 Parent decision: `PARENT_ACCEPTED`
+
+Reachability dependency decision: `NO_PACKAGE`
 
 Representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
 
 Active route:
 
-`Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
+`Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
 
-Exact authority chain:
+Exact accepted authority chain:
 
 - parent implementation: `008db9c93eb8818aea51652be07fd196df41c45f`;
 - first repair: `59af92629a79e95fa20247959159e336a8dbc88e`;
 - residual audit authority: `ad4a080acc3d05a4a790c4b219780db11a1be1a1`;
 - progression/placement repair: `07c57392c8078927e4f9e12efe18d8d89bb1fc70`;
-- repair coordination and `0.6.10.5` starting head: `fd40571bb0802177bd776fd3cd445b6b487716fd`;
 - parent acceptance authority: `950e851446fb75bfbdb717d0ea33e33ec2907d4a`;
-- reachability-decision coordination: `f746f99a91123297deba41c4272d025f11fcd15f`;
-- pre-connector-preparation hosted head: `2eb19bb45426803c8ee9835b4b6373e51357de9b`.
+- reachability-decision routing: `f746f99a91123297deba41c4272d025f11fcd15f`;
+- pre-Connector-preparation head: `2eb19bb45426803c8ee9835b4b6373e51357de9b`;
+- decision starting head after coordination-only preparation: `cf46fc885c870c252bc587b853baa67435b07465`;
+- decision coordination commit: reported in the completion response.
 
-## Accepted Parent Evidence
+## Completed Decision
 
-`0.6.10.5` independently accepted both residual repairs and every retained contract. Primary validation passed removable probe `16/16`, prescribed matrix `175/175` plus achievements `8/8`, Knowledge `132/132`, clock/schema `107/107`, and the 212-module Vite build. Bounded TypeScript remained exactly at the known 137-diagnostic baseline with only the two existing `ActivityPanel` findings on the relevant surface.
+The ordinary-reachability dependency decision is permanently recorded in:
 
-Separate read-only inspections passed AR-007 `20/20`, AR-008 `176/176` plus `64/64` permutations, and an 18-assertion retained-parent matrix. The primary reverified material source claims, ran the controlling suites, and removed all probes/build output.
+`docs/design/ashen-reef-survey-ordinary-reachability-and-representative-loop-dependency-closure-decision.md`
 
-Parent `0.6.10` now owns the bounded four-stage survey command, exact owner receipts, durable retry/duplicate, correction, projection repair, accepted-only caller, and persistence/recovery posture. Do not reopen it merely because upstream production reachability is incomplete.
+It returns `NO_PACKAGE`. Current repository authority cannot choose the canonical Ashen survey offer or travel-access occurrence without inventing product/canon facts. Provisional `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` is not authorized.
 
-## Representative Evidence Gap
+The decision does not reopen parent `0.6.10`. Survey advancement, retained authority, correction/repair, accepted-only caller behavior, version-7 publication/restart, durable duplicate, and Normal defeat/recovery preservation remain accepted.
 
-A real ordinary creator snapshot was published and reloaded through version 7. It contained:
+## Settled Downstream Seams
 
-- `questJournal: []`;
-- `trackedQuestId: null`;
-- only the selected starting settlement in `knownLocations`;
-- only the starting activity record;
-- no production survey quest offer or Ashen Reef activity record.
+- Quest acceptance/tracking correctly consume an existing `contracts` journal row and apply only accepted engine results.
+- Travel correctly consumes an existing exact known-location row and rejects missing access.
+- Successful tracked-quest travel to `location.ashen_reef` already creates `operation.quest.ashen_reef_survey` and sets `activity.survey.ashen_reef`.
+- The straight representative path therefore does not need a separate activity-record insertion or selection command.
+- Existing version-7 publication/load and survey ledger authority are sufficient after valid upstream offer/access admission. No save-format bump, migration, or generic persistence work is indicated.
 
-The four first edges returned:
+## Missing Authored Authority
 
-- quest acceptance: `quest_missing`;
-- Ashen Reef travel: `destination_not_known`;
-- survey activity selection: `activity_missing`;
-- survey advancement: `survey_quest_missing`.
+The next run must obtain explicit product/canon answers for:
 
-Existing “fresh character” survey coverage manually inserts the demo quest, tracking, Ashen Reef current activity/location, and sector flags. It proves eligible-owner behavior, not ordinary reachability.
+1. whether exact `quest.ashen_reef_survey` and current Starfall `location.ashen_reef` remain canonical;
+2. canonical issuer, delivery surface, place context, offer copy, and treatment of the demo’s Glasswater/Saltmere wording;
+3. the exact ordinary availability occurrence and eligibility;
+4. one-time/repeatable, expiry, retention, decline, and re-offer posture;
+5. stable offer-instance identity and the bounded owner that idempotently admits a `contracts` journal row;
+6. whether offer presentation, quest acceptance, or a separate authored interaction grants known/travelable `location.ashen_reef`;
+7. the exact owner/source facts for that access row.
 
-## Active Decision Contract
+Repository evidence is exhausted. The only authored reef-survey definition is a distinct Brineharbor charter; generic civilization offers have different identities and no journal bridge; demo text and protected proposals are not canon authority. Do not infer or combine them.
 
-The next run is documentation-only. It must decide:
+If the user has not supplied all answers, the active prompt must ask concise product questions and return `AUTHORED_INPUT_REQUIRED`. If all answers are explicit, record `AUTHORED_INPUT_ACCEPTED` and install a separate unversioned implementation-package decision. Do not assign `0.6.11` or install an implementation prompt directly.
 
-1. the authored/runtime owner and trigger for the survey quest offer;
-2. who makes `location.ashen_reef` known and when;
-3. whether the existing tracked-quest travel arrival hook is the accepted activity activation boundary or another narrow transition is required;
-4. minimum publication/restart ordering;
-5. one injection-free creator-to-restart representative test;
-6. whether provisional `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` is a coherent current-band package.
+## Evidence And Validation
 
-Return `PACKAGE_READY` only if repository authority settles every choice. Otherwise return `NO_PACKAGE` and install the smallest authored-input/owner prerequisite. Do not implement production in the decision, invent canon, seed demo quests into every campaign, or weaken survey `no_proposal` fields. Turn-in/rewards and geographic Knowledge/map behavior remain excluded. `0.7.0` stays `NOT_READY`.
+A fresh production creator -> version-7 publish/load probe produced:
+
+- no quest-journal rows or tracked quest;
+- only the starting settlement known;
+- only the starting arrival activity record;
+- `quest_missing`;
+- `destination_not_known`;
+- `activity_missing`;
+- `survey_quest_missing`.
+
+Primary downstream suites passed `33/33` quest/tracking/travel/activity and `46/46` survey/persistence/characterization/skill checks. Bounded independent inspections reverified the missing writers, current canon conflict, downstream arrival hook, persistence/restart sufficiency, and fixture-injection boundary. No tracked probe or build output remains.
 
 ## Branch And Evidence Posture
 
-Current hosted inventory is `master` plus 37 non-default remote branches and exactly two open pull requests. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+Current hosted inventory remains `master` plus 37 non-default remote branches and exactly two open pull requests.
 
-The current PR #3 body still contains historical route wording from `0.6.10.1` and must not be treated as current routing authority. Its branch contents remain preserved evidence; `docs/dev/branch-disposition-register.md`, this handoff, the current prompt, and the accepted survey audit control current disposition. A connector attempt to refresh only that PR metadata did not complete, so no PR state or branch content changed during preparation.
+- PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`, `SUPERSEDED_PRESERVE_EVIDENCE`.
+- PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`, `SUPERSEDED_PRESERVE_EVIDENCE`; its bundle SHA-256 remains `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`.
+- `admin/genesis-research-evidence-2026-08-13` remains `HOLD_NAMED_CONSUMER`.
+- Exact survey evidence refs remain activity `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, progression `387f2491d0d671ee7834656c28183e72a798f1ca`, projection `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, and Knowledge `46434f31f8b06d49aad9a516543fbe36d188d519`.
+- Protected integrated-gameplay readiness remains `59c103c3a06d55f35bffa735fd4b7814dffb583e`.
 
-The additional remote branch `admin/genesis-research-evidence-2026-08-13` remains at `210df5bcc017a8f31d621a553b5496c668540d29`. It adds one evidence-only future administration/template research document from base `fd40571...`, explicitly disclaims current Lineage authority, and is `HOLD_NAMED_CONSUMER` for a later administration or repository-governance review. Do not merge it into the active reachability route.
+No lifecycle disposition changed. No integration, branch deletion, PR closure, rebase, or ref mutation is due before the authored-canon decision.
 
-Exact read-only evidence refs remain:
+## Scope Guardrails
 
-- activity: `b4cbaea5f4292904bba62f60a0108bb84f2bd405`;
-- progression: `387f2491d0d671ee7834656c28183e72a798f1ca`;
-- Chronicle/projections: `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`;
-- Knowledge/discovery: `46434f31f8b06d49aad9a516543fbe36d188d519`;
-- protected readiness: `59c103c3a06d55f35bffa735fd4b7814dffb583e`.
+Do not implement production or tests during the active authored-canon decision. Do not seed demo state, alias the Brineharbor charter, derive travel access from geographic Knowledge/map/Codex/prose, change survey `no_proposal` fields, add turn-in/rewards, create generic quest/travel/activity infrastructure, or advance `0.7.0`.
 
-No lifecycle integration, branch deletion, PR closure, or evidence-ref mutation is due before the next Codex orientation.
-
-## Connector Preparation Result
-
-A bounded pre-Codex Connector cleanup pass found no safe production, test, schema, migration, content, asset, dependency, or active-prompt change to make. The authoritative route was already coherent, so preparation deliberately avoided creating another evidence branch or source patch.
-
-The useful consolidation completed here is coordination-only:
-
-- current branch count is normalized to 37 non-default remotes rather than the historical orientation count of 36 followed by a post-push discovery;
-- the new administration evidence branch is explicitly non-blocking and outside the active reachability package;
-- stale PR #3 route metadata is called out as historical rather than current authority;
-- parent acceptance and the exact active docs-only decision remain unchanged.
-
-No manual file movement, attachment, plugin activation, branch integration, or Connector-generated implementation input is required before Codex starts. Codex should fetch/prune, verify a clean synchronized checkout against the then-live hosted `master`, and proceed with the installed reachability decision.
-
-## Connector-Safe Follow-Up
-
-No further routine Connector interruption is required before the reachability decision. The next run needs synchronized repository inspection and may use removable local probes; Codex remains the authoritative execution surface. Connector evidence can assist only as isolated read-only input.
+No routine Connector interruption or manual file transfer is needed. Explicit product/canon answers are the only required external input.

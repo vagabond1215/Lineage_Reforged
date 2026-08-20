@@ -1,10 +1,18 @@
 # Branch Disposition Register
 
-Date: 2026-08-13
+Date: 2026-08-20
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-08-20 Ordinary Reachability Decision Refresh
+
+The documentation-only decision fetched/pruned and began from clean synchronized `master == origin/master` at `cf46fc885c870c252bc587b853baa67435b07465`. Fresh orientation inventoried one local branch, 37 non-default remote branches, and exactly two open pull requests. Every branch merge base, ahead/behind posture, unique commits, and changed paths was rechecked against the live head.
+
+PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. The PR #3 evidence bundle reconstructed to exact SHA-256 `c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+The four exact survey Connector refs remain `CANDIDATE_INTEGRATION` for broader named consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`; and `admin/genesis-research-evidence-2026-08-13` remains `HOLD_NAMED_CONSUMER`. The completed reachability decision creates no integration trigger. No disposition changed, and no merge, cherry-pick, rebase, close, delete, or ref mutation was due.
 
 ## 2026-08-13 Version 0.6.10.5 Acceptance Audit Refresh
 
@@ -459,9 +467,11 @@ These branches are not implementation authority merely because they are low-conf
 
 Active route:
 
-`Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
+`Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
 
-Branch handling during the documentation-only reachability decision requires:
+The completed ordinary-reachability decision inspected one local branch, 37 non-default remote branches, and exactly two open pull requests at starting head `cf46fc885c870c252bc587b853baa67435b07465`. No lifecycle trigger fired and no disposition changed.
+
+Branch handling during the documentation-only authored-canon decision requires:
 
 - required read-only inspection of protected references;
 - complete branch/PR inventory and disposition refresh;
@@ -469,9 +479,9 @@ Branch handling during the documentation-only reachability decision requires:
 - inspecting the protected integrated-gameplay readiness branch read-only;
 - otherwise preserving candidate branches for their named triggers.
 
-The permanent survey receipt decision, `0.6.10.1` acceptance audit, `0.6.10.2` implementation appendix, `0.6.10.3` post-repair audit appendix, `0.6.10.4` repair appendix, and `0.6.10.5` acceptance appendix are authoritative on `master`. No one-document Connector audit branch is implementation or acceptance authority. No candidate integration, branch deletion, or PR closure is due inside the active reachability decision unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
+The permanent survey receipt decision, `0.6.10.1` acceptance audit, `0.6.10.2` implementation appendix, `0.6.10.3` post-repair audit appendix, `0.6.10.4` repair appendix, `0.6.10.5` acceptance appendix, and ordinary-reachability dependency decision are authoritative on `master`. No one-document Connector audit branch is implementation, canon, or acceptance authority. No candidate integration, branch deletion, or PR closure is due inside the active authored-canon decision unless fresh live evidence changes the controlling disposition and the prompt's exclusions are first reconciled.
 
-The survey receipt decision remains `PACKAGE_READY`; implementation `0.6.10` is repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70` and accepted at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`. Ordinary reachability evidence remains incomplete and is owned by the active docs-first decision. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
+The survey receipt decision remains `PACKAGE_READY`; implementation `0.6.10` is repaired at `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70` and accepted at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`. Ordinary reachability returned `NO_PACKAGE` because authored offer/journal-admission and access facts are absent. The active authored-canon decision must not merge evidence branches to manufacture those facts. Parent `0.6.9` remains accepted through completed `0.6.9.11`; neither route creates a branch integration trigger.
 
 ## 6. Mandatory Next Codex Branch Report
 
