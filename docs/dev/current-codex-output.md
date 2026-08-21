@@ -2,7 +2,7 @@
 
 Date: 2026-08-20
 
-Source run: `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`
+Source run: `Ashen Reef Survey Ordinary Reachability Implementation Package Decision`
 
 Label class: unversioned documentation-only decision
 
@@ -10,89 +10,108 @@ Parent version: not applicable
 
 Milestone impact: `supports_current_band`
 
-Branch/status assumption: fetched/pruned clean synchronized `master == origin/master` at decision start `cf46fc885c870c252bc587b853baa67435b07465`; direct-to-`master` documentation workflow authorized by the installed prompt
+Branch/status assumption: fetched/pruned clean synchronized `master == origin/master` at decision start `31f5b851fd0adfe878d7e8e0496d7070b6daac96`; direct-to-`master` documentation workflow authorized by the installed prompt
 
-Accepted parent implementation: `008db9c93eb8818aea51652be07fd196df41c45f`
-
-Accepted parent repairs: `59af92629a79e95fa20247959159e336a8dbc88e` and `07c57392c8078927e4f9e12efe18d8d89bb1fc70`
+Accepted parent: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
 Parent acceptance authority: `950e851446fb75bfbdb717d0ea33e33ec2907d4a`
 
-Reachability-decision starting head: `cf46fc885c870c252bc587b853baa67435b07465`
+Decision commit: reported in the completion response because a commit cannot contain its own identity
 
-Final coordination commit: reported in the completion response because a commit cannot contain its own identity
+Outcome: `PACKAGE_READY`
 
-Outcome: `NO_PACKAGE`
+Selected next primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
 
-Representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
+Starting representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
 
-Provisional `Version 0.6.11`: not authorized
-
-Next route: `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
+`0.7.0`: `NOT_READY`
 
 ## A. Files Changed
 
 Focused authority:
 
-- `docs/design/ashen-reef-survey-ordinary-reachability-and-representative-loop-dependency-closure-decision.md`
-- `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`
+- `docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md`;
+- `docs/design/ashen-reef-soundings-authored-canon-decision.md`;
+- `docs/design/ashen-reef-survey-ordinary-reachability-and-representative-loop-dependency-closure-decision.md`;
+- `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`.
 
 Repository coordination:
 
-- `docs/dev/current-codex-prompt.md`
-- `docs/dev/current-codex-output.md`
-- `docs/dev/current-gpt-handoff.md`
-- `docs/dev/repository-first-agent-work-protocol.md`
-- `docs/dev/historical-version-and-deferred-route-register.md`
-- `docs/design/current-planning-anchor-reconciliation.md`
-- `docs/dev/project-roadmap.md`
-- `docs/dev/codex-sequenced-implementation-plan.md`
-- `docs/dev/project-vision-and-continuity-brief.md`
-- `docs/future_content_backlog.md`
-- `docs/design/static-content-expansion-program.md`
-- `docs/dev/branch-disposition-register.md`
+- `docs/dev/current-codex-prompt.md`;
+- `docs/dev/current-codex-output.md`;
+- `docs/dev/current-gpt-handoff.md`;
+- `docs/dev/repository-first-agent-work-protocol.md`;
+- `docs/dev/historical-version-and-deferred-route-register.md`;
+- `docs/design/current-planning-anchor-reconciliation.md`;
+- `docs/dev/project-roadmap.md`;
+- `docs/dev/codex-sequenced-implementation-plan.md`;
+- `docs/dev/project-vision-and-continuity-brief.md`;
+- `docs/future_content_backlog.md`;
+- `docs/design/static-content-expansion-program.md`;
+- `docs/dev/branch-disposition-register.md`.
 
-No production source, shared contract, tracked test, schema, serializer, migration, format, dependency, content, asset, UI, save, or gameplay file changed. The removable creator/publication/load probe was deleted.
+No production source, content JSON, schema, validator, tracked test, serializer, migration, save format, dependency, asset, generated output, UI, branch, or PR changed. No temporary probe remains.
 
 ## B. Patch Summary
 
-The dependency decision returns `NO_PACKAGE`. Ordinary creation and version-7 publication/load are sound, but they produce no exact Ashen survey offer, no journal row, no tracked quest, and no Ashen known-location/travel-access row. Production contains no writer for either missing state. Existing tests inject those prerequisites and therefore do not prove representative reachability.
+The decision returns `PACKAGE_READY`. Accepted authored canon now settles the exact quest identity, issuer, place, recurrence, admission posture, access occurrence, four-stage structure, and deferred reward boundary.
 
-The downstream route is otherwise coherent. Existing quest commands consume an admitted `contracts` row. Travel consumes an admitted known-location row. Successful travel to `location.ashen_reef` while the survey is tracked already creates the survey operation and exact current activity, so the straight path does not require a separate activity-record selection edge. The accepted survey owner, caller, campaign admission, publication/restart, duplicate, projection repair, correction, and Normal defeat/recovery seams can be reused unchanged.
+Current source proves a bounded package:
 
-Repository evidence cannot choose the missing canon. Demo copy says Glasswater/Saltmere, runtime travel maps Ashen Reef to Starfall Port/Starfall Isle, the authored Brineharbor reef charter is materially different, and generic civilization offers have distinct identities with no session-journal bridge. The next active route therefore requires explicit authored decisions for quest/place identity, issuer and offer timing, eligibility/recurrence, stable journal admission, and the exact accepted occurrence that grants travel access. It is not an implementation prompt. `0.7.0` remains `NOT_READY`.
+- one authored Starfall definition under a narrow nullable/deferred quest-definition schema correction;
+- one pure Ashen owner that stages the row in the unpublished target new-campaign candidate, with verified initial publication/load as offer admission and availability;
+- one pure Ashen known-location adapter inside accepted quest acceptance;
+- one site-aware Starfall/Ashen travel-origin correction;
+- direct Starfall presentation corrections using new survey content version 2 while preserving retained version-1 authority;
+- one injection-free production creator-to-final-restart test plus the accepted adjacent survey matrix.
+
+The direct travel correction is required: current source maps a genuine Starfall creator to `location.ashen_reef`, so granting the missing access changes rejection from `destination_not_known` to `already_at_destination`. Site-aware resolution closes that deadlock without renaming unrelated compatibility destination keys.
+
+The schema correction is also required. Production progression begins at level 0; no tick-to-hour mapping, deadline, office entity id, or numeric reward authority exists. Explicit null fields preserve that deliberate absence without fabricating zeros or Brineharbor values.
+
+The selected package is correctly classified as current-band primary `0.6.11`. It materially adds ordinary reachability and representative integration evidence, is not a parent repair/audit, and does not make `0.7.0` ready. The installed implementation prompt requires a separate `0.6.11.1` acceptance audit.
 
 ## C. Tests And Checks Run
 
-- production creator -> version-7 publish/load -> reachability probe reproduced `quest_missing`, `destination_not_known`, `activity_missing`, and `survey_quest_missing`; the temporary probe was removed;
-- primary quest acceptance/tracking/travel/activity command group: `33/33` passed;
-- primary survey command/persistence/characterization/skill-gating group: `46/46` passed;
-- bounded independent persistence/restart inspection: `114/114` relevant checks passed and reproduced the missing upstream edges;
-- bounded independent quest/canon inspection: quest acceptance/tracking `16/16` passed and found no exact authored offer or production journal writer;
-- bounded independent travel/activity inspection reverified the missing access writer and proved the accepted travel-owned activity/operation seam with a removable diagnostic;
-- complete source/writer searches, public caller and persistence inspection, exact Connector/protected-ref reconciliation, full branch/PR inventory, PR #3 bundle hash verification, diff hygiene, hosted-file verification, and temporary-artifact cleanup were performed.
-- the repository has no `.github/workflows` directory, so no hosted workflow run exists for this documentation-only decision.
+- fetched/pruned and verified clean synchronized `master == origin/master` at `31f5b851fd0adfe878d7e8e0496d7070b6daac96`;
+- inspected the complete authored preparation diff from `cf53772af2c97223bbd1ffa513472d1fee02d662` through the starting head and confirmed it changes exactly four documentation files;
+- reverified the production creator/new-campaign publication, quest acceptance/tracking, known-location/travel, arrival hook, survey owner, persistence, duplicate, correction/repair, and presentation call paths;
+- primary schema-file plus quest-objective/action-tree baseline passed `147/147`;
+- primary quest acceptance/tracking, travel, survey characterization/command/persistence, skill-gating, campaign-persistence, and save/load grouping passed `109/109`;
+- primary normal content lint passed with `71` files checked;
+- independently bounded quest schema/objective evidence passed `147/147` and normal content lint passed with `71` files checked;
+- independently bounded quest acceptance/tracking evidence passed `16/16`;
+- independently bounded acceptance/tracking/travel/survey evidence passed `65/65` and reproduced the Starfall origin deadlock;
+- fresh branch/PR inventory inspected one local branch, 37 non-default remote branches, and exactly two open PRs;
+- PR #2 and PR #3 hosted status/head posture was reverified through the authenticated GitHub surface;
+- exact survey evidence refs and protected readiness ref were reverified unchanged;
+- final documentation link/routing checks, focused baseline tests, `git diff --check`, hosted prompt/output/handoff retrieval, post-push fetch, and clean synchronization are reported in the completion response.
+
+The repository has no `.github/workflows` directory, so no hosted workflow run is expected for this docs-only decision.
 
 ## D. Risks / Follow-Up Notes
 
 Applicable failure-pattern evidence:
 
-- `FP-001`: used production creator, publication/load, acceptance, travel, activity, and survey seams rather than helper-only assumptions;
-- `FP-002`: green fixture suites were classified as downstream-owner evidence, not ordinary reachability;
-- `FP-005`: the held representative contract preserves stable technical-retry and durable duplicate identity;
-- `FP-008`: Connector, candidate, superseded, and protected refs remained evidence only;
-- `FP-009`: accepted implementation/repairs, parent audit, decision start, coordination commit, remote head, and hosted head remain distinct;
-- `FP-011`: missing offer/access occurrences and provenance block state projection;
-- `FP-013`: existing nested survey authority and recovery preservation remain sufficient after valid upstream admission;
-- `FP-014`: demo prose, generic offers, content definitions, runtime destinations, and owner projections were not treated as semantically interchangeable;
-- `FP-017`: fixture eligibility was explicitly separated from ordinary representative reachability.
+- `FP-001`: traced the real creator, acceptance, campaign admission, travel, survey caller, publication, and restart seams;
+- `FP-002`: treated fixture tests as downstream evidence only and required a new injection-free integration test;
+- `FP-005`: preserved retained new-campaign attempt identity and survey request duplicate semantics;
+- `FP-008`: all Connector, candidate, superseded, and protected refs remained evidence only;
+- `FP-009`: kept inspected base, starting head, decision commit, pushed head, and hosted verification distinct;
+- `FP-011`: fixed offer provenance at initial retained campaign creation and access provenance at accepted quest occurrence before mutation;
+- `FP-012`: required exact nullable schema semantics and versioned retained survey validation;
+- `FP-013`: retained nested survey authority and defeat/recovery preservation remain mandatory implementation evidence;
+- `FP-014`: kept authored definition, journal row, known location, settlement identity, Knowledge/map state, and presentation non-equivalent;
+- `FP-017`: explicitly forbade direct eligibility/authority insertion in representative evidence.
 
-No new failure-pattern entry is required.
+No new generalized failure-pattern entry is required.
 
-Risks: the next route needs explicit product/canon input. It must not seed demo state, alias the Brineharbor charter, infer access from Knowledge/map/Codex/prose, or let survey advancement grant access. Turn-in/rewards remain excluded. The accepted survey parent must not be reopened merely because its upstream offer/access owners are missing.
+Primary implementation risks are version-1 survey string compatibility, atomic access failure handling, and the Starfall settlement/anchorage distinction. The installed prompt requires exact v1/v2/mixed-version publication/restart tests, acceptance/access conflict tests, and Normal recovery coverage.
 
-Branch/PR review: orientation inspected one local branch, 37 non-default remote branches, and exactly two open PRs. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four exact survey Connector refs remain `CANDIDATE_INTEGRATION` for broader named consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`; `admin/genesis-research-evidence-2026-08-13` remains `HOLD_NAMED_CONSUMER`. No disposition changed and no integration, deletion, closure, rebase, or ref mutation was due.
+Turn-in/rewards, payout values, Geographic Knowledge/map/fog/recognition, generic offer/access infrastructure, unrelated travel-key cleanup, survey balance/receipt ownership, and `0.7.0` remain excluded.
 
-Suggested coordination commit message: `docs(survey): record authored reachability prerequisite`
+Branch/PR review: PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey refs remain `CANDIDATE_INTEGRATION` for broader named consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`. No disposition changed and no branch/PR action was due.
 
-Next recommended run: `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
+Suggested commit message: `docs(survey): authorize ordinary reachability package`
+
+Next recommended run: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`

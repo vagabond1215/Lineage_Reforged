@@ -2,192 +2,132 @@
 
 Date: 2026-08-20
 
-Status: Ashen authored input accepted; implementation-package decision installed and schema-facing authored inputs closed
+Status: ordinary-reachability implementation package authorized; `Version 0.6.11` installed
 
-Parent decision: `PARENT_ACCEPTED`
+Package decision: `PACKAGE_READY`
 
-Reachability dependency decision: `NO_PACKAGE`
+Selected primary:
+
+`Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
+
+Accepted parent: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+
+Parent acceptance authority: `950e851446fb75bfbdb717d0ea33e33ec2907d4a`
 
 Authored input: `AUTHORED_INPUT_ACCEPTED`
 
-Representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
+Starting representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
 
-Active route:
-
-`Ashen Reef Survey Ordinary Reachability Implementation Package Decision`
+`0.7.0`: `NOT_READY`
 
 Current prompt authority:
 
 `docs/dev/current-codex-prompt.md`
 
-Accepted authored-canon authority:
+Package authority:
 
-`docs/design/ashen-reef-soundings-authored-canon-decision.md`
+`docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md`
 
-Broader product-direction authority:
+## Decision Summary
 
-`docs/design/quest-identity-offer-context-and-travel-access-product-direction.md`
+No further authored input is required. The accepted **Soundings of Ashen Reef** canon plus current source settle one bounded implementation package.
 
-## Current Hosted Preparation Chain
+The package must add:
 
-The last completed Codex decision advanced hosted `master` to:
+- one honest authored Starfall quest definition under a narrow nullable/deferred schema correction;
+- one Ashen-specific owner that stages offer facts in the unpublished target new-campaign candidate, with verified initial publication/load as admission and availability;
+- one Ashen-specific travel-access adapter inside accepted quest acceptance;
+- one direct site-aware Starfall/Ashen travel-origin correction;
+- directly necessary Starfall presentation corrections with version-1 survey-authority compatibility and new content version 2;
+- one injection-free creator-to-final-restart production regression.
 
-`cf53772af2c97223bbd1ffa513472d1fee02d662` - `docs(survey): record authored reachability prerequisite`
+The implementation remains a `0.6.x` primary. It may report only `IMPLEMENTED_PENDING_PARENT_AUDIT` and must install a separate `0.6.11.1` acceptance audit.
 
-Connector/product-direction preparation then added these docs-only steps:
+## Source Head And Preparation Chain
 
-- `dc71404a8963e24c31cb9af6a5cc9fbf59bae7d6` - `docs(quests): record identity and access product direction`;
-- `32a3d57fba3604bd3292178b4fa34a6b954437c7` - `docs(survey): accept Ashen Reef soundings canon`;
-- `3679cfb8b942ffc090f6ffdd73cd04217b731b71` - `docs(prompt): install Ashen reachability package decision`;
-- `e5a92fd1d621724817b221c062f26346e6bae688` - `docs(handoff): hand off accepted Ashen canon`;
-- `324a1f7ee6b8d6e5a5022ac728bbed633e539f4b` - `docs(survey): close Ashen presentation inputs`;
-- `7fd9000a33d7cfd7311ad2a6675d5f8c3b9ee0a7` - `docs(prompt): close Ashen schema-facing inputs`;
-- this handoff update follows those preparation commits.
+The package decision inspected clean synchronized:
 
-No production, content JSON, schema, validator, tracked test, migration, UI, save, dependency, asset, generated, branch, or PR mutation was made by this preparation.
+`31f5b851fd0adfe878d7e8e0496d7070b6daac96`
 
-The next Codex run must fetch/prune and reverify the actual hosted head before trusting recorded SHAs.
+The seven commits after the prior Codex decision were documentation-only and accepted as current authored preparation. They added the product-direction document, the accepted authored-canon decision, the package-decision prompt, and handoff refinements. They did not modify production, content JSON, schemas, tests, save authority, dependencies, assets, branches, or PRs.
 
-## Accepted Canon - Do Not Re-Ask
+The implementation run must fetch/prune and trust only its freshly synchronized hosted head.
 
-The project owner approved the recommended civic hydrographic/pilotage premise.
+## Exact Canon
 
-First representative quest:
+- definition: `quest_definition.starfall_ashen_reef_soundings`;
+- runtime row: `quest.ashen_reef_survey`;
+- title: **Soundings of Ashen Reef**;
+- issuer: **Starfall Harbormaster's Office**;
+- contact role: **Duty Harbormaster**;
+- delivery context: `settlement.starfall_port`, `region.starfall_isle`;
+- one-time, non-expiring before acceptance, no hard admission gate;
+- post-storm background rather than a runtime weather trigger;
+- three survey sectors plus final ruin-marker verification;
+- Stormglass Bloom incidental;
+- paid civic contract with exact reward terms deferred;
+- acceptance, not offer visibility, grants charts/instructions/authorization/arranged access;
+- `location.ashen_reef` is an anchorage compatibility key, not Starfall Port identity.
 
-**Soundings of Ashen Reef**
+Do not copy Brineharbor values or old `580 crown + salvage rights` copy.
 
-Accepted authored definition id:
+## High-Risk Implementation Details
 
-`quest_definition.starfall_ashen_reef_soundings`
+### Schema and content
 
-Accepted runtime compatibility quest id:
+Production progression begins at level `0`; current `levelMin >= 1` would create a false gate. No accepted tick-to-hour conversion or reward numbers exist. The package therefore admits explicit nulls for missing institution id, hour fields, reward numbers, and action-node hours while keeping fields required. Null must not become zero.
 
-`quest.ashen_reef_survey`
+The new authored record uses `entityId: null`, `levelMin: 0`, null timing/reward/hour fields, rank D as routine field work with manageable danger, empty eligibility/logistics gates, and four sequential no-check descriptive nodes. The descriptive rank remains separate from admission eligibility. Existing five definitions and Brineharbor remain unchanged.
 
-Issuer presentation:
+### Offer owner
 
-**Starfall Harbormaster's Office**
+Call a pure engine staging owner after `initializeTargetCampaignSnapshot(...)` inside `createNewGameSnapshot(...)`, before `prepareNewCampaignAttempt(...)` retains the first candidate. The candidate is not active and the row is not available yet. Verified initial publication followed by authoritative load is the admission occurrence; no second post-load mutation is allowed. Do not stage/admit during general synchronization or later load. The row itself is the one-time consumed lifecycle record; the retained candidate provides retry/provenance.
 
-Contact presentation if the strict quest-definition schema requires one:
+### Access owner
 
-**Duty Harbormaster**
+Apply the exact Ashen known row inside accepted quest acceptance so quest activation, initial tracking, access, and event are one proposed mutation. Omit `settlementId` from the anchorage row. Duplicate/conflicting rows fail closed. Expose access posture in result/event facts. Publish/reload before travel.
 
-`Duty Harbormaster` is a role label, not a canonical named NPC.
+### Direct travel defect
 
-Place context:
+Current source maps every Starfall position to `location.ashen_reef`; a real Starfall creator therefore gets `already_at_destination` after access. Resolve the reef id only at site label `Survey Anchorage` or legacy `Ashen Reef`; otherwise use compatibility origin `settlement.starfall_port` and fall back to the live site label.
 
-- `settlement.starfall_port`;
-- `region.starfall_isle`;
-- `location.ashen_reef` remains the current compatibility travel key for the Starfall-associated survey anchorage/approach, not a statement that the reef and settlement are the same canonical place.
+### Survey content compatibility
 
-Narrative cause:
+Old survey receipts/projections embed Saltmere/Glasswater strings. New commands must author `surveyContent: 2`, while retained version 1 remains semantically valid with original expected strings. Canonicalization must preserve the stored version. Test v1, v2, and mixed sequences through publication/restart/duplicate/repair; do not migrate old evidence.
 
-- a major seasonal storm has made older working soundings/markers unreliable;
-- this is authored background already in effect, not a new runtime weather-event requirement;
-- the office commissions fresh soundings before fishing and commercial traffic intensify;
-- the survey concerns channels, breakers, draft-safe approaches, and ruin markers;
-- the reef is not established as a modern protected/conservation area;
-- fisheries are a secondary civic/economic motive rather than an ecological stock-management program;
-- Stormglass Bloom remains an incidental final-shift discovery.
+### Representative path
 
-The existing Brineharbor reef-soundings charter remains a separate authored quest.
+Quest acceptance already tracks the quest. One later tracking toggle would untrack it; assert acceptance-owned tracking instead. Travel already creates the operation/activity. Do not inject an activity record or add selection.
 
-## Reward And Timing Intent - Deliberately Deferred, Not Missing
+The tracked representative test must not import `demoSnapshot` or directly insert any eligibility, survey authority, projection, correction, or repair row. Keep deliberate corruption cases in adjacent suites. End before turn-in.
 
-This civic contract is intended to be paid in ordinary coin after an eventual accepted chart-packet turn-in.
+## Validation And Acceptance Posture
 
-Exact payout, bonus, standing, item, salvage, service, or other consequence values are **not authored in the reachability route** and belong to the separately deferred turn-in/reward authority.
+The decision run reverified current source and baseline behavior. Bounded independent checks reported:
 
-The old demo text `580 crown + salvage rights` is explicitly non-canonical.
+- quest schema/objective baseline `147/147` and normal content lint `71` files;
+- quest acceptance/tracking `16/16`;
+- acceptance/tracking/travel/survey focused grouping `65/65`;
+- exact reproduction of the current Starfall `destination_not_known -> already_at_destination` deadlock once access is present.
 
-Do not copy Brineharbor reward values, invent numeric economics, or encode zero as proof that the contract is unpaid simply to satisfy the current strict quest-definition reward shape.
+The implementation prompt requires the full content/schema, creator/publication, acceptance/access, travel, survey, Knowledge/non-proposal, persistence/recovery, representative integration, build, TypeScript baseline, mirror/export, diff, and hygiene matrix.
 
-Likewise, no hard runtime completion deadline is authored for this first reachability implementation. The post-storm reopening creates narrative urgency but not a required expiry/failure clock.
+The implementation may not self-accept. Install `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit` after a complete green implementation.
 
-Current schema requirements such as numeric reward fields or `dueWithinHours` are therefore **implementation-package constraints**, not missing product/canon input. The next Codex run must decide the smallest honest authority-preserving representation rather than asking the user to invent payout/balance prematurely.
+## Branch And PR Posture
 
-## Accepted Availability And Access Posture
+Fresh orientation found one local branch, 37 non-default remote branches, and exactly two open PRs.
 
-The initial contract is one-time per campaign.
+- PR #2 at `e78dc645cfb658685be12f45f46d34b7c0da1119`: `SUPERSEDED_PRESERVE_EVIDENCE`;
+- PR #3 at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`: `SUPERSEDED_PRESERVE_EVIDENCE`;
+- four exact survey evidence refs: `CANDIDATE_INTEGRATION` for broader named consumers only;
+- integrated-gameplay readiness: `PROTECTED_REFERENCE`;
+- administration evidence branch: `HOLD_NAMED_CONSUMER`.
 
-For the first representative path:
+No disposition changed and no integration, deletion, closure, rebase, or ref mutation is due.
 
-- the character may be created with Starfall Port as the explicit starting-settlement user choice;
-- after ordinary initial version-7 publication/load, the local Starfall contract should appear deterministically if not already active/completed/consumed;
-- there is no hard level/class/reputation/magic/skill gate for offer admission;
-- the offer does not expire before acceptance in the first package;
-- ignoring/dismissing it does not consume it;
-- it does not duplicate/re-offer after acceptance/completion.
+## Scope Guard
 
-Offer presentation alone does not make the survey anchorage travelable.
+Keep turn-in/rewards, numeric payout, Geographic Knowledge/map/fog/recognition, generic quest or travel infrastructure, other travel-key cleanup, survey balance/receipt ownership, dependencies, and `0.7.0` outside `0.6.11`.
 
-Accepted quest acceptance is the causal occurrence that supplies old charts, departure instructions, survey authorization, and arranged launch/access. The preferred implementation boundary is a narrow Ashen-specific access adapter/owner consuming accepted quest acceptance and idempotently ensuring `location.ashen_reef` is known/travelable.
-
-This must not grant Geographic Knowledge evidence/progress, map/Codex/fog recognition, or weaken the survey `no_proposal` boundary.
-
-## Settled Downstream Seams
-
-Preserve unless the package decision proves a direct contradiction:
-
-- quest acceptance/tracking consume an existing `contracts` journal row;
-- travel consumes an existing exact known-location row;
-- successful tracked-quest travel to `location.ashen_reef` creates `operation.quest.ashen_reef_survey` and sets `activity.survey.ashen_reef`;
-- no separate activity-record insertion/selection edge is required on the straight representative path;
-- the accepted four-shift survey command/caller/campaign mutation remains unchanged;
-- version-7 publication/restart, durable survey duplicate handling, correction/projection repair, and Normal defeat/recovery preservation remain accepted;
-- all nine survey geography `no_proposal` fields remain exact.
-
-## Active Package Questions For Codex
-
-Do not ask for more product/canon input unless fresh live evidence reveals a genuine contradiction with the accepted canon document.
-
-The active docs-only package decision must settle:
-
-1. the smallest honest authored-definition/canon mapping under the current strict quest-definition schema without fake payout/timing/institution facts;
-2. whether a narrow schema/content correction is justified or whether the first reachability implementation should keep the accepted canon mapping outside a live quest-definition record temporarily;
-3. the exact production owner that idempotently admits one Starfall `contracts` row after ordinary initial publication/load;
-4. the exact Ashen-specific accepted-quest access adapter/owner and its persistence/retry/duplicate rules;
-5. the smallest Starfall-canon presentation corrections required for stale Ashen-facing `Glasswater`, `Saltmere Harbor Office`, obsolete title/reward strings, and the current Stormglass discovery region label if still live;
-6. the injection-free production representative test from an explicitly selected Starfall starting settlement through offer, acceptance, tracking, access, travel, automatic activity/operation activation, four survey shifts, publication/restart, and durable result/projection behavior;
-7. whether the bounded package is now correctly `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`.
-
-If `PACKAGE_READY`, install a separate implementation prompt and do not implement during the decision run. If `NO_PACKAGE`, install only the smallest prerequisite.
-
-## Non-Quest Sanity Findings
-
-No separate non-quest blocker was found during this preparation.
-
-One deferred travel-identity debt is worth preserving but is **not** a blocker and must not widen the Ashen route:
-
-- current runtime travel keys include compatibility names that do not match their canonical settlement identities, including `location.saltmere` -> Aurelis, `location.westreach` -> Stonevein, and `location.crown_bastion` -> Sunspire Reach.
-
-Treat that as later compatibility-safe travel-identity cleanup. Do not rename these keys in the Ashen package merely for naming consistency. During the next package-decision final coordination, add/retain a deferred backlog note if no durable one already exists, but do not activate that lane.
-
-Historical/planning header dates or route summaries that still describe the pre-authored-input state should be reconciled by the next Codex decision during its required final coordination. Do not rewrite historical chronology just to make dates newer.
-
-## Current Output And Planning Posture
-
-`docs/dev/current-codex-output.md` intentionally remains the output of the last completed Codex run. Connector-authored canon/prompt preparation is not a Codex execution and must not fabricate a replacement Codex result.
-
-Some broader planning documents may still say the authored-canon decision is active or authored input is pending. The newly installed current prompt plus this handoff and the accepted authored-canon document supersede those live-routing statements for the next run. The package-decision run must reconcile roadmap, sequenced plan, planning reconciliation, continuity brief, historical register, backlog/static program, failure-pattern register if warranted, and branch register so one coherent route remains afterward.
-
-## Branch And Evidence Posture
-
-Last verified hosted inventory before this preparation was `master` plus 37 non-default remote branches and exactly two open pull requests.
-
-- PR #2: `SUPERSEDED_PRESERVE_EVIDENCE`;
-- PR #3: draft `SUPERSEDED_PRESERVE_EVIDENCE`; its body contains stale historical route wording and is not controlling authority;
-- `admin/genesis-research-evidence-2026-08-13`: `HOLD_NAMED_CONSUMER`;
-- protected integrated-gameplay readiness ref remains evidence only.
-
-No lifecycle trigger was identified. No integration, branch deletion, PR closure, rebase, or ref mutation is due before the package decision.
-
-The next Codex run must refresh this inventory rather than relying on the recorded count.
-
-## Scope Guardrails
-
-The next run is a documentation-only package decision.
-
-Do not implement production/content/schema/tests during that decision. Do not add turn-in/reward execution, generic quest/mission/order/favor/arc systems, dynamic weather infrastructure, broad travel-key renaming, generic Geographic Knowledge/map/fog recognition, generic activity/event/replay/correction infrastructure, or advance `0.7.0`.
-
-No routine Connector interruption or manual file transfer is needed before the next Codex run.
+No manual file transfer or additional authored response is required before execution.

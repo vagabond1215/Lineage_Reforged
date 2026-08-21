@@ -217,3 +217,13 @@ The documentation-only dependency decision reverified that accepted downstream a
 The package remains blocked upstream. Ordinary creation and version-7 reload produce no exact survey offer/journal row and no known `location.ashen_reef`. Production has no writer for either fact. Demo presentation, runtime Starfall destination facts, the distinct Brineharbor reef charter, and generic civilization offers are non-equivalent; no accepted authority chooses among them or maps them together. Existing “fresh character” and survey persistence tests inject the missing eligibility and therefore remain downstream-owner evidence only.
 
 The active prerequisite is `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`. It must obtain explicit quest/place identity, issuer, availability/eligibility/recurrence, stable journal-admission, and travel-access occurrence facts. It must fail closed rather than seed demo state, infer access from Knowledge/map/Codex/prose, alias the Brineharbor charter, or change any accepted survey `no_proposal` field. Provisional `0.6.11` is not authorized, and `0.7.0` remains `NOT_READY`.
+
+## 13. Ordinary Reachability Package Authorization Appendix
+
+Date: 2026-08-20
+
+Accepted authored canon closed the missing offer/access facts. The subsequent implementation-package decision returned `PACKAGE_READY` and selected `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`.
+
+The package does not reopen parent `0.6.10`. It adds only the upstream authored definition, new-campaign offer admission, accepted-quest access admission, direct Starfall/Ashen origin correction, canonical presentation with retained version-1 compatibility, and an injection-free creator-to-final-restart test. All four survey shifts, result/receipt identities, duplicate behavior, correction/repair, accepted-only caller application, persistence, defeat/recovery preservation, and nine non-proposals remain parent authority.
+
+Parent `0.6.10` stays accepted. Representative-loop evidence remains incomplete until `0.6.11` is implemented and a separate production-read-only `0.6.11.1` audit accepts it. `0.7.0` remains `NOT_READY`.

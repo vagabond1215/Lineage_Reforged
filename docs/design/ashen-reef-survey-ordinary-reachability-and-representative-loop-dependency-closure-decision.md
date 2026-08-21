@@ -154,3 +154,13 @@ All 37 non-default remote branches and open PRs #2 and #3 were inspected at the 
 Applicable guardrails were `FP-001`, `FP-002`, `FP-005`, `FP-008`, `FP-009`, `FP-011`, `FP-013`, `FP-014`, and especially `FP-017`. Current tests and fixture injections were not treated as ordinary reachability. No new failure-pattern entry is required.
 
 This decision changes documentation only. It does not change production source, shared contracts, tracked tests, schemas, serializers, migrations, formats, dependencies, content, assets, UI, saves, or gameplay behavior.
+
+## 9. Authored Input And Package Reopening Appendix
+
+Date: 2026-08-20
+
+The later accepted `docs/design/ashen-reef-soundings-authored-canon-decision.md` supplies every authored fact this decision identified as missing. The earlier `NO_PACKAGE` remains correct at its inspected source/time; its blocker is now closed rather than retroactively erased.
+
+The follow-up implementation-package decision inspected clean synchronized `31f5b851fd0adfe878d7e8e0496d7070b6daac96` and returned `PACKAGE_READY`. It proved a bounded package using a nullable/deferred authored quest record, initial new-campaign offer admission, accepted-quest access admission, direct Starfall/Ashen origin correction, versioned presentation compatibility, and the held injection-free evidence contract.
+
+The active route is now `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`. `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` remains the controlling classification until implementation and independent `0.6.11.1` acceptance. Turn-in/rewards and `0.7.0` remain excluded.

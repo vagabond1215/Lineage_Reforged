@@ -2,7 +2,7 @@
 
 Date: 2026-08-20
 Program versions: `0.6.4`-`0.6.8`
-Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted through `0.6.10.5`; ordinary reachability returned `NO_PACKAGE`; authored-canon decision active
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted through `0.6.10.5`; Soundings canon accepted; ordinary-reachability package `0.6.11` active
 
 ## 1. Purpose
 
@@ -179,7 +179,9 @@ Deep Research uses one gate and one artifact at a time.
 | `0.6.10.4` | Ashen Reef Survey Progression Coherence And Projection Placement Repair | Complete at `07c5739...` with `IMPLEMENTED_PENDING_REAUDIT`; repaired only the two residual authority seams and added/changed no static content. |
 | `0.6.10.5` | Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit | Complete with `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`; added/changed no static content. |
 | unversioned decision | Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision | Complete with `NO_PACKAGE`; downstream seams are reusable, but exact offer/journal-admission and access canon are absent. |
-| unversioned decision | Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision | Active documentation-only route; must obtain explicit product/canon facts and may not add/change static content. |
+| unversioned decision | Ashen Reef Soundings Authored-Canon Decision | Complete with `AUTHORED_INPUT_ACCEPTED`; no static content changed. |
+| unversioned decision | Ashen Reef Survey Ordinary Reachability Implementation Package Decision | Complete with `PACKAGE_READY`; selected bounded primary `0.6.11`. |
+| `0.6.11` | Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence | Active primary; includes one exact authored quest definition plus bounded reachability owners/evidence without reopening the broader static program. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -191,4 +193,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run only the unversioned `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`. It may record explicit authored choices but must not add or modify production static content. Do not broaden it into implementation, survey turn-in/rewards, geographic Knowledge implementation, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7` and is not reopened by the survey route.
+Run only `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`. It may add the one accepted Soundings definition and its narrowly required quest-definition schema/type posture, but it must not reopen broader static expansion. Do not broaden into survey turn-in/rewards, geographic Knowledge implementation, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7`.

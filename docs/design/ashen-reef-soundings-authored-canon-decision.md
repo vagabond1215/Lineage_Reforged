@@ -338,3 +338,15 @@ That decision must determine the smallest coherent implementation package for:
 Only that implementation-package decision may determine whether provisional `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` is now the correct next numbered implementation route.
 
 `0.7.0` remains `NOT_READY` until the implementation, independent acceptance, and later explicit band-entry decision are complete.
+
+## 17. Implementation-Package Disposition Appendix
+
+Date: 2026-08-20
+
+The installed `Ashen Reef Survey Ordinary Reachability Implementation Package Decision` inspected synchronized source at `31f5b851fd0adfe878d7e8e0496d7070b6daac96` and returned `PACKAGE_READY`.
+
+It selected current-band primary `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`. The bounded package uses an authored Starfall definition with explicit nullable/deferred timing, reward, and entity fields; one new-campaign offer owner; one quest-acceptance access adapter; a site-aware Starfall/Ashen origin correction; versioned Starfall presentation; and an injection-free representative test.
+
+For the accepted “after ordinary initial publication/load” availability rule, the package authorizes pre-publication staging inside the retained new-campaign candidate only. Staging is not admission and the candidate is not an active campaign. Verified initial version-7 publication followed by authoritative load is the single admission/availability occurrence. No second post-load mutation or re-offer pass is authorized.
+
+No further authored input is required. Exact turn-in rewards remain deferred, the Brineharbor quest remains separate, every accepted survey non-proposal remains exact, and `0.7.0` remains `NOT_READY`. The implementation must be followed by a separate `0.6.11.1` acceptance audit.

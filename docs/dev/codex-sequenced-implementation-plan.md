@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-08-20
-Route: `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
+Route: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -29,7 +29,7 @@ Latest completed support implementation:
 
 Latest completed unversioned run:
 
-- `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision`, outcome `NO_PACKAGE`
+- `Ashen Reef Survey Ordinary Reachability Implementation Package Decision`, outcome `PACKAGE_READY`
 
 Latest historical support audit:
 
@@ -41,7 +41,7 @@ Latest accepted and completed support audit:
 
 Active run:
 
-- `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision`
+- `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
 
 ## Current Queue Override
 
@@ -86,11 +86,11 @@ Active run:
 - `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` is complete at `07c57392c8078927e4f9e12efe18d8d89bb1fc70` with `IMPLEMENTED_PENDING_REAUDIT`; it repairs only those two residual seams.
 - `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` is complete with `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`.
 - The unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision` is complete with `NO_PACKAGE`. It proved travel-owned activity activation and version-7 persistence reusable but found no authoritative exact quest-offer/journal-admission writer or Ashen access grant.
-- The unversioned `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision` is active. It must obtain explicit product/canon answers for quest/place identity, issuer, availability/recurrence, journal admission, and the access occurrence, or return `AUTHORED_INPUT_REQUIRED` without implementation.
+- The unversioned authored-canon decision is complete with `AUTHORED_INPUT_ACCEPTED`. The follow-up implementation-package decision returned `PACKAGE_READY` and selected active current-band primary `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`. It owns only the honest authored definition/schema posture, initial Starfall offer admission, accepted-quest access admission, direct Starfall/Ashen origin correction, versioned presentation compatibility, and injection-free evidence. A separate `0.6.11.1` audit remains required.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
-- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; accepted `0.6.10` owns only bounded Ashen Reef survey advancement. The active authored-canon decision must not broaden into production implementation, turn-in/rewards, geographic Knowledge implementation, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, or generic activity behavior.
+- Activity advancement, rest, and quest turn-in remain separate consumers. Accepted `0.6.9` owns campaign/save/Normal-defeat/account-publication foundations; accepted `0.6.10` owns bounded Ashen Reef survey advancement. Active `0.6.11` must not broaden into turn-in/rewards, geographic Knowledge implementation, Committed/Ironbound Stakes, checkpoint selection, cloud synchronization, actual death/succession, generic quest/travel/activity infrastructure, or generic activity behavior.
 
 Versioning note:
 
@@ -585,7 +585,7 @@ Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Ite
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The live order is the unversioned `Ashen Reef Survey Offer, Journal Admission, And Travel-Access Authored-Canon Decision` after the reachability dependency decision returned `NO_PACKAGE`. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, and bounded survey advancement remain unchanged. Provisional `0.6.11` is not authorized.
+The live order is authorized current-band primary `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`, followed only by separate production-read-only `0.6.11.1` acceptance. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, and bounded survey advancement remain unchanged. `0.7.0` is not authorized.
 
 ## Default Prompt Pattern
 
@@ -601,7 +601,7 @@ Each future Codex prompt should:
 
 ## Sequence Guardrails
 
-- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is the unversioned Ashen Reef survey ordinary-reachability dependency-closure decision after `0.6.10.5` accepted the parent; accepted `0.6.9`, accepted `0.6.10`, and the completed survey receipt design decision remain unchanged. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
+- Treat the detailed `0.5.x` and early `0.6.x` guardrails below as historical constraints. The live immediate route is `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` after accepted authored canon and the package-ready decision; accepted `0.6.9`, accepted `0.6.10`, and the completed survey receipt design decision remain unchanged. The tool-surface post-repair audit remains support-only as `0.5.356.1` if contradictory evidence appears.
 - `0.5.276.1` clarified support-run suffix rules; it did not renumber or replace the then-next `0.5.277` primary route.
 - `0.5.277` selected both active Highcrown sites for later docs-first General Lore `settlement_site` snippet seed planning.
 - `0.5.278` selected exact future General Lore alignment and exactly two future snippets.
