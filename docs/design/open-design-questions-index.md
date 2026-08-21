@@ -1,238 +1,278 @@
 # Open Design Questions Index
 
 Source route: ChatGPT via GitHub Connector  
-Date: 2026-06-18  
+Date: 2026-08-20  
 Status: connector-side durable question index; documentation only; not an implementation handoff
 
 ## Purpose
 
-This index consolidates user-facing design questions that remain open after the June 17 and June 18, 2026 user-decision intakes.
+This index is the current user/product-decision surface for design questions that remain unresolved, intentionally deferred, or were superseded by later accepted authority.
 
-Resolved design decisions from those intakes are preserved in:
-
-- `docs/design/user-design-decisions-2026-06-17.md`
-- `docs/design/user-design-decisions-2026-06-18.md`
+It was rebaselined from the June 18, 2026 index by `Connector-Safe Pass 1 - Open Design Questions Rebaseline` after the repository advanced from the old Religion/hotspot pipeline into the `0.6.x` runtime-ownership transition.
 
 This file is not:
 
 - runtime authority;
-- content JSON;
-- schema authority;
+- content JSON or schema authority;
 - a backlog replacement;
 - a current implementation handoff;
-- permission to broaden a narrow Codex prompt.
+- permission to broaden a narrow Codex prompt;
+- evidence that a deferred question must be answered before its named trigger exists.
 
-Use it when future planning requires user preference, especially before implementing systems that would otherwise force assumptions about survival, builder, MMO, religion, family, inheritance, crafting, ecology, travel, law, NPCs, or UI direction.
+When this index conflicts with a newer focused accepted decision, current Codex output/handoff, or user-authored product direction, use the newer/more specific authority and update this index in a later connector-safe pass.
 
 ## Current Pipeline Context
 
-Current active lane:
+Current active implementation route:
 
-1. `Version 0.5.178 - Religious Hotspot Knowledge Subject Vocabulary Plan` is complete.
-2. `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator` remains the next recommended Codex run.
-3. This index does not renumber or interrupt that pipeline.
-4. No user input is required before `0.5.179` unless the user wants to override the current hotspot Knowledge subject schema/validator plan.
+`Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
 
-## Resolved Decisions From June 17 And June 18, 2026
+Current posture:
 
-The following are no longer open questions unless the user later revises them:
+- accepted parent `Version 0.6.10 - Ashen Reef Survey Advancement Authority` remains accepted through `0.6.10.5`;
+- the Ashen implementation-package decision returned `PACKAGE_READY`;
+- `0.6.11` owns the bounded ordinary Starfall creator -> offer -> acceptance/access -> travel -> four-shift survey -> restart representative path;
+- `0.6.11` must be followed by an independent `0.6.11.1` acceptance audit;
+- `0.7.0` remains `NOT_READY`;
+- **no question in this index is required before `0.6.11` executes**;
+- this connector-side index must not replace, revise, or interrupt `docs/dev/current-codex-prompt.md`.
 
-- `0.5.177` should proceed with the current hotspot seed defaults.
-- Settlements and regions are unique entities at different organizational levels; settlements fall within regions and should be connected appropriately.
-- Religious orders should eventually have ids or placeholder ids and be assigned to elemental branches.
-- Base elemental religious-order placeholder ids should use `religious_order.elemental.[element]`, such as `religious_order.elemental.light` and `religious_order.elemental.water`.
-- The elemental model should use the standard FFXI-style elements and relationships.
-- Earth is the actual element; spell labels may use `stone` or `rock` when emphasizing hardness, stone, or rock manifestation.
-- Thunder is the actual element; spell labels may use `lightning` for visible or applied effects.
-- Non-religious entities that interact with religion should eventually have religious favorability profiles for elemental branches.
-- Favorability is social disposition or relationship; elemental alignment is innate or intrinsic.
-- Knowing spells of an element does not by itself change character elemental affinity.
-- Spell-learning trials and prominent spell use may affect favorability later.
-- Elemental favorability normally floors at `0` for indirect changes.
-- Negative elemental favorability can exist only from direct antagonistic action and caps at `-100` per element.
-- Negative elemental values do not count against the positive `100` total favorability cap.
-- Default elemental favorability values are `0` unless backstory or Prestige unlocks later adjust them.
-- Fanatical `100` favorability profiles are benchmarks with benefits and consequences, but should not force permanent compliance.
-- Sacred sites are a rare subtype under religious hotspots, not the whole category.
-- Sacred sites should be planned after generic hotspot snippets but before full favorability/alignment mechanics.
-- Rare confluence sacred sites should require two or more elemental authorities plus a rare trigger.
-- The first sacred-site mechanic should be pilgrimage.
-- Religious orders are organizations, not inherently sacred places, though they may control sacred sites.
-- `religiousOrderIds` should remain deferred until broader organization authority exists, while placeholder id patterns are preserved.
-- Religious legality is location/government-specific, not globally inherent to religion.
-- Reputation and religious favorability should remain separate relationship functions, even if displayed together later.
-- Relationship systems should use internal numeric values and bands, but player-facing exact values need not be visible.
-- Relationship systems should use separate top-level structures by relationship type, such as `relationships.element`, `relationships.renown`, and `relationships.reputation`, rather than one generic ledger as the first posture.
-- Relationship progression should require trials or proof events.
-- Relationship decay should have diminishing returns and protected checkpoints, except for serious violating actions.
-- Elemental favorability should use shared bands first, with optional per-order display labels later.
-- Relationship checkpoints should use mixed checkpoints: tier-band checkpoints plus hardening segments inside each band.
-- Initial structure is local single-player; multiplayer is deferred.
-- Each starting character has a separate world by default; Prestige can later allow multi-character continuity in a pre-existing world.
-- NPC party members should use logic controls similar in spirit to Final Fantasy XII gambits.
-- NPCs should use generated role placeholders for now, with NPC name generation and lore-friendly profiles added later.
-- Generated NPCs should be disposable by default and become persistent only when promoted by meaningful events, roles, relationships, or history.
-- Survival state should use descriptive bands plus status effects where appropriate.
-- Real building should not be an early feature beyond bushcraft.
-- Inventory should account for both weight and volume, organized by container/location.
-- Inventory should use weight plus container capacity by item bulk; purses should have coin limits, while coins may also be stored in non-purse containers.
-- The first container/storage implementation should be character containers only, designed to support vehicles and settlement storage later.
-- Player-to-player trade is deferred.
-- Character creation difficulty modes should include `Story`, `Adventure`, `Trial`, `Extreme`, and Prestige-locked `Custom`.
-- Custom difficulty should expose weighted sliders and a summed difficulty rating.
-- The first difficulty mechanics should be Combat Danger, Survival Pressure, Economy Pressure, Progression Friction, and Consequence Severity, weighted 25/20/15/20/20 by default.
-- Hardcore should be a toggle that modifies the selected difficulty mode.
-- Easier difficulty should reduce Prestige gain or make Prestige harder to earn.
-- Deep travel planning should wait until the map/grid system is reviewed or overhauled.
-- The first travel-adjacent pass should be map/grid authority cleanup and projection, not route travel.
-- Early adult-age rules should use data-driven race/culture variation.
-- Offspring age by birthday, with stat increases divided into smaller periodic increments.
-- Offspring stat inheritance should use both parents' weighted stats with RNG weighting.
-- Stat inheritance applies to all offspring raised by the family, with special rules for illegitimate and adopted heirs.
-- Default orphan caretaker order is adult siblings, then adult uncles/aunts, then grandparents; if no adult records exist, the line enters an end-of-line/adopted-heir posture unless Prestige unlocks a caretaker option.
-- Offspring should not be married out until adult; adult married-out offspring create a new family if heir slots are available.
+## Rebaseline Metrics
 
-## Decision Priority Legend
+Baseline on 2026-08-20:
 
-| Priority | Meaning |
+- source index date: 2026-06-18;
+- obsolete pipeline pointer: `0.5.179` Religion/hotspot Knowledge subject work;
+- pre-existing question rows audited: **70**;
+- `OPEN_SOON`: **0**;
+- `OPEN_LATER`: **3**;
+- `OPEN_STRATEGIC`: **5**;
+- `DEFERRED_WITH_TRIGGER`: **45**;
+- `RESOLVED`: **11**;
+- `SUPERSEDED`: **6**;
+- new post-June deferred questions added: **3**;
+- questions required before current `0.6.11`: **0**.
+
+The point of these counts is not to score design completion. They distinguish real user decisions from questions whose owner or implementation lane does not yet exist.
+
+## Disposition Legend
+
+| Disposition | Meaning |
 | --- | --- |
-| Soon | Likely needed in the next few planning/implementation runs. |
-| Later | Can wait until the relevant system lane is selected. |
-| Strategic | Broad product direction; answer before major runtime/vertical-slice planning. |
+| `OPEN_SOON` | A product decision likely to block the current or immediately following accepted route. |
+| `OPEN_LATER` | A valid product choice that can be answered now but is not currently blocking. |
+| `OPEN_STRATEGIC` | Broad product direction that should be settled before a major future system/vertical-slice commitment. |
+| `DEFERRED_WITH_TRIGGER` | Intentionally postponed until the named authority/consumer/system lane exists. Do not ask merely to fill a blank. |
+| `RESOLVED` | Later accepted user/product or focused repository authority answers the question at the design level. |
+| `SUPERSEDED` | The question's premise or sequencing assumption was replaced by later implementation/authority; use the newer formulation instead. |
 
-## Soon: Religious Hotspot And Religion Follow-Ups
+## Open Soon
 
-| Question | Current recommendation / known posture | Priority |
+**None.**
+
+No unresolved product/design question in this index blocks the installed `0.6.11` implementation prompt.
+
+## Open Later
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| What exact rare triggers qualify a confluence sacred site for each element pair or opposition? | General rule accepted; exact trigger catalog unresolved. | Later |
-| What pilgrimage data fields and validation boundaries should the first sacred-site mechanic require? | Pilgrimage selected as first mechanic; implementation contract unresolved. | Later |
-| Should religious orders be Knowledge subjects, organization records only, or both depending on use case? | User leans organization construct first; Knowledge subject support remains unresolved. | Later |
-| Should auspicious environment/weather concepts become religious context records, ecology records, event tags, or hotspot modifiers? | Unresolved. | Later |
-| Which religion/element/doctrine knowledge concepts should be seeded next after the current hotspot lane? | Unresolved. | Later |
+| Should religion-owned `religious_order.*` identities become direct Knowledge subjects, or remain learnable only through religion/institution/place context? | Religious orders remain owned by `world.religions`; the later organization boundary explicitly rejects moving them into a generic organization collection. Direct Knowledge-subject support remains a separate presentation/evidence choice. | `OPEN_LATER` |
+| What final player-facing label should be used for exact `100` elemental favorability: `Consecrated`, `Fanatical`, or an order-specific label? | Shared bands are accepted; the exact final display label remains intentionally unsettled. | `OPEN_LATER` |
+| Which basic ordinary-work quests should be authored first when the next ordinary-work content lane is selected? | Sewer cleaning, pest control, patrols, and similar grounded work remain examples, not an approved seed list. | `OPEN_LATER` |
 
-## Soon: Relationship / Favorability / Alignment Framework Questions
+## Open Strategic
 
-| Question | Current recommendation / known posture | Priority |
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| What final player-facing label should be used for the exact `100` favorability band: `Consecrated`, `Fanatical`, or a per-order label? | Shared band structure accepted; exact 100 label unresolved. | Later |
-| How many days should recent relationship gains take to harden against ordinary decay? | Mixed checkpoint model accepted; hardening duration unresolved. | Later |
-| Which relationship losses can bypass protected checkpoints beyond sacred-site desecration, elemental killing, crime, and institutional betrayal? | User gave examples; exact taxonomy unresolved. | Later |
-| Which NPC or institution types can reveal relationship bands through trials or mystical means? | Unresolved. | Later |
-| Should exact relationship values ever be player-visible outside debug, or always represented by labels/bands? | User says exact value need not display; whether it ever can remains unresolved. | Later |
-| What exact positive benefits should adversarial elemental relationships grant? | Concept accepted; exact damage/favor mechanics unresolved. | Later |
+| What should the first builder-adjacent playable slice be: bushcraft only, camp utility, survival shelter, or another deliberately small scope? | Substantial building is explicitly not early; bushcraft is the allowed early edge, but the first builder slice is still a product choice. | `OPEN_STRATEGIC` |
+| How should the Hardcore toggle modify each difficulty mode? | The toggle and difficulty modes exist as accepted direction; exact mechanical effects remain unsettled. | `OPEN_STRATEGIC` |
+| How should Prestige gain scale inversely with selected difficulty? | The inverse relationship is accepted; exact formula/caps are not. | `OPEN_STRATEGIC` |
+| When a generated NPC becomes persistent, should its placeholder-derived traits freeze, be promoted into a fuller profile, or be selectively regenerated? | Disposable-until-promoted NPC posture is accepted; promotion profile semantics remain unresolved. | `OPEN_STRATEGIC` |
+| Beyond storage location, which facts should force item-stack separation: condition, ownership, quality, provenance, or another identity boundary? | Weight/bulk and container location are accepted; additional stack identity semantics require a future inventory owner decision. | `OPEN_STRATEGIC` |
 
-## Strategic: Survival / Builder / RPG / MMO Follow-Ups
+## Deferred With Trigger - Religion And Relationships
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen only when a concrete Religion/favorability/pilgrimage runtime or content consumer is selected.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| What is the first playable runtime loop after the current knowledge/content authority lane? | Unresolved. | Strategic |
-| Which UI surface is required before that first narrow runtime loop? | Unresolved. | Strategic |
-| Should the first builder-adjacent slice be bushcraft only, camp utility, survival shelter, or no building at all? | User says no real building early aside from bushcraft; exact first slice unresolved. | Strategic |
-| How should hardcore modify each difficulty mode? | Toggle is decided; exact effects unresolved. | Strategic |
-| How should Prestige gain scale inversely with difficulty? | Direction decided; exact scaling unresolved. | Strategic |
-| Should promoted generated NPCs keep placeholder-derived traits, reroll into full profiles, or freeze their current generated profile? | Generated placeholder and persistence posture accepted; promotion mechanics unresolved. | Strategic |
-| Should item stacks split automatically by storage location, item condition, ownership, quality, or provenance? | Storage location is required; other split rules unresolved. | Strategic |
+| What exact rare triggers qualify each future elemental confluence sacred site? | The general two-or-more elemental authorities plus rare-trigger rule is accepted. A trigger catalog should be authored only when a confluence candidate exists. | `DEFERRED_WITH_TRIGGER` |
+| What exact data fields, validation, and outcome boundary should the first pilgrimage mechanic use? | Pilgrimage remains the selected first sacred-site mechanic; runtime contract waits for a pilgrimage lane. | `DEFERRED_WITH_TRIGGER` |
+| Should auspicious environment/weather concepts be religion-context records, ecology facts, event tags, hotspot modifiers, or typed links among those owners? | The environments/events are accepted lore concepts; ownership needs a named consumer. | `DEFERRED_WITH_TRIGGER` |
+| How many days should relationship gains take to harden against ordinary decay? | Mixed band/checkpoint hardening is accepted; exact duration waits for mutable relationship decay authority. | `DEFERRED_WITH_TRIGGER` |
+| Which relationship violations may bypass hardened checkpoints? | Serious direct betrayal/violation can bypass protection; exact taxonomy waits for relationship/law/religion consumers. | `DEFERRED_WITH_TRIGGER` |
+| What positive mechanics, if any, should strong adversarial elemental relationships grant? | Potential benefits are accepted as possible; exact combat/favor mechanics wait for elemental favorability runtime. | `DEFERRED_WITH_TRIGGER` |
 
-## Organizations, Factions, Law, And Quests
+## Deferred With Trigger - Organizations, Law, And Quest Generation
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen only when the named identity/link/runtime authority becomes an active consumer.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| Should factions, guilds, institutions, governments, and religious orders use one shared organization schema with typed extensions, or separate schema families? | User wants balance between minimizing schemas and avoiding unused variables; exact structure unresolved. | Soon |
-| Should law authority be modeled as location-owned law profiles, government law profiles, enforcement contracts, or a layered structure? | User described layered local/government enforcement; exact structure unresolved. | Soon |
-| How should outsourced law enforcement be represented? | User gave examples: religious sect in sacred sites, trusted factions/guilds in frontier towns; exact structure unresolved. | Later |
-| How should notoriety trigger higher-authority patrols or investigations? | Unresolved. | Later |
-| Should quests use one hybrid quest authority, or separate authorities for work orders, contracts, event quests, and authored quests? | User selected hybrid quest posture; exact structure unresolved. | Soon |
-| Which basic ordinary-work quests should be seeded first? | Examples include sewer cleaning, pest control, patrols; exact first set unresolved. | Later |
-| What inputs should hybrid quests consume first: monster activity, crime, climate, supply/demand, trade-route activity, or events? | Unresolved. | Later |
+| How should outsourced law enforcement be represented between a competent authority, jurisdiction, and an enforcing religious/guild/faction/public-order body? | Later authority separates government, jurisdiction, office/institution, and force/public-order identity. Exact delegation/link semantics remain deferred. | `DEFERRED_WITH_TRIGGER` |
+| How should notoriety trigger higher-authority patrols, investigations, or escalation? | This is runtime public-order/enforcement behavior and waits for stable force/jurisdiction/law owners. | `DEFERRED_WITH_TRIGGER` |
+| Which world-condition inputs should first drive generated/dynamic quest offers: monsters, crime, climate, economy, trade routes, civic pressure, or events? | Contextual offer triggers are accepted product direction; no generic dynamic-offer owner is currently authorized. | `DEFERRED_WITH_TRIGGER` |
 
-## Map, Grid, Travel, And Points Of Interest
+## Deferred With Trigger - Travel, Map, And Discovery
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen when fast travel, grid travel, caravan simulation, merchant auto-travel, or a broader discovery/map-state owner is explicitly selected.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| What map/grid overhaul is required before serious travel planning? | User says map/grid overhaul must come first; exact scope unresolved. | Strategic |
-| What should map/grid authority cleanup and projection include as the first travel-adjacent pass? | Cleanup/projection selected; exact scope unresolved. | Strategic |
-| What success-rate model should eventually gate fast travel, and should the initial threshold be `95%` with Prestige reducing by `1%` per upgrade? | User suggested this; exact model needs planning after map/grid. | Later |
-| What action set should grid travel eventually support first: hunting, scouting, sneaking, mounted movement, climbing, swimming, or a smaller subset? | Unresolved; defer until after map/grid overhaul. | Later |
-| Should caravan travel use minigame/trial events before regular grid travel is implemented? | Unresolved; defer until after map/grid overhaul. | Later |
-| Should merchant auto-trade routes use the same travel-risk engine as player-present routes but auto-resolve events? | User suggested yes; exact structure unresolved. | Later |
-| What qualifies a point of interest for registration: any gameplay value, only visited/known places, or both with visibility state? | User says POIs must be known; exact data structure unresolved. | Later |
-| What discovery evidence should reveal POIs: word of mouth, maps, scrolls, pictures, history text, direct visit, or all? | User listed all; exact first implementation unresolved. | Later |
-| Should ruins, lairs, dungeons, sacred sites, shrines, and event locations share one POI authority with type filters? | User leans all gameplay-value locations as POIs; exact schema unresolved. | Later |
+| What eventual success/risk model should gate fast travel, including whether the old `95%` suggestion and `1%` Prestige reductions survive? | Historical suggestion only; current engine-owned travel does not establish this future fast-travel rule. | `DEFERRED_WITH_TRIGGER` |
+| Which player grid-travel actions should be first: hunting, scouting, sneaking, mounted movement, climbing, swimming, or a smaller subset? | Wait for a grid-travel action lane. | `DEFERRED_WITH_TRIGGER` |
+| Should caravan travel use trial/minigame events before or alongside regular player grid travel? | Wait for caravan runtime ownership. | `DEFERRED_WITH_TRIGGER` |
+| Should merchant auto-trade use the same risk/event resolver as player-present travel with automated resolution? | Plausible shared-model direction; needs economy/caravan/runtime owners. | `DEFERRED_WITH_TRIGGER` |
 
-## Family, Heirs, Adult Age, And Maturation
+## Deferred With Trigger - Family, Heirs, And Maturation
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen only when family lifecycle/heir/maturation runtime ownership is selected.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| What exact adult ages should each race/culture use? | User selected data-driven race/culture variation; values unresolved. | Later |
-| Should offspring stat growth be applied semi-annually, quarterly, monthly, or another cadence? | User accepts smaller increments; recommended cadence unresolved. | Later |
-| Should quarter-by-quarter offspring status be the default unless day-by-day is easier? | User leans quarterly; implementation cost needs investigation. | Later |
-| What RNG weighting range should both-parent stat inheritance use? | Unresolved. | Later |
-| How should chronic illness integrate with existing build/status systems? | Unresolved. | Later |
-| Should original character creation retain build choice, or should builds move into the heir system with Prestige unlocking original-character build choice? | User raised this as possible; unresolved. | Later |
-| What exact penalty reductions should Prestige provide for illegitimate and adopted heir stat growth? | Unresolved. | Later |
-| What exact orphan/adopted-heir workflow should occur after end-of-line with no adult caretakers? | User defined posture; implementation flow unresolved. | Later |
-| What heir-slot rules determine whether an adult married-out offspring creates a new family? | Unresolved. | Later |
+| What exact adult ages should each race/culture use? | Data-driven race/culture variation is accepted; values require authored maturation content. | `DEFERRED_WITH_TRIGGER` |
+| Should offspring stat growth apply semi-annually, quarterly, monthly, or another cadence? | Smaller increments are accepted; cadence should follow the eventual maturation owner's accuracy/cost. | `DEFERRED_WITH_TRIGGER` |
+| Should quarter-by-quarter offspring status be the default unless day-by-day proves simpler? | Quarterly is historical preference, not implementation authority. | `DEFERRED_WITH_TRIGGER` |
+| What RNG weighting range should both-parent stat inheritance use? | Parent-weighted inheritance is accepted; range is balance/runtime work. | `DEFERRED_WITH_TRIGGER` |
+| How should chronic illness alter maturation/stat growth? | Chronic-status interaction waits for health/maturation integration. | `DEFERRED_WITH_TRIGGER` |
+| Should original character creation retain build choice, or should some build selection move to heirs/Prestige? | Product option remains intentionally unselected until heir/creator integration is revisited. | `DEFERRED_WITH_TRIGGER` |
+| What exact Prestige penalty reductions should apply to illegitimate/adopted-heir growth? | Direction accepted; balance waits for heir runtime. | `DEFERRED_WITH_TRIGGER` |
+| What exact end-of-line/adopted-heir workflow follows when no adult caretaker exists? | Caretaker priority and end-of-line posture are accepted; command/state flow waits for family lifecycle. | `DEFERRED_WITH_TRIGGER` |
+| What heir-slot rule determines whether an adult married-out offspring creates a new family? | Wait for heir-slot/family lifecycle authority. | `DEFERRED_WITH_TRIGGER` |
 
-## Offspring Growth Roles And Rearing Prestige
+## Deferred With Trigger - Offspring Growth Roles And Rearing Prestige
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen only when maturation/rearing Prestige becomes an active system lane.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| Should annual growth roles be broken into semi-annual, quarterly, or monthly rates? | User says use whichever is easiest to track accurately; recommended cadence unresolved. | Later |
-| What are the first growth focus categories, and how do they map onto current character-creator stat profiles? | Unresolved. | Later |
-| How should zero-sum growth focus reallocations be calculated? | User wants zero-sum by default; formula unresolved. | Later |
-| Should the `.05` Prestige improvement apply to focus variance, total role effect, or both? | User specified `.05` per upgrade for zero-sum adjustment; exact implementation unresolved. | Later |
-| What is the standard habitual-activity definition: minimum time per day and days per week? | User requested recommended structures; unresolved. | Later |
-| Should family-specific rearing Prestige use separate unlock tracks for total growth and role efficiency? | User says both, with different unlocks; exact tracks unresolved. | Later |
-| If using 100 incremental upgrades, should benchmarks be 25/50/75/100 or 33/66/100? | User asks to use recommended; unresolved. | Later |
-| When should percentile upgrades unlock relative to flat upgrades? | User says first tier of flat upgrades; exact tier structure unresolved. | Later |
+| Should growth roles apply semi-annually, quarterly, monthly, or another cadence? | Use the cadence the eventual owner can track accurately. | `DEFERRED_WITH_TRIGGER` |
+| What are the first growth-focus categories and their mapping to character stat profiles? | Candidate roles exist in planning; exact live set is unauthored. | `DEFERRED_WITH_TRIGGER` |
+| How should zero-sum growth-focus reallocations be calculated? | Zero-sum default is accepted; formula waits for maturation math. | `DEFERRED_WITH_TRIGGER` |
+| Does the `.05` Prestige improvement affect focus variance, total role effect, or both? | Exact interpretation waits for the rearing Prestige contract. | `DEFERRED_WITH_TRIGGER` |
+| What minimum time/day and days/week define habitual activity? | Needs a maturation evidence owner. | `DEFERRED_WITH_TRIGGER` |
+| How should separate family-specific rearing Prestige tracks divide total-growth and role-efficiency upgrades? | Separate-track direction is accepted; track structure waits for Prestige/family runtime. | `DEFERRED_WITH_TRIGGER` |
+| If 100 incremental upgrades remain desirable, should major benchmarks be 25/50/75/100 or 33/66/100? | Balance/UI decision waits for the actual upgrade track. | `DEFERRED_WITH_TRIGGER` |
+| Exactly when should percentile upgrades unlock relative to flat upgrades? | Direction says after the first flat tier; exact tier waits for the live track. | `DEFERRED_WITH_TRIGGER` |
 
-## Recipes, Crafting, Cooking, And Bulk Preparation
+## Deferred With Trigger - Recipes, Crafting, Cooking, And Bulk Preparation
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen when recipe learning/quality, bulk crafting, or family recipe inheritance becomes an active runtime owner.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| Should recipe learning trials be required for all recipes or only non-trivial recipes? | Unresolved. | Later |
-| What should recipe quality labels be for cooking versus crafting? | Unresolved. | Later |
-| Should food and crafting share quality labels, or diverge by domain/culture? | Unresolved. | Later |
-| Should bulk preparation be account-wide, family-specific, guild-specific, or split by recipe/craft type? | Unresolved. | Later |
-| Should family recipes be visible to all family members, only household members, only apprentices, or only those with access rights? | Unresolved. | Later |
-| Should a married-out heir keep personally learned family recipes by default? | Current posture says personally learned recipes can remain; exact default and exceptions unresolved. | Later |
-| Should recipe inheritance preserve one recipe, multiple recipes, quality flags, or only access rights? | Unresolved. | Later |
-| Should crafting trials apply to every craft or only meaningful/high-risk/high-value work? | Unresolved. | Later |
+| Should recipe-learning trials be required for all recipes or only non-trivial recipes? | Current planning discourages burdening trivial actions but does not yet establish the final learning contract. | `DEFERRED_WITH_TRIGGER` |
+| What final quality labels should cooking use versus crafting? | A provisional poor/standard/good/fine/excellent/masterwork ladder exists; domain/culture presentation remains unsettled. | `DEFERRED_WITH_TRIGGER` |
+| Should food and crafting share one quality vocabulary or diverge by domain/culture? | Wait for quality owner/UI contract. | `DEFERRED_WITH_TRIGGER` |
+| Should bulk preparation be account-wide, family-specific, guild-specific, or split by recipe/craft type? | Wait for bulk-preparation ownership and progression authority. | `DEFERRED_WITH_TRIGGER` |
+| Who can view/use family recipes: all family members, household members, apprentices, or explicit access-right holders? | Family-scoped rather than account-wide is accepted; exact entitlement waits for family/recipe links. | `DEFERRED_WITH_TRIGGER` |
+| Should a married-out heir keep personally learned family recipes by default? | Planning permits personally learned recipes to remain; exceptions/transfer rules wait for family lifecycle. | `DEFERRED_WITH_TRIGGER` |
+| Should recipe inheritance preserve one/multiple recipes, quality flags, or access rights? | Wait for inheritance/Prestige owner. | `DEFERRED_WITH_TRIGGER` |
+| Should crafting trials apply to every craft or only meaningful/high-risk/high-value work? | Planning favors meaningful work; exact runtime threshold waits for crafting execution authority. | `DEFERRED_WITH_TRIGGER` |
 
-## Ecology, Agriculture, And Managed Breeding
+## Deferred With Trigger - Ecology, Agriculture, And Managed Breeding
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen only when macro ecology or managed estate/workplace production becomes an active runtime lane.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| Should macro flora/fauna population use exact counts, abundance bands, or hidden estimates? | Unresolved. | Later |
-| Should agriculture use exact counts, abundance bands, or hidden estimates? | Unresolved. | Later |
-| Which managed ecology lane should come first: livestock, crops/gardens, alchemy herbs, or another managed domain? | User says micro breeding can start later after seams; exact first domain unresolved. | Later |
-| Should managed breeding support genetic/quality traits? | Only if future design supports them; unresolved. | Later |
+| Should macro flora/fauna use exact counts, abundance bands, or hidden estimates? | Static ecology exists, but mutable population representation remains unauthored. | `DEFERRED_WITH_TRIGGER` |
+| Should agriculture use exact counts, abundance bands, or hidden estimates? | Wait for agriculture/production runtime. | `DEFERRED_WITH_TRIGGER` |
+| Which managed ecology lane should come first: livestock, crops/gardens, alchemy herbs, or another domain? | Micro breeding explicitly waits for estate/workplace/ownership/storage/economy seams. | `DEFERRED_WITH_TRIGGER` |
+| Should managed breeding support genetic/quality traits? | Only if a future breeding design explicitly owns them. | `DEFERRED_WITH_TRIGGER` |
 
-## Magic Runtime And Catalysts
+## Deferred With Trigger - Magic Runtime And Catalysts
 
-| Question | Current recommendation / known posture | Priority |
+Trigger: reopen when effect-bearing magic execution or magic-law integration becomes an active runtime lane.
+
+| Question | Current posture | Disposition |
 | --- | --- | --- |
-| Which spell should be the first effectful runtime candidate? | Unresolved. | Later |
-| Should catalysts be reserved, consumed, or paid only after successful resolution? | Unresolved. | Later |
-| Should future magic crime/licensing tie into law, faction, religion, or separate magic authority? | Unresolved. | Later |
+| Which spell should be the first effectful runtime candidate? | Static/study magic authority does not itself choose the first full effect-bearing runtime spell. | `DEFERRED_WITH_TRIGGER` |
+| Should catalysts be reserved, consumed, or paid only after successful resolution? | Requires an atomic magic-execution/inventory contract. | `DEFERRED_WITH_TRIGGER` |
+| Should future magic crime/licensing belong to law, faction/religion, a magic authority, or typed links among them? | Wait for jurisdiction/law plus effectful magic owners. | `DEFERRED_WITH_TRIGGER` |
 
-## UI, Journal, Map, And Relationship Display
+## Resolved And Superseded Disposition Register
 
-| Question | Current recommendation / known posture | Priority |
+These pre-existing rows are retained here so their disappearance from the open sections is auditable.
+
+| Original question | Disposition | Current answer / controlling direction |
 | --- | --- | --- |
-| Should the first gameplay shell present read-only state only? | Current project posture prefers read-only projection before mutation, but exact gameplay shell scope is unresolved. | Strategic |
-| Which UI surface is required before the first narrow runtime loop? | Unresolved. | Strategic |
-| Should knowledge, quest, map, reputation, and relationship journals share a common record-browser UI? | Unresolved. | Later |
-| Which NPC types can reveal relationship bands through trials or mystical means? | Unresolved. | Later |
+| Which religion/element/doctrine Knowledge concepts should be seeded next after the hotspot lane? | `SUPERSEDED` | The old hotspot sequence completed through later Religion, religious-hotspot, sacred-site, and Knowledge authority work. Future Religion content should be selected from a fresh gap/consumer, not this June sequencing question. |
+| Which NPC or institution types can reveal relationship bands through trials or mystical means? | `RESOLVED` | Accepted June user direction permits in-world revelation through an affiliated trial-giver, institution/civil representative, fortune-teller/occult/fantasy role, or equivalent owner-approved source. Exact NPC identities remain later content. |
+| Should exact relationship values ever be player-visible outside debug? | `RESOLVED` | Exact values are debug/internal by default; ordinary player presentation uses bands/in-world feedback unless a later focused UI decision explicitly changes that. |
+| What is the first playable runtime loop after the Knowledge/content lane? | `RESOLVED` | The repository advanced through engine-owned travel, quest acceptance/tracking, activity ownership, campaign persistence, and Ashen survey advancement. The current representative-loop closure route is `0.6.11`. |
+| Which UI surface is required before that first narrow runtime loop? | `SUPERSEDED` | The live six-domain shell exists and later `UI Information Architecture Boundary` governs future presentation. Runtime ownership advanced without a new prerequisite UI surface. |
+| Should factions, guilds, institutions, governments, and religious orders use one shared organization schema or separate families? | `RESOLVED` | `Organization Faction Guild Boundary Decision` rejects a general organization umbrella in the foundation phase and preserves specific owners (guild, religion/order, polity, faction, later government/office/etc.). |
+| Should law authority be location-owned, government-owned, enforcement-owned, or layered? | `RESOLVED` | Later civic authority separates government organization, jurisdiction applicability, law, office/institution, and force/enforcement. Law is downstream of stable jurisdiction rather than embedded in place/government/force identity. Exact law schema remains deferred. |
+| Should quests use one hybrid authority or separate work-order/contract/event/authored authorities? | `RESOLVED` | Current quest direction uses unique authored definitions plus reusable archetypes/templates, future arcs as separate grouping authority, and later typed quest/mission/order/favor semantics. No monolithic display-title/ID grammar is required. |
+| What map/grid overhaul is required before serious travel planning? | `SUPERSEDED` | Engine-owned player travel was implemented in `0.6.0` and is accepted. Future map/grid cleanup is now an independent improvement lane, not a prerequisite that can retroactively block travel. |
+| What should map/grid cleanup/projection include as the first travel-adjacent pass? | `SUPERSEDED` | The historical sequencing premise no longer controls; specific world/hex/travel/discovery owners now govern future cleanup. |
+| What qualifies a point of interest for registration? | `RESOLVED` | `Discovery And POI Boundary Decision` rejects a generic static POI authority. POI is a presentation concept over valid specific owner records plus runtime/player-known state. |
+| What evidence can reveal a POI: word of mouth, maps, scrolls, pictures, history, direct visit, or all? | `RESOLVED` | All are permitted authored/evidence routes in product direction; the later boundary keeps the resulting known/discovered/visited/revealed state in runtime/save owners rather than static POI content. |
+| Should ruins, lairs, dungeons, sacred sites, shrines, and event locations share one POI authority? | `RESOLVED` | No. Specific place/site/feature families own identity; a generic `world.pois` collection remains rejected unless a later non-duplicative role is proven. |
+| Should the first gameplay shell present read-only state only? | `SUPERSEDED` | Presentation-before-mutation remains a design principle, but the live shell already consumes accepted engine-owned mutating commands. Read-only-only is no longer the shell posture. |
+| Which UI surface is required before the first narrow runtime loop? (duplicate UI section row) | `SUPERSEDED` | Same disposition as above: current shell plus owner-specific UI boundary is established. |
+| Should Knowledge, quest, map, reputation, and relationship journals share a common record-browser UI? | `RESOLVED` | Later UI authority approves a common linked-record/search presentation shell while explicitly forbidding a common canonical data owner. |
+| Which NPC types can reveal relationship bands? (duplicate UI section row) | `RESOLVED` | Same accepted in-world revelation posture as the relationship row above. |
 
-## Questions That Do Not Need Input Before `0.5.179`
+## New Post-June Deferred Questions
 
-The current hotspot Knowledge subject schema/validator defaults stand:
+These were exposed by accepted work after the original June index. They are deliberately not blockers for `0.6.11`.
 
-- Add `religious_hotspot` to Knowledge subject vocabularies.
-- Preserve `religion` and `deity` subject behavior.
-- Validate hotspot snippet subjects against live `world.religious_hotspots` authority.
-- Enforce active-only policy for live hotspot snippet references.
-- Do not activate live hotspot records in `0.5.179`.
-- Do not add live hotspot snippets in `0.5.179`.
-- Do not add sacred sites, religious orders, favorability, alignment, law, consequence, runtime, UI, storage, reward, event, command, Magic Study, Prestige, family, or gameplay behavior in `0.5.179`.
+| Question | Trigger | Disposition |
+| --- | --- | --- |
+| What compatibility-safe migration/alias policy should eventually retire misleading runtime travel keys whose names no longer match canonical settlement/place identity? | Reopen after `0.6.11` and its audit are accepted, when a dedicated generic travel-identity cleanup is prioritized. Do not rename current keys opportunistically. | `DEFERRED_WITH_TRIGGER` |
+| What exact typed semantics and refusal/consequence rules should distinguish Quest, Mission, Order, Favor, and Trial when organization/law/rank owners are mature enough to consume them? | Reopen with a dedicated quest-kind/assignment-semantics decision. | `DEFERRED_WITH_TRIGGER` |
+| What exact payout, standing, item, salvage, service, or access consequences should `Soundings of Ashen Reef` award on accepted turn-in? | Reopen only when Ashen quest turn-in/reward authority is selected after ordinary reachability is independently accepted. Current canon establishes a paid civic contract but intentionally defers exact values. | `DEFERRED_WITH_TRIGGER` |
+
+## Durable Resolved User Direction
+
+The detailed June 17 and June 18 decisions remain preserved in:
+
+- `docs/design/user-design-decisions-2026-06-17.md`;
+- `docs/design/user-design-decisions-2026-06-18.md`.
+
+Later specific authorities refine those decisions without erasing them. Important durable examples include:
+
+- local single-player first; multiplayer deferred;
+- separate-world character starts with later continuity options;
+- classless development where supported;
+- specific institutional owners rather than an indiscriminate organization bucket;
+- survival bands/status effects;
+- weight plus bulk/container inventory;
+- generated NPCs disposable until promoted by meaningful world relationships/events;
+- data-driven race/culture maturation;
+- parent-weighted offspring development;
+- ordinary grounded quests alongside larger authored content;
+- specific place owners plus player-known/discovery state rather than a generic POI authority;
+- relationship categories/bands and in-world revelation rather than routine exact-number presentation.
+
+## Authority References Used By This Rebaseline
+
+At minimum, this pass reconciled the index against:
+
+- `AGENTS.md`;
+- `docs/design/user-design-decisions-2026-06-17.md`;
+- `docs/design/user-design-decisions-2026-06-18.md`;
+- `docs/design/future-system-design-ledger.md`;
+- `docs/design/organization-faction-guild-boundary-decision.md`;
+- `docs/design/government-jurisdiction-authority-boundary-decision.md`;
+- `docs/design/discovery-poi-boundary-decision.md`;
+- `docs/design/ui-information-architecture-boundary.md`;
+- `docs/design/quest-identity-offer-context-and-travel-access-product-direction.md`;
+- `docs/design/offspring-growth-recipes-ecology-engine-plan.md`;
+- `docs/dev/project-roadmap.md`;
+- `docs/dev/codex-sequenced-implementation-plan.md`;
+- `docs/dev/current-codex-output.md`;
+- `docs/dev/current-gpt-handoff.md`.
+
+## Maintenance Rule
+
+Do not add a question here merely because a schema could contain another field. Add or reopen a question when:
+
+1. a concrete future consumer exists;
+2. repository authority cannot decide a material product choice safely;
+3. the answer would change scope, behavior, canon, UX, balance, or ownership; and
+4. the question is specific enough for the user to make a meaningful decision.
+
+When an owner does not yet exist, prefer `DEFERRED_WITH_TRIGGER` over repeatedly asking speculative questions.
