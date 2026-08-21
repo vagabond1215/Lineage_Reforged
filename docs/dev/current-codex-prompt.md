@@ -46,7 +46,7 @@ and install a separate implementation prompt for that package. Do not execute th
 - authored facts are now explicitly settled in `docs/design/ashen-reef-soundings-authored-canon-decision.md`;
 - representative loop remains `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` until an injection-free production creator-to-restart path is implemented and independently accepted;
 - quest acceptance/tracking, tracked-quest travel activation, four-shift survey advancement, accepted-only application, version-7 publication/restart, durable duplicate, correction/repair, and Normal defeat/recovery preservation are accepted downstream seams;
-- survey turn-in/rewards and Geographic Knowledge/map proposals remain excluded.
+- survey turn-in/reward execution and Geographic Knowledge/map proposals remain excluded.
 
 ## Accepted Canon - Do Not Reopen
 
@@ -57,6 +57,7 @@ Treat these as controlling authored facts:
 - title: **Soundings of Ashen Reef**;
 - issuer presentation: **Starfall Harbormaster's Office**;
 - issuer type: government;
+- contact presentation if structurally required: **Duty Harbormaster**, a role label rather than a canonical named person;
 - delivery context: Starfall Harbormaster's Office, `settlement.starfall_port`, `region.starfall_isle`;
 - premise: one-time post-storm civic hydrographic/pilotage contract to re-sound channels, breakers, draft-safe approaches, and ruin markers before fishing and commercial traffic intensify;
 - the post-storm condition is authored background already in effect, not a new runtime weather-trigger requirement;
@@ -67,6 +68,9 @@ Treat these as controlling authored facts:
 - Brineharbor's reef-soundings charter remains a separate quest;
 - the first contract is one-time per campaign, non-expiring before acceptance, and must not duplicate/re-offer after acceptance/completion;
 - no hard level/class/reputation/magic/skill gate is authored for initial offer admission;
+- no hard post-acceptance runtime completion deadline is authored for this first reachability implementation;
+- the contract is intended to be paid in ordinary civic coin eventually, but exact payout/bonus/standing/item/salvage/service terms are deliberately deferred to turn-in/reward authority and are **not missing authored input for this package**;
+- obsolete demo `580 crown + salvage rights` wording is explicitly non-canonical;
 - representative test may explicitly choose Starfall Port as the starting settlement; this is not a global starting-location requirement;
 - offer presentation alone does not grant travel to the survey anchorage;
 - accepted quest acceptance is the causal occurrence that supplies old charts, departure instructions, authorization, and arranged access;
@@ -74,7 +78,7 @@ Treat these as controlling authored facts:
 - `location.ashen_reef` remains a compatibility travel key for the Starfall-associated survey anchorage/approach, not canonical proof that Starfall Port and Ashen Reef are the same place;
 - Saltmere/Glasswater presentation for this quest is non-canonical and should be corrected only where the implementation package directly publishes contradictory Ashen presentation.
 
-Do not ask the user to re-answer these facts.
+Do not ask the user to re-answer these facts. Do not treat deferred reward/turn-in balance as a reason to return to `AUTHORED_INPUT_REQUIRED`.
 
 ## Authority And Orientation
 
@@ -107,18 +111,24 @@ Determine the smallest correct way to represent `quest_definition.starfall_ashen
 
 Reconcile the current strict `civilization.quest_definitions` schema and the existing Brineharbor survey definition without copying its unrelated level/class/standing/reward assumptions.
 
-The package should prefer an actual authored quest definition over hard-coding all narrative copy in runtime if that can be done without broad schema redesign.
+The package should prefer an actual authored quest definition over hard-coding all narrative copy in runtime if that can be done without broad schema redesign or fabricated canon.
 
 Decide exact first-pass fields for:
 
 - id/slug/name/category/summary;
-- giver presentation metadata without inventing a canonical office/person id that current authority cannot support;
+- giver presentation metadata, using `Duty Harbormaster` if `contactName` is structurally required and without inventing a canonical office/person id that current authority cannot support;
 - requirements consistent with no hard level/class/reputation/magic/skill admission gate;
-- one-time/non-expiring scheduling posture to the extent current schema can honestly express it;
+- one-time/non-expiring-offer timing posture to the extent current schema can honestly express it;
 - descriptive logistics/action-tree material only where required and coherent with accepted four-shift runtime;
-- reward fields: keep descriptive/non-executing and do not authorize turn-in/payout implementation.
+- reward fields only if they can truthfully express **paid civic contract, exact payout deferred** without inventing numeric economics.
 
-If current schema forces materially false authored facts, do not silently fill them. Decide whether a narrow schema/content correction belongs in the package or whether that blocks package readiness.
+Current schema facts that deserve explicit scrutiny include required `levelMin`, `dueWithinHours`, giver `entityId`/`contactName`, and numeric reward-envelope fields. Their existence is a packaging constraint, not permission to manufacture product facts.
+
+If level 1 is the ordinary minimum playable level, `levelMin: 1` may represent no meaningful level gate. Empty class/skill/standing arrays are preferable to fabricated restrictions.
+
+Do not copy Brineharbor reward values, use obsolete demo `580 crown + salvage rights`, or encode zeros as proof the contract is unpaid. Exact payout is intentionally deferred and must not by itself force a return to authored-input collection.
+
+If current static quest-definition schema cannot represent this quest honestly without false payout/timing/institution facts, decide the smallest authority-preserving package posture: a narrow schema/content correction if truly bounded, or a documented temporary runtime/canon mapping with static-record insertion deferred. Return `NO_PACKAGE` only if live authority proves neither bounded option is safe.
 
 ### 2. Production Offer Admission Owner
 
@@ -126,7 +136,7 @@ Trace production creator -> initial version-7 publication/load -> session synchr
 
 The package must preserve:
 
-- static authored definition separate from mutable journal state;
+- static authored definition/canon separate from mutable journal state;
 - current runtime compatibility row id `quest.ashen_reef_survey` unless a schema change is proven indispensable;
 - deterministic eligibility when the character is currently in `settlement.starfall_port` and the one-time contract is not consumed;
 - no global grant to characters outside the Starfall delivery context;
@@ -164,11 +174,11 @@ The straight representative path must not inject an activity record or add a sep
 
 Audit only Ashen-facing production/demo presentation that would contradict accepted Starfall canon.
 
-Known candidates include stale `Glasswater` and `Saltmere Harbor Office` wording and the current `Stormglass Bloom` discovery region label.
+Known candidates include stale `Glasswater`, `Saltmere Harbor Office`, obsolete `Ashen Reef Survey` presentation where the narrative title should now be **Soundings of Ashen Reef**, obsolete `580 crown + salvage rights`, and the current `Stormglass Bloom` discovery region label.
 
-The package may include the smallest directly necessary corrections so the representative path does not publish mutually contradictory place/issuer facts.
+The package may include the smallest directly necessary corrections so the representative path does not publish mutually contradictory place/issuer/reward facts.
 
-Do **not** turn this into a broad world/travel naming cleanup.
+Do **not** turn this into a broad world/travel naming cleanup or reward implementation.
 
 ### 6. Injection-Free Representative Test
 
@@ -227,14 +237,14 @@ Create/update one durable implementation-package decision recording:
 
 1. exact package classification and version recommendation;
 2. live owner/caller/content/schema files to change;
-3. exact authored-definition strategy;
+3. exact authored-definition/canon mapping strategy;
 4. exact offer-admission owner and lifecycle;
 5. exact access-admission owner and lifecycle;
 6. accepted presentation corrections;
 7. atomicity/retry/duplicate/stale/conflict/publication/restart rules;
 8. exact representative test path and forbidden fixture insertions;
 9. focused/adjacent validation matrix;
-10. explicit exclusions and deferred generic work.
+10. explicit exclusions and deferred generic/reward work.
 
 Then install a separate implementation prompt. The implementation prompt must include clean-worktree, branch, validation, commit, push, post-push verification, and handoff requirements.
 
@@ -252,4 +262,4 @@ Commit only intended documentation/removable-probe cleanup, push `master`, fetch
 
 ## Scope Exclusions
 
-Do not implement quest offers, authored quest content, journal admission, known-location access, survey reachability, tracked tests, schemas, validators, serializers, migrations, UI, rewards, or turn-in during this decision; change survey balance or four-stage behavior; implement generic quests/missions/orders/favors/arcs; add generic weather triggers; add Geographic Knowledge/map/fog/recognition; redesign all travel destination ids; add generic quest/activity/effect/event/replay/correction infrastructure; add other Stakes/checkpoint/cloud/death/succession work; mutate dependencies/formats/assets/generated output; advance `0.7.0`; or mutate/integrate/close/delete/rebase/force-update branches or pull requests without a fresh controlling lifecycle trigger.
+Do not implement quest offers, authored quest content, journal admission, known-location access, survey reachability, tracked tests, schemas, validators, serializers, migrations, UI, reward payout, or turn-in during this decision; change survey balance or four-stage behavior; implement generic quests/missions/orders/favors/arcs; add generic weather triggers; add Geographic Knowledge/map/fog/recognition; redesign all travel destination ids; add generic quest/activity/effect/event/replay/correction infrastructure; add other Stakes/checkpoint/cloud/death/succession work; mutate dependencies/formats/assets/generated output; advance `0.7.0`; or mutate/integrate/close/delete/rebase/force-update branches or pull requests without a fresh controlling lifecycle trigger.
