@@ -2,7 +2,7 @@
 
 Date: 2026-08-20
 
-Status: Ashen authored input accepted; implementation-package decision installed
+Status: Ashen authored input accepted; implementation-package decision installed and schema-facing authored inputs closed
 
 Parent decision: `PARENT_ACCEPTED`
 
@@ -34,22 +34,25 @@ The last completed Codex decision advanced hosted `master` to:
 
 `cf53772af2c97223bbd1ffa513472d1fee02d662` - `docs(survey): record authored reachability prerequisite`
 
-Connector/product-direction preparation then added:
+Connector/product-direction preparation then added these docs-only steps:
 
 - `dc71404a8963e24c31cb9af6a5cc9fbf59bae7d6` - `docs(quests): record identity and access product direction`;
 - `32a3d57fba3604bd3292178b4fa34a6b954437c7` - `docs(survey): accept Ashen Reef soundings canon`;
 - `3679cfb8b942ffc090f6ffdd73cd04217b731b71` - `docs(prompt): install Ashen reachability package decision`;
-- this handoff commit follows those docs-only preparation commits.
+- `e5a92fd1d621724817b221c062f26346e6bae688` - `docs(handoff): hand off accepted Ashen canon`;
+- `324a1f7ee6b8d6e5a5022ac728bbed633e539f4b` - `docs(survey): close Ashen presentation inputs`;
+- `7fd9000a33d7cfd7311ad2a6675d5f8c3b9ee0a7` - `docs(prompt): close Ashen schema-facing inputs`;
+- this handoff update follows those preparation commits.
 
-No production, content JSON, schema, validator, tracked test, migration, UI, save, dependency, asset, generated, branch, or PR mutation is authorized or intended by this Connector preparation.
+No production, content JSON, schema, validator, tracked test, migration, UI, save, dependency, asset, generated, branch, or PR mutation was made by this preparation.
 
-The next Codex run must still fetch/prune and reverify the actual hosted head before trusting these recorded SHAs.
+The next Codex run must fetch/prune and reverify the actual hosted head before trusting recorded SHAs.
 
 ## Accepted Canon - Do Not Re-Ask
 
 The project owner approved the recommended civic hydrographic/pilotage premise.
 
-The first representative quest is:
+First representative quest:
 
 **Soundings of Ashen Reef**
 
@@ -64,6 +67,12 @@ Accepted runtime compatibility quest id:
 Issuer presentation:
 
 **Starfall Harbormaster's Office**
+
+Contact presentation if the strict quest-definition schema requires one:
+
+**Duty Harbormaster**
+
+`Duty Harbormaster` is a role label, not a canonical named NPC.
 
 Place context:
 
@@ -82,6 +91,20 @@ Narrative cause:
 - Stormglass Bloom remains an incidental final-shift discovery.
 
 The existing Brineharbor reef-soundings charter remains a separate authored quest.
+
+## Reward And Timing Intent - Deliberately Deferred, Not Missing
+
+This civic contract is intended to be paid in ordinary coin after an eventual accepted chart-packet turn-in.
+
+Exact payout, bonus, standing, item, salvage, service, or other consequence values are **not authored in the reachability route** and belong to the separately deferred turn-in/reward authority.
+
+The old demo text `580 crown + salvage rights` is explicitly non-canonical.
+
+Do not copy Brineharbor reward values, invent numeric economics, or encode zero as proof that the contract is unpaid simply to satisfy the current strict quest-definition reward shape.
+
+Likewise, no hard runtime completion deadline is authored for this first reachability implementation. The post-storm reopening creates narrative urgency but not a required expiry/failure clock.
+
+Current schema requirements such as numeric reward fields or `dueWithinHours` are therefore **implementation-package constraints**, not missing product/canon input. The next Codex run must decide the smallest honest authority-preserving representation rather than asking the user to invent payout/balance prematurely.
 
 ## Accepted Availability And Access Posture
 
@@ -120,11 +143,11 @@ Do not ask for more product/canon input unless fresh live evidence reveals a gen
 
 The active docs-only package decision must settle:
 
-1. the smallest honest authored-content representation of `quest_definition.starfall_ashen_reef_soundings` under the current strict quest-definition schema;
-2. whether current schema requirements force false level/class/standing/reward facts and, if so, the narrowest correction required;
+1. the smallest honest authored-definition/canon mapping under the current strict quest-definition schema without fake payout/timing/institution facts;
+2. whether a narrow schema/content correction is justified or whether the first reachability implementation should keep the accepted canon mapping outside a live quest-definition record temporarily;
 3. the exact production owner that idempotently admits one Starfall `contracts` row after ordinary initial publication/load;
 4. the exact Ashen-specific accepted-quest access adapter/owner and its persistence/retry/duplicate rules;
-5. the smallest Starfall-canon presentation corrections required for stale Ashen-facing `Glasswater`/`Saltmere` strings, including the current Stormglass discovery region label if still live;
+5. the smallest Starfall-canon presentation corrections required for stale Ashen-facing `Glasswater`, `Saltmere Harbor Office`, obsolete title/reward strings, and the current Stormglass discovery region label if still live;
 6. the injection-free production representative test from an explicitly selected Starfall starting settlement through offer, acceptance, tracking, access, travel, automatic activity/operation activation, four survey shifts, publication/restart, and durable result/projection behavior;
 7. whether the bounded package is now correctly `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`.
 
@@ -136,9 +159,9 @@ No separate non-quest blocker was found during this preparation.
 
 One deferred travel-identity debt is worth preserving but is **not** a blocker and must not widen the Ashen route:
 
-- current runtime travel keys include compatibility names that do not match their canonical settlement identities, for example `location.saltmere` -> Aurelis, `location.westreach` -> Stonevein, and `location.crown_bastion` -> Sunspire Reach.
+- current runtime travel keys include compatibility names that do not match their canonical settlement identities, including `location.saltmere` -> Aurelis, `location.westreach` -> Stonevein, and `location.crown_bastion` -> Sunspire Reach.
 
-Treat that as a later compatibility-safe travel-identity cleanup. Do not rename these keys in the Ashen package merely for naming consistency.
+Treat that as later compatibility-safe travel-identity cleanup. Do not rename these keys in the Ashen package merely for naming consistency. During the next package-decision final coordination, add/retain a deferred backlog note if no durable one already exists, but do not activate that lane.
 
 Historical/planning header dates or route summaries that still describe the pre-authored-input state should be reconciled by the next Codex decision during its required final coordination. Do not rewrite historical chronology just to make dates newer.
 
@@ -165,6 +188,6 @@ The next Codex run must refresh this inventory rather than relying on the record
 
 The next run is a documentation-only package decision.
 
-Do not implement production/content/schema/tests during that decision. Do not add turn-in/rewards, generic quest/mission/order/favor/arc systems, dynamic weather infrastructure, broad travel-key renaming, generic Geographic Knowledge/map/fog recognition, generic activity/event/replay/correction infrastructure, or advance `0.7.0`.
+Do not implement production/content/schema/tests during that decision. Do not add turn-in/reward execution, generic quest/mission/order/favor/arc systems, dynamic weather infrastructure, broad travel-key renaming, generic Geographic Knowledge/map/fog recognition, generic activity/event/replay/correction infrastructure, or advance `0.7.0`.
 
 No routine Connector interruption or manual file transfer is needed before the next Codex run.
