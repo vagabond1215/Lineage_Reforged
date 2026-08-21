@@ -2,7 +2,7 @@
 
 Date: 2026-08-20
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: GitHub Connector, documentation-only
 
@@ -120,3 +120,52 @@ Optional documentation-only coordination output, only if needed:
 - a short completion appendix in this plan recording metrics and final disposition counts.
 
 No current prompt replacement is authorized.
+
+## Completion Record
+
+Pass start hosted head:
+
+`1f7766102b64acf73b1e947ba0e8131ae2a42ca8`
+
+Plan installation commit:
+
+`387213ba79e78329a7ad6b0b35170c777aa6aa05`
+
+Primary rebaseline commit:
+
+`42e6f444b9d366e5bf1a2171eff0d623ffcbf5ed`
+
+Baseline findings:
+
+- stale index date: 2026-06-18;
+- stale active pointer: `Version 0.5.179 - Religious Hotspot Knowledge Subject Schema And Validator`;
+- pre-existing question rows: 70;
+- questions actually required before current `0.6.11`: 0.
+
+Final pre-existing-row dispositions:
+
+- `OPEN_SOON`: 0;
+- `OPEN_LATER`: 3;
+- `OPEN_STRATEGIC`: 5;
+- `DEFERRED_WITH_TRIGGER`: 45;
+- `RESOLVED`: 11;
+- `SUPERSEDED`: 6.
+
+Three additional post-June questions were added as `DEFERRED_WITH_TRIGGER`:
+
+1. compatibility-safe cleanup/migration of misleading travel keys;
+2. typed Quest/Mission/Order/Favor/Trial semantics and consequences;
+3. exact `Soundings of Ashen Reef` turn-in/reward consequences after reachability acceptance.
+
+Key later authorities used to close or supersede stale questions include:
+
+- `docs/design/organization-faction-guild-boundary-decision.md`;
+- `docs/design/government-jurisdiction-authority-boundary-decision.md`;
+- `docs/design/discovery-poi-boundary-decision.md`;
+- `docs/design/ui-information-architecture-boundary.md`;
+- `docs/design/quest-identity-offer-context-and-travel-access-product-direction.md`;
+- the current `0.6.11` roadmap/handoff/output authority.
+
+No user/product answer was invented. Questions whose owning runtime or authority does not yet exist remain deferred with an explicit reopening trigger.
+
+The active `0.6.11` implementation prompt was intentionally left untouched. This pass does not change `0.6.11` scope, implementation readiness, representative-loop classification, or the requirement for a later independent `0.6.11.1` acceptance audit.
