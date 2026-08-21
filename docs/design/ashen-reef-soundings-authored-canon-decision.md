@@ -90,9 +90,15 @@ Canonical regional context:
 
 `region.starfall_isle`
 
+Contact presentation for the first authored record, if the current quest-definition schema requires one:
+
+**Duty Harbormaster**
+
+`Duty Harbormaster` is a role label, not a named canonical person. Do not invent a named NPC merely to satisfy `contactName`.
+
 The office is a civic maritime authority responsible, at minimum for this quest's narrative purpose, for maintaining usable harbor pilotage information and commissioning soundings when existing working charts become unreliable.
 
-No permanent canonical institution/person/office id is invented by this decision. Existing quest giver fields may use presentation metadata until a dedicated office/institution/person authority supplies a stable canonical reference.
+No permanent canonical institution/person/office id is invented by this decision. Existing quest giver fields may use presentation metadata until a dedicated office/institution/person authority supplies a stable canonical reference. If a noncanonical giver `entityId` token is structurally required by the current quest-definition schema, it must be documented as presentation metadata and must not be promoted to canonical institution authority by inference.
 
 Representative delivery surface:
 
@@ -160,11 +166,19 @@ The existing survey's **Stormglass Bloom** remains an incidental discovery made 
 
 The survey output remains a verified reef chart packet suitable for harbor pilotage use.
 
-## 8. Conservation, Fisheries, Tourism, And Other Motives
+## 8. Conservation, Fisheries, Tourism, Reward Intent, And Other Motives
 
 Ashen Reef is not designated a protected reef by this decision.
 
 Fishing is an important secondary civic motivation because reliable approaches protect boats, crews, food supply, harbor activity, dues, and trade. This does not create a modern ecological stock-assessment or overfishing-management program.
+
+The contract is a paid civic undertaking. Successful eventual turn-in is intended to provide an ordinary monetary payment from the harbor authority. However, **no exact coin amount, bonus amount, standing award, salvage right, item grant, or other payout is authored by this reachability decision**.
+
+The old demo presentation `580 crown + salvage rights` is explicitly non-canonical and must not be copied into the authored definition or production representative path.
+
+Exact payout, standing, item, service, salvage, or other consequence terms belong to the separately deferred quest turn-in/reward authority. Their absence is intentional and must **not** be treated as missing authored input for the ordinary-reachability package.
+
+If the current strict `quest_definition` schema requires numeric descriptive reward fields, the implementation-package decision must resolve that as a schema/content packaging constraint without inventing fake economic canon. It may not silently encode zero as proof that the contract is unpaid, nor copy another quest's reward values by analogy.
 
 Tourism, festivals, noble events, religious use, hunting, salvage, natural study, military reconnaissance, economic surveys, or later recurring fisheries surveys may justify other quests in the future. They do not alter this quest's identity.
 
@@ -191,7 +205,9 @@ No mandatory skill gate is authored for offer admission. Navigation, General Lor
 
 The Harbormaster's willingness to contract the work is represented by making the civic contract openly available to capable volunteers/contractors at the office; the game's actual survey mechanics determine whether the player performs the work successfully and safely.
 
-## 10. Offer Retention, Expiry, Decline, And Re-Offer
+If the current authored quest schema requires a minimum level, `levelMin: 1` may represent the absence of a meaningful level gate only if level 1 is the ordinary minimum playable level under live authority. Empty class/skill/standing requirement arrays are preferred to fabricated qualifiers.
+
+## 10. Offer Retention, Expiry, Decline, Re-Offer, And Timing
 
 The initial offer does not expire in the first reachability package.
 
@@ -204,6 +220,8 @@ Once accepted, the same one-time offer must not be duplicated or re-offered.
 Once completed, it must not be re-offered.
 
 Failure/abandonment-specific re-offer policy is deferred unless live implementation authority proves it is necessary for the representative path. Do not invent a broad quest failure/abandonment framework here.
+
+No hard post-acceptance completion deadline is authored for the first reachability implementation. The post-storm reopening creates narrative urgency but not a runtime expiry requirement. If current static quest content requires `dueWithinHours` or similar descriptive scheduling fields, the implementation-package decision must not reinterpret them as an offer-expiry or runtime-failure mechanic without separate authority.
 
 ## 11. Journal Admission Authority
 
@@ -257,6 +275,7 @@ For this quest:
 
 - demo-only Saltmere Harbor Office wording is discarded as non-canonical presentation;
 - demo-only Glasswater region wording is discarded as non-canonical presentation;
+- demo-only `580 crown + salvage rights` reward wording is discarded as non-canonical presentation;
 - current Starfall Port / Starfall Isle association controls the accepted narrative location;
 - `location.ashen_reef` is a compatibility survey-destination key, not proof that the reef is identical to the settlement;
 - Brineharbor's authored `quest_definition.brineharbor_reef_soundings` remains separate.
@@ -284,7 +303,7 @@ No separate activity-selection mechanism is needed on the straight representativ
 This decision does not authorize:
 
 - quest turn-in or reward payout;
-- coin, item, standing, reputation, service, voucher, or merchant consequences;
+- exact coin, item, standing, reputation, service, voucher, salvage, or merchant consequences;
 - generic quest/mission/order/favor implementation;
 - quest-arc implementation;
 - generic dynamic world-condition offer generation;
@@ -308,7 +327,7 @@ Install and execute a separate unversioned:
 
 That decision must determine the smallest coherent implementation package for:
 
-1. the accepted authored quest definition and presentation;
+1. accepted quest presentation and the narrowest honest use of current authored quest content without fabricating unresolved payout/timing data;
 2. deterministic one-time Starfall offer admission after ordinary initial publication/load;
 3. durable `contracts` journal admission;
 4. accepted-quest-triggered Ashen travel-access admission;
