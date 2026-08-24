@@ -2,7 +2,7 @@
 
 Date: 2026-08-24
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: GitHub Connector, documentation-only
 
@@ -114,3 +114,29 @@ Coordination:
 - optional narrow update to `docs/design/open-design-questions-index.md` or `docs/future_content_backlog.md` only if it improves future discoverability without changing priority.
 
 No implementation prompt change is authorized.
+
+## Completion Appendix
+
+Outcome: `AUDIT_COMPLETE_DEFER_MIGRATION`
+
+Baseline head before Pass 2: `58ce5acfbb6d79b2c1e3905a3a886be23b46376b`.
+
+Planning commit: `61a7470797680f5b75f5f27c329e26adb8e49d5f`.
+
+Audit artifact: `docs/design/travel-compatibility-identity-and-migration-intent-audit.md`.
+
+Measured results:
+
+- live travel destination keys inspected: **4**;
+- materially name-divergent compatibility keys: **4**;
+- `COMPATIBILITY_ALIAS`: **3** (`location.saltmere`, `location.westreach`, `location.crown_bastion`);
+- `SITE_OR_APPROACH_KEY`: **1** (`location.ashen_reef`);
+- `NAME_ALIGNED`: **0**;
+- keys directly involved in active `0.6.11`: **1**;
+- unrelated current blockers found: **0**.
+
+Key finding: the four keys must not be treated as one homogeneous rename set. Saltmere/Aurelis, Westreach/Stonevein, and Crown Bastion/Sunspire Reach are settlement-era compatibility aliases. Ashen Reef is a narrower reef/anchorage destination whose current settlement-backed origin collision is already owned by `0.6.11`.
+
+The existing open-design index already carries a deferred compatibility-key-cleanup trigger, so no priority/index rewrite was needed. The new focused audit is now the detailed authority for that future question.
+
+No runtime/source/content/schema/test/save/branch/PR change was authorized or made. The active `0.6.11` prompt remains parked and must be verified byte-identical in final hosted validation.
