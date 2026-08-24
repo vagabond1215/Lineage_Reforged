@@ -2,7 +2,7 @@
 
 Date: 2026-08-24
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: GitHub Connector, documentation-only
 
@@ -106,3 +106,29 @@ Primary:
 Coordination:
 
 - completion appendix in this plan.
+
+## Completion Appendix
+
+Outcome: `QUEST_ARCHITECTURE_CONSOLIDATED`.
+
+Pass 5 baseline head: `164655b0bc9f57d7459dfbb7664a09b77c195b0e`.
+
+Primary output: `docs/design/quest-offer-issuer-and-arc-architecture-consolidation.md`.
+
+Benchmarks achieved:
+
+- durable quest identity/lifecycle layers separated: **11**;
+- authored definition family retained: `quest_definition.<unique_slug>`;
+- reusable archetype/template authorities preserved separately;
+- owner-local objective/action-tree identity preserved;
+- separate future arc/group identity retained without numeric definition-id sequencing;
+- issuer references made owner-family-aware at the architecture level;
+- general `organization.*` owner required: **no**;
+- availability, hard eligibility, suitability/risk, access and completion separately defined: **yes**;
+- same-definition multi-origin versus materially different multi-issuer/motive semantics separated: **yes**;
+- runtime offer instance separated from definition/title/journal ordering: **yes**;
+- downstream reward/access/service execution kept outside static quest authority: **yes**;
+- product questions required before parked `0.6.11`: **0**;
+- new quest schema/runtime/version authorized: **0**.
+
+The consolidation also records that the older generic quest-template architecture is historical context where it conflicts with later classless, contextual-eligibility, owner-local objective and current runtime-owner decisions.
