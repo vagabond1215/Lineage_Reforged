@@ -110,7 +110,7 @@ The backlog remains useful chronology. The design ledger remains useful broad in
 
 Outcome: `AUTHORITY_MAP_RECONCILED`.
 
-Major deferred families mapped: **29**.
+Major deferred families mapped: **30**.
 
 Current-route conflicts: **0**.
 
