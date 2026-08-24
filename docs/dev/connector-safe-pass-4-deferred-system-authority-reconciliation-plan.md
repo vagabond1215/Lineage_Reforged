@@ -2,7 +2,7 @@
 
 Date: 2026-08-24
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: GitHub Connector, documentation-only
 
@@ -122,3 +122,28 @@ Primary:
 Coordination:
 
 - completion appendix in this plan.
+
+## Completion Appendix
+
+Outcome: `AUTHORITY_MAP_RECONCILED`.
+
+Pass 4 baseline head: `f9a6cc84950f99d98bc9e225c28efcd2ab8904c8`.
+
+Primary output: `docs/design/deferred-system-authority-reconciliation.md`.
+
+Measured results:
+
+- major deferred system families mapped: **30**;
+- families with a named focused authority or focused current owner: **30/30**;
+- primary `BOUNDARY_ACCEPTED_DEFER_RUNTIME` classifications: **11**;
+- primary `SCHEMA_OR_STATIC_FOUNDATION_EXISTS_DEFER_CONSUMER` classifications: **4**;
+- primary `PRODUCT_DIRECTION_ONLY` classifications: **9**;
+- primary `EVIDENCE_OR_AUTHORED_INPUT_REQUIRED` classifications: **3**;
+- primary `REJECTED_OR_SUPERSEDED_MODEL` classifications: **2**;
+- primary `ACTIVE_ELSEWHERE` classifications: **1**;
+- current-route conflicts with parked `0.6.11`: **0**;
+- new implementation/version routes activated: **0**.
+
+The reconciliation deliberately leaves subjective design choices unresolved and gives each deferred lane a concrete reopening trigger. It also records rejected shortcuts such as a universal organization collection, generic static POI owner, composite quest-id grammar, generic relationship ledger, and blind travel-key rename.
+
+No broad backlog, roadmap, sequenced-plan, ledger, historical-register, prompt, output or handoff rewrite was required.
