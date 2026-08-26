@@ -1,133 +1,91 @@
 # Current GPT Handoff
 
-Date: 2026-08-20
+Date: 2026-08-26
 
-Status: ordinary-reachability implementation package authorized; `Version 0.6.11` installed
+Status: `Version 0.6.11` implemented; independent parent/representative audit installed
 
-Package decision: `PACKAGE_READY`
+Implementation disposition: `IMPLEMENTED_PENDING_PARENT_AUDIT`
 
-Selected primary:
+Implementation commit: `3ca23d6864541a899ea61a6bf26257665f754e78`
 
-`Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
+Connector evidence correction commit: `b54ea65b6fddf029f4fb12ea82c5cdc9f8c1e62a`
 
-Accepted parent: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+Active run:
+
+`Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`
+
+Accepted survey parent: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
 
 Parent acceptance authority: `950e851446fb75bfbdb717d0ea33e33ec2907d4a`
-
-Authored input: `AUTHORED_INPUT_ACCEPTED`
-
-Starting representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
-
-`0.7.0`: `NOT_READY`
-
-Current prompt authority:
-
-`docs/dev/current-codex-prompt.md`
 
 Package authority:
 
 `docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md`
 
-## Decision Summary
+Current prompt authority:
 
-No further authored input is required. The accepted **Soundings of Ashen Reef** canon plus current source settle one bounded implementation package.
+`docs/dev/current-codex-prompt.md`
 
-The package must add:
+Representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` pending audit
 
-- one honest authored Starfall quest definition under a narrow nullable/deferred schema correction;
-- one Ashen-specific owner that stages offer facts in the unpublished target new-campaign candidate, with verified initial publication/load as admission and availability;
-- one Ashen-specific travel-access adapter inside accepted quest acceptance;
-- one direct site-aware Starfall/Ashen travel-origin correction;
-- directly necessary Starfall presentation corrections with version-1 survey-authority compatibility and new content version 2;
-- one injection-free creator-to-final-restart production regression.
+`0.7.0`: `NOT_READY`
 
-The implementation remains a `0.6.x` primary. It may report only `IMPLEMENTED_PENDING_PARENT_AUDIT` and must install a separate `0.6.11.1` acceptance audit.
+## Implementation State
 
-## Source Head And Preparation Chain
+No further authored information is required for the implemented package. Commit `3ca23d6...` adds:
 
-The package decision inspected clean synchronized:
+- the exact authored **Soundings of Ashen Reef** definition and bounded nullable/zero schema/type posture;
+- one pure Starfall new-campaign offer-staging owner before initial publication, without access grant;
+- one pure accepted-quest access adapter and typed acceptance plan/result/event facts;
+- the site-aware Starfall versus Survey Anchorage identity correction;
+- survey-content version 2 with exact retained v1 and mixed-history compatibility;
+- Starfall quest, operation, activity, discovery, Codex, destination, and next-step presentation;
+- an injection-free production creator-to-final-restart representative test.
 
-`31f5b851fd0adfe878d7e8e0496d7070b6daac96`
+The final representative state is four ordered accepted requests/occurrences/results, 48 receipts, exact projections, three sectors plus ruins, complete operation, return activity, active unturned-in quest, and durable fourth-request duplicate. It has no ordinary correction/repair and no payout, reward, currency, standing, inventory, Geographic Knowledge, or extra General Lore turn-in effect.
 
-The seven commits after the prior Codex decision were documentation-only and accepted as current authored preparation. They added the product-direction document, the accepted authored-canon decision, the package-decision prompt, and handoff refinements. They did not modify production, content JSON, schemas, tests, save authority, dependencies, assets, branches, or PRs.
+## Connector Pass Disposition
 
-The implementation run must fetch/prune and trust only its freshly synchronized hosted head.
+Connector Passes 1-6 were independently compared with the synchronized checkout. They are reusable documentation evidence and scope guardrails, not implementation or acceptance authority. They changed no source, schema, tracked tests, or current coordination and do not block `0.6.11.1`.
 
-## Exact Canon
+The only corrections required were:
 
-- definition: `quest_definition.starfall_ashen_reef_soundings`;
-- runtime row: `quest.ashen_reef_survey`;
-- title: **Soundings of Ashen Reef**;
-- issuer: **Starfall Harbormaster's Office**;
-- contact role: **Duty Harbormaster**;
-- delivery context: `settlement.starfall_port`, `region.starfall_isle`;
-- one-time, non-expiring before acceptance, no hard admission gate;
-- post-storm background rather than a runtime weather trigger;
-- three survey sectors plus final ruin-marker verification;
-- Stormglass Bloom incidental;
-- paid civic contract with exact reward terms deferred;
-- acceptance, not offer visibility, grants charts/instructions/authorization/arranged access;
-- `location.ashen_reef` is an anchorage compatibility key, not Starfall Port identity.
+- replace the incorrect Pass 2 planning SHA with `61a74707a22a5e4f85ac9d1492f35da3bd7dcda8` in the two travel evidence documents;
+- remove one trailing-whitespace defect in the open-design-question index.
 
-Do not copy Brineharbor values or old `580 crown + salvage rights` copy.
+Those corrections are isolated at `b54ea65...`. No Connector branch merge or lifecycle change is authorized.
 
-## High-Risk Implementation Details
+## Validation Baseline
 
-### Schema and content
+- final focused/adjacent matrix: `1072/1072` passed;
+- adversarial package selection: `24/24` passed;
+- normal content lint: `71` files passed;
+- Vite production build: `219` modules passed, registered chunk advisory only;
+- bounded UI TypeScript: exact known `137` diagnostics before/after, no new diagnostic;
+- tracked bridge/export parity, persistence/restart, duplicate, correction/repair, defeat/recovery, Knowledge/no-proposal, characterization, diff, and artifact-cleanup checks passed.
 
-Production progression begins at level `0`; current `levelMin >= 1` would create a false gate. No accepted tick-to-hour conversion or reward numbers exist. The package therefore admits explicit nulls for missing institution id, hour fields, reward numbers, and action-node hours while keeping fields required. Null must not become zero.
+The independent audit must rerun and adversarially verify material claims. It must not accept from this report or tracked tests alone.
 
-The new authored record uses `entityId: null`, `levelMin: 0`, null timing/reward/hour fields, rank D as routine field work with manageable danger, empty eligibility/logistics gates, and four sequential no-check descriptive nodes. The descriptive rank remains separate from admission eligibility. Existing five definitions and Brineharbor remain unchanged.
+## Audit Priorities
 
-### Offer owner
+1. Verify the authored record and narrow schema/type widening without reopening Brineharbor or inventing deferred numeric facts.
+2. Prove offer staging and first version-7 publication/load semantics across Starfall/non-Starfall, repeat, consumed, conflict/residue, failed publication, lost caller, and restart.
+3. Prove quest acceptance owns tracking plus exact settlement-less access atomically, with no Geographic Knowledge/map/Codex access mutation.
+4. Prove ordinary Starfall remains an origin while Survey Anchorage/legacy Ashen labels resolve to `location.ashen_reef` and tracked arrival still owns operation/activity.
+5. Adversarially verify survey-content v1, v2, and mixed histories, including deep result/receipt/projection validation, live discovery/Codex presentation, immutable content facts, publication/restart/duplicate/repair, and no migration rewrite.
+6. Independently execute the real creator -> publication/load -> acceptance/admission -> restart -> travel/admission -> four caller shifts -> restart -> durable duplicate path without fixture or eligibility injection.
+7. Reconfirm exact nine non-proposals, turn-in/reward exclusions, accepted-only state, Normal defeat/recovery preservation, TS/JS/public exports, TypeScript baseline, build, branch/PR, and hosted identity evidence.
 
-Call a pure engine staging owner after `initializeTargetCampaignSnapshot(...)` inside `createNewGameSnapshot(...)`, before `prepareNewCampaignAttempt(...)` retains the first candidate. The candidate is not active and the row is not available yet. Verified initial publication followed by authoritative load is the admission occurrence; no second post-load mutation is allowed. Do not stage/admit during general synchronization or later load. The row itself is the one-time consumed lifecycle record; the retained candidate provides retry/provenance.
+## Decision Boundary
 
-### Access owner
+The audit is production-read-only. It may use removable untracked probes but must remove them before its coordination commit.
 
-Apply the exact Ashen known row inside accepted quest acceptance so quest activation, initial tracking, access, and event are one proposed mutation. Omit `settlementId` from the anchorage row. Duplicate/conflicting rows fail closed. Expose access posture in result/event facts. Publish/reload before travel.
+- Return `PARENT_ACCEPTED` only if every package and retained parent gate passes independently, then issue exactly one representative classification.
+- Return `REPAIR_REQUIRED` on any material failure, install only the smallest parent-specific repair prompt, and do not repair production during the audit.
+- Even after `PARENT_ACCEPTED` plus `REPRESENTATIVE_LOOP_ACCEPTED`, keep `0.7.0` `NOT_READY` and route a separate docs-first band-entry readiness decision.
 
-### Direct travel defect
+## Branch And Scope Guardrails
 
-Current source maps every Starfall position to `location.ashen_reef`; a real Starfall creator therefore gets `already_at_destination` after access. Resolve the reef id only at site label `Survey Anchorage` or legacy `Ashen Reef`; otherwise use compatibility origin `settlement.starfall_port` and fall back to the live site label.
+Orientation found one local branch, 37 non-default remote branches, and exactly two open PRs. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness remains `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
 
-### Survey content compatibility
-
-Old survey receipts/projections embed Saltmere/Glasswater strings. New commands must author `surveyContent: 2`, while retained version 1 remains semantically valid with original expected strings. Canonicalization must preserve the stored version. Test v1, v2, and mixed sequences through publication/restart/duplicate/repair; do not migrate old evidence.
-
-### Representative path
-
-Quest acceptance already tracks the quest. One later tracking toggle would untrack it; assert acceptance-owned tracking instead. Travel already creates the operation/activity. Do not inject an activity record or add selection.
-
-The tracked representative test must not import `demoSnapshot` or directly insert any eligibility, survey authority, projection, correction, or repair row. Keep deliberate corruption cases in adjacent suites. End before turn-in.
-
-## Validation And Acceptance Posture
-
-The decision run reverified current source and baseline behavior. Bounded independent checks reported:
-
-- quest schema/objective baseline `147/147` and normal content lint `71` files;
-- quest acceptance/tracking `16/16`;
-- acceptance/tracking/travel/survey focused grouping `65/65`;
-- exact reproduction of the current Starfall `destination_not_known -> already_at_destination` deadlock once access is present.
-
-The implementation prompt requires the full content/schema, creator/publication, acceptance/access, travel, survey, Knowledge/non-proposal, persistence/recovery, representative integration, build, TypeScript baseline, mirror/export, diff, and hygiene matrix.
-
-The implementation may not self-accept. Install `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit` after a complete green implementation.
-
-## Branch And PR Posture
-
-Fresh orientation found one local branch, 37 non-default remote branches, and exactly two open PRs.
-
-- PR #2 at `e78dc645cfb658685be12f45f46d34b7c0da1119`: `SUPERSEDED_PRESERVE_EVIDENCE`;
-- PR #3 at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`: `SUPERSEDED_PRESERVE_EVIDENCE`;
-- four exact survey evidence refs: `CANDIDATE_INTEGRATION` for broader named consumers only;
-- integrated-gameplay readiness: `PROTECTED_REFERENCE`;
-- administration evidence branch: `HOLD_NAMED_CONSUMER`.
-
-No disposition changed and no integration, deletion, closure, rebase, or ref mutation is due.
-
-## Scope Guard
-
-Keep turn-in/rewards, numeric payout, Geographic Knowledge/map/fog/recognition, generic quest or travel infrastructure, other travel-key cleanup, survey balance/receipt ownership, dependencies, and `0.7.0` outside `0.6.11`.
-
-No manual file transfer or additional authored response is required before execution.
+Do not merge, rebase, force-update, close, delete, or mutate those refs absent a fresh controlling trigger. Keep survey turn-in/rewards, generic quest/travel/activity infrastructure, Geographic Knowledge/map behavior, other Stakes modes, checkpoint/cloud/death/succession, broad TypeScript cleanup, and direct `0.7.0` entry out of the audit.

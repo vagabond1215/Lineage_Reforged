@@ -1,10 +1,18 @@
 # Branch Disposition Register
 
-Date: 2026-08-20
+Date: 2026-08-26
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-08-26 Version 0.6.11 Implementation Refresh
+
+The implementation orientation fetched/pruned and began from clean synchronized `master == origin/master` at `f68242fae03b22001a73e3a440ccdbf830347aba`. Fresh inventory found one local branch, 37 non-default remote branches, and exactly two open pull requests. Connector Passes 1-6 were linear documentation-only evidence on `master`; they neither blocked nor replaced the `0.6.11` implementation package.
+
+PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+The four exact survey Connector refs remain `CANDIDATE_INTEGRATION` for broader named consumers; integrated-gameplay readiness at `59c103c3a06d55f35bffa735fd4b7814dffb583e` remains `PROTECTED_REFERENCE`; and `admin/genesis-research-evidence-2026-08-13` remains `HOLD_NAMED_CONSUMER`. No integration, deletion, closure, rebase, or disposition change was due. Reinspect at `0.6.11.1` orientation or on an earlier explicit lifecycle instruction.
 
 ## 2026-08-20 Ordinary Reachability Package Decision Refresh
 

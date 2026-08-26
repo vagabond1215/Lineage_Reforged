@@ -1,117 +1,135 @@
 # Current Codex Output
 
-Date: 2026-08-20
+Date: 2026-08-26
 
-Source run: `Ashen Reef Survey Ordinary Reachability Implementation Package Decision`
+Source run: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
 
-Label class: unversioned documentation-only decision
+Label class: primary current-band implementation
 
 Parent version: not applicable
 
-Milestone impact: `supports_current_band`
+Milestone impact: `advances_current_band`
 
-Branch/status assumption: fetched/pruned clean synchronized `master == origin/master` at decision start `31f5b851fd0adfe878d7e8e0496d7070b6daac96`; direct-to-`master` documentation workflow authorized by the installed prompt
+Branch/status assumption: orientation began from clean synchronized `master == origin/master` at `f68242fae03b22001a73e3a440ccdbf830347aba`; implementation remained direct-to-`master` under the installed prompt
 
-Accepted parent: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`
+Connector evidence correction commit: `b54ea65b6fddf029f4fb12ea82c5cdc9f8c1e62a`
 
-Parent acceptance authority: `950e851446fb75bfbdb717d0ea33e33ec2907d4a`
+Implementation commit: `3ca23d6864541a899ea61a6bf26257665f754e78`
 
-Decision commit: reported in the completion response because a commit cannot contain its own identity
+Coordination commit: reported in the completion response because a commit cannot contain its own identity
 
-Outcome: `PACKAGE_READY`
+Completion state: `IMPLEMENTED_PENDING_PARENT_AUDIT`
 
-Selected next primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
+Installed next run: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`
 
-Starting representative classification: `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`
+Representative classification: remains `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` until the independent audit
 
 `0.7.0`: `NOT_READY`
 
 ## A. Files Changed
 
-Focused authority:
+Implementation and authored content:
+
+- `packages/content/base/civilization/quest_definitions.json`;
+- `packages/schemas/civilization/quest-definition.schema.json`;
+- `packages/engines/civilization-engine/src/content.ts`;
+- `packages/shared/types/src/contracts.ts`;
+- `packages/engines/game-engine/src/ashen-reef-survey-content.ts` and `.js`;
+- `packages/engines/game-engine/src/ashen-reef-survey-offer-staging.ts` and `.js`;
+- `packages/engines/game-engine/src/ashen-reef-survey-travel-access.ts` and `.js`;
+- `packages/engines/game-engine/src/campaign-rules.ts`;
+- `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`;
+- `packages/engines/game-engine/src/index.ts`;
+- `packages/engines/game-engine/src/player-quest-acceptance.ts`;
+- `packages/engines/game-engine/src/player-survey-activity-advancement.ts`;
+- `packages/engines/game-engine/src/player-travel-rules.ts`;
+- `packages/engines/game-engine/src/player-travel.ts`;
+- `apps/rpg-ui/src/game-shell/newGameSnapshot.ts`;
+- `apps/rpg-ui/src/game-shell/gameplayLoop.ts`;
+- `apps/rpg-ui/src/runtime/demoSnapshot.ts`.
+
+Tracked evidence:
+
+- `tests/integration/ashen-reef-survey-ordinary-reachability.test.mjs`;
+- `tests/unit/ashen-reef-survey-authored-content.test.mjs`;
+- `tests/unit/ashen-reef-survey-offer-staging.test.mjs`;
+- `tests/unit/ashen-reef-survey-travel-access.test.mjs`;
+- `tests/unit/campaign-persistence-foundation.test.mjs`;
+- `tests/unit/player-survey-activity-advancement-persistence.test.mjs`;
+- the adjacent activity-selection, quest-acceptance, quest-tracking, survey, and travel characterization files whose exact snapshots intentionally changed with canonical presentation.
+
+Connector evidence corrections, isolated at `b54ea65...`:
+
+- `docs/design/open-design-questions-index.md`;
+- `docs/design/travel-compatibility-identity-and-migration-intent-audit.md`;
+- `docs/dev/connector-safe-pass-2-travel-compatibility-identity-audit-plan.md`.
+
+Permanent and current coordination:
 
 - `docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md`;
-- `docs/design/ashen-reef-soundings-authored-canon-decision.md`;
 - `docs/design/ashen-reef-survey-ordinary-reachability-and-representative-loop-dependency-closure-decision.md`;
-- `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`.
-
-Repository coordination:
-
+- `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`;
 - `docs/dev/current-codex-prompt.md`;
 - `docs/dev/current-codex-output.md`;
 - `docs/dev/current-gpt-handoff.md`;
-- `docs/dev/repository-first-agent-work-protocol.md`;
 - `docs/dev/historical-version-and-deferred-route-register.md`;
 - `docs/design/current-planning-anchor-reconciliation.md`;
+- `docs/dev/branch-disposition-register.md`;
 - `docs/dev/project-roadmap.md`;
 - `docs/dev/codex-sequenced-implementation-plan.md`;
 - `docs/dev/project-vision-and-continuity-brief.md`;
 - `docs/future_content_backlog.md`;
-- `docs/design/static-content-expansion-program.md`;
-- `docs/dev/branch-disposition-register.md`.
-
-No production source, content JSON, schema, validator, tracked test, serializer, migration, save format, dependency, asset, generated output, UI, branch, or PR changed. No temporary probe remains.
+- `docs/design/static-content-expansion-program.md`.
 
 ## B. Patch Summary
 
-The decision returns `PACKAGE_READY`. Accepted authored canon now settles the exact quest identity, issuer, place, recurrence, admission posture, access occurrence, four-stage structure, and deferred reward boundary.
+- Added the exact authored **Soundings of Ashen Reef** definition while preserving the five preceding quest definitions and widening only the accepted nullable/zero schema and TypeScript fields.
+- Staged one canonical Starfall new-campaign contract before initial publication without granting access, with exact duplicate, consumed, conflict, residue, non-Starfall, source-immutability, failed-publication, lost-caller, and restart behavior.
+- Coupled exact settlement-less Ashen access to successful quest acceptance, including accepted plan/result/event facts and atomic failure/conflict closure.
+- Corrected ordinary Starfall versus Survey Anchorage identity without renaming unrelated compatibility destinations; tracked arrival still owns the survey operation/activity.
+- Introduced survey-content version 2 while preserving exact version-1 canonical authority, publication, restart, duplicate, repair, operation, activity, quest, discovery, and Codex presentation. Mixed v1-to-v2 history leaves earlier accepted evidence byte-stable.
+- Deep validation now rejects mismatched version-derived discovery and live Codex projections. Version facts return isolated arrays so snapshot mutation cannot corrupt shared content authority.
+- Added one injection-free production creator -> initial version-7 publication/load -> acceptance/admission -> travel/admission -> four caller shifts -> mid/final restart -> durable duplicate path. It ends active and unturned-in with no payout, reward, currency, standing, inventory, Geographic Knowledge, or extra General Lore turn-in effect.
+- Connector Passes 1-6 were useful as scope/evidence guardrails only. They were documentation-only, supplied no implementation authority, and did not block `0.6.11`; one incorrect Pass 2 SHA and one whitespace defect were corrected.
 
-Current source proves a bounded package:
+## C. Tests And Checks
 
-- one authored Starfall definition under a narrow nullable/deferred quest-definition schema correction;
-- one pure Ashen owner that stages the row in the unpublished target new-campaign candidate, with verified initial publication/load as offer admission and availability;
-- one pure Ashen known-location adapter inside accepted quest acceptance;
-- one site-aware Starfall/Ashen travel-origin correction;
-- direct Starfall presentation corrections using new survey content version 2 while preserving retained version-1 authority;
-- one injection-free production creator-to-final-restart test plus the accepted adjacent survey matrix.
+- Final prescribed focused/adjacent matrix: `1072/1072` passed across schema/objective, authored content, creator, campaign publication/retry/recovery, offer, acceptance/tracking, access, travel, activity selection, survey characterization/command/persistence/correction/repair, skill gating, Knowledge/no-proposal, save/load, and representative integration.
+- Focused adversarial package selection: `24/24` passed, including post-plan acceptance failure, forged v1/v2 Codex mismatch, content-array immutability, complete v1 publication/restart/duplicate/repair, mixed history, and ordinary creator evidence.
+- Normal content lint: `71` files checked, passed.
+- Vite `5.4.21` production build: `219` modules transformed, passed; only the registered large-chunk advisory remained. Temporary build output was resolved inside the workspace and removed.
+- Bounded UI TypeScript: nonzero as registered, exactly `137` diagnostics before and after. No new diagnostic was introduced. The only diagnostics in a changed file remain the same three pre-existing `civilization-engine/src/content.ts` findings at lines 1, 1284, and 1298.
+- TS/JS bridge and public-export parity passed in the tracked campaign-persistence suite.
+- `git diff --check`, scoped diff/status review, source-immutability checks, characterization hashes, and artifact cleanup passed.
+- A broad `npm test` attempt reproduced known unrelated repository failures; its one package-caused characterization drift was repaired and the final 1,072-test scoped gate is green. The broad suite is not the repository's accepted universal gate.
 
-The direct travel correction is required: current source maps a genuine Starfall creator to `location.ashen_reef`, so granting the missing access changes rejection from `destination_not_known` to `already_at_destination`. Site-aware resolution closes that deadlock without renaming unrelated compatibility destination keys.
+## D. Failure-Pattern Evidence
 
-The schema correction is also required. Production progression begins at level 0; no tick-to-hour mapping, deadline, office entity id, or numeric reward authority exists. Explicit null fields preserve that deliberate absence without fabricating zeros or Brineharbor values.
+- `FP-001`, `FP-002`, `FP-017`: the tracked representative test uses the real production creator, new-campaign attempt, version-7 publication/load, commands, campaign admission, travel, real survey caller, restarts, and durable duplicate; it imports no `demoSnapshot` and injects no eligibility state.
+- `FP-005`: retained new-campaign and survey request identities survive caller loss, publication failure, mid-loop restart, final restart, empty caches, and exact redelivery without replay or rollback.
+- `FP-008`: all Connector/branch artifacts remained read-only evidence; none was merged or treated as current source authority.
+- `FP-009`: inspected base `f68242f...`, Connector correction `b54ea65...`, implementation `3ca23d6...`, coordination, pushed, tracking, and hosted identities are recorded separately.
+- `FP-011`: offer/access provenance is established before mutation; representative publications pass the current session control at every post-admission boundary.
+- `FP-012`: canonical serialization and semantic validation admit only survey-content v1/v2, derive exact versioned result/receipt/projection facts, and reject forged live Codex presentation.
+- `FP-013`: campaign-persistence and survey-persistence regressions preserve the nested authority through same-command and later Normal defeat/recovery paths.
+- `FP-014`: authored definition, journal offer, acceptance access, compatibility travel identity, Geographic Knowledge, discovery, Codex, and presentation remain distinct owners.
+- No new generalized failure-pattern entry was needed. The adversarial review identified instances already covered by the existing atomicity, deep-validation, and real-caller patterns.
 
-The selected package is correctly classified as current-band primary `0.6.11`. It materially adds ordinary reachability and representative integration evidence, is not a parent repair/audit, and does not make `0.7.0` ready. The installed implementation prompt requires a separate `0.6.11.1` acceptance audit.
+## E. Branch And PR Lifecycle
 
-## C. Tests And Checks Run
+Fresh orientation fetched/pruned and inspected one local branch, 37 non-default remote branches, and exactly two open pull requests. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
 
-- fetched/pruned and verified clean synchronized `master == origin/master` at `31f5b851fd0adfe878d7e8e0496d7070b6daac96`;
-- inspected the complete authored preparation diff from `cf53772af2c97223bbd1ffa513472d1fee02d662` through the starting head and confirmed it changes exactly four documentation files;
-- reverified the production creator/new-campaign publication, quest acceptance/tracking, known-location/travel, arrival hook, survey owner, persistence, duplicate, correction/repair, and presentation call paths;
-- primary schema-file plus quest-objective/action-tree baseline passed `147/147`;
-- primary quest acceptance/tracking, travel, survey characterization/command/persistence, skill-gating, campaign-persistence, and save/load grouping passed `109/109`;
-- primary normal content lint passed with `71` files checked;
-- independently bounded quest schema/objective evidence passed `147/147` and normal content lint passed with `71` files checked;
-- independently bounded quest acceptance/tracking evidence passed `16/16`;
-- independently bounded acceptance/tracking/travel/survey evidence passed `65/65` and reproduced the Starfall origin deadlock;
-- fresh branch/PR inventory inspected one local branch, 37 non-default remote branches, and exactly two open PRs;
-- PR #2 and PR #3 hosted status/head posture was reverified through the authenticated GitHub surface;
-- exact survey evidence refs and protected readiness ref were reverified unchanged;
-- final documentation link/routing checks, focused baseline tests, `git diff --check`, hosted prompt/output/handoff retrieval, post-push fetch, and clean synchronization are reported in the completion response.
+The four exact survey Connector refs remain `CANDIDATE_INTEGRATION`, integrated-gameplay readiness remains `PROTECTED_REFERENCE`, and the administration evidence ref remains `HOLD_NAMED_CONSUMER`. No branch integration, rebase, force update, deletion, PR closure, or disposition change was due. Reinspect at `0.6.11.1` orientation or on an earlier explicit lifecycle trigger.
 
-The repository has no `.github/workflows` directory, so no hosted workflow run is expected for this docs-only decision.
+## F. Risks And Follow-Up
 
-## D. Risks / Follow-Up Notes
+- This implementation is evidence, not acceptance. Only the installed production-read-only `0.6.11.1` audit may accept parent `0.6.11` or change the representative classification.
+- Survey turn-in/reward execution remains deliberately excluded, including its older compatibility behavior and balance facts.
+- The known 137-diagnostic TypeScript baseline and Vite chunk-size advisory remain separate repository debt.
+- `0.7.0` remains `NOT_READY` even if `0.6.11.1` accepts representative evidence; a later explicit docs-first band-entry decision is still required.
 
-Applicable failure-pattern evidence:
+Suggested implementation commit message: `feat(survey): make Ashen Reef ordinarily reachable`
 
-- `FP-001`: traced the real creator, acceptance, campaign admission, travel, survey caller, publication, and restart seams;
-- `FP-002`: treated fixture tests as downstream evidence only and required a new injection-free integration test;
-- `FP-005`: preserved retained new-campaign attempt identity and survey request duplicate semantics;
-- `FP-008`: all Connector, candidate, superseded, and protected refs remained evidence only;
-- `FP-009`: kept inspected base, starting head, decision commit, pushed head, and hosted verification distinct;
-- `FP-011`: fixed offer provenance at initial retained campaign creation and access provenance at accepted quest occurrence before mutation;
-- `FP-012`: required exact nullable schema semantics and versioned retained survey validation;
-- `FP-013`: retained nested survey authority and defeat/recovery preservation remain mandatory implementation evidence;
-- `FP-014`: kept authored definition, journal row, known location, settlement identity, Knowledge/map state, and presentation non-equivalent;
-- `FP-017`: explicitly forbade direct eligibility/authority insertion in representative evidence.
+Suggested coordination commit message: `docs: route Ashen Reef reachability to audit`
 
-No new generalized failure-pattern entry is required.
-
-Primary implementation risks are version-1 survey string compatibility, atomic access failure handling, and the Starfall settlement/anchorage distinction. The installed prompt requires exact v1/v2/mixed-version publication/restart tests, acceptance/access conflict tests, and Normal recovery coverage.
-
-Turn-in/rewards, payout values, Geographic Knowledge/map/fog/recognition, generic offer/access infrastructure, unrelated travel-key cleanup, survey balance/receipt ownership, and `0.7.0` remain excluded.
-
-Branch/PR review: PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey refs remain `CANDIDATE_INTEGRATION` for broader named consumers; integrated-gameplay readiness remains `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`. No disposition changed and no branch/PR action was due.
-
-Suggested commit message: `docs(survey): authorize ordinary reachability package`
-
-Next recommended run: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
+Next recommended run: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`

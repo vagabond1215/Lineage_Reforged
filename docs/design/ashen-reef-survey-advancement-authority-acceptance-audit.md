@@ -227,3 +227,15 @@ Accepted authored canon closed the missing offer/access facts. The subsequent im
 The package does not reopen parent `0.6.10`. It adds only the upstream authored definition, new-campaign offer admission, accepted-quest access admission, direct Starfall/Ashen origin correction, canonical presentation with retained version-1 compatibility, and an injection-free creator-to-final-restart test. All four survey shifts, result/receipt identities, duplicate behavior, correction/repair, accepted-only caller application, persistence, defeat/recovery preservation, and nine non-proposals remain parent authority.
 
 Parent `0.6.10` stays accepted. Representative-loop evidence remains incomplete until `0.6.11` is implemented and a separate production-read-only `0.6.11.1` audit accepts it. `0.7.0` remains `NOT_READY`.
+
+## 14. Version 0.6.11 Ordinary Reachability Implementation Posture Appendix
+
+Date: 2026-08-26
+
+Implementation commit: `3ca23d6864541a899ea61a6bf26257665f754e78`
+
+Disposition: `IMPLEMENTED_PENDING_PARENT_AUDIT`
+
+`0.6.11` has implemented the bounded upstream reachability owners and the injection-free representative production path while preserving accepted parent `0.6.10` authority. The final scoped matrix passed `1072/1072`, the adversarial probe passed `24/24`, normal content lint passed for 71 files, the 219-module production build passed, and bounded TypeScript retained the exact 137-diagnostic baseline.
+
+This appendix does not reopen or re-accept parent `0.6.10`, and it does not self-accept representative evidence. Run production-read-only `Version 0.6.11.1` next. `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` remains controlling until that audit, survey turn-in/rewards remain excluded, and `0.7.0` remains `NOT_READY`.

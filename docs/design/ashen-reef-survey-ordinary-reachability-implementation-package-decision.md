@@ -385,3 +385,21 @@ Execute only:
 `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
 
 After implementation, install a separate production-read-only `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`. The implementation run may report `IMPLEMENTED_PENDING_PARENT_AUDIT`; it may not self-accept representative-loop evidence or advance `0.7.0`.
+
+## 15. Version 0.6.11 Implementation Appendix
+
+Date: 2026-08-26
+
+Synchronized implementation starting head: `f68242fae03b22001a73e3a440ccdbf830347aba`
+
+Connector-evidence correction commit: `b54ea65b6fddf029f4fb12ea82c5cdc9f8c1e62a`
+
+Implementation commit: `3ca23d6864541a899ea61a6bf26257665f754e78`
+
+Disposition: `IMPLEMENTED_PENDING_PARENT_AUDIT`
+
+The bounded package is implemented. Production now owns the exact Starfall Soundings quest definition, initial new-campaign offer staging, atomic accepted-quest Ashen Reef access admission, site-aware direct Starfall/Ashen travel, versioned canonical survey presentation with retained version-1 compatibility, and an injection-free creator-through-final-restart representative path. The implementation preserves the accepted four-shift survey authority, exact result and receipt identities, duplicate/retry behavior, correction/repair seams, accepted-only caller application, persistence, defeat/recovery preservation, and every named non-proposal.
+
+The final scoped matrix passed `1072/1072`, the final adversarial probe passed `24/24`, normal content lint passed for 71 files, the production Vite build completed for 219 modules, and bounded TypeScript retained the exact 137-diagnostic baseline with no new diagnostic tuple. `git diff --check` passed apart from repository line-ending warnings.
+
+Run only `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit` next. This appendix is implementation evidence, not independent acceptance. `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` remains controlling until that audit, survey turn-in/rewards remain excluded, and `0.7.0` remains `NOT_READY`.

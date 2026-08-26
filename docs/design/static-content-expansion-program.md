@@ -1,8 +1,8 @@
 # Static Content Expansion Program
 
-Date: 2026-08-20
+Date: 2026-08-26
 Program versions: `0.6.4`-`0.6.8`
-Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted through `0.6.10.5`; Soundings canon accepted; ordinary-reachability package `0.6.11` active
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted through `0.6.10.5`; Soundings canon accepted; ordinary-reachability `0.6.11` implemented pending active audit `0.6.11.1`
 
 ## 1. Purpose
 
@@ -181,7 +181,8 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned decision | Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision | Complete with `NO_PACKAGE`; downstream seams are reusable, but exact offer/journal-admission and access canon are absent. |
 | unversioned decision | Ashen Reef Soundings Authored-Canon Decision | Complete with `AUTHORED_INPUT_ACCEPTED`; no static content changed. |
 | unversioned decision | Ashen Reef Survey Ordinary Reachability Implementation Package Decision | Complete with `PACKAGE_READY`; selected bounded primary `0.6.11`. |
-| `0.6.11` | Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence | Active primary; includes one exact authored quest definition plus bounded reachability owners/evidence without reopening the broader static program. |
+| `0.6.11` | Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence | Implemented at `3ca23d6864541a899ea61a6bf26257665f754e78`, pending parent audit; added one exact authored quest definition plus bounded reachability owners/evidence without reopening the broader static program. |
+| `0.6.11.1` | Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit | Active production-read-only support audit; independently decides parent and representative-loop acceptance. |
 
 ## 13. Cross-Content Audit Criteria
 
@@ -193,4 +194,4 @@ Later owner-specific prompts may address inventory/storage, crafting execution, 
 
 ## 15. Runtime Resumption
 
-Run only `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`. It may add the one accepted Soundings definition and its narrowly required quest-definition schema/type posture, but it must not reopen broader static expansion. Do not broaden into survey turn-in/rewards, geographic Knowledge implementation, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7`.
+Run only production-read-only `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`. It must not modify production or reopen broader static expansion. Do not broaden into survey turn-in/rewards, geographic Knowledge implementation, broad Stakes modes, checkpoint/death, cloud synchronization, mutable health, or unrelated UI/runtime work. Static-content expansion remains complete through accepted `0.6.7`.

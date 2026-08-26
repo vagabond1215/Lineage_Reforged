@@ -164,3 +164,15 @@ The later accepted `docs/design/ashen-reef-soundings-authored-canon-decision.md`
 The follow-up implementation-package decision inspected clean synchronized `31f5b851fd0adfe878d7e8e0496d7070b6daac96` and returned `PACKAGE_READY`. It proved a bounded package using a nullable/deferred authored quest record, initial new-campaign offer admission, accepted-quest access admission, direct Starfall/Ashen origin correction, versioned presentation compatibility, and the held injection-free evidence contract.
 
 The active route is now `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`. `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` remains the controlling classification until implementation and independent `0.6.11.1` acceptance. Turn-in/rewards and `0.7.0` remain excluded.
+
+## 10. Held Representative Contract Implementation Appendix
+
+Date: 2026-08-26
+
+Implementation commit: `3ca23d6864541a899ea61a6bf26257665f754e78`
+
+Disposition: `IMPLEMENTED_PENDING_PARENT_AUDIT`
+
+The original `NO_PACKAGE` remains historically correct at its inspected source. Accepted authored canon and the later package decision closed its upstream blocker, and `0.6.11` has now implemented the bounded production route: new-campaign offer staging, journal acceptance, atomic Ashen access admission, site-aware travel, travel-owned survey activation, four accepted survey shifts, authoritative publication, and final restart without test-side eligibility injection.
+
+This appendix does not independently accept the representative loop. Run production-read-only `Version 0.6.11.1` next. Until it accepts the package, `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` and `0.7.0` `NOT_READY` remain controlling; turn-in/rewards and the original exclusions remain outside scope.
