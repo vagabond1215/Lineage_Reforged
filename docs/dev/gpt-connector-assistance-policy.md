@@ -2,13 +2,17 @@
 
 Date: 2026-07-29
 
+Updated: 2026-08-26
+
 Status: durable repository workflow instruction; applies to ChatGPT via GitHub Connector work unless a more specific current prompt or explicit user instruction narrows it
 
 ## 1. Purpose
 
 ChatGPT should act as an active repository collaborator rather than only a passive reviewer or prompt writer. It should continually look for work that can be completed safely through the GitHub Connector to reduce avoidable Codex workload, improve future Codex readiness, preserve repository clarity, and surface decisions that need user direction.
 
-The objective is not to maximize the number of connector commits. The objective is to perform the smallest useful work on the least expensive safe execution surface while preserving owner boundaries, current routing, validation discipline, user control over product direction, and complete branch lifecycle handling.
+The objective is not to maximize the number of connector commits. The objective is to perform the smallest useful work on the least expensive safe execution surface while preserving owner boundaries, current routing, validation discipline, user control over product direction, resource constraints, and complete branch lifecycle handling.
+
+`docs/dev/codex-resource-budget-and-execution-slicing-policy.md` controls Connector-first preparation, Codex package sizing, checkpoint expectations, and interruption/resume posture when constrained repository-capable/high-reasoning resources are known.
 
 ## 2. Proactive Assistance Requirement
 
@@ -19,12 +23,15 @@ During repository inspections, handoffs, roadmap discussions, and Codex coordina
 3. fully parallel read-only or documentation-only audits that do not overlap the active Codex edit surface;
 4. narrow repository-maintenance work such as stale-pointer correction, supersession classification, retention inventories, branch disposition, and focused documentation cleanup;
 5. tiny, obvious, low-risk bug fixes or metadata corrections that can be proven from repository evidence and do not require local execution to validate safely;
-6. prompt hardening, handoff clarification, acceptance criteria, changed-path locks, and test-plan preparation;
+6. prompt hardening, handoff clarification, acceptance criteria, changed-path locks, test-plan preparation, and exact-head orientation packets;
 7. issue, pull-request, branch, artifact, or historical-document disposition audits;
 8. user-context collection when a product, design, canon, UX, balance, or sequencing decision would materially benefit from explicit direction;
-9. other bounded connector work that safely removes clerical, inspection, packaging, documentation, or branch-triage burden from Codex.
+9. package-size classification and decomposition planning before constrained Codex work;
+10. other bounded connector work that safely removes clerical, inspection, packaging, documentation, or branch-triage burden from Codex.
 
 ChatGPT should not wait for the user to name every useful pass. It should notice safe opportunities, explain the value and conflict posture, and proceed when the user has authorized that class of work or when the task is an obvious part of the requested repository maintenance.
+
+When the user has explicitly prioritized conserving a constrained Codex/GPT Work/high-reasoning pool, more Connector/chat back-and-forth is acceptable when it materially reduces Codex rediscovery or package size.
 
 ## 3. Least-Powerful-Safe-Tool Rule
 
@@ -39,19 +46,21 @@ Prefer ChatGPT via GitHub Connector for:
 - one-file or similarly tiny corrections with clear repository-local proof;
 - parallel evidence passes;
 - retention, supersession, and disposition inventories;
-- preparing acceptance matrices, changed-path lists, validation requirements, and branch integration recommendations for Codex.
+- exact-head orientation packets and delta maps;
+- preparing acceptance matrices, changed-path lists, validation requirements, expected invariants, and branch integration recommendations for Codex.
 
 Reserve Codex for work that materially benefits from or requires:
 
 - a local working tree;
 - executing tests, linters, builds, scripts, or generated-output checks;
-- broad or coupled multi-file implementation;
+- broad or coupled multi-file implementation after safe decomposition has been considered;
 - source/runtime/schema/content changes whose correctness depends on execution;
 - migrations, dependency changes, generated files, or substantial refactors;
 - iterative edit-test-debug loops;
-- branch rebases, semantic conflict resolution, integration validation, or cleanup that cannot be resolved safely from remote repository evidence alone.
+- branch rebases, semantic conflict resolution, integration validation, or cleanup that cannot be resolved safely from remote repository evidence alone;
+- independent acceptance evidence that must be reproduced locally rather than inferred from Connector inspection.
 
-Do not route work to Codex merely because Codex could do it. Route it to Codex when local execution, implementation breadth, branch operations, or risk makes Codex the appropriate owner.
+Do not route work to Codex merely because Codex could do it. Route it to Codex when local execution, implementation breadth, branch operations, independence, or risk makes Codex the appropriate owner.
 
 ## 4. Parallel Connector Passes
 
@@ -59,19 +68,21 @@ When Codex is working, ChatGPT should look for passes that can run independently
 
 A parallel pass should normally:
 
-- use its own branch;
+- use its own branch when overlap or synchronization risk exists;
 - create or update only a narrowly named document or tiny isolated file set;
 - avoid files the active Codex prompt may edit;
 - avoid current prompt, output, handoff, roadmap, sequence, planning-anchor, and backlog files unless the parallel task explicitly owns coordination maintenance;
 - avoid implementation files unless the user explicitly authorizes a tiny proven fix;
 - state its source commit;
 - state that it does not advance the active route or version;
-- preserve isolated and noncontrolling branches;
+- preserve isolated and noncontrolling branches when a branch is used;
 - be compared against its source commit before completion;
-- be entered in `docs/dev/branch-disposition-register.md` with a current disposition and review trigger;
+- be entered in `docs/dev/branch-disposition-register.md` when it creates a retained non-default branch;
 - remain unmerged until the active Codex result is inspected when overlap risk exists.
 
-Useful parallel passes include UI ownership audits, engine mutation source maps, content-coverage audits, schema-readiness audits, PR disposition reviews, temporary-artifact inventories, test-gap audits, and future-package evidence matrices.
+When the user has explicitly authorized direct-to-`master` connector-safe documentation maintenance and no active Codex run owns the same files, a tiny complete-file documentation pass may use the current direct-to-`master` workflow rather than creating branch churn. Reinspect the live head immediately before every write.
+
+Useful parallel passes include UI ownership audits, engine mutation source maps, content-coverage audits, schema-readiness audits, PR disposition reviews, temporary-artifact inventories, test-gap audits, future-package evidence matrices, and acceptance-audit preflight packets.
 
 Do not create parallel work merely to appear productive. Each pass must answer a real repository question, reduce future effort, expose a blocker, or improve execution safety.
 
@@ -95,22 +106,28 @@ ChatGPT may directly merge, close, or delete only when the user has authorized t
 
 Connector-created documentation branches should normally be reviewed for integration at the next route checkpoint relevant to their contents or during a dedicated documentation integration pass. They should not be retained indefinitely merely because they are low risk.
 
-## 6. Aid To Active Codex Work
+## 6. Aid To Active Or Upcoming Codex Work
 
 Before or during a Codex run, ChatGPT should consider preparing:
 
 - exact live-file inventories;
+- exact source head and complete recent-commit delta;
 - owner and dependency matrices;
+- production caller maps;
 - changed-path allowlists and protected-path lists;
 - known baseline failures and non-gates;
 - focused validation commands;
-- expected record counts, IDs, and distributions;
+- expected record counts, IDs, distributions, ordering, versions, and compatibility facts;
 - stale or superseded authority warnings;
 - likely merge-conflict areas;
-- acceptance-audit checklists;
+- acceptance-audit checklists and independent-probe plans;
 - source citations and prior-decision reconciliations;
 - branch and PR inventories with proposed dispositions;
-- user decisions that should be obtained before implementation begins.
+- user decisions that should be obtained before implementation begins;
+- Codex package size (`XS`/`S`/`M`/`L`/`XL`) and the expected first durable checkpoint;
+- an exact statement of what Codex must reverify locally versus what should not be broadly rediscovered.
+
+When enough of those elements are useful, package them as a focused Connector orientation/evidence packet with an exact source commit. Such a packet may satisfy the broad read-only orientation portion allowed by `docs/dev/repository-first-agent-work-protocol.md`, but it never supplies implementation or acceptance authority by itself.
 
 This preparation should reduce Codex inspection and clerical work without predetermining implementation conclusions that require local evidence.
 
@@ -147,7 +164,8 @@ It should look for:
 - incomplete handoff constraints;
 - prompt omissions that could cause scope drift;
 - historical documents that need classification rather than deletion;
-- branches and PRs whose dispositions are stale or incomplete.
+- branches and PRs whose dispositions are stale or incomplete;
+- oversized future Codex prompts that should be decomposed before execution.
 
 Do not rewrite large documents from partial fetches. Do not delete source or research artifacts until every retention and consumer condition is proven. Prefer small complete-file edits, new focused audits, or explicit cleanup proposals.
 
@@ -170,7 +188,7 @@ Ask for context early enough to influence planning, not after Codex has implemen
 
 When a route is technically ready but product direction is genuinely ambiguous, pause implementation authorization and obtain the smallest useful user decision.
 
-## 10. Codex Work-Minimization Standard
+## 10. Codex Work-Minimization And Resource Standard
 
 ChatGPT should minimize Codex work that has no significant reason to be performed by Codex.
 
@@ -183,9 +201,12 @@ In practice:
 - acceptance criteria should be explicit enough that Codex can implement and validate without repeatedly resolving old planning ambiguity;
 - user context should be collected before it becomes an implementation blocker;
 - branch integration guidance should identify exact commits, paths, validation, and deletion conditions;
-- work should not be duplicated across ChatGPT and Codex without a clear independent-verification purpose.
+- work should not be duplicated across ChatGPT and Codex without a clear independent-verification purpose;
+- when a constrained high-reasoning window is known, `M` work should normally be split and `L`/`XL` work must be decomposed before execution unless atomicity or explicit user approval justifies otherwise;
+- if the strongest/highest-cost reasoning tier is genuinely necessary, narrow the slice further rather than assigning more discovery to it;
+- if a rate-limited run ends with a clean worktree and loses its orientation context, return to Connector preparation/decomposition rather than automatically repeating the same broad inspection.
 
-Independent acceptance audits remain valuable and are not considered wasteful duplication when they verify a parent package against explicit criteria.
+Independent acceptance audits remain valuable and are not considered wasteful duplication when they verify a parent package against explicit criteria. Connector preparation for an acceptance audit should reduce clerical discovery, not prejudge its final result.
 
 ## 11. Safety And Authority Boundaries
 
@@ -203,7 +224,8 @@ ChatGPT must still:
 - avoid modifying protected branches unless expressly assigned;
 - avoid merging or promoting parallel evidence automatically without the branch-policy review;
 - keep player-facing language, uncertainty, provenance, and setting constraints intact;
-- disclose conflicts, incomplete evidence, and validation limits.
+- disclose conflicts, incomplete evidence, and validation limits;
+- preserve independent acceptance authority even when preparing detailed acceptance packets.
 
 When a potentially useful connector task conflicts with the active route, defer it or isolate it rather than silently competing with Codex.
 
@@ -212,15 +234,18 @@ When a potentially useful connector task conflicts with the active route, defer 
 For connector work, report:
 
 - source commit;
-- branch and commit created;
+- branch and commit created, or direct-to-`master` documentation commit when authorized;
 - exact files changed;
 - evidence inspected;
 - scope and authority classification;
 - validation actually performed;
 - unresolved risks;
 - merge or rebase posture;
-- branch/PR disposition and retirement trigger;
+- branch/PR disposition and retirement trigger when relevant;
 - whether user input is still needed;
+- package-size/checkpoint recommendation for the next Codex work when resource slicing applies;
 - exact next Codex or connector action, when one is justified.
 
 After completing a repository task, ChatGPT should briefly reassess whether another safe connector pass can materially help the same development objective. It should continue only when authorized and useful, not indefinitely expand scope.
+
+Under an explicitly authorized Connector-first period, continue bounded useful passes until the next material action requires local execution, product direction, or independent acceptance; stop when further Connector work would only duplicate existing evidence without reducing risk or Codex scope.
