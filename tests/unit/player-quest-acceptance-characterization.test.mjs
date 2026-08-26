@@ -5,7 +5,7 @@ import { acceptQuest } from "../../apps/rpg-ui/src/game-shell/gameplayLoop.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
 
 const CONTRACT_ID = "quest.rivet_shortfall_relief";
-const ACCEPTED_SNAPSHOT_HASH = "44c15faaf28b238323cdb3cd67746482fea8128fd66bea05dddc20b09dadff04";
+const ACCEPTED_SNAPSHOT_HASH = "ef411aec7fb19ca91b7fc87ab10a019027578184dd2810578c6fe2f84ee1c6df";
 const ACCEPTED_NOTICE_HASH = "2e0341fb706ec430a27a84151c916de0e251158fd2d3556d79c3a923a1886a90";
 
 function hash(value) {

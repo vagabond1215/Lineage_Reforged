@@ -1299,7 +1299,7 @@ export interface AshenReefSurveyMaterialVersionsState {
   statGrowth: number;
   skillPolicy: 1;
   synchronization: 1;
-  surveyContent: 1;
+  surveyContent: 1 | 2;
 }
 
 export interface AshenReefSurveyMaterialFactsState {

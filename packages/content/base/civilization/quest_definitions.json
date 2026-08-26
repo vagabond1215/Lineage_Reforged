@@ -2054,6 +2054,168 @@
           }
         ]
       }
+    },
+    {
+      "id": "quest_definition.starfall_ashen_reef_soundings",
+      "slug": "starfall_ashen_reef_soundings",
+      "name": "Soundings of Ashen Reef",
+      "category": "survey",
+      "summary": "After a major seasonal storm, Starfall Harbormaster's Office commissions fresh soundings of Ashen Reef's channels, breakers, draft-safe approaches, and ruin markers before fishing and commercial traffic intensify.",
+      "giver": {
+        "type": "government",
+        "entityId": null,
+        "displayName": "Starfall Harbormaster's Office",
+        "contactName": "Duty Harbormaster",
+        "settlementId": "settlement.starfall_port"
+      },
+      "requirements": {
+        "levelMin": 0,
+        "classTagsAny": [],
+        "requiredSkills": [],
+        "requiredAbilities": [],
+        "requiredSpells": [],
+        "requiredTraits": [],
+        "requiredItems": [],
+        "standingRequirements": [],
+        "notes": [
+          "The civic contract is ordinarily available without a level, class, skill, magic, item, or standing gate.",
+          "Navigation, seamanship, equipment, health, fatigue, and party support describe suitability rather than admission requirements."
+        ]
+      },
+      "scheduling": {
+        "expectedDurationHours": null,
+        "dueWithinHours": null,
+        "planningWindowHours": null,
+        "repeatable": false,
+        "timeSensitivity": "post_storm_non_expiring"
+      },
+      "classification": {
+        "rank": "rank.d",
+        "expectedRisk": "risk.moderate",
+        "legalExposure": "sanctioned",
+        "combatIntensity": "none",
+        "failureProfile": "The field packet remains incomplete until all three survey sectors and the known ruin markers are verified."
+      },
+      "deployment": {
+        "minPartySize": 1,
+        "recommendedPartySize": 1,
+        "maxPartySize": 1,
+        "soloAllowed": true,
+        "roleSlots": [],
+        "partySizeRules": []
+      },
+      "logistics": {
+        "requiredTools": [],
+        "recommendedTools": [],
+        "requiredEquipmentTags": [],
+        "recommendedSpells": [],
+        "consumedItems": []
+      },
+      "rewards": {
+        "coinBase": null,
+        "coinBonusOnPerfect": null,
+        "standingBase": null,
+        "itemRewards": [],
+        "unlocks": [],
+        "reputationAwards": []
+      },
+      "miscNotes": [
+        "This is a paid civic contract, but exact turn-in payment and all other consequences remain deliberately deferred.",
+        "Old charts, departure instructions, authorization, and arranged anchorage access are supplied on acceptance as narrative source facts, not inventory grants.",
+        "Stormglass Bloom is an incidental discovery during the final inspection, not an authored objective."
+      ],
+      "actionTree": {
+        "entryNodeId": "record_inshore_approach",
+        "completionNodeIds": [
+          "verify_ruin_markers"
+        ],
+        "nodes": [
+          {
+            "id": "record_inshore_approach",
+            "label": "Inshore Approach",
+            "phase": "execution",
+            "summary": "Record the common approach from the Starfall side: soundings, breakers, shore bearings, and a usable draft-safe line.",
+            "estimatedHours": null,
+            "assignedRoles": [],
+            "participantRange": {
+              "min": 1,
+              "max": 1
+            },
+            "checks": [],
+            "branches": {
+              "success": {
+                "nextNodeId": "survey_working_reef",
+                "questState": "advance",
+                "summary": "The inshore approach is recorded for the field packet.",
+                "effects": []
+              }
+            }
+          },
+          {
+            "id": "survey_working_reef",
+            "label": "Working Reef",
+            "phase": "execution",
+            "summary": "Survey the shallows most relevant to fishing and local craft: shelves, breakers, old markers, anchorable water, and dangerous crossings.",
+            "estimatedHours": null,
+            "assignedRoles": [],
+            "participantRange": {
+              "min": 1,
+              "max": 1
+            },
+            "checks": [],
+            "branches": {
+              "success": {
+                "nextNodeId": "survey_outer_passage",
+                "questState": "advance",
+                "summary": "The working reef soundings are recorded for the field packet.",
+                "effects": []
+              }
+            }
+          },
+          {
+            "id": "survey_outer_passage",
+            "label": "Outer Passage",
+            "phase": "execution",
+            "summary": "Survey the exposed approach used by larger fishing craft, merchant tenders, patrols, and traffic forced wide by wind.",
+            "estimatedHours": null,
+            "assignedRoles": [],
+            "participantRange": {
+              "min": 1,
+              "max": 1
+            },
+            "checks": [],
+            "branches": {
+              "success": {
+                "nextNodeId": "verify_ruin_markers",
+                "questState": "advance",
+                "summary": "The outer passage is recorded for the field packet.",
+                "effects": []
+              }
+            }
+          },
+          {
+            "id": "verify_ruin_markers",
+            "label": "Ruin Markers",
+            "phase": "resolution",
+            "summary": "Verify the known visible and submerged ruins used as navigation bearings and hazards, leaving the completed field packet ready for later turn-in.",
+            "estimatedHours": null,
+            "assignedRoles": [],
+            "participantRange": {
+              "min": 1,
+              "max": 1
+            },
+            "checks": [],
+            "branches": {
+              "success": {
+                "nextNodeId": null,
+                "questState": "complete",
+                "summary": "All three survey sectors and the ruin markers are verified in the field packet.",
+                "effects": []
+              }
+            }
+          }
+        ]
+      }
     }
   ]
 }

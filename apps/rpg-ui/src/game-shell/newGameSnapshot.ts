@@ -29,6 +29,9 @@ import {
   initializeTargetCampaignSnapshot
 } from '../../../../packages/engines/game-engine/src/campaign-rules.js';
 import {
+  stageAshenReefSurveyOffer
+} from '../../../../packages/engines/game-engine/src/ashen-reef-survey-offer-staging.js';
+import {
   createDefaultCharacterAchievementsState
 } from '../../../../packages/engines/game-engine/src/account-achievement-state.js';
 import {
@@ -1089,8 +1092,12 @@ export function createNewGameSnapshot(
       source: 'new_campaign'
     }
   );
+  const stagedOffer = stageAshenReefSurveyOffer(targetSnapshot);
+  if (!stagedOffer.accepted) {
+    throw new Error(stagedOffer.reason);
+  }
 
   return {
-    ...targetSnapshot
+    ...stagedOffer.snapshot
   };
 }

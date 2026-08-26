@@ -7,7 +7,7 @@ import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
 const RECORD_ID = "job.harbor_surveyor";
 const MISSING_ID = "activity.missing";
 
-const SELECTED_SNAPSHOT_HASH = "1f2f5178d3ac4d9c592184f714bdec5c71f421012608b6850d548ed300e5fc40";
+const SELECTED_SNAPSHOT_HASH = "7dfaac848258b810a7ffe4cb5d6df26aea4a84440aef3e92105fb2ca269db55e";
 const SELECTED_NOTICE_HASH = "ca04212b7f64e83b8462653ab090144b4710a6e98b7ae64aa68f6846b04415ee";
 const MISSING_NOTICE_HASH = "31bafd513a34fce0bceb4c7c3b779e89da098cdb1b18b1e669b078ae4d13ed77";
 

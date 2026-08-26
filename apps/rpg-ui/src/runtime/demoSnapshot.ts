@@ -605,14 +605,13 @@ export const demoSnapshot: SaveSnapshot = {
       },
       {
         id: 'location.ashen_reef',
-        name: 'Starfall Port',
+        name: 'Ashen Reef',
         regionLabel: 'Starfall Isle',
-        settlementId: 'settlement.starfall_port',
         regionId: 'region.starfall_isle',
         type: 'ruin',
         x: 68,
         y: 58,
-        note: 'Survey target with volatile weather and ruins.',
+        note: 'Survey anchorage and reef approach authorized for Soundings of Ashen Reef.',
         known: true
       },
       {
@@ -844,15 +843,15 @@ export const demoSnapshot: SaveSnapshot = {
       {
         id: 'contract.ashen_reef',
         sectionId: 'contracts',
-        title: 'Ashen Reef Survey',
-        subtitle: 'Harbor Office contract',
-        meta: 'Reward 580 crown',
+        title: 'Soundings of Ashen Reef',
+        subtitle: "Starfall Harbormaster's Office",
+        meta: 'Paid civic contract',
         status: 'Tracked',
-        summary: 'Survey the reef lanes, confirm ruin coordinates, and assess safe vessel draft.',
-        tags: ['Exploration', 'Naval'],
+        summary: 'Re-sound channels, breakers, draft-safe approaches, and ruin markers after the seasonal storm.',
+        tags: ['Survey', 'Starfall Isle', 'Civic'],
         detailEntries: [
-          { label: 'Pay', value: '580 crown + salvage rights' },
-          { label: 'Duration', value: '3 days' },
+          { label: 'Pay', value: 'Terms set at later turn-in' },
+          { label: 'Deadline', value: 'No authored expiry' },
           { label: 'Deliverable', value: 'Verified chart packet' }
         ]
       },
@@ -1045,20 +1044,22 @@ export const demoSnapshot: SaveSnapshot = {
       {
         id: 'quest.ashen_reef_survey',
         category: 'active',
-        title: 'Ashen Reef Survey',
-        regionLabel: 'Glasswater',
-        rewardLabel: '580 crown + salvage rights',
-        summary: 'Survey the reef lanes, confirm ruin coordinates, and file a safe-draft chart.',
+        title: 'Soundings of Ashen Reef',
+        regionLabel: 'Starfall Isle',
+        rewardLabel: 'Paid civic contract - terms set at later turn-in',
+        summary: "After a major seasonal storm, Starfall Harbormaster's Office commissions fresh soundings of Ashen Reef's channels, breakers, draft-safe approaches, and ruin markers before fishing and commercial traffic intensify.",
         statusLabel: 'Tracked',
         tracked: true,
         objectives: [
-          'Survey reef lanes: 0 / 3 sectors complete',
-          'Confirm ruin markers: pending',
-          'Return chart packet to Saltmere Harbor Office'
+          'Record the Inshore Approach soundings: pending',
+          'Survey the Working Reef: pending',
+          'Survey the Outer Passage: pending',
+          'Verify the Ruin Markers: pending',
+          "Return chart packet to Starfall Harbormaster's Office"
         ],
-        rewards: ['580 crown', 'Registered salvage rights'],
-        relatedLocations: ['Saltmere', 'Ashen Reef'],
-        tags: ['Exploration', 'Naval']
+        rewards: ['Paid civic contract; exact turn-in terms remain deferred.'],
+        relatedLocations: ['settlement.starfall_port', 'location.ashen_reef'],
+        tags: ['Survey', 'Starfall Isle', 'Civic contract']
       },
       {
         id: 'quest.rivet_shortfall_relief',

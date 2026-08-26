@@ -84,6 +84,28 @@ export {
 } from "./normal-defeat.js";
 export { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 export {
+  ASHEN_REEF_SURVEY_DEFINITION_ID,
+  ASHEN_REEF_SURVEY_OFFER,
+  ASHEN_REEF_SURVEY_RUNTIME_QUEST_ID,
+  stageAshenReefSurveyOffer,
+  type AshenReefSurveyOfferStagingCode,
+  type AshenReefSurveyOfferStagingResult
+} from "./ashen-reef-survey-offer-staging.js";
+export {
+  ASHEN_REEF_SURVEY_ACCESS_LOCATION,
+  establishAshenReefSurveyTravelAccess,
+  type AshenReefSurveyTravelAccessFacts,
+  type AshenReefSurveyTravelAccessResult
+} from "./ashen-reef-survey-travel-access.js";
+export {
+  CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION,
+  buildAshenReefSurveyQuestObjectives,
+  getAshenReefSurveyContent,
+  resolveAshenReefSurveyContentVersion,
+  type AshenReefSurveyContentFacts,
+  type AshenReefSurveyContentVersion
+} from "./ashen-reef-survey-content.js";
+export {
   PLAYER_ACTIVITY_SELECTED_EVENT_TYPE,
   createPlayerActivitySelectionCommand,
   executePlayerActivitySelectionCommand,

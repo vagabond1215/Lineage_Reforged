@@ -1,5 +1,6 @@
 import { deserializeSnapshot, serializeSnapshot } from "../../../shared/persistence/src/index.js";
 import type {
+  AshenReefSurveyMaterialVersionsState,
   CodexEntryState,
   PanelRecordState,
   QuestJournalEntryState,
@@ -10,6 +11,11 @@ import {
   syncPlayerBodyState
 } from "../../player-engine/src/index.js";
 import { getCurrentPlayerTravelLocationId } from "./player-travel-rules.js";
+import {
+  buildAshenReefSurveyQuestObjectives,
+  getAshenReefSurveyContent,
+  resolveAshenReefSurveyContentVersion
+} from "./ashen-reef-survey-content.js";
 
 const FLAG_SURVEY_SECTOR_PREFIX = "gameplay.quest.ashen_reef_survey.sector.";
 const FLAG_SURVEY_RUINS_CONFIRMED = "gameplay.quest.ashen_reef_survey.ruins_confirmed";
@@ -54,29 +60,51 @@ function isQuestReadyToTurnIn(snapshot: SaveSnapshot, questId: string): boolean 
   return false;
 }
 
-function syncQuestJournal(snapshot: SaveSnapshot): QuestJournalEntryState[] {
+function syncQuestJournal(
+  snapshot: SaveSnapshot,
+  contentVersion: AshenReefSurveyMaterialVersionsState["surveyContent"]
+): QuestJournalEntryState[] {
   return snapshot.sessionState.questJournal.map((entry) => {
     if (entry.id === "quest.ashen_reef_survey") {
+      const content = getAshenReefSurveyContent(contentVersion);
+      const presentedEntry = {
+        ...entry,
+        title: content.questTitle,
+        regionLabel: content.questRegionLabel,
+        rewardLabel: content.questRewardLabel,
+        summary: content.questSummary,
+        rewards: [...content.questRewards],
+        relatedLocations: [...content.questRelatedLocations],
+        tags: [...content.questTags]
+      };
       const sectorCount = getSurveySectorCount(snapshot);
       const ruinsConfirmed = hasFlag(snapshot, FLAG_SURVEY_RUINS_CONFIRMED);
       const readyToTurnIn = isQuestReadyToTurnIn(snapshot, entry.id);
       const tracked = snapshot.sessionState.trackedQuestId === entry.id;
 
+      if (entry.category === "contracts") {
+        return {
+          ...presentedEntry,
+          tracked,
+          statusLabel: tracked ? "Tracked - Open contract" : "Open contract"
+        };
+      }
+
       if (entry.category === "completed") {
         return {
-          ...entry,
+          ...presentedEntry,
           tracked: false,
           statusLabel: "Turned in",
-          objectives: [
-            "Survey reef lanes: 3 / 3 sectors complete",
-            "Confirm ruin markers: complete",
-            "Return chart packet to Saltmere Harbor Office"
-          ]
+          objectives: buildAshenReefSurveyQuestObjectives(
+            contentVersion,
+            3,
+            true
+          )
         };
       }
 
       return {
-        ...entry,
+        ...presentedEntry,
         tracked,
         statusLabel: tracked
           ? readyToTurnIn
@@ -85,13 +113,12 @@ function syncQuestJournal(snapshot: SaveSnapshot): QuestJournalEntryState[] {
           : readyToTurnIn
             ? "Ready to turn in"
             : "In progress",
-        objectives: [
-          `Survey reef lanes: ${sectorCount} / 3 sectors complete`,
-          `Confirm ruin markers: ${ruinsConfirmed ? "complete" : "pending"}`,
+        objectives: buildAshenReefSurveyQuestObjectives(
+          contentVersion,
+          sectorCount,
+          ruinsConfirmed,
           readyToTurnIn
-            ? "Return chart packet to Saltmere Harbor Office: ready to turn in"
-            : "Return chart packet to Saltmere Harbor Office"
-        ]
+        )
       };
     }
 
@@ -252,7 +279,11 @@ function syncActivityRecords(snapshot: SaveSnapshot): PanelRecordState[] {
   });
 }
 
-function syncCodexEntries(snapshot: SaveSnapshot): CodexEntryState[] {
+function syncCodexEntries(
+  snapshot: SaveSnapshot,
+  contentVersion: AshenReefSurveyMaterialVersionsState["surveyContent"]
+): CodexEntryState[] {
+  const content = getAshenReefSurveyContent(contentVersion);
   return snapshot.sessionState.codexEntries.map((entry) => {
     if (entry.id !== "flora.unknown_bloom" || !hasFlag(snapshot, FLAG_DISCOVERY_STORMGLASS_BLOOM)) {
       return entry;
@@ -264,11 +295,11 @@ function syncCodexEntries(snapshot: SaveSnapshot): CodexEntryState[] {
       subtitle: "Catalogued reef flora",
       status: "Catalogued",
       summary: "A reef-edge bloom whose crystalline petals harden under salt spray and dusk light.",
-      tags: ["Glasswater", "Alchemy", "Flora"],
+      tags: [...content.codexTags],
       habitat: "Salt-lashed reef shelves with intermittent ruin shade",
       uses: "Lamp-glass flux, delicate varnish blends, and survey marking dyes",
       valueDescription: "Moderate value when fresh, high value when preserved for alchemical buyers",
-      regionTags: ["Glasswater", "Sable Coast"],
+      regionTags: [...content.codexRegionTags],
       locked: false
     };
   });
@@ -283,13 +314,28 @@ function syncQuestIds(snapshot: SaveSnapshot) {
     .map((entry) => entry.id);
 }
 
-export function synchronizeGameplaySnapshot(snapshot: SaveSnapshot): SaveSnapshot {
+export function synchronizeGameplaySnapshot(
+  snapshot: SaveSnapshot,
+  options: {
+    ashenReefSurveyContentVersion?: AshenReefSurveyMaterialVersionsState["surveyContent"];
+  } = {}
+): SaveSnapshot {
   const nextSnapshot = cloneSnapshot(snapshot);
+  const surveyContentVersion = resolveAshenReefSurveyContentVersion(
+    nextSnapshot,
+    options.ashenReefSurveyContentVersion
+  );
 
-  nextSnapshot.sessionState.questJournal = syncQuestJournal(nextSnapshot);
+  nextSnapshot.sessionState.questJournal = syncQuestJournal(
+    nextSnapshot,
+    surveyContentVersion
+  );
   nextSnapshot.sessionState.worldRecords = syncWorldRecords(nextSnapshot);
   nextSnapshot.sessionState.activityRecords = syncActivityRecords(nextSnapshot);
-  nextSnapshot.sessionState.codexEntries = syncCodexEntries(nextSnapshot);
+  nextSnapshot.sessionState.codexEntries = syncCodexEntries(
+    nextSnapshot,
+    surveyContentVersion
+  );
   syncQuestIds(nextSnapshot);
   syncPlayerBodyState(
     nextSnapshot.playerState,

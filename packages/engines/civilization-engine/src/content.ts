@@ -192,20 +192,24 @@ export interface QuestDefinitionRecord {
   summary: string;
   giver: {
     type: string;
-    entityId: string;
+    entityId: string | null;
     displayName: string;
     contactName: string;
     settlementId: string;
   };
-  requirements: Record<string, unknown>;
-  scheduling: Record<string, unknown>;
+  requirements: Record<string, unknown> & { levelMin: number };
+  scheduling: Record<string, unknown> & {
+    expectedDurationHours: number | null;
+    dueWithinHours: number | null;
+    planningWindowHours: number | null;
+  };
   classification: Record<string, unknown>;
   deployment: Record<string, unknown>;
   logistics: Record<string, unknown>;
   rewards: {
-    coinBase: number;
-    coinBonusOnPerfect: number;
-    standingBase: number;
+    coinBase: number | null;
+    coinBonusOnPerfect: number | null;
+    standingBase: number | null;
     itemRewards: string[];
     unlocks: string[];
     reputationAwards?: ReputationAwardDefinitionState[];
@@ -214,7 +218,7 @@ export interface QuestDefinitionRecord {
   actionTree: {
     entryNodeId: string;
     completionNodeIds: string[];
-    nodes: Array<Record<string, unknown>>;
+    nodes: Array<Record<string, unknown> & { estimatedHours: number | null }>;
   };
 }
 

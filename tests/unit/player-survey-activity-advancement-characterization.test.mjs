@@ -65,7 +65,7 @@ function surveyFlags(snapshot) {
   );
 }
 
-test("legacy Ashen Reef survey stages preserve the exact intended material mutation path", () => {
+test("current Ashen Reef survey stages preserve the exact intended material mutation path", () => {
   for (let stage = 1; stage <= 4; stage += 1) {
     const source = createStageSnapshot(stage);
     const sourceBytes = JSON.stringify(source);
@@ -130,7 +130,7 @@ test("legacy Ashen Reef survey stages preserve the exact intended material mutat
     );
     assert.deepEqual(operation, {
       id: "operation.quest.ashen_reef_survey",
-      title: "Ashen Reef Survey",
+      title: "Soundings of Ashen Reef",
       stage:
         stage === 4
           ? "Chart packet ready for harbor turn-in"
@@ -161,7 +161,7 @@ test("legacy Ashen Reef survey stages preserve the exact intended material mutat
         ? {
             title: "Survey packet complete",
             detail:
-              "All sectors and ruin markers are logged. Return to Saltmere for payment and codex credit.",
+              "All sectors and ruin markers are logged. Return the chart packet to Starfall Harbormaster's Office for later turn-in.",
             tone: "accent",
             timeLabel: "Day 1, High Sun"
           }
@@ -187,9 +187,11 @@ test("legacy Ashen Reef survey stages preserve the exact intended material mutat
 
     const quest = next.sessionState.questJournal.find((entry) => entry.id === QUEST_ID);
     assert.deepEqual(quest.objectives, [
-      `Survey reef lanes: ${Math.min(stage, 3)} / 3 sectors complete`,
-      `Confirm ruin markers: ${stage === 4 ? "complete" : "pending"}`,
-      "Return chart packet to Saltmere Harbor Office"
+      `Record the Inshore Approach soundings: ${stage >= 1 ? "complete" : "pending"}`,
+      `Survey the Working Reef: ${stage >= 2 ? "complete" : "pending"}`,
+      `Survey the Outer Passage: ${stage >= 3 ? "complete" : "pending"}`,
+      `Verify the Ruin Markers: ${stage === 4 ? "complete" : "pending"}`,
+      "Return chart packet to Starfall Harbormaster's Office"
     ]);
     assert.equal(next.sessionState.notifications.length, Math.min(8, source.sessionState.notifications.length + 1));
     assert.equal(next.sessionState.chronicle.length, Math.min(48, source.sessionState.chronicle.length + 1));
@@ -208,7 +210,7 @@ test("legacy Ashen Reef survey stages preserve the exact intended material mutat
         title: "Stormglass Bloom",
         discoveredAtTick: sourceTick + 2,
         discoveredAtLabel: "Day 1, High Sun",
-        regionLabel: "Glasswater",
+        regionLabel: "Starfall Isle",
         sourceType: "survey",
         sourceId: QUEST_ID,
         notes: [

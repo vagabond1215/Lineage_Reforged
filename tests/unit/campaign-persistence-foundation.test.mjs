@@ -2,6 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
+  ASHEN_REEF_SURVEY_ACCESS_LOCATION,
+  ASHEN_REEF_SURVEY_OFFER,
   admitCampaignMutation,
   completePendingNormalDefeatRecovery,
   createCampaignSessionControl,
@@ -123,6 +125,21 @@ function createTargetSnapshot(accountId) {
   return initializeTargetCampaignSnapshot(
     createLegacySnapshot(accountId),
     { source: "new_campaign" }
+  );
+}
+
+function assertCanonicalStagedAshenOffer(snapshot) {
+  assert.deepEqual(
+    snapshot.sessionState.questJournal.filter(
+      (entry) => entry.id === "quest.ashen_reef_survey"
+    ),
+    [ASHEN_REEF_SURVEY_OFFER]
+  );
+  assert.equal(
+    snapshot.sessionState.knownLocations.some(
+      (entry) => entry.id === "location.ashen_reef"
+    ),
+    false
   );
 }
 
@@ -942,6 +959,19 @@ test("pending-defeat destinations require exact nonconflicting settlement author
     () =>
       resolvePendingNormalDefeatRecoveryDestination(ambiguous),
     /multiple authoritative known safe settlements/
+  );
+
+  const starfallWithAnchorage = structuredClone(pending);
+  starfallWithAnchorage.playerState.location.settlementId =
+    "settlement.starfall_port";
+  starfallWithAnchorage.sessionState.knownLocations = [
+    createRecoveryLocation("settlement.starfall_port"),
+    structuredClone(ASHEN_REEF_SURVEY_ACCESS_LOCATION)
+  ];
+  assert.equal(
+    resolvePendingNormalDefeatRecoveryDestination(starfallWithAnchorage),
+    "settlement.starfall_port",
+    "the settlement-less Ashen anchorage must not collide with Starfall recovery"
   );
 });
 
@@ -1912,7 +1942,13 @@ test("production new-campaign coordinator retains exact authority across retry c
   let failAddress = true;
   withMockWindow((storage) => {
     const accountId = "account.new_campaign_attempt";
-    const form = createCompleteCharacterForm("Stable Retry");
+    const form = {
+      ...createCompleteCharacterForm("Stable Retry"),
+      backstoryId: "backstory.craftsmans_child",
+      continentId: "region.myridian_chain",
+      regionId: "region.starfall_isle",
+      startingSettlementId: "settlement.starfall_port"
+    };
     const consumerPlans = [
       {
         kind: "active_history",
@@ -1947,6 +1983,7 @@ test("production new-campaign coordinator retains exact authority across retry c
       campaignId: first.snapshot.campaignIdentity.campaignId,
       continuityId: first.snapshot.campaignIdentity.continuityId
     };
+    assertCanonicalStagedAshenOffer(first.snapshot);
 
     assert.throws(
       () =>
@@ -2001,6 +2038,7 @@ test("production new-campaign coordinator retains exact authority across retry c
       originalIdentity
     );
     assert.deepEqual(afterCallerLoss.consumerPlans, consumerPlans);
+    assertCanonicalStagedAshenOffer(afterCallerLoss.snapshot);
     assert.throws(
       () =>
         prepareNewCampaignAttempt({
@@ -2032,6 +2070,7 @@ test("production new-campaign coordinator retains exact authority across retry c
       retainedRecovery.publicationId
     );
     assert.equal(retried.slot.id, "slot-1");
+    assertCanonicalStagedAshenOffer(retried.snapshot);
 
     let profile = createDefaultAccountProfileState({ accountId });
     for (let index = 0; index < 2; index += 1) {
@@ -2080,6 +2119,7 @@ test("production new-campaign coordinator retains exact authority across retry c
     assert.equal(afterRestart.recoveredPublication.publication.publicationId,
       retainedRecovery.publicationId);
     assert.equal(preparationCount, 1);
+    assertCanonicalStagedAshenOffer(afterRestart.snapshot);
 
     completeCampaignPublicationConsumers(
       accountId,
@@ -3061,7 +3101,10 @@ test("new campaign owner modules keep JavaScript mirrors and public exports alig
     "campaign-rules",
     "campaign-session",
     "normal-defeat",
-    "account-publication"
+    "account-publication",
+    "ashen-reef-survey-content",
+    "ashen-reef-survey-offer-staging",
+    "ashen-reef-survey-travel-access"
   ]) {
     const mirror = readFileSync(
       new URL(`../../packages/engines/game-engine/src/${name}.js`, import.meta.url),
@@ -3089,4 +3132,7 @@ test("new campaign owner modules keep JavaScript mirrors and public exports alig
   assert.match(indexSource, /from "\.\/campaign-session\.js"/);
   assert.match(indexSource, /from "\.\/normal-defeat\.js"/);
   assert.match(indexSource, /from "\.\/account-publication\.js"/);
+  assert.match(indexSource, /from "\.\/ashen-reef-survey-content\.js"/);
+  assert.match(indexSource, /from "\.\/ashen-reef-survey-offer-staging\.js"/);
+  assert.match(indexSource, /from "\.\/ashen-reef-survey-travel-access\.js"/);
 });

@@ -9,8 +9,13 @@ import {
 } from "../../apps/rpg-ui/src/game-shell/saveManager.ts";
 import {
   initializeTargetCampaignSnapshot,
-  isTargetCampaignSnapshot
+  isTargetCampaignSnapshot,
+  serializeAshenReefSurveyNormalizedIntent
 } from "../../packages/engines/game-engine/src/campaign-rules.ts";
+import {
+  buildAshenReefSurveyQuestObjectives,
+  getAshenReefSurveyContent
+} from "../../packages/engines/game-engine/src/ashen-reef-survey-content.ts";
 import { createCampaignSessionControl } from "../../packages/engines/game-engine/src/campaign-session.ts";
 import { resolveNormalDefeat } from "../../packages/engines/game-engine/src/normal-defeat.ts";
 import {
@@ -22,6 +27,10 @@ import {
   listPendingPlayerSurveyProjectionRepairs,
   repairPlayerSurveyActivityProjection
 } from "../../packages/engines/game-engine/src/player-survey-activity-advancement.ts";
+import {
+  createPlayerTravelCommand,
+  executePlayerTravelCommand
+} from "../../packages/engines/game-engine/src/player-travel.ts";
 import {
   deserializeSnapshot,
   serializeSnapshot
@@ -111,6 +120,115 @@ function executeSurvey(snapshot, control, suffix, options = {}) {
   const requestId = `survey_request.00000000-0000-4000-8000-${suffix.padStart(12, "0")}`;
   const command = createPlayerSurveyActivityAdvancementCommand(snapshot, control, requestId);
   return executePlayerSurveyActivityAdvancementCommand(snapshot, control, command, options);
+}
+
+function rewriteSurveyAuthorityContentVersion(snapshot, version) {
+  const rewritten = structuredClone(snapshot);
+  const authority = rewritten.authorityLedger.ashenReefSurvey;
+  const content = getAshenReefSurveyContent(version);
+  assert.equal(authority.requests.length, authority.occurrences.length);
+  assert.equal(authority.requests.length, authority.results.length);
+
+  authority.requests.forEach((request, index) => {
+    const occurrence = authority.occurrences[index];
+    const result = authority.results[index];
+    assert.ok(occurrence);
+    assert.ok(result);
+    const objectives = buildAshenReefSurveyQuestObjectives(
+      version,
+      result.materialAfter.sectorCount,
+      result.materialAfter.ruinsConfirmed
+    );
+
+    request.normalizedIntent.materialVersions.surveyContent = version;
+    if (request.normalizedIntent.ownerInputs.surveyOperation) {
+      request.normalizedIntent.ownerInputs.surveyOperation.title = content.operationTitle;
+    }
+    request.canonicalIntent = serializeAshenReefSurveyNormalizedIntent(
+      request.normalizedIntent
+    );
+    occurrence.materialVersions.surveyContent = version;
+    result.operation.title = content.operationTitle;
+
+    const receipts = authority.consequenceReceipts.filter(
+      (entry) => entry.resultId === result.resultId
+    );
+    const operationReceipt = receipts.find((entry) => entry.kind === "survey_operation");
+    const questReceipt = receipts.find((entry) => entry.kind === "quest_progress_sync");
+    assert.ok(operationReceipt);
+    assert.ok(questReceipt);
+    if (operationReceipt.effect.before) {
+      operationReceipt.effect.before.title = content.operationTitle;
+    }
+    operationReceipt.effect.after.title = content.operationTitle;
+    questReceipt.effect.objectives = objectives;
+
+    if (result.stage === "ruins_confirmation") {
+      result.notice.detail = content.completionNoticeDetail;
+      result.currentActivityOutcome.detail = content.returnActivityDetail;
+      const notificationReceipt = receipts.find(
+        (entry) => entry.kind === "notification_projection"
+      );
+      const discoveryReceipt = receipts.find(
+        (entry) => entry.kind === "player_discovery"
+      );
+      const activityReceipt = receipts.find(
+        (entry) => entry.kind === "activity_transition"
+      );
+      assert.ok(notificationReceipt);
+      assert.ok(discoveryReceipt);
+      assert.ok(activityReceipt);
+      notificationReceipt.effect.row.detail = content.completionNotificationDetail;
+      discoveryReceipt.effect.after.regionLabel = content.regionLabel;
+      activityReceipt.effect.after.detail = content.returnActivityDetail;
+      const liveNotification = rewritten.sessionState.notifications.find(
+        (entry) => entry.id === result.projectionIds.notification
+      );
+      assert.ok(liveNotification);
+      liveNotification.detail = content.completionNotificationDetail;
+    }
+  });
+
+  const latestResult = authority.results.at(-1);
+  assert.ok(latestResult);
+  const objectives = buildAshenReefSurveyQuestObjectives(
+    version,
+    latestResult.materialAfter.sectorCount,
+    latestResult.materialAfter.ruinsConfirmed
+  );
+
+  const liveOperation = rewritten.sessionState.operations.find(
+    (entry) => entry.id === "operation.quest.ashen_reef_survey"
+  );
+  const liveQuest = rewritten.sessionState.questJournal.find(
+    (entry) => entry.id === QUEST_ID
+  );
+  assert.ok(liveOperation);
+  assert.ok(liveQuest);
+  liveOperation.title = content.operationTitle;
+  liveQuest.title = content.questTitle;
+  liveQuest.regionLabel = content.questRegionLabel;
+  liveQuest.rewardLabel = content.questRewardLabel;
+  liveQuest.summary = content.questSummary;
+  liveQuest.rewards = structuredClone(content.questRewards);
+  liveQuest.relatedLocations = structuredClone(content.questRelatedLocations);
+  liveQuest.tags = structuredClone(content.questTags);
+  liveQuest.objectives = objectives;
+  const liveDiscovery = rewritten.playerState.discoveryChronicle.entries.find(
+    (entry) => entry.id === "discovery.stormglass_bloom"
+  );
+  if (liveDiscovery) liveDiscovery.regionLabel = content.regionLabel;
+  if (rewritten.sessionState.currentActivity?.id === "activity.return.survey_packet") {
+    rewritten.sessionState.currentActivity.detail = content.returnActivityDetail;
+  }
+  const liveCodex = rewritten.sessionState.codexEntries.find(
+    (entry) => entry.id === "flora.unknown_bloom" && entry.locked === false
+  );
+  if (liveCodex) {
+    liveCodex.tags = structuredClone(content.codexTags);
+    liveCodex.regionTags = structuredClone(content.codexRegionTags);
+  }
+  return rewritten;
 }
 
 test("raw serialization preserves every persisted survey authority collection exactly", () => {
@@ -205,6 +323,343 @@ test("version-7 publication and restart preserve exact survey evidence and durab
     assert.equal(duplicate.snapshot, loaded.snapshot);
     assert.equal(duplicate.snapshot.clock.tick, accepted.snapshot.clock.tick);
   });
+});
+
+test("persisted survey-content v1 remains byte-stable while later shifts author v2 evidence", () => {
+  withMockWindow(() => {
+    const source = createSurveySource("account.survey_content_versions");
+    const legacyContent = getAshenReefSurveyContent(1);
+    const sourceQuest = source.sessionState.questJournal.find((entry) => entry.id === QUEST_ID);
+    assert.ok(sourceQuest);
+    sourceQuest.title = legacyContent.questTitle;
+    sourceQuest.objectives = buildAshenReefSurveyQuestObjectives(1, 0, false);
+
+    const initial = publishSave(
+      source.accountId,
+      "slot-1",
+      source,
+      buildSaveMetadata("slot-1", source)
+    );
+    const legacyRequestId = "survey_request.00000000-0000-4000-8000-00000000a030";
+    const currentCommand = createPlayerSurveyActivityAdvancementCommand(
+      initial.snapshot,
+      initial.sessionControl,
+      legacyRequestId
+    );
+    assert.equal(currentCommand.normalizedIntent.materialVersions.surveyContent, 2);
+    const currentResult = executePlayerSurveyActivityAdvancementCommand(
+      initial.snapshot,
+      initial.sessionControl,
+      currentCommand
+    );
+    assert.equal(currentResult.accepted, true);
+
+    const legacySnapshot = rewriteSurveyAuthorityContentVersion(
+      currentResult.snapshot,
+      1
+    );
+    assert.equal(isTargetCampaignSnapshot(legacySnapshot), true);
+    const legacyAuthorityBefore = structuredClone(
+      legacySnapshot.authorityLedger.ashenReefSurvey
+    );
+    publishSave(
+      source.accountId,
+      "slot-1",
+      legacySnapshot,
+      buildSaveMetadata("slot-1", legacySnapshot),
+      { sessionControl: currentResult.control }
+    );
+
+    const legacyReload = loadSaveWithAuthority(source.accountId, "slot-1");
+    assert.ok(legacyReload);
+    assert.deepEqual(
+      legacyReload.snapshot.authorityLedger.ashenReefSurvey,
+      legacyAuthorityBefore
+    );
+    const retainedLegacyCommand = createPlayerSurveyActivityAdvancementCommand(
+      legacyReload.snapshot,
+      legacyReload.sessionControl,
+      legacyRequestId
+    );
+    assert.equal(
+      retainedLegacyCommand.normalizedIntent.materialVersions.surveyContent,
+      1
+    );
+    const durableLegacyDuplicate = executePlayerSurveyActivityAdvancementCommand(
+      legacyReload.snapshot,
+      legacyReload.sessionControl,
+      retainedLegacyCommand
+    );
+    assert.equal(durableLegacyDuplicate.code, "duplicate");
+    assert.equal(durableLegacyDuplicate.duplicate, true);
+
+    const firstProjectionBytes = {
+      notification: JSON.stringify(
+        legacyReload.snapshot.sessionState.notifications.find(
+          (entry) => entry.id === legacyAuthorityBefore.results[0].projectionIds.notification
+        )
+      ),
+      chronicle: JSON.stringify(
+        legacyReload.snapshot.sessionState.chronicle.find(
+          (entry) => entry.id === legacyAuthorityBefore.results[0].projectionIds.chronicle
+        )
+      )
+    };
+    const next = executeSurvey(
+      legacyReload.snapshot,
+      legacyReload.sessionControl,
+      "a031"
+    );
+    assert.equal(next.accepted, true);
+    assert.deepEqual(
+      next.snapshot.authorityLedger.ashenReefSurvey.requests[0],
+      legacyAuthorityBefore.requests[0]
+    );
+    assert.deepEqual(
+      next.snapshot.authorityLedger.ashenReefSurvey.occurrences[0],
+      legacyAuthorityBefore.occurrences[0]
+    );
+    assert.deepEqual(
+      next.snapshot.authorityLedger.ashenReefSurvey.results[0],
+      legacyAuthorityBefore.results[0]
+    );
+    assert.deepEqual(
+      next.snapshot.authorityLedger.ashenReefSurvey.consequenceReceipts.slice(
+        0,
+        legacyAuthorityBefore.consequenceReceipts.length
+      ),
+      legacyAuthorityBefore.consequenceReceipts
+    );
+    assert.equal(
+      next.snapshot.authorityLedger.ashenReefSurvey.requests[1]
+        .normalizedIntent.materialVersions.surveyContent,
+      2
+    );
+    const mixedQuest = next.snapshot.sessionState.questJournal.find(
+      (entry) => entry.id === QUEST_ID
+    );
+    assert.equal(mixedQuest.title, "Soundings of Ashen Reef");
+    assert.equal(mixedQuest.regionLabel, "Starfall Isle");
+    assert.doesNotMatch(JSON.stringify(mixedQuest), /580 crown|salvage rights/i);
+    assert.deepEqual(
+      next.snapshot.authorityLedger.ashenReefSurvey.occurrences.map(
+        (entry) => entry.materialVersions.surveyContent
+      ),
+      [1, 2]
+    );
+    assert.equal(
+      JSON.stringify(next.snapshot.sessionState.notifications.find(
+        (entry) => entry.id === legacyAuthorityBefore.results[0].projectionIds.notification
+      )),
+      firstProjectionBytes.notification
+    );
+    assert.equal(
+      JSON.stringify(next.snapshot.sessionState.chronicle.find(
+        (entry) => entry.id === legacyAuthorityBefore.results[0].projectionIds.chronicle
+      )),
+      firstProjectionBytes.chronicle
+    );
+
+    publishSave(
+      source.accountId,
+      "slot-1",
+      next.snapshot,
+      buildSaveMetadata("slot-1", next.snapshot),
+      { sessionControl: next.control }
+    );
+    const mixedReload = loadSaveWithAuthority(source.accountId, "slot-1");
+    assert.ok(mixedReload);
+    assert.equal(isTargetCampaignSnapshot(mixedReload.snapshot), true);
+    assert.deepEqual(
+      mixedReload.snapshot.authorityLedger.ashenReefSurvey.requests.map(
+        (entry) => entry.normalizedIntent.materialVersions.surveyContent
+      ),
+      [1, 2]
+    );
+    const duplicateAfterMixedRestart = executePlayerSurveyActivityAdvancementCommand(
+      mixedReload.snapshot,
+      mixedReload.sessionControl,
+      retainedLegacyCommand
+    );
+    assert.equal(duplicateAfterMixedRestart.code, "duplicate");
+    assert.equal(duplicateAfterMixedRestart.duplicate, true);
+  });
+});
+
+test("complete survey-content v1 authority publishes, restarts, duplicates, and repairs with legacy presentation", () => {
+  withMockWindow(() => {
+    const source = createSurveySource("account.survey_content_v1_complete");
+    const initial = publishSave(
+      source.accountId,
+      "slot-1",
+      source,
+      buildSaveMetadata("slot-1", source)
+    );
+    let snapshot = initial.snapshot;
+    let control = initial.sessionControl;
+    const requestIds = [];
+    for (const suffix of ["a040", "a041", "a042", "a043"]) {
+      const result = executeSurvey(snapshot, control, suffix);
+      assert.equal(result.accepted, true);
+      snapshot = result.snapshot;
+      control = result.control;
+      requestIds.push(result.requestId);
+    }
+
+    const legacySnapshot = rewriteSurveyAuthorityContentVersion(snapshot, 1);
+    assert.equal(isTargetCampaignSnapshot(legacySnapshot), true);
+    const forgedCodexPresentation = structuredClone(legacySnapshot);
+    const forgedCodex = forgedCodexPresentation.sessionState.codexEntries.find(
+      (entry) => entry.id === "flora.unknown_bloom"
+    );
+    assert.ok(forgedCodex);
+    forgedCodex.tags = getAshenReefSurveyContent(2).codexTags;
+    forgedCodex.regionTags = getAshenReefSurveyContent(2).codexRegionTags;
+    assert.equal(
+      isTargetCampaignSnapshot(forgedCodexPresentation),
+      false,
+      "v1 authority rejects a forged v2 live Codex projection"
+    );
+    const rawRoundtrip = deserializeSnapshot(serializeSnapshot(legacySnapshot));
+    assert.deepEqual(
+      rawRoundtrip.authorityLedger.ashenReefSurvey,
+      legacySnapshot.authorityLedger.ashenReefSurvey
+    );
+    publishSave(
+      source.accountId,
+      "slot-1",
+      legacySnapshot,
+      buildSaveMetadata("slot-1", legacySnapshot),
+      { sessionControl: control }
+    );
+    const loaded = loadSaveWithAuthority(source.accountId, "slot-1");
+    assert.ok(loaded);
+    assert.deepEqual(
+      loaded.snapshot.authorityLedger.ashenReefSurvey.requests.map(
+        (entry) => entry.normalizedIntent.materialVersions.surveyContent
+      ),
+      [1, 1, 1, 1]
+    );
+    assert.equal(
+      loaded.snapshot.sessionState.operations.find(
+        (entry) => entry.id === "operation.quest.ashen_reef_survey"
+      ).title,
+      "Ashen Reef Survey"
+    );
+    assert.equal(
+      loaded.snapshot.sessionState.questJournal.find(
+        (entry) => entry.id === QUEST_ID
+      ).regionLabel,
+      "Glasswater"
+    );
+    assert.equal(
+      loaded.snapshot.playerState.discoveryChronicle.entries.find(
+        (entry) => entry.id === "discovery.stormglass_bloom"
+      ).regionLabel,
+      "Glasswater"
+    );
+    assert.match(
+      loaded.snapshot.sessionState.currentActivity.detail,
+      /Saltmere Harbor Office/
+    );
+    const legacyTravelSource = structuredClone(loaded.snapshot);
+    legacyTravelSource.playerState.location.siteLabel = "Starfall Harbor";
+    const legacyTravelCommand = createPlayerTravelCommand(
+      legacyTravelSource,
+      "location.ashen_reef"
+    );
+    const legacyTravel = executePlayerTravelCommand(
+      legacyTravelSource,
+      legacyTravelCommand
+    );
+    assert.equal(legacyTravel.accepted, true);
+    assert.equal(
+      legacyTravel.snapshot.sessionState.operations.find(
+        (entry) => entry.id === "operation.quest.ashen_reef_survey"
+      ).title,
+      "Ashen Reef Survey"
+    );
+    assert.deepEqual(
+      loaded.snapshot.sessionState.questJournal.find(
+        (entry) => entry.id === QUEST_ID
+      ).objectives,
+      buildAshenReefSurveyQuestObjectives(1, 3, true)
+    );
+
+    const retainedFinalCommand = createPlayerSurveyActivityAdvancementCommand(
+      loaded.snapshot,
+      loaded.sessionControl,
+      requestIds.at(-1)
+    );
+    const duplicate = executePlayerSurveyActivityAdvancementCommand(
+      loaded.snapshot,
+      loaded.sessionControl,
+      retainedFinalCommand
+    );
+    assert.equal(duplicate.code, "duplicate");
+    assert.equal(duplicate.duplicate, true);
+
+    const finalResult = loaded.snapshot.authorityLedger.ashenReefSurvey.results.at(-1);
+    const drifted = structuredClone(loaded.snapshot);
+    drifted.sessionState.notifications = drifted.sessionState.notifications.filter(
+      (entry) => entry.id !== finalResult.projectionIds.notification
+    );
+    assert.equal(isTargetCampaignSnapshot(drifted), true);
+    publishSave(
+      source.accountId,
+      "slot-1",
+      drifted,
+      buildSaveMetadata("slot-1", drifted),
+      { sessionControl: loaded.sessionControl }
+    );
+    const driftedReload = loadSaveWithAuthority(source.accountId, "slot-1");
+    assert.ok(driftedReload);
+    assert.equal(
+      listPendingPlayerSurveyProjectionRepairs(driftedReload.snapshot).some(
+        (entry) =>
+          entry.resultId === finalResult.resultId &&
+          entry.projectionKind === "notification"
+      ),
+      true
+    );
+    const repaired = repairPlayerSurveyActivityProjection(
+      driftedReload.snapshot,
+      driftedReload.sessionControl,
+      finalResult.resultId,
+      "notification"
+    );
+    assert.equal(repaired.accepted, true);
+    assert.equal(repaired.repair.outcome, "inserted");
+    assert.equal(
+      repaired.snapshot.sessionState.notifications.find(
+        (entry) => entry.id === finalResult.projectionIds.notification
+      ).detail,
+      getAshenReefSurveyContent(1).completionNotificationDetail
+    );
+    assert.equal(isTargetCampaignSnapshot(repaired.snapshot), true);
+  });
+});
+
+test("survey-content version serialization admits only retained v1 and current v2", () => {
+  const source = createSurveySource("account.survey_content_version_guard");
+  const command = createPlayerSurveyActivityAdvancementCommand(
+    source,
+    createControl(source),
+    "survey_request.00000000-0000-4000-8000-00000000a032"
+  );
+  assert.equal(command.normalizedIntent.materialVersions.surveyContent, 2);
+  assert.equal(
+    serializeAshenReefSurveyNormalizedIntent(command.normalizedIntent),
+    command.canonicalIntent
+  );
+  for (const forgedVersion of [0, 3]) {
+    const forged = structuredClone(command.normalizedIntent);
+    forged.materialVersions.surveyContent = forgedVersion;
+    assert.throws(
+      () => serializeAshenReefSurveyNormalizedIntent(forged),
+      /not valid canonical authority/
+    );
+  }
 });
 
 test("version-7 publication quarantines owner-incoherent retained progression without replacing valid authority", () => {

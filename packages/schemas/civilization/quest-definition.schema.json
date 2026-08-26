@@ -108,7 +108,7 @@
       "required": ["type", "entityId", "displayName", "contactName", "settlementId"],
       "properties": {
         "type": { "type": "string" },
-        "entityId": { "type": "string" },
+        "entityId": { "type": ["string", "null"] },
         "displayName": { "type": "string" },
         "contactName": { "type": "string" },
         "settlementId": { "type": "string" }
@@ -129,7 +129,7 @@
         "notes"
       ],
       "properties": {
-        "levelMin": { "type": "integer", "minimum": 1 },
+        "levelMin": { "type": "integer", "minimum": 0 },
         "classTagsAny": {
           "type": "array",
           "items": { "type": "string" }
@@ -196,9 +196,9 @@
       "additionalProperties": false,
       "required": ["expectedDurationHours", "dueWithinHours", "planningWindowHours", "repeatable", "timeSensitivity"],
       "properties": {
-        "expectedDurationHours": { "type": "number", "minimum": 1 },
-        "dueWithinHours": { "type": "number", "minimum": 1 },
-        "planningWindowHours": { "type": "number", "minimum": 0 },
+        "expectedDurationHours": { "type": ["number", "null"], "minimum": 1 },
+        "dueWithinHours": { "type": ["number", "null"], "minimum": 1 },
+        "planningWindowHours": { "type": ["number", "null"], "minimum": 0 },
         "repeatable": { "type": "boolean" },
         "timeSensitivity": { "type": "string" }
       }
@@ -291,9 +291,9 @@
       "additionalProperties": false,
       "required": ["coinBase", "coinBonusOnPerfect", "standingBase", "itemRewards", "unlocks"],
       "properties": {
-        "coinBase": { "type": "integer", "minimum": 0 },
-        "coinBonusOnPerfect": { "type": "integer", "minimum": 0 },
-        "standingBase": { "type": "integer", "minimum": 0 },
+        "coinBase": { "type": ["integer", "null"], "minimum": 0 },
+        "coinBonusOnPerfect": { "type": ["integer", "null"], "minimum": 0 },
+        "standingBase": { "type": ["integer", "null"], "minimum": 0 },
         "itemRewards": {
           "type": "array",
           "items": { "type": "string" }
@@ -598,7 +598,7 @@
         "label": { "type": "string" },
         "phase": { "type": "string" },
         "summary": { "type": "string" },
-        "estimatedHours": { "type": "number", "minimum": 0 },
+        "estimatedHours": { "type": ["number", "null"], "minimum": 0 },
         "assignedRoles": {
           "type": "array",
           "items": { "type": "string" }

@@ -7,11 +7,18 @@ import type {
   SaveSnapshot,
   UiTone
 } from "../../../shared/types/src/index.js";
+import {
+  establishAshenReefSurveyTravelAccess,
+  type AshenReefSurveyTravelAccessFacts
+} from "./ashen-reef-survey-travel-access.js";
 import { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 
 export const PLAYER_QUEST_ACCEPTED_EVENT_TYPE = EVENT_TYPES.PLAYER_QUEST_ACCEPTED;
 
-export type PlayerQuestAcceptancePlanRejectionCode = "quest_missing" | "quest_not_available";
+export type PlayerQuestAcceptancePlanRejectionCode =
+  | "quest_missing"
+  | "quest_not_available"
+  | "travel_access_conflict";
 
 export interface PlayerQuestAcceptanceFacts {
   questId: string;
@@ -19,6 +26,7 @@ export interface PlayerQuestAcceptanceFacts {
   regionLabel: string;
   summary: string;
   preparationActivity: CurrentActivityState;
+  travelAccess?: AshenReefSurveyTravelAccessFacts;
 }
 
 export interface AcceptedPlayerQuestAcceptancePlan {
@@ -63,6 +71,7 @@ export interface PlayerQuestAcceptedEventPayload {
   questId: string;
   title: string;
   regionLabel: string;
+  travelAccess?: AshenReefSurveyTravelAccessFacts;
 }
 
 export type PlayerQuestAcceptedEvent = GameEventEnvelope<PlayerQuestAcceptedEventPayload> & {
@@ -207,7 +216,8 @@ function createAcceptedEvent(
       playerId: command.playerId,
       questId: facts.questId,
       title: facts.title,
-      regionLabel: facts.regionLabel
+      regionLabel: facts.regionLabel,
+      ...(facts.travelAccess ? { travelAccess: facts.travelAccess } : {})
     }
   };
 }
@@ -269,10 +279,20 @@ export function resolvePlayerQuestAcceptancePlan(
     };
   }
 
+  const access = establishAshenReefSurveyTravelAccess(snapshot, quest.id);
+  if (!access.accepted) {
+    return {
+      accepted: false,
+      code: "travel_access_conflict",
+      reason: access.reason,
+      facts
+    };
+  }
+
   return {
     accepted: true,
     code: "quest_acceptance_available",
-    facts
+    facts: access.facts ? { ...facts, travelAccess: access.facts } : facts
   };
 }
 
@@ -330,7 +350,7 @@ export function executePlayerQuestAcceptanceCommand(
     const plan = resolvePlayerQuestAcceptancePlan(snapshot, command.questId);
     if (!plan.accepted) return reject(snapshot, plan.code, command.commandId, plan.facts);
 
-    const nextSnapshot = cloneSnapshot(snapshot);
+    let nextSnapshot = cloneSnapshot(snapshot);
     nextSnapshot.sessionState.questJournal = nextSnapshot.sessionState.questJournal.map((entry) =>
       entry.id === plan.facts.questId
         ? {
@@ -353,15 +373,32 @@ export function executePlayerQuestAcceptanceCommand(
       ...nextSnapshot.sessionState.chronicle
     ].slice(0, 48);
 
+    const access = establishAshenReefSurveyTravelAccess(
+      nextSnapshot,
+      plan.facts.questId
+    );
+    if (!access.accepted) {
+      return reject(
+        snapshot,
+        "travel_access_conflict",
+        command.commandId,
+        plan.facts
+      );
+    }
+    nextSnapshot = access.snapshot;
+    const committedFacts = access.facts
+      ? { ...plan.facts, travelAccess: access.facts }
+      : plan.facts;
+
     const committedSnapshot = synchronizeGameplaySnapshot(nextSnapshot);
-    const event = createAcceptedEvent(command, plan.facts, committedSnapshot.clock.tick);
+    const event = createAcceptedEvent(command, committedFacts, committedSnapshot.clock.tick);
     return {
       accepted: true,
       code: "quest_accepted",
       commandId: command.commandId,
       appliedTick: committedSnapshot.clock.tick,
-      facts: plan.facts,
-      noticeFacts: { questTitle: plan.facts.title },
+      facts: committedFacts,
+      noticeFacts: { questTitle: committedFacts.title },
       emittedEvents: [event],
       snapshot: committedSnapshot
     };

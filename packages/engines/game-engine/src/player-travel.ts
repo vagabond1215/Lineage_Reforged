@@ -14,6 +14,10 @@ import {
   grantSettlementGeographicKnowledge,
   syncPlayerRuntimeState
 } from "../../player-engine/src/index.js";
+import {
+  getAshenReefSurveyContent,
+  resolveAshenReefSurveyContentVersion
+} from "./ashen-reef-survey-content.js";
 import { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 import {
   getCurrentPlayerTravelLocationId,
@@ -220,10 +224,13 @@ function buildSurveyOperation(snapshot: SaveSnapshot): OperationState {
     "gameplay.quest.ashen_reef_survey.ruins_confirmed"
   );
   const progress = ruinsConfirmed ? 100 : sectors * 25;
+  const content = getAshenReefSurveyContent(
+    resolveAshenReefSurveyContentVersion(snapshot)
+  );
 
   return {
     id: "operation.quest.ashen_reef_survey",
-    title: "Ashen Reef Survey",
+    title: content.operationTitle,
     stage: ruinsConfirmed
       ? "Chart packet ready for harbor turn-in"
       : `Survey sectors logged: ${sectors} / 3`,

@@ -131,7 +131,7 @@ const PLAYER_TRAVEL_DESTINATIONS: Record<string, PlayerTravelDestination> = {
   },
   "location.ashen_reef": {
     id: "location.ashen_reef",
-    name: "Starfall Port",
+    name: "Ashen Reef",
     regionId: "region.starfall_isle",
     regionLabel: "Starfall Isle",
     settlementId: "settlement.starfall_port",
@@ -279,7 +279,12 @@ export function getCurrentPlayerTravelLocationId(snapshot: SaveSnapshot): string
 
   if (settlementId === "settlement.aurelis") return "location.saltmere";
   if (settlementId === "settlement.stonevein") return "location.westreach";
-  if (settlementId === "settlement.starfall_port") return "location.ashen_reef";
+  if (settlementId === "settlement.starfall_port") {
+    const siteLabel = snapshot.playerState.location.siteLabel;
+    return siteLabel === "Survey Anchorage" || siteLabel === "Ashen Reef"
+      ? "location.ashen_reef"
+      : "settlement.starfall_port";
+  }
   if (settlementId === "settlement.sunspire_reach") return "location.crown_bastion";
   return null;
 }
@@ -287,7 +292,9 @@ export function getCurrentPlayerTravelLocationId(snapshot: SaveSnapshot): string
 export function getCurrentPlayerTravelLocationLabel(snapshot: SaveSnapshot): string {
   const locationId = getCurrentPlayerTravelLocationId(snapshot);
   if (!locationId) return snapshot.playerState.location.siteLabel ?? "Current location";
-  return PLAYER_TRAVEL_DESTINATIONS[locationId]?.name ?? locationId;
+  return PLAYER_TRAVEL_DESTINATIONS[locationId]?.name ??
+    snapshot.playerState.location.siteLabel ??
+    locationId;
 }
 
 export function resolvePlayerTravelPlan(

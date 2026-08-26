@@ -49,6 +49,10 @@ import {
   preparePlayerSurveyCampaignMutation,
   type CampaignSessionControl
 } from "./campaign-session.js";
+import {
+  CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION,
+  getAshenReefSurveyContent
+} from "./ashen-reef-survey-content.js";
 import { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 import { getCurrentPlayerTravelLocationId } from "./player-travel-rules.js";
 
@@ -368,7 +372,7 @@ function resolveMaterialVersions(): AshenReefSurveyMaterialVersionsState {
     statGrowth: loadStatGrowthBalanceRule().version,
     skillPolicy: 1,
     synchronization: 1,
-    surveyContent: 1
+    surveyContent: CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION
   };
 }
 
@@ -542,11 +546,15 @@ function applySkill(
   };
 }
 
-function buildSurveyOperation(snapshot: SaveSnapshot): OperationState {
+function buildSurveyOperation(
+  snapshot: SaveSnapshot,
+  contentVersion: AshenReefSurveyMaterialVersionsState["surveyContent"]
+): OperationState {
   const facts = collectMaterialFacts(snapshot);
+  const content = getAshenReefSurveyContent(contentVersion);
   return {
     id: OPERATION_ID,
-    title: "Ashen Reef Survey",
+    title: content.operationTitle,
     stage: facts.ruinsConfirmed
       ? "Chart packet ready for harbor turn-in"
       : `Survey sectors logged: ${facts.sectorCount} / 3`,
@@ -574,12 +582,14 @@ function createProjectionFacts(
   snapshot: SaveSnapshot,
   stage: AshenReefSurveyStage,
   skill: SkillApplication,
-  ids: { notification: string; chronicle: string }
+  ids: { notification: string; chronicle: string },
+  contentVersion: AshenReefSurveyMaterialVersionsState["surveyContent"]
 ): {
   notification: NotificationState;
   chronicle: ChronicleEventState;
   notice: PlayerSurveyActivityAdvancementNoticeFacts;
 } {
+  const content = getAshenReefSurveyContent(contentVersion);
   const sector = stage === "sector_1" ? 1 : stage === "sector_2" ? 2 : stage === "sector_3" ? 3 : null;
   if (sector !== null) {
     return {
@@ -613,7 +623,7 @@ function createProjectionFacts(
     notification: {
       id: ids.notification,
       title: "Survey packet complete",
-      detail: "All sectors and ruin markers are logged. Return to Saltmere for payment and codex credit.",
+      detail: content.completionNotificationDetail,
       timeLabel: formatTickTime(snapshot),
       tone: "accent"
     },
@@ -632,7 +642,7 @@ function createProjectionFacts(
     notice: {
       tone: "accent",
       title: "Survey Packet Ready",
-      detail: "Return to Saltmere Harbor Office to turn in the completed chart packet."
+      detail: content.completionNoticeDetail
     }
   };
 }
@@ -644,6 +654,7 @@ function applyMaterialStage(
 ): MaterialApplication {
   const nextSnapshot = clone(sourceSnapshot);
   const materialVersions = resolveMaterialVersions();
+  const content = getAshenReefSurveyContent(materialVersions.surveyContent);
   const materialBefore = collectMaterialFacts(sourceSnapshot);
   const profile = resolveAshenReefSurveyMetabolicProfile(collectOwnerInputs(sourceSnapshot));
   const bodyBefore = clone(sourceSnapshot.playerState.bodyState);
@@ -724,7 +735,7 @@ function applyMaterialStage(
           title: "Stormglass Bloom",
           discoveredAtTick: nextSnapshot.clock.tick,
           discoveredAtLabel: formatTickTime(nextSnapshot),
-          regionLabel: "Glasswater",
+          regionLabel: content.regionLabel,
           sourceType: "survey",
           sourceId: QUEST_ID,
           notes: [
@@ -743,21 +754,27 @@ function applyMaterialStage(
       id: "activity.return.survey_packet",
       label: "Returning Chart Packet",
       category: "Contract",
-      detail: "The field chart is complete and ready to be taken back to Saltmere Harbor Office."
+      detail: content.returnActivityDetail
     };
   }
 
-  const operationAfter = buildSurveyOperation(nextSnapshot);
+  const operationAfter = buildSurveyOperation(
+    nextSnapshot,
+    materialVersions.surveyContent
+  );
   nextSnapshot.sessionState.operations = upsertOperation(
     nextSnapshot.sessionState.operations,
     operationAfter
   );
-  const synchronized = synchronizeGameplaySnapshot(nextSnapshot);
+  const synchronized = synchronizeGameplaySnapshot(nextSnapshot, {
+    ashenReefSurveyContentVersion: materialVersions.surveyContent
+  });
   const projectionFacts = createProjectionFacts(
     synchronized,
     stage,
     skill,
-    projectionIds
+    projectionIds,
+    materialVersions.surveyContent
   );
   const questAfter = synchronized.sessionState.questJournal.find((entry) => entry.id === QUEST_ID);
   if (!questAfter) throw new Error("Survey quest synchronization lost the active quest.");

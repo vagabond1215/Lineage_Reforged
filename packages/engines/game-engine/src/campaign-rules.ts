@@ -33,6 +33,10 @@ import {
   syncPlayerBodyState,
   syncPlayerStatGrowth
 } from "../../player-engine/src/index.js";
+import {
+  buildAshenReefSurveyQuestObjectives,
+  getAshenReefSurveyContent
+} from "./ashen-reef-survey-content.js";
 
 export const TARGET_SNAPSHOT_FORMAT = "lineage.save_snapshot.v2";
 export const CAMPAIGN_RULES_VERSION = 2 as const;
@@ -1048,7 +1052,7 @@ function normalizeSurveyIntentForCanonical(
       statGrowth: value.materialVersions.statGrowth,
       skillPolicy: 1,
       synchronization: 1,
-      surveyContent: 1
+      surveyContent: value.materialVersions.surveyContent
     }
   };
 }
@@ -1072,7 +1076,7 @@ function validateMaterialVersions(value: unknown): boolean {
     Number(value.statGrowth) > 0 &&
     value.skillPolicy === 1 &&
     value.synchronization === 1 &&
-    value.surveyContent === 1
+    (value.surveyContent === 1 || value.surveyContent === 2)
   );
 }
 
@@ -1179,11 +1183,14 @@ function expectedSurveyOperation(
   request: AshenReefSurveyAuthorityState["requests"][number],
   result: AshenReefSurveyAuthorityState["results"][number]
 ) {
+  const content = getAshenReefSurveyContent(
+    request.normalizedIntent.materialVersions.surveyContent
+  );
   const complete = result.stage === "ruins_confirmation";
   const sectors = result.materialAfter.sectorCount;
   return {
     id: "operation.quest.ashen_reef_survey",
-    title: "Ashen Reef Survey",
+    title: content.operationTitle,
     stage: complete
       ? "Chart packet ready for harbor turn-in"
       : `Survey sectors logged: ${sectors} / 3`,
@@ -1213,6 +1220,9 @@ function expectedSurveyProjectionFacts(
   result: AshenReefSurveyAuthorityState["results"][number],
   projectionPending: boolean
 ) {
+  const content = getAshenReefSurveyContent(
+    request.normalizedIntent.materialVersions.surveyContent
+  );
   const endClock = advanceClock(request.normalizedIntent.ownerInputs.clock, 2);
   const timeLabel = formatSurveyTickTime(endClock);
   const skillLabel = result.stage === "ruins_confirmation" ? "Survival" : "Navigation";
@@ -1232,7 +1242,7 @@ function expectedSurveyProjectionFacts(
     ? {
         id: result.projectionIds.notification,
         title: "Survey packet complete",
-        detail: "All sectors and ruin markers are logged. Return to Saltmere for payment and codex credit.",
+        detail: content.completionNotificationDetail,
         timeLabel,
         tone: "accent"
       }
@@ -1272,7 +1282,7 @@ function expectedSurveyProjectionFacts(
     ? {
         tone: "accent",
         title: "Survey Packet Ready",
-        detail: "Return to Saltmere Harbor Office to turn in the completed chart packet."
+        detail: content.completionNoticeDetail
       }
     : {
         tone: "success",
@@ -1303,6 +1313,9 @@ function expectedSurveyDiscovery(
   const retained = request.normalizedIntent.ownerInputs.stormglassDiscovery;
   if (retained) return clone(retained);
   const endClock = advanceClock(request.normalizedIntent.ownerInputs.clock, 2);
+  const content = getAshenReefSurveyContent(
+    request.normalizedIntent.materialVersions.surveyContent
+  );
   return {
     id: "discovery.stormglass_bloom",
     codexEntryId: "flora.unknown_bloom",
@@ -1310,13 +1323,36 @@ function expectedSurveyDiscovery(
     title: "Stormglass Bloom",
     discoveredAtTick: result.appliedTick,
     discoveredAtLabel: formatSurveyTickTime(endClock),
-    regionLabel: "Glasswater",
+    regionLabel: content.regionLabel,
     sourceType: "survey",
     sourceId: "quest.ashen_reef_survey",
     notes: [
       "Logged during the Ashen Reef survey while the crew marked ruin shelves.",
       "The petals refract storm light and dry into brittle crystalline veins."
     ]
+  };
+}
+
+function expectedSurveyCodexEntry(
+  request: AshenReefSurveyAuthorityState["requests"][number]
+) {
+  const retained = request.normalizedIntent.ownerInputs.stormglassCodexEntry;
+  if (!retained) return null;
+  const content = getAshenReefSurveyContent(
+    request.normalizedIntent.materialVersions.surveyContent
+  );
+  return {
+    ...clone(retained),
+    title: "Stormglass Bloom",
+    subtitle: "Catalogued reef flora",
+    status: "Catalogued",
+    summary: "A reef-edge bloom whose crystalline petals harden under salt spray and dusk light.",
+    tags: [...content.codexTags],
+    habitat: "Salt-lashed reef shelves with intermittent ruin shade",
+    uses: "Lamp-glass flux, delicate varnish blends, and survey marking dyes",
+    valueDescription: "Moderate value when fresh, high value when preserved for alchemical buyers",
+    regionTags: [...content.codexRegionTags],
+    locked: false
   };
 }
 
@@ -1336,12 +1372,15 @@ function validateResultTransition(
     result.stage,
     request.normalizedIntent.ownerInputs
   );
+  const content = getAshenReefSurveyContent(
+    request.normalizedIntent.materialVersions.surveyContent
+  );
   const expectedCurrentActivity = result.stage === "ruins_confirmation"
     ? {
         id: "activity.return.survey_packet",
         label: "Returning Chart Packet",
         category: "Contract",
-        detail: "The field chart is complete and ready to be taken back to Saltmere Harbor Office."
+        detail: content.returnActivityDetail
       }
     : request.normalizedIntent.ownerInputs.currentActivity;
   const expectedDiscoveryOutcome = result.stage !== "ruins_confirmation"
@@ -1419,16 +1458,17 @@ function validateReceiptEffect(
     case "quest_progress_sync": {
       const sectors = result.materialAfter.sectorCount;
       const ruins = result.materialAfter.ruinsConfirmed;
+      const contentVersion = request.normalizedIntent.materialVersions.surveyContent;
       return deepEqual(receipt.effect, {
         questId: "quest.ashen_reef_survey",
         category: "active",
         tracked: true,
         statusLabel: "Tracked",
-        objectives: [
-          `Survey reef lanes: ${sectors} / 3 sectors complete`,
-          `Confirm ruin markers: ${ruins ? "complete" : "pending"}`,
-          "Return chart packet to Saltmere Harbor Office"
-        ]
+        objectives: buildAshenReefSurveyQuestObjectives(
+          contentVersion,
+          sectors,
+          ruins
+        )
       });
     }
     case "survey_operation":
@@ -1813,6 +1853,13 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
   if (new Set(liveFlags).size !== liveFlags.length) return false;
   const latest = authority.results[authority.results.length - 1];
   if (latest) {
+    const latestRequest = authority.requests.find(
+      (entry) => entry.requestId === latest.requestId
+    );
+    if (!latestRequest) return false;
+    const expectedLiveDiscovery = latest.materialAfter.discoveryEntryState === "matching"
+      ? expectedSurveyDiscovery(latestRequest, latest)
+      : null;
     const ruinsFlags = snapshot.sessionState.flags.filter(
       (entry) => entry === "gameplay.quest.ashen_reef_survey.ruins_confirmed"
     );
@@ -1832,14 +1879,23 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
       discoveryFlag !== latest.materialAfter.discoveryFlagPresent ||
       matchingDiscoveries.length !== (latest.materialAfter.discoveryEntryState === "matching" ? 1 : 0) ||
       matchingDiscoveries.some(
-        (entry) =>
-          entry.codexEntryId !== "flora.unknown_bloom" ||
-          entry.category !== "flora" ||
-          entry.title !== "Stormglass Bloom" ||
-          entry.sourceType !== "survey" ||
-          entry.sourceId !== "quest.ashen_reef_survey"
+        (entry) => expectedLiveDiscovery === null || !deepEqual(entry, expectedLiveDiscovery)
       )
     ) return false;
+    if (latest.materialAfter.ruinsConfirmed) {
+      const expectedLiveCodex = latest.materialAfter.codexRowState === "source_record_absent"
+        ? null
+        : expectedSurveyCodexEntry(latestRequest);
+      const matchingCodexEntries = snapshot.sessionState.codexEntries.filter(
+        (entry) => entry.id === "flora.unknown_bloom"
+      );
+      if (
+        matchingCodexEntries.length !== (expectedLiveCodex === null ? 0 : 1) ||
+        matchingCodexEntries.some(
+          (entry) => expectedLiveCodex === null || !deepEqual(entry, expectedLiveCodex)
+        )
+      ) return false;
+    }
   }
   return true;
 }

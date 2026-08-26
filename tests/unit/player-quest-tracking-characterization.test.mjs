@@ -7,10 +7,10 @@ import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
 const ACTIVE_ID = "quest.ashen_reef_survey";
 const CONTRACT_ID = "quest.rivet_shortfall_relief";
 
-const TRACKED_SNAPSHOT_HASH = "bdb4202b3c8b1b59c1539dfd38fc505f5922b6f557827cdd970ce3205da0946f";
+const TRACKED_SNAPSHOT_HASH = "0a60952d4b9c001bc9147ba32dfb48f84f00543ed0d1854fd0c7f03bd8118687";
 const TRACKED_NOTICE_HASH = "6d364c85f4e69f804651d203ee9cab00124d913549ff328f5eeda9dc3624d5a1";
-const UNTRACKED_SNAPSHOT_HASH = "88668c3cb3b72cc87779f7fa053bdab1a2e383c2963f403ffa690b3b1fb75601";
-const UNTRACKED_NOTICE_HASH = "e6ceb7fdb1ead4388efeaab157b4fddae04debb67bfc9756262964c9be7bee74";
+const UNTRACKED_SNAPSHOT_HASH = "1968629d26d1b8e108ccf3bda97b1a576ac64b66a701ced76dd2983198f4ed44";
+const UNTRACKED_NOTICE_HASH = "339bb83cc0e08db15d34f0d994340944ae8100a81abf9c7917cba0602b19cbd3";
 
 function hash(value) {
   return createHash("sha256").update(JSON.stringify(value)).digest("hex");

@@ -787,7 +787,7 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
         canAccept: false,
         canTurnIn: false,
         canTrack: trackingPlan.accepted,
-        nextStep: 'Travel from Saltmere to Ashen Reef, then advance a work shift to begin charting.'
+        nextStep: 'Travel from Starfall Port to Ashen Reef, then advance a work shift to begin charting.'
       };
     }
 
@@ -809,8 +809,8 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
       canTrack: trackingPlan.accepted,
       nextStep:
         getCurrentLocationId(snapshot) === 'location.saltmere'
-          ? 'Turn the chart packet in at Saltmere Harbor Office for payout and discovery credit.'
-          : 'Return to Saltmere to turn in the completed chart packet.'
+          ? "Return the chart packet to Starfall Harbormaster's Office for later turn-in."
+          : "Return to Starfall Harbormaster's Office with the completed chart packet."
     };
   }
 
