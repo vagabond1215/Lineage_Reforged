@@ -1,7 +1,7 @@
 # Open Design Questions Index
 
 Source route: ChatGPT via GitHub Connector  
-Date: 2026-08-20  
+Date: 2026-08-20
 Status: connector-side durable question index; documentation only; not an implementation handoff
 
 ## Purpose

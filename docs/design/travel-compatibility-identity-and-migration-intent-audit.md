@@ -6,7 +6,7 @@ Status: connector-side documentation-only audit; no implementation authority
 
 Source baseline before Pass 2: `58ce5acfbb6d79b2c1e3905a3a886be23b46376b`
 
-Pass 2 planning commit: `61a7470797680f5b75f5f27c329e26adb8e49d5f`
+Pass 2 planning commit: `61a74707a22a5e4f85ac9d1492f35da3bd7dcda8`
 
 Protected active implementation route: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
 

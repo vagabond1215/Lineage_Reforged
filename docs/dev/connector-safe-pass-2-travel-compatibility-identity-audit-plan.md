@@ -121,7 +121,7 @@ Outcome: `AUDIT_COMPLETE_DEFER_MIGRATION`
 
 Baseline head before Pass 2: `58ce5acfbb6d79b2c1e3905a3a886be23b46376b`.
 
-Planning commit: `61a7470797680f5b75f5f27c329e26adb8e49d5f`.
+Planning commit: `61a74707a22a5e4f85ac9d1492f35da3bd7dcda8`.
 
 Audit artifact: `docs/design/travel-compatibility-identity-and-migration-intent-audit.md`.
 
