@@ -2,7 +2,7 @@
 
 Date: 2026-08-27
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: ChatGPT via GitHub Connector; documentation-only repository inspection
 
@@ -45,3 +45,21 @@ Classify remaining class/job/FFXI-era character-progression material so future i
 
 - `docs/design/classless-progression-and-placeholder-provenance-audit.md`;
 - completion appendix in this plan.
+
+
+## Completion Appendix
+
+Result: `AUDIT_COMPLETE_CLASSLESS_DIRECTION_CONFIRMED_COMPATIBILITY_RETAINED`
+
+Completed output:
+- `docs/design/classless-progression-and-placeholder-provenance-audit.md`
+
+Key findings:
+- ordinary new campaigns are already classless: `classId: null`, `jobId: null`, class level `0`;
+- class fields/profiles remain live serialized/resource/validation compatibility scaffolding and require a future versioned retirement/migration package;
+- current player skill/ability/spell records and schemas contain no inspected class/job gate vocabulary;
+- all 30 current trait records are lineage traits; the older data dictionary's job-trait language is stale;
+- FFXI elemental-reference direction remains separately authorized and must not be conflated with class/job provenance;
+- `docs/data-dictionary/player-stats.md` is ready for a bounded current-state repair.
+
+Follow-up selected: `Player Stats Data Dictionary Current-State Repair`.
