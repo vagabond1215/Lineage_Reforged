@@ -2,7 +2,7 @@
 
 Date: 2026-08-27
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: ChatGPT via GitHub Connector; documentation-only maintenance
 
@@ -38,3 +38,22 @@ Repair `docs/data-dictionary/player-stats.md` so it describes the live classless
 ## Exclusions
 
 No player balance changes. No catalog edits. No schema edits. No removal of `classId`, `jobId`, `classLevel`, class profiles, or save compatibility. No prompt/output/handoff modification.
+
+
+## Completion Appendix
+
+Result: `DOC_REPAIR_COMPLETE`
+
+Updated:
+- `docs/data-dictionary/player-stats.md`
+
+The repaired dictionary now:
+- describes the live classless creator instead of a future class taxonomy;
+- records current catalog sizes and the current trait posture;
+- separates declarative governing-attribute metadata from executable runtime formulas;
+- records the live resource formula and its drift from `attributes.json` hints;
+- records use-driven stat growth, attribute tension, Echo, and compatibility-field boundaries;
+- preserves FFXI provenance as historical/reference input rather than current job/class authority;
+- corrects the storage table name from nonexistent `player_progression_models` to live `player_progression_tracks`.
+
+No production/content/schema/test/prompt/output/handoff behavior changed.
