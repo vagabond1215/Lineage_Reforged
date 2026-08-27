@@ -2,7 +2,7 @@
 
 Date: 2026-08-27
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: ChatGPT via GitHub Connector; documentation-only/read-only source and evidence inspection
 
@@ -38,3 +38,24 @@ Map the current source owners and missing contracts required for a future quest 
 
 - `docs/design/quest-turn-in-and-reward-readiness-audit.md`;
 - completion appendix in this plan.
+
+
+## Completion Appendix
+
+Result: `AUDIT_COMPLETE_OWNER_CONTRACT_READY_AFTER_PARENT_ACCEPTANCE_AND_AUTHORED_TERMS`
+
+Completed output:
+- `docs/design/quest-turn-in-and-reward-readiness-audit.md`
+
+Key findings:
+- the current quest turn-in remains a UI/game-shell `legacy_bridge` path, although the resulting snapshot is still routed through generic campaign admission;
+- exactly two legacy turn-ins exist: Ashen and Rivet;
+- the old Ashen Saltmere payout/standing/reputation constants are characterization only and must not become Soundings canon;
+- current Soundings authority deliberately leaves numeric rewards null and ends the representative loop active/unturned-in;
+- work completion, turn-in eligibility, accepted turn-in occurrence, quest lifecycle completion, consequence delivery, and presentation projections must remain separate;
+- journal `completed` state is not a durable reward-delivery receipt;
+- a first future turn-in should be quest-specific rather than a generic reward framework;
+- implementation is gated by independent `0.6.11.1` acceptance and explicit authored Soundings turn-in terms;
+- the historical evidence branch `parallel/quest-turn-in-reward-source-audit` at `470e8aca48510f68824f7a5aa8f603d0b13bbc1f` remains read-only evidence.
+
+Safe stop reached after this pass: subsequent high-value work either depends materially on `0.6.11.1` acceptance or requires new product/balance decisions. No further Connector pass should be opened in this batch.
