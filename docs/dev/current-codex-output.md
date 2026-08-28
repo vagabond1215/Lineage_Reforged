@@ -22,7 +22,7 @@ Implementation coordination commit: `b63fc138d318f6d22d9d5be635b8e3404d8407cc`
 
 Synchronized audit starting head: `3e18bfdd22bb5de048ecc540ccd75ff397debc39`
 
-Post-audit integration base: `0eef8c9b0f55807829dbefec0e4ee86b263a3404` (seven workflow/documentation commits inspected and reconciled before publication)
+Post-audit integration base: `0eef8c96fbdbff1a45914bf9b36835bfe826e5d0` (seven workflow/documentation commits inspected and reconciled before publication)
 
 Audit coordination commit: reported in the completion response because a commit cannot contain its own identity
 
