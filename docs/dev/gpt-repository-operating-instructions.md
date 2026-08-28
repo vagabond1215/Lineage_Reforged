@@ -1,6 +1,7 @@
 # GPT Repository Operating Instructions
 
 Date: 2026-07-12
+Updated: 2026-08-27
 Status: active run-agnostic GPT operating guide for Lineage Reforged repository continuance
 Audience: GPT threads that inspect, summarize, prompt, or cautiously update the Lineage Reforged repository
 
@@ -13,6 +14,8 @@ Repository workflow is the default interpretation when the user asks to inspect 
 Prior conversation context about settlement images, environment art, image-generation prompts, or other asset production must not redirect a repository-workflow request. Treat that context as relevant only when the user explicitly asks for visual or asset work. For repository continuation, use the current GPT/Codex coordination files and live GitHub state.
 
 This guide does not replace live repo inspection, active handoffs, current prompts, design decisions, schemas, validators, content, tests, or explicit user instructions.
+
+Use `docs/dev/codex-vs-gpt-connector-handling-procedure.md` for the current GPT/Connector versus Codex division of labor and `docs/dev/codex-resource-budget-and-execution-slicing-policy.md` when constrained Codex/high-reasoning resources affect package size or sequencing.
 
 ## 2. Core Rule: Inspect Before Acting
 
@@ -71,16 +74,17 @@ Batch independent reads when useful, but do not perform speculative broad search
 
 ### 4.2 Codex Local
 
-Use Codex Local when the task must inspect the local worktree, edit multiple files, run commands, execute tests or lint, validate changes, or produce commit-ready implementation.
+Use Codex Local or the current authenticated repository-capable execution surface when the task requires the local worktree, production/source mutation, commands, tests/lint/build/typecheck, executable probes, local branch operations, or independent executable acceptance.
 
-Select the current supported Codex model and reasoning level according to complexity. Do not hard-code one mode for every task.
+Select the current supported model/reasoning tier from a fresh capability and resource preflight. Do not hard-code one model as the permanent default.
 
-- Use **Codex 5.6 Sol Local High** for the active cross-repository evidence audit and for complex multi-file work where broad evidence classification, careful scope control, and validation justify High reasoning.
-- Use a lighter supported local reasoning level for trivial, tightly bounded edits when it preserves quality.
-- Use Plan mode for decision-complete non-mutating plans when implementation is not authorized.
-- Use Cloud only when a substantially larger multi-file task clearly benefits from it and repository policy permits it.
+- Use the strongest/highest-cost reasoning only for slices that materially need it, such as multi-owner semantics, persistence/idempotency, migration, representative integration, or adversarial acceptance.
+- When that tier is constrained, narrow the slice and move repository discovery/packaging to Connector work first.
+- Use a lighter supported local reasoning level for deterministic bounded implementation when it preserves quality.
+- Use Plan mode for decision-complete non-mutating planning when implementation is not authorized.
+- Use another larger execution surface only when its capabilities materially improve completion and repository policy permits it.
 
-Codex prompts must name the required validations and scope boundaries. Do not ask Codex to infer permission from adjacent roadmap work.
+Codex prompts must name the required validations, scope boundaries, package-size/checkpoint posture, and what Connector evidence may be reused through delta verification. Do not ask Codex to infer permission from adjacent roadmap work.
 
 ### 4.3 Deep Research
 
