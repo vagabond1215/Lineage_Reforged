@@ -1,7 +1,7 @@
 # Future System Design Ledger
 
 Source route: ChatGPT via GitHub Connector
-Date: 2026-05-21
+Date: 2026-08-28
 Status: durable design-criteria ledger; not an implementation handoff
 
 ## Purpose
@@ -595,6 +595,40 @@ Rules:
 - Production-chain tuning waits for stable workplace/labor/market contracts.
 - Contacts, market passives, free income, business ownership, and institutional privileges require owner systems.
 - Opportunity discovery should guide without turning into quest rails.
+
+### Material Properties, Purpose Fit, And Substitution
+
+Future crafting should evolve beyond a simple material tier ladder. Raw and prepared materials should be able to carry multiple distinct properties whose usefulness depends on what is being made.
+
+Candidate property dimensions include, where relevant:
+
+- strength, toughness, hardness, edge retention, and wear resistance;
+- flexibility, elasticity, stiffness, weight, and density;
+- corrosion, rot, heat, cold, moisture, and water resistance;
+- insulation, permeability, texture, finish, color, pattern, luster, and other appearance traits;
+- workability, joining/forging/sewing difficulty, repairability, and tool or workplace demands;
+- magical conductivity, retention, affinity, interference, stability, or insulation;
+- scarcity, cultural desirability, prestige, and economy-owned value.
+
+The same material should therefore have different desirability by purpose rather than a universal "better material" score. Examples:
+
+- a sword may favor hardness, toughness, edge retention, workable weight, and compatible magical conduction;
+- jewelry may favor appearance, rarity, value, workability, corrosion resistance, or magical conduction over raw structural strength;
+- cutlery may favor corrosion resistance, edge behavior, food safety, finish, and ease of maintenance;
+- hides and leathers may trade among durability, flexibility, weight, insulation, water shedding, abrasion resistance, exotic appearance, rarity, and magical properties.
+
+Later crafting should be able to express functional material roles or constraints so characters can substitute eligible materials intentionally. Substitution should create meaningful tradeoffs in the resulting item's capabilities, appearance, value, crafting difficulty, maintenance needs, tool/workplace requirements, and failure risks instead of merely accepting or rejecting an item key.
+
+Guardrails:
+
+- Preserve the current fixed authored recipe baseline until a dedicated later decision explicitly introduces substitution; this ledger note does not change the accepted recipe schema or runtime.
+- Material properties belong to the appropriate item/material/resource authority. Recipes should reference required roles, constraints, or preferences without duplicating canonical material facts.
+- Crafted outputs should eventually preserve enough material/composition provenance for later equipment, economy, repair, enchanting, inheritance/heirloom, and descriptive systems to reason about what the object is made from.
+- Do not reduce every property to one aggregate quality number. Different uses should produce different optima and legitimate specialist materials.
+- Processing should be able to change properties where appropriate: tanning, tempering, alloying, laminating, curing, waterproofing, polishing, enchanting, and similar treatments may alter the useful profile rather than only rename the input.
+- Magical conductivity or affinity must not itself grant spell ownership, spell execution, enchantment success, or free energy; those remain separate magic/runtime authorities.
+- Economy-owned value should remain contextual and derived from scarcity, demand, workmanship, provenance, and use rather than being copied as a crafting-owned field.
+- Avoid combinatorial content explosion. Prefer reusable property profiles plus authored constraints and bounded outcome rules over hand-authoring every possible material/item permutation.
 
 ## Calendar, Climate, Travel, And World Criteria
 
