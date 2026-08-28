@@ -14,6 +14,8 @@ The objective is not to maximize the number of connector commits. The objective 
 
 `docs/dev/codex-resource-budget-and-execution-slicing-policy.md` controls Connector-first preparation, Codex package sizing, checkpoint expectations, and interruption/resume posture when constrained repository-capable/high-reasoning resources are known.
 
+`docs/dev/codex-vs-gpt-connector-handling-procedure.md` controls the current operational sequence: bounded Connector preparation may span multiple passes when useful, Codex receives one coherent local/executable slice, and post-run Connector review is consolidated after the hosted result.
+
 ## 2. Proactive Assistance Requirement
 
 During repository inspections, handoffs, roadmap discussions, and Codex coordination, ChatGPT should actively identify and, when authorized, perform useful connector-safe work in these categories:
