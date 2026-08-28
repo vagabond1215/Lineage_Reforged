@@ -239,3 +239,11 @@ Disposition: `IMPLEMENTED_PENDING_PARENT_AUDIT`
 `0.6.11` has implemented the bounded upstream reachability owners and the injection-free representative production path while preserving accepted parent `0.6.10` authority. The final scoped matrix passed `1072/1072`, the adversarial probe passed `24/24`, normal content lint passed for 71 files, the 219-module production build passed, and bounded TypeScript retained the exact 137-diagnostic baseline.
 
 This appendix does not reopen or re-accept parent `0.6.10`, and it does not self-accept representative evidence. Run production-read-only `Version 0.6.11.1` next. `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` remains controlling until that audit, survey turn-in/rewards remain excluded, and `0.7.0` remains `NOT_READY`.
+
+## 15. Ordinary Representative Loop Acceptance Appendix
+
+Date: 2026-08-27
+
+Independent `Version 0.6.11.1` accepted parent `0.6.11` and issued `REPRESENTATIVE_LOOP_ACCEPTED`. Fresh production evidence confirmed that the already accepted `0.6.10` four-stage owner is ordinarily reachable through accepted upstream offer, quest acceptance/access, travel, admission, publication, and restart authority.
+
+The final accepted path retains exactly four requests, four occurrences, four results, 48 receipts, the exact nine non-proposals, ordered projections, durable empty-cache duplicate, and Normal defeat/recovery preservation. The quest remains active and unturned-in. This appendix changes no `0.6.10` owner contract and grants no turn-in/reward authority. `0.7.0` remains `NOT_READY` pending a separate band-entry decision.

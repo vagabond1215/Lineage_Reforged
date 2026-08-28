@@ -403,3 +403,19 @@ The bounded package is implemented. Production now owns the exact Starfall Sound
 The final scoped matrix passed `1072/1072`, the final adversarial probe passed `24/24`, normal content lint passed for 71 files, the production Vite build completed for 219 modules, and bounded TypeScript retained the exact 137-diagnostic baseline with no new diagnostic tuple. `git diff --check` passed apart from repository line-ending warnings.
 
 Run only `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit` next. This appendix is implementation evidence, not independent acceptance. `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` remains controlling until that audit, survey turn-in/rewards remain excluded, and `0.7.0` remains `NOT_READY`.
+
+## 16. Version 0.6.11.1 Independent Acceptance Appendix
+
+Date: 2026-08-27
+
+Audit starting head: `3e18bfdd22bb5de048ecc540ccd75ff397debc39`
+
+Parent result: `PARENT_ACCEPTED`
+
+Representative classification: `REPRESENTATIVE_LOOP_ACCEPTED`
+
+The production-read-only audit independently accepted the authored definition, narrow schema/type honesty, one-time offer staging and initial admission, atomic quest-acceptance access, Starfall/Ashen travel identity, versioned survey presentation/persistence, retained parent contracts, and one ordinary injection-free creator-to-final-restart loop.
+
+Fresh removable evidence passed `4/4`: publication failure with lost-caller retry, post-plan transition atomicity, ordinary four-shift/restart/durable duplicate, and independently constructed v1-to-v2 mixed history with cross-version corruption rejection and content-array isolation. The prescribed matrix passed `1072/1072`, content lint passed 71 files, Vite built 219 modules, and bounded TypeScript retained exactly 137 registered diagnostics with no new tuple.
+
+No production or tracked test changed. The representative quest remains active and unturned-in; no turn-in, payout, reward, standing, inventory, Geographic Knowledge, or extra General Lore turn-in effect was accepted. `0.7.0` remains `NOT_READY`; the next route is the separate unversioned `Integrated Gameplay 0.7 Band-Entry Readiness Decision`.

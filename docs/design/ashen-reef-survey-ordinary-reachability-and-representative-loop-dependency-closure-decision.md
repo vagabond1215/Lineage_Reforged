@@ -176,3 +176,11 @@ Disposition: `IMPLEMENTED_PENDING_PARENT_AUDIT`
 The original `NO_PACKAGE` remains historically correct at its inspected source. Accepted authored canon and the later package decision closed its upstream blocker, and `0.6.11` has now implemented the bounded production route: new-campaign offer staging, journal acceptance, atomic Ashen access admission, site-aware travel, travel-owned survey activation, four accepted survey shifts, authoritative publication, and final restart without test-side eligibility injection.
 
 This appendix does not independently accept the representative loop. Run production-read-only `Version 0.6.11.1` next. Until it accepts the package, `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE` and `0.7.0` `NOT_READY` remain controlling; turn-in/rewards and the original exclusions remain outside scope.
+
+## 11. Representative Loop Acceptance Appendix
+
+Date: 2026-08-27
+
+Independent `Version 0.6.11.1` returned `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`. The formerly missing upstream offer and access owners are now accepted in production, and a fresh ordinary Starfall creator crossed version-7 admission, acceptance/tracking/access, travel-owned activation, four caller shifts, restart boundaries, and durable duplicate without eligibility injection.
+
+The earlier `NO_PACKAGE` remains historically correct at its inspected source and is not rewritten. Its blocker is closed. The representative path deliberately ends active and ready for later turn-in; no reward or turn-in authority is inferred. `0.7.0` remains `NOT_READY` pending the separate docs-first band-entry decision.

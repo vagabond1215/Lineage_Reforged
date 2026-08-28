@@ -1,10 +1,20 @@
 # Branch Disposition Register
 
-Date: 2026-08-26
+Date: 2026-08-27
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-08-27 Version 0.6.11.1 Acceptance Audit Refresh
+
+The production-read-only audit fetched/pruned, fast-forwarded a clean checkout across 12 Connector-safe documentation commits, and audited from synchronized `master == origin/master` at `3e18bfdd22bb5de048ecc540ccd75ff397debc39`. Before publication, a second fetch found seven additional workflow/documentation commits through `0eef8c9b0f55807829dbefec0e4ee86b263a3404`; their new Connector-handling procedure and pre-audit handoff were read and semantically reconciled before rebasing the audit coordination. Fresh comparison found one local branch and 37 non-default remote branches. No post-implementation commit changes Ashen production or tracked tests.
+
+Live pull-request refs retain PR #2 head `e78dc645cfb658685be12f45f46d34b7c0da1119` and PR #3 head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; both remain `SUPERSEDED_PRESERVE_EVIDENCE`. Their mechanical merge refs do not alter semantic disposition.
+
+The four exact survey refs remain `CANDIDATE_INTEGRATION` for broader named consumers: activity advancement `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, progression/reward mutation `387f2491d0d671ee7834656c28183e72a798f1ca`, Chronicle/notification provenance `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, and Knowledge/discovery visibility `46434f31f8b06d49aad9a516543fbe36d188d519`. Integrated-gameplay readiness at `59c103c3a06d55f35bffa735fd4b7814dffb583e` and prompt-packaging evidence remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
+
+No merge, cherry-pick, rebase, force update, PR mutation, closure, deletion, or disposition change was due. Reinspect during the installed `Integrated Gameplay 0.7 Band-Entry Readiness Decision` or an earlier explicit lifecycle trigger.
 
 ## 2026-08-26 Version 0.6.11 Implementation Refresh
 

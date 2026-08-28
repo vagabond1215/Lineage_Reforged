@@ -1,6 +1,6 @@
 # Lineage: Reforged - Strategic Continuity Brief
 
-Updated 2026-08-26 by `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`.
+Updated 2026-08-27 by `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`.
 
 ## Purpose
 
@@ -22,13 +22,13 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 
 ## Current Repository Anchor
 
-- Latest accepted primary: `Version 0.6.10 - Ashen Reef Survey Advancement Authority`.
-- Latest accepted and completed support audit: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`, outcome `PARENT_ACCEPTED` with `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`.
+- Latest accepted primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`.
+- Latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, outcome `PARENT_ACCEPTED` with `REPRESENTATIVE_LOOP_ACCEPTED`.
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, outcome `IMPLEMENTED_PENDING_REAUDIT`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
 - Latest completed unversioned decision: `Ashen Reef Survey Ordinary Reachability Implementation Package Decision`, `PACKAGE_READY`.
-- Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, `IMPLEMENTED_PENDING_PARENT_AUDIT`.
-- Active run: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`.
+- Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, accepted.
+- Active run: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -61,7 +61,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
 - `Version 0.6.9` is implemented and accepted with linked arbitrary-depth fork-lineage support under bounded Model C.
 - The survey receipt decision fixed the persisted identity/container, continuity-before-receipt, retry, owner, projection-repair, correction, migration, and retention contract and selected one bounded `0.6.10` package.
-- `0.7.0` remains `NOT_READY`; accepted authored canon closed the prior offer/access blocker, and bounded primary `0.6.11` is implemented at `3ca23d6864541a899ea61a6bf26257665f754e78`. Representative evidence remains incomplete until independent `0.6.11.1` acceptance.
+- `0.7.0` remains `NOT_READY`; bounded primary `0.6.11` is implemented at `3ca23d6864541a899ea61a6bf26257665f754e78`, and independent `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`. The active docs-first decision must evaluate every band-entry criterion.
 
 ## Validation Posture
 
@@ -79,7 +79,7 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 1. execute production-read-only `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`;
 2. install a separate repair suffix only if that audit returns `REPAIR_REQUIRED`;
-3. keep `0.7.0` behind accepted representative evidence and an explicit later docs-first band-entry decision.
+3. execute the installed docs-first band-entry decision and keep `0.7.0` unassigned unless it returns `BAND_ENTRY_READY`.
 
 ## Current Implementation Reality
 

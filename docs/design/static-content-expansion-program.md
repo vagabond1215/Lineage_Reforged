@@ -1,8 +1,8 @@
 # Static Content Expansion Program
 
-Date: 2026-08-26
+Date: 2026-08-27
 Program versions: `0.6.4`-`0.6.8`
-Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted through `0.6.10.5`; Soundings canon accepted; ordinary-reachability `0.6.11` implemented pending active audit `0.6.11.1`
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted; Soundings canon and ordinary-reachability `0.6.11` accepted through `0.6.11.1`; docs-first `0.7` band-entry decision active
 
 ## 1. Purpose
 
@@ -181,8 +181,8 @@ Deep Research uses one gate and one artifact at a time.
 | unversioned decision | Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision | Complete with `NO_PACKAGE`; downstream seams are reusable, but exact offer/journal-admission and access canon are absent. |
 | unversioned decision | Ashen Reef Soundings Authored-Canon Decision | Complete with `AUTHORED_INPUT_ACCEPTED`; no static content changed. |
 | unversioned decision | Ashen Reef Survey Ordinary Reachability Implementation Package Decision | Complete with `PACKAGE_READY`; selected bounded primary `0.6.11`. |
-| `0.6.11` | Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence | Implemented at `3ca23d6864541a899ea61a6bf26257665f754e78`, pending parent audit; added one exact authored quest definition plus bounded reachability owners/evidence without reopening the broader static program. |
-| `0.6.11.1` | Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit | Active production-read-only support audit; independently decides parent and representative-loop acceptance. |
+| `0.6.11` | Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence | Implemented at `3ca23d6864541a899ea61a6bf26257665f754e78` and independently accepted; added one exact authored quest definition plus bounded reachability owners/evidence without reopening the broader static program. |
+| `0.6.11.1` | Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit | Complete with `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`; changed no static content. |
 
 ## 13. Cross-Content Audit Criteria
 
