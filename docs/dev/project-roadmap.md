@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-08-27 by `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`
+Last reviewed: 2026-08-27 by `Integrated Gameplay 0.7 Band-Entry Readiness Decision`
 
 ## Current Runtime Transition Override
 
@@ -8,9 +8,9 @@ Last reviewed: 2026-08-27 by `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reac
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, `IMPLEMENTED_PENDING_REAUDIT`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
 - Latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`.
-- Latest completed unversioned decision: `Ashen Reef Survey Ordinary Reachability Implementation Package Decision`, outcome `PACKAGE_READY`.
-- Active run: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`.
-- Activity selection and `0.6.4`-`0.6.11` are accepted, including the injection-free representative loop. `0.7.0` remains `NOT_READY` pending the separate docs-first band-entry decision.
+- Latest completed unversioned decision: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, outcome `BAND_ENTRY_READY`.
+- Active run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`.
+- Activity selection and `0.6.4`-`0.6.11` are accepted, including the injection-free representative loop. `0.7.0` is authorized pending its separate milestone activation/publication package.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
 - The older primary `0.5.357` post-repair audit pointer is superseded. Use `0.5.356.1` only as support if contradictory focused evidence appears.
@@ -39,11 +39,11 @@ Current live anchor:
 - Latest accepted primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`; independently accepted by completed `0.6.11.1`.
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
-- Latest completed unversioned decision: `Ashen Reef Survey Ordinary Reachability Implementation Package Decision`, `PACKAGE_READY`.
+- Latest completed unversioned decision: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, `BAND_ENTRY_READY`.
 - Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, accepted.
-- Active route: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`.
+- Active route: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
-- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, Normal persistence, bounded survey advancement, ordinary reachability, and representative evidence are accepted; `0.7.0` remains `NOT_READY` pending the band-entry decision.
+- Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, Normal persistence, bounded survey advancement, ordinary reachability, and representative evidence are accepted; the readiness decision returned `BAND_ENTRY_READY`, and `0.7.0` milestone activation is pending.
 
 Versioning rule:
 
@@ -364,7 +364,7 @@ These are internal development maturity markers, not public release promises. Pa
 
 ## 3. Active Pipeline
 
-Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9`, `0.6.10`, and `0.6.11` are accepted, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the docs-first band-entry decision is active, and `0.7.0` remains `NOT_READY`.
+Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9`, `0.6.10`, and `0.6.11` are accepted, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the readiness decision returned `BAND_ENTRY_READY`, and separate `0.7.0` milestone activation is active.
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |

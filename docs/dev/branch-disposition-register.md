@@ -6,6 +6,16 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-27 Integrated Gameplay 0.7 Band-Entry Readiness Refresh
+
+The documentation-only decision fetched/pruned, fast-forwarded a clean checkout from `6fea077953eb24dbcf27488ea1a037035512cd04` to synchronized `master == origin/master` at `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`, and inspected the complete intervening delta. The ten remote commits add Connector/workflow planning and inventory/NPC/readiness audit documents only; no production or tracked-test path changed after accepted implementation `3ca23d6864541a899ea61a6bf26257665f754e78`.
+
+Fresh inventory found one local branch and 37 non-default remote branches. Live pull-request refs retain PR #2 head `e78dc645cfb658685be12f45f46d34b7c0da1119` and PR #3 head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; their current merge refs do not change `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+The four survey evidence refs remain `CANDIDATE_INTEGRATION` for broader named consumers. `prep/integrated-gameplay-0-7-readiness-audit` remains `PROTECTED_REFERENCE` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`; its earlier missing-owner findings were inspected as historical evidence and are now closed by accepted `0.6.9`-`0.6.11`, not integrated from the branch. Prompt-packaging remains `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
+
+The readiness decision returned `BAND_ENTRY_READY` and installed separate `Version 0.7.0 - Integrated Gameplay Systems Band Entry`. This route change creates a review checkpoint but no safe branch integration or retirement action. No merge, cherry-pick, rebase, force update, PR mutation, closure, deletion, or disposition change was due. Reinspect during the milestone activation or an earlier explicit lifecycle trigger.
+
 ## 2026-08-27 Version 0.6.11.1 Acceptance Audit Refresh
 
 The production-read-only audit fetched/pruned, fast-forwarded a clean checkout across 12 Connector-safe documentation commits, and audited from synchronized `master == origin/master` at `3e18bfdd22bb5de048ecc540ccd75ff397debc39`. Before publication, a second fetch found seven additional workflow/documentation commits through `0eef8c9b0f55807829dbefec0e4ee86b263a3404`; their new Connector-handling procedure and pre-audit handoff were read and semantically reconciled before rebasing the audit coordination. Fresh comparison found one local branch and 37 non-default remote branches. No post-implementation commit changes Ashen production or tracked tests.

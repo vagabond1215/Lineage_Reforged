@@ -2,90 +2,70 @@
 
 Date: 2026-08-27
 
-Status: `Version 0.6.11.1` complete; parent and representative loop accepted
+Status: integrated-gameplay band-entry readiness accepted; milestone activation pending
 
 Repository: `vagabond1215/Lineage_Reforged`
 
-Parent result: `PARENT_ACCEPTED`
-
-Representative classification: `REPRESENTATIVE_LOOP_ACCEPTED`
+Readiness result: `BAND_ENTRY_READY`
 
 Accepted implementation: `3ca23d6864541a899ea61a6bf26257665f754e78`
 
-Synchronized audit starting head: `3e18bfdd22bb5de048ecc540ccd75ff397debc39`
+Readiness decision starting head: `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`
 
 Active run:
 
-`Integrated Gameplay 0.7 Band-Entry Readiness Decision`
+`Version 0.7.0 - Integrated Gameplay Systems Band Entry`
 
 Current prompt authority:
 
 `docs/dev/current-codex-prompt.md`
 
-`0.7.0`: `NOT_READY`
+`0.7.0`: `AUTHORIZED_PENDING_MILESTONE_ACTIVATION`
 
-## 1. Accepted State
+## 1. Accepted Readiness State
 
-Independent production-read-only audit accepted the bounded `0.6.11` package and its representative evidence. One ordinary Starfall creator can receive the canonical Soundings contract through the retained initial publication path, accept it with atomic tracking and settlement-less Ashen access, travel from Starfall to Survey Anchorage, acquire the operation/activity from arrival, execute all four engine-owned survey shifts, publish/restart mid-loop and after completion, and durably deduplicate the fourth request with an empty caller cache.
+The unversioned band-entry decision independently returned `BAND_ENTRY_READY`. Every `0.7.0` policy criterion is satisfied by accepted `0.6.9`, `0.6.10`, `0.6.11`, and `0.6.11.1` authority plus a fresh current-head `77/77` focused gate.
 
-Final accepted authority is exactly four ordered requests, four occurrences, four results, and 48 receipts, with exact projections, three sectors plus ruins, complete operation, return activity, Stormglass discovery posture, active unturned-in quest, exact nine non-proposals, and no ordinary correction/repair. Currency, standing, inventory, payout/reward delivery, Geographic Knowledge, and extra General Lore turn-in gain remain absent.
+The accepted loop begins with a real Starfall creator, crosses retained new-campaign publication/load, quest acceptance and Ashen access, engine-owned travel and arrival activation, four engine-owned survey shifts, campaign admission, persistence/restart, and empty-cache durable duplicate. Final accepted authority remains 4 requests, 4 occurrences, 4 results, and 48 receipts.
 
-## 2. Audit Evidence
+## 2. Boundary To Preserve
 
-- independent removable audit probe: `4/4`;
-- prescribed focused/adjacent matrix: `1072/1072`;
-- normal content lint: 71 files;
-- Vite production build: 219 modules, registered chunk advisory only;
-- bounded TypeScript: exact registered 137 diagnostics, no new tuple;
-- implementation range diff/hygiene, mirrors/exports, raw/version-6/version-7 persistence, browser, duplicate/correction/repair, Knowledge/no-proposal, and Normal defeat/recovery gates passed.
+Soundings remains active and unturned-in. The accepted survey shifts—not legacy turn-in—supply the required cross-system consequence-bearing interaction. Inventory is an exact non-proposal for this interaction.
 
-The probe and build output were removed. Production and tracked tests were not modified by the audit.
+Do not reopen or import:
 
-## 3. Next Decision Boundary
+- turn-in, payout, rewards, or generic reward architecture;
+- class/progression cleanup or attribute rebalance;
+- generic quest/travel/activity/event/effect systems;
+- travel-key migration or other Stakes modes;
+- inventory-instance or generated-person/NPC promotion work;
+- `0.8.x` vertical-slice, accessibility/balance, packaging, alpha, or release gates.
 
-The installed unversioned docs-first band-entry decision must evaluate every `0.7.x` maturity criterion against accepted current authority. It must return `BAND_ENTRY_READY` or `BAND_ENTRY_NOT_READY` and may not implement or claim `0.7.0` in the same run.
+## 3. Next Run Contract
 
-Acceptance of the representative loop does not authorize survey turn-in/rewards, class/progression cleanup, attribute balancing, generic quest/travel/activity architecture, travel-key migration, other Stakes modes, or `0.8.x` vertical-slice hardening.
+Execute only `Version 0.7.0 - Integrated Gameplay Systems Band Entry`.
 
-## 4. Connector And Resource Procedure
+It is a bounded milestone activation/publication package over the already accepted loop. It should verify the complete live-head delta, inspect the real path, run the representative plus focused survey/campaign persistence gate, and then either:
 
-The durable division of labor is governed by:
+- return `MILESTONE_ENTRY_ACCEPTED`, record `0.7.0` complete, and install one separate next route; or
+- return `MILESTONE_ENTRY_BLOCKED`, keep the project in the current band, and install the smallest exact repair.
 
-- `docs/dev/codex-vs-gpt-connector-handling-procedure.md`;
-- `docs/dev/codex-resource-budget-and-execution-slicing-policy.md`;
-- `docs/dev/codex-connector-segmentation-and-independent-review-policy.md`;
-- `docs/dev/gpt-connector-assistance-policy.md`;
-- `docs/dev/prompt-execution-platform-tool-selection-policy.md`.
+It must not modify production or invent feature work merely to make the milestone label substantive.
 
-Before another expensive repository-capable run, GPT/Connector should inspect the exact hosted audit result and prepare the band-entry decision at the current head. Connector preparation may reduce discovery but must not prejudge `BAND_ENTRY_READY` or `BAND_ENTRY_NOT_READY`. Once Codex starts, prefer one coherent local/executable slice and avoid routine mid-run ping-pong. Preserve a valid interrupted worktree and resume from the first incomplete requirement.
+## 4. Branch And PR Posture
 
-## 5. Connector Work Preserved Outside The Ashen Scope
+The readiness decision found one local branch and 37 non-default remote branches. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey evidence refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness and prompt-packaging remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
 
-The workflow procedure update and Connector Passes 7-10 landed as documentation before audit completion. They remain supporting evidence for later focused routes:
+No lifecycle action was due. Reinspect live refs during the milestone package or an earlier explicit trigger.
 
-- attribute/skill/ability responsibility audit;
-- classless progression/compatibility provenance audit;
-- player-stats data-dictionary repair;
-- quest turn-in and reward readiness audit.
-
-They do not alter accepted Ashen behavior, supply Soundings turn-in terms, or authorize class/progression, attribute, generic quest, or reward implementation inside the band-entry decision.
-
-## 6. Branch And PR Posture
-
-Fresh audit orientation found one local branch and 37 non-default remote branches. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey evidence refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness and prompt-packaging refs remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`. No ref or PR mutation occurred.
-
-Reinspect live refs during the band-entry decision or an earlier explicit lifecycle trigger. Mechanical mergeability does not change semantic disposition.
-
-## 7. New GPT Thread Start
-
-Read in order:
+## 5. First Read Order
 
 1. `AGENTS.md`;
 2. `docs/dev/current-gpt-handoff.md`;
 3. `docs/dev/current-codex-prompt.md`;
 4. `docs/dev/current-codex-output.md`;
-5. `docs/dev/codex-vs-gpt-connector-handling-procedure.md`;
-6. `docs/dev/codex-resource-budget-and-execution-slicing-policy.md`;
-7. the accepted `0.6.11.1` appendices.
+5. `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
+6. `docs/design/internal-versioning-and-release-milestone-policy.md`;
+7. the accepted `0.6.11.1` appendices and representative test.
 
-Then fetch live `master`, compare the complete delta from the hosted audit commit, and preserve the installed docs-first route unless live evidence invalidates it.
+Fetch live `master`, verify the complete delta from the readiness decision, and preserve the fail-closed milestone gate.

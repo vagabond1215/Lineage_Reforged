@@ -2,7 +2,7 @@
 
 Date: 2026-08-27
 
-Status: accepted documentation-only coordination authority; live current headers refreshed through accepted primary `0.6.11` at `3ca23d6864541a899ea61a6bf26257665f754e78` and completed support audit `0.6.11.1`
+Status: accepted documentation-only coordination authority; band-entry readiness accepted and separate `0.7.0` milestone activation installed
 
 Milestone impact: `supports_current_band`
 
@@ -12,9 +12,9 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register, focused survey decisions, permanent acceptance audit and appendices, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through completed `Version 0.6.11.1`, which accepted parent `0.6.11` and issued `REPRESENTATIVE_LOOP_ACCEPTED`.
+The current prompt, handoff, output, historical register, focused survey decisions, permanent acceptance audit and appendices, failure-pattern guardrail register, and lower-precedence live planning headers are refreshed through the unversioned `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, which returned `BAND_ENTRY_READY` and installed a separate `0.7.0` milestone-activation package.
 
-Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`. The completed reachability decision correctly returned `NO_PACKAGE` until authored input arrived; accepted Soundings canon closed that blocker. The follow-up package decision returned `PACKAGE_READY`, `Version 0.6.11` implemented the bounded route at `3ca23d6864541a899ea61a6bf26257665f754e78`, and `0.6.11.1` independently returned `PARENT_ACCEPTED` plus `REPRESENTATIVE_LOOP_ACCEPTED`. `0.7.0` remains `NOT_READY` pending the installed docs-first band-entry decision.
+Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`. The completed reachability decision correctly returned `NO_PACKAGE` until authored input arrived; accepted Soundings canon closed that blocker. The follow-up package decision returned `PACKAGE_READY`, `Version 0.6.11` implemented the bounded route at `3ca23d6864541a899ea61a6bf26257665f754e78`, and `0.6.11.1` independently returned `PARENT_ACCEPTED` plus `REPRESENTATIVE_LOOP_ACCEPTED`. The subsequent readiness decision returned `BAND_ENTRY_READY`; `0.7.0` is authorized but remains pending its separate milestone activation/publication run.
 
 The audit corrected live-current pointers in `docs/dev/project-roadmap.md`, `docs/dev/codex-sequenced-implementation-plan.md`, `docs/dev/project-vision-and-continuity-brief.md`, `docs/future_content_backlog.md`, and `docs/design/static-content-expansion-program.md`. Older dated rows and completed-run narratives remain historical chronology and do not control execution.
 
@@ -43,9 +43,10 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - accepted survey-parent support audit: `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit`, `PARENT_ACCEPTED` with the then-current reachability classification;
 - latest completed unversioned decision: `Ashen Reef Survey Ordinary Reachability Implementation Package Decision`, `PACKAGE_READY`;
 - latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`;
-- active route: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`;
+- latest completed unversioned decision: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, `BAND_ENTRY_READY`;
+- active route: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`;
 - failure-pattern guardrail register: active durable workflow authority;
-- `0.7.0`: `NOT_READY`;
+- `0.7.0`: `AUTHORIZED_PENDING_MILESTONE_ACTIVATION`;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
 - completed fail-closed `0.6.6.2` attempt at `4/5` on the initial climate contract mismatch;
 - partial then fail-closed `0.6.6.3` attempt with schema commit `56932eec` and focused assertion commit `e71f8f6b`;
@@ -70,10 +71,10 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Accepted Near-Term Order
 
-1. execute installed docs-first `Integrated Gameplay 0.7 Band-Entry Readiness Decision`;
-2. if any mandatory entry criterion is incomplete, install only the smallest current-band prerequisite and do not assign `0.7.0`;
-3. assign a separate `0.7.0` implementation route only after `BAND_ENTRY_READY`; do not implement it inside the decision.
+1. execute installed `Version 0.7.0 - Integrated Gameplay Systems Band Entry` milestone activation/publication package;
+2. fail closed to the smallest exact current-band prerequisite if current-head drift invalidates any accepted criterion;
+3. after `MILESTONE_ENTRY_ACCEPTED`, select one separate next route under the normal owner and version-classification rules without importing `0.8.x` breadth.
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that `0.6.9`, `0.6.10`, and `0.6.11` are accepted, the earlier reachability `NO_PACKAGE` blocker was closed by accepted authored canon, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the band-entry decision is active, and `0.7.0` remains `NOT_READY`.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that `0.6.9`, `0.6.10`, and `0.6.11` are accepted, the earlier reachability `NO_PACKAGE` blocker was closed by accepted authored canon, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the readiness decision returned `BAND_ENTRY_READY`, and the separate `0.7.0` milestone activation is active.

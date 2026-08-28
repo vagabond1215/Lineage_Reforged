@@ -2,7 +2,7 @@
 
 Date: 2026-08-27
 Program versions: `0.6.4`-`0.6.8`
-Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted; Soundings canon and ordinary-reachability `0.6.11` accepted through `0.6.11.1`; docs-first `0.7` band-entry decision active
+Status: static program `0.6.4`-`0.6.8.1` complete and accepted; Normal persistence `0.6.9` accepted; Ashen Reef survey parent `0.6.10` accepted; Soundings canon and ordinary-reachability `0.6.11` accepted through `0.6.11.1`; `BAND_ENTRY_READY`; separate `0.7.0` milestone activation active
 
 ## 1. Purpose
 

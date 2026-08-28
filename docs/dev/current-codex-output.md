@@ -2,100 +2,77 @@
 
 Date: 2026-08-27
 
-Source run: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`
+Source run: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`
 
-Label class: support suffix
+Label class: unversioned documentation-only decision
 
-Parent version: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
+Milestone impact: `band_entry_candidate`
 
-Milestone impact: `supports_current_band`
+Inspected pre-sync head: `6fea077953eb24dbcf27488ea1a037035512cd04`
 
-Inspected pre-sync base: `cfb569c7f196e71e2f63451dc583f54ad31cd0b2`
+Synchronized decision starting head: `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`
 
-Implementation starting head: `f68242fae03b22001a73e3a440ccdbf830347aba`
+Accepted implementation: `3ca23d6864541a899ea61a6bf26257665f754e78`
 
-Connector correction: `b54ea65b6fddf029f4fb12ea82c5cdc9f8c1e62a`
+Decision: `BAND_ENTRY_READY`
 
-Implementation commit: `3ca23d6864541a899ea61a6bf26257665f754e78`
-
-Implementation coordination commit: `b63fc138d318f6d22d9d5be635b8e3404d8407cc`
-
-Synchronized audit starting head: `3e18bfdd22bb5de048ecc540ccd75ff397debc39`
-
-Post-audit integration base: `0eef8c96fbdbff1a45914bf9b36835bfe826e5d0` (seven workflow/documentation commits inspected and reconciled before publication)
-
-Audit coordination commit: reported in the completion response because a commit cannot contain its own identity
-
-Parent result: `PARENT_ACCEPTED`
-
-Representative classification: `REPRESENTATIVE_LOOP_ACCEPTED`
-
-`0.7.0`: `NOT_READY`
-
-Installed next run: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`
+Installed next run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
 
 ## A. Files Changed
 
 Documentation coordination only:
 
-- `docs/dev/current-codex-prompt.md`;
-- `docs/dev/current-codex-output.md`;
-- `docs/dev/current-gpt-handoff.md`;
-- `docs/dev/historical-version-and-deferred-route-register.md`;
-- `docs/design/current-planning-anchor-reconciliation.md`;
-- `docs/dev/branch-disposition-register.md`;
-- `docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md`;
-- `docs/design/ashen-reef-survey-ordinary-reachability-and-representative-loop-dependency-closure-decision.md`;
-- `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`;
-- lower-precedence live route headers in the roadmap, sequenced plan, continuity brief, backlog, and static-content program.
+- new `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
+- current prompt/output/handoff;
+- historical register, planning reconciliation, branch register;
+- lower-precedence live route headers required to preserve one active route.
 
-No production source, shared contract, schema, serializer, migration, tracked test, content, dependency, asset, UI, or gameplay behavior changed. The removable audit probe and temporary Vite output were deleted before coordination.
+No production source, shared contract, schema, serializer, migration, tracked test, content, dependency, asset, UI, save, or gameplay behavior changed.
 
-## B. Audit Findings
+## B. Decision Findings
 
-The parent conforms to the accepted package and the ordinary representative loop is independently accepted.
+Every `0.7.0` entry criterion is satisfied by accepted current authority and current-head evidence.
 
-- The authored file contains exactly one `quest_definition.starfall_ashen_reef_soundings`; the five preceding definitions, including Brineharbor, retain their implementation-parent bytes. Canonical title, issuer/contact, Starfall context, zero admission gate, nullable deferred timing/reward/entity fields, four sequential descriptive actions, and absent Stormglass objective match authority.
-- The real new-campaign path stages exactly one canonical Starfall contract before first publication without access or other gameplay mutation. Fresh failure/retry evidence preserved attempt, campaign, character, and offer identities after caller loss and admitted the offer only through verified publication/load.
-- Successful acceptance atomically owns active quest state, tracking, exact settlement-less Ashen access, notification/Chronicle/event facts, and campaign admission. Fresh post-plan failure evidence returned the original snapshot with no event or partial access.
-- Ordinary Starfall remains compatibility origin `settlement.starfall_port`; Survey Anchorage and legacy Ashen site labels resolve to `location.ashen_reef`; accepted arrival owns the operation and survey activity.
-- Survey-content v1 and v2 remain deeply validated and version-derived. Fresh mixed-history evidence preserved the first v1 result bytes while a later request authored v2, rejected cross-version corruption, and proved returned content arrays cannot mutate shared facts. The tracked matrix separately reconfirmed live Codex mismatch rejection, complete v1 publication/restart/duplicate/repair, and v2 correction/repair.
-- A fresh independent production creator path crossed initial publication/load, acceptance/admission, restart, travel/admission, all four real caller shifts, mid/final restart, and empty-cache fourth-request redelivery. Final authority was exactly 4 requests, 4 occurrences, 4 results, and 48 receipts; operation/activity/projections/discovery were exact; the quest remained active and unturned-in; no ordinary correction/repair or turn-in/reward/payout effect occurred.
+- A real creator enters a playable campaign through retained attempt and verified publication/load authority.
+- Engine-owned quest acceptance/access, travel/arrival, and four-stage survey advancement form one ordinary injection-free path.
+- Survey shifts cross time, body/resources, attributes, skills, quest/operation/activity, discovery, projections, events, campaign admission, and durable consequence receipts.
+- Typed identities, deep validation, stale/conflict rejection, durable duplicate, correction/repair, nested-owner preservation, and accepted-only real-caller application remain coherent.
+- The included interaction requires player resources but no inventory effect; inventory remains an exact `no_proposal` and is not a universal milestone prerequisite.
+- Legacy UI-authored Soundings turn-in exists outside the representative loop and is not used as milestone authority.
+- Soundings remains active and unturned-in. Rewards, generic architectures, class/progression cleanup, attribute balance, travel-key migration, other Stakes modes, inventory instances, NPC promotion, and all `0.8+` requirements remain deferred.
 
 ## C. Tests And Checks
 
-- Fresh removable audit probe: `4/4` passed. Cases covered publication failure plus lost-caller retry, post-plan access atomicity failure, injection-free ordinary four-shift/restart/durable duplicate, and independently constructed v1-to-v2 mixed history/cross-version corruption/content-array isolation.
-- Prescribed focused/adjacent matrix: `1072/1072` passed (`1064/1064` focused/adjacent plus `8/8` achievements).
-- Normal content lint: `71` files checked, passed.
-- Vite `5.4.21` production build: `219` modules transformed, passed; only the registered large-chunk advisory remained.
-- Bounded UI TypeScript: exactly the registered `137` diagnostics. Changed implementation surface still names only the same three pre-existing `civilization-engine/src/content.ts` diagnostics at lines 1, 1284, and 1298; no new tuple appeared.
-- The matrix included TS/JS/public-export parity, raw serialization, version-6 migration, version-7 publication/readback/restart, browser storage, Normal defeat/recovery, durable duplicate, correction/repair, Knowledge/no-proposal, and characterization gates.
-- `git diff --check` passed for the implementation range. The tracked representative source imports no `demoSnapshot` and contains no eligibility-state assignment.
-- The implementation surface is unchanged from `3ca23d6...` through the post-audit integration base. The 12 pre-audit intervening commits cover deferred attribute/class/progression/turn-in documentation; the seven later commits add workflow/Connector procedure documentation and refresh the pre-audit handoff. None changes Ashen production or tracked tests.
+- Complete diff from accepted implementation `3ca23d6...` through synchronized head: documentation/workflow only; no production or tracked-test drift.
+- Focused current-head executable gate: `77/77` passed across the representative integration, survey command, survey persistence, and campaign persistence suites.
+- Real caller source check: rejected survey transitions expose no accepted state; `GameSessionContext` applies only `transition.acceptedState`.
+- Representative source check: imports `createNewGameSnapshot(...)`, production attempt/publication/load, engine quest/travel commands, campaign admission, and the real caller; imports no `demoSnapshot`; performs no eligibility injection; asserts four requests/occurrences/results, 48 receipts, restart, empty-cache duplicate, exact non-proposals, and active unturned-in quest.
+- Current-head worktree was clean before documentation edits.
+
+The decision did not rerun the full `1072/1072`, content lint, Vite build, or TypeScript baseline because no production/test drift exists and the installed prompt required only executable evidence necessary for current gate facts. Those accepted `0.6.11.1` results remain predecessor evidence, not newly claimed execution.
 
 ## D. Failure-Pattern Evidence
 
-- `FP-001`, `FP-017`: fresh evidence exercised `createNewGameSnapshot(...)`, the production attempt coordinator/save path, real commands/admission, travel-owned activation, and `advanceAshenReefSurveyCaller` without eligibility injection.
-- `FP-002`: automated green state was supplemented with source review and independent failure/retry, atomicity, cross-version, restart, and durable-duplicate probes.
-- `FP-005`: caller loss retained the exact new-campaign attempt/campaign/character/offer; empty survey caller caches retained durable duplicate identity after restart.
-- `FP-008`: all Connector, PR, candidate, and protected refs remained evidence only; semantic disposition did not change because they were mechanically mergeable.
-- `FP-009`: inspected, implementation, implementation-coordination, audit-starting, audit-coordination, pushed, tracking, and hosted identities are kept distinct.
-- `FP-011`, `FP-012`, `FP-014`: access and survey authority failed closed before partial mutation; cross-version corruption and incomplete/ambiguous retained evidence remain rejected.
-- `FP-013`: survey ledger survived publication/restart and the retained Normal defeat/recovery regression surfaces.
+- `FP-001`, `FP-017`: real creator, publication, commands/admission, travel, real caller, restart, and durable duplicate were exercised without fixture eligibility.
+- `FP-002`: accepted audit evidence was supplemented by semantic current-source inspection, complete delta review, and fresh focused execution.
+- `FP-008`: branches, PR merge refs, protected audit, and Connector packets remain evidence only.
+- `FP-009`: inspected, readiness-decision, coordination, pushed, tracking, and hosted identities remain distinct.
+- `FP-013`: campaign-persistence coverage retains nested survey authority through defeat/recovery rewrites.
+- `FP-014`: focused tests retain deep semantic/canonical authority, exact complete receipt, owner-derived progression, and placement validation.
 - No new generalized failure pattern was discovered.
 
 ## E. Branch And PR Lifecycle
 
-Fresh fetch/prune and comparison found one local branch and 37 non-default remote branches. Live remote PR refs retain PR #2 head `e78dc645cfb658685be12f45f46d34b7c0da1119` and PR #3 head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; both retain `SUPERSEDED_PRESERVE_EVIDENCE`.
+Fresh fetch/prune found one local branch and 37 non-default remote branches. Live PR refs retain PR #2 head `e78dc645cfb658685be12f45f46d34b7c0da1119` and PR #3 head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
 
-The four survey evidence refs retain `CANDIDATE_INTEGRATION` for their broader named consumers. Integrated-gameplay readiness at `59c103c3a06d55f35bffa735fd4b7814dffb583e` and prompt-packaging evidence remain `PROTECTED_REFERENCE`. Administration evidence remains `HOLD_NAMED_CONSUMER`. No merge, cherry-pick, rebase, force update, closure, deletion, or disposition change was due. Reinspect during the installed band-entry decision or an earlier explicit lifecycle trigger.
+The four survey evidence refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness and prompt-packaging refs remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`. No branch/PR integration, mutation, closure, deletion, or disposition change was due.
 
 ## F. Risks And Follow-Up
 
-- Acceptance proves one bounded ordinary integrated loop, not quest turn-in/reward execution, generic quest architecture, class/progression cleanup, attribute balance, travel-key migration, other Stakes modes, or a pre-alpha slice.
-- The known TypeScript baseline and Vite chunk advisory remain separate debt.
-- `0.7.0` remains `NOT_READY` until the installed unversioned docs-first band-entry decision evaluates every maturity criterion.
+- `BAND_ENTRY_READY` authorizes the separate milestone package; it does not by itself record `Version 0.7.0` as completed.
+- The next run must fail closed if live production/test drift invalidates the decision before milestone publication.
+- `0.7.0` acceptance will prove only the bounded integrated loop. It will not imply `0.8.0` pre-alpha readiness or any deferred quest, inventory, NPC, class/progression, attribute, generic-architecture, packaging, or release capability.
 
-Suggested coordination commit message: `docs: accept Ashen Reef representative loop`
+Suggested coordination commit message: `docs: approve integrated gameplay band entry`
 
-Next run: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`
+Next run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
