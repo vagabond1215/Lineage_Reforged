@@ -2,7 +2,7 @@
 
 Date: 2026-08-27
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: ChatGPT via GitHub Connector; documentation-only/read-only repository inspection
 
@@ -38,3 +38,22 @@ Map current player inventory stack identity and determine which future item dist
 
 - `docs/design/inventory-stack-and-item-instance-identity-audit.md`;
 - completion appendix in this plan.
+
+
+## Completion Appendix
+
+Result: `AUDIT_COMPLETE_CURRENT_STACKS_FUNGIBLE_INSTANCE_MODEL_DEFERRED`
+
+Completed output:
+- `docs/design/inventory-stack-and-item-instance-identity-audit.md`
+
+Key findings:
+- carried `InventoryStack` currently contains only `itemId`, `itemKey`, and `quantity`;
+- stack merge identity is `itemId + itemKey`, while one legacy removal helper consumes by `itemKey` only;
+- equipment already carries richer per-copy `durability` and resource-modifier state;
+- character-panel session flags currently escrow equipped metadata while the item is carried, proving a real instance-identity gap;
+- UI stack ids are position-derived and must not become durable identity;
+- future fungible, differentiated-stack, and unique-instance models should be selected by concrete consumers rather than prebuilt universally;
+- current survey `0.7` candidate loop has inventory as `no_proposal`, so this future gap does not prejudge the active band-entry decision.
+
+No production/schema/content/test/save/prompt mutation occurred.
