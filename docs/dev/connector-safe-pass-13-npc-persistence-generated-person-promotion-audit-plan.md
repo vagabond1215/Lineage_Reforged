@@ -2,7 +2,7 @@
 
 Date: 2026-08-27
 
-Status: ACTIVE
+Status: COMPLETE
 
 Execution surface: ChatGPT via GitHub Connector; documentation-only/read-only repository inspection
 
@@ -38,3 +38,22 @@ Map current people/NPC identity, generated role-holder data, persistence, relati
 
 - `docs/design/npc-persistence-and-generated-person-promotion-audit.md`;
 - completion appendix in this plan.
+
+
+## Completion Appendix
+
+Result: `AUDIT_COMPLETE_RUNTIME_GENERATED_PERSON_OWNER_MISSING_AUTHORED_CANON_REMAINS_PAUSED`
+
+Completed output:
+- `docs/design/npc-persistence-and-generated-person-promotion-audit.md`
+
+Key findings:
+- current person/NPC schemas and focused validators exist, but live `people.json` and `npcs.json` content remain absent;
+- authored People/NPC seeding remains paused until new canonical named-person authority exists;
+- no runtime generated-person identity/persistence owner currently exists;
+- synthetic settlement `npc_household`/operator ids, quest contact strings, and combatant ids are not person authority;
+- future runtime persistence must remain distinct from editorial/global authored-canon promotion;
+- recommended future model separates ephemeral operators, persistent campaign-local generated people, authored people, authored NPC overlays, and runtime presence instances;
+- no named people, organizations, relationships, or promotion ids were invented.
+
+Safe stop reached after this pass: the highest-value active-route work is now the independent `0.7` band-entry Codex decision using the Connector preflight packet. Further independent Connector work is possible, but would no longer reduce that decision materially.
