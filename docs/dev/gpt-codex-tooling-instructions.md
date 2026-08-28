@@ -1,6 +1,7 @@
 # GPT And Codex Tooling Instructions
 
 Date: 2026-07-12
+Updated: 2026-08-27
 Status: active GPT/Codex operating guide for Lineage Reforged
 Audience: GPT threads, Codex prompt authors, and users choosing tools, modes, functions, and prompt packaging
 
@@ -13,6 +14,8 @@ The goal is not to default to one tool or maximum reasoning for every task. Sele
 Repository continuation, roadmap inspection, next-route selection, and prompt generation are GPT/Codex workflow tasks. Prior settlement-image or asset-prompt context must not override this workflow unless the user explicitly asks for visual production.
 
 This guide is operational guidance. It does not replace current output, handoff, prompt, roadmap, permanent design decisions, schemas, validators, content, tests, or explicit user instructions.
+
+For the current division of labor between GPT/Connector and Codex, use `docs/dev/codex-vs-gpt-connector-handling-procedure.md`. For constrained execution and package sizing, use `docs/dev/codex-resource-budget-and-execution-slicing-policy.md`.
 
 ## 2. Current-State Authority
 
@@ -92,40 +95,42 @@ After a connector write:
 
 ## 5. Codex Mode Selection
 
-Select the current supported Codex model, execution environment, and reasoning level according to the task. Do not use one fixed setting for every request.
+Select the current supported Codex model, execution environment, and reasoning level from a fresh capability/resource preflight. Do not hard-code one model or reasoning tier as the permanent default.
 
-### 5.1 Codex 5.6 Sol Local High
+### 5.1 Highest-Cost / Highest-Reasoning Tier
 
-Use **Codex 5.6 Sol Local High** when the task involves:
+Use the strongest available reasoning tier only when the **current slice** materially requires it, such as:
 
-- cross-repository evidence classification;
-- complex docs-only authority decisions with many owner boundaries;
-- multi-file code, schema, validator, content, or test changes;
-- risky edits requiring careful scope control;
-- substantial validation and reconciliation of coordination files.
+- multi-owner semantic conflicts;
+- persistence, idempotency, correction, or migration;
+- representative integration;
+- genuinely adversarial independent acceptance;
+- risky implementation where a lighter tier would materially reduce confidence.
 
-The active `Version 0.5.349 - Diplomacy Conflict Authority Evidence Audit` should use this mode.
+When the strongest tier is required, narrow the package rather than assigning it more discovery. Under a constrained short-window allowance, prefer `XS` or `S` work and complete Connector-first preparation before launch.
 
 ### 5.2 Lighter Local Reasoning
 
-Use a lighter supported local reasoning level for a trivial, tightly bounded task when:
+Use a lighter supported local reasoning level for deterministic or tightly bounded work when:
 
-- the changed path is obvious;
-- no broad evidence classification is needed;
-- validation is narrow;
-- using High would add cost without improving confidence.
+- the edit surface and owner are already known;
+- Connector preparation has removed broad discovery;
+- validation is focused;
+- the lighter tier preserves implementation and verification quality.
 
-The prompt should still state exact scope, allowed paths, and validation.
+Do not spend the strongest tier on mechanical follow-up merely because the overall feature is difficult.
 
 ### 5.3 Plan Mode
 
-Use Codex Plan mode when the result should be a decision-complete plan and repository mutation is not authorized.
+Use Codex Plan mode when the result should be a decision-complete non-mutating plan and repository mutation is not authorized.
 
 Plan mode must not write files, run cleanup, update output files, stage changes, or claim implementation.
 
-### 5.4 Cloud
+### 5.4 Other Codex Execution Surfaces
 
-Use Cloud only when the task is materially larger than a normal local run and the benefit is clear. Do not select it merely because it is available.
+Use Cloud or another larger execution surface only when its capabilities materially improve completion and repository policy permits it. Do not select a larger surface merely because it is available.
+
+Before every recommendation, apply `docs/dev/prompt-execution-platform-tool-selection-policy.md` and the resource-budget policy.
 
 ## 6. Deep Research And Web Research
 
@@ -194,15 +199,19 @@ Do not only paste the new prompt in chat when the user asked to generate or upda
 
 ### 8.1 Mode Line Packaging
 
-The platform/tool/mode line belongs in chat, outside the prompt file.
+The platform/tool/mode/reasoning recommendation belongs in chat, outside the prompt file.
 
-For the active route, give:
+Choose it from the fresh capability/resource preflight. State a capability class instead of inventing or preserving a stale exact model/version when the current product surface is not confirmed.
 
-```text
-Codex 5.6 Sol Local High.
-```
+Also report, when resource slicing applies:
 
-Do not store that mode line inside `docs/dev/current-codex-prompt.md`.
+- package size class;
+- whether Connector-first preparation is complete;
+- expected first durable checkpoint;
+- whether the strongest reasoning tier is actually required;
+- interruption/resume posture.
+
+Do not store a run-specific platform/tool/mode/model recommendation inside `docs/dev/current-codex-prompt.md`.
 
 ### 8.2 Prompt File Shape
 
@@ -290,7 +299,7 @@ Do not roll to `0.6.0` because the patch number is large. Runtime ownership tran
 
 ## 11. Project Guardrails
 
-During the current `0.5.x` foundation phase:
+For current repository work, use the live active route and maturity-band authority rather than a hard-coded historical phase:
 
 - prefer evidence audits and boundary decisions before implementation;
 - prefer schema decisions before schemas;
