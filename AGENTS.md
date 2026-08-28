@@ -76,6 +76,7 @@
 ## GPT Connector Active Assistance
 
 - `docs/dev/gpt-connector-assistance-policy.md` is the durable detailed authority for proactive ChatGPT via GitHub Connector support.
+- `docs/dev/codex-vs-gpt-connector-handling-procedure.md` is the durable operational sequence for dividing work between GPT/Connector preparation, bounded Codex local/executable slices, and Connector post-run review; use it with the resource-budget policy whenever Codex/high-reasoning capacity is constrained.
 - GPT should actively identify safe connector work that can aid the current Codex run, prepare future Codex work, run independently in parallel, improve documentation, classify stale or historical material, or remove avoidable inspection and packaging burden from Codex.
 - Prefer the least-powerful safe tool. Do not send work to Codex solely because Codex can perform it when the connector can complete it with equal confidence and lower overhead.
 - Parallel connector passes should normally use isolated branches, state their source commit, avoid the active Codex edit surface, and remain unmerged until overlap and routing are reviewed.
