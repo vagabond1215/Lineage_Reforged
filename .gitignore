@@ -1,6 +1,8 @@
 # Generated and vendor artifacts
 apps/rpg-ui/node_modules/
 apps/rpg-ui/dist/
+apps/rpg-ui/.wrangler/
+apps/rpg-ui/.dev.vars*
 packages/db/build/
 
 # Logs and local runtime output

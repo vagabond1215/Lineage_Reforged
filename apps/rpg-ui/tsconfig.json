@@ -17,6 +17,6 @@
     "exactOptionalPropertyTypes": true,
     "types": ["vite/client"]
   },
-  "include": ["src"],
+  "include": ["src", "worker"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
