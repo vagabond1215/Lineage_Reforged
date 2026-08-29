@@ -1,6 +1,6 @@
 # Current GPT Handoff
 
-Date: 2026-08-27
+Date: 2026-08-28
 
 Status: integrated-gameplay band-entry readiness accepted; milestone activation pending
 
@@ -21,6 +21,16 @@ Current prompt authority:
 `docs/dev/current-codex-prompt.md`
 
 `0.7.0`: `AUTHORIZED_PENDING_MILESTONE_ACTIVATION`
+
+Current Connector preflight:
+
+`${packetPath}`
+
+Inspected hosted head: `${sourceHead}`
+
+Connector disposition: `CONNECTOR_PREFLIGHT_REFRESH_COMPLETE_EXECUTION_RESERVED_TO_CODEX`
+
+The complete post-readiness delta is three commits. The readiness publication and material-property note are documentation-only. `${sourceHead}` changes the UI hosting/build/dependency surface but not representative gameplay owners or tracked tests. Because GitHub has no workflow run or combined status for that head, Codex must locally characterize the changed Vite/Cloudflare/Sites build and TypeScript surface in addition to the installed focused gameplay gate. This does not prejudge milestone acceptance and does not broaden the route into packaging or `0.8.x` work.
 
 ## 1. Accepted Readiness State
 
@@ -45,7 +55,7 @@ Do not reopen or import:
 
 Execute only `Version 0.7.0 - Integrated Gameplay Systems Band Entry`.
 
-It is a bounded milestone activation/publication package over the already accepted loop. It should verify the complete live-head delta, inspect the real path, run the representative plus focused survey/campaign persistence gate, and then either:
+It is a bounded milestone activation/publication package over the already accepted loop. It should verify the complete live-head delta, inspect the real path, run the representative plus focused survey/campaign persistence gate, locally characterize the post-readiness UI hosting/toolchain drift recorded in the Connector preflight packet, and then either:
 
 - return `MILESTONE_ENTRY_ACCEPTED`, record `0.7.0` complete, and install one separate next route; or
 - return `MILESTONE_ENTRY_BLOCKED`, keep the project in the current band, and install the smallest exact repair.
@@ -54,7 +64,7 @@ It must not modify production or invent feature work merely to make the mileston
 
 ## 4. Branch And PR Posture
 
-The readiness decision found one local branch and 37 non-default remote branches. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey evidence refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness and prompt-packaging remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
+The current Connector refresh sees 37 non-default hosted branches and two open PRs; local branch/worktree state remains for Codex to verify. The readiness decision previously found one local branch and 37 non-default remote branches. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey evidence refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness and prompt-packaging remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
 
 No lifecycle action was due. Reinspect live refs during the milestone package or an earlier explicit trigger.
 
@@ -66,6 +76,7 @@ No lifecycle action was due. Reinspect live refs during the milestone package or
 4. `docs/dev/current-codex-output.md`;
 5. `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
 6. `docs/design/internal-versioning-and-release-milestone-policy.md`;
-7. the accepted `0.6.11.1` appendices and representative test.
+7. `docs/dev/connector-preflight-version-0.7.0-milestone-activation-evidence-packet-2026-08-28.md`;
+8. the accepted `0.6.11.1` appendices and representative test.
 
 Fetch live `master`, verify the complete delta from the readiness decision, and preserve the fail-closed milestone gate.

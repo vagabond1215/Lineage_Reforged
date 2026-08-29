@@ -1,10 +1,22 @@
 # Branch Disposition Register
 
-Date: 2026-08-27
+Date: 2026-08-28
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+
+## 2026-08-28 Version 0.7.0 Milestone-Activation Connector Preflight Refresh
+
+The Connector inspected hosted `master` at `5f723d2924fef53b749c897440dfd2817499de32` and compared the complete three-commit delta from readiness-decision starting head `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`. The readiness-publication commit and material-property future-design note are documentation-only. The only non-documentation drift is `build(ui): enable Sites preview hosting`, which changes UI dependencies, lockfile, Vite/TypeScript configuration, hosting metadata, Wrangler configuration, and a minimal asset-serving worker without changing representative gameplay owners or tracked tests.
+
+Hosted inventory remains 38 branches total / 37 non-default branches and exactly two open pull requests. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Their registered disposition remains `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+The four exact survey evidence refs remain unchanged and `CANDIDATE_INTEGRATION` only for broader named consumers: activity advancement `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, progression/reward mutation `387f2491d0d671ee7834656c28183e72a798f1ca`, Chronicle/notification provenance `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, and Knowledge/discovery visibility `46434f31f8b06d49aad9a516543fbe36d188d519`. Integrated-gameplay readiness remains `PROTECTED_REFERENCE` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`; prompt-packaging remains `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
+
+No merge, cherry-pick, rebase, force update, PR mutation, closure, deletion, or disposition change is due. Local branches/worktree cannot be verified by the Connector and must be refreshed by Codex before the milestone decision. The new Connector packet records the exact hosted evidence and executable-validation handoff.
+
 
 ## 2026-08-27 Integrated Gameplay 0.7 Band-Entry Readiness Refresh
 
