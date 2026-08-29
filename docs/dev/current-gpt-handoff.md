@@ -24,13 +24,13 @@ Current prompt authority:
 
 Current Connector preflight:
 
-`${packetPath}`
+`docs/dev/connector-preflight-version-0.7.0-milestone-activation-evidence-packet-2026-08-28.md`
 
-Inspected hosted head: `${sourceHead}`
+Inspected hosted head: `5f723d2924fef53b749c897440dfd2817499de32`
 
 Connector disposition: `CONNECTOR_PREFLIGHT_REFRESH_COMPLETE_EXECUTION_RESERVED_TO_CODEX`
 
-The complete post-readiness delta is three commits. The readiness publication and material-property note are documentation-only. `${sourceHead}` changes the UI hosting/build/dependency surface but not representative gameplay owners or tracked tests. Because GitHub has no workflow run or combined status for that head, Codex must locally characterize the changed Vite/Cloudflare/Sites build and TypeScript surface in addition to the installed focused gameplay gate. This does not prejudge milestone acceptance and does not broaden the route into packaging or `0.8.x` work.
+The complete post-readiness delta is three commits. The readiness publication and material-property note are documentation-only. `5f723d2924fef53b749c897440dfd2817499de32` changes the UI hosting/build/dependency surface but not representative gameplay owners or tracked tests. Because GitHub has no workflow run or combined status for that head, Codex must locally characterize the changed Vite/Cloudflare/Sites build and TypeScript surface in addition to the installed focused gameplay gate. This does not prejudge milestone acceptance and does not broaden the route into packaging or `0.8.x` work.
 
 ## 1. Accepted Readiness State
 
