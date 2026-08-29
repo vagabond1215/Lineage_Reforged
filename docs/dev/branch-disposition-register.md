@@ -1,11 +1,20 @@
 # Branch Disposition Register
 
-Date: 2026-08-28
+Date: 2026-08-29
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-29 Sites Preview Hosting Enablement Refresh
+
+The unversioned hosting-support run fetched/pruned from clean synchronized `master == origin/master` at `53acee1f95aa27799166d169e48e1e0115e2ef85`, refreshed one local branch and 37 non-default remote branches, and found no branch integration trigger relevant to preview hosting. Registered protected, candidate-integration, hold, merged-retire, and superseded-evidence dispositions remain unchanged. The GitHub CLI was unavailable, so live PR metadata could not be refreshed through that client; the registered PR heads remain present as remote branches.
+
+The bounded Sites integration was committed and pushed at `5f723d2924fef53b749c897440dfd2817499de32`. No merge, rebase, cherry-pick, PR mutation, closure, deletion, or Lineage branch disposition change occurred.
+
+A publication-time fetch found two concurrent documentation-only Connector-preflight commits through `6576a1590fab2a9bdef42fde3bce7486374a5d3f`. Their packet, handoff facts, and branch refresh were semantically retained while the hosting outcome was rebased; this coordination rebase does not change any branch disposition.
+
+The private Sites source branch is an external deployment source rather than a Lineage integration branch. Its endpoint was verified with disposable seed `f4238047ac5e166d2742329447bba6c0883e6554`, but exact app-only source `3e61ea1ce56dbdbdbecc7865fb7b8db754ba0334` could not be uploaded because the `458,248,681`-byte source/archive payload repeatedly exceeded credential windows without a remote-head update. No version or deployment exists. Force-replace the seed with exact validated source before any later Sites save/deploy action.
 
 ## 2026-08-28 Version 0.7.0 Milestone-Activation Connector Preflight Refresh
 
@@ -16,7 +25,6 @@ Hosted inventory remains 38 branches total / 37 non-default branches and exactly
 The four exact survey evidence refs remain unchanged and `CANDIDATE_INTEGRATION` only for broader named consumers: activity advancement `b4cbaea5f4292904bba62f60a0108bb84f2bd405`, progression/reward mutation `387f2491d0d671ee7834656c28183e72a798f1ca`, Chronicle/notification provenance `4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01`, and Knowledge/discovery visibility `46434f31f8b06d49aad9a516543fbe36d188d519`. Integrated-gameplay readiness remains `PROTECTED_REFERENCE` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`; prompt-packaging remains `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
 
 No merge, cherry-pick, rebase, force update, PR mutation, closure, deletion, or disposition change is due. Local branches/worktree cannot be verified by the Connector and must be refreshed by Codex before the milestone decision. The new Connector packet records the exact hosted evidence and executable-validation handoff.
-
 
 ## 2026-08-27 Integrated Gameplay 0.7 Band-Entry Readiness Refresh
 

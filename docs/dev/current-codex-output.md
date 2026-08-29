@@ -1,78 +1,78 @@
 # Current Codex Output
 
-Date: 2026-08-27
+Date: 2026-08-29
 
-Source run: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`
+Source run: `Sites Preview Hosting Enablement`
 
-Label class: unversioned documentation-only decision
+Label class: unversioned deployment support
 
-Milestone impact: `band_entry_candidate`
+Milestone impact: `none`
 
-Inspected pre-sync head: `6fea077953eb24dbcf27488ea1a037035512cd04`
+Inspected base and implementation starting head: `53acee1f95aa27799166d169e48e1e0115e2ef85`
 
-Synchronized decision starting head: `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`
+Committed hosting integration: `5f723d2924fef53b749c897440dfd2817499de32`
 
-Accepted implementation: `3ca23d6864541a899ea61a6bf26257665f754e78`
+Live `origin/master` before the rebased coordination update: `6576a1590fab2a9bdef42fde3bce7486374a5d3f`
 
-Decision: `BAND_ENTRY_READY`
+Disposition: `IMPLEMENTATION_COMPLETE_DEPLOYMENT_BLOCKED`
 
-Installed next run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
+The active gameplay route remains `Version 0.7.0 - Integrated Gameplay Systems Band Entry`. This support run does not activate, revise, or supersede that prompt.
 
 ## A. Files Changed
 
-Documentation coordination only:
+- `.gitignore`: ignores local Wrangler state and development variable files.
+- `apps/rpg-ui/.openai/hosting.json`: persists the exact Sites project ID.
+- `apps/rpg-ui/package.json` and `package-lock.json`: add the official Sites and Cloudflare Vite adapters, Wrangler, Node/Worker types, and the compatible Vite 8 React toolchain.
+- `apps/rpg-ui/tsconfig.json` and `tsconfig.node.json`: include the Worker entry and support the Vite 8 Node-side configuration.
+- `apps/rpg-ui/vite.config.ts`: keeps ordinary Vite development lightweight and produces a Cloudflare Worker-compatible Sites build.
+- `apps/rpg-ui/worker/index.ts`: delegates requests to the generated static-asset binding.
+- `apps/rpg-ui/wrangler.jsonc`: defines the private SPA Worker and navigation fallback.
 
-- new `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
-- current prompt/output/handoff;
-- historical register, planning reconciliation, branch register;
-- lower-precedence live route headers required to preserve one active route.
+No gameplay, save, schema, migration, content, authored asset, test, or active `0.7.0` authority changed.
 
-No production source, shared contract, schema, serializer, migration, tracked test, content, dependency, asset, UI, save, or gameplay behavior changed.
+## B. Implementation And Deployment Findings
 
-## B. Decision Findings
-
-Every `0.7.0` entry criterion is satisfied by accepted current authority and current-head evidence.
-
-- A real creator enters a playable campaign through retained attempt and verified publication/load authority.
-- Engine-owned quest acceptance/access, travel/arrival, and four-stage survey advancement form one ordinary injection-free path.
-- Survey shifts cross time, body/resources, attributes, skills, quest/operation/activity, discovery, projections, events, campaign admission, and durable consequence receipts.
-- Typed identities, deep validation, stale/conflict rejection, durable duplicate, correction/repair, nested-owner preservation, and accepted-only real-caller application remain coherent.
-- The included interaction requires player resources but no inventory effect; inventory remains an exact `no_proposal` and is not a universal milestone prerequisite.
-- Legacy UI-authored Soundings turn-in exists outside the representative loop and is not used as milestone authority.
-- Soundings remains active and unturned-in. Rewards, generic architectures, class/progression cleanup, attribute balance, travel-key migration, other Stakes modes, inventory instances, NPC promotion, and all `0.8+` requirements remain deferred.
+- The existing React game runs locally through the Sites-enabled Vite development path and returns HTTP `200` at `http://127.0.0.1:5173/`.
+- The production build emits `dist/server/index.js`, `dist/server/wrangler.json`, `dist/client/**`, and `dist/.openai/hosting.json` as required by Sites.
+- The official Sites packaging helper succeeds. The exact archive is `458,248,681` bytes because the existing tracked character-creator and launcher imagery is large.
+- The private Sites project is active, owner-only, and has no saved version or deployment URL.
+- Authentication and branch writes were independently verified by pushing disposable seed commit `f4238047ac5e166d2742329447bba6c0883e6554` to the private Sites source branch.
+- Exact app-only source commit `3e61ea1ce56dbdbdbecc7865fb7b8db754ba0334` could not be pushed. Multiple monitored attempts exceeded their short-lived credential windows without a terminal response or remote-head update, including HTTP/1.1, fixed-buffer, no-prompt, and compression-disabled transport.
+- Final remote verification found the source branch still at the disposable seed commit. No site version was saved and no deployment was attempted. No preview URL may be claimed.
 
 ## C. Tests And Checks
 
-- Complete diff from accepted implementation `3ca23d6...` through synchronized head: documentation/workflow only; no production or tracked-test drift.
-- Focused current-head executable gate: `77/77` passed across the representative integration, survey command, survey persistence, and campaign persistence suites.
-- Real caller source check: rejected survey transitions expose no accepted state; `GameSessionContext` applies only `transition.acceptedState`.
-- Representative source check: imports `createNewGameSnapshot(...)`, production attempt/publication/load, engine quest/travel commands, campaign admission, and the real caller; imports no `demoSnapshot`; performs no eligibility injection; asserts four requests/occurrences/results, 48 receipts, restart, empty-cache duplicate, exact non-proposals, and active unturned-in quest.
-- Current-head worktree was clean before documentation edits.
+- `npm run dev -- --host 127.0.0.1 --port 5173`: passed; Sites-enabled local server started.
+- Exact local HTTP probe: `200`, title `Lineage: Reforged RPG UI`.
+- Node-side hosting configuration typecheck: passed.
+- `npx vite build`: passed; Worker environment plus `203` client modules built. The existing large client-chunk warning remains non-gating.
+- Official `package-site.sh`: passed and verified required archive entries.
+- `npm audit --omit=dev`: passed with `0` production vulnerabilities.
+- Workspace UI typecheck: retained the known `137` diagnostics; zero diagnostics named the changed hosting surfaces.
+- `git diff --check`: passed before the implementation commit.
+- Hosting integration commit pushed to `origin/master`; local and origin heads matched at `5f723d2924fef53b749c897440dfd2817499de32` before this coordination update.
 
-The decision did not rerun the full `1072/1072`, content lint, Vite build, or TypeScript baseline because no production/test drift exists and the installed prompt required only executable evidence necessary for current gate facts. Those accepted `0.6.11.1` results remain predecessor evidence, not newly claimed execution.
+## D. Applicable Failure-Pattern Evidence
 
-## D. Failure-Pattern Evidence
-
-- `FP-001`, `FP-017`: real creator, publication, commands/admission, travel, real caller, restart, and durable duplicate were exercised without fixture eligibility.
-- `FP-002`: accepted audit evidence was supplemented by semantic current-source inspection, complete delta review, and fresh focused execution.
-- `FP-008`: branches, PR merge refs, protected audit, and Connector packets remain evidence only.
-- `FP-009`: inspected, readiness-decision, coordination, pushed, tracking, and hosted identities remain distinct.
-- `FP-013`: campaign-persistence coverage retains nested survey authority through defeat/recovery rewrites.
-- `FP-014`: focused tests retain deep semantic/canonical authority, exact complete receipt, owner-derived progression, and placement validation.
-- No new generalized failure pattern was discovered.
+- `FP-001`: exercised the real app development caller and exact local HTTP response, not only a configuration parse.
+- `FP-008`: refreshed all 37 non-default remote branches and preserved their registered semantic dispositions; no branch integration was inferred from textual compatibility.
+- `FP-009`: distinguishes inspected base, hosting implementation commit, live origin head, app-only Sites source commit, disposable remote seed, and absent deployment.
+- No new generalized repository failure pattern was added; the blocker is an external aggregate-source transfer limit or failure mode, not a proven reusable game-authority defect.
 
 ## E. Branch And PR Lifecycle
 
-Fresh fetch/prune found one local branch and 37 non-default remote branches. Live PR refs retain PR #2 head `e78dc645cfb658685be12f45f46d34b7c0da1119` and PR #3 head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`; both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+Fresh fetch/prune found one local branch and 37 non-default remote branches. A publication-time fetch then found two concurrent documentation-only Connector-preflight commits through `6576a1590fab2a9bdef42fde3bce7486374a5d3f`; their new packet and coordination updates were semantically retained during rebase. The retained evidence, protected, candidate-integration, and superseded dispositions remain unchanged. The GitHub CLI was unavailable locally; the current Connector packet reports exactly two open PRs at the registered heads. No merge, cherry-pick, PR mutation, closure, deletion, or disposition change was due.
 
-The four survey evidence refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness and prompt-packaging refs remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`. No branch/PR integration, mutation, closure, deletion, or disposition change was due.
+The private Sites source branch is an external deployment source, not a Lineage integration branch. It contains only the disposable seed commit and must be force-replaced by the exact app source before any future save or deployment.
 
 ## F. Risks And Follow-Up
 
-- `BAND_ENTRY_READY` authorizes the separate milestone package; it does not by itself record `Version 0.7.0` as completed.
-- The next run must fail closed if live production/test drift invalidates the decision before milestone publication.
-- `0.7.0` acceptance will prove only the bounded integrated loop. It will not imply `0.8.0` pre-alpha readiness or any deferred quest, inventory, NPC, class/progression, attribute, generic-architecture, packaging, or release capability.
+- Hosting remains blocked until the exact app source can reach the Sites source repository. The smallest coherent follow-up is a dedicated preview-asset payload decision or an explicitly supported Sites large-source transfer route.
+- Do not silently omit creator assets, weaken exact-source publication, save a version against the seed commit, or claim a hosted preview.
+- The active `0.7.0` prompt remains unchanged and may proceed independently; this hosting blocker does not affect gameplay-band authority.
 
-Suggested coordination commit message: `docs: approve integrated gameplay band entry`
+Suggested coordination commit message: `docs: record Sites preview upload blocker`
 
-Next run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
+Next recommended gameplay run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
+
+Next preview-hosting run: unversioned, only after an exact supported asset-transfer or payload-reduction authority is selected.
