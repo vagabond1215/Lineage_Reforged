@@ -2,7 +2,7 @@
 
 Date: 2026-08-29
 
-Status: Sites preview integration committed but deployment blocked; integrated-gameplay band-entry readiness accepted and milestone activation pending
+Status: owner-only Sites preview deployed; integrated-gameplay band-entry readiness accepted and milestone activation pending
 
 Repository: `vagabond1215/Lineage_Reforged`
 
@@ -26,7 +26,7 @@ Current prompt authority:
 
 `docs/dev/connector-preflight-version-0.7.0-milestone-activation-evidence-packet-2026-08-28.md`
 
-Inspected hosted head: `5f723d2924fef53b749c897440dfd2817499de32`
+Inspected hosted head before the preview asset implementation: `712982fbf72b158280df0ac89dc903d3b1832ab4`
 
 Connector disposition: `CONNECTOR_PREFLIGHT_REFRESH_COMPLETE_EXECUTION_RESERVED_TO_CODEX`
 
@@ -34,11 +34,13 @@ The complete post-readiness delta is three commits. The readiness publication an
 
 ## 0A. Sites Preview Hosting Support Status
 
-Unversioned preview-hosting support is committed and pushed at `5f723d2924fef53b749c897440dfd2817499de32`. The existing RPG UI now runs under the Sites-enabled local development path and produces the required Cloudflare Worker-compatible build and official Sites archive.
+Unversioned preview-hosting support is complete. Production character-creator illustrations now resolve from immutable public GitHub commit `712982fbf72b158280df0ac89dc903d3b1832ab4`, while local development retains the existing repository paths and all authored assets. The implementation and focused test are committed and pushed at `7002efa8b4c3320932a623c2f1eae7f84865c676`.
 
-Deployment remains `BLOCKED_NO_EXACT_REMOTE_SOURCE`. The private owner-only Sites project exists, but its source branch contains only disposable endpoint-verification seed `f4238047ac5e166d2742329447bba6c0883e6554`. Exact app-only source commit `3e61ea1ce56dbdbdbecc7865fb7b8db754ba0334` could not be uploaded: the `458,248,681`-byte aggregate source/archive payload repeatedly exceeded credential windows without updating the remote head. No version was saved, no deployment was attempted, and no hosted preview URL exists.
+The exact independently buildable Sites source includes `apps/rpg-ui` and its imported `packages` tree, excluding only the hotlinked `apps/rpg-ui/public/character-creator` directory. It built to `20,343,949` bytes, was pushed at `f12274cab9f0fc40fc2c2d322d15128b374e6093`, and replaced the disposable seed before version creation. Sites version 1 and private deployment `appgdep_6a9332384ac881919f37da76fb6463dd` succeeded.
 
-Do not save or deploy against the seed commit. Any follow-up must first select an explicit supported large-source transfer route or a narrow asset-payload reduction authority, then force-replace the Sites source branch with exact validated source. This support blocker does not alter or supersede the active `0.7.0` gameplay prompt.
+Owner-only preview: `https://lineage-reforged-preview.vagabond1215.chatgpt.site`
+
+The live site and a representative pinned asset both returned HTTP `200`. This preview support does not alter or supersede the active `0.7.0` gameplay prompt. Raw GitHub delivery is a bounded preview choice, not durable public-release CDN authority.
 
 ## 1. Accepted Readiness State
 

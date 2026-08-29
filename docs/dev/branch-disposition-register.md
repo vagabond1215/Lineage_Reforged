@@ -6,6 +6,14 @@ Status: current coordination surface; live refs must be reinspected before merge
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
 
+## 2026-08-29 Sites Preview Asset Hotlink And Deployment Refresh
+
+The unversioned follow-up fetched/pruned and began from clean synchronized `master == origin/master` at `712982fbf72b158280df0ac89dc903d3b1832ab4`. Fresh inventory found one local branch and 37 non-default remote branches. Live GitHub inspection found exactly two open PRs: PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`, and PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+No non-default branch touches the character-creator authored asset directory. Only superseded legacy launcher branches overlap `apps/rpg-ui`, and their semantic scope does not supply or supersede this production-only asset URL boundary. Protected, candidate-integration, hold, merged-retire, and superseded-evidence dispositions remain unchanged. No merge, cherry-pick, rebase, PR mutation, closure, deletion, or Lineage ref disposition change was due.
+
+The private Sites source branch is external deployment infrastructure, not a Lineage integration branch. Its disposable seed `f4238047ac5e166d2742329447bba6c0883e6554` was force-replaced only after exact filtered source `f12274cab9f0fc40fc2c2d322d15128b374e6093` built successfully and its package omitted only the production-hotlinked creator assets. Sites version 1 and private deployment `appgdep_6a9332384ac881919f37da76fb6463dd` then succeeded. This deployment action does not change any registered Lineage branch disposition or its review trigger.
+
 ## 2026-08-29 Sites Preview Hosting Enablement Refresh
 
 The unversioned hosting-support run fetched/pruned from clean synchronized `master == origin/master` at `53acee1f95aa27799166d169e48e1e0115e2ef85`, refreshed one local branch and 37 non-default remote branches, and found no branch integration trigger relevant to preview hosting. Registered protected, candidate-integration, hold, merged-retire, and superseded-evidence dispositions remain unchanged. The GitHub CLI was unavailable, so live PR metadata could not be refreshed through that client; the registered PR heads remain present as remote branches.
