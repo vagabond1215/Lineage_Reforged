@@ -26,6 +26,7 @@ import {
   isCharacterAttributeKey,
   parsePresentedAttributeValues
 } from '../characterAttributes.js';
+import { resolveCharacterCreatorAssetUrl } from '../characterCreatorAssetUrl.js';
 import {
   createDefaultStartingBundleChoiceSelections,
   formatAgeBandModifierLine,
@@ -416,7 +417,7 @@ function renderRegionResourceIcons(
             >
               {resource.imageUrl ? (
                 <img
-                  src={resource.imageUrl}
+                  src={resolveCharacterCreatorAssetUrl(resource.imageUrl)}
                   alt=""
                   aria-hidden="true"
                   className={`${imageSizeClass} ${visualClass} object-contain`}
@@ -1187,8 +1188,12 @@ export function CharacterCreationNarrativeScreen({
           const statRows = parsePresentedAttributeValues(option.notes[0] ?? '');
           const art = getLineageCardArt(option.id);
           const selected = form.lineageId === option.id;
-          const lineagePrimaryImageUrl = art?.imageUrl;
-          const lineageSecondaryImageUrl = art?.secondaryImageUrl ?? null;
+          const lineagePrimaryImageUrl = art?.imageUrl
+            ? resolveCharacterCreatorAssetUrl(art.imageUrl)
+            : undefined;
+          const lineageSecondaryImageUrl = art?.secondaryImageUrl
+            ? resolveCharacterCreatorAssetUrl(art.secondaryImageUrl)
+            : null;
           const activeLineageImageUrl =
             selected && showAlternateLineageArt && lineageSecondaryImageUrl
               ? lineageSecondaryImageUrl
@@ -1756,9 +1761,12 @@ export function CharacterCreationNarrativeScreen({
         {continents.map((option) => {
           const art = getContinentCardArt(option.id);
           const selected = form.continentId === option.id;
-          const continentImageUrl = selected
+          const continentImagePath = selected
             ? art?.selectedImageUrl ?? art?.imageUrl
             : art?.imageUrl;
+          const continentImageUrl = continentImagePath
+            ? resolveCharacterCreatorAssetUrl(continentImagePath)
+            : undefined;
           const continentBackgroundPosition = selected
             ? art?.selectedBackgroundPosition ?? 'right bottom'
             : art?.backgroundPosition ?? 'center bottom';
@@ -1904,6 +1912,9 @@ export function CharacterCreationNarrativeScreen({
         {regions.map((option) => {
           const art = getRegionCardArt(option.id);
           const selected = form.regionId === option.id;
+          const regionImageUrl = art
+            ? resolveCharacterCreatorAssetUrl(art.imageUrl)
+            : undefined;
           const regionBackgroundPosition = art?.backgroundPosition ?? 'center bottom';
           const regionSelectedBackgroundPosition =
             art?.selectedBackgroundPosition ?? 'right bottom';
@@ -1918,7 +1929,7 @@ export function CharacterCreationNarrativeScreen({
                     <div
                       className="selector-card-ambient-art absolute inset-0 opacity-24 transition duration-500 ease-out group-hover:opacity-34"
                       style={{
-                        backgroundImage: `url(${art.imageUrl})`,
+                        backgroundImage: `url(${regionImageUrl})`,
                         backgroundPosition: regionBackgroundPosition
                       }}
                     />
@@ -1932,7 +1943,7 @@ export function CharacterCreationNarrativeScreen({
                         : 'inset-0 opacity-100 group-hover:scale-[1.01]'
                     }`}
                     style={{
-                      backgroundImage: `url(${art.imageUrl})`,
+                      backgroundImage: `url(${regionImageUrl})`,
                       left: selected ? REGION_SELECTION_IMAGE_LEFT : 0,
                       backgroundPosition: selected
                         ? regionSelectedBackgroundPosition
@@ -2121,6 +2132,9 @@ export function CharacterCreationNarrativeScreen({
         {settlements.map((option) => {
           const art = getSettlementCardArt(option.id);
           const selected = form.startingSettlementId === option.id;
+          const settlementImageUrl = art
+            ? resolveCharacterCreatorAssetUrl(art.imageUrl)
+            : undefined;
           const settlementBackgroundPosition = art?.backgroundPosition ?? 'center bottom';
           const settlementSelectedBackgroundPosition =
             art?.selectedBackgroundPosition ?? 'right bottom';
@@ -2135,7 +2149,7 @@ export function CharacterCreationNarrativeScreen({
                     <div
                       className="selector-card-ambient-art absolute inset-0 opacity-24 transition duration-500 ease-out group-hover:opacity-34"
                       style={{
-                        backgroundImage: `url(${art.imageUrl})`,
+                        backgroundImage: `url(${settlementImageUrl})`,
                         backgroundPosition: settlementBackgroundPosition,
                         backgroundSize: art.backgroundSize
                       }}
@@ -2150,7 +2164,7 @@ export function CharacterCreationNarrativeScreen({
                         : 'inset-0 opacity-100 group-hover:scale-[1.01]'
                     }`}
                     style={{
-                      backgroundImage: `url(${art.imageUrl})`,
+                      backgroundImage: `url(${settlementImageUrl})`,
                       left: selected ? REGION_SELECTION_IMAGE_LEFT : 0,
                       backgroundPosition: selected
                         ? settlementSelectedBackgroundPosition
