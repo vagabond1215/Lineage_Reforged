@@ -29,7 +29,20 @@ export type SidebarNavItem = {
   onSelect?: () => void;
 };
 
-const launcherSidebarAssets: Record<string, { inactive: string; active: string }> = {
+type LauncherSidebarAsset = {
+  inactive: string;
+  active: string;
+};
+
+export const LAUNCHER_SIDEBAR_ART_ASPECT_RATIO = '7 / 2';
+
+/*
+ * Sidebar art contract:
+ * - 7:2 transparent PNG or SVG button plates.
+ * - No baked readable labels; live labels stay in React for accessibility and localization.
+ * - Add sections here only after both active and inactive files exist in /public/launcher.
+ */
+const launcherSidebarAssets: Partial<Record<string, LauncherSidebarAsset>> = {
   characters: {
     inactive: '/launcher/character-inactive-soft.png',
     active: '/launcher/character-active-soft.png'
@@ -41,6 +54,10 @@ const launcherSidebarAssets: Record<string, { inactive: string; active: string }
   chronicles: {
     inactive: '/launcher/chronicles-inactive-soft.png',
     active: '/launcher/chronicles-active-soft.png'
+  },
+  bloodlines: {
+    inactive: '/launcher/bloodlines-inactive-soft.svg',
+    active: '/launcher/bloodlines-active-soft.svg'
   },
   settings: {
     inactive: '/launcher/settings-inactive-soft.png',
@@ -173,6 +190,7 @@ export function SidebarNav({
     >
       {items.map((item) => {
         const assets = launcherSidebarAssets[item.id];
+        const hasAssets = Boolean(assets);
 
         return (
           <button
@@ -182,8 +200,11 @@ export function SidebarNav({
             disabled={item.disabled}
             aria-label={item.label}
             aria-current={item.active ? 'page' : undefined}
+            data-launcher-section={item.id}
+            data-launcher-has-art={hasAssets ? 'true' : 'false'}
+            data-launcher-art-aspect={LAUNCHER_SIDEBAR_ART_ASPECT_RATIO}
             className={`launcher-sidebar-button min-w-[10rem] rounded-lg border px-4 py-4 text-left transition md:min-h-[2.125rem] md:min-w-0 md:w-full md:rounded-none md:border-x-0 md:border-t-0 md:first:border-t md:px-4 md:py-1.5 ${
-              assets ? 'has-art' : ''
+              hasAssets ? 'has-art' : ''
             } ${
               item.active
                 ? 'is-active border-[color:var(--color-border-soft)] text-[color:var(--color-text-primary)]'
