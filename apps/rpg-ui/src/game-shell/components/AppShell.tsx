@@ -42,6 +42,10 @@ const launcherSidebarAssets: Record<string, { inactive: string; active: string }
     inactive: '/launcher/chronicles-inactive-soft.png',
     active: '/launcher/chronicles-active-soft.png'
   },
+  bloodlines: {
+    inactive: '/launcher/bloodlines-inactive-soft.png',
+    active: '/launcher/bloodlines-active-soft.png'
+  },
   settings: {
     inactive: '/launcher/settings-inactive-soft.png',
     active: '/launcher/settings-active-soft.png'
