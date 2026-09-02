@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Date: 2026-08-29
+Date: 2026-09-02
 
-Status: owner-only Sites preview deployed; integrated-gameplay band-entry readiness accepted and milestone activation pending
+Status: owner-only Sites preview deployed with authoritative Bloodlines emblem migration; integrated-gameplay band-entry readiness accepted and milestone activation pending
 
 Repository: `vagabond1215/Lineage_Reforged`
 
@@ -41,6 +41,14 @@ The exact independently buildable Sites source includes `apps/rpg-ui` and its im
 Owner-only preview: `https://lineage-reforged-preview.vagabond1215.chatgpt.site`
 
 The live site and a representative pinned asset both returned HTTP `200`. This preview support does not alter or supersede the active `0.7.0` gameplay prompt. Raw GitHub delivery is a bounded preview choice, not durable public-release CDN authority.
+
+## 0B. Bloodlines Launcher Asset Migration
+
+An accidental task in the unrelated TORN project created a temporary Lineage checkout, replaced the Bloodlines tree emblem with a large stylized blood drop, published private Sites version 2 from filtered source `8857c08bb272f36938fde0a72087c5c0865be80b`, and then removed that temporary checkout. Live Lineage `master` separately received `df6c10dbd75e24d93cb6525cad4e572067389e08` with the earlier tree-based assets, sidebar mapping, and focused contract test.
+
+The exact deployed active/inactive PNGs were recovered from Sites and migrated into the authoritative `C:\Codex\EoL` checkout at `e58d6502b56c7d280d07ac0ad69902974f77de0a`. Their hashes match version-2 source exactly, the mapping was byte-equivalent and required no rewrite, the focused test and direct Vite build pass, and the owner-only live preview already serves the migrated emblem. No duplicate Sites version was created.
+
+The TORN task and temporary checkout are not Lineage authority. Continue all Lineage work only from `vagabond1215/Lineage_Reforged` in `C:\Codex\EoL`. This correction does not alter or supersede the active `0.7.0` milestone prompt.
 
 ## 1. Accepted Readiness State
 

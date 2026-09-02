@@ -1,10 +1,18 @@
 # Branch Disposition Register
 
-Date: 2026-08-29
+Date: 2026-09-02
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-09-02 Bloodlines Launcher Asset Thread Migration Refresh
+
+The unversioned migration refreshed synchronized Lineage `master`, reconciled concurrent asset commit `df6c10dbd75e24d93cb6525cad4e572067389e08`, and inventoried one local branch, 37 non-default hosted branches, and exactly two open PRs. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`.
+
+PR #2 was reinspected at its named launcher-asset trigger because it discusses missing Bloodlines artwork. Its older metadata/SVG proposal and no-baked-label contract remain semantically superseded by the accepted raster launcher system and do not authorize merge or cherry-pick. The current implementation uses the two production-consumed `700x200` soft-state PNGs plus the existing `AppShell` mapping and focused contract test. No Lineage branch/PR merge, rebase, force update, mutation, closure, deletion, or disposition change was due.
+
+The exact large-blood-drop PNGs were recovered from already-deployed private Sites source `8857c08bb272f36938fde0a72087c5c0865be80b` after an accidental TORN-project task deleted its temporary Lineage checkout. They were migrated to authoritative Lineage commit `e58d6502b56c7d280d07ac0ad69902974f77de0a`. The Sites source branch remains external deployment infrastructure rather than a Lineage integration branch; no TORN repository state or authority was imported.
 
 ## 2026-08-29 Sites Preview Asset Hotlink And Deployment Refresh
 

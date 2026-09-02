@@ -1,83 +1,83 @@
 # Current Codex Output
 
-Date: 2026-08-29
+Date: 2026-09-02
 
-Source run: `Sites Preview Asset Hotlink And Deployment`
+Source run: `Bloodlines Launcher Asset Thread Migration`
 
-Label class: unversioned deployment support
+Label class: unversioned deployment-support correction
 
 Milestone impact: `none`
 
 Parent version: not applicable
 
-Inspected base and asset-source commit: `712982fbf72b158280df0ac89dc903d3b1832ab4`
+Reconciled repository base: `df6c10dbd75e24d93cb6525cad4e572067389e08`
 
-Committed and pushed implementation: `7002efa8b4c3320932a623c2f1eae7f84865c676`
+Committed and pushed migration: `e58d6502b56c7d280d07ac0ad69902974f77de0a`
 
-Validated Sites source commit: `f12274cab9f0fc40fc2c2d322d15128b374e6093`
+Deployed Sites source: `8857c08bb272f36938fde0a72087c5c0865be80b`
 
-Disposition: `DEPLOYMENT_COMPLETE_OWNER_ONLY`
+Disposition: `MIGRATION_COMPLETE_LIVE_VERSION_ALREADY_CURRENT`
 
-The active gameplay route remains `Version 0.7.0 - Integrated Gameplay Systems Band Entry`. This support run does not activate, revise, or supersede that prompt.
+The active gameplay route remains `Version 0.7.0 - Integrated Gameplay Systems Band Entry`. This unversioned correction does not activate, revise, or supersede that prompt.
 
 ## A. Files Changed
 
-- `apps/rpg-ui/src/game-shell/characterCreatorAssetUrl.ts`: adds the production-only character-creator asset resolver pinned to the immutable public GitHub source commit.
-- `apps/rpg-ui/src/game-shell/components/CharacterCreationNarrativeScreen.tsx`: routes every lineage, continent, region, settlement, and resource illustration through that resolver while preserving local development paths.
-- `tests/unit/character-creator-asset-url.test.mjs`: covers development passthrough, production rewriting, custom-base normalization, and unrelated-asset passthrough.
-- `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, and `docs/dev/branch-disposition-register.md`: record the completed source replacement, private deployment, executable evidence, and unchanged gameplay/branch posture.
+- `apps/rpg-ui/public/launcher/bloodlines-inactive-soft.png`: replaces the provisional tree emblem with the exact deployed silver large-blood-drop asset.
+- `apps/rpg-ui/public/launcher/bloodlines-active-soft.png`: replaces the provisional tree emblem with the exact deployed ember-lit large-blood-drop asset.
+- `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, and `docs/dev/branch-disposition-register.md`: record the cross-project recovery, authoritative repository migration, validation, and unchanged route/branch posture.
 
-No gameplay owner, save format, schema, migration, authored content, authored visual asset, dependency, or active `0.7.0` authority changed.
+The sidebar mapping and focused launcher contract test were already present on live `master` through `df6c10dbd75e24d93cb6525cad4e572067389e08`; they were inspected and preserved unchanged.
 
-## B. Patch And Deployment Summary
+No gameplay owner, save, schema, migration, dependency, character-creator asset-delivery rule, or active milestone authority changed.
 
-- Local development continues to load `/character-creator/**` from `apps/rpg-ui/public`.
-- Production builds resolve those 128 files from `raw.githubusercontent.com` at immutable repository commit `712982fbf72b158280df0ac89dc903d3b1832ab4`.
-- The authored character-creator asset directory remains tracked and unchanged in Lineage. It is excluded only from the separate Sites source/package.
-- The exact Sites source contains `apps/rpg-ui` plus its imported `packages` dependency tree and omits only `apps/rpg-ui/public/character-creator`. Its tracked source is clean at `f12274cab9f0fc40fc2c2d322d15128b374e6093`.
-- The filtered build is `20,343,949` bytes, contains no `client/character-creator` directory, and contains the pinned production URL. The official package archive is `18,182,781` bytes with local SHA-256 `3443c0bd6185ac36aee8cd988fc192eec0f697acaf287a522da030790dedf5e4`.
-- The private Sites source branch was force-replaced from disposable seed `f4238047ac5e166d2742329447bba6c0883e6554` to the exact validated source commit.
-- Sites version 1 (`appgprj_6a92239b7f5c8191a91bcf4ee1f0e136~appgver_cbdecf74766881918ec0a4daf3a3f507`) was saved and production deployment `appgdep_6a9332384ac881919f37da76fb6463dd` succeeded.
-- Owner-only access was verified before deployment: one allowed owner, no groups, and no other allowed users.
-- Private preview URL: `https://lineage-reforged-preview.vagabond1215.chatgpt.site`.
+## B. Migration Summary
+
+- An accidental Codex task under the unrelated TORN project created a temporary `Lineage Reforged` checkout and refined the Bloodlines button from a tree-plus-small-drop emblem to one large stylized blood drop.
+- That task pushed only the filtered private Sites source commit `8857c08bb272f36938fde0a72087c5c0865be80b`, saved Sites version 2, deployed it privately, and then removed the temporary Lineage checkout from `C:\Codex\TORN`.
+- The authoritative Lineage repository later received `df6c10dbd75e24d93cb6525cad4e572067389e08` with the earlier tree-based assets, mapping, and contract test. The deployed large-drop files were still absent from repository history.
+- This run retrieved the exact version-2 source from the private Sites source repository, verified its provenance and dimensions, confirmed its `AppShell.tsx` was byte-equivalent to the authoritative mapping, and copied only the two deployed PNGs into `C:\Codex\EoL`.
+- Authoritative asset hashes now match the deployed source exactly:
+  - active: `a16b93535aff5f52febf30077a5c9ee3d26fc1f39006829ca0f54465648dc870`;
+  - inactive: `8709326a28e312582367c1f988d0e385bd1a7fc6b00e0ded7305c07c0537a478`.
+- Sites version 2 (`appgprj_6a92239b7f5c8191a91bcf4ee1f0e136~appgver_9a4187a832608191847bdce37d5b49d0`) already serves this exact pair, so no duplicate version or deployment was created.
+- Owner-only preview remains `https://lineage-reforged-preview.vagabond1215.chatgpt.site`.
 
 ## C. Tests And Checks
 
-- `node --test tests\unit\character-creator-asset-url.test.mjs`: passed, `4/4`.
+- `node --test tests\unit\launcher-bloodlines-asset.test.mjs`: passed, `1/1`.
 - `npm --prefix apps\rpg-ui run typecheck:node`: passed.
-- `npm --prefix apps\rpg-ui run typecheck`: retained the known broad TypeScript baseline failure. It includes the pre-existing `.at`/implicit-any diagnostics at lines 189/197 of the modified narrative component, but reports no diagnostic at the new resolver or rewritten asset caller lines.
-- `npm run ui:build`: stopped at the same TypeScript baseline because the wrapper runs `tsc` first.
-- `npx vite build --outDir .tmp-codex-vite-build --emptyOutDir`: passed against the live repository source.
-- `npx vite build`: passed against the exact filtered Sites source; `204` client modules built.
-- Official `package-site.sh`: passed; archive contains no `character-creator/` entry.
-- Local Sites-enabled development server: passed; `http://127.0.0.1:5173/` returned `200 text/html`.
-- Private production readback: passed; the authenticated live URL returned `200 text/html`.
-- Pinned GitHub asset readback: passed; returned `200`, `image/png`, `Access-Control-Allow-Origin: *`, and `Cross-Origin-Resource-Policy: cross-origin`.
-- `git diff --check`: passed before the implementation commit, with only the existing Windows line-ending warning.
+- `npx vite build --outDir .tmp-bloodlines-vite-build --emptyOutDir`: passed; Worker and `204` client modules built.
+- Filtered/deployed and authoritative assets: exact SHA-256 match, exact `700x200` dimensions.
+- Production build copies: exact SHA-256 match to the authoritative assets.
+- Sites-enabled local server: `200 text/html` at `http://127.0.0.1:5173/`.
+- Sites project readback: latest saved version is 2 at source `8857c08bb272f36938fde0a72087c5c0865be80b`; access remains owner-only.
+- `git diff --check`: passed before migration publication.
+- The broader UI TypeScript baseline was not widened or repaired; the direct deployment build remains the executable preview surface.
 
 ## D. Applicable Failure-Pattern Evidence
 
-- `FP-001`: exercised the real narrative-screen caller, the production bundle, a local HTTP response, the deployed site, and the external asset response rather than accepting the resolver unit test alone.
-- `FP-008`: fetched/pruned and refreshed all 37 non-default remote branches and both open PRs; no branch integration was inferred from textual mergeability.
-- `FP-009`: distinguishes the Lineage inspected/asset commit, pushed implementation commit, filtered Sites source commit, saved version ID, deployment ID, and final coordination head.
+- `FP-001`: verified the real sidebar mapping, exact PNG contract, local HTTP caller surface, production build copies, and already-deployed Sites source rather than accepting task history alone.
+- `FP-008`: refreshed all 37 non-default hosted branches and both open PRs. PR #2 overlaps launcher-asset evidence but remains `SUPERSEDED_PRESERVE_EVIDENCE`; its mechanical/textual relevance did not authorize integration.
+- `FP-009`: distinguishes the reconciled GitHub base, authoritative migration commit, filtered Sites source commit, saved version, deployment, and final pushed coordination head.
 - No new generalized failure-pattern entry was required.
 
 ## E. Branch And PR Lifecycle
 
-Fresh orientation found one local branch, 37 non-default remote branches, and two open PRs. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both remain `SUPERSEDED_PRESERVE_EVIDENCE`. The protected, candidate-integration, hold, merged-retire, and superseded branch dispositions remain unchanged.
+Live inventory contains one local branch, 37 non-default hosted branches, and two open PRs. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both retain `SUPERSEDED_PRESERVE_EVIDENCE`.
 
-No merge, cherry-pick, rebase, PR mutation, closure, deletion, or Lineage branch disposition change was due. The private Sites source branch is an external deployment source, not a Lineage integration branch; its seed was replaced only as required for exact-source publication.
+The launcher-asset trigger was reinspected because PR #2 discusses missing Bloodlines art. Its proposed metadata/SVG contract remains superseded and semantically incompatible with the current raster label-bearing launcher system; no merge or cherry-pick was authorized. No branch or PR mutation, closure, deletion, or registered disposition change was due.
+
+The Sites source branch is external deployment infrastructure, not a Lineage integration branch. Retrieving its exact deployed files did not import foreign TORN repository state or authority.
 
 ## F. Risks And Follow-Up
 
-- This is an owner-only preview, not a public game release.
-- Raw GitHub delivery is appropriate for this bounded preview but has no dedicated asset-CDN availability, bandwidth, transformation, or cache-control guarantee. A future public or high-traffic release should move these assets to an explicitly selected durable delivery service.
-- The pinned asset commit must remain reachable in the public repository for creator illustrations to load. Changing the repository back to private would break anonymous asset fetches.
-- The existing UI TypeScript baseline remains outside this hosting package and must not be silently treated as green.
+- The accidental TORN task remains only as application history; its local Lineage checkout was already removed and the parent TORN worktree was reported clean.
+- The two production-consumed `*-soft.png` states are authoritative. No unused non-soft Bloodlines siblings were invented.
+- The preview remains owner-only. Its current version already contains the migrated emblem.
 - The active `0.7.0` prompt remains unchanged and may proceed independently.
 
-Suggested coordination commit message: `docs: record private Sites preview deployment`
+Suggested coordination commit message: `docs: record Bloodlines asset thread migration`
 
 Next recommended gameplay run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
 
-Next preview-hosting run: none required unless access, asset delivery, or the deployed source changes.
+Next preview-hosting run: none required unless the asset, access, or deployed source changes.
