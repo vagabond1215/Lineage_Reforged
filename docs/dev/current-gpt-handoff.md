@@ -1,14 +1,16 @@
 # Current GPT Handoff
 
-Date: 2026-09-02
+Date: 2026-09-06
 
-Status: owner-only Sites preview deployed with authoritative Bloodlines emblem migration; integrated-gameplay band-entry readiness accepted and milestone activation pending
+Status: owner-only Sites preview complete/current; integrated-gameplay band-entry readiness accepted; milestone activation pending; playability calibrated separately from internal version
 
 Repository: `vagabond1215/Lineage_Reforged`
 
+Current hosted `master`: `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b`
+
 Readiness result: `BAND_ENTRY_READY`
 
-Accepted implementation: `3ca23d6864541a899ea61a6bf26257665f754e78`
+Accepted representative implementation: `3ca23d6864541a899ea61a6bf26257665f754e78`
 
 Readiness decision starting head: `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`
 
@@ -22,37 +24,53 @@ Current prompt authority:
 
 `0.7.0`: `AUTHORIZED_PENDING_MILESTONE_ACTIVATION`
 
+Internal maturity band: `0.6.x` pending `0.7.0` publication
+
+Playability posture: `INTEGRATED_LOOP_PENDING_PUBLICATION`
+
 ## 0. Current Connector Preflight
 
-`docs/dev/connector-preflight-version-0.7.0-milestone-activation-evidence-packet-2026-08-28.md`
+`docs/dev/connector-preflight-version-0.7.0-current-head-playability-calibration-2026-09-06.md`
 
-Inspected hosted head before the preview asset implementation: `712982fbf72b158280df0ac89dc903d3b1832ab4`
+Connector disposition: `CONNECTOR_PREFLIGHT_CURRENT_HEAD_COMPLETE_EXECUTION_RESERVED_TO_CODEX`
 
-Connector disposition: `CONNECTOR_PREFLIGHT_REFRESH_COMPLETE_EXECUTION_RESERVED_TO_CODEX`
+The current hosted head is 11 commits ahead of the readiness-decision source head. The intervening work is readiness/docs coordination, material-design notes, Sites/Vite/Cloudflare hosting support, production-only character-creator asset routing, private Sites deployment, Bloodlines launcher assets, and deployment-source reconciliation. Connector inspection finds no post-readiness change to the representative game-engine owners, campaign persistence owners, or representative gameplay tests. Codex must independently verify that current-head claim locally.
 
-The complete post-readiness delta is three commits. The readiness publication and material-property note are documentation-only. `5f723d2924fef53b749c897440dfd2817499de32` changes the UI hosting/build/dependency surface but not representative gameplay owners or tracked tests. Because GitHub has no workflow run or combined status for that head, Codex must locally characterize the changed Vite/Cloudflare/Sites build and TypeScript surface in addition to the installed focused gameplay gate. This does not prejudge milestone acceptance and does not broaden the route into packaging or `0.8.x` work.
+The earlier 2026-08-28 Connector preflight is historical orientation only and is superseded by the 2026-09-06 packet for current-head facts.
 
-## 0A. Sites Preview Hosting Support Status
+## 0A. Sites Preview Status
 
-Unversioned preview-hosting support is complete. Production character-creator illustrations now resolve from immutable public GitHub commit `712982fbf72b158280df0ac89dc903d3b1832ab4`, while local development retains the existing repository paths and all authored assets. The implementation and focused test are committed and pushed at `7002efa8b4c3320932a623c2f1eae7f84865c676`.
+The preview-hosting lane is complete for the current owner-only purpose.
 
-The exact independently buildable Sites source includes `apps/rpg-ui` and its imported `packages` tree, excluding only the hotlinked `apps/rpg-ui/public/character-creator` directory. It built to `20,343,949` bytes, was pushed at `f12274cab9f0fc40fc2c2d322d15128b374e6093`, and replaced the disposable seed before version creation. Sites version 1 and private deployment `appgdep_6a9332384ac881919f37da76fb6463dd` succeeded.
+- Owner-only preview: `https://lineage-reforged-preview.vagabond1215.chatgpt.site`
+- Current Sites version: version 2.
+- Deployed filtered source: `8857c08bb272f36938fde0a72087c5c0865be80b`.
+- Final Bloodlines active/inactive launcher assets were migrated back into authoritative Lineage history at `e58d650203bde7d84a6a56ab1501bfac4e18901c`.
+- Current coordination head `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b` records that the live version already serves the authoritative migrated emblem.
 
-Owner-only preview: `https://lineage-reforged-preview.vagabond1215.chatgpt.site`
+No further Sites run is required unless access policy, deployment source, or asset delivery changes. The Sites source branch remains external deployment infrastructure, not a Lineage integration branch.
 
-The live site and a representative pinned asset both returned HTTP `200`. This preview support does not alter or supersede the active `0.7.0` gameplay prompt. Raw GitHub delivery is a bounded preview choice, not durable public-release CDN authority.
+## 0B. Playability Calibration
 
-## 0B. Bloodlines Launcher Asset Migration
+Use `docs/dev/playability-posture-and-version-calibration.md` with the internal versioning policy.
 
-An accidental task in the unrelated TORN project created a temporary Lineage checkout, replaced the Bloodlines tree emblem with a large stylized blood drop, published private Sites version 2 from filtered source `8857c08bb272f36938fde0a72087c5c0865be80b`, and then removed that temporary checkout. Live Lineage `master` separately received `df6c10dbd75e24d93cb6525cad4e572067389e08` with the earlier tree-based assets, sidebar mapping, and focused contract test.
+The internal version number is **not** a percentage-complete or playability score.
 
-The exact deployed active/inactive PNGs were recovered from Sites and migrated into the authoritative `C:\Codex\EoL` checkout at `e58d6502b56c7d280d07ac0ad69902974f77de0a`. Their hashes match version-2 source exactly, the mapping was byte-equivalent and required no rewrite, the focused test and direct Vite build pass, and the owner-only live preview already serves the migrated emblem. No duplicate Sites version was created.
+If the current milestone is accepted:
 
-The TORN task and temporary checkout are not Lineage authority. Continue all Lineage work only from `vagabond1215/Lineage_Reforged` in `C:\Codex\EoL`. This correction does not alter or supersede the active `0.7.0` milestone prompt.
+- internal maturity becomes `0.7.x`;
+- playability posture becomes `INTEGRATED_LOOP`;
+- the project does **not** become `VERTICAL_SLICE`, `PRE_ALPHA`, or “70% complete.”
+
+The current representative loop is real and authoritative, but intentionally narrow. It proves fresh creator/start-state -> publication/load -> quest acceptance/access -> travel/arrival -> four survey shifts -> restart -> durable duplicate. It still ends with Soundings active and unturned-in.
+
+Material player-facing gaps remain in quest turn-in/reward closure, individualized inventory/item instances, crafting runtime depth and later material substitution, persistent generated NPCs/services, broader combat/economy integration, UI/accessibility hardening, balance, and representative content breadth.
+
+Those gaps do not invalidate the `0.7.0` gate. They do mean future routing must emphasize actual playable depth rather than version-number momentum.
 
 ## 1. Accepted Readiness State
 
-The unversioned band-entry decision independently returned `BAND_ENTRY_READY`. Every `0.7.0` policy criterion is satisfied by accepted `0.6.9`, `0.6.10`, `0.6.11`, and `0.6.11.1` authority plus a fresh current-head `77/77` focused gate.
+The unversioned band-entry decision independently returned `BAND_ENTRY_READY`. Every `0.7.0` policy criterion is satisfied by accepted `0.6.9`, `0.6.10`, `0.6.11`, and `0.6.11.1` authority plus the focused readiness evidence.
 
 The accepted loop begins with a real Starfall creator, crosses retained new-campaign publication/load, quest acceptance and Ashen access, engine-owned travel and arrival activation, four engine-owned survey shifts, campaign admission, persistence/restart, and empty-cache durable duplicate. Final accepted authority remains 4 requests, 4 occurrences, 4 results, and 48 receipts.
 
@@ -60,7 +78,7 @@ The accepted loop begins with a real Starfall creator, crosses retained new-camp
 
 Soundings remains active and unturned-in. The accepted survey shifts—not legacy turn-in—supply the required cross-system consequence-bearing interaction. Inventory is an exact non-proposal for this interaction.
 
-Do not reopen or import:
+Do not reopen or import into the milestone package:
 
 - turn-in, payout, rewards, or generic reward architecture;
 - class/progression cleanup or attribute rebalance;
@@ -73,18 +91,26 @@ Do not reopen or import:
 
 Execute only `Version 0.7.0 - Integrated Gameplay Systems Band Entry`.
 
-It is a bounded milestone activation/publication package over the already accepted loop. It should verify the complete live-head delta, inspect the real path, run the representative plus focused survey/campaign persistence gate, locally characterize the post-readiness UI hosting/toolchain drift recorded in the Connector preflight packet, and then either:
+It is a bounded milestone activation/publication package over the already accepted loop. It should verify the complete live-head delta, inspect the real path, run the representative plus focused survey/campaign persistence gate, verify the two post-readiness asset tests and current Sites/Vite build surface, and then either:
 
-- return `MILESTONE_ENTRY_ACCEPTED`, record `0.7.0` complete, and install one separate next route; or
+- return `MILESTONE_ENTRY_ACCEPTED`, record `0.7.0` complete/current, record playability posture `INTEGRATED_LOOP`, and install the separate unversioned `0.7.x Playability Gap Prioritization Decision`; or
 - return `MILESTONE_ENTRY_BLOCKED`, keep the project in the current band, and install the smallest exact repair.
+
+On acceptance, do **not** automatically assign `0.7.1`. The unversioned playability decision should first compare where the player-facing loop most needs closure. Existing evidence makes a narrow authoritative Soundings turn-in/reward lane a strong candidate, but it is not pre-assigned.
 
 It must not modify production or invent feature work merely to make the milestone label substantive.
 
 ## 4. Branch And PR Posture
 
-The current Connector refresh sees 37 non-default hosted branches and two open PRs; local branch/worktree state remains for Codex to verify. The readiness decision previously found one local branch and 37 non-default remote branches. PR #2 and PR #3 remain `SUPERSEDED_PRESERVE_EVIDENCE`; the four survey evidence refs remain `CANDIDATE_INTEGRATION`; integrated-gameplay readiness and prompt-packaging remain `PROTECTED_REFERENCE`; administration evidence remains `HOLD_NAMED_CONSUMER`.
+Current Connector-visible hosted inventory remains 38 branches total / 37 non-default branches and exactly two open PRs.
 
-No lifecycle action was due. Reinspect live refs during the milestone package or an earlier explicit trigger.
+- PR #2 remains `SUPERSEDED_PRESERVE_EVIDENCE` at `e78dc645cfb658685be12f45f46d34b7c0da1119`.
+- PR #3 remains `SUPERSEDED_PRESERVE_EVIDENCE` at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`.
+- the four survey evidence refs remain `CANDIDATE_INTEGRATION` only for broader named consumers;
+- integrated-gameplay readiness and prompt-packaging remain protected evidence;
+- administration evidence remains held for its named consumer.
+
+No Connector-visible lifecycle action is due. Reinspect local/worktree and live refs during the milestone package.
 
 ## 5. First Read Order
 
@@ -92,9 +118,10 @@ No lifecycle action was due. Reinspect live refs during the milestone package or
 2. `docs/dev/current-gpt-handoff.md`;
 3. `docs/dev/current-codex-prompt.md`;
 4. `docs/dev/current-codex-output.md`;
-5. `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
-6. `docs/design/internal-versioning-and-release-milestone-policy.md`;
-7. `docs/dev/connector-preflight-version-0.7.0-milestone-activation-evidence-packet-2026-08-28.md`;
-8. the accepted `0.6.11.1` appendices and representative test.
+5. `docs/dev/playability-posture-and-version-calibration.md`;
+6. `docs/dev/connector-preflight-version-0.7.0-current-head-playability-calibration-2026-09-06.md`;
+7. `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
+8. `docs/design/internal-versioning-and-release-milestone-policy.md`;
+9. the accepted `0.6.11.1` appendices and representative test.
 
-Fetch live `master`, verify the complete delta from the readiness decision, and preserve the fail-closed milestone gate.
+Fetch live `master`, verify any delta after `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b`, and preserve the fail-closed milestone gate.

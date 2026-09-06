@@ -1,6 +1,6 @@
 # Version 0.7.0 - Integrated Gameplay Systems Band Entry
 
-Date: 2026-08-27
+Date: 2026-09-06
 
 Label class: primary band-entry milestone
 
@@ -14,11 +14,17 @@ Readiness result: `BAND_ENTRY_READY`
 
 Accepted representative authority: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`
 
+Current-head Connector preflight: `docs/dev/connector-preflight-version-0.7.0-current-head-playability-calibration-2026-09-06.md`
+
+Playability calibration: `docs/dev/playability-posture-and-version-calibration.md`
+
 ## Objective
 
 Activate and publish the reserved `Version 0.7.0 - Integrated Gameplay Systems` internal maturity milestone over the already accepted bounded representative loop. Reverify that the live head has not invalidated the accepted readiness matrix, run the smallest focused executable confirmation, and update the durable route so `0.7.x` is the current maturity band.
 
 This is a bounded milestone integration/acceptance package, not a new feature package. Do not add gameplay behavior merely to make the version look substantive. The durable milestone decision itself qualifies this documentation-only primary because it closes the accepted band-entry gate and governs the next capability sequence.
+
+`0.7.0` is an internal maturity gate, not a percentage-complete or player-facing playability score. If accepted, the corresponding playability posture is `INTEGRATED_LOOP`, not `VERTICAL_SLICE`, `PRE_ALPHA`, or “70% complete.”
 
 Return exactly one result:
 
@@ -27,17 +33,19 @@ Return exactly one result:
 
 ## Required Orientation
 
-Follow `AGENTS.md`, the repository-first protocol, Codex-versus-Connector handling procedure, platform/tool policy, resource-slicing policy, branch policy/register, and applicable failure-pattern register. Fetch/prune, synchronize clean `master`, inventory live branches and pull-request refs, and distinguish accepted implementation, readiness-decision, inspected, coordination, pushed, tracking, and hosted heads.
+Follow `AGENTS.md`, the repository-first protocol, Codex-versus-Connector handling procedure, platform/tool policy, resource-slicing policy, branch policy/register, and applicable failure-pattern register. Fetch/prune, synchronize clean `master`, inventory live branches and pull-request refs, and distinguish accepted implementation, readiness-decision, inspected, coordination, pushed, tracking, hosted, and external Sites source heads.
 
 Read completely:
 
 - current prompt, handoff, output, historical register, and planning reconciliation;
 - `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
-- the internal versioning and release-milestone policy;
+- `docs/design/internal-versioning-and-release-milestone-policy.md`;
+- `docs/dev/playability-posture-and-version-calibration.md`;
+- `docs/dev/connector-preflight-version-0.7.0-current-head-playability-calibration-2026-09-06.md`;
 - accepted `0.6.9`, `0.6.10`, `0.6.11`, and `0.6.11.1` authorities;
 - current representative source/caller/persistence/test paths and the complete delta since the readiness decision.
 
-Connector packets and protected/evidence refs remain supporting evidence only.
+The earlier 2026-08-28 Connector preflight remains historical evidence only. Connector packets and protected/evidence refs remain supporting evidence, not executable or milestone acceptance authority.
 
 ## Acceptance Gate
 
@@ -55,9 +63,11 @@ If any criterion fails, return `MILESTONE_ENTRY_BLOCKED`, do not record `0.7.0` 
 
 ## Required Evidence
 
-- Inspect the complete diff from readiness-decision source head `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3` to synchronized live head.
+- Inspect the complete diff from readiness-decision source head `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3` to synchronized live head. The current Connector snapshot at `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b` is 11 commits ahead and contains hosting/UI/asset/documentation drift but no known representative gameplay-owner/test change; independently verify that claim locally and include any newer delta.
 - Reinspect the real creator, new-campaign attempt/publication, quest acceptance/access, travel/arrival, survey owner, campaign admission, real caller, accepted-only session bridge, persistence, and representative test.
 - Run the representative ordinary-reachability test plus the focused survey-command, survey-persistence, and campaign-persistence tests. Expand only if drift or failure requires it.
+- Run the post-readiness focused tracked tests `tests/unit/character-creator-asset-url.test.mjs` and `tests/unit/launcher-bloodlines-asset.test.mjs`.
+- Run the Node-side UI configuration typecheck and a direct current Vite production build or equivalent build path that loads the Sites/Cloudflare configuration. Characterize the known broad UI TypeScript baseline explicitly; do not silently claim it is green.
 - Confirm the representative test imports no `demoSnapshot`, injects no eligibility state, ends with the quest active/unturned-in, and asserts the durable duplicate and exact authority graph.
 - Apply at minimum `FP-001`, `FP-002`, `FP-008`, `FP-009`, `FP-013`, `FP-014`, and `FP-017`.
 
@@ -67,12 +77,16 @@ On `MILESTONE_ENTRY_ACCEPTED`:
 
 - record `Version 0.7.0 - Integrated Gameplay Systems Band Entry` as complete and accepted;
 - set the current maturity band to `0.7.x` without claiming `0.8.0` readiness;
+- record `Playability posture: INTEGRATED_LOOP` and explicitly state that the internal version is not a percentage-complete claim;
 - preserve the accepted representative-loop boundary and all later-system deferrals;
-- install one separate next route chosen under the normal owner/version classification rules, without implementing it in this run;
+- install one separate next route, without implementing it in this run: unversioned `0.7.x Playability Gap Prioritization Decision`;
+- do **not** automatically allocate `0.7.1` during milestone publication;
+- require that next decision to reproduce the actual player path and rank missing player-facing loop closure by playability gain, dependency closure, architectural risk, and package size before assigning a new primary capability;
+- treat a narrow authoritative Soundings turn-in/reward lane as a strong candidate to compare, not a predetermined versioned implementation;
 - update current prompt/output/handoff, the readiness decision, historical register, planning reconciliation, branch register, and lower-precedence live headers;
 - commit only intended documentation, push `master`, fetch/prune, verify `HEAD == origin/master`, retrieve hosted prompt/output/handoff, and finish clean.
 
-On `MILESTONE_ENTRY_BLOCKED`, update the same coordination surfaces with the fail-closed result and smallest current-band repair route.
+On `MILESTONE_ENTRY_BLOCKED`, update the same coordination surfaces with the fail-closed result and smallest current-band repair route. Do not install the playability-prioritization route until the band entry is accepted.
 
 ## Scope Exclusions
 
