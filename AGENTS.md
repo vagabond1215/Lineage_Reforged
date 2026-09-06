@@ -29,36 +29,41 @@
 - A chat response is not a repository handoff. Complete substantive runs by updating the current output, handoff, prompt when routing changes, branch register, focused authority, and exact commit/push identities required by the protocol.
 - If a synchronized authenticated checkout, required tooling, or prescribed validation is unavailable, report incomplete work and do not claim implementation or acceptance.
 
-## Version And Run Labels
+## Game Versions, Development Milestones, And Run Labels
 
-- Use `Version X.Y.Z - Short Name` for primary Codex workflow labels. Do not use old `Step N` labels for new work.
-- Use `Version X.Y.Z.S - Short Name` only for a support run attached to exactly one primary version, where `S` is the support-run counter.
-- Use a stable unversioned run name for cross-cutting research, coordination, source indexing, held planning, or read-only work that does not itself advance a primary capability and is not narrowly attached to one primary.
-- Each Codex prompt should include a version label when it is part of the ongoing primary or support workflow.
-- Internal workflow versions are development maturity markers, not public game release versions, package versions, save-format versions, protocol versions, model versions, or compatibility promises.
-- `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable detailed authority for label classification, maturity-band entry, and the reserved `0.7.0`, `0.8.0`, `0.9.0`, and `1.0.0` gates.
-- Patch numbers may be multi-digit, such as `Version 0.5.10 - Workflow Baseline Review`; do not roll from `v0.5.9` to `v0.6.0` automatically.
-- Minor-band advancement means project maturity has changed, not that the patch count reached 9, 99, or any other visual threshold.
-- A three-segment primary version is appropriate only when a run materially adds, changes, activates, or closes a durable capability or authority within the current maturity band.
-- Routine audits, retries, repairs, validation, parent-specific clarification, and parent-required cleanup should use a four-segment suffix rather than consuming another primary number.
-- Broad research, coordination, and future-system planning should remain unversioned unless the document itself is the required durable decision that materially advances the active capability sequence.
-- Advance to a new minor band only after a docs-first readiness audit proves every criterion for that band and records an explicit accepted decision. If the gate is not accepted, continue the current band with later patch numbers.
-- Before assigning any new run, classify it in this order: new-band entry, current-band primary capability, parent-specific support suffix, or unversioned work. When uncertain, choose the less maturity-significant label.
-- Do not mass-renumber accepted historical versions. Apply the stricter classification prospectively and record historical anomalies rather than rewriting shared history.
-- Current maturity bands:
-  - `v0.1.x`: repository scaffold, workspace conventions, schemas, and first canonical content foundations.
-  - `v0.2.x`: player identity, clean save/load behavior, creator/start-state, and core local UI flow foundations.
-  - `v0.3.x`: world, civilization, economy, reputation foundations, and stricter content validation.
-  - `v0.4.x`: account, Legacy, Chronicle, progression, and local persistence foundations.
-  - `v0.5.x`: foundation stabilization, including metadata guardrails, branding alignment, workflow rules, repo hygiene, generated/log/temp cleanup, and validation hardening.
-  - `v0.6.x`: runtime ownership transition and its dependency-closure work, replacing UI-authored or demo command handling with engine-owned commands, tick/event output, authoritative session updates, and the bounded static/content prerequisites needed for later integration.
-  - `v0.7.x`: integrated gameplay systems interacting through stable shared contracts. Entry requires an accepted engine-owned gameplay loop with authoritative advancement/results, persistence, typed cross-system consequences, accepted-only UI application, and representative integration tests.
-  - `v0.8.x`: pre-alpha vertical-slice hardening. Entry requires one repeatable end-to-end slice with its agreed gameplay systems, content, UI/accessibility posture, balance baseline, regression coverage, and reliable save/load.
-  - `v0.9.x`: alpha-readiness stabilization. Entry requires the agreed alpha scope, packaging/launch and diagnostic posture, performance budgets, repeated external-play readiness, reliable current-data saves, explicit known limitations, and no ordinary-use critical blocker.
-  - `v1.0.0`: accepted public-release milestone. Entry requires completed or explicitly cut launch scope, integrated launch-critical owners, release-candidate QA, stable saves and packaging, accessibility and performance acceptance, user-facing release/support material, and explicit release approval.
-- Static content, isolated schemas, pure helpers, read-only projections, selection-only commands, or documentation volume do not independently justify promotion to `0.7.0` or a later milestone.
-- Use later `v0.8.x` labels only when a narrow playable path is being stabilized as a pre-alpha slice.
-- Reserve `v0.9.x` until sustained alpha testing is viable; reserve `1.0.0` until release-readiness acceptance is recorded.
+- The canonical player-facing game version is the root `GAME_VERSION` value. `docs/dev/game-version-roadmap-and-acceptance-policy.md` controls game-version timeline, pre-alpha/alpha/beta/RC/release stages, and game-version acceptance criteria.
+- Prospectively use `DEV-X.Y.Z - Short Name` for a primary Codex development milestone. Do not use old `Step N` labels for new work.
+- Prospectively use `DEV-X.Y.Z.S - Short Name` only for a support run attached to exactly one primary development milestone, where `S` is the support-run counter.
+- Use a stable unversioned run name for cross-cutting research, coordination, source indexing, held planning, playability prioritization, or read-only work that does not itself advance a primary development capability and is not narrowly attached to one primary.
+- Each Codex prompt should include the current development-milestone label when it is part of an ongoing primary or support workflow.
+- Historical `Version X.Y.Z` and `Version X.Y.Z.S` labels remain stable accepted references. Do not mass-renumber historical commits, decisions, prompts, tests, or documents; interpret those labels as legacy development-milestone identifiers in current planning.
+- Game version, development milestone, build SHA, save/world/data version, deployment revision, package version, protocol/schema version, and model/tool version are separate identities. Never infer one from another.
+- `docs/design/internal-versioning-and-release-milestone-policy.md` is the durable detailed authority for development-milestone classification, `DEV-` migration, historical-label compatibility, and technical maturity-band entry.
+- `docs/dev/playability-posture-and-version-calibration.md` is the durable authority for the current player-facing playability posture.
+- Private npm/package `version` fields are package metadata, not canonical game-version authority unless a later explicit policy says otherwise.
+- Persisted fields such as `worldVersion` are save/world-state authority and must not be changed merely to align visually with `GAME_VERSION`.
+- A development milestone may advance without changing the game version. A game version may advance only after a separate player-facing game-version acceptance decision proves a meaningful playable-build delta.
+- Tests, schemas, validators, audits, refactors, owner migrations, deployment revisions, or documentation volume do not independently justify a game-version increment.
+- Before changing `GAME_VERSION`, apply the acceptance procedure in `docs/dev/game-version-roadmap-and-acceptance-policy.md` and record an explicit `GAME_VERSION_ACCEPTED`, `GAME_VERSION_NOT_READY`, or `GAME_VERSION_BLOCKED` result.
+- Development milestone patch numbers may be multi-digit, such as `DEV-0.5.10`; do not roll from `DEV-0.5.9` to `DEV-0.6.0` automatically.
+- Development minor-band advancement means engineering maturity has changed, not that the patch count reached 9, 99, or any other visual threshold.
+- A three-segment primary development milestone is appropriate only when a run materially adds, changes, activates, closes, or formally accepts a durable capability or authority within the current development band.
+- Routine audits, retries, repairs, validation, parent-specific clarification, and parent-required cleanup should use a four-segment `DEV-X.Y.Z.S` suffix rather than consuming another primary development milestone.
+- Broad research, coordination, future-system planning, and playability-prioritization work should remain unversioned unless the document itself is the required durable decision that materially advances an active development capability.
+- Advance to a new development minor band only after a docs-first readiness audit proves every technical criterion for that band and records an explicit accepted decision. If the gate is not accepted, continue the current development band.
+- Before assigning any new development run, classify it in this order: development-band entry, current-band primary capability, parent-specific support suffix, or unversioned work. When uncertain, choose the less maturity-significant label.
+- Current historical development bands remain meaningful technical chronology:
+  - legacy `0.1.x`: repository scaffold, workspace conventions, schemas, and first canonical content foundations;
+  - legacy `0.2.x`: player identity, clean save/load behavior, creator/start-state, and core local UI flow foundations;
+  - legacy `0.3.x`: world, civilization, economy, reputation foundations, and stricter content validation;
+  - legacy `0.4.x`: account, Legacy, Chronicle, progression, and local persistence foundations;
+  - legacy `0.5.x`: foundation stabilization, metadata guardrails, branding alignment, workflow rules, repo hygiene, cleanup, and validation hardening;
+  - legacy/current `0.6.x`: runtime ownership transition and dependency closure;
+  - `DEV-0.7.x`: integrated gameplay systems interacting through stable shared contracts;
+  - `DEV-0.8.x`: vertical-slice technical hardening;
+  - `DEV-0.9.x`: alpha-support technical readiness;
+  - `DEV-1.0.0`: release-engineering readiness only, not automatic Game `1.0.0`.
+- The current true game-version timeline is separate and begins with Game `0.1.x-prealpha` First Playable, then Game `0.2.0-prealpha` vertical slice, later pre-alpha expansion, Game `0.5.0-alpha`, Game `0.8.0-beta`, Game `0.9.x-rc.N`, and Game `1.0.0` accepted release, subject to the exact gates in the game-version policy.
 - Platform/tool recommendations belong outside and before copy-paste prompt bodies, not inside the prompt itself.
 - Before every prompt, perform the fresh capability inventory required by `docs/dev/prompt-execution-platform-tool-selection-policy.md`. Consider regular ChatGPT, Deep Research, ChatGPT via GitHub Connector, Agent Mode, GPT Work or successor workspaces, all current Codex modes, and every relevant installed or potentially installable plugin, connector, skill, and specialized tool.
 - Required access and completion authority are hard gates. Do not recommend a platform that lacks required repository, local-worktree, web, application, connector, execution, validation, commit, or push capabilities.
@@ -108,19 +113,22 @@
 - When a new independent inspection reveals a reusable omission, add or update one generalized entry and link the focused audit rather than duplicating the full defect narrative.
 
 - Each detailed Codex output written to [docs/dev/current-codex-output.md](docs/dev/current-codex-output.md) must state:
-  - source version/run
+  - source development milestone/run
+  - current game version
+  - current playability posture
   - date
   - branch/status assumption
-  - label class: primary, support suffix, or unversioned
-  - parent version when the run is a support suffix
-  - milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`
+  - label class: primary development milestone, support suffix, or unversioned
+  - parent development milestone when the run is a support suffix
+  - development milestone impact: `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`
+  - game-version impact: `none`, `candidate`, or accepted explicit game-version decision
   - files changed
   - checks run
   - applicable failure-pattern IDs and verification evidence, or an explicit statement that none apply
   - branch/PR lifecycle review and disposition changes
   - suggested commit message
   - risks/follow-up notes
-  - next recommended version/run
+  - next recommended development milestone/run and any separately proposed game-version decision
 
 ## Prompt Packaging
 

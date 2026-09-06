@@ -1,83 +1,161 @@
 # Current Codex Output
 
-Date: 2026-09-02
+Date: 2026-09-06
 
-Source run: `Bloodlines Launcher Asset Thread Migration`
+Source run: `Game Version Architecture And Roadmap Reclassification`
 
-Label class: unversioned deployment-support correction
+Label class: unversioned coordination/policy migration
 
-Milestone impact: `none`
+Development milestone impact: `none`
 
-Parent version: not applicable
+Game-version impact: `establishes current accepted classification only; no runtime change`
 
-Reconciled repository base: `df6c10dbd75e24d93cb6525cad4e572067389e08`
+Game version before: no separate canonical game-version authority
 
-Committed and pushed migration: `e58d6502b56c7d280d07ac0ad69902974f77de0a`
+Game version after: `0.1.0-prealpha`
 
-Deployed Sites source: `8857c08bb272f36938fde0a72087c5c0865be80b`
+Playability posture: `INTEGRATED_LOOP`
 
-Disposition: `MIGRATION_COMPLETE_LIVE_VERSION_ALREADY_CURRENT`
+Active development milestone after migration: `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
 
-The active gameplay route remains `Version 0.7.0 - Integrated Gameplay Systems Band Entry`. This unversioned correction does not activate, revise, or supersede that prompt.
+Legacy active-label mapping: `Version 0.7.0 - Integrated Gameplay Systems Band Entry` -> `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
 
-## A. Files Changed
+Inspected source head: `21b6cbb10e21f0b150d8810801aa8273ac9a1258`
 
-- `apps/rpg-ui/public/launcher/bloodlines-inactive-soft.png`: replaces the provisional tree emblem with the exact deployed silver large-blood-drop asset.
-- `apps/rpg-ui/public/launcher/bloodlines-active-soft.png`: replaces the provisional tree emblem with the exact deployed ember-lit large-blood-drop asset.
-- `docs/dev/current-codex-output.md`, `docs/dev/current-gpt-handoff.md`, and `docs/dev/branch-disposition-register.md`: record the cross-project recovery, authoritative repository migration, validation, and unchanged route/branch posture.
+Disposition: `VERSION_ARCHITECTURE_RECLASSIFIED_GAME_0_1_0_PREALPHA`
 
-The sidebar mapping and focused launcher contract test were already present on live `master` through `df6c10dbd75e24d93cb6525cad4e572067389e08`; they were inspected and preserved unchanged.
+## A. Purpose
 
-No gameplay owner, save, schema, migration, dependency, character-creator asset-delivery rule, or active milestone authority changed.
+Separate the real player-facing game version from the repository's historical engineering workflow numbering.
 
-## B. Migration Summary
+The previous `Version X.Y.Z` sequence remains valid historical development-milestone evidence. It is no longer treated as the actual game version.
 
-- An accidental Codex task under the unrelated TORN project created a temporary `Lineage Reforged` checkout and refined the Bloodlines button from a tree-plus-small-drop emblem to one large stylized blood drop.
-- That task pushed only the filtered private Sites source commit `8857c08bb272f36938fde0a72087c5c0865be80b`, saved Sites version 2, deployed it privately, and then removed the temporary Lineage checkout from `C:\Codex\TORN`.
-- The authoritative Lineage repository later received `df6c10dbd75e24d93cb6525cad4e572067389e08` with the earlier tree-based assets, mapping, and contract test. The deployed large-drop files were still absent from repository history.
-- This run retrieved the exact version-2 source from the private Sites source repository, verified its provenance and dimensions, confirmed its `AppShell.tsx` was byte-equivalent to the authoritative mapping, and copied only the two deployed PNGs into `C:\Codex\EoL`.
-- Authoritative asset hashes now match the deployed source exactly:
-  - active: `a16b93535aff5f52febf30077a5c9ee3d26fc1f39006829ca0f54465648dc870`;
-  - inactive: `8709326a28e312582367c1f988d0e385bd1a7fc6b00e0ded7305c07c0537a478`.
-- Sites version 2 (`appgprj_6a92239b7f5c8191a91bcf4ee1f0e136~appgver_9a4187a832608191847bdce37d5b49d0`) already serves this exact pair, so no duplicate version or deployment was created.
-- Owner-only preview remains `https://lineage-reforged-preview.vagabond1215.chatgpt.site`.
+The current game is classified from accepted repository playability evidence as First Playable / Early Pre-Alpha.
 
-## C. Tests And Checks
+## B. Files Changed
 
-- `node --test tests\unit\launcher-bloodlines-asset.test.mjs`: passed, `1/1`.
-- `npm --prefix apps\rpg-ui run typecheck:node`: passed.
-- `npx vite build --outDir .tmp-bloodlines-vite-build --emptyOutDir`: passed; Worker and `204` client modules built.
-- Filtered/deployed and authoritative assets: exact SHA-256 match, exact `700x200` dimensions.
-- Production build copies: exact SHA-256 match to the authoritative assets.
-- Sites-enabled local server: `200 text/html` at `http://127.0.0.1:5173/`.
-- Sites project readback: latest saved version is 2 at source `8857c08bb272f36938fde0a72087c5c0865be80b`; access remains owner-only.
-- `git diff --check`: passed before migration publication.
-- The broader UI TypeScript baseline was not widened or repaired; the direct deployment build remains the executable preview surface.
+- root `GAME_VERSION`: new canonical player-facing game-version source, `0.1.0-prealpha`;
+- `docs/dev/game-version-roadmap-and-acceptance-policy.md`: new authoritative game-version timeline, semantic increment rules, stage gates, and acceptance procedure;
+- `docs/design/internal-versioning-and-release-milestone-policy.md`: converts the engineering numbering system to a prospective `DEV-` milestone track while preserving historical labels;
+- `docs/dev/playability-posture-and-version-calibration.md`: records current `INTEGRATED_LOOP` playability independently from development milestone publication;
+- `docs/dev/current-codex-prompt.md`: renames the active milestone to `DEV-0.7.0` and forbids game-version advancement inside that docs-only milestone run;
+- `docs/dev/current-gpt-handoff.md`: records the five-identity version model, current game/playability state, and post-milestone playability-first route;
+- `docs/dev/current-codex-output.md`: this coordination result;
+- `AGENTS.md`: prospectively uses `DEV-X.Y.Z` development-milestone labels and points game-version claims to the canonical game-version policy.
 
-## D. Applicable Failure-Pattern Evidence
+No gameplay source, schema, content, test, save, migration, dependency, asset, UI runtime behavior, package dependency, branch, or pull request is changed by this policy migration.
 
-- `FP-001`: verified the real sidebar mapping, exact PNG contract, local HTTP caller surface, production build copies, and already-deployed Sites source rather than accepting task history alone.
-- `FP-008`: refreshed all 37 non-default hosted branches and both open PRs. PR #2 overlaps launcher-asset evidence but remains `SUPERSEDED_PRESERVE_EVIDENCE`; its mechanical/textual relevance did not authorize integration.
-- `FP-009`: distinguishes the reconciled GitHub base, authoritative migration commit, filtered Sites source commit, saved version, deployment, and final pushed coordination head.
-- No new generalized failure-pattern entry was required.
+Private npm package `version` fields remain package metadata and are deliberately not promoted to canonical game-version authority.
 
-## E. Branch And PR Lifecycle
+`worldVersion: 0.1.0` remains persisted world/save authority and is deliberately unchanged.
 
-Live inventory contains one local branch, 37 non-default hosted branches, and two open PRs. PR #2 remains open non-draft at `e78dc645cfb658685be12f45f46d34b7c0da1119`; PR #3 remains open draft at `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`. Both retain `SUPERSEDED_PRESERVE_EVIDENCE`.
+## C. Current Version Architecture
 
-The launcher-asset trigger was reinspected because PR #2 discusses missing Bloodlines art. Its proposed metadata/SVG contract remains superseded and semantically incompatible with the current raster label-bearing launcher system; no merge or cherry-pick was authorized. No branch or PR mutation, closure, deletion, or registered disposition change was due.
+| Identity | Current value | Authority |
+| --- | --- | --- |
+| Game version | `0.1.0-prealpha` | root `GAME_VERSION` + game-version policy |
+| Game phase | Early Pre-Alpha / First Playable | game-version policy |
+| Playability | `INTEGRATED_LOOP` | playability calibration + accepted representative loop |
+| Development milestone | `DEV-0.7.0` pending | current prompt + development-milestone policy |
+| World/save version | `worldVersion: 0.1.0` where currently authored | save/world-state authority |
+| Deployment | Sites version 2 | existing Sites deployment evidence |
+| Build | exact Git SHA | repository history |
 
-The Sites source branch is external deployment infrastructure, not a Lineage integration branch. Retrieving its exact deployed files did not import foreign TORN repository state or authority.
+These identities must not be inferred from each other.
 
-## F. Risks And Follow-Up
+## D. Why Game `0.1.0-prealpha`
 
-- The accidental TORN task remains only as application history; its local Lineage checkout was already removed and the parent TORN worktree was reported clean.
-- The two production-consumed `*-soft.png` states are authoritative. No unused non-soft Bloodlines siblings were invented.
-- The preview remains owner-only. Its current version already contains the migrated emblem.
-- The active `0.7.0` prompt remains unchanged and may proceed independently.
+Existing accepted evidence already proves an ordinary authoritative player path through:
 
-Suggested coordination commit message: `docs: record Bloodlines asset thread migration`
+creator/start-state
+→ campaign publication/load
+→ quest acceptance/access
+→ travel/arrival
+→ four survey shifts
+→ retained cross-system consequences
+→ restart/save restoration
+→ durable duplicate.
 
-Next recommended gameplay run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
+That is sufficient for First Playable / Early Pre-Alpha and `INTEGRATED_LOOP`.
 
-Next preview-hosting run: none required unless the asset, access, or deployed source changes.
+It is not sufficient for a vertical slice because Soundings remains active/unturned-in and major player-facing loops such as authoritative quest closure/rewards, individualized items, deeper crafting/economy, persistent NPC/services, broader combat/challenge integration, UI/accessibility hardening, balance, and representative content breadth remain incomplete.
+
+## E. Game-Version Roadmap
+
+The accepted player-facing release-stage sequence is now:
+
+- `0.0.x`: prototype/experimental;
+- `0.1.x-prealpha`: First Playable / Early Pre-Alpha — current;
+- `0.2.0-prealpha`: accepted vertical slice / mature pre-alpha;
+- `0.3.x-prealpha`: expanded pre-alpha I;
+- `0.4.x-prealpha`: representative core-game pre-alpha;
+- `0.5.0-alpha`: alpha entry;
+- `0.6.x-alpha` / `0.7.x-alpha`: alpha expansion and stabilization;
+- `0.8.0-beta`: beta entry;
+- `0.9.x-rc.N`: release candidate;
+- `1.0.0`: accepted public release.
+
+Exact acceptance gates live in `docs/dev/game-version-roadmap-and-acceptance-policy.md`.
+
+## F. Development Milestone Handling
+
+Historical `Version X.Y.Z` identifiers are not rewritten.
+
+Prospectively:
+
+- primary engineering milestone: `DEV-X.Y.Z`;
+- parent-specific support milestone: `DEV-X.Y.Z.S`;
+- cross-cutting research/planning/coordination: unversioned.
+
+The current active milestone is therefore:
+
+`DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
+
+Accepting it does not change Game `0.1.0-prealpha` because the run is a technical publication/verification package with no new player-visible behavior.
+
+## G. Acceptance Criterion Change
+
+A game-version increment now requires a separate explicit player-facing acceptance decision.
+
+Before changing `GAME_VERSION`, the repository must record:
+
+- prior accepted game version;
+- proposed version/stage;
+- exact player-visible capability delta;
+- ordinary play path proving the delta;
+- save/data compatibility consequences;
+- appropriate regression/acceptance validation;
+- known limitations/exclusions;
+- exact accepted build/artifact identity;
+- explicit `GAME_VERSION_ACCEPTED`, `GAME_VERSION_NOT_READY`, or `GAME_VERSION_BLOCKED` result.
+
+Architecture, schemas, tests, docs, owner migrations, deployments, or branch cleanup do not independently advance the game version.
+
+## H. Validation And Evidence
+
+This was a documentation/policy and canonical-label migration over already accepted gameplay evidence.
+
+Connector checks performed:
+
+- refreshed hosted `master` and source head;
+- reread root repository instructions and current prompt/handoff/output;
+- reread the existing internal versioning policy and playability calibration;
+- inspected the root/UI package-version metadata and confirmed they are separate private package metadata;
+- inspected current `worldVersion: 0.1.0` occurrences and classified them as persisted world/save authority, not game-version authority;
+- retained the existing branch/PR dispositions; no lifecycle action was authorized by this migration.
+
+No local executable validation was run or claimed because no runtime behavior, executable source, tests, dependency graph, save contract, or build configuration was changed.
+
+## I. Risks And Follow-Up
+
+- historical documents will continue to contain `Version X.Y.Z`; that is intentional and preserves stable evidence identities;
+- current agents must read the prospective `DEV-` migration policy before assigning new engineering labels;
+- package versions remain independent and may diverge from game versions in the future;
+- `worldVersion` must not be casually synchronized to `GAME_VERSION`;
+- the existing large `docs/dev/project-roadmap.md` remains useful technical chronology but is lower precedence for game-version/release-stage semantics;
+- the next executable run remains `DEV-0.7.0` and must not edit `GAME_VERSION`;
+- after `DEV-0.7.0` acceptance, run unversioned `Game 0.1.x Playability Gap Prioritization Decision` before assigning either the next development primary or Game `0.1.1-prealpha`.
+
+Suggested commit message: `docs: establish true game version architecture`
+
+Next recommended executable run: `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`

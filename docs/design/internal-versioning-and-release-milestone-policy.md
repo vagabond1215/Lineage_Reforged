@@ -1,256 +1,297 @@
-# Internal Versioning And Release Milestone Policy
+# Development Milestone And Game Version Policy
 
 Source route: ChatGPT via GitHub Connector
-Date: 2026-07-19
-Status: durable workflow and maturity policy; prospective; no historical renumbering
+
+Date: 2026-09-06
+
+Status: durable version architecture policy; prospective; no historical renumbering
+
+Primary game-version authority: `docs/dev/game-version-roadmap-and-acceptance-policy.md`
+
+Canonical game-version source: root `GAME_VERSION`
 
 ## 1. Purpose
 
-Define how Lineage: Reforged assigns internal development versions without making patch count, documentation volume, or a sequence of narrow changes appear to represent more product maturity than has actually been achieved.
+Lineage: Reforged uses two independent numbering systems:
 
-This policy governs:
+1. **Game versions** describe accepted player-facing playable-build maturity.
+2. **Development milestones** describe accepted engineering capability, authority ownership, validation, and technical integration.
 
-- entry into the `0.7.x`, `0.8.x`, and `0.9.x` maturity bands;
-- reservation of `1.0.0` for an accepted release milestone;
-- use of three-segment primary labels such as `0.6.8`;
-- use of four-segment support labels such as `0.6.8.1`;
-- use of unversioned research, coordination, and planning runs;
-- milestone-readiness evidence and explicit acceptance.
+The previous repository convention used labels such as `Version 0.6.11` and `Version 0.7.0` for development workflow milestones. Those labels remain stable historical references, but they are not game versions.
 
-These are internal workflow versions. They are not automatically package versions, public release numbers, marketing labels, save-format versions, protocol versions, or compatibility promises.
+Prospectively, development milestones use a `DEV-` prefix so they cannot be mistaken for the player-facing game version.
 
-## 2. Core Rule
+## 2. Current State
 
-> Version numbers measure accepted project maturity and durable capability, not the number of tasks completed.
+Current game version:
 
-Consequences:
+`0.1.0-prealpha`
 
-- Patch numbers may grow indefinitely within one maturity band.
-- Completing `0.M.9`, `0.M.99`, or any other patch does not imply promotion to `0.(M+1).0`.
-- Calendar time, commit volume, file count, test count, content count, and roadmap length do not independently justify a new minor band.
-- A new minor band requires a named milestone gate, evidence against every required criterion, and an explicit accepted decision.
-- Work that does not satisfy a new-band gate remains inside the current minor band, uses a support suffix, or remains unversioned according to the classification rules below.
+Current game phase:
 
-## 3. Label Classes
+`Early Pre-Alpha / First Playable`
 
-### 3.1 Three-segment primary version
+Current playability posture:
+
+`INTEGRATED_LOOP`
+
+Current development milestone posture:
+
+- accepted technical work through legacy `Version 0.6.11` / `DEV-0.6.11`;
+- `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` authorized and pending publication/verification;
+- accepting `DEV-0.7.0` does **not** automatically change `GAME_VERSION`.
+
+## 3. Identity Separation
+
+Never conflate these identifiers:
+
+- game version;
+- development milestone;
+- exact Git build/commit SHA;
+- save/world/data version;
+- deployment revision;
+- npm/package version;
+- protocol/schema version;
+- model/tool version.
+
+`worldVersion` remains persisted world/save authority. It is not a player-facing game version and must not be changed merely to keep numbers visually aligned.
+
+## 4. Development Milestone Label Classes
+
+### 4.1 Primary development milestone
 
 Format:
 
 ```text
-Version 0.M.P - Short Name
+DEV-X.Y.Z - Short Name
 ```
 
-Use a three-segment primary version only when the run adds, changes, activates, or closes a durable capability or authority that materially advances the current maturity band.
+Use a primary development milestone when a run adds, changes, activates, closes, or formally accepts a durable engineering capability or authority.
 
-Examples include:
+Examples:
 
-- moving an authoritative mutation behind an engine-owned command;
-- adding a validated static authority required by the active milestone;
+- moving a real mutation behind an engine-owned command;
+- adding a validated static authority required by an active dependency chain;
 - implementing a bounded runtime consumer;
-- activating a previously planned content family with its required validation;
-- completing a cross-system integration package that changes what the project can reliably do.
+- establishing a stable persistence or replay contract;
+- completing a cross-system technical integration gate.
 
-A documentation-only run may use a primary version only when the document itself is the required durable decision or contract that unblocks and governs a material capability in the active sequence. Routine planning, source gathering, prompt revision, status reconciliation, and repeated audits do not qualify by default.
+A primary development milestone does not imply a game-version increment.
 
-### 3.2 Four-segment support version
+### 4.2 Support milestone
 
 Format:
 
 ```text
-Version 0.M.P.S - Short Name
+DEV-X.Y.Z.S - Short Name
 ```
 
-The fourth segment is a support-run counter attached to exactly one three-segment primary anchor.
+Use for:
 
-Use it for:
-
-- post-transition or post-implementation audits;
-- retries after a blocked or failed run;
-- narrow repairs required to accept the parent version;
+- post-implementation audits;
+- retries after a blocked run;
+- parent-specific repairs;
 - validation-only passes;
 - regression-coverage corrections;
-- handoff or authority clarification specific to the parent version;
-- cleanup required by the parent version's accepted removal conditions.
+- acceptance audits;
+- parent-specific handoff or authority clarification.
 
-A support version:
+A support milestone:
 
-- does not consume the next three-segment primary number;
-- does not represent a new roadmap milestone;
-- must name its parent anchor;
-- should not broaden into unrelated capability work;
-- may have additional suffix runs when required, such as `0.6.8.2`.
+- belongs to exactly one primary milestone;
+- does not consume another primary number;
+- does not advance the game version by itself.
 
-### 3.3 Unversioned named run
+### 4.3 Unversioned run
 
-Use an unversioned named run when work is useful but does not itself advance a primary capability and is not narrowly attached to one primary anchor.
+Use a stable unversioned name for:
 
-Appropriate uses include:
-
-- Deep Research gates;
-- cross-domain research integration;
-- broad source indexing;
+- research;
+- cross-domain synthesis;
+- source indexing;
 - coordination reconciliation;
-- future-system exploration;
+- future-system planning;
 - held prompt preparation;
-- multi-version historical cleanup;
-- read-only audits that decide later work but do not alter accepted capability.
+- broad read-only audits;
+- player-facing prioritization decisions that have not yet selected an implementation package.
 
-An unversioned run must still have a stable name, scope, status, consumer, and artifact-disposition rule where applicable.
+## 5. Historical Label Compatibility
 
-## 4. Assignment Decision
+Do not mass-renumber accepted historical documents, commits, tests, prompts, or decisions.
 
-Assign a label in this order:
+Historical labels remain exact references. Interpret them as legacy development milestones when used in current planning.
 
-1. **Does the run prove every entry criterion for a new maturity band and receive explicit acceptance?**
-   - Yes: use the reserved band-entry version such as `0.7.0`.
-   - No: remain in the current band.
-2. **Does the run materially advance a durable capability or authority within the current band?**
-   - Yes: use the next appropriate three-segment primary label.
-3. **Is the run an audit, repair, retry, validation, clarification, or cleanup attached to one primary?**
-   - Yes: use the next four-segment suffix on that primary.
-4. **Is it cross-cutting research, planning, coordination, or a held future decision without direct capability advancement?**
-   - Yes: use an unversioned named run.
+Examples:
 
-When uncertain, choose the less maturity-significant label and record what evidence would justify promotion later.
+- historical `Version 0.6.11` remains written that way inside its accepted authority documents;
+- current discussion may refer to it as legacy `Version 0.6.11` / development milestone `DEV-0.6.11`;
+- the active legacy `Version 0.7.0 - Integrated Gameplay Systems Band Entry` is prospectively renamed `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` without changing its accepted evidence or readiness decision.
 
-## 5. Minor-Band Entry Protocol
+No historical commit or accepted authority is rewritten merely to add the prefix.
 
-Before assigning `0.7.0`, `0.8.0`, `0.9.0`, or `1.0.0`:
+## 6. Development Milestone Assignment Decision
+
+Assign a development label in this order:
+
+1. **Does the run satisfy a named development-band entry gate?**
+   - Yes: use the reserved `DEV-X.Y.0` band-entry label.
+2. **Does the run materially advance a durable engineering capability inside the current development band?**
+   - Yes: use a primary `DEV-X.Y.Z` label.
+3. **Is it an audit, repair, retry, validation, clarification, or cleanup attached to one primary?**
+   - Yes: use a `DEV-X.Y.Z.S` support suffix.
+4. **Is it research, planning, coordination, source indexing, or a held decision?**
+   - Yes: use an unversioned name.
+
+When uncertain, choose the less maturity-significant development label.
+
+This decision is independent from the game-version decision.
+
+## 7. Development Band Entry Protocol
+
+Before accepting a reserved development band entry:
 
 1. create or activate a docs-first readiness audit;
 2. reproduce the live repository baseline;
-3. evaluate every required milestone criterion individually;
+3. evaluate every technical criterion individually;
 4. list blockers, partials, unsupported claims, and known limitations;
-5. run the milestone's required validation and representative gameplay checks;
-6. record an explicit decision: `accepted`, `not_ready`, or `blocked`;
-7. use the new band only after `accepted`;
-8. otherwise continue the current band with `0.M.P`, `0.M.P.S`, or an unversioned run.
+5. run the required executable validation and representative caller-path checks;
+6. issue an explicit accepted/not-ready/blocked result;
+7. use the new development band only after acceptance;
+8. keep the game version unchanged unless a separate game-version acceptance gate is also satisfied.
 
-The entry version should be a bounded milestone acceptance/integration package, not a large speculative feature dump intended to make the milestone true in one pass.
+The band-entry package should be a bounded verification/publication package, not a speculative feature dump.
 
-## 6. Reserved Maturity Milestones
+## 8. Reserved Development Milestones
 
-### 6.1 `0.7.0` — Integrated Gameplay Systems
+These retain the technical intent of the historical workflow bands. They are **not** game release stages.
 
-Reserve `0.7.0` until a validated, engine-owned integrated gameplay loop exists through stable shared contracts.
+### `DEV-0.7.0` — Integrated Gameplay Systems
 
-Minimum evidence:
+Reserve until a validated, engine-owned integrated gameplay loop exists through stable shared contracts.
 
-- character creation or start-state can enter a playable session;
-- authoritative save/load preserves the slice's required state;
-- travel or movement is engine-owned and participates in the loop;
-- quests, contracts, or activities can advance beyond selection through an authoritative attempt/result path;
-- at least one consequence-bearing interaction crosses multiple systems, such as travel plus survival, combat plus inventory, gathering plus crafting, or quest plus economy/reputation;
-- commands, events, synchronization, revision/stale protection, and accepted-only UI application are coherent for the slice;
-- required inventory/resource ownership and typed effects exist for the included interactions;
-- the loop has deterministic or bounded replay/test coverage and explicit failure behavior;
-- remaining demo/UI-authored mutations do not control the milestone loop;
-- known omissions are documented and do not invalidate the integrated loop.
+Minimum technical evidence:
 
-Static content expansion, isolated schemas, pure helpers, read-only projections, selection-only commands, or planning documents do not individually satisfy `0.7.0`.
+- character creation/start-state can enter the representative session;
+- authoritative persistence preserves required state;
+- travel/movement participates through engine-owned authority;
+- quest/activity advancement moves beyond selection through authoritative attempt/result paths;
+- at least one consequence-bearing interaction crosses multiple systems;
+- commands, events, synchronization, stale/conflict protection, and accepted-only UI application are coherent;
+- required resource/typed-effect ownership exists for the included interaction;
+- replay/retry/failure behavior is bounded and tested;
+- demo/UI-authored mutations do not control the representative milestone loop;
+- known omissions are explicit and non-invalidating.
 
-### 6.2 `0.8.0` — Pre-Alpha Vertical Slice
+Acceptance of `DEV-0.7.0` means technical integrated-loop maturity. It does not mean `Game 0.7.0`, 70% complete, vertical slice, alpha, or beta.
 
-Reserve `0.8.0` until one narrow but coherent vertical slice is playable, repeatable, and hardened as a pre-alpha experience.
+### `DEV-0.8.0` — Vertical-Slice Technical Hardening
 
-Minimum evidence:
+Reserve until the selected vertical slice has the engineering owners, persistence, UI/application boundaries, regression protection, accessibility/input posture, balance instrumentation, and technical hardening required by the selected slice.
 
-- the `0.7.x` integrated loop is accepted and stable;
-- one bounded region/settlement/adventure path has sufficient authored content to exercise the intended game identity;
-- the slice includes the agreed subset of character development, travel, survival, encounters/combat, quests/contracts, inventory/equipment, crafting/economy, NPC/services, and persistence;
-- missing systems are explicitly excluded rather than silently simulated through placeholders;
-- UI supports the slice with keyboard/controller or documented input posture, accessibility basics, responsive constraints, and legible failure/readiness information;
-- representative balance baselines and anti-exploit checks exist;
-- regression coverage protects the end-to-end slice;
-- save/load and restart behavior are repeatedly tested;
-- critical placeholder, demo, and duplicated-authority paths are removed from the slice.
+This milestone may support `Game 0.2.0-prealpha`, but the game-version gate additionally requires a coherent player-facing vertical-slice experience and human-oriented playthrough acceptance.
 
-Content volume outside the selected slice is not an entry criterion.
+### `DEV-0.9.0` — Alpha-Support Technical Readiness
 
-### 6.3 `0.9.0` — Alpha Readiness
+Reserve until the agreed alpha-scope technical owners, persistence, packaging/launch, diagnostics, performance budgets, input/accessibility posture, and repeated external-play support are accepted.
 
-Reserve `0.9.0` until the project is ready for sustained alpha testing rather than one developer-controlled vertical slice.
+This milestone may support `Game 0.5.0-alpha`; it does not independently declare alpha.
 
-Minimum evidence:
+### `DEV-1.0.0` — Release-Engineering Readiness
 
-- the pre-alpha slice is accepted and expanded to the agreed alpha scope;
-- major launch-scope systems have functional owners and are integrated or explicitly removed from alpha scope;
-- save creation, load, overwrite, restart, and corruption/error handling are reliable under the current-data policy;
-- packaging, installation, launch, logging, crash reporting or diagnostic collection, and clean shutdown are validated for target platforms in scope;
-- performance budgets and representative stress cases are defined and pass at alpha scale;
-- known limitations, debug facilities, issue-reporting workflow, and test-account/data reset posture are documented;
-- balancing and progression can support repeated external play without immediate systemic collapse;
-- accessibility and input requirements for alpha are met;
-- no known critical blocker makes ordinary alpha participation unsafe or nonfunctional.
+Reserve for technical release-engineering acceptance: launch-critical owner closure, packaging, saves, performance, accessibility, diagnostics/support posture, and exact candidate validation.
 
-`0.9.x` remains alpha stabilization. It is not a release-candidate claim by itself.
+`DEV-1.0.0` is neither identical to nor sufficient for `Game 1.0.0`. Public release requires the separate game-version release gate in `docs/dev/game-version-roadmap-and-acceptance-policy.md`.
 
-### 6.4 `1.0.0` — Accepted Release
+## 9. Game-Version Authority
 
-Reserve `1.0.0` for an explicitly accepted public-release milestone.
+Game-version semantics, timeline, and acceptance criteria are controlled by:
 
-Minimum evidence:
+`docs/dev/game-version-roadmap-and-acceptance-policy.md`
 
-- agreed launch scope and content are complete or deliberately cut with documented product approval;
-- all launch-critical systems are integrated and have authoritative owners;
-- save/load, install/update/launch, input, accessibility, performance, error handling, and platform packaging meet release criteria;
-- release-candidate QA has no unresolved critical defects and has an accepted disposition for lower-severity defects;
-- progression, economy, combat, crafting, content access, and failure/recovery loops meet launch balance and exploit standards;
-- user-facing onboarding, settings, credits, legal notices, support information, and release documentation are complete where applicable;
-- telemetry, crash reporting, privacy, account/network behavior, and operational requirements are explicitly accepted or explicitly out of scope;
-- a release-readiness audit records the exact commit, artifacts, checks, known issues, rollback posture, and acceptance decision.
+The root `GAME_VERSION` file is the canonical current game-version value.
 
-`1.0.0` must not be assigned merely because `0.9.x` has accumulated many patches.
+The current accepted value is:
 
-## 7. Current `0.6.x` Posture
+`0.1.0-prealpha`
 
-The repository is currently in `0.6.x`.
+Do not change `GAME_VERSION` during an ordinary development-milestone run unless that run explicitly includes and satisfies a separate game-version acceptance decision.
 
-Accepted `0.6.x` work includes engine-owned travel, quest acceptance, quest tracking, activity selection, and the bounded `0.6.4`-`0.6.7` static-content/coherence milestone.
+## 10. Game-Version Acceptance Rule
 
-The static-content packages support dependency closure and later integration, but they do not by themselves satisfy the `0.7.0` integrated-gameplay gate.
+A development milestone can advance with no game-version change.
 
-After `0.6.7`, the docs-first Geography/recognition plan and the held Activity Resolution Existing-System Reuse Audit remain unversioned support decisions. Their completion does not automatically promote the project to `0.7.0`.
+A game version can advance only after a separate player-facing acceptance decision proves a meaningful playable-build delta.
 
-If the `0.7.0` criteria are still unmet, continue with `0.6.8`, `0.6.9`, `0.6.10`, and later `0.6.x` primaries as needed. Use `0.6.P.S` suffixes for support runs attached to those primaries.
+Tests, schemas, architecture, and owner cleanup are necessary evidence where relevant but are insufficient by themselves.
 
-## 8. Historical Labels
+Every proposed game-version change must answer:
 
-Do not mass-renumber accepted historical versions, commits, prompts, or documents.
+> What can the player meaningfully do, complete, understand, or retain in this accepted build that was not meaningfully available in the previous accepted game version?
 
-Historical labels remain stable references even when current policy would classify similar future work differently. Record any historical anomaly in the historical/deferred route register rather than rewriting shared history.
+If there is no decision-complete answer, do not change `GAME_VERSION`.
 
-This policy is prospective from 2026-07-19.
+## 11. Current Crosswalk
 
-## 9. Required Documentation Behavior
+| Dimension | Current value | Meaning |
+| --- | --- | --- |
+| Game version | `0.1.0-prealpha` | First Playable / Early Pre-Alpha |
+| Playability | `INTEGRATED_LOOP` | One real bounded multi-system persistent loop exists |
+| Development milestone | `DEV-0.7.0` pending | Integrated Gameplay technical band publication/verification |
+| World/save version | `worldVersion: 0.1.0` | Persisted world-state compatibility identity; separate |
+| Deployment | Sites version 2 | Owner-only preview revision; separate |
+| Build | Git SHA | Exact immutable source identity |
 
-Future roadmap, handoff, output, and prompt updates must:
+## 12. Required Documentation Behavior
 
-- identify the current maturity band;
-- state whether a run is primary, support-suffix, or unversioned;
-- name the parent version for every suffix run;
-- state the run's milestone impact as `none`, `supports_current_band`, `advances_current_band`, or `band_entry_candidate`;
-- avoid naming a future minor-band entry as active before its readiness audit is accepted;
-- preserve patch numbers beyond 9 rather than rolling bands;
-- keep public release/version claims separate from internal workflow labels;
-- record why a documentation-only run qualifies as a primary when that exceptional classification is used.
+Future roadmap, handoff, output, and prompt updates must state, when relevant:
 
-## 10. Anti-Inflation Guardrails
+- `Game version: ...`;
+- `Game phase: ...`;
+- `Playability posture: ...`;
+- `Development milestone: ...`;
+- exact build/source SHA;
+- save/world/data version only when relevant;
+- deployment revision only when relevant.
+
+For development runs:
+
+- use `DEV-X.Y.Z` prospectively;
+- name the parent for every support suffix;
+- state milestone impact;
+- do not imply a game-version increment unless a separate game-version gate was accepted.
+
+For game-version changes:
+
+- record the prior version;
+- record the player-visible capability delta;
+- record exact acceptance evidence/build identity;
+- record save/data compatibility consequences;
+- record an explicit `GAME_VERSION_ACCEPTED`, `GAME_VERSION_NOT_READY`, or `GAME_VERSION_BLOCKED` result.
+
+## 13. Anti-Inflation Guardrails
 
 Do not:
 
-- allocate a new three-segment primary merely because another task has begun;
-- split one coherent implementation into many primaries to imply progress;
-- combine unrelated systems into one oversized primary to force milestone entry;
-- classify ordinary audits or repairs as new primaries when a suffix is appropriate;
-- classify broad research as a primary implementation milestone;
-- promote to a new minor band because patch numbers are visually large;
-- use `0.7`, `0.8`, `0.9`, or `1.0` as aspirational marketing shorthand in authoritative status documents;
-- claim `1.0.0` release readiness while launch-critical owners, persistence, packaging, accessibility, QA, or support requirements remain unresolved.
+- use a development milestone number as a player-facing game version;
+- allocate a primary development milestone merely because another task started;
+- split one coherent implementation into many milestones to imply progress;
+- advance `GAME_VERSION` because a schema, validator, test, refactor, audit, deployment, or owner migration completed without a meaningful playable delta;
+- call `DEV-0.8.0` a pre-alpha game version;
+- call `DEV-0.9.0` an alpha game version;
+- call `DEV-1.0.0` the public release without the separate game release gate;
+- infer save compatibility from the game version;
+- infer game maturity from package or deployment version numbers.
 
-## 11. Next Required Use
+## 14. Current Required Use
 
-Accepted `0.6.6` and `0.6.7` complete the planned static-content sequence. The unversioned Geography/recognition plan is next, followed by the held unversioned Activity Resolution reuse audit.
+The active milestone should now be named:
 
-The first planning pass after `0.6.7`, Geography/recognition, and the Activity Resolution Existing-System Reuse Audit that selects a runtime consumer must apply this policy before assigning its label. It must continue in `0.6.x` unless a separate `0.7.0` readiness audit proves and accepts every integrated-gameplay criterion.
+`DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
+
+If it is accepted:
+
+- record the development milestone as accepted;
+- keep `GAME_VERSION` at `0.1.0-prealpha`;
+- keep playability at `INTEGRATED_LOOP` unless runtime/playability evidence independently changes it;
+- install the unversioned `Game 0.1.x Playability Gap Prioritization Decision`;
+- do not allocate the next game patch or next development primary solely because `DEV-0.7.0` closed.
