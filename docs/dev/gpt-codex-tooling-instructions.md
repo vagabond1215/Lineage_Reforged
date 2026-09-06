@@ -1,7 +1,7 @@
 # GPT And Codex Tooling Instructions
 
 Date: 2026-07-12
-Updated: 2026-08-27
+Updated: 2026-09-06
 Status: active GPT/Codex operating guide for Lineage Reforged
 Audience: GPT threads, Codex prompt authors, and users choosing tools, modes, functions, and prompt packaging
 
@@ -97,7 +97,49 @@ After a connector write:
 
 Select the current supported Codex model, execution environment, and reasoning level from a fresh capability/resource preflight. Do not hard-code one model or reasoning tier as the permanent default.
 
-### 5.1 Highest-Cost / Highest-Reasoning Tier
+### 5.1 Current Codex Model Snapshot — 2026-09-06
+
+This is dated operational routing guidance, not permanent availability authority. Before every recommendation, inspect the currently visible Codex picker. If the picker differs from this snapshot, the current picker wins and this section should be refreshed.
+
+User-confirmed selectable Codex models on 2026-09-06:
+
+- `GPT-6 Astra`
+- `GPT-5.6 Sol`
+- `GPT-5.6 Terra`
+- `GPT-5.6 Luna`
+- `GPT-5.5`
+- `GPT-5.4 Mini`
+
+User-confirmed thinking levels:
+
+- `Light`
+- `Medium`
+- `High`
+- `Extra High`
+- `Ultra`
+
+When these choices remain visible, use this baseline:
+
+| Model | Preferred use | Normal thinking posture |
+| --- | --- | --- |
+| `GPT-6 Astra` | Hardest end-to-end engineering, architecture, ambiguous multi-system debugging, large or risky refactors, difficult acceptance work, and tool-heavy orchestration where maximum capability materially changes confidence. Do not spend Astra on routine work merely because it is strongest. | `High` for bounded difficult work; `Extra High` for architecture or risky multi-owner work; `Ultra` only for the hardest decision-dense or adversarial work after scope has been reduced as far as practical. |
+| `GPT-5.6 Sol` | Primary high-capability default for complex repository work when Astra is unnecessary: substantial implementation, difficult debugging, cross-file reasoning, reviews, and implementation planning. | Usually `High`; use `Medium` for well-bounded work and `Extra High` for unusually difficult or risky work. |
+| `GPT-5.6 Terra` | Balanced everyday Codex default for ordinary bounded implementation, test fixes, moderate refactors, documentation/code coordination, and work where capability, latency, and quota balance matter. | Usually `Medium`; raise to `High` for nontrivial integration or debugging; use `Extra High` only when the task still fits Terra and deeper reasoning is more efficient than switching models. |
+| `GPT-5.6 Luna` | Fast, low-overhead execution for narrow deterministic edits, routine tests, simple bugs, repetitive cleanup, straightforward code generation, and inexpensive subagent work. | Usually `Light` or `Medium`; use `High` only for a tightly scoped task when switching models would add more overhead than value. |
+| `GPT-5.5` | Compatibility/fallback route for complex agentic coding when an existing prompt, evaluation, or task-specific evidence favors it. For new recommendations, normally prefer Astra/Sol for maximum capability or Terra for balanced work. | Usually `High`; `Extra High` for difficult legacy or tuned workflows. |
+| `GPT-5.4 Mini` | Legacy lightweight fallback when it is still visible in the current picker. For new lightweight recommendations normally prefer `GPT-5.6 Luna` unless repository-specific evidence favors 5.4 Mini. | `Light` or `Medium`. |
+
+Thinking-level semantics:
+
+- `Light` — rote, low-risk, deterministic work with little ambiguity.
+- `Medium` — normal implementation, documentation, test repair, and ordinary debugging.
+- `High` — nontrivial multi-file implementation, integration work, difficult failure analysis, or meaningful architectural interaction.
+- `Extra High` — architecture, persistence/migration, subtle concurrency/security/integrity work, difficult acceptance, or broad dependency reasoning.
+- `Ultra` — reserve for the hardest repository-wide/end-to-end reasoning, adversarial acceptance, or exceptionally ambiguous high-consequence work. Reduce package size before choosing Ultra; Ultra is not a substitute for decomposition.
+
+Do not choose a model solely by nominal generation. Match model, thinking level, repository access, validation authority, package size, and quota posture to the actual task. If a model does not expose one of the listed thinking levels in the current Codex UI, use only the levels actually available for that model.
+
+### 5.2 Highest-Cost / Highest-Reasoning Tier
 
 Use the strongest available reasoning tier only when the **current slice** materially requires it, such as:
 
@@ -109,7 +151,7 @@ Use the strongest available reasoning tier only when the **current slice** mater
 
 When the strongest tier is required, narrow the package rather than assigning it more discovery. Under a constrained short-window allowance, prefer `XS` or `S` work and complete Connector-first preparation before launch.
 
-### 5.2 Lighter Local Reasoning
+### 5.3 Lighter Local Reasoning
 
 Use a lighter supported local reasoning level for deterministic or tightly bounded work when:
 
@@ -120,13 +162,13 @@ Use a lighter supported local reasoning level for deterministic or tightly bound
 
 Do not spend the strongest tier on mechanical follow-up merely because the overall feature is difficult.
 
-### 5.3 Plan Mode
+### 5.4 Plan Mode
 
 Use Codex Plan mode when the result should be a decision-complete non-mutating plan and repository mutation is not authorized.
 
 Plan mode must not write files, run cleanup, update output files, stage changes, or claim implementation.
 
-### 5.4 Other Codex Execution Surfaces
+### 5.5 Other Codex Execution Surfaces
 
 Use Cloud or another larger execution surface only when its capabilities materially improve completion and repository policy permits it. Do not select a larger surface merely because it is available.
 
