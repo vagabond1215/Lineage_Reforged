@@ -6,7 +6,7 @@ Status: owner-only Sites preview complete/current; integrated-gameplay band-entr
 
 Repository: `vagabond1215/Lineage_Reforged`
 
-Current hosted `master`: `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b`
+Connector-inspected source head: `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b`
 
 Readiness result: `BAND_ENTRY_READY`
 
@@ -34,7 +34,7 @@ Playability posture: `INTEGRATED_LOOP_PENDING_PUBLICATION`
 
 Connector disposition: `CONNECTOR_PREFLIGHT_CURRENT_HEAD_COMPLETE_EXECUTION_RESERVED_TO_CODEX`
 
-The current hosted head is 11 commits ahead of the readiness-decision source head. The intervening work is readiness/docs coordination, material-design notes, Sites/Vite/Cloudflare hosting support, production-only character-creator asset routing, private Sites deployment, Bloodlines launcher assets, and deployment-source reconciliation. Connector inspection finds no post-readiness change to the representative game-engine owners, campaign persistence owners, or representative gameplay tests. Codex must independently verify that current-head claim locally.
+The Connector-inspected source head is 11 commits ahead of the readiness-decision source head. The intervening work is readiness/docs coordination, material-design notes, Sites/Vite/Cloudflare hosting support, production-only character-creator asset routing, private Sites deployment, Bloodlines launcher assets, and deployment-source reconciliation. Connector inspection finds no post-readiness change to the representative game-engine owners, campaign persistence owners, or representative gameplay tests. Codex must independently verify that current-head claim locally and include the documentation-only Connector coordination delta after this source head.
 
 The earlier 2026-08-28 Connector preflight is historical orientation only and is superseded by the 2026-09-06 packet for current-head facts.
 
@@ -46,7 +46,7 @@ The preview-hosting lane is complete for the current owner-only purpose.
 - Current Sites version: version 2.
 - Deployed filtered source: `8857c08bb272f36938fde0a72087c5c0865be80b`.
 - Final Bloodlines active/inactive launcher assets were migrated back into authoritative Lineage history at `e58d650203bde7d84a6a56ab1501bfac4e18901c`.
-- Current coordination head `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b` records that the live version already serves the authoritative migrated emblem.
+- Pre-coordination source head `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b` records that the live version already serves the authoritative migrated emblem.
 
 No further Sites run is required unless access policy, deployment source, or asset delivery changes. The Sites source branch remains external deployment infrastructure, not a Lineage integration branch.
 
