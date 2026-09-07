@@ -4,7 +4,9 @@ Date: 2026-09-07
 
 Run: `Branch Value Consolidation And Retirement` (unversioned maintenance)
 
-Status: `PRESERVATION_VERIFIED_RETIREMENT_PENDING_PUBLICATION`
+Status: `BRANCH_CONSOLIDATION_COMPLETE`
+
+Preservation was committed and pushed at `43bb35a4b358287c91683d04e164f45b99be25c7`; hosted content and synchronized master were verified before any retirement. PRs #2 and #3 were then closed as superseded, and all 34 cleared exact heads were deleted in one atomic push with per-ref expected-head leases. Fetch/prune confirmed only master and the three retained branches below. No local non-default branches existed; obsolete remote-tracking refs are gone. Final coordination publication is a separate commit.
 
 Inspected base and implementation starting head: `e059b49c14c11dbc499ce5f67e67b059dcb71a26`.
 
@@ -30,7 +32,7 @@ Execution: local Codex in Default implementation mode, authenticated Git transpo
 
 Preserved: **30 complete audit documents, two complete launcher diffs with zero context lines and seven repair-bundle files** (39 payloads; 243,103 bytes). The three existing master economy, combat-AI and magic documents are retained unchanged; their branch revisions live only in this evidence collection.
 
-Disposition after successful publication: the 30 audit containers and three superseded launcher/repair containers become `ABANDON_SAFE_TO_DELETE` through equivalent complete evidence preservation; the fully reachable asset branch is `MERGED_RETIRE`. Delete only the 34 exact recorded heads after linked PR closure and publication verification.
+Completed disposition: the 30 audit containers and three superseded launcher/repair containers were classified `ABANDON_SAFE_TO_DELETE` through equivalent complete evidence preservation; the fully reachable asset branch was `MERGED_RETIRE`. All 34 exact recorded heads were deleted after linked PR closure and publication verification. No branch was merged, cherry-picked or rebased into production.
 
 ## Current Authority For Interpreting The Audits
 
@@ -112,6 +114,6 @@ The five ordered Base64 parts were decoded in memory after reading the README. Z
 - The full staged whitespace check reports one pre-existing trailing space at line 44 of the archived Knowledge audit, identical to the document at source commit `46434f31...`. It is retained intentionally for byte-exact historical preservation, not a newly authored formatting error. Authored index/manifest, launcher diffs and bundle files pass their scoped whitespace check. No source or runtime validation is waived.
 - The current launcher asset contract test passed 1/1. No gameplay source/tests/configuration/assets, generated/vendor output, dependency, save/world version or GAME_VERSION changed.
 - No new runtime acceptance is claimed. Broad builds, typechecks, content lint and gameplay suites are unnecessary for an evidence-only change and were not run; the existing broad TypeScript baseline remains a separate route. Hosted combined status returned no checks and no tracked GitHub workflow exists.
-- Before retirement: inspect the staged documentation diff, verify staged artifact hashes, publish evidence to master, recheck exact remote heads and linked PRs, close superseded PRs, and delete only leased exact refs. Afterward fetch/prune and verify the retained set and clean synchronized master.
+- Retirement checks completed: staged documentation/diff and hashes reviewed; evidence published and hosted content retrieved; every remote head rechecked against the manifest; superseded PRs closed; only leased exact refs deleted atomically. Fetch/prune verified the retained set and synchronized master. Final coordination receives a separate diff, commit/push and hosted-readback check.
 
 Next executable development route remains `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`. No primary/support milestone or game-version increment is allocated by this maintenance run.

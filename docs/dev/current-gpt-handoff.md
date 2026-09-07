@@ -1,8 +1,8 @@
 # Current GPT Handoff
 
-Date: 2026-09-06
+Date: 2026-09-07
 
-Status: true game-version architecture installed; game `0.1.0-prealpha` / First Playable; playability `INTEGRATED_LOOP`; owner-only Sites preview current; `DEV-0.7.0` development milestone activation pending
+Status: branch consolidation complete; true game-version architecture installed; game `0.1.0-prealpha` / First Playable; playability `INTEGRATED_LOOP`; owner-only Sites preview current; `DEV-0.7.0` development milestone activation pending
 
 Repository: `vagabond1215/Lineage_Reforged`
 
@@ -164,15 +164,17 @@ A proposed game-version increment must separately pass the acceptance procedure 
 
 ## 7. Branch And PR Posture
 
-The latest Connector-visible branch/PR evidence before this version-architecture pass recorded 38 branches total / 37 non-default branches and exactly two open PRs.
+The user-authorized `Branch Value Consolidation And Retirement` pass completed on 2026-09-07 from inspected base `e059b49c14c11dbc499ce5f67e67b059dcb71a26`. All 30 audit documents, two launcher diffs and seven repair-bundle files were preserved at published commit `43bb35a4b358287c91683d04e164f45b99be25c7` before closing PRs #2/#3 and deleting 34 exact obsolete branch heads. PR #1 was already merged/closed. No production changes or obsolete implementation merges occurred.
 
-- PR #2: `SUPERSEDED_PRESERVE_EVIDENCE`, head `e78dc645cfb658685be12f45f46d34b7c0da1119`;
-- PR #3: `SUPERSEDED_PRESERVE_EVIDENCE`, head `10afdef7d85a3010b5afadd20c0cd014ceac5fcc`;
-- four survey evidence refs remain candidate evidence for broader named consumers;
-- readiness/prompt-packaging evidence remains protected;
-- administration evidence remains held for its named consumer.
+Post-retirement inventory: one local branch, four hosted branches total / three non-default branches, zero open PRs. Retained:
 
-No branch or PR lifecycle action is authorized by the version-architecture migration itself. Codex must refresh live refs locally at the next executable run.
+- `prep/integrated-gameplay-0-7-readiness-audit` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: protected; next read-only review at DEV-0.7.0 verification/publication or a dedicated readiness review;
+- `parallel/prompt-packaging-integrity-audit` at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: protected; dedicated prompt/execution-pointer integrity consumer;
+- `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`: held for administration/template/governance or an explicitly scheduled Lineage retrospective.
+
+Use the [consolidated review and evidence index](evidence/branch-consolidation-2026-09-07/README.md) and [exact manifest](evidence/branch-consolidation-2026-09-07/manifest.json) in place of retired branch refs. Future named consumers remain pending and now consume these master artifacts with the documented current-head caveats. Archived proposals, old status labels and obsolete blanket runtime-absence claims are not accepted authority. This includes the four former survey audit refs. All 13 tracked temporary research artifacts remain retained.
+
+The pending DEV-0.7.0 prompt is unchanged. Refresh live refs at the next run; the preservation SHA above is a checkpoint, not the final coordination head or future live master.
 
 ## 8. First Read Order
 
