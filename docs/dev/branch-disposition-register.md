@@ -1,10 +1,30 @@
 # Branch Disposition Register
 
-Date: 2026-09-02
+Date: 2026-09-07
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-09-07 Dedicated Branch Value Consolidation And Retirement
+
+The user's explicit lifecycle instruction authorizes this unversioned maintenance pass. Inspected base and implementation starting head: `e059b49c14c11dbc499ce5f67e67b059dcb71a26`, clean synchronized `master`. Fetch/prune and hosted enumeration confirmed one local branch, 37 non-default remote branches and two open PRs (#2 and #3); PR #1 is already merged/closed.
+
+The [current preservation review](evidence/branch-consolidation-2026-09-07/README.md) supersedes older live-disposition statements below. Its [exact inventory and preservation manifest](evidence/branch-consolidation-2026-09-07/manifest.json) records all 37 full head/merge-base identities, snapshot counts, unique commits, changed paths, dispositions and source/archive hashes. Older dated sections and tables below remain historical snapshots only.
+
+Preservation is verified; publication and retirement are pending. The review consolidates all 30 audit documents, two complete legacy launcher diffs and seven repair-bundle files. The 30 audit containers plus `main-menu-asset-contract-pass`, `main-menu-refinement-pass` and `parallel/0.6.9.7-repair-bundle` become `ABANDON_SAFE_TO_DELETE` after that evidence is published on master. `feat/main-menu-assets` is `MERGED_RETIRE` with its exact head reachable from master. All 34 deletion targets are explicitly enumerated in the manifest; deletion must use their exact verified heads, without wildcards.
+
+Future named audit consumers transfer to the archived documents and current-head caveats in the preservation review. None requires a retired branch container after complete evidence preservation. PR #1's later two branch-only commits are preserved separately and are not falsely claimed merged. PR #2's SVG/no-baked-label proposal is superseded by current PNG assets; PR #3's original consumer window is complete. Close PRs #2 and #3 only after hosted preservation verification, then delete their exact heads and the other cleared refs.
+
+Retain these three branches without mutation:
+
+| Branch | Exact head | Disposition | Next review trigger |
+| --- | --- | --- | --- |
+| `prep/integrated-gameplay-0-7-readiness-audit` | `59c103c3a06d55f35bffa735fd4b7814dffb583e` | `PROTECTED_REFERENCE` | Read-only inspection at installed DEV-0.7.0 verification/publication or an explicitly scheduled readiness review; a specific protection change is required before mutation. |
+| `parallel/prompt-packaging-integrity-audit` | `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f` | `PROTECTED_REFERENCE` | Dedicated prompt/execution-pointer integrity audit; explicit protection/disposition change before mutation. |
+| `admin/genesis-research-evidence-2026-08-13` | `210df5bcc017a8f31d621a553b5496c668540d29` | `HOLD_NAMED_CONSUMER` | Named administration/template/governance consumer or explicitly scheduled Lineage retrospective. |
+
+Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`, pending `DEV-0.7.0`, current prompt, production and all temporary research artifacts remain unchanged. Applied `FP-007`, `FP-008` and `FP-009`; exact verification and historical-whitespace limitation are recorded in the preservation review.
 
 ## 2026-09-02 Bloodlines Launcher Asset Thread Migration Refresh
 

@@ -1,0 +1,1009 @@
+{
+  "inspected_base": "e059b49c14c11dbc499ce5f67e67b059dcb71a26",
+  "date": "2026-09-07",
+  "inventory": [
+    {
+      "branch": "admin/genesis-research-evidence-2026-08-13",
+      "head": "210df5bcc017a8f31d621a553b5496c668540d29",
+      "merge_base": "fd40571bb0802177bd776fd3cd445b6b487716fd",
+      "base_only": 89,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/dev/evidence/administration-game-genesis-research-intent-2026-08-13.md"
+      ],
+      "unique_commits": [
+        "210df5bcc017a8f31d621a553b5496c668540d29 docs(admin): preserve future game genesis research intent"
+      ],
+      "disposition": "HOLD_NAMED_CONSUMER",
+      "archives": []
+    },
+    {
+      "branch": "feat/main-menu-assets",
+      "head": "b42d36f3241f99874606ad1e24c09849715affe5",
+      "merge_base": "b42d36f3241f99874606ad1e24c09849715affe5",
+      "base_only": 895,
+      "branch_only": 0,
+      "changes": [],
+      "unique_commits": [],
+      "disposition": "MERGED_RETIRE",
+      "archives": []
+    },
+    {
+      "branch": "main-menu-asset-contract-pass",
+      "head": "e78dc645cfb658685be12f45f46d34b7c0da1119",
+      "merge_base": "9a107a7eed54b6d0cd2f161c236fbe163282bba7",
+      "base_only": 823,
+      "branch_only": 10,
+      "changes": [
+        "A\tapps/rpg-ui/public/launcher/bloodlines-active-soft.svg",
+        "A\tapps/rpg-ui/public/launcher/bloodlines-inactive-soft.svg",
+        "M\tapps/rpg-ui/src/game-shell/components/AppShell.tsx",
+        "A\tdocs/design/main-menu-launcher-asset-contract.md"
+      ],
+      "unique_commits": [
+        "e78dc645cfb658685be12f45f46d34b7c0da1119 Add Bloodlines label to active sidebar art",
+        "28975d415ddfdc826f89f20a0c84d55a1d2da645 Add Bloodlines label to inactive sidebar art",
+        "989082ee15e2780f782488bc57896d79e5839ac8 Regenerate Bloodlines active art to match launcher plates",
+        "92a9368b55be53f9bdd757dce229bd12f930eaa1 Regenerate Bloodlines inactive art to match launcher plates",
+        "be1c2873331d3e55d13e8fb650390277869c8ffd Update Bloodlines asset contract status",
+        "7a171153fd09a48ffabfdb80d94eee0dca272a99 Wire Bloodlines sidebar art",
+        "faff690e51d1c8cb21dc2287604a8fa4290c3963 Add Bloodlines active sidebar art",
+        "32c4ef2b1d7a33ecb40090fd8c62865ff053bb00 Add Bloodlines inactive sidebar art",
+        "43549d304f0183ac2fba80bee1135ea07cc5b568 Add main menu launcher asset contract",
+        "c0193c235bb1c72a1624f447b2a219ed7305385f Document launcher sidebar asset contract"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "launcher/main-menu-asset-contract-pass.patch.txt"
+      ]
+    },
+    {
+      "branch": "main-menu-refinement-pass",
+      "head": "986d6352d2c18b60f7e9ddae4f992af96c662acc",
+      "merge_base": "d03846e89d1a4fd07a1ea86d02951559f617df74",
+      "base_only": 830,
+      "branch_only": 2,
+      "changes": [
+        "M\tapps/rpg-ui/src/game-shell/components/AppShell.tsx",
+        "A\tdocs/design/main-menu-launcher-asset-contract.md"
+      ],
+      "unique_commits": [
+        "986d6352d2c18b60f7e9ddae4f992af96c662acc Add main menu launcher asset contract",
+        "0040efb7adf9722f1d70c8d9dfda5e4cdb2016a8 Document launcher sidebar asset contract"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "launcher/main-menu-refinement-pass.patch.txt"
+      ]
+    },
+    {
+      "branch": "parallel/0.6.9.7-repair-bundle",
+      "head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "merge_base": "b6422118567a79a23be3377f035dd3a6905d4d8b",
+      "base_only": 182,
+      "branch_only": 7,
+      "changes": [
+        "A\tdocs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part01",
+        "A\tdocs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part02",
+        "A\tdocs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part03",
+        "A\tdocs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part04",
+        "A\tdocs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part05",
+        "A\tdocs/dev/repair-bundles/version-0.6.9.7/MANIFEST.sha256",
+        "A\tdocs/dev/repair-bundles/version-0.6.9.7/README.md"
+      ],
+      "unique_commits": [
+        "10afdef7d85a3010b5afadd20c0cd014ceac5fcc docs(bundle): add repair archive part 5",
+        "38f8cec81abca25487b6ff1e331cc76cb23ff66d docs(bundle): add repair archive part 4",
+        "1bd9f046c88ac9f330afc89eab05020f0856f843 docs(bundle): add repair archive part 3",
+        "215511d888367daa6d31581cc2a7087de0919d32 docs(bundle): add repair archive part 2",
+        "f0671506f6be18ef86d96882376cbfc72384d092 docs(bundle): add repair archive part 1",
+        "c6b5d1b2385fca24b8ba3a015f2b9e7969129bc7 docs(bundle): add repair bundle manifest",
+        "ef9a0581542b986145737faebb1871370cded3cc docs(bundle): register 0.6.9.7 repair evidence"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part01",
+        "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part02",
+        "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part03",
+        "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part04",
+        "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part05",
+        "repair-bundle/MANIFEST.sha256",
+        "repair-bundle/README.md"
+      ]
+    },
+    {
+      "branch": "parallel/activity-advancement-audit",
+      "head": "b4cbaea5f4292904bba62f60a0108bb84f2bd405",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/activity-advancement-command-result-and-effect-routing-audit.md"
+      ],
+      "unique_commits": [
+        "b4cbaea5f4292904bba62f60a0108bb84f2bd405 docs(activity): audit advancement command and effects"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/activity-advancement-command-result-and-effect-routing-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/character-panel-mutation-audit",
+      "head": "23d61f36f871d2426b53915a632df6168f2848d3",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/character-panel-inventory-equipment-and-preference-mutation-ownership-audit.md"
+      ],
+      "unique_commits": [
+        "23d61f36f871d2426b53915a632df6168f2848d3 docs(ui): audit character-panel mutation ownership"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/character-panel-inventory-equipment-and-preference-mutation-ownership-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/chronicle-notification-provenance-audit",
+      "head": "4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/chronicle-notification-operation-and-projection-provenance-audit.md"
+      ],
+      "unique_commits": [
+        "4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01 docs(history): audit chronicle and notification provenance"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/chronicle-notification-operation-and-projection-provenance-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/civilization-tick-audit",
+      "head": "859aadea20efaf88b49183491b08181bdea463db",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/civilization-simulation-tick-persistence-and-correction-audit.md"
+      ],
+      "unique_commits": [
+        "859aadea20efaf88b49183491b08181bdea463db docs(civilization): audit simulation tick authority"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/civilization-simulation-tick-persistence-and-correction-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/combat-ai-scoring-test-coverage-refresh",
+      "head": "e4e7a85bb356fb9d1ba143ac0edecf9532071698",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "M\tdocs/design/combat-ai-and-gambit-current-state-audit.md"
+      ],
+      "unique_commits": [
+        "e4e7a85bb356fb9d1ba143ac0edecf9532071698 docs(combat): refresh AI scoring and coverage audit"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/combat-ai-and-gambit-current-state-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/connector-prep-freshness-audit",
+      "head": "cadcc2a2280cb4a01f4d69c52bcbd607b3bb4c96",
+      "merge_base": "3006c968eb40b1d72f64fb2dc0263e227f869a7d",
+      "base_only": 231,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/dev/connector-prep-freshness-and-supersession-audit.md"
+      ],
+      "unique_commits": [
+        "cadcc2a2280cb4a01f4d69c52bcbd607b3bb4c96 docs(workflow): audit connector prep freshness"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/connector-prep-freshness-and-supersession-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/consumable-profile-coverage-audit",
+      "head": "510251f77431b694591d4cbbd8127ed0ef5d3185",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/consumable-profile-coverage-and-effect-ownership-audit.md"
+      ],
+      "unique_commits": [
+        "510251f77431b694591d4cbbd8127ed0ef5d3185 docs(audit): refresh consumable profile evidence",
+        "453697a663c7a135b6a0fb3fc9cd44cf48796cbd docs(items): audit consumable profile ownership"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/consumable-profile-coverage-and-effect-ownership-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/content-lint-schema-validator-coverage-audit",
+      "head": "82ce2bfa12efa3cfa6810d3841c655b6a3635334",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/dev/content-lint-schema-registration-and-validator-coverage-source-audit.md"
+      ],
+      "unique_commits": [
+        "82ce2bfa12efa3cfa6810d3841c655b6a3635334 docs(content): audit lint schema and validator coverage"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/content-lint-schema-registration-and-validator-coverage-source-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/economy-command-surface-refresh",
+      "head": "c98199dc8069099dbf52ded5fffcbf715fc08522",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "M\tdocs/design/economy-command-surface-source-map.md"
+      ],
+      "unique_commits": [
+        "c98199dc8069099dbf52ded5fffcbf715fc08522 docs(economy): refresh command and transaction ownership map"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/economy-command-surface-source-map.md"
+      ]
+    },
+    {
+      "branch": "parallel/equipment-profile-readiness-audit",
+      "head": "6a98bd0b1eca74cee93dca16e0e3a32d9fe595e3",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/weapon-and-armor-profile-current-state-readiness-audit.md"
+      ],
+      "unique_commits": [
+        "6a98bd0b1eca74cee93dca16e0e3a32d9fe595e3 docs(audit): refresh equipment profile readiness",
+        "343095adb5b59c28260ad3b17d82005963a374e9 docs(items): audit equipment profile readiness"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/weapon-and-armor-profile-current-state-readiness-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/game-tick-orchestration-audit",
+      "head": "95d64e9e56cd65ecad237f3101adef6812f7b020",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/game-tick-cross-engine-delta-event-and-warning-orchestration-audit.md"
+      ],
+      "unique_commits": [
+        "95d64e9e56cd65ecad237f3101adef6812f7b020 docs(game): audit cross-engine tick orchestration"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/game-tick-cross-engine-delta-event-and-warning-orchestration-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/gameplay-shell-ui-state-audit",
+      "head": "882cba46578b49468bcbe624765d9dec0481eace",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/gameplay-shell-and-ui-state-ownership-source-audit.md"
+      ],
+      "unique_commits": [
+        "882cba46578b49468bcbe624765d9dec0481eace docs(audit): refresh gameplay shell ownership",
+        "25c4a08a39d905903c9ebb940a3e54101864f50e docs(ui): audit gameplay shell state ownership"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/gameplay-shell-and-ui-state-ownership-source-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/item-use-profile-effect-ownership-audit",
+      "head": "d0d67520d06c1172b2b8830955330b26110dee39",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/item-use-profile-grant-charge-dose-and-effect-ownership-audit.md"
+      ],
+      "unique_commits": [
+        "d0d67520d06c1172b2b8830955330b26110dee39 docs(items): audit item use and effect ownership"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/item-use-profile-grant-charge-dose-and-effect-ownership-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/js-ts-mirror-export-integrity-audit",
+      "head": "6304ebf8ab00bbf74e81cd85099dea236373c2af",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/dev/javascript-typescript-mirror-public-export-and-import-specifier-integrity-audit.md"
+      ],
+      "unique_commits": [
+        "6304ebf8ab00bbf74e81cd85099dea236373c2af docs(tooling): audit js ts mirror and export integrity"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/javascript-typescript-mirror-public-export-and-import-specifier-integrity-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/knowledge-discovery-visibility-audit",
+      "head": "46434f31f8b06d49aad9a516543fbe36d188d519",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/knowledge-discovery-observation-and-visibility-ownership-audit.md"
+      ],
+      "unique_commits": [
+        "46434f31f8b06d49aad9a516543fbe36d188d519 docs(knowledge): audit discovery and visibility ownership"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/knowledge-discovery-observation-and-visibility-ownership-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/launcher-asset-pr-disposition",
+      "head": "72726210fc5c4c30d55c5fc27bc09117d1e4bff9",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/launcher-sidebar-asset-pr-disposition-audit.md"
+      ],
+      "unique_commits": [
+        "72726210fc5c4c30d55c5fc27bc09117d1e4bff9 docs(ui): audit launcher asset pull request"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/launcher-sidebar-asset-pr-disposition-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/magic-runtime-readiness-refresh",
+      "head": "891090af4d3739ae235b570b778029bed0f21893",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "M\tdocs/design/magic-runtime-readiness-audit.md"
+      ],
+      "unique_commits": [
+        "891090af4d3739ae235b570b778029bed0f21893 docs(magic): refresh runtime readiness audit"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/magic-runtime-readiness-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/npc-party-companion-readiness-audit",
+      "head": "c3092bcd02ff8530481f8cd4d16819f0a275c4a6",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/npc-party-companion-guest-and-combatant-persistence-readiness-audit.md"
+      ],
+      "unique_commits": [
+        "c3092bcd02ff8530481f8cd4d16819f0a275c4a6 docs(combat): audit npc party and companion readiness"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/npc-party-companion-guest-and-combatant-persistence-readiness-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/player-progression-reward-mutation-audit",
+      "head": "387f2491d0d671ee7834656c28183e72a798f1ca",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/player-progression-and-reward-mutation-source-audit.md"
+      ],
+      "unique_commits": [
+        "387f2491d0d671ee7834656c28183e72a798f1ca docs(progression): audit reward mutation ownership"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/player-progression-and-reward-mutation-source-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/prompt-packaging-integrity-audit",
+      "head": "58a34e37ee531aa1f6c87086b4a4a6d20d571f9f",
+      "merge_base": "3d77171ca2034c8b2fb8d19f374cef5df9605053",
+      "base_only": 258,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/dev/parallel-prompt-packaging-integrity-audit-prompt.md"
+      ],
+      "unique_commits": [
+        "58a34e37ee531aa1f6c87086b4a4a6d20d571f9f docs(prompt): add parallel prompt packaging audit"
+      ],
+      "disposition": "PROTECTED_REFERENCE",
+      "archives": []
+    },
+    {
+      "branch": "parallel/quest-action-tree-audit",
+      "head": "4d6c622b2b39b7e0ca1839e19473b4c772d0a762",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/quest-action-tree-runtime-adapter-readiness-audit.md"
+      ],
+      "unique_commits": [
+        "4d6c622b2b39b7e0ca1839e19473b4c772d0a762 docs(quest): audit action-tree runtime readiness"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/quest-action-tree-runtime-adapter-readiness-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/quest-turn-in-reward-source-audit",
+      "head": "470e8aca48510f68824f7a5aa8f603d0b13bbc1f",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/quest-turn-in-reward-delivery-and-idempotency-source-audit.md"
+      ],
+      "unique_commits": [
+        "470e8aca48510f68824f7a5aa8f603d0b13bbc1f docs(audit): refresh quest turn-in source map",
+        "ff1d3b26057919d95aace2a4848b854b7bdd40dc docs(quest): audit turn-in reward delivery"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/quest-turn-in-reward-delivery-and-idempotency-source-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/recipe-production-maturity-audit",
+      "head": "3db3c0f52456b4007dedc43817ecca5c06edd239",
+      "merge_base": "3006c968eb40b1d72f64fb2dc0263e227f869a7d",
+      "base_only": 231,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/recipe-and-production-coverage-maturity-audit.md"
+      ],
+      "unique_commits": [
+        "3db3c0f52456b4007dedc43817ecca5c06edd239 docs(audit): refresh recipe production maturity",
+        "544519ce006e2b20814fac3e223b28c871b5cd46 docs(crafting): audit recipe production maturity"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/recipe-and-production-coverage-maturity-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/regional-bestiary-ecology-maturity-audit",
+      "head": "2bafdb21a24535394c3cb32e946315c2c51eaa74",
+      "merge_base": "3006c968eb40b1d72f64fb2dc0263e227f869a7d",
+      "base_only": 231,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/regional-bestiary-and-ecology-coverage-maturity-audit.md"
+      ],
+      "unique_commits": [
+        "2bafdb21a24535394c3cb32e946315c2c51eaa74 docs(audit): refresh bestiary ecology maturity",
+        "e64574a9f887047f6eda1d9bcc9c11eec885d397 docs(ecology): audit regional bestiary maturity"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/regional-bestiary-and-ecology-coverage-maturity-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/regional-settlement-maturity-audit",
+      "head": "e96c3841d4e54f9bf6e2c40de8df5011bbbb4986",
+      "merge_base": "3006c968eb40b1d72f64fb2dc0263e227f869a7d",
+      "base_only": 231,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/regional-and-continental-settlement-maturity-evidence-audit.md"
+      ],
+      "unique_commits": [
+        "e96c3841d4e54f9bf6e2c40de8df5011bbbb4986 docs(audit): refresh settlement maturity evidence",
+        "eaedaeef10645b7952e3606eeb3e7708b45f5d3c docs(world): audit regional settlement maturity"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/regional-and-continental-settlement-maturity-evidence-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/research-artifact-retention-inventory",
+      "head": "feaeedd8d9585e9a100699d640a893bc578e900c",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/dev/temporary-research-artifact-retention-inventory.md"
+      ],
+      "unique_commits": [
+        "feaeedd8d9585e9a100699d640a893bc578e900c docs(audit): refresh research artifact retention",
+        "411740cd9b9e8cc48626fd7ea57a65c60765dc41 docs(workflow): inventory temporary research retention"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/temporary-research-artifact-retention-inventory.md"
+      ]
+    },
+    {
+      "branch": "parallel/rest-recovery-mutation-audit",
+      "head": "0e32703c410b1172b6078346353a0adfb99debbc",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/rest-and-recovery-ui-mutation-source-audit.md"
+      ],
+      "unique_commits": [
+        "0e32703c410b1172b6078346353a0adfb99debbc docs(audit): refresh rest recovery source map",
+        "1e6d049d88c9a9f7c1db5551cb7d0d3df19342fd docs(activity): audit rest recovery mutation"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/rest-and-recovery-ui-mutation-source-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/text-first-combat-view-model-audit",
+      "head": "b605175e6edce6889171e067a5c899e4c7a59788",
+      "merge_base": "bcbe658d1be033cdc83d04acdca67ec8186c484d",
+      "base_only": 229,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/text-first-combat-presentation-view-model-readiness-audit.md"
+      ],
+      "unique_commits": [
+        "b605175e6edce6889171e067a5c899e4c7a59788 docs(audit): refresh combat view model readiness",
+        "4f5d7162431ca0de75ee178f933e1339e1413887 docs(ui): audit combat presentation readiness"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/text-first-combat-presentation-view-model-readiness-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/travel-route-service-availability-audit",
+      "head": "d308d5c571b6c4739fecf4213f5a3152857e97ee",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/travel-destination-route-settlement-service-and-availability-authority-audit.md"
+      ],
+      "unique_commits": [
+        "d308d5c571b6c4739fecf4213f5a3152857e97ee docs(world): audit travel and service availability authority"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/travel-destination-route-settlement-service-and-availability-authority-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/ui-accessibility-input-source-audit",
+      "head": "adbf2cef04b8423a9eedc2921e862b4c3e5f1410",
+      "merge_base": "8a0065b7a72a6fc8193b502251e9020a1e4ca360",
+      "base_only": 139,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/ui-accessibility-keyboard-focus-and-responsive-source-audit.md"
+      ],
+      "unique_commits": [
+        "adbf2cef04b8423a9eedc2921e862b4c3e5f1410 docs(ui): audit accessibility and input source posture"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/ui-accessibility-keyboard-focus-and-responsive-source-audit.md"
+      ]
+    },
+    {
+      "branch": "parallel/world-spawn-admission-audit",
+      "head": "fb42f01bc91d6b31e8e20533c28935404f2c918c",
+      "merge_base": "8214327906fbc2edf7ab4d02168cf94b3abc7e6f",
+      "base_only": 134,
+      "branch_only": 1,
+      "changes": [
+        "A\tdocs/design/world-spawn-candidate-and-encounter-admission-audit.md"
+      ],
+      "unique_commits": [
+        "fb42f01bc91d6b31e8e20533c28935404f2c918c docs(world): audit spawn and encounter admission"
+      ],
+      "disposition": "ABANDON_SAFE_TO_DELETE",
+      "archives": [
+        "audits/world-spawn-candidate-and-encounter-admission-audit.md"
+      ]
+    },
+    {
+      "branch": "prep/integrated-gameplay-0-7-readiness-audit",
+      "head": "59c103c3a06d55f35bffa735fd4b7814dffb583e",
+      "merge_base": "895c02df40332c813a8403bd489af6184111ccba",
+      "base_only": 311,
+      "branch_only": 2,
+      "changes": [
+        "A\tdocs/design/integrated-gameplay-0.7-readiness-backlog-dependency-and-implementation-path-audit.md",
+        "A\tdocs/dev/queued-integrated-gameplay-0.7-readiness-backlog-dependency-and-implementation-path-audit-prompt.md"
+      ],
+      "unique_commits": [
+        "59c103c3a06d55f35bffa735fd4b7814dffb583e docs(audit): map integrated gameplay readiness",
+        "ae339eda516863f4af3043be381fb35a0c5c47db docs(audit): queue integrated gameplay readiness pass"
+      ],
+      "disposition": "PROTECTED_REFERENCE",
+      "archives": []
+    }
+  ],
+  "artifacts": [
+    {
+      "archive_path": "launcher/main-menu-asset-contract-pass.patch.txt",
+      "source_head": "e78dc645cfb658685be12f45f46d34b7c0da1119",
+      "source_path": "git diff --unified=0 --binary --full-index 9a107a7eed54b6d0cd2f161c236fbe163282bba7..e78dc645cfb658685be12f45f46d34b7c0da1119",
+      "source_blob": null,
+      "bytes": 14566,
+      "sha256": "d67bc2d31d452c84a0ed94f4019352be9c618c16945fa65532a82d8af44c04a4"
+    },
+    {
+      "archive_path": "launcher/main-menu-refinement-pass.patch.txt",
+      "source_head": "986d6352d2c18b60f7e9ddae4f992af96c662acc",
+      "source_path": "git diff --unified=0 --binary --full-index d03846e89d1a4fd07a1ea86d02951559f617df74..986d6352d2c18b60f7e9ddae4f992af96c662acc",
+      "source_blob": null,
+      "bytes": 4159,
+      "sha256": "71539ea96bafac52a8f62d2097521904cae3e89142ea9c933b0f5f1426dea610"
+    },
+    {
+      "archive_path": "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part01",
+      "source_head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "source_path": "docs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part01",
+      "source_blob": "7b4a2f0986e9d6edb454f6d776bb193ddf2cfe4f",
+      "bytes": 5000,
+      "sha256": "d689b26f9d79a52aa82102450bfd5d10004cdc9bf2cdea9c07c40db875e33fdb"
+    },
+    {
+      "archive_path": "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part02",
+      "source_head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "source_path": "docs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part02",
+      "source_blob": "76f94af9cd7b65485df9ea1278f01c727144738e",
+      "bytes": 5000,
+      "sha256": "265cc548be7fa4d35876d6fc66dfca52aa23f011a7ae7a93d8e01d1aa6c796ac"
+    },
+    {
+      "archive_path": "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part03",
+      "source_head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "source_path": "docs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part03",
+      "source_blob": "c86d4ad4a11763cc18c5a4b525720827402c6e11",
+      "bytes": 5000,
+      "sha256": "a342758576b8ef1704f60ada690d93f7c2276837acebee8ea37287dd7bbbec5c"
+    },
+    {
+      "archive_path": "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part04",
+      "source_head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "source_path": "docs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part04",
+      "source_blob": "938a895fd517afd0b1a5a37d0186f52c12a0ee36",
+      "bytes": 5000,
+      "sha256": "f4a46fc69de3c5bd6d6746a9644eb5cb9b839886fd3bcab4c8413de24acabf48"
+    },
+    {
+      "archive_path": "repair-bundle/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part05",
+      "source_head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "source_path": "docs/dev/repair-bundles/version-0.6.9.7/Lineage_Reborn_0.6.9.7_local_repair_bundle.zip.b64.part05",
+      "source_blob": "2f0c824f5055693faba6385b959304c8dbce7561",
+      "bytes": 3056,
+      "sha256": "9f223aaf52a943a0ac3b7d4aa6725dd520783c563fb7935e398bbc23b1963ccd"
+    },
+    {
+      "archive_path": "repair-bundle/MANIFEST.sha256",
+      "source_head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "source_path": "docs/dev/repair-bundles/version-0.6.9.7/MANIFEST.sha256",
+      "source_blob": "7d025e2d7ba1f196fdce2387c696f9eda1db2524",
+      "bytes": 599,
+      "sha256": "a36558446e77513f3f2eb3c8943b77592dad266fc5cdb9c202585d125d1f57c7"
+    },
+    {
+      "archive_path": "repair-bundle/README.md",
+      "source_head": "10afdef7d85a3010b5afadd20c0cd014ceac5fcc",
+      "source_path": "docs/dev/repair-bundles/version-0.6.9.7/README.md",
+      "source_blob": "cc544ccac85255b310cde86ac99b6a23260171ab",
+      "bytes": 3529,
+      "sha256": "7aad65a86ef4f46be22b13faed2eb5ec031944446cee782ca0022b4d705c4b67"
+    },
+    {
+      "archive_path": "audits/activity-advancement-command-result-and-effect-routing-audit.md",
+      "source_head": "b4cbaea5f4292904bba62f60a0108bb84f2bd405",
+      "source_path": "docs/design/activity-advancement-command-result-and-effect-routing-audit.md",
+      "source_blob": "91fef0c3edec7b504cc98e28c81efa873f70010a",
+      "bytes": 5999,
+      "sha256": "b03a4fa44902fc506d4a6c56e0daf5b59d1b5c206a6806653520d5dd314f0957"
+    },
+    {
+      "archive_path": "audits/character-panel-inventory-equipment-and-preference-mutation-ownership-audit.md",
+      "source_head": "23d61f36f871d2426b53915a632df6168f2848d3",
+      "source_path": "docs/design/character-panel-inventory-equipment-and-preference-mutation-ownership-audit.md",
+      "source_blob": "b0c264b72096c7474a8ac1656dc015ee0a86fb2c",
+      "bytes": 7002,
+      "sha256": "52db5750e5e4d5543b393f3dfc1f6a29ac29f48f22907bb6f9fd108ebf960088"
+    },
+    {
+      "archive_path": "audits/chronicle-notification-operation-and-projection-provenance-audit.md",
+      "source_head": "4b65d7fb6e093743cdc4d5a6db5b0e1bb6638c01",
+      "source_path": "docs/design/chronicle-notification-operation-and-projection-provenance-audit.md",
+      "source_blob": "c70687d0e02f6719d9041c252e8984cb1442854e",
+      "bytes": 6647,
+      "sha256": "6ac052059d7b0b8eaf79b2471146066b5f94c0851558ac13f4d177e722e60a91"
+    },
+    {
+      "archive_path": "audits/civilization-simulation-tick-persistence-and-correction-audit.md",
+      "source_head": "859aadea20efaf88b49183491b08181bdea463db",
+      "source_path": "docs/design/civilization-simulation-tick-persistence-and-correction-audit.md",
+      "source_blob": "bd2cb5bd78cba0e2242e4d0014d900aaea472fa9",
+      "bytes": 6633,
+      "sha256": "24520d0a7088d714bb06c15b2b6d06e532735d8d6b8bf962a8056b2d947ab15c"
+    },
+    {
+      "archive_path": "audits/combat-ai-and-gambit-current-state-audit.md",
+      "source_head": "e4e7a85bb356fb9d1ba143ac0edecf9532071698",
+      "source_path": "docs/design/combat-ai-and-gambit-current-state-audit.md",
+      "source_blob": "1e6e4ae6b9b609c193a26a971af83a576992ee09",
+      "bytes": 6517,
+      "sha256": "c4116a7b1fc1ef5de5cb0db809e48da26982331057ca385e86d04fa696d001f5"
+    },
+    {
+      "archive_path": "audits/connector-prep-freshness-and-supersession-audit.md",
+      "source_head": "cadcc2a2280cb4a01f4d69c52bcbd607b3bb4c96",
+      "source_path": "docs/dev/connector-prep-freshness-and-supersession-audit.md",
+      "source_blob": "658f09f07681adcb690c221db0833c40c4973def",
+      "bytes": 13493,
+      "sha256": "f62caeea3f9b3a626ed3164fa2b5c5be5f8823fc28b76c7f3e3dae3ddbda543a"
+    },
+    {
+      "archive_path": "audits/consumable-profile-coverage-and-effect-ownership-audit.md",
+      "source_head": "510251f77431b694591d4cbbd8127ed0ef5d3185",
+      "source_path": "docs/design/consumable-profile-coverage-and-effect-ownership-audit.md",
+      "source_blob": "64d25845a3591d03f414a38a3c4afdd5e263250f",
+      "bytes": 6822,
+      "sha256": "bb0485ffdc71fc653c8fe7107830c4541e6351fb2aa31c3e228fe4e355354dca"
+    },
+    {
+      "archive_path": "audits/content-lint-schema-registration-and-validator-coverage-source-audit.md",
+      "source_head": "82ce2bfa12efa3cfa6810d3841c655b6a3635334",
+      "source_path": "docs/dev/content-lint-schema-registration-and-validator-coverage-source-audit.md",
+      "source_blob": "cd6438ecc4cb5c5d7bbd8b31bdf9ee193e84ba07",
+      "bytes": 6012,
+      "sha256": "1cb807c75b17b7bf490f53383696a400c72e5b1cb61bd75d1e4b630cd833be55"
+    },
+    {
+      "archive_path": "audits/economy-command-surface-source-map.md",
+      "source_head": "c98199dc8069099dbf52ded5fffcbf715fc08522",
+      "source_path": "docs/design/economy-command-surface-source-map.md",
+      "source_blob": "b1a1bf92960d8e2f903b8fd48a639f2204fc422c",
+      "bytes": 6737,
+      "sha256": "b135d1965bbf291ff8f7cf342ef42a3e8cad2a58f8e9a4416ebd6c4db97ef80a"
+    },
+    {
+      "archive_path": "audits/weapon-and-armor-profile-current-state-readiness-audit.md",
+      "source_head": "6a98bd0b1eca74cee93dca16e0e3a32d9fe595e3",
+      "source_path": "docs/design/weapon-and-armor-profile-current-state-readiness-audit.md",
+      "source_blob": "106a3a3f121c0edf63cef512e62b24e0c83d5f02",
+      "bytes": 5557,
+      "sha256": "4f0431966e2fa3bfd745bd7063d4c8e6f240cee3ccff8a0230a1ac028d438ec3"
+    },
+    {
+      "archive_path": "audits/game-tick-cross-engine-delta-event-and-warning-orchestration-audit.md",
+      "source_head": "95d64e9e56cd65ecad237f3101adef6812f7b020",
+      "source_path": "docs/design/game-tick-cross-engine-delta-event-and-warning-orchestration-audit.md",
+      "source_blob": "3ed999976dc2436a5167e529719799d761bed1ff",
+      "bytes": 6700,
+      "sha256": "06b8fbd50878289e06f3760e6a8f42f140d2b1fed9e9098230abd592f952d20a"
+    },
+    {
+      "archive_path": "audits/gameplay-shell-and-ui-state-ownership-source-audit.md",
+      "source_head": "882cba46578b49468bcbe624765d9dec0481eace",
+      "source_path": "docs/design/gameplay-shell-and-ui-state-ownership-source-audit.md",
+      "source_blob": "3136ca3acba4fb4b6e26cf03c15a15ed1055aa33",
+      "bytes": 6834,
+      "sha256": "3b8220f690bbbb8e8a3f40aa63c7b0c980761f4991befbc2ca69d29e0e05fcb4"
+    },
+    {
+      "archive_path": "audits/item-use-profile-grant-charge-dose-and-effect-ownership-audit.md",
+      "source_head": "d0d67520d06c1172b2b8830955330b26110dee39",
+      "source_path": "docs/design/item-use-profile-grant-charge-dose-and-effect-ownership-audit.md",
+      "source_blob": "8837bdc7acdc7a019c500b55fd04bac4018be046",
+      "bytes": 6030,
+      "sha256": "64e4a0ad0123b42eea1a52e45bcf3b0bd0a2068d717cdd57cb16b24699cd93aa"
+    },
+    {
+      "archive_path": "audits/javascript-typescript-mirror-public-export-and-import-specifier-integrity-audit.md",
+      "source_head": "6304ebf8ab00bbf74e81cd85099dea236373c2af",
+      "source_path": "docs/dev/javascript-typescript-mirror-public-export-and-import-specifier-integrity-audit.md",
+      "source_blob": "ca2cac8067950e2f2951f6af27d66838a587c457",
+      "bytes": 5359,
+      "sha256": "424e1cfbc0e146e45440fb1df404d09f727da3ec0e38594027aaa9f9713755f4"
+    },
+    {
+      "archive_path": "audits/knowledge-discovery-observation-and-visibility-ownership-audit.md",
+      "source_head": "46434f31f8b06d49aad9a516543fbe36d188d519",
+      "source_path": "docs/design/knowledge-discovery-observation-and-visibility-ownership-audit.md",
+      "source_blob": "fa1de40b1c2f94782668b5de0878081dff5f8043",
+      "bytes": 6178,
+      "sha256": "c670faa8c8f60e381135e27763f26af0ba5e710173396f61873462d51dfeeffb"
+    },
+    {
+      "archive_path": "audits/launcher-sidebar-asset-pr-disposition-audit.md",
+      "source_head": "72726210fc5c4c30d55c5fc27bc09117d1e4bff9",
+      "source_path": "docs/design/launcher-sidebar-asset-pr-disposition-audit.md",
+      "source_blob": "46d5ef1a2d759490d4797210c480344329b62499",
+      "bytes": 11234,
+      "sha256": "e06641812eb6ec8e82d4d770030df7afdd6cb38039719da3fffb1dd3e85f0083"
+    },
+    {
+      "archive_path": "audits/magic-runtime-readiness-audit.md",
+      "source_head": "891090af4d3739ae235b570b778029bed0f21893",
+      "source_path": "docs/design/magic-runtime-readiness-audit.md",
+      "source_blob": "38bfc5940fa87260bce467a8494e0edb20de99aa",
+      "bytes": 6527,
+      "sha256": "2a72b9c49b35dda754ef4091838e5aadf700290b3b61e283e20205945038575b"
+    },
+    {
+      "archive_path": "audits/npc-party-companion-guest-and-combatant-persistence-readiness-audit.md",
+      "source_head": "c3092bcd02ff8530481f8cd4d16819f0a275c4a6",
+      "source_path": "docs/design/npc-party-companion-guest-and-combatant-persistence-readiness-audit.md",
+      "source_blob": "5b1132846f9cf155e2cac1bbc972e5a149aaab75",
+      "bytes": 6034,
+      "sha256": "3d9f11429366481690dabf315dcb36d894a71fc79e8f0b3697ff1d50e4ac97bb"
+    },
+    {
+      "archive_path": "audits/player-progression-and-reward-mutation-source-audit.md",
+      "source_head": "387f2491d0d671ee7834656c28183e72a798f1ca",
+      "source_path": "docs/design/player-progression-and-reward-mutation-source-audit.md",
+      "source_blob": "14f95219d2b3fafab0dbafaf18c7a55726edf48c",
+      "bytes": 5995,
+      "sha256": "0758aceeeeddc8b0a78f8c248dc16aa0fccd2d8c0b0417c75ee9030c7d518b49"
+    },
+    {
+      "archive_path": "audits/quest-action-tree-runtime-adapter-readiness-audit.md",
+      "source_head": "4d6c622b2b39b7e0ca1839e19473b4c772d0a762",
+      "source_path": "docs/design/quest-action-tree-runtime-adapter-readiness-audit.md",
+      "source_blob": "b1aa141ab1381088c861a9c33f1bbbc6890142e5",
+      "bytes": 6057,
+      "sha256": "f6cf584500816d6b639d65b377b12c6b31769494e09f66e071d35154735b77a3"
+    },
+    {
+      "archive_path": "audits/quest-turn-in-reward-delivery-and-idempotency-source-audit.md",
+      "source_head": "470e8aca48510f68824f7a5aa8f603d0b13bbc1f",
+      "source_path": "docs/design/quest-turn-in-reward-delivery-and-idempotency-source-audit.md",
+      "source_blob": "ea252f66b56584188d0c32b355973c7e8307f651",
+      "bytes": 6969,
+      "sha256": "aa48f4dc2e870156abffc54711741ed22d4d286279e88f7b43c7828dc70bee22"
+    },
+    {
+      "archive_path": "audits/recipe-and-production-coverage-maturity-audit.md",
+      "source_head": "3db3c0f52456b4007dedc43817ecca5c06edd239",
+      "source_path": "docs/design/recipe-and-production-coverage-maturity-audit.md",
+      "source_blob": "534cd69e74aeec266b87adc5eb640b5a960e71cf",
+      "bytes": 4674,
+      "sha256": "65f4d1562256d43a44ee6bebf91f1cf7be5f89b0a5346ce35028a21d8819cc47"
+    },
+    {
+      "archive_path": "audits/regional-bestiary-and-ecology-coverage-maturity-audit.md",
+      "source_head": "2bafdb21a24535394c3cb32e946315c2c51eaa74",
+      "source_path": "docs/design/regional-bestiary-and-ecology-coverage-maturity-audit.md",
+      "source_blob": "7f806b2443a752695ca9c3d56270d10c64d67a6a",
+      "bytes": 4513,
+      "sha256": "e6d20279f93cdbfedf9797e19c1a1e4c54b380bf68a8f297f2d7bbebd1d73da0"
+    },
+    {
+      "archive_path": "audits/regional-and-continental-settlement-maturity-evidence-audit.md",
+      "source_head": "e96c3841d4e54f9bf6e2c40de8df5011bbbb4986",
+      "source_path": "docs/design/regional-and-continental-settlement-maturity-evidence-audit.md",
+      "source_blob": "932e01c461b895e1df8730ba8207eee49797157e",
+      "bytes": 4512,
+      "sha256": "ae6d515aeb72e84fbac5111fe8ea8f8a048b86e0881d99438f4c3b09f2d3055c"
+    },
+    {
+      "archive_path": "audits/temporary-research-artifact-retention-inventory.md",
+      "source_head": "feaeedd8d9585e9a100699d640a893bc578e900c",
+      "source_path": "docs/dev/temporary-research-artifact-retention-inventory.md",
+      "source_blob": "10d57d8f5fdd632df0710da653847c75e929246b",
+      "bytes": 7156,
+      "sha256": "a5ed1f4da5a9f11ef0679ea15f81f55c7c492d5c8b786b8d7d5b6a2486bab47a"
+    },
+    {
+      "archive_path": "audits/rest-and-recovery-ui-mutation-source-audit.md",
+      "source_head": "0e32703c410b1172b6078346353a0adfb99debbc",
+      "source_path": "docs/design/rest-and-recovery-ui-mutation-source-audit.md",
+      "source_blob": "a465d2a58132ec8c5bbd2118c14da95d09fba999",
+      "bytes": 6638,
+      "sha256": "9fb17300a54d3047ce2342e7c8abc0c1cf1628f36fd6d48d79478cc02f99e8b1"
+    },
+    {
+      "archive_path": "audits/text-first-combat-presentation-view-model-readiness-audit.md",
+      "source_head": "b605175e6edce6889171e067a5c899e4c7a59788",
+      "source_path": "docs/design/text-first-combat-presentation-view-model-readiness-audit.md",
+      "source_blob": "56b8020b7572215a212c28ca62ae4fb0750bcf5a",
+      "bytes": 6495,
+      "sha256": "59011740d754af37eff0b0b9da331e0e6715feb6e993acaf77fa71f8c897d490"
+    },
+    {
+      "archive_path": "audits/travel-destination-route-settlement-service-and-availability-authority-audit.md",
+      "source_head": "d308d5c571b6c4739fecf4213f5a3152857e97ee",
+      "source_path": "docs/design/travel-destination-route-settlement-service-and-availability-authority-audit.md",
+      "source_blob": "7b2e40f2d22fb0427dc918ee84fe936d5cc29391",
+      "bytes": 5783,
+      "sha256": "f051b1dea32e6e6033d5c8472210d2e38bc9e40a0efa279e9290266108593386"
+    },
+    {
+      "archive_path": "audits/ui-accessibility-keyboard-focus-and-responsive-source-audit.md",
+      "source_head": "adbf2cef04b8423a9eedc2921e862b4c3e5f1410",
+      "source_path": "docs/design/ui-accessibility-keyboard-focus-and-responsive-source-audit.md",
+      "source_blob": "e5c085bd805e47cd6d0dec1925505768cd4ef341",
+      "bytes": 6236,
+      "sha256": "8e0a232ec2dd5acc1975a6db94cfceced8879ba72b0095273f5dd93b010d45c8"
+    },
+    {
+      "archive_path": "audits/world-spawn-candidate-and-encounter-admission-audit.md",
+      "source_head": "fb42f01bc91d6b31e8e20533c28935404f2c918c",
+      "source_path": "docs/design/world-spawn-candidate-and-encounter-admission-audit.md",
+      "source_blob": "746f8b86d377a3ced1f3ae78517cebbcf3db14a6",
+      "bytes": 5851,
+      "sha256": "35b77122ed6bd2e07cc81060868efeb0fee9846c42b1e5c30a4bbb747b042200"
+    }
+  ],
+  "repair_zip_sha256": "c5d536b10580877191fc9dc730b5f4f5e5571dc18d15bc7b7200871bf912b3fe",
+  "repair_members": [
+    {
+      "path": "packages/engines/game-engine/src/normal-defeat.ts",
+      "bytes": 20572,
+      "sha256": "51c496087ee4453f9388c8382aaad4c3a1677e4a1d38480b2dcc1661b805ae88"
+    },
+    {
+      "path": "packages/engines/game-engine/src/campaign-session.ts",
+      "bytes": 18208,
+      "sha256": "b5f7297d01411f7eddf69e4150eaab6204b7d3a56d5dbc7fc49d9e41bceb515c"
+    },
+    {
+      "path": "IMPLEMENTATION_REPORT.md",
+      "bytes": 7714,
+      "sha256": "0adc12df00dcc6673c8b7a04d7850f2d003ff8423890bca6278bff8546e03bdd"
+    },
+    {
+      "path": "preedit-probe.mjs",
+      "bytes": 5330,
+      "sha256": "d99feb5c16648c59708107cc8fd1fdf1587b10edbe94daccd9ba7866210442e4"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 15022,
+      "sha256": "a375735640b359ab66eb927f668a761ba1acaef48eaff9176d785538d77d1777"
+    }
+  ]
+}
