@@ -89,3 +89,7 @@ Installed, not executed: unversioned **Game 0.1.x Playability Gap Prioritization
 Known limits remain broad UI type debt, narrow active/unturned-in representative scope, deferred inventory instances/crafting/NPC/services/combat breadth, accessibility and balance gates, other Stakes modes, and independent future game-version acceptance. No new mandatory technical blocker remains. No browser playthrough, content lint, full workspace typecheck, broader parent audit rerun or deployment was required or claimed in this bounded no-drift milestone run.
 
 Suggested commit message: `docs: accept DEV-0.7.0 integrated gameplay band entry`
+
+## F. Verified Publication Checkpoint
+
+Acceptance/coordination commit: `cbd49bd961f36064c6f710fa90604e7dfd670136`, pushed to master on 2026-09-11. Post-push fetch/prune verified HEAD == origin/master at that commit and a clean worktree. Hosted exact-commit prompt/output/handoff were retrieved and matched local Git blobs: prompt `abec09cc03332352e636c1c5573f31acc51c296b`, output `09fb9544dc9b3e20123726106bf27415ff2cb60d`, handoff `cd28608e0a65828ae18b809c4d32bd96e15563ef`. Full unstaged review, staged identity/diff review and git diff --check passed. The later documentation-only publication-record commit contains this checkpoint; it does not change executable evidence or the accepted milestone. Resolve its exact final head through Git rather than treating the acceptance checkpoint as perpetual live master.

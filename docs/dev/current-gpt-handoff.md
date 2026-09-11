@@ -20,6 +20,8 @@ Active route: unversioned `Game 0.1.x Playability Gap Prioritization Decision`
 
 ## 1. Accepted Boundary And Evidence
 
+Milestone acceptance/coordination was committed and pushed at `cbd49bd961f36064c6f710fa90604e7dfd670136`; post-fetch local/tracking equality and hosted prompt/output/handoff blob identity passed. A later documentation-only publication record preserves that checkpoint. The user has now explicitly requested execution of the installed playability-prioritization decision.
+
 Milestone verification began from clean synchronized master at `d8c413208237f3ee3a895f133a1963400d76e938`. Readiness source is `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`; accepted representative implementation is `3ca23d6864541a899ea61a6bf26257665f754e78`, independently accepted by legacy 0.6.11.1. Publication identities are recorded in current output after commit/push; the inspected source is not the final coordination head.
 
 The complete post-readiness delta did not change representative owners or core tests. Current execution passed 82/82 prescribed cases, Node configuration typecheck and Vite 8 server/client build (4/204 modules). Broad UI typecheck still fails with 137 diagnostics, including pre-existing unchanged-code AppShell/creator findings; this is documented non-gating debt. No hosted statuses/workflow runs were attached to the inspected source head.
