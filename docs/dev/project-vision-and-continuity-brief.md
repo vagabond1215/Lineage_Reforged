@@ -28,7 +28,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
 - Latest completed unversioned decision: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, `BAND_ENTRY_READY`.
 - Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, accepted.
-- Active run: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`.
+- Active run: unversioned `Game 0.1.x Playability Gap Prioritization Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -61,7 +61,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - The follow-up dependency-closure decision returned `PACKAGE_READY` for atomic current-band primary `Version 0.6.9`: target verified publication and migration, one first-mutation continuity gateway, nonterminal Normal defeat and legacy HP-zero repair, and publication-keyed account consumers.
 - `Version 0.6.9` is implemented and accepted with linked arbitrary-depth fork-lineage support under bounded Model C.
 - The survey receipt decision fixed the persisted identity/container, continuity-before-receipt, retry, owner, projection-repair, correction, migration, and retention contract and selected one bounded `0.6.10` package.
-- Bounded primary `0.6.11` is implemented at `3ca23d6864541a899ea61a6bf26257665f754e78`, independent `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, and the subsequent decision returned `BAND_ENTRY_READY`. `0.7.0` is authorized pending its separate milestone activation/publication package.
+- Bounded primary `0.6.11` is implemented at `3ca23d6864541a899ea61a6bf26257665f754e78`, independent `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, and the subsequent decision returned `BAND_ENTRY_READY`. `DEV-0.7.0` is complete with `MILESTONE_ENTRY_ACCEPTED`; current development band `DEV-0.7.x`, Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`.
 
 ## Validation Posture
 
@@ -77,9 +77,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. execute `Version 0.7.0 - Integrated Gameplay Systems Band Entry` as the bounded milestone activation/publication package;
-2. fail closed to the smallest exact current-band prerequisite if live-head drift invalidates the accepted readiness matrix;
-3. after `MILESTONE_ENTRY_ACCEPTED`, select one separate next route without importing `0.8.x` breadth.
+1. execute unversioned `Game 0.1.x Playability Gap Prioritization Decision`;
+2. reproduce the player path and compare playability/loop/dependency closure against risk, size and regression burden;
+3. select one bounded capability or prerequisite without automatically assigning DEV-0.7.1 or Game 0.1.1-prealpha.
 
 ## Current Implementation Reality
 

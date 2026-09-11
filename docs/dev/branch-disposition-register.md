@@ -1,10 +1,24 @@
 # Branch Disposition Register
 
-Date: 2026-09-07
+Date: 2026-09-11
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change
 
 Controlling policy: `docs/dev/branch-lifecycle-and-integration-policy.md`
+
+## 2026-09-11 DEV-0.7.0 Milestone Publication Review
+
+Inspected base and documentation starting head: `d8c413208237f3ee3a895f133a1963400d76e938`, clean synchronized master after fetch/prune. One local branch, four hosted branches total, zero open PRs. Server-retained closed PR head refs #1/#2/#3 do not represent open work. Publication/final synchronization identities are recorded in current output and the completion report, not inferred from this starting snapshot.
+
+| Retained branch | Head | Merge base | Starting master-only / branch-only | Disposition / next review |
+| --- | --- | --- | --- | --- |
+| prep/integrated-gameplay-0-7-readiness-audit | 59c103c3a06d55f35bffa735fd4b7814dffb583e | 895c02df40332c813a8403bd489af6184111ccba | 313 / 2 | PROTECTED_REFERENCE; milestone read-only consumer completed; next explicitly scheduled readiness/regression or protection/disposition review. |
+| parallel/prompt-packaging-integrity-audit | 58a34e37ee531aa1f6c87086b4a4a6d20d571f9f | 3d77171ca2034c8b2fb8d19f374cef5df9605053 | 260 / 1 | PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit. |
+| admin/genesis-research-evidence-2026-08-13 | 210df5bcc017a8f31d621a553b5496c668540d29 | fd40571bb0802177bd776fd3cd445b6b487716fd | 91 / 1 | HOLD_NAMED_CONSUMER; administration/template/governance consumer or explicitly scheduled Lineage retrospective. |
+
+Unique work remains two readiness documents (commits ae339eda/59c103c3), one prompt-integrity document (58a34e37), and one administration evidence document (210df5bc). The protected readiness audit was read at its named trigger: accepted 0.6.9-0.6.11 and fresh executable evidence close the old missing-owner findings. No merge/cherry-pick/rebase/closure/deletion or evidence/protected-ref mutation is due or performed. No disposition class changes; only the completed readiness consumer's next trigger advances. All historical rows below remain dated snapshots superseded by this live review and September 7 retirement.
+
+DEV-0.7.0 returns MILESTONE_ENTRY_ACCEPTED; current band DEV-0.7.x; Game 0.1.0-prealpha and INTEGRATED_LOOP unchanged. Next route is the unversioned Game 0.1.x Playability Gap Prioritization Decision. FP-008/009 are satisfied by exact refs, semantic comparison, protected retention and distinct source/publication identities.
 
 ## 2026-09-07 Dedicated Branch Value Consolidation And Retirement
 

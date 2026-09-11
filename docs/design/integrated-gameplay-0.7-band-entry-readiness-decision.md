@@ -106,3 +106,31 @@ Execute only:
 `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
 
 That package is a bounded milestone activation/publication run over the already accepted representative slice. It must recheck live-head continuity and the focused gate, then record the internal band entry without adding gameplay behavior. If current-head drift invalidates any criterion, it must fail closed and restore the smallest `0.6.x` prerequisite instead of claiming `0.7.0`.
+
+## 9. DEV-0.7.0 Milestone Acceptance And Publication
+
+Date: 2026-09-11
+
+Executed prompt and inspected/documentation starting head: `d8c413208237f3ee3a895f133a1963400d76e938`
+
+Result: `MILESTONE_ENTRY_ACCEPTED`
+
+`DEV-0.7.0 - Integrated Gameplay Systems Band Entry` is complete and accepted. Current development band is `DEV-0.7.x`. Game version remains `0.1.0-prealpha`; playability remains `INTEGRATED_LOOP`. The earlier sections are the unchanged readiness-decision snapshot; this appendix consumes its separate activation route.
+
+| Installed activation criterion | Current result |
+| --- | --- |
+| 1. No invalidating post-readiness drift | Satisfied: complete 17-commit/78-path delta classified; gameplay owners, persistence/caller chain and four core tracked tests are unchanged. Hosting/assets and two focused tests were checked separately. |
+| 2. Ordinary path executable | Satisfied: production creator, retained publication/load, acceptance/access, travel/arrival, four real-caller shifts, mid/final restart and durable empty-cache duplicate pass. |
+| 3. Owner/admission/persistence/consequence coherence | Satisfied: focused stale/conflict, deep validation, correction/repair, nested preservation and accepted-only caller tests pass; independent source inspection finds no new boundary violation. |
+| 4. Active/unturned-in Soundings | Satisfied: representative test asserts active/tracked quest, unchanged currency/standing/inventory and no reward/turn-in receipts. |
+| 5. Current-head focused validation | Satisfied: 82/82 tests, Node configuration typecheck and direct Sites/Cloudflare Vite build pass. Broad UI typecheck remains the documented 137-diagnostic non-gate. |
+| 6. Omissions remain outside included interaction | Satisfied: exact nine non-proposals and deferred turn-in/rewards, inventory/NPC/crafting breadth, other Stakes modes and later hardening remain explicit. |
+| 7. No mandatory blocker | Satisfied: no technical criterion is newly contradicted. |
+
+The retained graph remains four requests, four occurrences, four results, 48 receipts, ordered stages/projections, content versions [2,2,2,2], and no pending correction/repair. The ordinary test uses no demoSnapshot or eligibility injection. Current output contains the exact commands, diagnostic classification, failure-boundary matrix, source paths, guardrail evidence and publication identities.
+
+Applied FP-001, FP-002, FP-008, FP-009, FP-013, FP-014 and FP-017. Fresh branches: one local/four hosted total/zero open PRs. Protected readiness evidence was read at its named milestone trigger; its historical missing-owner warnings are closed by accepted production work. No branch/PR mutation or disposition-class change occurred. Its next review is an explicitly scheduled readiness/regression or protection/disposition review.
+
+This acceptance does not create Game 0.7.0, Game 0.2.0, vertical-slice acceptance, alpha, beta or a percentage-complete claim. No game-version acceptance decision is issued. GAME_VERSION, worldVersion, runtime, tests, content, schemas, saves, migrations, dependencies, assets and deployment remain unchanged.
+
+Installed separate next route: unversioned `Game 0.1.x Playability Gap Prioritization Decision`. It must reproduce the player path and rank playability/loop/dependency closure against risk, size and regression burden; narrow Soundings authoritative turn-in/reward is a strong candidate, not a predetermined package. No DEV-0.7.1 or Game 0.1.1-prealpha is allocated here.

@@ -79,12 +79,12 @@ Current Lineage: Reforged state:
 - **Game version:** `0.1.0-prealpha`
 - **Game phase:** Early Pre-Alpha / First Playable
 - **Playability posture:** `INTEGRATED_LOOP`
-- **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` authorized and pending publication/verification
+- **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` complete and accepted on 2026-09-11
 - **Deployment posture:** owner-only Sites preview operational
 
-The playability posture is already `INTEGRATED_LOOP` because the representative ordinary loop was independently accepted before the pending development-milestone publication package.
+The playability posture is already `INTEGRATED_LOOP` because the representative ordinary loop was independently accepted before the now-completed development-milestone publication package.
 
-Accepting `DEV-0.7.0` should therefore **not** promote playability; it should only formalize the corresponding technical development-band milestone.
+Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The installed next route is the unversioned `Game 0.1.x Playability Gap Prioritization Decision`.
 
 ## 5. Current Accepted Player Path
 

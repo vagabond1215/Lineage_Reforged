@@ -1,193 +1,55 @@
 # Current GPT Handoff
 
-Date: 2026-09-07
-
-Status: branch consolidation complete; true game-version architecture installed; game `0.1.0-prealpha` / First Playable; playability `INTEGRATED_LOOP`; owner-only Sites preview current; `DEV-0.7.0` development milestone activation pending
+Date: 2026-09-11
 
 Repository: `vagabond1215/Lineage_Reforged`
 
-Version-architecture migration source head: `21b6cbb10e21f0b150d8810801aa8273ac9a1258`
+Status: `DEV-0.7.0` complete; `MILESTONE_ENTRY_ACCEPTED`; playability-prioritization decision installed and not executed
 
-Canonical game version: root `GAME_VERSION`
+Game version: `0.1.0-prealpha` (root `GAME_VERSION`)
 
-Game version: `0.1.0-prealpha`
-
-Game phase: `Early Pre-Alpha / First Playable`
+Game phase: Early Pre-Alpha / First Playable
 
 Playability posture: `INTEGRATED_LOOP`
 
-Development milestone:
+Accepted development milestone: `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
 
-`DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
+Current development band: `DEV-0.7.x`
 
-Legacy label mapping:
+Active route: unversioned `Game 0.1.x Playability Gap Prioritization Decision`
 
-`Version 0.7.0 - Integrated Gameplay Systems Band Entry` -> `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
+## 1. Accepted Boundary And Evidence
 
-Development milestone status: `AUTHORIZED_PENDING_MILESTONE_ACTIVATION`
+Milestone verification began from clean synchronized master at `d8c413208237f3ee3a895f133a1963400d76e938`. Readiness source is `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`; accepted representative implementation is `3ca23d6864541a899ea61a6bf26257665f754e78`, independently accepted by legacy 0.6.11.1. Publication identities are recorded in current output after commit/push; the inspected source is not the final coordination head.
 
-Readiness result: `BAND_ENTRY_READY`
+The complete post-readiness delta did not change representative owners or core tests. Current execution passed 82/82 prescribed cases, Node configuration typecheck and Vite 8 server/client build (4/204 modules). Broad UI typecheck still fails with 137 diagnostics, including pre-existing unchanged-code AppShell/creator findings; this is documented non-gating debt. No hosted statuses/workflow runs were attached to the inspected source head.
 
-Accepted representative implementation: `3ca23d6864541a899ea61a6bf26257665f754e78`
+The accepted path remains ordinary creator -> retained campaign publication/load -> quest acceptance/access -> travel/arrival -> four survey shifts -> restart -> empty-cache durable duplicate. Exact retained authority is four requests/occurrences/results and 48 receipts, all current content v2, nine non-proposals, ordered projections and no pending correction/repair. Soundings remains active and unturned-in. No legacy turn-in/reward authority is accepted.
 
-Readiness decision starting head: `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`
+The milestone changes no gameplay or game version. It does not create Game 0.7.0, Game 0.2.0, vertical-slice acceptance, alpha, beta, or a percentage-complete claim. `worldVersion: 0.1.0`, save format/envelope versions, package versions, build SHA and deployment revision are separate identities.
 
-Current prompt authority:
+## 2. Execute Only The Installed Decision
 
-`docs/dev/current-codex-prompt.md`
+Read `docs/dev/current-codex-prompt.md` and reproduce the real player path before ranking missing capability. Compare player payoff, loop closure, dependency closure, architectural risk, package size and regression burden. Narrow Soundings turn-in/reward is a strong candidate, but authored terms remain deferred and the winner is not predetermined.
 
-## 0. Version Architecture Authority
+Compare inventory/equipment, crafting/economy, combat/challenges, NPC/services, progression/lineage, UI/accessibility and content breadth. Select one smallest coherent capability or exact prerequisite. Keep production, tracked tests, content, schemas, dependencies, assets, saves, migrations, GAME_VERSION and worldVersion read-only. Do not allocate DEV-0.7.1 or Game 0.1.1-prealpha automatically or implement the selected route during the decision.
 
-Read together:
+First durable checkpoint: player-path reproduction and candidate matrix in the focused prioritization decision. A local execution stage owns ordinary UI/caller reproduction; Connector-only preparation may map evidence but cannot claim that reproduction. Preserve the current work/context if interrupted. External research is unnecessary unless a concrete later product decision requires it.
 
-- root `GAME_VERSION` — canonical current player-facing game version;
-- `docs/dev/game-version-roadmap-and-acceptance-policy.md` — actual game-version timeline and acceptance gates;
-- `docs/design/internal-versioning-and-release-milestone-policy.md` — development-milestone numbering and historical-label compatibility;
-- `docs/dev/playability-posture-and-version-calibration.md` — current player-facing playability classification.
+## 3. Branch And Deployment Posture
 
-The five identities must remain separate:
+Fresh inventory: one local branch, four hosted branches total, zero open PRs. Closed PR head refs #1/#2/#3 remain server-retained historical evidence. No lifecycle mutations occurred during DEV-0.7.0.
 
-1. game version;
-2. development milestone;
-3. exact build/source SHA;
-4. save/world/data version;
-5. deployment revision.
+- `prep/integrated-gameplay-0-7-readiness-audit` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: PROTECTED_REFERENCE; milestone read-only consumer completed; next explicitly scheduled readiness/regression or protection/disposition review.
+- `parallel/prompt-packaging-integrity-audit` at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit.
+- `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`: HOLD_NAMED_CONSUMER; administration/template/governance or explicitly scheduled Lineage retrospective.
 
-Private package versions are package metadata, not canonical game-version authority.
+The September 7 branch consolidation preserved 30 audits, two launcher diffs and seven repair-bundle files at `43bb35a4b358287c91683d04e164f45b99be25c7`, before closing #2/#3 and retiring 34 obsolete branch heads. Use `docs/dev/evidence/branch-consolidation-2026-09-07/README.md` and manifest instead of retired refs. Historical proposals are not current authority; all 13 tracked temporary research artifacts remain retained.
 
-`worldVersion: 0.1.0` is persisted-state authority and must not be changed merely to align with the game version.
+Sites remains the existing owner-only preview, version 2, filtered deployed source `8857c08bb272f36938fde0a72087c5c0865be80b`. Final Bloodlines assets remain authoritative at `e58d650203bde7d84a6a56ab1501bfac4e18901c`. The milestone neither redeployed nor reinspected the external source. No hosting run is scheduled by this handoff.
 
-The existing `docs/dev/project-roadmap.md` remains historical development chronology/technical sequencing. It is lower precedence than `docs/dev/game-version-roadmap-and-acceptance-policy.md` for actual game-version, pre-alpha/alpha/beta/RC/release, and player-facing acceptance claims.
+## 4. Read Order And Deferred Work
 
-## 1. Current True Game State
+Read AGENTS, GAME_VERSION, current prompt/output/handoff, game-version and development-milestone policies, playability calibration, focused readiness acceptance appendix, historical register, planning reconciliation and branch/failure-pattern policies. The current prompt names the specific turn-in, inventory, NPC and UI evidence needed for prioritization.
 
-The current accepted game version is:
-
-`0.1.0-prealpha`
-
-This is a First Playable / Early Pre-Alpha build.
-
-The current playability posture is already `INTEGRATED_LOOP`. It does **not** wait for the docs-only development milestone publication because the representative ordinary loop was independently accepted before `DEV-0.7.0` publication.
-
-The accepted ordinary path is:
-
-creator/start-state
-→ campaign publication/load
-→ quest acceptance/access
-→ travel/arrival
-→ four survey shifts
-→ retained cross-system consequences
-→ restart/save restoration
-→ durable duplicate.
-
-Soundings remains active and unturned-in.
-
-The game is therefore not a vertical slice, not alpha, not beta, and not approximately 70% complete.
-
-## 2. Current Development Milestone
-
-Execute only:
-
-`DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
-
-This is the prospectively renamed form of the installed legacy `Version 0.7.0` milestone. Historical accepted documents and commits retain their original `Version X.Y.Z` labels and must not be mass-renumbered.
-
-The development milestone is a bounded verification/publication package. It does not add gameplay and must not change `GAME_VERSION`.
-
-On acceptance:
-
-- development milestone becomes `DEV-0.7.x` current;
-- Game version remains `0.1.0-prealpha`;
-- playability remains `INTEGRATED_LOOP`;
-- install unversioned `Game 0.1.x Playability Gap Prioritization Decision`;
-- do not automatically assign `DEV-0.7.1` or Game `0.1.1-prealpha`.
-
-On blockage:
-
-- keep the development milestone unaccepted;
-- install the smallest exact technical repair;
-- keep Game `0.1.0-prealpha` unless an independent game-version decision says otherwise.
-
-## 3. Current Connector Preflight
-
-`docs/dev/connector-preflight-version-0.7.0-current-head-playability-calibration-2026-09-06.md`
-
-Connector disposition: `CONNECTOR_PREFLIGHT_CURRENT_HEAD_COMPLETE_EXECUTION_RESERVED_TO_CODEX`
-
-That packet inspected source head `a2d86f3753fd0ab599760a2cf6e80a0c926ea03b`. Later changes through the version-architecture migration source head are documentation/coordination only. Codex must fetch current `master`, include all later deltas, and independently verify no representative gameplay-owner/test drift.
-
-## 4. Sites Preview Status
-
-The owner-only preview lane is complete for the current purpose.
-
-- preview: `https://lineage-reforged-preview.vagabond1215.chatgpt.site`
-- current Sites version: version 2;
-- deployed filtered source: `8857c08bb272f36938fde0a72087c5c0865be80b`;
-- final Bloodlines active/inactive assets are authoritative in Lineage history at `e58d650203bde7d84a6a56ab1501bfac4e18901c`.
-
-No further Sites run is required unless access policy, deployment source, or asset delivery changes.
-
-## 5. Current Playability Gaps
-
-Material gaps separating Game `0.1.0-prealpha` from the reserved Game `0.2.0-prealpha` vertical-slice gate include:
-
-- authoritative quest turn-in/payout/reward closure;
-- individualized item identity/provenance/condition/quality/composition;
-- deeper runtime crafting/material choice;
-- persistent generated NPC/service ownership;
-- representative combat/challenge, inventory/equipment, crafting/economy, NPC/services, and progression breadth;
-- UI/accessibility/input hardening for a coherent slice;
-- balance and anti-exploit baselines;
-- representative content breadth;
-- broad UI TypeScript baseline cleanup as technical debt.
-
-These gaps are expected at `0.1.0-prealpha`.
-
-## 6. Post-DEV-0.7.0 Route
-
-After `DEV-0.7.0` acceptance, run the unversioned:
-
-`Game 0.1.x Playability Gap Prioritization Decision`
-
-It must reproduce the real player path and rank missing capabilities by:
-
-- player-facing payoff;
-- loop closure;
-- dependency closure;
-- architectural risk;
-- package size;
-- regression burden.
-
-Narrow authoritative Soundings turn-in/reward is a strong candidate because it closes the exact existing quest loop, but it is not pre-assigned as Game `0.1.1-prealpha`.
-
-A proposed game-version increment must separately pass the acceptance procedure in `docs/dev/game-version-roadmap-and-acceptance-policy.md`.
-
-## 7. Branch And PR Posture
-
-The user-authorized `Branch Value Consolidation And Retirement` pass completed on 2026-09-07 from inspected base `e059b49c14c11dbc499ce5f67e67b059dcb71a26`. All 30 audit documents, two launcher diffs and seven repair-bundle files were preserved at published commit `43bb35a4b358287c91683d04e164f45b99be25c7` before closing PRs #2/#3 and deleting 34 exact obsolete branch heads. PR #1 was already merged/closed. No production changes or obsolete implementation merges occurred.
-
-Post-retirement inventory: one local branch, four hosted branches total / three non-default branches, zero open PRs. Retained:
-
-- `prep/integrated-gameplay-0-7-readiness-audit` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: protected; next read-only review at DEV-0.7.0 verification/publication or a dedicated readiness review;
-- `parallel/prompt-packaging-integrity-audit` at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: protected; dedicated prompt/execution-pointer integrity consumer;
-- `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`: held for administration/template/governance or an explicitly scheduled Lineage retrospective.
-
-Use the [consolidated review and evidence index](evidence/branch-consolidation-2026-09-07/README.md) and [exact manifest](evidence/branch-consolidation-2026-09-07/manifest.json) in place of retired branch refs. Future named consumers remain pending and now consume these master artifacts with the documented current-head caveats. Archived proposals, old status labels and obsolete blanket runtime-absence claims are not accepted authority. This includes the four former survey audit refs. All 13 tracked temporary research artifacts remain retained.
-
-The pending DEV-0.7.0 prompt is unchanged. Refresh live refs at the next run; the preservation SHA above is a checkpoint, not the final coordination head or future live master.
-
-## 8. First Read Order
-
-1. `AGENTS.md`;
-2. root `GAME_VERSION`;
-3. `docs/dev/current-gpt-handoff.md`;
-4. `docs/dev/current-codex-prompt.md`;
-5. `docs/dev/current-codex-output.md`;
-6. `docs/dev/game-version-roadmap-and-acceptance-policy.md`;
-7. `docs/design/internal-versioning-and-release-milestone-policy.md`;
-8. `docs/dev/playability-posture-and-version-calibration.md`;
-9. `docs/dev/connector-preflight-version-0.7.0-current-head-playability-calibration-2026-09-06.md`;
-10. `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`;
-11. accepted legacy `0.6.11.1` appendices and representative test.
-
-Fetch live `master`, reconcile any delta after the version-architecture migration source head, and preserve the fail-closed `DEV-0.7.0` gate.
+The September 6 Connector preflight is consumed orientation evidence with stale branch/playability/routing statements superseded by current coordination. Accepted persistence and survey contracts remain closed unless fresh contradictory evidence requires reopening. Broad TypeScript cleanup, generic frameworks, other Stakes modes, travel-key migration, inventory instances, NPC promotion, mutable health, vertical-slice breadth and release hardening remain separately gated.

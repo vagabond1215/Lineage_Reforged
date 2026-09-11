@@ -38,7 +38,7 @@ Current playability posture:
 Current development milestone posture:
 
 - accepted technical work through legacy `Version 0.6.11` / `DEV-0.6.11`;
-- `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` authorized and pending publication/verification;
+- `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` complete and accepted on 2026-09-11;
 - accepting `DEV-0.7.0` does **not** automatically change `GAME_VERSION`.
 
 ## 3. Identity Separation
@@ -236,7 +236,7 @@ If there is no decision-complete answer, do not change `GAME_VERSION`.
 | --- | --- | --- |
 | Game version | `0.1.0-prealpha` | First Playable / Early Pre-Alpha |
 | Playability | `INTEGRATED_LOOP` | One real bounded multi-system persistent loop exists |
-| Development milestone | `DEV-0.7.0` pending | Integrated Gameplay technical band publication/verification |
+| Development milestone | `DEV-0.7.0` accepted | Integrated Gameplay technical band publication/verification |
 | World/save version | `worldVersion: 0.1.0` | Persisted world-state compatibility identity; separate |
 | Deployment | Sites version 2 | Owner-only preview revision; separate |
 | Build | Git SHA | Exact immutable source identity |
@@ -284,11 +284,11 @@ Do not:
 
 ## 14. Current Required Use
 
-The active milestone should now be named:
+The completed milestone is:
 
 `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
 
-If it is accepted:
+It returned `MILESTONE_ENTRY_ACCEPTED` on 2026-09-11; current development band is `DEV-0.7.x`. Its publication requirements are:
 
 - record the development milestone as accepted;
 - keep `GAME_VERSION` at `0.1.0-prealpha`;

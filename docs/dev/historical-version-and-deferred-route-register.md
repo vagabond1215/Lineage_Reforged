@@ -1,6 +1,6 @@
 # Historical Version And Deferred Route Register
 
-Date: 2026-08-27
+Date: 2026-09-11
 Status: durable coordination authority; documentation only
 
 ## Purpose And Precedence
@@ -59,7 +59,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `0.6.10.5` | Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit | Complete support suffix; `PARENT_ACCEPTED` | Independently accepted both residual repairs and every retained parent contract at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`; separately classified ordinary reachability `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`. | `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md` |
 | `0.6.11` | Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence | Complete accepted primary | Implemented the bounded authored definition, offer/access owners, direct origin correction, versioned presentation compatibility, and injection-free creator-to-restart evidence at `3ca23d6864541a899ea61a6bf26257665f754e78`; independently accepted by `0.6.11.1`. | `docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md` |
 | `0.6.11.1` | Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit | Complete support suffix; `PARENT_ACCEPTED` | Independently accepted every parent gate and issued `REPRESENTATIVE_LOOP_ACCEPTED`; kept the quest active/unturned-in and `0.7.0` `NOT_READY`. | `docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md` |
-| `0.7.0` | Integrated Gameplay Systems Band Entry | Authorized primary milestone; pending separate activation package | The readiness decision returned `BAND_ENTRY_READY`; do not mark the band entry complete until the installed milestone package rechecks current-head continuity and publishes `MILESTONE_ENTRY_ACCEPTED`. | `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md` |
+| `DEV-0.7.0` (legacy planned `0.7.0`) | Integrated Gameplay Systems Band Entry | Complete accepted development-band entry | `MILESTONE_ENTRY_ACCEPTED` on 2026-09-11; current band `DEV-0.7.x`, Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`. Next: unversioned Game 0.1.x Playability Gap Prioritization Decision. | `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md` |
 
 ## Latest Unversioned Decision
 
@@ -77,7 +77,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 
 ## Identity Rules
 
-- Three-segment labels are primary roadmap versions. Four-segment labels are support runs attached to one named primary.
+- Historical Version labels are development chronology. Prospectively use DEV-X.Y.Z for primary milestones, DEV-X.Y.Z.S for parent-specific support, and unversioned names for cross-cutting decisions. Game versions are separately controlled by root GAME_VERSION and the game-version acceptance policy.
 - `three-segment support package` is invalid terminology.
 - A historical proposed label is an alias only when a durable source maps it to a completed canonical label.
 - An absent number is not evidence of missing work. `0.5.211` is an evidenced unused gap.
@@ -96,7 +96,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | Static monster/ecology/loot | expanded-and-validated | Accepted `0.6.6`: 33 monsters, 9 fauna lineages, 9 ecology additions, 77 drop rows | None | New proven defect | Complete | `docs/dev/current-codex-output.md` |
 | Cross-content coherence | complete maturity gate | Accepted `0.6.4`-`0.6.6`, static lint/validators, durable research synthesis | None | New proven defect | Accepted `0.6.7`; no production repair needed | `docs/dev/current-codex-output.md` |
 | Geographic Knowledge/recognition | accepted documentation design gate | Place/Knowledge authorities and accepted `0.6.7` | Implementation packages remain separate | New explicitly scheduled owner-specific package | Preserve accepted domain/taxonomy/profile/source/occurrence/legacy boundaries | `docs/design/location-recognition-and-geographic-knowledge-taxonomy.md` |
-| Activity resolution reuse | band-entry ready; milestone activation pending | Selection, trial, quest, Knowledge, crafting, magic, occurrence foundations, accepted `0.6.9`, accepted `0.6.10`, accepted Ashen canon, implementation `3ca23d6864541a899ea61a6bf26257665f754e78`, independent `0.6.11.1` `REPRESENTATIVE_LOOP_ACCEPTED`, and unversioned `BAND_ENTRY_READY` decision | Separate current-head milestone activation/publication | `Version 0.7.0 - Integrated Gameplay Systems Band Entry` | Keep turn-in/rewards, geographic Knowledge/map behavior, generic quest/activity/travel infrastructure, other Stakes modes, and new gameplay behavior outside the milestone package | `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md` |
+| Activity resolution reuse | development band entry accepted | Selection, trial, quest, Knowledge, crafting, magic, occurrence foundations, accepted `0.6.9`, accepted `0.6.10`, accepted Ashen canon, implementation `3ca23d6864541a899ea61a6bf26257665f754e78`, independent `0.6.11.1` `REPRESENTATIVE_LOOP_ACCEPTED`, and unversioned `BAND_ENTRY_READY` decision | Later player-facing loop closure and breadth remain separate | Unversioned `Game 0.1.x Playability Gap Prioritization Decision` | Compare bounded turn-in/reward with other playability gains; no next development/game version allocated automatically | `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md` |
 | Injury/trauma/Mortal Crisis/restoration | accepted conceptual-contract lane; static foundation accepted | Injury, Mortal Crisis, save, occurrence, functional/lethal/care/crisis receipt authority, research integration, care/observer contracts, dependency audit, owner/schema plan, version classification, exact `0.6.8` implementation, and `0.6.8.1` acceptance | Source-reference contracts, mutable instances, occurrence, persistence/migration, replay/correction, and downstream owners | Explicit future health-route classification | Mutable implementation remains `NO_PACKAGE`; do not infer readiness from static acceptance | `docs/design/health-runtime-ownership-and-dependency-closure-audit.md` |
 | Generic `world.pois` | rejected | Specific owner families | None | Explicit decision | Never infer | `docs/design/discovery-poi-boundary-decision.md` |
 

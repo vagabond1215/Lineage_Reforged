@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-08-27
-Route: `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
+Route: unversioned `Game 0.1.x Playability Gap Prioritization Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -41,7 +41,9 @@ Latest accepted and completed support audit:
 
 Active run:
 
-- `Version 0.7.0 - Integrated Gameplay Systems Band Entry`
+- unversioned `Game 0.1.x Playability Gap Prioritization Decision`
+
+Accepted development milestone: `DEV-0.7.0`; current band `DEV-0.7.x`; Game `0.1.0-prealpha` / `INTEGRATED_LOOP` unchanged.
 
 ## Current Queue Override
 
@@ -86,7 +88,7 @@ Active run:
 - `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` is complete at `07c57392c8078927e4f9e12efe18d8d89bb1fc70` with `IMPLEMENTED_PENDING_REAUDIT`; it repairs only those two residual seams.
 - `Version 0.6.10.5 - Ashen Reef Survey Progression And Projection Post-Repair Acceptance Audit` is complete with `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_EVIDENCE_INCOMPLETE`.
 - The unversioned `Ashen Reef Survey Ordinary Reachability And Representative Loop Dependency Closure Decision` is complete with `NO_PACKAGE`. It proved travel-owned activity activation and version-7 persistence reusable but found no authoritative exact quest-offer/journal-admission writer or Ashen access grant.
-- The unversioned authored-canon decision is complete with `AUTHORED_INPUT_ACCEPTED`. The follow-up implementation-package decision returned `PACKAGE_READY`, current-band primary `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` implemented its bounded package at `3ca23d6864541a899ea61a6bf26257665f754e78`, and production-read-only `0.6.11.1` independently accepted it with `REPRESENTATIVE_LOOP_ACCEPTED`. The subsequent readiness decision returned `BAND_ENTRY_READY`; separate `Version 0.7.0 - Integrated Gameplay Systems Band Entry` is active and must not add gameplay behavior.
+- The unversioned authored-canon decision is complete with `AUTHORED_INPUT_ACCEPTED`. The follow-up implementation-package decision returned `PACKAGE_READY`, current-band primary `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` implemented its bounded package at `3ca23d6864541a899ea61a6bf26257665f754e78`, and production-read-only `0.6.11.1` independently accepted it with `REPRESENTATIVE_LOOP_ACCEPTED`. The subsequent readiness decision returned `BAND_ENTRY_READY`; `DEV-0.7.0` subsequently returned `MILESTONE_ENTRY_ACCEPTED` on 2026-09-11; the unversioned playability-prioritization decision is active and must not add gameplay behavior.
 - `docs/dev/queued-codex-cleanup-prompt.md` and `docs/dev/queued-static-content-expansion-integration-prompt.md` remain historical source prompts; neither controls current execution.
 - Future Home/compact-shell, linked-record/search, Codex-certainty, combat-presentation, and tactics-editor work remains gated behind the ownership, prototype, accessibility, responsive, and view-model readiness checks in `docs/design/ui-information-architecture-boundary.md`; it is not inserted ahead of the runtime queue.
 - `Version 0.5.356.1 - Tool Surface Test Post-Repair Audit` is optional support work only if fresh focused evidence contradicts the accepted repair.
@@ -585,7 +587,7 @@ Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Ite
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The live order is `Version 0.7.0 - Integrated Gameplay Systems Band Entry`, following accepted primary `0.6.11`, completed `0.6.11.1` `REPRESENTATIVE_LOOP_ACCEPTED`, and the unversioned `BAND_ENTRY_READY` decision. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, bounded survey advancement, and ordinary reachability remain unchanged. `0.7.0` is authorized pending milestone activation/publication.
+The live order is unversioned `Game 0.1.x Playability Gap Prioritization Decision`, following accepted primary `0.6.11`, completed `0.6.11.1` `REPRESENTATIVE_LOOP_ACCEPTED`, and the unversioned `BAND_ENTRY_READY` decision. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, bounded survey advancement, and ordinary reachability remain unchanged. `DEV-0.7.0` is accepted; current band `DEV-0.7.x`, Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`.
 
 ## Default Prompt Pattern
 

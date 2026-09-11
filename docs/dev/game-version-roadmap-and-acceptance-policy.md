@@ -47,7 +47,7 @@ The repository is currently classified as:
 - **Game version:** `0.1.0-prealpha`
 - **Development phase:** Early Pre-Alpha / First Playable
 - **Playability posture:** `INTEGRATED_LOOP`
-- **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` is authorized and pending milestone publication
+- **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` is complete with `MILESTONE_ENTRY_ACCEPTED` on 2026-09-11
 - **Deployment posture:** owner-only Sites preview operational
 
 `0.1.0-prealpha` is accepted as the current game version because the repository already proves an ordinary authoritative player path from character creation/start-state through campaign publication/load, quest acceptance/access, travel/arrival, four survey shifts, persistence/restart, and durable duplicate behavior.
@@ -316,9 +316,9 @@ Current crosswalk:
 The current sequence is:
 
 1. keep game version at `0.1.0-prealpha`;
-2. execute the pending `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` publication/verification package;
+2. preserve accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` and current development band `DEV-0.7.x`;
 3. on development-milestone acceptance, do **not** change `GAME_VERSION` merely because `DEV-0.7.0` was accepted;
-4. install an unversioned `Game 0.1.x Playability Gap Prioritization Decision`;
+4. execute the installed unversioned `Game 0.1.x Playability Gap Prioritization Decision`;
 5. compare actual player-facing payoff across quest closure/rewards, inventory/equipment identity, crafting/economy, combat/challenges, NPC/services, progression, UI/accessibility, and content breadth;
 6. select the smallest coherent player-visible package;
 7. only after that package is accepted decide whether it warrants `0.1.1-prealpha` or remains internal development work inside `0.1.0-prealpha`.
