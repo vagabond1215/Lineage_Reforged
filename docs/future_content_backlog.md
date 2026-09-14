@@ -840,3 +840,6 @@ Full candidate backlog for later domain expansion:
 ## Cleanup Notes
 
 This backlog was intentionally compacted on 2026-06-04 to remove stale long-form historical run notes that had already been processed into current handoffs, roadmap entries, design plans, or retained historical audit documents. Durable current guidance should live in the specific design documents and handoffs referenced above rather than remaining duplicated as old run-note paragraphs here.
+
+- 2026-09-14: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision` completed with `OWNER_CONTRACT_ACCEPTED`. Existing player travel remains the return movement owner; one quest-specific durable turn-in ledger/command owns exact completion and 5g delivery, accepted-only caller/application, duplicate/conflict handling, survey preservation and persistence. Installed `Soundings Return, Submission, Payment, And Durable Completion Implementation`. UI information architecture was also refined toward the concept-derived top-context + character/navigation rail + primary workspace/context-inspector/supporting-history composition; broad shell implementation remains deferred until after real loop closure/acceptance.
+
