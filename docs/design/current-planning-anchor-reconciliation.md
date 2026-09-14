@@ -2,7 +2,7 @@
 
 Date: 2026-09-14
 
-Status: accepted coordination authority; DEV-0.7.0 complete; playability priority selected; Soundings authored terms accepted; Quest Turn-In Completion And Consequence Receipt Owner Contract Decision installed
+Status: accepted coordination authority; DEV-0.7.0 complete; Soundings authored terms and owner contract accepted; bounded Soundings durable-completion implementation installed
 
 Milestone impact: accepted development-band entry to `DEV-0.7.x`; game-version impact: `none`
 
@@ -12,7 +12,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register and lower-precedence live planning headers are refreshed through accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` on 2026-09-11. The focused readiness appendix records `MILESTONE_ENTRY_ACCEPTED`; the separate unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed on 2026-09-14 with `PLAYABILITY_PRIORITY_SELECTED`. The project owner then accepted `Soundings Return, Submission, And Payment Authored-Terms Decision` with `AUTHORED_TERMS_ACCEPTED`. The installed successor is `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`. Earlier accepted audits and their historical labels remain unchanged.
+The current prompt, handoff, output, historical register and lower-precedence live planning headers are refreshed through accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` on 2026-09-11. The focused readiness appendix records `MILESTONE_ENTRY_ACCEPTED`; the separate unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed on 2026-09-14 with `PLAYABILITY_PRIORITY_SELECTED`. The project owner then accepted `Soundings Return, Submission, And Payment Authored-Terms Decision` with `AUTHORED_TERMS_ACCEPTED`, and the subsequent `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision` returned `OWNER_CONTRACT_ACCEPTED`. The installed successor is `Soundings Return, Submission, Payment, And Durable Completion Implementation`. Earlier accepted audits and their historical labels remain unchanged.
 
 Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`. The completed reachability decision correctly returned `NO_PACKAGE` until authored input arrived; accepted Soundings canon closed that blocker. The follow-up package decision returned `PACKAGE_READY`, `Version 0.6.11` implemented the bounded route at `3ca23d6864541a899ea61a6bf26257665f754e78`, and `0.6.11.1` independently returned `PARENT_ACCEPTED` plus `REPRESENTATIVE_LOOP_ACCEPTED`. The subsequent readiness decision returned `BAND_ENTRY_READY`; `DEV-0.7.0` is complete with `MILESTONE_ENTRY_ACCEPTED` at the 2026-09-11 verification; game `0.1.0-prealpha` and playability `INTEGRATED_LOOP` remain unchanged.
 
@@ -47,7 +47,8 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - accepted development milestone: `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`; current band `DEV-0.7.x`;
 - latest prioritization: `Game 0.1.x Playability Gap Prioritization Decision`, `PLAYABILITY_PRIORITY_SELECTED`;
 - latest authored product decision: `Soundings Return, Submission, And Payment Authored-Terms Decision`, `AUTHORED_TERMS_ACCEPTED`;
-- active route: unversioned `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`;
+- latest owner-contract decision: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`, `OWNER_CONTRACT_ACCEPTED`;
+- active route: `Soundings Return, Submission, Payment, And Durable Completion Implementation`;
 - failure-pattern guardrail register: active durable workflow authority;
 - `DEV-0.7.0`: `MILESTONE_ENTRY_ACCEPTED`; Game `0.1.0-prealpha` / `INTEGRATED_LOOP` unchanged;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -74,9 +75,9 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Accepted Near-Term Order
 
-1. execute unversioned `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`;
-2. define the smallest safe return-travel, completion, typed-consequence, accepted-only caller and persistence contract around the accepted 5-gold/evidence-only/Starfall/immediate-submission terms;
-3. on owner-contract acceptance install one bounded implementation package with local executable validation; implementation acceptance and any game-version gate remain later.
+1. execute `Soundings Return, Submission, Payment, And Durable Completion Implementation`;
+2. validate the bounded Ashen→Starfall return, quest-specific durable turn-in ledger, exact 5-gold payment, accepted-only caller, persistence/restart and targeted UI affordances;
+3. on implementation success install an independent acceptance audit; any game-version gate remains later.
 
 ## Maintenance Rule
 
