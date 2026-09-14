@@ -8,7 +8,7 @@ Inspected source master `4521cf183f9ca6fd431b9c37899d796fa5883794`, unchanged af
 - `parallel/prompt-packaging-integrity-audit` at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit.
 - `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`: HOLD_NAMED_CONSUMER; administration/template/governance or explicitly scheduled Lineage retrospective.
 
-`PLAYABILITY_PRIORITY_SELECTED`; Soundings authored prerequisite `AUTHORED_TERMS_ACCEPTED`; active route `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`. FP-008/009: protected references retained and source separated from publication identities in current output. No branch/PR mutations.
+`PLAYABILITY_PRIORITY_SELECTED`; Soundings authored prerequisite `AUTHORED_TERMS_ACCEPTED`; owner contract `OWNER_CONTRACT_ACCEPTED`; active route `Soundings Return, Submission, Payment, And Durable Completion Implementation`. FP-008/009: protected references retained and source separated from publication identities in current output. No branch/PR mutations.
 
 
 ## Prior DEV-0.7.0 Checkpoint
