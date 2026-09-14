@@ -39,3 +39,5 @@ September 14 fetch/prune: one local/four hosted branches, zero open PRs; no life
 September 7 preservation index and exact historical evidence remain retained. No protected branch mutation, branch retirement, generic framework, broad UI/typecheck cleanup or deployment is authorized. Predecessor broad UI typecheck remains a known non-green 137-diagnostic baseline; 82/82 milestone tests and build are predecessor evidence, not new checks.
 
 Publication identities and hosted readback are recorded in current output after commit/push. This handoff does not claim authored terms or implementation accepted.
+
+Verified publication: decision commit `265226d1b7f2d7fb9d0860a92d2d76a77231259a` pushed; local/tracking equality and hosted prompt/output/handoff blob checks passed on 2026-09-14. This later documentation record preserves that checkpoint; use the subsequent live fetched head for the next run.
