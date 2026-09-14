@@ -73,3 +73,18 @@ Implementation is blocked pending these decisions, but prioritization is complet
 Applied FP-001/002: exact source and UI→caller→owner→persistence distinction; FP-008: preserved protected refs and treated archived proposals as evidence, with no integration; FP-009: separated inspected source from later publication identities; FP-013: required preservation of nested survey authority by the future completion owner; FP-014: required semantic evidence validation rather than journal/container shape; FP-017: injection-free ordinary creator and UI path. No new parent rewrite or semantic-validation implementation was performed; adversarial FP-013/014 checks are requirements for the future owner package, not newly executed tests. The prior milestone's 82/82 tests, Node configuration typecheck and Vite build remain predecessor evidence. Its known 137-diagnostic broad UI typecheck baseline remains non-green; no broad rerun or repair was needed for this documentation decision.
 
 This is the first durable checkpoint, written before coordination updates. No production, tracked-test, content, schema, save, dependency, asset, game-version or deployment change. Source and documentation diff checks, branch refresh and exact publication identities belong to the subsequent coordination record.
+
+
+## Authored-Terms Resolution Appendix
+
+Date: 2026-09-14
+
+The selected prerequisite has now completed with `AUTHORED_TERMS_ACCEPTED`.
+
+Controlling authority:
+
+`docs/design/soundings-return-submission-and-payment-authored-terms-decision.md`
+
+Accepted terms are 5 gold and no other standing/fame/skill/item/service/salvage reward; retained survey evidence rather than an inventory packet; Starfall Harbormaster's Office submission; a 4-tick, no-fare Ashen Reef → Starfall Port return that must not become a universal Starfall travel cost; immediate atomic submission/completion/payment; durable Chronicle/history; one-time campaign completion; and duplicate-safe behavior.
+
+The active successor is the unversioned `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`. Implementation remains unauthorized until that technical owner contract is accepted and a separate bounded implementation package is installed.
