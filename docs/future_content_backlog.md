@@ -1,6 +1,8 @@
 # Future Content Backlog
 
-- 2026-09-14: `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED`. Ordinary UI completed four survey shifts with halfway save/restart; Starfall return rejected. Fresh integration 1/1 passed. `Soundings Return, Submission, And Payment Authored-Terms Decision` is active; owner contract and implementation remain gated. Game `0.1.0-prealpha` and DEV-0.7.x unchanged. See `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`.
+- 2026-09-14: `Soundings Return, Submission, And Payment Authored-Terms Decision` completed with `AUTHORED_TERMS_ACCEPTED`: 5g payment, retained survey evidence rather than an inventory packet, Starfall Harbormaster's Office, 4-tick no-fare Ashen Reef return, immediate completion/payment, no standing/fame/skill/item/service/salvage reward. Active next is `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`; implementation remains gated. Game `0.1.0-prealpha` and DEV-0.7.x unchanged.
+
+- 2026-09-14: `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED`. Ordinary UI completed four survey shifts with halfway save/restart; Starfall return rejected. Fresh integration 1/1 passed. Soundings closure was selected and its authored prerequisite is now accepted. See `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`.
 
 
 - 2026-09-11: Completed `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` with `MILESTONE_ENTRY_ACCEPTED`. No representative-owner drift; 82/82 focused tests, Node configuration typecheck and direct Sites/Cloudflare Vite build pass; broad UI typecheck remains non-green at 137 diagnostics. Current development band is `DEV-0.7.x`; Game `0.1.0-prealpha` and `INTEGRATED_LOOP` unchanged. Installed separate unversioned `Game 0.1.x Playability Gap Prioritization Decision`; no automatic DEV-0.7.1 or Game 0.1.1-prealpha.
