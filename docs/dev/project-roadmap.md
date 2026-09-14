@@ -10,7 +10,8 @@ Last reviewed: 2026-09-11 by `DEV-0.7.0 - Integrated Gameplay Systems Band Entry
 - Latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`.
 - Latest completed unversioned decision: `Game 0.1.x Playability Gap Prioritization Decision`, outcome `PLAYABILITY_PRIORITY_SELECTED`.
 - Latest authored product decision: `Soundings Return, Submission, And Payment Authored-Terms Decision`, `AUTHORED_TERMS_ACCEPTED`.
-- Active run: unversioned `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`.
+- Latest owner-contract decision: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`, `OWNER_CONTRACT_ACCEPTED`.
+- Active run: `Soundings Return, Submission, Payment, And Durable Completion Implementation`.
 - Activity selection and `0.6.4`-`0.6.11` are accepted, including the injection-free representative loop. `DEV-0.7.0` is complete with `MILESTONE_ENTRY_ACCEPTED`; current development band `DEV-0.7.x`, Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
@@ -42,7 +43,7 @@ Current live anchor:
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
 - Latest completed unversioned decision: `Game 0.1.x Playability Gap Prioritization Decision`, `PLAYABILITY_PRIORITY_SELECTED`.
 - Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, accepted.
-- Active route: unversioned `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`.
+- Active route: `Soundings Return, Submission, Payment, And Durable Completion Implementation`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, Normal persistence, bounded survey advancement, ordinary reachability, and representative evidence are accepted; the readiness decision returned `BAND_ENTRY_READY`, and `DEV-0.7.0` is accepted; Game `0.1.0-prealpha` and `INTEGRATED_LOOP` remain unchanged.
 
