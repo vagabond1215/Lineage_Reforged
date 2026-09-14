@@ -84,7 +84,7 @@ Current Lineage: Reforged state:
 
 The playability posture is already `INTEGRATED_LOOP` because the representative ordinary loop was independently accepted before the now-completed development-milestone publication package.
 
-Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED` on 2026-09-14; the installed next route is `Soundings Return, Submission, And Payment Authored-Terms Decision`.
+Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED` on 2026-09-14, and the selected Soundings authored terms then completed with `AUTHORED_TERMS_ACCEPTED`. The installed next route is `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`.
 
 ## 5. Current Accepted Player Path
 
