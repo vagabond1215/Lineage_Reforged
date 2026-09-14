@@ -2,9 +2,9 @@
 
 Date: 2026-09-14
 
-Source run: `Soundings Return, Submission, And Payment Authored-Terms Decision`.
+Source run: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`.
 
-Label class: unversioned authored product decision; parent: not applicable.
+Label class: unversioned technical owner-contract decision; parent: not applicable.
 
 Development milestone impact: `none`; game-version impact: `none`.
 
@@ -12,60 +12,76 @@ Game version: `0.1.0-prealpha`; phase: Early Pre-Alpha / First Playable; playabi
 
 Accepted development milestone: `DEV-0.7.0`; current band: `DEV-0.7.x`.
 
-Disposition: `AUTHORED_TERMS_ACCEPTED`.
+Disposition: `OWNER_CONTRACT_ACCEPTED`.
 
-## A. Authored Decision
+## A. Decision
 
-The project owner explicitly accepted the recommended bounded Soundings closure terms. Durable authority is:
+Created:
 
-`docs/design/soundings-return-submission-and-payment-authored-terms-decision.md`
+`docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md`
 
-Accepted terms:
+The contract is decision-complete for one bounded implementation.
 
-- payment: **5 gold, 0 silver**;
-- no standing, public/regional reputation, turn-in skill gain, item reward, service/access unlock or salvage right;
-- durable Chronicle/history completion record;
-- quest completes and remains consumed as a one-time-per-campaign contract;
-- completed chart packet remains retained authoritative survey evidence, not an inventory item;
-- canonical submission surface is the **Starfall Harbormaster's Office, Starfall Port**;
-- `Duty Harbormaster` remains a role label, not a named canonical person;
-- Ashen Reef → Starfall Port return is **4 ticks**, with **no monetary fare**;
-- those return terms must not be encoded as a universal Starfall cost from unrelated origins;
-- submission/payment is immediate once authoritative readiness and return context are satisfied;
-- Stormglass remains incidental and is not surrendered;
-- duplicate/retry must not pay or complete twice.
+Key ownership decisions:
 
-The legacy Saltmere turn-in, `5g 8s` payout, standing/fame awards and extra Lore gain remain characterization only.
+- existing `player-travel.ts` remains the sole movement/time/body authority;
+- add only route-aware Ashen Reef → Starfall Port facts within the existing travel-rules boundary;
+- do not make the four-tick Starfall return cost universal from unrelated origins;
+- first turn-in owner is quest-specific to Soundings rather than a generic reward framework;
+- journal completed state is not payment proof;
+- add a separate optional Soundings turn-in authority ledger with stable request/occurrence/result/consequence receipt identity;
+- the new turn-in owner atomically coordinates completion, exact 5-gold credit, tracking cleanup, survey-operation closure, post-submission activity and projections;
+- the durable currency-credit receipt proves payment delivery; wallet amount alone does not;
+- exact retry after restart is a durable duplicate and cannot replay payment;
+- conflicting request identity/intent or retained receipt graphs fail closed;
+- all accepted survey authority and Stormglass remain preserved;
+- real UI must use a production caller and accepted-only session application;
+- the legacy Soundings `turnInQuest(...)` UI path is characterization only after migration.
 
-## B. Scope And Validation
+## B. UI Design Intent
 
-This was repository-aware documentation/product-authority work through the GitHub Connector. No production, UI, content, schema, tracked-test, dependency, asset, save, migration, deployment, `GAME_VERSION`, or `worldVersion` change was made.
+Updated:
 
-No local tests, builds, typechecks, browser run, local worktree synchronization or executable acceptance are claimed in this authored decision. Existing accepted DEV-0.7.0 and playability reproduction evidence remains predecessor evidence.
+`docs/design/ui-information-architecture-boundary.md`
 
-The authored-decision file was created on hosted `master` at commit `592c921494beeb822b3aaee231ab6086670c1ed1`. The successor prompt was installed at `743ad6a36cea68adc5ca5c32551c443e3a60a13a`. Later coordination commits may advance live master without changing these authored terms.
+The user-supplied concept is now reflected as accepted target composition guidance:
 
-## C. Next Route
+- compact global top band;
+- richer but compact left character/navigation rail;
+- one main domain workspace;
+- within the main workspace: one dominant work surface, one contextual inspector/action column and one bounded supporting history/notes strip;
+- World is the preferred first future shell-migration domain;
+- dense grounded medieval-fantasy cartographic/administrative presentation rather than a generic card dashboard;
+- player-facing debug/source-reference surfaces should progressively leave normal presentation;
+- migrate incrementally by real gameplay slice;
+- broad shell rebuild is deferred as implementation, not deferred as design intent.
+
+The Soundings implementation may add only targeted return/readiness/turn-in/result affordances compatible with this future shell direction.
+
+## C. Scope And Validation
+
+This owner-contract/UI-intent pass was performed through remote repository-aware documentation writes.
+
+No production code, tracked tests, schemas, saves, dependencies, assets, deployment, `GAME_VERSION`, or `worldVersion` were changed.
+
+No local tests, builds, typechecks, browser execution, or local worktree synchronization are claimed.
+
+Owner-contract decision commit: `85747b5fbd2202d2730e6fa27b4547d78423a46c`.
+
+UI design-intent refinement commit: `864a727b4d5e7980b867adab931ad04840131fcc`.
+
+Implementation prompt installation commit: `eedbec899d7b1908caf27b83016be9a35705ea5a`.
+
+## D. Next Route
 
 Active route:
 
-**Quest Turn-In Completion And Consequence Receipt Owner Contract Decision**
+**Soundings Return, Submission, Payment, And Durable Completion Implementation**
 
-The installed prompt requires the smallest authoritative technical contract for:
+Package class: bounded `M`.
 
-- bounded Ashen Reef → Starfall Port return ownership;
-- turn-in readiness over retained survey evidence plus valid Starfall context;
-- stable command/request and occurrence/result identities;
-- typed 5-gold payment consequence;
-- quest-completion ownership;
-- wallet consumption of authorized consequences;
-- accepted-only caller/application;
-- duplicate/stale/conflict/malformed-evidence rejection;
-- survey-evidence preservation;
-- quest/tracking/operation/activity/Chronicle projections;
-- save/restart/publication validation;
-- legacy UI bridge retirement/bypass boundary.
+The implementation requires a synchronized local repository, executable tests/build validation, commit/push and post-push verification.
 
-That decision is documentation/architecture only and must not implement gameplay.
+On successful implementation, install a separate **Soundings Durable Completion Independent Acceptance Audit**.
 
 No `DEV-0.7.1` or game-version increment is allocated. `GAME_VERSION` remains `0.1.0-prealpha`.
