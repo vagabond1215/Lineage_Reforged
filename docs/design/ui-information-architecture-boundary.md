@@ -339,3 +339,159 @@ It also does not introduce class/job gates or make map geometry, Codex visibilit
 6. Define a combat presentation view model over existing encounter/timing/tactics contracts.
 7. Prototype the text-first combat and tactics surfaces.
 8. Implement one narrow, validated UI slice only after its owner, accessibility, responsive, and parity gates pass.
+
+
+## 22. Concept-Derived Gameplay Shell Direction
+
+Date: 2026-09-14
+
+Status: accepted design-intent refinement; visual concept guidance only; no broad shell implementation authorization
+
+A project-owner concept image reviewed on 2026-09-14 is materially closer to the intended playable interface than the current development UI. The image is not an exact mockup or pixel specification. Its value is the **composition, hierarchy, density, and interaction model**.
+
+The intended desktop gameplay shell should evolve toward a grounded tabletop/strategy command surface rather than a conventional card-dashboard web application.
+
+### 22.1 Target Composition
+
+Retain the existing three persistent shell regions, but refine their internal composition:
+
+1. **Global top context band**
+   - game/lineage identity;
+   - calendar/turn/watch context;
+   - weather/climate when actually owned and relevant;
+   - compact notices and global utilities;
+   - no debug metadata and no row of every game resource.
+
+2. **Left character/navigation rail**
+   - portrait or identity mark;
+   - character name and a very small readiness/resource summary;
+   - the six primary domains plus Home;
+   - current place/current action summary where useful;
+   - a bounded lower utility/status area for broadly relevant possessions or condition only when the corresponding owner has meaningful current data.
+
+   The rail may be visually richer than a minimal icon strip. It should still remain compact, scannable, keyboard accessible, and subordinate to the main gameplay surface.
+
+3. **One main domain workspace**
+   - a clear domain title and optional sibling tabs/filters;
+   - one dominant primary work surface;
+   - one context inspector or action column tied to that same domain;
+   - one bounded supporting strip, ledger, notes area, or recent-history view when it directly supports the current domain.
+
+The inspector and supporting strip are subdivisions of the main workspace, not new persistent global regions and not independent peer dashboards.
+
+### 22.2 World-Domain Reference Composition
+
+For World/Travel/Exploration, the preferred composition is:
+
+- a large map or geographic/scene workspace as the dominant region;
+- a right-side contextual inspector for the selected place, route, quest-linked operation, conditions, projected effects, and the next authoritative action;
+- a lower supporting area for field notes, observations, recent relevant Chronicle entries, or other owner-backed context;
+- domain tabs such as regional/local view, travel, known locations, rumors, or map layers only when those concepts have real owners.
+
+The selected location or operation should determine the inspector. The map is a presentation surface, never movement, discovery, quest, or Knowledge authority.
+
+A quest-linked World inspector may show:
+- current task;
+- objective/progress state;
+- travel or activity conditions;
+- projected costs/effects from the authoritative command preview;
+- one primary next action;
+- exact blocker text when unavailable.
+
+This pattern is specifically appropriate for the Soundings loop and should inform its targeted UI integration without requiring the complete shell redesign first.
+
+### 22.3 Same-Domain Supporting Context
+
+The concept usefully demonstrates that "one primary context" does **not** mean "one box on screen."
+
+A main domain may simultaneously show:
+- its primary work surface;
+- one contextual task/record inspector;
+- one compact supporting ledger/history/notes surface;
+
+provided that all three describe the same current gameplay context or provide explicit owner-routed links.
+
+Examples:
+- World map + selected Soundings operation + recent relevant Chronicle;
+- Character overview + selected equipment/skill inspector + recent character consequences;
+- Quest detail + objective/readiness inspector + linked completion history;
+- Combat field summary + selected combatant/action inspector + event log.
+
+Do not place full independent World, Quest, Chronicle, Character, and Activity applications beside each other merely to fill space.
+
+### 22.4 Visual Grammar
+
+The target visual language is grounded medieval-fantasy administration/cartography rather than glossy MMO HUD chrome:
+
+- parchment, paper, ink, leather, wood, dark metal, muted stone, or restrained painted-map surfaces;
+- dark forest/charcoal framing with cream, parchment, gray, bronze, muted gold or silver accents;
+- selected-state contrast through value, border, texture, iconography, and typography rather than a single-color wash;
+- decorative framing only where it reinforces hierarchy and does not materially reduce readable space;
+- serif/display typography may carry titles and atmospheric labels, while dense body text and controls must remain highly legible;
+- one dominant illustration/map region is preferable to many decorative thumbnails;
+- environmental art, portraits, crests, maps, and small scene images should support orientation and identity without replacing text state.
+
+The visual concept is a tonal reference, not permission to imitate any exact asset, ornament, map, typeface, or layout proportion.
+
+### 22.5 Information Density And Action Hierarchy
+
+The intended game is text/system heavy, so useful density is desirable. Density must be structured rather than cramped.
+
+Each gameplay workspace should make the following hierarchy obvious:
+
+1. **where/what context the player is in;**
+2. **what state or objective matters now;**
+3. **what has changed or is at risk;**
+4. **what the player can do next;**
+5. **what that action is expected to cost or cause.**
+
+Primary actions should normally live in the contextual inspector or immediately adjacent to the primary work surface. The interface should project engine-owned previews before consequential actions when available.
+
+Do not require a player to infer readiness by comparing several disconnected cards.
+
+### 22.6 Development Diagnostics Versus Player Presentation
+
+Current Runtime Bridge, source-reference, Window Standards, raw owner/debug, placeholder revenue, and similar foundation diagnostics are not part of the intended normal gameplay presentation.
+
+They may remain available through:
+- development/debug mode;
+- an explicit diagnostics drawer;
+- test instrumentation;
+- dedicated developer surfaces.
+
+They should progressively disappear from ordinary player-facing layouts as their corresponding systems receive accepted owners.
+
+### 22.7 Incremental Migration Rule
+
+This target should **not** trigger a repository-wide shell rewrite before current gameplay loops close.
+
+Use a strangler-style migration:
+
+1. preserve engine/save ownership and the current six-domain routing;
+2. implement each newly accepted gameplay capability through a presentation contract compatible with the target composition;
+3. replace one domain or one bounded interaction surface at a time;
+4. extract reusable shell components only after two or more real domain consumers prove the pattern;
+5. perform the broad visual-shell consolidation after enough accepted gameplay surfaces exist to validate hierarchy, responsive behavior, accessibility, and information density.
+
+The Soundings return/submission/payment implementation should therefore receive only the targeted affordances needed to:
+- show a reachable return to Starfall;
+- communicate packet readiness;
+- communicate turn-in blockers;
+- submit through the authoritative command;
+- show the accepted 5-gold/completion consequence;
+- expose the resulting Chronicle/history state.
+
+It should not attempt the full concept-shell rebuild.
+
+### 22.8 Recommended UI Sequencing
+
+Current priority:
+
+1. finish authoritative Soundings return/submission/payment;
+2. independently accept the completed player loop;
+3. run a focused **Gameplay Shell Target Architecture And Incremental Migration Decision** using this document and accepted real gameplay surfaces;
+4. prototype/refactor the World domain first because travel, map/location context, Soundings operation, projected effects, and Chronicle linkage exercise the target composition particularly well;
+5. migrate Quests/Activity next where owner contracts are sufficiently mature;
+6. preserve Character/Codex/Chronicle as owner-specific pages while reusable shell primitives stabilize.
+
+A full visual rebuild is therefore **deferred as implementation, but not deferred as design intent**.
