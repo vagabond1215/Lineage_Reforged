@@ -4,40 +4,56 @@ Date: 2026-09-14
 
 Repository: `vagabond1215/Lineage_Reforged`
 
-Status: `Game 0.1.x Playability Gap Prioritization Decision` complete; `PLAYABILITY_PRIORITY_SELECTED`.
+Status: Soundings authored closure terms accepted; `AUTHORED_TERMS_ACCEPTED`.
 
 Game version: `0.1.0-prealpha`; phase: Early Pre-Alpha / First Playable; playability: `INTEGRATED_LOOP`.
 
 Accepted milestone: `DEV-0.7.0`; current band: `DEV-0.7.x`.
 
-Active route: unversioned **Soundings Return, Submission, And Payment Authored-Terms Decision**; authored answers pending, not implementation permission.
+Active route: unversioned **Quest Turn-In Completion And Consequence Receipt Owner Contract Decision**.
 
-## Completed Checkpoint
+## Accepted Product Boundary
 
-Read `docs/design/game-0.1.x-playability-gap-prioritization-decision.md` first, then current prompt/output and accepted Soundings canon/turn-in readiness audit. Source `4521cf183f9ca6fd431b9c37899d796fa5883794` is the inspected base, not the future publication head. DEV-0.7.0 is already complete at `cbd49bd961f36064c6f710fa90604e7dfd670136` with publication record `4521cf...`; do not redo its whole-repository orientation without material drift.
+Read first:
 
-Fresh ordinary UI reached four survey shifts, including retained save/restart after two. Final field packet remained active/tracked, unturned-in; Starfall return rejected as unknown destination. Fresh ordinary integration passed 1/1, including final restart and empty-cache durable duplicate. Browser observation and executable evidence are separated in the decision. Existing user saves were preserved; no eligibility injection, production edits or deployment occurred.
+- `docs/design/soundings-return-submission-and-payment-authored-terms-decision.md`;
+- `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`;
+- current prompt/output;
+- accepted Soundings canon and quest-turn-in readiness audit.
 
-Soundings closure ranks first, targeted UI second, then inventory, combat, one player crafting/trade transaction, progression/lineage, NPC/services and content breadth. Return travel is a missing dependency, not merely a text change. Legacy Saltmere turn-in/payout is not accepted canon. Existing economy/combat/Legacy owners must not be described as absent merely because their ordinary consumer is incomplete.
+Controlling authored terms:
 
-## Next Decision And Owner Boundary
+- 5 gold payment, no silver;
+- no standing, fame/reputation, turn-in skill gain, item, service unlock or salvage reward;
+- retained survey evidence is the packet; no packet inventory item;
+- return to Starfall Harbormaster's Office / Starfall Port;
+- Duty Harbormaster remains a role label;
+- Ashen Reef → Starfall Port return: 4 ticks, no fare;
+- do not generalize that return cost to unrelated origins;
+- immediate accepted submission/completion/payment;
+- quest becomes completed and consumed;
+- durable Chronicle/history record;
+- Stormglass remains incidental;
+- duplicate/retry cannot double-pay or double-complete.
 
-Ask concrete product questions about exact payment/other consequences, retained evidence versus inventory packet, reachable Starfall return context and travel terms, and immediate versus staged submission. Paid one-time civic intent, Starfall office, and Duty Harbormaster role are already accepted. Do not invent a named person or office ID, reward amount, salvage right or recurrence.
+Legacy Saltmere turn-in and legacy payout/consequence values are non-canonical characterization.
 
-First successor checkpoint: authored terms table with accepted/proposed/pending facts. Publish pending questions if unanswered. After complete explicit authored acceptance, separately install Quest Turn-In Completion And Consequence Receipt Owner Contract Decision; it must cover accepted-only command/consequence ownership, duplicate/stale/conflict/rejection, nested survey retention and restart/publication. Only later bounded implementation plus independent acceptance can justify a game-version candidate. Keep DEV-0.7.1 unallocated and GAME_VERSION unchanged.
+## Next Decision
 
-Interactive repository-aware documentation work can use existing preparation. It needs no fresh browser/build run unless source drift changes the facts. A remote-only stage must not claim local synchronization or executable validation; use the checkout owner for those when necessary. Current prompt contains no platform/model recommendation.
+Execute only `docs/dev/current-codex-prompt.md`.
 
-## Retained Branches And Limits
+The owner-contract decision must determine the smallest safe authority for return travel and completion/consequence receipts, including readiness, command/result identities, typed payment, wallet consumption, accepted-only application, duplicate/stale/conflict rejection, survey preservation, projections, persistence/restart and real-caller/UI boundaries.
 
-September 14 fetch/prune: one local/four hosted branches, zero open PRs; no lifecycle action due. All heads/dispositions unchanged:
+It must not implement production behavior.
 
-- `prep/integrated-gameplay-0-7-readiness-audit` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: PROTECTED_REFERENCE; next explicitly scheduled readiness/regression or protection/disposition review.
-- `parallel/prompt-packaging-integrity-audit` at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit.
-- `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`: HOLD_NAMED_CONSUMER; administration/template/governance or explicitly scheduled Lineage retrospective.
+On `OWNER_CONTRACT_ACCEPTED`, install one bounded implementation prompt requiring local executable validation. Do not allocate `DEV-0.7.1` or change `GAME_VERSION`.
 
-September 7 preservation index and exact historical evidence remain retained. No protected branch mutation, branch retirement, generic framework, broad UI/typecheck cleanup or deployment is authorized. Predecessor broad UI typecheck remains a known non-green 137-diagnostic baseline; 82/82 milestone tests and build are predecessor evidence, not new checks.
+## Publication And Execution Boundary
 
-Publication identities and hosted readback are recorded in current output after commit/push. This handoff does not claim authored terms or implementation accepted.
+Authored decision file commit: `592c921494beeb822b3aaee231ab6086670c1ed1`.
 
-Verified publication: decision commit `265226d1b7f2d7fb9d0860a92d2d76a77231259a` pushed; local/tracking equality and hosted prompt/output/handoff blob checks passed on 2026-09-14. This later documentation record preserves that checkpoint; use the subsequent live fetched head for the next run.
+Owner-contract prompt installation commit: `743ad6a36cea68adc5ca5c32551c443e3a60a13a`.
+
+These were remote GitHub Connector writes. Do not infer local checkout synchronization, tests, builds or browser execution from them. A later local implementation owner must fetch/prune and synchronize before executable work.
+
+Retained branch/protected-reference posture remains unchanged unless fresh branch inspection proves otherwise.
