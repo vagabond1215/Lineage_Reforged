@@ -84,7 +84,7 @@ Current Lineage: Reforged state:
 
 The playability posture is already `INTEGRATED_LOOP` because the representative ordinary loop was independently accepted before the now-completed development-milestone publication package.
 
-Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The installed next route is the unversioned `Game 0.1.x Playability Gap Prioritization Decision`.
+Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED` on 2026-09-14; the installed next route is `Soundings Return, Submission, And Payment Authored-Terms Decision`.
 
 ## 5. Current Accepted Player Path
 
@@ -120,7 +120,7 @@ These gaps are expected for `0.1.0-prealpha`.
 
 ## 7. Playability-First Routing Rule
 
-After `DEV-0.7.0` acceptance, install an unversioned:
+The required post-`DEV-0.7.0` prioritization completed on 2026-09-14 (see `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`). Its original gate was an unversioned:
 
 `Game 0.1.x Playability Gap Prioritization Decision`
 

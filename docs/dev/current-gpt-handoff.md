@@ -1,57 +1,41 @@
 # Current GPT Handoff
 
-Date: 2026-09-11
+Date: 2026-09-14
 
 Repository: `vagabond1215/Lineage_Reforged`
 
-Status: `DEV-0.7.0` complete; `MILESTONE_ENTRY_ACCEPTED`; playability-prioritization decision installed and not executed
+Status: `Game 0.1.x Playability Gap Prioritization Decision` complete; `PLAYABILITY_PRIORITY_SELECTED`.
 
-Game version: `0.1.0-prealpha` (root `GAME_VERSION`)
+Game version: `0.1.0-prealpha`; phase: Early Pre-Alpha / First Playable; playability: `INTEGRATED_LOOP`.
 
-Game phase: Early Pre-Alpha / First Playable
+Accepted milestone: `DEV-0.7.0`; current band: `DEV-0.7.x`.
 
-Playability posture: `INTEGRATED_LOOP`
+Active route: unversioned **Soundings Return, Submission, And Payment Authored-Terms Decision**; authored answers pending, not implementation permission.
 
-Accepted development milestone: `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
+## Completed Checkpoint
 
-Current development band: `DEV-0.7.x`
+Read `docs/design/game-0.1.x-playability-gap-prioritization-decision.md` first, then current prompt/output and accepted Soundings canon/turn-in readiness audit. Source `4521cf183f9ca6fd431b9c37899d796fa5883794` is the inspected base, not the future publication head. DEV-0.7.0 is already complete at `cbd49bd961f36064c6f710fa90604e7dfd670136` with publication record `4521cf...`; do not redo its whole-repository orientation without material drift.
 
-Active route: unversioned `Game 0.1.x Playability Gap Prioritization Decision`
+Fresh ordinary UI reached four survey shifts, including retained save/restart after two. Final field packet remained active/tracked, unturned-in; Starfall return rejected as unknown destination. Fresh ordinary integration passed 1/1, including final restart and empty-cache durable duplicate. Browser observation and executable evidence are separated in the decision. Existing user saves were preserved; no eligibility injection, production edits or deployment occurred.
 
-## 1. Accepted Boundary And Evidence
+Soundings closure ranks first, targeted UI second, then inventory, combat, one player crafting/trade transaction, progression/lineage, NPC/services and content breadth. Return travel is a missing dependency, not merely a text change. Legacy Saltmere turn-in/payout is not accepted canon. Existing economy/combat/Legacy owners must not be described as absent merely because their ordinary consumer is incomplete.
 
-Milestone acceptance/coordination was committed and pushed at `cbd49bd961f36064c6f710fa90604e7dfd670136`; post-fetch local/tracking equality and hosted prompt/output/handoff blob identity passed. A later documentation-only publication record preserves that checkpoint. The user has now explicitly requested execution of the installed playability-prioritization decision.
+## Next Decision And Owner Boundary
 
-Milestone verification began from clean synchronized master at `d8c413208237f3ee3a895f133a1963400d76e938`. Readiness source is `dc89c8f0421e3e657740f03ecfa611a29ae2f8b3`; accepted representative implementation is `3ca23d6864541a899ea61a6bf26257665f754e78`, independently accepted by legacy 0.6.11.1. Publication identities are recorded in current output after commit/push; the inspected source is not the final coordination head.
+Ask concrete product questions about exact payment/other consequences, retained evidence versus inventory packet, reachable Starfall return context and travel terms, and immediate versus staged submission. Paid one-time civic intent, Starfall office, and Duty Harbormaster role are already accepted. Do not invent a named person or office ID, reward amount, salvage right or recurrence.
 
-The complete post-readiness delta did not change representative owners or core tests. Current execution passed 82/82 prescribed cases, Node configuration typecheck and Vite 8 server/client build (4/204 modules). Broad UI typecheck still fails with 137 diagnostics, including pre-existing unchanged-code AppShell/creator findings; this is documented non-gating debt. No hosted statuses/workflow runs were attached to the inspected source head.
+First successor checkpoint: authored terms table with accepted/proposed/pending facts. Publish pending questions if unanswered. After complete explicit authored acceptance, separately install Quest Turn-In Completion And Consequence Receipt Owner Contract Decision; it must cover accepted-only command/consequence ownership, duplicate/stale/conflict/rejection, nested survey retention and restart/publication. Only later bounded implementation plus independent acceptance can justify a game-version candidate. Keep DEV-0.7.1 unallocated and GAME_VERSION unchanged.
 
-The accepted path remains ordinary creator -> retained campaign publication/load -> quest acceptance/access -> travel/arrival -> four survey shifts -> restart -> empty-cache durable duplicate. Exact retained authority is four requests/occurrences/results and 48 receipts, all current content v2, nine non-proposals, ordered projections and no pending correction/repair. Soundings remains active and unturned-in. No legacy turn-in/reward authority is accepted.
+Interactive repository-aware documentation work can use existing preparation. It needs no fresh browser/build run unless source drift changes the facts. A remote-only stage must not claim local synchronization or executable validation; use the checkout owner for those when necessary. Current prompt contains no platform/model recommendation.
 
-The milestone changes no gameplay or game version. It does not create Game 0.7.0, Game 0.2.0, vertical-slice acceptance, alpha, beta, or a percentage-complete claim. `worldVersion: 0.1.0`, save format/envelope versions, package versions, build SHA and deployment revision are separate identities.
+## Retained Branches And Limits
 
-## 2. Execute Only The Installed Decision
+September 14 fetch/prune: one local/four hosted branches, zero open PRs; no lifecycle action due. All heads/dispositions unchanged:
 
-Read `docs/dev/current-codex-prompt.md` and reproduce the real player path before ranking missing capability. Compare player payoff, loop closure, dependency closure, architectural risk, package size and regression burden. Narrow Soundings turn-in/reward is a strong candidate, but authored terms remain deferred and the winner is not predetermined.
-
-Compare inventory/equipment, crafting/economy, combat/challenges, NPC/services, progression/lineage, UI/accessibility and content breadth. Select one smallest coherent capability or exact prerequisite. Keep production, tracked tests, content, schemas, dependencies, assets, saves, migrations, GAME_VERSION and worldVersion read-only. Do not allocate DEV-0.7.1 or Game 0.1.1-prealpha automatically or implement the selected route during the decision.
-
-First durable checkpoint: player-path reproduction and candidate matrix in the focused prioritization decision. A local execution stage owns ordinary UI/caller reproduction; Connector-only preparation may map evidence but cannot claim that reproduction. Preserve the current work/context if interrupted. External research is unnecessary unless a concrete later product decision requires it.
-
-## 3. Branch And Deployment Posture
-
-Fresh inventory: one local branch, four hosted branches total, zero open PRs. Closed PR head refs #1/#2/#3 remain server-retained historical evidence. No lifecycle mutations occurred during DEV-0.7.0.
-
-- `prep/integrated-gameplay-0-7-readiness-audit` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: PROTECTED_REFERENCE; milestone read-only consumer completed; next explicitly scheduled readiness/regression or protection/disposition review.
+- `prep/integrated-gameplay-0-7-readiness-audit` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: PROTECTED_REFERENCE; next explicitly scheduled readiness/regression or protection/disposition review.
 - `parallel/prompt-packaging-integrity-audit` at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit.
 - `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`: HOLD_NAMED_CONSUMER; administration/template/governance or explicitly scheduled Lineage retrospective.
 
-The September 7 branch consolidation preserved 30 audits, two launcher diffs and seven repair-bundle files at `43bb35a4b358287c91683d04e164f45b99be25c7`, before closing #2/#3 and retiring 34 obsolete branch heads. Use `docs/dev/evidence/branch-consolidation-2026-09-07/README.md` and manifest instead of retired refs. Historical proposals are not current authority; all 13 tracked temporary research artifacts remain retained.
+September 7 preservation index and exact historical evidence remain retained. No protected branch mutation, branch retirement, generic framework, broad UI/typecheck cleanup or deployment is authorized. Predecessor broad UI typecheck remains a known non-green 137-diagnostic baseline; 82/82 milestone tests and build are predecessor evidence, not new checks.
 
-Sites remains the existing owner-only preview, version 2, filtered deployed source `8857c08bb272f36938fde0a72087c5c0865be80b`. Final Bloodlines assets remain authoritative at `e58d650203bde7d84a6a56ab1501bfac4e18901c`. The milestone neither redeployed nor reinspected the external source. No hosting run is scheduled by this handoff.
-
-## 4. Read Order And Deferred Work
-
-Read AGENTS, GAME_VERSION, current prompt/output/handoff, game-version and development-milestone policies, playability calibration, focused readiness acceptance appendix, historical register, planning reconciliation and branch/failure-pattern policies. The current prompt names the specific turn-in, inventory, NPC and UI evidence needed for prioritization.
-
-The September 6 Connector preflight is consumed orientation evidence with stale branch/playability/routing statements superseded by current coordination. Accepted persistence and survey contracts remain closed unless fresh contradictory evidence requires reopening. Broad TypeScript cleanup, generic frameworks, other Stakes modes, travel-key migration, inventory instances, NPC promotion, mutable health, vertical-slice breadth and release hardening remain separately gated.
+Publication identities and hosted readback are recorded in current output after commit/push. This handoff does not claim authored terms or implementation accepted.

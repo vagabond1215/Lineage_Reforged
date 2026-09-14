@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-08-27
-Route: unversioned `Game 0.1.x Playability Gap Prioritization Decision`
+Route: unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
@@ -29,7 +29,7 @@ Latest completed support implementation:
 
 Latest completed unversioned run:
 
-- `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, outcome `BAND_ENTRY_READY`
+- `Game 0.1.x Playability Gap Prioritization Decision`, outcome `PLAYABILITY_PRIORITY_SELECTED`
 
 Latest historical support audit:
 
@@ -41,7 +41,7 @@ Latest accepted and completed support audit:
 
 Active run:
 
-- unversioned `Game 0.1.x Playability Gap Prioritization Decision`
+- unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`
 
 Accepted development milestone: `DEV-0.7.0`; current band `DEV-0.7.x`; Game `0.1.0-prealpha` / `INTEGRATED_LOOP` unchanged.
 
@@ -587,7 +587,7 @@ Completed: `0.6.4 - World And Settlement Static Content Expansion`, `0.6.5 - Ite
 
 Support suffixes `0.5.276.1` and `0.5.344.1` are complete and are not primary queue entries.
 
-The live order is unversioned `Game 0.1.x Playability Gap Prioritization Decision`, following accepted primary `0.6.11`, completed `0.6.11.1` `REPRESENTATIVE_LOOP_ACCEPTED`, and the unversioned `BAND_ENTRY_READY` decision. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, bounded survey advancement, and ordinary reachability remain unchanged. `DEV-0.7.0` is accepted; current band `DEV-0.7.x`, Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`.
+The live order is unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`, following accepted primary `0.6.11`, completed `0.6.11.1` `REPRESENTATIVE_LOOP_ACCEPTED`, and the unversioned `BAND_ENTRY_READY` decision. The full deferred classification and reopening triggers live in `docs/dev/historical-version-and-deferred-route-register.md`; accepted engine-owned travel, quest acceptance, quest tracking, activity selection, static packages, Normal persistence, bounded survey advancement, and ordinary reachability remain unchanged. `DEV-0.7.0` is accepted; current band `DEV-0.7.x`, Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`.
 
 ## Default Prompt Pattern
 

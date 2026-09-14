@@ -1,75 +1,34 @@
-# Game 0.1.x Playability Gap Prioritization Decision
+# Soundings Return, Submission, And Payment Authored-Terms Decision
 
-Date: 2026-09-11
+Date: 2026-09-14
 
-Label class: unversioned player-facing prioritization decision
+Label class: unversioned authored product decision; parent: not applicable.
 
-Development milestone impact: `none`
+Development milestone impact: `none`; game-version impact: `none`.
 
-Game-version impact: `none`
+Accepted milestone: `DEV-0.7.0`; band: `DEV-0.7.x`; Game `0.1.0-prealpha`; playability: `INTEGRATED_LOOP`.
 
-Accepted development milestone: `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
+## Objective And Authority
 
-Current development band: `DEV-0.7.x`
+Resolve the exact authored prerequisite selected by `docs/design/game-0.1.x-playability-gap-prioritization-decision.md` (`PLAYABILITY_PRIORITY_SELECTED`). Follow AGENTS and referenced repository workflow, platform, resource, branch and failure-pattern authorities. Work only in `vagabond1215/Lineage_Reforged`. Inspect current master, current prompt/output/handoff and the delta from source `4521cf183f9ca6fd431b9c37899d796fa5883794`; reuse the completed orientation and reproduction rather than rerunning them without drift.
 
-Game version: `0.1.0-prealpha`
+Read the complete focused prioritization decision, `docs/design/ashen-reef-soundings-authored-canon-decision.md`, `docs/design/quest-turn-in-and-reward-readiness-audit.md`, historical register and planning reconciliation. Consult inventory/NPC/UI audits only for consequences under consideration. Historical payout formulas are not authored authority.
 
-Playability posture: `INTEGRATED_LOOP`
+## Required Decision
 
-Execution posture: production-read-only decision with local player-path reproduction and documentation publication
+Prepare a small concrete product proposal and ask the project owner only for unresolved authored choices. Record answers explicitly; do not interpret execution of this prompt as approval of proposed canon.
 
-## Objective
+1. Exact monetary payment and explicitly included/excluded standing, public reputation, skill, item, service/access and salvage consequences. Paid civic intent is already accepted; no amount is accepted.
+2. Retained survey evidence versus physical inventory packet. Explain the dependency cost; evidence-only is a smaller proposal, not an approved fact.
+3. Reachable return to Starfall Port / Starfall Harbormaster's Office, including travel time/cost/access and submission context. Starfall is currently known but rejected as a destination. Keep Duty Harbormaster a role; invent no permanent person/office ID.
+4. Immediate accepted submission/completion/payment versus a later administrative step. Preserve the one-time contract and incidental discovery separation; do not add recurrence.
 
-Reproduce the actual ordinary player path and select the smallest coherent next player-facing capability by comparing playability gain, loop closure, dependency closure, architectural risk, package size, and regression burden. Publish a decision before assigning implementation work. Do not implement the selected capability in this run.
+Write `docs/design/soundings-return-submission-and-payment-authored-terms-decision.md`. First checkpoint: a decision table separating accepted facts, proposed choices, unanswered questions and dependency consequences. If input is missing, publish `AUTHORED_TERMS_PENDING` with exact questions and keep this route active. Only explicit project-owner answers can produce `AUTHORED_TERMS_ACCEPTED`.
 
-`DEV-0.7.0` is accepted. This does not create Game `0.7.0`, Game `0.2.0`, vertical-slice acceptance, alpha, beta, or a percentage-complete claim. Keep `GAME_VERSION` unchanged and do not automatically allocate `DEV-0.7.1` or Game `0.1.1-prealpha`.
+Do not implement return travel, turn-in, rewards, UI, content, schemas, tests, saves, migrations, dependencies or assets. Do not change GAME_VERSION/worldVersion, allocate DEV-0.7.1, invent economic canon, or reopen accepted survey/persistence owners without contradictory evidence.
 
-## Orientation And Authority
+## Successor And Publication
 
-Work only in `vagabond1215/Lineage_Reforged`. Follow `AGENTS.md`, the repository-first protocol, platform/tool selection policy, resource-slicing policy, Codex-versus-Connector handling procedure, branch policy/register, and applicable failure-pattern guardrails. Fetch/prune, verify clean synchronized `master`, inventory live branches/open PRs, and record exact source and publication heads. Preserve unrelated work and protected references.
+After complete authored acceptance, install the separate unversioned `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`. It must cover bounded Starfall return dependency, readiness, typed completion and authorized consequence receipts, duplicate/stale/conflict/rejection semantics, accepted-only caller application, nested survey preservation and publication/restart validation. It does not yet authorize implementation. If authored answers expand scope, split the owner decisions before implementation.
 
-Read the complete current prompt/output/handoff, historical register, planning reconciliation, and:
-
-- `docs/design/integrated-gameplay-0.7-band-entry-readiness-decision.md`, including the DEV-0.7.0 acceptance appendix;
-- `docs/dev/game-version-roadmap-and-acceptance-policy.md`;
-- `docs/design/internal-versioning-and-release-milestone-policy.md`;
-- `docs/dev/playability-posture-and-version-calibration.md`;
-- `docs/design/ashen-reef-survey-ordinary-reachability-implementation-package-decision.md`, including independent 0.6.11.1 acceptance;
-- `docs/design/ashen-reef-survey-advancement-authority-acceptance-audit.md`;
-- `docs/design/ashen-reef-soundings-authored-canon-decision.md`;
-- `docs/design/quest-turn-in-and-reward-readiness-audit.md`;
-- `docs/design/inventory-stack-and-item-instance-identity-audit.md`;
-- `docs/design/npc-persistence-and-generated-person-promotion-audit.md`;
-- `docs/design/ui-information-architecture-boundary.md`;
-- `docs/dev/evidence/branch-consolidation-2026-09-07/README.md` and the specific preserved audits needed for compared candidates.
-
-Inspect the complete delta from milestone verification source `d8c413208237f3ee3a895f133a1963400d76e938` and the later milestone publication commits to live head. Historical audit proposals and legacy reward formulas are evidence only. Do not reopen accepted ownership without fresh contradictory evidence.
-
-## Required Decision Work
-
-1. Reproduce fresh Starfall character creation, retained campaign publication/load, Soundings availability and acceptance/access, travel/arrival, four real-caller survey shifts, save/restart, and durable duplicate behavior. Use a disposable local campaign; preserve existing user saves. Exercise ordinary UI navigation where available and distinguish observed UI experience from lower-level executable evidence. Never inject eligibility or use demo state as representative proof. If UI access is unavailable, record the exact limitation and do not claim a completed player-experience decision from source inspection alone.
-2. Record what the player sees, chooses, gains, retains, and can do next. Identify the first missing closure owner, misleading readiness/return affordance, placeholder behavior, or absence of meaningful choice. Stop at the accepted active/unturned-in boundary; characterize legacy turn-in source without treating its payout as accepted canon.
-3. Compare narrow authoritative Soundings turn-in/reward, inventory/equipment, crafting/economy, combat/challenges, NPC/services, progression/lineage, UI/accessibility, and content breadth. Give each candidate an evidence-backed assessment of player payoff, loop/dependency closure, missing owners and authored decisions, architectural/save risks, package size, and regression burden. Avoid speculative precision or scoring that hides an unresolved prerequisite.
-4. Treat Soundings closure as a strong candidate, not a predetermined winner. Its exact paid-contract terms remain deferred; do not invent reward amounts, standing, items, salvage rights, recurrence, or a person/office identity. Distinguish owner design from balance/canon input.
-5. Select one smallest coherent package or one exact prerequisite decision. Ask a concrete user-direction question only when product/canon/UX/balance evidence cannot safely decide the boundary. Do not silently convert unresolved product choices into implementation permission.
-6. Classify the next run under the development-milestone policy after the selection. Do not assign a development primary merely because this decision completed. A potential future game-version increment requires a separate accepted playable delta and game-version gate after implementation and acceptance.
-
-## Validation And First Durable Checkpoint
-
-The first checkpoint is a completed reproduction record and candidate matrix in `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`, with uncertainty and uncompleted work explicit if interrupted.
-
-Run the ordinary-reachability integration test and the focused checks needed to substantiate any alleged regression. If launching/building the UI, use the existing configuration and direct Vite build as appropriate. The milestone gate passed 82/82 prescribed tests, Node configuration typecheck, and Vite server/client build. Broad UI typecheck remains a known non-green 137-diagnostic baseline; do not claim it passes or repair it inside this decision. Expand validation only for actual drift or a finding.
-
-Apply at least FP-001, FP-002, FP-008, FP-009 and FP-017; add FP-013/014 when assessing persisted owner boundaries. Separate fresh observations from predecessor test results. Review all documentation diffs and run `git diff --check`.
-
-## Result And Coordination
-
-Return one `PLAYABILITY_PRIORITY_SELECTED` or `PLAYABILITY_PRIORITY_BLOCKED` decision. Record the reproduced player path, candidate comparison, exact selected boundary, product questions, exclusions, owners, required validation, and next route. A blocked decision must name the missing evidence/input and smallest resolution.
-
-Update the focused decision, current output/handoff, historical register/planning reconciliation and live headers only where routing changes. Install one separate executable next prompt only if its prerequisites and scope are decision-complete; otherwise install the exact prerequisite. Keep platform/model/plugin/quota recommendations outside the prompt body and provide a fresh capability inventory in chat.
-
-Commit only intended documentation, push `master`, fetch/prune, verify local/tracking/live hosted heads, retrieve hosted prompt/output/handoff, and finish clean. Report exact commits, branches/PRs inspected, retained review triggers, checks, limitations, and game/development version separation.
-
-## Exclusions
-
-No production, UI, content, schema, tracked-test, dependency, asset, serializer, save, migration, `GAME_VERSION`, or `worldVersion` edits. No gameplay implementation, reward balancing, broad cleanup, generic framework, evidence/protected branch mutation, branch retirement, deployment, vertical-slice/alpha/beta acceptance, or cross-repository work.
+Update focused decision, current output/handoff, route registers and live headers only as needed. Read back complete edits and review documentation diffs. Distinguish remote documentation verification from local execution; do not claim tests/builds/browser reproduction unless actually run. Refresh branch/PR disposition without mutating protected refs. Publish intended documentation through authenticated repository writes, record exact source/publication identities and read back hosted prompt/output/handoff. When using a local checkout, commit/push master, fetch/prune and finish synchronized and clean; otherwise explicitly leave local synchronization to the checkout owner. Keep platform/model recommendations outside this prompt.

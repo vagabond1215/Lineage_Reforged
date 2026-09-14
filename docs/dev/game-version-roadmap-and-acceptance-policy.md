@@ -318,9 +318,9 @@ The current sequence is:
 1. keep game version at `0.1.0-prealpha`;
 2. preserve accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` and current development band `DEV-0.7.x`;
 3. on development-milestone acceptance, do **not** change `GAME_VERSION` merely because `DEV-0.7.0` was accepted;
-4. execute the installed unversioned `Game 0.1.x Playability Gap Prioritization Decision`;
-5. compare actual player-facing payoff across quest closure/rewards, inventory/equipment identity, crafting/economy, combat/challenges, NPC/services, progression, UI/accessibility, and content breadth;
-6. select the smallest coherent player-visible package;
+4. preserve completed `Game 0.1.x Playability Gap Prioritization Decision` (`PLAYABILITY_PRIORITY_SELECTED`);
+5. execute the installed unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`;
+6. after authored acceptance, decide the bounded completion/consequence owner contract and separately authorize implementation;
 7. only after that package is accepted decide whether it warrants `0.1.1-prealpha` or remains internal development work inside `0.1.0-prealpha`.
 
 `0.2.0-prealpha` remains reserved for the accepted vertical-slice gate above.

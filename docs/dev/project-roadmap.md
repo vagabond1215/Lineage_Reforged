@@ -8,8 +8,8 @@ Last reviewed: 2026-09-11 by `DEV-0.7.0 - Integrated Gameplay Systems Band Entry
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, `IMPLEMENTED_PENDING_REAUDIT`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
 - Latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`.
-- Latest completed unversioned decision: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, outcome `BAND_ENTRY_READY`.
-- Active run: unversioned `Game 0.1.x Playability Gap Prioritization Decision`.
+- Latest completed unversioned decision: `Game 0.1.x Playability Gap Prioritization Decision`, outcome `PLAYABILITY_PRIORITY_SELECTED`.
+- Active run: unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`.
 - Activity selection and `0.6.4`-`0.6.11` are accepted, including the injection-free representative loop. `DEV-0.7.0` is complete with `MILESTONE_ENTRY_ACCEPTED`; current development band `DEV-0.7.x`, Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`.
 - Player travel/movement is the first engine-owned consumer. The landed package combines the narrow command/result contract, collision-safe deterministic identity, atomic current-behavior state transition, typed completion event, shared preview/execution resolver, full snapshot synchronization parity, focused deterministic and post-travel roundtrip tests, and `WorldPanel` adapter migration.
 - No new canon, content authority, save field, pathfinding, encounter, survival, economy transport, or broad shell rewrite is part of `0.6.0`.
@@ -39,9 +39,9 @@ Current live anchor:
 - Latest accepted primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`; independently accepted by completed `0.6.11.1`.
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
-- Latest completed unversioned decision: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, `BAND_ENTRY_READY`.
+- Latest completed unversioned decision: `Game 0.1.x Playability Gap Prioritization Decision`, `PLAYABILITY_PRIORITY_SELECTED`.
 - Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, accepted.
-- Active route: unversioned `Game 0.1.x Playability Gap Prioritization Decision`.
+- Active route: unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`.
 - Current near-term sequence source: `docs/dev/codex-sequenced-implementation-plan.md`
 - Current phase: player travel, quest acceptance, repaired quest tracking, activity selection, static expansion, lethal-process static foundations, Normal persistence, bounded survey advancement, ordinary reachability, and representative evidence are accepted; the readiness decision returned `BAND_ENTRY_READY`, and `DEV-0.7.0` is accepted; Game `0.1.0-prealpha` and `INTEGRATED_LOOP` remain unchanged.
 
@@ -364,7 +364,7 @@ These are internal development maturity markers, not public release promises. Pa
 
 ## 3. Active Pipeline
 
-Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9`, `0.6.10`, and `0.6.11` are accepted, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the readiness decision returned `BAND_ENTRY_READY`, and separate `0.7.0` milestone activation is active.
+Historical pipeline ledger follows. For live execution, use the refreshed Current Runtime Transition Override and Current Anchor above: `0.6.9`, `0.6.10`, and `0.6.11` are accepted, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the readiness decision returned `BAND_ENTRY_READY`, and `DEV-0.7.0` is accepted; the current authored-terms decision controls the next route.
 
 | Version | Name | Route | Type | Status / Intent | Key Guardrail |
 | --- | --- | --- | --- | --- | --- |

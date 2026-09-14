@@ -1,5 +1,18 @@
 # Branch Disposition Register
 
+## 2026-09-14 Playability Decision Checkpoint
+
+Inspected source master `4521cf183f9ca6fd431b9c37899d796fa5883794`, unchanged after fetch/prune; one local/four hosted branches and zero open PRs. Prior orientation and unique-path review reused; the source delta is only the two DEV-0.7.0 publication documentation commits. No semantic integration, retirement or disposition change is due.
+
+- `prep/integrated-gameplay-0-7-readiness-audit` at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: PROTECTED_REFERENCE; next explicitly scheduled readiness/regression or protection/disposition review.
+- `parallel/prompt-packaging-integrity-audit` at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit.
+- `admin/genesis-research-evidence-2026-08-13` at `210df5bcc017a8f31d621a553b5496c668540d29`: HOLD_NAMED_CONSUMER; administration/template/governance or explicitly scheduled Lineage retrospective.
+
+`PLAYABILITY_PRIORITY_SELECTED`; active prerequisite `Soundings Return, Submission, And Payment Authored-Terms Decision`. FP-008/009: protected references retained and source separated from publication identities in current output. No branch/PR mutations.
+
+
+## Prior DEV-0.7.0 Checkpoint
+
 Date: 2026-09-11
 
 Status: current coordination surface; live refs must be reinspected before merge, deletion, or status change

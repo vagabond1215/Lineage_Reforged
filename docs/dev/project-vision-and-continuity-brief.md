@@ -26,9 +26,9 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, outcome `PARENT_ACCEPTED` with `REPRESENTATIVE_LOOP_ACCEPTED`.
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, outcome `IMPLEMENTED_PENDING_REAUDIT`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
-- Latest completed unversioned decision: `Integrated Gameplay 0.7 Band-Entry Readiness Decision`, `BAND_ENTRY_READY`.
+- Latest completed unversioned decision: `Game 0.1.x Playability Gap Prioritization Decision`, `PLAYABILITY_PRIORITY_SELECTED`.
 - Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, accepted.
-- Active run: unversioned `Game 0.1.x Playability Gap Prioritization Decision`.
+- Active run: unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`.
 - Landed BOM repair: `0.6.6.1`, commit `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`.
 - `0.6.6.2` completed fail-closed at `4/5` on the initial climate contract mismatch.
 - `0.6.6.3` landed schema commit `56932eec` and focused climate assertion commit `e71f8f6b`, then failed closed on bounded migration evidence.
@@ -77,9 +77,9 @@ The accepted audit evidence is two nonzero runs with identical complete `173`-tu
 
 ## Immediate Sequence
 
-1. execute unversioned `Game 0.1.x Playability Gap Prioritization Decision`;
-2. reproduce the player path and compare playability/loop/dependency closure against risk, size and regression burden;
-3. select one bounded capability or prerequisite without automatically assigning DEV-0.7.1 or Game 0.1.1-prealpha.
+1. execute unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`;
+2. settle authored payment, consequences, packet representation and Starfall return/submission terms;
+3. after authored acceptance, separately decide the completion/consequence owner contract; no automatic DEV-0.7.1 or Game 0.1.1-prealpha.
 
 ## Current Implementation Reality
 
