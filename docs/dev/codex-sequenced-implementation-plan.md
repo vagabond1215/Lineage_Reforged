@@ -1,7 +1,7 @@
 # Codex Sequenced Implementation Plan
 
 Date: 2026-08-27
-Route: unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`
+Route: unversioned `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`
 Status: locally aligned sequencing plan for future Codex runs
 
 ## Purpose
