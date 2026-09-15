@@ -1,6 +1,6 @@
 # Lineage: Reforged - Long-Term Project Roadmap
 
-Last reviewed: 2026-09-11 by `DEV-0.7.0 - Integrated Gameplay Systems Band Entry`
+Last reviewed: 2026-09-14 during Soundings owner-contract and durable-completion route reconciliation
 
 ## Current Runtime Transition Override
 
@@ -8,7 +8,7 @@ Last reviewed: 2026-09-11 by `DEV-0.7.0 - Integrated Gameplay Systems Band Entry
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, `IMPLEMENTED_PENDING_REAUDIT`.
 - Completed support routes: unversioned historical/static-pipeline integration and unversioned cross-domain production research integration.
 - Latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`.
-- Latest completed unversioned decision: `Game 0.1.x Playability Gap Prioritization Decision`, outcome `PLAYABILITY_PRIORITY_SELECTED`.
+- Playability prioritization decision: `Game 0.1.x Playability Gap Prioritization Decision`, outcome `PLAYABILITY_PRIORITY_SELECTED`.
 - Latest authored product decision: `Soundings Return, Submission, And Payment Authored-Terms Decision`, `AUTHORED_TERMS_ACCEPTED`.
 - Latest owner-contract decision: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`, `OWNER_CONTRACT_ACCEPTED`.
 - Active run: `Soundings Return, Submission, Payment, And Durable Completion Implementation`.
