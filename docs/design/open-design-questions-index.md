@@ -2,6 +2,7 @@
 
 Source route: ChatGPT via GitHub Connector  
 Date: 2026-08-20
+Last refreshed: 2026-09-14
 Status: connector-side durable question index; documentation only; not an implementation handoff
 
 ## Purpose
@@ -25,16 +26,17 @@ When this index conflicts with a newer focused accepted decision, current Codex 
 
 Current active implementation route:
 
-`Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence`
+`Soundings Return, Submission, Payment, And Durable Completion Implementation`
 
 Current posture:
 
-- accepted parent `Version 0.6.10 - Ashen Reef Survey Advancement Authority` remains accepted through `0.6.10.5`;
-- the Ashen implementation-package decision returned `PACKAGE_READY`;
-- `0.6.11` owns the bounded ordinary Starfall creator -> offer -> acceptance/access -> travel -> four-shift survey -> restart representative path;
-- `0.6.11` must be followed by an independent `0.6.11.1` acceptance audit;
-- `0.7.0` remains `NOT_READY`;
-- **no question in this index is required before `0.6.11` executes**;
+- `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` is implemented and independently accepted by `0.6.11.1`;
+- `DEV-0.7.0` is accepted with `MILESTONE_ENTRY_ACCEPTED`; current development band is `DEV-0.7.x`;
+- the Game 0.1.x playability prioritization returned `PLAYABILITY_PRIORITY_SELECTED`;
+- Soundings authored terms are accepted as `AUTHORED_TERMS_ACCEPTED`, including exactly 5 gold and no standing, fame/reputation, turn-in skill, item, service/access, or salvage reward;
+- the quest turn-in/completion owner contract is accepted as `OWNER_CONTRACT_ACCEPTED`;
+- the bounded local implementation prompt is installed and production implementation remains pending executable validation;
+- **no unresolved product/design question in this index blocks the active Soundings implementation**;
 - this connector-side index must not replace, revise, or interrupt `docs/dev/current-codex-prompt.md`.
 
 ## Rebaseline Metrics
@@ -70,7 +72,7 @@ The point of these counts is not to score design completion. They distinguish re
 
 **None.**
 
-No unresolved product/design question in this index blocks the installed `0.6.11` implementation prompt.
+No unresolved product/design question in this index blocks the installed Soundings durable-completion implementation prompt.
 
 ## Open Later
 
@@ -197,10 +199,11 @@ These pre-existing rows are retained here so their disappearance from the open s
 
 | Original question | Disposition | Current answer / controlling direction |
 | --- | --- | --- |
+| What exact payout, standing, item, salvage, service, or access consequences should `Soundings of Ashen Reef` award on accepted turn-in? | `RESOLVED` | `Soundings Return, Submission, And Payment Authored-Terms Decision` accepts exactly **5 gold, 0 silver** and explicitly no standing, fame/reputation, turn-in skill, item, service/access, or salvage reward. |
 | Which religion/element/doctrine Knowledge concepts should be seeded next after the hotspot lane? | `SUPERSEDED` | The old hotspot sequence completed through later Religion, religious-hotspot, sacred-site, and Knowledge authority work. Future Religion content should be selected from a fresh gap/consumer, not this June sequencing question. |
 | Which NPC or institution types can reveal relationship bands through trials or mystical means? | `RESOLVED` | Accepted June user direction permits in-world revelation through an affiliated trial-giver, institution/civil representative, fortune-teller/occult/fantasy role, or equivalent owner-approved source. Exact NPC identities remain later content. |
 | Should exact relationship values ever be player-visible outside debug? | `RESOLVED` | Exact values are debug/internal by default; ordinary player presentation uses bands/in-world feedback unless a later focused UI decision explicitly changes that. |
-| What is the first playable runtime loop after the Knowledge/content lane? | `RESOLVED` | The repository advanced through engine-owned travel, quest acceptance/tracking, activity ownership, campaign persistence, and Ashen survey advancement. The current representative-loop closure route is `0.6.11`. |
+| What is the first playable runtime loop after the Knowledge/content lane? | `RESOLVED` | The repository advanced through engine-owned travel, quest acceptance/tracking, activity ownership, campaign persistence, and Ashen survey advancement. The representative loop was implemented in `0.6.11` and independently accepted by `0.6.11.1`; the active follow-on route closes Soundings through authoritative return, turn-in, payment, and durable completion. |
 | Which UI surface is required before that first narrow runtime loop? | `SUPERSEDED` | The live six-domain shell exists and later `UI Information Architecture Boundary` governs future presentation. Runtime ownership advanced without a new prerequisite UI surface. |
 | Should factions, guilds, institutions, governments, and religious orders use one shared organization schema or separate families? | `RESOLVED` | `Organization Faction Guild Boundary Decision` rejects a general organization umbrella in the foundation phase and preserves specific owners (guild, religion/order, polity, faction, later government/office/etc.). |
 | Should law authority be location-owned, government-owned, enforcement-owned, or layered? | `RESOLVED` | Later civic authority separates government organization, jurisdiction applicability, law, office/institution, and force/enforcement. Law is downstream of stable jurisdiction rather than embedded in place/government/force identity. Exact law schema remains deferred. |
@@ -223,7 +226,6 @@ These were exposed by accepted work after the original June index. They are deli
 | --- | --- | --- |
 | What compatibility-safe migration/alias policy should eventually retire misleading runtime travel keys whose names no longer match canonical settlement/place identity? | Reopen after `0.6.11` and its audit are accepted, when a dedicated generic travel-identity cleanup is prioritized. Do not rename current keys opportunistically. | `DEFERRED_WITH_TRIGGER` |
 | What exact typed semantics and refusal/consequence rules should distinguish Quest, Mission, Order, Favor, and Trial when organization/law/rank owners are mature enough to consume them? | Reopen with a dedicated quest-kind/assignment-semantics decision. | `DEFERRED_WITH_TRIGGER` |
-| What exact payout, standing, item, salvage, service, or access consequences should `Soundings of Ashen Reef` award on accepted turn-in? | Reopen only when Ashen quest turn-in/reward authority is selected after ordinary reachability is independently accepted. Current canon establishes a paid civic contract but intentionally defers exact values. | `DEFERRED_WITH_TRIGGER` |
 
 ## Durable Resolved User Direction
 
