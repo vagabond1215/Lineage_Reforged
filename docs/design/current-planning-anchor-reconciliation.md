@@ -2,7 +2,7 @@
 
 Date: 2026-09-14
 
-Status: accepted coordination authority; DEV-0.7.0 complete; Soundings authored terms and owner contract accepted; bounded Soundings durable-completion implementation installed
+Status: accepted coordination authority; DEV-0.7.0 complete; Soundings authored terms and owner contract accepted; bounded Soundings durable-completion implementation route/prompt installed; production implementation pending
 
 Milestone impact: accepted development-band entry to `DEV-0.7.x`; game-version impact: `none`
 
