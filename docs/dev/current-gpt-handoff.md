@@ -4,7 +4,7 @@ Date: 2026-09-14
 
 Repository: `vagabond1215/Lineage_Reforged`
 
-Status: Soundings authored terms accepted; turn-in/completion owner contract accepted; bounded implementation installed.
+Status: Soundings authored terms accepted; turn-in/completion owner contract accepted; bounded implementation route/prompt installed; production implementation remains pending local execution and validation.
 
 Game version: `0.1.0-prealpha`; phase: Early Pre-Alpha / First Playable; playability: `INTEGRATED_LOOP`.
 
