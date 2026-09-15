@@ -26,7 +26,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - Latest accepted and completed support audit: `Version 0.6.11.1 - Ashen Reef Survey Ordinary Reachability And Representative Loop Acceptance Audit`, outcome `PARENT_ACCEPTED` with `REPRESENTATIVE_LOOP_ACCEPTED`.
 - Latest completed support implementation: `Version 0.6.10.4 - Ashen Reef Survey Progression Coherence And Projection Placement Repair` at `07c57392c8078927e4f9e12efe18d8d89bb1fc70`, outcome `IMPLEMENTED_PENDING_REAUDIT`.
 - Historical support audit: `Version 0.6.9.10 - Durable Recovery Completion Lineage Post-Repair Acceptance Audit`; acceptance claim superseded.
-- Latest completed unversioned decision: `Game 0.1.x Playability Gap Prioritization Decision`, `PLAYABILITY_PRIORITY_SELECTED`.
+- Playability prioritization decision: `Game 0.1.x Playability Gap Prioritization Decision`, `PLAYABILITY_PRIORITY_SELECTED`.
 - Latest implemented primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`, accepted.
 - Latest authored product decision: `Soundings Return, Submission, And Payment Authored-Terms Decision`, `AUTHORED_TERMS_ACCEPTED`.
 - Latest owner-contract decision: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`, `OWNER_CONTRACT_ACCEPTED`.
