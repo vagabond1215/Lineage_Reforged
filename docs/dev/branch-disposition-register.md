@@ -1,5 +1,13 @@
 # Branch Disposition Register
 
+## 2026-09-14/15 Connector Drift-Audit Refresh
+
+Connector inspection of hosted state immediately before this register write found `master` at `9e5b86cf4446825f5b31f919aafe959152cd3a25`, four hosted branches total and zero open pull requests. The three non-default hosted branches remain `prep/integrated-gameplay-0-7-readiness-audit`, `parallel/prompt-packaging-integrity-audit`, and `admin/genesis-research-evidence-2026-08-13`; their prior `PROTECTED_REFERENCE` / `HOLD_NAMED_CONSUMER` dispositions and review triggers remain unchanged. No merge, rebase, cherry-pick, branch deletion, PR mutation, or protection change is due from this documentation drift audit.
+
+The Connector cannot verify the local Codex worktree or local-only branches. The active implementation owner must still fetch/prune and perform the repository-first local orientation/delta verification before editing. This register commit itself advances hosted `master`, so use live refs rather than this pre-write SHA for any later mutation.
+
+Active route remains **Soundings Return, Submission, Payment, And Durable Completion Implementation**. The drift audit repaired current coordination wording and strengthened the active prompt; it did not implement production behavior or alter branch dispositions.
+
 ## 2026-09-14 Playability Decision Checkpoint
 
 Inspected source master `4521cf183f9ca6fd431b9c37899d796fa5883794`, unchanged after fetch/prune; one local/four hosted branches and zero open PRs. Prior orientation and unique-path review reused; the source delta is only the two DEV-0.7.0 publication documentation commits. No semantic integration, retirement or disposition change is due.
