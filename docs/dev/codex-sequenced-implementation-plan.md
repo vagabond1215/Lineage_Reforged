@@ -29,7 +29,12 @@ Latest completed support implementation:
 
 Latest completed unversioned run:
 
-- `Game 0.1.x Playability Gap Prioritization Decision`, outcome `PLAYABILITY_PRIORITY_SELECTED`
+- `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`, outcome `OWNER_CONTRACT_ACCEPTED`
+
+Prior current-route decisions:
+
+- `Game 0.1.x Playability Gap Prioritization Decision`, outcome `PLAYABILITY_PRIORITY_SELECTED`;
+- `Soundings Return, Submission, And Payment Authored-Terms Decision`, outcome `AUTHORED_TERMS_ACCEPTED`
 
 Latest historical support audit:
 
@@ -41,7 +46,7 @@ Latest accepted and completed support audit:
 
 Active run:
 
-- unversioned `Soundings Return, Submission, And Payment Authored-Terms Decision`
+- `Soundings Return, Submission, Payment, And Durable Completion Implementation`
 
 Accepted development milestone: `DEV-0.7.0`; current band `DEV-0.7.x`; Game `0.1.0-prealpha` / `INTEGRATED_LOOP` unchanged.
 
