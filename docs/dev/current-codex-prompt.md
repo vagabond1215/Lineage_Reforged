@@ -170,6 +170,8 @@ Update `GameSessionContext.tsx` to apply only accepted state.
 
 Migrate the real Soundings turn-in path in `apps/rpg-ui/src/features/QuestsPanel.tsx` away from legacy `turnInQuest(snapshot,...)`.
 
+Also reconcile `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`, which currently duplicates legacy Soundings readiness and still requires `location.saltmere`. Current journal/readiness/blocker projection must derive from, or remain semantically identical to, the new authoritative Starfall turn-in readiness contract; do not leave a second legacy readiness predicate that can disagree with the command owner.
+
 Legacy Soundings handling in `gameplayLoop.ts` must be removed from the real path or retained only as clearly unreachable characterization. Avoid unrelated Rivet rewrites.
 
 ### 7. Targeted UI only
