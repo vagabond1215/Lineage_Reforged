@@ -55,6 +55,8 @@ Use a real runtime caller plus campaign/session admission. GameSessionContext ap
 
 Preserve the full accepted survey authority graph and Stormglass.
 
+Connector drift review on 2026-09-14/15 confirmed two implementation-critical legacy surfaces that the active prompt now names explicitly: current Soundings reward presentation/content still says exact terms are deferred, and `gameplay-snapshot-sync.ts` duplicates the old Saltmere-based turn-in readiness predicate. The local implementation must reconcile both without rewriting historical decision evidence.
+
 ## 3. UI Direction
 
 The 2026-09-14 UI concept is now incorporated into durable design intent.
