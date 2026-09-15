@@ -185,6 +185,16 @@ This slice may change only what is needed to make the completed loop understanda
 - 5-gold + completion preview/result;
 - completion Chronicle result.
 
+Reconcile stale current runtime/content presentation that still says exact Soundings turn-in terms are deferred. At minimum inspect:
+
+- `packages/engines/game-engine/src/ashen-reef-survey-content.ts`;
+- `packages/engines/game-engine/src/ashen-reef-survey-offer-staging.ts`;
+- `apps/rpg-ui/src/runtime/demoSnapshot.ts`;
+- `packages/content/base/civilization/quest_definitions.json`;
+- matching focused tests and any other current user-visible publisher discovered from those owners.
+
+Current runtime/content presentation must reflect the accepted 5-gold terms where it is user-visible or consumed by current runtime presentation. Preserve historical decision/audit wording as historical evidence; do not rewrite older records merely because later accepted authority closed the deferral.
+
 Prefer presentation compatible with a future contextual inspector/next-action column.
 
 Do not rebuild the top bar, left rail, Home, World shell, map system, Character, Activity, Codex, or Chronicle architecture in this package.
