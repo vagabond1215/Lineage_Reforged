@@ -34,12 +34,12 @@ export const ASHEN_REEF_SURVEY_OFFER: QuestJournalEntryState = {
   category: "contracts",
   title: definition.name,
   regionLabel: "Starfall Isle",
-  rewardLabel: "Paid civic contract - terms set at later turn-in",
+  rewardLabel: "5 gold on accepted submission",
   summary: definition.summary,
   statusLabel: "Open contract",
   tracked: false,
   objectives: definition.actionTree.nodes.map((node) => node.summary),
-  rewards: ["Paid civic contract; exact turn-in terms remain deferred."],
+  rewards: ["5 gold; contract completed at Starfall Harbormaster's Office."],
   relatedLocations: [definition.giver.settlementId, "location.ashen_reef"],
   tags: ["Survey", "Starfall Isle", "Civic contract"]
 };

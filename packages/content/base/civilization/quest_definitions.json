@@ -2120,7 +2120,7 @@
         "reputationAwards": []
       },
       "miscNotes": [
-        "This is a paid civic contract, but exact turn-in payment and all other consequences remain deliberately deferred.",
+        "Accepted submission pays exactly 5 gold, 0 silver, and completes the one-time contract. No bonus, standing, reputation, skill, item, service, or salvage reward. The generic coinBase field has no denomination mapping; the quest-specific currency-credit owner defines the exact gold payment.",
         "Old charts, departure instructions, authorization, and arranged anchorage access are supplied on acceptance as narrative source facts, not inventory grants.",
         "Stormglass Bloom is an incidental discovery during the final inspection, not an authored objective."
       ],
@@ -2197,7 +2197,7 @@
             "id": "verify_ruin_markers",
             "label": "Ruin Markers",
             "phase": "resolution",
-            "summary": "Verify the known visible and submerged ruins used as navigation bearings and hazards, leaving the completed field packet ready for later turn-in.",
+            "summary": "Verify the known visible and submerged ruins used as navigation bearings and hazards, leaving the completed field packet ready for immediate submission at Starfall Harbormaster's Office for 5 gold.",
             "estimatedHours": null,
             "assignedRoles": [],
             "participantRange": {

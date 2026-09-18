@@ -399,11 +399,13 @@ export function executePlayerTravelCommand(
     advanceTravelClock(nextSnapshot, plan);
     applyResourceCosts(nextSnapshot, plan.facts);
     nextSnapshot.playerState.regionId = plan.facts.regionId;
-    nextSnapshot.playerState.geographicKnowledge = grantSettlementGeographicKnowledge(
-      nextSnapshot.playerState.geographicKnowledge,
-      plan.facts.settlementId,
-      1
-    );
+    if (!(plan.originLocationId === "location.ashen_reef" && plan.facts.id === "settlement.starfall_port")) {
+      nextSnapshot.playerState.geographicKnowledge = grantSettlementGeographicKnowledge(
+        nextSnapshot.playerState.geographicKnowledge,
+        plan.facts.settlementId,
+        1
+      );
+    }
     nextSnapshot.playerState.location = {
       settlementId: plan.facts.settlementId,
       siteLabel: plan.facts.siteLabel,

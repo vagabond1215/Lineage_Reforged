@@ -12,6 +12,7 @@ import {
   advancePlayerBodyState,
   syncPlayerRuntimeState
 } from "../../player-engine/src/index.js";
+import { establishAshenReefSurveyTravelAccess } from "./ashen-reef-survey-travel-access.js";
 
 export type PlayerTravelPlanRejectionCode =
   | "incoherent_state"
@@ -188,6 +189,44 @@ const PLAYER_TRAVEL_DESTINATIONS: Record<string, PlayerTravelDestination> = {
   }
 };
 
+function resolveTravelDestination(
+  snapshot: SaveSnapshot,
+  originLocationId: string,
+  destinationId: string
+): PlayerTravelDestination | undefined {
+  if (destinationId !== "settlement.starfall_port") {
+    return PLAYER_TRAVEL_DESTINATIONS[destinationId];
+  }
+  if (originLocationId !== "location.ashen_reef") return undefined;
+
+  const soundings = snapshot.sessionState.questJournal.filter(
+    (entry) => entry.id === "quest.ashen_reef_survey"
+  );
+  if (
+    soundings.length !== 1 ||
+    (soundings[0]?.category !== "active" && soundings[0]?.category !== "completed")
+  ) return undefined;
+  const access = establishAshenReefSurveyTravelAccess(snapshot, "quest.ashen_reef_survey");
+  if (!access.accepted || access.facts?.posture !== "already_known") return undefined;
+
+  // This is the accepted charter's return leg, not a universal Starfall cost.
+  // Derive its maritime clock, resource, and body profile from the outbound leg.
+  const maritimeProfile = PLAYER_TRAVEL_DESTINATIONS["location.ashen_reef"];
+  if (!maritimeProfile) return undefined;
+  return {
+    ...maritimeProfile,
+    id: "settlement.starfall_port",
+    name: "Starfall Port",
+    siteLabel: "Starfall Harbormaster's Office",
+    arrivalActivity: {
+      id: "activity.arrival.starfall_port",
+      label: "Back In Starfall Port",
+      category: "Arrival",
+      detail: "The Starfall Harbormaster's Office receives completed Soundings survey packets."
+    }
+  };
+}
+
 function cloneSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
   return deserializeSnapshot(serializeSnapshot(snapshot));
 }
@@ -315,7 +354,7 @@ export function resolvePlayerTravelPlan(
       };
     }
 
-    const destination = PLAYER_TRAVEL_DESTINATIONS[destinationId];
+    const destination = resolveTravelDestination(snapshot, originLocationId, destinationId);
     if (!destination) {
       return {
         accepted: false,

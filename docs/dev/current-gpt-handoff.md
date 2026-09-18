@@ -4,85 +4,34 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-18
 
-Date: 2026-09-14
+Repository: vagabond1215/Lineage_Reforged.
 
-Repository: `vagabond1215/Lineage_Reforged`
+Latest implementation: `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`.
 
-Status: Soundings authored terms accepted; turn-in/completion owner contract accepted; bounded implementation route/prompt installed; production implementation remains pending local execution and validation.
+Active route: **Soundings Durable Completion Independent Acceptance Audit**. Execute only current prompt. Do not rerun the completed implementation or DEV-0.7.0 orientation without material drift.
 
-Game version: `0.1.0-prealpha`; phase: Early Pre-Alpha / First Playable; playability: `INTEGRATED_LOOP`.
+Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`, accepted milestone `DEV-0.7.0`, band `DEV-0.7.x`. No DEV-0.7.1 or game-version decision.
 
-Accepted milestone: `DEV-0.7.0`; current band: `DEV-0.7.x`.
+## Controlling Evidence
 
-Active route: **Soundings Return, Submission, Payment, And Durable Completion Implementation**.
+Read the full implementation record at docs/design/soundings-durable-completion-implementation-record.md, the accepted quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md, soundings-return-submission-and-payment-authored-terms-decision.md, game-0.1.x-playability-gap-prioritization-decision.md and ui-information-architecture-boundary.md. Current output publication appendix records exact implementation/hosted identities.
 
-## 1. Controlling Decisions
+## Implemented Boundary
 
-Read first:
+Ashen -> Starfall uses existing travel ownership, four ticks/no fare. Submission at the Harbormaster's Office uses a quest-specific command/caller, campaign admission, one optional durable ledger and seven linked receipts: exactly 5 gold/0 silver; no other rewards. Tracking clears only for Soundings; operation closes; activity and Chronicle/notification reflect completion. Survey authority and Stormglass survive.
 
-- `docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md`;
-- `docs/design/soundings-return-submission-and-payment-authored-terms-decision.md`;
-- `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`;
-- `docs/design/ui-information-architecture-boundary.md`;
-- current prompt/output.
+Exact durable retries return current state without replay. Missing/misplaced projections repair from receipts; conflicts/full-feed repair fail unchanged. Current terms use survey-content v3, retaining v1/v2 evidence. No world/save migration, generic frameworks or broad shell changes.
 
-Owner contract disposition: `OWNER_CONTRACT_ACCEPTED`.
+A real browser run exposed and closed a repeated-graph storage quota failure. Compact fingerprints retain the original graph once; final ordinary save/restart/continued play succeeded. Integration uses a 5 MiB cap, not unlimited mock storage. Arbitrary history capacity is not claimed.
 
-Accepted product terms remain:
+## Validation And Remaining Gate
 
-- 5 gold, 0 silver;
-- no standing/fame/reputation/skill/item/service/salvage reward;
-- retained survey evidence is the packet;
-- Starfall Harbormaster's Office submission;
-- Duty Harbormaster remains a role;
-- Ashen Reef → Starfall Port = 4 ticks, no fare, not a universal Starfall cost;
-- immediate submission/completion/payment;
-- one-time contract;
-- Chronicle/history record;
-- Stormglass preserved;
-- no double-pay/double-complete.
+123/123 focused/adjacent tests; 71-file content lint; Node UI config typecheck; 214-module Vite build; diff checks. Broad UI TS remains 137 known signatures, with no additions. QuestsPanel/WorldPanel each retain two existing strict-optional diagnostics. No broad cleanup.
 
-## 2. Implementation Boundary
+Independently audit authority, admission, projections/caps, persistence/restart/duplicates, nested fork/defeat/recovery preservation and ordinary browser flow. Implementation tests are not acceptance. Broad shell redesign, generic reward architecture and versions remain deferred.
 
-Existing player travel remains the movement/time/body owner.
+## Branch Posture
 
-Add only the bounded Ashen→Starfall route facts required by the accepted return.
-
-Add one quest-specific Soundings turn-in engine owner and a separate durable turn-in authority ledger with request/occurrence/result/consequence receipts.
-
-The turn-in owner atomically owns the exact transaction boundary:
-quest completion + exactly 5g + tracking cleanup + survey operation/activity transition + completion projections.
-
-The first currency consequence remains quest-specific and must have a durable currency-credit receipt. Do not build a generic reward/wallet framework.
-
-Use a real runtime caller plus campaign/session admission. GameSessionContext applies only accepted state. Migrate Soundings away from the legacy `QuestsPanel.tsx -> gameplayLoop.turnInQuest` mutation path.
-
-Preserve the full accepted survey authority graph and Stormglass.
-
-Connector drift review on 2026-09-14/15 confirmed two implementation-critical legacy surfaces that the active prompt now names explicitly: current Soundings reward presentation/content still says exact terms are deferred, and `gameplay-snapshot-sync.ts` duplicates the old Saltmere-based turn-in readiness predicate. The local implementation must reconcile both without rewriting historical decision evidence.
-
-## 3. UI Direction
-
-The 2026-09-14 UI concept is now incorporated into durable design intent.
-
-Broad shell implementation is deferred until after real loop closure and independent acceptance.
-
-This implementation may make only the targeted UI changes necessary for truthful Starfall return, packet readiness, blockers, authoritative turn-in, 5g/completion result and Chronicle feedback.
-
-Those affordances should be compatible with the future composition:
-top context band + character/navigation rail + primary domain workspace with contextual inspector/supporting history.
-
-Do not rebuild the shell in this implementation.
-
-## 4. Required Execution
-
-Execute only `docs/dev/current-codex-prompt.md`.
-
-This is a bounded `M` local implementation requiring executable validation.
-
-On success return `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE` and install **Soundings Durable Completion Independent Acceptance Audit**.
-
-Do not allocate `DEV-0.7.1` or change `GAME_VERSION`.
-
-The owner-contract/UI-intent work in this handoff was performed by remote Connector writes; the implementation owner must fetch/prune and synchronize the local checkout before editing.
+September 18: one local/four hosted branches, zero open PRs. No branch actions due. Retain protected readiness and prompt-integrity references and held administration evidence at the exact heads/triggers in the branch register; refresh live refs before action.

@@ -6,7 +6,7 @@ import type {
 export type AshenReefSurveyContentVersion =
   AshenReefSurveyMaterialVersionsState["surveyContent"];
 
-export const CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION = 2 as const;
+export const CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION = 3 as const;
 
 export interface AshenReefSurveyContentFacts {
   version: AshenReefSurveyContentVersion;
@@ -28,7 +28,7 @@ export interface AshenReefSurveyContentFacts {
 }
 
 const CONTENT_BY_VERSION: Record<
-  AshenReefSurveyContentVersion,
+  Exclude<AshenReefSurveyContentVersion, 3>,
   AshenReefSurveyContentFacts
 > = {
   1: {
@@ -79,7 +79,14 @@ const CONTENT_BY_VERSION: Record<
 export function getAshenReefSurveyContent(
   version: AshenReefSurveyContentVersion
 ): AshenReefSurveyContentFacts {
-  const content = CONTENT_BY_VERSION[version];
+  // Retained v1/v2 receipts keep their original authored projections.
+  const content = version === 3 ? {
+    ...CONTENT_BY_VERSION[2],
+    version: 3 as const,
+    questRewardLabel: "5 gold on accepted submission",
+    questRewards: ["5 gold; contract completed at Starfall Harbormaster's Office."],
+    completionNotificationDetail: "All sectors and ruin markers are logged. Return the chart packet to Starfall Harbormaster's Office for submission and 5 gold."
+  } : CONTENT_BY_VERSION[version];
   return {
     ...content,
     questRewards: [...content.questRewards],

@@ -4,89 +4,95 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-18
 
-Date: 2026-09-14
+Source run: **Soundings Return, Submission, Payment, And Durable Completion Implementation**.
 
-Source run: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`.
+Disposition: `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`.
 
-Label class: unversioned technical owner-contract decision; parent: not applicable.
+Label class: unversioned bounded implementation. Parent development milestone: not applicable; controlling parent is the unversioned owner-contract decision. Development milestone impact: `supports_current_band`; game-version impact: `none`. Game `0.1.0-prealpha`; playability `INTEGRATED_LOOP`; accepted milestone `DEV-0.7.0`; band `DEV-0.7.x`. No DEV-0.7.1.
 
-Development milestone impact: `none`; game-version impact: `none`.
+Branch: authenticated master in vagabond1215/Lineage_Reforged. Decision source `85747b5fbd2202d2730e6fa27b4547d78423a46c`; initial synchronized implementation head `0dfa6835521e60ba3c0ab21888342b5a00ccac1f`; resumed inspected head `9bc128c11ff561281a0ba2665efb20cec8c7d108`. September 18 fetch/prune confirmed local/tracking equality. Documentation-only routing/scope drift was reconciled; no conflicting runtime drift. Saved partial edits were preserved.
 
-Game version: `0.1.0-prealpha`; phase: Early Pre-Alpha / First Playable; playability: `INTEGRATED_LOOP`.
+## A. Patch And Files
 
-Accepted development milestone: `DEV-0.7.0`; current band: `DEV-0.7.x`.
+Implemented bounded Starfall return, authoritative submission, exact 5-gold payment, one-time durable completion and accepted-only UI. Linked receipts, restart/latest-state duplicate and projection recovery preserve survey/Stormglass. Current content/readiness reflects accepted terms; historical v1/v2 evidence is unchanged. No dependencies, world/save version, game version or broad shell redesign changed.
 
-Disposition: `OWNER_CONTRACT_ACCEPTED`.
+Full design, exact validation command, failure matrix and ordinary browser evidence: docs/design/soundings-durable-completion-implementation-record.md. Intended file inventory follows below.
 
-## A. Decision
+## B. Checks And Guardrails
 
-Created:
+- **123/123** focused/adjacent tests passed, including ordinary end-to-end under a **5 MiB** store cap.
+- Content lint: **71 files** passed. Node UI configuration typecheck passed.
+- Broad UI TypeScript: **137 existing diagnostics**, identical signatures after line/column normalization against the DEV-0.7.0 capture. QuestsPanel/WorldPanel each retain two pre-existing strict-optional prop errors. No new signatures; broad TS is not green.
+- Direct Vite production build passed: **214 client modules**. Existing Browserslist-age and chunk-size warnings remain.
+- Fresh browser creator/acceptance/four shifts, saved restart after two, return/submission: **16g 8s -> 21g 8s**, tracking cleared, one completion Chronicle. Completion save/restart and continued travel/save passed. Completed UI disables resubmission; direct duplicates after restart/later mutation pass in tests.
+- Initial real-browser quota failure was reproduced and fixed by removing repeated survey graphs from retained intent. Measured storage fell from about **9.4 MB to 3.1 MB** without dropping authority; unlimited retention is not claimed.
+- Diff checks, bridges/exports and intended source/test diff review passed. Generated outputs excluded.
 
-`docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md`
+Applied FP-001/017 (ordinary real caller), FP-002 (separate audit), FP-008/009 (refs and source/publication identities), FP-012 (latest durable retry), FP-013 (nested fork/defeat/publication), FP-014/015 (semantic graph/source validation), FP-016 (placement/repair/no eviction). The focused record maps evidence to each.
 
-The contract is decision-complete for one bounded implementation.
+## C. Branch/PR Review
 
-Key ownership decisions:
+September 18: one local branch, four hosted branches total, zero open PRs, verified by fetch/prune and scoped GitHub inspection. No integrations, rebases, deletions, PR or protection changes due/performed.
 
-- existing `player-travel.ts` remains the sole movement/time/body authority;
-- add only route-aware Ashen Reef → Starfall Port facts within the existing travel-rules boundary;
-- do not make the four-tick Starfall return cost universal from unrelated origins;
-- first turn-in owner is quest-specific to Soundings rather than a generic reward framework;
-- journal completed state is not payment proof;
-- add a separate optional Soundings turn-in authority ledger with stable request/occurrence/result/consequence receipt identity;
-- the new turn-in owner atomically coordinates completion, exact 5-gold credit, tracking cleanup, survey-operation closure, post-submission activity and projections;
-- the durable currency-credit receipt proves payment delivery; wallet amount alone does not;
-- exact retry after restart is a durable duplicate and cannot replay payment;
-- conflicting request identity/intent or retained receipt graphs fail closed;
-- all accepted survey authority and Stormglass remain preserved;
-- real UI must use a production caller and accepted-only session application;
-- the legacy Soundings `turnInQuest(...)` UI path is characterization only after migration.
+- prep/integrated-gameplay-0-7-readiness-audit at `59c103c3a06d55f35bffa735fd4b7814dffb583e`: PROTECTED_REFERENCE; next explicitly scheduled readiness/regression or protection/disposition review.
+- parallel/prompt-packaging-integrity-audit at `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`: PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit.
+- admin/genesis-research-evidence-2026-08-13 at `210df5bcc017a8f31d621a553b5496c668540d29`: HOLD_NAMED_CONSUMER; administration/template/governance or explicitly scheduled Lineage retrospective.
 
-## B. UI Design Intent
+## D. Risks And Handoff
 
-Updated:
+Installed **Soundings Durable Completion Independent Acceptance Audit**. No self-acceptance or automatic version advancement. Full projection repair destinations fail unchanged without eviction; audit must examine normal feed trimming/repair reachability. Hosted CI and arbitrary-length browser save history are not claimed. Broad shell, generic rewards/travel and unrelated TS cleanup remain deferred.
 
-`docs/design/ui-information-architecture-boundary.md`
+Execution: Codex repository Default mode, shell/tests/build, GitHub connector readback and in-app browser. Bounded owner/test agent work was reconciled and validated after interruptions. Package M stayed coupled across transaction/persistence/UI validation. No extra plugin/dependency installed. Connector-only review cannot replace executable acceptance.
 
-The user-supplied concept is now reflected as accepted target composition guidance:
+Suggested implementation commit: `feat(soundings): close return submission and durable payment loop`.
 
-- compact global top band;
-- richer but compact left character/navigation rail;
-- one main domain workspace;
-- within the main workspace: one dominant work surface, one contextual inspector/action column and one bounded supporting history/notes strip;
-- World is the preferred first future shell-migration domain;
-- dense grounded medieval-fantasy cartographic/administrative presentation rather than a generic card dashboard;
-- player-facing debug/source-reference surfaces should progressively leave normal presentation;
-- migrate incrementally by real gameplay slice;
-- broad shell rebuild is deferred as implementation, not deferred as design intent.
+Publication appendix will distinguish implementation and final documentation publication heads after commit/push.
 
-The Soundings implementation may add only targeted return/readiness/turn-in/result affordances compatible with this future shell direction.
+## Intended File Inventory
 
-## C. Scope And Validation
-
-This owner-contract/UI-intent pass was performed through remote repository-aware documentation writes.
-
-No production code, tracked tests, schemas, saves, dependencies, assets, deployment, `GAME_VERSION`, or `worldVersion` were changed.
-
-No local tests, builds, typechecks, browser execution, or local worktree synchronization are claimed.
-
-Owner-contract decision commit: `85747b5fbd2202d2730e6fa27b4547d78423a46c`.
-
-UI design-intent refinement commit: `864a727b4d5e7980b867adab931ad04840131fcc`.
-
-Implementation prompt installation commit: `eedbec899d7b1908caf27b83016be9a35705ea5a`.
-
-## D. Next Route
-
-Active route:
-
-**Soundings Return, Submission, Payment, And Durable Completion Implementation**
-
-Package class: bounded `M`.
-
-The implementation requires a synchronized local repository, executable tests/build validation, commit/push and post-push verification.
-
-On successful implementation, install a separate **Soundings Durable Completion Independent Acceptance Audit**.
-
-No `DEV-0.7.1` or game-version increment is allocated. `GAME_VERSION` remains `0.1.0-prealpha`.
+- apps/rpg-ui/src/features/QuestsPanel.tsx
+- apps/rpg-ui/src/features/WorldPanel.tsx
+- apps/rpg-ui/src/game-shell/gameplayLoop.ts
+- apps/rpg-ui/src/runtime/GameSessionContext.tsx
+- apps/rpg-ui/src/runtime/demoSnapshot.ts
+- apps/rpg-ui/src/runtime/soundingsTurnInCaller.js
+- apps/rpg-ui/src/runtime/soundingsTurnInCaller.ts
+- docs/design/current-planning-anchor-reconciliation.md
+- docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md
+- docs/design/soundings-durable-completion-implementation-record.md
+- docs/dev/branch-disposition-register.md
+- docs/dev/current-codex-output.md
+- docs/dev/current-codex-prompt.md
+- docs/dev/current-gpt-handoff.md
+- docs/dev/historical-version-and-deferred-route-register.md
+- docs/dev/repository-first-agent-work-protocol.md
+- packages/content/base/civilization/quest_definitions.json
+- packages/engines/game-engine/src/ashen-reef-survey-content.ts
+- packages/engines/game-engine/src/ashen-reef-survey-offer-staging.ts
+- packages/engines/game-engine/src/campaign-rules.ts
+- packages/engines/game-engine/src/campaign-session.ts
+- packages/engines/game-engine/src/gameplay-snapshot-sync.ts
+- packages/engines/game-engine/src/index.ts
+- packages/engines/game-engine/src/player-soundings-turn-in.js
+- packages/engines/game-engine/src/player-soundings-turn-in.ts
+- packages/engines/game-engine/src/player-travel-rules.ts
+- packages/engines/game-engine/src/player-travel.ts
+- packages/engines/game-engine/src/soundings-fingerprint.js
+- packages/engines/game-engine/src/soundings-fingerprint.ts
+- packages/engines/game-engine/src/soundings-turn-in-authority.js
+- packages/engines/game-engine/src/soundings-turn-in-authority.ts
+- packages/engines/game-engine/src/soundings-turn-in-readiness.js
+- packages/engines/game-engine/src/soundings-turn-in-readiness.ts
+- packages/shared/types/src/contracts.ts
+- tests/helpers/soundings-ordinary-campaign.mjs
+- tests/integration/ashen-reef-survey-ordinary-reachability.test.mjs
+- tests/integration/soundings-durable-completion-ordinary.test.mjs
+- tests/unit/ashen-reef-survey-authored-content.test.mjs
+- tests/unit/player-soundings-turn-in-persistence.test.mjs
+- tests/unit/player-soundings-turn-in.test.mjs
+- tests/unit/player-survey-activity-advancement-characterization.test.mjs
+- tests/unit/player-survey-activity-advancement-persistence.test.mjs
+- tests/unit/player-travel-characterization.test.mjs
+- tests/unit/soundings-return-travel.test.mjs

@@ -1,258 +1,53 @@
-# Soundings Return, Submission, Payment, And Durable Completion Implementation
+# Soundings Durable Completion Independent Acceptance Audit
 
 <!-- repo-scope-guard -->
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-18
 
-Date: 2026-09-14
+Label class: unversioned independent audit of the bounded Soundings implementation. Package M; keep the coupled transaction/restart decision together. First durable checkpoint: focused audit with independently reproduced matrix and explicit disposition before coordination publication.
 
-Label class: bounded current-band implementation; parent: unversioned owner-contract decision.
+Game `0.1.0-prealpha`; playability `INTEGRATED_LOOP`; accepted milestone `DEV-0.7.0`; current band `DEV-0.7.x`. Do not change GAME_VERSION, allocate DEV-0.7.1 or issue a game-version decision.
 
-Development milestone impact: `none unless separately accepted later`; game-version impact: `none in this run`.
+## Sources And Preflight
 
-Game version: `0.1.0-prealpha`; playability: `INTEGRATED_LOOP`; accepted milestone: `DEV-0.7.0`; current band: `DEV-0.7.x`.
+Work only in vagabond1215/Lineage_Reforged. Follow AGENTS.md and all required authorities: repository-first, platform/tool selection, resource slicing, branch policy/register, current handoff/output, historical register, planning reconciliation and failure guardrails.
 
-Package class: bounded `M`.
+Fetch/prune and synchronize clean master. Read exact implementation/publication identities from current output and the implementation record; inspect intervening drift. Reuse completed orientation, but independently inspect each material caller, owner, persistence, projection, test and UI boundary. Inventory branches/open PRs. Preserve protected/held references.
 
-Source decision head: `85747b5fbd2202d2730e6fa27b4547d78423a46c`.
+Read completely:
 
-Controlling authorities:
+- docs/design/soundings-durable-completion-implementation-record.md;
+- docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md;
+- docs/design/soundings-return-submission-and-payment-authored-terms-decision.md;
+- docs/design/game-0.1.x-playability-gap-prioritization-decision.md;
+- docs/design/ui-information-architecture-boundary.md.
 
-- `docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md`;
-- `docs/design/soundings-return-submission-and-payment-authored-terms-decision.md`;
-- `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`;
-- `docs/design/ui-information-architecture-boundary.md`.
+The implementation report is evidence, not acceptance authority. Do not redo DEV-0.7.0 orientation or authored-terms decisions without contradictory drift.
 
-## Objective
+## Independent Acceptance Matrix
 
-Implement one bounded authoritative closure for **Soundings of Ashen Reef**:
+1. Reproduce ordinary creator -> Starfall offer/acceptance -> Ashen travel -> four authoritative shifts, including saved restart during fieldwork -> four-tick no-fare Starfall return -> submission -> exactly +5 gold, no silver/other consequence -> completion -> save/restart -> exact duplicate -> later accepted mutation -> latest-state duplicate. Use the real caller/admission. No injected eligibility may establish representative reachability.
+2. Inspect route specificity, clock/body ownership, unsupported origins, stale/wrong-origin/malformed travel and prior travel behavior.
+3. Deeply inspect the separate turn-in graph, canonical intent, request/occurrence/result/seven receipt identities, accepted-only state, compact retained-source reconstruction, SHA-256 implementation and before-state binding. Journal completion/wallet balance alone is not payment proof.
+4. Independently probe malformed command, wrong account/player/campaign, stale snapshot/revision, wrong location, missing/inactive/consumed quest, incomplete/deeply incoherent survey, pending/conflicting repair, conflicting request reuse, forged graphs and recomputed canonical strings. Require unchanged source/no partial effects. Check equivalent key-order semantics.
+5. Verify tracking clears only for Soundings, no replacement is auto-selected, operation closes, activity is truthful, one Chronicle/notification is projected, excluded reward owners and Stormglass are unchanged.
+6. Test absent-ledger compatibility, publication/restart, first non-head submission, later continuity fork, defeat/recovery parent rewrites and old survey versions. Roundtrip alone is insufficient.
+7. Verify missing/misplaced projection repair through reachable caller/synchronization, both orders, repeated repair/restart, conflicts, opaque ordering and caps. No repair may replay payment. Examine whether normal feed trimming creates an unfinishable or misleading posture.
+8. Reproduce real browser storage capacity. The initial repeated-graph failure used about 9.4 MB; the repaired tested sequence uses about 3.1 MB and has a 5 MiB integration cap. Verify explicit save/reload and continued play with a disposable local account/origin; preserve user data.
+9. Verify targeted World/Quests/Chronicle behavior and shared Starfall readiness. Current terms must say 5 gold; historical v1/v2 evidence must remain stable. Broad shell migration is excluded.
 
-complete survey
-→ return from Ashen Reef to Starfall Port
-→ submit at the Starfall Harbormaster's Office
-→ complete quest
-→ receive exactly 5 gold
-→ durable Chronicle/history result
-→ save/restart
-→ durable duplicate with no replay.
+Apply FP-001, FP-002, FP-008, FP-009, FP-012, FP-013, FP-014, FP-015, FP-016 and FP-017 where relevant. Add generalized guardrails only for independently demonstrated reusable omissions.
 
-This run requires a synchronized local repository, executable tests, build/type validation as scoped below, commit, push, and post-push verification.
+## Validation
 
-## Repository And Orientation
+Run the exact combined command in the implementation record (baseline 123/123), plus independent probes. Run content lint (71-file baseline), Node UI configuration typecheck, broad UI typecheck with changed-file/signature comparison against the known 137-diagnostic baseline, and direct Vite production build. Do not claim broad TS is green or perform generic cleanup. Verify exports/JS bridges, full diff, git diff --check and intended-file hygiene.
 
-Work only in `vagabond1215/Lineage_Reforged`.
+## Decision And Durable Completion
 
-Follow `AGENTS.md`, repository-first protocol, current prompt/output/handoff, resource-slicing policy, branch policy/register, and failure-pattern guardrails.
+Write docs/design/soundings-durable-completion-independent-acceptance-audit.md with exact source, numbered evidence and limitations. Return one audit disposition: `SOUNDINGS_DURABLE_COMPLETION_ACCEPTED` or `REPAIR_REQUIRED`.
 
-Fetch/prune, synchronize clean `master`, inspect the delta from `85747b5fbd2202d2730e6fa27b4547d78423a46c` to live head, and fail closed on material drift affecting the owner contract.
+Accept only the bounded Soundings capability if proven. Install the smallest separate next decision supported by playability priority and accepted UI direction; no automatic broad shell implementation/version advancement. On failure, record exact reproductions and install the smallest coherent repair prompt. Do not silently repair production during this independent audit and then self-accept it.
 
-Reuse accepted DEV-0.7.0 and playability evidence; do not redo broad repository discovery without contradictory drift.
-
-## Accepted Product Terms
-
-Preserve exactly:
-
-- submission: Starfall Harbormaster's Office, Starfall Port;
-- Duty Harbormaster remains a role, not a named person;
-- packet is retained survey evidence, not an inventory item;
-- Ashen Reef → Starfall Port return is 4 ticks with no fare;
-- do not make the Ashen return cost a universal Starfall cost;
-- immediate accepted submission/completion/payment;
-- payment is exactly 5 gold, 0 silver;
-- no standing, reputation/fame, turn-in skill gain, item, service/access, or salvage consequence;
-- one-time-per-campaign;
-- durable Chronicle/history consequence;
-- Stormglass remains incidental;
-- duplicate/retry cannot pay or complete twice.
-
-## Required Implementation
-
-### 1. Return travel
-
-Keep `player-travel.ts` as the sole travel/movement/clock/body owner.
-
-Add only the narrow route-aware support needed for:
-
-`location.ashen_reef -> settlement.starfall_port`
-
-The route must use the existing travel command and existing travel/body mechanics.
-
-Do not encode a global four-tick Starfall destination rule for unrelated origins.
-
-Share/derive the existing Ashen maritime travel profile rather than creating an unrelated second return-balance system.
-
-Add focused tests proving:
-- the accepted Ashen return succeeds at 4 ticks;
-- unrelated origins do not inherit that route accidentally;
-- existing stale/wrong-origin/malformed travel protections remain intact.
-
-### 2. Quest-specific turn-in owner
-
-Add one engine-owned Soundings turn-in module. Do not create a generic reward DSL or all-quests framework.
-
-Implement stable:
-- command/request identity;
-- normalized intent fingerprint;
-- occurrence identity;
-- result identity;
-- consequence receipt identities;
-- rejection codes;
-- durable duplicate classification.
-
-Readiness must require:
-- active Soundings quest;
-- valid Starfall submission context;
-- complete semantically valid retained four-shift survey authority;
-- no required pending/conflicting survey repair;
-- no prior conflicting turn-in authority.
-
-UI objective flags alone are insufficient.
-
-### 3. Durable authority
-
-Extend the campaign authority-ledger family with one optional, versioned Soundings turn-in container as specified by the owner contract.
-
-Keep it separate from `ashenReefSurvey` field-work authority.
-
-Persist:
-- requests;
-- accepted occurrences;
-- results;
-- consequence receipts;
-- only the projection-repair state actually required.
-
-Update strict shared types, campaign validation, serialization/migration/default handling, TS/JS bridges and tests as required.
-
-Do not change `worldVersion` merely to align labels. If a persisted migration/version change is actually required, prove and document it rather than assuming it.
-
-### 4. Atomic completion and payment
-
-One accepted turn-in must atomically:
-
-- complete/turn in Soundings;
-- clear tracking when Soundings is tracked;
-- never auto-select another quest by array order;
-- add exactly 5 gold and 0 silver;
-- record exactly one durable currency-credit receipt;
-- close/remove the Soundings operation as specified;
-- transition current activity to post-submission presentation;
-- append one completion Chronicle projection;
-- append one success notification projection;
-- preserve survey authority and Stormglass.
-
-No excluded reward category may change.
-
-The turn-in owner is the bounded transaction coordinator for this first currency consequence. Do not create arbitrary direct-wallet permission elsewhere.
-
-### 5. Retry / failure semantics
-
-Required rejection/duplicate coverage:
-
-- malformed command;
-- wrong player/campaign;
-- stale snapshot/revision;
-- wrong location;
-- quest missing/not active/already consumed;
-- incomplete survey;
-- malformed/deeply incoherent survey authority;
-- pending/conflicting survey repair;
-- same request identity with conflicting normalized intent;
-- conflicting retained turn-in receipt graph;
-- exact durable duplicate;
-- duplicate after restart;
-- duplicate after later unrelated accepted mutation.
-
-Every rejection before durable acceptance must preserve the original snapshot. No partial payment/completion/projection cleanup is allowed.
-
-### 6. Real caller and accepted-only UI
-
-Add a real runtime caller using campaign/session admission.
-
-Expose `acceptedState` only after accepted mutation.
-
-Update `GameSessionContext.tsx` to apply only accepted state.
-
-Migrate the real Soundings turn-in path in `apps/rpg-ui/src/features/QuestsPanel.tsx` away from legacy `turnInQuest(snapshot,...)`.
-
-Also reconcile `packages/engines/game-engine/src/gameplay-snapshot-sync.ts`, which currently duplicates legacy Soundings readiness and still requires `location.saltmere`. Current journal/readiness/blocker projection must derive from, or remain semantically identical to, the new authoritative Starfall turn-in readiness contract; do not leave a second legacy readiness predicate that can disagree with the command owner.
-
-Legacy Soundings handling in `gameplayLoop.ts` must be removed from the real path or retained only as clearly unreachable characterization. Avoid unrelated Rivet rewrites.
-
-### 7. Targeted UI only
-
-Honor the refined UI design intent without attempting the broad shell redesign.
-
-This slice may change only what is needed to make the completed loop understandable:
-
-- truthful Starfall return affordance;
-- packet-ready / return-next state;
-- exact turn-in blocker state;
-- one authoritative Submit/Turn In action;
-- 5-gold + completion preview/result;
-- completion Chronicle result.
-
-Reconcile stale current runtime/content presentation that still says exact Soundings turn-in terms are deferred. At minimum inspect:
-
-- `packages/engines/game-engine/src/ashen-reef-survey-content.ts`;
-- `packages/engines/game-engine/src/ashen-reef-survey-offer-staging.ts`;
-- `apps/rpg-ui/src/runtime/demoSnapshot.ts`;
-- `packages/content/base/civilization/quest_definitions.json`;
-- matching focused tests and any other current user-visible publisher discovered from those owners.
-
-Current runtime/content presentation must reflect the accepted 5-gold terms where it is user-visible or consumed by current runtime presentation. Preserve historical decision/audit wording as historical evidence; do not rewrite older records merely because later accepted authority closed the deferral.
-
-Prefer presentation compatible with a future contextual inspector/next-action column.
-
-Do not rebuild the top bar, left rail, Home, World shell, map system, Character, Activity, Codex, or Chronicle architecture in this package.
-
-## Focused Validation
-
-At minimum run:
-
-1. existing ordinary reachability integration;
-2. existing player-travel focused tests;
-3. new return-route tests;
-4. new Soundings turn-in command/authority tests;
-5. persistence/campaign-admission tests covering the new ledger;
-6. accepted-only caller/UI source guards;
-7. a new ordinary end-to-end integration covering:
-   creator/start
-   → offer/acceptance
-   → Ashen travel
-   → four shifts
-   → restart
-   → Starfall return
-   → turn-in
-   → exactly +5g
-   → quest completed
-   → restart
-   → durable duplicate
-   → continued play;
-8. Node-side UI configuration typecheck;
-9. targeted UI/type checks for changed files;
-10. direct current Vite production build or equivalent current build path;
-11. `git diff --check` and clean final status.
-
-The broad UI TypeScript baseline is known non-green. Do not silently claim it is green and do not mix broad cleanup into this package. Characterize changed-file impact explicitly.
-
-Apply FP-001, FP-002, FP-009, FP-013, FP-014, FP-017 and any persistence/branch guardrails required by live source.
-
-## Acceptance Result
-
-Return exactly one implementation disposition:
-
-- `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`; or
-- `IMPLEMENTATION_BLOCKED`.
-
-On success:
-
-- record exact implementation commit and validation evidence;
-- keep `GAME_VERSION` at `0.1.0-prealpha`;
-- keep `DEV-0.7.x` current without auto-allocating `DEV-0.7.1`;
-- install a separate **Soundings Durable Completion Independent Acceptance Audit**;
-- do not issue a game-version acceptance decision in this run.
-
-On blockage, identify the exact failed contract and install only the smallest coherent repair/decision.
-
-Commit only intended changes, push `master`, fetch/prune, verify local/tracking equality, retrieve hosted current prompt/output/handoff, and finish clean.
+Update focused authority, current output/handoff/prompt, branch register, historical routing and planning reconciliation. Commit intended audit/coordination changes, push master, fetch/prune, verify local/tracking/live hosted equality, retrieve hosted current prompt/output/handoff, and finish clean with exact commit identities.

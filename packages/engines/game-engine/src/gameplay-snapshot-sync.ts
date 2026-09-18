@@ -1,3 +1,5 @@
+import { resolvePlayerSoundingsTurnIn } from "./soundings-turn-in-readiness.js";
+import { repairSoundingsTurnInProjections } from "./soundings-turn-in-authority.js";
 import { deserializeSnapshot, serializeSnapshot } from "../../../shared/persistence/src/index.js";
 import type {
   AshenReefSurveyMaterialVersionsState,
@@ -12,6 +14,7 @@ import {
 } from "../../player-engine/src/index.js";
 import { getCurrentPlayerTravelLocationId } from "./player-travel-rules.js";
 import {
+  CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION,
   buildAshenReefSurveyQuestObjectives,
   getAshenReefSurveyContent,
   resolveAshenReefSurveyContentVersion
@@ -52,7 +55,7 @@ function isQuestReadyToTurnIn(snapshot: SaveSnapshot, questId: string): boolean 
   const quest = findQuest(snapshot, questId);
   if (!quest || quest.category !== "active") return false;
   if (questId === "quest.ashen_reef_survey") {
-    return isSurveyComplete(snapshot) && getCurrentPlayerTravelLocationId(snapshot) === "location.saltmere";
+    return resolvePlayerSoundingsTurnIn(snapshot).accepted;
   }
   if (questId === "quest.rivet_shortfall_relief") {
     return hasRivetCargo(snapshot) && getCurrentPlayerTravelLocationId(snapshot) === "location.saltmere";
@@ -99,7 +102,9 @@ function syncQuestJournal(
             contentVersion,
             3,
             true
-          )
+          ).slice(0, 4).concat(snapshot.authorityLedger?.soundingsTurnIn?.results.length
+            ? "Submitted at Starfall Harbormaster's Office; 5 gold received"
+            : "Contract completed (legacy record)")
         };
       }
 
@@ -321,6 +326,7 @@ export function synchronizeGameplaySnapshot(
   } = {}
 ): SaveSnapshot {
   const nextSnapshot = cloneSnapshot(snapshot);
+  repairSoundingsTurnInProjections(nextSnapshot, false);
   const surveyContentVersion = resolveAshenReefSurveyContentVersion(
     nextSnapshot,
     options.ashenReefSurveyContentVersion
@@ -328,7 +334,7 @@ export function synchronizeGameplaySnapshot(
 
   nextSnapshot.sessionState.questJournal = syncQuestJournal(
     nextSnapshot,
-    surveyContentVersion
+    options.ashenReefSurveyContentVersion ?? CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION
   );
   nextSnapshot.sessionState.worldRecords = syncWorldRecords(nextSnapshot);
   nextSnapshot.sessionState.activityRecords = syncActivityRecords(nextSnapshot);

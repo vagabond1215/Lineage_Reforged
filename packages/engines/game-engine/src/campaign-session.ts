@@ -3,6 +3,7 @@ import type {
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
 import { serializeSnapshot } from "../../../shared/persistence/src/index.js";
+import { fingerprintSoundingsState } from "./soundings-turn-in-authority.js";
 import {
   createAuthorityId,
   isTargetCampaignSnapshot
@@ -384,11 +385,30 @@ function isSurveyCampaignControlCoherent(
     identity.firstDivergentMutationId === control.firstDivergentMutationId;
 }
 
+/** Soundings uses the same campaign continuity boundary as field work. */
+export function isSoundingsCampaignControlCoherent(control: CampaignSessionControl, snapshot: SaveSnapshot): boolean {
+  return control.accountId === snapshot.accountId && control.campaignId === snapshot.campaignIdentity?.campaignId && isSurveyCampaignControlCoherent(control, snapshot);
+}
+
 function candidateContainsPreparedSurveyEvidence(
   preparation: Extract<PlayerSurveyCampaignPreparation, { accepted: true }>,
   candidateSnapshot: SaveSnapshot,
   resultId: string
 ): boolean {
+  if (preparation.mutationId.startsWith("soundings_turn_in_request.")) {
+    const authority = candidateSnapshot.authorityLedger?.soundingsTurnIn;
+    const request = authority?.requests[0];
+    const result = authority?.results[0];
+    return !!request && !!result && request.requestId === preparation.mutationId &&
+      result.resultId === resultId && request.acceptedContinuityId === preparation.acceptedContinuityId &&
+      request.normalizedIntent.sourceContinuityId === preparation.sourceContinuityId &&
+      request.normalizedIntent.sourceArtifactId === preparation.sourceArtifactId &&
+      request.normalizedIntent.sourcePublicationId === preparation.sourcePublicationId &&
+      request.normalizedIntent.sourceRevision === preparation.sourceRevision &&
+      request.normalizedIntent.snapshotFingerprint === fingerprintSoundingsState(JSON.parse(preparation.sourceSnapshotFingerprint)) &&
+      JSON.stringify(candidateSnapshot.playerState.currency) === JSON.stringify({ ...result.currencyBefore, gold: result.currencyBefore.gold + 5 }) &&
+      result.continuityId === preparation.acceptedContinuityId;
+  }
   const authority = candidateSnapshot.authorityLedger?.ashenReefSurvey;
   if (!authority) return false;
   if (preparation.mutationId.startsWith("survey_request.")) {
@@ -653,6 +673,16 @@ export function admitCampaignMutation(
   control: CampaignSessionControl,
   submission: CampaignMutationSubmission
 ): CampaignMutationAdmission {
+  // Submission receipts may be introduced only through their prepared owner.
+  // Other accepted mutations may preserve valid existing authority, never rewrite it.
+  if (submission.sourceSnapshot.authorityLedger?.soundingsTurnIn || submission.proposedSnapshot.authorityLedger?.soundingsTurnIn) {
+    let valid = false;
+    try {
+      valid = isTargetCampaignSnapshot(submission.sourceSnapshot) && isTargetCampaignSnapshot(submission.proposedSnapshot) &&
+        JSON.stringify(submission.sourceSnapshot.authorityLedger?.soundingsTurnIn) === JSON.stringify(submission.proposedSnapshot.authorityLedger?.soundingsTurnIn);
+    } catch { valid = false; }
+    if (!valid) return { accepted: false, duplicate: false, reason: "rejected", snapshot: submission.sourceSnapshot, control, resultId: null };
+  }
   const submissionFingerprint =
     buildMutationSubmissionFingerprint(submission);
   const retained = control.retainedMutationResults.find(

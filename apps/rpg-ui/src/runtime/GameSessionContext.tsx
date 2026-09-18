@@ -40,6 +40,7 @@ import {
 } from './ashenReefSurveyCaller.js';
 
 export type { AshenReefSurveyCallerOutcome } from './ashenReefSurveyCaller.js';
+import { submitSoundingsTurnInCaller, type SoundingsTurnInCommand, type SoundingsTurnInCallerOutcome } from './soundingsTurnInCaller.js';
 
 export interface GameSessionState {
   accountProfile: AccountProfileState;
@@ -63,6 +64,7 @@ export interface GameSessionContextValue extends GameSessionState {
   advanceAshenReefSurvey: (
     requestId: string
   ) => AshenReefSurveyCallerOutcome;
+  submitSoundingsTurnIn: (requestId: string) => SoundingsTurnInCallerOutcome;
   repairAshenReefSurveyProjection: (
     resultId: string,
     projectionKind: AshenReefSurveyProjectionKind
@@ -114,6 +116,7 @@ export function GameSessionProvider({
     createInitialBodyStatePresentationMemory()
   );
   const surveyCommandRef = useRef<Map<string, PlayerSurveyActivityAdvancementCommand>>(new Map());
+  const soundingsCommandRef = useRef<Map<string, SoundingsTurnInCommand>>(new Map());
   const [dismissedToastIds, setDismissedToastIds] = useState<string[]>([]);
   const dismissedToastIdSet = useMemo(() => new Set(dismissedToastIds), [dismissedToastIds]);
   const sessionState = useMemo(
@@ -200,6 +203,13 @@ export function GameSessionProvider({
           onSnapshotChange(result.snapshot, result.control);
         }
         return result;
+      },
+      submitSoundingsTurnIn: (requestId) => {
+        const transition = submitSoundingsTurnInCaller(snapshot, campaignSessionControl, requestId, soundingsCommandRef.current);
+        if (transition.acceptedState) {
+          onSnapshotChange(transition.acceptedState.snapshot, transition.acceptedState.control);
+        }
+        return transition.outcome;
       },
       dismissBodyStateToast: () => {
         const toastId = sessionState.bodyStatePresentation.toastId;

@@ -289,7 +289,7 @@ test("ordinary creator reaches and completes the Ashen survey through production
       authority.requests.map(
         (entry) => entry.normalizedIntent.materialVersions.surveyContent
       ),
-      [2, 2, 2, 2]
+      [3, 3, 3, 3]
     );
     for (const result of authority.results) {
       assert.deepEqual(result.nonProposals, ASHEN_REEF_SURVEY_NON_PROPOSALS);

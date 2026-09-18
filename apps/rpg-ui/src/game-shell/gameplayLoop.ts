@@ -1,4 +1,5 @@
-﻿import { deserializeSnapshot, serializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
+import { resolvePlayerSoundingsTurnIn } from '../../../../packages/engines/game-engine/src/player-soundings-turn-in.js';
+import { deserializeSnapshot, serializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
 import { advanceClock } from '../../../../packages/shared/time/src/index.js';
 import {
   type ActionAttributeLoadProfileState,
@@ -100,16 +101,7 @@ const FLAG_SURVEY_RUINS_CONFIRMED = 'gameplay.quest.ashen_reef_survey.ruins_conf
 const FLAG_PORTER_CRATES_SECURED = 'gameplay.quest.rivet_shortfall_relief.crates_secured';
 const RIVET_CRATE_ITEM_KEY = 'deepiron_rivet_crate';
 const RIVET_CRATE_ITEM_ID = 'item.deepiron_rivet_crate';
-const OPERATION_SURVEY_ID = 'operation.quest.ashen_reef_survey';
 const OPERATION_PORTER_ID = 'operation.quest.rivet_shortfall_relief';
-
-const ASHEN_REEF_SURVEY_FAME_AWARD: ReputationAwardDefinitionState = {
-  axis: 'fame',
-  branchId: 'commercial',
-  directEarnedScope: 'regional',
-  baseValue: 6,
-  originSettlementIds: ['settlement.aurelis']
-};
 
 const RIVET_SHORTFALL_RELIEF_FAME_AWARD: ReputationAwardDefinitionState = {
   axis: 'fame',
@@ -201,10 +193,6 @@ function getSurveySectorCount(snapshot: SaveSnapshot): number {
   ).length;
 }
 
-function isSurveyComplete(snapshot: SaveSnapshot): boolean {
-  return getSurveySectorCount(snapshot) >= 3 && hasFlag(snapshot, FLAG_SURVEY_RUINS_CONFIRMED);
-}
-
 function hasRivetCargo(snapshot: SaveSnapshot): boolean {
   return hasFlag(snapshot, FLAG_PORTER_CRATES_SECURED);
 }
@@ -221,7 +209,7 @@ function isQuestReadyToTurnIn(snapshot: SaveSnapshot, questId: string): boolean 
   }
 
   if (questId === 'quest.ashen_reef_survey') {
-    return isSurveyComplete(snapshot) && getCurrentLocationId(snapshot) === 'location.saltmere';
+    return resolvePlayerSoundingsTurnIn(snapshot).accepted;
   }
 
   if (questId === 'quest.rivet_shortfall_relief') {
@@ -780,38 +768,8 @@ function makeQuestState(snapshot: SaveSnapshot, questId: string): QuestCommandSt
   }
 
   if (questId === 'quest.ashen_reef_survey') {
-    const sectorCount = getSurveySectorCount(snapshot);
-
-    if (getCurrentLocationId(snapshot) !== 'location.ashen_reef' && sectorCount === 0) {
-      return {
-        canAccept: false,
-        canTurnIn: false,
-        canTrack: trackingPlan.accepted,
-        nextStep: 'Travel from Starfall Port to Ashen Reef, then advance a work shift to begin charting.'
-      };
-    }
-
-    if (!isSurveyComplete(snapshot)) {
-      return {
-        canAccept: false,
-        canTurnIn: false,
-        canTrack: trackingPlan.accepted,
-        nextStep:
-          getCurrentLocationId(snapshot) === 'location.ashen_reef'
-            ? 'Advance work shifts at Ashen Reef until all three sectors and ruin markers are logged.'
-            : 'Return to Ashen Reef to finish the survey packet.'
-      };
-    }
-
-    return {
-      canAccept: false,
-      canTurnIn: isQuestReadyToTurnIn(snapshot, questId),
-      canTrack: trackingPlan.accepted,
-      nextStep:
-        getCurrentLocationId(snapshot) === 'location.saltmere'
-          ? "Return the chart packet to Starfall Harbormaster's Office for later turn-in."
-          : "Return to Starfall Harbormaster's Office with the completed chart packet."
-    };
+    const plan = resolvePlayerSoundingsTurnIn(snapshot);
+    return { canAccept: false, canTurnIn: plan.accepted, canTrack: trackingPlan.accepted, nextStep: plan.notice.detail };
   }
 
   if (questId === 'quest.rivet_shortfall_relief') {
@@ -1355,6 +1313,10 @@ export function restAtCurrentSettlement(snapshot: SaveSnapshot): GameplayActionR
 }
 
 export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayActionResult {
+  // Soundings must cross its durable command and campaign admission boundary.
+  if (questId === 'quest.ashen_reef_survey') {
+    return { snapshot, notice: createNotice('warning', 'Authoritative Submission Required', 'Submit Soundings through the campaign turn-in command.') };
+  }
   const quest = findQuest(snapshot, questId);
 
   if (!quest) {
@@ -1389,65 +1351,7 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
       : entry
   );
 
-  if (questId === 'quest.ashen_reef_survey') {
-    addCurrency(nextSnapshot, { gold: 5, silver: 8 });
-    const skillGain = addOrUpdateSkill(
-      nextSnapshot.playerState.skills,
-      'skill.knowledge.general_lore',
-      1,
-      'Ashen Reef survey turn-in'
-    );
-    nextSnapshot.playerState.skills = skillGain.skills;
-    nextSnapshot.playerState.standing = addOrUpdateStanding(
-      nextSnapshot.playerState.standing,
-      'rep.harbor_office',
-      'Saltmere Harbor Office',
-      8,
-      ['survey_priority', 'harbor_access']
-    );
-    nextSnapshot.playerState.reputation = applyReputationAward(
-      nextSnapshot.playerState.reputation,
-      ASHEN_REEF_SURVEY_FAME_AWARD,
-      {
-        meaningful: true,
-        exposureSatisfied: true,
-        attributionSatisfied: true,
-        sociallyValued: true,
-        tick: nextSnapshot.clock.tick,
-        sourceId: questId
-      }
-    );
-    nextSnapshot.sessionState.operations = removeOperation(
-      nextSnapshot.sessionState.operations,
-      OPERATION_SURVEY_ID
-    );
-    nextSnapshot.sessionState.currentActivity = {
-      id: 'activity.harbor.turn_in',
-      label: 'Filing Survey Packet',
-      category: 'Contract',
-      detail: 'Harbor clerks are stamping the packet, payout order, and codex notes.'
-    };
-    appendNotification(
-      nextSnapshot,
-      'Survey payout received',
-      'Saltmere Harbor Office paid out the Ashen Reef charter and logged the new flora record.',
-      'success'
-    );
-    appendChronicle(
-      nextSnapshot,
-      makeChronicleEntry(
-        nextSnapshot,
-        'reputation',
-        'Ashen Reef survey turned in at Saltmere Harbor Office',
-        'The harbor office paid the charter, updated the route file, and credited the discovery record.',
-        '+5g 8s',
-        [nextSnapshot.playerState.coreData.playerName, 'Saltmere Harbor Office', 'Ashen Reef'],
-        ['Payout secured', 'Harbor standing improved', 'Codex entry unlocked'],
-        [formatSkillGainEffect(skillGain, 'Common Lore'), 'Harbor Office Standing +8', 'Regional Fame +6'],
-        ['Contract', 'Discovery', 'Harbor Office']
-      )
-    );
-  } else if (questId === 'quest.rivet_shortfall_relief') {
+  if (questId === 'quest.rivet_shortfall_relief') {
     removeInventoryQuantity(nextSnapshot.playerState.inventory, RIVET_CRATE_ITEM_KEY, 6);
     addCurrency(nextSnapshot, { gold: 4, silver: 1 });
     const skillGain = addOrUpdateSkill(

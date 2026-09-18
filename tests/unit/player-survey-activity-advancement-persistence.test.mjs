@@ -325,7 +325,7 @@ test("version-7 publication and restart preserve exact survey evidence and durab
   });
 });
 
-test("persisted survey-content v1 remains byte-stable while later shifts author v2 evidence", () => {
+test("persisted survey-content v1 remains byte-stable while later shifts author v3 evidence", () => {
   withMockWindow(() => {
     const source = createSurveySource("account.survey_content_versions");
     const legacyContent = getAshenReefSurveyContent(1);
@@ -346,7 +346,7 @@ test("persisted survey-content v1 remains byte-stable while later shifts author 
       initial.sessionControl,
       legacyRequestId
     );
-    assert.equal(currentCommand.normalizedIntent.materialVersions.surveyContent, 2);
+    assert.equal(currentCommand.normalizedIntent.materialVersions.surveyContent, 3);
     const currentResult = executePlayerSurveyActivityAdvancementCommand(
       initial.snapshot,
       initial.sessionControl,
@@ -433,7 +433,7 @@ test("persisted survey-content v1 remains byte-stable while later shifts author 
     assert.equal(
       next.snapshot.authorityLedger.ashenReefSurvey.requests[1]
         .normalizedIntent.materialVersions.surveyContent,
-      2
+      3
     );
     const mixedQuest = next.snapshot.sessionState.questJournal.find(
       (entry) => entry.id === QUEST_ID
@@ -445,7 +445,7 @@ test("persisted survey-content v1 remains byte-stable while later shifts author 
       next.snapshot.authorityLedger.ashenReefSurvey.occurrences.map(
         (entry) => entry.materialVersions.surveyContent
       ),
-      [1, 2]
+      [1, 3]
     );
     assert.equal(
       JSON.stringify(next.snapshot.sessionState.notifications.find(
@@ -474,7 +474,7 @@ test("persisted survey-content v1 remains byte-stable while later shifts author 
       mixedReload.snapshot.authorityLedger.ashenReefSurvey.requests.map(
         (entry) => entry.normalizedIntent.materialVersions.surveyContent
       ),
-      [1, 2]
+      [1, 3]
     );
     const duplicateAfterMixedRestart = executePlayerSurveyActivityAdvancementCommand(
       mixedReload.snapshot,
@@ -640,19 +640,19 @@ test("complete survey-content v1 authority publishes, restarts, duplicates, and 
   });
 });
 
-test("survey-content version serialization admits only retained v1 and current v2", () => {
+test("survey-content version serialization admits retained v1/v2 and current v3", () => {
   const source = createSurveySource("account.survey_content_version_guard");
   const command = createPlayerSurveyActivityAdvancementCommand(
     source,
     createControl(source),
     "survey_request.00000000-0000-4000-8000-00000000a032"
   );
-  assert.equal(command.normalizedIntent.materialVersions.surveyContent, 2);
+  assert.equal(command.normalizedIntent.materialVersions.surveyContent, 3);
   assert.equal(
     serializeAshenReefSurveyNormalizedIntent(command.normalizedIntent),
     command.canonicalIntent
   );
-  for (const forgedVersion of [0, 3]) {
+  for (const forgedVersion of [0, 4]) {
     const forged = structuredClone(command.normalizedIntent);
     forged.materialVersions.surveyContent = forgedVersion;
     assert.throws(

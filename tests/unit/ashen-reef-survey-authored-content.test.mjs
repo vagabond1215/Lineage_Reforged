@@ -143,7 +143,7 @@ test("quest schema admits only the bounded authored null semantics", () => {
 });
 
 test("version-two runtime presentation stays aligned with the authored offer", () => {
-  const content = getAshenReefSurveyContent(2);
+  const content = getAshenReefSurveyContent(3);
   assert.deepEqual(
     {
       title: content.questTitle,
@@ -178,4 +178,11 @@ test("versioned presentation facts do not expose mutable shared arrays", () => {
   ]);
   assert.deepEqual(fresh.codexTags, ["Starfall Isle", "Alchemy", "Flora"]);
   assert.deepEqual(fresh.codexRegionTags, ["Starfall Isle"]);
+});
+
+
+test("current Soundings terms are 5 gold while historical v2 stays unchanged", () => {
+  assert.equal(getAshenReefSurveyContent(3).questRewardLabel, "5 gold on accepted submission");
+  assert.match(ashen.miscNotes.join(" "), /exactly 5 gold, 0 silver/);
+  assert.match(getAshenReefSurveyContent(2).questRewards[0], /deferred/);
 });

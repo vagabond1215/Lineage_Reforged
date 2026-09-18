@@ -1,4 +1,4 @@
-﻿import {
+import {
   applyAttributeAdjustments,
   createEmptyPlayerResourceRuntimeState,
   resolvePlayerOriginProfile,
@@ -850,7 +850,7 @@ export const demoSnapshot: SaveSnapshot = {
         summary: 'Re-sound channels, breakers, draft-safe approaches, and ruin markers after the seasonal storm.',
         tags: ['Survey', 'Starfall Isle', 'Civic'],
         detailEntries: [
-          { label: 'Pay', value: 'Terms set at later turn-in' },
+          { label: 'Pay', value: '5 gold on accepted submission' },
           { label: 'Deadline', value: 'No authored expiry' },
           { label: 'Deliverable', value: 'Verified chart packet' }
         ]
@@ -1046,7 +1046,7 @@ export const demoSnapshot: SaveSnapshot = {
         category: 'active',
         title: 'Soundings of Ashen Reef',
         regionLabel: 'Starfall Isle',
-        rewardLabel: 'Paid civic contract - terms set at later turn-in',
+        rewardLabel: '5 gold on accepted submission',
         summary: "After a major seasonal storm, Starfall Harbormaster's Office commissions fresh soundings of Ashen Reef's channels, breakers, draft-safe approaches, and ruin markers before fishing and commercial traffic intensify.",
         statusLabel: 'Tracked',
         tracked: true,
@@ -1057,7 +1057,7 @@ export const demoSnapshot: SaveSnapshot = {
           'Verify the Ruin Markers: pending',
           "Return chart packet to Starfall Harbormaster's Office"
         ],
-        rewards: ['Paid civic contract; exact turn-in terms remain deferred.'],
+        rewards: ["5 gold; contract completed at Starfall Harbormaster's Office."],
         relatedLocations: ['settlement.starfall_port', 'location.ashen_reef'],
         tags: ['Survey', 'Starfall Isle', 'Civic contract']
       },
@@ -1177,6 +1177,5 @@ syncPlayerRuntimeState(
   [],
   demoSnapshot.gameState.runDifficulty
 );
-
 
 

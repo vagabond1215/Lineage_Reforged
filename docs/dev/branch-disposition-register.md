@@ -1,5 +1,12 @@
 # Branch Disposition Register
 
+## 2026-09-18 Soundings Implementation Checkpoint
+
+Fetched/pruned master at source `9bc128c11ff561281a0ba2665efb20cec8c7d108`; one local/four hosted branches, zero open PRs. Existing partial implementation edits preserved. Non-default heads unchanged: readiness `59c103c3a06d55f35bffa735fd4b7814dffb583e` and prompt-integrity `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f` remain PROTECTED_REFERENCE; administration `210df5bcc017a8f31d621a553b5496c668540d29` remains HOLD_NAMED_CONSUMER. Prior merge-base/unique-path evidence reused because refs and semantic disposition are unchanged. No integration, rebase, branch deletion, PR or protection mutation due/performed.
+
+Exact retained review triggers: explicitly scheduled readiness/regression or protection/disposition review; dedicated prompt/execution-pointer integrity audit; administration/template/governance or explicitly scheduled Lineage retrospective, respectively. Implementation returns IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE; active successor is Soundings Durable Completion Independent Acceptance Audit. FP-008/009: publication heads are recorded separately in current output and focused implementation record. Older rows below are dated history.
+
+
 ## 2026-09-14/15 Connector Drift-Audit Refresh
 
 Connector inspection of hosted state immediately before this register write found `master` at `9e5b86cf4446825f5b31f919aafe959152cd3a25`, four hosted branches total and zero open pull requests. The three non-default hosted branches remain `prep/integrated-gameplay-0-7-readiness-audit`, `parallel/prompt-packaging-integrity-audit`, and `admin/genesis-research-evidence-2026-08-13`; their prior `PROTECTED_REFERENCE` / `HOLD_NAMED_CONSUMER` dispositions and review triggers remain unchanged. No merge, rebase, cherry-pick, branch deletion, PR mutation, or protection change is due from this documentation drift audit.

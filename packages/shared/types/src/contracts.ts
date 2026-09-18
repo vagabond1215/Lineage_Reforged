@@ -1299,7 +1299,7 @@ export interface AshenReefSurveyMaterialVersionsState {
   statGrowth: number;
   skillPolicy: 1;
   synchronization: 1;
-  surveyContent: 1 | 2;
+  surveyContent: 1 | 2 | 3;
 }
 
 export interface AshenReefSurveyMaterialFactsState {
@@ -1707,6 +1707,85 @@ export interface CampaignAuthorityLedgerState {
   version: 1;
   entries: CampaignAuthorityLedgerEntryState[];
   ashenReefSurvey?: AshenReefSurveyAuthorityState;
+  soundingsTurnIn?: SoundingsTurnInAuthorityState;
+}
+
+export interface SoundingsTurnInNormalizedIntentState {
+  version: 1;
+  accountId: string;
+  campaignId: string;
+  characterId: string;
+  questId: "quest.ashen_reef_survey";
+  sourceContinuityId: string;
+  sourceArtifactId: string;
+  sourcePublicationId: string;
+  sourceRevision: number;
+  expectedRevision: number;
+  expectedTick: number;
+  expectedSnapshotVersion: string;
+  expectedLocationId: "settlement.starfall_port";
+  sourceSnapshot: string;
+  snapshotFingerprint: string;
+  surveyFingerprint: string;
+}
+
+export interface SoundingsTurnInRequestState {
+  version: 1;
+  requestId: string;
+  commandId: string;
+  canonicalIntent: string;
+  normalizedIntent: SoundingsTurnInNormalizedIntentState;
+  acceptedContinuityId: string;
+  occurrenceId: string;
+  resultId: string;
+}
+
+export interface SoundingsTurnInOccurrenceState {
+  version: 1;
+  occurrenceId: string;
+  requestId: string;
+  resultId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  appliedTick: number;
+}
+
+export interface SoundingsTurnInResultState extends SoundingsTurnInOccurrenceState {
+  code: "soundings_completed";
+  questId: "quest.ashen_reef_survey";
+  payment: { gold: 5; silver: 0 };
+  currencyBefore: PlayerCurrencyState;
+  trackingBefore: string | null;
+  operationBefore: OperationState | null;
+  activityBefore: CurrentActivityState | null;
+  timeLabel: string;
+  requiredReceiptIds: string[];
+  notice: { tone: "success"; title: string; detail: string };
+}
+
+export type SoundingsTurnInConsequenceKind = "quest_completion" | "currency_credit" | "tracking_clear" | "operation_close" | "activity_transition" | "chronicle_projection" | "notification_projection";
+export interface SoundingsTurnInConsequenceReceiptState {
+  version: 1;
+  receiptId: string;
+  requestId: string;
+  resultId: string;
+  occurrenceId: string;
+  campaignId: string;
+  continuityId: string;
+  characterId: string;
+  appliedTick: number;
+  owner: "soundings_turn_in";
+  posture: "applied";
+  kind: SoundingsTurnInConsequenceKind;
+  effect: Record<string, unknown>;
+}
+export interface SoundingsTurnInAuthorityState {
+  version: 1;
+  requests: SoundingsTurnInRequestState[];
+  occurrences: SoundingsTurnInOccurrenceState[];
+  results: SoundingsTurnInResultState[];
+  consequenceReceipts: SoundingsTurnInConsequenceReceiptState[];
 }
 
 export type NormalDefeatSourceKind =

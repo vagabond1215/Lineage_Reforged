@@ -16,6 +16,7 @@ import type {
   RunDifficultyState,
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
+import { validateSoundingsTurnInAuthority } from "./soundings-turn-in-authority.js";
 import {
   resolvePlayerOriginProfile,
   resolvePlayerResources
@@ -1076,7 +1077,7 @@ function validateMaterialVersions(value: unknown): boolean {
     Number(value.statGrowth) > 0 &&
     value.skillPolicy === 1 &&
     value.synchronization === 1 &&
-    (value.surveyContent === 1 || value.surveyContent === 2)
+    (value.surveyContent === 1 || value.surveyContent === 2 || value.surveyContent === 3)
   );
 }
 
@@ -2063,6 +2064,7 @@ export function isTargetCampaignSnapshot(
     snapshot.authorityLedger?.version === 1 &&
     Array.isArray(snapshot.authorityLedger.entries) &&
     Array.isArray(snapshot.normalDefeatReceipts) &&
-    validateAshenReefSurveyAuthority(snapshot)
+    validateAshenReefSurveyAuthority(snapshot) &&
+    validateSoundingsTurnInAuthority(snapshot)
   );
 }

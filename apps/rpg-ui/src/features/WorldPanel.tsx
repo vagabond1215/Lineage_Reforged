@@ -202,6 +202,7 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                     disabled={
                       !selectedWorldLocation ||
                       !selectedWorldLocation.known ||
+                      !travelPreview?.available ||
                       selectedWorldLocation.id === currentLocationId
                     }
                     onClick={() => {

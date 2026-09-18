@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { resolvePlayerSoundingsTurnIn } from '../../../../packages/engines/game-engine/src/player-soundings-turn-in.js';
 import { useUiViewModel } from '../runtime/UiViewModelContext';
 import { matchesQuery } from '../utils';
 import { PanelLayout } from '../components/layout/PanelLayout';
@@ -26,7 +27,8 @@ type QuestsPanelProps = {
 
 export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: QuestsPanelProps) {
   const questData = useUiViewModel().quests;
-  const { snapshot, updateSnapshot } = useGameSession();
+  const { snapshot, updateSnapshot, submitSoundingsTurnIn } = useGameSession();
+  const soundingsRequestId = useRef<string | null>(null);
   const [activeSection, setActiveSection] = useState('active');
   const [selectedId, setSelectedId] = useState(questData.entries[0]?.id ?? '');
   const [panelNotice, setPanelNotice] = useState<GameShellNotice | null>(null);
@@ -41,6 +43,8 @@ export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Que
   });
   const selectedItem = filteredItems.find((item) => item.id === selectedId) ?? filteredItems[0];
   const questCommandState = selectedItem ? getQuestCommandState(snapshot, selectedItem.id) : null;
+  const isSoundings = selectedItem?.id === 'quest.ashen_reef_survey';
+  const soundingsPlan = isSoundings ? resolvePlayerSoundingsTurnIn(snapshot) : null;
   const isTrackedQuest = selectedItem ? snapshot.sessionState.trackedQuestId === selectedItem.id : false;
   const windowDetail = questData.windowDetails[activeSection];
   const primaryDetail = selectedItem
@@ -84,8 +88,11 @@ export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Que
                   <div className="mt-1 text-base text-slate-50">{selectedItem?.title ?? 'No quest selected'}</div>
                 </div>
                 <div className="text-slate-400">
-                  {questCommandState?.nextStep ?? 'Select a quest or contract to review next-step guidance.'}
+                  {isSoundings && selectedItem?.category !== 'contracts'
+                    ? soundingsPlan?.notice.detail
+                    : questCommandState?.nextStep ?? 'Select a quest or contract to review next-step guidance.'}
                 </div>
+                {isSoundings && selectedItem?.category !== 'completed' && <div>Submit the verified packet at Starfall Harbormaster's Office to complete the contract and receive 5 gold.</div>}
               </div>
               <div className="flex flex-wrap gap-3">
                 <GameActionButton
@@ -129,14 +136,22 @@ export function QuestsPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Que
                   }}
                 />
                 <GameActionButton
-                  label="Turn In Quest"
+                  label={isSoundings ? 'Submit Soundings' : 'Turn In Quest'}
                   tone="warning"
-                  disabled={!selectedItem || !questCommandState?.canTurnIn}
+                  disabled={!selectedItem || (isSoundings ? !soundingsPlan?.accepted : !questCommandState?.canTurnIn)}
                   onClick={() => {
                     if (!selectedItem) {
                       return;
                     }
 
+                    if (isSoundings) {
+                      const requestId = soundingsRequestId.current ?? `soundings_turn_in_request.${crypto.randomUUID()}`;
+                      const outcome = submitSoundingsTurnIn(requestId);
+                      soundingsRequestId.current = outcome.kind === 'technical_retry' ? requestId : null;
+                      if (outcome.kind === 'accepted') setActiveSection('completed');
+                      setPanelNotice(outcome.notice);
+                      return;
+                    }
                     const result = turnInQuest(snapshot, selectedItem.id);
                     updateSnapshot(result.snapshot);
                     setActiveSection('completed');

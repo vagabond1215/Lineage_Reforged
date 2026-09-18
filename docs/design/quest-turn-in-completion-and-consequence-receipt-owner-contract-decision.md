@@ -423,3 +423,7 @@ The implementation requires Codex/local repository execution and executable vali
 After implementation, run an independent production-read-only acceptance audit before any game-version decision.
 
 No `DEV-0.7.1` or game-version increment is allocated here. `GAME_VERSION` remains `0.1.0-prealpha`.
+
+## 2026-09-18 Implementation Handoff
+
+The bounded implementation is complete with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`. See `soundings-durable-completion-implementation-record.md` for exact source, code boundaries, 123-test validation, real browser ordinary-path/save/restart evidence, storage-capacity repair and publication identities. This appendix does not independently accept the implementation or change the accepted contract. The separate Soundings Durable Completion Independent Acceptance Audit is installed; game/development versions remain unchanged.

@@ -161,7 +161,7 @@ test("current Ashen Reef survey stages preserve the exact intended material muta
         ? {
             title: "Survey packet complete",
             detail:
-              "All sectors and ruin markers are logged. Return the chart packet to Starfall Harbormaster's Office for later turn-in.",
+              "All sectors and ruin markers are logged. Return the chart packet to Starfall Harbormaster's Office for submission and 5 gold.",
             tone: "accent",
             timeLabel: "Day 1, High Sun"
           }
