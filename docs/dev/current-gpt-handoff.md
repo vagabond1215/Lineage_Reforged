@@ -6,6 +6,8 @@
 
 Date: 2026-09-18
 
+Implementation source: `af0954c294d222bc1f8667266e4549b8619d5484`; later publication-record changes are documentation-only. Inspect any subsequent drift before execution.
+
 Repository: vagabond1215/Lineage_Reforged.
 
 Latest implementation: `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`.

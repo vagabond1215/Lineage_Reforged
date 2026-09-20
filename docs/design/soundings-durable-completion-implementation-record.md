@@ -73,3 +73,9 @@ Fresh local account/character, Human / Workshop-Raised / Traveler / Starfall Por
 September 18: one local branch (`master`), four hosted branches total, zero open PRs. Non-default heads are unchanged: protected readiness `59c103c3a06d55f35bffa735fd4b7814dffb583e`, protected prompt-integrity `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`, and held administration evidence `210df5bcc017a8f31d621a553b5496c668540d29`. No branch actions due or performed; exact triggers remain in the branch register.
 
 Local implementation/validation used the authenticated checkout, shell, GitHub readback and in-app browser. Bounded owner/test agents contributed before interruption; the coordinating run inspected and validated the final shared files. This is not an independent audit. Hosted CI and unlimited-save retention are not claimed. Follow the separately installed **Soundings Durable Completion Independent Acceptance Audit**; broad UI redesign, generic reward architecture, future content and version advancement remain deferred.
+
+## Publication Checkpoint — 2026-09-18
+
+Implementation commit: `af0954c294d222bc1f8667266e4549b8619d5484`. Pushed to origin/master; fetch/prune confirmed HEAD = origin/master with 0 ahead / 0 behind and clean tracked/untracked status. Hosted GitHub retrieval matched local Git blobs for current prompt `ac85ad8d167eb95945373c0bcedb86b5435067ca`, current output `69df23f3ea75bf44b6de283d0271f4aab4908196`, and handoff `99394fceb1d6384b00c737c2ef9a6c69ba9eba7d` at that implementation head.
+
+This follow-up publication-record commit changes documentation only and pins the audit source to the implementation SHA. Its exact identity is the commit containing this appendix (resolve with git log -1 -- docs/dev/current-codex-output.md), separate from the tested implementation. Final post-push fetch, hosted readback and clean status are reported in the completion message; no self-referential commit identity is fabricated.

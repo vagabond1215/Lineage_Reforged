@@ -6,6 +6,8 @@
 
 Date: 2026-09-18
 
+Implementation source: `af0954c294d222bc1f8667266e4549b8619d5484`; later publication-record changes are documentation-only. Inspect any subsequent drift before execution.
+
 Label class: unversioned independent audit of the bounded Soundings implementation. Package M; keep the coupled transaction/restart decision together. First durable checkpoint: focused audit with independently reproduced matrix and explicit disposition before coordination publication.
 
 Game `0.1.0-prealpha`; playability `INTEGRATED_LOOP`; accepted milestone `DEV-0.7.0`; current band `DEV-0.7.x`. Do not change GAME_VERSION, allocate DEV-0.7.1 or issue a game-version decision.

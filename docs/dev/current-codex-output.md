@@ -48,7 +48,7 @@ Execution: Codex repository Default mode, shell/tests/build, GitHub connector re
 
 Suggested implementation commit: `feat(soundings): close return submission and durable payment loop`.
 
-Publication appendix will distinguish implementation and final documentation publication heads after commit/push.
+Implementation and first hosted synchronization are recorded in the publication appendix below.
 
 ## Intended File Inventory
 
@@ -96,3 +96,9 @@ Publication appendix will distinguish implementation and final documentation pub
 - tests/unit/player-survey-activity-advancement-persistence.test.mjs
 - tests/unit/player-travel-characterization.test.mjs
 - tests/unit/soundings-return-travel.test.mjs
+
+## Publication Checkpoint — 2026-09-18
+
+Implementation commit: `af0954c294d222bc1f8667266e4549b8619d5484`. Pushed to origin/master; fetch/prune confirmed HEAD = origin/master with 0 ahead / 0 behind and clean tracked/untracked status. Hosted GitHub retrieval matched local Git blobs for current prompt `ac85ad8d167eb95945373c0bcedb86b5435067ca`, current output `69df23f3ea75bf44b6de283d0271f4aab4908196`, and handoff `99394fceb1d6384b00c737c2ef9a6c69ba9eba7d` at that implementation head.
+
+This follow-up publication-record commit changes documentation only and pins the audit source to the implementation SHA. Its exact identity is the commit containing this appendix (resolve with git log -1 -- docs/dev/current-codex-output.md), separate from the tested implementation. Final post-push fetch, hosted readback and clean status are reported in the completion message; no self-referential commit identity is fabricated.
