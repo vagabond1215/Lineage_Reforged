@@ -175,6 +175,8 @@ Do not copy full defect narratives into this register. Link the focused audit or
 
 ### FP-014 — Container Shape And Recomputed Strings Are Not Semantic Authority
 
+- **Additional evidence (2026-09-20):** `docs/design/soundings-durable-completion-independent-acceptance-audit.md`, F1: a replaceable retained source and recomputed digest/receipt set, or nonexistent artifact/publication references, pass restart duplicate validation. Require source-provenance binding to independently retained accepted authority; another adjacent mutable checksum is insufficient. This is not a claim of general local-save tamper resistance.
+
 - **Pattern:** Shallow object or array checks, or a caller-recomputed serialization string, admit missing required fields, empty required evidence, noncanonical nested ordering, or well-shaped but semantically false owner facts.
 - **Why it escaped:** Validation proved outer container shape and self-consistency with a recomputed string without independently validating every nested field, required collection cardinality, or one insertion-order-independent canonical representation.
 - **Guardrail:** Deeply validate every authority-bearing nested value, require nonempty collections where evidence is mandatory, and compute canonical serialization with recursively stable key ordering owned by the validator rather than trusted caller ordering.

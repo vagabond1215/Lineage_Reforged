@@ -1,8 +1,8 @@
 # Current Planning Anchor Reconciliation
 
-Date: 2026-09-18
+Date: 2026-09-20
 
-Status: accepted coordination authority; DEV-0.7.0 complete; Soundings authored terms and owner contract accepted; Soundings durable completion implemented pending independent acceptance; audit route installed
+Status: accepted coordination authority; DEV-0.7.0 complete; Soundings terms/owner contract accepted; independent Slice-A audit REPAIR_REQUIRED; bounded provenance repair installed
 
 Milestone impact: accepted development-band entry to `DEV-0.7.x`; game-version impact: `none`
 
@@ -12,7 +12,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register and lower-precedence live planning headers are refreshed through accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` on 2026-09-11. The focused readiness appendix records `MILESTONE_ENTRY_ACCEPTED`; the separate unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed on 2026-09-14 with `PLAYABILITY_PRIORITY_SELECTED`. The project owner then accepted `Soundings Return, Submission, And Payment Authored-Terms Decision` with `AUTHORED_TERMS_ACCEPTED`, and the subsequent `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision` returned `OWNER_CONTRACT_ACCEPTED`. The bounded Soundings implementation is complete with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`; the installed successor is `Soundings Durable Completion Independent Acceptance Audit`. See `soundings-durable-completion-implementation-record.md` for exact executable and browser evidence. Earlier accepted audits and their historical labels remain unchanged.
+The current prompt, handoff, output, historical register and lower-precedence live planning headers are refreshed through accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` on 2026-09-11. The focused readiness appendix records `MILESTONE_ENTRY_ACCEPTED`; the separate unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed on 2026-09-14 with `PLAYABILITY_PRIORITY_SELECTED`. The project owner then accepted `Soundings Return, Submission, And Payment Authored-Terms Decision` with `AUTHORED_TERMS_ACCEPTED`, and the subsequent `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision` returned `OWNER_CONTRACT_ACCEPTED`. The bounded Soundings implementation is complete with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`; the independent audit returned `REPAIR_REQUIRED` on 2026-09-20 and the installed successor is `Soundings Retained Source Provenance And Before-State Binding Repair`. See `soundings-durable-completion-independent-acceptance-audit.md` for F1 and the remaining unaccepted matrix. See `soundings-durable-completion-implementation-record.md` for exact executable and browser evidence. Earlier accepted audits and their historical labels remain unchanged.
 
 Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`. The completed reachability decision correctly returned `NO_PACKAGE` until authored input arrived; accepted Soundings canon closed that blocker. The follow-up package decision returned `PACKAGE_READY`, `Version 0.6.11` implemented the bounded route at `3ca23d6864541a899ea61a6bf26257665f754e78`, and `0.6.11.1` independently returned `PARENT_ACCEPTED` plus `REPRESENTATIVE_LOOP_ACCEPTED`. The subsequent readiness decision returned `BAND_ENTRY_READY`; `DEV-0.7.0` is complete with `MILESTONE_ENTRY_ACCEPTED` at the 2026-09-11 verification; game `0.1.0-prealpha` and playability `INTEGRATED_LOOP` remain unchanged.
 
@@ -49,7 +49,8 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - latest authored product decision: `Soundings Return, Submission, And Payment Authored-Terms Decision`, `AUTHORED_TERMS_ACCEPTED`;
 - latest owner-contract decision: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`, `OWNER_CONTRACT_ACCEPTED`;
 - latest bounded implementation: `Soundings Return, Submission, Payment, And Durable Completion Implementation`, `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`;
-- active route: `Soundings Durable Completion Independent Acceptance Audit`;
+- latest independent audit: `Soundings Durable Completion Independent Acceptance Audit`, `REPAIR_REQUIRED` at Slice A (F1);
+- active route: `Soundings Retained Source Provenance And Before-State Binding Repair`;
 - failure-pattern guardrail register: active durable workflow authority;
 - `DEV-0.7.0`: `MILESTONE_ENTRY_ACCEPTED`; Game `0.1.0-prealpha` / `INTEGRATED_LOOP` unchanged;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -76,10 +77,10 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Accepted Near-Term Order
 
-1. execute `Soundings Durable Completion Independent Acceptance Audit`;
-2. independently reproduce the bounded return, exact payment, caller, receipt/projection, quota, restart/duplicate and nested preservation matrix;
-3. install only the smallest evidence-supported next decision or repair; any game-version gate remains later.
+1. execute `Soundings Retained Source Provenance And Before-State Binding Repair` for F1, or document the exact missing binding contract if existing authority cannot support it;
+2. after repair, separately revalidate Slice A and finish independent B/C/D, including browser/storage and projection-capacity posture;
+3. install only the smallest evidence-supported next decision; any game-version gate remains later.
 
 ## Maintenance Rule
 
-Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that `0.6.9`, `0.6.10`, and `0.6.11` are accepted, the earlier reachability `NO_PACKAGE` blocker was closed by accepted authored canon, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the readiness decision returned `BAND_ENTRY_READY`, and `DEV-0.7.0` is accepted with playability prioritization complete, Soundings authored terms accepted, owner contract accepted, and bounded implementation pending the separate independent acceptance audit.
+Do not edit historical roadmap rows merely because their wording is old. Correct only live current-state headers, false active pointers, broken references, or contradictions that can misroute execution. Retain this reconciliation and the 2026-08-02 repository-wide audit as coordination history unless a later dedicated maintenance pass supersedes them. The refreshed lower-precedence summaries now agree that `0.6.9`, `0.6.10`, and `0.6.11` are accepted, the earlier reachability `NO_PACKAGE` blocker was closed by accepted authored canon, `0.6.11.1` issued `REPRESENTATIVE_LOOP_ACCEPTED`, the readiness decision returned `BAND_ENTRY_READY`, and `DEV-0.7.0` is accepted with playability prioritization complete, Soundings authored terms accepted, owner contract accepted, and bounded implementation requiring the September 20 F1 provenance repair before separate post-repair acceptance.
