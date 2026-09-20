@@ -53,3 +53,17 @@ Write docs/design/soundings-durable-completion-independent-acceptance-audit.md w
 Accept only the bounded Soundings capability if proven. Install the smallest separate next decision supported by playability priority and accepted UI direction; no automatic broad shell implementation/version advancement. On failure, record exact reproductions and install the smallest coherent repair prompt. Do not silently repair production during this independent audit and then self-accept it.
 
 Update focused authority, current output/handoff/prompt, branch register, historical routing and planning reconciliation. Commit intended audit/coordination changes, push master, fetch/prune, verify local/tracking/live hosted equality, retrieve hosted current prompt/output/handoff, and finish clean with exact commit identities.
+
+## Connector Preparation — 2026-09-20
+
+Three Connector-first preparation passes are available and should be used as orientation aids:
+
+- `docs/dev/connector-preflight-soundings-durable-completion-independent-acceptance-2026-09-20.md`;
+- `docs/dev/connector-static-adversarial-soundings-durable-completion-2026-09-20.md`;
+- `docs/dev/connector-handoff-soundings-durable-completion-independent-acceptance-2026-09-20.md`.
+
+They capture the hosted implementation delta, caller/owner/persistence map, branch/PR snapshot, reported baselines, prioritized adversarial probes and a resource-aware Slice A-D execution plan.
+
+Treat them as evidence, not acceptance authority. Verify repository identity, synchronized local HEAD/worktree, current authorities and every material claim used for the final disposition. If the local head contains only the expected documentation-only Connector preparation after `af0954c294d222bc1f8667266e4549b8619d5484`, use delta verification instead of repeating broad repository archaeology.
+
+Under a constrained Codex window, reach the Slice-A core-authority checkpoint first, preserve valid partial audit evidence across interruption, and continue from the first incomplete slice rather than redoing completed orientation. The final disposition remains singular and independent after all required slices complete.
