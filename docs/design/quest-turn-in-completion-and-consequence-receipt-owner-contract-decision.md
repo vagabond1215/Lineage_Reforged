@@ -1,5 +1,9 @@
 # Quest Turn-In Completion And Consequence Receipt Owner Contract Decision
 
+## 2026-09-22 Provenance Contract Gate
+
+The bounded repair investigation returned `PROVENANCE_CONTRACT_REQUIRED`; F1 remains `REPAIR_REQUIRED`. Existing immutable publications do not necessarily retain the exact unpublished pre-submission source, and session admission evidence is lost on restart. See `soundings-source-provenance-contract-gate.md` for fresh executable evidence and precise missing ownership/retention/compatibility facts. No production repair or new contract is accepted here. Active successor: **Soundings Accepted Admission Provenance And Retention Contract Decision**, followed only after an accepted decision by bounded repair and separate independent acceptance. Historical routing below is preserved as dated evidence; authored terms, 5g/seven receipts and version posture remain unchanged.
+
 ## 2026-09-20 Independent Audit Routing
 
 The independent audit returned `REPAIR_REQUIRED` at Slice A against runtime `af0954c294d222bc1f8667266e4549b8619d5484`. F1 permits rewritten retained source before-state/provenance to survive validation, publication/restart and fresh-caller duplicate classification. See `soundings-durable-completion-independent-acceptance-audit.md` for both exact variants and limits; no extra payment or ordinary UI exploit was demonstrated. This does not change accepted terms or self-repair production. Active successor: **Soundings Retained Source Provenance And Before-State Binding Repair**, then a separately installed post-repair independent audit completing the remaining matrix. Historical implementation handoff below remains dated evidence.

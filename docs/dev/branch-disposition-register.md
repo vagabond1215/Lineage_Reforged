@@ -1,5 +1,19 @@
 # Branch Disposition Register
 
+## 2026-09-22 Soundings Provenance Contract Gate
+
+Inspected/start master `50110d7e871d3959040abe3102be439dc23fea8c`, clean and synchronized after fetch/prune. One local branch, four hosted branches and zero open PRs by scoped GitHub query. Exact non-default heads and unique commit/path evidence were refreshed:
+
+| Ref | Head | Merge base | Master-only / ref-only | Unique paths | Disposition / next review |
+| --- | --- | --- | --- | --- | --- |
+| `prep/integrated-gameplay-0-7-readiness-audit` | `59c103c3a06d55f35bffa735fd4b7814dffb583e` | `895c02df40332c813a8403bd489af6184111ccba` | 373 / 2 | readiness audit under docs/design and its queued prompt under docs/dev | PROTECTED_REFERENCE; explicitly scheduled readiness/regression or protection review |
+| `parallel/prompt-packaging-integrity-audit` | `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f` | `3d77171ca2034c8b2fb8d19f374cef5df9605053` | 320 / 1 | docs/dev/parallel-prompt-packaging-integrity-audit-prompt.md | PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit |
+| `admin/genesis-research-evidence-2026-08-13` | `210df5bcc017a8f31d621a553b5496c668540d29` | `fd40571bb0802177bd776fd3cd445b6b487716fd` | 151 / 1 | docs/dev/evidence/administration-game-genesis-research-intent-2026-08-13.md | HOLD_NAMED_CONSUMER; administration/template/governance or explicit Lineage retrospective |
+
+No branch overlaps the focused provenance contract gate or has a consumed trigger. No integration, rebase, cherry-pick, branch/PR/protection mutation, deletion or disposition change due/performed. Earlier preserved unique-path evidence remains valid at unchanged heads. Snapshot counts precede this later documentation/evidence publication; final local/tracking/live equality and hosted readback are reported after push.
+
+Active route becomes **Soundings Accepted Admission Provenance And Retention Contract Decision**. Repair investigation returned `PROVENANCE_CONTRACT_REQUIRED`, not implementation/acceptance. Retained refs are not implementation authority for that decision.
+
 ## 2026-09-20 Soundings Slice-A Independent Audit
 
 Inspected clean synchronized source master `e14ae0db059299f40e28c0bf25a4649ac7b07262` after fetch/prune and a documentation-only fast-forward from `fb8e5df153bc744c06510493be28d129492697af`. One local branch/four hosted branches; scoped GitHub query returned zero open PRs. Non-default heads remain unchanged: readiness `59c103c3a06d55f35bffa735fd4b7814dffb583e`, prompt-integrity `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f`, administration `210df5bcc017a8f31d621a553b5496c668540d29`. Prior unique-path/disposition evidence reused; no semantic integration, rebase, deletion, PR/protection mutation or disposition change due/performed.

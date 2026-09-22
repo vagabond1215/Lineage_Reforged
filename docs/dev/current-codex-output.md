@@ -4,53 +4,57 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
-Date: 2026-09-20
+Date: 2026-09-22
 
-Source run: **Soundings Durable Completion Independent Acceptance Audit**.
-Disposition: **REPAIR_REQUIRED**. Slice A: **CORE_AUTHORITY_DEFECT_FOUND**.
+Source run: **Soundings Retained Source Provenance And Before-State Binding Repair**.
+Disposition: **PROVENANCE_CONTRACT_REQUIRED**. F1 remains **REPAIR_REQUIRED**. No production repair or acceptance claim.
 
-Label: unversioned independent audit; parent development milestone not applicable. Development milestone impact: none; game-version impact: none. Game 0.1.0-prealpha, INTEGRATED_LOOP, accepted DEV-0.7.0, band DEV-0.7.x.
+Label class: unversioned bounded investigation; parent development milestone not applicable. Development milestone impact: none; game-version impact: none. Game 0.1.0-prealpha, INTEGRATED_LOOP, accepted DEV-0.7.0, band DEV-0.7.x unchanged.
 
-Initially clean master fb8e5df153bc744c06510493be28d129492697af was fetched/pruned and fast-forwarded to audit source e14ae0db059299f40e28c0bf25a4649ac7b07262. Runtime source af0954c294d222bc1f8667266e4549b8619d5484; later drift was documentation-only. Final audit publication is the later commit containing this output, resolved through Git/hosted readback; the source SHA is not final master.
+Inspected/start source: clean master 50110d7e871d3959040abe3102be439dc23fea8c, synchronized with origin after fetch/prune. Audit source e14ae0db059299f40e28c0bf25a4649ac7b07262; runtime af0954c294d222bc1f8667266e4549b8619d5484. Complete intervening delta is audit evidence/coordination only. Final publication is the later commit containing this output, reported after commit/push/readback rather than as a self-referential SHA.
 
-## A. Findings And Files
+## A. Files Changed
 
-F1: retained source before-state/provenance can be replaced after completion. Recomputed historical wallet/hash/result/receipts and nonexistent artifact/publication IDs pass validation, publication/restart and fresh-caller duplicate. No payment replay or ordinary UI exploit shown; original unchanged commands conflict.
+- docs/design/soundings-source-provenance-contract-gate.md
+- docs/dev/evidence/soundings-provenance-2026-09-22/retention-gap.mjs
+- docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md
+- docs/design/current-planning-anchor-reconciliation.md
+- docs/dev/current-codex-output.md
+- docs/dev/current-gpt-handoff.md
+- docs/dev/current-codex-prompt.md
+- docs/dev/branch-disposition-register.md
+- docs/dev/historical-version-and-deferred-route-register.md
 
-Detailed audit: docs/design/soundings-durable-completion-independent-acceptance-audit.md. Executable evidence: docs/dev/evidence/soundings-acceptance-2026-09-20/slice-a.mjs.
+## B. Result
 
-Changed files: those two evidence files; docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md audit appendix; docs/design/current-planning-anchor-reconciliation.md; docs/dev/current-codex-output.md; docs/dev/current-gpt-handoff.md; docs/dev/current-codex-prompt.md; docs/dev/branch-disposition-register.md; docs/dev/historical-version-and-deferred-route-register.md; docs/dev/codex-failure-patterns-and-verification-guardrails.md (existing FP-014 evidence link).
+Both F1 variants reproduced through real caller/publication/load with cache loss. Exact pre-submission state is transient: ordinary loaded artifact is at Ashen tick 12/revision 4, current valid source at Starfall tick 16/session revision 5. No exact source artifact exists. Accepted session has two retained results; restart clears both and all accepted mutation IDs. Existing publication/ancestry facts do not independently bind the original unpublished admission. A read-only reviewer at the same source independently confirmed the gap.
 
-No production, tracked regression test, content, schema, dependency, game-version or generated build artifact change.
+The controlling prompt explicitly requires stopping when a new retention contract is necessary. Focused gate records the exact missing facts and smallest decision scope. No source repair, schema/save migration, dependency, existing regression-test, historical audit probe or generated-output edit. No extra payout or ordinary UI exploit claim.
 
-## B. Checks And Guardrails
+## C. Checks And Guardrails
 
-- Exact combined implementation baseline: 123/123 passed, zero failures/skips.
-- Independent committed audit probe: exit 0 confirming F1, not repaired behavior; bounded read-only second reviewer reproduced both variants.
-- Content lint: 71 files, pass. Node UI config typecheck: pass.
-- Broad UI TypeScript: 137 diagnostics; zero normalized signature differences against .tmp-dev070-ui-typecheck.log. Remains non-green.
-- Direct Vite build: 214 client modules, pass; existing Browserslist/chunk warnings.
-- Soundings engine export and five JS bridges inspected.
-- Final diff/whitespace/intended-file checks and hosted readback completed during publication; exact final SHA belongs to completion report.
+- Historical slice-a.mjs: exit 0, reproducing both defects plus unchanged negative guards, key-order duplicate and changed-intent conflict. This confirms faulty behavior, not repair success.
+- New retention-gap.mjs: exit 0 under a 5 MiB disposable store, proving unpublished source absence and restart cache loss while legitimate retry succeeds.
+- Exact combined 14-file implementation command: 123/123 passed, zero failures/skips.
+- Content lint: pass, 71 files.
+- Node UI configuration typecheck: pass.
+- Broad UI TypeScript: 137 diagnostics, zero normalized line/column-independent signature differences from .tmp-dev070-ui-typecheck.log; remains non-green.
+- Direct Vite build: pass, 214 client modules (4 worker modules); existing Browserslist/chunk warnings and plugin-timing warning.
+- Engine public export and five TS/JS bridges inspected; unchanged.
+- Full intended diff, documentation readback, whitespace and final Git/hosted checks performed during publication; exact final identity in completion report.
 
-FP-001 real caller/publication/UI seam; FP-002 adversarial failure despite green baseline; FP-008/009 source/ref/publication distinction; FP-010 one finding mapped to repair; FP-012 corruption/conflict/key-order duplicate probes; FP-014/015 F1 source failure; FP-017 ordinary prerequisites before negative-copy mutation. FP-013/016 remain independent follow-up gates. Existing FP-014 gains this evidence link; no new pattern ID needed.
+FP-001/017 real ordinary prerequisite/caller/publication/load; FP-002 green tests do not close F1; FP-008/009 exact scoped refs/source separation; FP-010 both F1 variants mapped to the contract gate; FP-012 lost cache and canonical equality/conflict; FP-014/015 independently retained input requirement blocks self-consistency-only repair. FP-013/016 are preserved successor gates, not newly accepted here. No new pattern needed.
 
-## C. Branch/PR Lifecycle
+## D. Branches, Risks And Next Route
 
-Fresh fetch: one local/four hosted branches; scoped GitHub query: zero open PRs. No semantic integration, rebase, deletion, PR mutation or disposition change due/performed. Reused prior unique-path evidence for unchanged refs. Master fast-forward consumed expected prepared docs only.
+One local branch (master), four hosted branches, zero open PRs by scoped GitHub query. Fresh merge-base/unique-commit/path review found no overlap or consumed trigger. No merge, rebase, cherry-pick, branch/PR mutation, deletion or disposition change due/performed.
 
-- prep/integrated-gameplay-0-7-readiness-audit at 59c103c3a06d55f35bffa735fd4b7814dffb583e: PROTECTED_REFERENCE; next explicit readiness/regression or protection/disposition review.
-- parallel/prompt-packaging-integrity-audit at 58a34e37ee531aa1f6c87086b4a4a6d20d571f9f: PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit.
-- admin/genesis-research-evidence-2026-08-13 at 210df5bcc017a8f31d621a553b5496c668540d29: HOLD_NAMED_CONSUMER; administration/template/governance or explicit Lineage retrospective.
+- Protected readiness 59c103c3a06d55f35bffa735fd4b7814dffb583e: next explicitly scheduled readiness/regression or protection review.
+- Protected prompt-integrity 58a34e37ee531aa1f6c87086b4a4a6d20d571f9f: dedicated prompt/execution-pointer integrity audit.
+- Held administration 210df5bcc017a8f31d621a553b5496c668540d29: administration/template/governance consumer or explicit Lineage retrospective.
 
-## D. Risks And Handoff
+Installed **Soundings Accepted Admission Provenance And Retention Contract Decision**. Decide independent admission ownership, retention/publication ordering, verification context and existing-completed-save compatibility before repair. Then separate independent post-repair A/B/C/D remains required, including real browser/storage and full-feed repair posture. No fresh browser acceptance or general tamper resistance is claimed.
 
-Installed **Soundings Retained Source Provenance And Before-State Binding Repair**. First checkpoint: reproduce both variants and establish the smallest independent binding; document a precise contract gate if existing evidence cannot support it. Preserve later wallet mutations and compact survey authority.
+Execution: authenticated local checkout, shell/Node/Git, active GitHub Connector and one bounded read-only provenance reviewer. Three prepared packets avoided broad orientation. M repair reached its S first checkpoint and explicit contract stop. Next S documentation decision can use an active remote GitHub documentation surface; local executable claims remain reserved. No new plugin installation, external messaging or user-save mutation.
 
-Prepared stop-on-defect rule ended broader audit expansion. Remaining independent A cases and B/C were not completed; mechanical baseline reproduced. Browser/storage and projection-capacity acceptance remain open for separate post-repair audit. No self-repair/self-acceptance or version advancement.
-
-Execution: authenticated local checkout, shell/Node/tests/build/typechecks, GitHub readback, one bounded read-only finding reviewer. Computer Use instructions loaded as requested; no desktop/browser action needed after Slice-A stop. Prepared packets saved broad orientation. Package M audit reached first S-sized negative checkpoint. No plugin/dependency installation, user-save mutation or external message.
-
-Suggested commit: docs(soundings): record Slice A source-binding failure and repair route.
-
-Prior implementation publication evidence remains in the focused implementation record and previous output history. Exact final commit/push/equality/readback are reported after publication, not fabricated self-referentially.
+Suggested commit: docs(soundings): record provenance retention gate and decision route.
