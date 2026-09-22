@@ -6,55 +6,90 @@
 
 Date: 2026-09-22
 
-Source run: **Soundings Retained Source Provenance And Before-State Binding Repair**.
-Disposition: **PROVENANCE_CONTRACT_REQUIRED**. F1 remains **REPAIR_REQUIRED**. No production repair or acceptance claim.
+Source run: **Soundings Accepted Admission Provenance And Retention Contract Decision**.
 
-Label class: unversioned bounded investigation; parent development milestone not applicable. Development milestone impact: none; game-version impact: none. Game 0.1.0-prealpha, INTEGRATED_LOOP, accepted DEV-0.7.0, band DEV-0.7.x unchanged.
+Disposition: **`PROVENANCE_CONTRACT_ACCEPTED_REPAIR_AUTHORIZED`**.
 
-Inspected/start source: clean master 50110d7e871d3959040abe3102be439dc23fea8c, synchronized with origin after fetch/prune. Audit source e14ae0db059299f40e28c0bf25a4649ac7b07262; runtime af0954c294d222bc1f8667266e4549b8619d5484. Complete intervening delta is audit evidence/coordination only. Final publication is the later commit containing this output, reported after commit/push/readback rather than as a self-referential SHA.
+Label: unversioned documentation-only technical contract decision. Development milestone impact: none; game-version impact: none. Game `0.1.0-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, band `DEV-0.7.x` unchanged.
 
-## A. Files Changed
+Runtime F1 remains unrepaired until the installed bounded implementation runs.
 
-- docs/design/soundings-source-provenance-contract-gate.md
-- docs/dev/evidence/soundings-provenance-2026-09-22/retention-gap.mjs
-- docs/design/quest-turn-in-completion-and-consequence-receipt-owner-contract-decision.md
-- docs/design/current-planning-anchor-reconciliation.md
-- docs/dev/current-codex-output.md
-- docs/dev/current-gpt-handoff.md
-- docs/dev/current-codex-prompt.md
-- docs/dev/branch-disposition-register.md
-- docs/dev/historical-version-and-deferred-route-register.md
+## A. Connector Audit And Decision
 
-## B. Result
+Connector-safe audit:
 
-Both F1 variants reproduced through real caller/publication/load with cache loss. Exact pre-submission state is transient: ordinary loaded artifact is at Ashen tick 12/revision 4, current valid source at Starfall tick 16/session revision 5. No exact source artifact exists. Accepted session has two retained results; restart clears both and all accepted mutation IDs. Existing publication/ancestry facts do not independently bind the original unpublished admission. A read-only reviewer at the same source independently confirmed the gap.
+`docs/dev/connector-audit-soundings-provenance-contract-2026-09-22.md`
 
-The controlling prompt explicitly requires stopping when a new retention contract is necessary. Focused gate records the exact missing facts and smallest decision scope. No source repair, schema/save migration, dependency, existing regression-test, historical audit probe or generated-output edit. No extra payout or ordinary UI exploit claim.
+Accepted focused decision:
 
-## C. Checks And Guardrails
+`docs/design/soundings-accepted-admission-provenance-and-retention-contract-decision.md`
 
-- Historical slice-a.mjs: exit 0, reproducing both defects plus unchanged negative guards, key-order duplicate and changed-intent conflict. This confirms faulty behavior, not repair success.
-- New retention-gap.mjs: exit 0 under a 5 MiB disposable store, proving unpublished source absence and restart cache loss while legitimate retry succeeds.
-- Exact combined 14-file implementation command: 123/123 passed, zero failures/skips.
-- Content lint: pass, 71 files.
-- Node UI configuration typecheck: pass.
-- Broad UI TypeScript: 137 diagnostics, zero normalized line/column-independent signature differences from .tmp-dev070-ui-typecheck.log; remains non-green.
-- Direct Vite build: pass, 214 client modules (4 worker modules); existing Browserslist/chunk warnings and plugin-timing warning.
-- Engine public export and five TS/JS bridges inspected; unchanged.
-- Full intended diff, documentation readback, whitespace and final Git/hosted checks performed during publication; exact final identity in completion report.
+The six contract rows from the September 22 provenance gate are decision-complete. No product/canon question remains before repair.
 
-FP-001/017 real ordinary prerequisite/caller/publication/load; FP-002 green tests do not close F1; FP-008/009 exact scoped refs/source separation; FP-010 both F1 variants mapped to the contract gate; FP-012 lost cache and canonical equality/conflict; FP-014/015 independently retained input requirement blocks self-consistency-only repair. FP-013/016 are preserved successor gates, not newly accepted here. No new pattern needed.
+Selected design:
 
-## D. Branches, Risks And Next Route
+- one quest-specific Soundings accepted-admission witness;
+- witness owned by campaign save/persistence authority, outside the mutable campaign snapshot;
+- pending candidate created from verified prepared campaign admission / accepted result facts;
+- durable record keyed by account + campaign + request identity;
+- exact original source artifact/publication/session revision, continuity, before-state/survey/intent fingerprints and result identity retained compactly;
+- first durable artifact/publication/revision bound during save publication;
+- existing candidate/head/publication-recovery ordering extended narrowly so pending witness cannot act as trusted evidence and applied witness survives restart;
+- structural snapshot validation remains distinct from persistence-supplied provenance verification;
+- later wallet changes, descendants, non-head forks and defeat/recovery do not rewrite the historical witness.
 
-One local branch (master), four hosted branches, zero open PRs by scoped GitHub query. Fresh merge-base/unique-commit/path review found no overlap or consumed trigger. No merge, rebase, cherry-pick, branch/PR mutation, deletion or disposition change due/performed.
+Rejected shortcuts:
 
-- Protected readiness 59c103c3a06d55f35bffa735fd4b7814dffb583e: next explicitly scheduled readiness/regression or protection review.
-- Protected prompt-integrity 58a34e37ee531aa1f6c87086b4a4a6d20d571f9f: dedicated prompt/execution-pointer integrity audit.
-- Held administration 210df5bcc017a8f31d621a553b5496c668540d29: administration/template/governance consumer or explicit Lineage retrospective.
+- another digest beside the mutable request;
+- requiring source == loaded artifact;
+- latest-wallet equality;
+- inference from completion publication/request alone;
+- current account-publication receipt as-is;
+- generic wallet/history/signing/anti-cheat architecture.
 
-Installed **Soundings Accepted Admission Provenance And Retention Contract Decision**. Decide independent admission ownership, retention/publication ordering, verification context and existing-completed-save compatibility before repair. Then separate independent post-repair A/B/C/D remains required, including real browser/storage and full-feed repair posture. No fresh browser acceptance or general tamper resistance is claimed.
+## B. Existing-Save Compatibility
 
-Execution: authenticated local checkout, shell/Node/Git, active GitHub Connector and one bounded read-only provenance reviewer. Three prepared packets avoided broad orientation. M repair reached its S first checkpoint and explicit contract stop. Next S documentation decision can use an active remote GitHub documentation surface; local executable claims remain reserved. No new plugin installation, external messaging or user-save mutation.
+Existing pre-repair completed Soundings saves without an independent witness remain loadable/playable/saveable for unrelated later gameplay.
 
-Suggested commit: docs(soundings): record provenance retention gate and decision route.
+They must not be:
+
+- deleted solely for lacking the new witness;
+- repaid;
+- retroactively given a synthesized trusted witness;
+- projection-repaired from unverifiable retained history.
+
+A provenance-dependent historical retry on such a save must return a deterministic non-mutating legacy/unverified posture rather than a newly trusted durable duplicate.
+
+New post-repair completions must be unambiguously provenance-required. Missing/conflicting witness for those after recovery attempts fails closed and may not silently downgrade to legacy.
+
+No `worldVersion`, `GAME_VERSION`, or `DEV-0.7.1` change is allocated by this contract.
+
+## C. Hosted Evidence And Limits
+
+Connector inspection source before documentation writes: `45356195d9556d31968fb05c4fb790ccb79a5f4d`.
+
+Fresh hosted inventory at that source: four branches total and zero open PRs. Existing non-default branch dispositions remain unchanged.
+
+This decision used remote GitHub repository inspection and documentation writes only. It does **not** claim:
+
+- local checkout/worktree state;
+- tests, typechecks, builds or browser validation;
+- production/schema/save changes;
+- F1 repair success;
+- Soundings independent acceptance.
+
+The predecessor executable evidence remains the September 20/22 audit/gate: 123/123 mechanical baseline, 71-file lint, Node UI config typecheck, 214-module Vite build and 137 known broad UI diagnostics, but those are prior Codex evidence rather than newly reproduced Connector evidence.
+
+## D. Active Route
+
+Installed:
+
+**Soundings Accepted Admission Witness And Provenance Binding Repair**
+
+The repair is a bounded atomic `M` package because verified admission, witness publication durability, load context and durable duplicate/projection semantics must agree in one persisted contract.
+
+First useful checkpoint: implement the typed pending witness from verified campaign admission and prove conflicting source/intent cannot rewrite it.
+
+On successful repair return `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE` and install **Soundings Durable Completion Post-Repair Independent Acceptance Audit**. That audit must revalidate repaired Slice A and finish remaining A/B/C/D, including real browser/storage and full-feed projection-capacity posture.
+
+F1 remains `REPAIR_REQUIRED` until that implementation and later independent acceptance complete.
