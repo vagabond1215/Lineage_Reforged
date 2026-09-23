@@ -3,6 +3,7 @@ import { isTargetCampaignSnapshot } from "./campaign-rules.js";
 import { preparePlayerSurveyCampaignMutation, commitPreparedPlayerSurveyCampaignMutation, isSoundingsCampaignControlCoherent, admitCampaignMutation, type CampaignSessionControl } from "./campaign-session.js";
 import { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 import { resolvePlayerSoundingsTurnIn } from "./soundings-turn-in-readiness.js";
+import { verifySoundingsAdmissionProvenance } from "./soundings-admission-witness.js";
 import { SOUNDINGS_QUEST_ID, SOUNDINGS_OPERATION_ID, SOUNDINGS_REQUEST_PATTERN, SOUNDINGS_RECEIPT_KINDS, soundingsIds, serializeSoundingsIntent, isSoundingsIntent, soundingsCompletionActivity, soundingsCompletionNotice, soundingsChronicle, soundingsNotification, buildSoundingsReceipts, repairSoundingsTurnInProjections, fingerprintSoundingsState, retainSoundingsSource } from "./soundings-turn-in-authority.js";
 export { resolvePlayerSoundingsTurnIn } from "./soundings-turn-in-readiness.js";
 
@@ -62,9 +63,11 @@ export function executePlayerSoundingsTurnInCommand(snapshot: SaveSnapshot, cont
     const retained = authority?.requests.find(r => r.requestId === requestId);
     if (retained) {
       if (retained.canonicalIntent !== command.canonicalIntent) return reject("request_conflict", "The retained request identity was reused for different intent.");
+      const provenance = verifySoundingsAdmissionProvenance(snapshot, control);
+      if (provenance !== "verified") return reject(provenance === "legacy_unverified" ? "legacy_unverified" : "invalid_provenance", "Original submission provenance is unavailable or conflicting; completion remains unchanged.");
       const result = authority!.results[0]!;
       const repaired = structuredClone(snapshot);
-      if (repairSoundingsTurnInProjections(repaired)) {
+      if (repairSoundingsTurnInProjections(repaired, true, control)) {
         const admission = admitCampaignMutation(control, {
           mutationId: `${requestId}.projection_repair.${control.loadedArtifactId}.${control.sessionRevision}`,
           sourceArtifactId: control.loadedArtifactId, sourceRevision: control.sessionRevision,
@@ -86,7 +89,7 @@ export function executePlayerSoundingsTurnInCommand(snapshot: SaveSnapshot, cont
     const result: SoundingsTurnInResultState = { ...occurrence, code: "soundings_completed", questId: SOUNDINGS_QUEST_ID, payment: { gold: 5, silver: 0 }, currencyBefore: structuredClone(next.playerState.currency), trackingBefore: next.sessionState.trackedQuestId, operationBefore: structuredClone(next.sessionState.operations.find(o => o.id === SOUNDINGS_OPERATION_ID) ?? null), activityBefore: structuredClone(next.sessionState.currentActivity), timeLabel: `Day ${next.clock.day} · Tick ${next.clock.tick}`, requiredReceiptIds: SOUNDINGS_RECEIPT_KINDS.map(ids.receiptId), notice: soundingsCompletionNotice() };
     if (!Number.isSafeInteger(result.currencyBefore.gold + 5)) return reject("invalid_authority", "The payment cannot be represented safely.");
     const receipts = buildSoundingsReceipts(result);
-    next.authorityLedger!.soundingsTurnIn = { version: 1, requests: [{ version: 1, requestId, commandId: ids.commandId, normalizedIntent: structuredClone(intent), canonicalIntent: command.canonicalIntent, acceptedContinuityId: preparation.acceptedContinuityId, occurrenceId: ids.occurrenceId, resultId: ids.resultId }], occurrences: [occurrence], results: [result], consequenceReceipts: receipts };
+    next.authorityLedger!.soundingsTurnIn = { version: 2, requests: [{ version: 1, requestId, commandId: ids.commandId, normalizedIntent: structuredClone(intent), canonicalIntent: command.canonicalIntent, acceptedContinuityId: preparation.acceptedContinuityId, occurrenceId: ids.occurrenceId, resultId: ids.resultId }], occurrences: [occurrence], results: [result], consequenceReceipts: receipts };
     const quest = next.sessionState.questJournal.find(q => q.id === SOUNDINGS_QUEST_ID)!;
     quest.category = "completed";
     quest.statusLabel = "Turned in";

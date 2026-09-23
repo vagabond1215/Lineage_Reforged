@@ -2,6 +2,7 @@ import type { ChronicleEventState, CurrentActivityState, NotificationState, Save
 import { isTargetCampaignSnapshot } from "./campaign-rules.js";
 import { getCurrentPlayerTravelLocationId } from "./player-travel-rules.js";
 import { soundingsSha256 } from "./soundings-fingerprint.js";
+import { verifySoundingsAdmissionProvenance, type SoundingsAdmissionVerificationContext } from "./soundings-admission-witness.js";
 
 export const SOUNDINGS_QUEST_ID = "quest.ashen_reef_survey" as const;
 export const SOUNDINGS_OPERATION_ID = "operation.quest.ashen_reef_survey";
@@ -70,12 +71,12 @@ export function buildSoundingsReceipts(result: SoundingsTurnInResultState): Soun
   return SOUNDINGS_RECEIPT_KINDS.map(kind => ({ version: 1, receiptId: ids.receiptId(kind), requestId: result.requestId, resultId: result.resultId, occurrenceId: result.occurrenceId, campaignId: result.campaignId, continuityId: result.continuityId, characterId: result.characterId, appliedTick: result.appliedTick, owner: "soundings_turn_in", posture: "applied", kind, effect: effects[kind] }));
 }
 
-/** Independent of snapshot synchronization and command execution (also safe on save load). */
+/** Structural validation only; original admission provenance requires a save-owned witness. */
 export function validateSoundingsTurnInAuthority(snapshot: SaveSnapshot): boolean {
   try {
     const a = snapshot.authorityLedger?.soundingsTurnIn;
     if (a === undefined) return true;
-    if (a.version !== 1 || Object.keys(a).length !== 5 || ![a.requests,a.occurrences,a.results,a.consequenceReceipts].every(Array.isArray)) return false;
+    if ((a.version !== 1 && a.version !== 2) || Object.keys(a).length !== 5 || ![a.requests,a.occurrences,a.results,a.consequenceReceipts].every(Array.isArray)) return false;
     if (a.requests.length === 0) return a.occurrences.length === 0 && a.results.length === 0 && a.consequenceReceipts.length === 0;
     if (a.requests.length !== 1 || a.occurrences.length !== 1 || a.results.length !== 1 || a.consequenceReceipts.length !== 7) return false;
     const request = a.requests[0]!, result = a.results[0]!, intent = request.normalizedIntent, identity = snapshot.campaignIdentity;
@@ -127,10 +128,10 @@ export function validateSoundingsTurnInAuthority(snapshot: SaveSnapshot): boolea
   } catch { return false; }
 }
 
-/** Rebuild only missing presentation rows from validated durable receipts. */
-export function repairSoundingsTurnInProjections(snapshot: SaveSnapshot, requireCapacity = true): boolean {
+/** Rebuild presentation rows only with independently verified admission context. */
+export function repairSoundingsTurnInProjections(snapshot: SaveSnapshot, requireCapacity = true, context?: SoundingsAdmissionVerificationContext): boolean {
   const result = snapshot.authorityLedger?.soundingsTurnIn?.results[0];
-  if (!result || !validateSoundingsTurnInAuthority(snapshot)) return false;
+  if (!result || verifySoundingsAdmissionProvenance(snapshot, context) !== "verified") return false;
   let repaired = false;
   const source = JSON.parse(snapshot.authorityLedger!.soundingsTurnIn!.requests[0]!.normalizedIntent.sourceSnapshot) as SaveSnapshot;
   function restore<T extends { id: string }>(rows: T[], expected: T, prior: { id: string }[], cap: number): void {

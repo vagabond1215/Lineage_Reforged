@@ -449,3 +449,4 @@ export function runGameTick(context: GameTickContext): TickResult<GameDelta> {
   };
 }
 export * from "./player-soundings-turn-in.js";
+export * from "./soundings-admission-witness.js";

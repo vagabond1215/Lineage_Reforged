@@ -5,7 +5,8 @@ import {
 import type {
   CampaignIdentityState,
   CampaignPublicationConsumerKind,
-  SaveSnapshot
+  SaveSnapshot,
+  SoundingsAdmissionWitness
 } from "../../../../packages/shared/types/src/index.js";
 import {
   TARGET_SNAPSHOT_FORMAT,
@@ -17,6 +18,8 @@ import {
   createCampaignSessionControl,
   type CampaignSessionControl
 } from "../../../../packages/engines/game-engine/src/campaign-session.js";
+import { isSoundingsAdmissionWitness, verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
+import { fingerprintSoundingsState } from "../../../../packages/engines/game-engine/src/soundings-turn-in-authority.js";
 import {
   hasPendingNormalDefeat,
   resolveNormalDefeat
@@ -98,6 +101,10 @@ type StoredPublicationRecovery = {
   headRevision: number;
   terminal: boolean;
   envelopeRaw: string;
+  soundingsAdmissionWitness?: SoundingsAdmissionWitness;
+  soundingsWitnessFingerprint?: string;
+  previousHeadArtifactId?: string | null;
+  previousHeadRevision?: number;
   status: "artifact_verified" | "head_verified" | "address_verified";
   consumerPlans: CampaignPublicationConsumerPlan[];
   completedConsumerKinds: CampaignPublicationConsumerKind[];
@@ -257,6 +264,109 @@ function getPublicationRecoveryKey(
   campaignId: string
 ): string {
   return `${STORAGE_PREFIX}.account.${accountId}.campaign.${campaignId}.publication-recovery`;
+}
+
+function getSoundingsWitnessKey(accountId: string, campaignId: string, requestId: string): string {
+  return `${STORAGE_PREFIX}.account.${accountId}.campaign.${campaignId}.soundings-witness.${requestId}`;
+}
+
+export function loadSoundingsAdmissionWitness(accountId: string, campaignId: string, requestId: string): SoundingsAdmissionWitness | undefined {
+  const raw = getStorage().getItem(getSoundingsWitnessKey(accountId, campaignId, requestId));
+  if (raw === null) return undefined;
+  const value: unknown = JSON.parse(raw);
+  if (!isSoundingsAdmissionWitness(value) || value.posture === "session" || value.accountId !== accountId || value.campaignId !== campaignId || value.requestId !== requestId) {
+    throw new Error("Soundings provenance witness is invalid.");
+  }
+  if (value.posture === "applied") {
+    const firstRaw = getStorage().getItem(getArtifactStorageKey(accountId, value.firstDurableArtifactId));
+    const first: unknown = firstRaw === null ? null : JSON.parse(firstRaw);
+    if (!isStoredSaveEnvelope(first) || first.accountId !== accountId || first.campaignId !== campaignId ||
+        first.characterId !== value.characterId || first.artifactId !== value.firstDurableArtifactId ||
+        first.publicationId !== value.firstDurablePublicationId || first.headRevision !== value.firstDurableHeadRevision ||
+        !readVerifiedArtifactForAddress(getStorage(), accountId, first)) {
+      throw new Error("Soundings first durable publication is missing or conflicts with its witness.");
+    }
+    const original = deserializeSnapshot(first.snapshot);
+    if (original.authorityLedger?.soundingsTurnIn?.version !== 2 || verifySoundingsAdmissionProvenance(original, { soundingsAdmissionWitness: value, retainedMutationResults: [] }) !== "verified") {
+      throw new Error("Soundings first durable publication provenance conflicts with its witness.");
+    }
+  }
+  return value;
+}
+
+function persistedSoundingsContext(accountId: string, snapshot: SaveSnapshot): SoundingsAdmissionWitness | undefined {
+  const request = snapshot.authorityLedger?.soundingsTurnIn?.requests[0];
+  const witness = request && snapshot.campaignIdentity
+    ? loadSoundingsAdmissionWitness(accountId, snapshot.campaignIdentity.campaignId, request.requestId)
+    : undefined;
+  if (witness && snapshot.authorityLedger?.soundingsTurnIn?.version !== 2) {
+    throw new Error("Soundings provenance-required completion cannot downgrade to legacy authority.");
+  }
+  const posture = verifySoundingsAdmissionProvenance(snapshot, { ...(witness ? { soundingsAdmissionWitness: witness } : {}), retainedMutationResults: [] });
+  if (posture !== "verified" && posture !== "not_completed" && posture !== "legacy_unverified") {
+    throw new Error(`Soundings provenance recovery required: ${posture}.`);
+  }
+  return witness?.posture === "applied" ? witness : undefined;
+}
+
+function withSoundingsContext(accountId: string, snapshot: SaveSnapshot, control: CampaignSessionControl): CampaignSessionControl {
+  const witness = persistedSoundingsContext(accountId, snapshot);
+  return witness ? { ...control, soundingsAdmissionWitness: witness } : control;
+}
+
+function retainRecoveryWitness(storage: Storage, recovery: StoredPublicationRecovery, applied: boolean): void {
+  const witness = recovery.soundingsAdmissionWitness;
+  if (!witness) {
+    persistedSoundingsContext(recovery.accountId, deserializeSnapshot(readRecoveryEnvelope(recovery).snapshot));
+    return;
+  }
+  if (!isSoundingsAdmissionWitness(witness) || witness.posture !== "pending" ||
+      fingerprintSoundingsState(witness) !== recovery.soundingsWitnessFingerprint ||
+      witness.accountId !== recovery.accountId || witness.campaignId !== recovery.campaignId ||
+      witness.firstDurableArtifactId !== recovery.artifactId || witness.firstDurablePublicationId !== recovery.publicationId || witness.firstDurableHeadRevision !== recovery.headRevision) {
+    throw new Error("Soundings publication recovery witness is invalid.");
+  }
+  // The exact candidate is retained by recovery before publication, never rebuilt from the snapshot.
+  const promoted: SoundingsAdmissionWitness = { ...witness, posture: "applied" };
+  if (verifySoundingsAdmissionProvenance(deserializeSnapshot(readRecoveryEnvelope(recovery).snapshot), { soundingsAdmissionWitness: promoted, retainedMutationResults: [] }) !== "verified") {
+    throw new Error("Soundings publication recovery provenance conflicts.");
+  }
+  const existing = loadSoundingsAdmissionWitness(witness.accountId, witness.campaignId, witness.requestId);
+  if (existing && fingerprintSoundingsState(existing) !== fingerprintSoundingsState(witness) && fingerprintSoundingsState(existing) !== fingerprintSoundingsState(promoted)) {
+    throw new Error("Soundings stable witness conflict; retained evidence is immutable.");
+  }
+  const target = applied || existing?.posture === "applied" ? promoted : witness;
+  writeAndVerify(storage, getSoundingsWitnessKey(witness.accountId, witness.campaignId, witness.requestId), JSON.stringify(target));
+}
+
+function resumeWitnessPublication(storage: Storage, recovery: StoredPublicationRecovery): StoredPublicationRecovery {
+  if (recovery.status !== "artifact_verified") return recovery;
+  const control = readCampaignControl(recovery.accountId, recovery.campaignId);
+  if (control?.headArtifactId !== recovery.artifactId || control.headPublicationId !== recovery.publicationId || control.headRevision !== recovery.headRevision) {
+    if (!recovery.soundingsAdmissionWitness) return recovery;
+    if ((control?.headArtifactId ?? null) !== recovery.previousHeadArtifactId || (control?.headRevision ?? 0) !== recovery.previousHeadRevision || control?.closed) {
+      throw new Error("Soundings publication recovery conflicts with campaign head.");
+    }
+    const envelope = readRecoveryEnvelope(recovery);
+    const candidate = storage.getItem(getCandidateStorageKey(recovery.accountId, recovery.generationId));
+    if (candidate !== recovery.envelopeRaw) throw new Error("Soundings recovery candidate is missing or changed.");
+    const artifactKey = getArtifactStorageKey(recovery.accountId, recovery.artifactId);
+    const existingArtifact = storage.getItem(artifactKey);
+    if (existingArtifact !== null && existingArtifact !== recovery.envelopeRaw) {
+      throw new Error("Soundings recovery conflicts with retained immutable artifact.");
+    }
+    retainRecoveryWitness(storage, recovery, false);
+    writeAndVerify(storage, artifactKey, recovery.envelopeRaw);
+    writeAndVerify(storage, getCampaignControlKey(recovery.accountId, recovery.campaignId), JSON.stringify({
+      version: 1, accountId: recovery.accountId, campaignId: recovery.campaignId,
+      headArtifactId: envelope.artifactId, headPublicationId: envelope.publicationId, headRevision: envelope.headRevision,
+      previousHeadArtifactId: control?.headArtifactId ?? null, previousHeadPublicationId: control?.headPublicationId ?? null,
+      closed: recovery.terminal, updatedAt: recovery.updatedAt
+    } satisfies StoredCampaignControl));
+  }
+  const next = { ...recovery, status: "head_verified" as const };
+  writePublicationRecovery(storage, next);
+  return next;
 }
 
 function getArtifactStorageKey(accountId: string, artifactId: string): string {
@@ -574,6 +684,12 @@ function isStoredPublicationRecovery(
     typeof value.headRevision === "number" &&
     typeof value.terminal === "boolean" &&
     typeof value.envelopeRaw === "string" &&
+    (value.soundingsAdmissionWitness === undefined ||
+      (isSoundingsAdmissionWitness(value.soundingsAdmissionWitness) &&
+       value.soundingsAdmissionWitness.posture === "pending" &&
+       typeof value.soundingsWitnessFingerprint === "string" &&
+       (value.previousHeadArtifactId === null || typeof value.previousHeadArtifactId === "string") &&
+       Number.isSafeInteger(value.previousHeadRevision))) &&
     (value.status === "artifact_verified" ||
       value.status === "head_verified" ||
       value.status === "address_verified") &&
@@ -1060,6 +1176,8 @@ function recoverPublicationAddress(
     );
   }
 
+  retainRecoveryWitness(storage, recovery, true);
+
   const addressKey = getStorageKey(recovery.accountId, recovery.slotId);
   const currentRaw = storage.getItem(addressKey);
   if (currentRaw && currentRaw !== recovery.envelopeRaw) {
@@ -1245,7 +1363,7 @@ export function recoverPendingCampaignPublications(
 ): PendingCampaignPublicationRecovery[] {
   const storage = getStorage();
   const recovered: PendingCampaignPublicationRecovery[] = [];
-  const pending = listStoredPublicationRecoveries(accountId).filter(
+  const pending = listStoredPublicationRecoveries(accountId).map((entry) => resumeWitnessPublication(storage, entry)).filter(
     (stored) => stored.status !== "artifact_verified"
   );
   const slotIds = [...new Set(pending.map((stored) => stored.slotId))].sort();
@@ -1308,6 +1426,14 @@ export function completeCampaignPublicationConsumers(
   );
   if (!recovery) {
     return;
+  }
+  if (recovery.soundingsAdmissionWitness) {
+    if (recovery.status !== "address_verified") {
+      throw new Error("Soundings publication recovery must finish before consumer completion.");
+    }
+    // Consumer completion may follow terminal address deletion. Verify the retained
+    // witness without recreating a playable address that its owner has removed.
+    retainRecoveryWitness(storage, recovery, true);
   }
   const completedConsumerKinds = Array.from(
     new Set([
@@ -1780,7 +1906,7 @@ function migrateLegacySaveGroup(
   const loaded = migrated.find((entry) => entry.slotId === loadedSlotId)!;
   return {
     snapshot: loaded.snapshot,
-    sessionControl: createCampaignSessionControl({
+    sessionControl: withSoundingsContext(accountId, loaded.snapshot, createCampaignSessionControl({
       accountId,
       campaignId: loaded.envelope.campaignId,
       artifactId: loaded.envelope.artifactId,
@@ -1789,7 +1915,7 @@ function migrateLegacySaveGroup(
       continuityId: loaded.envelope.continuityId,
       headArtifactId: control.headArtifactId,
       headRevision: control.headRevision
-    }),
+    })),
     publication: buildVerifiedPublication(loaded.envelope),
     migratedLegacy: true,
     repairedLegacyDefeat: loaded.repairedLegacyDefeat
@@ -1821,7 +1947,7 @@ export function publishSave(
 
   const storage = getStorage();
   const campaignId = snapshot.campaignIdentity!.campaignId;
-  const existingControl = readCampaignControl(accountId, campaignId);
+  let existingControl = readCampaignControl(accountId, campaignId);
   const sessionControl = options.sessionControl;
   const consumerPlans = options.consumerPlans ?? [];
   const duplicatePlanKind = consumerPlans.find(
@@ -1836,10 +1962,9 @@ export function publishSave(
     );
   }
 
-  const pendingRecovery = readPublicationRecovery(
-    accountId,
-    campaignId
-  );
+  const retainedRecovery = readPublicationRecovery(accountId, campaignId);
+  const pendingRecovery = retainedRecovery ? resumeWitnessPublication(storage, retainedRecovery) : null;
+  existingControl = readCampaignControl(accountId, campaignId);
   if (
     pendingRecovery &&
     pendingRecovery.status !== "artifact_verified"
@@ -1889,7 +2014,7 @@ export function publishSave(
     return {
       slot: createSlotSummary(slot, "ready", envelope.metadata),
       snapshot: requestedSnapshot,
-      sessionControl: createCampaignSessionControl({
+      sessionControl: withSoundingsContext(accountId, requestedSnapshot, createCampaignSessionControl({
         accountId,
         campaignId,
         artifactId: envelope.artifactId,
@@ -1898,7 +2023,7 @@ export function publishSave(
         continuityId: envelope.continuityId,
         headArtifactId: envelope.artifactId,
         headRevision: envelope.headRevision
-      }),
+      })),
       publication: buildVerifiedPublication(envelope),
       boundExistingArtifact: false
     };
@@ -1925,6 +2050,27 @@ export function publishSave(
     throw new Error("Closed campaign authority cannot be reopened.");
   }
 
+  const request = snapshot.authorityLedger?.soundingsTurnIn?.requests[0];
+  if (sessionControl?.soundingsAdmissionWitness &&
+      (snapshot.authorityLedger?.soundingsTurnIn?.version !== 2 || request?.requestId !== sessionControl.soundingsAdmissionWitness.requestId)) {
+    throw new Error("Soundings admitted completion cannot discard or downgrade its witness identity.");
+  }
+  const durableWitness = request ? loadSoundingsAdmissionWitness(accountId, campaignId, request.requestId) : undefined;
+  if (durableWitness && snapshot.authorityLedger?.soundingsTurnIn?.version !== 2) {
+    throw new Error("Soundings provenance-required completion cannot downgrade to legacy authority.");
+  }
+  const witness = durableWitness ?? (sessionControl?.soundingsAdmissionWitness?.posture === "session" ? sessionControl.soundingsAdmissionWitness : undefined);
+  const provenance = verifySoundingsAdmissionProvenance(snapshot, {
+    ...(witness ? { soundingsAdmissionWitness: witness } : {}),
+    retainedMutationResults: sessionControl?.retainedMutationResults ?? []
+  });
+  if (provenance !== "verified" && provenance !== "not_completed" && provenance !== "legacy_unverified") {
+    throw new Error(`Soundings publication provenance rejected: ${provenance}.`);
+  }
+  if (witness?.posture === "session" && (witness.accountId !== accountId || witness.campaignId !== campaignId)) {
+    throw new Error("Soundings candidate belongs to a different campaign.");
+  }
+
   if (
     sessionControl?.posture === "non_head_unmutated" &&
     !sessionControl.hasUnpublishedGameplayState
@@ -1945,6 +2091,7 @@ export function publishSave(
       throw new Error("Loaded non-head artifact failed verification.");
     }
 
+    persistedSoundingsContext(accountId, deserializeSnapshot(artifact.snapshot));
     const rebound: StoredSaveEnvelope = {
       ...artifact,
       slotId,
@@ -2014,11 +2161,9 @@ export function publishSave(
     throw new Error("Candidate save failed semantic validation.");
   }
 
-  writeAndVerify(
-    storage,
-    getArtifactStorageKey(accountId, artifactId),
-    raw
-  );
+  const pendingWitness: SoundingsAdmissionWitness | undefined = witness?.posture === "session"
+    ? { ...witness, posture: "pending", firstDurableArtifactId: artifactId, firstDurablePublicationId: publicationId, firstDurableHeadRevision: headRevision }
+    : undefined;
   const recovery: StoredPublicationRecovery = {
     version: 1,
     accountId,
@@ -2030,6 +2175,7 @@ export function publishSave(
     headRevision,
     terminal: options.terminal === true,
     envelopeRaw: raw,
+    ...(pendingWitness ? { soundingsAdmissionWitness: pendingWitness, soundingsWitnessFingerprint: fingerprintSoundingsState(pendingWitness), previousHeadArtifactId: existingControl?.headArtifactId ?? null, previousHeadRevision: existingControl?.headRevision ?? 0 } : {}),
     status: "artifact_verified",
     consumerPlans,
     completedConsumerKinds: [],
@@ -2040,6 +2186,8 @@ export function publishSave(
     updatedAt: savedAt
   };
   writePublicationRecovery(storage, recovery);
+  retainRecoveryWitness(storage, recovery, false);
+  writeAndVerify(storage, getArtifactStorageKey(accountId, artifactId), raw);
   const nextControl: StoredCampaignControl = {
     version: 1,
     accountId,
@@ -2106,7 +2254,7 @@ export function publishSave(
   return {
     slot: createSlotSummary(slot, "ready", envelope.metadata),
     snapshot,
-    sessionControl: nextSessionControl,
+    sessionControl: withSoundingsContext(accountId, snapshot, nextSessionControl),
     publication: buildVerifiedPublication(envelope),
     boundExistingArtifact: false
   };
@@ -2228,7 +2376,7 @@ function repairLoadedMigratedDefeat(
   }
   return {
     snapshot: repaired,
-    sessionControl: createCampaignSessionControl({
+    sessionControl: withSoundingsContext(accountId, repaired, createCampaignSessionControl({
       accountId,
       campaignId: repairedEnvelope.campaignId,
       artifactId,
@@ -2237,7 +2385,7 @@ function repairLoadedMigratedDefeat(
       continuityId: repairedEnvelope.continuityId,
       headArtifactId: control.headArtifactId,
       headRevision: control.headRevision
-    }),
+    })),
     publication: buildVerifiedPublication(repairedEnvelope),
     migratedLegacy: false,
     repairedLegacyDefeat: true
@@ -2251,7 +2399,19 @@ export function loadSaveWithAuthority(
     allowClosed?: boolean;
   } = {}
 ): LoadedCampaignSave | null {
-  const inspected = inspectStoredSave(accountId, slotId);
+  let inspected = inspectStoredSave(accountId, slotId);
+  if (inspected.status === "ready" && inspected.envelope.version === 7) {
+    const recovery = readPublicationRecovery(accountId, inspected.envelope.campaignId);
+    if (recovery?.soundingsAdmissionWitness && recovery.slotId === slotId && recovery.status !== "address_verified") {
+      // Only the narrow first-witness publication boundary is automatic on load.
+      // Existing address corruption and ordinary consumer recovery remain explicit.
+      const recovered = recoverPublicationAddress(getStorage(), resumeWitnessPublication(getStorage(), recovery));
+      if (recovered.consumerPlans.every(plan => recovered.completedConsumerKinds.includes(plan.kind))) {
+        getStorage().removeItem(getPublicationRecoveryKey(accountId, recovered.campaignId));
+      }
+      inspected = inspectStoredSave(accountId, slotId);
+    }
+  }
   if (inspected.status !== "ready") {
     return null;
   }
@@ -2279,6 +2439,7 @@ export function loadSaveWithAuthority(
     return null;
   }
 
+  persistedSoundingsContext(accountId, inspected.snapshot);
   if (
     inspected.snapshot.campaignRules?.source ===
       "legacy_migration" &&
@@ -2303,7 +2464,7 @@ export function loadSaveWithAuthority(
 
   return {
     snapshot: inspected.snapshot,
-    sessionControl: createCampaignSessionControl({
+    sessionControl: withSoundingsContext(accountId, inspected.snapshot, createCampaignSessionControl({
       accountId,
       campaignId: envelope.campaignId,
       artifactId: envelope.artifactId,
@@ -2312,7 +2473,7 @@ export function loadSaveWithAuthority(
       continuityId: envelope.continuityId,
       headArtifactId: control.headArtifactId,
       headRevision: control.headRevision
-    }),
+    })),
     publication: buildVerifiedPublication(envelope),
     migratedLegacy: false,
     repairedLegacyDefeat: false

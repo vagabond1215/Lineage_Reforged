@@ -1,5 +1,6 @@
 import type {
   NormalDefeatReceiptState,
+  SoundingsAdmissionWitness,
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
 import { serializeSnapshot } from "../../../shared/persistence/src/index.js";
@@ -25,6 +26,7 @@ export type CampaignSessionPosture =
   | "head_unpublished";
 
 export interface CampaignSessionControl {
+  soundingsAdmissionWitness?: SoundingsAdmissionWitness;
   accountId: string;
   campaignId: string;
   loadedArtifactId: string;
@@ -303,6 +305,7 @@ function buildSurveyPreparationControlFingerprint(
 ): string {
   return JSON.stringify({
     accountId: control.accountId,
+    soundingsAdmissionWitness: control.soundingsAdmissionWitness ?? null,
     campaignId: control.campaignId,
     loadedArtifactId: control.loadedArtifactId,
     loadedPublicationId: control.loadedPublicationId,
@@ -628,6 +631,27 @@ export function commitPreparedPlayerSurveyCampaignMutation(
 
   const nextRevision = control.sessionRevision + 1;
   const acceptedMutationIds = [...control.acceptedMutationIds, preparation.mutationId];
+  // Mint only here, after both the original preparation and accepted result
+  // were independently checked. Never backfill from a completed loaded save.
+  let soundingsAdmissionWitness = control.soundingsAdmissionWitness;
+  if (preparation.mutationId.startsWith("soundings_turn_in_request.")) {
+    const request = nextSnapshot.authorityLedger!.soundingsTurnIn!.requests[0]!;
+    const result = nextSnapshot.authorityLedger!.soundingsTurnIn!.results[0]!;
+    const intent = request.normalizedIntent;
+    if (soundingsAdmissionWitness || sourceSnapshot.authorityLedger?.soundingsTurnIn?.requests.length || nextSnapshot.authorityLedger!.soundingsTurnIn!.version !== 2) {
+      return { accepted: false, duplicate: false, reason: "rejected", snapshot: sourceSnapshot, control, resultId: null };
+    }
+    soundingsAdmissionWitness = {
+      version: 1, posture: "session",
+      witnessId: `soundings_admission_witness.${fingerprintSoundingsState([sourceSnapshot.accountId, sourceSnapshot.campaignIdentity!.campaignId, preparation.mutationId])}`,
+      requestId: preparation.mutationId, accountId: sourceSnapshot.accountId!, campaignId: sourceSnapshot.campaignIdentity!.campaignId,
+      characterId: sourceSnapshot.campaignIdentity!.characterId, questId: "quest.ashen_reef_survey",
+      sourceArtifactId: preparation.sourceArtifactId, sourcePublicationId: preparation.sourcePublicationId, sourceRevision: preparation.sourceRevision,
+      sourceContinuityId: preparation.sourceContinuityId, acceptedContinuityId: preparation.acceptedContinuityId,
+      sourceSnapshotFingerprint: fingerprintSoundingsState(sourceSnapshot), surveyFingerprint: fingerprintSoundingsState(sourceSnapshot.authorityLedger!.ashenReefSurvey),
+      canonicalIntentFingerprint: fingerprintSoundingsState(intent), occurrenceId: result.occurrenceId, resultId: result.resultId, acceptedTick: sourceSnapshot.clock.tick
+    };
+  }
   const retainedResult: RetainedCampaignMutationResult = {
     mutationId: preparation.mutationId,
     submissionFingerprint: JSON.stringify({
@@ -657,6 +681,7 @@ export function commitPreparedPlayerSurveyCampaignMutation(
     resultId,
     control: {
       ...control,
+      ...(soundingsAdmissionWitness ? { soundingsAdmissionWitness } : {}),
       sessionRevision: nextRevision,
       posture: preparation.posture,
       pendingContinuityId: preparation.pendingContinuityId,

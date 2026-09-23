@@ -1781,12 +1781,38 @@ export interface SoundingsTurnInConsequenceReceiptState {
   effect: Record<string, unknown>;
 }
 export interface SoundingsTurnInAuthorityState {
-  version: 1;
+  version: 1 | 2;
   requests: SoundingsTurnInRequestState[];
   occurrences: SoundingsTurnInOccurrenceState[];
   results: SoundingsTurnInResultState[];
   consequenceReceipts: SoundingsTurnInConsequenceReceiptState[];
 }
+
+/** Compact save-owned admission evidence; never embedded in a campaign snapshot. */
+export interface SoundingsAdmissionWitnessFacts {
+  version: 1;
+  witnessId: string;
+  requestId: string;
+  accountId: string;
+  campaignId: string;
+  characterId: string;
+  questId: "quest.ashen_reef_survey";
+  sourceArtifactId: string;
+  sourcePublicationId: string;
+  sourceRevision: number;
+  sourceContinuityId: string;
+  acceptedContinuityId: string;
+  sourceSnapshotFingerprint: string;
+  surveyFingerprint: string;
+  canonicalIntentFingerprint: string;
+  occurrenceId: string;
+  resultId: string;
+  acceptedTick: number;
+}
+export type SoundingsAdmissionWitness = SoundingsAdmissionWitnessFacts & (
+  | { posture: "session" }
+  | { posture: "pending" | "applied"; firstDurableArtifactId: string; firstDurablePublicationId: string; firstDurableHeadRevision: number }
+);
 
 export type NormalDefeatSourceKind =
   | "accepted_mutation"
