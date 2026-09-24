@@ -20,6 +20,20 @@ Work only in `vagabond1215/Lineage_Reforged`. Fetch/prune and verify repository,
 
 Read AGENTS, required protocol/current coordination/branch/failure-pattern authorities; accepted Soundings authored terms; quest-turn-in owner contract; accepted-admission provenance/retention decision; historical independent audit and provenance gate; new `docs/design/soundings-admission-witness-repair-implementation-record.md`. Apply FP-001/002/008/009/010/012/013/014/015/016/017 and relevant recovery guardrails.
 
+## Fresh Connector Preparation — 2026-09-24
+
+Use these exact-head preparation packets before spending audit time on source archaeology:
+
+- `docs/dev/connector-preflight-soundings-post-repair-independent-acceptance-2026-09-24.md`;
+- `docs/dev/connector-static-adversarial-soundings-post-repair-2026-09-24.md`;
+- `docs/dev/connector-handoff-soundings-post-repair-independent-acceptance-2026-09-24.md`.
+
+At Connector preflight start, hosted `master` `6781e277f634f8c29f27ec70366ebc977145f6b1` was exactly one documentation-only commit ahead of runtime `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`, with four hosted branches, zero open PRs and zero GitHub status checks on the runtime. The Connector packet/prompt/handoff commits are later documentation-only drift. Verify that locally after fetch/prune and use delta verification instead of repeating broad discovery.
+
+The packets are orientation and probe-prioritization aids only. Independently author and execute acceptance probes; do not treat implementation tests or Connector conclusions as acceptance evidence.
+
+Resource-aware order when quota matters: repaired provenance/caller A1 first; publication/recovery B1 second; continuity/full-feed projection B2 third; ordinary browser/storage C fourth; mechanical baseline D fifth. Preserve durable checkpoints and resume from the next unfinished slice rather than repaying for completed orientation.
+
 ## Slice A — Repaired Admission Provenance And Caller
 
 Independently inspect prepared admission, witness construction, structural versus provenance validation, command/caller and accepted-only UI application. Prove witness facts bind original verified source rather than being reconstructed solely from completed mutable history. Pure engine must not read browser storage.
