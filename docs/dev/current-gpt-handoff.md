@@ -18,6 +18,18 @@ Read current prompt/output, `soundings-admission-witness-repair-implementation-r
 
 Reuse September 20 Connector preflight/static-adversarial/handoff packets and September 22 provenance Connector audit as historical maps. Their source identities/baselines are historical: current witness changes are explicitly mapped by the repair record. Do not restart broad discovery absent unexplained drift.
 
+## September 24 Connector Pre-Audit Packets
+
+Fresh Connector preparation for the repaired runtime is now durable:
+
+- `docs/dev/connector-preflight-soundings-post-repair-independent-acceptance-2026-09-24.md` — exact runtime/live-head drift, ref/PR/status posture and owner map;
+- `docs/dev/connector-static-adversarial-soundings-post-repair-2026-09-24.md` — independent P0/P1/P2 probe matrix and static risk prioritization;
+- `docs/dev/connector-handoff-soundings-post-repair-independent-acceptance-2026-09-24.md` — resource-aware A1/B1/B2/C/D execution order and interruption/resume rules.
+
+At packet preparation start, hosted `master` `6781e277f634f8c29f27ec70366ebc977145f6b1` was exactly one documentation-only commit ahead of runtime `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`; four hosted branches and zero open PRs were confirmed; the runtime had zero GitHub status checks. The Connector packet commits and this handoff update are documentation-only later drift. Verify locally after fetch/prune, then use delta verification rather than repeating broad reconnaissance.
+
+These packets do not supply acceptance. Independently author and execute the required probes.
+
 ## Implemented Contract
 
 Verified prepared admission creates one compact session witness; save authority retains it independently at account/campaign/request. Pending cannot authorize durable history. Candidate/recovery/pending/head/applied/readback ordering supports crash recovery, conflicts fail closed, applied context verifies the first immutable publication. Pure engine receives context, not browser storage access.
@@ -42,6 +54,6 @@ Separate final audit from historical September 20 evidence. No game-version deci
 
 ## Repository And Platform Boundary
 
-One local/four hosted refs and zero open PRs at implementation review. Protected readiness/prompt-integrity and held administration refs unchanged; exact review triggers remain in branch register. No branch cleanup due. Final publication/live equality is verified after push and reported by the completion message.
+Fresh Connector preflight confirmed four hosted refs and zero open PRs; non-default heads remain unchanged. Protected/held disposition semantics in the branch register remain current; no branch cleanup is due. Connector documentation commits after runtime are not runtime drift. Final publication/live equality remains a local audit responsibility.
 
 This next run requires authenticated local checkout, execution, tests/build, browser, commit/push and hosted readback. Connector preparation is complete; Connector can review docs but cannot supply executable acceptance. External research, Deep Research and separate application workspaces add no necessary capability here. Quota unknown; preserve slice checkpoints and reuse exact-source evidence on resume.
