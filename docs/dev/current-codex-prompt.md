@@ -12,6 +12,19 @@ Repair F2 from `docs/design/soundings-durable-completion-post-repair-independent
 
 Fetch/prune and verify repository, clean master, all branches/open PRs and current coordination before editing; preserve unrelated changes. Read AGENTS, repository-first protocol, current output/handoff, historical/planning registers, branch/failure-pattern authorities, accepted Soundings authored terms, quest-turn-in owner contract, accepted-admission provenance/retention contract, witness implementation record and new focused audit. Reuse September 24 Connector packets and exact owner maps; no broad reorientation absent unexplained drift.
 
+## Fresh Connector F2 Preparation — 2026-09-24
+
+Read these narrow exact-owner packets before local source archaeology:
+
+- `docs/dev/connector-audit-soundings-f2-consumer-boundary-2026-09-24.md`;
+- `docs/dev/connector-map-soundings-f2-callers-and-reachability-2026-09-24.md`;
+- `docs/dev/connector-matrix-soundings-f2-regression-2026-09-24.md`;
+- `docs/dev/connector-preflight-soundings-f2-repair-2026-09-24.md`.
+
+Connector preflight confirmed that runtime `0df87bb7afaa4d7fcc9f08b79b7528d60727c370` -> audit publication `918b092ad3b911dd9804dd87aad1d06d2cc3736e` changes only docs and independent evidence probes, with four hosted branches and zero open PRs. The F2 packets and this prompt update are later documentation-only drift. Verify that delta locally after fetch/prune and use delta verification rather than broad rediscovery.
+
+The owner-boundary audit establishes the narrow static seam: derive whether Soundings provenance is required from the validated retained publication envelope/snapshot, then validate the required recovery witness/fingerprint/durable identity before any completed-consumer write or recovery cleanup. Do not let optional sidecar absence decide that a version-2 completed publication is legacy/no-witness. Reuse existing `readRecoveryEnvelope`, persisted witness/provenance validation and recovery-witness machinery rather than inventing a new trust system. The caller map confirms ordinary App startup runs publication recovery before consumer cleanup; preserve this ordering and terminal cleanup after intentional address deletion. The regression matrix maps omission/conflict/legacy/no-Soundings/idempotent/terminal cases to existing fixtures.
+
 ## Bounded Implementation
 
 First independently reproduce `docs/dev/evidence/soundings-post-repair-acceptance-2026-09-24/slice-b1.mjs`: 13 passing prerequisite/control cases then intentional exit 1 because omitting recovery witness/fingerprint allows declared consumer completion to erase head_verified recovery with stable pending witness. The unchanged valid record rejects identically. This is an exported owner-boundary defect; ordinary UI reachability was not established.
