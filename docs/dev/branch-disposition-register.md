@@ -1,5 +1,13 @@
 # Branch Disposition Register
 
+## 2026-09-24 F2 Consumer Completion Repair
+
+Clean synchronized source `a9508e658452a024310a7d3a59e1f46fd2953442`; runtime `0383cedc99a4c3d5e2c9b47cf0665683720aef9e`. Fetch/prune: no incoming changes; one local/four hosted refs; zero open PRs. All three non-default heads/merge bases/unique commits/paths in the historical table below remain unchanged. Starting counts: readiness395/2, prompt-integrity342/1, administration173/1. No semantic overlap or consumed review trigger.
+
+Retain readiness `59c103c3a06d55f35bffa735fd4b7814dffb583e` PROTECTED_REFERENCE until scheduled readiness/regression or explicit protection review; prompt-integrity `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f` PROTECTED_REFERENCE until dedicated prompt/execution-pointer audit; administration `210df5bcc017a8f31d621a553b5496c668540d29` HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. No merge/rebase/integration/deletion/PR/protection/disposition action due/performed.
+
+Validation165 tests, A68/B14, lint/type/build checks in focused F2 repair record. Result IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE; successor **Soundings Durable Completion Post-F2 Independent Acceptance Audit**. Final docs publication/live equality is resolved after push and reported separately from source/runtime.
+
 ## 2026-09-24 Post-Repair Independent Acceptance
 
 Inspected source `c4911cdc13c2e57927ee10ed1a5f40ac4d6de72e`, runtime `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`. Fetch/prune and docs-only fast-forward from `6781e277f634f8c29f27ec70366ebc977145f6b1`; one local/four hosted refs; zero open PRs. All three exact heads, merge bases and unique paths in the following historical witness-repair table were rechecked unchanged. At this source, master-only/ref-only counts are respectively 388/2, 335/1 and 166/1.
