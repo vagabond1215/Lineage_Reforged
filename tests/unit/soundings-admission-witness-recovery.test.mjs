@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { submitSoundingsTurnInCaller } from "../../apps/rpg-ui/src/runtime/soundingsTurnInCaller.ts";
-import { buildSaveMetadata, loadSaveWithAuthority, publishSave, recoverPendingCampaignPublications } from "../../apps/rpg-ui/src/game-shell/saveManager.ts";
+import { buildSaveMetadata, completeCampaignPublicationConsumers, deleteSave, loadSaveWithAuthority, publishSave, recoverPendingCampaignPublications } from "../../apps/rpg-ui/src/game-shell/saveManager.ts";
 import { createOrdinarySoundingsCampaign, publishAndRestart, travelTo, withCampaignStorage, ACCOUNT_ID, SLOT_ID, REQUEST_ID } from "../helpers/soundings-ordinary-campaign.mjs";
 
 const storageEntries = storage => Array.from({ length: storage.length }, (_, index) => {
@@ -11,6 +11,54 @@ const storageEntries = storage => Array.from({ length: storage.length }, (_, ind
 const findEntry = (storage, suffix) => storageEntries(storage).find(([key]) => key.endsWith(suffix));
 const witnessEntry = storage => findEntry(storage, `.soundings-witness.${REQUEST_ID}`);
 const publish = state => publishSave(ACCOUNT_ID, SLOT_ID, state.snapshot, buildSaveMetadata(SLOT_ID, state.snapshot), { sessionControl: state.control });
+const completionPlans = [
+  { kind: "active_history", payloadFingerprint: "f2.active-history" },
+  { kind: "estate", payloadFingerprint: "f2.estate" }
+];
+const completionKinds = completionPlans.map(plan => plan.kind);
+const publishWithConsumers = (state, options = {}) => publishSave(
+  ACCOUNT_ID, SLOT_ID, state.snapshot, buildSaveMetadata(SLOT_ID, state.snapshot),
+  { sessionControl: state.control, consumerPlans: completionPlans, ...options }
+);
+function interruptBeforeApplied(storage, state) {
+  const originalSet = storage.setItem.bind(storage);
+  let interrupted = false;
+  storage.setItem = (key, raw) => {
+    if (key.endsWith(`.soundings-witness.${REQUEST_ID}`) && JSON.parse(raw).posture === "applied") {
+      interrupted = true;
+      throw new Error("F2 before applied witness");
+    }
+    originalSet(key, raw);
+  };
+  try { assert.throws(() => publishWithConsumers(state), /F2 before applied witness/); }
+  finally { storage.setItem = originalSet; }
+  assert.equal(interrupted, true);
+  assert.equal(JSON.parse(witnessEntry(storage)[1]).posture, "pending");
+}
+function rejectCompletionUnchanged(storage, publicationId) {
+  // The first call would persist a partial set; the second would delete recovery.
+  for (const kinds of [["active_history"], completionKinds]) {
+    const before = storageEntries(storage);
+    assert.throws(() => completeCampaignPublicationConsumers(ACCOUNT_ID, publicationId, kinds), /witness|provenance|recovery|publication|artifact/i);
+    assert.deepEqual(storageEntries(storage), before, "rejection must preserve every stored byte before partial writes and final cleanup");
+  }
+}
+function finishConsumersExactly(storage, publicationId) {
+  const [key, raw] = findEntry(storage, ".publication-recovery");
+  const before = storageEntries(storage);
+  completeCampaignPublicationConsumers(ACCOUNT_ID, publicationId, ["active_history"]);
+  const partial = JSON.parse(storage.getItem(key));
+  assert.deepEqual(partial.completedConsumerKinds, ["active_history"]);
+  assert.deepEqual(partial.consumerPlans, JSON.parse(raw).consumerPlans);
+  assert.deepEqual(storageEntries(storage).filter(([entry]) => entry !== key), before.filter(([entry]) => entry !== key));
+  const partialBytes = storageEntries(storage);
+  completeCampaignPublicationConsumers(ACCOUNT_ID, publicationId, completionKinds);
+  assert.equal(storage.getItem(key), null);
+  assert.deepEqual(storageEntries(storage), partialBytes.filter(([entry]) => entry !== key));
+  const finished = storageEntries(storage);
+  completeCampaignPublicationConsumers(ACCOUNT_ID, publicationId, completionKinds);
+  assert.deepEqual(storageEntries(storage), finished, "repeated completion cannot resurrect recovery or any save address");
+}
 function completed() {
   const source = createOrdinarySoundingsCampaign();
   const submitted = submitSoundingsTurnInCaller(source.snapshot, source.control, REQUEST_ID, new Map());
@@ -199,5 +247,133 @@ test("first publication retains and reads back pending witness before head, then
       assert.ok(index > previous, `${event} must follow ${requiredOrder[requiredOrder.indexOf(event) - 1] ?? "publication start"}: ${events.join(", ")}`);
       previous = index;
     }
+  });
+});
+
+for (const stage of ["pending", "applied"]) {
+  for (const omitted of [["soundingsAdmissionWitness"], ["soundingsWitnessFingerprint"], ["soundingsAdmissionWitness", "soundingsWitnessFingerprint"]]) {
+    test(`F2 ${stage} first publication rejects omitted ${omitted.join(" and ")} before consumer effects`, () => {
+      withCampaignStorage(storage => {
+        const state = completed();
+        if (stage === "pending") interruptBeforeApplied(storage, state);
+        else publishWithConsumers(state);
+        const [key, raw] = findEntry(storage, ".publication-recovery");
+        const recovery = JSON.parse(raw);
+        assert.ok(recovery.soundingsAdmissionWitness);
+        assert.ok(recovery.soundingsWitnessFingerprint);
+        for (const field of omitted) delete recovery[field];
+        storage.setItem(key, JSON.stringify(recovery));
+        rejectCompletionUnchanged(storage, recovery.publicationId);
+      });
+    });
+  }
+}
+
+for (const corruption of ["unchanged pending", "pending with address_verified", "malformed witness", "conflicting witness", "wrong fingerprint", "missing stable witness", "pending stable witness", "conflicting stable source", "conflicting first artifact", "conflicting first publication", "conflicting first revision"]) {
+  test(`F2 consumer completion rejects ${corruption} without partial writes or cleanup`, () => {
+    withCampaignStorage(storage => {
+      const state = completed();
+      if (corruption.startsWith("unchanged pending") || corruption === "pending with address_verified") interruptBeforeApplied(storage, state);
+      else publishWithConsumers(state);
+      const [key, raw] = findEntry(storage, ".publication-recovery");
+      const recovery = JSON.parse(raw);
+      const [stableKey, stableRaw] = witnessEntry(storage);
+      const stable = JSON.parse(stableRaw);
+      if (corruption === "pending with address_verified") recovery.status = "address_verified";
+      if (corruption === "malformed witness") recovery.soundingsAdmissionWitness = {};
+      if (corruption === "conflicting witness") recovery.soundingsAdmissionWitness.sourceArtifactId += ".conflict";
+      if (corruption === "wrong fingerprint") recovery.soundingsWitnessFingerprint = "wrong-fingerprint";
+      if (corruption === "missing stable witness") storage.removeItem(stableKey);
+      if (corruption === "pending stable witness") stable.posture = "pending";
+      if (corruption === "conflicting stable source") stable.sourceArtifactId += ".conflict";
+      if (corruption === "conflicting first artifact") stable.firstDurableArtifactId += ".conflict";
+      if (corruption === "conflicting first publication") stable.firstDurablePublicationId += ".conflict";
+      if (corruption === "conflicting first revision") stable.firstDurableHeadRevision += 1;
+      if (corruption === "pending stable witness" || corruption.startsWith("conflicting stable") || corruption.startsWith("conflicting first")) storage.setItem(stableKey, JSON.stringify(stable));
+      storage.setItem(key, JSON.stringify(recovery));
+      rejectCompletionUnchanged(storage, recovery.publicationId);
+    });
+  });
+}
+
+test("F2 valid first and later descendant publications complete exactly with immutable applied witness", () => {
+  withCampaignStorage(storage => {
+    const source = completed();
+    const first = publishWithConsumers(source);
+    const originalWitness = witnessEntry(storage);
+    assert.equal(JSON.parse(originalWitness[1]).posture, "applied");
+    finishConsumersExactly(storage, first.publication.publicationId);
+    const loaded = loadSaveWithAuthority(ACCOUNT_ID, SLOT_ID);
+    const later = travelTo({ snapshot: loaded.snapshot, control: loaded.sessionControl }, "location.ashen_reef");
+    const descendant = publishWithConsumers(later);
+    const recovery = JSON.parse(findEntry(storage, ".publication-recovery")[1]);
+    assert.equal(recovery.soundingsAdmissionWitness, undefined, "later publication legitimately has no first-publication sidecar");
+    assert.equal(recovery.soundingsWitnessFingerprint, undefined);
+    assert.notEqual(descendant.publication.publicationId, first.publication.publicationId);
+    finishConsumersExactly(storage, descendant.publication.publicationId);
+    assert.deepEqual(witnessEntry(storage), originalWitness);
+  });
+});
+
+test("F2 descendant without sidecar still requires matching applied stable provenance", () => {
+  withCampaignStorage(storage => {
+    const source = completed();
+    const first = publishWithConsumers(source);
+    finishConsumersExactly(storage, first.publication.publicationId);
+    const loaded = loadSaveWithAuthority(ACCOUNT_ID, SLOT_ID);
+    const later = travelTo({ snapshot: loaded.snapshot, control: loaded.sessionControl }, "location.ashen_reef");
+    const descendant = publishWithConsumers(later);
+    const recovery = JSON.parse(findEntry(storage, ".publication-recovery")[1]);
+    assert.equal(recovery.soundingsAdmissionWitness, undefined);
+    const [key, raw] = witnessEntry(storage);
+    for (const corruption of ["missing", "pending", "conflicting"]) {
+      const stable = JSON.parse(raw);
+      if (corruption === "missing") storage.removeItem(key);
+      else {
+        if (corruption === "pending") stable.posture = "pending";
+        else stable.sourceArtifactId += ".conflict";
+        storage.setItem(key, JSON.stringify(stable));
+      }
+      rejectCompletionUnchanged(storage, descendant.publication.publicationId);
+      storage.setItem(key, raw);
+    }
+    finishConsumersExactly(storage, descendant.publication.publicationId);
+  });
+});
+
+for (const kind of ["ordinary no-Soundings completion", "legacy v1 completion"]) {
+  test(`F2 ${kind} preserves no-witness consumer compatibility`, () => {
+    withCampaignStorage(storage => {
+      const state = kind.startsWith("ordinary") ? createOrdinarySoundingsCampaign() : completed();
+      if (kind.startsWith("legacy")) {
+        state.snapshot.authorityLedger.soundingsTurnIn.version = 1;
+        delete state.control.soundingsAdmissionWitness;
+      }
+      const ledger = structuredClone(state.snapshot.authorityLedger.soundingsTurnIn);
+      const wallet = structuredClone(state.snapshot.playerState.currency);
+      const result = publishWithConsumers(state);
+      assert.equal(witnessEntry(storage), undefined);
+      finishConsumersExactly(storage, result.publication.publicationId);
+      const loaded = loadSaveWithAuthority(ACCOUNT_ID, SLOT_ID);
+      assert.deepEqual(loaded.snapshot.authorityLedger.soundingsTurnIn, ledger);
+      assert.deepEqual(loaded.snapshot.playerState.currency, wallet);
+      assert.equal(witnessEntry(storage), undefined);
+    });
+  });
+}
+
+test("F2 verified terminal Soundings completion cleans consumers after address deletion without resurrection", () => {
+  withCampaignStorage(storage => {
+    const source = completed();
+    const terminal = publishWithConsumers(source, { terminal: true });
+    const retainedWitness = witnessEntry(storage);
+    deleteSave(ACCOUNT_ID, SLOT_ID);
+    assert.equal(loadSaveWithAuthority(ACCOUNT_ID, SLOT_ID, { allowClosed: true }), null);
+    finishConsumersExactly(storage, terminal.publication.publicationId);
+    assert.equal(loadSaveWithAuthority(ACCOUNT_ID, SLOT_ID, { allowClosed: true }), null);
+    assert.deepEqual(witnessEntry(storage), retainedWitness);
+    const after = storageEntries(storage);
+    assert.deepEqual(recoverPendingCampaignPublications(ACCOUNT_ID), []);
+    assert.deepEqual(storageEntries(storage), after);
   });
 });

@@ -1427,13 +1427,27 @@ export function completeCampaignPublicationConsumers(
   if (!recovery) {
     return;
   }
-  if (recovery.soundingsAdmissionWitness) {
+  const snapshot = deserializeSnapshot(readRecoveryEnvelope(recovery).snapshot);
+  if (recovery.soundingsAdmissionWitness || snapshot.authorityLedger?.soundingsTurnIn?.version === 2) {
     if (recovery.status !== "address_verified") {
       throw new Error("Soundings publication recovery must finish before consumer completion.");
     }
-    // Consumer completion may follow terminal address deletion. Verify the retained
-    // witness without recreating a playable address that its owner has removed.
-    retainRecoveryWitness(storage, recovery, true);
+  }
+  // Cleanup is verification-only: it cannot promote pending evidence or recreate
+  // an address intentionally deleted by a terminal consumer.
+  const applied = persistedSoundingsContext(accountId, snapshot);
+  const witness = recovery.soundingsAdmissionWitness;
+  const firstPublication = applied?.posture === "applied" && applied.firstDurableArtifactId === recovery.artifactId;
+  if (firstPublication || witness || recovery.soundingsWitnessFingerprint !== undefined) {
+    if (!applied || !witness || witness.posture !== "pending" ||
+        fingerprintSoundingsState(witness) !== recovery.soundingsWitnessFingerprint ||
+        witness.accountId !== recovery.accountId || witness.campaignId !== recovery.campaignId ||
+        witness.firstDurableArtifactId !== recovery.artifactId ||
+        witness.firstDurablePublicationId !== recovery.publicationId ||
+        witness.firstDurableHeadRevision !== recovery.headRevision ||
+        fingerprintSoundingsState({ ...witness, posture: "applied" }) !== fingerprintSoundingsState(applied)) {
+      throw new Error("Soundings consumer completion witness evidence is missing or conflicts.");
+    }
   }
   const completedConsumerKinds = Array.from(
     new Set([
