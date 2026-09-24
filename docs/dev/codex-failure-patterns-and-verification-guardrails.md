@@ -155,6 +155,8 @@ Do not copy full defect narratives into this register. Link the focused audit or
 
 ### FP-012 — Duplicate Results Require Unique Complete Durable Evidence
 
+- **Additional guardrail/evidence (2026-09-24):** Required durability gates must derive from validated retained payload authority, not optional sidecar presence. At consumer completion/cleanup, remove required evidence and verify rejection before partial completion writes or recovery deletion, paired with valid pending and applied controls. See `docs/design/soundings-durable-completion-post-repair-independent-acceptance-audit.md`, F2; upstream caller ordering does not replace the exported owner's fail-closed contract.
+
 - **Pattern:** First, last, latest, or `.find(...)` array selection treats ambiguous or partial retained state as a completed duplicate result.
 - **Why it escaped:** Idempotency tests exercised one clean retained result but did not reverse arrays, duplicate identities, remove associated ledger/projection evidence, or restart without in-memory retained results.
 - **Guardrail:** Duplicate handling must target stable identity and prove exactly one complete internally consistent evidence set. Ambiguous, missing, duplicated, orphaned, or conflicting evidence fails closed before effects.

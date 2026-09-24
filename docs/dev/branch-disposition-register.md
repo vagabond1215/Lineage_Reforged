@@ -1,5 +1,13 @@
 # Branch Disposition Register
 
+## 2026-09-24 Post-Repair Independent Acceptance
+
+Inspected source `c4911cdc13c2e57927ee10ed1a5f40ac4d6de72e`, runtime `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`. Fetch/prune and docs-only fast-forward from `6781e277f634f8c29f27ec70366ebc977145f6b1`; one local/four hosted refs; zero open PRs. All three exact heads, merge bases and unique paths in the following historical witness-repair table were rechecked unchanged. At this source, master-only/ref-only counts are respectively 388/2, 335/1 and 166/1.
+
+Readiness ref remains PROTECTED_REFERENCE until scheduled readiness/regression or explicit protection review; prompt-integrity ref remains PROTECTED_REFERENCE until dedicated prompt/execution-pointer audit; administration ref remains HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. No trigger consumed, semantic overlap, disposition change, integration/deletion or PR action due/performed.
+
+Audit result REPAIR_REQUIRED (F2), A1 68 pass; B1 13 controls then confirmed defect; remaining slices stopped. Successor: **Soundings Publication Consumer Completion Witness Gate Repair**. Final audit publication is docs/evidence only, distinct from runtime/source; completion report supplies exact pushed/verified identity.
+
 ## 2026-09-24 Soundings Witness Repair
 
 Inspected clean synchronized starting master `6d594417a9b8cf2c0d8b29a2e12725029eda30d5`; runtime repair `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`. Fetch/prune confirmed unchanged origin during implementation; scoped GitHub search returned zero open PRs. One local branch and four hosted branches total. Exact heads/merge bases/unique paths remain unchanged from the prior review:

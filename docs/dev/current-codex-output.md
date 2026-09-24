@@ -4,59 +4,28 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
-Date: 2026-09-24.
+Date: 2026-09-24. Source run: **Soundings Durable Completion Post-Repair Independent Acceptance Audit**. Disposition: **REPAIR_REQUIRED**, F2.
 
-Source run: **Soundings Accepted Admission Witness And Provenance Binding Repair**.
-
-Disposition: **IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE**.
-
-Label class: unversioned bounded repair; parent development milestone not applicable. Development milestone impact `supports_current_band`; game-version impact `none`. Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, current band `DEV-0.7.x` unchanged.
+Label class: unversioned independent audit; parent development milestone not applicable; development milestone impact `none`; game-version impact `none`. Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, band `DEV-0.7.x` unchanged.
 
 ## A. Files Changed
 
-Implementation commits `9400bc0de6dceaa89b954190a00abe54426d46e3` and `0df87bb7afaa4d7fcc9f08b79b7528d60727c370` change ten files in total:
+Independent `slice-a.mjs` and `slice-b1.mjs` probes under `docs/dev/evidence/soundings-post-repair-acceptance-2026-09-24/`; new focused post-repair audit; current output/handoff/prompt; branch/historical/planning registers; generalized FP-012 omission guardrail. Production and implementation tests unchanged.
 
-- `apps/rpg-ui/src/game-shell/saveManager.ts`;
-- `packages/shared/types/src/contracts.ts`;
-- engine `campaign-session.ts`, `player-soundings-turn-in.ts`, `soundings-turn-in-authority.ts`, `index.ts`, new `soundings-admission-witness.ts` and `.js` bridge;
-- `tests/unit/soundings-admission-witness.test.mjs` and `soundings-admission-witness-recovery.test.mjs`.
+## B. Findings
 
-Documentation publication updates this output, handoff, prompt, branch register, historical register, planning reconciliation, focused repair record and focused implementation/owner handoff references. No dependency, version, generated build output or unrelated production edit.
+A1 independently passes 68 cases including both historical F1 forgeries, restart, witness substitutions, real caller and stale preparation. B1 finds F2: omitting witness/fingerprint from interrupted recovery permits exported consumer completion to delete recovery while stable witness remains pending. The unchanged valid control rejects; nonempty declared active_history plan reproduces bypass. Current App ordering mitigates ordinary UI reachability, which was not established. Accepted durability/cleanup owner contract is violated.
 
-## B. Patch And Authority
-
-Verified prepared admission now mints a compact Soundings witness. Save persistence retains it outside mutable campaign snapshots, keyed by account/campaign/request, using candidate -> recovery -> pending -> artifact/head -> applied -> address/consumer ordering and exact readbacks. Applied loading verifies the first immutable publication. Pure engine duplicate/projection verification receives typed context.
-
-New completions use Soundings authority version 2 and fail closed on absent/conflicting evidence. Legacy version 1 without independent evidence remains playable/saveable with non-mutating `legacy_unverified` historical retry and no witness synthesis, repayment or historical projection repair. Later spending/earnings, descendants and defeat/recovery retain historical witness identity.
-
-Both F1 variants reject before trusted duplicate, projection repair and new publication. Final review also closed witnessed version-1 downgrade in command/caller retry, with a dedicated regression. Historical audit evidence is unchanged. The September 20 negative acceptance remains historical authority until a separate post-repair audit decides the repaired implementation.
-
-Detailed source, finding-to-test matrix, commands, browser evidence and limitations: `docs/design/soundings-admission-witness-repair-implementation-record.md`.
+Full evidence, exact commands, reachability qualification and guardrail mapping: `docs/design/soundings-durable-completion-post-repair-independent-acceptance-audit.md`.
 
 ## C. Checks Run
 
-- Prior 123-test command plus 20 new tests: **143/143 pass, 0 failed/skipped**. New suites 7/7 and 13/13; campaign-persistence plus witness recovery 46/46.
-- Content lint: **71 files**, pass. Node UI configuration typecheck: pass.
-- Broad UI TypeScript: **137 existing diagnostics**, not green; zero sorted signature differences after line/column normalization against `.tmp-dev070-ui-typecheck.log`.
-- Direct application-local Vite build: pass, **216 client modules**. Existing Browserslist/chunk warnings remain.
-- Public engine JS exports/TS bridge and final diff/whitespace checks pass.
-- Historical Slice-A defect probe exits 1 at its unchanged expectation of faulty duplicate; actual `invalid_provenance`. This is expected historical behavior reversal, not a passing suite. New tests cover both variants.
-- Historical retention-gap probe exits 0; full source remains unpublished and transient results disappear on restart, while the new independent witness supplies the binding omitted by that old probe.
-- September 23 ordinary browser smoke on the initial implementation (final change only adds downgrade rejection): creator/accept/travel/two shifts/save/reload/two shifts/return/submit/save/reload/continued travel/save succeeds on disposable localhost account. Wallet 16g 8s -> 21g 8s; completed quest cannot resubmit; no quota failure.
-- Automated ordinary sequence enforces 5 MiB on every write. Measured retained ordinary completion plus later travel/restart: **4,320,700 UTF-16 bytes**, including **3,112 witness key/value bytes**. Bounded observation only.
+Coordinator reruns: A1 68 pass, exit 0; B1 13 prerequisite/control cases pass, then deliberate defect assertion exit 1 (`rejected:false`, `recoveryRetained:false`, stable witness pending). Diff/whitespace and runtime-surface comparison checked before commit. B2/C/D were not executed because the prompt requires stopping on a critical defect. Prior implementation tests/build/browser/capacity evidence is historical, not fresh audit acceptance. Applicable FP-001/002/003/004/005/006/008/009/010/011/012/014/015/017 mapped in focused audit; FP-013/016 remaining gates unexecuted.
 
-FP-001/017: real caller and ordinary UI/integration. FP-002: separate acceptance. FP-008/009: exact branch/source/publication separation. FP-010/014/015: both F1 variants and before-state witness matching. FP-012: cache-loss and durable uniqueness. FP-013: fork/defeat/recovery preservation. FP-016: existing projection suite retained; independent full-feed audit still required. FP-003/004/005/006/011 also applied to pending recovery, collisions, restart and validation ordering. Full mapping is in the focused record.
+## D. Source, Branches And Next Step
 
-## D. Branches, Risks And Successor
+Clean starting master `6781e277f634f8c29f27ec70366ebc977145f6b1`; fetched and fast-forwarded five docs-only commits to `c4911cdc13c2e57927ee10ed1a5f40ac4d6de72e`. Runtime under audit `0df87bb7afaa4d7fcc9f08b79b7528d60727c370` is unchanged. Audit publication is a later docs/evidence commit; final exact identity and push/fetch/clean hosted equality are reported after publication, including hosted prompt/output/handoff readback.
 
-Starting clean synchronized master: `6d594417a9b8cf2c0d8b29a2e12725029eda30d5`. Runtime implementation: `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`. Final coordination publication is later and documentation only; resolve exact final/live heads after push rather than treating either source SHA as final master. Final completion report records fetch/prune, clean status, hosted equality and prompt/output/handoff readback.
+One local/four hosted branches; scoped query zero open PRs. Three retained heads, merge bases, unique paths and triggers rechecked; two PROTECTED_REFERENCE, one HOLD_NAMED_CONSUMER. No disposition change, integration/deletion or PR action due/performed; see branch register for exact heads/triggers.
 
-One local/four hosted branches, zero open PRs. All three non-default heads and unique paths rechecked; no integration/deletion/PR/protection/disposition action due or performed. Readiness and prompt-integrity refs remain protected; administration remains held for named consumers. Exact heads and review triggers are in `branch-disposition-register.md`.
-
-Out-of-scope finding: ordinary Starfall is typed `harbor`; existing Normal defeat completion requires a `settlement`. The witness defeat test explicitly admits a test-only safe settlement and uses the real pending/completion owners. It does not establish ordinary Starfall defeat-recovery reachability. Production for that separate boundary was preserved.
-
-No broad TypeScript cleanup, unlimited storage guarantee, arbitrary coordinated local-storage tamper protection, Soundings self acceptance or game-version decision.
-
-Installed next: **Soundings Durable Completion Post-Repair Independent Acceptance Audit**, package M split into internal A/B/C/D evidence checkpoints. Reuse Connector preparation; verify the runtime delta, revalidate repaired Slice A independently, then finish continuity/projection capacity, ordinary browser/storage and regression evidence against one target. No separately proposed game-version decision.
-
-Suggested implementation commit message used: `fix(soundings): bind completion to retained admission witness`.
+Installed next: **Soundings Publication Consumer Completion Witness Gate Repair**, package S. Validate required provenance before consumer updates/cleanup even when optional evidence is missing; preserve legacy and terminal cleanup; then separate full independent acceptance. No new product decision or game-version proposal. Soundings remains unaccepted. Suggested commit: `docs(soundings): record consumer completion acceptance defect`.
