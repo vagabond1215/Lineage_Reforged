@@ -47,6 +47,7 @@ export function verifySoundingsAdmissionProvenance(snapshot: SaveSnapshot, conte
     if (!authority?.requests.length) return "not_completed";
     const witness = context?.soundingsAdmissionWitness;
     if (!witness) return authority.version === 1 ? "legacy_unverified" : "missing_witness";
+    if (authority.version !== 2) return "invalid_witness";
     if (!isSoundingsAdmissionWitness(witness) || witness.posture === "pending" || serializeSoundingsIntent(soundingsWitnessFacts(witness)) !== serializeSoundingsIntent(snapshotFacts(snapshot))) return "invalid_witness";
     if (witness.posture === "session") {
       const retained = context!.retainedMutationResults.filter(entry => entry.mutationId === witness.requestId);

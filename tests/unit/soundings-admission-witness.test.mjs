@@ -78,6 +78,26 @@ test('verified admission witness survives caller cache loss and semantic key ord
   }
 }));
 
+test('witness-backed completion cannot downgrade to legacy for same-session or restarted retry',()=>withCampaignStorage(()=>{
+  const source=createOrdinarySoundingsCampaign();
+  const command=prepare(source.snapshot,source.control,REQUEST_ID).command;
+  const accepted=submit(source);
+  for(const state of [accepted,publishAndRestart(accepted.snapshot,accepted.control)]) {
+    const downgraded=structuredClone(state);
+    downgraded.snapshot.authorityLedger.soundingsTurnIn.version=1;
+    assert.equal(isTargetCampaignSnapshot(downgraded.snapshot),true);
+    const before=structuredClone(downgraded);
+    const direct=execute(downgraded.snapshot,downgraded.control,command);
+    assert.equal(direct.code,'invalid_provenance');
+    assert.equal(direct.duplicate,false);
+    assert.equal(direct.accepted,false);
+    const retry=caller(downgraded.snapshot,downgraded.control,REQUEST_ID,new Map());
+    assert.equal(retry.outcome.result.code,'invalid_provenance');
+    assert.equal(retry.acceptedState,null);
+    assert.deepEqual(downgraded,before);
+  }
+}));
+
 test('later admitted spending and earnings retain original witness and historical duplicate without wallet rollback',()=>withCampaignStorage(()=>{
   let state=createOrdinarySoundingsCampaign();
   state=submit(state); state=publishAndRestart(state.snapshot,state.control);
