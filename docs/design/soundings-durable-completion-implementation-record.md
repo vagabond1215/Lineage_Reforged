@@ -79,3 +79,8 @@ Local implementation/validation used the authenticated checkout, shell, GitHub r
 Implementation commit: `af0954c294d222bc1f8667266e4549b8619d5484`. Pushed to origin/master; fetch/prune confirmed HEAD = origin/master with 0 ahead / 0 behind and clean tracked/untracked status. Hosted GitHub retrieval matched local Git blobs for current prompt `ac85ad8d167eb95945373c0bcedb86b5435067ca`, current output `69df23f3ea75bf44b6de283d0271f4aab4908196`, and handoff `99394fceb1d6384b00c737c2ef9a6c69ba9eba7d` at that implementation head.
 
 This follow-up publication-record commit changes documentation only and pins the audit source to the implementation SHA. Its exact identity is the commit containing this appendix (resolve with git log -1 -- docs/dev/current-codex-output.md), separate from the tested implementation. Final post-push fetch, hosted readback and clean status are reported in the completion message; no self-referential commit identity is fabricated.
+
+
+## 2026-09-24 Witness Repair Handoff
+
+Following the September 20 F1 finding and accepted provenance/retention contract, runtime `0df87bb7afaa4d7fcc9f08b79b7528d60727c370` implements the independent admission witness with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`. New completions use Soundings authority version 2; version-1 no-witness historical saves remain playable/saveable without trusted provenance synthesis. See `soundings-admission-witness-repair-implementation-record.md` for the exact boundary, 143-test evidence, ordinary browser/storage results and limitations. The installed successor is **Soundings Durable Completion Post-Repair Independent Acceptance Audit**. Earlier implementation/audit evidence remains historical; no self acceptance or version change.

@@ -1,5 +1,20 @@
 # Branch Disposition Register
 
+## 2026-09-24 Soundings Witness Repair
+
+Inspected clean synchronized starting master `6d594417a9b8cf2c0d8b29a2e12725029eda30d5`; runtime repair `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`. Fetch/prune confirmed unchanged origin during implementation; scoped GitHub search returned zero open PRs. One local branch and four hosted branches total. Exact heads/merge bases/unique paths remain unchanged from the prior review:
+
+| Ref | Head | Merge base | Starting master-only / ref-only | Unique paths | Disposition / next review |
+| --- | --- | --- | --- | --- | --- |
+| `prep/integrated-gameplay-0-7-readiness-audit` | `59c103c3a06d55f35bffa735fd4b7814dffb583e` | `895c02df40332c813a8403bd489af6184111ccba` | 380 / 2 | readiness audit and queued prompt | PROTECTED_REFERENCE; explicitly scheduled readiness/regression or protection review |
+| `parallel/prompt-packaging-integrity-audit` | `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f` | `3d77171ca2034c8b2fb8d19f374cef5df9605053` | 327 / 1 | prompt-packaging audit prompt | PROTECTED_REFERENCE; dedicated prompt/execution-pointer integrity audit |
+| `admin/genesis-research-evidence-2026-08-13` | `210df5bcc017a8f31d621a553b5496c668540d29` | `fd40571bb0802177bd776fd3cd445b6b487716fd` | 158 / 1 | administration research evidence | HOLD_NAMED_CONSUMER; administration/template/governance or explicit Lineage retrospective |
+
+No retained branch overlaps the active witness repair; no named trigger was consumed. No merge, rebase, integration, deletion, PR/protection mutation or disposition change due/performed. Counts are starting-source observations, not post-publication counts. Runtime validation: 143/143, 71-file lint, Node config typecheck, 216-module build, unchanged 137 broad diagnostics. Final documentation publication/live equality and clean state are resolved after push and reported separately.
+
+Result IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE; active successor **Soundings Durable Completion Post-Repair Independent Acceptance Audit**. These retained refs confer no acceptance authority. Earlier dated entries remain historical.
+
+
 ## 2026-09-22 Soundings Provenance Contract Gate
 
 Inspected/start master `50110d7e871d3959040abe3102be439dc23fea8c`, clean and synchronized after fetch/prune. One local branch, four hosted branches and zero open PRs by scoped GitHub query. Exact non-default heads and unique commit/path evidence were refreshed:

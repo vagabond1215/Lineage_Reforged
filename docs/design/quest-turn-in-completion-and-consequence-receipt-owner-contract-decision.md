@@ -435,3 +435,8 @@ No `DEV-0.7.1` or game-version increment is allocated here. `GAME_VERSION` remai
 ## 2026-09-18 Implementation Handoff
 
 The bounded implementation is complete with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`. See `soundings-durable-completion-implementation-record.md` for exact source, code boundaries, 123-test validation, real browser ordinary-path/save/restart evidence, storage-capacity repair and publication identities. This appendix does not independently accept the implementation or change the accepted contract. The separate Soundings Durable Completion Independent Acceptance Audit is installed; game/development versions remain unchanged.
+
+
+## 2026-09-24 Witness Repair Handoff
+
+Following the September 20 F1 finding and accepted provenance/retention contract, runtime `0df87bb7afaa4d7fcc9f08b79b7528d60727c370` implements the independent admission witness with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`. New completions use Soundings authority version 2; version-1 no-witness historical saves remain playable/saveable without trusted provenance synthesis. See `soundings-admission-witness-repair-implementation-record.md` for the exact boundary, 143-test evidence, ordinary browser/storage results and limitations. The installed successor is **Soundings Durable Completion Post-Repair Independent Acceptance Audit**. Earlier implementation/audit evidence remains historical; no self acceptance or version change.
