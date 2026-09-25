@@ -1,8 +1,23 @@
 import type { ChronicleEventState, CurrentActivityState, NotificationState, SaveSnapshot, SoundingsTurnInConsequenceKind, SoundingsTurnInConsequenceReceiptState, SoundingsTurnInNormalizedIntentState, SoundingsTurnInResultState } from "../../../shared/types/src/index.js";
-import { isTargetCampaignSnapshot } from "./campaign-rules.js";
+import { isTargetCampaignSnapshot, validateAshenReefSurveyAuthority } from "./campaign-rules.js";
 import { getCurrentPlayerTravelLocationId } from "./player-travel-rules.js";
 import { soundingsSha256 } from "./soundings-fingerprint.js";
 import { verifySoundingsAdmissionProvenance, type SoundingsAdmissionVerificationContext } from "./soundings-admission-witness.js";
+
+// Recover only the exact certified prefix. The live survey graph, including its
+// independently validated repair suffix, remains untouched.
+function resolveAdmissionSurvey(snapshot: SaveSnapshot, fingerprint: string) {
+  const current = snapshot.authorityLedger?.ashenReefSurvey;
+  if (!current || !validateAshenReefSurveyAuthority(snapshot)) return null;
+  let admission: typeof current | null = null;
+  for (let length = current.projectionRepairs.length; length >= 0; length--) {
+    const candidate = { ...current, projectionRepairs: current.projectionRepairs.slice(0, length) };
+    if (fingerprintSoundingsState(candidate) !== fingerprint) continue;
+    if (admission) return null;
+    admission = candidate;
+  }
+  return admission;
+}
 
 export const SOUNDINGS_QUEST_ID = "quest.ashen_reef_survey" as const;
 export const SOUNDINGS_OPERATION_ID = "operation.quest.ashen_reef_survey";
@@ -90,13 +105,14 @@ export function validateSoundingsTurnInAuthority(snapshot: SaveSnapshot): boolea
       continuity = snapshot.authorityLedger?.entries.find(e => e.kind === "continuity_fork" && e.childContinuityId === continuity)?.parentContinuityId;
     }
     if (!ancestors.has(result.continuityId) || !ancestors.has(intent.sourceContinuityId) || intent.accountId !== snapshot.accountId || intent.campaignId !== identity.campaignId || intent.characterId !== identity.characterId || intent.characterId !== snapshot.playerState.playerId || intent.expectedSnapshotVersion !== snapshot.snapshotVersion || intent.expectedTick > snapshot.clock.tick) return false;
-    if (intent.surveyFingerprint !== fingerprintSoundingsState(snapshot.authorityLedger?.ashenReefSurvey)) return false;
+    const admissionSurvey = resolveAdmissionSurvey(snapshot, intent.surveyFingerprint);
+    if (!admissionSurvey) return false;
     // Before-state facts must be recomputed from the retained source, not merely
     // repeated consistently in a result and its receipts. Disallow recursive
     // completed authority before invoking the shared deep campaign validator.
     const source = JSON.parse(intent.sourceSnapshot) as SaveSnapshot;
     if (!source.authorityLedger || source.authorityLedger.ashenReefSurvey !== undefined) return false;
-    source.authorityLedger.ashenReefSurvey = snapshot.authorityLedger!.ashenReefSurvey!;
+    source.authorityLedger.ashenReefSurvey = admissionSurvey;
     if (fingerprintSoundingsState(source) !== intent.snapshotFingerprint) return false;
     if (source.authorityLedger?.soundingsTurnIn?.requests.length || !isTargetCampaignSnapshot(source) ||
       source.accountId !== intent.accountId || source.campaignIdentity?.campaignId !== intent.campaignId ||

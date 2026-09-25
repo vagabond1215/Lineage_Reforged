@@ -1901,7 +1901,7 @@ function validateAshenReefSurveyAuthorityUnsafe(snapshot: SaveSnapshot): boolean
   return true;
 }
 
-function validateAshenReefSurveyAuthority(snapshot: SaveSnapshot): boolean {
+export function validateAshenReefSurveyAuthority(snapshot: SaveSnapshot): boolean {
   try {
     return validateAshenReefSurveyAuthorityUnsafe(snapshot);
   } catch {
