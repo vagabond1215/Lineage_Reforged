@@ -167,6 +167,8 @@ Do not copy full defect narratives into this register. Link the focused audit or
 
 ### FP-013 — Parent Authority Rewrites Must Preserve Nested Owner State
 
+- **Additional guardrail/evidence (2026-09-24):** A parent validator must also preserve authorized nested-owner transitions after parent completion. Binding historical admission to the entire latest nested graph can freeze valid append-only projection repair metadata. Exercise nested projection repair before/after parent completion and both owner orders while preserving original witness/source bindings; do not fix by weakening provenance. See `docs/design/soundings-durable-completion-post-f2-independent-acceptance-audit.md`, F3.
+
 - **Pattern:** A mutation or migration rebuilds a parent authority object from selected legacy fields and silently drops a newer optional nested owner container.
 - **Why it escaped:** The new container round-tripped through ordinary serialization, but separate fork, migration, defeat, or recovery paths reconstructed `{ version, entries }` instead of preserving the full parent object.
 - **Guardrail:** Inventory every assignment that replaces a parent authority object. Preserve all existing nested owner state before changing the owned fields, and initialize new emptiness only at an authorized creation/migration boundary.

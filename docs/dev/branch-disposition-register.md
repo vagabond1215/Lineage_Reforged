@@ -1,5 +1,13 @@
 # Branch Disposition Register
 
+## 2026-09-24 Post-F2 B2 Audit
+
+Pulled docs-only `b857db9fce62604cc0a3b9e36fd498681985f269` -> `21d52a7b6cfcbcfb6e4fd304011f066615ba3866`; runtime `0383cedc99a4c3d5e2c9b47cf0665683720aef9e` unchanged. One local/four hosted branches; zero open PRs. Exact heads/merge bases/unique paths in the F2 entry/table below rechecked unchanged. Starting counts readiness400/2, prompt-integrity347/1, administration178/1. No semantic overlap or consumed trigger.
+
+Readiness and prompt-integrity remain PROTECTED_REFERENCE until scheduled readiness/regression/protection review and dedicated prompt/execution-pointer audit, respectively. Administration remains HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. No disposition change, integration/deletion/rebase/PR/protection action due/performed.
+
+Result REPAIR_REQUIRED F3; A/B1 operator checkpoint retained; B2 travel7/continuity8/projection8 then confirmed survey repair failure. C/D stopped. Successor **Soundings Survey Projection Repair Compatibility Repair**. Publication is later docs/evidence only; completion report records exact final synchronization/readback.
+
 ## 2026-09-24 F2 Consumer Completion Repair
 
 Clean synchronized source `a9508e658452a024310a7d3a59e1f46fd2953442`; runtime `0383cedc99a4c3d5e2c9b47cf0665683720aef9e`. Fetch/prune: no incoming changes; one local/four hosted refs; zero open PRs. All three non-default heads/merge bases/unique commits/paths in the historical table below remain unchanged. Starting counts: readiness395/2, prompt-integrity342/1, administration173/1. No semantic overlap or consumed review trigger.

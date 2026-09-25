@@ -1,131 +1,35 @@
-# Soundings Durable Completion Post-F2 Independent Acceptance Audit — Resume From B2
+# Soundings Survey Projection Repair Compatibility Repair
 
 <!-- repo-scope-guard -->
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
-Date: 2026-09-24. Unversioned independent acceptance audit. Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, band `DEV-0.7.x` unchanged. No game-version or milestone allocation in this run.
+Date: 2026-09-24. Unversioned bounded repair, package S with a contract gate if retained evidence is insufficient; parent development milestone not applicable; development milestone impact `supports_current_band`; game-version impact `none`. Game `0.1.0-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, band `DEV-0.7.x` unchanged.
 
-## Objective
+## Objective And Authority
 
-Complete the remaining independent acceptance of Soundings durable completion at exact runtime:
+Repair F3 from `docs/design/soundings-durable-completion-post-f2-independent-acceptance-audit.md`: completed Soundings authority prevents accepted survey projection-only repair. Runtime `0383cedc99a4c3d5e2c9b47cf0665683720aef9e`; inspected source `21d52a7b6cfcbcfb6e4fd304011f066615ba3866`. Subsequent audit publication is docs/evidence only; verify live delta.
 
-`0383cedc99a4c3d5e2c9b47cf0665683720aef9e`
+Fetch/prune, verify clean synchronized master/repository, branches/open PRs and intended surface; preserve unrelated edits. Read AGENTS, protocol/current output/handoff, planning/history/branch/failure-pattern authorities, accepted survey activity owner contract, Soundings authored terms/turn-in owner/provenance retention contracts, both repair records and F3 audit. Reuse current Connector maps and operator checkpoint; no broad archaeology absent unexplained drift.
 
-F1 and F2 repairs are implemented but not yet finally accepted. Historical negative audits remain authoritative chronology. This run is production-read-only: do not change runtime, tests, schemas, authored content, dependencies or generated outputs. Independent probes and audit/coordination evidence are allowed. If a critical defect appears, stop, preserve the smallest reproduction and return `REPAIR_REQUIRED`; do not self-repair.
+## Reproduce And Bound
 
-## Required Readback And Delta Verification
+Run `node docs/dev/evidence/soundings-post-f2-acceptance-2026-09-24/b2-projections.mjs`. Current expected baseline: eight projection cases pass, then pre-completion survey Chronicle repair succeeds while identical post-completion repair rejects `projection_invalid`, unchanged state/storage. Source is valid and witness remains applied. Preserve this independently authored desired-behavior probe.
 
-Fetch/prune and verify repository, local status, `master`, all hosted refs/open PRs, and exact delta from runtime `0383cedc99a4c3d5e2c9b47cf0665683720aef9e` to live `master`. Reuse existing Connector packets, accepted provenance/retention contract, authored terms, quest-turn-in owner contract, both repair records, historical F1/F2 audits, branch register and failure-pattern guardrails. Do not redo broad source archaeology unless unexplained production/test drift invalidates existing maps.
+Trace `soundings-turn-in-authority.ts` whole-current-survey fingerprint and historical reconstruction against the survey owner's append of validated `projectionRepairs`. Determine the smallest safe way to preserve the original accepted survey/source facts while admitting independently validated subsequent projection-only repair history. Include witness verifier/campaign admission where required by this dependency. Keep turn-in payment/receipts, survey material/result authority and original witness immutable.
 
-Read first:
+Do not merely skip a digest, discard arbitrary repair fields, infer original authority from the completed graph or rewrite historical witnesses. Preserve both F1 forged-before-state/source-ID rejection and F2 fail-closed cleanup. If the existing retained graph cannot prove the boundary safely, stop implementation and install a decision-complete bounded retention/compatibility prerequisite with exact evidence. Do not broaden into generic transaction history or invent an unreviewed persistence format.
 
-- `docs/dev/evidence/soundings-post-f2-operator-checkpoint-2026-09-24.md`;
-- `docs/design/soundings-consumer-completion-witness-gate-repair-record.md`;
-- `docs/design/soundings-admission-witness-repair-implementation-record.md`;
-- `docs/design/soundings-durable-completion-post-repair-independent-acceptance-audit.md`;
-- September 24 Connector post-repair and F2 packets referenced by current handoff.
+## Implementation And Verification
 
-## Completed Checkpoint — Do Not Repay Unless Invalidated
+Implement only the smallest coherent owner compatibility repair and focused meaningful tests. No new dependency, reward, UI, generic wallet/history, unrelated defeat recovery, content or game-version change. Preserve legacy-v1 no-witness load/play/save without trusted duplicate/projection synthesis.
 
-Repository operator executed the preserved A and B1 probes locally in a detached worktree whose printed HEAD was exactly:
+Tests must cover pre/post-completion Chronicle and notification survey repairs, each repair order with Soundings repair, repeated repair/restart and descendant continuity, valid appended repair history versus malformed/conflicting/forged/reordered evidence, unchanged original witness and payment, and original source fingerprints before/after repair. Include cap/full-feed behavior to prevent erasing newer truth or misclassifying missing projections as new acceptance. Use ordinary setup and label fixtures explicitly.
 
-`0383cedc99a4c3d5e2c9b47cf0665683720aef9e`
+Rerun all three B2 probes, retained A/B1 probes (new runtime may invalidate prior checkpoint), exact 16-file baseline (165 plus new tests), content lint71, Node typecheck, normalized137-diagnostic UI comparison, direct application-local Vite build216 baseline, JS/TS exports and diff checks. Run any adjacent survey repair suite needed by changed ownership. A historical negative assertion is not a green acceptance suite. Preserve old audit chronology and report all unavailable or skipped evidence.
 
-Durable operator evidence is recorded in `docs/dev/evidence/soundings-post-f2-operator-checkpoint-2026-09-24.md`.
+## Completion And Handoff
 
-Reported results:
+Return IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE only after repair and prescribed validation; never self-accept Soundings. Update focused repair evidence, current output/handoff/prompt, branch/history/planning coordination and relevant authority. Install a separate independent audit against the final exact runtime, retaining all F1/F2/F3 findings and completing A/B1/B2/C/D including browser/storage/full-feed posture. No DEV-0.7.1 or game-version decision.
 
-- Slice A: **68/68 PASS**, `CORE_AUTHORITY_PROBES_PASS`;
-- Slice B1: **14/14 PASS**, `B1_PARTIAL_PASS`;
-- repaired F2 omission observation: `rejected=true`, `recoveryRetained=true`, `storageUnchanged=true`, stable witness remained pending.
-
-The preserved scripts print historical embedded runtime label `0df87bb7...`; use the worktree HEAD and current tree verification as actual runtime identity.
-
-Before relying on the checkpoint, verify only that:
-
-1. the target tree is exactly `0383cedc...` or production/test-equivalent with documentation-only drift;
-2. the preserved `slice-a.mjs` and `slice-b1.mjs` evidence files are unchanged;
-3. no runtime/test/schema/dependency/content drift invalidates the checkpoint.
-
-If those conditions hold, **do not rerun A or B1**. Resume directly at B2. If a condition fails, rerun only the affected checkpoint.
-
-## B2 — Continuity, Compatibility, Consequences And Projection Capacity
-
-Independently author/execute probes needed to decide all unfinished persistence/projection questions at the exact target. At minimum cover:
-
-- current-head and non-head first submission;
-- later descendant continuity and restart;
-- admitted spending/earnings after completion without corrupting historical witness or duplicate behavior;
-- legacy version-1 no-witness load/save compatibility without witness synthesis, trusted historical duplicate, repayment or projection repair;
-- defeat -> pending recovery -> completion -> publication/restart witness preservation, while clearly separating the known Starfall `harbor` versus safe-`settlement` ordinary-reachability limitation from the provenance contract;
-- exact Ashen -> Starfall Soundings return: four ticks, no fare, no knowledge grant, route-specific eligibility, unsupported origins fail closed;
-- exact completion consequences: +5 gold, +0 silver, seven receipts once, no standing/reputation/skill/item/service/salvage reward, survey authority and Stormglass unchanged;
-- Chronicle and notification projection repair for missing, misplaced, same-ID-conflicting and equal-tick rows;
-- both repair orders, repeated repair/restart, opaque unrelated rows and cap boundaries;
-- full Chronicle/notification feeds: explicit repair failure must not replay payment or evict newer truth; unrelated accepted gameplay must remain possible afterward where contract allows, followed by later save/restart; explicitly classify terminal full-feed posture.
-
-Require byte-/state-preserving rejection where applicable. Never infer accepted provenance from incomplete projections. Do not broaden into generic reward, anti-cheat, signing, wallet-ledger, shell/UI or defeat-system redesign.
-
-Record one durable B2 result:
-
-- `PERSISTENCE_AND_PROJECTION_PROBES_PASS`, or
-- `PERSISTENCE_OR_PROJECTION_DEFECT_FOUND` with exact reproduction.
-
-If acceptance-critical defect appears, stop expansion and return `REPAIR_REQUIRED`.
-
-## C — Ordinary Browser And Storage
-
-If B2 passes, run a fresh disposable local browser flow with no prerequisite injection and no user-save mutation:
-
-creator/start -> accept Soundings -> travel to Ashen -> two shifts -> explicit save/reload -> remaining two shifts -> verify packet-ready blocker -> four-tick return to Starfall -> Harbormaster submit -> exact +5g with silver unchanged -> quest completed/tracking cleared -> one completion Chronicle -> save/reload -> no resubmission -> later travel -> save again.
-
-Capture readiness/result/Chronicle feedback and any storage/quota failure. Independently reproduce the existing bounded 5 MiB UTF-16 posture across intermediate writes; implementation's prior ~4,320,700 retained-byte measurement is historical, not this audit's measurement.
-
-Record:
-
-- `ORDINARY_BROWSER_FLOW_PASS`, or
-- `ORDINARY_BROWSER_FLOW_DEFECT_FOUND`.
-
-If browser/tooling is unavailable, return `ACCEPTANCE_INCOMPLETE` rather than inventing a pass.
-
-## D — Mechanical And Changed-Surface Regression
-
-If B2 and C pass, reproduce the final mechanical baseline on the same runtime tree:
-
-1. exact 16-file Soundings command from the repair records, expected current baseline **165 tests**;
-2. `npm run tool:content-lint`, baseline 71 files;
-3. `npm run typecheck:ui:node`;
-4. `npm run typecheck:ui`, compare normalized sorted signatures against the accepted 137-diagnostic baseline; nonzero alone is not regression;
-5. from `apps/rpg-ui`, direct Vite production build via `node node_modules/vite/bin/vite.js build`, repair baseline 216 client modules;
-6. public JS/TS bridge/export checks;
-7. `git diff --check`, intended-file/status check, and confirm audit run did not mutate production/test files.
-
-Record:
-
-- `REGRESSION_BASELINE_REPRODUCED`, or
-- `REGRESSION_DRIFT_FOUND`.
-
-Do not fix unrelated existing TypeScript diagnostics.
-
-## Final Decision
-
-Write a new focused **post-F2 independent acceptance audit** document containing:
-
-- exact runtime/tested tree;
-- durable operator A/B1 checkpoint provenance and your validation that it remained applicable;
-- independently executed B2/C/D evidence;
-- findings-to-evidence matrix;
-- explicit full-feed projection conclusion;
-- browser/storage conclusion;
-- known harbor-vs-settlement limitation classification;
-- branch/PR/status review;
-- limitations and any unavailable evidence.
-
-Return exactly one disposition:
-
-- `SOUNDINGS_DURABLE_COMPLETION_ACCEPTED` only if A/B1 checkpoint remains valid and B2/C/D all pass at the same runtime target;
-- `REPAIR_REQUIRED` for a confirmed acceptance-critical defect, with smallest concrete repair boundary;
-- `ACCEPTANCE_INCOMPLETE` only when required environment/evidence is unavailable, preserving completed checkpoints and exact remainder.
-
-If accepted, install only the next decision authorized by current accepted planning. Do not allocate `DEV-0.7.1`, bump `GAME_VERSION`, or automatically start broad UI work. Update `current-codex-output.md`, `current-gpt-handoff.md`, `current-codex-prompt.md`, planning/history/branch coordination as needed. Commit audit/docs only, push `master`, fetch/prune, verify clean local/tracking/hosted equality, and read back hosted prompt/output/handoff. A chat-only result is not a durable handoff.
+Record exact source/runtime/publication identities and applicable FP-001/002/008/009/010/011/012/013/014/015/016/017 and relevant recovery guardrails. Review protected/held branches and retain exact triggers; no age-only cleanup. Commit intended files, push master, fetch/prune, verify clean local/tracking/hosted equality and fetch hosted prompt/output/handoff. Keep platform/model recommendations outside this file.
