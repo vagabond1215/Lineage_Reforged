@@ -167,6 +167,8 @@ Do not copy full defect narratives into this register. Link the focused audit or
 
 ### FP-013 — Parent Authority Rewrites Must Preserve Nested Owner State
 
+- **Repair evidence (2026-09-25):** `docs/design/soundings-f3-survey-projection-compatibility-repair-record.md` validates full live nested history while reconstructing the exact independently certified admission prefix. Tests retain nonempty earlier history and same-tick later repairs; malformed suffix is rejected even by direct provenance verification. Never replace historical binding with a latest-state or all-history-stripped digest.
+
 - **Additional guardrail/evidence (2026-09-24):** A parent validator must also preserve authorized nested-owner transitions after parent completion. Binding historical admission to the entire latest nested graph can freeze valid append-only projection repair metadata. Exercise nested projection repair before/after parent completion and both owner orders while preserving original witness/source bindings; do not fix by weakening provenance. See `docs/design/soundings-durable-completion-post-f2-independent-acceptance-audit.md`, F3.
 
 - **Pattern:** A mutation or migration rebuilds a parent authority object from selected legacy fields and silently drops a newer optional nested owner container.

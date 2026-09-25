@@ -1,5 +1,13 @@
 # Branch Disposition Register
 
+## 2026-09-25 F3 Compatibility Repair
+
+Pulled clean 232379e5 through seven docs-only commits to source `413c4abfba65ae4cc8b60c0beb7799fc01f6eeae`; runtime `7c8c980d01892b0f673afc5a5940aec33ad2d7a2`. One local/four hosted refs, zero open PRs. Exact heads/merge bases/unique commits/paths below rechecked unchanged; starting counts readiness 408/2, prompt-integrity 355/1, administration 186/1. No overlapping surface or consumed retention trigger.
+
+Readiness 59c103c3 remains PROTECTED_REFERENCE until scheduled readiness/regression or explicit protection review; prompt-integrity 58a34e37 remains PROTECTED_REFERENCE until dedicated prompt/execution-pointer audit; administration 210df5bc remains HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. Full exact heads remain in prior table. No integration/deletion/rebase/PR/protection/disposition action due/performed.
+
+183 tests and five preserved probes pass; mechanical evidence in focused F3 repair record. Result IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE; next **Soundings Durable Completion Post-F3 Independent Acceptance Audit**. Later docs publication/live equality reported after push, separately from runtime/source.
+
 ## 2026-09-24 Post-F2 B2 Audit
 
 Pulled docs-only `b857db9fce62604cc0a3b9e36fd498681985f269` -> `21d52a7b6cfcbcfb6e4fd304011f066615ba3866`; runtime `0383cedc99a4c3d5e2c9b47cf0665683720aef9e` unchanged. One local/four hosted branches; zero open PRs. Exact heads/merge bases/unique paths in the F2 entry/table below rechecked unchanged. Starting counts readiness400/2, prompt-integrity347/1, administration178/1. No semantic overlap or consumed trigger.

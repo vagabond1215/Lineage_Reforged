@@ -1,8 +1,8 @@
 # Current Planning Anchor Reconciliation
 
-Date: 2026-09-24
+Date: 2026-09-25
 
-Status: accepted coordination authority; DEV-0.7.0 complete; Soundings post-F2 audit REPAIR_REQUIRED (F3); survey projection repair compatibility route active
+Status: accepted coordination authority; DEV-0.7.0 complete; Soundings F3 compatibility repair implemented pending independent acceptance
 
 Milestone impact: accepted development-band entry to `DEV-0.7.x`; game-version impact: `none`
 
@@ -12,7 +12,7 @@ This document reconciles stale current-state headers in long-lived planning docu
 
 ## Current Header Status
 
-The current prompt, handoff, output, historical register and lower-precedence live planning headers are refreshed through accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` on 2026-09-11. The focused readiness appendix records `MILESTONE_ENTRY_ACCEPTED`; the separate unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed on 2026-09-14 with `PLAYABILITY_PRIORITY_SELECTED`. The project owner then accepted `Soundings Return, Submission, And Payment Authored-Terms Decision` with `AUTHORED_TERMS_ACCEPTED`, and the subsequent `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision` returned `OWNER_CONTRACT_ACCEPTED`. The bounded Soundings implementation is complete with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`; the independent audit returned `REPAIR_REQUIRED` on 2026-09-20 and its bounded repair investigation returned `PROVENANCE_CONTRACT_REQUIRED` on 2026-09-22. The subsequent provenance contract was accepted and witness repair is implemented at `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`, pending independent acceptance. The September 24 post-repair audit returned `REPAIR_REQUIRED` for F2 consumer completion cleanup with omitted witness evidence; A1 passed 68 cases, remaining acceptance stopped. See `soundings-durable-completion-post-repair-independent-acceptance-audit.md`. F2 repair is implemented at `0383cedc99a4c3d5e2c9b47cf0665683720aef9e`; see `soundings-consumer-completion-witness-gate-repair-record.md`. The post-F2 audit returned `REPAIR_REQUIRED` for F3 survey projection repair compatibility; see `soundings-durable-completion-post-f2-independent-acceptance-audit.md`. The installed successor is `Soundings Survey Projection Repair Compatibility Repair`; see `soundings-admission-witness-repair-implementation-record.md` for current executable evidence and `soundings-source-provenance-contract-gate.md` for the historical retention gap. See `soundings-durable-completion-independent-acceptance-audit.md` for F1 and the remaining unaccepted matrix. See `soundings-durable-completion-implementation-record.md` for exact executable and browser evidence. Earlier accepted audits and their historical labels remain unchanged.
+The current prompt, handoff, output, historical register and lower-precedence live planning headers are refreshed through accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` on 2026-09-11. The focused readiness appendix records `MILESTONE_ENTRY_ACCEPTED`; the separate unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed on 2026-09-14 with `PLAYABILITY_PRIORITY_SELECTED`. The project owner then accepted `Soundings Return, Submission, And Payment Authored-Terms Decision` with `AUTHORED_TERMS_ACCEPTED`, and the subsequent `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision` returned `OWNER_CONTRACT_ACCEPTED`. The bounded Soundings implementation is complete with `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE`; the independent audit returned `REPAIR_REQUIRED` on 2026-09-20 and its bounded repair investigation returned `PROVENANCE_CONTRACT_REQUIRED` on 2026-09-22. The subsequent provenance contract was accepted and witness repair is implemented at `0df87bb7afaa4d7fcc9f08b79b7528d60727c370`, pending independent acceptance. The September 24 post-repair audit returned `REPAIR_REQUIRED` for F2 consumer completion cleanup with omitted witness evidence; A1 passed 68 cases, remaining acceptance stopped. See `soundings-durable-completion-post-repair-independent-acceptance-audit.md`. F2 repair is implemented at `0383cedc99a4c3d5e2c9b47cf0665683720aef9e`; see `soundings-consumer-completion-witness-gate-repair-record.md`. The post-F2 audit returned `REPAIR_REQUIRED` for F3 survey projection repair compatibility; see `soundings-durable-completion-post-f2-independent-acceptance-audit.md`. F3 repair is implemented at `7c8c980d01892b0f673afc5a5940aec33ad2d7a2` under accepted admission-prefix sufficiency; see `soundings-f3-survey-projection-compatibility-repair-record.md`. The installed successor is `Soundings Durable Completion Post-F3 Independent Acceptance Audit`; see `soundings-admission-witness-repair-implementation-record.md` for current executable evidence and `soundings-source-provenance-contract-gate.md` for the historical retention gap. See `soundings-durable-completion-independent-acceptance-audit.md` for F1 and the remaining unaccepted matrix. See `soundings-durable-completion-implementation-record.md` for exact executable and browser evidence. Earlier accepted audits and their historical labels remain unchanged.
 
 Installed `Version 0.6.9.11 - Historical Recovery Fork Authority Acceptance Audit` independently accepted parent `0.6.9`. The survey receipt decision selected `0.6.10`; implementation landed at `008db9c...`, `0.6.10.2` implemented the first six audit findings at `59af926...`, and `0.6.10.4` repaired two residual findings at `07c5739...`. Independent `0.6.10.5` accepted the complete parent at `950e851446fb75bfbdb717d0ea33e33ec2907d4a`. The completed reachability decision correctly returned `NO_PACKAGE` until authored input arrived; accepted Soundings canon closed that blocker. The follow-up package decision returned `PACKAGE_READY`, `Version 0.6.11` implemented the bounded route at `3ca23d6864541a899ea61a6bf26257665f754e78`, and `0.6.11.1` independently returned `PARENT_ACCEPTED` plus `REPRESENTATIVE_LOOP_ACCEPTED`. The subsequent readiness decision returned `BAND_ENTRY_READY`; `DEV-0.7.0` is complete with `MILESTONE_ENTRY_ACCEPTED` at the 2026-09-11 verification; game `0.1.0-prealpha` and playability `INTEGRATED_LOOP` remain unchanged.
 
@@ -48,11 +48,11 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - latest prioritization: `Game 0.1.x Playability Gap Prioritization Decision`, `PLAYABILITY_PRIORITY_SELECTED`;
 - latest authored product decision: `Soundings Return, Submission, And Payment Authored-Terms Decision`, `AUTHORED_TERMS_ACCEPTED`;
 - latest owner-contract decision: `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision`, `OWNER_CONTRACT_ACCEPTED`;
-- latest bounded implementation: `Soundings Publication Consumer Completion Witness Gate Repair`, `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE` at `0383cedc99a4c3d5e2c9b47cf0665683720aef9e`;
+- latest bounded implementation: `Soundings Survey Projection Repair Compatibility Repair`, `IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE` at `7c8c980d01892b0f673afc5a5940aec33ad2d7a2`;
 - latest independent audit: `Soundings Durable Completion Post-F2 Independent Acceptance Audit`, `REPAIR_REQUIRED` at B2 (F3); operator A68/B1-14 checkpoint retained;
 - latest repair investigation: `Soundings Retained Source Provenance And Before-State Binding Repair`, `PROVENANCE_CONTRACT_REQUIRED`; no production repair;
-- latest accepted technical decision: `Soundings Accepted Admission Provenance And Retention Contract Decision`, `PROVENANCE_CONTRACT_ACCEPTED_REPAIR_AUTHORIZED`;
-- active route: `Soundings Survey Projection Repair Compatibility Repair`;
+- latest accepted technical decision: `Soundings F3 Survey Admission Retention Sufficiency Decision`, `RETENTION_SUFFICIENT_BOUNDED_REPAIR_AUTHORIZED`; the original accepted-admission provenance contract remains binding;
+- active route: `Soundings Durable Completion Post-F3 Independent Acceptance Audit`;
 - failure-pattern guardrail register: active durable workflow authority;
 - `DEV-0.7.0`: `MILESTONE_ENTRY_ACCEPTED`; Game `0.1.0-prealpha` / `INTEGRATED_LOOP` unchanged;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
@@ -79,8 +79,8 @@ The broad TypeScript backlog remains a separate tooling/config cleanup route. It
 
 ## Accepted Near-Term Order
 
-1. repair F3 survey projection compatibility without weakening original admission provenance; use a contract gate if retained evidence is insufficient;
-2. separately rerun independent A/B1/B2/C/D against the repaired target, preserving both historical findings;
+1. F3 exact admission-prefix repair is implemented under the accepted retention-sufficiency decision; preserve historical findings;
+2. separately rerun independent A/B1/B2/C/D against the repaired target, preserving all three historical findings;
 3. any development/game-version gate remains separate and later.
 
 ## Maintenance Rule
