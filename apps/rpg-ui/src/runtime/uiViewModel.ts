@@ -2568,8 +2568,8 @@ export function createUiViewModel(
         {
           id: 'daily-revenue',
           label: 'Daily Revenue',
-          value: '842',
-          detail: 'Current bridge still reads revenue from session activity records'
+          value: 'Not tracked',
+          detail: 'Daily revenue is not currently tracked.'
         },
         {
           id: 'tracked-activity',
