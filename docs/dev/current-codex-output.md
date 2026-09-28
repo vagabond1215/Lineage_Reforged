@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-28. Source run: **Ordinary Combat/Challenge And Recovery Package Decision**. Label class: unversioned; parent not applicable. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized source `b0692e9fad000e364e4e871eba11cdfb1ca1682f`; documentation publication identity is verified separately after push. Result: **COMBAT_CHALLENGE_PREREQUISITE_REQUIRED**.
+
+## A. Files changed
+
+Focused decision `docs/design/ordinary-combat-challenge-and-recovery-package-decision.md`; current prompt, handoff and output; historical/deferred register, planning-anchor reconciliation and branch register. No production source, content, UI, test, save, schema, dependency or game-version file changed.
+
+## B. Patch summary
+
+Installed exactly one documentation prerequisite, **Ordinary Encounter Admission And Outcome Ownership Contract Decision**. The provisional source-derived scenario is creator-selected Stonevein with Warrior arming sword, buckler and light armor, and existing Kaelvar roadside kobold patrol content. It is not yet an ordinary playable route: creator records Auric Marches without frontier habitat; authored spawn selection expects Kaelvar with frontier tags; ordinary UI does not call `runGameTick`; and combat result handling does not call `resolveNormalDefeat` or pass through an accepted campaign mutation. The new contract prompt resolves that one world-to-campaign admission/outcome seam before implementation. The focused decision records conservative text-first presentation, safe-settlement recovery and storage gates. No loot, currency, reputation, quest reward or generalized inventory is inferred.
+
+## C. Tests and checks run
+
+Fresh fetch/prune, three-commit documentation-only delta review from Connector packet `8fbc63bdf4ccde39475d7e485dc8135d749703a1`, clean worktree/upstream, branch inventory and live source/test tracing. `node --test tests/unit/combat-spawn-foundation.test.mjs`: 30/30 pass. `node --test tests/unit/campaign-persistence-foundation.test.mjs`: 33/33 pass. These are foundation checks, not ordinary UI or combat-loop acceptance. No browser run or production change. `git diff --check` and post-edit scope review are publication gates. The broad UI baseline remains 137 diagnostics, not a newly green check.
+
+FP-001/017: distinguished ordinary UI caller from engine/simulation and injected candidates. FP-002: green units do not accept a playable parent. FP-003/005/012: pending recovery completion, retry and durable duplicate proof required before implementation. FP-008/009: inspected protected refs and kept source/publication identities distinct. No new generalized pattern is warranted.
+
+One local/four hosted branches; GitHub showed zero open PRs. Readiness `59c103c3` (427/2), prompt-integrity `58a34e37` (374/1) and administration `210df5bc` (205/1) retain their exact heads, unique paths and prior `PROTECTED_REFERENCE`/`HOLD_NAMED_CONSUMER` dispositions. Review triggers respectively remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition action due/performed.
+
+## D. Risks and follow-up notes
+
+Normal-Stakes recovery is implemented but not wired to combat resolution. Stonevein creator facts satisfy the current known-settlement predicate in source, yet ordinary combat recovery and restart still need executable proof. Repeatable defeat can grow receipts/ledger/Chronicle; retained storage peak 5,076,206/5,242,880 leaves 166,674 UTF-16 bytes, so the additional-history reopening trigger is consumed before implementation. Candidate geography/habitat and observer policy remain undecided. No game-version or milestone advancement. Suggested documentation commit: `docs(decision): require ordinary encounter admission contract`. Next recommended run: **Ordinary Encounter Admission And Outcome Ownership Contract Decision**; no separate game-version decision proposed.
+
+---
+
 Date: 2026-09-28. Source run: **Activity Revenue Presentation Truthfulness Repair**. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Unversioned; parent not applicable; development milestone impact `none`; game-version impact `none`. Result: **PRESENTATION_REPAIR_VERIFIED**. Inspected and implementation-starting head `1f6d513a0c780ff52a8d7b9af6282c3010557d15`; implementation commit `c2d07ac8d4b4e1a404687cbd9d86c533feeb9222`; resumed validation head `c950f5fe1f4094140475eb7f61f0817ad2d2782b`. Final coordination/publication head is reported after commit and push.
 
 ## A. Files changed

@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-28 Ordinary combat/challenge package decision
+
+**COMBAT_CHALLENGE_PREREQUISITE_REQUIRED** at source `b0692e9fad000e364e4e871eba11cdfb1ca1682f`; see `docs/design/ordinary-combat-challenge-and-recovery-package-decision.md`. The sole active successor is the unversioned **Ordinary Encounter Admission And Outcome Ownership Contract Decision**, documentation only. No combat implementation, vertical-slice acceptance, new development milestone or game-version change is installed. This current entry supersedes older no-active-successor wording and preserves the accepted Soundings/Activity chronology below.
+
 ## 2026-09-28 Activity presentation repair closure
 
 **PRESENTATION_REPAIR_VERIFIED**: Activity Revenue Presentation Truthfulness Repair is complete at code commit `c2d07ac8d4b4e1a404687cbd9d86c533feeb9222`; the focused record contains the authorized ordinary active-survey browser proof. No active executable successor is installed. Remaining ranked gaps retain the explicit reopening triggers in `docs/design/post-soundings-playability-gap-prioritization-decision.md`. Game 0.1.1-prealpha / INTEGRATED_LOOP / DEV-0.7.0 unchanged. This entry supersedes the older active-route wording below without rewriting completed chronology.

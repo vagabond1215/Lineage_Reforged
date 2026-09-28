@@ -1,45 +1,28 @@
-# Ordinary Combat/Challenge And Recovery Package Decision
+# Ordinary Encounter Admission And Outcome Ownership Contract Decision
 
 <!-- repo-scope-guard -->
 > **Repository boundary — mandatory:** This document applies only to `vagabond1215/Lineage_Reforged`. All repository work must stay in this repository. Cross-repository mutation is unauthorized.
 <!-- /repo-scope-guard -->
 
-Date: 2026-09-28. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Unversioned documentation/readiness decision. Development milestone impact `none`; game-version impact `none`.
+Date: 2026-09-28. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Unversioned documentation prerequisite; development milestone impact `none`; game-version impact `none`.
 
-## Objective
+## Objective and authority
 
-Decide the smallest ordinary player-reachable combat/challenge lifecycle that can become the next bounded playable-depth implementation package. Start from `docs/design/ordinary-combat-challenge-and-recovery-package-decision-prework.md`; independently revalidate its connector findings against fresh synchronized master and the complete controlling authorities. This run is a decision/readiness pass, not combat implementation.
+Close the one prerequisite identified by `docs/design/ordinary-combat-challenge-and-recovery-package-decision.md`: an accepted ordinary campaign transition from a player action/context through authored encounter admission to success or Normal-Stakes defeat/recovery. This is a decision/owner contract only. Do not change production source, content, UI, tests, schemas, saves, or dependencies in this run; do not implement combat.
 
-Perform the repository-first orientation required by `AGENTS.md`: fetch/prune, clean/synchronized worktree, branches/open PRs, current prompt/output/handoff/history/planning anchors, focused authorities, relevant runtime callers/content/tests/build surfaces, and failure-pattern guardrails. Preserve unrelated edits and retained-branch triggers.
+Begin with repository-first fresh fetch/prune, synchronized head/worktree, branches/PRs, current prompt/output/handoff/history/planning, focused authorities, live caller/engine/save/UI/test delta, and failure-pattern guardrails. Independently verify the decision's source claims rather than treating the Connector packet or prior units as ordinary-reachability proof.
 
-## Required decision work
+## Exact decision questions
 
-Trace the real ordinary caller path from creator/campaign state and world/travel/activity context into encounter admission. Identify an exact existing authored encounter/template/monster/spawn candidate if one is honestly usable; otherwise identify the smallest authored prerequisite rather than inventing one. Distinguish world candidate/admission authority from combat runtime.
+1. Select one ordinary player action and valid world context for the provisional Stonevein Warrior/arming-sword path. Resolve the `region.auric_marches` versus `region.kaelvar` profile mismatch and frontier habitat source from accepted geography/travel/activity authority, or record the one precise missing product/canon decision. Do not make a city arrival automatically hostile or inject a candidate.
+2. Specify candidate eligibility, stable identity, ordering, age/expiry, admission, atomic consumption, one-active-encounter policy, stale/duplicate/conflict rejection, and restart/correction behavior. Keep `world.spawn_profiles` and `world.encounter_templates` as content owners and combat instance state in game engine.
+3. Specify the accepted campaign mutation/publication owner for encounter start, legal manual commands/target selection, advancing time, resolved success and HP-zero defeat. Unknown/ungranted actions must not silently become basic melee in the player-facing contract. Define source identity, revision/stale behavior, retries, save/load, and exact no-reward success consequence.
+4. Bind HP-zero to one `resolveNormalDefeat` receipt and cleanup. Prove exact known-safe settlement destination for the chosen context, `recovery_pending` entry/repair owner, continued play, publication failure and durable duplicate/conflict paths. Do not infer Starfall Port safety from harbor status.
+5. Decide only the minimum observer-safe text-first labels, facts and controls for this encounter, including no-encounter/active/paused/resolved/pending/unavailable states, keyboard/focus and narrow/wide readability. Do not invent hidden enemy facts or gambits.
+6. Treat the additional durable-history storage trigger as consumed. Define and, where this decision needs it, execute bounded repeated success/defeat/save-reload/quota measurement against the existing 166,674-byte retained headroom. Do not delete accepted history or witness evidence.
 
-Characterize the minimum meaningful player choice/action loop using existing combat commands and runtime. Inspect success/outcome behavior, restart/save implications, and whether any durable consequence is actually owned. Do not invent loot, currency, reputation, quest, or progression rewards.
+## Disposition and completion
 
-Trace Normal-Stakes defeat from HP zero through encounter cleanup, receipt, recovery destination selection, continued play, duplicate/restart behavior, and any `recovery_pending` case relevant to the selected ordinary context. Prove destination authority; do not treat Starfall Port or another harbor as safe merely by inference.
+Return one decision-complete owner contract or `CONTRACT_BLOCKED` with the exact unresolved source/product question. Name a smallest subsequent implementation package only if all admission, outcome, recovery, presentation, and capacity gates are closed. No implementation or vertical-slice/game-version acceptance in this run.
 
-Inspect starter/equipment paths for the selected creator/loadout. Prefer an already valid profiled loadout. If the selected loop cannot work without an equipment repair, identify only the smallest consumer-driven prerequisite. Do not authorize generalized individualized-item/provenance work unless the exact selected consumer proves it necessary.
-
-Define the minimum text-first presentation contract needed for the selected encounter: player-facing labels, visibility/hidden-information boundary, encounter/roster/resources/status/action/target/outcome/recovery facts, legal controls, unavailable/stale states, keyboard/focus/readability expectations. Reconcile the retained text-first combat presentation audit against current source. Do not invent a gambit system or broad combat UI.
-
-Evaluate storage explicitly. The retained peak is 5,076,206 / 5,242,880 UTF-16 bytes with 166,674 bytes headroom. If the proposed lifecycle adds materially recurring durable history, perform/define the bounded growth evidence needed and treat the existing storage trigger as consumed before implementation. Do not delete accepted witness/history to gain space.
-
-Use local executable probes/tests when necessary to establish runtime readiness, but do not mutate production source/content/UI in this decision. Browser inspection may characterize existing ordinary reachability only; do not use fixture injection as proof of ordinary admission.
-
-## Disposition
-
-Return exactly one:
-
-- `COMBAT_CHALLENGE_PACKAGE_READY` — exact bounded lifecycle, owners, files/surfaces, tests, browser acceptance, success and defeat/recovery gates, storage posture, exclusions, and implementation route are decision-complete.
-- `COMBAT_CHALLENGE_PREREQUISITE_REQUIRED` — exactly one smallest prerequisite is required; install only that prerequisite route.
-- `COMBAT_CHALLENGE_NO_PACKAGE` — no coherent bounded package is currently supportable; record the missing authority/evidence and leave implementation uninstalled.
-
-Do not implement the resulting package in this same run.
-
-## Completion
-
-Create a focused durable decision recording source identity, evidence, owner/caller trace, candidate encounter/context, equipment posture, presentation contract, success and defeat/recovery lifecycle, persistence/storage analysis, tests/browser acceptance plan, risks, exclusions, and disposition. Update current Codex output, GPT handoff, current prompt, material planning/history pointers, and branch register. Commit/push/fetch/read back hosted authority and report exact source and publication heads separately.
-
-Preserve Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, the 137-diagnostic broad UI baseline, accepted Soundings closure, and protected/held branch triggers. Do not claim vertical-slice acceptance or allocate a game-version increment.
+Create one focused durable contract; update current output, handoff, prompt if routing changes, material history/planning pointers and branch register. Record tests/probes and limits. Commit, push, fetch and read back exact hosted authority; separate inspected source and publication heads. Preserve accepted Soundings and Activity repair, the 137 broad UI diagnostic baseline, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `DEV-0.7.0`, and all protected/held branch triggers.

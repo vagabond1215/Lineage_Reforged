@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-28 Ordinary combat/challenge package decision
+
+**COMBAT_CHALLENGE_PREREQUISITE_REQUIRED** at inspected source `b0692e9fad000e364e4e871eba11cdfb1ca1682f`. The focused decision is `docs/design/ordinary-combat-challenge-and-recovery-package-decision.md`. Install exactly one unversioned documentation prerequisite: **Ordinary Encounter Admission And Outcome Ownership Contract Decision**. Ordinary UI does not run the world/combat tick, the provisional Stonevein-to-Kaelvar spawn context lacks matching region/habitat authority, and combat loss is not bound to the accepted Normal-Stakes receipt. Additional durable-history expansion consumes the existing storage reopening trigger. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This current entry supersedes prior no-active-successor wording below without rewriting historical chronology.
+
 ## 2026-09-28 Activity presentation repair closure
 
 **PRESENTATION_REPAIR_VERIFIED**: Activity Revenue Presentation Truthfulness Repair is complete at code commit `c2d07ac8d4b4e1a404687cbd9d86c533feeb9222`, with ordinary active-Soundings-survey browser evidence in `docs/dev/activity-revenue-presentation-truthfulness-repair-2026-09-28.md`. No active executable successor is installed. The remaining ranked gaps in `docs/design/post-soundings-playability-gap-prioritization-decision.md` stay deferred under their explicit reopening triggers. Game 0.1.1-prealpha / INTEGRATED_LOOP / DEV-0.7.0 unchanged. This entry supersedes the older active-route wording below while preserving chronology.
