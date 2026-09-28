@@ -1,0 +1,91 @@
+PASS ordinary acceptance applies only returned accepted state
+PASS legacy helper cannot pay Soundings
+PASS session legitimate retry and nested key-order equivalence
+PASS session semantic changed intent conflict
+PUBLICATION_REJECT session coherent F1 wallet Soundings publication provenance rejected: invalid_witness.
+PASS session coherent F1 wallet: invalid_provenance
+PUBLICATION_REJECT session coherent F1 source_ids Soundings publication provenance rejected: invalid_witness.
+PASS session coherent F1 source_ids: invalid_provenance
+PUBLICATION_REJECT session downgrade Soundings admitted completion cannot discard or downgrade its witness identity.
+PASS session downgrade: invalid_provenance
+PUBLICATION_REJECT session empty-linked-authority Soundings admitted completion cannot discard or downgrade its witness identity.
+PASS session empty-linked-authority: already_consumed
+PUBLICATION_REJECT session deep-empty-result Version 7 publication requires a target campaign snapshot.
+PASS session deep-empty-result: invalid_authority
+PUBLICATION_REJECT session orphan-result Version 7 publication requires a target campaign snapshot.
+PASS session orphan-result: invalid_authority
+PUBLICATION_REJECT session missing-source Version 7 publication requires a target campaign snapshot.
+PASS session missing-source: invalid_authority
+PUBLICATION_REJECT session duplicate-request Version 7 publication requires a target campaign snapshot.
+PASS session duplicate-request: invalid_authority
+PUBLICATION_REJECT session duplicate-occurrence Version 7 publication requires a target campaign snapshot.
+PASS session duplicate-occurrence: invalid_authority
+PUBLICATION_REJECT session duplicate-receipt Version 7 publication requires a target campaign snapshot.
+PASS session duplicate-receipt: invalid_authority
+PUBLICATION_REJECT session wrong-owner Version 7 publication requires a target campaign snapshot.
+PASS session wrong-owner: invalid_authority
+PASS session wrong witness accountId: invalid_provenance
+PASS session wrong witness campaignId: invalid_provenance
+PASS session wrong witness characterId: invalid_provenance
+PASS session wrong witness sourceArtifactId: invalid_provenance
+PASS session wrong witness sourcePublicationId: invalid_provenance
+PASS session wrong witness sourceRevision: invalid_provenance
+PASS session wrong witness sourceContinuityId: invalid_provenance
+PASS session wrong witness acceptedContinuityId: invalid_provenance
+PASS session wrong witness sourceSnapshotFingerprint: invalid_provenance
+PASS session wrong witness surveyFingerprint: invalid_provenance
+PASS session wrong witness canonicalIntentFingerprint: invalid_provenance
+PASS session wrong witness occurrenceId: invalid_provenance
+PASS session wrong witness resultId: invalid_provenance
+PASS session wrong witness acceptedTick: invalid_provenance
+PASS session missing context: invalid_provenance
+PASS session pending context: invalid_provenance
+PASS restart legitimate retry and nested key-order equivalence
+PASS restart semantic changed intent conflict
+PUBLICATION_REJECT restart coherent F1 wallet Soundings publication provenance rejected: invalid_witness.
+PASS restart coherent F1 wallet: invalid_provenance
+PUBLICATION_REJECT restart coherent F1 source_ids Soundings publication provenance rejected: invalid_witness.
+PASS restart coherent F1 source_ids: invalid_provenance
+PUBLICATION_REJECT restart downgrade Soundings admitted completion cannot discard or downgrade its witness identity.
+PASS restart downgrade: invalid_provenance
+PUBLICATION_REJECT restart empty-linked-authority Soundings admitted completion cannot discard or downgrade its witness identity.
+PASS restart empty-linked-authority: already_consumed
+PUBLICATION_REJECT restart deep-empty-result Version 7 publication requires a target campaign snapshot.
+PASS restart deep-empty-result: invalid_authority
+PUBLICATION_REJECT restart orphan-result Version 7 publication requires a target campaign snapshot.
+PASS restart orphan-result: invalid_authority
+PUBLICATION_REJECT restart missing-source Version 7 publication requires a target campaign snapshot.
+PASS restart missing-source: invalid_authority
+PUBLICATION_REJECT restart duplicate-request Version 7 publication requires a target campaign snapshot.
+PASS restart duplicate-request: invalid_authority
+PUBLICATION_REJECT restart duplicate-occurrence Version 7 publication requires a target campaign snapshot.
+PASS restart duplicate-occurrence: invalid_authority
+PUBLICATION_REJECT restart duplicate-receipt Version 7 publication requires a target campaign snapshot.
+PASS restart duplicate-receipt: invalid_authority
+PUBLICATION_REJECT restart wrong-owner Version 7 publication requires a target campaign snapshot.
+PASS restart wrong-owner: invalid_authority
+PASS restart wrong witness accountId: invalid_provenance
+PASS restart wrong witness campaignId: invalid_provenance
+PASS restart wrong witness characterId: invalid_provenance
+PASS restart wrong witness sourceArtifactId: invalid_provenance
+PASS restart wrong witness sourcePublicationId: invalid_provenance
+PASS restart wrong witness sourceRevision: invalid_provenance
+PASS restart wrong witness sourceContinuityId: invalid_provenance
+PASS restart wrong witness acceptedContinuityId: invalid_provenance
+PASS restart wrong witness sourceSnapshotFingerprint: invalid_provenance
+PASS restart wrong witness surveyFingerprint: invalid_provenance
+PASS restart wrong witness canonicalIntentFingerprint: invalid_provenance
+PASS restart wrong witness occurrenceId: invalid_provenance
+PASS restart wrong witness resultId: invalid_provenance
+PASS restart wrong witness acceptedTick: invalid_provenance
+PASS restart missing context: invalid_provenance
+PASS restart pending context: invalid_provenance
+PASS stale prepared revision: stale_snapshot
+PASS stale prepared tick: stale_snapshot
+PASS stale prepared source-artifact: invalid_authority
+PASS durable missing load and publication reject unchanged
+PASS durable pending load and publication reject unchanged
+PASS durable wrong-first-artifact load and publication reject unchanged
+PASS durable wrong-first-publication load and publication reject unchanged
+PASS durable wrong-first-revision load and publication reject unchanged
+{"status":"CORE_AUTHORITY_PROBES_PASS","runtime":"0df87bb7afaa4d7fcc9f08b79b7528d60727c370","cases":68}

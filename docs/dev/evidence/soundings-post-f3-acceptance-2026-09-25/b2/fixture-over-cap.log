@@ -1,0 +1,47 @@
+PASS ordinary admission preserves three-entry same-tick nonempty prefix; exact five gold and seven receipts
+PASS chronicle: three same-tick suffix repairs, restart each, exact frozen intent/source/witness and no repayment
+PASS notification: three same-tick suffix repairs, restart each, exact frozen intent/source/witness and no repayment
+PASS chronicle survey-first: both independently authorized projection owners followed by restart
+PASS chronicle soundings-first: both independently authorized projection owners followed by restart
+PASS notification survey-first: both independently authorized projection owners followed by restart
+PASS notification soundings-first: both independently authorized projection owners followed by restart
+MUTATION remove certified prefix surveyValid false
+PASS remove certified prefix: direct provenance, campaign, caller and publication fail closed unchanged
+MUTATION swap certified distinct-owner rows surveyValid true
+PASS swap certified distinct-owner rows: direct provenance, campaign, caller and publication fail closed unchanged
+MUTATION insert certified prefix copy surveyValid false
+PASS insert certified prefix copy: direct provenance, campaign, caller and publication fail closed unchanged
+MUTATION alter prefix observed state surveyValid false
+PASS alter prefix observed state: direct provenance, campaign, caller and publication fail closed unchanged
+MUTATION malformed suffix ordinal surveyValid false
+PASS malformed suffix ordinal: direct provenance, campaign, caller and publication fail closed unchanged
+MUTATION duplicate suffix identity surveyValid false
+PASS duplicate suffix identity: direct provenance, campaign, caller and publication fail closed unchanged
+MUTATION nonprojection result drift surveyValid false
+PASS nonprojection result drift: direct provenance, campaign, caller and publication fail closed unchanged
+MUTATION nonprojection receipt drift surveyValid false
+PASS nonprojection receipt drift: direct provenance, campaign, caller and publication fail closed unchanged
+PASS chronicle: full opaque feed retained, survey terminal expiry vs Soundings refusal, later ordinary travel/save/restart
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at file:///C:/Codex/EoL/docs/dev/evidence/soundings-post-f3-acceptance-2026-09-25/b2/independent-prefix.mjs:107:11
+    at withCampaignStorage (file:///C:/Codex/EoL/tests/helpers/soundings-ordinary-campaign.mjs:35:16)
+    at file:///C:/Codex/EoL/docs/dev/evidence/soundings-post-f3-acceptance-2026-09-25/b2/independent-prefix.mjs:17:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:430:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:661:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.14.1

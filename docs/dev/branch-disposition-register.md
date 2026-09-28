@@ -1,5 +1,11 @@
 # Branch Disposition Register
 
+## 2026-09-28 Post-F3 Independent Acceptance
+
+Inspected source `567d250cae46a43c1c87123d63478aa9f47183f9`, runtime `7c8c980d01892b0f673afc5a5940aec33ad2d7a2`. One local/four hosted branches, zero open PRs. Exact retained heads/bases/unique commits/paths rechecked; source divergence readiness 410/2, prompt-integrity 357/1, administration 188/1. Independent audit accepted Soundings; this consumes no retained branch trigger. No disposition, integration, merge, rebase, deletion, PR or protection action due/performed.
+
+Readiness 59c103c3 remains PROTECTED_REFERENCE until scheduled readiness/regression or explicit protection review; prompt-integrity 58a34e37 remains PROTECTED_REFERENCE until dedicated prompt/execution-pointer audit; administration 210df5bc remains HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. Exact full identities are in `docs/design/soundings-durable-completion-post-f3-independent-acceptance-audit.md` and prior register rows. Next: **Soundings Playable-Build Version Calibration Decision**. Final docs/evidence publication and post-fetch equality are separately reported after push.
+
 ## 2026-09-25 F3 Compatibility Repair
 
 Pulled clean 232379e5 through seven docs-only commits to source `413c4abfba65ae4cc8b60c0beb7799fc01f6eeae`; runtime `7c8c980d01892b0f673afc5a5940aec33ad2d7a2`. One local/four hosted refs, zero open PRs. Exact heads/merge bases/unique commits/paths below rechecked unchanged; starting counts readiness 408/2, prompt-integrity 355/1, administration 186/1. No overlapping surface or consumed retention trigger.
@@ -22,7 +28,7 @@ Clean synchronized source `a9508e658452a024310a7d3a59e1f46fd2953442`; runtime `0
 
 Retain readiness `59c103c3a06d55f35bffa735fd4b7814dffb583e` PROTECTED_REFERENCE until scheduled readiness/regression or explicit protection review; prompt-integrity `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f` PROTECTED_REFERENCE until dedicated prompt/execution-pointer audit; administration `210df5bcc017a8f31d621a553b5496c668540d29` HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. No merge/rebase/integration/deletion/PR/protection/disposition action due/performed.
 
-Validation165 tests, A68/B14, lint/type/build checks in focused F2 repair record. Result IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE; successor **Soundings Durable Completion Post-F2 Independent Acceptance Audit**. Final docs publication/live equality is resolved after push and reported separately from source/runtime.
+Validation165 tests, A 68/B14, lint/type/build checks in focused F2 repair record. Result IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE; successor **Soundings Durable Completion Post-F2 Independent Acceptance Audit**. Final docs publication/live equality is resolved after push and reported separately from source/runtime.
 
 ## 2026-09-24 Post-Repair Independent Acceptance
 

@@ -1,0 +1,8 @@
+PASS ordinary exact four-tick return, no fare/knowledge/access grant, no global Starfall profile
+PASS unsupported origin rejects unchanged
+PASS unaccepted quest rejects unchanged
+PASS missing access rejects unchanged
+PASS exact +5g/+0s and seven receipts; all other player/game/survey/access surfaces unchanged
+PASS restart exact once-only consequences
+PASS completed contract retains legitimate four-tick no-fare return
+{"status":"CONSEQUENCES_AND_TRAVEL_PASS","runtime":"0383cedc99a4c3d5e2c9b47cf0665683720aef9e","cases":7}

@@ -1,0 +1,9 @@
+PASS current-head first submission publishes applied witness and restart duplicate without repayment
+PASS admitted spend owner fixture persists latest wallet and exact witness/ledger across restart
+PASS admitted earn owner fixture persists latest wallet and exact witness/ledger across restart
+PASS non-head first submission creates child continuity and durable matching witness
+PASS later descendant fork plus return and repeated restart retain original applied witness
+PASS legacy v1 no-witness load/play/save preserves wallet and ledger without synthesis, trusted duplicate or projection repair
+PASS ordinary harbor defeat is pending, publish and unsafe harbor recovery reject unchanged (known reachability limitation)
+PASS explicit safe-settlement fixture: real pending recovery completion, publication/restart preserve witness and trusted duplicate
+{"status":"B2_CONTINUITY_PROBES_PASS","runtime":"0383cedc99a4c3d5e2c9b47cf0665683720aef9e","cases":8}

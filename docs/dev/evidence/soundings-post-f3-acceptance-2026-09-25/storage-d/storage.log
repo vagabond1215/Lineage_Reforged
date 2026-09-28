@@ -1,0 +1,12 @@
+{
+  "runtime": "7c8c980d01892b0f673afc5a5940aec33ad2d7a2",
+  "status": "BOUNDED_UTF16_STORAGE_PASS",
+  "quotaBytes": 5242880,
+  "writes": 45,
+  "retainedBytes": 4320700,
+  "peakIntermediateBytes": 5076206,
+  "witnessValueBytes": 2716,
+  "witnessKeyAndValueBytes": 3112,
+  "keys": 15,
+  "limitation": "Finite ordinary sequence only; no claim of unlimited history."
+}

@@ -1,5 +1,9 @@
 # Soundings F3 Survey Projection Compatibility Repair Record
 
+## Current Acceptance Update — 2026-09-28
+
+Soundings durable completion is independently accepted at `7c8c980d01892b0f673afc5a5940aec33ad2d7a2` by `soundings-durable-completion-post-f3-independent-acceptance-audit.md`. All A/B1/B2/C/D gates passed. Historical pending/negative routes below remain dated chronology. Current successor: **Soundings Playable-Build Version Calibration Decision**; game/development versions unchanged.
+
 Date: 2026-09-25. Run: **Soundings Survey Projection Repair Compatibility Repair**. Result: **IMPLEMENTED_PENDING_INDEPENDENT_ACCEPTANCE**.
 
 Unversioned bounded repair, package S; parent development milestone not applicable; development milestone impact `supports_current_band`; game-version impact `none`. Game `0.1.0-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, band `DEV-0.7.x` unchanged.

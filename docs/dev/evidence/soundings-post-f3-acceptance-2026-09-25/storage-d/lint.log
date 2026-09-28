@@ -1,0 +1,5 @@
+
+> survival-builder-rpg-foundation@0.1.0 tool:content-lint
+> node ./tools/content-lint/index.mjs
+
+content-lint: ok (71 files checked)

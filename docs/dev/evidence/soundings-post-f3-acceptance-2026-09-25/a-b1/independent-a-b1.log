@@ -1,0 +1,69 @@
+PASS accepted witness binds independently prepared original snapshot; caller leaves inputs untouched
+PASS pure engine duplicate and provenance execute with browser access forbidden
+PASS session: coherent wallet rejects at provenance before duplicate, repair and publication
+PASS session: coherent nonexistent-source rejects at provenance before duplicate, repair and publication
+PASS restart: coherent wallet rejects at provenance before duplicate, repair and publication
+PASS restart: coherent nonexistent-source rejects at provenance before duplicate, repair and publication
+PASS session missing-retained cannot establish accepted history
+PASS session duplicate-retained cannot establish accepted history
+PASS session changed-retained cannot establish accepted history
+PASS session missing-witness cannot establish accepted history
+PASS session pending-witness cannot establish accepted history
+PASS publication candidate/before: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication candidate/after: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication candidate/readback: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication recovery/before: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication recovery/after: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication recovery/readback: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication pending/before: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication pending/after: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication pending/readback: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication artifact/before: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication artifact/after: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication artifact/readback: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication head/before: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication head/after: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication head/readback: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication applied/before: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication applied/after: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication applied/readback: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication address/before: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication address/after: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS publication address/readback: retry or bounded recovery preserves exactly-once payment and applied identity
+PASS missing-candidate: interrupted first publication rejects byte-unchanged
+PASS changed-candidate: interrupted first publication rejects byte-unchanged
+PASS artifact-collision: interrupted first publication rejects byte-unchanged
+PASS newer-head: interrupted first publication rejects byte-unchanged
+PASS stale address: verified head supersedes old address
+PASS newer address: recovery rejects without replacing address
+PASS malformed address: recovery rejects without replacing address
+PASS stale loaded session cannot publish over a newer campaign head
+PASS F2 pending/missing-witness: partial and final cleanup reject byte-unchanged
+PASS F2 pending/missing-fingerprint: partial and final cleanup reject byte-unchanged
+PASS F2 pending/missing-both: partial and final cleanup reject byte-unchanged
+PASS F2 pending/null-witness: partial and final cleanup reject byte-unchanged
+PASS F2 pending/deep-empty: partial and final cleanup reject byte-unchanged
+PASS F2 pending/coherent-sidecar-substitution: partial and final cleanup reject byte-unchanged
+PASS F2 applied/missing-witness: partial and final cleanup reject byte-unchanged
+PASS F2 applied/missing-fingerprint: partial and final cleanup reject byte-unchanged
+PASS F2 applied/missing-both: partial and final cleanup reject byte-unchanged
+PASS F2 applied/null-witness: partial and final cleanup reject byte-unchanged
+PASS F2 applied/deep-empty: partial and final cleanup reject byte-unchanged
+PASS F2 applied/coherent-sidecar-substitution: partial and final cleanup reject byte-unchanged
+PASS F2 pending-forged-status: no promotion or consumer cleanup
+PASS F2 stable-missing: no promotion or consumer cleanup
+PASS F2 stable-pending: no promotion or consumer cleanup
+PASS F2 stable-source: no promotion or consumer cleanup
+PASS F2 stable-first-artifact: no promotion or consumer cleanup
+PASS F2 stable-first-publication: no promotion or consumer cleanup
+PASS F2 stable-first-revision: no promotion or consumer cleanup
+PASS F2 envelope-substitution: no promotion or consumer cleanup
+PASS F2 valid first publication partial/final/repeat changes only recovery
+PASS later sidecar-free publication still rejects missing applied provenance
+PASS later sidecar-free publication still rejects pending applied provenance
+PASS later sidecar-free publication still rejects conflicting applied provenance
+PASS later sidecar-free publication completes while preserving original applied witness
+PASS ordinary no-witness consumer compatibility preserves wallet and no witness synthesis
+PASS legacy no-witness consumer compatibility preserves wallet and no witness synthesis
+PASS terminal consumer cleanup after address deletion never resurrects save or modifies witness
+{"status":"INDEPENDENT_A_B1_PROBES_PASS","runtime":"7c8c980d01892b0f673afc5a5940aec33ad2d7a2","cases":68}

@@ -1,0 +1,13 @@
+PASS chronicle missing, exact repair, publication/restart, idempotent no repayment
+PASS chronicle misplaced, exact repair, publication/restart, idempotent no repayment
+PASS notifications missing, exact repair, publication/restart, idempotent no repayment
+PASS notifications misplaced, exact repair, publication/restart, idempotent no repayment
+PASS chronicle same-id conflicting row fails closed unchanged
+PASS notifications same-id conflicting row fails closed unchanged
+PASS chronicle opaque equal-tick later row retained before historical completion
+PASS notifications opaque equal-tick later row retained before historical completion
+SURVEY_REPAIR_OBSERVATION {"kind":"chronicle","controlCode":"projection_repaired","controlAccepted":true,"postCompletionCode":"projection_repaired","postCompletionAccepted":true,"sourceValid":true,"sourceUnchanged":true,"storageUnchanged":true}
+PASS chronicle survey projection repair remains available after Soundings completion
+SURVEY_REPAIR_OBSERVATION {"kind":"notification","controlCode":"projection_repaired","controlAccepted":true,"postCompletionCode":"projection_retention_expired","postCompletionAccepted":true,"sourceValid":true,"sourceUnchanged":true,"storageUnchanged":true}
+PASS notification survey projection repair remains available after Soundings completion
+{"status":"B2_PROJECTION_PROBES_PASS","cases":10,"runtime":"0383cedc99a4c3d5e2c9b47cf0665683720aef9e"}

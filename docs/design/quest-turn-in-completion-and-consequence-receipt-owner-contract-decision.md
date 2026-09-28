@@ -1,5 +1,9 @@
 # Quest Turn-In Completion And Consequence Receipt Owner Contract Decision
 
+## Current Acceptance Update — 2026-09-28
+
+Soundings durable completion is independently accepted at `7c8c980d01892b0f673afc5a5940aec33ad2d7a2` by `soundings-durable-completion-post-f3-independent-acceptance-audit.md`. All A/B1/B2/C/D gates passed. Historical pending/negative routes below remain dated chronology. Current successor: **Soundings Playable-Build Version Calibration Decision**; game/development versions unchanged.
+
 ## 2026-09-22 Provenance Contract Gate
 
 The bounded repair investigation returned `PROVENANCE_CONTRACT_REQUIRED`; F1 remains `REPAIR_REQUIRED`. Existing immutable publications do not necessarily retain the exact unpublished pre-submission source, and session admission evidence is lost on restart. See `soundings-source-provenance-contract-gate.md` for fresh executable evidence and precise missing ownership/retention/compatibility facts. No production repair or new contract is accepted here. Active successor: **Soundings Accepted Admission Provenance And Retention Contract Decision**, followed only after an accepted decision by bounded repair and separate independent acceptance. Historical routing below is preserved as dated evidence; authored terms, 5g/seven receipts and version posture remain unchanged.

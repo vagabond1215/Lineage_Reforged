@@ -1,0 +1,16 @@
+PASS pending/before: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS pending/after: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS pending/readback: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS head/before: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS head/after: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS head/readback: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS applied/before: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS applied/after: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS applied/readback: recovered original witness, exactly-once completion and byte-idempotent startup
+PASS pending-witness: recovery rejects without changing retained bytes
+PASS immutable-artifact: recovery rejects without changing retained bytes
+PASS newer-head: recovery rejects without changing retained bytes
+PASS unchanged valid pre-applied recovery blocks premature declared consumer completion unchanged
+CONSUMER_COMPLETION_OBSERVATION {"case":"recovery witness omission before consumer completion","recoveryStatus":"head_verified","stableWitnessBefore":"pending","stableWitnessAfter":"pending","declaredConsumerKinds":["active_history"],"completedKinds":["active_history"],"rejected":true,"recoveryRetained":true,"storageUnchanged":true,"precedingCases":13}
+PASS malformed recovery cannot clear pending witness recovery
+{"runtime":"0df87bb7afaa4d7fcc9f08b79b7528d60727c370","cases":14,"status":"B1_PARTIAL_PASS"}

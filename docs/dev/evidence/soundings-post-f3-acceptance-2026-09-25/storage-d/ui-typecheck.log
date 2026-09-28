@@ -1,0 +1,238 @@
+
+> survival-builder-rpg-foundation@0.1.0 typecheck:ui
+> npm --prefix ./apps/rpg-ui run typecheck
+
+
+> @cataclysm/rpg-ui@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+src/components/TopStatusBar.tsx(226,18): error TS2375: Type '{ key: string; label: string; value: number; max: number; color: string; visualState: StatMeterVisualState | undefined; }' is not assignable to type 'ProgressBarProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'visualState' are incompatible.
+    Type 'StatMeterVisualState | undefined' is not assignable to type '"normal" | "critical" | "warning"'.
+      Type 'undefined' is not assignable to type '"normal" | "critical" | "warning"'.
+src/features/ActivityPanel.tsx(354,12): error TS2375: Type '{ title: string; items: ListItem[]; selectedId: string | undefined; onSelect: (id: string) => void; pinnedIds: string[]; onTogglePin: (id: string) => void; accent: string; emptyMessage: string; }' is not assignable to type 'SelectionListProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'selectedId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/ActivityPanel.tsx(373,10): error TS2375: Type '{ accent: string; primary: { title: string; summary: string; groups: DetailGroup[]; } | undefined; sectionDetail: WindowDetail | undefined; emptyTitle: string; emptyMessage: string; }' is not assignable to type 'PanelDetailStackProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'primary' are incompatible.
+    Type '{ title: string; summary: string; groups: DetailGroup[]; } | undefined' is not assignable to type 'DetailCardData'.
+      Type 'undefined' is not assignable to type 'DetailCardData'.
+src/features/CharacterPanel.tsx(157,21): error TS18048: 'characterData.lists.attributes' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(162,33): error TS18048: 'characterData.lists.geographicKnowledge' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(163,19): error TS18048: 'characterData.lists.standing' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(164,21): error TS18048: 'characterData.lists.reputation' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(165,22): error TS18048: 'characterData.lists.discoveries' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(168,7): error TS18048: 'characterData.lists.attributes' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(169,7): error TS18048: 'characterData.lists.discoveries' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(170,7): error TS18048: 'characterData.lists.geographicKnowledge' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(171,7): error TS18048: 'characterData.lists.reputation' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(172,7): error TS18048: 'characterData.lists.standing' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(180,26): error TS18048: 'characterData.lists.attributes' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(183,25): error TS18048: 'characterData.lists.standing' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(186,36): error TS18048: 'characterData.lists.geographicKnowledge' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(189,27): error TS18048: 'characterData.lists.reputation' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(192,26): error TS18048: 'characterData.lists.discoveries' is possibly 'undefined'.
+src/features/CharacterPanel.tsx(277,8): error TS2375: Type '{ title: string; items: ListItem[]; selectedId: string | undefined; onSelect: (id: string) => void; pinnedIds: string[]; onTogglePin: (id: string) => void; accent: string; emptyMessage: string; }' is not assignable to type 'SelectionListProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'selectedId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/CharacterPanel.tsx(351,105): error TS2550: Property 'at' does not exist on type 'string[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/features/CharacterPanel.tsx(366,8): error TS2375: Type '{ title: string; items: ListItem[]; selectedId: string | undefined; onSelect: (id: string) => void; pinnedIds: string[]; onTogglePin: (id: string) => void; accent: string; emptyMessage: string; }' is not assignable to type 'SelectionListProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'selectedId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/CharacterPanel.tsx(620,10): error TS2375: Type '{ accent: string; primary: { title: string; summary: string; groups: DetailGroup[]; } | undefined; sectionDetail: WindowDetail | undefined; emptyTitle: string; emptyMessage: string; }' is not assignable to type 'PanelDetailStackProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'primary' are incompatible.
+    Type '{ title: string; summary: string; groups: DetailGroup[]; } | undefined' is not assignable to type 'DetailCardData'.
+      Type 'undefined' is not assignable to type 'DetailCardData'.
+src/features/ChroniclePanel.tsx(75,12): error TS2375: Type '{ title: string; items: ListItem[]; selectedId: string | undefined; onSelect: Dispatch<SetStateAction<string>>; pinnedIds: string[]; onTogglePin: (id: string) => void; accent: string; emptyMessage: string; }' is not assignable to type 'SelectionListProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'selectedId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/ChroniclePanel.tsx(88,10): error TS2375: Type '{ accent: string; primary: { title: string; summary: string; groups: DetailGroup[]; } | undefined; sectionDetail: WindowDetail | undefined; emptyTitle: string; emptyMessage: string; }' is not assignable to type 'PanelDetailStackProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'primary' are incompatible.
+    Type '{ title: string; summary: string; groups: DetailGroup[]; } | undefined' is not assignable to type 'DetailCardData'.
+      Type 'undefined' is not assignable to type 'DetailCardData'.
+src/features/CodexPanel.tsx(124,12): error TS2375: Type '{ title: string; items: ListItem[]; selectedId: string | undefined; onSelect: (id: string) => void; pinnedIds: string[]; onTogglePin: (id: string) => void; accent: string; emptyMessage: string; }' is not assignable to type 'SelectionListProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'selectedId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/CodexPanel.tsx(142,10): error TS2375: Type '{ accent: string; primary: { title: string; summary: string; groups: DetailGroup[]; } | undefined; sectionDetail: WindowDetail | undefined; emptyTitle: string; emptyMessage: string; }' is not assignable to type 'PanelDetailStackProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'primary' are incompatible.
+    Type '{ title: string; summary: string; groups: DetailGroup[]; } | undefined' is not assignable to type 'DetailCardData'.
+      Type 'undefined' is not assignable to type 'DetailCardData'.
+src/features/QuestsPanel.tsx(164,12): error TS2375: Type '{ title: string; items: ListItem[]; selectedId: string | undefined; onSelect: Dispatch<SetStateAction<string>>; pinnedIds: string[]; onTogglePin: (id: string) => void; accent: string; emptyMessage: string; }' is not assignable to type 'SelectionListProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'selectedId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/QuestsPanel.tsx(177,10): error TS2375: Type '{ accent: string; primary: { title: string; summary: string; groups: DetailGroup[]; } | undefined; sectionDetail: WindowDetail | undefined; emptyTitle: string; emptyMessage: string; }' is not assignable to type 'PanelDetailStackProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'primary' are incompatible.
+    Type '{ title: string; summary: string; groups: DetailGroup[]; } | undefined' is not assignable to type 'DetailCardData'.
+      Type 'undefined' is not assignable to type 'DetailCardData'.
+src/features/WorldPanel.tsx(240,12): error TS2375: Type '{ title: string; items: ListItem[]; selectedId: string | undefined; onSelect: (id: string) => void; pinnedIds: string[]; onTogglePin: (id: string) => void; accent: string; emptyMessage: string; }' is not assignable to type 'SelectionListProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'selectedId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/features/WorldPanel.tsx(258,10): error TS2375: Type '{ accent: string; primary: { title: string; summary: string; groups: DetailGroup[]; } | undefined; sectionDetail: WindowDetail | undefined; emptyTitle: string; emptyMessage: string; }' is not assignable to type 'PanelDetailStackProps' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'primary' are incompatible.
+    Type '{ title: string; summary: string; groups: DetailGroup[]; } | undefined' is not assignable to type 'DetailCardData'.
+      Type 'undefined' is not assignable to type 'DetailCardData'.
+src/game-shell/achievementChroniclesPresentation.ts(42,40): error TS2550: Property 'at' does not exist on type 'string[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/game-shell/achievementChroniclesPresentation.ts(46,11): error TS7006: Parameter 'segment' implicitly has an 'any' type.
+src/game-shell/calendarClimatePresentation.ts(145,40): error TS2550: Property 'at' does not exist on type 'string[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/game-shell/calendarClimatePresentation.ts(148,11): error TS7006: Parameter 'word' implicitly has an 'any' type.
+src/game-shell/calendarClimatePresentation.ts(156,11): error TS7006: Parameter 'word' implicitly has an 'any' type.
+src/game-shell/characterCreationIdentityOptions.ts(635,5): error TS2532: Object is possibly 'undefined'.
+src/game-shell/characterCreationIdentityOptions.ts(690,14): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/game-shell/characterCreationIdentityOptions.ts(690,48): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/game-shell/characterCreationIdentityOptions.ts(691,12): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/game-shell/characterCreationMath.ts(82,14): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/game-shell/characterCreationMath.ts(82,48): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/game-shell/characterCreationMath.ts(83,12): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/game-shell/components/AppShell.tsx(305,10): error TS2375: Type '{ children: (Element | ReactNode)[]; className: string; innerClassName: string | undefined; }' is not assignable to type '{ children: ReactNode; className?: string; innerClassName?: string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'innerClassName' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/game-shell/components/CharacterCreationNarrativeScreen.tsx(189,36): error TS2550: Property 'at' does not exist on type 'string[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/game-shell/components/CharacterCreationNarrativeScreen.tsx(197,11): error TS7006: Parameter 'word' implicitly has an 'any' type.
+src/game-shell/components/MainMenuScreen.tsx(228,8): error TS2375: Type '{ children: Element; brand: Element; centerActions: Element | null; accountControls: Element; sidebar: Element; subBar: Element; notice: Element | null; contentInnerClassName: string | undefined; }' is not assignable to type '{ sidebar?: ReactNode; subBar?: ReactNode; notice?: ReactNode; contentClassName?: string; contentInnerClassName?: string; children: ReactNode; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'contentInnerClassName' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/game-shell/economyClarityPresentation.ts(153,40): error TS2550: Property 'at' does not exist on type 'string[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/game-shell/economyClarityPresentation.ts(156,11): error TS7006: Parameter 'word' implicitly has an 'any' type.
+src/game-shell/economyClarityPresentation.ts(164,11): error TS7006: Parameter 'word' implicitly has an 'any' type.
+src/game-shell/economyClarityPresentation.ts(655,70): error TS18048: 'current' is possibly 'undefined'.
+src/game-shell/legacyLedgerPresentation.ts(42,40): error TS2550: Property 'at' does not exist on type 'string[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+src/game-shell/legacyLedgerPresentation.ts(46,11): error TS7006: Parameter 'segment' implicitly has an 'any' type.
+src/game-shell/worldSelectionCatalog.ts(775,49): error TS2550: Property 'replaceAll' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2021' or later.
+src/runtime/uiViewModel.ts(292,20): error TS2532: Object is possibly 'undefined'.
+src/runtime/uiViewModel.ts(551,3): error TS2375: Type '{ id: string; title: string; subtitle: string | undefined; meta: string | undefined; status: string | undefined; description: string; tags: string[]; detailTitle: string; detailSummary: string; detailGroups: DetailGroup[]; }' is not assignable to type 'ListItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'subtitle' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/runtime/uiViewModel.ts(566,3): error TS2375: Type '{ id: string; category: string; title: string; subtitle: string | undefined; meta: string; status: string | undefined; tags: string[]; locked: boolean | undefined; detailTitle: string; detailSummary: string; detailGroups: DetailGroup[]; }' is not assignable to type 'ListItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'subtitle' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/runtime/uiViewModel.ts(602,5): error TS2783: 'character.combat.entries' is specified more than once, so this usage will be overwritten.
+src/runtime/uiViewModel.ts(603,5): error TS2783: 'character.travel.entries' is specified more than once, so this usage will be overwritten.
+src/runtime/uiViewModel.ts(604,5): error TS2783: 'character.discovery.entries' is specified more than once, so this usage will be overwritten.
+src/runtime/uiViewModel.ts(605,5): error TS2783: 'character.crafting.entries' is specified more than once, so this usage will be overwritten.
+src/runtime/uiViewModel.ts(606,5): error TS2783: 'character.trade.entries' is specified more than once, so this usage will be overwritten.
+src/runtime/uiViewModel.ts(607,5): error TS2783: 'character.quests.completed' is specified more than once, so this usage will be overwritten.
+src/runtime/uiViewModel.ts(608,5): error TS2783: 'character.reputation.historical_total' is specified more than once, so this usage will be overwritten.
+src/runtime/uiViewModel.ts(769,3): error TS2375: Type '{ id: string; category: QuestJournalCategory; title: string; subtitle: string; meta: string; status: string | undefined; tags: string[]; detailTitle: string; detailSummary: string; detailGroups: { ...; }[]; }' is not assignable to type 'ListItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'status' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/runtime/uiViewModel.ts(805,3): error TS2375: Type '{ id: string; category: ChronicleCategory; title: string; subtitle: string; meta: string; status: string | undefined; tags: string[]; detailTitle: string; detailSummary: string; detailGroups: { ...; }[]; }' is not assignable to type 'ListItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'status' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/runtime/uiViewModel.ts(829,3): error TS2375: Type '{ id: string; category: PlayerDiscoveryCategory; title: string; subtitle: string; meta: string; status: string; tags: string[]; description: string | undefined; detailTitle: string; detailSummary: string; detailGroups: { ...; }[]; }' is not assignable to type 'ListItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'description' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+src/runtime/uiViewModel.ts(1134,5): error TS2322: Type '{ id: string; title: string; subtitle: string; meta: string; status: string | undefined; tags: string[]; detailTitle: string; detailSummary: string; detailGroups: DetailGroup[]; }[]' is not assignable to type 'ListItem[]'.
+  Type '{ id: string; title: string; subtitle: string; meta: string; status: string | undefined; tags: string[]; detailTitle: string; detailSummary: string; detailGroups: DetailGroup[]; }' is not assignable to type 'ListItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'status' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.
+src/runtime/uiViewModel.ts(1145,3): error TS2322: Type '{ count: number | undefined; id: string; label: string; description?: string; }[]' is not assignable to type 'SidebarItem[]'.
+  Type '{ count: number | undefined; id: string; label: string; description?: string; }' is not assignable to type 'SidebarItem' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+    Types of property 'count' are incompatible.
+      Type 'number | undefined' is not assignable to type 'number'.
+        Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(1253,47): error TS18048: 'characterLists.attributes' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1275,43): error TS18048: 'characterLists.skills' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1295,43): error TS18048: 'characterLists.inventory' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1340,43): error TS18048: 'characterLists.traits' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1360,40): error TS18048: 'characterLists.geographicKnowledge' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1361,42): error TS18048: 'characterLists.geographicKnowledge' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1362,46): error TS18048: 'characterLists.geographicKnowledge' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1380,45): error TS18048: 'characterLists.standing' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1400,47): error TS18048: 'characterLists.reputation' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1416,43): error TS18048: 'characterLists.titles' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1501,43): error TS18048: 'worldLists.region' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1525,47): error TS18048: 'worldLists.settlement' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1549,42): error TS2532: Object is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1569,43): error TS18048: 'worldLists.travel' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1589,43): error TS2532: Object is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1617,47): error TS18048: 'activityLists.employment' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1637,45): error TS18048: 'activityLists.businesses' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1657,45): error TS18048: 'activityLists.crafting' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1677,42): error TS18048: 'activityLists.trade' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1697,45): error TS18048: 'activityLists.contracts' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1717,45): error TS18048: 'activityLists.military' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1737,42): error TS18048: 'activityLists.naval' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1757,46): error TS18048: 'activityLists.operations' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(1893,52): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(1898,52): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(1903,58): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(1908,52): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(1913,56): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(1918,58): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(1923,52): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/runtime/uiViewModel.ts(2175,17): error TS18048: 'characterLists.attributes' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2176,13): error TS18048: 'characterLists.skills' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2177,16): error TS18048: 'characterLists.inventory' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2178,16): error TS18048: 'characterLists.equipment' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2179,13): error TS18048: 'characterLists.traits' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2180,29): error TS18048: 'characterLists.geographicKnowledge' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2181,15): error TS18048: 'characterLists.standing' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2182,17): error TS18048: 'characterLists.reputation' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2183,13): error TS18048: 'characterLists.titles' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2184,18): error TS18048: 'characterLists.discoveries' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2188,13): error TS18048: 'worldLists.region' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2189,17): error TS18048: 'worldLists.settlement' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2190,21): error TS2532: Object is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2191,13): error TS18048: 'worldLists.travel' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2192,21): error TS2532: Object is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2195,17): error TS18048: 'activityLists.employment' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2196,17): error TS18048: 'activityLists.businesses' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2197,15): error TS18048: 'activityLists.crafting' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2198,12): error TS18048: 'activityLists.trade' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2199,16): error TS18048: 'activityLists.contracts' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2200,15): error TS18048: 'activityLists.military' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2201,12): error TS18048: 'activityLists.naval' is possibly 'undefined'.
+src/runtime/uiViewModel.ts(2202,26): error TS18048: 'activityLists.operations' is possibly 'undefined'.
+../../packages/engines/civilization-engine/src/content.ts(1,30): error TS2307: Cannot find module 'node:fs' or its corresponding type declarations.
+../../packages/engines/civilization-engine/src/content.ts(1284,37): error TS2345: Argument of type 'FameBranchId' is not assignable to parameter of type 'never'.
+  Type '"civic"' is not assignable to type 'never'.
+../../packages/engines/civilization-engine/src/content.ts(1298,82): error TS2345: Argument of type 'NotorietyCategoryId' is not assignable to parameter of type '"theft" | "fraud" | "violent" | "murder" | "arson" | "banditry" | "treason"'.
+  Type '"sacrilege"' is not assignable to type '"theft" | "fraud" | "violent" | "murder" | "arson" | "banditry" | "treason"'.
+../../packages/engines/game-engine/src/account-estate.ts(216,3): error TS2375: Type '{ continentId?: string | undefined; regionId?: string; settlementId?: string; }' is not assignable to type 'EstateAssetLocationState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'continentId' are incompatible.
+    Type 'string | undefined' is not assignable to type 'string'.
+      Type 'undefined' is not assignable to type 'string'.
+../../packages/engines/game-engine/src/account-estate.ts(344,40): error TS2550: Property 'at' does not exist on type 'string[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+../../packages/engines/game-engine/src/account-estate.ts(348,11): error TS7006: Parameter 'segment' implicitly has an 'any' type.
+../../packages/engines/player-engine/src/body-state.ts(838,44): error TS2379: Argument of type '{ runDifficulty: Partial<RunDifficultyState> | null | undefined; recoveryAssessment: RecoveryAssessmentState | null | undefined; statGrowthRule: StatGrowthBalanceRuleState; }' is not assignable to parameter of type '{ runDifficulty?: Partial<RunDifficultyState> | null; recoveryAssessment: RecoveryAssessmentState | null | undefined; statGrowthRule: Pick<...>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'runDifficulty' are incompatible.
+    Type 'Partial<RunDifficultyState> | null | undefined' is not assignable to type 'Partial<RunDifficultyState> | null'.
+      Type 'undefined' is not assignable to type 'Partial<RunDifficultyState> | null'.
+../../packages/engines/player-engine/src/difficulty.ts(40,17): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+../../packages/engines/player-engine/src/difficulty.ts(40,44): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+../../packages/engines/player-engine/src/index.ts(236,5): error TS2322: Type 'PlayerReputationState' is not assignable to type 'Record<string, unknown>'.
+  Index signature for type 'string' is missing in type 'PlayerReputationState'.
+../../packages/engines/player-engine/src/progression.ts(544,29): error TS2550: Property 'at' does not exist on type 'SkillProgressionBandState[]'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2022' or later.
+../../packages/engines/player-engine/src/reputation.ts(481,49): error TS2552: Cannot find name 'SettlementContentRecord'. Did you mean 'SettlementRecord'?
+../../packages/engines/player-engine/src/stat-growth.ts(491,44): error TS2379: Argument of type '{ runDifficulty: Partial<RunDifficultyState> | null | undefined; recoveryAssessment: RecoveryAssessmentState | null | undefined; statGrowthRule: StatGrowthBalanceRuleState; }' is not assignable to parameter of type '{ runDifficulty?: Partial<RunDifficultyState> | null; recoveryAssessment: RecoveryAssessmentState | null | undefined; statGrowthRule: Pick<...>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'runDifficulty' are incompatible.
+    Type 'Partial<RunDifficultyState> | null | undefined' is not assignable to type 'Partial<RunDifficultyState> | null'.
+      Type 'undefined' is not assignable to type 'Partial<RunDifficultyState> | null'.
+../../packages/shared/time/src/index.ts(40,5): error TS2322: Type 'SeasonName | undefined' is not assignable to type 'SeasonName'.
+  Type 'undefined' is not assignable to type 'SeasonName'.
+../../packages/shared/time/src/index.ts(84,5): error TS2322: Type 'SeasonName | undefined' is not assignable to type 'SeasonName'.
+  Type 'undefined' is not assignable to type 'SeasonName'.
+../../packages/shared/types/src/settlement-institutions.ts(1111,7): error TS2345: Argument of type 'StartAuthorityTier' is not assignable to parameter of type '"military" | "chartered"'.
+  Type '"temple"' is not assignable to type '"military" | "chartered"'.

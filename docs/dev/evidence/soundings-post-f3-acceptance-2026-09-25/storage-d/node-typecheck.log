@@ -1,0 +1,7 @@
+
+> survival-builder-rpg-foundation@0.1.0 typecheck:ui:node
+> npm --prefix ./apps/rpg-ui run typecheck:node
+
+
+> @cataclysm/rpg-ui@0.1.0 typecheck:node
+> tsc --noEmit --tsBuildInfoFile ../../.tmp-rpg-ui-node.tsbuildinfo -p tsconfig.node.json
