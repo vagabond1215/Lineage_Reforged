@@ -1,5 +1,12 @@
 # Branch Disposition Register
 
+## 2026-09-28 Version Calibration
+
+Fresh Connector inspection at calibration start confirmed hosted master `d63577396baad2b4eae90280e53c6c043d419398`, four hosted branches and zero open PRs. The Soundings version-calibration route consumed no retained-branch review trigger and made documentation-only current-route changes. Readiness `59c103c3a06d55f35bffa735fd4b7814dffb583e` remains `PROTECTED_REFERENCE`; prompt-integrity `58a34e37ee531aa1f6c87086b4a4a6d20d571f9f` remains `PROTECTED_REFERENCE`; administration `210df5bcc017a8f31d621a553b5496c668540d29` remains `HOLD_NAMED_CONSUMER`. No merge, rebase, integration, deletion, PR or protection action was due or performed.
+
+Calibration disposition: `GAME_VERSION_CANDIDATE_JUSTIFIED` for `0.1.1-prealpha`; canonical Game remains `0.1.0-prealpha`. Next: **Game 0.1.1-prealpha Publication Acceptance**. Existing exact review triggers remain unchanged.
+
+
 ## 2026-09-28 Post-F3 Independent Acceptance
 
 Inspected source `567d250cae46a43c1c87123d63478aa9f47183f9`, runtime `7c8c980d01892b0f673afc5a5940aec33ad2d7a2`. One local/four hosted branches, zero open PRs. Exact retained heads/bases/unique commits/paths rechecked; source divergence readiness 410/2, prompt-integrity 357/1, administration 188/1. Independent audit accepted Soundings; this consumes no retained branch trigger. No disposition, integration, merge, rebase, deletion, PR or protection action due/performed.
