@@ -1,5 +1,9 @@
 # Branch Disposition Register
 
+## 2026-09-28 Activity revenue implementation checkpoint
+
+Inspected/start clean synchronized master `1f6d513a0c780ff52a8d7b9af6282c3010557d15`; implementation checkpoint `c2d07ac8d4b4e1a404687cbd9d86c533feeb9222`. Fresh fetch/prune showed one local/four hosted branches; GitHub showed zero open PRs. Retained heads and merge bases unchanged. Starting master-only/ref-only counts: readiness 421/2, prompt-integrity 368/1, administration 199/1; unique paths unchanged from the prior register entry. Readiness and prompt-integrity remain PROTECTED_REFERENCE until scheduled readiness/regression or protection review and dedicated prompt/execution-pointer audit, respectively. Administration remains HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. No trigger consumed and no integration, deletion, PR, or disposition action due/performed. Activity repair remains IMPLEMENTATION_INCOMPLETE pending the auto-review-blocked active-survey render check. Counts are source-head observations, not final publication counts.
+
 ## 2026-09-28 Post-Soundings prioritization
 
 Source `35d8dd016e802db42c58185d4699756c13ca0507`, clean synchronized master. One local/four hosted branches; zero open PRs. Prior exact heads/bases/unique paths verified unchanged. Starting divergence readiness 420/2, prompt-integrity 367/1, administration 198/1. Readiness and prompt-integrity remain PROTECTED_REFERENCE until scheduled readiness/regression/protection review and dedicated prompt/execution-pointer audit respectively. Administration remains HOLD_NAMED_CONSUMER until administration/template/governance or explicit Lineage retrospective. No trigger consumed; no branch/PR/disposition action due/performed. Documentation-only selection of Activity Revenue Presentation Truthfulness Repair does not authorize retained-branch integration.
