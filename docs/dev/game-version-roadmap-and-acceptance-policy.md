@@ -1,12 +1,12 @@
 # Game Version Roadmap And Acceptance Policy
 
-Date: 2026-09-06
+Date: 2026-09-28
 
 Status: authoritative player-facing game-version and release-stage roadmap
 
 Canonical current game version: root `GAME_VERSION`
 
-Current value: `0.1.0-prealpha`
+Current value: `0.1.1-prealpha`
 
 Companion development-milestone authority: `docs/design/internal-versioning-and-release-milestone-policy.md`
 
@@ -44,15 +44,15 @@ In particular:
 
 The repository is currently classified as:
 
-- **Game version:** `0.1.0-prealpha`
+- **Game version:** `0.1.1-prealpha`
 - **Development phase:** Early Pre-Alpha / First Playable
 - **Playability posture:** `INTEGRATED_LOOP`
 - **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` is complete with `MILESTONE_ENTRY_ACCEPTED` on 2026-09-11
-- **Deployment posture:** owner-only Sites preview operational
+- **Deployment posture:** historical owner-only Sites preview; this version accepts the local development build only
 
-`0.1.0-prealpha` is accepted as the current game version because the repository already proves an ordinary authoritative player path from character creation/start-state through campaign publication/load, quest acceptance/access, travel/arrival, four survey shifts, persistence/restart, and durable duplicate behavior.
+`0.1.1-prealpha` is accepted by `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md`. The previous `0.1.0-prealpha` path reached four survey shifts with Soundings active and unturned-in. The accepted patch adds authoritative four-tick no-fare return, immediate exact +5g submission, completed history, save/restart without replay, and later travel/save.
 
-That path is real but narrow. Soundings remains active and unturned-in. The current build is therefore a first playable, not a vertical slice and not a broad pre-alpha representation of the intended final game.
+This remains a narrow first playable with `INTEGRATED_LOOP` posture. The known storage, UI diagnostics, harbor recovery, presentation, accessibility and deployment limits remain explicit in the publication decision.
 
 ## 4. Core Game-Version Rule
 
@@ -97,7 +97,7 @@ Use stage labels where they add clarity:
 - `beta` when beta acceptance is reached;
 - `rc.N` for release-candidate builds.
 
-The canonical current value is `0.1.0-prealpha`.
+The canonical current value is `0.1.1-prealpha`.
 
 ## 6. Game-Version Timeline And Acceptance Gates
 
@@ -278,7 +278,7 @@ Before changing `GAME_VERSION`:
 10. issue an explicit `GAME_VERSION_ACCEPTED`, `GAME_VERSION_NOT_READY`, or `GAME_VERSION_BLOCKED` decision;
 11. update `GAME_VERSION` only on `GAME_VERSION_ACCEPTED`.
 
-A documentation-only classification may establish the initial current version when it merely labels already-accepted playable evidence and changes no runtime behavior. That is the basis for the present `0.1.0-prealpha` classification.
+A documentation-only classification may establish the initial current version when it merely labels already-accepted playable evidence and changes no runtime behavior. That is the basis for the initial `0.1.0-prealpha` classification. The subsequent `0.1.1-prealpha` publication applies the complete procedure to independently accepted Soundings closure.
 
 ## 8. Anti-Inflation Guardrails
 
@@ -315,12 +315,9 @@ Current crosswalk:
 
 The current sequence is:
 
-1. keep game version at `0.1.0-prealpha`;
-2. preserve accepted `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` and current development band `DEV-0.7.x`;
-3. on development-milestone acceptance, do **not** change `GAME_VERSION` merely because `DEV-0.7.0` was accepted;
-4. preserve completed `Game 0.1.x Playability Gap Prioritization Decision` (`PLAYABILITY_PRIORITY_SELECTED`);
-5. preserve accepted `Soundings Return, Submission, And Payment Authored-Terms Decision` (`AUTHORED_TERMS_ACCEPTED`);
-6. preserve accepted `Quest Turn-In Completion And Consequence Receipt Owner Contract Decision` (`OWNER_CONTRACT_ACCEPTED`) and execute the installed bounded Soundings durable-completion implementation;
-7. only after implementation and independent acceptance decide whether the playable delta warrants `0.1.1-prealpha` or remains internal development work inside `0.1.0-prealpha`.
+1. preserve accepted Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and development band `DEV-0.7.x`;
+2. preserve accepted Soundings authored terms, owner contract, implementation and independent post-F3 acceptance;
+3. execute **Post-Soundings Playability Gap Prioritization Decision** to select the next smallest coherent player-visible package from current evidence;
+4. require a separate implementation and acceptance route before any further game-version decision.
 
 `0.2.0-prealpha` remains reserved for the accepted vertical-slice gate above.

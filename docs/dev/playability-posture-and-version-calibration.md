@@ -1,10 +1,10 @@
 # Playability Posture And Version Calibration
 
-Date: 2026-09-06
+Date: 2026-09-28
 
 Status: durable player-facing playability coordination authority
 
-Current game version: `0.1.0-prealpha`
+Current game version: `0.1.1-prealpha`
 
 Canonical game-version source: root `GAME_VERSION`
 
@@ -76,15 +76,15 @@ This is the posture required for Game `1.0.0`.
 
 Current Lineage: Reforged state:
 
-- **Game version:** `0.1.0-prealpha`
+- **Game version:** `0.1.1-prealpha`
 - **Game phase:** Early Pre-Alpha / First Playable
 - **Playability posture:** `INTEGRATED_LOOP`
 - **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` complete and accepted on 2026-09-11
-- **Deployment posture:** owner-only Sites preview operational
+- **Deployment posture:** historical owner-only Sites preview; no hosted acceptance for this patch
 
 The playability posture is already `INTEGRATED_LOOP` because the representative ordinary loop was independently accepted before the now-completed development-milestone publication package.
 
-Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED` on 2026-09-14, and the selected Soundings authored terms then completed with `AUTHORED_TERMS_ACCEPTED`. The owner-contract decision subsequently returned `OWNER_CONTRACT_ACCEPTED`; the installed next route is `Soundings Return, Submission, Payment, And Durable Completion Implementation`.
+Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED` on 2026-09-14, and the selected Soundings authored terms then completed with `AUTHORED_TERMS_ACCEPTED`. The owner-contract decision subsequently returned `OWNER_CONTRACT_ACCEPTED`; Soundings subsequently passed independent post-F3 acceptance. Game `0.1.1-prealpha` is now accepted by `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md`. The next route is `Post-Soundings Playability Gap Prioritization Decision`.
 
 ## 5. Current Accepted Player Path
 
@@ -99,7 +99,7 @@ character creation/start-state
 → restart/save restoration
 → durable duplicate behavior.
 
-The path intentionally ends with Soundings active and unturned-in.
+The previous Game `0.1.0-prealpha` path ended active and unturned-in; the accepted patch closes that lifecycle.
 
 That is sufficient for First Playable / `INTEGRATED_LOOP`, but insufficient for `VERTICAL_SLICE`.
 
@@ -107,7 +107,6 @@ That is sufficient for First Playable / `INTEGRATED_LOOP`, but insufficient for 
 
 Material gaps separating the current game from a coherent vertical slice include:
 
-- Soundings fieldwork does not yet close through authoritative turn-in/payout/reward delivery;
 - player inventory remains a fungible stack model without durable individualized item identity, provenance, condition, quality, composition, or repair history;
 - crafting remains based on fixed authored transformations rather than a richer runtime material-selection/substitution loop;
 - generated-person/NPC persistence and promotion ownership remain absent;
@@ -116,7 +115,7 @@ Material gaps separating the current game from a coherent vertical slice include
 - representative content breadth remains intentionally narrow;
 - the broad UI TypeScript diagnostic baseline remains technical debt even though direct Vite/Sites builds are executable.
 
-These gaps are expected for `0.1.0-prealpha`.
+These gaps are expected for `0.1.1-prealpha`.
 
 ## 7. Playability-First Routing Rule
 
@@ -134,7 +133,7 @@ That decision should:
 6. decide only after implementation/acceptance whether the resulting build warrants `0.1.1-prealpha`;
 7. keep `0.2.0-prealpha` reserved for the vertical-slice gate.
 
-A narrow authoritative Soundings turn-in/reward lane remains a strong candidate because it closes the exact representative quest loop, but it is not pre-assigned as the next game version.
+That Soundings package is now independently accepted and published as Game `0.1.1-prealpha`. Reapply the prioritization method to the remaining gaps; no next capability or version is pre-assigned.
 
 ## 8. Reporting Rule
 
