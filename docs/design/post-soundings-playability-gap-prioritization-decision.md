@@ -1,6 +1,10 @@
 # Post-Soundings Playability Gap Prioritization Decision
 
-Date: 2026-09-28. Status: **PLAYABILITY_PRIORITY_SELECTED**.
+Date: 2026-09-28. Status: **PLAYABILITY_PRIORITY_SELECTED**; selected Activity presentation repair subsequently verified.
+
+## Selected repair closure
+
+`Activity Revenue Presentation Truthfulness Repair` is complete at implementation commit `c2d07ac8d4b4e1a404687cbd9d86c533feeb9222`. The ordinary creator, accepted contract, travel, and active-survey Activity render were verified in an isolated local QA campaign under explicit user authorization. The metric reads `Not tracked` with a plain explanation while Soundings action readiness and the other Activity metrics remain visible. The focused repair record is `docs/dev/activity-revenue-presentation-truthfulness-repair-2026-09-28.md`. This closure does not consume any reopening trigger in the ranked table below or authorize another candidate's implementation.
 
 Repository: `vagabond1215/Lineage_Reforged` only. Inspected clean synchronized master `35d8dd016e802db42c58185d4699756c13ca0507`. Label class unversioned; parent not applicable; development milestone impact `none`; game-version impact `none`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, band `DEV-0.7.x` remain unchanged.
 

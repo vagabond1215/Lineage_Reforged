@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-28 Activity presentation repair closure
+
+**PRESENTATION_REPAIR_VERIFIED**: Activity Revenue Presentation Truthfulness Repair is complete at code commit `c2d07ac8d4b4e1a404687cbd9d86c533feeb9222`; the focused record contains the authorized ordinary active-survey browser proof. No active executable successor is installed. Remaining ranked gaps retain the explicit reopening triggers in `docs/design/post-soundings-playability-gap-prioritization-decision.md`. Game 0.1.1-prealpha / INTEGRATED_LOOP / DEV-0.7.0 unchanged. This entry supersedes the older active-route wording below without rewriting completed chronology.
+
 ## 2026-09-28 Current prioritization update
 
 **PLAYABILITY_PRIORITY_SELECTED**: Post-Soundings prioritization is complete. Active successor: **Activity Revenue Presentation Truthfulness Repair**. Controlling decision: `docs/design/post-soundings-playability-gap-prioritization-decision.md`. Correct only fabricated Daily Revenue presentation; remaining ranked gaps retain explicit reopening triggers. Game 0.1.1-prealpha / INTEGRATED_LOOP / DEV-0.7.0 unchanged. This current update supersedes older active-route wording below; completed chronology remains historical.
@@ -58,7 +62,7 @@ Repository workflow authority also includes `AGENTS.md` and `docs/dev/codex-fail
 - latest repair investigation: `Soundings Retained Source Provenance And Before-State Binding Repair`, `PROVENANCE_CONTRACT_REQUIRED`; no production repair;
 - latest accepted technical decision: `Soundings F3 Survey Admission Retention Sufficiency Decision`, `RETENTION_SUFFICIENT_BOUNDED_REPAIR_AUTHORIZED`; the original accepted-admission provenance contract remains binding;
 - latest version calibration: `Soundings Playable-Build Version Calibration Decision`, `GAME_VERSION_CANDIDATE_JUSTIFIED` for `0.1.1-prealpha`; subsequently published as accepted Game `0.1.1-prealpha`;
-- active route: `Activity Revenue Presentation Truthfulness Repair`;
+- active route: none installed after `Activity Revenue Presentation Truthfulness Repair` completed;
 - failure-pattern guardrail register: active durable workflow authority;
 - `DEV-0.7.0`: `MILESTONE_ENTRY_ACCEPTED`; Game `0.1.1-prealpha` accepted separately / `INTEGRATED_LOOP` unchanged;
 - accepted BOM repair: `Version 0.6.6.1` at `66f12fd6f649f8f218f7f49fc721a8fe545a7a01`;
