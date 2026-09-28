@@ -1,31 +1,25 @@
-# Post-Soundings Playability Gap Prioritization Decision
+# Activity Revenue Presentation Truthfulness Repair
 
 <!-- repo-scope-guard -->
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
-Date: 2026-09-28. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Label class: unversioned; parent not applicable; development milestone impact `none`. Game-version impact `none`.
+Date: 2026-09-28. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Unversioned; parent not applicable; development milestone impact `none`; game-version impact `none`.
 
-## Objective
+## Objective and authority
 
-Select the next smallest coherent player-visible package after accepted Soundings completion. This is a bounded documentation decision, not implementation or a new game-version gate.
+Implement only the selected Activity Daily Revenue presentation repair in `docs/design/post-soundings-playability-gap-prioritization-decision.md`. Read that complete decision, current output/handoff, UI information-architecture boundary and applicable repository workflow/guardrails before editing. Freshly fetch/prune and inspect synchronized master, worktree, branches/open PRs and material authority delta. Preserve unrelated edits. Source of selection: `35d8dd016e802db42c58185d4699756c13ca0507`.
 
-## Orientation and authority
+## Bounded implementation
 
-Freshly inspect synchronized master, worktree, branches/open PRs and current prompt/output/handoff. Read repository workflow, platform/tool policy, branch policy/register, guardrails, historical/deferred register, planning reconciliation, game-version policy, playability calibration, original `docs/design/game-0.1.x-playability-gap-prioritization-decision.md`, the Soundings post-F3 independent audit and `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md`.
+The live view model labels literal 842 as Daily Revenue and misleadingly claims session-record provenance. Replace this with an explicit unavailable/not-tracked state and plain player-facing explanation. Do not substitute zero, wallet balance, earned Soundings payment or invented income calculations. Keep other metrics and controls unchanged. Start in `apps/rpg-ui/src/runtime/uiViewModel.ts`; change ActivityPanel only if necessary for existing text rendering.
 
-Accepted gameplay `7c8c980d01892b0f673afc5a5940aec33ad2d7a2`; independent audit publication `d63577396baad2b4eae90280e53c6c043d419398`; inspected source `3d8f456d4595909098d9cbcc992e82577133b332`; version-bearing publication build `bd4a6c434426ae958b108e6ac54d2da2ba186baa`. Production files are identical across these heads; publication changes only GAME_VERSION and documentation.
+No new dependency, generic framework, revenue owner, engine/content/schema/save/world/package/deployment change; no clock, diagnostics, navigation, inventory, combat, harbor recovery or storage repair. Do not change GAME_VERSION, development milestone or playability. Stop and install a bounded prerequisite if a necessary change crosses this boundary.
 
-## Decision scope
+## Validation
 
-Use accepted ordinary-path evidence to identify remaining stops, placeholders and missing meaningful choices. Rank a bounded set of candidate packages by player-facing payoff, dependency closure, architectural risk, size and regression burden. Reconcile earlier ranking against completed Soundings; include measured storage limits, UI truthfulness and harbor recovery alongside relevant existing gameplay candidates without assuming they must win. Read focused authorities and current callers only as needed to resolve candidate feasibility. Distinguish observed defects, authored intent and unaccepted proposals.
+Follow the focused decision acceptance list: source-to-renderer verification; ordinary creator/Activity survey context with no prerequisite injection; truthful unavailable state with preserved action readiness and other metrics; narrow/wide readability and accessible text. Save rendered evidence without touching user saves. Run app-local Vite build and Node configuration typecheck; characterize broad UI typecheck against 137 known diagnostics without claiming green. Review complete diff and whitespace. Do not add a test mirroring literal text or rerun the full Soundings suite gratuitously; run relevant tests if behavior actually changes. Do not claim comprehensive accessibility or new gameplay acceptance.
 
-Select one smallest coherent package, its explicit exclusions, prerequisites, ordinary caller path, acceptance checks, owner and next route. If material product intent cannot be settled by repository authority, record the concrete question and decision boundary instead of inventing canon. A contract/authored-terms prerequisite can be the selected next route. Do not turn prioritization into broad implementation or rerun accepted Soundings tests without material contradictory evidence.
+## Completion
 
-Retain narrow storage headroom (peak 5,076,206 / 5,242,880 UTF-16 bytes), 137 broad UI diagnostics, ordinary Starfall harbor defeat/recovery limitation, presentation debt, no comprehensive accessibility acceptance and no hosted/deployment acceptance. No automatic `0.2.0-prealpha`, `VERTICAL_SLICE`, `DEV-0.7.1` or `DEV-0.8.x`.
-
-## Mutation and completion
-
-Documentation only. Do not change gameplay, tests, content, schemas, dependencies, saves/world/package/deployment identities, GAME_VERSION, development milestone or playability posture. Preserve unrelated edits and protected/held refs unless their named trigger is explicitly consumed.
-
-Record a focused decision with ranking, evidence, selection or precise blocker and validation boundary. Refresh output/handoff/prompt, material planning/history pointers and branch disposition. Verify complete-file writes, links and scope; commit/push and read back hosted authority. Record exact source/publication identities, evidence reuse, limits and branch/PR actions. Keep platform/tool recommendations outside the durable prompt body.
+Record implementation and verification in a focused repair record. Update current output/handoff/prompt, material planning/history pointers and branch register. Preserve retained-branch triggers. Commit, push, fetch and verify hosted authority; distinguish exact source/implementation/publication heads and report any missing validation as incomplete. Select only the smallest evidence-supported successor; broader candidate rows remain deferred, not automatically authorized.

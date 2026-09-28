@@ -1,5 +1,10 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-28 Current prioritization update
+
+**PLAYABILITY_PRIORITY_SELECTED**: Post-Soundings prioritization is complete. Active successor: **Activity Revenue Presentation Truthfulness Repair**. Controlling decision: `docs/design/post-soundings-playability-gap-prioritization-decision.md`. Correct only fabricated Daily Revenue presentation; remaining ranked gaps retain explicit reopening triggers. Game 0.1.1-prealpha / INTEGRATED_LOOP / DEV-0.7.0 unchanged. This current update supersedes older active-route wording below; completed chronology remains historical.
+
+
 Date: 2026-09-28
 Status: durable coordination authority; documentation only
 
@@ -80,7 +85,7 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 | `Soundings Durable Completion Post-F3 Independent Acceptance Audit` | Complete; `SOUNDINGS_DURABLE_COMPLETION_ACCEPTED` | A/B1/B2/C/D pass at `7c8c980d01892b0f673afc5a5940aec33ad2d7a2`; game version unchanged | `docs/design/soundings-durable-completion-post-f3-independent-acceptance-audit.md` |
 | `Soundings Playable-Build Version Calibration Decision` | Complete; `GAME_VERSION_CANDIDATE_JUSTIFIED` | `0.1.1-prealpha` is the smallest patch candidate; canonical Game remains `0.1.0-prealpha`; no vertical-slice inference | `docs/design/soundings-playable-build-version-calibration-decision.md` |
 | `Game 0.1.1-prealpha Publication Acceptance` | Complete; `GAME_VERSION_ACCEPTED` | Published `0.1.1-prealpha`; development and playability unchanged | `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md` |
-| `Post-Soundings Playability Gap Prioritization Decision` | Active documentation decision | Rank remaining gaps and select a bounded package or explicit prerequisite | `docs/dev/current-codex-prompt.md` |
+| `Post-Soundings Playability Gap Prioritization Decision` | Complete; PLAYABILITY_PRIORITY_SELECTED | Rank remaining gaps and select a bounded package or explicit prerequisite | `docs/dev/current-codex-prompt.md` |
 | `Repository Roadmap, Pipeline, Backlog, And Active-Prompt Reconciliation Audit` | Complete; aligned | `AUDIT_ALIGNED_CURRENT_ROUTE`; established the reconciled `0.6.9.7` route that is now implemented, while lower-precedence live headers remain reconciled. | `docs/dev/repository-roadmap-pipeline-backlog-active-prompt-reconciliation-audit-2026-08-02.md` |
 | `Normal Defeat Recovery Continuity And Destination Provenance Contract Decision` | Complete; accepted with narrow later lineage amendment | Its receipt/destination contract remains accepted; the later lineage decision supersedes only its no-ledger-extension conclusion. | `docs/design/normal-defeat-recovery-continuity-and-destination-provenance-contract-decision.md` |
 | `Normal Defeat Recovery Completion Lineage Repair Decision` | Complete; accepted | `DECISION_ACCEPTED_REPAIR_AUTHORIZED`; superseded only the earlier assumption that receipt continuity alone proved arbitrary-depth ancestry. | `docs/design/normal-defeat-recovery-completion-lineage-repair-decision.md` |
