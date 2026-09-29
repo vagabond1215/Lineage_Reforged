@@ -2018,6 +2018,13 @@ export function publishSave(
       pendingRecovery
     );
     const envelope = readRecoveryEnvelope(recovered);
+    if (recovered.consumerPlans.length === 0) {
+      const recoveryKey = getPublicationRecoveryKey(accountId, campaignId);
+      storage.removeItem(recoveryKey);
+      if (storage.getItem(recoveryKey) !== null) {
+        throw new Error("Completed campaign publication recovery could not be cleared.");
+      }
+    }
     const slot = SAVE_SLOT_ORDER.find(
       (entry) => entry.id === slotId
     ) ?? {

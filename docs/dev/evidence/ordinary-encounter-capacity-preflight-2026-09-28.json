@@ -1,0 +1,873 @@
+{
+  "limitBytes": 5242880,
+  "sourceHead": "fead51012561ca584359fcadf51d801b196ac21d",
+  "rows": [
+    {
+      "label": "prepared",
+      "tick": 0,
+      "snapshotBytes": 26128,
+      "storedBytes": 33536,
+      "headroom": 5209344,
+      "peakAttemptedBytes": 33536,
+      "byKind": {
+        "account": 2608,
+        "attempt": 30928
+      }
+    },
+    {
+      "label": "creator_saved",
+      "tick": 0,
+      "snapshotBytes": 26128,
+      "storedBytes": 97788,
+      "headroom": 5145092,
+      "peakAttemptedBytes": 167170,
+      "byKind": {
+        "account": 2608,
+        "candidate": 31406,
+        "artifact": 31400,
+        "control": 1060,
+        "slot": 31314
+      }
+    },
+    {
+      "label": "action_1_saved",
+      "tick": 1,
+      "snapshotBytes": 28058,
+      "storedBytes": 165614,
+      "headroom": 5077266,
+      "peakAttemptedBytes": 205676,
+      "byKind": {
+        "account": 2608,
+        "candidate": 64426,
+        "artifact": 64414,
+        "control": 1238,
+        "slot": 32928
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_2_saved",
+      "tick": 2,
+      "snapshotBytes": 30810,
+      "storedBytes": 240660,
+      "headroom": 5002220,
+      "peakAttemptedBytes": 284230,
+      "byKind": {
+        "account": 2608,
+        "candidate": 100450,
+        "artifact": 100432,
+        "control": 1238,
+        "slot": 35932
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_3_saved",
+      "tick": 3,
+      "snapshotBytes": 31638,
+      "storedBytes": 315546,
+      "headroom": 4927334,
+      "peakAttemptedBytes": 360304,
+      "byKind": {
+        "account": 2608,
+        "candidate": 137422,
+        "artifact": 137398,
+        "control": 1238,
+        "slot": 36880
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_4_saved",
+      "tick": 4,
+      "snapshotBytes": 30492,
+      "storedBytes": 386010,
+      "headroom": 4856870,
+      "peakAttemptedBytes": 430746,
+      "byKind": {
+        "account": 2608,
+        "candidate": 173236,
+        "artifact": 173206,
+        "control": 1238,
+        "slot": 35722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_5_saved",
+      "tick": 5,
+      "snapshotBytes": 33252,
+      "storedBytes": 466668,
+      "headroom": 4776212,
+      "peakAttemptedBytes": 513760,
+      "byKind": {
+        "account": 2608,
+        "candidate": 212062,
+        "artifact": 212026,
+        "control": 1238,
+        "slot": 38734
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_6_saved",
+      "tick": 6,
+      "snapshotBytes": 32104,
+      "storedBytes": 540834,
+      "headroom": 4702046,
+      "peakAttemptedBytes": 587904,
+      "byKind": {
+        "account": 2608,
+        "candidate": 249728,
+        "artifact": 249686,
+        "control": 1238,
+        "slot": 37574
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_7_saved",
+      "tick": 7,
+      "snapshotBytes": 32896,
+      "storedBytes": 618896,
+      "headroom": 4623984,
+      "peakAttemptedBytes": 665956,
+      "byKind": {
+        "account": 2608,
+        "candidate": 288306,
+        "artifact": 288258,
+        "control": 1238,
+        "slot": 38486
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_8_saved",
+      "tick": 8,
+      "snapshotBytes": 33736,
+      "storedBytes": 698944,
+      "headroom": 4543936,
+      "peakAttemptedBytes": 747218,
+      "byKind": {
+        "account": 2608,
+        "candidate": 327850,
+        "artifact": 327796,
+        "control": 1238,
+        "slot": 39452
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_9_saved",
+      "tick": 9,
+      "snapshotBytes": 36472,
+      "storedBytes": 786998,
+      "headroom": 4455882,
+      "peakAttemptedBytes": 838768,
+      "byKind": {
+        "account": 2608,
+        "candidate": 370384,
+        "artifact": 370324,
+        "control": 1240,
+        "slot": 42442
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_10_saved",
+      "tick": 10,
+      "snapshotBytes": 35338,
+      "storedBytes": 868622,
+      "headroom": 4374258,
+      "peakAttemptedBytes": 920370,
+      "byKind": {
+        "account": 2608,
+        "candidate": 411772,
+        "artifact": 411706,
+        "control": 1240,
+        "slot": 41296
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_11_saved",
+      "tick": 11,
+      "snapshotBytes": 36168,
+      "storedBytes": 954242,
+      "headroom": 4288638,
+      "peakAttemptedBytes": 1006032,
+      "byKind": {
+        "account": 2608,
+        "candidate": 454110,
+        "artifact": 454038,
+        "control": 1240,
+        "slot": 42246
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_12_saved",
+      "tick": 12,
+      "snapshotBytes": 36962,
+      "storedBytes": 1041654,
+      "headroom": 4201226,
+      "peakAttemptedBytes": 1094598,
+      "byKind": {
+        "account": 2608,
+        "candidate": 497362,
+        "artifact": 497284,
+        "control": 1240,
+        "slot": 43160
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_13_saved",
+      "tick": 13,
+      "snapshotBytes": 39708,
+      "storedBytes": 1137140,
+      "headroom": 4105740,
+      "peakAttemptedBytes": 1193584,
+      "byKind": {
+        "account": 2608,
+        "candidate": 543610,
+        "artifact": 543526,
+        "control": 1240,
+        "slot": 46156
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_14_saved",
+      "tick": 14,
+      "snapshotBytes": 38586,
+      "storedBytes": 1226228,
+      "headroom": 4016652,
+      "peakAttemptedBytes": 1282650,
+      "byKind": {
+        "account": 2608,
+        "candidate": 588724,
+        "artifact": 588634,
+        "control": 1240,
+        "slot": 45022
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_15_saved",
+      "tick": 15,
+      "snapshotBytes": 39584,
+      "storedBytes": 1319828,
+      "headroom": 3923052,
+      "peakAttemptedBytes": 1376496,
+      "byKind": {
+        "account": 2608,
+        "candidate": 634964,
+        "artifact": 634868,
+        "control": 1240,
+        "slot": 46148
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_16_saved",
+      "tick": 16,
+      "snapshotBytes": 42322,
+      "storedBytes": 1421272,
+      "headroom": 3821608,
+      "peakAttemptedBytes": 1481434,
+      "byKind": {
+        "account": 2608,
+        "candidate": 684194,
+        "artifact": 684092,
+        "control": 1240,
+        "slot": 49138
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_17_saved",
+      "tick": 17,
+      "snapshotBytes": 42716,
+      "storedBytes": 1521094,
+      "headroom": 3721786,
+      "peakAttemptedBytes": 1581832,
+      "byKind": {
+        "account": 2608,
+        "candidate": 733880,
+        "artifact": 733772,
+        "control": 1240,
+        "slot": 49594
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_18_saved",
+      "tick": 18,
+      "snapshotBytes": 41582,
+      "storedBytes": 1617016,
+      "headroom": 3625864,
+      "peakAttemptedBytes": 1677732,
+      "byKind": {
+        "account": 2608,
+        "candidate": 782418,
+        "artifact": 782304,
+        "control": 1240,
+        "slot": 48446
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_19_saved",
+      "tick": 19,
+      "snapshotBytes": 44306,
+      "storedBytes": 1723014,
+      "headroom": 3519866,
+      "peakAttemptedBytes": 1786060,
+      "byKind": {
+        "account": 2608,
+        "candidate": 833932,
+        "artifact": 833812,
+        "control": 1240,
+        "slot": 51422
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_20_saved",
+      "tick": 20,
+      "snapshotBytes": 43122,
+      "storedBytes": 1822448,
+      "headroom": 3420432,
+      "peakAttemptedBytes": 1885472,
+      "byKind": {
+        "account": 2608,
+        "candidate": 884250,
+        "artifact": 884124,
+        "control": 1240,
+        "slot": 50226
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_21_saved",
+      "tick": 21,
+      "snapshotBytes": 43930,
+      "storedBytes": 1925862,
+      "headroom": 3317018,
+      "peakAttemptedBytes": 1988856,
+      "byKind": {
+        "account": 2608,
+        "candidate": 935496,
+        "artifact": 935364,
+        "control": 1240,
+        "slot": 51154
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_22_saved",
+      "tick": 22,
+      "snapshotBytes": 46666,
+      "storedBytes": 2037312,
+      "headroom": 3205568,
+      "peakAttemptedBytes": 2103798,
+      "byKind": {
+        "account": 2608,
+        "candidate": 989730,
+        "artifact": 989592,
+        "control": 1240,
+        "slot": 54142
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_23_saved",
+      "tick": 23,
+      "snapshotBytes": 47074,
+      "storedBytes": 2147184,
+      "headroom": 3095696,
+      "peakAttemptedBytes": 2214260,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1044434,
+        "artifact": 1044290,
+        "control": 1240,
+        "slot": 54612
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_24_saved",
+      "tick": 24,
+      "snapshotBytes": 45796,
+      "storedBytes": 2252560,
+      "headroom": 2990320,
+      "peakAttemptedBytes": 2319510,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1097796,
+        "artifact": 1097646,
+        "control": 1240,
+        "slot": 53270
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_25_saved",
+      "tick": 25,
+      "snapshotBytes": 48544,
+      "storedBytes": 2368272,
+      "headroom": 2874608,
+      "peakAttemptedBytes": 2437380,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1154156,
+        "artifact": 1154000,
+        "control": 1240,
+        "slot": 56268
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_26_saved",
+      "tick": 26,
+      "snapshotBytes": 46666,
+      "storedBytes": 2476234,
+      "headroom": 2766646,
+      "peakAttemptedBytes": 2545200,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1208932,
+        "artifact": 1208770,
+        "control": 1240,
+        "slot": 54684
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_27_saved",
+      "tick": 27,
+      "snapshotBytes": 46672,
+      "storedBytes": 2585894,
+      "headroom": 2656986,
+      "peakAttemptedBytes": 2653312,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1263746,
+        "artifact": 1263578,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_28_saved",
+      "tick": 28,
+      "snapshotBytes": 46670,
+      "storedBytes": 2695504,
+      "headroom": 2547376,
+      "peakAttemptedBytes": 2762924,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1318556,
+        "artifact": 1318382,
+        "control": 1240,
+        "slot": 54718
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_29_saved",
+      "tick": 29,
+      "snapshotBytes": 46684,
+      "storedBytes": 2805160,
+      "headroom": 2437720,
+      "peakAttemptedBytes": 2872588,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1373380,
+        "artifact": 1373200,
+        "control": 1240,
+        "slot": 54732
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_30_saved",
+      "tick": 30,
+      "snapshotBytes": 46684,
+      "storedBytes": 2914802,
+      "headroom": 2328078,
+      "peakAttemptedBytes": 2982232,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1428204,
+        "artifact": 1428018,
+        "control": 1240,
+        "slot": 54732
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_31_saved",
+      "tick": 31,
+      "snapshotBytes": 46688,
+      "storedBytes": 3024468,
+      "headroom": 2218412,
+      "peakAttemptedBytes": 3091904,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1483036,
+        "artifact": 1482844,
+        "control": 1240,
+        "slot": 54740
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_32_saved",
+      "tick": 32,
+      "snapshotBytes": 46672,
+      "storedBytes": 3134078,
+      "headroom": 2108802,
+      "peakAttemptedBytes": 3201516,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1537852,
+        "artifact": 1537654,
+        "control": 1240,
+        "slot": 54724
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_33_saved",
+      "tick": 33,
+      "snapshotBytes": 48616,
+      "storedBytes": 3249932,
+      "headroom": 1992948,
+      "peakAttemptedBytes": 3319692,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1594744,
+        "artifact": 1594540,
+        "control": 1240,
+        "slot": 56800
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_34_saved",
+      "tick": 34,
+      "snapshotBytes": 48614,
+      "storedBytes": 3363704,
+      "headroom": 1879176,
+      "peakAttemptedBytes": 3433466,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1651634,
+        "artifact": 1651424,
+        "control": 1240,
+        "slot": 56798
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_35_saved",
+      "tick": 35,
+      "snapshotBytes": 48612,
+      "storedBytes": 3477472,
+      "headroom": 1765408,
+      "peakAttemptedBytes": 3547232,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1708522,
+        "artifact": 1708306,
+        "control": 1240,
+        "slot": 56796
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_36_saved",
+      "tick": 36,
+      "snapshotBytes": 46670,
+      "storedBytes": 3585020,
+      "headroom": 1657860,
+      "peakAttemptedBytes": 3654514,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1763336,
+        "artifact": 1763114,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_37_saved",
+      "tick": 37,
+      "snapshotBytes": 46670,
+      "storedBytes": 3694642,
+      "headroom": 1548238,
+      "peakAttemptedBytes": 3762062,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1818150,
+        "artifact": 1817922,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_38_saved",
+      "tick": 38,
+      "snapshotBytes": 48616,
+      "storedBytes": 3810498,
+      "headroom": 1432382,
+      "peakAttemptedBytes": 3880258,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1875042,
+        "artifact": 1874808,
+        "control": 1240,
+        "slot": 56800
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_39_saved",
+      "tick": 39,
+      "snapshotBytes": 46670,
+      "storedBytes": 3918042,
+      "headroom": 1324838,
+      "peakAttemptedBytes": 3987540,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1929856,
+        "artifact": 1929616,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_40_saved",
+      "tick": 40,
+      "snapshotBytes": 48612,
+      "storedBytes": 4033886,
+      "headroom": 1208994,
+      "peakAttemptedBytes": 4103642,
+      "byKind": {
+        "account": 2608,
+        "candidate": 1986744,
+        "artifact": 1986498,
+        "control": 1240,
+        "slot": 56796
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_41_saved",
+      "tick": 41,
+      "snapshotBytes": 46670,
+      "storedBytes": 4141434,
+      "headroom": 1101446,
+      "peakAttemptedBytes": 4210928,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2041558,
+        "artifact": 2041306,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_42_saved",
+      "tick": 42,
+      "snapshotBytes": 48614,
+      "storedBytes": 4257284,
+      "headroom": 985596,
+      "peakAttemptedBytes": 4327042,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2098448,
+        "artifact": 2098190,
+        "control": 1240,
+        "slot": 56798
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_43_saved",
+      "tick": 43,
+      "snapshotBytes": 46670,
+      "storedBytes": 4364830,
+      "headroom": 878050,
+      "peakAttemptedBytes": 4434326,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2153262,
+        "artifact": 2152998,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_44_saved",
+      "tick": 44,
+      "snapshotBytes": 46672,
+      "storedBytes": 4474458,
+      "headroom": 768422,
+      "peakAttemptedBytes": 4541878,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2208078,
+        "artifact": 2207808,
+        "control": 1240,
+        "slot": 54724
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_45_saved",
+      "tick": 45,
+      "snapshotBytes": 48612,
+      "storedBytes": 4590300,
+      "headroom": 652580,
+      "peakAttemptedBytes": 4660056,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2264966,
+        "artifact": 2264690,
+        "control": 1240,
+        "slot": 56796
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_46_saved",
+      "tick": 46,
+      "snapshotBytes": 46670,
+      "storedBytes": 4697848,
+      "headroom": 545032,
+      "peakAttemptedBytes": 4767342,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2319780,
+        "artifact": 2319498,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_47_saved",
+      "tick": 47,
+      "snapshotBytes": 46670,
+      "storedBytes": 4807470,
+      "headroom": 435410,
+      "peakAttemptedBytes": 4874890,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2374594,
+        "artifact": 2374306,
+        "control": 1240,
+        "slot": 54722
+      },
+      "outcome": "no_eligible_encounter"
+    },
+    {
+      "label": "action_48_saved",
+      "tick": 48,
+      "snapshotBytes": 48610,
+      "storedBytes": 4923308,
+      "headroom": 319572,
+      "peakAttemptedBytes": 4993062,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2431480,
+        "artifact": 2431186,
+        "control": 1240,
+        "slot": 56794
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_49_saved",
+      "tick": 49,
+      "snapshotBytes": 48610,
+      "storedBytes": 5037074,
+      "headroom": 205806,
+      "peakAttemptedBytes": 5106830,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2488366,
+        "artifact": 2488066,
+        "control": 1240,
+        "slot": 56794
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_50_saved",
+      "tick": 50,
+      "snapshotBytes": 48606,
+      "storedBytes": 5150828,
+      "headroom": 92052,
+      "peakAttemptedBytes": 5220584,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2545248,
+        "artifact": 2544942,
+        "control": 1240,
+        "slot": 56790
+      },
+      "outcome": "candidate_pending"
+    },
+    {
+      "label": "action_51_quota",
+      "tick": 51,
+      "snapshotBytes": 48612,
+      "storedBytes": 5207716,
+      "headroom": 35164,
+      "peakAttemptedBytes": 5277474,
+      "byKind": {
+        "account": 2608,
+        "candidate": 2602136,
+        "artifact": 2544942,
+        "control": 1240,
+        "slot": 56790
+      },
+      "outcome": "candidate_pending",
+      "failedWrite": {
+        "key": "cataclysm-rpg-ui.saves.v7.account.account.ordinary_capacity_isolated_qa.campaign.campaign.894345a6-b2f9-4f30-a338-9b992eb06bdf.publication-recovery",
+        "proposedBytes": 5277474,
+        "kind": "quota"
+      },
+      "retainedHeadRevision": 51,
+      "candidateCount": 22,
+      "noCandidateCount": 29,
+      "retry": {
+        "kind": "QuotaExceededError",
+        "bytesBefore": 5207716,
+        "bytesAfter": 5207716
+      }
+    }
+  ],
+  "postHeadRetry": {
+    "failedAt": "slot_address_after_head",
+    "pendingRevision": 2,
+    "bytesBeforeRetry": 210542,
+    "bytesAfterRetry": 171836,
+    "artifactCountBefore": 2,
+    "artifactCountAfter": 2,
+    "samePublication": true,
+    "recoveryAfterRetry": null,
+    "nextSaveTick": 2
+  }
+}
