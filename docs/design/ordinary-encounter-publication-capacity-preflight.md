@@ -1,0 +1,40 @@
+# Ordinary Encounter Publication Capacity Preflight
+
+Date: 2026-09-28. Repository: `vagabond1215/Lineage_Reforged` only. Run: `DEV-0.7.1 Slice C - Repeatable Encounter Capacity Preflight`, an internal slice of the planned current-band primary. Inspected clean synchronized source `fead51012561ca584359fcadf51d801b196ac21d`; measurement and retry-repair checkpoint `bb24c483d7d683466d28dcace57fc1e6a723de0a`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. Development milestone impact `supports_current_band`; game-version impact `none`.
+
+## Decision
+
+**CAPACITY_GATE_FAILED; COMBAT_ADMISSION_HELD.** One actual creator-started Stonevein campaign can repeat the World nearby-exploration action and save both candidate and no-candidate results, but its local-storage publication footprint reaches the 5 MiB test ceiling after about 50 save cycles. The selected world candidate is a single replaceable observation; repeated immutable candidate and artifact envelopes are the dominant retained cost. No combat admission, command, success, defeat, recovery, reward or new encounter history was added or measured. The current result cannot authorize a repeatable combat loop. The next route is the unversioned **Ordinary Campaign Publication Capacity And Retention Contract Decision**, which must settle safe bounded retention before an implementation repair is packaged.
+
+## Method and exact captured run
+
+`tests/probes/ordinary-encounter-capacity-preflight.mjs` uses production `createNewGameSnapshot`, `prepareNewCampaignAttempt`, `publishSave`, `completeNewCampaignAttempt`, `loadSaveWithAuthority`, `advanceNearbyExplorationCaller` and `saveAccountProfile` against an isolated in-memory Storage implementation with a 5,242,880 UTF-16 byte limit. The storage counts every key and value after each write, checks the proposed whole-store size before mutation, records transient attempted peaks, and throws `QuotaExceededError` when a write would exceed the limit. It never reads or changes a user's browser account or save. The archived single-run output is `docs/dev/evidence/ordinary-encounter-capacity-preflight-2026-09-28.json`; generated campaign IDs and selection outcomes can vary on replay, so the captured numbers below belong to that output and checkpoint.
+
+| Step | Serialized snapshot | Retained store | Headroom | Peak attempted store |
+| --- | ---: | ---: | ---: | ---: |
+| Creator published | 26,128 | 97,788 | 5,145,092 | 167,170 |
+| Action 49 saved | 48,610 | 5,037,074 | 205,806 | 5,106,830 |
+| Action 50 saved | 48,606 | 5,150,828 | 92,052 | 5,220,584 |
+| Action 51 quota failure | 48,612 | 5,207,716 | 35,164 | 5,277,474 |
+
+All figures are UTF-16 bytes under the instrumented 5,242,880-byte budget. The action-51 recovery-record write proposed 5,277,474 bytes, 34,594 above the ceiling. It was rejected; the prior verified head remained revision 51, representing the creator publication plus 50 saved actions. The pre-head candidate write had already succeeded, so retained store rose to 5,207,716 despite the rejected publication. Retrying the exact action snapshot also threw `QuotaExceededError`; retained bytes and head revision stayed unchanged. In this captured run 22 candidate draws and 29 no-candidate draws were accepted by the campaign caller, with no generic pending combat queue or active encounter.
+
+At action 50, retained candidate envelopes used 2,545,248 bytes and immutable artifacts used 2,544,942; the current slot address used 56,790, account profile 2,608, and campaign control 1,240. Retained store grew by 5,053,040 bytes over 50 saved actions, about 101,061 bytes per save on this run. A one-snapshot size of 48,606 bytes understated the account-wide store by more than two orders of magnitude. The historical Soundings peak was 5,076,206 / 5,242,880 bytes; this run crossed that retained size between actions 49 and 50 without combining Soundings and ordinary exploration in one campaign.
+
+## Failure and retry boundaries
+
+The probe checks exact immutable artifact snapshot bytes after each successful publication, then reloads through `loadSaveWithAuthority` and verifies tick, Stamina, candidate and publication identity. Loaded runtime breakdown fields may be normalized during readback; that normalization is not treated as a byte-for-byte snapshot comparison. Repeated exploration replaces the current world observation and leaves `pendingSpawnCandidates` empty and `activeEncounter` null.
+
+The separate post-head address-failure branch injected one `QuotaExceededError` at the slot-address write after head revision 2 was durable. A same-source retry used the retained publication ID, kept two immutable artifacts rather than minting a third, and loaded tick 1. Inspection exposed an unrelated completion omission: with no account consumer plans, the recovered `address_verified` record remained and blocked the next save. The bounded `saveManager.ts` repair clears and verifies that completed no-consumer recovery record. The rerun observed recovery absent, 210,542 bytes before retry versus 171,836 after cleanup, then accepted and reloaded a further action at tick 2. The adjacent consumer-plan retry path remains under its existing owner and tests.
+
+## Limits and required next decision
+
+This is production caller and persistence code against a quota-enforcing in-memory Storage model, not a measurement of a specific browser engine's actual quota. It includes the QA account profile and every storage key written by this scenario, but no other user campaigns, full new-game account consumer plans, Soundings history, future encounter receipts or outcome history. It saves after each action to exercise a repeatable ordinary player pattern; less frequent saves consume capacity more slowly. No actual browser QA campaign was mutated in Slice C. Future combat admission/outcome and Normal-Stakes recovery have no measured bytes because they are not implemented.
+
+The next decision must inventory readers, provenance and retention obligations for candidate, artifact, control, address, recovery, Soundings witness, non-head, legacy and account history keys; define bounded retention or compaction with exact restart/duplicate/conflict semantics; preserve independently required accepted evidence; and specify quota-failure behavior after partial pre-head writes. It must provide a small repair package and a repeatable whole-store acceptance budget before combat admission may resume. Blind deletion of accepted source, witness or history is not authorized. This preflight does not accept `DEV-0.7.1` or a game-version change.
+
+## Validation and branch posture
+
+Capacity probe passed with the expected quota boundary and post-head retry; 38/38 focused and adjacent persistence/Soundings tests passed; content lint checked 72 files; production Vite build passed on a sequential rerun with 229 client modules. The first concurrent Vite build failed in HTML output path; its clean sequential rerun supersedes it. Broad UI TypeScript remains at the known 137 diagnostics, with no new `saveManager` diagnostic. `git diff --cached --check` passed at the checkpoint. FP-001/002/003/005/009/011/012/014/015/017 apply: real caller, explicit non-acceptance, reachable retry completion, preserved head, exact artifact readback and honest absent combat evidence. No new generalized failure pattern was needed.
+
+Fresh fetch/prune found one local/four hosted branches and zero open PRs. At inspected source, readiness `59c103c3` was 434 master-only/2 ref-only, prompt-integrity `58a34e37` was 381/1, administration `210df5bc` was 212/1; heads, bases, unique documentation paths and protected/held dispositions remain unchanged. No review trigger was consumed, and no integration, branch deletion, PR or disposition change was due or performed. Final publication identity is verified after push.

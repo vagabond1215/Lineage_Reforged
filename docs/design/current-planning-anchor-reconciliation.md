@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-28 DEV-0.7.1 Slice C capacity preflight
+
+**CAPACITY_GATE_FAILED; COMBAT_ADMISSION_HELD** at checkpoint `bb24c483d7d683466d28dcace57fc1e6a723de0a` from source `fead51012561ca584359fcadf51d801b196ac21d`. Fifty saved ordinary nearby explorations retained 5,150,828 / 5,242,880 UTF-16 bytes; the next publication hit quota. The prior head remained verified, and a separate no-consumer retry completion omission was repaired. The installed unversioned **Ordinary Campaign Publication Capacity And Retention Contract Decision** must settle bounded evidence retention and quota recovery before combat admission/outcome work. Planned parent, game version and playability posture remain unchanged. This entry supersedes older route wording below.
+
 ## 2026-09-28 DEV-0.7.1 Slice B ordinary reachability
 
 **ORDINARY_CONTEXT_REACHABLE; COMBAT_ADMISSION_HELD** at implementation checkpoint `400fc0facd5119333fb5591afd216a10a79582a0` from inspected synchronized source `f4b510ee081ea0c46a47807b719b24509c7979d3`. The World nearby-exploration command now reaches the authored edge from an ordinary Stonevein creator start and returns eligible candidate or no-match without combat. One representative context does not become a universal first encounter. The installed **DEV-0.7.1 Slice C - Repeatable Encounter Capacity Preflight** owns the storage reopening trigger before admission/outcome work; parent acceptance and game-version change remain held. This entry supersedes older route wording below.
