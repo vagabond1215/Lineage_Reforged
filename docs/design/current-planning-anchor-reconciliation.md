@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 DEV-0.7.1 Slice D transactional store foundation
+
+**TRANSACTION_FOUNDATION_IMPLEMENTED; LIVE_CUTOVER_HELD** at code checkpoint `db129b43` from synchronized source `54c4595f122b194d33a520352b11ed43e755632e`. A versioned, account-scoped IndexedDB owner commits artifact, head/control, slot and applied Soundings witness atomically and verifies exact readback; native Chromium QA passed 12 cases. It has no live localStorage caller, migration or capacity acceptance. The installed successor is the unversioned **Legacy Campaign Store Migration Boundary Decision**. Slice C quota failure and combat admission hold remain; parent `DEV-0.7.1`, Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and accepted `DEV-0.7.0` are unchanged. This supersedes older Slice-D-active route wording while retaining chronology.
+
 ## 2026-09-29 Ordinary campaign publication capacity and retention decision
 
 **RETENTION_BOUNDARY_ACCEPTED; HIGHER_CAPACITY_BACKEND_REQUIRED; COMBAT_ADMISSION_HELD** at inspected source `a16523d8e08b14816a75db95e0b135c09ae40fc9`. The focused contract preserves legitimate durable campaign/history and Soundings provenance, permits only proven-redundant completed candidate bounds, and requires transactional higher-capacity local storage for long-running campaigns. The installed next route is **DEV-0.7.1 Slice D - Transactional Campaign Store Foundation**; later verified migration/cutover, candidate cleanup and stress acceptance precede combat admission. The 5 MiB Slice C result remains a current-backend failure, not a product budget. Parent, game version and playability posture unchanged. This supersedes earlier decision-pending route wording.

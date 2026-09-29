@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **DEV-0.7.1 Slice D - Transactional Campaign Store Foundation**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `54c4595f122b194d33a520352b11ed43e755632e`. Result: **TRANSACTION_FOUNDATION_IMPLEMENTED; LIVE_CUTOVER_HELD**. Implementation checkpoint and final hosted head are resolved after commit/push.
+
+## A. Files changed
+
+New IndexedDB owner `apps/rpg-ui/src/game-shell/campaignIndexedDbStore.ts`; existing guard/type exports in `saveManager.ts`; native QA page and fixture helper; focused implementation record; this output, handoff, historical/deferred register, planning reconciliation, branch register and installed successor prompt. No live caller, legacy save, dependency, content, shared schema, combat or game-version change.
+
+## B. Patch summary
+
+Version 1 IndexedDB schema has account-scoped artifact/control/slot/witness records and indexes. One async publication transaction validates exact expected head, retained predecessor artifact, v7 envelope/snapshot identities, slot, immutable conflicts and independent applied Soundings provenance; it commits all required records or aborts. Post-commit readback verifies raw artifact/address and control/witness. Same-source retry is idempotent. Failure codes distinguish unavailable, blocked upgrade, quota, abort, stale head, conflict, invalid record and readback failure. Current synchronous localStorage callers remain unchanged. The installed successor is the unversioned **Legacy Campaign Store Migration Boundary Decision** before any copy/cutover.
+
+## C. Tests and checks run
+
+Native Codex in-app Chromium QA: **12/12 PASS** with synthetic production-owner fixtures, including first and descendant Soundings, write-by-write abort, injected quota, stale/conflict/malformed, reopen/retry and blocked/unavailable. Adjacent campaign persistence and Soundings recovery: **68/68 PASS**. Production Vite build: **PASS**, 229 client modules; Node config typecheck: **PASS**. Broad UI typecheck: **FAIL**, known 137 diagnostics, zero in changed source files. Diff check: **PASS**. Command-line headless Edge/Chrome GPU startup failed before page load; native in-app browser QA completed instead. Natural quota, second browser, live save cutover and long-run stress remain untested. Detailed evidence and reproduction route: `docs/dev/dev-0.7.1-slice-d-transactional-campaign-store-foundation-record.md`.
+
+FP-002/004/005/006/009/011/012/014/015 applied: green tests do not accept parent; account/slot and predecessor conflicts fail closed; reopen and retry preserve exact bytes; source and publication heads remain distinct; validators and retained first-publication witness/artifact control authority. FP-003 is a later migration/caller gate. No new pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3` / base `895c02df` (441 master-only/2 ref-only), prompt-integrity `58a34e37` / base `3d77171c` (388/1), administration `210df5bc` / base `fd40571b` (219/1) retain their unique documentation paths and `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER` dispositions. Review triggers remain scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition action due/performed.
+
+## D. Risks and follow-up notes
+
+The backend is not activated and has no browser capacity acceptance. The 5 MiB Slice C localStorage failure and combat hold remain. Next work must inventory all legacy families and define verified non-activating copy, activation, rollback and async caller ownership without deleting user data. Suggested commit: `feat(storage): add transactional IndexedDB campaign foundation`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and planned parent unchanged.
+
+---
+
 Date: 2026-09-29. Source run: **Ordinary Campaign Publication Capacity And Retention Contract Decision**. Label class: unversioned cross-cutting documentation decision; parent `DEV-0.7.1` remains planned/held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `a16523d8e08b14816a75db95e0b135c09ae40fc9`. Result: **RETENTION_BOUNDARY_ACCEPTED; HIGHER_CAPACITY_BACKEND_REQUIRED; COMBAT_ADMISSION_HELD**.
 
 ## A. Files changed

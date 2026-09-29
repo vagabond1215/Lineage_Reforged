@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-29 DEV-0.7.1 Slice D transactional store foundation
+
+**TRANSACTION_FOUNDATION_IMPLEMENTED; LIVE_CUTOVER_HELD** from synchronized source `54c4595f122b194d33a520352b11ed43e755632e`, code checkpoint `db129b43`. The v1 IndexedDB account-scoped artifact/control/slot/witness transaction and exact readback passed 12 native Chromium QA cases; 68 adjacent localStorage/Soundings tests passed. No legacy authority was copied, activated, deleted or cut over. Install the unversioned **Legacy Campaign Store Migration Boundary Decision** to settle complete existing-family inventory, non-activating copy/verification, activation/rollback and async caller ownership before implementation. Slice C capacity failure and combat/parent hold persist; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the prior Slice-D-active route, not its historical decision.
+
 ## 2026-09-29 Ordinary campaign publication capacity and retention decision
 
 **RETENTION_BOUNDARY_ACCEPTED; HIGHER_CAPACITY_BACKEND_REQUIRED; COMBAT_ADMISSION_HELD** from clean synchronized source `a16523d8e08b14816a75db95e0b135c09ae40fc9`. The focused decision authorizes bounds only for completed, exactly proven redundant candidate copies and preserves artifacts, non-head saves/forks, Soundings witness/first artifact, migration evidence and account history. Candidate cleanup is a bridge, not long-running acceptance; the 5 MiB model is a current-backend constraint. IndexedDB is the selected transactional local backend, subject to migration, dynamic quota, backup and browser acceptance gates. Install **DEV-0.7.1 Slice D - Transactional Campaign Store Foundation** as the smallest next implementation checkpoint; no live migration or combat yet. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and planned parent `DEV-0.7.1` unchanged. This supersedes the prior decision-pending route below.
