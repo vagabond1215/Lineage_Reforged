@@ -1,5 +1,10 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 Legacy campaign store migration boundary decision
+
+**MIGRATION_COPY_CONTRACT_ACCEPTED; ACTIVATION_HELD** at inspected synchronized source `a2ce0de324fe7c04fc43a9b28d573616c0095e2e`. `docs/design/legacy-campaign-store-migration-boundary-decision.md` selects an additive IndexedDB v2 inert exact-raw copy and account-wide verification stage because Slice D's v1 publication owner cannot retain every legacy, account, recovery or non-head family. Installed next route: **DEV-0.7.1 Slice E - Inert Legacy Authority Copy And Verification**. Activation, async callers, reset/delete coordination, export/rollback, two-browser long-run capacity and combat acceptance remain separate. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and planned parent `DEV-0.7.1` remain unchanged. This supersedes the older migration-decision-active route while preserving chronology.
+
+
 ## 2026-09-29 DEV-0.7.1 Slice D transactional store foundation
 
 **TRANSACTION_FOUNDATION_IMPLEMENTED; LIVE_CUTOVER_HELD** at code checkpoint `db129b43` from synchronized source `54c4595f122b194d33a520352b11ed43e755632e`. A versioned, account-scoped IndexedDB owner commits artifact, head/control, slot and applied Soundings witness atomically and verifies exact readback; native Chromium QA passed 12 cases. It has no live localStorage caller, migration or capacity acceptance. The installed successor is the unversioned **Legacy Campaign Store Migration Boundary Decision**. Slice C quota failure and combat admission hold remain; parent `DEV-0.7.1`, Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and accepted `DEV-0.7.0` are unchanged. This supersedes older Slice-D-active route wording while retaining chronology.

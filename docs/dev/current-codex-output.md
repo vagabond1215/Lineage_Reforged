@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **Legacy Campaign Store Migration Boundary Decision**. Label class: unversioned documentation decision; planned parent `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `a2ce0de324fe7c04fc43a9b28d573616c0095e2e`. Result: **MIGRATION_COPY_CONTRACT_ACCEPTED; ACTIVATION_HELD**. Final publication/live head is verified after push.
+
+## A. Files changed
+
+New focused `docs/design/legacy-campaign-store-migration-boundary-decision.md`; current output, handoff, historical/deferred route, planning reconciliation, branch register and installed successor prompt. No production code, schema, test, user save, account, dependency or version change.
+
+## B. Patch summary
+
+Inventoried v7 artifact/control/slot/candidate/recovery/witness, v6 and obsolete keys, migration receipt/source, account profile/history/consumers, new-campaign attempts, active pointer, launcher auth and preferences from live owner/caller paths. Accepted additive IndexedDB v2 inert exact-raw staged copy and account-wide verification, with malformed/unknown evidence retained and no live caller cutover. Version 1 cannot import all retained history or account state. Later activation requires complete canonical records, async callers, stale-tab fencing, restart readback, export/rollback and account reset/delete coordination. Installed **DEV-0.7.1 Slice E - Inert Legacy Authority Copy And Verification** only; Slice C capacity and combat holds persist.
+
+## C. Tests and checks run
+
+Fresh fetch/prune, exact source/head and branch inventory, zero-open-PR GitHub readback, focused source/authority review and `git diff --check` after documentation edit. No tests, build, typecheck, native browser QA or user-data probe run in this documentation-only decision. Slice D's Chromium 12/12, adjacent 68/68, Vite build and Node config typecheck are **reused prior evidence**; broad UI typecheck's 137 diagnostics are a known baseline, not green.
+
+FP-001/002/003/004/005/006/009/011/012/013/014/015 applied as migration contract guards: real caller and restart gates remain future implementation obligations; current decision maps account-wide recovery, complete evidence, independently retained Soundings first artifact, preserved nested/account history, source/hosted identities and fail-closed staging. No new generalized failure pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3` / base `895c02df` (443 master-only/2 ref-only), prompt-integrity `58a34e37` / base `3d77171c` (390/1), administration `210df5bc` / base `fd40571b` (221/1) retain their unique documentation paths and `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER` dispositions. Review triggers remain scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition action due/performed.
+
+## D. Risks and follow-up notes
+
+Stage E will not activate IndexedDB or resolve dynamic capacity. Cross-tab source writes can invalidate a captured generation; quarantine and retry are required. Account reset/delete currently omit attempt and IndexedDB data, so cutover must close that path. First Soundings witness and artifact, non-head/fork history, pending consumers and unknown keys cannot be dropped. Suggested commit: `docs(decision): define inert legacy campaign copy boundary`. No `GAME_VERSION` or parent acceptance; next recommended run is Slice E, with later activation and a separately measured game-version decision only when player-facing criteria warrant it.
+
+---
+
 Date: 2026-09-29. Source run: **DEV-0.7.1 Slice D - Transactional Campaign Store Foundation**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `54c4595f122b194d33a520352b11ed43e755632e`. Result: **TRANSACTION_FOUNDATION_IMPLEMENTED; LIVE_CUTOVER_HELD**. Implementation checkpoint and final hosted head are resolved after commit/push.
 
 ## A. Files changed
