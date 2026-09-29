@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 Ordinary campaign publication capacity and retention decision
+
+**RETENTION_BOUNDARY_ACCEPTED; HIGHER_CAPACITY_BACKEND_REQUIRED; COMBAT_ADMISSION_HELD** at inspected source `a16523d8e08b14816a75db95e0b135c09ae40fc9`. The focused contract preserves legitimate durable campaign/history and Soundings provenance, permits only proven-redundant completed candidate bounds, and requires transactional higher-capacity local storage for long-running campaigns. The installed next route is **DEV-0.7.1 Slice D - Transactional Campaign Store Foundation**; later verified migration/cutover, candidate cleanup and stress acceptance precede combat admission. The 5 MiB Slice C result remains a current-backend failure, not a product budget. Parent, game version and playability posture unchanged. This supersedes earlier decision-pending route wording.
+
 ## 2026-09-29 Ordinary campaign retention direction clarification
 
 **DIRECTION_RECORDED; RETENTION_DECISION_NOT_STARTED** at synchronized source `f0d8b4c82ba3683e1ec0a5df084625423f0d6a6e`. The installed unversioned decision now distinguishes safe bounds for proven redundant publication copies from the separate need for a higher-capacity backend for long-running durable campaigns. The 5 MiB failure remains a current-backend gate, not the product save-size budget. Accepted campaign/history data and independent provenance must be preserved. Combat admission and parent acceptance remain held; game version, playability and accepted milestone are unchanged. This entry supersedes earlier route wording that implied compaction alone was the complete capacity answer.

@@ -1,5 +1,9 @@
 # Branch Disposition Register
 
+## 2026-09-29 Ordinary campaign publication capacity and retention decision
+
+Inspected clean synchronized source `a16523d8e08b14816a75db95e0b135c09ae40fc9` after fresh fetch/prune: one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3` / base `895c02df` is 437 master-only/2 ref-only with two unique readiness docs; prompt-integrity `58a34e37` / base `3d77171c` is 384/1 with one unique prompt audit doc; administration `210df5bc` / base `fd40571b` is 215/1 with one unique research evidence doc. Readiness and prompt-integrity stay `PROTECTED_REFERENCE` until scheduled readiness/regression or protection review and dedicated prompt/execution-pointer audit respectively; administration stays `HOLD_NAMED_CONSUMER` until administration/template/governance or explicit Lineage retrospective. The capacity decision and installed Slice D consume none of those triggers. No integration, merge, rebase, deletion, PR or disposition action due/performed. Counts describe inspected source, not publication head.
+
 ## 2026-09-29 Ordinary campaign retention direction clarification
 
 Inspected clean synchronized source `f0d8b4c82ba3683e1ec0a5df084625423f0d6a6e` after fresh fetch/prune: one local/four hosted branches; the [scoped GitHub PR page](https://github.com/vagabond1215/Lineage_Reforged/pulls) showed zero open PRs. Retained heads remain readiness `59c103c3` and prompt-integrity `58a34e37` as `PROTECTED_REFERENCE`, and administration `210df5bc` as `HOLD_NAMED_CONSUMER`; unique paths and review triggers remain as recorded in the Slice C entry below. Clarifying the installed retention prompt consumes no readiness/regression, dedicated prompt-integrity audit, or administration/governance review trigger. No disposition change, integration, deletion or PR action due/performed. Final hosted equality is reported after push.

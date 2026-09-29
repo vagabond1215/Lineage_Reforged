@@ -4,6 +4,28 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **Ordinary Campaign Publication Capacity And Retention Contract Decision**. Label class: unversioned cross-cutting documentation decision; parent `DEV-0.7.1` remains planned/held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `a16523d8e08b14816a75db95e0b135c09ae40fc9`. Result: **RETENTION_BOUNDARY_ACCEPTED; HIGHER_CAPACITY_BACKEND_REQUIRED; COMBAT_ADMISSION_HELD**.
+
+## A. Files changed
+
+Focused `docs/design/ordinary-campaign-publication-capacity-and-retention-contract-decision.md`, this output, current GPT handoff and installed next prompt, historical/deferred register, planning reconciliation and branch register. No production, test, save, content, dependency or version edit.
+
+## B. Patch summary
+
+Slice C's 5 MiB quota is classified as a current `localStorage` constraint, not a product campaign-size limit. The inventory preserves immutable artifacts, non-head slots, Soundings first-publication witness/artifact, migration source/receipt and account history. Completed candidate envelopes alone are conditionally redundant after exact artifact, recovery, witness, consumer and cross-slot checks; cleanup is only a bridge. At action 50, subtracting all 2,545,248 candidate bytes would leave an arithmetic 2,605,580-byte store, while 2,544,942 artifact bytes remain. Long-running campaigns require a higher-capacity backend. IndexedDB is selected for transactional local campaign/account authority, with dynamic quota, export/rollback and async caller migration gates. No backend implementation or candidate deletion occurred. The next installed prompt is `DEV-0.7.1 Slice D - Transactional Campaign Store Foundation`.
+
+## C. Tests and checks run
+
+Read-only live source/caller and key-family trace, exact Slice C JSON arithmetic, official browser-storage reference review, branch/PR inventory, documentation diff and `git diff --check`. The earlier Slice C probe/38 tests/lint/build are **reused evidence**, not rerun. No new probe, test, build, typecheck, browser QA save or migration was run in this documentation decision. FP-002: the failed capacity gate still holds the parent. FP-003/004/005/006: recovery, slot-wide contention, lost-caller retry and newer-address precedence are explicit. FP-008/009: protected refs and source versus publication identity are separated. FP-011/012/013/014/015: migration must preserve witness priority, complete duplicate evidence and nested owner history; no mutable-digest shortcut. No new generalized pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3` / base `895c02df` (437 master-only/2 ref-only), prompt-integrity `58a34e37` / base `3d77171c` (384/1), administration `210df5bc` / base `fd40571b` (215/1) retain their unique documentation paths and `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER` dispositions. Review triggers remain readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition action due/performed.
+
+## D. Risks and follow-up notes
+
+IndexedDB has browser/device-dependent quota and possible eviction; native browser, migration, export/restore and long-run tests remain mandatory. The next Slice D is a foundation checkpoint only and cannot clear current capacity or combat gates. Future slices own verified copy/cutover, async callers, candidate cleanup and account-wide stress. Suggested commit: `docs(decision): require higher-capacity campaign persistence`. No game-version or parent acceptance.
+
+---
+
 Date: 2026-09-29. Source run: **Ordinary Campaign Publication Capacity And Retention Direction Clarification**. Label class: unversioned cross-cutting coordination; parent `DEV-0.7.1` remains planned and held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `f0d8b4c82ba3683e1ec0a5df084625423f0d6a6e`. Result: **DIRECTION_RECORDED; RETENTION_DECISION_NOT_STARTED**.
 
 ## A. Files changed
