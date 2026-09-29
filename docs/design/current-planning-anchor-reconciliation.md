@@ -1,5 +1,10 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 Legacy campaign canonical materialization and activation boundary decision
+
+**CANONICAL_MATERIALIZATION_CONTRACT_ACCEPTED; ACTIVATION_HELD** at inspected clean synchronized source `307be4860c5fb7ca2ade90461ae57873a32cfbea`. The focused decision accepts a separate version-3 inert canonical materialization/readback slice covering every legacy account/campaign family, non-head/fork history and quarantined unknown raw; the installed successor is **DEV-0.7.1 Slice F - Inert Canonical Materialization And Exact Readback**. Live activation waits for old-writer fencing, complete blocker repair, async callers, account reset/delete, export/restore, rollback and two-browser long-run acceptance. Older open code cannot be controlled by a new marker. Slice C capacity and combat/parent holds; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the Slice-E decision pointer while preserving chronology.
+
+
 ## 2026-09-29 DEV-0.7.1 Slice E inert legacy authority copy
 
 **INERT_COPY_IMPLEMENTED; ACTIVATION_HELD** at inspected source `87ddc774dec662bdc68d0ae30428505ff0c5d0c2`. IndexedDB schema v2 adds inert exact-raw legacy staging and verified/blocked manifest status while v1 publication behavior remains intact; 15/15 new and 12/12 existing native Chromium QA passed. No live caller or source data is cut over. The next installed route is the unversioned **Legacy Campaign Canonical Materialization And Activation Boundary Decision**. Canonical schema, async callers, stale-tab fencing, account reset/delete, export/rollback, two-browser long-run capacity and combat acceptance remain separate. Planned parent `DEV-0.7.1`, Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and accepted `DEV-0.7.0` remain unchanged. This supersedes older Slice-E-active wording while retaining chronology.

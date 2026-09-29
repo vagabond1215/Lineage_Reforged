@@ -1,5 +1,10 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-29 Legacy campaign canonical materialization and activation boundary decision
+
+**CANONICAL_MATERIALIZATION_CONTRACT_ACCEPTED; ACTIVATION_HELD** from clean synchronized source `307be4860c5fb7ca2ade90461ae57873a32cfbea`. The focused decision selects additive IndexedDB version-3 inert generation-scoped canonical records and exact readback across all raw source families, with `DEV-0.7.1 Slice F - Inert Canonical Materialization And Exact Readback` installed next. Activation is later and conditional on source recheck, all blockers repaired, async caller conversion, demonstrable old-writer fencing, reset/delete, export/restore and rollback. A new marker cannot bind an older open tab. Slice C capacity/combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the Slice-E-installed decision route, not its implementation evidence.
+
+
 ## 2026-09-29 DEV-0.7.1 Slice E inert legacy authority copy
 
 **INERT_COPY_IMPLEMENTED; ACTIVATION_HELD** from clean synchronized source `87ddc774dec662bdc68d0ae30428505ff0c5d0c2`. Additive IndexedDB v2 staged records/manifests preserve exact legacy campaign/account raw bytes, including malformed/unknown evidence, without source writes or live caller imports. Native Chromium copy QA passed 15/15, existing publication QA 12/12, adjacent tests 68/68, Node config typecheck and Vite build passed. Broad UI typecheck remains 137 baseline diagnostics. The installed successor is the unversioned **Legacy Campaign Canonical Materialization And Activation Boundary Decision** to settle complete schema, async caller, stale-tab fencing, account reset/delete, export/rollback and staged package order. Slice C capacity failure and combat/parent holds persist; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the Slice-E-active route, not its decision.
