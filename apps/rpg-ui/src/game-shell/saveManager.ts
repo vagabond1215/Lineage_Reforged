@@ -54,7 +54,7 @@ type LegacyStoredSaveEnvelope = {
   snapshot: string;
 };
 
-type StoredSaveEnvelope = {
+export type StoredSaveEnvelope = {
   version: 7;
   accountId: string;
   slotId: SaveSlotId;
@@ -72,7 +72,7 @@ type StoredSaveEnvelope = {
   snapshot: string;
 };
 
-type StoredCampaignControl = {
+export type StoredCampaignControl = {
   version: 1;
   accountId: string;
   campaignId: string;
@@ -593,7 +593,7 @@ function isSaveSlotMetadata(value: unknown): value is SaveSlotMetadata {
   );
 }
 
-function isStoredSaveEnvelope(value: unknown): value is StoredSaveEnvelope {
+export function isStoredSaveEnvelope(value: unknown): value is StoredSaveEnvelope {
   if (!isRecord(value)) {
     return false;
   }
@@ -634,7 +634,7 @@ function isLegacyStoredSaveEnvelope(
   );
 }
 
-function isStoredCampaignControl(
+export function isStoredCampaignControl(
   value: unknown
 ): value is StoredCampaignControl {
   return (
