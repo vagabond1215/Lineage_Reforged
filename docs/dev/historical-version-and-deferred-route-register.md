@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-28 DEV-0.7.1 Slice B ordinary reachability
+
+**ORDINARY_CONTEXT_REACHABLE; COMBAT_ADMISSION_HELD** at implementation checkpoint `400fc0facd5119333fb5591afd216a10a79582a0` from inspected synchronized source `f4b510ee081ea0c46a47807b719b24509c7979d3`. The ordinary creator-to-World action reaches the one authored Stonevein edge, selects only eligible content or truthfully reports no encounter, and saves an isolated candidate without combat admission. Install **DEV-0.7.1 Slice C - Repeatable Encounter Capacity Preflight** for the 5 MiB storage reopening trigger. Parent `DEV-0.7.1`, combat admission/outcome/recovery and any game-version decision remain held. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This entry supersedes older active-route wording below.
+
 ## 2026-09-28 DEV-0.7.1 Slice A static context authorship
 
 **STATIC_CONTEXT_AUTHORED; ORDINARY_REACHABILITY_PENDING** at implementation checkpoint `c9b38166`, from inspected synchronized source `05836a6976ee45014012af4b13a77fc5a746e2b3`. The one world-owned Stonevein nearby-exploration context, strict schema, semantic lint and negative matrix passed; see current Codex output. Install **DEV-0.7.1 Slice B - Ordinary Nearby Exploration Reachability** for actual command/World caller/resolver evidence. Planned parent `DEV-0.7.1` remains unaccepted; repeatable 5 MiB and combat admission/outcome gates remain later. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This entry supersedes older active-route wording below.

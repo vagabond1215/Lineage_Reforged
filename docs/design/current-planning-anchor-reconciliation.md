@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-28 DEV-0.7.1 Slice B ordinary reachability
+
+**ORDINARY_CONTEXT_REACHABLE; COMBAT_ADMISSION_HELD** at implementation checkpoint `400fc0facd5119333fb5591afd216a10a79582a0` from inspected synchronized source `f4b510ee081ea0c46a47807b719b24509c7979d3`. The World nearby-exploration command now reaches the authored edge from an ordinary Stonevein creator start and returns eligible candidate or no-match without combat. One representative context does not become a universal first encounter. The installed **DEV-0.7.1 Slice C - Repeatable Encounter Capacity Preflight** owns the storage reopening trigger before admission/outcome work; parent acceptance and game-version change remain held. This entry supersedes older route wording below.
+
 ## 2026-09-28 DEV-0.7.1 Slice A static context authorship
 
 **STATIC_CONTEXT_AUTHORED; ORDINARY_REACHABILITY_PENDING** at implementation checkpoint `c9b38166` from inspected synchronized `05836a6976ee45014012af4b13a77fc5a746e2b3`. The exact Stonevein nearby-exploration edge context now has explicit `frontier_track`, local hazard provenance, schema and semantic lint. No action or ordinary caller exists yet. The installed **DEV-0.7.1 Slice B - Ordinary Nearby Exploration Reachability** owns that executable seam and the habitat-aware selector gate. Parent milestone, 5 MiB repeatability, combat admission/outcome and game-version acceptance remain open. This current entry supersedes older route wording below.
