@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-28 DEV-0.7.1 Slice A static context authorship
+
+**STATIC_CONTEXT_AUTHORED; ORDINARY_REACHABILITY_PENDING** at implementation checkpoint `c9b38166`, from inspected synchronized source `05836a6976ee45014012af4b13a77fc5a746e2b3`. The one world-owned Stonevein nearby-exploration context, strict schema, semantic lint and negative matrix passed; see current Codex output. Install **DEV-0.7.1 Slice B - Ordinary Nearby Exploration Reachability** for actual command/World caller/resolver evidence. Planned parent `DEV-0.7.1` remains unaccepted; repeatable 5 MiB and combat admission/outcome gates remain later. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This entry supersedes older active-route wording below.
+
 ## 2026-09-28 Ordinary encounter context authorship
 
 **AUTHORED_CONTEXT_DECIDED; IMPLEMENTATION_HELD** at inspected source `3976619afbabb063624fcb15e10bd619b5f7e133`. The project owner chose deliberate **Explore nearby environs** from Stonevein onto the Ore Ridge–Caravan Marches pass, with `frontier_track` explicitly authored for that one action/place; see `docs/design/ordinary-encounter-context-authorship-decision.md`. This is not a universal first encounter. Install planned `DEV-0.7.1 Slice A - Ordinary Encounter Context Static Authorship` as the smallest implementation checkpoint; later action/World caller/resolver reachability and 5 MiB capacity/combat gates remain separate. No positive ordinary combat or storage-safety claim. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This current entry supersedes older active-route wording below while preserving chronology.

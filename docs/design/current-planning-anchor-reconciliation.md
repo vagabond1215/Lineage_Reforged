@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-28 DEV-0.7.1 Slice A static context authorship
+
+**STATIC_CONTEXT_AUTHORED; ORDINARY_REACHABILITY_PENDING** at implementation checkpoint `c9b38166` from inspected synchronized `05836a6976ee45014012af4b13a77fc5a746e2b3`. The exact Stonevein nearby-exploration edge context now has explicit `frontier_track`, local hazard provenance, schema and semantic lint. No action or ordinary caller exists yet. The installed **DEV-0.7.1 Slice B - Ordinary Nearby Exploration Reachability** owns that executable seam and the habitat-aware selector gate. Parent milestone, 5 MiB repeatability, combat admission/outcome and game-version acceptance remain open. This current entry supersedes older route wording below.
+
 ## 2026-09-28 Ordinary encounter context authorship
 
 **AUTHORED_CONTEXT_DECIDED; IMPLEMENTATION_HELD** at inspected source `3976619afbabb063624fcb15e10bd619b5f7e133`; see `docs/design/ordinary-encounter-context-authorship-decision.md`. The project owner chose deliberate **Explore nearby environs** from Stonevein onto the Ore Ridge–Caravan Marches pass with explicit `frontier_track` habitat for that action/place. This is one reference, not a universal first encounter. The installed next prompt is planned `DEV-0.7.1 Slice A - Ordinary Encounter Context Static Authorship`; subsequent action/caller/resolver, capacity and combat gates remain separate. No current combat implementation, accepted milestone or game-version change is claimed. This current entry supersedes older route wording below.
