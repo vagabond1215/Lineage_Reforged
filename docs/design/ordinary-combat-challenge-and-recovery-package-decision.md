@@ -2,6 +2,10 @@
 
 Date: 2026-09-28. Repository: `vagabond1215/Lineage_Reforged`. Inspected synchronized source: `b0692e9fad000e364e4e871eba11cdfb1ca1682f`. Unversioned decision; development milestone impact `none`; game-version impact `none`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and band `DEV-0.7.x` remain unchanged.
 
+## 2026-09-28 product-direction clarification and consuming contract
+
+The project owner directed that first encounters be context-driven by authoritative starting location and ordinary action. Stonevein is a representative reference scenario only; this decision does not make Stonevein, Kaelvar, kobolds, or one encounter universal. When an action has no truthful authored place/habitat match, the result is no eligible encounter. The successor `docs/design/ordinary-encounter-admission-and-outcome-ownership-contract-decision.md` accepts that reusable fail-closed owner contract and holds implementation until one positive authored action context and bounded capacity evidence exist. This clarification governs the provisional example below.
+
 ## Disposition
 
 **COMBAT_CHALLENGE_PREREQUISITE_REQUIRED.** Install exactly one documentation prerequisite: **Ordinary Encounter Admission And Outcome Ownership Contract Decision**. It must define the single accepted transition from an ordinary player action/context to an authored spawn candidate, one admitted combat encounter, a campaign-accepted success or Normal-Stakes defeat, and continued play. No combat implementation, new authored enemy, UI, content, or storage repair is authorized by this decision.

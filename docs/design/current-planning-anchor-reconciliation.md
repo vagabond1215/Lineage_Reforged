@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-28 Ordinary encounter owner contract
+
+**CONTRACT_ACCEPTED; IMPLEMENTATION_HELD** at source `fefd6bae0acca2bef53bb1eadc922350d557dffc`; see `docs/design/ordinary-encounter-admission-and-outcome-ownership-contract-decision.md`. User direction requires context-driven encounter eligibility and truthful no-match results, with Stonevein only a reference case. The sole active successor is the unversioned documentation-only **Ordinary Encounter Context Authorship Decision**. A positive ordinary encounter and repeatable storage gate remain open; no combat implementation, milestone or game-version change is installed. This current entry supersedes older route wording below.
+
 ## 2026-09-28 Ordinary combat/challenge package decision
 
 **COMBAT_CHALLENGE_PREREQUISITE_REQUIRED** at source `b0692e9fad000e364e4e871eba11cdfb1ca1682f`; see `docs/design/ordinary-combat-challenge-and-recovery-package-decision.md`. The sole active successor is the unversioned **Ordinary Encounter Admission And Outcome Ownership Contract Decision**, documentation only. No combat implementation, vertical-slice acceptance, new development milestone or game-version change is installed. This current entry supersedes older no-active-successor wording and preserves the accepted Soundings/Activity chronology below.

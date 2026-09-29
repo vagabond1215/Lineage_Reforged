@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-28 Ordinary encounter owner contract
+
+**CONTRACT_ACCEPTED; IMPLEMENTATION_HELD** at inspected source `fefd6bae0acca2bef53bb1eadc922350d557dffc`. `docs/design/ordinary-encounter-admission-and-outcome-ownership-contract-decision.md` accepts a reusable context-driven, fail-closed admission/outcome/Normal-Stakes recovery boundary under explicit user direction. Stonevein is representative only; absent authored action/place/habitat gives `no_eligible_encounter`. No positive ordinary caller or repeatable capacity result is claimed. Install the unversioned **Ordinary Encounter Context Authorship Decision** as the sole documentation successor; a bounded storage gate remains before combat implementation. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This entry supersedes the older active-route wording below while preserving chronology.
+
 ## 2026-09-28 Ordinary combat/challenge package decision
 
 **COMBAT_CHALLENGE_PREREQUISITE_REQUIRED** at inspected source `b0692e9fad000e364e4e871eba11cdfb1ca1682f`. The focused decision is `docs/design/ordinary-combat-challenge-and-recovery-package-decision.md`. Install exactly one unversioned documentation prerequisite: **Ordinary Encounter Admission And Outcome Ownership Contract Decision**. Ordinary UI does not run the world/combat tick, the provisional Stonevein-to-Kaelvar spawn context lacks matching region/habitat authority, and combat loss is not bound to the accepted Normal-Stakes receipt. Additional durable-history expansion consumes the existing storage reopening trigger. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This current entry supersedes prior no-active-successor wording below without rewriting historical chronology.

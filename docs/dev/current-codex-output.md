@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-28. Source run: **Ordinary Encounter Admission And Outcome Ownership Contract Decision**. Label class unversioned; parent not applicable. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized source `fefd6bae0acca2bef53bb1eadc922350d557dffc`; documentation publication identity is verified separately after push. Result: **CONTRACT_ACCEPTED; IMPLEMENTATION_HELD**.
+
+## A. Files changed
+
+Focused contract `docs/design/ordinary-encounter-admission-and-outcome-ownership-contract-decision.md`; clarification in the preceding combat package decision; current prompt, output and GPT handoff; historical/deferred register, planning-anchor reconciliation and branch register. No production source/content/UI/test/schema/save/dependency or game-version file changed.
+
+## B. Patch summary
+
+Accepted a reusable, context-driven, fail-closed contract under the user's explicit direction: current location, exact authored hex/edge, local-to-macro region, habitat, hazard and accepted ordinary action determine whether a candidate exists. Stonevein/caravan approach is a reference only; no universal Stonevein/Kaelvar/kobold first fight. Missing authored eligibility returns `no_eligible_encounter`. The contract assigns candidate identity, deterministic ordering, one-time campaign admission, legal commands, success/no-reward result, Normal-Stakes defeat/recovery, compact durable evidence, observer-safe text-first controls and repeatable-storage gate. Current content does not authorize an action-to-habitat link and no positive ordinary caller exists. Installed only **Ordinary Encounter Context Authorship Decision**, documentation-only, as next route; no combat implementation package.
+
+## C. Tests and checks run
+
+Fresh fetch/prune confirmed local/hosted equality and clean source. Live creator, world hex/edge, region, spawn, travel/activity, combat, campaign session, recovery, UI contract, save and test owners were re-inspected. `node --test tests/unit/combat-spawn-foundation.test.mjs`: 30/30 pass; `node --test tests/unit/player-travel-command.test.mjs`: 8/8 pass; `node --test tests/unit/campaign-persistence-foundation.test.mjs`: 33/33 pass. A read-only spawn resolver probe with `region.auric_marches`, anchored ore-ridges hex, empty habitat and authored hazard 46 returned zero candidates at ticks 0, 1, 5, 25 and 99. This does not prove the ordinary UI path. No browser execution, positive encounter, save mutation or storage-growth measurement. `git diff --check` and final scope review are publication gates; the 137 broad UI diagnostics remain a known baseline, not a green result.
+
+FP-001/017: ordinary caller cannot be replaced by an injected candidate. FP-002: green foundation tests do not establish playable acceptance. FP-003/005/011/012/014/015: pending completion, precedence, caller-state loss, semantic receipt/duplicate validation and owner-derived facts are contract gates. FP-008/009: source/publication and protected branch state remain distinct. No new generalized pattern is needed.
+
+One local/four hosted branches and zero open PRs. Retained readiness `59c103c3` (428/2), prompt-integrity `58a34e37` (375/1) and administration `210df5bc` (206/1) have unchanged exact heads/merge bases/unique paths and remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, and `HOLD_NAMED_CONSUMER`. Review triggers: scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no branch/PR action due/performed.
+
+## D. Risks and follow-up notes
+
+Current world data provide Stonevein's location and risk descriptors but no authorized `frontier_track`, `roadside_ditch` or `quarry_edge` mapping for an ordinary action. Any actual positive implementation still needs one authored reachable context and an instrumented repeated-campaign capacity result; retained peak 5,076,206/5,242,880 leaves 166,674 UTF-16 bytes. Recovery is source-plausible at an exact known settlement but not accepted through combat. No game-version or milestone advancement. Suggested commit: `docs(contract): define context-driven encounter admission`. Next recommended run: **Ordinary Encounter Context Authorship Decision**; no separate game-version decision.
+
+---
+
 Date: 2026-09-28. Source run: **Ordinary Combat/Challenge And Recovery Package Decision**. Label class: unversioned; parent not applicable. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized source `b0692e9fad000e364e4e871eba11cdfb1ca1682f`; documentation publication identity is verified separately after push. Result: **COMBAT_CHALLENGE_PREREQUISITE_REQUIRED**.
 
 ## A. Files changed
