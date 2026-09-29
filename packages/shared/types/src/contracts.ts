@@ -51,17 +51,25 @@ export interface TickContextBase<TState = Record<string, unknown>> {
   incomingEvents: ReadonlyArray<GameEventEnvelope>;
 }
 
+export interface WorldEncounterContextState {
+  regionId: string;
+  actionContextId?: string;
+  sourceActionId?: string;
+  worldHexEdgeId?: string;
+  hazardSource?: string;
+  settlementId?: string | null;
+  siteId?: string | null;
+  worldHexId?: string | null;
+  habitatTags: string[];
+  hazardPressure: number;
+}
+
 export interface WorldState {
   activeRegions: string[];
   weatherState: Record<string, unknown>;
-  encounterContext?: {
-    regionId: string;
-    settlementId?: string | null;
-    siteId?: string | null;
-    worldHexId?: string | null;
-    habitatTags: string[];
-    hazardPressure: number;
-  };
+  encounterContext?: WorldEncounterContextState;
+  nearbyExplorationContext?: WorldEncounterContextState;
+  nearbyExplorationCandidate?: ResolvedSpawnCandidateState | null;
   pendingSpawnCandidates?: ResolvedSpawnCandidateState[];
 }
 

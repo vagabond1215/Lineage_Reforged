@@ -13,33 +13,27 @@ function hashText(value: string): number {
   return hash;
 }
 
-function matchesSpawnProfile(profile: SpawnProfileRecord, state: WorldState, regionId: string): boolean {
-  const encounterContext = state.encounterContext;
-  if (!profile.regionIds.includes(regionId)) {
+function matchesSpawnProfile(profile: SpawnProfileRecord, context: NonNullable<WorldState["encounterContext"]>, ancestry: string[]): boolean {
+  if (!profile.regionIds.some((id) => ancestry.includes(id))) {
     return false;
   }
-  if (encounterContext?.worldHexId && profile.worldHexIds.length > 0 && !profile.worldHexIds.includes(encounterContext.worldHexId)) {
+  if (profile.worldHexIds.length > 0 && !profile.worldHexIds.includes(context.worldHexId ?? "")) {
     return false;
   }
-  if (
-    encounterContext?.settlementId &&
-    profile.settlementIds.length > 0 &&
-    !profile.settlementIds.includes(encounterContext.settlementId)
-  ) {
+  if (profile.settlementIds.length > 0 && !profile.settlementIds.includes(context.settlementId ?? "")) {
     return false;
   }
-  if (encounterContext?.siteId && profile.siteIds.length > 0 && !profile.siteIds.includes(encounterContext.siteId)) {
+  if (profile.siteIds.length > 0 && !profile.siteIds.includes(context.siteId ?? "")) {
     return false;
   }
   if (
-    encounterContext &&
     profile.habitatTags.length > 0 &&
-    !profile.habitatTags.some((tag) => encounterContext.habitatTags.includes(tag))
+    !profile.habitatTags.some((tag) => context.habitatTags.includes(tag))
   ) {
     return false;
   }
 
-  const hazardPressure = encounterContext?.hazardPressure ?? 35;
+  const hazardPressure = context.hazardPressure;
   return hazardPressure >= profile.minHazardPressure && hazardPressure <= profile.maxHazardPressure;
 }
 
@@ -56,18 +50,34 @@ export function buildDefaultEncounterContext(state: WorldState): NonNullable<Wor
   );
 }
 
-export function resolveSpawnCandidates(state: WorldState, tick: number, seed: number): ResolvedSpawnCandidateState[] {
-  const content = loadSpawnFoundationContent();
+export function resolveSpawnCandidates(
+  state: WorldState, tick: number, seed: number,
+  options: { strict?: boolean; selectionKey?: string; content?: ReturnType<typeof loadSpawnFoundationContent> } = {}
+): ResolvedSpawnCandidateState[] {
+  const content = options.content ?? loadSpawnFoundationContent();
+  if (options.strict && !state.encounterContext) return [];
   const encounterContext = buildDefaultEncounterContext(state);
   const regionId = encounterContext.regionId;
-  const hazardPressure =
-    encounterContext.hazardPressure ?? content.regionHazardById.get(regionId) ?? 35;
+  const hazardPressure = encounterContext.hazardPressure;
+  if (options.strict && (!Number.isFinite(hazardPressure) || hazardPressure < 0 || hazardPressure > 100 ||
+      !encounterContext.habitatTags.length)) return [];
+  const ancestry: string[] = [];
+  const seen = new Set<string>();
+  let cursorId: string | null = regionId;
+  while (cursorId) {
+    if (seen.has(cursorId) || !content.regionParentById.has(cursorId)) return [];
+    seen.add(cursorId);
+    ancestry.push(cursorId);
+    cursorId = content.regionParentById.get(cursorId) ?? null;
+  }
 
-  const matchedProfiles = content.spawnProfiles.filter((profile) => matchesSpawnProfile(profile, state, regionId));
+  const matchedProfiles = content.spawnProfiles
+    .filter((profile) => matchesSpawnProfile(profile, encounterContext, ancestry))
+    .sort((a, b) => a.id.localeCompare(b.id));
 
   const candidates: ResolvedSpawnCandidateState[] = [];
   for (const profile of matchedProfiles) {
-    const spawnRoll = hashText(`${seed}:${tick}:${profile.id}:${regionId}`) % 100;
+    const spawnRoll = hashText(`${options.selectionKey ?? seed}:${tick}:${profile.id}:${regionId}`) % 100;
     if (spawnRoll >= profile.spawnRatePerDay) {
       continue;
     }
@@ -75,15 +85,24 @@ export function resolveSpawnCandidates(state: WorldState, tick: number, seed: nu
     const eligibleEncounterWeights = profile.encounterWeights.filter((entry) => {
       const minHazard = entry.minHazardPressure ?? profile.minHazardPressure;
       const maxHazard = entry.maxHazardPressure ?? profile.maxHazardPressure;
-      return hazardPressure >= minHazard && hazardPressure <= maxHazard;
-    });
+      const template = content.encounterTemplateById.get(entry.encounterTemplateId);
+      return entry.weight > 0 && hazardPressure >= minHazard && hazardPressure <= maxHazard &&
+        !!template && template.regionIds.some((id) => ancestry.includes(id)) &&
+        template.habitatTags.some((tag) => encounterContext.habitatTags.includes(tag)) &&
+        profile.allowedMovementModes.includes(template.movementMode) &&
+        profile.hostilityWeights[template.disposition] > 0 &&
+        template.members.length > 0 && template.members.every((member) => {
+          const monster = content.monsterById.get(member.monsterId);
+          return !!monster && monster.habitatTags.some((tag) => encounterContext.habitatTags.includes(tag));
+        });
+    }).sort((a, b) => a.encounterTemplateId.localeCompare(b.encounterTemplateId));
 
     if (eligibleEncounterWeights.length === 0) {
       continue;
     }
 
     const totalWeight = eligibleEncounterWeights.reduce((sum, entry) => sum + entry.weight, 0);
-    const selection = hashText(`${profile.id}:${tick}:${seed}:encounter`) % totalWeight;
+    const selection = hashText(`${profile.id}:${tick}:${options.selectionKey ?? seed}:encounter`) % totalWeight;
     let cursor = 0;
     const chosen =
       eligibleEncounterWeights.find((entry) => {
@@ -91,14 +110,23 @@ export function resolveSpawnCandidates(state: WorldState, tick: number, seed: nu
         return selection < cursor;
       }) ?? eligibleEncounterWeights[0];
 
-    const template = chosen ? content.encounterTemplateById.get(chosen.encounterTemplateId) : null;
+    if (!chosen) continue;
+
+    const template = content.encounterTemplateById.get(chosen.encounterTemplateId);
     if (!template) {
       continue;
     }
 
     const difficultyTier = Math.max(0, Math.min(3, Math.floor(hazardPressure / 25)));
     candidates.push({
-      id: `spawn.${profile.id}.${template.id}.${tick}`,
+      id: options.selectionKey
+        ? `spawn.${hashText(options.selectionKey)}.${profile.id}.${template.id}.${tick}`
+        : `spawn.${profile.id}.${template.id}.${tick}`,
+      ...(options.selectionKey ? { selectionVersion: "ordinary.v1" } : {}),
+      ...(encounterContext.sourceActionId ? { sourceActionId: encounterContext.sourceActionId } : {}),
+      ...(encounterContext.actionContextId ? { actionContextId: encounterContext.actionContextId } : {}),
+      ...(encounterContext.worldHexEdgeId ? { worldHexEdgeId: encounterContext.worldHexEdgeId } : {}),
+      ...(encounterContext.hazardSource ? { hazardSource: encounterContext.hazardSource } : {}),
       spawnProfileId: profile.id,
       encounterTemplateId: template.id,
       regionId,

@@ -19,6 +19,7 @@ import {
 } from '../game-shell/gameplayLoop';
 import type { GameShellNotice } from '../game-shell/state';
 import { buildActionOutcomePreview } from '../runtime/bodyStatePresentation';
+import { resolveNearbyExplorationPlan } from '../../../../packages/engines/game-engine/src/player-nearby-exploration.js';
 
 type WorldPanelProps = {
   accent: string;
@@ -29,7 +30,7 @@ type WorldPanelProps = {
 
 export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: WorldPanelProps) {
   const worldData = useUiViewModel().world;
-  const { snapshot, updateSnapshot, bodyStatePresentation } = useGameSession();
+  const { snapshot, updateSnapshot, bodyStatePresentation, exploreNearby } = useGameSession();
   const [activeSection, setActiveSection] = useState('world-map');
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({
     'world-map': worldData.lists['world-map']?.[0]?.id ?? '',
@@ -69,6 +70,7 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
         : null,
     [selectedWorldLocation, snapshot]
   );
+  const nearbyPlan = useMemo(() => resolveNearbyExplorationPlan(snapshot), [snapshot]);
   const travelOutcome = useMemo(
     () =>
       travelPreview?.available && travelPreview.projectedBodyState
@@ -175,6 +177,29 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
             </div>
           </Card>
           {panelNotice && <PanelNotice notice={panelNotice} />}
+          <Card title="Nearby Exploration" accent={accent}>
+            <div className="space-y-3 text-sm text-[color:var(--color-text-secondary)]">
+              <p>{nearbyPlan.available
+                ? 'Explore an authored nearby approach for one watch. Applies low-intensity strain and a 2 Stamina action cost; an encounter may or may not be found.'
+                : nearbyPlan.reason}</p>
+              {snapshot.worldState.nearbyExplorationCandidate && (
+                <p>Earlier exploration found signs of danger. No encounter has begun; exploring again replaces those signs.</p>
+              )}
+              <GameActionButton
+                label="Explore nearby environs"
+                tone="accent"
+                disabled={!nearbyPlan.available}
+                onClick={() => {
+                  const outcome = exploreNearby();
+                  setPanelNotice({
+                    tone: outcome.accepted ? 'success' : 'warning',
+                    title: outcome.accepted ? 'Exploration Complete' : 'Exploration Unavailable',
+                    detail: outcome.message
+                  });
+                }}
+              />
+            </div>
+          </Card>
           <Card title="Travel Actions" accent={accent}>
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-4">

@@ -115,6 +115,11 @@ export interface SpawnProfileRecord {
 
 export interface ResolvedSpawnCandidateState {
   id: string;
+  selectionVersion?: string;
+  sourceActionId?: string;
+  actionContextId?: string;
+  worldHexEdgeId?: string;
+  hazardSource?: string;
   spawnProfileId: string;
   encounterTemplateId: string;
   regionId: string;

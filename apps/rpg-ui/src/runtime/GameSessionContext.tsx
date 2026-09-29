@@ -41,6 +41,7 @@ import {
 
 export type { AshenReefSurveyCallerOutcome } from './ashenReefSurveyCaller.js';
 import { submitSoundingsTurnInCaller, type SoundingsTurnInCommand, type SoundingsTurnInCallerOutcome } from './soundingsTurnInCaller.js';
+import { advanceNearbyExplorationCaller } from './nearbyExplorationCaller.js';
 
 export interface GameSessionState {
   accountProfile: AccountProfileState;
@@ -51,6 +52,7 @@ export interface GameSessionState {
 
 export interface GameSessionContextValue extends GameSessionState {
   campaignSessionControl: CampaignSessionControl;
+  exploreNearby: () => ReturnType<typeof advanceNearbyExplorationCaller>['outcome'];
   updateSnapshot: (
     snapshot: SaveSnapshot,
     options?: {
@@ -145,6 +147,13 @@ export function GameSessionProvider({
     () => ({
       ...sessionState,
       campaignSessionControl,
+      exploreNearby: () => {
+        const transition = advanceNearbyExplorationCaller(snapshot, campaignSessionControl);
+        if (transition.acceptedState) {
+          onSnapshotChange(transition.acceptedState.snapshot, transition.acceptedState.control);
+        }
+        return transition.outcome;
+      },
       updateSnapshot: (proposedSnapshot, options = {}) => {
         const admission = admitCampaignMutation(campaignSessionControl, {
           mutationId:

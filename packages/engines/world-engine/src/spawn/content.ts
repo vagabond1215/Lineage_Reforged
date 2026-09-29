@@ -1,4 +1,7 @@
-import { readFileSync } from "node:fs";
+import encounterParsed from "../../../../content/base/world/encounter_templates.json" with { type: "json" };
+import monsterParsed from "../../../../content/base/world/monsters.json" with { type: "json" };
+import spawnParsed from "../../../../content/base/world/spawn_profiles.json" with { type: "json" };
+import regionsParsed from "../../../../content/base/world/regions.json" with { type: "json" };
 import type {
   EncounterTemplateRecord,
   MonsterRecord,
@@ -7,6 +10,7 @@ import type {
 
 type RegionHazardRecord = {
   id: string;
+  parentRegionId?: string;
   simulationProfile?: {
     hazardPressure?: number;
   };
@@ -20,39 +24,32 @@ type CachedSpawnContent = {
   spawnProfiles: SpawnProfileRecord[];
   spawnProfileById: Map<string, SpawnProfileRecord>;
   regionHazardById: Map<string, number>;
+  regionParentById: Map<string, string | null>;
 };
 
 let cachedSpawnContent: CachedSpawnContent | null = null;
-
-function readJson<T>(relativePath: string): T {
-  const raw = readFileSync(new URL(relativePath, import.meta.url), "utf8");
-  return JSON.parse(raw) as T;
-}
 
 export function loadSpawnFoundationContent(): CachedSpawnContent {
   if (cachedSpawnContent) {
     return cachedSpawnContent;
   }
 
-  const encounterParsed = readJson<{ records: EncounterTemplateRecord[] }>(
-    "../../../../content/base/world/encounter_templates.json"
-  );
-  const monsterParsed = readJson<{ records: MonsterRecord[] }>("../../../../content/base/world/monsters.json");
-  const spawnParsed = readJson<{ records: SpawnProfileRecord[] }>(
-    "../../../../content/base/world/spawn_profiles.json"
-  );
-  const regionsParsed = readJson<{ records: RegionHazardRecord[] }>("../../../../content/base/world/regions.json");
+  const encounters = encounterParsed.records as EncounterTemplateRecord[];
+  const monsters = monsterParsed.records as MonsterRecord[];
+  const profiles = spawnParsed.records as SpawnProfileRecord[];
+  const regions = regionsParsed.records as RegionHazardRecord[];
 
   cachedSpawnContent = {
-    encounterTemplates: encounterParsed.records,
-    encounterTemplateById: new Map(encounterParsed.records.map((record) => [record.id, record])),
-    monsters: monsterParsed.records,
-    monsterById: new Map(monsterParsed.records.map((record) => [record.id, record])),
-    spawnProfiles: spawnParsed.records,
-    spawnProfileById: new Map(spawnParsed.records.map((record) => [record.id, record])),
+    encounterTemplates: encounters,
+    encounterTemplateById: new Map(encounters.map((record) => [record.id, record])),
+    monsters,
+    monsterById: new Map(monsters.map((record) => [record.id, record])),
+    spawnProfiles: profiles,
+    spawnProfileById: new Map(profiles.map((record) => [record.id, record])),
     regionHazardById: new Map(
-      regionsParsed.records.map((record) => [record.id, record.simulationProfile?.hazardPressure ?? 35])
-    )
+      regions.map((record) => [record.id, record.simulationProfile?.hazardPressure ?? 35])
+    ),
+    regionParentById: new Map(regions.map((record) => [record.id, record.parentRegionId ?? null]))
   };
 
   return cachedSpawnContent;
