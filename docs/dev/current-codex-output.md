@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-28. Source run: **Ordinary Encounter Context Authorship Decision**. Label class unversioned; parent not applicable. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized source and documentation starting head `3976619afbabb063624fcb15e10bd619b5f7e133`; publication identity is verified separately after push. Result: **AUTHORED_CONTEXT_DECIDED; IMPLEMENTATION_HELD**.
+
+## A. Files changed
+
+Focused `docs/design/ordinary-encounter-context-authorship-decision.md`, current prompt/output/handoff, historical/deferred register, planning-anchor reconciliation and branch register. No production source, content, schema, UI, test, save, dependency or game-version change.
+
+## B. Patch summary
+
+The project owner explicitly chose deliberate **Explore nearby environs** from Stonevein onto the authored Ore Ridge–Caravan Marches pass, with `frontier_track` to be explicitly placed for this one action/context. Stonevein is a reference, never a universal first encounter. The actual creator still has one known settlement and arrival activity, no encounter context, and no known travel catalog destination. Ordinary travel is a whole-leg alias command; generic shift stays in town. The focused decision fixes exact place, habitat and hazard provenance, owner split, a static authoring/lint slice, separate reachable-action slice and capacity/combat gates. The installed next prompt is `DEV-0.7.1 Slice A - Ordinary Encounter Context Static Authorship`; it does not implement combat or accept the planned parent milestone.
+
+## C. Tests and checks run
+
+Fresh fetch/prune confirmed source `HEAD == origin/master`, clean tree, one local/four hosted branches, and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Read-only creator probe used `createNewGameSnapshot` with validated Stonevein form and found `destination_not_known` for all four current travel catalog IDs; ordinary shift preview was available but carried no off-settlement context. Source inspection covered creator, World/Activity UI callers, travel/activity owners, exact routes/hexes/edges, world schemas, content-lint registration, and spawn/template/member/hazard authority. `node --test tests/unit/player-travel-command.test.mjs tests/unit/player-activity-selection-command.test.mjs tests/unit/combat-spawn-foundation.test.mjs` passed **47/47**. A hand-supplied resolver context at tick 1 yielded 36 hits for seeds 0–99, including a habitat-ineligible sapper template; this characterizes a later selector gate, not ordinary reachability. No browser run, positive ordinary caller, save mutation or capacity measurement. `git diff --check` and final publication/readback remain final gates; known 137 broad UI diagnostics were not rerun or called green.
+
+FP-001/017: ordinary creator/caller probe separates reachability from demo and injected spawn tests. FP-002: 47 green units do not accept ordinary combat. FP-008/009: retained branches reviewed semantically and inspected/publication heads distinguished. No new generalized pattern.
+
+Retained readiness `59c103c3` (429 master-only/2 ref-only), prompt-integrity `58a34e37` (376/1) and administration `210df5bc` (207/1) have unchanged merge bases, unique paths and dispositions `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`. Their review triggers are respectively scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no merge, rebase, integration, deletion, PR or disposition action due/performed.
+
+## D. Risks and follow-up notes
+
+The accepted reference needs a new action/context record and a later real World-panel caller. Unknown origins/actions stay `no_eligible_encounter`; current source cannot yet admit a positive encounter. The current resolver's template-habitat omission must be repaired in the later action/resolver slice. Repeatable campaign storage remains separate: retained peak 5,076,206/5,242,880 UTF-16 bytes leaves 166,674. Suggested commit: `docs(decision): select nearby exploration context authorship`. Next recommended run: **DEV-0.7.1 Slice A - Ordinary Encounter Context Static Authorship**; no separate game-version decision.
+
+---
+
 Date: 2026-09-28. Source run: **Ordinary Encounter Admission And Outcome Ownership Contract Decision**. Label class unversioned; parent not applicable. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`, band `DEV-0.7.x`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized source `fefd6bae0acca2bef53bb1eadc922350d557dffc`; documentation publication identity is verified separately after push. Result: **CONTRACT_ACCEPTED; IMPLEMENTATION_HELD**.
 
 ## A. Files changed

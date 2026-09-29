@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-28 Ordinary encounter context authorship
+
+**AUTHORED_CONTEXT_DECIDED; IMPLEMENTATION_HELD** at inspected source `3976619afbabb063624fcb15e10bd619b5f7e133`; see `docs/design/ordinary-encounter-context-authorship-decision.md`. The project owner chose deliberate **Explore nearby environs** from Stonevein onto the Ore Ridge–Caravan Marches pass with explicit `frontier_track` habitat for that action/place. This is one reference, not a universal first encounter. The installed next prompt is planned `DEV-0.7.1 Slice A - Ordinary Encounter Context Static Authorship`; subsequent action/caller/resolver, capacity and combat gates remain separate. No current combat implementation, accepted milestone or game-version change is claimed. This current entry supersedes older route wording below.
+
 ## 2026-09-28 Ordinary encounter owner contract
 
 **CONTRACT_ACCEPTED; IMPLEMENTATION_HELD** at source `fefd6bae0acca2bef53bb1eadc922350d557dffc`; see `docs/design/ordinary-encounter-admission-and-outcome-ownership-contract-decision.md`. User direction requires context-driven encounter eligibility and truthful no-match results, with Stonevein only a reference case. The sole active successor is the unversioned documentation-only **Ordinary Encounter Context Authorship Decision**. A positive ordinary encounter and repeatable storage gate remain open; no combat implementation, milestone or game-version change is installed. This current entry supersedes older route wording below.
