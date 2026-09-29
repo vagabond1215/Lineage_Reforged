@@ -10,10 +10,12 @@ import {
 } from "./saveManager.js";
 
 /** Isolated foundation. No existing localStorage caller uses this database yet. */
-export const CAMPAIGN_DATABASE_VERSION = 2;
+export const CAMPAIGN_DATABASE_VERSION = 3;
 export const CAMPAIGN_DATABASE_NAME = "lineage.campaigns";
 export const LEGACY_COPY_RECORD_STORE = "legacyCopyRecords";
 export const LEGACY_COPY_MANIFEST_STORE = "legacyCopyManifests";
+export const CANONICAL_RECORD_STORE = "canonicalRecords";
+export const CANONICAL_MANIFEST_STORE = "canonicalManifests";
 type Family = "artifacts" | "controls" | "slots" | "witnesses";
 const FAMILIES: Family[] = ["artifacts", "controls", "slots", "witnesses"];
 
@@ -165,12 +167,21 @@ export async function openCampaignIndexedDbDatabase(options: Pick<CampaignStoreO
       if (!db.objectStoreNames.contains(LEGACY_COPY_MANIFEST_STORE)) {
         db.createObjectStore(LEGACY_COPY_MANIFEST_STORE, { keyPath: "copyId" });
       }
+      if (!db.objectStoreNames.contains(CANONICAL_RECORD_STORE)) {
+        const store = db.createObjectStore(CANONICAL_RECORD_STORE, { keyPath: ["copyId", "scopeKind", "scopeId", "family", "identity"] });
+        store.createIndex("byGenerationScope", ["copyId", "scopeKind", "scopeId"], { unique: false });
+        store.createIndex("byGenerationScopeFamily", ["copyId", "scopeKind", "scopeId", "family"], { unique: false });
+        store.createIndex("byGenerationKey", ["copyId", "originalKey"], { unique: true });
+      }
+      if (!db.objectStoreNames.contains(CANONICAL_MANIFEST_STORE)) {
+        db.createObjectStore(CANONICAL_MANIFEST_STORE, { keyPath: ["copyId", "scopeKind", "scopeId"] });
+      }
     };
     request.onerror = () => reject(storeError(request.error, "unavailable"));
     request.onsuccess = () => {
       if (blocked) { request.result.close(); return; }
       const db = request.result;
-      if (FAMILIES.some(family => !db.objectStoreNames.contains(family)) || !db.objectStoreNames.contains(LEGACY_COPY_RECORD_STORE) || !db.objectStoreNames.contains(LEGACY_COPY_MANIFEST_STORE)) { db.close(); reject(new CampaignStoreError("invalid_record", "Campaign database schema is incomplete.")); return; }
+      if (FAMILIES.some(family => !db.objectStoreNames.contains(family)) || !db.objectStoreNames.contains(LEGACY_COPY_RECORD_STORE) || !db.objectStoreNames.contains(LEGACY_COPY_MANIFEST_STORE) || !db.objectStoreNames.contains(CANONICAL_RECORD_STORE) || !db.objectStoreNames.contains(CANONICAL_MANIFEST_STORE)) { db.close(); reject(new CampaignStoreError("invalid_record", "Campaign database schema is incomplete.")); return; }
       db.onversionchange = () => db.close();
       resolve(db);
     };
