@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-29 Ordinary campaign retention direction clarification
+
+**DIRECTION_RECORDED; RETENTION_DECISION_NOT_STARTED** at synchronized source `f0d8b4c82ba3683e1ec0a5df084625423f0d6a6e`. The installed unversioned **Ordinary Campaign Publication Capacity And Retention Contract Decision** now has two separate obligations: prove which copies are genuinely redundant and safe to bound while preserving legitimate durable campaign/history data, and decide whether long-running campaigns require a higher-capacity backend and migration. The 5 MiB preflight ceiling is a current implementation constraint, not a product save-size requirement. Slice C's failed capacity gate and held combat route remain in force; no decision or implementation began in this clarification. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and planned `DEV-0.7.1` unchanged. This entry supersedes only older route wording that assumed bounded retention alone would be sufficient.
+
 ## 2026-09-28 DEV-0.7.1 Slice C capacity preflight
 
 **CAPACITY_GATE_FAILED; COMBAT_ADMISSION_HELD** at checkpoint `bb24c483d7d683466d28dcace57fc1e6a723de0a` from synchronized source `fead51012561ca584359fcadf51d801b196ac21d`. An isolated production caller/save sequence reached 5,150,828 / 5,242,880 UTF-16 bytes at saved action 50 and exceeded the limit on action 51, while preserving the prior verified head. The focused capacity record and captured JSON give exact evidence; a narrow no-consumer retry completion bug was repaired. Install the unversioned documentation-only **Ordinary Campaign Publication Capacity And Retention Contract Decision** before any combat admission/outcome implementation. Planned parent `DEV-0.7.1`, game `0.1.1-prealpha`, `INTEGRATED_LOOP` and accepted `DEV-0.7.0` unchanged. This entry supersedes older active-route wording below.

@@ -4,6 +4,28 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **Ordinary Campaign Publication Capacity And Retention Direction Clarification**. Label class: unversioned cross-cutting coordination; parent `DEV-0.7.1` remains planned and held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `f0d8b4c82ba3683e1ec0a5df084625423f0d6a6e`. Result: **DIRECTION_RECORDED; RETENTION_DECISION_NOT_STARTED**.
+
+## A. Files changed
+
+Installed decision prompt, Slice C focused preflight record, this output, current GPT handoff, historical/deferred register, planning reconciliation and branch disposition register. No production, test, schema, content, save or version change.
+
+## B. Patch summary
+
+The project owner clarified that the measured 5 MiB ceiling constrains current persistence, not product campaign length. The installed decision now separately requires proof of genuinely redundant copies eligible for bounds and a long-running-campaign backend-capacity/migration disposition. Legitimate durable history remains protected. The Slice C measurements remain historical evidence; the retention decision itself was not executed.
+
+## C. Tests and checks run
+
+Documentation diff/readback and `git diff --check` only; no executable tests or browser campaign mutation. FP-002/008/009/011/012/014/015: capacity failure remains explicit, measured source and authority identities remain separated, and no accepted source, witness, history or newer head is declared disposable. No new generalized pattern.
+
+Fresh fetch/prune found one local/four hosted branches, and the scoped GitHub PR page showed zero open PRs; retained readiness `59c103c3` and prompt-integrity `58a34e37` remain protected, administration `210df5bc` remains held. This direction clarification consumes none of their review triggers and requires no integration, deletion, PR or disposition action. Review triggers remain readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective.
+
+## D. Risks and follow-up notes
+
+The current backend still fails the measured repeatability gate. The next installed run is the unversioned **Ordinary Campaign Publication Capacity And Retention Contract Decision**, documentation only, with independent retention and backend-capacity findings. Suggested commit message: `docs(prompt): preserve long-running campaign data in retention decision`. No implementation repair, migration or combat acceptance is claimed.
+
+---
+
 Date: 2026-09-28. Source run: **DEV-0.7.1 Slice C - Repeatable Encounter Capacity Preflight**. Label class: internal slice of planned current-band primary `DEV-0.7.1 - Ordinary Encounter Reachability`; parent remains unaccepted. Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `fead51012561ca584359fcadf51d801b196ac21d`; implementation/evidence checkpoint `bb24c483d7d683466d28dcace57fc1e6a723de0a`. Result: **CAPACITY_GATE_FAILED; COMBAT_ADMISSION_HELD**. Final documentation publication head is verified after push.
 
 ## A. Files changed

@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 Ordinary campaign retention direction clarification
+
+**DIRECTION_RECORDED; RETENTION_DECISION_NOT_STARTED** at synchronized source `f0d8b4c82ba3683e1ec0a5df084625423f0d6a6e`. The installed unversioned decision now distinguishes safe bounds for proven redundant publication copies from the separate need for a higher-capacity backend for long-running durable campaigns. The 5 MiB failure remains a current-backend gate, not the product save-size budget. Accepted campaign/history data and independent provenance must be preserved. Combat admission and parent acceptance remain held; game version, playability and accepted milestone are unchanged. This entry supersedes earlier route wording that implied compaction alone was the complete capacity answer.
+
 ## 2026-09-28 DEV-0.7.1 Slice C capacity preflight
 
 **CAPACITY_GATE_FAILED; COMBAT_ADMISSION_HELD** at checkpoint `bb24c483d7d683466d28dcace57fc1e6a723de0a` from source `fead51012561ca584359fcadf51d801b196ac21d`. Fifty saved ordinary nearby explorations retained 5,150,828 / 5,242,880 UTF-16 bytes; the next publication hit quota. The prior head remained verified, and a separate no-consumer retry completion omission was repaired. The installed unversioned **Ordinary Campaign Publication Capacity And Retention Contract Decision** must settle bounded evidence retention and quota recovery before combat admission/outcome work. Planned parent, game version and playability posture remain unchanged. This entry supersedes older route wording below.
