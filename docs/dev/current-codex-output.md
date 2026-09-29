@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **DEV-0.7.1 Slice F - Inert Canonical Materialization And Exact Readback**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `122082a611bf72b981a5f783b12c5506ceec5519`. Result: **INERT_CANONICAL_MATERIALIZATION_IMPLEMENTED; ACTIVATION_HELD**. Code checkpoint `d81c5ea2`; final hosted head is verified after handoff push.
+
+## A. Files changed
+
+Additive schema version 3 in `apps/rpg-ui/src/game-shell/campaignIndexedDbStore.ts`; new injected-source `legacyCanonicalMaterializationStore.ts`; synthetic native-browser `campaign-canonical-qa.html` and `.ts`; focused Slice F record, current output/handoff, historical/deferred route, planning reconciliation, branch register and successor prompt. No live caller import, source-key write, user data, dependency, combat or game-version change.
+
+## B. Patch summary
+
+Generation-scoped inert canonical records/manifests preserve exact source keys, UTF-16 raw values and digests across account and origin-unscoped families. Byte-verified Slice-E staging, graph/blocker analysis, provisional atomic scope write, independent close/reopen exact readback, source recensus, same-source retry and changed-source separation fail closed. Existing v1/v2 stores remain operational; no authority selector exists. Installed unversioned **Legacy Writer Fence And Async Caller Cutover Feasibility Decision** before live caller mutation.
+
+## C. Tests and checks run
+
+Fresh native Chromium canonical QA **14/14 PASS**; existing legacy-copy QA **15/15 PASS**; existing v1 publication QA **12/12 PASS** after v3 upgrade. Adjacent campaign/Soundings tests **68/68 PASS**. Node config typecheck **PASS**; Vite production build **PASS** (229 modules); staged diff check **PASS**. Broad UI typecheck **FAIL** with 137 known baseline diagnostics and zero in changed owner files. The first QA rerun found same-source final-manifest retry and blocked-upgrade error-code defects; both were fixed before final green evidence. Detailed fixtures, cases and limits: `docs/dev/dev-0.7.1-slice-f-inert-canonical-materialization-record.md`.
+
+FP-001/002/003/004/005/006/009/011/012/013/014/015 apply: isolated QA does not accept the parent; account-wide blockers, exact source/provenance, conflict, lost-state retry and independently retained first Soundings witness/artifact were exercised or held for real caller repair as named in the focused record. FP-008 applies to semantic branch review. No new generalized pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (446 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (393/1), administration `210df5bc`/base `fd40571b` (224/1) retain only their registered unique documentation paths and `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`. Exact review triggers remain scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. No trigger consumed, disposition change, integration, deletion or PR action due/performed.
+
+## D. Risks and follow-up notes
+
+Older open clients remain unfenced; activation, async caller conversion, reset/delete, export/restore, production repair, two-browser long-run capacity and combat acceptance remain held. Slice C capacity failure persists. Suggested handoff commit: `docs(handoff): record Slice F and writer-fence route`. No `GAME_VERSION` or parent acceptance; no separate game-version decision proposed.
+
+---
+
 Date: 2026-09-29. Source run: **Legacy Campaign Canonical Materialization And Activation Boundary Decision**. Label class: unversioned documentation decision; planned parent `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `307be4860c5fb7ca2ade90461ae57873a32cfbea`. Result: **CANONICAL_MATERIALIZATION_CONTRACT_ACCEPTED; ACTIVATION_HELD**. Final committed and hosted head are verified after push.
 
 ## A. Files changed
