@@ -1,3 +1,5 @@
+Date: 2026-09-29. **SLICE_D_PREWORK_READY.** Connector-safe six-pass audit at source `62fc8ad7856ad15ca6eb686c71e36f2193d0964f` is recorded in `docs/dev/connector-audit-slice-d-transactional-campaign-store-prework-2026-09-29.md`. It inventories persistence owners, extracts current publication invariants, maps the synchronous-to-async seam, audits Soundings witness dependencies, defines the Slice-D acceptance matrix, and checks migration/schema fit. Material refinement: Slice D must implement a publication-shaped atomic IndexedDB operation, not four unrelated CRUD stores; first durable Soundings publication cannot expose a committed head without its matching artifact and valid applied witness, and descendants must preserve stable first-publication provenance. Live localStorage callers remain unchanged; the new owner is explicitly async and no migration/cutover occurs. No blocker requires a new decision before Slice D. Current prompt incorporates this audit. Game/milestone/combat/branch dispositions unchanged.
+
 # Current GPT Handoff
 
 <!-- repo-scope-guard -->
