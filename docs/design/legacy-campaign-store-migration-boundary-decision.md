@@ -1,5 +1,7 @@
 # Legacy Campaign Store Migration Boundary Decision
 
+**2026-09-29 further owner-policy supersession:** The development-only clean-epoch decision waives preservation of all pre-cutover browser-local test data, including accounts, credentials, sessions, campaigns, history and migration records. Slice E remains inert historical evidence, not a required importer for activation; full new-epoch durability still applies.
+
 **2026-09-29 owner-policy supersession:** This document remains the accepted historical contract for inert Slice E copying. The owner has waived backward preservation/migration of saves from the currently deployed older build for later activation; a clean new persistence epoch may require a new campaign. Do not require this legacy copy as the source of new-epoch authority or build export/import solely for old-save compatibility. Old-client protection and new-epoch history durability remain required; see `legacy-writer-fence-and-async-caller-cutover-feasibility-decision.md`.
 
 Date: 2026-09-29. Repository: `vagabond1215/Lineage_Reforged` only. Inspected clean, synchronized `master` at `a2ce0de324fe7c04fc43a9b28d573616c0095e2e`; Slice D code checkpoint `db129b43`. Unversioned documentation decision; development milestone impact `none`, game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, and planned parent `DEV-0.7.1` are unchanged.

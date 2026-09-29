@@ -1,5 +1,7 @@
 # Legacy Writer Fence And Async Caller Cutover Feasibility Decision
 
+**2026-09-29 owner-policy supersession:** `development-only-clean-persistence-epoch-route-decision.md` now controls the route. The sole-user development deployment may deliberately close/reload all old tabs, clear all pre-cutover browser-local test data, and begin a fresh account/campaign epoch. The literal technical inability to force an already-open old writer to stop remains true, but all-client exclusion and old-bundle archaeology are no longer activation requirements. A small fresh database/key boundary and no legacy fallback protect new authority; all post-epoch durability, caller, recovery and capacity gates remain. Read the strict hold and candidate fence below as historical evidence, not the current product policy.
+
 Date: 2026-09-29. Inspected clean synchronized `master` at `37549a2cc6b82eb090df9384aa23aa1dc74a2fc1`. Unversioned documentation decision supporting planned `DEV-0.7.1` after Slice F. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. The project owner expressly waived backward preservation/migration of saves from the currently deployed older build: those saves may be invalidated/deleted and players may start a new campaign at activation. This waiver does not apply to saves created by the new architecture or its long-running history.
 
 ## Decision

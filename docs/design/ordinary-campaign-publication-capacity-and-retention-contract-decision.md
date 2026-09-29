@@ -1,5 +1,7 @@
 # Ordinary Campaign Publication Capacity And Retention Contract Decision
 
+**2026-09-29 scope clarification:** The owner's development-only clean-epoch reset permits disposal of pre-cutover browser test data and removes backward migration/old-save export obligations. Retention, backup/restore, recovery and long-running capacity requirements below govern campaigns and account/history data created in the new IndexedDB epoch. See `development-only-clean-persistence-epoch-route-decision.md`.
+
 Date: 2026-09-29. Repository: `vagabond1215/Lineage_Reforged` only. Inspected clean synchronized `master` at `a16523d8e08b14816a75db95e0b135c09ae40fc9`. Unversioned cross-cutting documentation decision; development milestone impact `none`, game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0`; planned `DEV-0.7.1` remains held.
 
 ## Disposition

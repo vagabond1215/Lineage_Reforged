@@ -4,6 +4,28 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **Development-Only Clean Persistence Epoch Route Decision**. Label class: unversioned owner-policy decision; planned parent `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `18ef8008e398cf13c316374a403d7069e7fedc7d`. Result: **CLEAN_DEVELOPMENT_EPOCH_ROUTE_ACCEPTED; IMPLEMENTATION_AND_ACTIVATION_HELD**.
+
+## A. Files changed
+
+New focused clean-epoch route decision; supersession notes in writer-fence, migration, canonical and retention decisions; current prompt/output/handoff, historical register, planning reconciliation and branch register. No source, browser storage, deployment, dependency, gameplay or game-version change.
+
+## B. Patch summary
+
+The owner confirms a sole-user development/testing deployment and waives *all* pre-cutover browser-local test data. A deliberate close/reload and origin-specific reset at eventual activation replaces technical all-old-tab exclusion and legacy migration gates. Use a fresh versioned IndexedDB database plus epoch-specific account/session keys, with no legacy fallback. Keep inert Slice E/F history, but do not activate an importer. After cutover, preserve complete campaign/world/lineage/Chronicle/history, non-head/fork artifacts, first Soundings provenance, account/attempt/recovery semantics, backup/restore and long-running capacity. Installed inert **DEV-0.7.1 Slice G1 - Clean-Epoch Transactional Account Store Extension**. No reset was performed.
+
+## C. Tests and checks run
+
+Fresh fetch/prune; exact branch and unique-path inventory; [zero-open-PR readback](https://github.com/vagabond1215/Lineage_Reforged/pulls); current schema, caller and authority review; documentation diff and `git diff --check`. No test, build, typecheck, native browser execution, Sites mutation or user-data read in this decision. Slice F's browser 14/15/12, adjacent 68 tests, Node typecheck and Vite build are reused evidence. Broad UI 137 diagnostics remain a known baseline, not a fresh green result. FP-001/002/003/004/005/006/011/012/013/014/015 are future post-epoch/caller constraints; FP-008/009 apply to branch/head review.
+
+One local/four hosted branches and zero open PRs inspected. Readiness `59c103c3`/base `895c02df` (449 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (396/1), administration `210df5bc`/base `fd40571b` (227/1) retain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`. Review triggers remain scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. No disposition change, integration, deletion, PR or branch action due/performed.
+
+## D. Risks and follow-up notes
+
+The operational close/reset is a sole-user development cutover assumption, not software proof that an arbitrary same-origin old script cannot run. New authority must stay isolated from legacy writes and fail closed. G1 does not activate it. Post-epoch capacity, real caller, two-browser, recovery and rollback/backup acceptance still gate activation/parent. Suggested commit: `docs(decision): accept development clean persistence epoch`. No game-version decision proposed.
+
+---
+
 Date: 2026-09-29. Source run: **Legacy Writer Fence And Async Caller Cutover Feasibility Decision**. Label class: unversioned documentation decision; planned parent `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `37549a2cc6b82eb090df9384aa23aa1dc74a2fc1`. Result: **SAME_ORIGIN_OLD_WRITER_EXCLUSION_UNPROVEN; CLEAN_EPOCH_ALLOWED_IN_PRINCIPLE; ACTIVATION_HELD**. Final hosted head is verified after documentation push.
 
 ## A. Files changed
