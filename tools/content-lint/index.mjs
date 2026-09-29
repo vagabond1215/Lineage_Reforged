@@ -22,6 +22,7 @@ import { validateReligiousHotspots } from "./religious-hotspots.mjs";
 import { validateSacredSites } from "./sacred-sites.mjs";
 import { validateSettlementVisualMapRefs } from "./settlement-visual-map-refs.mjs";
 import { validateMonsterAuthority } from "./monsters.mjs";
+import { validateEncounterActionContexts } from "./encounter-action-contexts.mjs";
 import {
   validateQuestArchetypeActionTrees,
   validateQuestDefinitionActionTrees
@@ -788,6 +789,12 @@ const checks = [
     requireSlug: false,
     forbidGeoQualifierInName: false,
     validateSpawnProfiles: true
+  },
+  {
+    file: "packages/content/base/world/encounter_action_contexts.json",
+    requiredTopLevel: ["records"],
+    requireSlug: false,
+    forbidGeoQualifierInName: false
   },
   {
     file: "packages/content/base/player/equipment_slots.json",
@@ -10167,6 +10174,27 @@ async function validateCombatFoundationAgainstDependencies() {
   }
 }
 
+async function validateEncounterActionContextsAgainstDependencies() {
+  const load = async (name) => JSON.parse(await readFile(
+    path.join(ROOT, `packages/content/base/world/${name}.json`), "utf8"
+  )).records;
+  const collection = JSON.parse(await readFile(path.join(
+    ROOT, "packages/content/base/world/encounter_action_contexts.json"
+  ), "utf8"));
+  if (Object.keys(collection).length !== 1 || !Object.hasOwn(collection, "records")) {
+    throw new Error("packages/content/base/world/encounter_action_contexts.json must contain only records");
+  }
+  validateEncounterActionContexts(collection.records, {
+    regions: await load("regions"),
+    settlements: await load("settlements"),
+    worldHexes: await load("world_hexes"),
+    worldHexEdges: await load("world_hex_edges"),
+    spawnProfiles: await load("spawn_profiles"),
+    encounterTemplates: await load("encounter_templates"),
+    monsters: await load("monsters")
+  });
+}
+
 async function validateMonstersAgainstMarketValues() {
   const monsterPath = path.join(ROOT, "packages/content/base/world/monsters.json");
   const marketPath = path.join(ROOT, "packages/content/base/civilization/market_item_values.json");
@@ -10497,6 +10525,7 @@ async function main() {
   await validateQuestDefinitionsAgainstWorldData();
   await validatePlayerContentAgainstDependencies();
   await validateCombatFoundationAgainstDependencies();
+  await validateEncounterActionContextsAgainstDependencies();
   await validateMonsterAuthorityAgainstDependencies();
   await validateMonstersAgainstMarketValues();
   await validateTravelNetworksAgainstWorldData();

@@ -87,7 +87,8 @@ const schemaFiles = [
   "packages/schemas/items/weapon-profile.schema.json",
   "packages/schemas/items/armor-profile.schema.json",
   "packages/schemas/crafting/recipe.schema.json",
-  "packages/schemas/world/spawn-profile.schema.json"
+  "packages/schemas/world/spawn-profile.schema.json",
+  "packages/schemas/world/encounter-action-context.schema.json"
 ];
 
 for (const schemaFile of schemaFiles) {

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["records"],
+  "properties": {
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "actionType", "originSettlementId", "localRegionId",
+          "originWorldHexId", "worldHexEdgeId", "habitatTags", "hazardSource"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^encounter_action_context\\.[a-z0-9]+(?:_[a-z0-9]+)*$" },
+          "actionType": { "type": "string", "pattern": "^player\\.[a-z0-9]+(?:\\.[a-z0-9]+)*$" },
+          "originSettlementId": { "type": "string", "pattern": "^settlement\\.[a-z0-9]+(?:_[a-z0-9]+)*$" },
+          "localRegionId": { "type": "string", "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*$" },
+          "originWorldHexId": { "type": "string", "pattern": "^world_hex\\.[a-z0-9]+(?:_[a-z0-9]+)*$" },
+          "worldHexEdgeId": { "type": "string", "pattern": "^world_hex_edge\\.[a-z0-9]+(?:_[a-z0-9]+)*$" },
+          "habitatTags": {
+            "type": "array", "minItems": 1, "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[a-z0-9]+(?:_[a-z0-9]+)*$" }
+          },
+          "hazardSource": { "type": "string", "pattern": "^region\\.[a-z0-9]+(?:_[a-z0-9]+)*\\.simulationProfile\\.hazardPressure$" }
+        }
+      }
+    }
+  }
+}

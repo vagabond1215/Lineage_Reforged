@@ -1,0 +1,14 @@
+{
+  "records": [
+    {
+      "id": "encounter_action_context.stonevein_ore_caravan_explore",
+      "actionType": "player.explore.nearby",
+      "originSettlementId": "settlement.stonevein",
+      "localRegionId": "region.auric_marches",
+      "originWorldHexId": "world_hex.auric_marches_ore_ridges",
+      "worldHexEdgeId": "world_hex_edge.auric_marches_ore_ridges_auric_marches_caravan_marches",
+      "habitatTags": ["frontier_track"],
+      "hazardSource": "region.auric_marches.simulationProfile.hazardPressure"
+    }
+  ]
+}
