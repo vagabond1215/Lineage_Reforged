@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **Legacy Writer Fence And Async Caller Cutover Feasibility Decision**. Label class: unversioned documentation decision; planned parent `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `37549a2cc6b82eb090df9384aa23aa1dc74a2fc1`. Result: **SAME_ORIGIN_OLD_WRITER_EXCLUSION_UNPROVEN; CLEAN_EPOCH_ALLOWED_IN_PRINCIPLE; ACTIVATION_HELD**. Final hosted head is verified after documentation push.
+
+## A. Files changed
+
+New `docs/design/legacy-writer-fence-and-async-caller-cutover-feasibility-decision.md`; owner-policy supersession notes in the focused canonical and migration decisions; current output/handoff, historical/deferred route, planning reconciliation, branch register and installed successor prompt. No production code, deployment, browser user data, dependency or game-version change.
+
+## B. Patch summary
+
+The owner selected the existing origin and waived backward preservation/migration/export of pre-cutover legacy saves; new-epoch saves and long-running history remain fully durable. Direct synchronous legacy writers remain in save, profile, attempt, launcher and lifecycle owners. The configured owner-only Sites preview has a successful version-2 deployment dated 2026-09-02; its source SHA is absent from this checkout and deployment metadata provides no open-tab/old-client barrier. New markers or cooperative signals cannot stop already-open old scripts, and IndexedDB/localStorage share no transaction. An isolated new database plus versioned auth/account namespace could make old writes non-interfering, but neither exact old-bundle capability nor literal old-writer exclusion is proven. The full earlier G migration package is not admitted; installed **Clean Persistence Epoch Namespace And Deployed Old-Client Capability Decision** as the next bounded route. No old keys were deleted.
+
+## C. Tests and checks run
+
+Fresh fetch/prune, exact branch divergence and unique-path inventory, [zero-open-PR readback](https://github.com/vagabond1215/Lineage_Reforged/pulls), current source/caller/hosting-config inspection, read-only Sites project/version/deployment metadata, and documentation diff check. No test, build, typecheck, native browser migration probe or user-data read was run in this docs-only decision. Slice F's Chromium 14/15/12 suites, 68 adjacent tests, Node typecheck and Vite build are **reused prior evidence**; broad UI typecheck's 137 diagnostics remain a baseline, not a green result. Detailed fresh evidence and limits are in the focused decision.
+
+FP-001/002/003/004/005/006/009/011/012/013/014/015 apply as future real-caller, parent, repair, contention, retry, stale authority, provenance and nested-history constraints; FP-008 applies to semantic branch review. No new generalized pattern is needed.
+
+One local/four hosted branches and zero open PRs were inspected. Readiness `59c103c3`/base `895c02df` (448 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (395/1), administration `210df5bc`/base `fd40571b` (226/1) retain their unique documentation paths and `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`. Triggers remain scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. No trigger consumed, integration, deletion, PR or disposition change due/performed.
+
+## D. Risks and follow-up notes
+
+Same-origin all-old-tab exclusion cannot be proved from the present app or Sites metadata. A disjoint namespace is only a candidate non-interference boundary and cannot silently replace the owner's stated exclusion requirement. New-epoch account/credential transition and actual published-bundle capabilities need a separate decision. Slice C capacity, live activation, combat admission and parent acceptance stay held. Suggested commit: `docs(decision): hold same-origin cutover at old-client boundary`. No game-version decision proposed.
+
+---
+
 Date: 2026-09-29. Source run: **DEV-0.7.1 Slice F - Inert Canonical Materialization And Exact Readback**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `122082a611bf72b981a5f783b12c5506ceec5519`. Result: **INERT_CANONICAL_MATERIALIZATION_IMPLEMENTED; ACTIVATION_HELD**. Code checkpoint `d81c5ea2`; final hosted head is verified after handoff push.
 
 ## A. Files changed

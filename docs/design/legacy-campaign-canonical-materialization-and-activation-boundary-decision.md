@@ -1,5 +1,7 @@
 # Legacy Campaign Canonical Materialization And Activation Boundary Decision
 
+**2026-09-29 owner-policy supersession:** Backward preservation, migration, reconciliation and export/import of saves from the currently deployed older build are no longer required. At eventual activation, those saves may be invalidated/deleted and players may start a new campaign. This changes the later activation route, not the historical Slice F implementation evidence. The same-origin old-client boundary and full long-running durability of saves created by the new persistence architecture remain mandatory. See `legacy-writer-fence-and-async-caller-cutover-feasibility-decision.md`; do not read the legacy-import and old-save export gates below as current requirements for a clean new epoch.
+
 Date: 2026-09-29. Inspected clean synchronized `master` at `307be4860c5fb7ca2ade90461ae57873a32cfbea`. Unversioned documentation decision; planned parent `DEV-0.7.1` remains held. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
 
 ## Decision
