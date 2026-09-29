@@ -1,4 +1,4 @@
-import { openCampaignIndexedDbStore, type CampaignStorePublication, type CampaignStoreFailureCode } from "./src/game-shell/campaignIndexedDbStore.ts";
+import { CAMPAIGN_DATABASE_VERSION, openCampaignIndexedDbStore, type CampaignStorePublication, type CampaignStoreFailureCode } from "./src/game-shell/campaignIndexedDbStore.ts";
 
 type Fixture = { raw: string; control: CampaignStorePublication["control"]; witness?: NonNullable<CampaignStorePublication["witness"]> };
 const output = document.querySelector<HTMLPreElement>("#result")!;
@@ -83,7 +83,7 @@ async function nativeSuite() {
       await expectCode(() => store.publish(ordinary), "aborted"); store.close();
       const reopened = await openCampaignIndexedDbStore({ name });
       check(await reopened.read(ordinary.accountId, ordinary.campaignId, ordinary.slotId) === null, `partial ${family} head`);
-      const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, 1); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
+      const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, CAMPAIGN_DATABASE_VERSION); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
       for (const f of ["artifacts", "controls", "slots", "witnesses"]) {
         const identity = f === "artifacts" ? [ordinary.accountId, JSON.parse(ordinary.artifactRaw).artifactId] : f === "controls" ? [ordinary.accountId, ordinary.campaignId] : f === "slots" ? [ordinary.accountId, ordinary.slotId] : [ordinary.accountId, ordinary.campaignId, "missing"];
         check(await rawRead(db, f, identity) === undefined, `partial ${family} record at ${f}`);
@@ -101,7 +101,7 @@ async function nativeSuite() {
   await test("malformed stored family and malformed input fail closed", async () => {
     const name = key("malformed"); const store = await openCampaignIndexedDbStore({ name }); await store.publish(ordinary);
     await expectCode(() => store.publish({ ...ordinary, artifactRaw: ordinary.artifactRaw.replace('"version":7', '"version":8') }), "invalid_record");
-    const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, 1); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
+    const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, CAMPAIGN_DATABASE_VERSION); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
     await rawChange(db, "controls", { version: 99, accountId: ordinary.accountId, campaignId: ordinary.campaignId, value: ordinary.control }); db.close();
     await expectCode(() => store.publish(next(ordinary)), "invalid_record"); store.close();
   });
@@ -122,7 +122,7 @@ async function nativeSuite() {
     const name = key("soundings-conflict"); const store = await openCampaignIndexedDbStore({ name }); await store.publish(soundings);
     const changedWitness = { ...soundings.witness!, sourceArtifactId: "artifact.conflicting.source" };
     await expectCode(() => store.publish({ ...soundings, witness: changedWitness }), "conflict");
-    const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, 1); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
+    const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, CAMPAIGN_DATABASE_VERSION); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
     const witness = await rawRead<Record<string, unknown>>(db, "witnesses", [soundings.accountId, soundings.campaignId, soundings.witness!.requestId]);
     await rawChange(db, "witnesses", { ...witness, version: 99 }); db.close();
     await expectCode(() => store.publish(next(soundings)), "invalid_record"); store.close();
@@ -130,7 +130,7 @@ async function nativeSuite() {
   await test("missing and pending Soundings witness block descendants", async () => {
     for (const posture of ["missing", "pending"]) {
       const name = key(`soundings-${posture}`); const store = await openCampaignIndexedDbStore({ name }); await store.publish(soundings);
-      const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, 1); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
+      const db = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, CAMPAIGN_DATABASE_VERSION); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
       const identity = [soundings.accountId, soundings.campaignId, soundings.witness!.requestId];
       if (posture === "missing") await rawDelete(db, "witnesses", identity);
       else {
@@ -148,8 +148,8 @@ async function nativeSuite() {
   });
   await test("blocked upgrade and unavailable factory report explicit failures", async () => {
     const name = key("blocked"); const created = await openCampaignIndexedDbStore({ name }); created.close();
-    const holder = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, 1); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
-    await expectCode(() => openCampaignIndexedDbStore({ name, factory: { open: () => indexedDB.open(name, 2) } as IDBFactory }), "blocked_upgrade");
+    const holder = await new Promise<IDBDatabase>((resolve, reject) => { const op = indexedDB.open(name, CAMPAIGN_DATABASE_VERSION); op.onsuccess = () => resolve(op.result); op.onerror = () => reject(op.error); });
+    await expectCode(() => openCampaignIndexedDbStore({ name, factory: { open: () => indexedDB.open(name, CAMPAIGN_DATABASE_VERSION + 1) } as IDBFactory }), "blocked_upgrade");
     holder.close();
     await expectCode(() => openCampaignIndexedDbStore({ factory: { open: () => { throw new Error("unavailable"); } } as unknown as IDBFactory }), "unavailable");
   });

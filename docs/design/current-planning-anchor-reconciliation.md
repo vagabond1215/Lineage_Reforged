@@ -1,5 +1,10 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 DEV-0.7.1 Slice E inert legacy authority copy
+
+**INERT_COPY_IMPLEMENTED; ACTIVATION_HELD** at inspected source `87ddc774dec662bdc68d0ae30428505ff0c5d0c2`. IndexedDB schema v2 adds inert exact-raw legacy staging and verified/blocked manifest status while v1 publication behavior remains intact; 15/15 new and 12/12 existing native Chromium QA passed. No live caller or source data is cut over. The next installed route is the unversioned **Legacy Campaign Canonical Materialization And Activation Boundary Decision**. Canonical schema, async callers, stale-tab fencing, account reset/delete, export/rollback, two-browser long-run capacity and combat acceptance remain separate. Planned parent `DEV-0.7.1`, Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and accepted `DEV-0.7.0` remain unchanged. This supersedes older Slice-E-active wording while retaining chronology.
+
+
 ## 2026-09-29 Legacy campaign store migration boundary decision
 
 **MIGRATION_COPY_CONTRACT_ACCEPTED; ACTIVATION_HELD** at inspected synchronized source `a2ce0de324fe7c04fc43a9b28d573616c0095e2e`. `docs/design/legacy-campaign-store-migration-boundary-decision.md` selects an additive IndexedDB v2 inert exact-raw copy and account-wide verification stage because Slice D's v1 publication owner cannot retain every legacy, account, recovery or non-head family. Installed next route: **DEV-0.7.1 Slice E - Inert Legacy Authority Copy And Verification**. Activation, async callers, reset/delete coordination, export/rollback, two-browser long-run capacity and combat acceptance remain separate. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and planned parent `DEV-0.7.1` remain unchanged. This supersedes the older migration-decision-active route while preserving chronology.

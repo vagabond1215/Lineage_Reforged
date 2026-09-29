@@ -10,8 +10,10 @@ import {
 } from "./saveManager.js";
 
 /** Isolated foundation. No existing localStorage caller uses this database yet. */
-export const CAMPAIGN_DATABASE_VERSION = 1;
+export const CAMPAIGN_DATABASE_VERSION = 2;
 export const CAMPAIGN_DATABASE_NAME = "lineage.campaigns";
+export const LEGACY_COPY_RECORD_STORE = "legacyCopyRecords";
+export const LEGACY_COPY_MANIFEST_STORE = "legacyCopyManifests";
 type Family = "artifacts" | "controls" | "slots" | "witnesses";
 const FAMILIES: Family[] = ["artifacts", "controls", "slots", "witnesses"];
 
@@ -134,7 +136,8 @@ export type CampaignStoreOptions = {
   afterWrite?: (family: Family, transaction: IDBTransaction) => void;
 };
 
-export async function openCampaignIndexedDbStore(options: CampaignStoreOptions = {}): Promise<CampaignIndexedDbStore> {
+/** Schema access for the isolated legacy copy owner. Never exposes a live caller. */
+export async function openCampaignIndexedDbDatabase(options: Pick<CampaignStoreOptions, "name" | "factory"> = {}): Promise<IDBDatabase> {
   let factory: IDBFactory | undefined;
   try { factory = options.factory ?? globalThis.indexedDB; }
   catch (error) { throw new CampaignStoreError("unavailable", "IndexedDB is unavailable in this browser.", error); }
@@ -155,16 +158,28 @@ export async function openCampaignIndexedDbStore(options: CampaignStoreOptions =
         const store = db.createObjectStore(family, { keyPath: keys });
         store.createIndex("byAccountCampaign", ["accountId", "campaignId"], { unique: false });
       }
+      if (!db.objectStoreNames.contains(LEGACY_COPY_RECORD_STORE)) {
+        const store = db.createObjectStore(LEGACY_COPY_RECORD_STORE, { keyPath: ["copyId", "key"] });
+        store.createIndex("byCopy", "copyId", { unique: false });
+      }
+      if (!db.objectStoreNames.contains(LEGACY_COPY_MANIFEST_STORE)) {
+        db.createObjectStore(LEGACY_COPY_MANIFEST_STORE, { keyPath: "copyId" });
+      }
     };
     request.onerror = () => reject(storeError(request.error, "unavailable"));
     request.onsuccess = () => {
       if (blocked) { request.result.close(); return; }
       const db = request.result;
-      if (FAMILIES.some(family => !db.objectStoreNames.contains(family))) { db.close(); reject(new CampaignStoreError("invalid_record", "Campaign database schema is incomplete.")); return; }
+      if (FAMILIES.some(family => !db.objectStoreNames.contains(family)) || !db.objectStoreNames.contains(LEGACY_COPY_RECORD_STORE) || !db.objectStoreNames.contains(LEGACY_COPY_MANIFEST_STORE)) { db.close(); reject(new CampaignStoreError("invalid_record", "Campaign database schema is incomplete.")); return; }
       db.onversionchange = () => db.close();
-      resolve(new CampaignIndexedDbStore(db, options.beforeWrite, options.afterWrite));
+      resolve(db);
     };
   });
+}
+
+export async function openCampaignIndexedDbStore(options: CampaignStoreOptions = {}): Promise<CampaignIndexedDbStore> {
+  const db = await openCampaignIndexedDbDatabase(options);
+  return new CampaignIndexedDbStore(db, options.beforeWrite, options.afterWrite);
 }
 
 export class CampaignIndexedDbStore {

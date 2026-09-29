@@ -406,7 +406,7 @@ function isAccountEstateState(value: unknown): value is AccountEstateState {
   );
 }
 
-function isAccountProfileState(value: unknown): value is AccountProfileState {
+export function isAccountProfileState(value: unknown): value is AccountProfileState {
   return (
     isRecord(value) &&
     typeof value.accountId === "string" &&

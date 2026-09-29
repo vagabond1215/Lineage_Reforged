@@ -617,7 +617,7 @@ export function isStoredSaveEnvelope(value: unknown): value is StoredSaveEnvelop
   );
 }
 
-function isLegacyStoredSaveEnvelope(
+export function isLegacyStoredSaveEnvelope(
   value: unknown
 ): value is LegacyStoredSaveEnvelope {
   if (!isRecord(value)) {
@@ -669,7 +669,7 @@ function isCampaignPublicationConsumerKind(
   );
 }
 
-function isStoredPublicationRecovery(
+export function isStoredPublicationRecovery(
   value: unknown
 ): value is StoredPublicationRecovery {
   return (

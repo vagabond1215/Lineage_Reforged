@@ -1,5 +1,10 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-29 DEV-0.7.1 Slice E inert legacy authority copy
+
+**INERT_COPY_IMPLEMENTED; ACTIVATION_HELD** from clean synchronized source `87ddc774dec662bdc68d0ae30428505ff0c5d0c2`. Additive IndexedDB v2 staged records/manifests preserve exact legacy campaign/account raw bytes, including malformed/unknown evidence, without source writes or live caller imports. Native Chromium copy QA passed 15/15, existing publication QA 12/12, adjacent tests 68/68, Node config typecheck and Vite build passed. Broad UI typecheck remains 137 baseline diagnostics. The installed successor is the unversioned **Legacy Campaign Canonical Materialization And Activation Boundary Decision** to settle complete schema, async caller, stale-tab fencing, account reset/delete, export/rollback and staged package order. Slice C capacity failure and combat/parent holds persist; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the Slice-E-active route, not its decision.
+
+
 ## 2026-09-29 Legacy campaign store migration boundary decision
 
 **MIGRATION_COPY_CONTRACT_ACCEPTED; ACTIVATION_HELD** from clean synchronized source `a2ce0de324fe7c04fc43a9b28d573616c0095e2e`. The focused decision maps v7/v6/obsolete saves, migration evidence, account profile/history/consumers, attempts, launcher pointers/auth and preferences. The v1 IndexedDB publication owner cannot import complete legacy authority; an additive v2 inert exact-raw stage with account-wide verification and quarantine is the bounded successor **DEV-0.7.1 Slice E - Inert Legacy Authority Copy And Verification**. Copy does not activate or delete old authority. Async callers, canonical materialization, account reset/delete, export/rollback and two-browser capacity acceptance remain later gates. Slice C capacity failure and combat/parent hold persist; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the Slice-D-installed decision route, not its historical result.
