@@ -1237,7 +1237,9 @@ export class CleanEpochAccountStore {
   private async write(accountId: string, expectedRevision: number | null,
     nextValue: CleanEpochAccountRecord | ((current: CleanEpochAccountRecord) => CleanEpochAccountRecord)): Promise<CleanEpochAccountWriteResult> {
     let transaction: IDBTransaction;
-    try { transaction = this.db.transaction(CLEAN_EPOCH_ACCOUNT_STORE, "readwrite"); }
+    try { transaction = this.db.transaction(expectedRevision === null ? [CLEAN_EPOCH_ACCOUNT_STORE] :
+      [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
+        CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE], "readwrite"); }
     catch (error) { throw classify(error, "unavailable"); }
     const done = complete(transaction);
     let next: CleanEpochAccountRecord;
@@ -1259,6 +1261,45 @@ export class CleanEpochAccountStore {
         else if (current.revision !== expectedRevision) fail("stale_head", "Account revision changed.");
       }
       if (status === "committed") {
+        if (expectedRevision !== null) {
+          // The account CAS and every publication recovery share this transaction scope.
+          // An edit cannot consume the revision reserved by a lost campaign caller.
+          const attempts = await requestValue(transaction.objectStore(CLEAN_EPOCH_ATTEMPT_STORE)
+            .getAll(IDBKeyRange.bound([accountId, ""], [accountId, "\uffff"])) as IDBRequest<unknown[]>);
+          const firstRecoveries = await requestValue(transaction.objectStore(CLEAN_EPOCH_RECOVERY_STORE)
+            .getAll(IDBKeyRange.bound([accountId, ""], [accountId, "\uffff"])) as IDBRequest<unknown[]>);
+          const bySlot = new Map<string, CleanEpochAttemptRecord>();
+          for (const raw of attempts) {
+            const slotId = object(raw) && typeof raw.slotId === "string" ? raw.slotId : "";
+            const attempt = checkedAttempt(raw, accountId, slotId);
+            bySlot.set(slotId, attempt);
+          }
+          const recovered = new Set<string>();
+          for (const raw of firstRecoveries) {
+            const slotId = object(raw) && typeof raw.slotId === "string" ? raw.slotId : "";
+            const attempt = bySlot.get(slotId);
+            if (!attempt) fail("invalid_record", "Account has orphan first-publication recovery.");
+            const recovery = checkedRecovery(raw, attempt);
+            recovered.add(slotId);
+            if (recovery.status !== "consumers_completed")
+              fail("conflict", "Account has pending first-publication consumers.");
+            if (!completedReceiptsMatch(current!, recovery))
+              fail("invalid_record", "Completed first-publication receipts are missing.");
+          }
+          if ([...bySlot.keys()].some(slotId => !recovered.has(slotId)))
+            fail("conflict", "Account has a prepared first-campaign attempt.");
+          const descendants = await requestValue(transaction.objectStore(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE)
+            .getAll(IDBKeyRange.bound([accountId, "", ""], [accountId, "\uffff", "\uffff"])) as IDBRequest<unknown[]>);
+          for (const raw of descendants) {
+            const campaignId = object(raw) && typeof raw.campaignId === "string" ? raw.campaignId : "";
+            const publicationId = object(raw) && typeof raw.publicationId === "string" ? raw.publicationId : "";
+            const recovery = checkedDescendantRecovery(raw, accountId, campaignId, publicationId);
+            if (recovery.status !== "consumers_completed")
+              fail("conflict", "Account has pending descendant consumers.");
+            if (!descendantReceiptsMatch(current!, recovery))
+              fail("invalid_record", "Completed descendant receipts are missing.");
+          }
+        }
         this.beforeWrite?.(transaction);
         await requestValue(store.put(next));
         this.afterWrite?.(transaction);

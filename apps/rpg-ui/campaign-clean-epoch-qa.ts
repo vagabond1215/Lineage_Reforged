@@ -309,9 +309,10 @@ async function suite() {
     await owner.prepareAttempt(attempt);
     await expectCode(() => owner.publishPreparedAttempt("attempt.regenerated", firstPublication), "conflict");
     await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, { ...firstPublication, campaignId: "wrong.campaign" }), "invalid_record");
-    await owner.updateProfile(accountId, 1, { ...profile, displayName: "later" });
-    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "stale_head");
-    check(await owner.readRecovery(accountId, attempt.slotId) === null, "invalid request published"); owner.close();
+    await expectCode(() => owner.updateProfile(accountId, 1, { ...profile, displayName: "later" }), "conflict");
+    check(await owner.readRecovery(accountId, attempt.slotId) === null, "invalid request published");
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    check((await owner.readRecovery(accountId, attempt.slotId))?.status === "accepted_pending_consumers", "fenced attempt could not publish"); owner.close();
   });
   await test("stale campaign head rejects first publication without changing its artifact", async () => {
     const databaseName = name("publication-stale-head"); const owner = await openCleanEpochAccountStore({ name: databaseName });
@@ -449,9 +450,10 @@ async function suite() {
     await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
     await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, "wrong-attempt", envelope.publicationId), "conflict");
     await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, "wrong-publication"), "conflict");
-    await owner.updateProfile(accountId, 1, { ...profile, displayName: "concurrent update" });
-    await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId), "stale_head");
-    check((await owner.read(accountId))?.revision === 2 && (await owner.readRecovery(accountId, attempt.slotId))?.status === "accepted_pending_consumers", "stale completion changed authority"); owner.close();
+    await expectCode(() => owner.updateProfile(accountId, 1, { ...profile, displayName: "concurrent update" }), "conflict");
+    check((await owner.read(accountId))?.revision === 1 && (await owner.readRecovery(accountId, attempt.slotId))?.status === "accepted_pending_consumers", "fence changed pending authority");
+    await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    check((await owner.readSlot(accountId, attempt.slotId)).status === "ready", "fenced consumers could not complete"); owner.close();
   });
   await test("abort and quota at each consumer write preserve pending recovery and account", async () => {
     for (const [mode, stop] of [["aborted", 1], ["aborted", 2], ["quota", 1], ["quota", 2]] as const) {
@@ -815,10 +817,11 @@ async function suite() {
     await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
     const request = nextRequest(envelope, 2, 2); await owner.publishDescendant(request);
     const retained = (await owner.read(accountId))!;
-    await owner.updateProfile(accountId, 2, { ...retained.profile, displayName: "Concurrent profile edit" });
-    await expectCode(() => owner.completeDescendantConsumers(accountId, attempt.campaignId, request.next.publicationId), "stale_head");
-    check((await owner.read(accountId))?.profile.displayName === "Concurrent profile edit" &&
-      (await owner.readSlot(accountId, "slot-1")).status === "pending_consumers", "stale completion overwrote profile");
+    await expectCode(() => owner.updateProfile(accountId, 2, { ...retained.profile, displayName: "Concurrent profile edit" }), "conflict");
+    check((await owner.read(accountId))?.profile.displayName === retained.profile.displayName &&
+      (await owner.readSlot(accountId, "slot-1")).status === "pending_consumers", "fence changed pending profile");
+    await owner.completeDescendantConsumers(accountId, attempt.campaignId, request.next.publicationId);
+    check((await owner.readSlot(accountId, "slot-1")).status === "ready", "fenced descendant could not complete");
     owner.close();
   });
   await test("missing descendant artifact or applied receipt blocks load and retry", async () => {
