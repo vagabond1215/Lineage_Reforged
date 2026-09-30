@@ -1,24 +1,23 @@
-# DEV-0.7.1 Slice G8C — First Witnessed Descendant And Cross-Slot Authority Decision
+# DEV-0.7.1 Slice G8D — First Witnessed Descendant Owner Implementation
 
 <!-- repo-scope-guard -->
 > **Repository boundary — mandatory:** This document applies only to `vagabond1215/Lineage_Reforged`. All repository work must stay in this repository. Cross-repository mutation is unauthorized.
 <!-- /repo-scope-guard -->
 
-Date: 2026-09-30. Internal decision slice of planned primary `DEV-0.7.1`; parent, Game version and live activation remain held. Controlling authorities: `docs/dev/dev-0.7.1-slice-g8b-inert-descendant-caller-checkpoint.md`, `docs/design/clean-epoch-async-caller-ownership-and-activation-package-decision.md`, the G8A/G7B/G6 records, and the development-only clean persistence epoch decision.
+Date: 2026-09-30. Internal implementation slice of planned primary `DEV-0.7.1`; parent, Game version and live activation remain held. Controlling authority: `docs/design/g8c-first-witnessed-descendant-and-cross-slot-authority-decision.md`, then G8B/G6 and accepted Soundings provenance authority.
 
-## Pre-edit gate
+## Objective
 
-Start from synchronized `master`; note dirt, complete repository-first orientation and fresh branch/PR review. Read complete current prompt/handoff/output, historical/deferred and planning registers, protocol, platform/resource policy, failure-pattern and branch registers, focused G8B/G8A/G7B/G6 authority, ordinary App and save owners, epoch account/publication stores, Soundings admission/provenance owner and tests. Record exact source head, run identities, bounded documentation files, exclusions and decision acceptance checks before editing. Pre-cutover development saves are disposable; data created after the new epoch is not.
+Implement only the accepted **first independently witnessed descendant** owner contract. Do not implement cross-slot addressing or cut App over in this slice.
 
-## Decision package
+Extend the clean-epoch descendant publication/recovery owner so the first ordinary Soundings completion after the pure creator head can durably publish from an independently produced **session witness**. The caller must verify the gameplay/session witness against the target snapshot before publication; the transactional owner must independently validate its exact source/predecessor and target facts. In the same IndexedDB transaction as artifact/head/slot/pending recovery, convert the accepted session witness to the immutable applied witness with the new publication's `firstDurable*` identity. Never infer witness authority from snapshot agreement.
 
-Resolve the two concrete G8B owner gaps before selecting the real App route:
+Preserve expected campaign-head and account-revision CAS, immutable source/history, exactly-once consumer recovery, retained first creator artifact and later provenance. Same-source retry must reuse exact retained publication/witness/recovery. Lost caller must resume the accepted head. Reject missing/tampered/stale/session-mismatched witness, second first witness, downgrade, malformed retained evidence, closed campaign and conflicting retry.
 
-1. Define an account-scoped async transaction/recovery contract for the **first independently witnessed Soundings completion after a pure creator first head**. Trace the real Soundings command's session witness through accepted gameplay, publication, immutable first witnessed artifact, applied witness and account consumers. Specify how the owner validates independence from the mutable snapshot, exact source/predecessor, retry, restart, two-owner contention, malformed or missing evidence, and no provenance downgrade. Do not infer a witness from snapshot agreement.
-2. Define manual and quick **cross-slot campaign address semantics** matching the actual ordinary App behavior. Specify whether a quick slot retains an independent accepted snapshot or aliases a campaign head, how source and destination slots, account history, immutable non-head/fork artifacts, optimistic head/account revisions, pending consumer recovery, overwrite/delete holds and stale tabs interact. Reject designs that silently overwrite or prune accepted history or report a quick save without a loadable quick slot.
+## Required validation
 
-Give explicit state transitions, transaction boundaries, identity keys, readback conditions, recovery lookup, failure-boundary matrix and adversarial browser QA for each contract. Decide whether they can share one implementation package or must be separate bounded slices, then order the owner work and the final real App cutover. Keep G9 lifecycle/reset/delete and G10 coordinated activation/post-epoch long-run capacity, quota/eviction and backup/restore separate. If repository authority cannot settle a product-visible quick-save choice, present the exact alternatives and ask the owner only after completing independent analysis.
+Add focused native Chromium failure-injection QA for: first completion from pure creator head; exact applied witness/readback; restart before/after commit; lost caller; missing/tampered/stale witness; two-owner contention; abort/quota at publication writes; consumer abort/retry; later descendants preserving first witness; no second witness/downgrade; malformed retained witness/recovery. Rerun G8B/G8A/G7B/G7A, clean-epoch/publication/Soundings adjacent suites, Node UI config typecheck, app-local Vite build and broad UI characterization against the 137-diagnostic baseline.
 
-## Output and exclusions
+## Exclusions and successor
 
-This is a read-only source and documentation decision; do not edit production code, tests, schema, browser data or deployment, and do not claim G8 App acceptance. No migration/reconciliation/export/import for pre-cutover saves, new dependency, combat or Game-version change. Update one focused accepted decision, current output/handoff, historical/deferred route, planning reconciliation, branch register and successor prompt from actual evidence. Distinguish fresh inspection from reused test results, apply FP-001/002/003/004/005/006/011/012/013/014/015 and FP-008/009, and record exact retained branch triggers. Commit, push, fetch and read back the hosted head.
+No App cutover, cross-slot quick/manual implementation, lifecycle/reset/delete, activation/reset/deployment, migration for disposable pre-cutover data, combat, dependency or Game-version change. If the witnessed owner verifies, install **DEV-0.7.1 Slice G8E — Cross-Slot Campaign Address Owner Implementation**. G8F real App cutover follows G8E; G9-G10 remain later.
