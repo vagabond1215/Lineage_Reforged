@@ -4,6 +4,18 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+## 2026-09-30 DEV-0.7.1 Slice G8C decision
+
+Source hosted head inspected: `ea7b8562830d1df19a4ade32f7754f7c378d6672`. Result **WITNESSED_DESCENDANT_AND_CROSS_SLOT_CONTRACTS_ACCEPTED; IMPLEMENTATION_HELD**. Focused authority: `docs/design/g8c-first-witnessed-descendant-and-cross-slot-authority-decision.md`.
+
+G8C accepts two separate owner contracts. First Soundings completion after a pure creator head must publish from the independently produced session witness; the transactional owner converts that exact session witness to the immutable applied witness with the first durable descendant identity in the same transaction as artifact/head/address/pending recovery. Snapshot agreement cannot mint provenance. Second, manual/quick cross-slot save uses one singular campaign head plus durable account-scoped slot addresses: destination points to the newly accepted immutable head, source address remains unchanged, and prior artifacts/addresses remain durable. Destination overwrite requires optimistic expected-address CAS and never prunes history.
+
+Implementation order is G8D witnessed descendant owner, G8E cross-slot campaign address owner, then G8F real async App cutover and ordinary UI QA. G9 lifecycle/reset/delete and G10 activation/durability remain separate. No production code/test/schema/browser/deployment change and no executable acceptance occurred in G8C. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged; planned `DEV-0.7.1` held.
+
+Retained branch dispositions remain readiness/prompt-integrity `PROTECTED_REFERENCE` and administration `HOLD_NAMED_CONSUMER`; their exact triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G8C consumes none.
+
+
+
 ## 2026-09-30 DEV-0.7.1 Slice G8B checkpoint
 
 Source run **DEV-0.7.1 Slice G8B — Inert Same-Slot Descendant Caller Checkpoint**; label class internal slice of planned current-band primary `DEV-0.7.1`, parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development impact `supports_current_band`; game-version impact `none`. Clean synchronized source `master`/`origin/master` `55c558fb335ac9b285d38a6b215d72424cbff920`. Result **SAME_SLOT_DESCENDANT_CALLER_VERIFIED; LIVE_APP_CUTOVER_HELD**. Final hosted head requires post-push readback.
