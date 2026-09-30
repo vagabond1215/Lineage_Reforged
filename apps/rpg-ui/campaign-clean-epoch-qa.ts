@@ -1,8 +1,9 @@
 import { createDefaultAccountProfileState } from "../../packages/engines/game-engine/src/legacy-account.ts";
-import { CAMPAIGN_DATABASE_NAME, type CampaignStoreFailureCode } from "./src/game-shell/campaignIndexedDbStore.ts";
+import { CAMPAIGN_DATABASE_NAME, CampaignIndexedDbStore, ensureCampaignPublicationStores, type CampaignStoreFailureCode, type CampaignStorePublication } from "./src/game-shell/campaignIndexedDbStore.ts";
 import {
   CLEAN_EPOCH_ACCOUNT_STORE,
   CLEAN_EPOCH_ATTEMPT_STORE,
+  CLEAN_EPOCH_RECOVERY_STORE,
   CLEAN_EPOCH_DATABASE_NAME,
   CLEAN_EPOCH_DATABASE_VERSION,
   CLEAN_EPOCH_SESSION_STORAGE_KEY,
@@ -38,6 +39,10 @@ function rawPutFamily(db: IDBDatabase, family: string, value: unknown): Promise<
   return new Promise((resolve, reject) => { const tx = db.transaction(family, "readwrite");
     tx.objectStore(family).put(value); tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error); });
 }
+function rawDeleteFamily(db: IDBDatabase, family: string, key: IDBValidKey): Promise<void> {
+  return new Promise((resolve, reject) => { const tx = db.transaction(family, "readwrite");
+    tx.objectStore(family).delete(key); tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error); });
+}
 
 async function suite() {
   const accountId = `account.qa.${crypto.randomUUID()}`;
@@ -48,7 +53,7 @@ async function suite() {
     await expectCode(() => openCleanEpochAccountStore({ name: CAMPAIGN_DATABASE_NAME }), "invalid_record");
     const databaseName = name("schema"); const owner = await openCleanEpochAccountStore({ name: databaseName }); owner.close();
     const db = await rawOpen(databaseName);
-    for (const family of ["accounts", "newCampaignAttempts", "artifacts", "controls", "slots", "witnesses"]) check(db.objectStoreNames.contains(family), `missing ${family}`);
+    for (const family of ["accounts", "newCampaignAttempts", "pendingPublicationRecoveries", "artifacts", "controls", "slots", "witnesses"]) check(db.objectStoreNames.contains(family), `missing ${family}`);
     for (const family of ["legacyCopyRecords", "legacyCopyManifests", "canonicalRecords", "canonicalManifests"]) check(!db.objectStoreNames.contains(family), `legacy ${family} leaked`);
     db.close();
   });
@@ -144,7 +149,10 @@ async function suite() {
     await expectCode(() => openCleanEpochAccountStore({ name: wrong }), "invalid_record");
   });
 
-  const fixtures = await (await fetch("/.campaign-indexeddb-fixtures.json")).json() as { ordinary: { raw: string } };
+  const fixtures = await (await fetch("/.campaign-indexeddb-fixtures.json")).json() as {
+    ordinary: { raw: string; control: CampaignStorePublication["control"] };
+    soundings: { raw: string; control: CampaignStorePublication["control"]; witness: NonNullable<CampaignStorePublication["witness"]> };
+  };
   const envelope = JSON.parse(fixtures.ordinary.raw);
   const snapshot = JSON.parse(envelope.snapshot);
   snapshot.accountId = accountId;
@@ -156,6 +164,30 @@ async function suite() {
     snapshotRaw: JSON.stringify(snapshot), consumerPlans: [{ kind: "active_history" as const, payloadFingerprint: "history-fingerprint" }],
     createdAt: "2026-09-29T00:00:00.000Z"
   };
+  envelope.accountId = accountId;
+  envelope.snapshot = attempt.snapshotRaw;
+  const firstPublication: CampaignStorePublication = {
+    accountId, campaignId: attempt.campaignId, slotId: attempt.slotId, expectedHead: null,
+    artifactRaw: JSON.stringify(envelope), control: { ...fixtures.ordinary.control, accountId }
+  };
+  await test("version-two prepared attempt upgrades with exact account and attempt", async () => {
+    const databaseName = name("upgrade-v2");
+    const old = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open(databaseName, 2);
+      request.onupgradeneeded = () => {
+        ensureCampaignPublicationStores(request.result);
+        request.result.createObjectStore(CLEAN_EPOCH_ACCOUNT_STORE, { keyPath: "accountId" });
+        request.result.createObjectStore(CLEAN_EPOCH_ATTEMPT_STORE, { keyPath: ["accountId", "slotId"] });
+      };
+      request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error);
+    });
+    await rawPut(old, { version: 1, accountId, revision: 1, profile, credential: verifier });
+    await rawPutFamily(old, CLEAN_EPOCH_ATTEMPT_STORE, attempt); old.close();
+    const owner = await openCleanEpochAccountStore({ name: databaseName });
+    check((await owner.read(accountId))?.revision === 1 && (await owner.readAttempt(accountId, attempt.slotId))?.attemptId === attempt.attemptId,
+      "v2 upgrade lost account or attempt");
+    check(await owner.readRecovery(accountId, attempt.slotId) === null, "v2 upgrade invented recovery"); owner.close();
+  });
   await test("account-slot reservation, exact retry, restart and lost caller read", async () => {
     const databaseName = name("attempt"); let owner = await openCleanEpochAccountStore({ name: databaseName });
     await owner.register(profile, verifier);
@@ -222,6 +254,116 @@ async function suite() {
     await expectCode(() => owner.prepareAttempt(attempt), "invalid_record");
     await rawPut(db, { version: 1, accountId, revision: 1, profile: { accountId }, credential: verifier });
     await expectCode(() => owner.prepareAttempt(attempt), "invalid_record"); db.close(); owner.close();
+  });
+  await test("first publication, pending recovery, exact retry and restart", async () => {
+    const databaseName = name("first-publication"); let owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    const accepted = await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    check(accepted.publication.status === "committed" && accepted.recovery.status === "accepted_pending_consumers", "first publication not accepted pending consumers");
+    check(accepted.recovery.completedConsumerKinds.length === 0, "consumers falsely completed");
+    check((await owner.publishPreparedAttempt(attempt.attemptId, firstPublication)).publication.status === "same_source_retry", "publication retry failed");
+    owner.close(); owner = await openCleanEpochAccountStore({ name: databaseName });
+    check((await owner.readRecovery(accountId, attempt.slotId))?.attemptId === attempt.attemptId, "lost caller recovery missing");
+    await expectCode(() => owner.prepareAttempt({ ...attempt, attemptId: `attempt.${crypto.randomUUID()}` }), "conflict"); owner.close();
+  });
+  await test("first publication rejects missing, stale and mismatched attempt authority", async () => {
+    const owner = await openCleanEpochAccountStore({ name: name("publication-input") }); await owner.register(profile, verifier);
+    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "invalid_record");
+    await owner.prepareAttempt(attempt);
+    await expectCode(() => owner.publishPreparedAttempt("attempt.regenerated", firstPublication), "conflict");
+    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, { ...firstPublication, campaignId: "wrong.campaign" }), "invalid_record");
+    await owner.updateProfile(accountId, 1, { ...profile, displayName: "later" });
+    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "stale_head");
+    check(await owner.readRecovery(accountId, attempt.slotId) === null, "invalid request published"); owner.close();
+  });
+  await test("stale campaign head rejects first publication without changing its artifact", async () => {
+    const databaseName = name("publication-stale-head"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    const db = await rawOpen(databaseName);
+    const competingEnvelope = { ...envelope, artifactId: `${envelope.artifactId}.other`, publicationId: `${envelope.publicationId}.other` };
+    const competing: CampaignStorePublication = { ...firstPublication, artifactRaw: JSON.stringify(competingEnvelope),
+      control: { ...firstPublication.control, headArtifactId: competingEnvelope.artifactId, headPublicationId: competingEnvelope.publicationId } };
+    await new CampaignIndexedDbStore(db).publish(competing); // synthetic corruption: bypass only to exercise the clean owner fence
+    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "stale_head");
+    check((await new CampaignIndexedDbStore(db).read(accountId, attempt.campaignId, attempt.slotId))?.artifactRaw === competing.artifactRaw,
+      "stale request rewrote accepted artifact"); db.close(); owner.close();
+  });
+  await test("abort at each publication write and quota at recovery preserve prepared attempt", async () => {
+    for (let stop = 1; stop <= 4; stop++) {
+      const databaseName = name(`publish-abort-${stop}`); const initial = await openCleanEpochAccountStore({ name: databaseName });
+      await initial.register(profile, verifier); await initial.prepareAttempt(attempt); initial.close();
+      let writes = 0; const failing = await openCleanEpochAccountStore({ name: databaseName, afterWrite: tx => { if (++writes === stop) tx.abort(); } });
+      await expectCode(() => failing.publishPreparedAttempt(attempt.attemptId, firstPublication), "aborted"); failing.close();
+      const reopened = await openCleanEpochAccountStore({ name: databaseName });
+      check(await reopened.readRecovery(accountId, attempt.slotId) === null && (await reopened.readAttempt(accountId, attempt.slotId))?.attemptId === attempt.attemptId,
+        `abort ${stop} lost attempt or published partial recovery`); reopened.close();
+    }
+    const databaseName = name("publish-quota"); const initial = await openCleanEpochAccountStore({ name: databaseName });
+    await initial.register(profile, verifier); await initial.prepareAttempt(attempt); initial.close();
+    let writes = 0; const failing = await openCleanEpochAccountStore({ name: databaseName, beforeWrite: () => {
+      if (++writes === 4) throw new DOMException("quota", "QuotaExceededError");
+    } });
+    await expectCode(() => failing.publishPreparedAttempt(attempt.attemptId, firstPublication), "quota"); failing.close();
+    const reopened = await openCleanEpochAccountStore({ name: databaseName });
+    check(await reopened.readRecovery(accountId, attempt.slotId) === null, "quota left accepted recovery"); reopened.close();
+  });
+  await test("missing or malformed recovery blocks same-head retry and read", async () => {
+    const databaseName = name("recovery-invalid"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    const valid = await owner.readRecovery(accountId, attempt.slotId);
+    const db = await rawOpen(databaseName);
+    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, { ...valid, consumerPlans: [] });
+    await expectCode(() => owner.readRecovery(accountId, attempt.slotId), "invalid_record");
+    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "invalid_record");
+    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, valid);
+    await rawDeleteFamily(db, CLEAN_EPOCH_ATTEMPT_STORE, [accountId, attempt.slotId]);
+    await expectCode(() => owner.readRecovery(accountId, attempt.slotId), "invalid_record");
+    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "invalid_record");
+    db.close(); owner.close();
+  });
+  await test("missing recovery and orphaned head cannot be mistaken for an empty destination", async () => {
+    const databaseName = name("recovery-missing"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    const db = await rawOpen(databaseName);
+    await rawDeleteFamily(db, CLEAN_EPOCH_RECOVERY_STORE, [accountId, attempt.slotId]);
+    await expectCode(() => owner.readRecovery(accountId, attempt.slotId), "invalid_record");
+    await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "invalid_record");
+    await rawDeleteFamily(db, "slots", [accountId, attempt.slotId]);
+    await expectCode(() => owner.readRecovery(accountId, attempt.slotId), "invalid_record");
+    db.close(); owner.close();
+  });
+  await test("concurrent duplicate first publication has one commit and one exact retry", async () => {
+    const databaseName = name("publication-concurrent"); const first = await openCleanEpochAccountStore({ name: databaseName });
+    await first.register(profile, verifier); await first.prepareAttempt(attempt);
+    const second = await openCleanEpochAccountStore({ name: databaseName });
+    const results = await Promise.all([first.publishPreparedAttempt(attempt.attemptId, firstPublication),
+      second.publishPreparedAttempt(attempt.attemptId, firstPublication)]);
+    check(results.filter(result => result.publication.status === "committed").length === 1 &&
+      results.filter(result => result.publication.status === "same_source_retry").length === 1, "concurrent duplicate was not serialized");
+    check((await first.readRecovery(accountId, attempt.slotId))?.publicationId === envelope.publicationId, "concurrent recovery changed");
+    first.close(); second.close();
+  });
+  await test("Soundings first publication retains independent applied witness and artifact", async () => {
+    const source = JSON.parse(fixtures.soundings.raw);
+    const soundingsAccount = source.accountId as string;
+    const soundingsProfile = createDefaultAccountProfileState({ accountId: soundingsAccount, displayName: "Soundings synthetic", createdAt: "2026-09-29T00:00:00.000Z" });
+    const soundingsAttempt = { ...attempt, accountId: soundingsAccount, slotId: source.slotId as string,
+      campaignId: source.campaignId as string, attemptId: `attempt.${crypto.randomUUID()}`, snapshotRaw: source.snapshot as string };
+    const databaseName = name("soundings-first"); let owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(soundingsProfile, await credential(soundingsAccount)); await owner.prepareAttempt(soundingsAttempt);
+    const request = { accountId: soundingsAccount, campaignId: source.campaignId, slotId: source.slotId,
+      expectedHead: null, artifactRaw: fixtures.soundings.raw, control: fixtures.soundings.control, witness: fixtures.soundings.witness };
+    const accepted = await owner.publishPreparedAttempt(soundingsAttempt.attemptId, request);
+    check(accepted.publication.readback.witness?.firstDurableArtifactId === source.artifactId, "first witness not retained");
+    owner.close(); owner = await openCleanEpochAccountStore({ name: databaseName });
+    check((await owner.readRecovery(soundingsAccount, source.slotId))?.witnessRequestId === fixtures.soundings.witness.requestId, "witness lost on reopen");
+    const db = await rawOpen(databaseName);
+    await rawDeleteFamily(db, "witnesses", [soundingsAccount, source.campaignId, fixtures.soundings.witness.requestId]);
+    await expectCode(() => owner.readRecovery(soundingsAccount, source.slotId), "invalid_record");
+    await rawPutFamily(db, "witnesses", { version: 1, accountId: soundingsAccount, campaignId: source.campaignId,
+      requestId: fixtures.soundings.witness.requestId, value: fixtures.soundings.witness });
+    await rawDeleteFamily(db, "artifacts", [soundingsAccount, source.artifactId]);
+    await expectCode(() => owner.readRecovery(soundingsAccount, source.slotId), "invalid_record"); db.close(); owner.close();
   });
 }
 

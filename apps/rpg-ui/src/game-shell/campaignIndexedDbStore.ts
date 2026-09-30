@@ -51,6 +51,12 @@ export type CampaignStorePublication = {
 };
 export type CampaignStoreReadback = { artifactRaw: string; control: StoredCampaignControl; slotRaw: string; witness: SoundingsAdmissionWitness | null };
 export type CampaignStorePublishResult = { status: "committed" | "same_source_retry"; readback: CampaignStoreReadback };
+/** Internal extension point for the inert clean-epoch account/attempt fence. */
+export type CampaignPublicationTransactionExtension = {
+  storeNames: string[];
+  verify: (transaction: IDBTransaction, current: StoredCampaignControl | null) => Promise<void>;
+  write: (transaction: IDBTransaction) => Promise<void>;
+};
 export type CampaignStoreFailureCode = "unavailable" | "blocked_upgrade" | "quota" | "aborted" | "stale_head" | "conflict" | "invalid_record" | "readback_failed";
 
 export class CampaignStoreError extends Error {
@@ -244,10 +250,10 @@ export class CampaignIndexedDbStore {
     } catch (error) { throw storeError(error, "invalid_record"); }
   }
 
-  async publish(input: CampaignStorePublication): Promise<CampaignStorePublishResult> {
+  async publish(input: CampaignStorePublication, extension?: CampaignPublicationTransactionExtension): Promise<CampaignStorePublishResult> {
     const { envelope, snapshot, requestId } = validateRequest(input);
     let tx: IDBTransaction;
-    try { tx = this.db.transaction(FAMILIES, "readwrite"); }
+    try { tx = this.db.transaction([...FAMILIES, ...(extension?.storeNames ?? [])], "readwrite"); }
     catch (error) { throw storeError(error); }
     let transactionError: unknown;
     const completion = new Promise<void>((resolve, reject) => {
@@ -265,6 +271,7 @@ export class CampaignIndexedDbStore {
         requestValue(tx.objectStore("witnesses").index("byAccountCampaign").getAll([input.accountId, input.campaignId]) as IDBRequest<unknown[]>)
       ]);
       if (current !== undefined && !controlRecord(current, input.accountId, input.campaignId)) fail("invalid_record", "Stored campaign head is malformed.");
+      await extension?.verify(tx, current?.value ?? null);
       if (existingArtifact !== undefined && !artifactRecord(existingArtifact, input.accountId, envelope.artifactId)) fail("invalid_record", "Stored immutable artifact is malformed.");
       if (address !== undefined && !slotRecord(address, input.accountId, input.slotId)) fail("invalid_record", "Stored slot address is malformed.");
       if (requestId && existingWitness !== undefined && !witnessRecord(existingWitness, input.accountId, input.campaignId, requestId)) fail("invalid_record", "Stored witness is malformed.");
@@ -303,6 +310,7 @@ export class CampaignIndexedDbStore {
         await requestValue(tx.objectStore(family).put(value));
         this.afterWrite?.(family, tx);
       }
+      await extension?.write(tx);
       await completion;
     } catch (error) {
       transactionError = error;
