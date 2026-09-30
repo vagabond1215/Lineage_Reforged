@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G7A — Inert Epoch Account And Auth Adapter Checkpoint**. Label class: internal checkpoint of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `0b60cfad8fa35bd5eb472d4502db2b22e39cf60d`; code checkpoint `b0ed5ca8`. Result: **INERT_EPOCH_ACCOUNT_AUTH_ADAPTER_VERIFIED; FIRST_CAMPAIGN_AND_LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
+
+## A. Files changed
+
+`apps/rpg-ui/src/game-shell/cleanEpochAccountAdapter.ts` and `.js` mirror, pure export visibility in `launcherAuthManager.ts`, native account-adapter QA page/script, focused G7A record, current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No App caller, deployment, browser reset, legacy migration, dependency, combat or Game-version change.
+
+## B. Patch summary
+
+Inert async registration, PBKDF2 sign-in, epoch-only validated session hint, profile CAS and password mutation use the clean-epoch IndexedDB account owner and typed blocked results. Registration retains caller-created identity across retry/restart and same-input owner races. Sign-in rereads the credential after PBKDF2 without incrementing account revision, preserving prepared first-campaign restart eligibility. Session hint failure reports the committed account ID for password recovery. Installed **DEV-0.7.1 Slice G7B — Inert First-Campaign Orchestration And Pending-Account Fence** because a retained first-campaign attempt currently lacks independent Soundings witness evidence and account mutation must be atomically fenced while an attempt/recovery is pending.
+
+## C. Tests and checks run
+
+Fresh native Chromium account-adapter QA **13/13 PASS**, existing clean-epoch QA **52/52 PASS**, publication QA **12/12 PASS**, adjacent campaign/Soundings tests **68/68 PASS**, Node UI typecheck **PASS**, app-local Vite build **PASS** (229 client modules). Broad UI typecheck remains **137 pre-existing diagnostics, zero in changed production files**. Staged `git diff --check` **PASS**. Adapter QA covers registration/restart/race, wrong credential, sign-in revision stability, session hint failures, two-owner profile CAS, password change, abort/quota, unavailable and malformed retained data. Existing owner suites were rerun fresh, but G1-G6 implementation evidence is inherited. No real App or first-campaign caller was exercised.
+
+FP-001/002 bound the inert checkpoint; FP-003 reserves pending completion for G7B; FP-004/005/006 cover identity contention/retry and account CAS; FP-011/014 cover retained credential/session validation. FP-012/013/015 remain in freshly rerun owner regressions and require G7B adapter-path evidence. FP-008/009 govern branch/head reporting. No new generalized pattern.
+
+Fresh fetch/prune at inspected source found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (464 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (411/1), administration `210df5bc`/base `fd40571b` (242/1) retain two readiness docs, one prompt-audit doc and one research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition action due/performed. Counts describe inspected source.
+
+## D. Risks and follow-up notes
+
+No first-campaign adapter or production caller selects epoch authority. G7B must retain or prove inapplicable Soundings witness at a prepared first attempt, then implement prepare/publish/consumer completion with restart and exact readback; it must atomically prevent profile/password changes from stranding a pending attempt. G8-G10 App/lifecycle/activation and post-epoch durability remain. Suggested code commit: `feat(persistence): add inert clean-epoch account auth adapter`; handoff commit: `docs(handoff): record G7A account checkpoint and install G7B`. No Game-version decision proposed.
+
+---
+
 Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G6 - Inert Descendant Publication And General Recovery Transactions**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `692a14f34f34d8f0b1c89e999530f96096d206e4`; code checkpoint `878ca3623c2b5e1a6bab183764acfcfb2e29e05c` and `c6aa39f190ee705765bff4afade75586f23d33a8`. Result: **INERT_ORDINARY_DESCENDANT_RECOVERY_AND_HISTORY_VERIFIED; LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
 
 ## A. Files changed
