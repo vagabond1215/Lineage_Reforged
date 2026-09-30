@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G7B — Inert First-Campaign Orchestration And Pending-Account Fence**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `5a5f6b10e92bddbfee58051d3014699850351753`; code checkpoint `c25fc296`. Result: **INERT_FIRST_CAMPAIGN_ORCHESTRATION_VERIFIED; LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
+
+## A. Files changed
+
+`apps/rpg-ui/src/game-shell/cleanEpochFirstCampaignAdapter.ts` and `.js` mirror, `cleanEpochAccountStore.ts`, first-campaign native QA page/script, adjusted clean-epoch QA expectations, focused G7B record, current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No App import, activation, reset, legacy migration, dependency, combat or Game-version change.
+
+## B. Patch summary
+
+The inert adapter reads the retained account and attempt before preparation, builds one exact creator snapshot with selected Legacy preparation and optional heir source, reserves it transactionally, publishes the first artifact and pending recovery, completes every mandatory account consumer and reads the ready slot before success. Restart and two-owner retries preserve the accepted attempt/publication; conflicting creator input blocks. The pure creator stages but cannot complete Soundings, so generated and retained first attempts require `not_completed`; no witness is synthesized. Profile/password mutations now share an IndexedDB transaction with all account attempts and recoveries, blocking a revision change while first or descendant consumers are pending; sign-in keeps the reserved revision.
+
+## C. Tests and checks run
+
+Fresh native Chromium first-campaign QA **5/5 PASS**, clean-epoch **52/52 PASS**, account adapter **13/13 PASS**, publication **12/12 PASS**, canonical **14/14 PASS**. Adjacent campaign/creator/account tests **51/51 PASS**, Soundings provenance/completion **53/53 PASS**. Node UI config typecheck **PASS** and app-local Vite build **PASS** (229 client modules). Broad UI typecheck remains **137 baseline diagnostics**; targeted TypeScript inspection showed zero G7B-file diagnostics and 22 unrelated imported-source diagnostics. `git diff --check` **PASS**. The focused record names scenario evidence and limits.
+
+FP-001/002 restrict this to inert adapter proof; FP-003/004/005/006 cover reachable `resume`, account-wide fence, lost caller, two owners and conflict. FP-011/012/013/014/015 cover creator Soundings posture, independent owner witness regression, unique receipts, selected preparation/inheritance and full retained snapshot/readback. FP-008/009 govern branch and exact-head accounting. No new generalized pattern.
+
+Fresh fetch/prune at inspected source found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (466 master-only/2 ref-only), prompt integrity `58a34e37`/base `3d77171c` (413/1), administration `210df5bc`/base `fd40571b` (244/1) retain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; triggers are scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. None was consumed; no branch action or PR was due.
+
+## D. Risks and follow-up notes
+
+No production App caller selects the adapter. G8 owns ordinary async App bootstrap/load/new campaign/manual and quick actions; G9 lifecycle/reset/delete; G10 coordinated development-only activation and post-epoch long-run/two-browser capacity, quota/eviction and backup/restore acceptance. Suggested code commit: `feat(persistence): orchestrate inert first campaigns in clean epoch` (`c25fc296`); suggested handoff commit: `docs(handoff): record G7B checkpoint and install G8`. No Game-version decision proposed.
+
+---
+
 Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G7A — Inert Epoch Account And Auth Adapter Checkpoint**. Label class: internal checkpoint of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `0b60cfad8fa35bd5eb472d4502db2b22e39cf60d`; code checkpoint `b0ed5ca8`. Result: **INERT_EPOCH_ACCOUNT_AUTH_ADAPTER_VERIFIED; FIRST_CAMPAIGN_AND_LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
 
 ## A. Files changed
