@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-30 clean-epoch async caller package decision
+
+**ASYNC_CALLER_ROUTE_SELECTED; LIVE_ACTIVATION_HELD** at inspected clean synchronized `master` `631477f168ef9f828e053a7384a0b5aa9c4fecc6`. `clean-epoch-async-caller-ownership-and-activation-package-decision.md` is the focused cross-owner map. Inert G4 first-campaign consumer completion is not an App cutover. Installed **DEV-0.7.1 Slice G5 - Inert Clean-Epoch Slot Inventory And Verified First-Head Load**, followed by guarded descendant/history, account/auth/attempt, App ordinary actions, lifecycle/reset/delete and coordinated activation with post-epoch durability checks. Sole-user pre-cutover data is disposable; post-epoch non-head/fork history, Soundings, recovery, backup/restore and two-browser long-run capacity remain mandatory. No code, browser reset or deployment now. Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G4 decision-active pointer below while preserving chronology.
+
 ## 2026-09-29 DEV-0.7.1 Slice G4 clean-epoch consumer completion
 
 **FIRST_CAMPAIGN_CONSUMERS_COMPLETE_IN_INERT_EPOCH; LIVE_CALLER_ACTIVATION_HELD** from clean synchronized source `f23670f1ffa29465798b84f86d9604b0f1e1280d`, code checkpoint `920f6301`. The inert clean-epoch owner atomically completes the accepted first campaign's full account/history/preparation/inheritance/receipt plans with recovery; native Chromium 35/35, publication 12/12 and adjacent 68/68 pass. No live caller selects it. Installed unversioned **Clean-Epoch Async Caller Ownership And Activation Package Decision** to select the real async caller sequence. The development-only reset has not occurred. Account reset/delete, backup/restore, long-run capacity, two-browser acceptance, Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and accepted `DEV-0.7.0` remain unchanged.

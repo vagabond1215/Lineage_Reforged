@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-30 clean-epoch async caller package decision
+
+**ASYNC_CALLER_ROUTE_SELECTED; LIVE_ACTIVATION_HELD** at inspected clean synchronized `master` `631477f168ef9f828e053a7384a0b5aa9c4fecc6`. Focused authority: `docs/design/clean-epoch-async-caller-ownership-and-activation-package-decision.md`. G4's complete first-campaign transaction remains inert; legacy App/auth/save/lifecycle callers still own live paths. Selected G5 inert epoch slot inventory/verified load, then G6 descendant/history, G7-G9 async caller and reset/delete packages, G10 coordinated activation and post-epoch durability acceptance. No pre-cutover migration. Installed **DEV-0.7.1 Slice G5 - Inert Clean-Epoch Slot Inventory And Verified First-Head Load**. No production code or browser data changed in this decision. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0`, Slice C capacity/combat and parent holds unchanged. This supersedes the G4 caller-decision-active pointer below, preserving chronology.
+
 ## 2026-09-29 DEV-0.7.1 Slice G4 clean-epoch consumer completion
 
 **FIRST_CAMPAIGN_CONSUMERS_COMPLETE_IN_INERT_EPOCH; LIVE_CALLER_ACTIVATION_HELD** from clean synchronized source `f23670f1ffa29465798b84f86d9604b0f1e1280d`, code checkpoint `920f6301`. First-campaign account history/achievement, preparation, optional inheritance and receipts complete atomically with retained recovery; native Chromium 35/35, publication 12/12, adjacent 68/68, Node typecheck and Vite build pass. Broad UI typecheck retains 137 baseline diagnostics, zero changed-source diagnostics. No real caller or browser reset. Installed unversioned **Clean-Epoch Async Caller Ownership And Activation Package Decision**; post-epoch durability, capacity and combat gates remain. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G4-active pointer below, not the clean-epoch decision.

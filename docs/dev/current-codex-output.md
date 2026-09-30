@@ -4,6 +4,28 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-30. Source run: **Clean-Epoch Async Caller Ownership And Activation Package Decision**. Label class: unversioned cross-owner decision; parent development milestone not applicable, planned `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` `631477f168ef9f828e053a7384a0b5aa9c4fecc6`. Result: **ASYNC_CALLER_ROUTE_SELECTED; LIVE_ACTIVATION_HELD**. Final hosted head requires post-push verification.
+
+## A. Files changed
+
+Focused `docs/design/clean-epoch-async-caller-ownership-and-activation-package-decision.md`; current prompt, output/handoff, historical/deferred route, planning reconciliation and branch register. No production code, browser data, deployment, dependency, gameplay or Game version changes.
+
+## B. Patch summary
+
+Fresh source inspection maps legacy launcher/auth, profile/credential, attempt, save/list/load/recovery, App bootstrap/action and lifecycle callers. G4 supplies only an inert complete first-publication transaction; there is no account-scoped epoch slot inventory/load, general descendant/account consumer owner, or epoch reset/delete. Selected bounded G5 read surface before G6 descendant/history and G7-G9 async caller packages; G10 coordinates activation and post-epoch two-browser/long-run capacity, quota/eviction and backup/restore gates. Installed **DEV-0.7.1 Slice G5 - Inert Clean-Epoch Slot Inventory And Verified First-Head Load**. Sole-user pre-cutover data stays disposable; new-epoch durability is mandatory.
+
+## C. Tests and checks run
+
+Fresh code/doc/branch inspection and staged `git diff --check` only; no new browser QA, typecheck or build in this docs-only pass. G4 native Chromium 35/35, publication 12/12, adjacent 68/68, Node typecheck and Vite build are reused evidence, not acceptance of real callers. FP-001/002 limit claims; FP-003/004/005/006 require failure, contention and retry; FP-011/012/013/014/015 govern provenance, complete receipts and nested history; FP-008/009 govern branch/head reporting. No new generalized pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (458 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (405/1), administration `210df5bc`/base `fd40571b` (236/1) retain two readiness docs, one prompt-audit doc and one research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; triggers are scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. None consumed; no branch integration, deletion, PR or disposition action due/performed. Counts describe inspected source.
+
+## D. Risks and follow-up notes
+
+No real caller uses epoch authority; activation and development reset remain held. General descendant publication, non-head/fork history, async App/auth/lifecycle, reset/delete, backup/restore and long-running capacity are separate gates. Slice C combat/parent acceptance held. Suggested commit: `docs(persistence): decide async caller packages and install G5`. No Game-version decision proposed.
+
+---
+
 Date: 2026-09-29. Source run: **DEV-0.7.1 Slice G4 - Clean-Epoch Account Consumer Completion Transactions**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `f23670f1ffa29465798b84f86d9604b0f1e1280d`; code checkpoint `920f6301`. Result: **FIRST_CAMPAIGN_CONSUMERS_COMPLETE_IN_INERT_EPOCH; LIVE_CALLER_ACTIVATION_HELD**. Final hosted head requires post-push verification.
 
 ## A. Files changed
