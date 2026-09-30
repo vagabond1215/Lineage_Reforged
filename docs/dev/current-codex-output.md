@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G6 - Inert Descendant Publication And General Recovery Transactions**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `692a14f34f34d8f0b1c89e999530f96096d206e4`; code checkpoint `878ca3623c2b5e1a6bab183764acfcfb2e29e05c` and `c6aa39f190ee705765bff4afade75586f23d33a8`. Result: **INERT_ORDINARY_DESCENDANT_RECOVERY_AND_HISTORY_VERIFIED; LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
+
+## A. Files changed
+
+`apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts`, native `apps/rpg-ui/campaign-clean-epoch-qa.ts`, focused G6 record, current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No live caller, deployment, browser data, legacy migration, dependency, combat or Game-version change.
+
+## B. Patch summary
+
+Schema v4 retains each descendant's source, predecessor, immutable artifact and pending/completed recovery. The account-scoped ordinary publisher couples campaign-head and account-revision CAS, first Soundings provenance, exact consumer plans, same-source retry and atomic recovery. Transactional completion applies account history/Chronicle, achievements, Legacy rewards, last played and unique receipts. Current and historical reads validate the complete chain and retain non-head/fork artifacts; pending, raw/unrecovered, stale, closed and malformed states remain nonplayable. Terminal/Normal defeat lifecycle settlement is reserved for G9. Installed **DEV-0.7.1 Slice G7 - Epoch Account, Auth And First-Campaign Orchestration Adapters**.
+
+## C. Tests and checks run
+
+Fresh native Chromium clean-epoch QA **52/52 PASS**, existing publication QA **12/12 PASS**, adjacent campaign/Soundings tests **68/68 PASS**, Node UI typecheck **PASS**, app-local Vite build **PASS** (229 client modules), broad UI typecheck **137 baseline diagnostics, zero changed-file diagnostics**, staged `git diff --check` **PASS**. Focused synthetic QA covers first and second descendants, historical reopen/fork, two-owner contention, stale account/head, retry/restart, each publication/consumer abort and quota boundary, missing evidence and Soundings first provenance. These are inert helper checks, not real App or long-running two-browser acceptance.
+
+FP-001/002 limit helper and parent claims; FP-003 has an inert pending completion owner while production reachability remains G7-G9; FP-004/005/006 cover resource-scoped contention, retry/restart and stale authority; FP-011/012/013/014/015 cover retained source/provenance, unique receipts, full nested snapshot and derived account projection checks; FP-008/009 govern branch/head reporting. No new generalized pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (461 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (408/1), administration `210df5bc`/base `fd40571b` (239/1) retain two readiness docs, one prompt-audit doc and one research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; review triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition action due/performed. Counts describe inspected source.
+
+## D. Risks and follow-up notes
+
+No real App/launcher/save/lifecycle caller uses the epoch. G7-G9 must establish reachable async actions and terminal/reset/delete semantics. G10 owns deployment/reset, long-running capacity, quota/eviction, backup/restore and two-browser ordinary-path acceptance. Slice C combat and planned parent remain held. Suggested code commit: `feat(persistence): add inert descendant recovery transactions`; handoff commit: `docs(handoff): record G6 descendant transactions and install G7`. No Game-version decision proposed.
+
+---
+
 Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G5 - Inert Clean-Epoch Slot Inventory And Verified First-Head Load**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `80274c0923e5c84cc1e91db45b28806a6088e21a`, code checkpoint `af285bb92af9c81c6fd9147f012dfb5ff674a742`. Result: **FIRST_HEAD_READ_SURFACE_VERIFIED_IN_INERT_EPOCH; DESCENDANT_AND_LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
 
 ## A. Files changed
