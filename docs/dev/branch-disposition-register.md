@@ -1,3 +1,7 @@
+## 2026-09-30 DEV-0.7.1 Slice G8C connector decision
+
+At inspected hosted `master` `ea7b8562830d1df19a4ade32f7754f7c378d6672`, four hosted branches remain: `master`, readiness `59c103c3`, prompt integrity `58a34e37`, administration `210df5bc`. G8C consumes no retained-branch trigger. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; exact triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. No merge, rebase, integration, deletion or disposition change was authorized or performed.
+
 # Branch Disposition Register
 
 ## 2026-09-30 DEV-0.7.1 Slice G8B inert descendant caller checkpoint
