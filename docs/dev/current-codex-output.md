@@ -4,6 +4,28 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G5 - Inert Clean-Epoch Slot Inventory And Verified First-Head Load**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `80274c0923e5c84cc1e91db45b28806a6088e21a`, code checkpoint `af285bb92af9c81c6fd9147f012dfb5ff674a742`. Result: **FIRST_HEAD_READ_SURFACE_VERIFIED_IN_INERT_EPOCH; DESCENDANT_AND_LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
+
+## A. Files changed
+
+`apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts`, native `apps/rpg-ui/campaign-clean-epoch-qa.ts`, focused G5 record, current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No live caller, schema, browser user data, deployment, dependency, gameplay or Game version change.
+
+## B. Patch summary
+
+Readonly account-scoped `listSlots` and `readSlot` distinguish empty, prepared, pending consumers, playable completed first head, closed head and unsupported descendant. Exact first artifact, slot/control/head, independent Soundings witness, unique applied consumer receipts and retained first run address are required before returning a snapshot/session control. Failed reads never become empty/default or legacy fallback. Descendant history remains retained and nonplayable pending G6. Installed **DEV-0.7.1 Slice G6 - Inert Descendant Publication And General Recovery Transactions**.
+
+## C. Tests and checks run
+
+Fresh native Chromium clean-epoch QA **42/42 PASS**, existing publication QA **12/12 PASS**, adjacent campaign/Soundings tests **68/68 PASS**, Node UI typecheck **PASS**, app-local Vite build **PASS** (229 modules), broad UI typecheck **137 baseline diagnostics with zero in changed store**, staged `git diff --check` **PASS**. Synthetic helper QA does not accept real callers or long-running capacity. FP-001/002 limit claims; FP-003/004/005/006 cover explicit block, contention/restart and stale authority; FP-011/012/013/014/015 cover provenance, unique receipts, full nested snapshot and retained history; FP-008/009 govern branch/head accounting. No new generalized pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (459 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (406/1), administration `210df5bc`/base `fd40571b` (237/1) retain two readiness docs, one prompt-audit doc and one research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; review triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition action due/performed. Counts describe inspected source.
+
+## D. Risks and follow-up notes
+
+No real App/launcher/save/lifecycle caller selects epoch authority. Descendant publication/consumer completion, non-head/fork playable history, async callers, account reset/delete, backup/restore, dynamic quota/eviction and two-browser long-run capacity remain. Slice C combat/parent acceptance held. Suggested commit: `feat(persistence): add inert clean-epoch first-head slot reads`. No Game-version decision proposed.
+
+---
+
 Date: 2026-09-30. Source run: **Clean-Epoch Async Caller Ownership And Activation Package Decision**. Label class: unversioned cross-owner decision; parent development milestone not applicable, planned `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` `631477f168ef9f828e053a7384a0b5aa9c4fecc6`. Result: **ASYNC_CALLER_ROUTE_SELECTED; LIVE_ACTIVATION_HELD**. Final hosted head requires post-push verification.
 
 ## A. Files changed
