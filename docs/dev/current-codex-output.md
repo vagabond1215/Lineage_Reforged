@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **DEV-0.7.1 Slice G1 - Clean-Epoch Transactional Account Store Extension**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `04d36930b8e5dd53f8508e820ddb41e8a37d64e2`; code checkpoint `b1aa1ec405d3ba41c15d69f77fc07ab983f3bc45`. Result: **CLEAN_EPOCH_ACCOUNT_CHECKPOINT_IMPLEMENTED; ATTEMPT_RECOVERY_AND_ACTIVATION_HELD**. Final hosted head will be verified after handoff push.
+
+## A. Files changed
+
+`campaignIndexedDbStore.ts` shares its four-store publication schema; new `cleanEpochAccountStore.ts` and `campaign-clean-epoch-qa.ts`/`.html` supply an inert distinct database and native QA. New focused G1 record; current output/handoff, historical/deferred route, planning reconciliation, branch register and installed G2 prompt. No live caller, browser user data, deployment, dependency, gameplay or game-version change.
+
+## B. Patch summary
+
+The new `lineage.campaigns.epoch1` database has an atomic account record holding complete profile and PBKDF2 credential. Registration, profile and credential revision updates, exact duplicate retry, stale/conflict rejection, list/read validation and selected-account hint readback are isolated from legacy storage. No attempt/recovery transaction or new-epoch publication is exposed yet; the installed prompt explicitly permits this tested account checkpoint and routes those coupled records to **DEV-0.7.1 Slice G2 - Clean-Epoch Attempt And Recovery Transactions**. Full post-epoch durability and real async caller work remain required.
+
+## C. Tests and checks run
+
+Fresh native Chromium clean-epoch QA **10/10**, existing publication QA **12/12**, adjacent campaign/Soundings tests **68/68**, Node UI typecheck **PASS**, app-local Vite build **PASS** (229 modules), broad UI typecheck **137 baseline diagnostics** with zero in changed owner files, staged `git diff --check` **PASS**. The synthetic fixture was removed and QA server/tab closed. No hosted deployment or user campaign data was touched. The focused G1 record identifies the exact browser and failure-boundary cases.
+
+FP-001/002 constrain real-caller and parent claims; FP-003/004/005/006 remain G2/later repair, contention, retry and stale-projection gates. FP-008/009 apply to branch/head accounting; FP-012 covers duplicate/conflicting registration; FP-013/014/015 constrain complete nested account/campaign authority. No new generalized failure pattern was added.
+
+At code checkpoint after fresh fetch/prune, one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls) were inspected. Readiness `59c103c3`/base `895c02df` (451 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (398/1), administration `210df5bc`/base `fd40571b` (229/1) retain unique documentation paths and `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`. Review triggers remain scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition change due/performed.
+
+## D. Risks and follow-up notes
+
+No App/launcher/save caller imports the store, and helper QA cannot prove live cutover, reset/delete, long-run capacity or two-browser behavior. The account owner rejects incomplete retained profiles; attempts, recovery/consumers, account-checked publication and later reset/delete still need implementation. Slice C capacity, combat and parent acceptance remain held. Suggested commit: `docs(handoff): record G1 account checkpoint and install G2`. No game-version decision proposed.
+
+---
+
 Date: 2026-09-29. Source run: **Development-Only Clean Persistence Epoch Route Decision**. Label class: unversioned owner-policy decision; planned parent `DEV-0.7.1` held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `none`; game-version impact `none`. Inspected clean synchronized `master` at `18ef8008e398cf13c316374a403d7069e7fedc7d`. Result: **CLEAN_DEVELOPMENT_EPOCH_ROUTE_ACCEPTED; IMPLEMENTATION_AND_ACTIVATION_HELD**.
 
 ## A. Files changed
