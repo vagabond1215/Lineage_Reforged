@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **DEV-0.7.1 Slice G4 - Clean-Epoch Account Consumer Completion Transactions**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `f23670f1ffa29465798b84f86d9604b0f1e1280d`; code checkpoint `920f6301`. Result: **FIRST_CAMPAIGN_CONSUMERS_COMPLETE_IN_INERT_EPOCH; LIVE_CALLER_ACTIVATION_HELD**. Final hosted head requires post-push verification.
+
+## A. Files changed
+
+`cleanEpochAccountStore.ts`, `campaignIndexedDbStore.ts` and `campaign-clean-epoch-qa.ts` implement and verify the inert account-consumer completion transaction. New focused G4 record; current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No live caller, user browser data, deployment, dependency, gameplay or game-version change.
+
+## B. Patch summary
+
+First publication now validates every applicable new-campaign plan and retained fingerprint. Completion atomically applies full account achievement/history, preparation, optional one-use inheritance, last-played and exact applied receipts with the completed recovery record. Same-source retry/restart, account revision conflicts, abort/quota and missing Soundings provenance fail closed. Installed unversioned **Clean-Epoch Async Caller Ownership And Activation Package Decision** to select ordered live-caller packages from actual source.
+
+## C. Tests and checks run
+
+Fresh native Chromium clean-epoch QA **35/35** and existing publication QA **12/12**; adjacent campaign/Soundings tests **68/68**; Node UI typecheck **PASS**; app-local Vite build **PASS** (229 modules); broad UI typecheck **137 baseline diagnostics**, zero in changed source; staged `git diff --check` **PASS**. Synthetic helper checks do not accept live callers or long-running capacity.
+
+FP-001/002 limit helper and parent claims; FP-003/004/005/006 cover reachable completion, contention, retry and stale head; FP-011/012/013/014/015 govern provenance, duplicate receipts, nested state and derived facts. FP-008/009 govern branch/head accounting. No new generalized pattern.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (456 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (403/1), administration `210df5bc`/base `fd40571b` (234/1) retain unique docs and dispositions `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`. Review triggers remain scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition change due/performed. Counts describe inspected source.
+
+## D. Risks and follow-up notes
+
+No real App/launcher/save caller selects the new epoch. A concurrent account revision change during pending recovery blocks completion; live callers need ordered writes or a separately proven repair. Account reset/delete, backup/restore, quota/eviction and two-browser long-running acceptance remain. Slice C capacity, combat and parent acceptance remain held. Suggested commit: `docs(handoff): record G4 consumer checkpoint and install caller decision`. No game-version decision proposed.
+
+---
+
 Date: 2026-09-29. Source run: **DEV-0.7.1 Slice G3 - Clean-Epoch Publication Recovery And Consumer Transactions**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `d31ab58331e1da401ac4e61f33f0ee4bfe3e3ed2`; code checkpoint `a49acbc4`. Result: **FIRST_PUBLICATION_RECOVERY_CHECKPOINT_IMPLEMENTED; CONSUMER_COMPLETION_AND_ACTIVATION_HELD**. Final hosted head requires post-push verification.
 
 ## A. Files changed

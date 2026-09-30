@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-29 DEV-0.7.1 Slice G4 clean-epoch consumer completion
+
+**FIRST_CAMPAIGN_CONSUMERS_COMPLETE_IN_INERT_EPOCH; LIVE_CALLER_ACTIVATION_HELD** from clean synchronized source `f23670f1ffa29465798b84f86d9604b0f1e1280d`, code checkpoint `920f6301`. First-campaign account history/achievement, preparation, optional inheritance and receipts complete atomically with retained recovery; native Chromium 35/35, publication 12/12, adjacent 68/68, Node typecheck and Vite build pass. Broad UI typecheck retains 137 baseline diagnostics, zero changed-source diagnostics. No real caller or browser reset. Installed unversioned **Clean-Epoch Async Caller Ownership And Activation Package Decision**; post-epoch durability, capacity and combat gates remain. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G4-active pointer below, not the clean-epoch decision.
+
 ## 2026-09-29 DEV-0.7.1 Slice G3 first-publication recovery checkpoint
 
 **FIRST_PUBLICATION_RECOVERY_CHECKPOINT_IMPLEMENTED; CONSUMER_COMPLETION_AND_ACTIVATION_HELD** from clean synchronized source `d31ab58331e1da401ac4e61f33f0ee4bfe3e3ed2`, code checkpoint `a49acbc4`. Inert clean-epoch schema v3 commits the prepared attempt's first artifact/head/slot, Soundings witness and pending recovery atomically. Native Chromium 27/27, publication 12/12, adjacent 68/68, Node typecheck and isolated Vite build pass; broad UI typecheck retains 137 baseline diagnostics, zero changed-file diagnostics. Account consumer completion and live activation remain held; installed **DEV-0.7.1 Slice G4 - Clean-Epoch Account Consumer Completion Transactions**. No browser reset, deployment, old-save migration or Game version change. This supersedes the G3-active pointer below, not the clean-epoch decision.

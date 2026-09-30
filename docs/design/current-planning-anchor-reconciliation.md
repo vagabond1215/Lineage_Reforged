@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 DEV-0.7.1 Slice G4 clean-epoch consumer completion
+
+**FIRST_CAMPAIGN_CONSUMERS_COMPLETE_IN_INERT_EPOCH; LIVE_CALLER_ACTIVATION_HELD** from clean synchronized source `f23670f1ffa29465798b84f86d9604b0f1e1280d`, code checkpoint `920f6301`. The inert clean-epoch owner atomically completes the accepted first campaign's full account/history/preparation/inheritance/receipt plans with recovery; native Chromium 35/35, publication 12/12 and adjacent 68/68 pass. No live caller selects it. Installed unversioned **Clean-Epoch Async Caller Ownership And Activation Package Decision** to select the real async caller sequence. The development-only reset has not occurred. Account reset/delete, backup/restore, long-run capacity, two-browser acceptance, Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and accepted `DEV-0.7.0` remain unchanged.
+
 ## 2026-09-29 DEV-0.7.1 Slice G3 first-publication recovery checkpoint
 
 **FIRST_PUBLICATION_RECOVERY_CHECKPOINT_IMPLEMENTED; CONSUMER_COMPLETION_AND_ACTIVATION_HELD** from clean synchronized source `d31ab58331e1da401ac4e61f33f0ee4bfe3e3ed2`, code checkpoint `a49acbc4`. Inert `lineage.campaigns.epoch1` v3 atomically stores the first artifact/head/slot, independent Soundings witness and pending recovery for an exact prepared attempt. Native Chromium 27/27, existing publication 12/12 and adjacent 68/68 pass. The retained recovery says consumers are pending; it does not accept a complete campaign. Installed **DEV-0.7.1 Slice G4** for atomic complete profile/Chronicle/Legacy consumer transitions. Real async callers, reset/delete, backup/restore and two-browser long-run capacity remain later gates. Development-only reset has not occurred. Slice C capacity, combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
