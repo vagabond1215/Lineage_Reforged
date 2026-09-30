@@ -1,3 +1,7 @@
+## 2026-09-30 G8C planning reconciliation
+
+G8C closes the two decision blockers discovered by G8B without activating callers. Accepted architecture: independent session Soundings witness -> atomic first witnessed descendant/applied witness/recovery; and singular campaign head -> durable manual/quick slot addresses with optimistic destination CAS and no history pruning. Execute G8D then G8E before G8F App cutover. G9 lifecycle/reset/delete, G10 coordinated activation/durability and Slice C combat remain downstream. Parent `DEV-0.7.1`, Game `0.1.1-prealpha`, playability and accepted DEV remain unchanged.
+
 # Current Planning Anchor Reconciliation
 
 ## 2026-09-30 DEV-0.7.1 Slice G8B descendant caller checkpoint
