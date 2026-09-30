@@ -19,6 +19,21 @@ export const CANONICAL_MANIFEST_STORE = "canonicalManifests";
 type Family = "artifacts" | "controls" | "slots" | "witnesses";
 const FAMILIES: Family[] = ["artifacts", "controls", "slots", "witnesses"];
 
+/** Shared schema for the isolated foundation and the clean-epoch database. */
+export function ensureCampaignPublicationStores(db: IDBDatabase): void {
+  for (const family of FAMILIES) {
+    if (db.objectStoreNames.contains(family)) continue;
+    const keys = family === "artifacts" ? ["accountId", "artifactId"] : family === "controls" ? ["accountId", "campaignId"] :
+      family === "slots" ? ["accountId", "slotId"] : ["accountId", "campaignId", "requestId"];
+    const store = db.createObjectStore(family, { keyPath: keys });
+    store.createIndex("byAccountCampaign", ["accountId", "campaignId"], { unique: false });
+  }
+}
+
+export function hasCampaignPublicationStores(db: IDBDatabase): boolean {
+  return FAMILIES.every(family => db.objectStoreNames.contains(family));
+}
+
 type ArtifactRecord = { version: 1; accountId: string; campaignId: string; artifactId: string; generationId: string; publicationId: string; slotId: string; headRevision: number; raw: string };
 type ControlRecord = { version: 1; accountId: string; campaignId: string; value: StoredCampaignControl };
 type SlotRecord = { version: 1; accountId: string; campaignId: string; slotId: string; artifactId: string; publicationId: string; raw: string };
@@ -153,13 +168,7 @@ export async function openCampaignIndexedDbDatabase(options: Pick<CampaignStoreO
     request.onblocked = () => { blocked = true; reject(new CampaignStoreError("blocked_upgrade", "IndexedDB upgrade is blocked by another connection.")); };
     request.onupgradeneeded = () => {
       const db = request.result;
-      for (const family of FAMILIES) {
-        if (db.objectStoreNames.contains(family)) continue;
-        const keys = family === "artifacts" ? ["accountId", "artifactId"] : family === "controls" ? ["accountId", "campaignId"] :
-          family === "slots" ? ["accountId", "slotId"] : ["accountId", "campaignId", "requestId"];
-        const store = db.createObjectStore(family, { keyPath: keys });
-        store.createIndex("byAccountCampaign", ["accountId", "campaignId"], { unique: false });
-      }
+      ensureCampaignPublicationStores(db);
       if (!db.objectStoreNames.contains(LEGACY_COPY_RECORD_STORE)) {
         const store = db.createObjectStore(LEGACY_COPY_RECORD_STORE, { keyPath: ["copyId", "key"] });
         store.createIndex("byCopy", "copyId", { unique: false });
@@ -181,7 +190,7 @@ export async function openCampaignIndexedDbDatabase(options: Pick<CampaignStoreO
     request.onsuccess = () => {
       if (blocked) { request.result.close(); return; }
       const db = request.result;
-      if (FAMILIES.some(family => !db.objectStoreNames.contains(family)) || !db.objectStoreNames.contains(LEGACY_COPY_RECORD_STORE) || !db.objectStoreNames.contains(LEGACY_COPY_MANIFEST_STORE) || !db.objectStoreNames.contains(CANONICAL_RECORD_STORE) || !db.objectStoreNames.contains(CANONICAL_MANIFEST_STORE)) { db.close(); reject(new CampaignStoreError("invalid_record", "Campaign database schema is incomplete.")); return; }
+      if (!hasCampaignPublicationStores(db) || !db.objectStoreNames.contains(LEGACY_COPY_RECORD_STORE) || !db.objectStoreNames.contains(LEGACY_COPY_MANIFEST_STORE) || !db.objectStoreNames.contains(CANONICAL_RECORD_STORE) || !db.objectStoreNames.contains(CANONICAL_MANIFEST_STORE)) { db.close(); reject(new CampaignStoreError("invalid_record", "Campaign database schema is incomplete.")); return; }
       db.onversionchange = () => db.close();
       resolve(db);
     };
