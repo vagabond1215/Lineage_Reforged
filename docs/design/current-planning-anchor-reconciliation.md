@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 DEV-0.7.1 Slice G2 clean-epoch attempt checkpoint
+
+**ACCOUNT_SLOT_ATTEMPT_CHECKPOINT_IMPLEMENTED; RECOVERY_CONSUMERS_AND_ACTIVATION_HELD** from clean synchronized source `a7a0969bebe48c3a36a2760e4c46d31d5b8fcc3d`, code checkpoint `8affd8c4`. The inert `lineage.campaigns.epoch1` v2 owner adds one prepared new-campaign attempt per account slot with durable identity, account revision, empty head, exact retry and contention checks. Native Chromium 18/18, existing publication 12/12 and adjacent 68/68 pass. No attempt is accepted as a publication; recovery/consumer transactions are installed as **DEV-0.7.1 Slice G3**. Real async callers, reset/delete, backup/restore and two-browser long-run capacity remain later gates. Development-only reset has not occurred. Slice C capacity, combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
+
 ## 2026-09-29 DEV-0.7.1 Slice G1 clean-epoch account checkpoint
 
 **CLEAN_EPOCH_ACCOUNT_CHECKPOINT_IMPLEMENTED; ATTEMPT_RECOVERY_AND_ACTIVATION_HELD** from clean synchronized source `04d36930b8e5dd53f8508e820ddb41e8a37d64e2`, code checkpoint `b1aa1ec4`. A distinct IndexedDB epoch now holds an atomic complete profile/credential account record with revision compare-and-swap and fail-closed read/list/selection. Synthetic native Chromium QA passed 10/10; existing publication QA 12/12 and adjacent tests 68/68 passed. No live caller selects it. Installed **DEV-0.7.1 Slice G2 - Clean-Epoch Attempt And Recovery Transactions**; later real async callers, reset/delete, backup/restore and two-browser long-run capacity remain. The development-only reset has not occurred. Slice C capacity, combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G1-active pointer below while preserving chronology.

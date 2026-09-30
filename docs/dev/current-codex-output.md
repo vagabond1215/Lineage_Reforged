@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+Date: 2026-09-29. Source run: **DEV-0.7.1 Slice G2 - Clean-Epoch Attempt And Recovery Transactions**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `a7a0969bebe48c3a36a2760e4c46d31d5b8fcc3d`; code checkpoint `8affd8c428d3d4a643246df527ac84f5e7b27666`. Result: **ACCOUNT_SLOT_ATTEMPT_CHECKPOINT_IMPLEMENTED; RECOVERY_CONSUMERS_AND_ACTIVATION_HELD**. Final hosted head will be verified after handoff push.
+
+## A. Files changed
+
+`cleanEpochAccountStore.ts` and `campaign-clean-epoch-qa.ts` implement and verify the inert v2 account-slot attempt reservation. New focused G2 record; current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No live caller, browser user data, deployment, dependency, gameplay or game-version change.
+
+## B. Patch summary
+
+The new-epoch database now stores a typed `prepared` new-campaign attempt keyed by account and slot. A single write transaction validates complete retained account authority, expected account revision, exact attempt identity and snapshot/consumer plans, empty slot and absent campaign control. Same-source retry and restart recover the exact record; regenerated or competing attempts conflict; abort/quota cannot leave partial data. Version-1 account data upgrades to schema v2. No new-epoch publication, recovery or consumer-completion API is exposed. The active G2 prompt permits this tested `S` checkpoint; **DEV-0.7.1 Slice G3 - Clean-Epoch Publication Recovery And Consumer Transactions** is installed for the coupled remainder.
+
+## C. Tests and checks run
+
+Fresh native Chromium clean-epoch QA **18/18**, existing publication QA **12/12**, adjacent campaign/Soundings tests **68/68**, Node UI typecheck **PASS**, app-local Vite build **PASS** (229 modules), broad UI typecheck **137 baseline diagnostics** with zero in changed files, staged `git diff --check` **PASS**. Synthetic fixture and QA browser/server were removed after testing. No user campaign data or hosted deployment was touched. The focused G2 record lists exact cases and limits.
+
+FP-001/002 prohibit live-caller or parent acceptance from helper QA. FP-003/004/005 require reachable pending recovery, account-slot contention and lost-caller retry; FP-006/011/012/013/014/015 govern later publication, Soundings and full nested account/history authority. FP-008/009 govern branch/head accounting. No new generalized pattern was added.
+
+Fresh fetch/prune at inspected source found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` (452 master-only/2 ref-only), prompt-integrity `58a34e37`/base `3d77171c` (399/1), administration `210df5bc`/base `fd40571b` (230/1) retain their unique docs and dispositions `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`. Review triggers: scheduled readiness/regression or protection review; dedicated prompt/execution-pointer audit; administration/template/governance or explicit Lineage retrospective. None consumed; no integration, deletion, PR or disposition change was due/performed.
+
+## D. Risks and follow-up notes
+
+Prepared attempts reserve an account slot but cannot yet publish or complete. G3 must couple publication, pending recovery, first Soundings witness/artifact and profile consumers before any accepted new-epoch campaign; later real async callers, reset/delete, backup/restore, long-run two-browser capacity and activation remain. Slice C capacity, combat and parent acceptance stay held. Suggested commit: `docs(handoff): record G2 attempt checkpoint and install G3`. No game-version decision proposed.
+
+---
+
 Date: 2026-09-29. Source run: **DEV-0.7.1 Slice G1 - Clean-Epoch Transactional Account Store Extension**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` at `04d36930b8e5dd53f8508e820ddb41e8a37d64e2`; code checkpoint `b1aa1ec405d3ba41c15d69f77fc07ab983f3bc45`. Result: **CLEAN_EPOCH_ACCOUNT_CHECKPOINT_IMPLEMENTED; ATTEMPT_RECOVERY_AND_ACTIVATION_HELD**. Final hosted head will be verified after handoff push.
 
 ## A. Files changed

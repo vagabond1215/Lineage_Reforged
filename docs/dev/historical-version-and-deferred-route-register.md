@@ -1,5 +1,9 @@
 # Historical Version And Deferred Route Register
 
+## 2026-09-29 DEV-0.7.1 Slice G2 clean-epoch attempt checkpoint
+
+**ACCOUNT_SLOT_ATTEMPT_CHECKPOINT_IMPLEMENTED; RECOVERY_CONSUMERS_AND_ACTIVATION_HELD** from clean synchronized source `a7a0969bebe48c3a36a2760e4c46d31d5b8fcc3d`, code checkpoint `8affd8c4`. New epoch schema v2 atomically reserves a prepared attempt per account slot with exact account revision, empty destination, retry, restart and contention checks. Native Chromium 18/18, publication 12/12, adjacent 68/68, Node typecheck and Vite build pass; broad UI typecheck 137 baseline diagnostics, zero changed-file diagnostics. Recovery/consumer completion and live activation remain held; installed **DEV-0.7.1 Slice G3 - Clean-Epoch Publication Recovery And Consumer Transactions**. No browser reset, deployment, old-save migration or Game version change. This supersedes the G2-active pointer below, not the clean-epoch decision.
+
 ## 2026-09-29 DEV-0.7.1 Slice G1 clean-epoch account checkpoint
 
 **CLEAN_EPOCH_ACCOUNT_CHECKPOINT_IMPLEMENTED; ATTEMPT_RECOVERY_AND_ACTIVATION_HELD** from clean synchronized source `04d36930b8e5dd53f8508e820ddb41e8a37d64e2`, code checkpoint `b1aa1ec4`. Distinct `lineage.campaigns.epoch1` schema and atomic complete profile/PBKDF2 credential record have exact readback, revision compare-and-swap, retry/conflict, fail-closed selection and native Chromium 10/10 evidence. Existing publication QA 12/12, adjacent 68/68, Node typecheck and Vite build pass; broad UI typecheck remains 137 baseline diagnostics, zero in changed owner files. No live caller import, browser reset or deployment. Installed **DEV-0.7.1 Slice G2 - Clean-Epoch Attempt And Recovery Transactions** for deferred coupled records. Slice C capacity, combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G1-active route pointer below, not the clean-epoch decision.
