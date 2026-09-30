@@ -834,6 +834,9 @@ async function suite() {
     await rawDeleteFamily(db, "artifacts", [accountId, request.next.artifactId]);
     await expectCode(() => owner.readSlot(accountId, "slot-1"), "invalid_record");
     await rawPutFamily(db, "artifacts", retainedArtifact);
+    await rawPutFamily(db, "artifacts", { ...(retainedArtifact as object), generationId: "wrong.generation" });
+    await expectCode(() => owner.readSlot(accountId, "slot-1"), "invalid_record");
+    await rawPutFamily(db, "artifacts", retainedArtifact);
     const retainedAccount = await rawGetFamily(db, CLEAN_EPOCH_ACCOUNT_STORE, accountId) as { profile: AccountProfileState };
     await rawPutFamily(db, CLEAN_EPOCH_ACCOUNT_STORE, { ...retainedAccount, profile: { ...retainedAccount.profile,
       campaignPublicationReceipts: retainedAccount.profile.campaignPublicationReceipts?.filter(receipt =>

@@ -230,6 +230,13 @@ function envelopeFromRaw(raw: string): StoredSaveEnvelope {
   if (!isStoredSaveEnvelope(parsed)) fail("invalid_record", "First-publication envelope is invalid.");
   return parsed;
 }
+function retainedArtifactMatches(value: unknown, envelope: StoredSaveEnvelope): boolean {
+  return object(value) && value.version === 1 && value.accountId === envelope.accountId &&
+    value.campaignId === envelope.campaignId && value.slotId === envelope.slotId &&
+    value.artifactId === envelope.artifactId && value.generationId === envelope.generationId &&
+    value.publicationId === envelope.publicationId && value.headRevision === envelope.headRevision &&
+    typeof value.raw === "string" && exactEqual(envelopeFromRaw(value.raw), envelope);
+}
 const FIRST_CAMPAIGN_CONSUMERS: CampaignPublicationConsumerKind[] = [
   "active_history", "account_achievements", "legacy_rewards", "last_played", "preparation_consumption"
 ];
@@ -526,6 +533,8 @@ export class CleanEpochAccountStore {
       if (!object(artifactRaw) || typeof artifactRaw.raw !== "string")
         fail("invalid_record", "Historical artifact is missing.");
       const envelope = envelopeFromRaw(artifactRaw.raw);
+      if (!retainedArtifactMatches(artifactRaw, envelope))
+        fail("invalid_record", "Historical artifact record identity is malformed.");
       let publishedAt: string;
       if (artifactId === first.artifactId) {
         if (artifactRaw.raw !== first.envelopeRaw || first.status !== "consumers_completed")
@@ -628,6 +637,8 @@ export class CleanEpochAccountStore {
           fail("invalid_record", "Descendant immutable source or artifact is missing.");
         const source = envelopeFromRaw(sourceRaw.raw);
         const target = envelopeFromRaw(entry.envelopeRaw);
+        if (!retainedArtifactMatches(sourceRaw, source) || !retainedArtifactMatches(artifactRaw, target))
+          fail("invalid_record", "Descendant artifact record identity is malformed.");
         const sourceIdentity = deserializeSnapshot(source.snapshot).campaignIdentity;
         const targetIdentity = deserializeSnapshot(target.snapshot).campaignIdentity;
         if (source.accountId !== accountId || source.campaignId !== attempt.campaignId ||
@@ -895,6 +906,8 @@ export class CleanEpochAccountStore {
           fail("invalid_record", "Descendant source or predecessor artifact is missing.");
         const source = envelopeFromRaw(sourceRaw.raw);
         const predecessor = envelopeFromRaw(predecessorRaw.raw);
+        if (!retainedArtifactMatches(sourceRaw, source) || !retainedArtifactMatches(predecessorRaw, predecessor))
+          fail("invalid_record", "Retained source or predecessor record identity is malformed.");
         if (source.accountId !== input.accountId || source.campaignId !== input.campaignId ||
             source.slotId !== input.slotId || source.artifactId !== sourceArtifactId ||
             source.publicationId !== sourcePublicationId || source.snapshot !== sourceSnapshotRaw ||
@@ -993,6 +1006,9 @@ export class CleanEpochAccountStore {
           envelopeFromRaw(sourceRaw.raw).snapshot !== recovery.sourceSnapshotRaw ||
           !object(predecessorRaw) || typeof predecessorRaw.raw !== "string" ||
           envelopeFromRaw(predecessorRaw.raw).publicationId !== recovery.expectedHead.publicationId ||
+          !retainedArtifactMatches(artifactRaw, envelopeFromRaw(recovery.envelopeRaw)) ||
+          !retainedArtifactMatches(sourceRaw, envelopeFromRaw(sourceRaw.raw)) ||
+          !retainedArtifactMatches(predecessorRaw, envelopeFromRaw(predecessorRaw.raw)) ||
           !object(controlRaw) || !object(controlRaw.value) ||
           (controlRaw.value.headRevision as number) < recovery.headRevision ||
           (recovery.status === "consumers_completed" && !descendantReceiptsMatch(account, recovery)))
@@ -1116,6 +1132,7 @@ export class CleanEpochAccountStore {
       if (address === undefined) fail("invalid_record", "Accepted recovery lacks published slot.");
       const artifactRaw = await requestValue(tx.objectStore("artifacts").get([accountId, recovery.artifactId]) as IDBRequest<unknown>);
       if (!object(artifactRaw) || artifactRaw.raw !== recovery.envelopeRaw ||
+          !retainedArtifactMatches(artifactRaw, envelopeFromRaw(recovery.envelopeRaw)) ||
           !object(control) || !object(control.value) || (control.value.headRevision as number) < 1)
         fail("invalid_record", "First recovery lost immutable artifact or campaign control.");
       const published = await new CampaignIndexedDbStore(this.db).read(accountId, recovery.campaignId, slotId, tx);
