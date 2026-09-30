@@ -1,5 +1,9 @@
 # Current Planning Anchor Reconciliation
 
+## 2026-09-29 DEV-0.7.1 Slice G3 first-publication recovery checkpoint
+
+**FIRST_PUBLICATION_RECOVERY_CHECKPOINT_IMPLEMENTED; CONSUMER_COMPLETION_AND_ACTIVATION_HELD** from clean synchronized source `d31ab58331e1da401ac4e61f33f0ee4bfe3e3ed2`, code checkpoint `a49acbc4`. Inert `lineage.campaigns.epoch1` v3 atomically stores the first artifact/head/slot, independent Soundings witness and pending recovery for an exact prepared attempt. Native Chromium 27/27, existing publication 12/12 and adjacent 68/68 pass. The retained recovery says consumers are pending; it does not accept a complete campaign. Installed **DEV-0.7.1 Slice G4** for atomic complete profile/Chronicle/Legacy consumer transitions. Real async callers, reset/delete, backup/restore and two-browser long-run capacity remain later gates. Development-only reset has not occurred. Slice C capacity, combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
+
 ## 2026-09-29 DEV-0.7.1 Slice G2 clean-epoch attempt checkpoint
 
 **ACCOUNT_SLOT_ATTEMPT_CHECKPOINT_IMPLEMENTED; RECOVERY_CONSUMERS_AND_ACTIVATION_HELD** from clean synchronized source `a7a0969bebe48c3a36a2760e4c46d31d5b8fcc3d`, code checkpoint `8affd8c4`. The inert `lineage.campaigns.epoch1` v2 owner adds one prepared new-campaign attempt per account slot with durable identity, account revision, empty head, exact retry and contention checks. Native Chromium 18/18, existing publication 12/12 and adjacent 68/68 pass. No attempt is accepted as a publication; recovery/consumer transactions are installed as **DEV-0.7.1 Slice G3**. Real async callers, reset/delete, backup/restore and two-browser long-run capacity remain later gates. Development-only reset has not occurred. Slice C capacity, combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
