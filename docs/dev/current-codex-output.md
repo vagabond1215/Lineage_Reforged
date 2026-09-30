@@ -4,6 +4,30 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+## 2026-09-30 DEV-0.7.1 Slice G8A checkpoint
+
+Source run **DEV-0.7.1 Slice G8A — Inert Async Launcher Read Checkpoint**; label class internal slice of planned current-band primary `DEV-0.7.1`, parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development impact `supports_current_band`; game-version impact `none`. Clean synchronized source `master`/`origin/master` `8e8ce9f39ebb760edd40bf3a978e68d655bee21e`. Result **EPOCH_LAUNCHER_READ_BOUNDARY_VERIFIED; LIVE_APP_CUTOVER_HELD**. Final hosted head requires post-push readback.
+
+### A. Files changed
+
+New `apps/rpg-ui/src/game-shell/cleanEpochLauncherRead.ts` and `.js` mirror, native browser QA page/script, focused G8A record, current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No App, legacy owner, deployment, reset, dependency, combat or Game-version change.
+
+### B. Patch summary
+
+The inert reader composes validated epoch session selection, account-scoped inventory and exact ready-slot load. It checks account revision around reads, distinguishes prepared/pending/closed/unsupported from empty, and returns typed blocked results without a default profile or empty fallback. The installed G8 permits this narrower safe checkpoint because real App actions remain coupled to synchronous legacy account/save/lifecycle owners. G8 ordinary App acceptance is **not** claimed; G8B is installed for the real caller switch and ordinary descendant adapter.
+
+### C. Tests or checks run
+
+Native Chromium G8A fixture **7/7 PASS**; G7B first campaign **5/5**, G7A account adapter **13/13**, clean epoch **52/52**, publication **12/12**, canonical **14/14 PASS**. Adjacent campaign **51/51** and Soundings **53/53 PASS**. Node UI config typecheck and app-local Vite build **PASS** (229 client modules). Broad UI typecheck reports **137 existing diagnostics**, zero naming G8A files. `git diff --check` PASS. An initial clean-epoch/publication/canonical QA attempt lacked ignored fixture JSON; the generated-fixture rerun passed. Native ordinary App UI QA remains pending.
+
+FP-001/002 bound the inert claim; FP-003/004/005/006 are addressed by blocked statuses, restart and stable revision in the new fixture, with two-owner publication proof reused from G6/G7B; FP-011/012/013/014/015 use rerun owner/adjacent suites, not new caller proof; FP-008/009 govern branch/head accounting. No new generalized pattern found.
+
+### D. Risks / follow-up notes
+
+The real App still selects legacy localStorage authority. Complete G8B account, creator, load and manual/quick descendant callers plus reachable blocked/retry UI before G8 acceptance. G9 lifecycle/reset/delete and G10 coordinated activation and post-epoch long-run/two-browser capacity, quota/eviction and backup/restore remain held. Suggested commit: `feat(persistence): add inert epoch launcher read boundary`.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 468 master-only/2 ref-only; prompt integrity `58a34e37`/base `3d77171c` is 415/1; administration `210df5bc`/base `fd40571b` is 246/1. Unique paths remain two readiness docs, one prompt-audit doc and one research-evidence doc. Dispositions stay `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; triggers are scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. No branch action due. Counts describe the inspected source, not final head. Next run **DEV-0.7.1 Slice G8B — Real Async App Caller Cutover**; no Game-version decision proposed.
+
 Date: 2026-09-30. Source run: **DEV-0.7.1 Slice G7B — Inert First-Campaign Orchestration And Pending-Account Fence**. Label class: internal slice of planned current-band primary `DEV-0.7.1`; parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development milestone impact `supports_current_band`; game-version impact `none`. Inspected clean synchronized `master` `5a5f6b10e92bddbfee58051d3014699850351753`; code checkpoint `c25fc296`. Result: **INERT_FIRST_CAMPAIGN_ORCHESTRATION_VERIFIED; LIVE_CALLERS_HELD**. Final hosted head requires post-push verification.
 
 ## A. Files changed
