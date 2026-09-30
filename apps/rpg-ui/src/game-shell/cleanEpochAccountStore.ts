@@ -1,6 +1,9 @@
 import type { AccountProfileState } from "../../../../packages/shared/types/src/index.js";
 import type { LocalAuthCredentialRecord } from "./launcherAuthManager.js";
 import { isAccountProfileState } from "./accountProfileManager.js";
+import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
+import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
+import type { CampaignPublicationConsumerPlan } from "./saveManager.js";
 import {
   CAMPAIGN_DATABASE_NAME,
   CampaignStoreError,
@@ -10,8 +13,9 @@ import {
 
 /** Inert new-epoch owner. No launcher, App or save caller opens it yet. */
 export const CLEAN_EPOCH_DATABASE_NAME = "lineage.campaigns.epoch1";
-export const CLEAN_EPOCH_DATABASE_VERSION = 1;
+export const CLEAN_EPOCH_DATABASE_VERSION = 2;
 export const CLEAN_EPOCH_ACCOUNT_STORE = "accounts";
+export const CLEAN_EPOCH_ATTEMPT_STORE = "newCampaignAttempts";
 export const CLEAN_EPOCH_SESSION_STORAGE_KEY = "cataclysm-rpg-ui.epoch1.session";
 
 export type CleanEpochAccountRecord = {
@@ -24,6 +28,25 @@ export type CleanEpochAccountRecord = {
 export type CleanEpochAccountWriteResult = {
   status: "committed" | "same_source_retry";
   readback: CleanEpochAccountRecord;
+};
+/** A reservation, not an accepted campaign publication. One record owns one account slot. */
+export type CleanEpochAttemptRecord = {
+  version: 1;
+  status: "prepared";
+  accountId: string;
+  slotId: string;
+  campaignId: string;
+  attemptId: string;
+  expectedAccountRevision: number;
+  expectedHead: null;
+  inputFingerprint: string;
+  snapshotRaw: string;
+  consumerPlans: CampaignPublicationConsumerPlan[];
+  createdAt: string;
+};
+export type CleanEpochAttemptWriteResult = {
+  status: "committed" | "same_source_retry";
+  readback: CleanEpochAttemptRecord;
 };
 export type CleanEpochAccountStoreOptions = {
   name?: string;
@@ -89,6 +112,34 @@ function checkedAccount(value: unknown, accountId: string): CleanEpochAccountRec
   if (!validAccount(value, accountId)) fail("invalid_record", "Retained clean-epoch account is malformed or mismatched.");
   return value;
 }
+const CONSUMER_KINDS = new Set([
+  "active_history", "account_achievements", "legacy_rewards", "preparation_consumption",
+  "inheritance_consumption", "retirement_settlement", "estate", "last_played"
+]);
+function validAttempt(value: unknown, accountId: string, slotId: string): value is CleanEpochAttemptRecord {
+  if (!object(value) || value.version !== 1 || value.status !== "prepared" ||
+      value.accountId !== accountId || value.slotId !== slotId ||
+      !nonblank(value.campaignId) || !nonblank(value.attemptId) ||
+      !Number.isSafeInteger(value.expectedAccountRevision) || (value.expectedAccountRevision as number) < 1 ||
+      value.expectedHead !== null || !nonblank(value.inputFingerprint) ||
+      !nonblank(value.createdAt) || typeof value.snapshotRaw !== "string" ||
+      !Array.isArray(value.consumerPlans)) return false;
+  const plans = value.consumerPlans;
+  if (!plans.every(plan => object(plan) && CONSUMER_KINDS.has(plan.kind as string) && nonblank(plan.payloadFingerprint)) ||
+      new Set(plans.map(plan => (plan as CampaignPublicationConsumerPlan).kind)).size !== plans.length) return false;
+  try {
+    const snapshot = deserializeSnapshot(value.snapshotRaw);
+    return snapshot.accountId === accountId && snapshot.campaignIdentity?.campaignId === value.campaignId &&
+      snapshot.campaignRules?.source === "new_campaign" && isTargetCampaignSnapshot(snapshot);
+  } catch { return false; }
+}
+function checkedAttempt(value: unknown, accountId: string, slotId: string): CleanEpochAttemptRecord {
+  if (!validAttempt(value, accountId, slotId)) fail("invalid_record", "Retained clean-epoch attempt is malformed or mismatched.");
+  return value;
+}
+function validSlotId(value: unknown): value is string {
+  return typeof value === "string" && (value === "quick-save" || /^slot-[1-9][0-9]*$/.test(value));
+}
 
 export async function openCleanEpochAccountStore(options: CleanEpochAccountStoreOptions = {}): Promise<CleanEpochAccountStore> {
   const name = options.name ?? CLEAN_EPOCH_DATABASE_NAME;
@@ -109,12 +160,16 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
       if (!database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_STORE)) {
         database.createObjectStore(CLEAN_EPOCH_ACCOUNT_STORE, { keyPath: "accountId" });
       }
+      if (!database.objectStoreNames.contains(CLEAN_EPOCH_ATTEMPT_STORE)) {
+        database.createObjectStore(CLEAN_EPOCH_ATTEMPT_STORE, { keyPath: ["accountId", "slotId"] });
+      }
     };
     request.onerror = () => reject(classify(request.error, "unavailable"));
     request.onsuccess = () => {
       if (blocked) { request.result.close(); return; }
       const database = request.result;
-      if (!hasCampaignPublicationStores(database) || !database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_STORE)) {
+      if (!hasCampaignPublicationStores(database) || !database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_STORE) ||
+          !database.objectStoreNames.contains(CLEAN_EPOCH_ATTEMPT_STORE)) {
         database.close(); reject(new CampaignStoreError("invalid_record", "Clean-epoch schema is incomplete.")); return;
       }
       database.onversionchange = () => database.close();
@@ -154,6 +209,59 @@ export class CleanEpochAccountStore {
     const selected = await this.read(accountId);
     if (!selected) fail("invalid_record", "Selected clean-epoch account is missing.");
     return selected;
+  }
+
+  /** A lost caller must read this reservation before preparing another identity. */
+  async readAttempt(accountId: string, slotId: string): Promise<CleanEpochAttemptRecord | null> {
+    if (!nonblank(accountId) || !validSlotId(slotId)) fail("invalid_record", "Attempt address is invalid.");
+    try {
+      const tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE], "readonly");
+      const account = await requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>);
+      if (account === undefined) fail("invalid_record", "Retained attempt account is missing.");
+      checkedAccount(account, accountId);
+      const attempt = await requestValue(tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE).get([accountId, slotId]) as IDBRequest<unknown>);
+      return attempt === undefined ? null : checkedAttempt(attempt, accountId, slotId);
+    } catch (error) { throw classify(error, "unavailable"); }
+  }
+
+  /** Atomic account-slot reservation. Publication and completion require the successor owner. */
+  async prepareAttempt(candidate: CleanEpochAttemptRecord): Promise<CleanEpochAttemptWriteResult> {
+    if (!object(candidate) || !validSlotId(candidate.slotId) || !validAttempt(candidate, candidate.accountId, candidate.slotId))
+      fail("invalid_record", "New-campaign attempt candidate is invalid.");
+    let tx: IDBTransaction;
+    try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, "slots", "controls"], "readwrite"); }
+    catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    let status: CleanEpochAttemptWriteResult["status"] = "committed";
+    try {
+      const accountRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(candidate.accountId) as IDBRequest<unknown>);
+      if (accountRaw === undefined) fail("invalid_record", "New-campaign account is missing.");
+      const account = checkedAccount(accountRaw, candidate.accountId);
+      if (account.revision !== candidate.expectedAccountRevision) fail("stale_head", "New-campaign account revision changed.");
+      const attempts = tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE);
+      const retainedRaw = await requestValue(attempts.get([candidate.accountId, candidate.slotId]) as IDBRequest<unknown>);
+      if (retainedRaw !== undefined) {
+        const retained = checkedAttempt(retainedRaw, candidate.accountId, candidate.slotId);
+        if (!exactEqual(retained, candidate)) fail("conflict", "Account slot is reserved by a different attempt.");
+        status = "same_source_retry";
+      }
+      const occupied = await requestValue(tx.objectStore("slots").get([candidate.accountId, candidate.slotId]) as IDBRequest<unknown>);
+      const campaign = await requestValue(tx.objectStore("controls").get([candidate.accountId, candidate.campaignId]) as IDBRequest<unknown>);
+      if (occupied !== undefined || campaign !== undefined) fail("conflict", "New-campaign destination already has publication authority.");
+      if (status === "committed") {
+        this.beforeWrite?.(tx);
+        await requestValue(attempts.put(candidate));
+        this.afterWrite?.(tx);
+      }
+      await done;
+    } catch (error) {
+      try { tx.abort(); } catch { /* already settled */ }
+      try { await done; } catch { /* original error is authoritative */ }
+      throw classify(error, "aborted");
+    }
+    const readback = await this.readAttempt(candidate.accountId, candidate.slotId);
+    if (!readback || !exactEqual(readback, candidate)) fail("readback_failed", "Attempt reservation failed exact readback.");
+    return { status, readback };
   }
 
   async register(profile: AccountProfileState, credential: LocalAuthCredentialRecord): Promise<CleanEpochAccountWriteResult> {
