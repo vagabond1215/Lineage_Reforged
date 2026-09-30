@@ -212,8 +212,9 @@ export class CampaignIndexedDbStore {
   constructor(private readonly db: IDBDatabase, private readonly beforeWrite?: CampaignStoreOptions["beforeWrite"], private readonly afterWrite?: CampaignStoreOptions["afterWrite"]) {}
   close(): void { this.db.close(); }
 
-  async read(accountId: string, campaignId: string, slotId: string): Promise<CampaignStoreReadback | null> {
-    const tx = this.db.transaction(FAMILIES, "readonly");
+  /** A supplied transaction lets the clean-epoch owner verify provenance before its account write. */
+  async read(accountId: string, campaignId: string, slotId: string, transaction?: IDBTransaction): Promise<CampaignStoreReadback | null> {
+    const tx = transaction ?? this.db.transaction(FAMILIES, "readonly");
     try {
       const control = await requestValue(tx.objectStore("controls").get([accountId, campaignId]) as IDBRequest<unknown>);
       if (control === undefined) return null;

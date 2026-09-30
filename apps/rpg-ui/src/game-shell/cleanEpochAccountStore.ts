@@ -1,6 +1,10 @@
-import type { AccountProfileState } from "../../../../packages/shared/types/src/index.js";
+import type { AccountProfileState, CampaignPublicationConsumerKind, SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
 import type { LocalAuthCredentialRecord } from "./launcherAuthManager.js";
 import { isAccountProfileState } from "./accountProfileManager.js";
+import { evaluateAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
+import { recordCampaignPublicationConsumer, type VerifiedCampaignPublication } from "../../../../packages/engines/game-engine/src/account-publication.js";
+import { consumeSelectedLegacyPreparations, resolveLegacyPreparationSelection } from "../../../../packages/engines/game-engine/src/legacy-unlocks.js";
+import { consumeRetiredRunInheritanceUse, resolveHeirSourceById } from "./runLifecycle.js";
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { isStoredSaveEnvelope, type CampaignPublicationConsumerPlan, type StoredSaveEnvelope } from "./saveManager.js";
@@ -11,7 +15,8 @@ import {
   ensureCampaignPublicationStores,
   hasCampaignPublicationStores,
   type CampaignStorePublication,
-  type CampaignStorePublishResult
+  type CampaignStorePublishResult,
+  type CampaignStoreReadback
 } from "./campaignIndexedDbStore.js";
 
 /** Inert new-epoch owner. No launcher, App or save caller opens it yet. */
@@ -52,10 +57,9 @@ export type CleanEpochAttemptWriteResult = {
   status: "committed" | "same_source_retry";
   readback: CleanEpochAttemptRecord;
 };
-/** Publication is accepted, while account consumers remain explicitly pending. */
-export type CleanEpochPublicationRecovery = {
+/** Publication recovery records the exact pending or completed account-consumer transition. */
+type CleanEpochRecoveryBase = {
   version: 1;
-  status: "accepted_pending_consumers";
   accountId: string;
   slotId: string;
   campaignId: string;
@@ -68,13 +72,21 @@ export type CleanEpochPublicationRecovery = {
   envelopeRaw: string;
   witnessRequestId: string | null;
   consumerPlans: CampaignPublicationConsumerPlan[];
-  completedConsumerKinds: [];
   createdAt: string;
   updatedAt: string;
 };
+export type CleanEpochPublicationRecovery = CleanEpochRecoveryBase & (
+  { status: "accepted_pending_consumers"; completedConsumerKinds: []; completedAccountRevision?: never } |
+  { status: "consumers_completed"; completedConsumerKinds: CampaignPublicationConsumerKind[]; completedAccountRevision: number }
+);
 export type CleanEpochFirstPublicationResult = {
   publication: CampaignStorePublishResult;
   recovery: CleanEpochPublicationRecovery;
+};
+export type CleanEpochConsumerCompletionResult = {
+  status: "committed" | "same_source_retry";
+  account: CleanEpochAccountRecord;
+  recovery: CleanEpochPublicationRecovery & { status: "consumers_completed" };
 };
 export type CleanEpochAccountStoreOptions = {
   name?: string;
@@ -174,16 +186,78 @@ function envelopeFromRaw(raw: string): StoredSaveEnvelope {
   if (!isStoredSaveEnvelope(parsed)) fail("invalid_record", "First-publication envelope is invalid.");
   return parsed;
 }
+const FIRST_CAMPAIGN_CONSUMERS: CampaignPublicationConsumerKind[] = [
+  "active_history", "account_achievements", "legacy_rewards", "last_played", "preparation_consumption"
+];
+function publicationFor(snapshot: SaveSnapshot, recovery: CleanEpochPublicationRecovery): VerifiedCampaignPublication {
+  if (!snapshot.campaignIdentity) fail("invalid_record", "First publication lacks campaign identity.");
+  return { publicationId: recovery.publicationId, campaignId: recovery.campaignId,
+    continuityId: snapshot.campaignIdentity.continuityId, characterId: snapshot.playerState.playerId,
+    publishedAt: recovery.updatedAt };
+}
+function firstCampaignProjection(account: CleanEpochAccountRecord, attempt: CleanEpochAttemptRecord,
+  recovery: CleanEpochPublicationRecovery): AccountProfileState {
+  try {
+    const snapshot = deserializeSnapshot(attempt.snapshotRaw);
+    const sourceRunId = snapshot.playerState.saveMeta.sourceRunId?.trim() ?? "";
+    const requiredKinds = [...FIRST_CAMPAIGN_CONSUMERS, ...(sourceRunId ? ["inheritance_consumption" as const] : [])];
+    if (attempt.consumerPlans.length !== requiredKinds.length ||
+        requiredKinds.some(kind => !attempt.consumerPlans.some(plan => plan.kind === kind)))
+      fail("invalid_record", "First-publication consumer plan set is incomplete or inapplicable.");
+    if ((account.profile.campaignPublicationReceipts ?? []).some(receipt => receipt.publicationId === recovery.publicationId))
+      fail("conflict", "First-publication consumer identity already exists in the account.");
+    const evaluated = evaluateAchievementProgress(snapshot, account.profile, {
+      slotId: attempt.slotId, touchHistory: true, recordedAt: recovery.updatedAt, suppressLegacyRewards: true
+    });
+    if (!exactEqual(evaluated.nextSnapshot, snapshot))
+      fail("invalid_record", "First-publication account projection would change the accepted artifact.");
+    const coreFingerprint = JSON.stringify({ slotId: attempt.slotId, capturedAtTick: snapshot.capturedAtTick,
+      characterAchievementIds: snapshot.playerState.achievements.unlocked.map(entry => entry.achievementId) });
+    const selected = resolveLegacyPreparationSelection(account.profile);
+    if (!exactEqual(snapshot.playerState.saveMeta.appliedLegacyPreparationIds ?? [], selected.selectedUnlockIds) ||
+        !exactEqual(snapshot.playerState.saveMeta.appliedLegacyPreparationChoices ?? {}, selected.selectedChoicePayloads))
+      fail("conflict", "Retained preparation selection differs from the published campaign.");
+    const preparationFingerprint = JSON.stringify({ selectedPreparationUnlockIds: selected.selectedUnlockIds,
+      selectedPreparationChoicePayloads: selected.selectedChoicePayloads, sourceRunId: sourceRunId || null });
+    for (const plan of attempt.consumerPlans) {
+      const expected = FIRST_CAMPAIGN_CONSUMERS.slice(0, 4).includes(plan.kind)
+        ? coreFingerprint : preparationFingerprint;
+      if (plan.payloadFingerprint !== expected) fail("conflict", "First-publication consumer payload fingerprint differs from retained authority.");
+    }
+    const publication = publicationFor(snapshot, recovery);
+    let next: AccountProfileState = { ...evaluated.nextAccountProfile, lastPlayedAt: recovery.updatedAt };
+    next = consumeSelectedLegacyPreparations(next).profile;
+    if (sourceRunId) {
+      const source = resolveHeirSourceById(next, sourceRunId);
+      if (!source) fail("conflict", "Retained inheritance source is unavailable.");
+      const consumed = consumeRetiredRunInheritanceUse(next,
+        { characterId: source.characterId, recordedAt: recovery.updatedAt });
+      if (!consumed.consumed) fail("conflict", "Retained inheritance use was not consumed.");
+      next = consumed.accountProfile;
+    }
+    for (const plan of attempt.consumerPlans) {
+      next = recordCampaignPublicationConsumer(next, publication, plan.kind, plan.payloadFingerprint, { status: "applied" });
+    }
+    if (!validProfile(next, account.accountId)) fail("invalid_record", "Projected account consumers are malformed.");
+    return next;
+  } catch (error) { throw classify(error, "invalid_record"); }
+}
 function validRecovery(value: unknown, attempt: CleanEpochAttemptRecord): value is CleanEpochPublicationRecovery {
-  if (!object(value) || value.version !== 1 || value.status !== "accepted_pending_consumers" ||
+  if (!object(value) || value.version !== 1 ||
       value.accountId !== attempt.accountId || value.slotId !== attempt.slotId ||
       value.campaignId !== attempt.campaignId || value.attemptId !== attempt.attemptId ||
       !nonblank(value.artifactId) || !nonblank(value.generationId) || !nonblank(value.publicationId) ||
       value.headRevision !== 1 || value.expectedAccountRevision !== attempt.expectedAccountRevision ||
       typeof value.envelopeRaw !== "string" || !Array.isArray(value.consumerPlans) ||
       !exactEqual(value.consumerPlans, attempt.consumerPlans) || !Array.isArray(value.completedConsumerKinds) ||
-      value.completedConsumerKinds.length !== 0 || !nonblank(value.createdAt) || !nonblank(value.updatedAt) ||
+      !nonblank(value.createdAt) || !nonblank(value.updatedAt) ||
       (value.witnessRequestId !== null && !nonblank(value.witnessRequestId))) return false;
+  const pending = value.status === "accepted_pending_consumers" && value.completedConsumerKinds.length === 0 &&
+    value.completedAccountRevision === undefined;
+  const completed = value.status === "consumers_completed" &&
+    value.completedAccountRevision === attempt.expectedAccountRevision + 1 &&
+    exactEqual(value.completedConsumerKinds, attempt.consumerPlans.map(plan => plan.kind));
+  if (!pending && !completed) return false;
   try {
     const envelope = envelopeFromRaw(value.envelopeRaw);
     const snapshot = deserializeSnapshot(envelope.snapshot);
@@ -199,6 +273,29 @@ function validRecovery(value: unknown, attempt: CleanEpochAttemptRecord): value 
 function checkedRecovery(value: unknown, attempt: CleanEpochAttemptRecord): CleanEpochPublicationRecovery {
   if (!validRecovery(value, attempt)) fail("invalid_record", "Retained clean-epoch recovery is malformed or unlinked.");
   return value;
+}
+function sameRecoverySource(left: CleanEpochPublicationRecovery, right: CleanEpochPublicationRecovery): boolean {
+  const { status: _leftStatus, completedConsumerKinds: _leftKinds, completedAccountRevision: _leftRevision, ...leftSource } = left;
+  const { status: _rightStatus, completedConsumerKinds: _rightKinds, completedAccountRevision: _rightRevision, ...rightSource } = right;
+  return exactEqual(leftSource, rightSource);
+}
+function completedReceiptsMatch(account: CleanEpochAccountRecord, recovery: CleanEpochPublicationRecovery): boolean {
+  if (recovery.status !== "consumers_completed" || account.revision < recovery.completedAccountRevision) return false;
+  const snapshot = deserializeSnapshot(envelopeFromRaw(recovery.envelopeRaw).snapshot);
+  const publication = publicationFor(snapshot, recovery);
+  return recovery.consumerPlans.every(plan => (account.profile.campaignPublicationReceipts ?? []).some(receipt =>
+    receipt.consumerId === `${publication.publicationId}.consumer.${plan.kind}` &&
+    receipt.publicationId === publication.publicationId && receipt.campaignId === publication.campaignId &&
+    receipt.continuityId === publication.continuityId && receipt.characterId === publication.characterId &&
+    receipt.kind === plan.kind && receipt.payloadFingerprint === plan.payloadFingerprint &&
+    receipt.status === "applied" && receipt.appliedAt === publication.publishedAt));
+}
+function publicationMatchesRecovery(published: CampaignStoreReadback | null, recovery: CleanEpochPublicationRecovery): boolean {
+  return !!published && published.artifactRaw === recovery.envelopeRaw && published.slotRaw === recovery.envelopeRaw &&
+    published.control.headArtifactId === recovery.artifactId && published.control.headPublicationId === recovery.publicationId &&
+    published.control.headRevision === 1 && published.control.previousHeadArtifactId === null &&
+    published.control.previousHeadPublicationId === null && published.control.closed === false &&
+    published.control.updatedAt === recovery.updatedAt && (published.witness?.requestId ?? null) === recovery.witnessRequestId;
 }
 
 export async function openCleanEpochAccountStore(options: CleanEpochAccountStoreOptions = {}): Promise<CleanEpochAccountStore> {
@@ -357,7 +454,6 @@ export class CleanEpochAccountStore {
         if (accountRaw === undefined || attemptRaw === undefined) fail("invalid_record", "First publication lacks retained account or attempt.");
         const account = checkedAccount(accountRaw, input.accountId);
         const attempt = checkedAttempt(attemptRaw, input.accountId, input.slotId);
-        if (account.revision !== attempt.expectedAccountRevision) fail("stale_head", "First-publication account revision changed.");
         if (attempt.attemptId !== attemptId || attempt.campaignId !== input.campaignId ||
             attempt.snapshotRaw !== envelope.snapshot || !attempt.consumerPlans.some(plan => plan.kind === "active_history")) {
           fail("conflict", "First publication does not match the retained attempt and required history plan.");
@@ -375,10 +471,18 @@ export class CleanEpochAccountStore {
         if (!validRecovery(proposed, attempt)) fail("invalid_record", "Proposed first-publication recovery is invalid.");
         if (recoveryRaw !== undefined) {
           const retained = checkedRecovery(recoveryRaw, attempt);
-          if (!current || !exactEqual(current, input.control) || !exactEqual(retained, proposed))
+          if (retained.status === "accepted_pending_consumers" && account.revision !== attempt.expectedAccountRevision)
+            fail("stale_head", "First-publication account revision changed.");
+          if (!current || !exactEqual(current, input.control) || !sameRecoverySource(retained, proposed) ||
+              (retained.status === "consumers_completed" && !completedReceiptsMatch(account, retained)))
             fail("conflict", "Pending account-slot recovery conflicts with first publication.");
+          if (retained.status === "accepted_pending_consumers") firstCampaignProjection(account, attempt, retained);
         } else if (current && exactEqual(current, input.control))
           fail("invalid_record", "Published campaign lacks its pending consumer recovery.");
+        else {
+          if (account.revision !== attempt.expectedAccountRevision) fail("stale_head", "First-publication account revision changed.");
+          firstCampaignProjection(account, attempt, proposed);
+        }
       },
       write: async tx => {
         if (!proposed) fail("invalid_record", "First-publication recovery was not validated.");
@@ -388,13 +492,14 @@ export class CleanEpochAccountStore {
       }
     });
     const recovery = await this.readRecovery(input.accountId, input.slotId);
-    if (!recovery || !proposed || !exactEqual(recovery, proposed)) fail("readback_failed", "First-publication recovery failed exact readback.");
+    if (!recovery || !proposed || !sameRecoverySource(recovery, proposed)) fail("readback_failed", "First-publication recovery failed exact readback.");
     return { publication, recovery };
   }
 
   async readRecovery(accountId: string, slotId: string): Promise<CleanEpochPublicationRecovery | null> {
     if (!nonblank(accountId) || !validSlotId(slotId)) fail("invalid_record", "Recovery address is invalid.");
     let recovery: CleanEpochPublicationRecovery | null;
+    let account: CleanEpochAccountRecord;
     try {
       const tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE, "slots", "controls"], "readonly");
       const [accountRaw, attemptRaw, recoveryRaw, address] = await Promise.all([
@@ -404,7 +509,7 @@ export class CleanEpochAccountStore {
         requestValue(tx.objectStore("slots").get([accountId, slotId]) as IDBRequest<unknown>)
       ]);
       if (accountRaw === undefined) fail("invalid_record", "Recovery account is missing.");
-      checkedAccount(accountRaw, accountId);
+      account = checkedAccount(accountRaw, accountId);
       if (attemptRaw === undefined) {
         if (recoveryRaw !== undefined || address !== undefined) fail("invalid_record", "Recovery lacks its retained attempt.");
         return null;
@@ -419,14 +524,75 @@ export class CleanEpochAccountStore {
       if (address === undefined) fail("invalid_record", "Accepted recovery lacks published slot.");
     } catch (error) { throw classify(error, "invalid_record"); }
     const published = await new CampaignIndexedDbStore(this.db).read(accountId, recovery.campaignId, slotId);
-    if (!published || published.artifactRaw !== recovery.envelopeRaw || published.slotRaw !== recovery.envelopeRaw ||
-        published.control.headArtifactId !== recovery.artifactId || published.control.headPublicationId !== recovery.publicationId ||
-        published.control.headRevision !== 1 || published.control.previousHeadArtifactId !== null ||
-        published.control.previousHeadPublicationId !== null || published.control.closed !== false ||
-        published.control.updatedAt !== recovery.updatedAt || (published.witness?.requestId ?? null) !== recovery.witnessRequestId) {
+    if (!publicationMatchesRecovery(published, recovery) ||
+        (recovery.status === "consumers_completed" && !completedReceiptsMatch(account, recovery))) {
       fail("invalid_record", "Accepted recovery and publication disagree.");
     }
     return recovery;
+  }
+
+  /** One account transaction completes every first-campaign consumer or none of them. */
+  async completePreparedAttemptConsumers(accountId: string, slotId: string, attemptId: string,
+    publicationId: string): Promise<CleanEpochConsumerCompletionResult> {
+    if (!nonblank(accountId) || !validSlotId(slotId) || !nonblank(attemptId) || !nonblank(publicationId))
+      fail("invalid_record", "Consumer completion identity is invalid.");
+    let tx: IDBTransaction;
+    try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
+      "artifacts", "controls", "slots", "witnesses"], "readwrite"); }
+    catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    let status: CleanEpochConsumerCompletionResult["status"] = "committed";
+    let expectedAccount: CleanEpochAccountRecord;
+    let expectedRecovery: CleanEpochPublicationRecovery & { status: "consumers_completed" };
+    try {
+      const [accountRaw, attemptRaw, recoveryRaw] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE).get([accountId, slotId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE).get([accountId, slotId]) as IDBRequest<unknown>)
+      ]);
+      if (accountRaw === undefined || attemptRaw === undefined || recoveryRaw === undefined)
+        fail("invalid_record", "Consumer completion lacks retained account, attempt or recovery.");
+      const account = checkedAccount(accountRaw, accountId);
+      const attempt = checkedAttempt(attemptRaw, accountId, slotId);
+      const recovery = checkedRecovery(recoveryRaw, attempt);
+      if (attempt.attemptId !== attemptId || recovery.attemptId !== attemptId || recovery.publicationId !== publicationId)
+        fail("conflict", "Consumer completion does not match retained publication identity.");
+      const published = await new CampaignIndexedDbStore(this.db).read(accountId, recovery.campaignId, slotId, tx);
+      if (!publicationMatchesRecovery(published, recovery)) fail("invalid_record", "Consumer completion lost published authority.");
+      if (recovery.status === "consumers_completed") {
+        if (!completedReceiptsMatch(account, recovery)) fail("invalid_record", "Completed consumer evidence is missing or malformed.");
+        status = "same_source_retry";
+        expectedAccount = account;
+        expectedRecovery = recovery;
+      } else {
+        if (account.revision !== recovery.expectedAccountRevision)
+          fail("stale_head", "Consumer completion account revision changed.");
+        const profile = firstCampaignProjection(account, attempt, recovery);
+        expectedAccount = { ...account, revision: account.revision + 1, profile };
+        expectedRecovery = { ...recovery, status: "consumers_completed",
+          completedConsumerKinds: attempt.consumerPlans.map(plan => plan.kind),
+          completedAccountRevision: expectedAccount.revision };
+        if (!validRecovery(expectedRecovery, attempt)) fail("invalid_record", "Completed consumer recovery is malformed.");
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).put(expectedAccount));
+        this.afterWrite?.(tx);
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE).put(expectedRecovery));
+        this.afterWrite?.(tx);
+      }
+      await done;
+    } catch (error) {
+      try { tx.abort(); } catch { /* already settled */ }
+      try { await done; } catch { /* original error is authoritative */ }
+      throw classify(error, "aborted");
+    }
+    const [account, recovery] = await Promise.all([this.read(accountId), this.readRecovery(accountId, slotId)]);
+    if (!account || !recovery || recovery.status !== "consumers_completed" ||
+        !exactEqual(recovery, expectedRecovery) ||
+        (status === "committed" && !exactEqual(account, expectedAccount)) ||
+        !completedReceiptsMatch(account, recovery))
+      fail("readback_failed", "Completed account consumers failed durable readback.");
+    return { status, account, recovery };
   }
 
   async register(profile: AccountProfileState, credential: LocalAuthCredentialRecord): Promise<CleanEpochAccountWriteResult> {

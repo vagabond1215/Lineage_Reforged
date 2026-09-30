@@ -1,4 +1,7 @@
 import { createDefaultAccountProfileState } from "../../packages/engines/game-engine/src/legacy-account.ts";
+import { evaluateAchievementProgress, prepareCharacterAchievementProgress } from "../../packages/engines/game-engine/src/achievements.ts";
+import { resolveLegacyPreparationSelection } from "../../packages/engines/game-engine/src/legacy-unlocks.ts";
+import type { AccountProfileState, SaveSnapshot } from "../../packages/shared/types/src/index.ts";
 import { CAMPAIGN_DATABASE_NAME, CampaignIndexedDbStore, ensureCampaignPublicationStores, type CampaignStoreFailureCode, type CampaignStorePublication } from "./src/game-shell/campaignIndexedDbStore.ts";
 import {
   CLEAN_EPOCH_ACCOUNT_STORE,
@@ -21,6 +24,18 @@ async function expectCode(run: () => Promise<unknown>, code: CampaignStoreFailur
   throw new Error(`expected ${code}`);
 }
 function encode(bytes: Uint8Array): string { return btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join("")); }
+function newCampaignPlans(snapshot: SaveSnapshot, profile: AccountProfileState, slotId: string) {
+  const core = JSON.stringify({ slotId, capturedAtTick: snapshot.capturedAtTick,
+    characterAchievementIds: snapshot.playerState.achievements.unlocked.map(entry => entry.achievementId) });
+  const selected = resolveLegacyPreparationSelection(profile);
+  const sourceRunId = snapshot.playerState.saveMeta.sourceRunId?.trim() ?? "";
+  const preparation = JSON.stringify({ selectedPreparationUnlockIds: selected.selectedUnlockIds,
+    selectedPreparationChoicePayloads: selected.selectedChoicePayloads, sourceRunId: sourceRunId || null });
+  return (["active_history", "account_achievements", "legacy_rewards", "last_played"] as const)
+    .map(kind => ({ kind, payloadFingerprint: core }))
+    .concat([{ kind: "preparation_consumption" as const, payloadFingerprint: preparation }])
+    .concat(sourceRunId ? [{ kind: "inheritance_consumption" as const, payloadFingerprint: preparation }] : []);
+}
 async function credential(accountId: string): Promise<LocalAuthCredentialRecord> {
   const salt = crypto.getRandomValues(new Uint8Array(16));
   const material = await crypto.subtle.importKey("raw", new TextEncoder().encode("synthetic-only-password"), "PBKDF2", false, ["deriveBits"]);
@@ -157,11 +172,12 @@ async function suite() {
   const snapshot = JSON.parse(envelope.snapshot);
   snapshot.accountId = accountId;
   snapshot.campaignRules.source = "new_campaign";
+  const preparedSnapshot = prepareCharacterAchievementProgress(snapshot, envelope.savedAt).snapshot;
   const attempt = {
     version: 1 as const, status: "prepared" as const, accountId, slotId: "slot-1",
     campaignId: snapshot.campaignIdentity.campaignId, attemptId: `attempt.${crypto.randomUUID()}`,
     expectedAccountRevision: 1, expectedHead: null, inputFingerprint: "normalized-new-campaign-input",
-    snapshotRaw: JSON.stringify(snapshot), consumerPlans: [{ kind: "active_history" as const, payloadFingerprint: "history-fingerprint" }],
+    snapshotRaw: JSON.stringify(preparedSnapshot), consumerPlans: newCampaignPlans(preparedSnapshot, profile, "slot-1"),
     createdAt: "2026-09-29T00:00:00.000Z"
   };
   envelope.accountId = accountId;
@@ -347,12 +363,15 @@ async function suite() {
     const source = JSON.parse(fixtures.soundings.raw);
     const soundingsAccount = source.accountId as string;
     const soundingsProfile = createDefaultAccountProfileState({ accountId: soundingsAccount, displayName: "Soundings synthetic", createdAt: "2026-09-29T00:00:00.000Z" });
+    const soundingsSnapshot = prepareCharacterAchievementProgress(JSON.parse(source.snapshot), fixtures.soundings.control.updatedAt).snapshot;
+    source.snapshot = JSON.stringify(soundingsSnapshot);
     const soundingsAttempt = { ...attempt, accountId: soundingsAccount, slotId: source.slotId as string,
-      campaignId: source.campaignId as string, attemptId: `attempt.${crypto.randomUUID()}`, snapshotRaw: source.snapshot as string };
+      campaignId: source.campaignId as string, attemptId: `attempt.${crypto.randomUUID()}`, snapshotRaw: source.snapshot as string,
+      consumerPlans: newCampaignPlans(soundingsSnapshot, soundingsProfile, source.slotId as string) };
     const databaseName = name("soundings-first"); let owner = await openCleanEpochAccountStore({ name: databaseName });
     await owner.register(soundingsProfile, await credential(soundingsAccount)); await owner.prepareAttempt(soundingsAttempt);
     const request = { accountId: soundingsAccount, campaignId: source.campaignId, slotId: source.slotId,
-      expectedHead: null, artifactRaw: fixtures.soundings.raw, control: fixtures.soundings.control, witness: fixtures.soundings.witness };
+      expectedHead: null, artifactRaw: JSON.stringify(source), control: fixtures.soundings.control, witness: fixtures.soundings.witness };
     const accepted = await owner.publishPreparedAttempt(soundingsAttempt.attemptId, request);
     check(accepted.publication.readback.witness?.firstDurableArtifactId === source.artifactId, "first witness not retained");
     owner.close(); owner = await openCleanEpochAccountStore({ name: databaseName });
@@ -364,6 +383,139 @@ async function suite() {
       requestId: fixtures.soundings.witness.requestId, value: fixtures.soundings.witness });
     await rawDeleteFamily(db, "artifacts", [soundingsAccount, source.artifactId]);
     await expectCode(() => owner.readRecovery(soundingsAccount, source.slotId), "invalid_record"); db.close(); owner.close();
+  });
+  await test("all first-campaign consumers commit once, preserve prior history and recover after restart", async () => {
+    const databaseName = name("consumer-complete");
+    const older = structuredClone(preparedSnapshot);
+    older.playerState.playerId = "player.qa.previous";
+    const priorProfile = evaluateAchievementProgress(older, profile,
+      { slotId: "slot-2", touchHistory: true, recordedAt: "2026-09-28T00:00:00.000Z", suppressLegacyRewards: true }).nextAccountProfile;
+    const priorRun = structuredClone(priorProfile.history.runRecords[0]);
+    let owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(priorProfile, verifier); await owner.prepareAttempt(attempt);
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    const result = await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    check(result.status === "committed" && result.account.revision === 2 && result.recovery.status === "consumers_completed", "consumer completion did not commit");
+    check(JSON.stringify(result.recovery.completedConsumerKinds) === JSON.stringify(attempt.consumerPlans.map(plan => plan.kind)), "consumer evidence incomplete");
+    check(result.account.profile.history.runRecords.length === 2 &&
+      JSON.stringify(result.account.profile.history.runRecords[0]) === JSON.stringify(priorRun), "prior history changed");
+    check(result.account.profile.history.runRecords.some(run => run.characterId === preparedSnapshot.playerState.playerId && run.saveSlotIds.includes(attempt.slotId)), "active history missing");
+    check(result.account.profile.lastPlayedAt === firstPublication.control.updatedAt &&
+      result.account.profile.legacy.selectedPreparationUnlockIds.length === 0, "account consumer effect missing");
+    check(attempt.consumerPlans.every(plan => result.account.profile.campaignPublicationReceipts?.some(receipt =>
+      receipt.publicationId === envelope.publicationId && receipt.kind === plan.kind && receipt.status === "applied")), "applied receipt missing");
+    check((await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId)).status === "same_source_retry", "duplicate completion wrote again");
+    check((await owner.publishPreparedAttempt(attempt.attemptId, firstPublication)).publication.status === "same_source_retry", "completed publication did not retry");
+    owner.close(); owner = await openCleanEpochAccountStore({ name: databaseName });
+    check((await owner.readRecovery(accountId, attempt.slotId))?.status === "consumers_completed" &&
+      (await owner.read(accountId))?.revision === 2, "restart lost completion"); owner.close();
+  });
+  await test("incomplete or conflicting first-campaign plans cannot publish", async () => {
+    for (const [index, plans] of [
+      attempt.consumerPlans.slice(0, 1),
+      attempt.consumerPlans.map(plan => plan.kind === "active_history" ? { ...plan, payloadFingerprint: "wrong" } : plan),
+      [...attempt.consumerPlans.slice(0, -1), { kind: "estate" as const, payloadFingerprint: "wrong" }]
+    ].entries()) {
+      const owner = await openCleanEpochAccountStore({ name: name("consumer-plan") });
+      await owner.register(profile, verifier); const candidate = { ...attempt, consumerPlans: plans };
+      await owner.prepareAttempt(candidate);
+      await expectCode(() => owner.publishPreparedAttempt(candidate.attemptId, firstPublication), index === 1 ? "conflict" : "invalid_record");
+      check(await owner.readRecovery(accountId, attempt.slotId) === null, "invalid plan published"); owner.close();
+    }
+  });
+  await test("consumer identity and stale account revision block without partial profile change", async () => {
+    const owner = await openCleanEpochAccountStore({ name: name("consumer-stale") });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, "wrong-attempt", envelope.publicationId), "conflict");
+    await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, "wrong-publication"), "conflict");
+    await owner.updateProfile(accountId, 1, { ...profile, displayName: "concurrent update" });
+    await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId), "stale_head");
+    check((await owner.read(accountId))?.revision === 2 && (await owner.readRecovery(accountId, attempt.slotId))?.status === "accepted_pending_consumers", "stale completion changed authority"); owner.close();
+  });
+  await test("abort and quota at each consumer write preserve pending recovery and account", async () => {
+    for (const [mode, stop] of [["aborted", 1], ["aborted", 2], ["quota", 1], ["quota", 2]] as const) {
+      const databaseName = name(`consumer-${mode}-${stop}`); const first = await openCleanEpochAccountStore({ name: databaseName });
+      await first.register(profile, verifier); await first.prepareAttempt(attempt); await first.publishPreparedAttempt(attempt.attemptId, firstPublication); first.close();
+      let writes = 0;
+      const failing = await openCleanEpochAccountStore({ name: databaseName,
+        beforeWrite: () => { if (mode === "quota" && ++writes === stop) throw new DOMException("quota", "QuotaExceededError"); },
+        afterWrite: tx => { if (mode === "aborted" && ++writes === stop) tx.abort(); } });
+      await expectCode(() => failing.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId), mode);
+      failing.close(); const reopened = await openCleanEpochAccountStore({ name: databaseName });
+      check((await reopened.read(accountId))?.revision === 1 &&
+        (await reopened.readRecovery(accountId, attempt.slotId))?.status === "accepted_pending_consumers", `${mode} ${stop} committed partial consumers`);
+      check((await reopened.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId)).status === "committed", "failed completion could not retry");
+      reopened.close();
+    }
+  });
+  await test("malformed recovery, lost artifact and missing witness block consumer completion", async () => {
+    const databaseName = name("consumer-missing"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    const db = await rawOpen(databaseName); const retained = await owner.readRecovery(accountId, attempt.slotId);
+    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, { ...retained, completedConsumerKinds: ["active_history"] });
+    await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId), "invalid_record");
+    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, retained);
+    await rawDeleteFamily(db, "artifacts", [accountId, envelope.artifactId]);
+    await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId), "invalid_record");
+    check((await owner.read(accountId))?.revision === 1, "missing artifact advanced account"); db.close(); owner.close();
+  });
+  await test("concurrent duplicate consumer completion has one commit and one retry", async () => {
+    const databaseName = name("consumer-concurrent"); const first = await openCleanEpochAccountStore({ name: databaseName });
+    await first.register(profile, verifier); await first.prepareAttempt(attempt); await first.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    const second = await openCleanEpochAccountStore({ name: databaseName });
+    const results = await Promise.all([first.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId),
+      second.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId)]);
+    check(results.filter(result => result.status === "committed").length === 1 &&
+      results.filter(result => result.status === "same_source_retry").length === 1, "duplicate completion not serialized");
+    check((await first.read(accountId))?.revision === 2, "duplicate completion incremented revision twice");
+    first.close(); second.close();
+  });
+  await test("retired lineage source is consumed exactly once with prior run retained", async () => {
+    const oldSnapshot = structuredClone(preparedSnapshot); oldSnapshot.playerState.playerId = "player.qa.retired-source";
+    const oldProfile = evaluateAchievementProgress(oldSnapshot, profile,
+      { slotId: "slot-2", touchHistory: true, recordedAt: "2026-09-28T00:00:00.000Z", suppressLegacyRewards: true }).nextAccountProfile;
+    const previous = oldProfile.history.runRecords[0];
+    const source = { ...previous, outcome: "retired" as const, endedAt: "2026-09-28T01:00:00.000Z", inheritanceUsesRemaining: 1 };
+    const lineageProfile = { ...oldProfile, history: { runRecords: [source] } };
+    const sourceRunId = `${source.characterId}::${source.startedAt}`;
+    const heirSnapshot = structuredClone(preparedSnapshot);
+    heirSnapshot.playerState.saveMeta.sourceRunId = sourceRunId;
+    const heirAttempt = { ...attempt, snapshotRaw: JSON.stringify(heirSnapshot),
+      consumerPlans: newCampaignPlans(heirSnapshot, lineageProfile, attempt.slotId) };
+    const heirEnvelope = { ...envelope, snapshot: heirAttempt.snapshotRaw };
+    const heirRequest = { ...firstPublication, artifactRaw: JSON.stringify(heirEnvelope) };
+    const owner = await openCleanEpochAccountStore({ name: name("inheritance") });
+    await owner.register(lineageProfile, verifier); await owner.prepareAttempt(heirAttempt);
+    await owner.publishPreparedAttempt(heirAttempt.attemptId, heirRequest);
+    const result = await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const retained = result.account.profile.history.runRecords.find(run => run.characterId === source.characterId);
+    check(retained?.inheritanceUsesRemaining === 0 && result.account.profile.history.runRecords.length === 2, "inheritance or prior run was lost");
+    check((await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId)).status === "same_source_retry" &&
+      (await owner.read(accountId))?.profile.history.runRecords.find(run => run.characterId === source.characterId)?.inheritanceUsesRemaining === 0,
+      "inheritance duplicate spent twice"); owner.close();
+  });
+  await test("Soundings witness and first artifact remain required for consumer completion", async () => {
+    const source = JSON.parse(fixtures.soundings.raw);
+    const soundingsAccount = source.accountId as string;
+    const soundingsProfile = createDefaultAccountProfileState({ accountId: soundingsAccount, displayName: "Soundings consumer", createdAt: "2026-09-29T00:00:00.000Z" });
+    const soundingsSnapshot = prepareCharacterAchievementProgress(JSON.parse(source.snapshot), fixtures.soundings.control.updatedAt).snapshot;
+    source.snapshot = JSON.stringify(soundingsSnapshot);
+    const candidate = { ...attempt, accountId: soundingsAccount, slotId: source.slotId as string,
+      campaignId: source.campaignId as string, attemptId: `attempt.${crypto.randomUUID()}`,
+      snapshotRaw: source.snapshot as string, consumerPlans: newCampaignPlans(soundingsSnapshot, soundingsProfile, source.slotId as string) };
+    const request = { accountId: soundingsAccount, campaignId: source.campaignId as string, slotId: source.slotId as string,
+      expectedHead: null, artifactRaw: JSON.stringify(source), control: fixtures.soundings.control, witness: fixtures.soundings.witness };
+    const databaseName = name("soundings-consumer"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(soundingsProfile, await credential(soundingsAccount)); await owner.prepareAttempt(candidate);
+    await owner.publishPreparedAttempt(candidate.attemptId, request);
+    const db = await rawOpen(databaseName);
+    await rawDeleteFamily(db, "witnesses", [soundingsAccount, source.campaignId, fixtures.soundings.witness.requestId]);
+    await expectCode(() => owner.completePreparedAttemptConsumers(soundingsAccount, source.slotId, candidate.attemptId, source.publicationId), "invalid_record");
+    check((await owner.read(soundingsAccount))?.revision === 1, "missing witness changed account");
+    await rawPutFamily(db, "witnesses", { version: 1, accountId: soundingsAccount, campaignId: source.campaignId,
+      requestId: fixtures.soundings.witness.requestId, value: fixtures.soundings.witness });
+    check((await owner.completePreparedAttemptConsumers(soundingsAccount, source.slotId, candidate.attemptId, source.publicationId)).account.revision === 2,
+      "restored witness could not complete consumers"); db.close(); owner.close();
   });
 }
 
