@@ -7,6 +7,7 @@ import {
   CLEAN_EPOCH_ACCOUNT_STORE,
   CLEAN_EPOCH_ATTEMPT_STORE,
   CLEAN_EPOCH_RECOVERY_STORE,
+  CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
   CLEAN_EPOCH_DATABASE_NAME,
   CLEAN_EPOCH_DATABASE_VERSION,
   CLEAN_EPOCH_SESSION_STORAGE_KEY,
@@ -73,7 +74,7 @@ async function suite() {
     await expectCode(() => openCleanEpochAccountStore({ name: CAMPAIGN_DATABASE_NAME }), "invalid_record");
     const databaseName = name("schema"); const owner = await openCleanEpochAccountStore({ name: databaseName }); owner.close();
     const db = await rawOpen(databaseName);
-    for (const family of ["accounts", "newCampaignAttempts", "pendingPublicationRecoveries", "artifacts", "controls", "slots", "witnesses"]) check(db.objectStoreNames.contains(family), `missing ${family}`);
+    for (const family of ["accounts", "newCampaignAttempts", "pendingPublicationRecoveries", "descendantPublicationRecoveries", "artifacts", "controls", "slots", "witnesses"]) check(db.objectStoreNames.contains(family), `missing ${family}`);
     for (const family of ["legacyCopyRecords", "legacyCopyManifests", "canonicalRecords", "canonicalManifests"]) check(!db.objectStoreNames.contains(family), `legacy ${family} leaked`);
     db.close();
   });
@@ -191,6 +192,21 @@ async function suite() {
     accountId, campaignId: attempt.campaignId, slotId: attempt.slotId, expectedHead: null,
     artifactRaw: JSON.stringify(envelope), control: { ...fixtures.ordinary.control, accountId }
   };
+  function nextRequest(prior: typeof envelope, revision: number, expectedAccountRevision: number) {
+    const next = { ...prior, artifactId: `artifact.${crypto.randomUUID()}`,
+      generationId: `generation.${crypto.randomUUID()}`, publicationId: `publication.${crypto.randomUUID()}`,
+      headRevision: revision, savedAt: `2026-09-30T0${revision}:00:00.000Z` };
+    const expectedHead = { artifactId: prior.artifactId as string, publicationId: prior.publicationId as string,
+      revision: revision - 1 };
+    const publication = { ...firstPublication, expectedHead, artifactRaw: JSON.stringify(next),
+      control: { ...firstPublication.control, headArtifactId: next.artifactId,
+        headPublicationId: next.publicationId, headRevision: revision,
+        previousHeadArtifactId: prior.artifactId, previousHeadPublicationId: prior.publicationId,
+        updatedAt: next.savedAt } };
+    return { publication, expectedAccountRevision, sourceArtifactId: prior.artifactId as string,
+      sourcePublicationId: prior.publicationId as string, sourceSnapshotRaw: prior.snapshot as string,
+      consumerPlans: newCampaignPlans(JSON.parse(next.snapshot), profile, "slot-1").slice(0, 4), next };
+  }
   await test("version-two prepared attempt upgrades with exact account and attempt", async () => {
     const databaseName = name("upgrade-v2");
     const old = await new Promise<IDBDatabase>((resolve, reject) => {
@@ -606,7 +622,7 @@ async function suite() {
     check((await owner.readSlot(accountId, "slot-1")).status === "ready", "restored account history not loadable");
     db.close(); owner.close();
   });
-  await test("descendant and closed heads stay nonplayable while first artifact is retained", async () => {
+  await test("raw descendant and closed heads without owner recovery fail closed while artifacts remain", async () => {
     const databaseName = name("slot-descendant"); const owner = await openCleanEpochAccountStore({ name: databaseName });
     await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
     await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
@@ -619,11 +635,10 @@ async function suite() {
       previousHeadArtifactId: envelope.artifactId, previousHeadPublicationId: envelope.publicationId };
     await rawStore.publish({ ...firstPublication, artifactRaw: JSON.stringify(descendant),
       expectedHead: { artifactId: envelope.artifactId, publicationId: envelope.publicationId, revision: 1 }, control: nextControl });
-    const unsupported = await owner.readSlot(accountId, "slot-1");
-    check(unsupported.status === "descendant_unsupported" && unsupported.loaded === undefined &&
-      (await owner.listSlots(accountId))[0]?.status === "descendant_unsupported" &&
-      (await rawGetFamily(db, "artifacts", [accountId, envelope.artifactId])) !== undefined,
-      "descendant was playable or erased first artifact");
+    await expectCode(() => owner.readSlot(accountId, "slot-1"), "invalid_record");
+    await expectCode(() => owner.listSlots(accountId), "invalid_record");
+    check((await rawGetFamily(db, "artifacts", [accountId, envelope.artifactId])) !== undefined,
+      "raw descendant erased first artifact");
     const retainedFirst = await rawGetFamily(db, "artifacts", [accountId, envelope.artifactId]);
     await rawDeleteFamily(db, "artifacts", [accountId, envelope.artifactId]);
     await expectCode(() => owner.readSlot(accountId, "slot-1"), "invalid_record");
@@ -640,9 +655,253 @@ async function suite() {
       control: { ...nextControl, headArtifactId: terminal.artifactId, headPublicationId: terminal.publicationId,
         headRevision: 3, previousHeadArtifactId: descendant.artifactId,
         previousHeadPublicationId: descendant.publicationId, closed: true } });
-    check((await owner.readSlot(accountId, "slot-1")).status === "closed" &&
-      (await rawGetFamily(db, "artifacts", [accountId, descendant.artifactId])) !== undefined,
-      "closed slot erased non-head artifact"); db.close(); owner.close();
+    await expectCode(() => owner.readSlot(accountId, "slot-1"), "invalid_record");
+    check((await rawGetFamily(db, "artifacts", [accountId, descendant.artifactId])) !== undefined,
+      "raw closed slot erased non-head artifact"); db.close(); owner.close();
+  });
+  await test("guarded descendant accepts one pending head with exact source and restart recovery", async () => {
+    const databaseName = name("descendant-pending"); let owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const request = nextRequest(envelope, 2, 2);
+    const accepted = await owner.publishDescendant(request);
+    check(accepted.publication.status === "committed" && accepted.recovery.status === "accepted_pending_consumers" &&
+      (await owner.readSlot(accountId, "slot-1")).loaded === undefined, "pending descendant became playable");
+    check((await owner.publishDescendant(request)).publication.status === "same_source_retry", "descendant retry changed head");
+    await expectCode(() => owner.publishDescendant(nextRequest(envelope, 2, 2)), "stale_head");
+    await expectCode(() => owner.publishDescendant(nextRequest(request.next, 3, 2)), "conflict");
+    owner.close(); owner = await openCleanEpochAccountStore({ name: databaseName });
+    check((await owner.readDescendantRecovery(accountId, attempt.campaignId, request.next.publicationId))?.status ===
+      "accepted_pending_consumers", "restart lost pending descendant");
+    check((await owner.readRecovery(accountId, attempt.slotId))?.status === "consumers_completed", "descendant displaced first recovery");
+    const db = await rawOpen(databaseName);
+    check((await rawGetFamily(db, "artifacts", [accountId, envelope.artifactId])) !== undefined &&
+      (await rawGetFamily(db, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+        [accountId, attempt.campaignId, request.next.publicationId])) !== undefined, "accepted history was pruned");
+    db.close(); owner.close();
+  });
+  await test("first and second descendants complete once, reload and retain every head", async () => {
+    const databaseName = name("descendant-chain"); let owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const second = nextRequest(envelope, 2, 2);
+    await owner.publishDescendant(second);
+    check((await owner.readSlot(accountId, "slot-1")).status === "pending_consumers", "pending descendant exposed as ready");
+    const completedSecond = await owner.completeDescendantConsumers(accountId, attempt.campaignId, second.next.publicationId);
+    check(completedSecond.account.revision === 3 && completedSecond.recovery.status === "consumers_completed" &&
+      (await owner.readSlot(accountId, "slot-1")).loaded?.sessionControl.campaignHeadRevision === 2,
+      "first descendant did not become playable after consumers");
+    check((await owner.completeDescendantConsumers(accountId, attempt.campaignId, second.next.publicationId)).status ===
+      "same_source_retry", "completed descendant duplicated consumers");
+    const third = nextRequest(second.next, 3, 3);
+    await owner.publishDescendant(third);
+    await owner.completeDescendantConsumers(accountId, attempt.campaignId, third.next.publicationId);
+    owner.close(); owner = await openCleanEpochAccountStore({ name: databaseName });
+    const loaded = await owner.readSlot(accountId, "slot-1");
+    check(loaded.status === "ready" && loaded.loaded?.sessionControl.campaignHeadRevision === 3 &&
+      JSON.stringify(loaded.loaded.snapshot) === third.next.snapshot &&
+      (await owner.read(accountId))?.revision === 4 &&
+      (await owner.readDescendantRecovery(accountId, attempt.campaignId, second.next.publicationId))?.status ===
+        "consumers_completed", "second descendant or restart lost history");
+    for (const historicalId of [envelope.artifactId, second.next.artifactId]) {
+      const historical = await owner.readHistoricalArtifact(accountId, "slot-1", historicalId);
+      check(historical.sessionControl.posture === "non_head_unmutated" &&
+        historical.sessionControl.campaignHeadRevision === 3 &&
+        historical.sessionControl.loadedArtifactId === historicalId,
+        "retained non-head artifact did not reload against current head");
+    }
+    await expectCode(() => owner.readHistoricalArtifact(accountId, "slot-1", "artifact.missing"), "invalid_record");
+    const db = await rawOpen(databaseName);
+    for (const artifactId of [envelope.artifactId, second.next.artifactId, third.next.artifactId])
+      check((await rawGetFamily(db, "artifacts", [accountId, artifactId])) !== undefined, `lost artifact ${artifactId}`);
+    db.close(); owner.close();
+  });
+  await test("non-head source forks a new continuity while retaining its source and prior head", async () => {
+    const databaseName = name("descendant-fork"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const second = nextRequest(envelope, 2, 2);
+    await owner.publishDescendant(second);
+    await owner.completeDescendantConsumers(accountId, attempt.campaignId, second.next.publicationId);
+    const third = nextRequest(second.next, 3, 3);
+    const forkSnapshot = JSON.parse(third.next.snapshot);
+    forkSnapshot.campaignIdentity = { ...forkSnapshot.campaignIdentity,
+      parentContinuityId: snapshot.campaignIdentity.continuityId,
+      continuityId: `continuity.${crypto.randomUUID()}`,
+      forkedFromArtifactId: envelope.artifactId, forkedFromPublicationId: envelope.publicationId,
+      firstDivergentMutationId: `mutation.${crypto.randomUUID()}` };
+    third.next.snapshot = JSON.stringify(forkSnapshot);
+    third.next.continuityId = forkSnapshot.campaignIdentity.continuityId;
+    third.publication.artifactRaw = JSON.stringify(third.next);
+    third.sourceArtifactId = envelope.artifactId;
+    third.sourcePublicationId = envelope.publicationId;
+    third.sourceSnapshotRaw = envelope.snapshot;
+    await owner.publishDescendant(third);
+    await owner.completeDescendantConsumers(accountId, attempt.campaignId, third.next.publicationId);
+    const loaded = await owner.readSlot(accountId, "slot-1");
+    check(loaded.status === "ready" && loaded.loaded?.snapshot.campaignIdentity?.forkedFromArtifactId === envelope.artifactId,
+      "fork continuity not loadable");
+    const db = await rawOpen(databaseName);
+    check((await rawGetFamily(db, "artifacts", [accountId, second.next.artifactId])) !== undefined &&
+      (await rawGetFamily(db, "artifacts", [accountId, envelope.artifactId])) !== undefined,
+      "fork pruned accepted history"); db.close(); owner.close();
+  });
+  await test("descendant source, account revision and predecessor conflicts leave first head intact", async () => {
+    const databaseName = name("descendant-conflict"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const request = nextRequest(envelope, 2, 2);
+    await expectCode(() => owner.publishDescendant({ ...request, sourceSnapshotRaw: "{}" }), "invalid_record");
+    await expectCode(() => owner.publishDescendant({ ...request, expectedAccountRevision: 1 }), "stale_head");
+    await expectCode(() => owner.publishDescendant({ ...request, consumerPlans: request.consumerPlans.slice(1) }), "invalid_record");
+    const db = await rawOpen(databaseName);
+    check((await rawGetFamily(db, "controls", [accountId, attempt.campaignId]) as { value: { headRevision: number } }).value.headRevision === 1 &&
+      (await rawGetFamily(db, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+        [accountId, attempt.campaignId, request.next.publicationId])) === undefined, "conflict changed head");
+    db.close(); owner.close();
+  });
+  await test("two epoch owners contend for one descendant and one completion", async () => {
+    const databaseName = name("descendant-contended"); const first = await openCleanEpochAccountStore({ name: databaseName });
+    await first.register(profile, verifier); await first.prepareAttempt(attempt);
+    await first.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await first.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const second = await openCleanEpochAccountStore({ name: databaseName });
+    const left = nextRequest(envelope, 2, 2); const right = nextRequest(envelope, 2, 2);
+    const results = await Promise.allSettled([first.publishDescendant(left), second.publishDescendant(right)]);
+    check(results.filter(result => result.status === "fulfilled").length === 1 &&
+      (results.find(result => result.status === "rejected") as PromiseRejectedResult).reason.code === "stale_head",
+      "two owners both accepted descendant heads");
+    const winner = results[0]?.status === "fulfilled" ? left : right;
+    const completions = await Promise.allSettled([
+      first.completeDescendantConsumers(accountId, attempt.campaignId, winner.next.publicationId),
+      second.completeDescendantConsumers(accountId, attempt.campaignId, winner.next.publicationId)
+    ]);
+    check(completions.every(result => result.status === "fulfilled") &&
+      completions.filter(result => result.status === "fulfilled" && result.value.status === "committed").length === 1 &&
+      completions.filter(result => result.status === "fulfilled" && result.value.status === "same_source_retry").length === 1,
+      "two owners duplicated or lost descendant consumers");
+    check((await first.read(accountId))?.revision === 3 && (await second.readSlot(accountId, "slot-1")).status === "ready",
+      "contended completion did not read back"); first.close(); second.close();
+  });
+  await test("abort and quota at each descendant consumer write preserve pending recovery", async () => {
+    for (const mode of ["aborted", "quota"] as const) for (let stop = 1; stop <= 2; stop++) {
+      const databaseName = name(`descendant-consumer-${mode}-${stop}`);
+      const first = await openCleanEpochAccountStore({ name: databaseName });
+      await first.register(profile, verifier); await first.prepareAttempt(attempt);
+      await first.publishPreparedAttempt(attempt.attemptId, firstPublication);
+      await first.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+      const request = nextRequest(envelope, 2, 2); await first.publishDescendant(request); first.close();
+      let writes = 0;
+      const failing = await openCleanEpochAccountStore({ name: databaseName,
+        beforeWrite: () => { if (mode === "quota" && ++writes === stop) throw new DOMException("quota", "QuotaExceededError"); },
+        afterWrite: tx => { if (mode === "aborted" && ++writes === stop) tx.abort(); } });
+      await expectCode(() => failing.completeDescendantConsumers(accountId, attempt.campaignId, request.next.publicationId), mode);
+      failing.close(); const reopened = await openCleanEpochAccountStore({ name: databaseName });
+      check((await reopened.read(accountId))?.revision === 2 &&
+        (await reopened.readDescendantRecovery(accountId, attempt.campaignId, request.next.publicationId))?.status ===
+          "accepted_pending_consumers" &&
+        (await reopened.readSlot(accountId, "slot-1")).status === "pending_consumers",
+        `${mode} ${stop} partially completed descendant consumers`); reopened.close();
+    }
+  });
+  await test("account edit after descendant acceptance blocks consumer completion without overwriting profile", async () => {
+    const owner = await openCleanEpochAccountStore({ name: name("descendant-stale-consumer") });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const request = nextRequest(envelope, 2, 2); await owner.publishDescendant(request);
+    const retained = (await owner.read(accountId))!;
+    await owner.updateProfile(accountId, 2, { ...retained.profile, displayName: "Concurrent profile edit" });
+    await expectCode(() => owner.completeDescendantConsumers(accountId, attempt.campaignId, request.next.publicationId), "stale_head");
+    check((await owner.read(accountId))?.profile.displayName === "Concurrent profile edit" &&
+      (await owner.readSlot(accountId, "slot-1")).status === "pending_consumers", "stale completion overwrote profile");
+    owner.close();
+  });
+  await test("missing descendant artifact or applied receipt blocks load and retry", async () => {
+    const databaseName = name("descendant-missing"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
+    await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
+    await owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+    const request = nextRequest(envelope, 2, 2);
+    await owner.publishDescendant(request);
+    await owner.completeDescendantConsumers(accountId, attempt.campaignId, request.next.publicationId);
+    const db = await rawOpen(databaseName);
+    const retainedArtifact = await rawGetFamily(db, "artifacts", [accountId, request.next.artifactId]);
+    await rawDeleteFamily(db, "artifacts", [accountId, request.next.artifactId]);
+    await expectCode(() => owner.readSlot(accountId, "slot-1"), "invalid_record");
+    await rawPutFamily(db, "artifacts", retainedArtifact);
+    const retainedAccount = await rawGetFamily(db, CLEAN_EPOCH_ACCOUNT_STORE, accountId) as { profile: AccountProfileState };
+    await rawPutFamily(db, CLEAN_EPOCH_ACCOUNT_STORE, { ...retainedAccount, profile: { ...retainedAccount.profile,
+      campaignPublicationReceipts: retainedAccount.profile.campaignPublicationReceipts?.filter(receipt =>
+        receipt.publicationId !== request.next.publicationId) } });
+    await expectCode(() => owner.readSlot(accountId, "slot-1"), "invalid_record");
+    await expectCode(() => owner.completeDescendantConsumers(accountId, attempt.campaignId, request.next.publicationId), "invalid_record");
+    db.close(); owner.close();
+  });
+  await test("Soundings descendant retains first witness and immutable first artifact", async () => {
+    const source = JSON.parse(fixtures.soundings.raw);
+    const soundingsAccount = source.accountId as string;
+    const soundingsProfile = createDefaultAccountProfileState({ accountId: soundingsAccount,
+      displayName: "Soundings descendant", createdAt: "2026-09-29T00:00:00.000Z" });
+    const soundingsSnapshot = prepareCharacterAchievementProgress(JSON.parse(source.snapshot),
+      fixtures.soundings.control.updatedAt).snapshot;
+    source.snapshot = JSON.stringify(soundingsSnapshot);
+    const prepared = { ...attempt, accountId: soundingsAccount, slotId: source.slotId as string,
+      campaignId: source.campaignId as string, attemptId: `attempt.${crypto.randomUUID()}`,
+      snapshotRaw: source.snapshot as string, consumerPlans: newCampaignPlans(soundingsSnapshot, soundingsProfile, source.slotId) };
+    const databaseName = name("soundings-descendant"); const owner = await openCleanEpochAccountStore({ name: databaseName });
+    await owner.register(soundingsProfile, await credential(soundingsAccount)); await owner.prepareAttempt(prepared);
+    const first = { accountId: soundingsAccount, campaignId: source.campaignId as string, slotId: source.slotId as string,
+      expectedHead: null, artifactRaw: JSON.stringify(source), control: fixtures.soundings.control,
+      witness: fixtures.soundings.witness };
+    await owner.publishPreparedAttempt(prepared.attemptId, first);
+    await owner.completePreparedAttemptConsumers(soundingsAccount, source.slotId, prepared.attemptId, source.publicationId);
+    const descendant = { ...source, artifactId: `artifact.${crypto.randomUUID()}`,
+      generationId: `generation.${crypto.randomUUID()}`, publicationId: `publication.${crypto.randomUUID()}`,
+      headRevision: 2, savedAt: "2026-09-30T02:00:00.000Z" };
+    const request = { publication: { accountId: soundingsAccount, campaignId: source.campaignId,
+      slotId: source.slotId, artifactRaw: JSON.stringify(descendant),
+      expectedHead: { artifactId: source.artifactId, publicationId: source.publicationId, revision: 1 },
+      control: { ...fixtures.soundings.control, headArtifactId: descendant.artifactId,
+        headPublicationId: descendant.publicationId, headRevision: 2,
+        previousHeadArtifactId: source.artifactId, previousHeadPublicationId: source.publicationId,
+        updatedAt: descendant.savedAt } },
+      expectedAccountRevision: 2, sourceArtifactId: source.artifactId as string,
+      sourcePublicationId: source.publicationId as string, sourceSnapshotRaw: source.snapshot as string,
+      consumerPlans: newCampaignPlans(soundingsSnapshot, soundingsProfile, source.slotId).slice(0, 4) };
+    await owner.publishDescendant(request);
+    await owner.completeDescendantConsumers(soundingsAccount, source.campaignId, descendant.publicationId);
+    check((await owner.readSlot(soundingsAccount, source.slotId)).loaded?.sessionControl.soundingsAdmissionWitness?.firstDurableArtifactId ===
+      source.artifactId, "descendant lost first Soundings witness");
+    const db = await rawOpen(databaseName);
+    check((await rawGetFamily(db, "artifacts", [soundingsAccount, source.artifactId])) !== undefined,
+      "descendant lost first Soundings artifact");
+    await rawDeleteFamily(db, "witnesses", [soundingsAccount, source.campaignId, fixtures.soundings.witness.requestId]);
+    await expectCode(() => owner.readSlot(soundingsAccount, source.slotId), "invalid_record");
+    db.close(); owner.close();
+  });
+  await test("abort and quota at each descendant write leave no accepted partial head", async () => {
+    for (const mode of ["aborted", "quota"] as const) for (let stop = 1; stop <= 4; stop++) {
+      const databaseName = name(`descendant-${mode}-${stop}`); const first = await openCleanEpochAccountStore({ name: databaseName });
+      await first.register(profile, verifier); await first.prepareAttempt(attempt);
+      await first.publishPreparedAttempt(attempt.attemptId, firstPublication);
+      await first.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId);
+      first.close(); let writes = 0;
+      const failing = await openCleanEpochAccountStore({ name: databaseName,
+        beforeWrite: () => { if (mode === "quota" && ++writes === stop) throw new DOMException("quota", "QuotaExceededError"); },
+        afterWrite: tx => { if (mode === "aborted" && ++writes === stop) tx.abort(); } });
+      const request = nextRequest(envelope, 2, 2);
+      await expectCode(() => failing.publishDescendant(request), mode); failing.close();
+      const reopened = await openCleanEpochAccountStore({ name: databaseName });
+      check((await reopened.readSlot(accountId, "slot-1")).status === "ready" &&
+        await reopened.readDescendantRecovery(accountId, attempt.campaignId, request.next.publicationId) === null,
+        `${mode} ${stop} retained partial descendant`);
+      reopened.close();
+    }
   });
   await test("Soundings first-head load requires its retained witness", async () => {
     const source = JSON.parse(fixtures.soundings.raw);
