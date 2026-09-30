@@ -1,3 +1,7 @@
+## 2026-09-30 DEV-0.7.1 Slice G8C authority decision
+
+**WITNESSED_DESCENDANT_AND_CROSS_SLOT_CONTRACTS_ACCEPTED; IMPLEMENTATION_HELD** from hosted source `ea7b8562830d1df19a4ade32f7754f7c378d6672`. The first independently witnessed Soundings descendant must atomically convert an accepted session witness to applied first-durable provenance; no snapshot-derived witness is legal. Cross-slot quick/manual save is defined as one singular campaign head plus durable slot addresses, with destination CAS, unchanged source address and retained immutable history. Ordered successors: G8D witnessed owner, G8E cross-slot owner, G8F real App cutover. G9-G10 and combat remain held.
+
 # Historical Version And Deferred Route Register
 
 ## 2026-09-30 DEV-0.7.1 Slice G8B inert same-slot descendant caller checkpoint
