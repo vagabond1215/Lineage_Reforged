@@ -343,7 +343,7 @@ export function constantTimeEqualBytes(left: Uint8Array, right: Uint8Array): boo
   return difference === 0;
 }
 
-async function createCredentialRecord(
+export async function createCredentialRecord(
   accountId: string,
   password: string,
   recordedAt: string
@@ -368,7 +368,7 @@ async function createCredentialRecord(
   };
 }
 
-async function verifyPassword(
+export async function verifyPassword(
   password: string,
   credential: LocalAuthCredentialRecord
 ): Promise<boolean> {
