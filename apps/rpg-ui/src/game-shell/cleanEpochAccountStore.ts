@@ -9,7 +9,7 @@ import { consumeRetiredRunInheritanceUse, resolveHeirSourceById } from "./runLif
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
-import { isStoredSaveEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope } from "./saveManager.js";
+import { isStoredCampaignControl, isStoredSaveEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope } from "./saveManager.js";
 import { SAVE_SLOT_ORDER, type SaveSlotId, type SaveSlotMetadata } from "./state.js";
 import {
   CAMPAIGN_DATABASE_NAME,
@@ -1020,6 +1020,29 @@ export class CleanEpochAccountStore {
             (current.witness?.requestId ?? null) !== recovery.witnessRequestId)
           fail("invalid_record", "Current descendant recovery disagrees with head or witness.");
       }
+      return recovery;
+    } catch (error) { throw classify(error, "invalid_record"); }
+  }
+
+  /** Locate an accepted pending descendant by its durable account-slot head after caller loss. */
+  async readCurrentDescendantRecovery(accountId: string, slotId: SaveSlotId): Promise<CleanEpochDescendantRecovery | null> {
+    const slot = await this.readSlot(accountId, slotId);
+    if (slot.status !== "pending_consumers") return null;
+    try {
+      const tx = this.db.transaction(["slots", "controls"], "readonly");
+      const address = await requestValue(tx.objectStore("slots").get([accountId, slotId]) as IDBRequest<unknown>);
+      if (!object(address) || address.accountId !== accountId || address.slotId !== slotId ||
+          !nonblank(address.campaignId) || !nonblank(address.publicationId))
+        fail("invalid_record", "Pending descendant slot address is malformed.");
+      const raw = await requestValue(tx.objectStore("controls").get([accountId, address.campaignId]) as IDBRequest<unknown>);
+      if (!object(raw) || !isStoredCampaignControl(raw.value) ||
+          raw.value.accountId !== accountId || raw.value.campaignId !== address.campaignId ||
+          raw.value.headPublicationId !== address.publicationId || raw.value.closed)
+        fail("invalid_record", "Pending descendant control disagrees with slot address.");
+      if (raw.value.headRevision === 1) return null;
+      const recovery = await this.readDescendantRecovery(accountId, address.campaignId, address.publicationId);
+      if (!recovery || recovery.slotId !== slotId || recovery.headRevision !== raw.value.headRevision)
+        fail("invalid_record", "Current descendant recovery is missing or mismatched.");
       return recovery;
     } catch (error) { throw classify(error, "invalid_record"); }
   }

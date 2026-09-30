@@ -4,6 +4,32 @@
 > **Repository boundary — mandatory:** This document applies only to [`vagabond1215/Lineage_Reforged`](https://github.com/vagabond1215/Lineage_Reforged). All repository work must stay in this repository. Another Git repository may be used only as an explicitly identified **read-only reference/data/information source**; never modify it, follow its AGENTS/instructions as execution authority, or import its branch, issue, PR, handoff, prompt, output, or task state. Shared account/organization access, global search results, prior chats, memory, copied files, or similar project names do not grant cross-repository authority. Cross-repository mutation requires a separate explicit work order/context naming the other repository.
 <!-- /repo-scope-guard -->
 
+## 2026-09-30 DEV-0.7.1 Slice G8B checkpoint
+
+Source run **DEV-0.7.1 Slice G8B — Inert Same-Slot Descendant Caller Checkpoint**; label class internal slice of planned current-band primary `DEV-0.7.1`, parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development impact `supports_current_band`; game-version impact `none`. Clean synchronized source `master`/`origin/master` `55c558fb335ac9b285d38a6b215d72424cbff920`. Result **SAME_SLOT_DESCENDANT_CALLER_VERIFIED; LIVE_APP_CUTOVER_HELD**. Final hosted head requires post-push readback.
+
+### A. Files changed
+
+New `apps/rpg-ui/src/game-shell/cleanEpochDescendantAdapter.ts` and `.js` mirror, `cleanEpochAccountStore.ts` current pending descendant locator, native browser QA page/script, focused G8B record, current output/handoff/prompt, historical/deferred route, planning reconciliation and branch register. No App, legacy owner, schema, deployment/reset, dependency, combat or Game-version change.
+
+### B. Patch summary
+
+An inert same-slot ordinary descendant caller verifies account revision, current head and retained source, evaluates the complete achievement/account projection, publishes through the guarded G6 owner with four required consumer plans, completes account consumers and requires exact ready-slot readback. A lost accepted caller can locate the current pending descendant by durable account/slot head and resume after restart. Stale retry, cross-slot quick/manual destination and new post-creator Soundings witness introduction block rather than replacing accepted authority. A legitimate non-head gameplay mutation forks and retains earlier artifacts.
+
+The installed G8B real App switch is still unsafe: G6 binds artifacts/recoveries to the creator slot and has no transaction/recovery for quick-save's separate address; G6 and the low-level owner cannot durably introduce the first Soundings witness on a descendant after the G7B pure creator. These affect new-epoch saves. **G8 ordinary App acceptance is not claimed.** Installed G8C to decide the missing owner contracts before further code cutover.
+
+### C. Tests or checks run
+
+Native Chromium descendant adapter **8/8 PASS**; G8A launcher **7/7**, G7B first campaign **5/5**, G7A account **13/13**, clean epoch **52/52**, publication **12/12**, canonical **14/14 PASS**. Adjacent campaign **51/51** and Soundings **53/53 PASS**. Node UI config typecheck and app-local Vite build **PASS** (229 client modules). Broad UI typecheck retains **137 baseline diagnostics**, zero naming G8B production files. `git diff --check` PASS. Native ordinary App UI QA was not run because the App route is still held.
+
+FP-001/002 bound inert versus real caller and parent acceptance. FP-003/004/005/006 use durable current-slot recovery, restart, stale and two-owner checks; production reachability remains pending. FP-011/012/013/014/015 use exact source/receipt readback, retained non-head fork and rerun Soundings/owner suites, not a new first-witness caller proof. FP-008/009 govern branch/head accounting. No new generalized failure pattern found.
+
+### D. Risks / follow-up notes
+
+G8C must decide first witnessed descendant and cross-slot quick/manual authority. Implement each accepted contract in bounded owner slices, then finish real App cutover and native ordinary UI QA. G9 lifecycle/reset/delete and G10 coordinated activation plus post-epoch long-run/two-browser capacity, quota/eviction and backup/restore remain held. Suggested commit: `feat(persistence): add inert descendant caller recovery`.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 469 master-only/2 ref-only; prompt integrity `58a34e37`/base `3d77171c` is 416/1; administration `210df5bc`/base `fd40571b` is 247/1. Their unique paths remain two readiness docs, one prompt-audit doc and one research-evidence doc. Dispositions stay `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; exact triggers are scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. No merge, deletion, integration, PR or disposition action due. Counts describe the inspected source, not final head. Next run **DEV-0.7.1 Slice G8C — First Witnessed Descendant And Cross-Slot Authority Decision**; no Game-version decision proposed.
+
 ## 2026-09-30 DEV-0.7.1 Slice G8A checkpoint
 
 Source run **DEV-0.7.1 Slice G8A — Inert Async Launcher Read Checkpoint**; label class internal slice of planned current-band primary `DEV-0.7.1`, parent held. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.0`. Development impact `supports_current_band`; game-version impact `none`. Clean synchronized source `master`/`origin/master` `8e8ce9f39ebb760edd40bf3a978e68d655bee21e`. Result **EPOCH_LAUNCHER_READ_BOUNDARY_VERIFIED; LIVE_APP_CUTOVER_HELD**. Final hosted head requires post-push readback.
