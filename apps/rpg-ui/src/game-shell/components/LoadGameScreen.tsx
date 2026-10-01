@@ -12,6 +12,8 @@ type LoadGameScreenProps = {
   onSelectSlot: (slotId: SaveSlotId) => void;
   onLoadSelected: () => void;
   onDeleteSlot: (slotId: SaveSlotId) => void;
+  epochMode?: boolean;
+  allowDeleteSlot?: boolean;
 };
 
 function getSlotStatusLabel(slot: SaveSlotSummary): string {
@@ -27,6 +29,11 @@ function getSlotStatusLabel(slot: SaveSlotSummary): string {
     return 'Incompatible Save Data';
   }
 
+  if (slot.status === 'prepared') return 'Prepared Campaign';
+  if (slot.status === 'pending_consumers') return 'Recovery Pending';
+  if (slot.status === 'closed') return 'Closed Campaign';
+  if (slot.status === 'descendant_unsupported') return 'Campaign Unavailable';
+
   return 'Empty';
 }
 
@@ -38,21 +45,23 @@ export function LoadGameScreen({
   onBack,
   onSelectSlot,
   onLoadSelected,
-  onDeleteSlot
+  onDeleteSlot,
+  epochMode = false,
+  allowDeleteSlot = true
 }: LoadGameScreenProps) {
   const [pendingDeleteSlotId, setPendingDeleteSlotId] = useState<SaveSlotId | null>(null);
   const selectedSlot = slots.find((slot) => slot.id === selectedSlotId) ?? null;
   const hasAnyLoadableSave = slots.some((slot) => slot.hasSave);
-  const canDeleteSelected =
+  const canDeleteSelected = allowDeleteSlot && (
     selectedSlot?.status === 'corrupt' ||
     selectedSlot?.status === 'incompatible' ||
-    selectedSlot?.hasSave === true;
+    selectedSlot?.hasSave === true);
 
   return (
     <ScreenFrame
       eyebrow="Load Game"
       title="Open A Local Save"
-      description="Each save record is backed by browser localStorage using account-scoped snapshot keys. Manual saves and the dedicated quick-save slot are listed together, and unreadable entries are isolated so one bad record cannot break the whole menu."
+      description={epochMode ? 'Verified campaign addresses are stored in IndexedDB. Manual saves and the dedicated quick-save slot can address retained campaign history.' : 'Each save record is backed by browser localStorage using account-scoped snapshot keys. Manual saves and the dedicated quick-save slot are listed together.'}
       accent="var(--color-world)"
       notice={notice}
       onDismissNotice={onDismissNotice}
@@ -109,6 +118,8 @@ export function LoadGameScreen({
                       <div>{slot.playtimeLabel}</div>
                       <div>Tick {slot.capturedAtTick}</div>
                     </div>
+                  ) : epochMode && slot.status !== 'empty' ? (
+                    <div className="mt-3 text-sm text-amber-200">{getSlotStatusLabel(slot)}. Return to Characters to resume a prepared campaign or retry recovery.</div>
                   ) : slot.status === 'corrupt' ? (
                     <div className="mt-3 rounded-lg border border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] px-3 py-3 text-sm text-[color:var(--color-tone-danger-text)]">
                       This slot contains malformed or incompatible local data. It cannot be loaded until it is deleted.
@@ -149,7 +160,7 @@ export function LoadGameScreen({
                 </span>
               </button>
 
-              {canDeleteSelected && selectedSlot && pendingDeleteSlotId === selectedSlot.id ? (
+              {allowDeleteSlot && (canDeleteSelected && selectedSlot && pendingDeleteSlotId === selectedSlot.id ? (
                 <div className="forged-subpanel border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] p-4">
                   <div className="text-sm leading-6 text-[color:var(--color-tone-danger-text)]">
                     {selectedSlot.status === 'corrupt'
@@ -198,7 +209,7 @@ export function LoadGameScreen({
                       : 'Select a save slot to remove it.'}
                   </span>
                 </button>
-              )}
+              ))}
             </div>
           </Card>
         </div>
@@ -228,9 +239,12 @@ export function LoadGameScreen({
               </div>
 
               <div className="forged-subpanel p-4 text-sm leading-6 text-slate-300">
-                Loading restores the shared snapshot directly into the existing in-game panel shell. Manual saves,
-                quick saves, and safe deletion all use the same browser-local storage namespace.
+                {epochMode ? 'Loading verifies the exact campaign address and retained history before entering play.' : 'Loading restores the shared snapshot into the in-game panel shell.'}
               </div>
+            </div>
+          ) : epochMode && selectedSlot && selectedSlot.status !== 'empty' ? (
+            <div className="forged-subpanel p-4 text-sm leading-6 text-amber-200">
+              {getSlotStatusLabel(selectedSlot)}. This address is not ready to load. Return to Characters to resume a prepared campaign or retry recovery.
             </div>
           ) : selectedSlot?.status === 'corrupt' ? (
             <div className="space-y-4">

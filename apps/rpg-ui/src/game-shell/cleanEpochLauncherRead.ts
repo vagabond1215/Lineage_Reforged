@@ -21,7 +21,7 @@ function blocked(error: unknown, accountId?: string, slotId?: SaveSlotId): Epoch
     ...(accountId ? { accountId } : {}), ...(slotId ? { slotId } : {}) };
 }
 
-/** Inert read boundary for the future App route. No legacy account or save owner is consulted. */
+/** Awaited App read boundary. No legacy account or save owner is consulted. */
 export class CleanEpochLauncherRead {
   constructor(private readonly owner: CleanEpochAccountStore,
     private readonly accounts: CleanEpochAccountAdapter) {}

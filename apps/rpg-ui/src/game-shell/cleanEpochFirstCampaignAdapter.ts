@@ -81,7 +81,7 @@ function publicationFromAttempt(attempt: CleanEpochAttemptRecord): CampaignStore
       updatedAt: savedAt } };
 }
 
-/** Inert first-campaign owner. App does not import or select this adapter. */
+/** Awaited first-campaign caller selected by the local App. */
 export class CleanEpochFirstCampaignAdapter {
   constructor(private readonly owner: CleanEpochAccountStore) {}
 

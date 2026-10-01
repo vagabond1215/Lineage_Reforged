@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Epoch App IndexedDB failure QA</title></head>
+<body><div id="root"></div><script type="module">
+  // Each fault is isolated to this page and exercises the actual App bootstrap.
+  const fault = new URLSearchParams(location.search).get('fault') ?? 'unavailable';
+  if (!['unavailable', 'blocked', 'malformed'].includes(fault)) throw new Error('Unknown QA fault.');
+  const fakeFactory = fault === 'unavailable' ? undefined : {
+    open() {
+      const request = { result: fault === 'malformed'
+        ? { objectStoreNames: { contains: () => false }, close() {} } : undefined };
+      queueMicrotask(() => fault === 'blocked' ? request.onblocked?.() : request.onsuccess?.());
+      return request;
+    }
+  };
+  Object.defineProperty(window, 'indexedDB', { configurable: true, value: fakeFactory });
+  await import('/src/main.tsx');
+</script></body></html>

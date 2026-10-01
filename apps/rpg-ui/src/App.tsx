@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
+import { EpochApp } from './EpochApp';
 import {
   hasPendingMandatoryCampaignConsumers,
   recordCampaignPublicationConsumer,
@@ -745,7 +746,7 @@ function buildSaveStatusNotice(slot: Pick<SaveSlotSummary, 'id' | 'playerName' |
   };
 }
 
-export default function App() {
+function LegacyApp() {
   const [state, dispatch] = useReducer(gameShellReducer, undefined, createAppState);
   const [themePreference, setThemePreference] = useState<ThemePreference>(readInitialThemePreference);
   const [systemTheme, setSystemTheme] = useState<ThemeMode>(resolveSystemTheme);
@@ -2711,4 +2712,10 @@ export default function App() {
       {content}
     </div>
   );
+}
+
+// The legacy caller is retained only as a reference until the G10 storage audit.
+// The selected application path is the awaited clean-epoch caller.
+export default function App() {
+  return <EpochApp />;
 }

@@ -27,7 +27,7 @@ function plans(snapshot: SaveSnapshot, slotId: SaveSlotId): CampaignPublicationC
     .map(kind => ({ kind, payloadFingerprint }));
 }
 
-/** Inert ordinary caller. App activation remains a separate route. */
+/** Awaited ordinary descendant caller selected by the local App. Deployment activation remains separate. */
 export class CleanEpochDescendantAdapter {
   constructor(private readonly owner: CleanEpochAccountStore) {}
 

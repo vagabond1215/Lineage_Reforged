@@ -23,7 +23,7 @@ import {
   type CampaignStoreReadback
 } from "./campaignIndexedDbStore.js";
 
-/** Inert new-epoch owner. No launcher, App or save caller opens it yet. */
+/** Clean-epoch account and campaign authority selected by the awaited App caller. */
 export const CLEAN_EPOCH_DATABASE_NAME = "lineage.campaigns.epoch1";
 export const CLEAN_EPOCH_DATABASE_VERSION = 4;
 export const CLEAN_EPOCH_ACCOUNT_STORE = "accounts";
@@ -505,7 +505,7 @@ export class CleanEpochAccountStore {
     return checkedAttempt(matched[0], accountId, matched[0].slotId as string);
   }
 
-  /** Inert first-head inventory. A failed read never becomes an empty slot. */
+  /** First-head inventory. A failed read never becomes an empty slot. */
   async listSlots(accountId: string): Promise<CleanEpochSlotSummary[]> {
     if (!nonblank(accountId)) fail("invalid_record", "Slot account ID is blank.");
     try {
@@ -903,7 +903,7 @@ export class CleanEpochAccountStore {
     return { publication, recovery };
   }
 
-  /** Inert ordinary-save entry point. The accepted head remains nonplayable until its consumers complete. */
+  /** Ordinary-save entry point. The accepted head remains nonplayable until its consumers complete. */
   async publishDescendant(request: CleanEpochDescendantRequest): Promise<CleanEpochDescendantResult> {
     const { publication: input, sessionWitness, expectedAccountRevision, sourceSlotId,
       sourceArtifactId, sourcePublicationId, sourceSnapshotRaw, consumerPlans } = request;

@@ -39,6 +39,7 @@ type SettingsScreenProps = {
   onOpenLauncherSection: (section: LauncherSectionId) => void;
   onResetAccount: (options: { accountId: string; password: string }) => Promise<AccountActionResult>;
   onDeleteAccount: (options: { accountId: string; password: string }) => Promise<AccountActionResult>;
+  allowAccountLifecycle?: boolean;
   onContinue: () => void;
   onExit: () => void;
   onLogout: () => void;
@@ -305,6 +306,7 @@ export function SettingsScreen({
   onOpenLauncherSection,
   onResetAccount,
   onDeleteAccount,
+  allowAccountLifecycle = true,
   onContinue,
   onExit,
   onLogout,
@@ -597,20 +599,21 @@ export function SettingsScreen({
               <button type="button" onClick={onLogout} className={neutralButtonClass}>
                 Log Out
               </button>
-              <button
+              {allowAccountLifecycle && <button
                 type="button"
                 onClick={() => beginAccountAction('reset')}
                 className={cautionButtonClass}
               >
                 Reset Account
-              </button>
-              <button
+              </button>}
+              {allowAccountLifecycle && <button
                 type="button"
                 onClick={() => beginAccountAction('delete')}
                 className={dangerButtonClass}
               >
                 Delete Account
-              </button>
+              </button>}
+              {!allowAccountLifecycle && <span className="text-xs text-[color:var(--color-text-secondary)]">Account reset and deletion are unavailable during the epoch cutover.</span>}
             </div>
           </div>
 

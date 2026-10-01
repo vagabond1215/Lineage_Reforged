@@ -24,8 +24,10 @@ type MainMenuScreenProps = {
   onDismissNotice: () => void;
   onActivateSlot: (slotId: ManualSaveSlotId) => void;
   onDeleteSlot: (slotId: ManualSaveSlotId) => void;
+  allowDeleteSlot?: boolean;
   onContinue: () => void;
   onOpenSettings: () => void;
+  onOpenLoadGame?: () => void;
   activeSection: LauncherSectionId;
   onActiveSectionChange: (section: LauncherSectionId) => void;
   onPurchaseLegacyUnlock: (unlockId: string) => void;
@@ -131,8 +133,10 @@ export function MainMenuScreen({
   onDismissNotice,
   onActivateSlot,
   onDeleteSlot,
+  allowDeleteSlot = true,
   onContinue,
   onOpenSettings,
+  onOpenLoadGame,
   activeSection,
   onActiveSectionChange,
   onPurchaseLegacyUnlock,
@@ -336,6 +340,9 @@ export function MainMenuScreen({
       >
         {activeSection === 'characters' ? (
           <section aria-label="Characters" className="space-y-4">
+            {onOpenLoadGame && <div className="flex justify-end px-4 pt-3">
+              <button type="button" onClick={onOpenLoadGame} className="launcher-control px-4 py-2 text-sm">Load Game / Quick Save</button>
+            </div>}
             {visibleSlots.length > 0 && (
               <div className="launcher-save-list space-y-3">
                 {visibleSlots.map((slot) => (
@@ -388,7 +395,7 @@ export function MainMenuScreen({
                           </div>
                         </div>
 
-                        <button
+                        {allowDeleteSlot && <button
                           type="button"
                           onClick={(event) => {
                             event.stopPropagation();
@@ -399,7 +406,7 @@ export function MainMenuScreen({
                           title="Delete save"
                         >
                           <Icon name="closeCircle" className="h-10 w-10" />
-                        </button>
+                        </button>}
                       </>
                     ) : (
                       <div className="flex min-h-[4.5rem] items-center justify-center px-4 py-1">
@@ -407,7 +414,10 @@ export function MainMenuScreen({
                           className="text-sm font-semibold uppercase tracking-[0.15em] text-[color:var(--color-text-muted)]"
                           style={{ fontFamily: 'var(--font-display)' }}
                         >
-                          Empty
+                          {slot.status === 'prepared' ? 'Resume prepared campaign' :
+                            slot.status === 'pending_consumers' ? 'Campaign recovery pending' :
+                            slot.status === 'closed' ? 'Campaign closed' :
+                            slot.status === 'descendant_unsupported' ? 'Campaign unavailable' : 'Empty'}
                         </span>
                       </div>
                     )}

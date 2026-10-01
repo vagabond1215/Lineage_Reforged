@@ -23,6 +23,7 @@ type LocalAccountAccessScreenProps = {
     accountId: string;
     password: string;
   }) => Promise<LauncherAccountDeletionResult>;
+  allowAccountDeletion?: boolean;
   onCreateAccount: (options: {
     displayName: string;
     password: string;
@@ -57,6 +58,7 @@ export function LocalAccountAccessScreen({
   onDismissNotice,
   onSignIn,
   onDeleteAccount,
+  allowAccountDeletion = true,
   onCreateAccount,
   themeMode,
   onToggleThemeMode
@@ -358,14 +360,14 @@ export function LocalAccountAccessScreen({
                     </label>
 
                     <div className="flex flex-wrap justify-end gap-3">
-                      <button
+                      {allowAccountDeletion && <button
                         type="button"
                         onClick={submitAccountDeletion}
                         disabled={submitting}
                         className="rounded-full border border-rose-400/35 bg-rose-100/80 px-4 py-2 text-sm font-medium text-rose-700 transition hover:bg-rose-200/85 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         Delete Account
-                      </button>
+                      </button>}
                       <button
                         type="button"
                         onClick={submitSelectedAccount}

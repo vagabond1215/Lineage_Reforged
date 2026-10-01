@@ -82,7 +82,7 @@ export function createEpochAccountId(): string {
   return `account.local.${globalThis.crypto.randomUUID()}`;
 }
 
-/** Inert caller adapter. The IndexedDB owner is the sole account and credential authority. */
+/** Awaited caller adapter. The IndexedDB owner is the sole account and credential authority. */
 export class CleanEpochAccountAdapter {
   constructor(private readonly owner: CleanEpochAccountStore, private readonly storage?: Storage) {}
 
