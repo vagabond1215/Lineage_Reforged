@@ -126,6 +126,10 @@ export function EpochApp() {
         const resumed = await next.first.resume(accountId, slot.slotId as ManualSaveSlotId);
         if (resumed.status === 'blocked') throw new Error(resumed.message);
       } else {
+        // A single pending campaign head can make older source addresses appear pending too.
+        // Only the destination address owns the retained descendant recovery.
+        const recovery = await next.owner.readCurrentDescendantRecovery(accountId, slot.slotId);
+        if (!recovery) continue;
         const resumed = await next.descendant.resumeCurrent(accountId, slot.slotId);
         if (resumed.status === 'blocked') throw new Error(resumed.message);
       }
@@ -138,6 +142,8 @@ export function EpochApp() {
     await completePending(next, accountId, result.value.slots);
     result = await next.launcher.inventory(accountId);
     if (result.status === 'blocked') throw new Error(result.message);
+    if (result.value.slots.some(slot => slot.status === 'pending_consumers'))
+      throw new Error('Retained campaign publication remains pending after recovery.');
     return result.value;
   };
 

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Epoch App failure QA</title></head>
+<body>
+  <aside style="position:sticky;top:0;z-index:1000;background:#17212d;color:white;padding:8px;font:12px system-ui">
+    <strong>Local G8F.1 fault QA</strong>
+    <button id="arm-quota" type="button">Arm artifact quota</button>
+    <button id="arm-abort" type="button">Arm artifact abort</button>
+    <button id="arm-consumer-loss" type="button">Arm descendant caller loss</button>
+    <button id="arm-stale-destination" type="button">Arm stale destination</button>
+    <button id="arm-stale-head" type="button">Arm stale head</button>
+    <button id="inspect-epoch" type="button">Inspect retained epoch</button>
+    <pre id="qa-result" role="status" style="max-height:100px;overflow:auto;white-space:pre-wrap"></pre>
+  </aside>
+  <div id="root"></div>
+  <script type="module" src="/campaign-clean-epoch-app-failure-qa.ts"></script>
+</body></html>
