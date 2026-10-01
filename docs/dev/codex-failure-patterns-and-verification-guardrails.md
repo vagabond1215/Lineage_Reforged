@@ -78,9 +78,9 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Pattern:** Recovery lookup is keyed by a newly generated or narrower identity while collision occurs at a broader resource such as account plus slot.
 - **Why it escaped:** The implementation searched only the candidate campaign rather than all pending authority capable of rewriting the destination.
 - **Guardrail:** Before creating, retrying, or projecting authority, inspect every pending record that can affect the destination resource. Define compatibility, ordering, quarantine, and stale-replacement rules at that resource scope.
-- **Verification:** Inject one compatible recovery, one incompatible recovery, and multiple recoveries targeting the same destination.
+- **Verification:** Inject one compatible recovery, one incompatible recovery, and multiple recoveries targeting the same destination. When several addresses reflect one pending shared head, identify the exact address that owns the recovery before resuming; re-read the whole address inventory afterward.
 - **Applies to:** save slots, publication recovery, migrations, account consumers, branch destinations, generated artifacts.
-- **Evidence:** `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`.
+- **Evidence:** `docs/design/normal-campaign-new-game-retry-and-recovery-collision-audit.md`; `docs/dev/dev-0.7.1-slice-g8f-1-actual-app-failure-ui-record.md`.
 - **Status:** active.
 
 ### FP-005 — Retry Tests Must Include Lost And Regenerated Caller State

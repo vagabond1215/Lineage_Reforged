@@ -1,0 +1,26 @@
+# DEV-0.7.1 Slice G8F.1 — Actual App Failure UI And Recovery Record
+
+Date: 2026-10-01. Starting clean synchronized `master`/`origin/master` `9cd07551000ede0e211f0da8ba278c679ea1d914`; code/QA checkpoint `a9070e33`. Support run of planned current-band primary `DEV-0.7.1`; parent acceptance held. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Development impact `supports_current_band`; game-version impact `none`.
+
+## Decision and repair
+
+**G8F_ACTUAL_APP_FAILURE_UI_VERIFIED; G9_AND_ACTIVATION_HELD.** The selected `EpochApp` fails closed for write-time quota and abort, stale account/head/destination expectations, and another tab's accepted pending publication. Prepared first attempts and accepted pending first/descendant publications resume through the ordinary launcher with one ready result and exact account consumers. No old-save import, production deployment, browser reset, dependency, schema or Game-version change occurred.
+
+The actual two-tab pending quick-save probe found a caller defect: one pending campaign head marks both its older manual source address and quick destination as `pending_consumers`; `completePending` tried to resume the source address, which has no descendant recovery. The repair asks the store for `readCurrentDescendantRecovery` at each pending address, resumes only the durable destination owner, then re-reads inventory and blocks if any pending status remains. The local-only `campaign-clean-epoch-app-failure-qa.html/.ts` page seeds fresh epoch QA accounts, mounts the real App, injects one write fault through `IDBObjectStore.put`, and reports retained authority and unexpected localStorage writes. It introduces no production hook.
+
+## Fresh evidence
+
+- Native actual App quota and transaction abort at artifact publication: full unavailable/retry state, no success or playable fallback; prior artifact and account revision 2, five receipts and empty quick address stayed unchanged. Retry reached the launcher. No unexpected localStorage key writes were observed by the QA page.
+- Prepared first attempt: launcher displayed `Resume prepared campaign`; selecting it retained the exact attempt ID, produced one ready head, account revision 2 and five receipts.
+- Accepted pending first and same-slot descendant: App bootstrap completed consumers and reached ready; first reached five receipts, descendant reached nine. A second restart did not duplicate the descendant account revision or receipts.
+- Accepted pending manual-to-quick publication: before App, both source and destination displayed pending, while only quick held recovery `publication.5cc93df3-c09a-4ed4-805c-e41afc6eea45`. After the repair, App reached the launcher with both addresses ready, the source artifact retained, quick addressing that exact publication, account revision 3 and nine receipts.
+- Two real tabs: the second tab refused to save while the shared head was pending; a competing recovery briefly surfaced a truthful account-changed inventory block and Retry succeeded. In a separate race, one normal save succeeded with exact notice while the stale tab blocked on account revision and preserved the winner. Injected stale head and destination expectations separately reached their guarded failure messages without changing the prior head.
+- Adjacent native Chromium suites: descendant 16/16, witnessed descendant 11/11, launcher 7/7, first campaign 5/5, account 13/13, clean epoch 52/52, publication 12/12, canonical 14/14: **130/130 PASS**. Campaign/Soundings Node suites **116/116 PASS**. Node UI-config typecheck, QA-file targeted TypeScript check and app-local Vite build pass. Broad UI typecheck remains **137 known diagnostics**, with only the pre-existing MainMenu optional-prop diagnostic in a changed path. Code diff check passed.
+
+Closed-slot production authority belongs to G9 and cannot yet produce a valid ordinary closed case. `descendant_unsupported` was a pre-G6 inventory posture and has no current valid owner fixture; malformed raw descendant authority blocks the full App. These were not claimed as playable or as G8F failure. G10 still owns exhaustive built-output/storage audit, long-run two-context capacity, eviction, backup/restore and deliberate development deployment activation.
+
+FP-001/002: actual selected App proof is kept below parent acceptance. FP-003/004/005/006: destination-owned pending recovery, two-tab contention, restart and retry are covered; FP-004 gains a generalized alias-status note. FP-011/012/013/014/015/017: accepted Soundings/history source contracts remain covered by prior real UI and fresh adjacent suites. FP-008/009: exact source, branch and publication identities are recorded.
+
+Fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` was 483 master-only/2 ref-only, prompt integrity `58a34e37`/base `3d77171c` 430/1, administration `210df5bc`/base `fd40571b` 261/1. Unique paths and dispositions remain as in the branch register. No integration, merge, rebase, deletion, PR or disposition change is due.
+
+Next: **DEV-0.7.1 Slice G9A — Epoch Lifecycle And Destructive Transition Authority Decision**, then bounded G9 implementation. G10 activation/post-epoch durability, combat and planned parent acceptance remain held.
