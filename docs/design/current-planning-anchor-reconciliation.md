@@ -1,3 +1,7 @@
+## 2026-09-30 G8D witnessed descendant owner checkpoint
+
+**FIRST_WITNESSED_DESCENDANT_OWNER_VERIFIED; CROSS_SLOT_AND_LIVE_APP_HELD** from synchronized starting source `1ad268e956cfd4396feadad0dbcd3764a90bd5b9`, code checkpoint `745e1b4d`. The first post-creator Soundings completion now uses independently admitted session evidence, transactionally promoted to immutable applied first-durable provenance with the descendant head and pending recovery. Native witnessed QA 9/9, adjacent browser 111/111 and Node campaign/Soundings 116/116 pass; broad UI typecheck retains its 137 baseline diagnostics. G8E must implement the accepted cross-slot manual/quick address contract before G8F real App cutover and ordinary UI QA. G9 lifecycle and G10 activation/post-epoch durability remain separate; combat and planned `DEV-0.7.1` parent acceptance remain held. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
+
 ## 2026-09-30 G8C planning reconciliation
 
 G8C closes the two decision blockers discovered by G8B without activating callers. Accepted architecture: independent session Soundings witness -> atomic first witnessed descendant/applied witness/recovery; and singular campaign head -> durable manual/quick slot addresses with optimistic destination CAS and no history pruning. Execute G8D then G8E before G8F App cutover. G9 lifecycle/reset/delete, G10 coordinated activation/durability and Slice C combat remain downstream. Parent `DEV-0.7.1`, Game `0.1.1-prealpha`, playability and accepted DEV remain unchanged.

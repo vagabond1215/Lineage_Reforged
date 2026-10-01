@@ -183,6 +183,8 @@ Do not copy full defect narratives into this register. Link the focused audit or
 
 ### FP-014 — Container Shape And Recomputed Strings Are Not Semantic Authority
 
+- **Additional evidence (2026-09-30):** A creator head can be unwitnessed while a later descendant becomes the first independently witnessed Soundings artifact. Do not compare the creator recovery's null request against the current descendant witness as if both artifacts were first durable provenance. Validate each artifact/recovery at its own revision and the current head against the first witnessed artifact. The first G8D native run exposed and repaired this creator-versus-first-witness assumption; see `docs/dev/dev-0.7.1-slice-g8d-first-witnessed-descendant-owner-record.md`.
+
 - **Additional evidence (2026-09-20):** `docs/design/soundings-durable-completion-independent-acceptance-audit.md`, F1: a replaceable retained source and recomputed digest/receipt set, or nonexistent artifact/publication references, pass restart duplicate validation. Require source-provenance binding to independently retained accepted authority; another adjacent mutable checksum is insufficient. This is not a claim of general local-save tamper resistance.
 
 - **Pattern:** Shallow object or array checks, or a caller-recomputed serialization string, admit missing required fields, empty required evidence, noncanonical nested ordering, or well-shaped but semantically false owner facts.
