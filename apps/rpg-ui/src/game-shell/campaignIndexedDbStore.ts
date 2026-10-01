@@ -45,6 +45,8 @@ export type CampaignStorePublication = {
   campaignId: string;
   slotId: string;
   expectedHead: ExpectedCampaignHead;
+  /** Destination address observed by the caller; undefined retains the isolated foundation contract. */
+  expectedSlotAddress?: { artifactId: string; publicationId: string } | null;
   artifactRaw: string;
   control: StoredCampaignControl;
   witness?: SoundingsAdmissionWitness;
@@ -238,12 +240,17 @@ export class CampaignIndexedDbStore {
       if (!controlRecord(control, accountId, campaignId)) fail("invalid_record", "Stored campaign control is malformed.");
       const artifact = await requestValue(tx.objectStore("artifacts").get([accountId, control.value.headArtifactId]) as IDBRequest<unknown>);
       const slot = await requestValue(tx.objectStore("slots").get([accountId, slotId]) as IDBRequest<unknown>);
+      const addressed = slotRecord(slot, accountId, slotId)
+        ? await requestValue(tx.objectStore("artifacts").get([accountId, slot.artifactId]) as IDBRequest<unknown>) : undefined;
       if (!artifactRecord(artifact, accountId, control.value.headArtifactId) || !slotRecord(slot, accountId, slotId) ||
-          slot.campaignId !== campaignId || slot.artifactId !== artifact.artifactId || slot.raw !== artifact.raw ||
-          slot.publicationId !== control.value.headPublicationId || artifact.headRevision !== control.value.headRevision) {
+          !artifactRecord(addressed, accountId, slot.artifactId) || slot.campaignId !== campaignId ||
+          addressed.campaignId !== campaignId || slot.raw !== addressed.raw ||
+          slot.publicationId !== addressed.publicationId || addressed.headRevision > control.value.headRevision ||
+          artifact.campaignId !== campaignId || artifact.publicationId !== control.value.headPublicationId ||
+          artifact.headRevision !== control.value.headRevision) {
         fail("invalid_record", "Stored head, artifact and slot disagree.");
       }
-      const { snapshot } = validatedEnvelope(artifact.raw, accountId, campaignId, slotId);
+      const { snapshot } = validatedEnvelope(artifact.raw, accountId, campaignId);
       const requestId = snapshot.authorityLedger?.soundingsTurnIn?.requests[0]?.requestId;
       let witness: SoundingsAdmissionWitness | null = null;
       const retainedWitnesses = await requestValue(tx.objectStore("witnesses").index("byAccountCampaign").getAll([accountId, campaignId]) as IDBRequest<unknown[]>);
@@ -303,6 +310,14 @@ export class CampaignIndexedDbStore {
       await extension?.verify(tx, current?.value ?? null);
       if (existingArtifact !== undefined && !artifactRecord(existingArtifact, input.accountId, envelope.artifactId)) fail("invalid_record", "Stored immutable artifact is malformed.");
       if (address !== undefined && !slotRecord(address, input.accountId, input.slotId)) fail("invalid_record", "Stored slot address is malformed.");
+      if (address) {
+        const addressedPrior = await requestValue(tx.objectStore("artifacts")
+          .get([input.accountId, address.artifactId]) as IDBRequest<unknown>);
+        if (!artifactRecord(addressedPrior, input.accountId, address.artifactId) ||
+            addressedPrior.campaignId !== address.campaignId ||
+            addressedPrior.publicationId !== address.publicationId || addressedPrior.raw !== address.raw)
+          fail("invalid_record", "Destination address lacks its retained immutable artifact.");
+      }
       if (requestId && existingWitness !== undefined && !witnessRecord(existingWitness, input.accountId, input.campaignId, requestId)) fail("invalid_record", "Stored witness is malformed.");
       if (retainedWitnesses.length > (requestId ? 1 : 0) || (!requestId && retainedWitnesses.length)) fail("invalid_record", "Campaign cannot discard or multiply retained Soundings provenance.");
       if (current) {
@@ -326,7 +341,17 @@ export class CampaignIndexedDbStore {
           (current?.value.headPublicationId ?? null) !== (expected?.publicationId ?? null) ||
           (current?.value.headRevision ?? 0) !== (expected?.revision ?? 0)) fail("stale_head", "Campaign head changed after publication source was captured.");
       if (current?.value.closed) fail("conflict", "Closed campaign cannot advance.");
-      if (address && (address.campaignId !== input.campaignId || (expected && address.artifactId !== expected.artifactId))) fail("conflict", "Slot points to another verified publication.");
+      if (input.expectedSlotAddress !== undefined) {
+        const wanted = input.expectedSlotAddress;
+        if (wanted !== null && (!nonblank(wanted.artifactId) || !nonblank(wanted.publicationId)))
+          fail("invalid_record", "Expected destination address is malformed.");
+        if ((address?.artifactId ?? null) !== (wanted?.artifactId ?? null) ||
+            (address?.publicationId ?? null) !== (wanted?.publicationId ?? null))
+          fail("conflict", "Destination address changed after it was captured.");
+        if (address && address.campaignId !== input.campaignId)
+          fail("conflict", "Destination belongs to another campaign.");
+      } else if (address && (address.campaignId !== input.campaignId || (expected && address.artifactId !== expected.artifactId)))
+        fail("conflict", "Slot points to another verified publication.");
       await this.verifySoundingsInTransaction(tx, acceptedInput, envelope, snapshot, requestId, existingWitness, !!sessionWitness);
       const writes: { family: Family; value: ArtifactRecord | ControlRecord | SlotRecord | WitnessRecord }[] = [
         { family: "artifacts", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, artifactId: envelope.artifactId, generationId: envelope.generationId, publicationId: envelope.publicationId, slotId: input.slotId, headRevision: envelope.headRevision, raw: input.artifactRaw } },

@@ -94,16 +94,17 @@ function input(context: Awaited<ReturnType<typeof setup>>) {
     destinationSlotId: "slot-1" as const, expectedAccountRevision: 2,
     snapshot: context.state.snapshot, control: context.state.control };
 }
-function publicationRequest(context: Awaited<ReturnType<typeof setup>>) {
+function publicationRequest(context: Awaited<ReturnType<typeof setup>>,
+  destinationSlotId: "slot-1" | "quick-save" = "slot-1") {
   const { accountId, first, state } = context;
   const savedAt = new Date().toISOString();
   const snapshot = evaluateAchievementProgress(state.snapshot, context.account.profile,
-    { slotId: "slot-1", touchHistory: true, recordedAt: savedAt }).nextSnapshot;
+    { slotId: destinationSlotId, touchHistory: true, recordedAt: savedAt }).nextSnapshot;
   const identity = snapshot.campaignIdentity!;
   const artifactId = `artifact.${crypto.randomUUID()}`;
   const publicationId = `publication.${crypto.randomUUID()}`;
-  const envelope: StoredSaveEnvelope = { version: 7, accountId, slotId: "slot-1", savedAt,
-    metadata: { ...buildSaveMetadata("slot-1", snapshot), lastSavedAt: savedAt,
+  const envelope: StoredSaveEnvelope = { version: 7, accountId, slotId: destinationSlotId, savedAt,
+    metadata: { ...buildSaveMetadata(destinationSlotId, snapshot), lastSavedAt: savedAt,
       snapshotVersion: snapshot.snapshotVersion }, snapshotFormatId: snapshot.snapshotVersion,
     campaignId: identity.campaignId, continuityId: identity.continuityId,
     characterId: snapshot.playerState.playerId, artifactId,
@@ -111,16 +112,19 @@ function publicationRequest(context: Awaited<ReturnType<typeof setup>>) {
     headRevision: 2, terminal: false, snapshot: serializeSnapshot(snapshot) };
   const firstControl = first.loaded.sessionControl;
   const publication: CampaignStorePublication = { accountId, campaignId: identity.campaignId,
-    slotId: "slot-1", expectedHead: { artifactId: firstControl.loadedArtifactId,
+    slotId: destinationSlotId, expectedSlotAddress: destinationSlotId === "quick-save" ? null :
+      { artifactId: firstControl.loadedArtifactId, publicationId: firstControl.loadedPublicationId },
+    expectedHead: { artifactId: firstControl.loadedArtifactId,
       publicationId: firstControl.loadedPublicationId, revision: 1 }, artifactRaw: JSON.stringify(envelope),
     control: { version: 1, accountId, campaignId: identity.campaignId,
       headArtifactId: artifactId, headPublicationId: publicationId, headRevision: 2,
       previousHeadArtifactId: firstControl.loadedArtifactId,
       previousHeadPublicationId: firstControl.loadedPublicationId, closed: false, updatedAt: savedAt } };
-  const payloadFingerprint = JSON.stringify({ slotId: "slot-1", capturedAtTick: snapshot.capturedAtTick,
+  const payloadFingerprint = JSON.stringify({ slotId: destinationSlotId, capturedAtTick: snapshot.capturedAtTick,
     characterAchievementIds: snapshot.playerState.achievements.unlocked.map(entry => entry.achievementId) });
   return { publication, sessionWitness: state.control.soundingsAdmissionWitness,
-    expectedAccountRevision: 2, sourceArtifactId: firstControl.loadedArtifactId,
+    expectedAccountRevision: 2, sourceSlotId: "slot-1" as const,
+    sourceArtifactId: firstControl.loadedArtifactId,
     sourcePublicationId: firstControl.loadedPublicationId,
     sourceSnapshotRaw: serializeSnapshot(first.loaded.snapshot),
     consumerPlans: (["active_history", "account_achievements", "legacy_rewards", "last_played"] as const)
@@ -140,6 +144,52 @@ function rawGet(db: IDBDatabase, storeName: string, key: IDBValidKey): Promise<a
     request.onerror = () => reject(request.error); });
 }
 async function suite() {
+  await test("cross-slot first witness binds quick head and retains manual source", async () => {
+    const context = await setup("cross-slot-first");
+    const saved = await new CleanEpochDescendantAdapter(context.owner).save({ ...input(context),
+      destinationSlotId: "quick-save", expectedDestinationAddress: null });
+    check(saved.status === "ready", `witnessed quick save failed: ${JSON.stringify(saved)}`);
+    const manual = await context.owner.readSlot(context.accountId, "slot-1");
+    const quick = await context.owner.readSlot(context.accountId, "quick-save");
+    check(manual.status === "ready" && quick.status === "ready" &&
+      manual.loaded.sessionControl.loadedArtifactId === context.first.loaded.sessionControl.loadedArtifactId &&
+      quick.loaded.sessionControl.soundingsAdmissionWitness?.posture === "applied" &&
+      quick.loaded.sessionControl.soundingsAdmissionWitness.firstDurableArtifactId ===
+        quick.loaded.sessionControl.loadedArtifactId,
+      "first Soundings witness or source address changed across slots");
+    const later = await new CleanEpochDescendantAdapter(context.owner).save({
+      accountId: context.accountId, sourceSlotId: "quick-save", destinationSlotId: "slot-1",
+      expectedDestinationAddress: { artifactId: manual.loaded.sessionControl.loadedArtifactId,
+        publicationId: manual.loaded.sessionControl.loadedPublicationId },
+      expectedAccountRevision: 3, snapshot: quick.loaded.snapshot, control: quick.loaded.sessionControl });
+    check(later.status === "ready" && later.value.loaded.sessionControl.soundingsAdmissionWitness?.firstDurableArtifactId ===
+      quick.loaded.sessionControl.loadedArtifactId,
+      `later manual publication lost first witness: ${JSON.stringify(later)}`);
+    context.owner.close();
+  });
+  await test("cross-slot witnessed abort and quota at every write leave no partial witness", async () => {
+    for (const mode of ["aborted", "quota"] as const) for (let stop = 1; stop <= 5; stop++) {
+      const context = await setup(`cross-${mode}-${stop}`);
+      const request = publicationRequest(context, "quick-save");
+      context.owner.close(); let writes = 0;
+      const failing = await openCleanEpochAccountStore({ name: context.name,
+        beforeWrite: () => { if (mode === "quota" && ++writes === stop)
+          throw new DOMException("quota", "QuotaExceededError"); },
+        afterWrite: tx => { if (mode === "aborted" && ++writes === stop) tx.abort(); } });
+      await expectCode(() => failing.publishDescendant(request), mode);
+      failing.close();
+      const reopened = await openCleanEpochAccountStore({ name: context.name });
+      check((await reopened.readSlot(context.accountId, "slot-1")).loaded?.sessionControl.campaignHeadRevision === 1 &&
+        (await reopened.readSlot(context.accountId, "quick-save")).status === "empty" &&
+        (await reopened.read(context.accountId))?.revision === 2,
+        `${mode} at cross-slot write ${stop} left partial authority`);
+      const db = await rawOpen(context.name);
+      check(await rawGet(db, "witnesses", [context.accountId, request.publication.campaignId,
+        request.sessionWitness!.requestId]) === undefined,
+        `${mode} at cross-slot write ${stop} left a first witness`);
+      db.close(); reopened.close();
+    }
+  });
   await test("pure creator head accepts first independent Soundings witness and exact applied readback", async () => {
     const context = await setup("first");
     const saved = await new CleanEpochDescendantAdapter(context.owner).save(input(context));

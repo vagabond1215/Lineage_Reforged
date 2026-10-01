@@ -27,17 +27,18 @@ function plans(snapshot: SaveSnapshot, slotId: SaveSlotId): CampaignPublicationC
     .map(kind => ({ kind, payloadFingerprint }));
 }
 
-/** Inert same-slot ordinary caller. App remains held until cross-slot ownership is accepted. */
+/** Inert ordinary caller. App activation remains a separate route. */
 export class CleanEpochDescendantAdapter {
   constructor(private readonly owner: CleanEpochAccountStore) {}
 
   async save(input: { accountId: string; sourceSlotId: SaveSlotId; destinationSlotId: SaveSlotId;
-    expectedAccountRevision: number; snapshot: SaveSnapshot; control: CampaignSessionControl }):
+    expectedAccountRevision: number; snapshot: SaveSnapshot; control: CampaignSessionControl;
+    expectedDestinationAddress?: { artifactId: string; publicationId: string } | null }):
     Promise<EpochDescendantResult> {
     const { accountId, sourceSlotId, destinationSlotId, expectedAccountRevision, snapshot, control } = input;
     try {
-      if (sourceSlotId !== destinationSlotId)
-        throw new CampaignStoreError("conflict", "Cross-slot quick or manual publication requires an epoch slot-alias owner.");
+      if (sourceSlotId !== destinationSlotId && input.expectedDestinationAddress === undefined)
+        throw new CampaignStoreError("invalid_record", "Cross-slot save requires an expected destination address.");
       if (!isTargetCampaignSnapshot(snapshot) || hasPendingNormalDefeat(snapshot) || !snapshot.campaignIdentity ||
           snapshot.accountId !== accountId || control.accountId !== accountId ||
           control.campaignId !== snapshot.campaignIdentity.campaignId)
@@ -51,9 +52,22 @@ export class CleanEpochDescendantAdapter {
         throw new CampaignStoreError("conflict", `Slot is ${current.status}; recover its retained publication first.`);
       const headControl = current.loaded.sessionControl;
       if (headControl.campaignId !== control.campaignId ||
-          headControl.loadedArtifactId !== control.campaignHeadArtifactId ||
-          headControl.loadedHeadRevision !== control.campaignHeadRevision)
+          headControl.campaignHeadArtifactId !== control.campaignHeadArtifactId ||
+          headControl.campaignHeadRevision !== control.campaignHeadRevision)
         throw new CampaignStoreError("stale_head", "Campaign head changed after this session was loaded.");
+      const destination = sourceSlotId === destinationSlotId ? current
+        : await this.owner.readSlot(accountId, destinationSlotId);
+      if (destination.status !== "ready" && destination.status !== "empty")
+        throw new CampaignStoreError("conflict", `Destination is ${destination.status}.`);
+      if (destination.status === "ready" && destination.loaded.sessionControl.campaignId !== control.campaignId)
+        throw new CampaignStoreError("conflict", "Destination belongs to another campaign.");
+      const observedAddress = destination.status === "ready" ? {
+        artifactId: destination.loaded.sessionControl.loadedArtifactId,
+        publicationId: destination.loaded.sessionControl.loadedPublicationId } : null;
+      if (input.expectedDestinationAddress !== undefined && (
+          (input.expectedDestinationAddress?.artifactId ?? null) !== (observedAddress?.artifactId ?? null) ||
+          (input.expectedDestinationAddress?.publicationId ?? null) !== (observedAddress?.publicationId ?? null)))
+        throw new CampaignStoreError("conflict", "Destination address changed before save.");
       const source = control.loadedArtifactId === headControl.loadedArtifactId
         ? current.loaded
         : await this.owner.readHistoricalArtifact(accountId, sourceSlotId, control.loadedArtifactId);
@@ -78,6 +92,10 @@ export class CleanEpochDescendantAdapter {
       if (!firstCompletion && sessionWitness)
         throw new CampaignStoreError("invalid_record", "Session witness cannot introduce a second first completion.");
       const identity = prepared.campaignIdentity!;
+      const head = await this.owner.readCampaignHead(accountId, identity.campaignId, sourceSlotId);
+      if (head.artifactId !== headControl.campaignHeadArtifactId ||
+          head.revision !== headControl.campaignHeadRevision)
+        throw new CampaignStoreError("stale_head", "Campaign head changed during save preparation.");
       const artifactId = createAuthorityId("artifact");
       const generationId = createAuthorityId("generation");
       const publicationId = createAuthorityId("publication");
@@ -91,16 +109,16 @@ export class CleanEpochDescendantAdapter {
         snapshot: serializeSnapshot(prepared) };
       const publication: CampaignStorePublication = { accountId, campaignId: identity.campaignId,
         slotId: destinationSlotId,
-        expectedHead: { artifactId: headControl.loadedArtifactId,
-          publicationId: headControl.loadedPublicationId, revision: headControl.loadedHeadRevision },
+        expectedSlotAddress: input.expectedDestinationAddress ?? observedAddress,
+        expectedHead: head,
         artifactRaw: JSON.stringify(envelope),
         control: { version: 1, accountId, campaignId: identity.campaignId,
           headArtifactId: artifactId, headPublicationId: publicationId,
-          headRevision: envelope.headRevision, previousHeadArtifactId: headControl.loadedArtifactId,
-          previousHeadPublicationId: headControl.loadedPublicationId, closed: false, updatedAt: savedAt } };
+          headRevision: envelope.headRevision, previousHeadArtifactId: head.artifactId,
+          previousHeadPublicationId: head.publicationId, closed: false, updatedAt: savedAt } };
       await this.owner.publishDescendant({ publication,
         ...(sessionWitness ? { sessionWitness } : {}), expectedAccountRevision,
-        sourceArtifactId: source.sessionControl.loadedArtifactId,
+        sourceSlotId, sourceArtifactId: source.sessionControl.loadedArtifactId,
         sourcePublicationId: source.sessionControl.loadedPublicationId,
         sourceSnapshotRaw: serializeSnapshot(source.snapshot), consumerPlans: plans(prepared, destinationSlotId) });
       await this.owner.completeDescendantConsumers(accountId, identity.campaignId, publicationId);

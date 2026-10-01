@@ -95,6 +95,8 @@ export type CleanEpochDescendantRecovery = {
   accountId: string;
   campaignId: string;
   slotId: string;
+  sourceSlotId: string;
+  expectedSlotAddress: { artifactId: string; publicationId: string } | null;
   artifactId: string;
   generationId: string;
   publicationId: string;
@@ -117,6 +119,7 @@ export type CleanEpochDescendantRequest = {
   sessionWitness?: SoundingsAdmissionWitness;
   expectedAccountRevision: number;
   sourceArtifactId: string;
+  sourceSlotId: SaveSlotId;
   sourcePublicationId: string;
   sourceSnapshotRaw: string;
   consumerPlans: CampaignPublicationConsumerPlan[];
@@ -366,7 +369,10 @@ function descendantFingerprint(snapshot: SaveSnapshot, slotId: string): string {
 function validDescendantRecovery(value: unknown, accountId: string, campaignId: string,
   publicationId: string): value is CleanEpochDescendantRecovery {
   if (!object(value) || value.version !== 1 || value.accountId !== accountId || value.campaignId !== campaignId ||
-      value.publicationId !== publicationId || !validSlotId(value.slotId) || !nonblank(value.artifactId) ||
+      value.publicationId !== publicationId || !validSlotId(value.slotId) || !validSlotId(value.sourceSlotId) ||
+      (value.expectedSlotAddress !== null && (!object(value.expectedSlotAddress) ||
+        !nonblank(value.expectedSlotAddress.artifactId) || !nonblank(value.expectedSlotAddress.publicationId))) ||
+      !nonblank(value.artifactId) ||
       !nonblank(value.generationId) || !nonblank(value.sourceArtifactId) || !nonblank(value.sourcePublicationId) ||
       typeof value.sourceSnapshotRaw !== "string" || typeof value.envelopeRaw !== "string" ||
       !Number.isSafeInteger(value.headRevision) || (value.headRevision as number) < 2 ||
@@ -479,6 +485,26 @@ export class CleanEpochAccountStore {
 
   close(): void { this.db.close(); }
 
+  async readCampaignHead(accountId: string, campaignId: string, slotId: SaveSlotId):
+    Promise<{ artifactId: string; publicationId: string; revision: number }> {
+    if (!nonblank(accountId) || !nonblank(campaignId) || !validSlotId(slotId))
+      fail("invalid_record", "Campaign head address is invalid.");
+    const published = await new CampaignIndexedDbStore(this.db).read(accountId, campaignId, slotId);
+    if (!published) fail("invalid_record", "Campaign head is missing.");
+    return { artifactId: published.control.headArtifactId,
+      publicationId: published.control.headPublicationId, revision: published.control.headRevision };
+  }
+
+  private async campaignAttempt(tx: IDBTransaction, accountId: string,
+    campaignId: string): Promise<CleanEpochAttemptRecord> {
+    const raws = await requestValue(tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE)
+      .getAll(IDBKeyRange.bound([accountId, ""], [accountId, "\uffff"])) as IDBRequest<unknown[]>);
+    const matched = raws.filter(raw => object(raw) && raw.campaignId === campaignId);
+    if (matched.length !== 1 || !object(matched[0]) || !validSlotId(matched[0].slotId))
+      fail("invalid_record", "Campaign has no singular retained creator attempt.");
+    return checkedAttempt(matched[0], accountId, matched[0].slotId as string);
+  }
+
   /** Inert first-head inventory. A failed read never becomes an empty slot. */
   async listSlots(accountId: string): Promise<CleanEpochSlotSummary[]> {
     if (!nonblank(accountId)) fail("invalid_record", "Slot account ID is blank.");
@@ -526,12 +552,11 @@ export class CleanEpochAccountStore {
       const current = await this.inspectSlot(tx, checkedAccount(accountRaw, accountId), slotId);
       if (current.status !== "ready") fail("conflict", "Historical load requires a completed open campaign head.");
       if (current.loaded.sessionControl.loadedArtifactId === artifactId) return current.loaded;
-      const [attemptRaw, firstRaw, artifactRaw] = await Promise.all([
-        requestValue(tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE).get([accountId, slotId]) as IDBRequest<unknown>),
-        requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE).get([accountId, slotId]) as IDBRequest<unknown>),
+      const attempt = await this.campaignAttempt(tx, accountId, current.loaded.sessionControl.campaignId);
+      const [firstRaw, artifactRaw] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE).get([accountId, attempt.slotId]) as IDBRequest<unknown>),
         requestValue(tx.objectStore("artifacts").get([accountId, artifactId]) as IDBRequest<unknown>)
       ]);
-      const attempt = checkedAttempt(attemptRaw, accountId, slotId);
       const first = checkedRecovery(firstRaw, attempt);
       if (!object(artifactRaw) || typeof artifactRaw.raw !== "string")
         fail("invalid_record", "Historical artifact is missing.");
@@ -573,18 +598,27 @@ export class CleanEpochAccountStore {
   private async inspectSlot(tx: IDBTransaction, account: CleanEpochAccountRecord,
     slotId: SaveSlotId): Promise<CleanEpochSlotRead> {
     const accountId = account.accountId;
-    const [attemptRaw, recoveryRaw, addressRaw] = await Promise.all([
+    const [ownAttemptRaw, ownRecoveryRaw, addressRaw] = await Promise.all([
       requestValue(tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE).get([accountId, slotId]) as IDBRequest<unknown>),
       requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE).get([accountId, slotId]) as IDBRequest<unknown>),
       requestValue(tx.objectStore("slots").get([accountId, slotId]) as IDBRequest<unknown>)
     ]);
     const empty = (status: "empty" | "prepared"): CleanEpochSlotRead => ({ slotId, status, metadata: null });
-    if (attemptRaw === undefined) {
-      if (recoveryRaw !== undefined || addressRaw !== undefined)
-        fail("invalid_record", "Slot authority lacks its retained attempt.");
+    if (ownAttemptRaw === undefined && addressRaw === undefined) {
+      if (ownRecoveryRaw !== undefined)
+        fail("invalid_record", "Slot recovery lacks its retained attempt.");
       return empty("empty");
     }
-    const attempt = checkedAttempt(attemptRaw, accountId, slotId);
+    if (ownAttemptRaw === undefined && (!object(addressRaw) || !nonblank(addressRaw.campaignId)))
+      fail("invalid_record", "Address lacks a campaign identity.");
+    const attempt = ownAttemptRaw === undefined
+      ? await this.campaignAttempt(tx, accountId, (addressRaw as { campaignId: string }).campaignId)
+      : checkedAttempt(ownAttemptRaw, accountId, slotId);
+    const recoveryRaw = ownAttemptRaw === undefined
+      ? await requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE)
+        .get([accountId, attempt.slotId]) as IDBRequest<unknown>) : ownRecoveryRaw;
+    if (ownAttemptRaw === undefined && ownRecoveryRaw !== undefined)
+      fail("invalid_record", "Destination has unrelated first-publication recovery.");
     const controlRaw = await requestValue(tx.objectStore("controls").get([accountId, attempt.campaignId]) as IDBRequest<unknown>);
     if (recoveryRaw === undefined) {
       if (addressRaw !== undefined || controlRaw !== undefined)
@@ -599,7 +633,7 @@ export class CleanEpochAccountStore {
     if (!published) fail("invalid_record", "Accepted slot lacks verified publication.");
     const firstRaw = await requestValue(tx.objectStore("artifacts").get([accountId, recovery.artifactId]) as IDBRequest<unknown>);
     if (!object(firstRaw) || firstRaw.accountId !== accountId || firstRaw.campaignId !== attempt.campaignId ||
-        firstRaw.version !== 1 || firstRaw.slotId !== slotId ||
+        firstRaw.version !== 1 || firstRaw.slotId !== attempt.slotId ||
         firstRaw.artifactId !== recovery.artifactId || firstRaw.generationId !== recovery.generationId ||
         firstRaw.publicationId !== recovery.publicationId || firstRaw.headRevision !== 1 ||
         firstRaw.raw !== recovery.envelopeRaw ||
@@ -630,7 +664,7 @@ export class CleanEpochAccountStore {
       let priorPublication = recovery.publicationId;
       for (let revision = 2; revision <= published.control.headRevision; revision++) {
         const entry = byRevision.get(revision);
-        if (!entry || entry.slotId !== slotId || entry.expectedHead.artifactId !== priorId ||
+        if (!entry || entry.expectedHead.artifactId !== priorId ||
             entry.expectedHead.publicationId !== priorPublication || entry.expectedHead.revision !== revision - 1)
           fail("invalid_record", "Descendant predecessor chain is incomplete.");
         const [artifactRaw, sourceRaw] = await Promise.all([
@@ -657,6 +691,9 @@ export class CleanEpochAccountStore {
                 targetIdentity.forkedFromPublicationId !== entry.sourcePublicationId ||
                 !nonblank(targetIdentity.firstDivergentMutationId)))
           fail("invalid_record", "Descendant source continuity is invalid.");
+        if (entry.sourceSlotId !== source.slotId ||
+            (entry.expectedSlotAddress !== null && entry.expectedSlotAddress.artifactId === entry.artifactId))
+          fail("invalid_record", "Descendant source or destination address evidence is invalid.");
         if (revision < published.control.headRevision &&
             (entry.status !== "consumers_completed" || !descendantReceiptsMatch(account, entry)))
           fail("invalid_record", "Non-head descendant lacks completed consumers.");
@@ -670,21 +707,30 @@ export class CleanEpochAccountStore {
           head.expectedHead.publicationId !== published.control.previousHeadPublicationId ||
           (published.witness?.requestId ?? null) !== head.witnessRequestId)
         fail("invalid_record", "Descendant head, recovery or Soundings witness disagree.");
+      const addressed = envelopeFromRaw(published.slotRaw);
       if (head.status === "accepted_pending_consumers")
-        return { slotId, status: "pending_consumers", metadata: descendant.metadata };
+        return { slotId, status: "pending_consumers", metadata: addressed.metadata };
       if (!descendantReceiptsMatch(account, head)) fail("invalid_record", "Head descendant lacks exact account receipts.");
-      const firstRun = account.profile.history.runRecords.filter(run => run.characterId === descendant.characterId);
+      const addressedRecovery = addressed.headRevision === 1 ? recovery : byRevision.get(addressed.headRevision);
+      if (!addressedRecovery || addressedRecovery.status !== "consumers_completed" ||
+          addressedRecovery.artifactId !== addressed.artifactId ||
+          addressedRecovery.publicationId !== addressed.publicationId ||
+          addressedRecovery.envelopeRaw !== published.slotRaw ||
+          (addressed.headRevision > 1 && (addressedRecovery as CleanEpochDescendantRecovery).slotId !== slotId))
+        fail("invalid_record", "Slot address lacks completed retained publication authority.");
+      const firstRun = account.profile.history.runRecords.filter(run => run.characterId === addressed.characterId);
       if (firstRun.length !== 1 || !firstRun[0]!.saveSlotIds.includes(slotId))
-        fail("invalid_record", "Descendant lacks retained account history address.");
-      if (published.control.closed) return { slotId, status: "closed", metadata: descendant.metadata };
-      const snapshot = deserializeSnapshot(descendant.snapshot);
+        fail("invalid_record", "Address lacks retained account history.");
+      if (published.control.closed) return { slotId, status: "closed", metadata: addressed.metadata };
+      const snapshot = deserializeSnapshot(addressed.snapshot);
       const sessionControl = createCampaignSessionControl({ accountId, campaignId: attempt.campaignId,
-        artifactId: descendant.artifactId, publicationId: descendant.publicationId,
-        artifactRevision: descendant.headRevision, continuityId: descendant.continuityId,
+        artifactId: addressed.artifactId, publicationId: addressed.publicationId,
+        artifactRevision: addressed.headRevision, continuityId: addressed.continuityId,
         headArtifactId: descendant.artifactId, headRevision: descendant.headRevision });
-      return { slotId, status: "ready", metadata: descendant.metadata, loaded: {
+      return { slotId, status: "ready", metadata: addressed.metadata, loaded: {
         snapshot, sessionControl: published.witness ? { ...sessionControl, soundingsAdmissionWitness: published.witness } : sessionControl,
-        publication: publicationFor(snapshot, { ...head, updatedAt: head.createdAt }),
+        publication: publicationFor(snapshot, addressed.headRevision === 1 ? recovery :
+          { ...(addressedRecovery as CleanEpochDescendantRecovery), updatedAt: addressedRecovery.createdAt }),
         migratedLegacy: false, repairedLegacyDefeat: false
       } };
     }
@@ -859,8 +905,10 @@ export class CleanEpochAccountStore {
 
   /** Inert ordinary-save entry point. The accepted head remains nonplayable until its consumers complete. */
   async publishDescendant(request: CleanEpochDescendantRequest): Promise<CleanEpochDescendantResult> {
-    const { publication: input, sessionWitness, expectedAccountRevision, sourceArtifactId, sourcePublicationId, sourceSnapshotRaw, consumerPlans } = request;
-    if (!object(input) || !input.expectedHead || !validSlotId(input.slotId) ||
+    const { publication: input, sessionWitness, expectedAccountRevision, sourceSlotId,
+      sourceArtifactId, sourcePublicationId, sourceSnapshotRaw, consumerPlans } = request;
+    if (!object(input) || !input.expectedHead || !validSlotId(input.slotId) || !validSlotId(sourceSlotId) ||
+        input.expectedSlotAddress === undefined ||
         !Number.isSafeInteger(expectedAccountRevision) || expectedAccountRevision < 1 ||
         !nonblank(sourceArtifactId) || !nonblank(sourcePublicationId) || typeof sourceSnapshotRaw !== "string" ||
         !Array.isArray(consumerPlans) || input.witness !== undefined ||
@@ -874,7 +922,8 @@ export class CleanEpochAccountStore {
     const snapshot = deserializeSnapshot(envelope.snapshot);
     const proposed: CleanEpochDescendantRecovery = {
       version: 1, status: "accepted_pending_consumers", accountId: input.accountId,
-      campaignId: input.campaignId, slotId: input.slotId, artifactId: envelope.artifactId,
+      campaignId: input.campaignId, slotId: input.slotId, sourceSlotId,
+      expectedSlotAddress: input.expectedSlotAddress!, artifactId: envelope.artifactId,
       generationId: envelope.generationId, publicationId: envelope.publicationId,
       headRevision: envelope.headRevision, expectedHead: input.expectedHead,
       expectedAccountRevision, sourceArtifactId, sourcePublicationId, sourceSnapshotRaw,
@@ -892,22 +941,41 @@ export class CleanEpochAccountStore {
         CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE],
       ...(sessionWitness ? { firstSessionWitness: sessionWitness } : {}),
       verify: async (tx, current) => {
-        const [accountRaw, attemptRaw, firstRaw, retainedRaw, sourceRaw, predecessorRaw] = await Promise.all([
+        const [accountRaw, sourceAddress, destinationAddress, retainedRaw, sourceRaw, predecessorRaw] = await Promise.all([
           requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(input.accountId) as IDBRequest<unknown>),
-          requestValue(tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE).get([input.accountId, input.slotId]) as IDBRequest<unknown>),
-          requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE).get([input.accountId, input.slotId]) as IDBRequest<unknown>),
+          requestValue(tx.objectStore("slots").get([input.accountId, sourceSlotId]) as IDBRequest<unknown>),
+          requestValue(tx.objectStore("slots").get([input.accountId, input.slotId]) as IDBRequest<unknown>),
           requestValue(tx.objectStore(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE).get([input.accountId, input.campaignId, envelope.publicationId]) as IDBRequest<unknown>),
           requestValue(tx.objectStore("artifacts").get([input.accountId, sourceArtifactId]) as IDBRequest<unknown>),
           requestValue(tx.objectStore("artifacts").get([input.accountId, input.expectedHead!.artifactId]) as IDBRequest<unknown>)
         ]);
-        if (accountRaw === undefined || attemptRaw === undefined || firstRaw === undefined || !current)
+        if (accountRaw === undefined || !current)
           fail("invalid_record", "Descendant lacks retained account, first publication or predecessor.");
         const account = checkedAccount(accountRaw, input.accountId);
-        const attempt = checkedAttempt(attemptRaw, input.accountId, input.slotId);
+        const attempt = await this.campaignAttempt(tx, input.accountId, input.campaignId);
+        const firstRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE)
+          .get([input.accountId, attempt.slotId]) as IDBRequest<unknown>);
         const first = checkedRecovery(firstRaw, attempt);
         if (attempt.campaignId !== input.campaignId || first.status !== "consumers_completed" ||
             !completedReceiptsMatch(account, first))
           fail("invalid_record", "Descendant lacks completed first-campaign consumers.");
+        if (!object(sourceAddress) || sourceAddress.accountId !== input.accountId ||
+            sourceAddress.slotId !== sourceSlotId || sourceAddress.campaignId !== input.campaignId ||
+            !nonblank(sourceAddress.artifactId) || !nonblank(sourceAddress.publicationId) ||
+            (destinationAddress !== undefined && (!object(destinationAddress) ||
+              destinationAddress.campaignId !== input.campaignId)))
+          fail("conflict", "Source or destination slot belongs to another campaign.");
+        const sourceAddressArtifact = await requestValue(tx.objectStore("artifacts")
+          .get([input.accountId, sourceAddress.artifactId]) as IDBRequest<unknown>);
+        const sourceAddressEnvelope = envelopeFromRaw(sourceAddress.raw as string);
+        if (!object(sourceAddressArtifact) || typeof sourceAddressArtifact.raw !== "string" ||
+            sourceAddressArtifact.raw !== sourceAddress.raw ||
+            sourceAddressArtifact.campaignId !== input.campaignId ||
+            sourceAddressEnvelope.slotId !== sourceSlotId ||
+            sourceAddressEnvelope.headRevision > current.headRevision ||
+            !retainedArtifactMatches(sourceAddressArtifact, sourceAddressEnvelope) ||
+            sourceAddressArtifact.publicationId !== sourceAddress.publicationId)
+          fail("invalid_record", "Source slot address lacks its retained immutable artifact.");
         if (!object(sourceRaw) || typeof sourceRaw.raw !== "string" ||
             !object(predecessorRaw) || typeof predecessorRaw.raw !== "string")
           fail("invalid_record", "Descendant source or predecessor artifact is missing.");
@@ -916,7 +984,7 @@ export class CleanEpochAccountStore {
         if (!retainedArtifactMatches(sourceRaw, source) || !retainedArtifactMatches(predecessorRaw, predecessor))
           fail("invalid_record", "Retained source or predecessor record identity is malformed.");
         if (source.accountId !== input.accountId || source.campaignId !== input.campaignId ||
-            source.slotId !== input.slotId || source.artifactId !== sourceArtifactId ||
+            source.slotId !== sourceSlotId || source.artifactId !== sourceArtifactId ||
             source.publicationId !== sourcePublicationId || source.snapshot !== sourceSnapshotRaw ||
             source.headRevision > input.expectedHead!.revision ||
             predecessor.accountId !== input.accountId || predecessor.campaignId !== input.campaignId ||
@@ -1056,8 +1124,9 @@ export class CleanEpochAccountStore {
       const raw = await requestValue(tx.objectStore("controls").get([accountId, address.campaignId]) as IDBRequest<unknown>);
       if (!object(raw) || !isStoredCampaignControl(raw.value) ||
           raw.value.accountId !== accountId || raw.value.campaignId !== address.campaignId ||
-          raw.value.headPublicationId !== address.publicationId || raw.value.closed)
+          raw.value.closed)
         fail("invalid_record", "Pending descendant control disagrees with slot address.");
+      if (raw.value.headPublicationId !== address.publicationId) return null;
       if (raw.value.headRevision === 1) return null;
       const recovery = await this.readDescendantRecovery(accountId, address.campaignId, address.publicationId);
       if (!recovery || recovery.slotId !== slotId || recovery.headRevision !== raw.value.headRevision)

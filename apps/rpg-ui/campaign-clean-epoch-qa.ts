@@ -198,12 +198,15 @@ async function suite() {
       headRevision: revision, savedAt: `2026-09-30T0${revision}:00:00.000Z` };
     const expectedHead = { artifactId: prior.artifactId as string, publicationId: prior.publicationId as string,
       revision: revision - 1 };
-    const publication = { ...firstPublication, expectedHead, artifactRaw: JSON.stringify(next),
+    const publication = { ...firstPublication, expectedHead,
+      expectedSlotAddress: { artifactId: prior.artifactId as string, publicationId: prior.publicationId as string },
+      artifactRaw: JSON.stringify(next),
       control: { ...firstPublication.control, headArtifactId: next.artifactId,
         headPublicationId: next.publicationId, headRevision: revision,
         previousHeadArtifactId: prior.artifactId, previousHeadPublicationId: prior.publicationId,
         updatedAt: next.savedAt } };
-    return { publication, expectedAccountRevision, sourceArtifactId: prior.artifactId as string,
+    return { publication, expectedAccountRevision, sourceSlotId: "slot-1" as const,
+      sourceArtifactId: prior.artifactId as string,
       sourcePublicationId: prior.publicationId as string, sourceSnapshotRaw: prior.snapshot as string,
       consumerPlans: newCampaignPlans(JSON.parse(next.snapshot), profile, "slot-1").slice(0, 4), next };
   }
@@ -871,12 +874,14 @@ async function suite() {
       headRevision: 2, savedAt: "2026-09-30T02:00:00.000Z" };
     const request = { publication: { accountId: soundingsAccount, campaignId: source.campaignId,
       slotId: source.slotId, artifactRaw: JSON.stringify(descendant),
+      expectedSlotAddress: { artifactId: source.artifactId, publicationId: source.publicationId },
       expectedHead: { artifactId: source.artifactId, publicationId: source.publicationId, revision: 1 },
       control: { ...fixtures.soundings.control, headArtifactId: descendant.artifactId,
         headPublicationId: descendant.publicationId, headRevision: 2,
         previousHeadArtifactId: source.artifactId, previousHeadPublicationId: source.publicationId,
         updatedAt: descendant.savedAt } },
-      expectedAccountRevision: 2, sourceArtifactId: source.artifactId as string,
+      expectedAccountRevision: 2, sourceSlotId: source.slotId as "slot-1",
+      sourceArtifactId: source.artifactId as string,
       sourcePublicationId: source.publicationId as string, sourceSnapshotRaw: source.snapshot as string,
       consumerPlans: newCampaignPlans(soundingsSnapshot, soundingsProfile, source.slotId).slice(0, 4) };
     await owner.publishDescendant(request);

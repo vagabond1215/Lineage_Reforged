@@ -56,14 +56,208 @@ async function suite() {
     check(retry.status === "blocked" && retry.code === "stale_head", "stale caller created another head");
     context.owner.close();
   });
-  await test("cross-slot quick save blocks without changing the manual head", async () => {
+  await test("cross-slot quick save requires explicit destination CAS", async () => {
     const context = await setup("quick-slot");
     const blocked = await new CleanEpochDescendantAdapter(context.owner).save(request(context, "quick-save"));
-    check(blocked.status === "blocked" && blocked.code === "conflict" &&
+    check(blocked.status === "blocked" && blocked.code === "invalid_record" &&
       (await context.owner.readSlot(accountId, "slot-1")).loaded?.sessionControl.campaignHeadRevision === 1 &&
       (await context.owner.readSlot(accountId, "quick-save")).status === "empty",
-      "unsupported quick destination changed epoch authority");
+      "missing quick destination expectation changed epoch authority");
     context.owner.close();
+  });
+  await test("manual to quick keeps manual address and loads quick head", async () => {
+    const context = await setup("manual-quick");
+    const saved = await new CleanEpochDescendantAdapter(context.owner).save({
+      ...request(context, "quick-save"), expectedDestinationAddress: null });
+    check(saved.status === "ready" && saved.value.loaded.sessionControl.campaignHeadRevision === 2,
+      `quick publication failed: ${JSON.stringify(saved)}`);
+    const manual = await context.owner.readSlot(accountId, "slot-1");
+    const quick = await context.owner.readSlot(accountId, "quick-save");
+    check(manual.status === "ready" && quick.status === "ready" &&
+      manual.loaded.sessionControl.loadedArtifactId === context.first.loaded.sessionControl.loadedArtifactId &&
+      manual.loaded.sessionControl.posture === "non_head_unmutated" &&
+      manual.loaded.sessionControl.campaignHeadArtifactId === quick.loaded.sessionControl.loadedArtifactId &&
+      quick.loaded.publication.publicationId === saved.value.loaded.publication.publicationId,
+      "manual address moved or quick address did not load exact head");
+    const account = await context.owner.read(accountId);
+    check(account?.profile.history.runRecords[0]?.saveSlotIds.filter(id => id === "quick-save").length === 1 &&
+      account.profile.history.runRecords[0]?.saveSlotIds.filter(id => id === "slot-1").length === 1,
+      "account history omitted a source or destination address");
+    context.owner.close();
+  });
+  await test("quick to occupied manual overwrites only its address and retains a non-head fork", async () => {
+    const context = await setup("quick-manual");
+    const adapter = new CleanEpochDescendantAdapter(context.owner);
+    const quick = await adapter.save({ ...request(context, "quick-save"), expectedDestinationAddress: null });
+    check(quick.status === "ready", "quick source failed");
+    const firstAddress = { artifactId: context.first.loaded.sessionControl.loadedArtifactId,
+      publicationId: context.first.loaded.sessionControl.loadedPublicationId };
+    const manual = await adapter.save({ accountId, sourceSlotId: "quick-save", destinationSlotId: "slot-1",
+      expectedDestinationAddress: firstAddress, expectedAccountRevision: 3,
+      snapshot: quick.value.loaded.snapshot, control: quick.value.loaded.sessionControl });
+    check(manual.status === "ready" && manual.value.loaded.sessionControl.campaignHeadRevision === 3,
+      `occupied manual save failed: ${JSON.stringify(manual)}`);
+    const retained = await context.owner.readHistoricalArtifact(accountId, "slot-1", firstAddress.artifactId);
+    const oldQuick = await context.owner.readSlot(accountId, "quick-save");
+    check(retained.publication.publicationId === firstAddress.publicationId &&
+      oldQuick.status === "ready" && oldQuick.loaded.sessionControl.posture === "non_head_unmutated" &&
+      oldQuick.loaded.sessionControl.loadedArtifactId === quick.value.loaded.sessionControl.loadedArtifactId,
+      "manual overwrite deleted prior address or moved quick source");
+    const proposed = structuredClone(oldQuick.loaded.snapshot);
+    proposed.playerState.currency.gold += 1;
+    const admitted = admitCampaignMutation(oldQuick.loaded.sessionControl,
+      { mutationId: `mutation.${crypto.randomUUID()}`, sourceArtifactId: oldQuick.loaded.sessionControl.loadedArtifactId,
+        sourceRevision: oldQuick.loaded.sessionControl.sessionRevision, ownerKind: "legacy_bridge",
+        accepted: true, sourceSnapshot: oldQuick.loaded.snapshot, proposedSnapshot: proposed });
+    check(admitted.accepted && admitted.snapshot.campaignIdentity?.forkedFromArtifactId ===
+      oldQuick.loaded.sessionControl.loadedArtifactId, "older quick address did not fork");
+    const fork = await adapter.save({ accountId, sourceSlotId: "quick-save", destinationSlotId: "slot-1",
+      expectedDestinationAddress: { artifactId: manual.value.loaded.sessionControl.loadedArtifactId,
+        publicationId: manual.value.loaded.sessionControl.loadedPublicationId },
+      expectedAccountRevision: 4, snapshot: admitted.snapshot, control: admitted.control });
+    check(fork.status === "ready" && fork.value.loaded.sessionControl.campaignHeadRevision === 4 &&
+      fork.value.loaded.snapshot.campaignIdentity?.forkedFromArtifactId ===
+        oldQuick.loaded.sessionControl.loadedArtifactId,
+      `cross-slot fork was not retained: ${JSON.stringify(fork)}`);
+    context.owner.close();
+  });
+  await test("stale destination address and competing owners cannot overwrite a winner", async () => {
+    const context = await setup("destination-cas");
+    const other = await openCleanEpochAccountStore({ name: context.databaseName });
+    const stale = await new CleanEpochDescendantAdapter(context.owner).save({
+      ...request(context, "quick-save"), expectedDestinationAddress: {
+        artifactId: "artifact.stale", publicationId: "publication.stale" } });
+    check(stale.status === "blocked" && stale.code === "conflict" &&
+      (await context.owner.readSlot(accountId, "quick-save")).status === "empty",
+      "stale destination expectation changed the slot");
+    const [left, right] = await Promise.all([
+      new CleanEpochDescendantAdapter(context.owner).save({ ...request(context, "quick-save"), expectedDestinationAddress: null }),
+      new CleanEpochDescendantAdapter(other).save({ ...request(context, "quick-save"), expectedDestinationAddress: null })
+    ]);
+    check([left, right].filter(result => result.status === "ready").length === 1 &&
+      [left, right].filter(result => result.status === "blocked").length === 1 &&
+      (await context.owner.readSlot(accountId, "slot-1")).loaded?.sessionControl.loadedArtifactId ===
+        context.first.loaded.sessionControl.loadedArtifactId,
+      "destination race changed more than one address or source");
+    context.owner.close(); other.close();
+  });
+  await test("another campaign in the destination blocks cross-slot overwrite", async () => {
+    const context = await setup("other-campaign");
+    const second = await new CleanEpochFirstCampaignAdapter(context.owner).start(accountId,
+      { ...form(), saveSlotId: "slot-2" });
+    check(second.status === "ready", `second campaign setup failed: ${JSON.stringify(second)}`);
+    const result = await new CleanEpochDescendantAdapter(context.owner).save({
+      ...request(context, "slot-2"), expectedAccountRevision: 3,
+      expectedDestinationAddress: { artifactId: second.value.loaded.sessionControl.loadedArtifactId,
+        publicationId: second.value.loaded.sessionControl.loadedPublicationId } });
+    check(result.status === "blocked" && result.code === "conflict" &&
+      (await context.owner.readSlot(accountId, "slot-2")).loaded?.sessionControl.loadedArtifactId ===
+        second.value.loaded.sessionControl.loadedArtifactId,
+      "cross-campaign destination was overwritten");
+    context.owner.close();
+  });
+  await test("unrelated pending destination recovery blocks a cross-slot save", async () => {
+    const context = await setup("other-pending");
+    const original = context.owner.completePreparedAttemptConsumers.bind(context.owner);
+    context.owner.completePreparedAttemptConsumers = async () => { throw new Error("synthetic pending second campaign"); };
+    const second = await new CleanEpochFirstCampaignAdapter(context.owner).start(accountId,
+      { ...form(), saveSlotId: "slot-2" });
+    check(second.status === "blocked" && (await context.owner.readSlot(accountId, "slot-2")).status ===
+      "pending_consumers", "second campaign did not retain pending address");
+    context.owner.completePreparedAttemptConsumers = original;
+    const result = await new CleanEpochDescendantAdapter(context.owner).save({
+      ...request(context, "slot-2"), expectedDestinationAddress: null });
+    check(result.status === "blocked" && result.code === "conflict" &&
+      (await context.owner.readSlot(accountId, "slot-1")).loaded?.sessionControl.campaignHeadRevision === 1,
+      "unrelated pending destination allowed publication");
+    context.owner.close();
+  });
+  await test("cross-slot lost caller resumes exact destination after restart", async () => {
+    const context = await setup("cross-restart");
+    const originalPublish = context.owner.publishDescendant.bind(context.owner);
+    let captured: Parameters<typeof context.owner.publishDescendant>[0] | undefined;
+    context.owner.publishDescendant = async value => { captured = value; return originalPublish(value); };
+    const original = context.owner.completeDescendantConsumers.bind(context.owner);
+    context.owner.completeDescendantConsumers = async () => { throw new Error("synthetic lost caller"); };
+    const interrupted = await new CleanEpochDescendantAdapter(context.owner).save({
+      ...request(context, "quick-save"), expectedDestinationAddress: null });
+    check(interrupted.status === "blocked" &&
+      (await context.owner.readSlot(accountId, "quick-save")).status === "pending_consumers",
+      "cross-slot pending publication was not retained");
+    context.owner.completeDescendantConsumers = original;
+    context.owner.close();
+    const failing = await openCleanEpochAccountStore({ name: context.databaseName,
+      afterWrite: tx => tx.abort() });
+    const failedResume = await new CleanEpochDescendantAdapter(failing).resumeCurrent(accountId, "quick-save");
+    check(failedResume.status === "blocked" && failedResume.code === "aborted" &&
+      (await failing.read(accountId))?.revision === 2,
+      "consumer abort partially completed cross-slot account");
+    failing.close();
+    const reopened = await openCleanEpochAccountStore({ name: context.databaseName });
+    check(captured !== undefined &&
+      (await reopened.publishDescendant(captured)).publication.status === "same_source_retry",
+      "same-source cross-slot retry minted a second publication");
+    const pending = await reopened.readCurrentDescendantRecovery(accountId, "quick-save");
+    check(pending?.status === "accepted_pending_consumers" && pending.expectedSlotAddress === null &&
+      await reopened.readCurrentDescendantRecovery(accountId, "slot-1") === null,
+      "pending recovery was attributed to the wrong address");
+    const resumed = await new CleanEpochDescendantAdapter(reopened).resumeCurrent(accountId, "quick-save");
+    check(resumed.status === "ready" && resumed.value.loaded.publication.publicationId === pending.publicationId &&
+      (await reopened.read(accountId))?.revision === 3,
+      "cross-slot restart did not complete exact accepted publication");
+    reopened.close();
+  });
+  await test("malformed destination address and stale source reject without fallback", async () => {
+    const context = await setup("malformed-address");
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      const opened = indexedDB.open(context.databaseName);
+      opened.onsuccess = () => resolve(opened.result); opened.onerror = () => reject(opened.error);
+    });
+    const tx = db.transaction("slots", "readwrite");
+    tx.objectStore("slots").put({ version: 1, accountId, slotId: "quick-save",
+      campaignId: context.first.loaded.sessionControl.campaignId,
+      artifactId: "artifact.missing", publicationId: "publication.missing", raw: "{}" });
+    await new Promise<void>((resolve, reject) => { tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error); });
+    const result = await new CleanEpochDescendantAdapter(context.owner).save({
+      ...request(context, "quick-save"), expectedDestinationAddress: null });
+    check(result.status === "blocked" && result.code === "invalid_record" &&
+      (await context.owner.readSlot(accountId, "slot-1")).loaded?.sessionControl.campaignHeadRevision === 1,
+      "malformed destination became empty or advanced the campaign");
+    db.close(); context.owner.close();
+    const fresh = await setup("stale-cross-source");
+    const quick = await new CleanEpochDescendantAdapter(fresh.owner).save({
+      ...request(fresh, "quick-save"), expectedDestinationAddress: null });
+    check(quick.status === "ready", "fresh quick head missing");
+    const stale = await new CleanEpochDescendantAdapter(fresh.owner).save({ ...request(fresh, "quick-save"),
+      expectedAccountRevision: 3, expectedDestinationAddress: {
+        artifactId: quick.value.loaded.sessionControl.loadedArtifactId,
+        publicationId: quick.value.loaded.sessionControl.loadedPublicationId } });
+    check(stale.status === "blocked" && stale.code === "stale_head" &&
+      (await fresh.owner.readSlot(accountId, "quick-save")).loaded?.sessionControl.campaignHeadRevision === 2,
+      "stale source advanced quick head");
+    fresh.owner.close();
+  });
+  await test("cross-slot abort and quota at every publication write roll back both addresses", async () => {
+    for (const mode of ["aborted", "quota"] as const) for (let stop = 1; stop <= 4; stop++) {
+      const context = await setup(`cross-${mode}-${stop}`);
+      context.owner.close();
+      let writes = 0;
+      const failing = await openCleanEpochAccountStore({ name: context.databaseName,
+        ...(mode === "quota" ? { beforeWrite: () => {
+          if (++writes === stop) throw new DOMException("quota", "QuotaExceededError");
+        } } : { afterWrite: (tx: IDBTransaction) => { if (++writes === stop) tx.abort(); } }) });
+      const result = await new CleanEpochDescendantAdapter(failing).save({
+        ...request(context, "quick-save"), expectedDestinationAddress: null });
+      check(result.status === "blocked" && result.code === mode,
+        `${mode} at publication write ${stop} did not stop cross-slot save`);
+      failing.close();
+      const reopened = await openCleanEpochAccountStore({ name: context.databaseName });
+      check((await reopened.readSlot(accountId, "slot-1")).loaded?.sessionControl.campaignHeadRevision === 1 &&
+        (await reopened.readSlot(accountId, "quick-save")).status === "empty" &&
+        (await reopened.read(accountId))?.revision === 2,
+        `${mode} at write ${stop} left partial cross-slot authority`);
+      reopened.close();
+    }
   });
   await test("non-head gameplay mutation forks while retaining both prior artifacts", async () => {
     const context = await setup("fork");
