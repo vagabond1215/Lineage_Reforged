@@ -1,5 +1,6 @@
-import type { AccountProfileState, CampaignPublicationConsumerKind, SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
+import type { AccountProfileState, CampaignPublicationConsumerKind, SaveSnapshot, SoundingsAdmissionWitness } from "../../../../packages/shared/types/src/index.js";
 import { createCampaignSessionControl } from "../../../../packages/engines/game-engine/src/campaign-session.js";
+import { isSoundingsAdmissionWitness, verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
 import type { LocalAuthCredentialRecord } from "./launcherAuthManager.js";
 import { isAccountProfileState } from "./accountProfileManager.js";
 import { evaluateAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
@@ -112,6 +113,8 @@ export type CleanEpochDescendantRecovery = {
 };
 export type CleanEpochDescendantRequest = {
   publication: CampaignStorePublication;
+  /** The session witness minted by accepted gameplay, before any durable promotion. */
+  sessionWitness?: SoundingsAdmissionWitness;
   expectedAccountRevision: number;
   sourceArtifactId: string;
   sourcePublicationId: string;
@@ -600,7 +603,9 @@ export class CleanEpochAccountStore {
         firstRaw.artifactId !== recovery.artifactId || firstRaw.generationId !== recovery.generationId ||
         firstRaw.publicationId !== recovery.publicationId || firstRaw.headRevision !== 1 ||
         firstRaw.raw !== recovery.envelopeRaw ||
-        (published.witness?.requestId ?? null) !== recovery.witnessRequestId)
+        (recovery.witnessRequestId !== null && published.witness?.requestId !== recovery.witnessRequestId) ||
+        (published.control.headRevision === 1 &&
+          (published.witness?.requestId ?? null) !== recovery.witnessRequestId))
       fail("invalid_record", "Retained first artifact or Soundings provenance disagrees with recovery.");
     if (recovery.status === "consumers_completed" && !completedReceiptsMatch(account, recovery))
       fail("invalid_record", "Completed slot lacks exact account consumer receipts.");
@@ -854,11 +859,12 @@ export class CleanEpochAccountStore {
 
   /** Inert ordinary-save entry point. The accepted head remains nonplayable until its consumers complete. */
   async publishDescendant(request: CleanEpochDescendantRequest): Promise<CleanEpochDescendantResult> {
-    const { publication: input, expectedAccountRevision, sourceArtifactId, sourcePublicationId, sourceSnapshotRaw, consumerPlans } = request;
+    const { publication: input, sessionWitness, expectedAccountRevision, sourceArtifactId, sourcePublicationId, sourceSnapshotRaw, consumerPlans } = request;
     if (!object(input) || !input.expectedHead || !validSlotId(input.slotId) ||
         !Number.isSafeInteger(expectedAccountRevision) || expectedAccountRevision < 1 ||
         !nonblank(sourceArtifactId) || !nonblank(sourcePublicationId) || typeof sourceSnapshotRaw !== "string" ||
-        !Array.isArray(consumerPlans) || input.witness !== undefined)
+        !Array.isArray(consumerPlans) || input.witness !== undefined ||
+        (sessionWitness !== undefined && (!isSoundingsAdmissionWitness(sessionWitness) || sessionWitness.posture !== "session")))
       fail("invalid_record", "Descendant request identity is invalid.");
     const envelope = envelopeFromRaw(input.artifactRaw);
     if (envelope.accountId !== input.accountId || envelope.campaignId !== input.campaignId ||
@@ -884,6 +890,7 @@ export class CleanEpochAccountStore {
     const publication = await publicationStore.publish(input, {
       storeNames: [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
         CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE],
+      ...(sessionWitness ? { firstSessionWitness: sessionWitness } : {}),
       verify: async (tx, current) => {
         const [accountRaw, attemptRaw, firstRaw, retainedRaw, sourceRaw, predecessorRaw] = await Promise.all([
           requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(input.accountId) as IDBRequest<unknown>),
@@ -940,6 +947,18 @@ export class CleanEpochAccountStore {
                 identity.forkedFromPublicationId !== sourcePublicationId ||
                 !nonblank(identity.firstDivergentMutationId)))
           fail("conflict", "Descendant continuity does not derive from its retained source.");
+        if (sessionWitness) {
+          if (verifySoundingsAdmissionProvenance(sourceSnapshot) !== "not_completed" ||
+              sessionWitness.accountId !== input.accountId || sessionWitness.campaignId !== input.campaignId ||
+              sessionWitness.characterId !== source.characterId || sessionWitness.characterId !== envelope.characterId ||
+              sessionWitness.sourceArtifactId !== sourceArtifactId ||
+              sessionWitness.sourcePublicationId !== sourcePublicationId ||
+              sessionWitness.sourceRevision < source.headRevision ||
+              sessionWitness.sourceContinuityId !== source.continuityId ||
+              sessionWitness.acceptedContinuityId !== snapshot.authorityLedger?.soundingsTurnIn?.requests[0]?.acceptedContinuityId ||
+              sessionWitness.requestId !== proposed.witnessRequestId)
+            fail("invalid_record", "Session Soundings witness disagrees with the retained source or target.");
+        }
         if (current.headRevision === input.expectedHead!.revision) {
           if (current.headArtifactId !== predecessor.artifactId || current.headPublicationId !== predecessor.publicationId)
             fail("stale_head", "Descendant campaign head changed.");

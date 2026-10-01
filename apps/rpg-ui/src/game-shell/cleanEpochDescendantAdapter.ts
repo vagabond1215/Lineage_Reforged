@@ -2,6 +2,7 @@ import { evaluateAchievementProgress } from "../../../../packages/engines/game-e
 import { createAuthorityId, isTargetCampaignSnapshot, TARGET_SNAPSHOT_FORMAT } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import type { CampaignSessionControl } from "../../../../packages/engines/game-engine/src/campaign-session.js";
 import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
+import { verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
 import { serializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import type { SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
 import { CampaignStoreError, type CampaignStoreFailureCode, type CampaignStorePublication } from "./campaignIndexedDbStore.js";
@@ -26,7 +27,7 @@ function plans(snapshot: SaveSnapshot, slotId: SaveSlotId): CampaignPublicationC
     .map(kind => ({ kind, payloadFingerprint }));
 }
 
-/** Inert same-slot ordinary caller. App remains held until quick-slot and first Soundings witness ownership exist. */
+/** Inert same-slot ordinary caller. App remains held until cross-slot ownership is accepted. */
 export class CleanEpochDescendantAdapter {
   constructor(private readonly owner: CleanEpochAccountStore) {}
 
@@ -60,14 +61,22 @@ export class CleanEpochDescendantAdapter {
           source.sessionControl.loadedHeadRevision !== control.loadedHeadRevision ||
           source.sessionControl.loadedContinuityId !== control.loadedContinuityId)
         throw new CampaignStoreError("conflict", "Loaded source differs from retained campaign authority.");
-      if (snapshot.authorityLedger?.soundingsTurnIn?.version === 2 &&
-          source.snapshot.authorityLedger?.soundingsTurnIn?.version !== 2)
-        throw new CampaignStoreError("conflict", "First Soundings completion needs an independent descendant witness owner.");
       if (control.posture === "non_head_unmutated" && !control.hasUnpublishedGameplayState)
         throw new CampaignStoreError("conflict", "An unchanged non-head artifact cannot create a descendant.");
       const savedAt = new Date().toISOString();
       const prepared = evaluateAchievementProgress(snapshot, account.profile,
         { slotId: destinationSlotId, touchHistory: true, recordedAt: savedAt }).nextSnapshot;
+      const provenance = verifySoundingsAdmissionProvenance(prepared, control);
+      if (provenance !== "not_completed" && provenance !== "verified")
+        throw new CampaignStoreError("invalid_record", `Soundings session provenance is ${provenance}.`);
+      const firstCompletion = prepared.authorityLedger?.soundingsTurnIn?.version === 2 &&
+        source.snapshot.authorityLedger?.soundingsTurnIn?.version !== 2;
+      const sessionWitness = control.soundingsAdmissionWitness?.posture === "session"
+        ? control.soundingsAdmissionWitness : undefined;
+      if (firstCompletion && (!sessionWitness || provenance !== "verified"))
+        throw new CampaignStoreError("invalid_record", "First Soundings completion lacks independent session evidence.");
+      if (!firstCompletion && sessionWitness)
+        throw new CampaignStoreError("invalid_record", "Session witness cannot introduce a second first completion.");
       const identity = prepared.campaignIdentity!;
       const artifactId = createAuthorityId("artifact");
       const generationId = createAuthorityId("generation");
@@ -89,7 +98,8 @@ export class CleanEpochDescendantAdapter {
           headArtifactId: artifactId, headPublicationId: publicationId,
           headRevision: envelope.headRevision, previousHeadArtifactId: headControl.loadedArtifactId,
           previousHeadPublicationId: headControl.loadedPublicationId, closed: false, updatedAt: savedAt } };
-      await this.owner.publishDescendant({ publication, expectedAccountRevision,
+      await this.owner.publishDescendant({ publication,
+        ...(sessionWitness ? { sessionWitness } : {}), expectedAccountRevision,
         sourceArtifactId: source.sessionControl.loadedArtifactId,
         sourcePublicationId: source.sessionControl.loadedPublicationId,
         sourceSnapshotRaw: serializeSnapshot(source.snapshot), consumerPlans: plans(prepared, destinationSlotId) });

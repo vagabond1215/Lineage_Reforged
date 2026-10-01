@@ -56,6 +56,8 @@ export type CampaignPublicationTransactionExtension = {
   storeNames: string[];
   verify: (transaction: IDBTransaction, current: StoredCampaignControl | null) => Promise<void>;
   write: (transaction: IDBTransaction) => Promise<void>;
+  /** Independently admitted gameplay evidence; only the epoch descendant owner supplies it. */
+  firstSessionWitness?: SoundingsAdmissionWitness;
 };
 export type CampaignStoreFailureCode = "unavailable" | "blocked_upgrade" | "quota" | "aborted" | "stale_head" | "conflict" | "invalid_record" | "readback_failed";
 
@@ -126,6 +128,21 @@ function validateWitness(witness: SoundingsAdmissionWitness, snapshot: SaveSnaps
       verifySoundingsAdmissionProvenance(snapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") {
     fail("invalid_record", "Soundings first-publication provenance is invalid.");
   }
+}
+
+async function validateFirstDescendantWitnessSource(tx: IDBTransaction, witness: SoundingsAdmissionWitness,
+  first: StoredSaveEnvelope): Promise<void> {
+  if (first.headRevision === 1) return;
+  const retained = await requestValue(tx.objectStore("artifacts").get([first.accountId, witness.sourceArtifactId]) as IDBRequest<unknown>);
+  if (!artifactRecord(retained, first.accountId, witness.sourceArtifactId) ||
+      retained.campaignId !== first.campaignId || retained.publicationId !== witness.sourcePublicationId ||
+      retained.headRevision > witness.sourceRevision || retained.headRevision >= first.headRevision)
+    fail("invalid_record", "First Soundings witness lacks its exact retained source artifact.");
+  const source = validatedEnvelope(retained.raw, first.accountId, first.campaignId);
+  if (source.envelope.characterId !== first.characterId ||
+      source.envelope.continuityId !== witness.sourceContinuityId ||
+      verifySoundingsAdmissionProvenance(source.snapshot) !== "not_completed")
+    fail("invalid_record", "First Soundings witness source authority is invalid.");
 }
 
 function validateRequest(input: CampaignStorePublication): { envelope: StoredSaveEnvelope; snapshot: SaveSnapshot; requestId: string | null } {
@@ -244,6 +261,7 @@ export class CampaignIndexedDbStore {
           const first = await requestValue(tx.objectStore("artifacts").get([accountId, witness.firstDurableArtifactId]) as IDBRequest<unknown>);
           if (!artifactRecord(first, accountId, witness.firstDurableArtifactId)) fail("invalid_record", "Soundings first artifact is missing.");
           validateWitness(witness, validatedEnvelope(first.raw, accountId, campaignId).snapshot, validatedEnvelope(first.raw, accountId, campaignId).envelope);
+          await validateFirstDescendantWitnessSource(tx, witness, validatedEnvelope(first.raw, accountId, campaignId).envelope);
           if (verifySoundingsAdmissionProvenance(snapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") fail("invalid_record", "Current Soundings provenance conflicts with retained witness.");
         }
       }
@@ -253,6 +271,16 @@ export class CampaignIndexedDbStore {
 
   async publish(input: CampaignStorePublication, extension?: CampaignPublicationTransactionExtension): Promise<CampaignStorePublishResult> {
     const { envelope, snapshot, requestId } = validateRequest(input);
+    const sessionWitness = extension?.firstSessionWitness;
+    if (sessionWitness && (input.witness || !input.expectedHead || !isSoundingsAdmissionWitness(sessionWitness) ||
+        sessionWitness.posture !== "session" || sessionWitness.accountId !== input.accountId ||
+        sessionWitness.campaignId !== input.campaignId || sessionWitness.requestId !== requestId))
+      fail("invalid_record", "First descendant session witness is invalid.");
+    const appliedWitness: SoundingsAdmissionWitness | undefined = sessionWitness && sessionWitness.posture === "session"
+      ? { ...sessionWitness, posture: "applied", firstDurableArtifactId: envelope.artifactId,
+          firstDurablePublicationId: envelope.publicationId, firstDurableHeadRevision: envelope.headRevision }
+      : input.witness;
+    const acceptedInput = appliedWitness ? { ...input, witness: appliedWitness } : input;
     let tx: IDBTransaction;
     try { tx = this.db.transaction([...FAMILIES, ...(extension?.storeNames ?? [])], "readwrite"); }
     catch (error) { throw storeError(error); }
@@ -285,12 +313,12 @@ export class CampaignIndexedDbStore {
         }
       }
       if (existingArtifact && existingArtifact.raw !== input.artifactRaw) fail("conflict", "Immutable artifact ID has conflicting bytes.");
-      if (existingWitness && input.witness && !equal((existingWitness as WitnessRecord).value, input.witness)) fail("conflict", "Immutable Soundings witness conflicts.");
+      if (existingWitness && appliedWitness && !equal((existingWitness as WitnessRecord).value, appliedWitness)) fail("conflict", "Immutable Soundings witness conflicts.");
       if (current && equal(current.value, input.control)) {
         if (!existingArtifact || !address || address.raw !== input.artifactRaw || address.campaignId !== input.campaignId) fail("conflict", "Same-head retry has incomplete or conflicting records.");
-        await this.verifySoundingsInTransaction(tx, input, envelope, snapshot, requestId, existingWitness);
+        await this.verifySoundingsInTransaction(tx, acceptedInput, envelope, snapshot, requestId, existingWitness, !!sessionWitness);
         await completion;
-        const readback = await this.exactReadback(input);
+        const readback = await this.exactReadback(acceptedInput);
         return { status: "same_source_retry", readback };
       }
       const expected = input.expectedHead;
@@ -299,13 +327,13 @@ export class CampaignIndexedDbStore {
           (current?.value.headRevision ?? 0) !== (expected?.revision ?? 0)) fail("stale_head", "Campaign head changed after publication source was captured.");
       if (current?.value.closed) fail("conflict", "Closed campaign cannot advance.");
       if (address && (address.campaignId !== input.campaignId || (expected && address.artifactId !== expected.artifactId))) fail("conflict", "Slot points to another verified publication.");
-      await this.verifySoundingsInTransaction(tx, input, envelope, snapshot, requestId, existingWitness);
+      await this.verifySoundingsInTransaction(tx, acceptedInput, envelope, snapshot, requestId, existingWitness, !!sessionWitness);
       const writes: { family: Family; value: ArtifactRecord | ControlRecord | SlotRecord | WitnessRecord }[] = [
         { family: "artifacts", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, artifactId: envelope.artifactId, generationId: envelope.generationId, publicationId: envelope.publicationId, slotId: input.slotId, headRevision: envelope.headRevision, raw: input.artifactRaw } },
         { family: "controls", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, value: input.control } },
         { family: "slots", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, slotId: input.slotId, artifactId: envelope.artifactId, publicationId: envelope.publicationId, raw: input.artifactRaw } }
       ];
-      if (input.witness && !existingWitness) writes.push({ family: "witnesses", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, requestId: input.witness.requestId, value: input.witness } });
+      if (appliedWitness && !existingWitness) writes.push({ family: "witnesses", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, requestId: appliedWitness.requestId, value: appliedWitness } });
       for (const { family, value } of writes) {
         this.beforeWrite?.(family, tx);
         await requestValue(tx.objectStore(family).put(value));
@@ -319,10 +347,10 @@ export class CampaignIndexedDbStore {
       try { await completion; } catch { /* original error is more specific */ }
       throw storeError(error, error instanceof CampaignStoreError ? error.code : "aborted");
     }
-    return { status: "committed", readback: await this.exactReadback(input) };
+    return { status: "committed", readback: await this.exactReadback(acceptedInput) };
   }
 
-  private async verifySoundingsInTransaction(tx: IDBTransaction, input: CampaignStorePublication, envelope: StoredSaveEnvelope, snapshot: SaveSnapshot, requestId: string | null, existing: unknown): Promise<void> {
+  private async verifySoundingsInTransaction(tx: IDBTransaction, input: CampaignStorePublication, envelope: StoredSaveEnvelope, snapshot: SaveSnapshot, requestId: string | null, existing: unknown, sessionIntroduced: boolean): Promise<void> {
     if (!requestId) return;
     const version = snapshot.authorityLedger?.soundingsTurnIn?.version;
     if (version !== 2) {
@@ -340,8 +368,10 @@ export class CampaignIndexedDbStore {
       first = validatedEnvelope(retained.raw, input.accountId, input.campaignId);
     }
     validateWitness(witness, first.snapshot, first.envelope);
+    await validateFirstDescendantWitnessSource(tx, witness, first.envelope);
     if (verifySoundingsAdmissionProvenance(snapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") fail("invalid_record", "Soundings descendant conflicts with retained provenance.");
-    if (input.witness && witness.firstDurableArtifactId !== envelope.artifactId && !existing) fail("invalid_record", "Descendant cannot introduce first-publication provenance.");
+    if (input.witness && witness.firstDurableArtifactId !== envelope.artifactId && !existing) fail("invalid_record", "Publication cannot introduce unrelated first provenance.");
+    if (input.expectedHead && !existing && !sessionIntroduced) fail("invalid_record", "First descendant provenance requires session evidence.");
   }
 
   private async exactReadback(input: CampaignStorePublication): Promise<CampaignStoreReadback> {
