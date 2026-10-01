@@ -1,6 +1,11 @@
+## 2026-10-01 DEV-0.7.1 Slice G8F caller checkpoint
+
+At fetched synchronized `master`/`origin/master` `2dcbee6c97a8680bce0a2066d3bad6b3ae9cd734`, one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls) were inspected. Readiness `59c103c3`/base `895c02df` was 481 master-only/2 ref-only with two unique readiness docs; prompt integrity `58a34e37`/base `3d77171c` was 428/1 with one prompt-audit doc; administration `210df5bc`/base `fd40571b` was 259/1 with one research-evidence doc. These unique paths do not overlap G8F code or handoff. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G8F/G8F.1 consume none. No integration, merge, rebase, deletion, PR or disposition change due/performed. Counts describe inspected source, not final hosted head.
+
 ## 2026-09-30 DEV-0.7.1 Slice G8E cross-slot address owner checkpoint
 
 At inspected clean synchronized `master`/`origin/master` `fe78984d953097975ae993ecce8757ab32c2f560`, fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` was 479 master-only/2 ref-only with two unique readiness docs; prompt integrity `58a34e37`/base `3d77171c` was 426/1 with one prompt-audit doc; administration `210df5bc`/base `fd40571b` was 257/1 with one research-evidence doc. Their changed paths do not overlap G8E code or current handoff. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; exact triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G8E and installed G8F consume none. No integration, merge, rebase, deletion, PR or disposition change due/performed. Counts describe inspected source, not final hosted head.
+
 
 ## 2026-09-30 DEV-0.7.1 Slice G8D witnessed descendant owner checkpoint
 
@@ -12,29 +17,36 @@ At inspected hosted `master` `ea7b8562830d1df19a4ade32f7754f7c378d6672`, four ho
 
 # Branch Disposition Register
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G8B inert descendant caller checkpoint
 
 At inspected clean synchronized `master`/`origin/master` `55c558fb335ac9b285d38a6b215d72424cbff920`, fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 469 master-only/2 ref-only with two unique readiness docs; prompt integrity `58a34e37`/base `3d77171c` is 416/1 with one prompt-audit doc; administration `210df5bc`/base `fd40571b` is 247/1 with one research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; exact triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G8B and installed G8C consume none. No integration, merge, rebase, deletion, PR or disposition change due/performed. Counts describe the inspected source, not final publication head.
+
 
 ## 2026-09-30 DEV-0.7.1 Slice G8A inert launcher read checkpoint
 
 At inspected clean synchronized `master`/`origin/master` `8e8ce9f39ebb760edd40bf3a978e68d655bee21e`, fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 468 master-only/2 ref-only with two unique readiness docs; prompt integrity `58a34e37`/base `3d77171c` is 415/1 with one prompt-audit doc; administration `210df5bc`/base `fd40571b` is 246/1 with one research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; exact triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G8A and installed G8B consume none. No integration, merge, rebase, deletion, PR or disposition change due/performed. Counts describe the inspected source, not final publication head.
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G7B inert first-campaign orchestration checkpoint
 
 At inspected clean synchronized `master` `5a5f6b10e92bddbfee58051d3014699850351753`, code checkpoint `c25fc296`, fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 466 master-only/2 ref-only with two unique readiness docs; prompt integrity `58a34e37`/base `3d77171c` is 413/1 with one prompt-audit doc; administration `210df5bc`/base `fd40571b` is 244/1 with one research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; exact review triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G7B and installed G8 consume none. No integration, merge, rebase, deletion, PR or disposition action due/performed. Counts describe the inspected source, not final publication head.
+
 
 ## 2026-09-30 DEV-0.7.1 Slice G7A epoch account/auth adapter checkpoint
 
 At inspected clean synchronized `master` `0b60cfad8fa35bd5eb472d4502db2b22e39cf60d`, code checkpoint `b0ed5ca8`, fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 464 master-only/2 ref-only with two unique readiness docs; prompt-integrity `58a34e37`/base `3d77171c` is 411/1 with one unique prompt-audit doc; administration `210df5bc`/base `fd40571b` is 242/1 with one unique research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; exact review triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G7A and installed G7B consume none, overlap no unique retained path and require no integration, merge, rebase, deletion, PR or disposition change. Counts describe inspected source, not final publication head.
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G6 descendant transactions and history
 
 At inspected clean synchronized `master` `692a14f34f34d8f0b1c89e999530f96096d206e4`, code checkpoint `878ca3623c2b5e1a6bab183764acfcfb2e29e05c` and `c6aa39f190ee705765bff4afade75586f23d33a8`, fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 461 master-only/2 ref-only with two unique readiness docs; prompt-integrity `58a34e37`/base `3d77171c` is 408/1 with one unique prompt-audit doc; administration `210df5bc`/base `fd40571b` is 239/1 with one unique research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; review triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G6 and installed G7 consume none, overlap no unique retained path and require no integration, merge, rebase, deletion, PR or disposition change. Counts describe inspected source, not final publication head.
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G5 first-head slot reads
 
 At inspected clean synchronized `master` `80274c0923e5c84cc1e91db45b28806a6088e21a`, code checkpoint `af285bb92af9c81c6fd9147f012dfb5ff674a742`, fresh fetch/prune found one local/four hosted branches and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness `59c103c3`/base `895c02df` is 459 master-only/2 ref-only with two unique readiness docs; prompt-integrity `58a34e37`/base `3d77171c` is 406/1 with one unique prompt-audit doc; administration `210df5bc`/base `fd40571b` is 237/1 with one unique research-evidence doc. Dispositions remain `PROTECTED_REFERENCE`, `PROTECTED_REFERENCE`, `HOLD_NAMED_CONSUMER`; review triggers remain scheduled readiness/regression or protection review, dedicated prompt/execution-pointer audit, and administration/template/governance or explicit Lineage retrospective. G5 and installed G6 consume none, overlap no unique retained path and require no integration, merge, rebase, deletion, PR or disposition change. Counts describe inspected source, not final publication head.
+
 
 ## 2026-09-30 clean-epoch async caller package decision
 

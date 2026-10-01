@@ -1,6 +1,11 @@
+## 2026-10-01 G8F real App caller checkpoint
+
+**REAL_ASYNC_APP_ORDINARY_PATH_VERIFIED; G8F_FAILURE_UI_ACCEPTANCE_HELD.** Source `2dcbee6c97a8680bce0a2066d3bad6b3ae9cd734`; code checkpoint `08329e90`. The local selected App now awaits clean-epoch account, inventory, first campaign, exact load and ordinary descendant save; actual UI proved manual/quick address retention, non-head fork, witnessed Soundings first/later save, restart and a two-tab stale refusal. Native bootstrap faults fail closed. Owner suites 130/130 and Node 116/116 pass; broad UI retains 137 known diagnostics. Install **G8F.1 actual-App failure UI and recovery proof** before G9. G10 activation/post-epoch durability, combat and planned parent acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. This supersedes G8E-active wording below without rewriting chronology.
+
 ## 2026-09-30 G8E cross-slot campaign address owner checkpoint
 
 **CROSS_SLOT_CAMPAIGN_ADDRESS_OWNER_VERIFIED; REAL_APP_AND_ACTIVATION_HELD** from synchronized starting source `fe78984d953097975ae993ecce8757ab32c2f560`, code checkpoint `1a38a677a9f1415bd5a21332418210067220fa42`. Manual/quick slots now retain distinct immutable artifact addresses against one singular campaign head, with destination CAS, exact pending recovery, destination account history, non-head load/fork and G8D Soundings witness retention. Native browser 130/130 and adjacent Node 116/116 pass; broad UI retains 137 baseline diagnostics. Installed **DEV-0.7.1 Slice G8F — Real Async App Caller Cutover And Ordinary UI QA**. G9 lifecycle/reset/delete, G10 activation/post-epoch durability, combat and planned parent acceptance remain held. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes G8D-active wording below without rewriting chronology.
+
 
 ## 2026-09-30 G8D witnessed descendant owner checkpoint
 
@@ -12,29 +17,36 @@ G8C closes the two decision blockers discovered by G8B without activating caller
 
 # Current Planning Anchor Reconciliation
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G8B descendant caller checkpoint
 
 **SAME_SLOT_DESCENDANT_CALLER_VERIFIED; LIVE_APP_CUTOVER_HELD** from clean synchronized source `55c558fb335ac9b285d38a6b215d72424cbff920`. G8B adds an inert guarded same-slot ordinary descendant caller with exact ready readback and a durable current-pending recovery lookup. Native descendant 8/8, G8A 7/7, first campaign 5/5, account 13/13, clean epoch 52/52, publication 12/12, canonical 14/14, adjacent campaign 51/51 and Soundings 53/53 pass; Node config typecheck and Vite build pass. The owner still lacks a cross-slot quick-save address contract and first post-creator Soundings witness introduction. Installed **DEV-0.7.1 Slice G8C — First Witnessed Descendant And Cross-Slot Authority Decision** before further owner implementation and real App UI cutover. G9 lifecycle/reset/delete, G10 deliberate development-only activation and post-epoch long-run/two-browser capacity, quota/eviction and backup/restore remain held. Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G8A-active pointer while preserving chronology.
+
 
 ## 2026-09-30 DEV-0.7.1 Slice G8A launcher read checkpoint
 
 **EPOCH_LAUNCHER_READ_BOUNDARY_VERIFIED; LIVE_APP_CUTOVER_HELD** from clean synchronized source `8e8ce9f39ebb760edd40bf3a978e68d655bee21e`. G8A adds an inert awaited epoch session/inventory/load reader with explicit blocked status and no default account or empty-slot fallback. Native adapter 7/7, first campaign 5/5, account 13/13, clean epoch 52/52, publication 12/12, canonical 14/14, adjacent campaign 51/51 and Soundings 53/53 pass; Node config typecheck and Vite build pass. Real App ordinary caller conversion and native UI acceptance remain **G8B**. G9 lifecycle/reset/delete, G10 deliberate development-only activation and post-epoch long-run/two-browser capacity, quota/eviction and backup/restore remain held. Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G7B-active pointer while retaining chronology.
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G7B first-campaign orchestration checkpoint
 
 **INERT_FIRST_CAMPAIGN_ORCHESTRATION_VERIFIED; LIVE_CALLERS_HELD** from clean synchronized source `5a5f6b10e92bddbfee58051d3014699850351753`, code checkpoint `c25fc296`. The G7B adapter reserves and resumes an exact first-campaign attempt, publishes and completes mandatory consumers, then reads a verified ready slot. It fences account profile/password mutations while first or descendant recoveries are pending; sign-in retains the account revision. Selected Legacy preparation and one-use inheritance are exercised in native Chromium. Pure creator attempts have no completed Soundings turn-in; the adapter blocks incompatible retained evidence and does not invent a witness. Native first-campaign 5/5, clean-epoch 52/52, account 13/13, publication 12/12, canonical 14/14, adjacent campaign 51/51 and Soundings 53/53 pass; Node config typecheck and Vite build pass. Installed **DEV-0.7.1 Slice G8 — Async App Bootstrap, Load And Ordinary Campaign Actions**. G9 lifecycle/reset/delete, G10 deliberate development-only activation and post-epoch long-run/two-browser capacity, quota/eviction and backup/restore remain. Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G7A-active pointer below while retaining chronology.
+
 
 ## 2026-09-30 DEV-0.7.1 Slice G7A epoch account/auth adapter checkpoint
 
 **INERT_EPOCH_ACCOUNT_AUTH_ADAPTER_VERIFIED; FIRST_CAMPAIGN_AND_LIVE_CALLERS_HELD** from clean synchronized source `0b60cfad8fa35bd5eb472d4502db2b22e39cf60d`, code checkpoint `b0ed5ca8`. The epoch account adapter registers exact caller-held identity, verifies PBKDF2 credentials without reading legacy keys, validates the epoch session hint against retained account state, and exposes revisioned profile/password mutation with typed blocked results. Sign-in does not change account revision. Native Chromium adapter QA 13/13, clean-epoch 52/52, publication 12/12, adjacent 68/68, Node typecheck and Vite build pass; broad UI remains at 137 baseline diagnostics with zero in changed production files. Installed **DEV-0.7.1 Slice G7B — Inert First-Campaign Orchestration And Pending-Account Fence**. Soundings witness retention/lost-caller recovery and atomic mutation guard are the next bounded package; App, lifecycle, development reset and post-epoch long-run/two-browser capacity, quota/eviction and backup/restore remain G8-G10. Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G6-active pointer below while retaining chronology.
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G6 descendant transactions and history
 
 **INERT_ORDINARY_DESCENDANT_RECOVERY_AND_HISTORY_VERIFIED; LIVE_CALLERS_HELD** from inspected clean synchronized `master` `692a14f34f34d8f0b1c89e999530f96096d206e4`, code checkpoint `878ca3623c2b5e1a6bab183764acfcfb2e29e05c` and `c6aa39f190ee705765bff4afade75586f23d33a8`. The clean-epoch owner now retains every ordinary descendant and its source/recovery, completes account history/Chronicle/Legacy receipts atomically, and verifies current and non-head/fork loads against the full chain and first Soundings witness. Native Chromium 52/52, publication 12/12, adjacent 68/68, Node typecheck and Vite build pass. No live App/launcher/save caller uses it. Installed **DEV-0.7.1 Slice G7 - Epoch Account, Auth And First-Campaign Orchestration Adapters**; G8-G10 async App/lifecycle, development reset, two-browser/long-run durability, quota/eviction and backup/restore remain. Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G5-active pointer below while retaining chronology.
 
+
 ## 2026-09-30 DEV-0.7.1 Slice G5 first-head slot reads
 
 **FIRST_HEAD_READ_SURFACE_VERIFIED_IN_INERT_EPOCH; DESCENDANT_AND_LIVE_CALLERS_HELD** from inspected clean synchronized `master` `80274c0923e5c84cc1e91db45b28806a6088e21a`, code checkpoint `af285bb92af9c81c6fd9147f012dfb5ff674a742`. The clean-epoch owner now has readonly account-scoped slot inventory and verified playable first-head load only after complete account consumers, Soundings provenance and first-run history are retained. Prepared/pending/closed/descendant statuses stay nonplayable. Native Chromium 42/42, publication 12/12, adjacent 68/68, Node typecheck and Vite build pass; no real caller uses it. Installed **DEV-0.7.1 Slice G6 - Inert Descendant Publication And General Recovery Transactions**. Development reset, async caller conversion, post-epoch non-head/fork and long-run durability, Slice C combat/parent holds, Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged. This supersedes the G5-active pointer below, retaining chronology.
+
 
 ## 2026-09-30 clean-epoch async caller package decision
 
