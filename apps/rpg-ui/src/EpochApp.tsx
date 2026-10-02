@@ -17,6 +17,7 @@ import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAd
 import { CleanEpochNormalDefeatRecoveryAdapter } from './game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochLauncherRead } from './game-shell/cleanEpochLauncherRead.js';
+import { CleanEpochLegacyActionAdapter, type EpochLegacyAction } from './game-shell/cleanEpochLegacyActionAdapter.js';
 import type { LauncherAccountDeletionResult, LauncherAuthResult, LauncherRuntimeSession } from './game-shell/launcherAuthManager.js';
 import { createAccountAccessState, gameShellReducer, getPreferredLoadSlotId, getPreferredSaveSlotId,
   getSaveSlotLabel, SAVE_SLOT_ORDER, type GameShellNotice, type GameShellState, type ManualSaveSlotId,
@@ -24,7 +25,7 @@ import { createAccountAccessState, gameShellReducer, getPreferredLoadSlotId, get
 
 type Services = { owner: CleanEpochAccountStore; accounts: CleanEpochAccountAdapter;
   launcher: CleanEpochLauncherRead; first: CleanEpochFirstCampaignAdapter; descendant: CleanEpochDescendantAdapter;
-  normalDefeat: CleanEpochNormalDefeatRecoveryAdapter };
+  normalDefeat: CleanEpochNormalDefeatRecoveryAdapter; legacy: CleanEpochLegacyActionAdapter };
 type Address = { artifactId: string; publicationId: string };
 type Inventory = { account: Awaited<ReturnType<CleanEpochAccountStore['readSelected']>> & {};
   slots: CleanEpochSlotSummary[] };
@@ -102,6 +103,7 @@ export function EpochApp() {
   const accountIdForRegistration = useRef<string | null>(null);
   const sourceSlot = useRef<SaveSlotId | null>(null);
   const observedAccountRevision = useRef<number | null>(null);
+  const menuAccountRevision = useRef<number | null>(null);
   const observedAddresses = useRef<Partial<Record<SaveSlotId, Address | null>>>({});
   const initializationGeneration = useRef(0);
   const activeOwner = useRef<CleanEpochAccountStore | null>(null);
@@ -162,7 +164,8 @@ export function EpochApp() {
       const accounts = new CleanEpochAccountAdapter(owner);
       const next: Services = { owner, accounts, launcher: new CleanEpochLauncherRead(owner, accounts),
         first: new CleanEpochFirstCampaignAdapter(owner), descendant: new CleanEpochDescendantAdapter(owner),
-        normalDefeat: new CleanEpochNormalDefeatRecoveryAdapter(owner) };
+        normalDefeat: new CleanEpochNormalDefeatRecoveryAdapter(owner),
+        legacy: new CleanEpochLegacyActionAdapter(owner) };
       const selected = await next.launcher.bootstrap();
       if (selected.status === 'blocked') throw new Error(selected.message);
       if (selected.value.mode === 'pick_account') {
@@ -170,6 +173,7 @@ export function EpochApp() {
           accounts: selected.value.accounts, notice: null });
       } else {
         const found = await inventory(next, selected.value.inventory.account.accountId);
+        menuAccountRevision.current = found.account.revision;
         dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: selected.value.session,
           accountProfile: found.account.profile, slots: slotSummaries(found.slots), notice: null });
       }
@@ -199,6 +203,7 @@ export function EpochApp() {
     message: GameShellNotice | null = null, section?: LauncherSectionId) => {
     if (!services) throw new Error('Epoch owner is unavailable.');
     const found = await inventory(services, accountId);
+    menuAccountRevision.current = found.account.revision;
     if (section) setLauncherSection(section);
     dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: session, accountProfile: found.account.profile,
       slots: slotSummaries(found.slots), notice: message });
@@ -359,8 +364,21 @@ export function EpochApp() {
     window.localStorage.removeItem(CLEAN_EPOCH_SESSION_STORAGE_KEY);
     if (window.localStorage.getItem(CLEAN_EPOCH_SESSION_STORAGE_KEY) !== null)
       throw new Error('Epoch session hint could not be cleared.');
-    sourceSlot.current = null; observedAccountRevision.current = null; observedAddresses.current = {};
+    sourceSlot.current = null; observedAccountRevision.current = null;
+    menuAccountRevision.current = null; observedAddresses.current = {};
     await initialize();
+  }, undefined);
+
+  const applyLegacy = (action: EpochLegacyAction) => void guarded(async () => {
+    if (state.screen !== 'MAIN_MENU' || !services) return;
+    const expectedRevision = menuAccountRevision.current;
+    if (expectedRevision === null) throw new Error('Menu account revision was not captured.');
+    const result = await services.legacy.apply({ accountId: state.accountProfile.accountId,
+      expectedRevision, expectedProfile: state.accountProfile, action });
+    if (result.status === 'rejected') { failed('Legacy Action Unavailable', result.message); return; }
+    if (result.status === 'blocked') throw new Error(result.message);
+    await showMenu(state.launcherSession, state.accountProfile.accountId,
+      { tone: 'success', title: result.title, detail: result.detail }, 'legacy');
   }, undefined);
 
   if (boot !== 'ready' || !services) return <div data-theme={themeMode} className="min-h-screen p-8 text-[color:var(--color-text-strong)]">
@@ -389,10 +407,10 @@ export function EpochApp() {
       selectedSlotId: getPreferredLoadSlotId(current.slots), notice: null })}
     onOpenSettings={() => dispatch({ type: 'OPEN_SETTINGS', launcherSession: current.launcherSession,
       accountProfile: current.accountProfile, slots: current.slots, notice: null })}
-    onPurchaseLegacyUnlock={() => unsupported('Legacy Purchase')}
-    onSelectLegacyPreparation={() => unsupported('Legacy Preparation')}
-    onSetLegacyPreparationChoice={() => unsupported('Legacy Preparation')}
-    onRemoveLegacyPreparation={() => unsupported('Legacy Preparation')}
+    onPurchaseLegacyUnlock={unlockId => applyLegacy({ kind: 'purchase', unlockId, recordedAt: new Date().toISOString() })}
+    onSelectLegacyPreparation={unlockId => applyLegacy({ kind: 'select', unlockId })}
+    onSetLegacyPreparationChoice={(unlockId, choiceId) => applyLegacy({ kind: 'choice', unlockId, choiceId })}
+    onRemoveLegacyPreparation={unlockId => applyLegacy({ kind: 'remove', unlockId })}
     onLogout={logout} onExit={() => window.close()}
     clockLabel={clockLabel} clockTitle={clockNow.toString()} />;
   else if (current.screen === 'CHARACTER_CREATION') {
