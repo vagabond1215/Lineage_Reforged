@@ -1,17 +1,35 @@
-# DEV-0.7.1 Slice G9A — Epoch Lifecycle And Destructive Transition Authority Decision
+# DEV-0.7.1 Slice G9B — Normal Defeat Recovery Publication Owner Implementation
 
 <!-- repo-scope-guard -->
 > **Repository boundary — mandatory:** This document applies only to `vagabond1215/Lineage_Reforged`. All repository work must stay in this repository. Cross-repository mutation is unauthorized.
 <!-- /repo-scope-guard -->
 
-Date: 2026-10-01. Internal decision slice of planned primary `DEV-0.7.1`; parent, Game version and deployment activation remain held. G8F ordinary caller and G8F.1 failure UI are recorded in `docs/dev/dev-0.7.1-slice-g8f-real-async-app-caller-checkpoint.md` and `docs/dev/dev-0.7.1-slice-g8f-1-actual-app-failure-ui-record.md`. The accepted route is `docs/design/clean-epoch-async-caller-ownership-and-activation-package-decision.md`; preserve the G8C singular head/multiple-address and independent Soundings witness contracts.
+Date: 2026-10-02. Internal implementation slice of planned primary `DEV-0.7.1`; parent, Game version and deployment activation remain held. Start from the accepted G9A contract in `docs/design/g9a-epoch-lifecycle-and-destructive-transition-authority-decision.md` and preserve G8C one-head/multiple-address, G8D Soundings witness and G8F.1 actual-App failure semantics.
 
 ## Objective
 
-Produce a decision-complete, repository-authoritative G9 lifecycle and destructive-transition contract before implementing those callers. Map the selected `EpochApp` placeholders and former App/run-lifecycle/account/save paths to existing epoch owner capabilities. Decide the smallest ordered implementation packages for profile/credential and Legacy actions, blocked-run/Normal-defeat repair, retirement and inheritance settlement, terminal slot closure/deletion, explicit account reset/delete, and sign-out/session invalidation. Separate ordinary recoverable transitions from player-requested destructive deletion. Pre-cutover development saves are disposable; accepted new-epoch campaign/world/lineage/Chronicle/history, non-head/fork artifacts and Soundings provenance are durable until an explicit authorized epoch deletion/reset.
+Implement the smallest clean-epoch Normal-Stakes defeat recovery owner and selected-App caller. A retained ready campaign with exactly one authoritative `recovery_pending` receipt must be recoverable through the existing campaign-session authority, published as a normal descendant, completed through account consumers and returned only after exact ready readback. Do not persist a snapshot that still contains pending defeat and do not reproduce recovery destination/receipt/continuity rules in UI code.
 
-## Required decision
+## Required implementation
 
-For each action, state the exact durable owner, expected account/head/address revision, transaction and pending-recovery identity, required account consumers/receipts, retry/restart/two-tab behavior, and full blocked/readback exit. Define one-time terminal settlement, estate/inheritance and reward semantics from existing accepted gameplay rules; do not invent payouts or clear an address before durable settlement. Define how old tabs and session hints become invalid for reset/delete, and how explicit deletion differs from quota/eviction or ordinary slot closure. Identify any contract that cannot be decided from repository authority and route only that prerequisite to a focused follow-up. Include a matrix of production UI actions and implementation/testing order, with precise G9B first package and exclusions.
+- Resolve an exact retained source artifact/publication/session control and expected account/head/destination address.
+- Invoke `completePendingNormalDefeatRecovery` as the gameplay authority. Preserve its receipt identity, deterministic safe-settlement destination, four-tick recovery, Chronicle/notification and continuity semantics.
+- Publish the resulting playable snapshot through the clean-epoch descendant owner. Same-slot recovery is the primary route; retained non-head source must obey existing fork rules.
+- Complete ordinary descendant consumers exactly once and require exact ready-slot readback before gameplay resumes or success is shown.
+- Stable retry must reuse the accepted receipt/publication/recovery. Restart after accepted publication resumes the destination-owned descendant recovery rather than recomputing another recovery.
+- Reject malformed/multiple/missing receipts, invalid destination, stale account/head/address/source, conflicting duplicate, unresolved publication consumers, closed campaign and storage failure without partial authority.
+- Wire only the selected `EpochApp` defeat-recovery path after the owner is proven. Do not fall back to the retained legacy App/localStorage path.
 
-This is documentation-only. Do not implement G9 production code, change schema, delete/reset any browser data, deploy, migrate old saves, add dependencies, advance Game version, or claim G10 durability/activation. Use the repo protocol: fetch/prune, read complete current authorities, inspect live branches/PRs and relevant code/tests, preserve unrelated work, update a focused decision plus current output/handoff/prompt, planning/historical and branch registers, commit/push, fetch and read back hosted head. Run read-only probes if needed; label reused G8F.1 tests separately. G10 post-epoch backup/restore, long-running capacity/eviction, coordinated reset/deployment and parent acceptance remain held.
+## Verification
+
+Use native Chromium and focused Node coverage as appropriate. Include: head recovery, restart/lost caller after accepted publication, exact duplicate receipt replay, bad explicit destination, malformed/multiple pending receipts, historical/non-head fork, stale account, stale head, stale destination, two-tab contention, write abort and quota injection, and exact ready readback. Re-run adjacent clean-epoch owner suites and campaign/Normal-defeat/Soundings tests. Run Node UI-config typecheck, app-local Vite build and broad UI characterization against the known baseline. Distinguish owner proof from actual selected-App proof.
+
+If a prerequisite contract is missing, stop with the smallest focused follow-up rather than inventing lifecycle semantics.
+
+## Exclusions
+
+No retirement/death terminal settlement, slot deletion, account reset/delete, Legacy/profile UI expansion, G10 activation/deployment/reset, old-save migration, dependency addition, combat implementation or Game-version change. Preserve all immutable artifacts, non-head/fork history and Soundings provenance.
+
+## Repository completion
+
+Fetch/prune and start from synchronized hosted `master`. Inspect live branches/PRs and preserve retained dispositions/triggers. Review complete source/test/doc diff, commit/push useful checkpoints, update focused record plus current output/handoff/prompt/planning/historical/branch authority, then fetch and read back hosted head. If G9B is verified, install G9C from the accepted G9A order; otherwise retain the narrowest repair.
