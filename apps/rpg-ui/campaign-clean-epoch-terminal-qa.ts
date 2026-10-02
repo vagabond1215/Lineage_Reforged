@@ -101,6 +101,31 @@ async function suite() {
       settled.revision === 4, 'terminal settlement lost retained address membership');
     context.owner.close();
   });
+  await test('retirement rejects stale extra account-history address membership', async () => {
+    const context = await setup('address-membership-mismatch');
+    const characterId = context.first.loaded.snapshot.playerState.playerId;
+    const profile = { ...context.account.profile, history: {
+      ...context.account.profile.history,
+      runRecords: context.account.profile.history.runRecords.map(record =>
+        record.characterId === characterId
+          ? { ...record, saveSlotIds: [...record.saveSlotIds, 'quick-save'] }
+          : record)
+    } };
+    const updated = await context.owner.updateProfile(context.accountId, context.account.revision, profile);
+    check(updated.status === 'committed' && updated.readback.revision === 3,
+      'mismatched history setup did not commit');
+    const retired = await new CleanEpochTerminalAdapter(context.owner).retire({
+      ...request(context), expectedAccountRevision: updated.readback.revision
+    });
+    const retained = await context.owner.readSelected(context.accountId);
+    check(retired.status === 'blocked' &&
+      (await context.owner.readSlot(context.accountId, 'slot-1')).status === 'ready' &&
+      (await context.owner.readPendingTerminalForAccount(context.accountId)) === null &&
+      retained?.revision === 3 &&
+      retained.profile.history.runRecords[0]?.saveSlotIds.includes('quick-save'),
+      'address-membership mismatch was repaired or partially retired instead of failing closed');
+    context.owner.close();
+  });
   await test('earned progression grants one Legacy payout and transaction', async () => {
     const context = await setup('earned-payout');
     const baseline = context.first.loaded.snapshot;
@@ -285,7 +310,7 @@ async function suite() {
       context.owner.close();
     }
   });
-  await test('lost post-commit readback resumes retained terminal identity', async () => {
+  await test('lost terminal-publication readback resumes retained terminal identity', async () => {
     const context = await setup('readback-loss');
     const original = context.owner.readTerminalRecovery.bind(context.owner);
     let failOnce = true;
@@ -301,7 +326,37 @@ async function suite() {
     const reopened = await openCleanEpochAccountStore({ name: context.databaseName });
     const resumed = await new CleanEpochTerminalAdapter(reopened).resumePending(context.accountId);
     check(resumed?.status === 'completed' && resumed.recovery.publicationId === pending.publicationId,
-      'lost readback minted another terminal identity');
+      'lost publication readback minted another terminal identity');
+    reopened.close();
+  });
+  await test('lost settlement readback retains completed authority and exact retry', async () => {
+    const context = await setup('settlement-readback-loss');
+    const original = context.owner.readTerminalRecovery.bind(context.owner);
+    let failCompletedReadback = true;
+    context.owner.readTerminalRecovery = async (...args) => {
+      const readback = await original(...args);
+      if (failCompletedReadback && readback?.status === 'settlement_completed') {
+        failCompletedReadback = false;
+        throw new Error('synthetic completed-settlement readback unavailable');
+      }
+      return readback;
+    };
+    const result = await new CleanEpochTerminalAdapter(context.owner).retire(request(context));
+    check(result.status === 'blocked', 'lost settlement readback unexpectedly returned success');
+    context.owner.readTerminalRecovery = original;
+    const retained = await context.owner.readTerminalForSource(context.accountId,
+      request(context).control.campaignId, request(context).control.loadedPublicationId);
+    const account = await context.owner.readSelected(context.accountId);
+    check(retained?.status === 'settlement_completed' && account?.revision === 3 &&
+      (await context.owner.readSlot(context.accountId, 'slot-1')).status === 'closed' &&
+      (await context.owner.readPendingTerminalForAccount(context.accountId)) === null,
+      'lost settlement readback did not retain one completed closed authority');
+    context.owner.close();
+    const reopened = await openCleanEpochAccountStore({ name: context.databaseName });
+    const retry = await new CleanEpochTerminalAdapter(reopened).retire(request(context));
+    check(retry.status === 'completed' && retry.recovery.publicationId === retained.publicationId &&
+      (await reopened.readSelected(context.accountId))?.revision === 3,
+      'completed settlement readback loss did not recover through exact retry');
     reopened.close();
   });
   output.textContent = `PASS ${cases.length}/${cases.length}\n${cases.join('\n')}`;
