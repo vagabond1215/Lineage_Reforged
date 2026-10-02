@@ -2,6 +2,11 @@
 
 **G8F_ACTUAL_APP_FAILURE_UI_VERIFIED; G9_AND_ACTIVATION_HELD.** Source `9cd07551000ede0e211f0da8ba278c679ea1d914`, code `a9070e33`. The selected App now recovers pending descendants from the exact destination address even when older source addresses also display a pending shared head. Actual App quota/abort, prepared/pending/restart, two-tab contention and stale account/head/destination failure UI passed; owner browser 130/130 and Node 116/116 pass; broad UI remains 137 known diagnostics. Install **G9A lifecycle/destructive-transition authority decision** before G9 code. G10 deployment/post-epoch durability, combat and planned parent acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. This supersedes G8F.1-active wording below without rewriting chronology.
 
+## 2026-10-02 — G9A lifecycle/destructive authority
+
+G9A accepted the clean-epoch lifecycle boundary without production implementation. Normal defeat recovery is first because the existing campaign-session owner already defines receipt/destination/continuity semantics and the selected App currently blocks this ordinary nonterminal route. Terminal settlement, address deletion and whole-account destruction remain distinct later packages. See `docs/design/g9a-epoch-lifecycle-and-destructive-transition-authority-decision.md`. G10 activation/durability and combat remain held.
+
+
 ## 2026-10-01 G8F real App caller checkpoint
 
 **REAL_ASYNC_APP_ORDINARY_PATH_VERIFIED; G8F_FAILURE_UI_ACCEPTANCE_HELD.** Source `2dcbee6c97a8680bce0a2066d3bad6b3ae9cd734`; code checkpoint `08329e90`. The local selected App now awaits clean-epoch account, inventory, first campaign, exact load and ordinary descendant save; actual UI proved manual/quick address retention, non-head fork, witnessed Soundings first/later save, restart and a two-tab stale refusal. Native bootstrap faults fail closed. Owner suites 130/130 and Node 116/116 pass; broad UI retains 137 known diagnostics. Install **G8F.1 actual-App failure UI and recovery proof** before G9. G10 activation/post-epoch durability, combat and planned parent acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. This supersedes G8E-active wording below without rewriting chronology.
