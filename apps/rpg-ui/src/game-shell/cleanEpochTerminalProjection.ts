@@ -57,8 +57,11 @@ export function projectRetirementSettlement(params: {
       (profile.campaignPublicationReceipts ?? []).some(receipt => receipt.publicationId === publication.publicationId))
     throw new Error('Retirement projection identity or consumer plan is invalid.');
   const prior = profile.history.runRecords.filter(record => record.characterId === characterId);
+  const retainedAddressSlotIds = prior.length === 1 ? [...prior[0]!.saveSlotIds].sort() : [];
+  const terminalAddressSlotIds = [...addressSlotIds].sort();
   if (prior.length !== 1 || prior[0]!.outcome !== 'active' ||
-      !addressSlotIds.every(id => prior[0]!.saveSlotIds.includes(id)))
+      retainedAddressSlotIds.length !== terminalAddressSlotIds.length ||
+      retainedAddressSlotIds.some((id, index) => id !== terminalAddressSlotIds[index]))
     throw new Error('Retirement requires one active retained run and exact address membership.');
   const recordedAt = publication.publishedAt;
   const evaluated = evaluateAchievementProgress(snapshot, profile,
