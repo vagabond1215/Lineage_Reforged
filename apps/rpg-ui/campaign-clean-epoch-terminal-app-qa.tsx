@@ -1,0 +1,81 @@
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.ts';
+import { EpochApp } from './src/EpochApp.tsx';
+import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from './src/game-shell/characterCreationCatalog.ts';
+import { createDefaultCharacterCreationFormState } from './src/game-shell/characterCreationForm.ts';
+import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.ts';
+import { CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_SESSION_STORAGE_KEY,
+  CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, openCleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.ts';
+import { createCredentialRecord } from './src/game-shell/launcherAuthManager.ts';
+import './src/index.css';
+
+const marker = 'lineage.g9d.app.qa.account';
+const status = document.querySelector<HTMLDivElement>('#qa-status')!;
+const inspection = document.querySelector<HTMLPreElement>('#qa-inspection')!;
+let armed: 'terminal_quota' | 'settlement_abort' | null = null;
+const originalPut = IDBObjectStore.prototype.put;
+IDBObjectStore.prototype.put = function(value: unknown, key?: IDBValidKey) {
+  if (armed && ((armed === 'terminal_quota' && this.name === CLEAN_EPOCH_TERMINAL_RECOVERY_STORE) ||
+      (armed === 'settlement_abort' && this.name === CLEAN_EPOCH_ACCOUNT_STORE))) {
+    const fault = armed; armed = null;
+    if (fault === 'terminal_quota') throw new DOMException('synthetic terminal quota', 'QuotaExceededError');
+    const result = key === undefined ? originalPut.call(this, value) : originalPut.call(this, value, key);
+    queueMicrotask(() => { try { this.transaction.abort(); } catch { /* already settled */ } });
+    return result;
+  }
+  return key === undefined ? originalPut.call(this, value) : originalPut.call(this, value, key);
+};
+document.querySelector<HTMLButtonElement>('#arm-terminal-quota')!.onclick = () => {
+  armed = 'terminal_quota'; inspection.textContent = 'Terminal quota armed.';
+};
+document.querySelector<HTMLButtonElement>('#arm-settlement-abort')!.onclick = () => {
+  armed = 'settlement_abort'; inspection.textContent = 'Settlement abort armed.';
+};
+window.confirm = () => true; // QA page only: exercise the production retirement callback without a modal.
+function form() {
+  const identity = getLineageIdentityCatalog('lineage.human')!;
+  const bundle = 'starting_bundle.traveler';
+  return { ...createDefaultCharacterCreationFormState('slot-1'), playerName: 'Mara Terminal App',
+    hairColorId: identity.hairColorOptions[0]!.id, eyeColorId: identity.eyeColorOptions[0]!.id,
+    skinToneId: identity.skinToneOptions[0]!.id, startingBundleId: bundle,
+    startingBundleChoiceSelections: createDefaultStartingBundleChoiceSelections(bundle),
+    backstoryId: 'backstory.craftsmans_child', continentId: 'region.myridian_chain',
+    regionId: 'region.starfall_isle', startingSettlementId: 'settlement.starfall_port' };
+}
+async function start() {
+  const owner = await openCleanEpochAccountStore();
+  let accountId = sessionStorage.getItem(marker);
+  try {
+    if (!accountId) {
+      accountId = `account.local.${crypto.randomUUID()}`;
+      await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'G9D Browser QA' }),
+        await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+      const first = await new CleanEpochFirstCampaignAdapter(owner).start(accountId, form());
+      if (first.status !== 'ready') throw new Error(`Production first campaign owner failed: ${JSON.stringify(first)}`);
+      sessionStorage.setItem(marker, accountId);
+    }
+    localStorage.setItem(CLEAN_EPOCH_SESSION_STORAGE_KEY,
+      JSON.stringify({ version: 1, accountId, issuedAt: new Date().toISOString() }));
+    status.textContent = `QA ACCOUNT ${accountId}`;
+    document.querySelector<HTMLButtonElement>('#inspect')!.onclick = () => { void (async () => {
+      const selected = await openCleanEpochAccountStore();
+      try {
+        const account = await selected.readSelected(accountId!);
+        const slots = await selected.listSlots(accountId!);
+        const pending = await selected.readPendingTerminalForAccount(accountId!);
+        inspection.textContent = JSON.stringify({ revision: account?.revision,
+          run: account?.profile.history.runRecords[0],
+          payoutTransactions: account?.profile.legacy.legacyTransactions.filter(tx =>
+            tx.sourceType === 'run_lifecycle').length,
+          estateDeposits: account?.profile.estate.deposits.length,
+          terminalReceipts: account?.profile.campaignPublicationReceipts?.filter(receipt =>
+            receipt.kind === 'retirement_settlement').length,
+          slots: slots.map(slot => ({ id: slot.slotId, status: slot.status })),
+          pending: pending && { publicationId: pending.publicationId, status: pending.status } }, null, 2);
+      } finally { selected.close(); }
+    })().catch(error => { inspection.textContent = String(error); }); };
+  } finally { owner.close(); }
+  createRoot(document.querySelector('#root')!).render(<EpochApp />);
+}
+start().catch(error => { status.textContent = `FAIL: ${error instanceof Error ? error.message : String(error)}`; });

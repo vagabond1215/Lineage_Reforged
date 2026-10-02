@@ -15,6 +15,7 @@ import { CLEAN_EPOCH_SESSION_STORAGE_KEY, openCleanEpochAccountStore,
   type CleanEpochAccountStore, type CleanEpochSlotSummary } from './game-shell/cleanEpochAccountStore.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
+import { CleanEpochTerminalAdapter } from './game-shell/cleanEpochTerminalAdapter.js';
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochLauncherRead } from './game-shell/cleanEpochLauncherRead.js';
 import { CleanEpochLegacyActionAdapter, type EpochLegacyAction } from './game-shell/cleanEpochLegacyActionAdapter.js';
@@ -25,7 +26,8 @@ import { createAccountAccessState, gameShellReducer, getPreferredLoadSlotId, get
 
 type Services = { owner: CleanEpochAccountStore; accounts: CleanEpochAccountAdapter;
   launcher: CleanEpochLauncherRead; first: CleanEpochFirstCampaignAdapter; descendant: CleanEpochDescendantAdapter;
-  normalDefeat: CleanEpochNormalDefeatRecoveryAdapter; legacy: CleanEpochLegacyActionAdapter };
+  normalDefeat: CleanEpochNormalDefeatRecoveryAdapter; legacy: CleanEpochLegacyActionAdapter;
+  terminal: CleanEpochTerminalAdapter };
 type Address = { artifactId: string; publicationId: string };
 type Inventory = { account: Awaited<ReturnType<CleanEpochAccountStore['readSelected']>> & {};
   slots: CleanEpochSlotSummary[] };
@@ -144,6 +146,8 @@ export function EpochApp() {
     let result = await next.launcher.inventory(accountId);
     if (result.status === 'blocked') throw new Error(result.message);
     await completePending(next, accountId, result.value.slots);
+    const terminal = await next.terminal.resumePending(accountId);
+    if (terminal?.status === 'blocked') throw new Error(terminal.message);
     result = await next.launcher.inventory(accountId);
     if (result.status === 'blocked') throw new Error(result.message);
     if (result.value.slots.some(slot => slot.status === 'pending_consumers'))
@@ -165,7 +169,8 @@ export function EpochApp() {
       const next: Services = { owner, accounts, launcher: new CleanEpochLauncherRead(owner, accounts),
         first: new CleanEpochFirstCampaignAdapter(owner), descendant: new CleanEpochDescendantAdapter(owner),
         normalDefeat: new CleanEpochNormalDefeatRecoveryAdapter(owner),
-        legacy: new CleanEpochLegacyActionAdapter(owner) };
+        legacy: new CleanEpochLegacyActionAdapter(owner),
+        terminal: new CleanEpochTerminalAdapter(owner) };
       const selected = await next.launcher.bootstrap();
       if (selected.status === 'blocked') throw new Error(selected.message);
       if (selected.value.mode === 'pick_account') {
@@ -351,6 +356,28 @@ export function EpochApp() {
         detail: `Saved to ${getSaveSlotLabel(destinationSlotId)} and verified its exact ready address.` } });
   }, undefined);
 
+  const retire = () => {
+    if (state.screen !== 'IN_GAME' || !services) return;
+    if (!window.confirm(`Retire ${state.snapshot.playerState.coreData.playerName}? This closes the campaign and records its final history. Closed slot addresses remain retained until lifecycle cleanup is available.`)) return;
+    void guarded(async () => {
+      if (state.screen !== 'IN_GAME' || !services) return;
+      const sourceSlotId = sourceSlot.current;
+      const expectedAccountRevision = observedAccountRevision.current;
+      const expectedSourceAddress = sourceSlotId ? observedAddresses.current[sourceSlotId] : undefined;
+      if (!sourceSlotId || expectedAccountRevision === null || !expectedSourceAddress)
+        throw new Error('Retirement source address or account revision was not captured.');
+      const result = await services.terminal.retire({ accountId: state.accountProfile.accountId,
+        sourceSlotId, expectedAccountRevision, expectedSourceAddress,
+        snapshot: state.snapshot, control: state.campaignSessionControl });
+      if (result.status === 'blocked') throw new Error(result.message);
+      sourceSlot.current = null; observedAccountRevision.current = null;
+      observedAddresses.current = {};
+      await showMenu(state.launcherSession, state.accountProfile.accountId,
+        { tone: 'success', title: 'Character Retired',
+          detail: `${state.snapshot.playerState.coreData.playerName}'s retirement was recorded and verified. The closed campaign remains in history.` });
+    }, undefined);
+  };
+
   const refreshMenu = (message: GameShellNotice | null = null, section?: LauncherSectionId) =>
     guarded(async () => { if (state.screen === 'ACCOUNT_ACCESS') return;
       await showMenu(state.launcherSession, state.accountProfile.accountId, message, section); }, undefined);
@@ -449,7 +476,7 @@ export function EpochApp() {
       launcherSession: current.launcherSession, accountProfile: current.accountProfile, slots: current.slots,
       snapshot, campaignSessionControl })}
     onSave={() => void save(current.activeSlotId)} onQuickSave={() => void save('quick-save')}
-    onRetireCharacter={() => unsupported('Retirement')}
+    onRetireCharacter={retire}
     onReturnToMainMenu={() => {
       if (current.hasUnsavedChanges && !window.confirm('Discard unsaved in-memory changes and return to the menu?')) return;
       void refreshMenu();

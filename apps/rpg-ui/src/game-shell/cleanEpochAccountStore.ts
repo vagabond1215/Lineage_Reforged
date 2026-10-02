@@ -7,6 +7,7 @@ import { evaluateAchievementProgress } from "../../../../packages/engines/game-e
 import { recordCampaignPublicationConsumer, type VerifiedCampaignPublication } from "../../../../packages/engines/game-engine/src/account-publication.js";
 import { consumeSelectedLegacyPreparations, resolveLegacyPreparationSelection } from "../../../../packages/engines/game-engine/src/legacy-unlocks.js";
 import { consumeRetiredRunInheritanceUse, resolveHeirSourceById } from "./runLifecycle.js";
+import { projectRetirementSettlement, retirementSettlementFingerprint, RETIREMENT_CONSUMERS } from "./cleanEpochTerminalProjection.js";
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
@@ -25,11 +26,12 @@ import {
 
 /** Clean-epoch account and campaign authority selected by the awaited App caller. */
 export const CLEAN_EPOCH_DATABASE_NAME = "lineage.campaigns.epoch1";
-export const CLEAN_EPOCH_DATABASE_VERSION = 4;
+export const CLEAN_EPOCH_DATABASE_VERSION = 5;
 export const CLEAN_EPOCH_ACCOUNT_STORE = "accounts";
 export const CLEAN_EPOCH_ATTEMPT_STORE = "newCampaignAttempts";
 export const CLEAN_EPOCH_RECOVERY_STORE = "pendingPublicationRecoveries";
 export const CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE = "descendantPublicationRecoveries";
+export const CLEAN_EPOCH_TERMINAL_RECOVERY_STORE = "terminalLifecycleRecoveries";
 export const CLEAN_EPOCH_SESSION_STORAGE_KEY = "cataclysm-rpg-ui.epoch1.session";
 
 export type CleanEpochAccountRecord = {
@@ -127,6 +129,44 @@ export type CleanEpochDescendantRequest = {
 export type CleanEpochDescendantResult = {
   publication: CampaignStorePublishResult;
   recovery: CleanEpochDescendantRecovery;
+};
+export type CleanEpochTerminalRecovery = {
+  version: 1;
+  status: "accepted_pending_settlement" | "settlement_completed";
+  accountId: string;
+  campaignId: string;
+  characterId: string;
+  slotId: SaveSlotId;
+  sourceArtifactId: string;
+  sourcePublicationId: string;
+  sourceSnapshotRaw: string;
+  sourceAddress: { artifactId: string; publicationId: string };
+  expectedHead: NonNullable<CampaignStorePublication["expectedHead"]>;
+  expectedAccountRevision: number;
+  sourceProfile: AccountProfileState;
+  artifactId: string;
+  publicationId: string;
+  envelopeRaw: string;
+  archiveReason: "retired";
+  addressSlotIds: SaveSlotId[];
+  consumerPlans: CampaignPublicationConsumerPlan[];
+  settlementFingerprint: string;
+  payoutTransactionId: string | null;
+  estateSourceRunId: string;
+  estateDepositId: string;
+  completedAccountRevision?: number;
+  createdAt: string;
+};
+export type CleanEpochTerminalRequest = {
+  publication: CampaignStorePublication;
+  sessionWitness?: SoundingsAdmissionWitness;
+  expectedAccountRevision: number;
+  sourceArtifactId: string;
+  sourcePublicationId: string;
+  sourceSnapshotRaw: string;
+  sourceAddress: { artifactId: string; publicationId: string };
+  addressSlotIds: SaveSlotId[];
+  consumerPlans: CampaignPublicationConsumerPlan[];
 };
 export type CleanEpochConsumerCompletionResult = {
   status: "committed" | "same_source_retry";
@@ -430,6 +470,96 @@ function descendantReceiptsMatch(account: CleanEpochAccountRecord, recovery: Cle
     receipt.payloadFingerprint === plan.payloadFingerprint && receipt.status === "applied" &&
     receipt.appliedAt === recovery.createdAt).length === 1);
 }
+function validTerminalRecovery(value: unknown, accountId: string, campaignId: string,
+  publicationId: string): value is CleanEpochTerminalRecovery {
+  if (!object(value) || value.version !== 1 || value.accountId !== accountId ||
+      value.campaignId !== campaignId || value.publicationId !== publicationId ||
+      value.archiveReason !== "retired" || !nonblank(value.characterId) ||
+      !validSlotId(value.slotId) || !nonblank(value.sourceArtifactId) ||
+      !nonblank(value.sourcePublicationId) || !nonblank(value.artifactId) ||
+      !nonblank(value.createdAt) || typeof value.sourceSnapshotRaw !== "string" ||
+      typeof value.envelopeRaw !== "string" || !validProfile(value.sourceProfile, accountId) ||
+      !object(value.sourceAddress) || !nonblank(value.sourceAddress.artifactId) ||
+      !nonblank(value.sourceAddress.publicationId) ||
+      !object(value.expectedHead) || !nonblank(value.expectedHead.artifactId) ||
+      !nonblank(value.expectedHead.publicationId) ||
+      !Number.isSafeInteger(value.expectedHead.revision) || (value.expectedHead.revision as number) < 1 ||
+      !Number.isSafeInteger(value.expectedAccountRevision) || (value.expectedAccountRevision as number) < 1 ||
+      !Array.isArray(value.addressSlotIds) || !value.addressSlotIds.every(validSlotId) ||
+      new Set(value.addressSlotIds).size !== value.addressSlotIds.length ||
+      !value.addressSlotIds.includes(value.slotId) || !Array.isArray(value.consumerPlans) ||
+      value.consumerPlans.length !== RETIREMENT_CONSUMERS.length ||
+      !RETIREMENT_CONSUMERS.every(kind => (value.consumerPlans as unknown[]).some(plan =>
+        object(plan) && plan.kind === kind && nonblank(plan.payloadFingerprint))) ||
+      !nonblank(value.settlementFingerprint) ||
+      !nonblank(value.estateSourceRunId) || !nonblank(value.estateDepositId) ||
+      (value.payoutTransactionId !== null && !nonblank(value.payoutTransactionId))) return false;
+  const pending = value.status === "accepted_pending_settlement" && value.completedAccountRevision === undefined;
+  const completed = value.status === "settlement_completed" &&
+    value.completedAccountRevision === (value.expectedAccountRevision as number) + 1;
+  if (!pending && !completed) return false;
+  try {
+    const envelope = envelopeFromRaw(value.envelopeRaw);
+    const snapshot = deserializeSnapshot(envelope.snapshot);
+    const source = deserializeSnapshot(value.sourceSnapshotRaw);
+    if (!envelope.terminal || envelope.accountId !== accountId || envelope.campaignId !== campaignId ||
+        envelope.publicationId !== publicationId || envelope.artifactId !== value.artifactId ||
+        envelope.slotId !== value.slotId || envelope.characterId !== value.characterId ||
+        envelope.headRevision !== (value.expectedHead.revision as number) + 1 ||
+        source.accountId !== accountId || source.campaignIdentity?.campaignId !== campaignId ||
+        source.playerState.playerId !== value.characterId ||
+        snapshot.playerState.playerId !== value.characterId ||
+        snapshot.campaignIdentity?.campaignId !== campaignId || hasPendingNormalDefeat(snapshot) ||
+        value.sourceAddress.artifactId !== value.sourceArtifactId ||
+        value.sourceAddress.publicationId !== value.sourcePublicationId ||
+        (value.consumerPlans as CampaignPublicationConsumerPlan[]).some(plan =>
+          plan.payloadFingerprint !== value.settlementFingerprint)) return false;
+    const projection = projectRetirementSettlement({ profile: value.sourceProfile, snapshot,
+      publication: publicationFor(snapshot, { publicationId, campaignId, updatedAt: value.createdAt }),
+      slotId: value.slotId as SaveSlotId, addressSlotIds: value.addressSlotIds as SaveSlotId[],
+      consumerPlans: value.consumerPlans as CampaignPublicationConsumerPlan[] });
+    return projection.payoutTransactionId === value.payoutTransactionId &&
+      projection.estateSourceRunId === value.estateSourceRunId &&
+      projection.estateDepositId === value.estateDepositId &&
+      value.settlementFingerprint === retirementSettlementFingerprint({ accountId, campaignId,
+        sourceArtifactId: value.sourceArtifactId as string,
+        sourcePublicationId: value.sourcePublicationId as string,
+        terminalArtifactId: value.artifactId as string, terminalPublicationId: publicationId,
+        sourceSlotId: value.slotId as SaveSlotId, addressSlotIds: value.addressSlotIds as SaveSlotId[],
+        payout: projection.payout, payoutTransactionId: projection.payoutTransactionId,
+        estateSourceRunId: projection.estateSourceRunId, estateDepositId: projection.estateDepositId });
+  } catch { return false; }
+}
+function checkedTerminalRecovery(value: unknown, accountId: string, campaignId: string,
+  publicationId: string): CleanEpochTerminalRecovery {
+  if (!validTerminalRecovery(value, accountId, campaignId, publicationId))
+    fail("invalid_record", "Retained terminal recovery is malformed or disagrees with derived settlement.");
+  return value;
+}
+function terminalReceiptsMatch(account: CleanEpochAccountRecord, recovery: CleanEpochTerminalRecovery): boolean {
+  if (recovery.status !== "settlement_completed" ||
+      account.revision < (recovery.completedAccountRevision ?? Infinity)) return false;
+  const receipts = (account.profile.campaignPublicationReceipts ?? []).filter(
+    receipt => receipt.publicationId === recovery.publicationId);
+  const run = account.profile.history.runRecords.find(record => record.characterId === recovery.characterId);
+  return receipts.length === RETIREMENT_CONSUMERS.length &&
+    RETIREMENT_CONSUMERS.every(kind => receipts.filter(receipt =>
+      receipt.consumerId === `${recovery.publicationId}.consumer.${kind}` &&
+      receipt.kind === kind && receipt.status === "applied" &&
+      receipt.payloadFingerprint === recovery.settlementFingerprint &&
+      receipt.campaignId === recovery.campaignId &&
+      receipt.characterId === recovery.characterId &&
+      receipt.appliedAt === recovery.createdAt).length === 1) &&
+    run?.outcome === "archived" && run.archiveReason === "retired" &&
+    run.legacyPayoutTransactionId === (recovery.payoutTransactionId ?? undefined) &&
+    recovery.addressSlotIds.every(id => run.saveSlotIds.includes(id)) &&
+    account.profile.estate.deposits.filter(deposit =>
+      deposit.sourceRunId === recovery.estateSourceRunId &&
+      deposit.depositId === recovery.estateDepositId).length === 1 &&
+    (recovery.payoutTransactionId === null ||
+      account.profile.legacy.legacyTransactions.filter(tx =>
+        tx.id === recovery.payoutTransactionId).length === 1);
+}
 
 export async function openCleanEpochAccountStore(options: CleanEpochAccountStoreOptions = {}): Promise<CleanEpochAccountStore> {
   const name = options.name ?? CLEAN_EPOCH_DATABASE_NAME;
@@ -461,6 +591,12 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
           { keyPath: ["accountId", "campaignId", "publicationId"] });
         store.createIndex("byAccountCampaign", ["accountId", "campaignId"], { unique: false });
       }
+      if (!database.objectStoreNames.contains(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)) {
+        const store = database.createObjectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+          { keyPath: ["accountId", "campaignId", "publicationId"] });
+        store.createIndex("bySourcePublication", ["accountId", "campaignId", "sourcePublicationId"], { unique: true });
+        store.createIndex("byAccount", "accountId", { unique: false });
+      }
     };
     request.onerror = () => reject(classify(request.error, "unavailable"));
     request.onsuccess = () => {
@@ -468,7 +604,10 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
       const database = request.result;
       if (!hasCampaignPublicationStores(database) || !database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_STORE) ||
           !database.objectStoreNames.contains(CLEAN_EPOCH_ATTEMPT_STORE) || !database.objectStoreNames.contains(CLEAN_EPOCH_RECOVERY_STORE) ||
-          !database.objectStoreNames.contains(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE)) {
+          !database.objectStoreNames.contains(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE) ||
+          !database.objectStoreNames.contains(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE) ||
+          !database.transaction(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE).objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+            .indexNames.contains("bySourcePublication")) {
         database.close(); reject(new CampaignStoreError("invalid_record", "Clean-epoch schema is incomplete.")); return;
       }
       database.onversionchange = () => database.close();
@@ -505,12 +644,24 @@ export class CleanEpochAccountStore {
     return checkedAttempt(matched[0], accountId, matched[0].slotId as string);
   }
 
+  private async assertNoPendingTerminal(tx: IDBTransaction, accountId: string): Promise<void> {
+    const rows = await requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+      .index("byAccount").getAll(accountId) as IDBRequest<unknown[]>);
+    for (const raw of rows) {
+      if (!object(raw) || !nonblank(raw.campaignId) || !nonblank(raw.publicationId))
+        fail("invalid_record", "Account has malformed terminal recovery.");
+      const recovery = checkedTerminalRecovery(raw, accountId, raw.campaignId, raw.publicationId);
+      if (recovery.status !== "settlement_completed")
+        fail("conflict", "Account has pending terminal settlement.");
+    }
+  }
+
   /** First-head inventory. A failed read never becomes an empty slot. */
   async listSlots(accountId: string): Promise<CleanEpochSlotSummary[]> {
     if (!nonblank(accountId)) fail("invalid_record", "Slot account ID is blank.");
     try {
       const tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE,
-        CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+        CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
         "artifacts", "controls", "slots", "witnesses"], "readonly");
       const accountRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>);
       if (accountRaw === undefined) fail("invalid_record", "Slot account is missing.");
@@ -530,7 +681,7 @@ export class CleanEpochAccountStore {
       fail("invalid_record", "Slot address is invalid.");
     try {
       const tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE,
-        CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+        CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
         "artifacts", "controls", "slots", "witnesses"], "readonly");
       const accountRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>);
       if (accountRaw === undefined) fail("invalid_record", "Slot account is missing.");
@@ -651,7 +802,9 @@ export class CleanEpochAccountStore {
         fail("invalid_record", "Descendant terminal posture disagrees with campaign control.");
       const retained = await requestValue(tx.objectStore(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE)
         .index("byAccountCampaign").getAll([accountId, attempt.campaignId]) as IDBRequest<unknown[]>);
-      if (retained.length !== published.control.headRevision - 1)
+      const regularHeadRevision = published.control.closed
+        ? published.control.headRevision - 1 : published.control.headRevision;
+      if (retained.length !== regularHeadRevision - 1)
         fail("invalid_record", "Descendant chain has missing or extra recovery evidence.");
       const byRevision = new Map<number, CleanEpochDescendantRecovery>();
       for (const raw of retained) {
@@ -662,7 +815,7 @@ export class CleanEpochAccountStore {
       }
       let priorId = recovery.artifactId;
       let priorPublication = recovery.publicationId;
-      for (let revision = 2; revision <= published.control.headRevision; revision++) {
+      for (let revision = 2; revision <= regularHeadRevision; revision++) {
         const entry = byRevision.get(revision);
         if (!entry || entry.expectedHead.artifactId !== priorId ||
             entry.expectedHead.publicationId !== priorPublication || entry.expectedHead.revision !== revision - 1)
@@ -694,11 +847,46 @@ export class CleanEpochAccountStore {
         if (entry.sourceSlotId !== source.slotId ||
             (entry.expectedSlotAddress !== null && entry.expectedSlotAddress.artifactId === entry.artifactId))
           fail("invalid_record", "Descendant source or destination address evidence is invalid.");
-        if (revision < published.control.headRevision &&
+        if (revision < regularHeadRevision &&
             (entry.status !== "consumers_completed" || !descendantReceiptsMatch(account, entry)))
           fail("invalid_record", "Non-head descendant lacks completed consumers.");
         priorId = entry.artifactId;
         priorPublication = entry.publicationId;
+      }
+      if (published.control.closed) {
+        const terminalRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+          .get([accountId, attempt.campaignId, published.control.headPublicationId]) as IDBRequest<unknown>);
+        const terminal = checkedTerminalRecovery(terminalRaw, accountId, attempt.campaignId,
+          published.control.headPublicationId);
+        if (terminal.expectedHead.artifactId !== priorId ||
+            terminal.expectedHead.publicationId !== priorPublication ||
+            terminal.expectedHead.revision !== regularHeadRevision ||
+            terminal.artifactId !== published.control.headArtifactId ||
+            terminal.envelopeRaw !== published.artifactRaw ||
+            terminal.sourceArtifactId !== priorId ||
+            terminal.sourcePublicationId !== priorPublication ||
+            terminal.status === "settlement_completed" && !terminalReceiptsMatch(account, terminal) ||
+            terminal.status === "accepted_pending_settlement" &&
+              (account.revision !== terminal.expectedAccountRevision ||
+                !exactEqual(account.profile, terminal.sourceProfile)))
+          fail("invalid_record", "Closed campaign lacks exact terminal lifecycle authority.");
+        const addressed = envelopeFromRaw(published.slotRaw);
+        if (addressed.artifactId === terminal.artifactId) {
+          if (terminal.slotId !== slotId || published.slotRaw !== terminal.envelopeRaw)
+            fail("invalid_record", "Terminal address disagrees with lifecycle recovery.");
+        } else if (addressed.headRevision > 1) {
+          const prior = byRevision.get(addressed.headRevision);
+          if (!prior || prior.slotId !== slotId || prior.artifactId !== addressed.artifactId ||
+              prior.envelopeRaw !== published.slotRaw || prior.status !== "consumers_completed" ||
+              !descendantReceiptsMatch(account, prior))
+            fail("invalid_record", "Closed campaign address lost completed descendant evidence.");
+        } else if (addressed.artifactId !== recovery.artifactId ||
+            recovery.envelopeRaw !== published.slotRaw)
+          fail("invalid_record", "Closed campaign address lost first publication evidence.");
+        const run = account.profile.history.runRecords.filter(entry => entry.characterId === addressed.characterId);
+        if (run.length !== 1 || !run[0]!.saveSlotIds.includes(slotId))
+          fail("invalid_record", "Closed address lacks retained run history membership.");
+        return { slotId, status: "closed", metadata: addressed.metadata };
       }
       const head = byRevision.get(published.control.headRevision)!;
       if (head.artifactId !== descendant.artifactId || head.publicationId !== descendant.publicationId ||
@@ -796,7 +984,8 @@ export class CleanEpochAccountStore {
     if (!object(candidate) || !validSlotId(candidate.slotId) || !validAttempt(candidate, candidate.accountId, candidate.slotId))
       fail("invalid_record", "New-campaign attempt candidate is invalid.");
     let tx: IDBTransaction;
-    try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE, "slots", "controls"], "readwrite"); }
+    try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE,
+      CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, "slots", "controls"], "readwrite"); }
     catch (error) { throw classify(error, "unavailable"); }
     const done = complete(tx);
     let status: CleanEpochAttemptWriteResult["status"] = "committed";
@@ -805,6 +994,7 @@ export class CleanEpochAccountStore {
       if (accountRaw === undefined) fail("invalid_record", "New-campaign account is missing.");
       const account = checkedAccount(accountRaw, candidate.accountId);
       if (account.revision !== candidate.expectedAccountRevision) fail("stale_head", "New-campaign account revision changed.");
+      await this.assertNoPendingTerminal(tx, candidate.accountId);
       const attempts = tx.objectStore(CLEAN_EPOCH_ATTEMPT_STORE);
       const retainedRaw = await requestValue(attempts.get([candidate.accountId, candidate.slotId]) as IDBRequest<unknown>);
       if (retainedRaw !== undefined) {
@@ -851,7 +1041,8 @@ export class CleanEpochAccountStore {
       (_, tx) => this.beforeWrite?.(tx), (_, tx) => this.afterWrite?.(tx));
     let proposed: CleanEpochPublicationRecovery | null = null;
     const publication = await publicationStore.publish(input, {
-      storeNames: [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE],
+      storeNames: [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE,
+        CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE],
       verify: async (tx, current) => {
         const [accountRaw, attemptRaw, recoveryRaw] = await Promise.all([
           requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(input.accountId) as IDBRequest<unknown>),
@@ -860,6 +1051,7 @@ export class CleanEpochAccountStore {
         ]);
         if (accountRaw === undefined || attemptRaw === undefined) fail("invalid_record", "First publication lacks retained account or attempt.");
         const account = checkedAccount(accountRaw, input.accountId);
+        await this.assertNoPendingTerminal(tx, input.accountId);
         const attempt = checkedAttempt(attemptRaw, input.accountId, input.slotId);
         if (attempt.attemptId !== attemptId || attempt.campaignId !== input.campaignId ||
             attempt.snapshotRaw !== envelope.snapshot || !attempt.consumerPlans.some(plan => plan.kind === "active_history")) {
@@ -903,6 +1095,334 @@ export class CleanEpochAccountStore {
     return { publication, recovery };
   }
 
+  /** Accept one closed head and its recoverable retirement identity atomically. */
+  async publishTerminal(request: CleanEpochTerminalRequest): Promise<CleanEpochTerminalRecovery> {
+    const { publication: input, expectedAccountRevision, sourceArtifactId, sourcePublicationId,
+      sourceSnapshotRaw, sourceAddress, addressSlotIds, consumerPlans, sessionWitness } = request;
+    if (!input.expectedHead || !validSlotId(input.slotId) ||
+        input.expectedSlotAddress === undefined || !nonblank(sourceArtifactId) ||
+        !nonblank(sourcePublicationId) || typeof sourceSnapshotRaw !== "string" ||
+        !Number.isSafeInteger(expectedAccountRevision) || expectedAccountRevision < 1 ||
+        !object(sourceAddress) || !nonblank(sourceAddress.artifactId) ||
+        !nonblank(sourceAddress.publicationId) || !Array.isArray(addressSlotIds) ||
+        !Array.isArray(consumerPlans) ||
+        (sessionWitness && (!isSoundingsAdmissionWitness(sessionWitness) ||
+          sessionWitness.posture !== "session")))
+      fail("invalid_record", "Terminal publication request is malformed.");
+    const envelope = envelopeFromRaw(input.artifactRaw);
+    const snapshot = deserializeSnapshot(envelope.snapshot);
+    if (!envelope.terminal || envelope.accountId !== input.accountId ||
+        envelope.campaignId !== input.campaignId || envelope.slotId !== input.slotId ||
+        hasPendingNormalDefeat(snapshot) || sourceAddress.artifactId !== sourceArtifactId ||
+        sourceAddress.publicationId !== sourcePublicationId)
+      fail("invalid_record", "Terminal artifact or source address is invalid.");
+    let proposed: CleanEpochTerminalRecovery | null = null;
+    const store = new CampaignIndexedDbStore(this.db,
+      (_, tx) => this.beforeWrite?.(tx), (_, tx) => this.afterWrite?.(tx));
+    await store.publish(input, {
+      storeNames: [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE,
+        CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+        CLEAN_EPOCH_TERMINAL_RECOVERY_STORE],
+      ...(sessionWitness ? { firstSessionWitness: sessionWitness } : {}),
+      verify: async (tx, current) => {
+        const [accountRaw, sourceRaw, addressRaw, retainedRaw, bySourceRaw] = await Promise.all([
+          requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(input.accountId) as IDBRequest<unknown>),
+          requestValue(tx.objectStore("artifacts").get([input.accountId, sourceArtifactId]) as IDBRequest<unknown>),
+          requestValue(tx.objectStore("slots").get([input.accountId, input.slotId]) as IDBRequest<unknown>),
+          requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+            .get([input.accountId, input.campaignId, envelope.publicationId]) as IDBRequest<unknown>),
+          requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+            .index("bySourcePublication").get([input.accountId, input.campaignId, sourcePublicationId]) as IDBRequest<unknown>)
+        ]);
+        if (accountRaw === undefined || !current || !object(sourceRaw) ||
+            typeof sourceRaw.raw !== "string" || !object(addressRaw))
+          fail("invalid_record", "Terminal source account, head, artifact or address is missing.");
+        const account = checkedAccount(accountRaw, input.accountId);
+        const source = envelopeFromRaw(sourceRaw.raw);
+        if (!retainedArtifactMatches(sourceRaw, source) || source.snapshot !== sourceSnapshotRaw ||
+            source.accountId !== input.accountId || source.campaignId !== input.campaignId ||
+            source.slotId !== input.slotId || source.artifactId !== sourceArtifactId ||
+            source.publicationId !== sourcePublicationId || source.terminal ||
+            (retainedRaw === undefined &&
+              (addressRaw.artifactId !== sourceArtifactId ||
+                addressRaw.publicationId !== sourcePublicationId ||
+                addressRaw.raw !== sourceRaw.raw || addressRaw.campaignId !== input.campaignId)) ||
+            !exactEqual(input.expectedSlotAddress, sourceAddress) ||
+            snapshot.playerState.playerId !== source.characterId ||
+            snapshot.campaignIdentity?.continuityId !== source.continuityId ||
+            snapshot.campaignIdentity?.campaignId !== input.campaignId ||
+            sourceArtifactId !== input.expectedHead!.artifactId ||
+            sourcePublicationId !== input.expectedHead!.publicationId ||
+            source.headRevision !== input.expectedHead!.revision)
+          fail("conflict", "Terminal source is not the exact retained open head and address.");
+        const attempt = await this.campaignAttempt(tx, input.accountId, input.campaignId);
+        const firstRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE)
+          .get([input.accountId, attempt.slotId]) as IDBRequest<unknown>);
+        const first = checkedRecovery(firstRaw, attempt);
+        if (first.status !== "consumers_completed" || !completedReceiptsMatch(account, first))
+          fail("conflict", "Terminal source lacks completed first publication.");
+        if (input.expectedHead!.revision > 1) {
+          const priorRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE)
+            .get([input.accountId, input.campaignId, input.expectedHead!.publicationId]) as IDBRequest<unknown>);
+          const prior = checkedDescendantRecovery(priorRaw, input.accountId,
+            input.campaignId, input.expectedHead!.publicationId);
+          if (prior.status !== "consumers_completed" || !descendantReceiptsMatch(account, prior))
+            fail("conflict", "Terminal source has pending descendant consumers.");
+        }
+        if (bySourceRaw !== undefined && (!object(bySourceRaw) ||
+            bySourceRaw.publicationId !== envelope.publicationId))
+          fail("conflict", "Source already owns a different terminal publication.");
+        if (retainedRaw !== undefined) {
+          const retained = checkedTerminalRecovery(retainedRaw, input.accountId,
+            input.campaignId, envelope.publicationId);
+          if (retained.envelopeRaw !== input.artifactRaw ||
+              retained.sourceArtifactId !== sourceArtifactId ||
+              retained.sourcePublicationId !== sourcePublicationId ||
+              retained.expectedAccountRevision !== expectedAccountRevision ||
+              !exactEqual(retained.addressSlotIds, addressSlotIds) ||
+              !exactEqual(retained.consumerPlans, consumerPlans) ||
+              current.headPublicationId !== envelope.publicationId ||
+              (retained.status === "settlement_completed" && !terminalReceiptsMatch(account, retained)))
+            fail("conflict", "Terminal retry differs from accepted lifecycle authority.");
+          proposed = retained;
+          return;
+        }
+        if (current.closed || current.headArtifactId !== sourceArtifactId ||
+            account.revision !== expectedAccountRevision)
+          fail("stale_head", "Terminal head or account revision changed.");
+        await this.assertNoPendingTerminal(tx, input.accountId);
+        const addressed = await requestValue(tx.objectStore("slots").index("byAccountCampaign")
+          .getAll([input.accountId, input.campaignId]) as IDBRequest<unknown[]>);
+        const actualIds: SaveSlotId[] = [];
+        for (const raw of addressed) {
+          if (!object(raw) || !validSlotId(raw.slotId) || !nonblank(raw.artifactId) ||
+              !nonblank(raw.publicationId) || typeof raw.raw !== "string")
+            fail("invalid_record", "Terminal campaign has malformed address membership.");
+          const prior = envelopeFromRaw(raw.raw);
+          const artifact = await requestValue(tx.objectStore("artifacts")
+            .get([input.accountId, raw.artifactId]) as IDBRequest<unknown>);
+          if (!retainedArtifactMatches(artifact, prior) ||
+              prior.characterId !== envelope.characterId || prior.terminal)
+            fail("invalid_record", "Terminal address lacks a retained open artifact.");
+          actualIds.push(raw.slotId as SaveSlotId);
+        }
+        if (!exactEqual([...actualIds].sort(), [...addressSlotIds].sort()) ||
+            new Set(actualIds).size !== actualIds.length)
+          fail("conflict", "Terminal address membership changed.");
+        const publication = publicationFor(snapshot,
+          { publicationId: envelope.publicationId, campaignId: input.campaignId, updatedAt: input.control.updatedAt });
+        const projection = projectRetirementSettlement({ profile: account.profile, snapshot,
+          publication, slotId: input.slotId as SaveSlotId, addressSlotIds: actualIds, consumerPlans });
+        const fingerprint = retirementSettlementFingerprint({ accountId: input.accountId,
+          campaignId: input.campaignId, sourceArtifactId, sourcePublicationId,
+          terminalArtifactId: envelope.artifactId, terminalPublicationId: envelope.publicationId,
+          sourceSlotId: input.slotId as SaveSlotId, addressSlotIds: actualIds,
+          payout: projection.payout, payoutTransactionId: projection.payoutTransactionId,
+          estateSourceRunId: projection.estateSourceRunId, estateDepositId: projection.estateDepositId });
+        if (consumerPlans.some(plan => plan.payloadFingerprint !== fingerprint))
+          fail("conflict", "Terminal consumer fingerprints differ from derived settlement.");
+        proposed = { version: 1, status: "accepted_pending_settlement", accountId: input.accountId,
+          campaignId: input.campaignId, characterId: envelope.characterId,
+          slotId: input.slotId as SaveSlotId, sourceArtifactId, sourcePublicationId,
+          sourceSnapshotRaw, sourceAddress, expectedHead: input.expectedHead!,
+          expectedAccountRevision, sourceProfile: account.profile, artifactId: envelope.artifactId,
+          publicationId: envelope.publicationId, envelopeRaw: input.artifactRaw, archiveReason: "retired",
+          addressSlotIds: actualIds, consumerPlans, settlementFingerprint: fingerprint,
+          payoutTransactionId: projection.payoutTransactionId,
+          estateSourceRunId: projection.estateSourceRunId, estateDepositId: projection.estateDepositId,
+          createdAt: input.control.updatedAt };
+        if (!validTerminalRecovery(proposed, input.accountId, input.campaignId, envelope.publicationId))
+          fail("invalid_record", "Proposed terminal recovery failed derived validation.");
+      },
+      write: async tx => {
+        if (!proposed) fail("invalid_record", "Terminal recovery was not prepared.");
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE).put(proposed));
+        this.afterWrite?.(tx);
+      }
+    });
+    const recovery = await this.readTerminalRecovery(input.accountId, input.campaignId, envelope.publicationId);
+    if (!recovery || !proposed || !exactEqual(recovery, proposed))
+      fail("readback_failed", "Terminal acceptance failed durable lifecycle readback.");
+    return recovery;
+  }
+
+  async readTerminalRecovery(accountId: string, campaignId: string,
+    publicationId: string): Promise<CleanEpochTerminalRecovery | null> {
+    if (![accountId, campaignId, publicationId].every(nonblank))
+      fail("invalid_record", "Terminal recovery address is invalid.");
+    try {
+      const tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+        "artifacts", "controls", "slots", "witnesses"], "readonly");
+      const [accountRaw, raw] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+          .get([accountId, campaignId, publicationId]) as IDBRequest<unknown>)
+      ]);
+      if (accountRaw === undefined) fail("invalid_record", "Terminal recovery account is missing.");
+      const account = checkedAccount(accountRaw, accountId);
+      if (raw === undefined) return null;
+      const recovery = checkedTerminalRecovery(raw, accountId, campaignId, publicationId);
+      const [sourceRaw, terminalRaw, controlRaw, addressRaw] = await Promise.all([
+        requestValue(tx.objectStore("artifacts")
+          .get([accountId, recovery.sourceArtifactId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore("artifacts")
+          .get([accountId, recovery.artifactId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore("controls")
+          .get([accountId, campaignId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore("slots")
+          .get([accountId, recovery.slotId]) as IDBRequest<unknown>)
+      ]);
+      if (!object(sourceRaw) || typeof sourceRaw.raw !== "string" ||
+          !retainedArtifactMatches(sourceRaw, envelopeFromRaw(sourceRaw.raw)) ||
+          envelopeFromRaw(sourceRaw.raw).snapshot !== recovery.sourceSnapshotRaw ||
+          envelopeFromRaw(sourceRaw.raw).publicationId !== recovery.sourcePublicationId ||
+          !object(terminalRaw) || terminalRaw.raw !== recovery.envelopeRaw ||
+          !retainedArtifactMatches(terminalRaw, envelopeFromRaw(recovery.envelopeRaw)) ||
+          !object(controlRaw) || !object(controlRaw.value) || controlRaw.value.closed !== true ||
+          controlRaw.value.headArtifactId !== recovery.artifactId ||
+          controlRaw.value.headPublicationId !== publicationId ||
+          controlRaw.value.headRevision !== recovery.expectedHead.revision + 1 ||
+          !object(addressRaw) || addressRaw.artifactId !== recovery.artifactId ||
+          addressRaw.publicationId !== publicationId || addressRaw.raw !== recovery.envelopeRaw)
+        fail("invalid_record", "Terminal recovery lost its retained source, closed head or address.");
+      const published = await new CampaignIndexedDbStore(this.db).read(accountId, campaignId,
+        recovery.slotId, tx);
+      if (!published || published.artifactRaw !== recovery.envelopeRaw ||
+          published.slotRaw !== recovery.envelopeRaw || !published.control.closed)
+        fail("invalid_record", "Terminal recovery failed closed campaign readback.");
+      if (recovery.status === "accepted_pending_settlement") {
+        if (account.revision !== recovery.expectedAccountRevision ||
+            !exactEqual(account.profile, recovery.sourceProfile))
+          fail("conflict", "Pending terminal source account changed.");
+      } else if (!terminalReceiptsMatch(account, recovery))
+        fail("invalid_record", "Completed terminal account receipts are missing.");
+      return recovery;
+    } catch (error) { throw classify(error, "invalid_record"); }
+  }
+
+  async readPendingTerminalForAccount(accountId: string): Promise<CleanEpochTerminalRecovery | null> {
+    if (!nonblank(accountId)) fail("invalid_record", "Terminal account is invalid.");
+    let rows: unknown[];
+    try {
+      const tx = this.db.transaction(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, "readonly");
+      rows = await requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+        .index("byAccount").getAll(accountId) as IDBRequest<unknown[]>);
+    } catch (error) { throw classify(error, "unavailable"); }
+    const pending: CleanEpochTerminalRecovery[] = [];
+    for (const raw of rows) {
+      if (!object(raw) || !nonblank(raw.campaignId) || !nonblank(raw.publicationId))
+        fail("invalid_record", "Account has malformed terminal recovery.");
+      const verified = await this.readTerminalRecovery(accountId, raw.campaignId, raw.publicationId);
+      if (!verified) fail("invalid_record", "Account terminal recovery disappeared.");
+      if (verified.status === "accepted_pending_settlement") pending.push(verified);
+    }
+    if (pending.length > 1) fail("invalid_record", "Account has multiple pending terminal settlements.");
+    return pending[0] ?? null;
+  }
+
+  async readTerminalForSource(accountId: string, campaignId: string,
+    sourcePublicationId: string): Promise<CleanEpochTerminalRecovery | null> {
+    if (![accountId, campaignId, sourcePublicationId].every(nonblank))
+      fail("invalid_record", "Terminal source identity is invalid.");
+    let raw: unknown;
+    try {
+      const tx = this.db.transaction(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, "readonly");
+      raw = await requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+        .index("bySourcePublication")
+        .get([accountId, campaignId, sourcePublicationId]) as IDBRequest<unknown>);
+    } catch (error) { throw classify(error, "unavailable"); }
+    if (raw === undefined) return null;
+    if (!object(raw) || !nonblank(raw.publicationId))
+      fail("invalid_record", "Terminal source index is malformed.");
+    const recovery = await this.readTerminalRecovery(accountId, campaignId, raw.publicationId);
+    if (!recovery || recovery.sourcePublicationId !== sourcePublicationId)
+      fail("invalid_record", "Terminal source index disagrees with recovery.");
+    return recovery;
+  }
+
+  /** The account profile and completion marker advance together or neither does. */
+  async completeTerminalSettlement(accountId: string, campaignId: string,
+    publicationId: string): Promise<CleanEpochAccountWriteResult> {
+    await this.readTerminalRecovery(accountId, campaignId, publicationId);
+    let tx: IDBTransaction;
+    try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+      "artifacts", "controls", "slots"], "readwrite"); }
+    catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    let expectedAccount: CleanEpochAccountRecord;
+    let expectedRecovery: CleanEpochTerminalRecovery;
+    let status: CleanEpochAccountWriteResult["status"] = "committed";
+    try {
+      const [accountRaw, recoveryRaw] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
+          .get([accountId, campaignId, publicationId]) as IDBRequest<unknown>)
+      ]);
+      if (accountRaw === undefined || recoveryRaw === undefined)
+        fail("invalid_record", "Terminal settlement lacks account or recovery.");
+      const account = checkedAccount(accountRaw, accountId);
+      const recovery = checkedTerminalRecovery(recoveryRaw, accountId, campaignId, publicationId);
+      const [controlRaw, artifactRaw, addressRaw] = await Promise.all([
+        requestValue(tx.objectStore("controls").get([accountId, campaignId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore("artifacts").get([accountId, recovery.artifactId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore("slots").get([accountId, recovery.slotId]) as IDBRequest<unknown>)
+      ]);
+      if (!object(controlRaw) || !object(controlRaw.value) ||
+          controlRaw.value.headArtifactId !== recovery.artifactId ||
+          controlRaw.value.headPublicationId !== publicationId || controlRaw.value.closed !== true ||
+          !object(artifactRaw) || artifactRaw.raw !== recovery.envelopeRaw ||
+          !object(addressRaw) || addressRaw.artifactId !== recovery.artifactId ||
+          addressRaw.publicationId !== publicationId)
+        fail("invalid_record", "Terminal settlement lost closed publication authority.");
+      if (recovery.status === "settlement_completed") {
+        if (!terminalReceiptsMatch(account, recovery))
+          fail("invalid_record", "Completed settlement receipts are inconsistent.");
+        expectedAccount = account;
+        expectedRecovery = recovery;
+        status = "same_source_retry";
+      } else {
+        if (account.revision !== recovery.expectedAccountRevision ||
+            !exactEqual(account.profile, recovery.sourceProfile))
+          fail("stale_head", "Terminal settlement account revision changed.");
+        const snapshot = deserializeSnapshot(envelopeFromRaw(recovery.envelopeRaw).snapshot);
+        const projection = projectRetirementSettlement({ profile: account.profile, snapshot,
+          publication: publicationFor(snapshot, { campaignId, publicationId,
+            updatedAt: recovery.createdAt }), slotId: recovery.slotId,
+          addressSlotIds: recovery.addressSlotIds, consumerPlans: recovery.consumerPlans });
+        if (projection.payoutTransactionId !== recovery.payoutTransactionId ||
+            projection.estateSourceRunId !== recovery.estateSourceRunId ||
+            projection.estateDepositId !== recovery.estateDepositId ||
+            !validProfile(projection.profile, accountId))
+          fail("invalid_record", "Terminal settlement projection conflicts with recovery.");
+        expectedAccount = { ...account, revision: account.revision + 1, profile: projection.profile };
+        expectedRecovery = { ...recovery, status: "settlement_completed",
+          completedAccountRevision: expectedAccount.revision };
+        if (!validTerminalRecovery(expectedRecovery, accountId, campaignId, publicationId))
+          fail("invalid_record", "Completed terminal recovery is malformed.");
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).put(expectedAccount));
+        this.afterWrite?.(tx);
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE).put(expectedRecovery));
+        this.afterWrite?.(tx);
+      }
+      await done;
+    } catch (error) {
+      try { tx.abort(); } catch { /* already settled */ }
+      try { await done; } catch { /* original error is authoritative */ }
+      throw classify(error, "aborted");
+    }
+    const [account, recovery] = await Promise.all([
+      this.read(accountId), this.readTerminalRecovery(accountId, campaignId, publicationId)
+    ]);
+    if (!account || !recovery || !exactEqual(recovery, expectedRecovery) ||
+        (status === "committed" && !exactEqual(account, expectedAccount)) ||
+        !terminalReceiptsMatch(account, recovery))
+      fail("readback_failed", "Completed terminal settlement failed exact readback.");
+    return { status, readback: account };
+  }
+
   /** Ordinary-save entry point. The accepted head remains nonplayable until its consumers complete. */
   async publishDescendant(request: CleanEpochDescendantRequest): Promise<CleanEpochDescendantResult> {
     const { publication: input, sessionWitness, expectedAccountRevision, sourceSlotId,
@@ -938,7 +1458,7 @@ export class CleanEpochAccountStore {
       (_, tx) => this.beforeWrite?.(tx), (_, tx) => this.afterWrite?.(tx));
     const publication = await publicationStore.publish(input, {
       storeNames: [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
-        CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE],
+        CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE],
       ...(sessionWitness ? { firstSessionWitness: sessionWitness } : {}),
       verify: async (tx, current) => {
         const [accountRaw, sourceAddress, destinationAddress, retainedRaw, sourceRaw, predecessorRaw] = await Promise.all([
@@ -952,6 +1472,7 @@ export class CleanEpochAccountStore {
         if (accountRaw === undefined || !current)
           fail("invalid_record", "Descendant lacks retained account, first publication or predecessor.");
         const account = checkedAccount(accountRaw, input.accountId);
+        await this.assertNoPendingTerminal(tx, input.accountId);
         const attempt = await this.campaignAttempt(tx, input.accountId, input.campaignId);
         const firstRaw = await requestValue(tx.objectStore(CLEAN_EPOCH_RECOVERY_STORE)
           .get([input.accountId, attempt.slotId]) as IDBRequest<unknown>);
@@ -1143,7 +1664,8 @@ export class CleanEpochAccountStore {
       fail("invalid_record", "Descendant consumer identity is invalid.");
     let tx: IDBTransaction;
     try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
-      CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE, "artifacts", "controls", "slots", "witnesses"], "readwrite"); }
+      CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+      "artifacts", "controls", "slots", "witnesses"], "readwrite"); }
     catch (error) { throw classify(error, "unavailable"); }
     const done = complete(tx);
     let status: "committed" | "same_source_retry" = "committed";
@@ -1171,6 +1693,7 @@ export class CleanEpochAccountStore {
         expectedAccount = account;
         expectedRecovery = recovery;
       } else {
+        await this.assertNoPendingTerminal(tx, accountId);
         if (account.revision !== recovery.expectedAccountRevision)
           fail("stale_head", "Descendant consumer account revision changed.");
         const snapshot = deserializeSnapshot(envelopeFromRaw(recovery.envelopeRaw).snapshot);
@@ -1263,7 +1786,7 @@ export class CleanEpochAccountStore {
       fail("invalid_record", "Consumer completion identity is invalid.");
     let tx: IDBTransaction;
     try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
-      "artifacts", "controls", "slots", "witnesses"], "readwrite"); }
+      CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, "artifacts", "controls", "slots", "witnesses"], "readwrite"); }
     catch (error) { throw classify(error, "unavailable"); }
     const done = complete(tx);
     let status: CleanEpochConsumerCompletionResult["status"] = "committed";
@@ -1290,6 +1813,7 @@ export class CleanEpochAccountStore {
         expectedAccount = account;
         expectedRecovery = recovery;
       } else {
+        await this.assertNoPendingTerminal(tx, accountId);
         if (account.revision !== recovery.expectedAccountRevision)
           fail("stale_head", "Consumer completion account revision changed.");
         const profile = firstCampaignProjection(account, attempt, recovery);
@@ -1350,7 +1874,7 @@ export class CleanEpochAccountStore {
     let transaction: IDBTransaction;
     try { transaction = this.db.transaction(expectedRevision === null ? [CLEAN_EPOCH_ACCOUNT_STORE] :
       [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
-        CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE], "readwrite"); }
+        CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE], "readwrite"); }
     catch (error) { throw classify(error, "unavailable"); }
     const done = complete(transaction);
     let next: CleanEpochAccountRecord;
@@ -1373,6 +1897,7 @@ export class CleanEpochAccountStore {
       }
       if (status === "committed") {
         if (expectedRevision !== null) {
+          await this.assertNoPendingTerminal(transaction, accountId);
           // The account CAS and every publication recovery share this transaction scope.
           // An edit cannot consume the revision reserved by a lost campaign caller.
           const attempts = await requestValue(transaction.objectStore(CLEAN_EPOCH_ATTEMPT_STORE)
