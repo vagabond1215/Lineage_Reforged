@@ -241,3 +241,6 @@ Latest acceptance update (2026-09-28): Soundings is now independently accepted t
 
 
 Latest calibration update (2026-09-28): `0.1.1-prealpha` is justified as the smallest patch candidate because accepted Soundings now closes authoritatively through exact +5g reward and durable continuation. Root `GAME_VERSION` is now `0.1.1-prealpha` under `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md`; `INTEGRATED_LOOP` remains unchanged and no `0.2.0-prealpha` vertical-slice maturity is inferred.
+## 2026-10-02 G9B retained Normal defeat recovery publication
+
+**RETAINED_NORMAL_DEFEAT_RECOVERY_OWNER_VERIFIED; G9C_AND_ACTIVATION_HELD.** Source `09c4d74f`, code `13622ef2`. The selected App now recovers one exact retained Normal defeat pending receipt through the campaign-session owner and clean-epoch descendant publication/consumers/readback. Focused native 8/8, adjacent browser 130/130 and Node 126/126 pass; broad UI remains 137 baseline diagnostics. The next installed package is **G9C revisioned account/Legacy actions** from G9A. Natural combat-triggered unsaved pending, G9D-F lifecycle/destruction, G10 deployment/post-epoch durability and planned parent acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. This supersedes G9A-active wording below without rewriting chronology.

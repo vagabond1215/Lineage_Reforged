@@ -271,3 +271,6 @@ Historical roadmap and sequenced-plan rows remain chronology unless a live curre
 ## Maintenance Rule
 
 Update this register only when a route identity, gate classification, reopening trigger, or near-term posture materially changes. Historical design documents should remain intact unless they contain a false live pointer that still controls execution.
+## 2026-10-02 DEV-0.7.1 Slice G9B retained Normal defeat recovery
+
+**RETAINED_NORMAL_DEFEAT_RECOVERY_OWNER_VERIFIED; G9C_AND_ACTIVATION_HELD** from synchronized source `09c4d74f`, code checkpoint `13622ef2`. Selected App retained pending recovery uses exact source/account/head/address, `completePendingNormalDefeatRecovery`, ordinary descendant consumers and exact ready readback; accepted retry/restart reuses the publication. Focused browser 8/8, adjacent browser 130/130, Node 126/126, build and Node UI-config pass; broad UI retains 137 baseline diagnostics. Focused record: `docs/dev/dev-0.7.1-slice-g9b-normal-defeat-recovery-publication-record.md`. Installed **G9C revisioned account and Legacy actions**. Natural combat-triggered unsaved pending, terminal/closed lifecycle, deletion/reset, G10 activation/post-epoch durability and parent acceptance remain held. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. This supersedes G9B-active wording below without rewriting chronology.
