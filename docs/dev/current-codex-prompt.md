@@ -10,6 +10,12 @@ Date: 2026-10-02. Internal implementation slice of planned primary `DEV-0.7.1`; 
 
 Implement explicit clean-epoch slot address deletion and post-settlement terminal address closure/cleanup, plus exactly-once retired inheritance-use consumption under the already accepted rules. Keep immutable campaign artifacts, terminal/descendant/first recoveries, Soundings witness, Chronicle, estate and unrelated account/slot state durable. Do not route through retained localStorage deletion or inheritance writers.
 
+## Entry hardening gate
+
+Before any G9E mutation, verify the connector-authored G9D hardening checkpoints now on hosted `master`: `7888f372` requires exact equality between retained account-history `saveSlotIds` and current IndexedDB campaign address membership at retirement, and `b20c7c0c` adds focused rejection coverage plus a distinct completed-settlement post-commit readback-loss/retry case. These connector edits are **not executable acceptance evidence**.
+
+Run the focused native terminal suite first and require **14/14 PASS**. Then re-run the adjacent epoch owner/browser suites, campaign/Soundings/survey Node suites, Node UI-config typecheck, app-local Vite build, and broad UI characterization against the known 137-diagnostic baseline. If either hardening case fails, repair G9D narrowly and re-run before beginning G9E. Do not reuse the prior 12/12 G9D count as evidence for the hardened hosted head.
+
 ## Required implementation and proof
 
 - Define the exact address and account revision CAS for manual/quick deletion. A player delete removes only the addressed artifact/publication pointer and adjusts the corresponding run-history `saveSlotIds` once. Other addresses and the singular campaign head remain authoritative. Reject stale, malformed, pending, cross-account or competing requests without partial effects. Define the no-address run outcome from accepted G9A rules; if an additional shared contract is genuinely missing, stop at the smallest decision-complete prerequisite.
