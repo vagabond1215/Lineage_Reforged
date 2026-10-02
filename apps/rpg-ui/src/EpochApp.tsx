@@ -14,6 +14,7 @@ import { CleanEpochAccountAdapter, createEpochAccountId } from './game-shell/cle
 import { CLEAN_EPOCH_SESSION_STORAGE_KEY, openCleanEpochAccountStore,
   type CleanEpochAccountStore, type CleanEpochSlotSummary } from './game-shell/cleanEpochAccountStore.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
+import { CleanEpochNormalDefeatRecoveryAdapter } from './game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochLauncherRead } from './game-shell/cleanEpochLauncherRead.js';
 import type { LauncherAccountDeletionResult, LauncherAuthResult, LauncherRuntimeSession } from './game-shell/launcherAuthManager.js';
@@ -22,7 +23,8 @@ import { createAccountAccessState, gameShellReducer, getPreferredLoadSlotId, get
   type SaveSlotId, type SaveSlotSummary } from './game-shell/state.js';
 
 type Services = { owner: CleanEpochAccountStore; accounts: CleanEpochAccountAdapter;
-  launcher: CleanEpochLauncherRead; first: CleanEpochFirstCampaignAdapter; descendant: CleanEpochDescendantAdapter };
+  launcher: CleanEpochLauncherRead; first: CleanEpochFirstCampaignAdapter; descendant: CleanEpochDescendantAdapter;
+  normalDefeat: CleanEpochNormalDefeatRecoveryAdapter };
 type Address = { artifactId: string; publicationId: string };
 type Inventory = { account: Awaited<ReturnType<CleanEpochAccountStore['readSelected']>> & {};
   slots: CleanEpochSlotSummary[] };
@@ -159,7 +161,8 @@ export function EpochApp() {
       if (generation !== initializationGeneration.current) { owner.close(); return; }
       const accounts = new CleanEpochAccountAdapter(owner);
       const next: Services = { owner, accounts, launcher: new CleanEpochLauncherRead(owner, accounts),
-        first: new CleanEpochFirstCampaignAdapter(owner), descendant: new CleanEpochDescendantAdapter(owner) };
+        first: new CleanEpochFirstCampaignAdapter(owner), descendant: new CleanEpochDescendantAdapter(owner),
+        normalDefeat: new CleanEpochNormalDefeatRecoveryAdapter(owner) };
       const selected = await next.launcher.bootstrap();
       if (selected.status === 'blocked') throw new Error(selected.message);
       if (selected.value.mode === 'pick_account') {
@@ -254,13 +257,27 @@ export function EpochApp() {
       notice: { tone: 'accent', title: 'Campaign Ready', detail: `${getSaveSlotLabel(slotId)} read back from the campaign store.` } });
   };
 
+  const recoverLoaded = async (accountId: string, slotId: SaveSlotId, expectedAccountRevision: number,
+    loaded: { snapshot: SaveSnapshot; sessionControl: CampaignSessionControl }) => {
+    if (!services || !hasPendingNormalDefeat(loaded.snapshot)) return loaded;
+    const recovered = await services.normalDefeat.recover({ accountId, sourceSlotId: slotId,
+      destinationSlotId: slotId, expectedDestinationAddress: {
+        artifactId: loaded.sessionControl.loadedArtifactId,
+        publicationId: loaded.sessionControl.loadedPublicationId },
+      expectedAccountRevision, snapshot: loaded.snapshot, control: loaded.sessionControl,
+      receiptId: loaded.snapshot.normalDefeatReceipts?.find(receipt => receipt.posture === 'recovery_pending')?.receiptId ?? '' });
+    if (recovered.status === 'blocked') throw new Error(recovered.message);
+    return recovered.value.loaded;
+  };
+
   const load = (session: LauncherRuntimeSession, accountId: string, slotId: SaveSlotId) =>
     guarded(async () => {
       if (!services) throw new Error('Epoch owner is unavailable.');
       const found = await inventory(services, accountId);
       const result = await services.launcher.load(accountId, found.account.revision, slotId);
       if (result.status === 'blocked') throw new Error(result.message);
-      await enter(session, accountId, slotId, result.value.slot.loaded);
+      await enter(session, accountId, slotId,
+        await recoverLoaded(accountId, slotId, result.value.account.revision, result.value.slot.loaded));
     }, undefined);
 
   const activateSlot = (slotId: ManualSaveSlotId) => guarded(async () => {
@@ -271,7 +288,8 @@ export function EpochApp() {
     if (slot.status === 'ready') {
       const result = await services.launcher.load(found.account.accountId, found.account.revision, slotId);
       if (result.status === 'blocked') throw new Error(result.message);
-      await enter(state.launcherSession, found.account.accountId, slotId, result.value.slot.loaded);
+      await enter(state.launcherSession, found.account.accountId, slotId,
+        await recoverLoaded(found.account.accountId, slotId, result.value.account.revision, result.value.slot.loaded));
     } else if (slot.status === 'prepared') {
       const resumed = await services.first.resume(found.account.accountId, slotId);
       if (resumed.status === 'blocked') throw new Error(resumed.message);
@@ -301,7 +319,7 @@ export function EpochApp() {
 
   const save = (destinationSlotId: SaveSlotId) => guarded(async () => {
     if (state.screen !== 'IN_GAME' || !services) return;
-    if (hasPendingNormalDefeat(state.snapshot)) { unsupported('Defeat Recovery'); return; }
+    const defeatPending = hasPendingNormalDefeat(state.snapshot);
     const sourceSlotId = sourceSlot.current;
     const expectedDestinationAddress = observedAddresses.current[destinationSlotId];
     if (!sourceSlotId || expectedDestinationAddress === undefined)
@@ -309,9 +327,13 @@ export function EpochApp() {
     const accountId = state.accountProfile.accountId;
     const expectedAccountRevision = observedAccountRevision.current;
     if (expectedAccountRevision === null) throw new Error('Session account revision was not captured.');
-    const result = await services.descendant.save({ accountId, sourceSlotId, destinationSlotId,
-      expectedDestinationAddress, expectedAccountRevision,
-      snapshot: state.snapshot, control: state.campaignSessionControl });
+    const result = defeatPending ? await services.normalDefeat.recover({ accountId, sourceSlotId,
+      destinationSlotId, expectedDestinationAddress, expectedAccountRevision,
+      snapshot: state.snapshot, control: state.campaignSessionControl,
+      receiptId: state.snapshot.normalDefeatReceipts?.find(receipt => receipt.posture === 'recovery_pending')?.receiptId ?? '' })
+      : await services.descendant.save({ accountId, sourceSlotId, destinationSlotId,
+        expectedDestinationAddress, expectedAccountRevision,
+        snapshot: state.snapshot, control: state.campaignSessionControl });
     if (result.status === 'blocked') throw new Error(result.message);
     const found = await inventory(services, accountId);
     await captureAddresses(services, accountId, state.activeSlotId);
@@ -320,7 +342,7 @@ export function EpochApp() {
     dispatch({ type: 'COMPLETE_IN_GAME_SAVE', launcherSession: state.launcherSession,
       accountProfile: found.account.profile, slots: slotSummaries(found.slots), activeSlotId: state.activeSlotId,
       snapshot: result.value.loaded.snapshot, campaignSessionControl: result.value.loaded.sessionControl,
-      notice: { tone: 'success', title: 'Game Data Saved',
+      notice: { tone: 'success', title: defeatPending ? 'Defeat Recovery Saved' : 'Game Data Saved',
         detail: `Saved to ${getSaveSlotLabel(destinationSlotId)} and verified its exact ready address.` } });
   }, undefined);
 
