@@ -2,7 +2,13 @@
 
 Date: 2026-10-02. Source: hosted `master` after G9E implementation commit `618c8e5dfe4aac961467df92e9e08f3064273a0b` and hosted readback `3335261c6e700e711aa688ebb931af0d3f7ac2f5`. Internal support slice of planned primary `DEV-0.7.1`; G9F, G10, parent acceptance, deployment and Game-version change remain held until this gate is closed.
 
-## Disposition
+## Closure — 2026-10-03
+
+**G9E_1_HARDENING_VERIFIED; G9F_NEXT; ACTIVATION_HELD.** Starting from synchronized hosted `master` `2614b788`, the focused QA now rejects an accepted envelope/recovery `generationId` as a slot-generation CAS identity. A published, witnessed two-address v5 campaign upgrades to ready v6 with its first recovery, consumer receipts, artifact, control and witness retained through restart; disagreeing migration aborts. Two-address terminal cleanup rolled back at all eight transactional writes under both abort and quota injection, then completed on exact retry after restart. A separate lost post-commit readback retained the same closure marker, two receipts and account revision without duplicate mutation. The selected App refreshes inventory before its delete notice: an exact old-generation retry after Slot 1 reuse reported the newer occupant, while current deletion reported empty. Synthetic QA accounts were used; no user campaign was changed.
+
+Fresh native Chromium G9E **13/13**, hardened G9D **14/14** and adjacent owner/browser **130/130** passed. Selected-App old-generation exact retry, current deletion and retirement were exercised. Focused campaign/Soundings/survey Node suites passed **174/174**; Node UI-config typecheck, app-local Vite build and diff check passed. Broad UI typecheck retained **137 known diagnostics**, none in the changed App file. Full workspace `npm test` was not used as a green gate under the validation matrix. The accepted G9F prompt is reinstalled only after this gate; G9F implementation has not begun. G10, parent acceptance, deployment and Game-version change remain held.
+
+## Initial disposition — 2026-10-02
 
 **G9E_IMPLEMENTATION_RETAINED; G9E_1_HARDENING_REQUIRED_BEFORE_G9F.** Do not unwind the additive v6 design. The inspected implementation follows the accepted campaign-keyed first-authority and slot-generation architecture, retains historical evidence, supports physical-slot reuse, closes terminal addresses after settlement and preserves archival-retirement semantics. The remaining work is a narrow hardening pass, not a schema redesign.
 

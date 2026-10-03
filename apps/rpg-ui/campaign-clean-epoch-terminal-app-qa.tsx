@@ -85,6 +85,37 @@ async function start() {
           pending: pending && { publicationId: pending.publicationId, status: pending.status } }, null, 2);
       } finally { selected.close(); }
     })().catch(error => { inspection.textContent = String(error); }); };
+    document.querySelector<HTMLButtonElement>('#replace-captured-slot')!.onclick = () => { void (async () => {
+      const competing = await openCleanEpochAccountStore();
+      try {
+        const [account, pointer, slot] = await Promise.all([
+          competing.readSelected(accountId!), competing.readSlotGeneration(accountId!, 'slot-1'),
+          competing.readSlot(accountId!, 'slot-1')
+        ]);
+        if (!account || !pointer || slot.status !== 'ready')
+          throw new Error('Replacement requires one ready captured slot.');
+        const deletedAt = new Date().toISOString();
+        await competing.deleteSlotAddress({ accountId: accountId!, slotId: 'slot-1',
+          expectedAccountRevision: account.revision,
+          expectedSlotGenerationId: pointer.slotGenerationId,
+          expectedAddress: { artifactId: slot.loaded.sessionControl.loadedArtifactId,
+            publicationId: slot.loaded.sessionControl.loadedPublicationId },
+          deletedAt });
+        const replacement = await new CleanEpochFirstCampaignAdapter(competing).start(accountId!,
+          { ...form(), playerName: 'Mara Replacement App' });
+        if (replacement.status !== 'ready') throw new Error(`Replacement failed: ${JSON.stringify(replacement)}`);
+        // Keep the old App's next delete request byte-identical to the retained QA receipt.
+        const NativeDate = Date;
+        (globalThis as { Date: DateConstructor }).Date = class extends NativeDate {
+          constructor(...args: any[]) { super(args.length === 0 ? deletedAt : args[0]); }
+          static now() { return NativeDate.parse(deletedAt); }
+        } as DateConstructor;
+        inspection.textContent = `Replacement ready in Slot 1; old App deletion source remains captured.\n` +
+          JSON.stringify({ accountRevision: (await competing.readSelected(accountId!))?.revision,
+            currentSlotGenerationId: (await competing.readSlotGeneration(accountId!, 'slot-1'))?.slotGenerationId,
+            oldSlotGenerationId: pointer.slotGenerationId }, null, 2);
+      } finally { competing.close(); }
+    })().catch(error => { inspection.textContent = String(error); }); };
   } finally { owner.close(); }
   createRoot(document.querySelector('#root')!).render(<EpochApp />);
 }

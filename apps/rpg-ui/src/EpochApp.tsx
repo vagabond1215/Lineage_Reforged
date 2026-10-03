@@ -226,14 +226,15 @@ export function EpochApp() {
   useEffect(() => { try { window.localStorage.setItem(TIME_KEY, JSON.stringify(timeSettings)); } catch { /* Optional preference. */ } }, [timeSettings]);
 
   const showMenu = async (session: LauncherRuntimeSession, accountId: string,
-    message: GameShellNotice | null = null, section?: LauncherSectionId) => {
+    message: GameShellNotice | ((found: Inventory) => GameShellNotice) | null = null,
+    section?: LauncherSectionId) => {
     if (!services) throw new Error('Epoch owner is unavailable.');
     const found = await inventory(services, accountId);
     menuAccountRevision.current = found.account.revision;
     await captureMenuDeletionSources(services, accountId, found.slots);
     if (section) setLauncherSection(section);
     dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: session, accountProfile: found.account.profile,
-      slots: slotSummaries(found.slots), notice: message });
+      slots: slotSummaries(found.slots), notice: typeof message === 'function' ? message(found) : message });
   };
 
   const signIn = (options: { accountId: string; password: string; stayLoggedIn: boolean }): Promise<LauncherAuthResult> =>
@@ -419,8 +420,10 @@ export function EpochApp() {
           slotId, expectedAccountRevision, expectedSlotGenerationId: source.slotGenerationId,
           expectedAddress: source.address, deletedAt: new Date().toISOString() });
         await showMenu(state.launcherSession, state.accountProfile.accountId,
-          { tone: 'success', title: 'Save Address Removed',
-            detail: `${getSaveSlotLabel(slotId)} is empty. Campaign history remains retained.` });
+          found => ({ tone: 'success', title: 'Save Address Removed',
+            detail: found.slots.find(slot => slot.slotId === slotId)?.status === 'empty'
+              ? `${getSaveSlotLabel(slotId)} is empty. Campaign history remains retained.`
+              : `The earlier ${getSaveSlotLabel(slotId)} address was removed. The slot is currently occupied; campaign history remains retained.` }));
       } catch (error) {
         await showMenu(state.launcherSession, state.accountProfile.accountId,
           blockedNotice(error instanceof Error ? error.message : String(error)));

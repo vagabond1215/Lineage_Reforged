@@ -1,4 +1,9 @@
 import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.ts';
+import { admitCampaignMutation } from '../../packages/engines/game-engine/src/campaign-session.ts';
+import { createPlayerQuestAcceptanceCommand, executePlayerQuestAcceptanceCommand } from '../../packages/engines/game-engine/src/player-quest-acceptance.ts';
+import { createPlayerTravelCommand, executePlayerTravelCommand } from '../../packages/engines/game-engine/src/player-travel.ts';
+import { advanceAshenReefSurveyCaller } from './src/runtime/ashenReefSurveyCaller.ts';
+import { submitSoundingsTurnInCaller } from './src/runtime/soundingsTurnInCaller.ts';
 import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from './src/game-shell/characterCreationCatalog.ts';
 import { createDefaultCharacterCreationFormState } from './src/game-shell/characterCreationForm.ts';
 import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.ts';
@@ -9,6 +14,7 @@ import { openCleanEpochAccountStore, type CleanEpochAccountStore,
   CLEAN_EPOCH_ADDRESS_DELETION_STORE, CLEAN_EPOCH_DATABASE_VERSION,
   CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
   CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+  CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE,
   type CleanEpochAddressDeletionRequest } from './src/game-shell/cleanEpochAccountStore.ts';
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.ts';
 
@@ -132,6 +138,35 @@ async function suite() {
       account.profile.history.runRecords[0]?.saveSlotIds[0] === 'quick-save',
       'one-address deletion changed other address or campaign history');
     context.owner.close();
+  });
+  await test('accepted save and recovery generation IDs cannot authorize slot deletion', async () => {
+    const context = await setup('distinct-generations');
+    const first = await start(context.owner, context.accountId, 'Mara Generations');
+    const request = await deletionRequest(context.owner, context.accountId, 'slot-1');
+    const recovery = await context.owner.readHistoricalFirstRecovery(context.accountId,
+      first.loaded.sessionControl.campaignId);
+    const db = await rawDatabase(context.databaseName);
+    const envelope = await new Promise<{ generationId: string }>((resolve, reject) => {
+      const tx = db.transaction('slots');
+      const read = tx.objectStore('slots').get([context.accountId, 'slot-1']);
+      read.onsuccess = () => {
+        try { resolve(JSON.parse(read.result.raw) as { generationId: string }); }
+        catch (error) { reject(error); }
+      };
+      read.onerror = () => reject(read.error);
+    });
+    check(typeof envelope.generationId === 'string' && envelope.generationId.length > 0 &&
+      recovery?.status === 'consumers_completed' &&
+      recovery.generationId === envelope.generationId &&
+      envelope.generationId !== request.expectedSlotGenerationId,
+      'accepted envelope/recovery generation aliased physical slot occupancy');
+    let refused = false;
+    try { await context.owner.deleteSlotAddress({ ...request,
+      expectedSlotGenerationId: envelope.generationId }); } catch { refused = true; }
+    check(refused && (await context.owner.readSlot(context.accountId, 'slot-1')).status === 'ready' &&
+      (await context.owner.readSelected(context.accountId))?.revision === request.expectedAccountRevision,
+      'save/publication generation satisfied slot-generation CAS');
+    db.close(); context.owner.close();
   });
   await test('terminal cleanup removes every address after settlement and keeps archived history', async () => {
     const context = await setup('terminal-cleanup');
@@ -263,8 +298,8 @@ async function suite() {
       'multi-address terminal cleanup lost restart marker');
     reopened.close();
   });
-  await test('terminal cleanup abort and quota at every write preserve completed closed address', async () => {
-    for (const fault of ['abort', 'quota'] as const) for (let target = 1; target <= 5; target++) {
+  await test('two-address terminal cleanup abort and quota at all eight writes permit exact retry', async () => {
+    for (const fault of ['abort', 'quota'] as const) for (let target = 1; target <= 8; target++) {
       let armed = false; let writes = 0;
       const context = await setup(`terminal-${fault}-${target}`, {
         afterWrite: tx => { if (armed && fault === 'abort' && ++writes === target) tx.abort(); },
@@ -272,14 +307,23 @@ async function suite() {
           throw new DOMException('synthetic quota', 'QuotaExceededError'); }
       });
       const first = await start(context.owner, context.accountId, 'Mara Terminal Fault');
-      const retired = await new CleanEpochTerminalAdapter(context.owner).retire({
-        accountId: context.accountId, sourceSlotId: 'slot-1',
+      const saved = await new CleanEpochDescendantAdapter(context.owner).save({
+        accountId: context.accountId, sourceSlotId: 'slot-1', destinationSlotId: 'quick-save',
         expectedAccountRevision: (await context.owner.readSelected(context.accountId))!.revision,
         snapshot: first.loaded.snapshot, control: first.loaded.sessionControl,
-        expectedSourceAddress: { artifactId: first.loaded.sessionControl.loadedArtifactId,
-          publicationId: first.loaded.sessionControl.loadedPublicationId } });
+        expectedDestinationAddress: null });
+      if (saved.status !== 'ready') throw new Error(`Cross-slot fault setup failed: ${JSON.stringify(saved)}`);
+      const retired = await new CleanEpochTerminalAdapter(context.owner).retire({
+        accountId: context.accountId, sourceSlotId: 'quick-save',
+        expectedAccountRevision: (await context.owner.readSelected(context.accountId))!.revision,
+        snapshot: saved.value.loaded.snapshot, control: saved.value.loaded.sessionControl,
+        expectedSourceAddress: { artifactId: saved.value.loaded.sessionControl.loadedArtifactId,
+          publicationId: saved.value.loaded.sessionControl.loadedPublicationId } });
       if (retired.status !== 'completed') throw new Error(`Retirement failed: ${JSON.stringify(retired)}`);
-      const pointer = await context.owner.readSlotGeneration(context.accountId, 'slot-1');
+      check(retired.recovery.addressSlotIds.length === 2,
+        'fault setup lost one terminal address');
+      const pointers = await Promise.all(['slot-1', 'quick-save'].map(slotId =>
+        context.owner.readSlotGeneration(context.accountId, slotId as 'slot-1' | 'quick-save')));
       const closedAt = new Date().toISOString();
       armed = true;
       let failed = false;
@@ -289,19 +333,78 @@ async function suite() {
       armed = false;
       check(failed && (await context.owner.readSelected(context.accountId))?.revision === retired.account.revision &&
         (await context.owner.readSlot(context.accountId, 'slot-1')).status === 'closed' &&
+        (await context.owner.readSlot(context.accountId, 'quick-save')).status === 'closed' &&
         (await context.owner.readTerminalRecovery(context.accountId,
           retired.recovery.campaignId, retired.recovery.publicationId))?.addressClosure === undefined &&
         (await context.owner.readAddressDeletionReceipt(context.accountId, 'slot-1',
-          pointer!.slotGenerationId)) === null,
-        `${fault} at terminal write ${target} partially removed closed address`);
-      const retry = await context.owner.closeTerminalAddresses(context.accountId,
+          pointers[0]!.slotGenerationId)) === null &&
+        (await context.owner.readAddressDeletionReceipt(context.accountId, 'quick-save',
+          pointers[1]!.slotGenerationId)) === null,
+        `${fault} at terminal write ${target} partially removed one of two closed addresses`);
+      context.owner.close();
+      const reopened = await openCleanEpochAccountStore({ name: context.databaseName });
+      const retry = await reopened.closeTerminalAddresses(context.accountId,
         retired.recovery.campaignId, retired.recovery.publicationId,
         retired.account.revision, closedAt);
       check(retry.status === 'committed' &&
-        (await context.owner.readSlot(context.accountId, 'slot-1')).status === 'empty',
+        retry.account.revision === retired.account.revision + 1 &&
+        retry.recovery.addressClosure?.receipts.length === 2 &&
+        (await reopened.readSlot(context.accountId, 'slot-1')).status === 'empty' &&
+        (await reopened.readSlot(context.accountId, 'quick-save')).status === 'empty',
         `${fault} at terminal write ${target} did not recover`);
-      context.owner.close();
+      reopened.close();
     }
+  });
+  await test('lost post-commit terminal closure readback retains exact two-address completion', async () => {
+    const context = await setup('terminal-lost-closure-readback');
+    const first = await start(context.owner, context.accountId, 'Mara Lost Closure');
+    const saved = await new CleanEpochDescendantAdapter(context.owner).save({
+      accountId: context.accountId, sourceSlotId: 'slot-1', destinationSlotId: 'quick-save',
+      expectedAccountRevision: (await context.owner.readSelected(context.accountId))!.revision,
+      snapshot: first.loaded.snapshot, control: first.loaded.sessionControl,
+      expectedDestinationAddress: null });
+    if (saved.status !== 'ready') throw new Error(`Cross-slot setup failed: ${JSON.stringify(saved)}`);
+    const retired = await new CleanEpochTerminalAdapter(context.owner).retire({
+      accountId: context.accountId, sourceSlotId: 'quick-save',
+      expectedAccountRevision: (await context.owner.readSelected(context.accountId))!.revision,
+      snapshot: saved.value.loaded.snapshot, control: saved.value.loaded.sessionControl,
+      expectedSourceAddress: { artifactId: saved.value.loaded.sessionControl.loadedArtifactId,
+        publicationId: saved.value.loaded.sessionControl.loadedPublicationId } });
+    if (retired.status !== 'completed') throw new Error(`Retirement failed: ${JSON.stringify(retired)}`);
+    const closedAt = new Date().toISOString();
+    const originalRead = context.owner.read.bind(context.owner);
+    let loseReadback = true;
+    context.owner.read = async (...args) => {
+      if (loseReadback) { loseReadback = false; throw new Error('synthetic lost closure readback'); }
+      return originalRead(...args);
+    };
+    let lost = false;
+    try { await context.owner.closeTerminalAddresses(context.accountId,
+      retired.recovery.campaignId, retired.recovery.publicationId,
+      retired.account.revision, closedAt); } catch { lost = true; }
+    check(lost && !loseReadback, 'closure readback failure did not occur after commit');
+    context.owner.close();
+    const reopened = await openCleanEpochAccountStore({ name: context.databaseName });
+    const completed = await reopened.readTerminalRecovery(context.accountId,
+      retired.recovery.campaignId, retired.recovery.publicationId);
+    const receipts = completed?.addressClosure?.receipts;
+    check(receipts?.length === 2 &&
+      (await reopened.readSelected(context.accountId))?.revision === retired.account.revision + 1,
+      'closure commit did not survive lost readback');
+    const retry = await reopened.closeTerminalAddresses(context.accountId,
+      retired.recovery.campaignId, retired.recovery.publicationId,
+      retired.account.revision, closedAt);
+    check(retry.status === 'same_source_retry' &&
+      retry.account.revision === retired.account.revision + 1 &&
+      JSON.stringify(retry.recovery.addressClosure) === JSON.stringify(completed?.addressClosure) &&
+      (await reopened.readSlot(context.accountId, 'slot-1')).status === 'empty' &&
+      (await reopened.readSlot(context.accountId, 'quick-save')).status === 'empty',
+      'lost closure readback retry duplicated mutation or changed receipts');
+    for (const receipt of receipts!) check(
+      (await reopened.readAddressDeletionReceipt(context.accountId, receipt.slotId,
+        receipt.slotGenerationId))?.completedAccountRevision === retry.account.revision,
+      'closure retry lost durable receipt');
+    reopened.close();
   });
   await test('competing owners and lost readback retain an exact deletion retry', async () => {
     const context = await setup('competing-readback');
@@ -346,8 +449,9 @@ async function suite() {
           db.createObjectStore(CLEAN_EPOCH_ACCOUNT_STORE, { keyPath: 'accountId' });
           db.createObjectStore(CLEAN_EPOCH_ATTEMPT_STORE, { keyPath: ['accountId', 'slotId'] });
           db.createObjectStore(CLEAN_EPOCH_RECOVERY_STORE, { keyPath: ['accountId', 'slotId'] });
-          db.createObjectStore(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+          const descendants = db.createObjectStore(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
             { keyPath: ['accountId', 'campaignId', 'publicationId'] });
+          descendants.createIndex('byAccountCampaign', ['accountId', 'campaignId']);
           const terminal = db.createObjectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
             { keyPath: ['accountId', 'campaignId', 'publicationId'] });
           terminal.createIndex('bySourcePublication',
@@ -377,6 +481,149 @@ async function suite() {
     try { const bad = await openCleanEpochAccountStore({ name: badName }); bad.close(); }
     catch { refused = true; }
     check(refused, 'duplicate v5 campaign migrated into ambiguous v6 authority');
+    source.owner.close();
+  });
+  await test('published two-address v5 authority migrates to ready v6 and rejects disagreement', async () => {
+    const source = await setup('v5-published-source');
+    const first = await start(source.owner, source.accountId, 'Mara Published Upgrade');
+    let state = { snapshot: first.loaded.snapshot, control: first.loaded.sessionControl };
+    const accept = (result: { accepted: boolean; snapshot: typeof state.snapshot }, mutationId: string) => {
+      check(result.accepted, `migration witness ${mutationId} was rejected`);
+      const admitted = admitCampaignMutation(state.control, { mutationId,
+        sourceArtifactId: state.control.loadedArtifactId, sourceRevision: state.control.sessionRevision,
+        ownerKind: 'engine_result', accepted: true, sourceSnapshot: state.snapshot,
+        proposedSnapshot: result.snapshot });
+      check(admitted.accepted, `migration session ${mutationId} was rejected`);
+      state = { snapshot: admitted.snapshot, control: admitted.control };
+    };
+    const travel = (destination: string) => {
+      const command = createPlayerTravelCommand(state.snapshot, destination);
+      accept(executePlayerTravelCommand(state.snapshot, command), `mutation.${command.commandId}`);
+    };
+    const quest = createPlayerQuestAcceptanceCommand(state.snapshot, 'quest.ashen_reef_survey');
+    accept(executePlayerQuestAcceptanceCommand(state.snapshot, quest), `mutation.${quest.commandId}`);
+    travel('location.ashen_reef');
+    const surveyCache = new Map();
+    for (let index = 1; index <= 4; index++) {
+      const requestId = `survey_request.00000000-0000-4000-8000-${String(index).padStart(12, '0')}`;
+      const result = advanceAshenReefSurveyCaller(state.snapshot, state.control, requestId, surveyCache);
+      check(result.outcome.kind === 'accepted' && result.acceptedState,
+        `migration survey stage ${index} was rejected`);
+      state = result.acceptedState!;
+    }
+    travel('settlement.starfall_port');
+    const turnIn = submitSoundingsTurnInCaller(state.snapshot, state.control,
+      `soundings_turn_in_request.${crypto.randomUUID()}`, new Map());
+    check(turnIn.outcome.kind === 'accepted' && turnIn.acceptedState,
+      'migration Soundings turn-in was rejected');
+    state = turnIn.acceptedState!;
+    check(state.control.soundingsAdmissionWitness?.posture === 'session',
+      'migration source lacks a real accepted session witness');
+    const saved = await new CleanEpochDescendantAdapter(source.owner).save({
+      accountId: source.accountId, sourceSlotId: 'slot-1', destinationSlotId: 'quick-save',
+      expectedAccountRevision: (await source.owner.readSelected(source.accountId))!.revision,
+      snapshot: state.snapshot, control: state.control,
+      expectedDestinationAddress: null });
+    if (saved.status !== 'ready') throw new Error(`Published v5 setup failed: ${JSON.stringify(saved)}`);
+    const families = [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ATTEMPT_STORE,
+      CLEAN_EPOCH_RECOVERY_STORE, CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+      CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, 'artifacts', 'controls', 'slots', 'witnesses'];
+    const sourceDb = await rawDatabase(source.databaseName);
+    const rows = new Map<string, unknown[]>();
+    for (const family of families) rows.set(family, await new Promise<unknown[]>((resolve, reject) => {
+      const sourceFamily = family === CLEAN_EPOCH_ATTEMPT_STORE ? CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE :
+        family === CLEAN_EPOCH_RECOVERY_STORE ? CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE : family;
+      const read = sourceDb.transaction(sourceFamily).objectStore(sourceFamily).getAll();
+      read.onsuccess = () => resolve(read.result);
+      read.onerror = () => reject(read.error);
+    }));
+    sourceDb.close();
+    check(rows.get(CLEAN_EPOCH_RECOVERY_STORE)?.length === 1 &&
+      rows.get('slots')?.length === 2 && rows.get('controls')?.length === 1 &&
+      (rows.get('artifacts')?.length ?? 0) >= 2 && rows.get('witnesses')?.length === 1,
+      `published v5 seed lacks completed first authority or two addresses: ${JSON.stringify(
+        Object.fromEntries(families.map(family => [family, rows.get(family)?.length])) )}`);
+    async function seedPublishedV5(disagreeing: boolean): Promise<string> {
+      const name = `lineage.epoch-g9e.v5-published.${crypto.randomUUID()}`;
+      await new Promise<void>((resolve, reject) => {
+        const request = indexedDB.open(name, 5);
+        request.onupgradeneeded = () => {
+          const db = request.result;
+          ensureCampaignPublicationStores(db);
+          db.createObjectStore(CLEAN_EPOCH_ACCOUNT_STORE, { keyPath: 'accountId' });
+          db.createObjectStore(CLEAN_EPOCH_ATTEMPT_STORE, { keyPath: ['accountId', 'slotId'] });
+          db.createObjectStore(CLEAN_EPOCH_RECOVERY_STORE, { keyPath: ['accountId', 'slotId'] });
+          const descendants = db.createObjectStore(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
+            { keyPath: ['accountId', 'campaignId', 'publicationId'] });
+          descendants.createIndex('byAccountCampaign', ['accountId', 'campaignId']);
+          const terminal = db.createObjectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+            { keyPath: ['accountId', 'campaignId', 'publicationId'] });
+          terminal.createIndex('bySourcePublication',
+            ['accountId', 'campaignId', 'sourcePublicationId'], { unique: true });
+          terminal.createIndex('byAccount', 'accountId');
+          const tx = request.transaction!;
+          for (const family of families) for (const raw of rows.get(family) ?? []) {
+            const row = disagreeing && family === 'slots' &&
+              (raw as { slotId?: string }).slotId === 'quick-save'
+              ? { ...(raw as object), campaignId: `campaign.disagreeing.${crypto.randomUUID()}` }
+              : raw;
+            tx.objectStore(family).put(row);
+          }
+        };
+        request.onsuccess = () => { request.result.close(); resolve(); };
+        request.onerror = () => reject(request.error);
+      });
+      return name;
+    }
+    const validName = await seedPublishedV5(false);
+    const migrated = await openCleanEpochAccountStore({ name: validName });
+    const [account, firstSlot, quickSlot, firstRecovery, firstPointer, quickPointer] = await Promise.all([
+      migrated.readSelected(source.accountId),
+      migrated.readSlot(source.accountId, 'slot-1'),
+      migrated.readSlot(source.accountId, 'quick-save'),
+      migrated.readHistoricalFirstRecovery(source.accountId, first.loaded.sessionControl.campaignId),
+      migrated.readSlotGeneration(source.accountId, 'slot-1'),
+      migrated.readSlotGeneration(source.accountId, 'quick-save')
+    ]);
+    check(account?.revision === (await source.owner.readSelected(source.accountId))?.revision &&
+      firstSlot.status === 'ready' && quickSlot.status === 'ready' &&
+      firstRecovery?.status === 'consumers_completed' &&
+      quickSlot.loaded.sessionControl.soundingsAdmissionWitness?.requestId ===
+        (rows.get('witnesses')![0] as { requestId: string }).requestId &&
+      firstRecovery.generationId === (rows.get(CLEAN_EPOCH_RECOVERY_STORE)![0] as { generationId: string }).generationId &&
+      firstPointer?.campaignId === first.loaded.sessionControl.campaignId &&
+      quickPointer?.campaignId === firstPointer.campaignId &&
+      firstPointer.slotGenerationId !== quickPointer.slotGenerationId &&
+      firstPointer.slotGenerationId !== firstRecovery.generationId &&
+      (await migrated.readAttempt(source.accountId, 'slot-1'))?.attemptId === firstRecovery.attemptId &&
+      (await migrated.readCampaignHead(source.accountId, firstPointer.campaignId, 'quick-save')).publicationId ===
+        saved.value.loaded.sessionControl.loadedPublicationId,
+      'published v5 migration lost account, first recovery, control or address authority');
+    const migratedDb = await rawDatabase(validName);
+    for (const family of [CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
+      'artifacts', 'controls', 'witnesses']) {
+      const retained = await new Promise<unknown[]>((resolve, reject) => {
+        const read = migratedDb.transaction(family).objectStore(family).getAll();
+        read.onsuccess = () => resolve(read.result);
+        read.onerror = () => reject(read.error);
+      });
+      check(JSON.stringify(retained) === JSON.stringify(rows.get(family)),
+        `v5 ${family} evidence changed during v6 upgrade`);
+    }
+    migratedDb.close();
+    migrated.close();
+    const restarted = await openCleanEpochAccountStore({ name: validName });
+    check((await restarted.readSlot(source.accountId, 'slot-1')).status === 'ready' &&
+      (await restarted.readSlot(source.accountId, 'quick-save')).status === 'ready' &&
+      (await restarted.readHistoricalFirstRecovery(source.accountId,
+        first.loaded.sessionControl.campaignId)).status === 'consumers_completed',
+      'published v5 migrated authority did not survive restart');
+    restarted.close();
+    const badName = await seedPublishedV5(true);
+    let refused = false;
+    try { const bad = await openCleanEpochAccountStore({ name: badName }); bad.close(); }
+    catch { refused = true; }
+    check(refused, 'disagreeing published v5 address upgraded into v6');
     source.owner.close();
   });
   output.textContent = `PASS ${cases.length}/${cases.length}\n${cases.join('\n')}`;
