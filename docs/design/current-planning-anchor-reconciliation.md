@@ -34,6 +34,10 @@ G8C closes the two decision blockers discovered by G8B without activating caller
 
 # Current Planning Anchor Reconciliation
 
+## 2026-10-02 DEV-0.7.1 Slice G9E prerequisite
+
+Hardened G9D is verified on synchronized `4ebfc220` (terminal 14/14, adjacent browser 130/130, Node 127/127; build and UI-config pass; broad UI known 137 diagnostics). G9E address deletion is held on the accepted v5 slot-key contradiction: historical first attempt/recovery must survive deletion, but their `[accountId,slotId]` keys prevent a replacement campaign. The focused G9E address-generation decision installs additive v6 generation authority before player deletion and terminal cleanup. G9F, G10, parent and Game-version acceptance remain held.
+
 
 ## 2026-09-30 DEV-0.7.1 Slice G8B descendant caller checkpoint
 
