@@ -18,5 +18,6 @@
     "types": ["vite/client"]
   },
   "include": ["src", "worker"],
+  "exclude": ["src/game-shell/components/CharacterCreationNarrativeScreen.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
