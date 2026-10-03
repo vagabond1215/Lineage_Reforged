@@ -10,8 +10,60 @@ const ZERO_RESOURCE_GROWTH = {
 };
 const NO_ATTRIBUTE_ADJUSTMENTS = {
     male: {},
-    female: { AGI: 1, STR: -1 },
+    female: {},
     neutral: {}
+};
+export const PLAYER_PLAYABLE_LINEAGE_SEX_ATTRIBUTE_ADJUSTMENTS = {
+    "lineage.human": {
+        male: { STR: 1, AGI: -1 },
+        female: { STR: -1, AGI: 1 },
+        neutral: {}
+    },
+    "lineage.dwarf": {
+        male: { STR: 1, VIT: -1 },
+        female: { STR: -1, VIT: 1 },
+        neutral: {}
+    },
+    "lineage.gnome": {
+        male: {},
+        female: {},
+        neutral: {}
+    },
+    "lineage.halfling": {
+        male: { VIT: 1, DEX: -1 },
+        female: { VIT: -1, DEX: 1 },
+        neutral: {}
+    },
+    "lineage.elf": {
+        male: {},
+        female: {},
+        neutral: {}
+    },
+    "lineage.dark_elf": {
+        male: { DEX: 1, CON: -1 },
+        female: { DEX: -1, CON: 1 },
+        neutral: {}
+    },
+    "lineage.half_troll": {
+        male: { STR: 2, CON: -1, VIT: -1 },
+        female: { STR: -2, CON: 1, VIT: 1 },
+        neutral: {}
+    },
+    "lineage.half_orc": {
+        male: { STR: 1, CON: 1, DEX: -1, AGI: -1 },
+        female: { STR: -1, CON: -1, DEX: 1, AGI: 1 },
+        neutral: {}
+    },
+    "lineage.half_goblin": {
+        male: { AGI: 1, CON: -1 },
+        female: { AGI: -1, CON: 1 },
+        neutral: {}
+    },
+    "lineage.half_merfolk": {
+        male: { AGI: 1, VIT: -1 },
+        female: { AGI: -1, VIT: 1 },
+        neutral: {}
+    }
 };
 const DEFAULT_METABOLIC_PROFILE = {
     calorieEfficiency: 1,
@@ -278,7 +330,7 @@ function createPlayableLineage(seed) {
     return {
         ...seed,
         attributeGrowthBiases: seed.attributeGrowthBiases ?? DEFAULT_ATTRIBUTE_GROWTH_BIASES,
-        sexAttributeAdjustments: NO_ATTRIBUTE_ADJUSTMENTS
+        sexAttributeAdjustments: PLAYER_PLAYABLE_LINEAGE_SEX_ATTRIBUTE_ADJUSTMENTS[seed.id] ?? NO_ATTRIBUTE_ADJUSTMENTS
     };
 }
 function averageAttributeGrowthBiases(left, right) {
