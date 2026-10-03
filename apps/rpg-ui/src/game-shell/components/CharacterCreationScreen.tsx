@@ -42,11 +42,6 @@ import {
   formatCharacterCreationSexAdjustment
 } from '../characterCreationSexProfiles.js';
 import {
-  buildCharacterPortraitPromptSpec,
-  createCharacterPortraitIdentityFingerprint,
-  CREATOR_TEST_PORTRAIT_RENDER_PROFILE
-} from '../characterPortraitSpec.js';
-import {
   beginCharacterPortraitGeneration,
   completeCharacterPortraitGeneration,
   createDeterministicLocalCharacterPortraitProvider,
@@ -55,8 +50,12 @@ import {
   type CharacterPortraitUiState
 } from '../characterPortraitProvider.js';
 import {
-  buildCharacterCreationPreview
-} from '../newGameSnapshot.js';
+  buildCharacterPortraitPromptSpec,
+  createCharacterPortraitIdentityFingerprint,
+  CREATOR_TEST_PORTRAIT_RENDER_PROFILE
+} from '../characterPortraitSpec.js';
+import { buildCharacterCreationPreview } from '../newGameSnapshot.js';
+import { resolveRunHistorySourceId } from '../runLifecycle.js';
 import type { GameShellNotice, ManualSaveSlotId, SaveSlotSummary } from '../state.js';
 import {
   getWorldContinentOptions,
@@ -144,11 +143,22 @@ function firstError(errors: Record<string, string | undefined>): string | null {
   return Object.values(errors).find(Boolean) ?? null;
 }
 
+function humanizeLineageId(value: string): string {
+  const segments = value.split('.');
+  const tail = segments[segments.length - 1] ?? value;
+  return tail
+    .split('_')
+    .filter(Boolean)
+    .map((segment) => segment[0]!.toUpperCase() + segment.slice(1))
+    .join(' ');
+}
+
 export function CharacterCreationScreen({
   form,
   accountProfile = null,
   appliedLegacyPreparationIds = [],
   appliedLegacyPreparationChoices = {},
+  eligibleHeirSources = [],
   slots,
   notice,
   pendingOverwriteSlotId,
@@ -331,6 +341,19 @@ export function CharacterCreationScreen({
       );
     }
     next.push(entry.id);
+
+    if (entry.category === 'hair.length') {
+      const nextRank = entry.hairLengthRank ?? 0;
+      next = next.filter((id) => {
+        const descriptor = getCharacterAppearanceDescriptor(id);
+        if (descriptor?.category !== 'hair.primary_style') return true;
+        const minimumLength = descriptor.requiresAll?.find(
+          (requirement) => requirement.type === 'hair_length_at_least'
+        );
+        return !minimumLength || nextRank >= minimumLength.value;
+      });
+    }
+
     const contextSex = form.sexId === 'female' ? 'female' : 'male';
     const validation = validateCharacterAppearanceSelection(next, {
       sexId: contextSex,
@@ -433,22 +456,47 @@ export function CharacterCreationScreen({
 
   if (currentStepId === 'lineage') {
     mainContent = (
-      <div className="grid gap-3 lg:grid-cols-2">
-        {lineageOptions.map((entry) => {
-          const selected = form.lineageId === entry.id;
-          return (
-            <button
-              key={entry.id}
-              type="button"
-              aria-pressed={selected}
-              onClick={() => chooseLineage(entry.id)}
-              className={`${sectionClass} text-left transition ${selected ? 'ring-2 ring-[color:var(--color-border-active)]' : 'hover:bg-[color:var(--color-creator-card-hover)]'}`}
-            >
-              <div className="text-lg font-semibold text-[color:var(--color-text-strong)]">{entry.label}</div>
-              <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-soft)]">{entry.description}</div>
-            </button>
-          );
-        })}
+      <div className="space-y-5">
+        <div className="grid gap-3 lg:grid-cols-2">
+          {lineageOptions.map((entry) => {
+            const selected = form.lineageId === entry.id;
+            return (
+              <button
+                key={entry.id}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => chooseLineage(entry.id)}
+                className={`${sectionClass} text-left transition ${selected ? 'ring-2 ring-[color:var(--color-border-active)]' : 'hover:bg-[color:var(--color-creator-card-hover)]'}`}
+              >
+                <div className="text-lg font-semibold text-[color:var(--color-text-strong)]">{entry.label}</div>
+                <div className="mt-2 text-sm leading-6 text-[color:var(--color-text-soft)]">{entry.description}</div>
+              </button>
+            );
+          })}
+        </div>
+        {eligibleHeirSources.length > 0 && (
+          <section className={sectionClass}>
+            <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--color-muted-strong)]">Lineage Start</h2>
+            <p className="mt-2 text-sm leading-6 text-[color:var(--color-text-soft)]">Begin fresh, or consume an eligible retained lineage source when the campaign starts.</p>
+            <div className="mt-3 grid gap-2 sm:grid-cols-2">
+              <button type="button" aria-pressed={!form.sourceRunId} onClick={() => setSelection({ sourceRunId: '' })} className={`${chipClass} ${!form.sourceRunId ? selectedChipClass : idleChipClass}`}>
+                <span className="font-semibold">Fresh Lineage</span>
+                <span className="mt-1 block text-xs opacity-80">No retained source will be consumed.</span>
+              </button>
+              {eligibleHeirSources.map((record) => {
+                const sourceRunId = resolveRunHistorySourceId(record);
+                const selected = form.sourceRunId === sourceRunId;
+                const uses = Math.max(0, Math.trunc(record.inheritanceUsesRemaining ?? 0));
+                return (
+                  <button key={sourceRunId} type="button" aria-pressed={selected} onClick={() => setSelection({ sourceRunId })} className={`${chipClass} ${selected ? selectedChipClass : idleChipClass}`}>
+                    <span className="font-semibold">{record.name || 'Retained Lineage'}</span>
+                    <span className="mt-1 block text-xs opacity-80">{humanizeLineageId(record.lineageId)} · {uses} use{uses === 1 ? '' : 's'} remaining</span>
+                  </button>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
     );
   } else if (currentStepId === 'identity' && identityCatalog) {
@@ -680,7 +728,7 @@ export function CharacterCreationScreen({
                     onChange={(event) => setSelection({ startingBundleChoiceSelections: { ...form.startingBundleChoiceSelections, [group.id]: event.target.value } })}
                     className="w-full rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-surface-muted)] px-3 py-2 text-[color:var(--color-text-strong)]"
                   >
-                    {group.options.map((option) => <option key={option.itemId} value={option.itemId}>{option.label}</option>)}
+                    {group.options.map((option, optionIndex) => <option key={option.itemId} value={option.itemId}>{group.optionLabels[optionIndex] ?? option.itemKey}</option>)}
                   </select>
                 </label>
               ))}
@@ -743,7 +791,7 @@ export function CharacterCreationScreen({
           <button type="button" onClick={onReturnToMainMenu} className={secondaryButtonClass}>Main Menu</button>
         </div>
       }
-      notice={notice ? <NoticeBanner notice={notice} onDismiss={onDismissNotice} /> : undefined}
+      notice={notice ? <NoticeBanner notice={notice} onDismiss={onDismissNotice} /> : null}
     >
       <div className="mx-auto w-full max-w-6xl">
         <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
