@@ -81,7 +81,7 @@ export const EMPTY_CHARACTER_PORTRAIT_UI_STATE: CharacterPortraitUiState = {
 
 export function markCharacterPortraitIdentityChanged(
   state: CharacterPortraitUiState,
-  currentIdentityFingerprint: string
+  currentIdentityFingerprint: string | null
 ): CharacterPortraitUiState {
   if (!state.assetRef || !state.sourceIdentityFingerprint) return state;
   const stale = state.sourceIdentityFingerprint !== currentIdentityFingerprint;
@@ -116,7 +116,7 @@ export function completeCharacterPortraitGeneration(input: {
   state: CharacterPortraitUiState;
   requestId: number;
   requestFingerprint: string;
-  currentIdentityFingerprint: string;
+  currentIdentityFingerprint: string | null;
   result: CharacterPortraitGenerationResult;
 }): CharacterPortraitUiState {
   const { state, requestId, requestFingerprint, currentIdentityFingerprint, result } = input;
