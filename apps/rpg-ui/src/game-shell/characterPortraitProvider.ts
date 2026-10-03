@@ -150,16 +150,17 @@ export function completeCharacterPortraitGeneration(input: {
 
 function escapeXml(value: string): string {
   return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
 
 function createFakeSvgDataUrl(promptSpec: CharacterPortraitPromptSpec): string {
   const fingerprint = createCharacterPortraitIdentityFingerprint(promptSpec);
-  const lineage = promptSpec.lineageId.split(".").at(-1)?.replaceAll("_", " ") ?? "character";
+  const lineageSegments = promptSpec.lineageId.split(".");
+  const lineage = (lineageSegments[lineageSegments.length - 1] ?? "character").replace(/_/g, " ");
   const label = `${promptSpec.sexId} ${lineage}`;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000"><rect width="800" height="1000" fill="#1b1f24"/><ellipse cx="400" cy="330" rx="145" ry="175" fill="#6e7781"/><path d="M170 980 C200 650 280 545 400 545 C520 545 600 650 630 980 Z" fill="#4b5563"/><text x="400" y="80" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" fill="#e5e7eb">LOCAL PORTRAIT PROOF</text><text x="400" y="875" text-anchor="middle" font-family="system-ui, sans-serif" font-size="30" fill="#e5e7eb">${escapeXml(label)}</text><text x="400" y="920" text-anchor="middle" font-family="monospace" font-size="18" fill="#cbd5e1">${escapeXml(fingerprint)}</text></svg>`;
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
