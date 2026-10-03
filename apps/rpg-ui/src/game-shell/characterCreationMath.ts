@@ -2,19 +2,22 @@ import {
   applyAttributeAdjustments,
   type PlayerAttributes,
   type PlayerIdentityAgeBandId,
-  type PlayerIdentityFocusId,
-  type PlayerIdentityNatureId,
-  type PlayerIdentityPhysiqueId,
   type PlayerSexId
 } from "../../../../packages/shared/types/src/index.js";
 import { CHARACTER_ATTRIBUTE_ORDER } from "./characterAttributes.js";
 import {
+  getAgeBandAttributeAdjustments,
   getBackstoryAttributeAdjustments,
+  getHeightBandAttributeAdjustments,
   getLineageBaseAttributes,
-  resolveCharacterCreationIdentityModifiers,
   sumPlayerAttributes,
   type HeightBandId
 } from "./characterCreationCatalog.js";
+import {
+  aggregateCharacterProfileTraitWeights,
+  validateCharacterProfileTraitSelection
+} from "./characterCreationProfileTraits.js";
+import { getCharacterCreationSexAttributeAdjustments } from "./characterCreationSexProfiles.js";
 
 const BASE_STAT_TOTAL = 90;
 const FINAL_STAT_TOTAL = 100;
@@ -28,9 +31,8 @@ export interface CharacterCreationAttributeResolution {
   baseAttributes: PlayerAttributes;
   generatedProfilePoints: PlayerAttributes;
   finalAttributes: PlayerAttributes;
-  finalPhysiqueShare: number;
-  finalNatureShare: number;
   errors: string[];
+  warnings: string[];
 }
 
 export type CharacterCreationAttributeResolutionParams = {
@@ -38,9 +40,7 @@ export type CharacterCreationAttributeResolutionParams = {
   sexId: CharacterCreationResolvedSexId;
   ageBandId: PlayerIdentityAgeBandId | "" | null;
   heightBandId: HeightBandId | "" | null;
-  physiqueId: PlayerIdentityPhysiqueId | "" | null;
-  natureId: PlayerIdentityNatureId | "" | null;
-  focusId: PlayerIdentityFocusId | "" | null;
+  profileTraitIds: readonly string[];
   backstoryId: string;
 };
 
@@ -79,15 +79,7 @@ function isDevelopmentRuntime(): boolean {
     return meta.env.DEV;
   }
 
-  if (typeof process !== "undefined" && typeof process.env?.NODE_ENV === "string") {
-    return process.env.NODE_ENV !== "production";
-  }
-
   return true;
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(max, Math.max(min, value));
 }
 
 function normalizeCanonical(
@@ -114,12 +106,10 @@ function normalizeCanonical(
 export function resolveGeneratedProfilePointDistribution(
   combinedRaw: PlayerAttributes
 ): PlayerAttributes {
-  const rescaled = createEmptyAttributes();
   const generated = createEmptyAttributes();
   const remainders = CHARACTER_ATTRIBUTE_ORDER.map((attributeKey) => {
     const rawValue = combinedRaw[attributeKey] * GENERATED_PROFILE_POINTS;
     const flooredValue = Math.floor(rawValue);
-    rescaled[attributeKey] = rawValue;
     generated[attributeKey] = flooredValue;
 
     return {
@@ -189,28 +179,18 @@ function validateProfileInvariants(
 export function resolveCharacterCreationAttributes(
   params: CharacterCreationAttributeResolutionParams
 ): CharacterCreationAttributeResolution {
-  const resolvedIdentityModifiers = resolveCharacterCreationIdentityModifiers({
-    lineageId: params.lineageId,
-    sexId: params.sexId,
-    ageBandId: params.ageBandId,
-    heightBandId: params.heightBandId,
-    physiqueId: params.physiqueId,
-    natureId: params.natureId,
-    focusId: params.focusId
-  });
-
   let baseAttributes = getLineageBaseAttributes(params.lineageId);
   baseAttributes = applyAttributeAdjustments(
     baseAttributes,
-    resolvedIdentityModifiers.sex.attributeAdjustments
+    getCharacterCreationSexAttributeAdjustments(params.lineageId, params.sexId)
   );
   baseAttributes = applyAttributeAdjustments(
     baseAttributes,
-    resolvedIdentityModifiers.ageBand?.attributeAdjustments ?? {}
+    getAgeBandAttributeAdjustments(params.ageBandId)
   );
   baseAttributes = applyAttributeAdjustments(
     baseAttributes,
-    resolvedIdentityModifiers.heightBand?.attributeAdjustments ?? {}
+    getHeightBandAttributeAdjustments(params.heightBandId)
   );
   baseAttributes = applyAttributeAdjustments(
     baseAttributes,
@@ -224,44 +204,18 @@ export function resolveCharacterCreationAttributes(
     );
   }
 
-  if (!resolvedIdentityModifiers.physique) {
-    errors.push("Choose a valid physique profile.");
-  }
-  if (!resolvedIdentityModifiers.nature) {
-    errors.push("Choose a valid nature profile.");
-  }
-  if (!resolvedIdentityModifiers.focus) {
-    errors.push("Choose a valid focus profile.");
-  }
+  const traitValidation = validateCharacterProfileTraitSelection(
+    params.profileTraitIds,
+    params.lineageId
+  );
+  errors.push(...traitValidation.errors);
 
   let generatedProfilePoints = createEmptyAttributes();
-  let finalPhysiqueShare = 0.5;
-  let finalNatureShare = 0.5;
-
-  if (
-    resolvedIdentityModifiers.physique &&
-    resolvedIdentityModifiers.nature &&
-    resolvedIdentityModifiers.focus
-  ) {
-    finalPhysiqueShare = clamp(
-      resolvedIdentityModifiers.physique.baselinePhysiqueShare +
-        resolvedIdentityModifiers.focus.physiqueShareShift,
-      0.25,
-      0.75
+  if (traitValidation.isValid) {
+    const aggregateWeights = aggregateCharacterProfileTraitWeights(params.profileTraitIds);
+    generatedProfilePoints = resolveGeneratedProfilePointDistribution(
+      normalizeCanonical(aggregateWeights)
     );
-    finalNatureShare = 1 - finalPhysiqueShare;
-
-    const physiqueRaw = normalizeCanonical(resolvedIdentityModifiers.physique.weights);
-    const natureRaw = normalizeCanonical(resolvedIdentityModifiers.nature.weights);
-    const combinedRaw = createEmptyAttributes();
-
-    for (const attributeKey of CHARACTER_ATTRIBUTE_ORDER) {
-      combinedRaw[attributeKey] =
-        physiqueRaw[attributeKey] * finalPhysiqueShare +
-        natureRaw[attributeKey] * finalNatureShare;
-    }
-
-    generatedProfilePoints = resolveGeneratedProfilePointDistribution(combinedRaw);
   }
 
   const finalAttributes = cloneAttributes(baseAttributes);
@@ -285,8 +239,7 @@ export function resolveCharacterCreationAttributes(
     baseAttributes,
     generatedProfilePoints,
     finalAttributes,
-    finalPhysiqueShare,
-    finalNatureShare,
-    errors
+    errors,
+    warnings: traitValidation.warnings
   };
 }
