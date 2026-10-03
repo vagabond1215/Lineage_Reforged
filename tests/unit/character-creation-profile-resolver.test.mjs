@@ -3,10 +3,10 @@ import assert from "node:assert/strict";
 
 const { CHARACTER_ATTRIBUTE_ORDER } = await import("../../apps/rpg-ui/src/game-shell/characterAttributes.ts");
 const {
-  getFocusOptions,
-  getNatureOptions,
-  getPhysiqueOptions
-} = await import("../../apps/rpg-ui/src/game-shell/characterCreationIdentityOptions.ts");
+  DEFAULT_CHARACTER_PROFILE_TRAIT_IDS,
+  generateRandomCharacterProfileTraitIds,
+  validateCharacterProfileTraitSelection
+} = await import("../../apps/rpg-ui/src/game-shell/characterCreationProfileTraits.ts");
 const {
   resolveCharacterCreationAttributes,
   resolveGeneratedProfilePointDistribution
@@ -16,42 +16,63 @@ function sumPlayerAttributes(attributes) {
   return CHARACTER_ATTRIBUTE_ORDER.reduce((total, attributeKey) => total + attributes[attributeKey], 0);
 }
 
-test("every physique/nature/focus combination resolves deterministically to a 100-total character", () => {
-  for (const physique of getPhysiqueOptions()) {
-    for (const nature of getNatureOptions()) {
-      for (const focus of getFocusOptions()) {
-        const params = {
-          lineageId: "lineage.human",
-          sexId: "male",
-          ageBandId: "prime",
-          heightBandId: "normal",
-          physiqueId: physique.id,
-          natureId: nature.id,
-          focusId: focus.id,
-          backstoryId: "backstory.local_hero"
-        };
+function deterministicRng(seed) {
+  let state = seed >>> 0;
+  return () => {
+    state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+    return state / 0x100000000;
+  };
+}
 
-        const first = resolveCharacterCreationAttributes(params);
-        const second = resolveCharacterCreationAttributes(params);
+function resolve(profileTraitIds, overrides = {}) {
+  return resolveCharacterCreationAttributes({
+    lineageId: "lineage.human",
+    sexId: "male",
+    ageBandId: "prime",
+    heightBandId: "normal",
+    profileTraitIds,
+    backstoryId: "backstory.local_hero",
+    ...overrides
+  });
+}
 
-        assert.deepEqual(
-          first.errors,
-          [],
-          `${physique.id} / ${nature.id} / ${focus.id}: ${first.errors.join(" | ")}`
-        );
-        assert.deepEqual(first, second);
-        assert.equal(sumPlayerAttributes(first.baseAttributes), 90);
-        assert.equal(sumPlayerAttributes(first.generatedProfilePoints), 10);
-        assert.equal(sumPlayerAttributes(first.finalAttributes), 100);
+test("approved default six-trait profile resolves deterministically to a 100-total character", () => {
+  const first = resolve(DEFAULT_CHARACTER_PROFILE_TRAIT_IDS);
+  const second = resolve([...DEFAULT_CHARACTER_PROFILE_TRAIT_IDS].reverse());
 
-        for (const attributeKey of CHARACTER_ATTRIBUTE_ORDER) {
-          assert.ok(first.generatedProfilePoints[attributeKey] >= 0, `${physique.id}/${nature.id}/${focus.id} ${attributeKey}`);
-          assert.ok(Number.isInteger(first.generatedProfilePoints[attributeKey]));
-          assert.ok(first.finalAttributes[attributeKey] >= 1, `${physique.id}/${nature.id}/${focus.id} ${attributeKey}`);
-        }
-      }
-    }
+  assert.deepEqual(first.errors, []);
+  assert.deepEqual(second.errors, []);
+  assert.deepEqual(first.baseAttributes, second.baseAttributes);
+  assert.deepEqual(first.generatedProfilePoints, second.generatedProfilePoints);
+  assert.deepEqual(first.finalAttributes, second.finalAttributes);
+  assert.equal(sumPlayerAttributes(first.baseAttributes), 90);
+  assert.equal(sumPlayerAttributes(first.generatedProfilePoints), 10);
+  assert.equal(sumPlayerAttributes(first.finalAttributes), 100);
+
+  for (const attributeKey of CHARACTER_ATTRIBUTE_ORDER) {
+    assert.ok(first.generatedProfilePoints[attributeKey] >= 0, attributeKey);
+    assert.ok(Number.isInteger(first.generatedProfilePoints[attributeKey]));
+    assert.ok(first.finalAttributes[attributeKey] >= 1, attributeKey);
   }
+});
+
+test("five hundred valid randomized profiles preserve resolver invariants", () => {
+  for (let seed = 1; seed <= 500; seed += 1) {
+    const profileTraitIds = generateRandomCharacterProfileTraitIds(deterministicRng(seed));
+    const validation = validateCharacterProfileTraitSelection(profileTraitIds, "lineage.human");
+    assert.equal(validation.isValid, true, `${seed}: ${validation.errors.join(" | ")}`);
+
+    const resolution = resolve(profileTraitIds);
+    assert.deepEqual(resolution.errors, [], `${seed}: ${resolution.errors.join(" | ")}`);
+    assert.equal(sumPlayerAttributes(resolution.baseAttributes), 90);
+    assert.equal(sumPlayerAttributes(resolution.generatedProfilePoints), 10);
+    assert.equal(sumPlayerAttributes(resolution.finalAttributes), 100);
+  }
+});
+
+test("invalid trait count fails rather than silently reallocating profile power", () => {
+  const resolution = resolve(DEFAULT_CHARACTER_PROFILE_TRAIT_IDS.slice(0, 5));
+  assert.ok(resolution.errors.some((error) => /exactly 6 profile traits/i.test(error)));
 });
 
 test("remainder ties inside epsilon resolve by canonical stat order", () => {
