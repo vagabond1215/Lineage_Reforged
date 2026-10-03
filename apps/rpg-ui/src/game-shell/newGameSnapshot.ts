@@ -58,24 +58,22 @@ import {
   formatHeightBandModifierLine,
   getHeightBandAttributeAdjustments,
   getIdentityOptionLabel,
-  getFocusLabel,
   getLineageBaseAttributes,
-  getNatureLabel,
-  getPhysiqueLabel,
   getRepresentativeHeightCm,
-  getSexOptionForLineage,
-  getSexAttributeAdjustments,
   resolveCanonicalAgeBandId,
-  resolveCanonicalFocusId,
-  resolveCanonicalNatureId,
-  resolveCanonicalPhysiqueId,
   getStartingAbilityStates,
   getStartingBundleSelectedStacks,
   getStartingBundleTemplate,
   isKnownBackstoryId,
   isKnownStartingBundleId
 } from './characterCreationCatalog.js';
+import { getCharacterAppearanceDescriptor } from './characterCreationAppearance.js';
 import { resolveCharacterCreationAttributes } from './characterCreationMath.js';
+import { getCharacterProfileTrait } from './characterCreationProfileTraits.js';
+import {
+  formatCharacterCreationSexAdjustment,
+  getCharacterCreationSexAttributeAdjustments
+} from './characterCreationSexProfiles.js';
 import {
   applyLegacyPreparationBonuses,
   type LegacyPreparationReviewEntry
@@ -280,7 +278,8 @@ const LINEAGE_TRAIT_IDS: Record<string, string[]> = {
 
 function humanizeId(value: string | null | undefined): string {
   if (!value) return 'Unknown';
-  const tail = value.split('.').pop() ?? value;
+  const segments = value.split('.');
+  const tail = segments[segments.length - 1] ?? value;
   return tail.split('_').filter(Boolean).map((segment) => segment[0]!.toUpperCase() + segment.slice(1)).join(' ');
 }
 
@@ -312,21 +311,32 @@ function toMetric(id: string, label: string, value: number | string | null): Cha
   return { id, label, value: value === null ? null : value.toString() };
 }
 
+function profileTraitSummary(ids: readonly string[]): string {
+  return ids.map((id) => getCharacterProfileTrait(id)?.label ?? humanizeId(id)).join(', ');
+}
+
+function appearanceSummary(ids: readonly string[]): string {
+  const labels = ids.map((id) => getCharacterAppearanceDescriptor(id)?.label ?? humanizeId(id));
+  if (labels.length === 0) return 'No optional appearance details';
+  if (labels.length <= 4) return labels.join(', ');
+  return `${labels.slice(0, 4).join(', ')} +${labels.length - 4} more`;
+}
+
 function buildIdentityMetrics(
   form: Pick<
     CharacterCreationFormState,
-    'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'physiqueId' | 'natureId' | 'focusId' | 'hairColorId' | 'eyeColorId' | 'skinToneId'
+    'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'profileTraitIds' | 'appearanceDescriptorIds' | 'hairColorId' | 'eyeColorId' | 'skinToneId'
   >
 ): CharacterCreationPreviewMetric[] {
-  const sexOption = getSexOptionForLineage(form.lineageId, form.sexId);
+  const sexId = form.sexId === 'female' ? 'female' : 'male';
+  const sexLabel = sexId === 'female' ? 'Female' : 'Male';
 
   return [
-    toMetric('sex', 'Sex', `${sexOption.label} — ${sexOption.modifierText}`),
+    toMetric('sex', 'Sex', `${sexLabel} — ${formatCharacterCreationSexAdjustment(form.lineageId, sexId)}`),
     toMetric('age', 'Age', formatAgeBandModifierLine(form.lineageId, form.sexId, form.ageBandId)),
     toMetric('height', 'Height', formatHeightBandModifierLine(form.heightBandId)),
-    toMetric('physique', 'Physique', getPhysiqueLabel(form.physiqueId)),
-    toMetric('nature', 'Nature', getNatureLabel(form.natureId)),
-    toMetric('focus', 'Focus', getFocusLabel(form.focusId)),
+    toMetric('profile_traits', 'Profile Traits', profileTraitSummary(form.profileTraitIds)),
+    toMetric('appearance', 'Appearance', appearanceSummary(form.appearanceDescriptorIds)),
     toMetric('hair', 'Hair', getIdentityOptionLabel(form.lineageId, 'hairColorOptions', form.hairColorId)),
     toMetric('eyes', 'Eyes', getIdentityOptionLabel(form.lineageId, 'eyeColorOptions', form.eyeColorId)),
     toMetric('skin', 'Skin', getIdentityOptionLabel(form.lineageId, 'skinToneOptions', form.skinToneId))
@@ -410,13 +420,11 @@ export function buildCharacterCreationAttributePreviewRows(
     sexId: form.sexId,
     ageBandId: form.ageBandId,
     heightBandId: form.heightBandId,
-    physiqueId: form.physiqueId,
-    natureId: form.natureId,
-    focusId: form.focusId,
+    profileTraitIds: form.profileTraitIds,
     backstoryId: form.backstoryId
   });
   const baseline = getLineageBaseAttributes(lineageId);
-  const sex = getSexAttributeAdjustments(lineageId, form.sexId);
+  const sex = getCharacterCreationSexAttributeAdjustments(lineageId, form.sexId);
   const age = getAgeBandAttributeAdjustments(form.ageBandId);
   const height = getHeightBandAttributeAdjustments(form.heightBandId);
   const backstory =
@@ -458,8 +466,8 @@ export function buildCharacterCreationAttributePreviewRows(
         value: backstory[attributeKey] ?? 0
       },
       {
-        id: "generated_profile",
-        label: "Generated Build/Profile",
+        id: "selected_profile_traits",
+        label: "Selected Profile Traits",
         value: generated[attributeKey] ?? 0
       },
       {
@@ -489,7 +497,7 @@ export function buildCharacterCreationAttributePreviewRows(
 function resolveWorkingCharacterAttributes(
   form: Pick<
     CharacterCreationFormState,
-    'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'physiqueId' | 'natureId' | 'focusId' | 'backstoryId'
+    'sexId' | 'lineageId' | 'ageBandId' | 'heightBandId' | 'profileTraitIds' | 'backstoryId'
   >
 ): PlayerAttributes {
   const resolution = resolveCharacterCreationAttributes({
@@ -497,9 +505,7 @@ function resolveWorkingCharacterAttributes(
     sexId: form.sexId,
     ageBandId: form.ageBandId,
     heightBandId: form.heightBandId,
-    physiqueId: form.physiqueId,
-    natureId: form.natureId,
-    focusId: form.focusId,
+    profileTraitIds: form.profileTraitIds,
     backstoryId: form.backstoryId
   });
 
@@ -514,10 +520,14 @@ function resolveWorkingCharacterResources(
   const lineageId = form.lineageId.trim() || 'lineage.human';
   const sexId = form.sexId === 'female' ? 'female' : 'male';
   const clock = createDefaultNewGameClock();
-  const originProfile = resolvePlayerOriginProfile(
+  const resolvedOriginProfile = resolvePlayerOriginProfile(
     { lineageId, classId: null, sexId },
     createPlayerProgressionState({ legacyGrowth: { resourceGrowthLevel: 1, classLevel: 0 } })
   );
+  const originProfile = {
+    ...resolvedOriginProfile,
+    attributeAdjustments: getCharacterCreationSexAttributeAdjustments(lineageId, sexId)
+  };
   const resolution = resolvePlayerResources(
     {
       playerId: 'player.preview',
@@ -729,9 +739,7 @@ function buildPlaceholderPreview(
         sexId: form.sexId,
         ageBandId: form.ageBandId,
         heightBandId: form.heightBandId,
-        physiqueId: form.physiqueId,
-        natureId: form.natureId,
-        focusId: form.focusId,
+        profileTraitIds: form.profileTraitIds,
         backstoryId: form.backstoryId
       }).generatedProfilePoints
     ),
@@ -781,15 +789,17 @@ function deriveCharacterCreationState(
   });
   const playerName = form.playerName.trim();
   const playerId = `player.${playerName.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'new_adventurer'}`;
-  const originProfile = resolvePlayerOriginProfile({ lineageId: form.lineageId, classId: null, sexId: form.sexId }, progression);
+  const resolvedOriginProfile = resolvePlayerOriginProfile({ lineageId: form.lineageId, classId: null, sexId: form.sexId }, progression);
+  const originProfile = {
+    ...resolvedOriginProfile,
+    attributeAdjustments: getCharacterCreationSexAttributeAdjustments(form.lineageId, form.sexId)
+  };
   const attributeResolution = resolveCharacterCreationAttributes({
     lineageId: form.lineageId,
     sexId: form.sexId,
     ageBandId: form.ageBandId,
     heightBandId: form.heightBandId,
-    physiqueId: form.physiqueId,
-    natureId: form.natureId,
-    focusId: form.focusId,
+    profileTraitIds: form.profileTraitIds,
     backstoryId: form.backstoryId
   });
 
@@ -799,11 +809,8 @@ function deriveCharacterCreationState(
 
   let attributes = attributeResolution.finalAttributes;
   const canonicalAgeBandId = resolveCanonicalAgeBandId(form.ageBandId);
-  const canonicalPhysiqueId = resolveCanonicalPhysiqueId(form.physiqueId);
-  const canonicalNatureId = resolveCanonicalNatureId(form.natureId);
-  const canonicalFocusId = resolveCanonicalFocusId(form.focusId);
 
-  if (!canonicalAgeBandId || !canonicalPhysiqueId || !canonicalNatureId || !canonicalFocusId) {
+  if (!canonicalAgeBandId) {
     throw new Error("Character identity selections could not be resolved to canonical ids.");
   }
   const equipment = buildStarterEquipment(bundleStacks);
@@ -904,9 +911,11 @@ function deriveCharacterCreationState(
         identityProfile: {
           heightCm: getRepresentativeHeightCm(form.lineageId, form.heightBandId),
           ageBandId: canonicalAgeBandId,
-          physiqueId: canonicalPhysiqueId,
-          natureId: canonicalNatureId,
-          focusId: canonicalFocusId,
+          physiqueId: null,
+          natureId: null,
+          focusId: null,
+          profileTraitIds: [...form.profileTraitIds],
+          appearanceDescriptorIds: [...form.appearanceDescriptorIds],
           hairColorId: form.hairColorId,
           hairHighlightColorId: null,
           eyeColorId: form.eyeColorId,
