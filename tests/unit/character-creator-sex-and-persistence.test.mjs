@@ -6,6 +6,7 @@ const catalog = await import("../../apps/rpg-ui/src/game-shell/characterCreation
 const sexProfiles = await import("../../apps/rpg-ui/src/game-shell/characterCreationSexProfiles.ts");
 const snapshotModule = await import("../../apps/rpg-ui/src/game-shell/newGameSnapshot.ts");
 const world = await import("../../apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts");
+const sharedOrigins = await import("../../packages/shared/types/src/player-origins.ts");
 
 const EXPECTED = {
   "lineage.human": {
@@ -44,21 +45,42 @@ const EXPECTED = {
   }
 };
 
-test("every playable lineage owns an explicit zero-sum creator sex profile", () => {
+function makeProgressionInput() {
+  return { level: 1, classLevel: 0 };
+}
+
+test("every playable lineage owns one explicit zero-sum shared sex profile", () => {
   const lineageIds = catalog.lineageOptions.map((entry) => entry.id);
   assert.deepEqual(sexProfiles.validateCharacterCreationSexProfiles(lineageIds), []);
 
   for (const lineageId of lineageIds) {
+    const shared = sharedOrigins.PLAYER_PLAYABLE_LINEAGE_SEX_ATTRIBUTE_ADJUSTMENTS[lineageId];
+    assert.ok(shared, `missing shared profile for ${lineageId}`);
+    assert.deepEqual(shared.male, EXPECTED[lineageId].male, `${lineageId} shared male`);
+    assert.deepEqual(shared.female, EXPECTED[lineageId].female, `${lineageId} shared female`);
+    assert.deepEqual(shared.neutral, {}, `${lineageId} shared neutral`);
+
     assert.deepEqual(
       sexProfiles.getCharacterCreationSexAttributeAdjustments(lineageId, "male"),
       EXPECTED[lineageId].male,
-      `${lineageId} male`
+      `${lineageId} creator male`
     );
     assert.deepEqual(
       sexProfiles.getCharacterCreationSexAttributeAdjustments(lineageId, "female"),
       EXPECTED[lineageId].female,
-      `${lineageId} female`
+      `${lineageId} creator female`
     );
+
+    const maleOrigin = sharedOrigins.resolvePlayerOriginProfile(
+      { lineageId, classId: null, sexId: "male" },
+      makeProgressionInput()
+    );
+    const femaleOrigin = sharedOrigins.resolvePlayerOriginProfile(
+      { lineageId, classId: null, sexId: "female" },
+      makeProgressionInput()
+    );
+    assert.deepEqual(maleOrigin.attributeAdjustments, EXPECTED[lineageId].male, `${lineageId} origin male`);
+    assert.deepEqual(femaleOrigin.attributeAdjustments, EXPECTED[lineageId].female, `${lineageId} origin female`);
   }
 });
 
