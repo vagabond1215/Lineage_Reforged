@@ -90,6 +90,31 @@ Covers:
 - assisted-provider fallback if automated Perchance integration is not supportable;
 - production-provider replacement requirements.
 
+### 5. Character Creator Renovation Implementation Audit And Plan
+
+`docs/design/character-creator-renovation-implementation-audit-and-plan.md`
+
+Source-accurate implementation bridge and execution authority.
+
+Read this **after** the four design documents above and **before** editing source.
+
+Covers:
+
+- audit against current `master` rather than the original planning snapshot;
+- identification of already-consumed Unified Shell / backstory / randomization work;
+- current source ownership map;
+- distinction between creator profile traits and existing runtime `playerState.traits`;
+- recommended `profile_trait.*` / `profileTraitIds` implementation namespace;
+- tracked TypeScript / JavaScript parity requirement for `player-origins`;
+- snapshot / persistence boundary and migration choices;
+- source and test impact matrices;
+- atomic implementation slices and stop gates;
+- fake/local portrait provider before external provider integration;
+- durable portrait asset-storage decision as a separate later slice;
+- definitions of done for mechanics, appearance, and portrait UX.
+
+When a broad phase list in an earlier plan conflicts with current source reality documented by this audit, use the audit's source-aware slice ordering unless a newer explicit design decision supersedes it.
+
 ## Settled Planning Direction
 
 Unless deliberately revised in a later design decision, future implementation should assume:
@@ -124,6 +149,11 @@ Unless deliberately revised in a later design decision, future implementation sh
 28. A future implementation must re-check provider rules before enabling Perchance automation or embedding.
 29. Undocumented scraping, simulated third-party UI control, reverse-engineered endpoints, and cross-origin DOM manipulation are not planned integration strategies.
 30. If Perchance cannot support an acceptable automated path, it may remain assisted / developer-only while the same Lineage Generate / Regenerate UI and state model are retained for a later provider.
+31. Creator profile traits remain separate from existing runtime passive traits in `playerState.traits`.
+32. Implementation should use an unambiguous creator-profile namespace such as `profile_trait.*` and a field such as `profileTraitIds` rather than a generic `traitIds` / `traits` field.
+33. Existing full-character randomization, optional-backstory handling, derived step-state navigation, AppShell creator integration, and attribute-contribution breakdown are foundations to preserve rather than features to rebuild.
+34. Trait / appearance identity migration should land before durable generated-image persistence.
+35. Portrait asset storage / retention authority is a separate persistence decision and must not be guessed inside the trait migration.
 
 ## Planning Package Boundaries
 
@@ -138,7 +168,8 @@ This package intentionally does not yet settle:
 - every lineage-specific facial-hair rule;
 - every culture-specific tattoo / piercing / hairstyle;
 - final creator UI layout implementation outside the settled portrait-action state model;
-- save migration strategy if active development saves must later be preserved;
+- whether active development saves require a temporary old-identity compatibility bridge at implementation time;
+- durable generated-portrait asset storage, ownership, retention, and deletion policy;
 - flaw / drawback trait design.
 
 Those should be resolved through focused follow-up decisions rather than guessed during implementation.
@@ -159,66 +190,63 @@ Before implementation reaches full catalog lock, settle:
 10. Exact global portrait art direction.
 11. At prototype implementation time, re-check Perchance's current integration rules and determine whether the adapter is automated, purpose-built embedded, or assisted.
 12. Decide where generated portrait assets are persisted independently of transient provider pages or URLs.
+13. At Slice 0, decide whether development-save compatibility is required or whether the creator identity schema may make a clean development cut.
+14. Confirm the creator-profile ID / field naming recommended by the implementation audit before source changes begin.
 
 ## Suggested Implementation Consumption Order
 
-A future coding pass should consume this package in slices:
+The detailed and current source-aware implementation sequence lives in:
 
-### Slice A: catalog authority
+`docs/design/character-creator-renovation-implementation-audit-and-plan.md`
 
-- mechanical trait types and data;
-- appearance descriptor types and data;
-- lineage sex profiles;
-- lineage portrait profiles;
-- validation tests.
+Its atomic slices supersede the older broad phase summaries for execution planning.
 
-### Slice B: resolver
+At a high level, implementation should proceed as:
 
-- replace Physique / Nature / Focus resolver;
-- preserve deterministic 10-point allocation;
-- update attribute preview breakdown.
+### Group A: mechanical authority
 
-### Slice C: form and persistence
+- reconcile against current master;
+- lock profile-trait naming and save-compatibility posture;
+- add profile-trait / appearance catalog authority;
+- add explicit lineage sex profiles;
+- replace the old profile resolver while preserving fixed 10-point allocation.
 
-- replace old profile IDs;
-- add trait IDs;
-- add appearance descriptor IDs;
-- update randomization;
-- update save / load fixtures.
+### Group B: creator cutover
 
-### Slice D: creator UI
+- replace form fields;
+- extend existing full randomizer;
+- update preview / source breakdown;
+- update new-game snapshot identity persistence;
+- update fixtures and remove old active profile authority.
 
-- grouped trait selection;
+### Group C: creator presentation
+
+- grouped profile-trait selector;
 - appearance customization;
-- live attribute preview;
-- portrait preview / fallback state;
-- provider-neutral Generate / Regenerate / Retry control state machine.
+- preserve existing AppShell / step-state / backstory / world-start behavior;
+- preserve live attribute preview.
 
-### Slice E: portrait specification
+### Group D: portrait specification and local UX proof
 
-- deterministic prompt spec;
-- lineage morphology fragments;
-- render-profile contract;
-- identity fingerprint and stale-state logic.
+- author lineage morphology;
+- deterministic portrait prompt specification;
+- identity fingerprint;
+- test render profile;
+- fake/local provider;
+- provider-neutral Generate / Regenerate / Retry state machine.
 
-### Slice F: testing provider
+### Group E: durable portrait storage and runtime use
 
-- first prove the portrait state machine with a fake or deterministic local stub provider;
+- settle asset ownership / retention first;
+- persist stable asset references;
+- keep initials fallback;
+- expose optional portrait assets in runtime UI.
+
+### Group F: external providers
+
 - re-check current Perchance integration rules;
-- choose automated, purpose-built embedded, or assisted prototype mode only if supportable;
-- keep the ordinary player-facing UI limited to Generate / Regenerate / Retry;
-- use the test-era hips-up generation profile;
-- persist a stable Lineage-owned asset reference;
-- normalize provider failures into application-owned error states;
-- never block character completion when generation fails.
-
-### Slice G: production provider later
-
-- replace or supplement provider adapter;
-- add production render profile;
-- preserve canonical identity and descriptor IDs;
-- preserve Generate / Regenerate UI semantics;
-- preserve portrait fingerprint and stale-state behavior.
+- attach Perchance only through a supportable path;
+- add production provider later without changing canonical identity.
 
 ## Isolation Requirement
 
@@ -229,6 +257,7 @@ Before any future implementation pass:
 - preserve unrelated Codex / GPT changes;
 - do not assume file paths in these plans are unchanged;
 - treat current source as implementation reality and these documents as design intent;
+- read the implementation audit after the design documents;
 - surface conflicts explicitly rather than silently reconciling them through broad rewrites.
 
 This package is meant to preserve design decisions, not override newer implementation authority without inspection.
