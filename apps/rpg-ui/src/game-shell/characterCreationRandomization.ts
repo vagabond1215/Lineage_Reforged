@@ -1,4 +1,5 @@
 import type { AccountProfileState } from "../../../../packages/shared/types/src/index.js";
+import { generateRandomCharacterAppearanceDescriptorIds } from "./characterCreationAppearance.js";
 import type { CharacterCreationFormState } from "./characterCreationForm.js";
 import {
   createDefaultStartingBundleChoiceSelections,
@@ -10,6 +11,7 @@ import {
   startingBundleOptions,
   type StarterBackstoryPresentation
 } from "./characterCreationCatalog.js";
+import { generateRandomCharacterProfileTraitIds } from "./characterCreationProfileTraits.js";
 import {
   getDefaultWorldSelection,
   getWorldContinentOptions,
@@ -94,11 +96,11 @@ export function generateRandomCharacterCreationFormState({
     lineageId,
     ageBandId: pickRandomValue(identityCatalog?.ageBands ?? [], rng)?.id ?? "prime",
     heightBandId: pickRandomValue(identityCatalog?.heightBands ?? [], rng)?.id ?? "normal",
-    physiqueId:
-      pickRandomValue(identityCatalog?.physiqueOptions ?? [], rng)?.id ?? "stocky",
-    natureId:
-      pickRandomValue(identityCatalog?.natureOptions ?? [], rng)?.id ?? "disciplined",
-    focusId: pickRandomValue(identityCatalog?.focusOptions ?? [], rng)?.id ?? "balanced",
+    profileTraitIds: generateRandomCharacterProfileTraitIds(rng),
+    appearanceDescriptorIds: generateRandomCharacterAppearanceDescriptorIds(
+      { sexId: nextSex, lineageId },
+      rng
+    ),
     hairColorId:
       pickRandomValue(identityCatalog?.hairColorOptions ?? [], rng)?.id ?? "",
     eyeColorId:
