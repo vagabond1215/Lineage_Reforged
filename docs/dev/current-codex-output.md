@@ -10,6 +10,8 @@ Checks: synthetic native G9F **12/12**, G9E **13/13**, G9D **14/14**, adjacent b
 
 Branch/PR review: two local/six hosted refs and [zero open PRs](https://github.com/vagabond1215/Lineage_Reforged/pulls). Readiness and prompt-integrity remain protected; administration, creator planning and creator implementation remain held for their named consumers, with exact triggers in the branch register. No merge, rebase, integration, deletion or PR action due. Suggested commit: `feat(persistence): guard account lifecycle generations in epoch store`. Next **DEV-0.7.1.1 — G9 Lifecycle Parent Acceptance Audit**; G10, capacity/eviction/backup, death caller, combat, deployment, planned primary and Game-version acceptance held. Final commit/push and hosted-head readback are reported separately at publication.
 
+Publication: G9F implementation commit `cf593f4ad56d98d9e3e7edde8fa8e6fe2b958806` was pushed to hosted `master`; `git ls-remote origin refs/heads/master` returned that exact SHA. This publication annotation is a separate documentation commit; its final hosted-head identity is reported in the completion response.
+
 ## 2026-10-03 DEV-0.7.1 Slice G9E.1 hardening closure
 
 Source run **DEV-0.7.1 Slice G9E.1 — Slot Generation Hardening Before G9F** from clean synchronized `master`/`origin/master` `2614b788`. Label class: support suffix of planned primary `DEV-0.7.1` (parent held); Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Result **G9E_SLOT_GENERATION_AND_ADDRESS_DELETION_VERIFIED; G9E_1_HARDENING_VERIFIED; G9F_NEXT; ACTIVATION_HELD**. Focused record: `docs/dev/dev-0.7.1-slice-g9e-1-hardening-gate.md`.
