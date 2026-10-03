@@ -25,6 +25,7 @@ type MainMenuScreenProps = {
   onActivateSlot: (slotId: ManualSaveSlotId) => void;
   onDeleteSlot: (slotId: ManualSaveSlotId) => void;
   allowDeleteSlot?: boolean;
+  addressOnlyDeletion?: boolean;
   onContinue: () => void;
   onOpenSettings: () => void;
   onOpenLoadGame?: () => void;
@@ -134,6 +135,7 @@ export function MainMenuScreen({
   onActivateSlot,
   onDeleteSlot,
   allowDeleteSlot = true,
+  addressOnlyDeletion = false,
   onContinue,
   onOpenSettings,
   onOpenLoadGame,
@@ -450,7 +452,9 @@ export function MainMenuScreen({
               Remove {pendingDeleteSlot.playerName ?? 'saved character'}?
             </div>
             <div className="mt-3 text-sm leading-7 text-[color:var(--color-text-soft)]">
-              This will erase the local save data for {pendingDeleteSlot.playerName ?? 'that character'} from this browser.
+              {addressOnlyDeletion
+                ? 'This empties this save slot. Campaign history and other save addresses remain in this browser.'
+                : `This will erase the local save data for ${pendingDeleteSlot.playerName ?? 'that character'} from this browser.`}
             </div>
             <div className="mt-6 flex flex-wrap justify-end gap-3">
               <button

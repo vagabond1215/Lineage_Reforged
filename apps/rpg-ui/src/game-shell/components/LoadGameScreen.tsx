@@ -167,7 +167,9 @@ export function LoadGameScreen({
                       ? `Delete the unreadable data stored in ${selectedSlot.label}?`
                       : selectedSlot.status === 'incompatible'
                         ? `Delete the incompatible data stored in ${selectedSlot.label}?`
-                      : `Delete ${selectedSlot.playerName} from ${selectedSlot.label}?`}
+                      : epochMode
+                        ? `Empty ${selectedSlot.label}? Campaign history and other save addresses remain.`
+                        : `Delete ${selectedSlot.playerName} from ${selectedSlot.label}?`}
                   </div>
                   <div className="mt-4 flex flex-wrap gap-3">
                     <button

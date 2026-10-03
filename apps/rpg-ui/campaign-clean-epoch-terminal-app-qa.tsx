@@ -6,20 +6,24 @@ import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog 
 import { createDefaultCharacterCreationFormState } from './src/game-shell/characterCreationForm.ts';
 import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.ts';
 import { CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_SESSION_STORAGE_KEY,
-  CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, openCleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.ts';
+  CLEAN_EPOCH_ADDRESS_DELETION_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+  openCleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.ts';
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.ts';
 import './src/index.css';
 
 const marker = 'lineage.g9d.app.qa.account';
 const status = document.querySelector<HTMLDivElement>('#qa-status')!;
 const inspection = document.querySelector<HTMLPreElement>('#qa-inspection')!;
-let armed: 'terminal_quota' | 'settlement_abort' | null = null;
+let armed: 'terminal_quota' | 'settlement_abort' | 'delete_quota' | 'delete_abort' | null = null;
 const originalPut = IDBObjectStore.prototype.put;
 IDBObjectStore.prototype.put = function(value: unknown, key?: IDBValidKey) {
   if (armed && ((armed === 'terminal_quota' && this.name === CLEAN_EPOCH_TERMINAL_RECOVERY_STORE) ||
-      (armed === 'settlement_abort' && this.name === CLEAN_EPOCH_ACCOUNT_STORE))) {
+      (armed === 'settlement_abort' && this.name === CLEAN_EPOCH_ACCOUNT_STORE) ||
+      ((armed === 'delete_quota' || armed === 'delete_abort') &&
+        this.name === CLEAN_EPOCH_ADDRESS_DELETION_STORE))) {
     const fault = armed; armed = null;
-    if (fault === 'terminal_quota') throw new DOMException('synthetic terminal quota', 'QuotaExceededError');
+    if (fault === 'terminal_quota' || fault === 'delete_quota')
+      throw new DOMException('synthetic quota', 'QuotaExceededError');
     const result = key === undefined ? originalPut.call(this, value) : originalPut.call(this, value, key);
     queueMicrotask(() => { try { this.transaction.abort(); } catch { /* already settled */ } });
     return result;
@@ -31,6 +35,12 @@ document.querySelector<HTMLButtonElement>('#arm-terminal-quota')!.onclick = () =
 };
 document.querySelector<HTMLButtonElement>('#arm-settlement-abort')!.onclick = () => {
   armed = 'settlement_abort'; inspection.textContent = 'Settlement abort armed.';
+};
+document.querySelector<HTMLButtonElement>('#arm-delete-quota')!.onclick = () => {
+  armed = 'delete_quota'; inspection.textContent = 'Delete quota armed.';
+};
+document.querySelector<HTMLButtonElement>('#arm-delete-abort')!.onclick = () => {
+  armed = 'delete_abort'; inspection.textContent = 'Delete abort armed.';
 };
 window.confirm = () => true; // QA page only: exercise the production retirement callback without a modal.
 function form() {

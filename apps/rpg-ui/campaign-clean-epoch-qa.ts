@@ -7,6 +7,8 @@ import {
   CLEAN_EPOCH_ACCOUNT_STORE,
   CLEAN_EPOCH_ATTEMPT_STORE,
   CLEAN_EPOCH_RECOVERY_STORE,
+  CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE,
+  CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE,
   CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE,
   CLEAN_EPOCH_DATABASE_NAME,
   CLEAN_EPOCH_DATABASE_VERSION,
@@ -289,7 +291,7 @@ async function suite() {
     const databaseName = name("attempt-malformed"); const owner = await openCleanEpochAccountStore({ name: databaseName });
     await owner.register(profile, verifier); await owner.prepareAttempt(attempt);
     const db = await rawOpen(databaseName);
-    await rawPutFamily(db, CLEAN_EPOCH_ATTEMPT_STORE, { ...attempt, consumerPlans: [{ kind: "unknown", payloadFingerprint: "x" }] });
+    await rawPutFamily(db, CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, { ...attempt, consumerPlans: [{ kind: "unknown", payloadFingerprint: "x" }] });
     await expectCode(() => owner.readAttempt(accountId, attempt.slotId), "invalid_record");
     await expectCode(() => owner.prepareAttempt(attempt), "invalid_record");
     await rawPut(db, { version: 1, accountId, revision: 1, profile: { accountId }, credential: verifier });
@@ -353,11 +355,11 @@ async function suite() {
     await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
     const valid = await owner.readRecovery(accountId, attempt.slotId);
     const db = await rawOpen(databaseName);
-    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, { ...valid, consumerPlans: [] });
+    await rawPutFamily(db, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, { ...valid, consumerPlans: [] });
     await expectCode(() => owner.readRecovery(accountId, attempt.slotId), "invalid_record");
     await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "invalid_record");
-    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, valid);
-    await rawDeleteFamily(db, CLEAN_EPOCH_ATTEMPT_STORE, [accountId, attempt.slotId]);
+    await rawPutFamily(db, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, valid);
+    await rawDeleteFamily(db, CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, [accountId, attempt.campaignId]);
     await expectCode(() => owner.readRecovery(accountId, attempt.slotId), "invalid_record");
     await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "invalid_record");
     db.close(); owner.close();
@@ -366,7 +368,7 @@ async function suite() {
     const databaseName = name("recovery-missing"); const owner = await openCleanEpochAccountStore({ name: databaseName });
     await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
     const db = await rawOpen(databaseName);
-    await rawDeleteFamily(db, CLEAN_EPOCH_RECOVERY_STORE, [accountId, attempt.slotId]);
+    await rawDeleteFamily(db, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, [accountId, attempt.campaignId]);
     await expectCode(() => owner.readRecovery(accountId, attempt.slotId), "invalid_record");
     await expectCode(() => owner.publishPreparedAttempt(attempt.attemptId, firstPublication), "invalid_record");
     await rawDeleteFamily(db, "slots", [accountId, attempt.slotId]);
@@ -478,9 +480,9 @@ async function suite() {
     const databaseName = name("consumer-missing"); const owner = await openCleanEpochAccountStore({ name: databaseName });
     await owner.register(profile, verifier); await owner.prepareAttempt(attempt); await owner.publishPreparedAttempt(attempt.attemptId, firstPublication);
     const db = await rawOpen(databaseName); const retained = await owner.readRecovery(accountId, attempt.slotId);
-    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, { ...retained, completedConsumerKinds: ["active_history"] });
+    await rawPutFamily(db, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, { ...retained, completedConsumerKinds: ["active_history"] });
     await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId), "invalid_record");
-    await rawPutFamily(db, CLEAN_EPOCH_RECOVERY_STORE, retained);
+    await rawPutFamily(db, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, retained);
     await rawDeleteFamily(db, "artifacts", [accountId, envelope.artifactId]);
     await expectCode(() => owner.completePreparedAttemptConsumers(accountId, attempt.slotId, attempt.attemptId, envelope.publicationId), "invalid_record");
     check((await owner.read(accountId))?.revision === 1, "missing artifact advanced account"); db.close(); owner.close();
@@ -579,13 +581,13 @@ async function suite() {
     const db = await rawOpen(databaseName);
     const before = JSON.stringify(await Promise.all([
       rawGetFamily(db, CLEAN_EPOCH_ACCOUNT_STORE, accountId),
-      rawGetFamily(db, CLEAN_EPOCH_RECOVERY_STORE, [accountId, attempt.slotId]),
+      rawGetFamily(db, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, [accountId, attempt.campaignId]),
       rawGetFamily(db, "artifacts", [accountId, envelope.artifactId])
     ]));
     await owner.listSlots(accountId); await owner.readSlot(accountId, "slot-1");
     const after = JSON.stringify(await Promise.all([
       rawGetFamily(db, CLEAN_EPOCH_ACCOUNT_STORE, accountId),
-      rawGetFamily(db, CLEAN_EPOCH_RECOVERY_STORE, [accountId, attempt.slotId]),
+      rawGetFamily(db, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, [accountId, attempt.campaignId]),
       rawGetFamily(db, "artifacts", [accountId, envelope.artifactId])
     ]));
     check(after === before, "read changed retained account, recovery or artifact"); db.close(); owner.close();
