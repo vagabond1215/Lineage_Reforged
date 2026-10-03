@@ -69,6 +69,27 @@ Covers:
 - production-provider migration;
 - test-era hips-up / hands-out-of-frame composition.
 
+### 4. Character Creator Perchance Prototype Provider Plan
+
+`docs/design/character-creator-perchance-prototype-provider-plan.md`
+
+Companion prototype-provider and portrait-control authority.
+
+Covers:
+
+- Perchance as disposable development / test infrastructure rather than canonical character authority;
+- provider-compliance and technical-integration boundaries;
+- preference for a purpose-built Lineage test generator over embedding a generic control surface when permitted;
+- provider-neutral Generate / Regenerate / Retry UI;
+- empty, generating, ready, stale, regenerating, and failure states;
+- no manual prompt, style, provider, or model controls in ordinary character creation;
+- preservation of the previous portrait during regeneration;
+- asset persistence and provider provenance;
+- provider-neutral error normalization;
+- test-era hips-up / hands-hidden render profile;
+- assisted-provider fallback if automated Perchance integration is not supportable;
+- production-provider replacement requirements.
+
 ## Settled Planning Direction
 
 Unless deliberately revised in a later design decision, future implementation should assume:
@@ -93,19 +114,30 @@ Unless deliberately revised in a later design decision, future implementation sh
 18. Provider / model / crop / lighting details are renderer configuration, not character identity.
 19. The free test-generation service is disposable infrastructure.
 20. Moving to a production image service must not require changing saved character facts.
+21. The ordinary player-facing portrait interface exposes one principal action at a time: Generate Portrait, Regenerate Portrait, or Retry Portrait.
+22. Normal character creation exposes no manual image prompt field.
+23. Normal character creation exposes no provider selector, model selector, sampler, inference, style, or advanced generation controls.
+24. Regeneration preserves the previous portrait until a replacement succeeds.
+25. A failed first generation falls back to initials and never invalidates the character.
+26. A failed regeneration preserves the previous portrait and allows another attempt.
+27. Perchance is a prototype-provider candidate, not a production dependency.
+28. A future implementation must re-check provider rules before enabling Perchance automation or embedding.
+29. Undocumented scraping, simulated third-party UI control, reverse-engineered endpoints, and cross-origin DOM manipulation are not planned integration strategies.
+30. If Perchance cannot support an acceptable automated path, it may remain assisted / developer-only while the same Lineage Generate / Regenerate UI and state model are retained for a later provider.
 
 ## Planning Package Boundaries
 
 This package intentionally does not yet settle:
 
-- exact provider selection;
-- provider credentials / quotas / pricing;
+- final production provider selection;
+- production provider credentials / quotas / pricing;
 - exact provider pixel dimensions;
 - exact production renderer capabilities;
+- whether Perchance ultimately supports an acceptable automated, purpose-built embedded, or assisted prototype path at implementation time;
 - canonical visual morphology for every fantasy lineage;
 - every lineage-specific facial-hair rule;
 - every culture-specific tattoo / piercing / hairstyle;
-- final creator UI layout implementation;
+- final creator UI layout implementation outside the settled portrait-action state model;
 - save migration strategy if active development saves must later be preserved;
 - flaw / drawback trait design.
 
@@ -125,6 +157,8 @@ Before implementation reaches full catalog lock, settle:
 8. Whether Half-Merfolk have visible aquatic face / neck morphology.
 9. Which appearance styles are universal versus culture-specific.
 10. Exact global portrait art direction.
+11. At prototype implementation time, re-check Perchance's current integration rules and determine whether the adapter is automated, purpose-built embedded, or assisted.
+12. Decide where generated portrait assets are persisted independently of transient provider pages or URLs.
 
 ## Suggested Implementation Consumption Order
 
@@ -157,7 +191,8 @@ A future coding pass should consume this package in slices:
 - grouped trait selection;
 - appearance customization;
 - live attribute preview;
-- portrait preview / fallback state.
+- portrait preview / fallback state;
+- provider-neutral Generate / Regenerate / Retry control state machine.
 
 ### Slice E: portrait specification
 
@@ -168,17 +203,22 @@ A future coding pass should consume this package in slices:
 
 ### Slice F: testing provider
 
-- provider adapter;
-- explicit Generate / Regenerate action;
-- stable asset reference;
-- test-era hips-up generation;
-- failure handling.
+- first prove the portrait state machine with a fake or deterministic local stub provider;
+- re-check current Perchance integration rules;
+- choose automated, purpose-built embedded, or assisted prototype mode only if supportable;
+- keep the ordinary player-facing UI limited to Generate / Regenerate / Retry;
+- use the test-era hips-up generation profile;
+- persist a stable Lineage-owned asset reference;
+- normalize provider failures into application-owned error states;
+- never block character completion when generation fails.
 
 ### Slice G: production provider later
 
 - replace or supplement provider adapter;
 - add production render profile;
-- preserve canonical identity and descriptor IDs.
+- preserve canonical identity and descriptor IDs;
+- preserve Generate / Regenerate UI semantics;
+- preserve portrait fingerprint and stale-state behavior.
 
 ## Isolation Requirement
 
