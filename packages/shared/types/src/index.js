@@ -1,4 +1,5 @@
 export * from "./contracts.js";
+export * from "./character-creator.js";
 export * from "./combat.js";
 export * from "./encounters.js";
 export * from "./player-origins.js";
