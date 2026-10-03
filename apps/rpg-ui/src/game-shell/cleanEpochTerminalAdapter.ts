@@ -40,7 +40,8 @@ export class CleanEpochTerminalAdapter {
       this.owner.readSlot(recovery.accountId, recovery.slotId)
     ]);
     if (!account || !readback || readback.status !== 'settlement_completed' ||
-        slot.status !== 'closed' || readback.artifactId !== recovery.artifactId)
+        (!readback.addressClosure && slot.status !== 'closed') ||
+        readback.artifactId !== recovery.artifactId)
       throw new CampaignStoreError('readback_failed', 'Retirement did not read back as one settled closed head.');
     return { status: 'completed', account, recovery: readback };
   }

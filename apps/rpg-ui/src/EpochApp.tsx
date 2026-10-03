@@ -29,6 +29,7 @@ type Services = { owner: CleanEpochAccountStore; accounts: CleanEpochAccountAdap
   normalDefeat: CleanEpochNormalDefeatRecoveryAdapter; legacy: CleanEpochLegacyActionAdapter;
   terminal: CleanEpochTerminalAdapter };
 type Address = { artifactId: string; publicationId: string };
+type MenuDeletionSource = { slotGenerationId: string; address: Address };
 type Inventory = { account: Awaited<ReturnType<CleanEpochAccountStore['readSelected']>> & {};
   slots: CleanEpochSlotSummary[] };
 type ThemePreference = 'system' | 'dark' | 'light';
@@ -107,6 +108,7 @@ export function EpochApp() {
   const observedAccountRevision = useRef<number | null>(null);
   const menuAccountRevision = useRef<number | null>(null);
   const observedAddresses = useRef<Partial<Record<SaveSlotId, Address | null>>>({});
+  const menuDeletionSources = useRef<Partial<Record<SaveSlotId, MenuDeletionSource>>>({});
   const initializationGeneration = useRef(0);
   const activeOwner = useRef<CleanEpochAccountStore | null>(null);
 
@@ -121,6 +123,23 @@ export function EpochApp() {
     try { return await work(); }
     catch (error) { block(error instanceof Error ? error.message : String(error)); return fallback; }
     finally { actionPending.current = false; setBusy(false); }
+  };
+  const captureMenuDeletionSources = async (next: Services, accountId: string,
+    slots: CleanEpochSlotSummary[]) => {
+    const captured: Partial<Record<SaveSlotId, MenuDeletionSource>> = {};
+    for (const slot of slots) {
+      if (slot.status !== 'ready') continue;
+      const [read, pointer] = await Promise.all([
+        next.owner.readSlot(accountId, slot.slotId),
+        next.owner.readSlotGeneration(accountId, slot.slotId)
+      ]);
+      if (read.status !== 'ready' || !pointer || pointer.status !== 'published')
+        throw new Error(`Ready slot ${slot.slotId} lost its deletion source.`);
+      captured[slot.slotId] = { slotGenerationId: pointer.slotGenerationId,
+        address: { artifactId: read.loaded.sessionControl.loadedArtifactId,
+          publicationId: read.loaded.sessionControl.loadedPublicationId } };
+    }
+    menuDeletionSources.current = captured;
   };
 
   const completePending = async (next: Services, accountId: string, slots: CleanEpochSlotSummary[]) => {
@@ -148,6 +167,7 @@ export function EpochApp() {
     await completePending(next, accountId, result.value.slots);
     const terminal = await next.terminal.resumePending(accountId);
     if (terminal?.status === 'blocked') throw new Error(terminal.message);
+    await next.owner.closePendingTerminalAddressesForAccount(accountId);
     result = await next.launcher.inventory(accountId);
     if (result.status === 'blocked') throw new Error(result.message);
     if (result.value.slots.some(slot => slot.status === 'pending_consumers'))
@@ -179,6 +199,7 @@ export function EpochApp() {
       } else {
         const found = await inventory(next, selected.value.inventory.account.accountId);
         menuAccountRevision.current = found.account.revision;
+        await captureMenuDeletionSources(next, found.account.accountId, found.slots);
         dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: selected.value.session,
           accountProfile: found.account.profile, slots: slotSummaries(found.slots), notice: null });
       }
@@ -209,6 +230,7 @@ export function EpochApp() {
     if (!services) throw new Error('Epoch owner is unavailable.');
     const found = await inventory(services, accountId);
     menuAccountRevision.current = found.account.revision;
+    await captureMenuDeletionSources(services, accountId, found.slots);
     if (section) setLauncherSection(section);
     dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: session, accountProfile: found.account.profile,
       slots: slotSummaries(found.slots), notice: message });
@@ -358,7 +380,7 @@ export function EpochApp() {
 
   const retire = () => {
     if (state.screen !== 'IN_GAME' || !services) return;
-    if (!window.confirm(`Retire ${state.snapshot.playerState.coreData.playerName}? This closes the campaign and records its final history. Closed slot addresses remain retained until lifecycle cleanup is available.`)) return;
+    if (!window.confirm(`Retire ${state.snapshot.playerState.coreData.playerName}? This closes the campaign, records its final history and empties its save slots after settlement.`)) return;
     void guarded(async () => {
       if (state.screen !== 'IN_GAME' || !services) return;
       const sourceSlotId = sourceSlot.current;
@@ -381,6 +403,30 @@ export function EpochApp() {
   const refreshMenu = (message: GameShellNotice | null = null, section?: LauncherSectionId) =>
     guarded(async () => { if (state.screen === 'ACCOUNT_ACCESS') return;
       await showMenu(state.launcherSession, state.accountProfile.accountId, message, section); }, undefined);
+
+  const deleteSlot = (slotId: SaveSlotId) => {
+    if ((state.screen !== 'MAIN_MENU' && state.screen !== 'LOAD_GAME') || !services) return;
+    const source = menuDeletionSources.current[slotId];
+    const expectedAccountRevision = menuAccountRevision.current;
+    if (!source || expectedAccountRevision === null) {
+      failed('Could Not Delete Save', 'The verified slot address was not captured. Refresh the account menu.');
+      return;
+    }
+    void guarded(async () => {
+      if (!services || (state.screen !== 'MAIN_MENU' && state.screen !== 'LOAD_GAME')) return;
+      try {
+        await services.owner.deleteSlotAddress({ accountId: state.accountProfile.accountId,
+          slotId, expectedAccountRevision, expectedSlotGenerationId: source.slotGenerationId,
+          expectedAddress: source.address, deletedAt: new Date().toISOString() });
+        await showMenu(state.launcherSession, state.accountProfile.accountId,
+          { tone: 'success', title: 'Save Address Removed',
+            detail: `${getSaveSlotLabel(slotId)} is empty. Campaign history remains retained.` });
+      } catch (error) {
+        await showMenu(state.launcherSession, state.accountProfile.accountId,
+          blockedNotice(error instanceof Error ? error.message : String(error)));
+      }
+    }, undefined);
+  };
 
   const loadLatest = () => { if (state.screen === 'ACCOUNT_ACCESS') return;
     const slotId = getPreferredLoadSlotId(state.slots);
@@ -426,9 +472,9 @@ export function EpochApp() {
     themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')} />;
   else if (current.screen === 'MAIN_MENU') content = <MainMenuScreen {...common}
     accountProfile={current.accountProfile} slots={current.slots} activeSection={launcherSection}
-    allowDeleteSlot={false}
+    allowDeleteSlot addressOnlyDeletion
     onActiveSectionChange={setLauncherSection} onActivateSlot={slotId => void activateSlot(slotId)}
-    onDeleteSlot={() => unsupported('Slot Deletion')} onContinue={loadLatest}
+    onDeleteSlot={deleteSlot} onContinue={loadLatest}
     onOpenLoadGame={() => dispatch({ type: 'OPEN_LOAD_GAME', launcherSession: current.launcherSession,
       accountProfile: current.accountProfile, slots: current.slots,
       selectedSlotId: getPreferredLoadSlotId(current.slots), notice: null })}
@@ -453,12 +499,12 @@ export function EpochApp() {
       onCancelOverwrite={() => dispatch({ type: 'SET_CHARACTER_OVERWRITE', slotId: null })}
       themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')} />;
   } else if (current.screen === 'LOAD_GAME') content = <LoadGameScreen {...common} slots={current.slots}
-    epochMode allowDeleteSlot={false}
+    epochMode allowDeleteSlot
     selectedSlotId={current.selectedSlotId} onBack={() => void refreshMenu()}
     onSelectSlot={slotId => dispatch({ type: 'SELECT_LOAD_SLOT', slotId })}
     onLoadSelected={() => { if (current.selectedSlotId) void load(current.launcherSession,
       current.accountProfile.accountId, current.selectedSlotId); }}
-    onDeleteSlot={() => unsupported('Slot Deletion')} />;
+    onDeleteSlot={deleteSlot} />;
   else if (current.screen === 'SETTINGS') content = <SettingsScreen {...common} accountProfile={current.accountProfile}
     allowAccountLifecycle={false}
     slots={current.slots} onOpenLauncherSection={section => void refreshMenu(null, section)}
