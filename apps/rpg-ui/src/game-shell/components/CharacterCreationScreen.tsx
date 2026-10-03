@@ -259,11 +259,9 @@ export function CharacterCreationScreen({
 
   useEffect(() => {
     portraitFingerprintRef.current = portraitFingerprint;
-    if (portraitFingerprint) {
-      setPortraitState((current) =>
-        markCharacterPortraitIdentityChanged(current, portraitFingerprint)
-      );
-    }
+    setPortraitState((current) =>
+      markCharacterPortraitIdentityChanged(current, portraitFingerprint)
+    );
   }, [portraitFingerprint]);
 
   const fullValidation = validateCharacterCreationForm(form, {
@@ -394,7 +392,7 @@ export function CharacterCreationScreen({
         state: current,
         requestId: start.requestId,
         requestFingerprint: start.requestFingerprint,
-        currentIdentityFingerprint: portraitFingerprintRef.current ?? start.requestFingerprint,
+        currentIdentityFingerprint: portraitFingerprintRef.current,
         result
       })
     );
