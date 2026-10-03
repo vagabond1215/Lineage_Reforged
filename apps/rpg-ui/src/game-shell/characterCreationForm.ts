@@ -1,9 +1,6 @@
 import type {
   AccountProfileState,
   PlayerIdentityAgeBandId,
-  PlayerIdentityFocusId,
-  PlayerIdentityNatureId,
-  PlayerIdentityPhysiqueId,
   PlayerSexId
 } from "../../../../packages/shared/types/src/index.js";
 import type { ManualSaveSlotId } from "./state.js";
@@ -16,13 +13,18 @@ import {
   isKnownStartingBundleId,
   isSelectableBackstoryId,
   resolveCanonicalAgeBandId,
-  resolveCanonicalFocusId,
-  resolveCanonicalNatureId,
-  resolveCanonicalPhysiqueId,
   validateStartingBundleChoiceSelections,
   type StartingBundleChoiceSelections
 } from "./characterCreationCatalog.js";
+import {
+  DEFAULT_CHARACTER_APPEARANCE_DESCRIPTOR_IDS,
+  validateCharacterAppearanceSelection
+} from "./characterCreationAppearance.js";
 import { resolveCharacterCreationAttributes } from "./characterCreationMath.js";
+import {
+  DEFAULT_CHARACTER_PROFILE_TRAIT_IDS,
+  validateCharacterProfileTraitSelection
+} from "./characterCreationProfileTraits.js";
 import {
   getWorldContinentOptions,
   getWorldRegionOptions,
@@ -33,9 +35,6 @@ import {
 export type CharacterCreationSexId = "" | Extract<PlayerSexId, "male" | "female">;
 export type CharacterCreationAgeBandId = "" | PlayerIdentityAgeBandId;
 export type CharacterCreationHeightBandId = "" | HeightBandId;
-export type CharacterCreationPhysiqueId = "" | PlayerIdentityPhysiqueId;
-export type CharacterCreationNatureId = "" | PlayerIdentityNatureId;
-export type CharacterCreationFocusId = "" | PlayerIdentityFocusId;
 
 export type CharacterCreationStepId =
   | "lineage"
@@ -53,9 +52,8 @@ export type CharacterCreationField =
   | "lineageId"
   | "ageBandId"
   | "heightBandId"
-  | "physiqueId"
-  | "natureId"
-  | "focusId"
+  | "profileTraitIds"
+  | "appearanceDescriptorIds"
   | "hairColorId"
   | "eyeColorId"
   | "skinToneId"
@@ -73,9 +71,8 @@ export interface CharacterCreationFormState {
   lineageId: string;
   ageBandId: CharacterCreationAgeBandId;
   heightBandId: CharacterCreationHeightBandId;
-  physiqueId: CharacterCreationPhysiqueId;
-  natureId: CharacterCreationNatureId;
-  focusId: CharacterCreationFocusId;
+  profileTraitIds: string[];
+  appearanceDescriptorIds: string[];
   hairColorId: string;
   eyeColorId: string;
   skinToneId: string;
@@ -129,9 +126,6 @@ export interface CompleteCharacterCreationFormState extends CharacterCreationFor
   sexId: Extract<PlayerSexId, "male" | "female">;
   ageBandId: PlayerIdentityAgeBandId;
   heightBandId: HeightBandId;
-  physiqueId: PlayerIdentityPhysiqueId;
-  natureId: PlayerIdentityNatureId;
-  focusId: PlayerIdentityFocusId;
 }
 
 export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
@@ -146,15 +140,14 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
     id: "identity",
     label: "Identity",
     description:
-      "Choose name, sex, age, stature, physique, nature, focus, and lineage-valid coloration from the shared identity profile system.",
+      "Choose name, sex, age, stature, six profile traits, appearance, and lineage-valid coloration.",
     fields: [
       "playerName",
       "sexId",
       "ageBandId",
       "heightBandId",
-      "physiqueId",
-      "natureId",
-      "focusId",
+      "profileTraitIds",
+      "appearanceDescriptorIds",
       "hairColorId",
       "eyeColorId",
       "skinToneId"
@@ -205,9 +198,8 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
       "lineageId",
       "ageBandId",
       "heightBandId",
-      "physiqueId",
-      "natureId",
-      "focusId",
+      "profileTraitIds",
+      "appearanceDescriptorIds",
       "hairColorId",
       "eyeColorId",
       "skinToneId",
@@ -231,9 +223,8 @@ export function createDefaultCharacterCreationFormState(
     lineageId: "lineage.human",
     ageBandId: "prime",
     heightBandId: "normal",
-    physiqueId: "stocky",
-    natureId: "disciplined",
-    focusId: "balanced",
+    profileTraitIds: [...DEFAULT_CHARACTER_PROFILE_TRAIT_IDS],
+    appearanceDescriptorIds: [...DEFAULT_CHARACTER_APPEARANCE_DESCRIPTOR_IDS],
     hairColorId: "",
     eyeColorId: "",
     skinToneId: "",
@@ -257,15 +248,25 @@ export function hasCompleteCharacterCreationSelections(
   options: CharacterCreationValidationOptions = {}
 ): form is CompleteCharacterCreationFormState {
   const backstoryRequired = isBackstoryRequired(options);
+  const validSex = form.sexId === "male" || form.sexId === "female";
+  const profileTraitsValid = validateCharacterProfileTraitSelection(
+    form.profileTraitIds,
+    form.lineageId
+  ).isValid;
+  const appearanceValid = validSex
+    ? validateCharacterAppearanceSelection(form.appearanceDescriptorIds, {
+        sexId: form.sexId,
+        lineageId: form.lineageId
+      }).isValid
+    : false;
 
   return Boolean(
-    form.sexId &&
+    validSex &&
       form.lineageId.trim() &&
       resolveCanonicalAgeBandId(form.ageBandId) &&
       form.heightBandId &&
-      resolveCanonicalPhysiqueId(form.physiqueId) &&
-      resolveCanonicalNatureId(form.natureId) &&
-      resolveCanonicalFocusId(form.focusId) &&
+      profileTraitsValid &&
+      appearanceValid &&
       form.hairColorId.trim() &&
       form.eyeColorId.trim() &&
       form.skinToneId.trim() &&
@@ -424,16 +425,12 @@ export function validateCharacterCreationForm(
 
   const identityCatalog = getLineageIdentityCatalog(form.lineageId);
   const normalizedAgeBandId = resolveCanonicalAgeBandId(form.ageBandId);
-  const normalizedPhysiqueId = resolveCanonicalPhysiqueId(form.physiqueId);
-  const normalizedNatureId = resolveCanonicalNatureId(form.natureId);
-  const normalizedFocusId = resolveCanonicalFocusId(form.focusId);
 
   if (!identityCatalog) {
     errors.ageBandId = "Choose a lineage before setting identity details.";
     errors.heightBandId = "Choose a lineage before setting identity details.";
-    errors.physiqueId = "Choose a lineage before setting identity details.";
-    errors.natureId = "Choose a lineage before setting identity details.";
-    errors.focusId = "Choose a lineage before setting identity details.";
+    errors.profileTraitIds = "Choose a lineage before setting profile traits.";
+    errors.appearanceDescriptorIds = "Choose a lineage before setting appearance details.";
     errors.hairColorId = "Choose a lineage before setting identity details.";
     errors.eyeColorId = "Choose a lineage before setting identity details.";
     errors.skinToneId = "Choose a lineage before setting identity details.";
@@ -446,20 +443,23 @@ export function validateCharacterCreationForm(
       errors.heightBandId = "Choose a valid height profile.";
     }
 
-    if (
-      !identityCatalog.physiqueOptions.some(
-        (option) => option.id === normalizedPhysiqueId
-      )
-    ) {
-      errors.physiqueId = "Choose a valid physique profile.";
+    const traitValidation = validateCharacterProfileTraitSelection(
+      form.profileTraitIds,
+      form.lineageId
+    );
+    if (!traitValidation.isValid) {
+      errors.profileTraitIds = traitValidation.errors[0] ?? "Choose a valid set of profile traits.";
     }
 
-    if (!identityCatalog.natureOptions.some((option) => option.id === normalizedNatureId)) {
-      errors.natureId = "Choose a valid nature profile.";
-    }
-
-    if (!identityCatalog.focusOptions.some((option) => option.id === normalizedFocusId)) {
-      errors.focusId = "Choose a valid focus profile.";
+    if (form.sexId === "male" || form.sexId === "female") {
+      const appearanceValidation = validateCharacterAppearanceSelection(
+        form.appearanceDescriptorIds,
+        { sexId: form.sexId, lineageId: form.lineageId }
+      );
+      if (!appearanceValidation.isValid) {
+        errors.appearanceDescriptorIds =
+          appearanceValidation.errors[0] ?? "Choose a valid set of appearance details.";
+      }
     }
 
     if (!identityCatalog.hairColorOptions.some((option) => option.id === form.hairColorId)) {
@@ -545,17 +545,12 @@ export function validateCharacterCreationForm(
     sexId: form.sexId,
     ageBandId: form.ageBandId,
     heightBandId: form.heightBandId,
-    physiqueId: form.physiqueId,
-    natureId: form.natureId,
-    focusId: form.focusId,
+    profileTraitIds: form.profileTraitIds,
     backstoryId: form.backstoryId
   });
 
-  if (attributeResolution.errors.length > 0) {
-    const [firstProfileError] = attributeResolution.errors;
-    if (firstProfileError) {
-      errors.focusId = firstProfileError;
-    }
+  if (attributeResolution.errors.length > 0 && !errors.profileTraitIds) {
+    errors.profileTraitIds = attributeResolution.errors[0] ?? "Profile traits could not be resolved.";
   }
 
   return {
