@@ -1,12 +1,13 @@
 import type { AccountProfileState, CampaignPublicationConsumerKind, SaveSnapshot, SoundingsAdmissionWitness } from "../../../../packages/shared/types/src/index.js";
 import { createCampaignSessionControl } from "../../../../packages/engines/game-engine/src/campaign-session.js";
 import { isSoundingsAdmissionWitness, verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
-import type { LocalAuthCredentialRecord } from "./launcherAuthManager.js";
+import { verifyPassword, type LocalAuthCredentialRecord } from "./launcherAuthManager.js";
 import { isAccountProfileState } from "./accountProfileManager.js";
 import { evaluateAchievementProgress, markRunDeleted } from "../../../../packages/engines/game-engine/src/achievements.js";
 import { recordCampaignPublicationConsumer, type VerifiedCampaignPublication } from "../../../../packages/engines/game-engine/src/account-publication.js";
 import { consumeSelectedLegacyPreparations, resolveLegacyPreparationSelection } from "../../../../packages/engines/game-engine/src/legacy-unlocks.js";
 import { consumeRetiredRunInheritanceUse, resolveHeirSourceById } from "./runLifecycle.js";
+import { createDefaultAccountProfileState } from "../../../../packages/engines/game-engine/src/legacy-account.js";
 import { projectRetirementSettlement, retirementSettlementFingerprint, RETIREMENT_CONSUMERS } from "./cleanEpochTerminalProjection.js";
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
@@ -26,7 +27,7 @@ import {
 
 /** Clean-epoch account and campaign authority selected by the awaited App caller. */
 export const CLEAN_EPOCH_DATABASE_NAME = "lineage.campaigns.epoch1";
-export const CLEAN_EPOCH_DATABASE_VERSION = 6;
+export const CLEAN_EPOCH_DATABASE_VERSION = 7;
 export const CLEAN_EPOCH_ACCOUNT_STORE = "accounts";
 export const CLEAN_EPOCH_ATTEMPT_STORE = "newCampaignAttempts";
 export const CLEAN_EPOCH_RECOVERY_STORE = "pendingPublicationRecoveries";
@@ -36,12 +37,20 @@ export const CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE = "campaignAttemptsV6";
 export const CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE = "firstPublicationRecoveriesV6";
 export const CLEAN_EPOCH_SLOT_GENERATION_STORE = "currentSlotGenerations";
 export const CLEAN_EPOCH_ADDRESS_DELETION_STORE = "addressDeletionReceipts";
+export const CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE = "accountLifecycle";
 export const CLEAN_EPOCH_SESSION_STORAGE_KEY = "cataclysm-rpg-ui.epoch1.session";
+const ACCOUNT_DATA_STORES = [CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
+  CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+  CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE,
+  CLEAN_EPOCH_SLOT_GENERATION_STORE, CLEAN_EPOCH_ADDRESS_DELETION_STORE,
+  "artifacts", "controls", "slots", "witnesses"] as const;
 
 export type CleanEpochAccountRecord = {
   version: 1;
   accountId: string;
   revision: number;
+  /** Missing only on retained v6 rows; their initial lifecycle generation is one. */
+  lifecycleGeneration?: number;
   profile: AccountProfileState;
   credential: LocalAuthCredentialRecord;
 };
@@ -77,6 +86,20 @@ export type CleanEpochAddressDeletionReceipt = {
   campaignId: string; characterId: string; artifactId: string; publicationId: string;
   addressRaw: string; expectedAccountRevision: number; completedAccountRevision: number;
   reason: "player" | "terminal"; deletedAt: string;
+};
+export type CleanEpochAccountLifecycleReceipt = {
+  version: 1; accountId: string; kind: "reset" | "delete";
+  expectedRevision: number; expectedGeneration: number; completedGeneration: number;
+  completedRevision: number | null; completedAt: string;
+};
+export type CleanEpochAccountLifecycleRequest = {
+  accountId: string; expectedRevision: number; expectedGeneration: number;
+  currentPassword: string;
+};
+export type CleanEpochAccountLifecycleResult = {
+  status: "committed" | "same_source_retry";
+  receipt: CleanEpochAccountLifecycleReceipt;
+  account: CleanEpochAccountRecord | null;
 };
 export type CleanEpochAddressDeletionRequest = {
   accountId: string; slotId: SaveSlotId; expectedAccountRevision: number;
@@ -293,7 +316,22 @@ function validProfile(value: unknown, accountId: string): value is AccountProfil
 function validAccount(value: unknown, accountId: string): value is CleanEpochAccountRecord {
   return object(value) && value.version === 1 && value.accountId === accountId &&
     Number.isSafeInteger(value.revision) && (value.revision as number) >= 1 &&
+    (value.lifecycleGeneration === undefined ||
+      (Number.isSafeInteger(value.lifecycleGeneration) && (value.lifecycleGeneration as number) >= 1)) &&
     validProfile(value.profile, accountId) && validCredential(value.credential, accountId);
+}
+export function accountLifecycleGeneration(account: CleanEpochAccountRecord): number {
+  return account.lifecycleGeneration ?? 1;
+}
+function checkedLifecycle(value: unknown, accountId: string): CleanEpochAccountLifecycleReceipt {
+  if (!object(value) || value.version !== 1 || value.accountId !== accountId ||
+      (value.kind !== "reset" && value.kind !== "delete") ||
+      !Number.isSafeInteger(value.expectedRevision) || (value.expectedRevision as number) < 1 ||
+      !Number.isSafeInteger(value.expectedGeneration) || (value.expectedGeneration as number) < 1 ||
+      value.completedGeneration !== (value.expectedGeneration as number) + 1 ||
+      value.completedRevision !== (value.kind === "reset" ? (value.expectedRevision as number) + 1 : null) ||
+      !nonblank(value.completedAt)) fail("invalid_record", "Account lifecycle receipt is malformed.");
+  return value as CleanEpochAccountLifecycleReceipt;
 }
 function checkedAccount(value: unknown, accountId: string): CleanEpochAccountRecord {
   if (!validAccount(value, accountId)) fail("invalid_record", "Retained clean-epoch account is malformed or mismatched.");
@@ -680,6 +718,8 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
       if (!database.objectStoreNames.contains(CLEAN_EPOCH_ADDRESS_DELETION_STORE))
         database.createObjectStore(CLEAN_EPOCH_ADDRESS_DELETION_STORE,
           { keyPath: ["accountId", "slotId", "slotGenerationId"] });
+      if (!database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE))
+        database.createObjectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, { keyPath: "accountId" });
       // The v5 families remain untouched as retained evidence. The v6 copies are the
       // sole active attempt/recovery authority after this atomic upgrade.
       if (event.oldVersion < 6) {
@@ -778,6 +818,7 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
           !database.objectStoreNames.contains(CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE) ||
           !database.objectStoreNames.contains(CLEAN_EPOCH_SLOT_GENERATION_STORE) ||
           !database.objectStoreNames.contains(CLEAN_EPOCH_ADDRESS_DELETION_STORE) ||
+          !database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE) ||
           !database.transaction(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE).objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
             .indexNames.contains("bySourcePublication")) {
         database.close(); reject(new CampaignStoreError("invalid_record", "Clean-epoch schema is incomplete.")); return;
@@ -795,6 +836,138 @@ export class CleanEpochAccountStore {
     private readonly afterWrite?: CleanEpochAccountStoreOptions["afterWrite"]) {}
 
   close(): void { this.db.close(); }
+
+  async readLifecycleReceipt(accountId: string): Promise<CleanEpochAccountLifecycleReceipt | null> {
+    if (!nonblank(accountId)) fail("invalid_record", "Account lifecycle identity is invalid.");
+    try {
+      const tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE], "readonly");
+      const [accountRaw, receiptRaw] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE).get(accountId) as IDBRequest<unknown>)
+      ]);
+      const receipt = receiptRaw === undefined ? null : checkedLifecycle(receiptRaw, accountId);
+      if (accountRaw !== undefined) {
+        const account = checkedAccount(accountRaw, accountId);
+        if ((!receipt && accountLifecycleGeneration(account) !== 1) ||
+            (receipt && (receipt.kind === "delete" ||
+              accountLifecycleGeneration(account) !== receipt.completedGeneration)))
+          fail("invalid_record", "Account disagrees with lifecycle authority.");
+      } else if (receipt?.kind === "reset") fail("invalid_record", "Reset receipt lacks its account.");
+      return receipt;
+    } catch (error) { throw classify(error, "unavailable"); }
+  }
+
+  /** One database transaction erases every account-owned row and records the generation boundary. */
+  async transitionAccount(kind: "reset" | "delete", input: CleanEpochAccountLifecycleRequest):
+    Promise<CleanEpochAccountLifecycleResult> {
+    if (!object(input) || !nonblank(input.accountId) ||
+        !Number.isSafeInteger(input.expectedRevision) || input.expectedRevision < 1 ||
+        !Number.isSafeInteger(input.expectedGeneration) || input.expectedGeneration < 1 ||
+        typeof input.currentPassword !== "string" || !input.currentPassword.trim())
+      fail("invalid_record", "Account lifecycle request is invalid.");
+    const verified = await this.read(input.accountId);
+    if (verified && !await verifyPassword(input.currentPassword, verified.credential))
+      fail("conflict", "Current account credential did not match.");
+    let tx: IDBTransaction;
+    try { tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE,
+      ...ACCOUNT_DATA_STORES], "readwrite"); }
+    catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    let status: CleanEpochAccountLifecycleResult["status"] = "committed";
+    let receipt: CleanEpochAccountLifecycleReceipt;
+    let next: CleanEpochAccountRecord | null = null;
+    try {
+      const accounts = tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE);
+      const lifecycle = tx.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE);
+      const [accountRaw, receiptRaw] = await Promise.all([
+        requestValue(accounts.get(input.accountId) as IDBRequest<unknown>),
+        requestValue(lifecycle.get(input.accountId) as IDBRequest<unknown>)
+      ]);
+      const prior = receiptRaw === undefined ? null : checkedLifecycle(receiptRaw, input.accountId);
+      if (prior && prior.expectedRevision === input.expectedRevision &&
+          prior.expectedGeneration === input.expectedGeneration && prior.kind === kind) {
+        status = "same_source_retry";
+        receipt = prior;
+        next = accountRaw === undefined ? null : checkedAccount(accountRaw, input.accountId);
+        if (kind === "reset" && (!next || accountLifecycleGeneration(next) !== prior.completedGeneration ||
+            next.revision < prior.completedRevision!))
+          fail("invalid_record", "Reset completion lacks its account generation.");
+        if (kind === "delete" && next) fail("invalid_record", "Deleted account was recreated.");
+      } else {
+        if (prior && prior.kind === "delete") fail("conflict", "Deleted account identity is tombstoned.");
+        if (accountRaw === undefined) fail("invalid_record", "Lifecycle account is missing.");
+        const account = checkedAccount(accountRaw, input.accountId);
+        if ((!prior && accountLifecycleGeneration(account) !== 1) ||
+            (prior && accountLifecycleGeneration(account) !== prior.completedGeneration))
+          fail("invalid_record", "Account lifecycle generation lacks exact retained authority.");
+        if (account.revision !== input.expectedRevision ||
+            accountLifecycleGeneration(account) !== input.expectedGeneration)
+          fail("stale_head", "Account revision or lifecycle generation changed.");
+        const completedAt = new Date().toISOString();
+        next = kind === "reset" ? { ...account, revision: account.revision + 1,
+          lifecycleGeneration: input.expectedGeneration + 1,
+          profile: createDefaultAccountProfileState({ accountId: input.accountId,
+            displayName: account.profile.displayName, createdAt: account.profile.createdAt,
+            updatedAt: completedAt }) } : null;
+        receipt = { version: 1, accountId: input.accountId, kind,
+          expectedRevision: input.expectedRevision, expectedGeneration: input.expectedGeneration,
+          completedGeneration: input.expectedGeneration + 1,
+          completedRevision: next?.revision ?? null, completedAt };
+        // Validate the entire account prefix before the first write. Incomplete rows
+        // cannot be silently mistaken for a successful destructive transition.
+        const keys = new Map<string, IDBValidKey[]>();
+        const range = IDBKeyRange.bound([input.accountId], [input.accountId, []]);
+        for (const name of ACCOUNT_DATA_STORES) {
+          const store = tx.objectStore(name);
+          const found = await requestValue(store.getAllKeys(range));
+          for (const key of found) {
+            const raw = await requestValue(store.get(key) as IDBRequest<unknown>);
+            if (!Array.isArray(key) || key[0] !== input.accountId ||
+                !object(raw) || raw.version !== 1 || raw.accountId !== input.accountId)
+              fail("invalid_record", `Malformed ${name} account row blocks lifecycle transition.`);
+          }
+          keys.set(name, found);
+        }
+        const write = async <T,>(request: () => IDBRequest<T>) => {
+          this.beforeWrite?.(tx);
+          await requestValue(request());
+          this.afterWrite?.(tx);
+        };
+        for (const name of ACCOUNT_DATA_STORES)
+          for (const key of keys.get(name) ?? [])
+            await write(() => tx.objectStore(name).delete(key));
+        if (next) await write(() => accounts.put(next));
+        else await write(() => accounts.delete(input.accountId));
+        await write(() => lifecycle.put(receipt));
+      }
+      await done;
+    } catch (error) {
+      try { tx.abort(); } catch { /* already settled */ }
+      try { await done; } catch { /* retain original failure */ }
+      throw classify(error, "aborted");
+    }
+    const [actual, durableReceipt] = await Promise.all([
+      this.read(input.accountId), this.readLifecycleReceipt(input.accountId)
+    ]);
+    if (!durableReceipt || !exactEqual(durableReceipt, receipt) ||
+        (kind === "delete" ? actual !== null : !actual ||
+          (status === "committed" && !exactEqual(actual, next))))
+      fail("readback_failed", "Account lifecycle completion failed exact readback.");
+    // A later authorized caller may have created new-generation rows after the
+    // reset. The receipt proves the old generation was erased; do not expose
+    // the newer account or misclassify its rows as failed old-generation cleanup.
+    const advancedReset = kind === "reset" && status === "same_source_retry" &&
+      actual !== null && actual.revision > receipt.completedRevision!;
+    if (!advancedReset) for (const name of ACCOUNT_DATA_STORES) {
+      try {
+        const check = this.db.transaction(name, "readonly");
+        const count = await requestValue(check.objectStore(name)
+          .count(IDBKeyRange.bound([input.accountId], [input.accountId, []])));
+        if (count !== 0) fail("readback_failed", `Account lifecycle left ${name} rows.`);
+      } catch (error) { throw classify(error, "readback_failed"); }
+    }
+    return { status, receipt, account: advancedReset ? null : actual };
+  }
 
   async readCampaignHead(accountId: string, campaignId: string, slotId: SaveSlotId):
     Promise<{ artifactId: string; publicationId: string; revision: number }> {
@@ -1123,17 +1296,46 @@ export class CleanEpochAccountStore {
   async read(accountId: string): Promise<CleanEpochAccountRecord | null> {
     if (!nonblank(accountId)) fail("invalid_record", "Account ID is blank.");
     try {
-      const transaction = this.db.transaction(CLEAN_EPOCH_ACCOUNT_STORE, "readonly");
-      const value = await requestValue(transaction.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>);
-      return value === undefined ? null : checkedAccount(value, accountId);
+      const transaction = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE,
+        CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE], "readonly");
+      const [value, receiptRaw] = await Promise.all([
+        requestValue(transaction.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(transaction.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE).get(accountId) as IDBRequest<unknown>)
+      ]);
+      const receipt = receiptRaw === undefined ? null : checkedLifecycle(receiptRaw, accountId);
+      if (value === undefined) {
+        if (receipt?.kind === "reset") fail("invalid_record", "Reset account is missing.");
+        return null;
+      }
+      const account = checkedAccount(value, accountId);
+      if ((!receipt && accountLifecycleGeneration(account) !== 1) ||
+          (receipt && (receipt.kind === "delete" ||
+            accountLifecycleGeneration(account) !== receipt.completedGeneration)))
+        fail("invalid_record", "Account disagrees with lifecycle receipt.");
+      return account;
     } catch (error) { throw classify(error, "unavailable"); }
   }
 
   async list(): Promise<CleanEpochAccountRecord[]> {
     try {
-      const transaction = this.db.transaction(CLEAN_EPOCH_ACCOUNT_STORE, "readonly");
+      const transaction = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE,
+        CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE], "readonly");
       const values = await requestValue(transaction.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).getAll() as IDBRequest<unknown[]>);
-      return values.map(value => checkedAccount(value, object(value) && typeof value.accountId === "string" ? value.accountId : ""));
+      const accounts = values.map(value => checkedAccount(value,
+        object(value) && typeof value.accountId === "string" ? value.accountId : ""));
+      for (const account of accounts) {
+        const raw = await requestValue(transaction.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE)
+          .get(account.accountId) as IDBRequest<unknown>);
+        if (raw === undefined) {
+          if (accountLifecycleGeneration(account) !== 1)
+            fail("invalid_record", "Listed account lacks lifecycle authority.");
+          continue;
+        }
+        const receipt = checkedLifecycle(raw, account.accountId);
+        if (receipt.kind === "delete" || accountLifecycleGeneration(account) !== receipt.completedGeneration)
+          fail("invalid_record", "Listed account disagrees with lifecycle authority.");
+      }
+      return accounts;
     } catch (error) { throw classify(error, "unavailable"); }
   }
 
@@ -2531,7 +2733,8 @@ export class CleanEpochAccountStore {
     if (!nonblank(accountId) || !validProfile(profile, accountId) || !validCredential(credential, accountId)) {
       fail("invalid_record", "New account profile or credential is invalid.");
     }
-    const next: CleanEpochAccountRecord = { version: 1, accountId, revision: 1, profile, credential };
+    const next: CleanEpochAccountRecord = { version: 1, accountId, revision: 1,
+      lifecycleGeneration: 1, profile, credential };
     return this.write(accountId, null, next);
   }
 
@@ -2554,7 +2757,8 @@ export class CleanEpochAccountStore {
   private async write(accountId: string, expectedRevision: number | null,
     nextValue: CleanEpochAccountRecord | ((current: CleanEpochAccountRecord) => CleanEpochAccountRecord)): Promise<CleanEpochAccountWriteResult> {
     let transaction: IDBTransaction;
-    try { transaction = this.db.transaction(expectedRevision === null ? [CLEAN_EPOCH_ACCOUNT_STORE] :
+    try { transaction = this.db.transaction(expectedRevision === null ?
+      [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE] :
       [CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, CLEAN_EPOCH_SLOT_GENERATION_STORE, CLEAN_EPOCH_ADDRESS_DELETION_STORE,
         CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE], "readwrite"); }
     catch (error) { throw classify(error, "unavailable"); }
@@ -2566,6 +2770,12 @@ export class CleanEpochAccountStore {
       const raw = await requestValue(store.get(accountId) as IDBRequest<unknown>);
       const current = raw === undefined ? null : checkedAccount(raw, accountId);
       if (expectedRevision === null) {
+        const receiptRaw = await requestValue(transaction.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE)
+          .get(accountId) as IDBRequest<unknown>);
+        if (receiptRaw !== undefined) {
+          checkedLifecycle(receiptRaw, accountId);
+          fail("conflict", "Account identity has durable lifecycle history.");
+        }
         next = nextValue as CleanEpochAccountRecord;
         if (current) {
           if (!exactEqual(current, next)) fail("conflict", "Account identity already belongs to different durable data.");

@@ -72,6 +72,7 @@ export function LocalAccountAccessScreen({
   const [createConfirmPassword, setCreateConfirmPassword] = useState("");
   const [createStayLoggedIn, setCreateStayLoggedIn] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [deletionError, setDeletionError] = useState<string | null>(null);
 
   useEffect(() => {
     if (mode === "create_first_account") {
@@ -102,6 +103,7 @@ export function LocalAccountAccessScreen({
   };
 
   const handleSelectAccount = (accountId: string) => {
+    setDeletionError(null);
     setShowCreateForm(false);
     setSelectedAccountId((current) => (current === accountId ? null : accountId));
     resetAccountForm();
@@ -148,10 +150,12 @@ export function LocalAccountAccessScreen({
     setSubmitting(true);
 
     try {
-      await onDeleteAccount({
+      const result = await onDeleteAccount({
         accountId: selectedAccount.accountId,
         password
       });
+      if (!result.ok) { setDeletionError(result.message); return; }
+      setDeletionError(null);
       resetAccountForm();
       setSelectedAccountId(null);
     } finally {
@@ -377,6 +381,7 @@ export function LocalAccountAccessScreen({
                         Log In
                       </button>
                     </div>
+                    {deletionError && <p role="alert" className="text-sm text-rose-600">{deletionError}</p>}
                   </div>
                 </Card>
               )}

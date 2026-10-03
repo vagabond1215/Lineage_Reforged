@@ -12,6 +12,7 @@ import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/
 import { SettingsScreen } from './game-shell/components/SettingsScreen.js';
 import { CleanEpochAccountAdapter, createEpochAccountId } from './game-shell/cleanEpochAccountAdapter.js';
 import { CLEAN_EPOCH_SESSION_STORAGE_KEY, openCleanEpochAccountStore,
+  accountLifecycleGeneration,
   type CleanEpochAccountStore, type CleanEpochSlotSummary } from './game-shell/cleanEpochAccountStore.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
@@ -120,7 +121,11 @@ export function EpochApp() {
     if (actionPending.current) return fallback;
     actionPending.current = true;
     setBusy(true);
-    try { return await work(); }
+    try {
+      if (state.screen !== 'ACCOUNT_ACCESS' && services)
+        await services.accounts.validateSession(state.launcherSession);
+      return await work();
+    }
     catch (error) { block(error instanceof Error ? error.message : String(error)); return fallback; }
     finally { actionPending.current = false; setBusy(false); }
   };
@@ -468,10 +473,18 @@ export function EpochApp() {
   const common = { notice: current.notice, onDismissNotice: () => dispatch({ type: 'SET_NOTICE', notice: null }) };
   let content;
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
-    allowAccountDeletion={false}
+    allowAccountDeletion
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}
-    onDeleteAccount={async (): Promise<LauncherAccountDeletionResult> => {
-      unsupported('Account Deletion'); return { ok: false, message: 'Account deletion awaits G9.' }; }}
+    onDeleteAccount={options => guarded(async (): Promise<LauncherAccountDeletionResult> => {
+      if (!services) throw new Error('Epoch owner is unavailable.');
+      const current = await services.owner.readSelected(options.accountId);
+      if (!current) return { ok: false, message: 'Account is missing.' };
+      const result = await services.accounts.deleteAccount({ ...options,
+        expectedRevision: current.revision, expectedGeneration: accountLifecycleGeneration(current) });
+      if (result.status === 'blocked') return { ok: false, message: result.message };
+      await initialize();
+      return { ok: true, accountId: result.value.accountId, displayName: result.value.displayName };
+    }, { ok: false, message: 'Account operation is already pending or blocked.' })}
     themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')} />;
   else if (current.screen === 'MAIN_MENU') content = <MainMenuScreen {...common}
     accountProfile={current.accountProfile} slots={current.slots} activeSection={launcherSection}
@@ -509,10 +522,30 @@ export function EpochApp() {
       current.accountProfile.accountId, current.selectedSlotId); }}
     onDeleteSlot={deleteSlot} />;
   else if (current.screen === 'SETTINGS') content = <SettingsScreen {...common} accountProfile={current.accountProfile}
-    allowAccountLifecycle={false}
+    allowAccountLifecycle
     slots={current.slots} onOpenLauncherSection={section => void refreshMenu(null, section)}
-    onResetAccount={async () => { unsupported('Account Reset'); return { ok: false, message: 'Account reset awaits G9.' }; }}
-    onDeleteAccount={async () => { unsupported('Account Deletion'); return { ok: false, message: 'Account deletion awaits G9.' }; }}
+    onResetAccount={options => guarded(async () => {
+      if (!services || state.screen !== 'SETTINGS' || menuAccountRevision.current === null)
+        return { ok: false, message: 'Account reset source is unavailable.' };
+      const result = await services.accounts.resetAccount({ ...options,
+        expectedRevision: menuAccountRevision.current,
+        expectedGeneration: Number(state.launcherSession.metadata?.epochGeneration),
+        stayLoggedIn: state.launcherSession.stayLoggedIn });
+      if (result.status === 'blocked') return { ok: false, message: result.message };
+      await showMenu(result.value.session, result.value.account.accountId,
+        { tone: 'success', title: 'Account Reset', detail: 'Account data was erased and read back.' });
+      return { ok: true };
+    }, { ok: false, message: 'Account operation is already pending or blocked.' })}
+    onDeleteAccount={options => guarded(async () => {
+      if (!services || state.screen !== 'SETTINGS' || menuAccountRevision.current === null)
+        return { ok: false, message: 'Account deletion source is unavailable.' };
+      const result = await services.accounts.deleteAccount({ ...options,
+        expectedRevision: menuAccountRevision.current,
+        expectedGeneration: Number(state.launcherSession.metadata?.epochGeneration) });
+      if (result.status === 'blocked') return { ok: false, message: result.message };
+      await initialize();
+      return { ok: true };
+    }, { ok: false, message: 'Account operation is already pending or blocked.' })}
     onContinue={loadLatest} onExit={() => window.close()} onLogout={logout} themeMode={themeMode}
     themePreference={themePreference} onThemePreferenceChange={setThemePreference}
     timeZone={timeSettings.timeZone} onTimeZoneChange={timeZone => setTimeSettings(current => ({ ...current, timeZone }))}

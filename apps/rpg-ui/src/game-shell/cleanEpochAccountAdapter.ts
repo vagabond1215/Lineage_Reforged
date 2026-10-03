@@ -3,6 +3,7 @@ import type { AccountProfileState } from "../../../../packages/shared/types/src/
 import { CampaignStoreError, type CampaignStoreFailureCode } from "./campaignIndexedDbStore.js";
 import {
   CLEAN_EPOCH_SESSION_STORAGE_KEY,
+  accountLifecycleGeneration,
   type CleanEpochAccountRecord,
   type CleanEpochAccountStore
 } from "./cleanEpochAccountStore.js";
@@ -22,7 +23,7 @@ export type EpochSessionSelection =
   | { mode: "signed_in"; account: CleanEpochAccountRecord; session: LauncherRuntimeSession }
   | { mode: "pick_account"; accounts: Array<{ accountId: string; displayName: string; lastPlayedAt?: string }> };
 
-type EpochSessionHint = { version: 1; accountId: string; issuedAt: string };
+type EpochSessionHint = { version: 1 | 2; accountId: string; issuedAt: string; lifecycleGeneration?: number };
 
 function blocked(error: unknown, accountId?: string): EpochAccountAdapterResult<never> {
   if (error instanceof CampaignStoreError) {
@@ -50,7 +51,9 @@ function readHint(storage: Storage): EpochSessionHint | null {
   if (!value || typeof value !== "object" || Array.isArray(value))
     throw new CampaignStoreError("invalid_record", "Epoch session hint is invalid.");
   const hint = value as Record<string, unknown>;
-  if (hint.version !== 1 || typeof hint.accountId !== "string" || !hint.accountId.trim() ||
+  if ((hint.version !== 1 && hint.version !== 2) || typeof hint.accountId !== "string" || !hint.accountId.trim() ||
+      (hint.version === 2 && (!Number.isSafeInteger(hint.lifecycleGeneration) ||
+        (hint.lifecycleGeneration as number) < 1)) ||
       typeof hint.issuedAt !== "string" || !hint.issuedAt.trim())
     throw new CampaignStoreError("invalid_record", "Epoch session hint is invalid.");
   return hint as EpochSessionHint;
@@ -58,7 +61,12 @@ function readHint(storage: Storage): EpochSessionHint | null {
 
 function runtimeSession(hint: EpochSessionHint, stayLoggedIn: boolean): LauncherRuntimeSession {
   return { accountId: hint.accountId, providerId: "local_password", issuedAt: hint.issuedAt,
-    lastValidatedAt: new Date().toISOString(), stayLoggedIn };
+    lastValidatedAt: new Date().toISOString(), stayLoggedIn,
+    metadata: { epochGeneration: String(hint.lifecycleGeneration ?? 1) } };
+}
+function hintFor(account: CleanEpochAccountRecord): EpochSessionHint {
+  return { version: 2, accountId: account.accountId,
+    issuedAt: new Date().toISOString(), lifecycleGeneration: accountLifecycleGeneration(account) };
 }
 
 function storeHint(storage: Storage, hint: EpochSessionHint | null): void {
@@ -100,7 +108,8 @@ export class CleanEpochAccountAdapter {
       const existing = await this.owner.read(accountId);
       let account: CleanEpochAccountRecord;
       if (existing) {
-        if (existing.profile.displayName !== displayName || !await verifyPassword(password, existing.credential))
+        if (accountLifecycleGeneration(existing) !== 1 ||
+            existing.profile.displayName !== displayName || !await verifyPassword(password, existing.credential))
           return rejected("conflict", "Account identity belongs to different retained credentials or profile.", accountId);
         account = existing;
       } else {
@@ -117,7 +126,7 @@ export class CleanEpochAccountAdapter {
           account = winner;
         }
       }
-      const hint: EpochSessionHint = { version: 1, accountId, issuedAt: new Date().toISOString() };
+      const hint = hintFor(account);
       storeHint(hintStorage(this.storage), input.stayLoggedIn ? hint : null);
       return { status: "ready", value: { account, session: runtimeSession(hint, input.stayLoggedIn) } };
     } catch (error) { return blocked(error, accountId); }
@@ -141,7 +150,7 @@ export class CleanEpochAccountAdapter {
           account.credential.saltBase64 !== current.credential.saltBase64)
         return rejected("stale_head", "Account credential changed during sign-in.", accountId);
       const recordedAt = new Date().toISOString();
-      const hint: EpochSessionHint = { version: 1, accountId, issuedAt: recordedAt };
+      const hint: EpochSessionHint = { ...hintFor(account), issuedAt: recordedAt };
       storeHint(hintStorage(this.storage), input.stayLoggedIn ? hint : null);
       return { status: "ready", value: { account, session: runtimeSession(hint, input.stayLoggedIn) } };
     } catch (error) { return blocked(error, accountId); }
@@ -160,8 +169,69 @@ export class CleanEpochAccountAdapter {
       }
       const account = await this.owner.readSelected(hint.accountId);
       if (!account) throw new CampaignStoreError("invalid_record", "Epoch session account is missing.");
+      if (accountLifecycleGeneration(account) !== (hint.lifecycleGeneration ?? 1))
+        throw new CampaignStoreError("stale_head", "Epoch session lifecycle generation changed.");
       return { status: "ready", value: { mode: "signed_in", account, session: runtimeSession(hint, true) } };
     } catch (error) { return blocked(error); }
+  }
+
+  async validateSession(session: LauncherRuntimeSession): Promise<CleanEpochAccountRecord> {
+    const account = await this.owner.readSelected(session.accountId);
+    if (!account || session.metadata?.epochGeneration !== String(accountLifecycleGeneration(account)))
+      throw new CampaignStoreError("stale_head", "Epoch session lifecycle generation changed.");
+    return account;
+  }
+
+  async resetAccount(input: { accountId: string; expectedRevision: number;
+    expectedGeneration: number; password: string; stayLoggedIn: boolean }):
+    Promise<EpochAccountAdapterResult<{ account: CleanEpochAccountRecord; session: LauncherRuntimeSession }>> {
+    try {
+      const current = await this.owner.readSelected(input.accountId);
+      if (!current) return rejected("stale_head", "Account changed before reset.", input.accountId);
+      const prior = await this.owner.readLifecycleReceipt(input.accountId);
+      const exactRetry = prior?.kind === "reset" && prior.expectedRevision === input.expectedRevision &&
+        prior.expectedGeneration === input.expectedGeneration &&
+        current.revision === prior.completedRevision &&
+        accountLifecycleGeneration(current) === prior.completedGeneration;
+      if (!exactRetry && (current.revision !== input.expectedRevision ||
+          accountLifecycleGeneration(current) !== input.expectedGeneration))
+        return rejected("stale_head", "Account changed before reset.", input.accountId);
+      if (!await verifyPassword(input.password, current.credential))
+        return rejected("invalid_credentials", "Current password did not match.", input.accountId);
+      const result = await this.owner.transitionAccount("reset",
+        { ...input, currentPassword: input.password });
+      if (!result.account) throw new CampaignStoreError("readback_failed", "Reset account is missing.");
+      const hint = hintFor(result.account);
+      storeHint(hintStorage(this.storage), input.stayLoggedIn ? hint : null);
+      return { status: "ready", value: { account: result.account,
+        session: runtimeSession(hint, input.stayLoggedIn) } };
+    } catch (error) { return blocked(error, input.accountId); }
+  }
+
+  async deleteAccount(input: { accountId: string; expectedRevision: number;
+    expectedGeneration: number; password: string }): Promise<EpochAccountAdapterResult<{ accountId: string; displayName: string }>> {
+    try {
+      const current = await this.owner.read(input.accountId);
+      if (current) {
+        if (current.revision !== input.expectedRevision ||
+            accountLifecycleGeneration(current) !== input.expectedGeneration)
+          return rejected("stale_head", "Account changed before deletion.", input.accountId);
+        if (!await verifyPassword(input.password, current.credential))
+          return rejected("invalid_credentials", "Current password did not match.", input.accountId);
+      } else {
+        const prior = await this.owner.readLifecycleReceipt(input.accountId);
+        if (prior?.kind !== "delete" || prior.expectedRevision !== input.expectedRevision ||
+            prior.expectedGeneration !== input.expectedGeneration)
+          return rejected("stale_head", "Account changed before deletion.", input.accountId);
+      }
+      await this.owner.transitionAccount("delete",
+        { ...input, currentPassword: input.password });
+      const storage = hintStorage(this.storage);
+      const hint = readHint(storage);
+      if (hint?.accountId === input.accountId) storeHint(storage, null);
+      return { status: "ready", value: { accountId: input.accountId,
+        displayName: current?.profile.displayName ?? "" } };
+    } catch (error) { return blocked(error, input.accountId); }
   }
 
   async updateProfile(accountId: string, expectedRevision: number, profile: AccountProfileState): Promise<EpochAccountAdapterResult<CleanEpochAccountRecord>> {
