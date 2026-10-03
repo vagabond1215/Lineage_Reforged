@@ -175,3 +175,46 @@ test("portrait completion is stale when identity changes while the request is in
   assert.equal(completed.status, "stale");
   assert.equal(completed.assetRef, "asset:old");
 });
+
+test("portrait completion is stale when current identity becomes temporarily invalid", () => {
+  const prompt = createPrompt();
+  const start = portraitProvider.beginCharacterPortraitGeneration(
+    portraitProvider.EMPTY_CHARACTER_PORTRAIT_UI_STATE,
+    prompt
+  );
+  const completed = portraitProvider.completeCharacterPortraitGeneration({
+    state: start.state,
+    requestId: start.requestId,
+    requestFingerprint: start.requestFingerprint,
+    currentIdentityFingerprint: null,
+    result: {
+      ok: true,
+      assetRef: "asset:invalidated",
+      generationId: "invalidated",
+      providerKey: "test"
+    }
+  });
+  assert.equal(completed.status, "stale");
+  assert.equal(completed.assetRef, "asset:invalidated");
+});
+
+test("ready portrait becomes stale when current identity is temporarily invalid", () => {
+  const prompt = createPrompt();
+  const fingerprint = portraitSpec.createCharacterPortraitIdentityFingerprint(prompt);
+  const start = portraitProvider.beginCharacterPortraitGeneration(
+    portraitProvider.EMPTY_CHARACTER_PORTRAIT_UI_STATE,
+    prompt
+  );
+  const ready = portraitProvider.completeCharacterPortraitGeneration({
+    state: start.state,
+    requestId: start.requestId,
+    requestFingerprint: start.requestFingerprint,
+    currentIdentityFingerprint: fingerprint,
+    result: { ok: true, assetRef: "asset:ready", generationId: "ready", providerKey: "test" }
+  });
+  assert.equal(ready.status, "ready");
+
+  const stale = portraitProvider.markCharacterPortraitIdentityChanged(ready, null);
+  assert.equal(stale.status, "stale");
+  assert.equal(stale.assetRef, "asset:ready");
+});
