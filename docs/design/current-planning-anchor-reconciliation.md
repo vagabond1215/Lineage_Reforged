@@ -1,3 +1,7 @@
+## 2026-10-05 — G9 parent audit repair gate
+
+**G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD.** Synchronized source `de5b1cab`; `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md` documents F1. Both whole-account destructive actions succeeded after required campaign-graph authority was removed, erasing surviving version-1 rows. The installed route is `DEV-0.7.1.2` destructive graph-preflight repair, followed by independent G9 parent re-audit. Planned `DEV-0.7.1`, G10, deployment and Game-version acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. Older G9F-next pointers remain historical.
+
 ## 2026-10-03 — G9E.1 slot generation hardening closure
 
 **G9E_1_HARDENING_VERIFIED; G9F_NEXT; ACTIVATION_HELD.** On synchronized `master` `2614b788`, direct envelope/recovery versus slot-generation CAS proof, witnessed published two-address v5 migration, eight-write terminal closure rollback/retry, lost post-commit readback and selected-App reused-slot presentation passed the focused gate. Native G9E 13/13, G9D 14/14, adjacent browser 130/130, Node 174/174, Node UI-config and app-local Vite pass; broad UI remains 137 known diagnostics. The accepted G9A account-wide reset/delete and session-invalidation contract now owns G9F. No G9F implementation, G10 activation, capacity/backup, death caller, combat, parent or Game-version acceptance occurred; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` remain unchanged.

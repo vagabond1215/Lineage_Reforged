@@ -1,3 +1,7 @@
+## 2026-10-05 DEV-0.7.1.1 G9 parent audit
+
+**G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD.** From synchronized `de5b1cab`, fresh coherent-campaign corruption probes found both reset and delete commit after required artifact/control/recovery/address/generation or witnessed Soundings authority is removed while version-1 rows survive. See `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md`, F1. Install the narrow `DEV-0.7.1.2` graph-preflight repair. G9 parent and G10 remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. This supersedes G9F-next and parent-audit-next pointers in older entries without rewriting their chronology.
+
 ## 2026-10-03 DEV-0.7.1 Slice G9E.1 hardening closure
 
 **G9E_1_HARDENING_VERIFIED; G9F_NEXT; ACTIVATION_HELD.** Synchronized source `2614b788`; focused record `docs/dev/dev-0.7.1-slice-g9e-1-hardening-gate.md`. G9E 13/13, hardened G9D 14/14, adjacent browser 130/130, focused Node 174/174, Node UI-config and app-local Vite pass. Published witnessed two-address v5 migration, exact generation boundary, all eight closure writes under abort/quota, lost post-commit readback and selected-App reused-slot notice are covered. Broad UI retains 137 known diagnostics. G9F is the installed next route, not implemented in this pass. G10, death caller, combat, deployment, planned parent and Game-version acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. This supersedes G9F-next wording in older G9E entries only after the hardening gate.

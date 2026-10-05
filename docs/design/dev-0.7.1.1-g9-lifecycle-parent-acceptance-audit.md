@@ -1,0 +1,30 @@
+# DEV-0.7.1.1 — G9 Lifecycle Parent Acceptance Audit
+
+Date: 2026-10-05. Inspected clean synchronized `master`/`origin/master` `de5b1cab7bf9adeee418e42f31dbd19830ea69af` after fetch/prune. Support run of planned `DEV-0.7.1`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. All browser data below used isolated synthetic accounts.
+
+## Decision and finding inventory
+
+**G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD.** F1 is the sole confirmed parent finding. G9B–G9F focused owners retain their bounded verification, but the whole-account reset/delete owner can launder unexpected partial campaign-graph loss into a success result. G9 parent, planned `DEV-0.7.1`, deployment and Game-version acceptance remain held. This audit changes no production owner or schema.
+
+**F1 — incomplete destructive preflight.** `CleanEpochAccountStore.transitionAccount` checks only the key, version and account ID of each *surviving* row in the 12 account-owned families before deleting them and issuing a lifecycle receipt. It does not prove the required artifact, control, first/descendant/terminal recovery, witness, slot address and generation authority are present and mutually bound. Zero-row readback after commit proves erasure, not graph completeness before erasure. `CleanEpochAccountAdapter` and selected `EpochApp` Settings reset/delete and picker delete controls call this owner. G9A explicitly says missing data after unexpected storage loss is corrupt/unavailable, never successful deletion.
+
+Fresh native browser reproduction registered isolated accounts and published coherent ready campaigns through the production first-campaign adapter. For each of `artifacts`, `controls`, `firstPublicationRecoveriesV6`, `slots` and `currentSlotGenerations`, it removed exactly one required row, verified a version-1 `campaignAttemptsV6` row remained, then called exported reset and delete with correct password and exact revision/generation. **10/10** operations returned `committed`, erased the surviving attempt and wrote a success receipt/tombstone. A second probe used accepted Soundings gameplay and descendant publication to persist a required witness; removing its `witnesses` row with a version-1 attempt still present produced the same result for reset and delete (**2/2**). Expected for every case: explicit `invalid_record` or corrupt/unavailable rejection, unchanged account and surviving bytes, and no lifecycle receipt. Disposable probe files were removed after observation; the repair must install durable regression tests.
+
+G9F's existing malformed-row case changes one surviving row's `version` to 99. Its 12-family seed comprises independent rows rather than a coherent graph. G9D/E validate linked authority for their own operations, but the destructive owner bypasses those checks. Additional pending/historical graph combinations below are repair gates, not claimed new findings.
+
+## Cross-slice evidence and remaining gate
+
+| Boundary | Fresh result and limit |
+| --- | --- |
+| Normal defeat and account/Legacy CAS | G9B browser 8/8 and G9C 6/6 pass; selected `EpochApp` source routes to epoch adapters rather than retained localStorage lifecycle writers. |
+| Terminal, address and generation | G9D browser 14/14 and G9E 13/13 pass, including pending settlement, two-address rollback, exact retry, migration and retained history. Owner suite passes do not accept the parent. |
+| Whole-account transitions | G9F browser 12/12 passes existing all-write abort/quota, restart, lost readback, retry, contention, tombstone/session and surviving-row malformation cases. F1 is absent there and fails independently. |
+| Partial campaign graph before destruction | Fresh 12/12 isolated defect reproductions across both destructive actions and six required row categories; every operation committed and erased surviving version-1 data. |
+| Pending first/descendant/terminal recovery and historical/deleted-address receipts before destruction | Complete account-wide graph proof and paired valid/corrupt controls remain required in the narrow repair. No parent acceptance claim for these combinations. |
+| Executable matrix | Focused campaign/Soundings/survey Node 174/174, Node UI-config typecheck and app-local Vite build pass. Broad UI typecheck remains nonzero at 137 diagnostics. The initial Vite invocation hit sandbox denial replacing ignored `dist`; the app-local native-config build then passed with authorized output access. |
+
+The selected caller inventory covers `EpochApp` bootstrap/session and Settings/picker actions, account and first/descendant/terminal adapters, campaign/slot/destructive transactions and the retained localStorage owner as a negative routing check. The repair must preserve valid prepared, pending, deleted-address, retired and closed states and G9E's address-only versus account-wide distinction. Relevant guardrails: FP-001/002/003/004/005/006/008/009/011/012/013/014/015/017/018 and new FP-019, with F1 particularly demonstrating FP-002/014/019. Synthetic fixture results are not ordinary player reachability.
+
+Fresh fetch/prune found two local and six hosted branches including `master`, with zero open PRs via the repository-scoped GitHub connector. Readiness `59c103c3` and prompt-integrity `58a34e37` remain `PROTECTED_REFERENCE`; administration `210df5bc`, creator planning `2cf0cb6c` and creator implementation `d7d12467` remain `HOLD_NAMED_CONSUMER` with existing register triggers. No integration or deletion is due.
+
+Install **DEV-0.7.1.2 — G9 Destructive Campaign-Graph Preflight Repair**. Its gate is a complete account-wide graph proof before the first destructive write, paired valid/corrupt reset/delete tests, rollback/readback/retry, restart, two owners, other-account isolation and selected-App blocked presentation. Rerun an independent parent audit after repair. Only `G9_PARENT_ACCEPTED` may release a later G10 docs-first decision. Combat/death gameplay, deployment, backup/capacity acceptance and Game-version change remain excluded.

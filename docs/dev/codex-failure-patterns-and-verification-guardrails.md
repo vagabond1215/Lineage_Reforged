@@ -235,6 +235,16 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Evidence:** `docs/dev/dev-0.7.1-slice-g9f-account-lifecycle-record.md`.
 - **Status:** active.
 
+### FP-019 — Destructive Erasure Must Prove Preexisting Graph Completeness
+
+- **Pattern:** Reset/delete checks only surviving row shapes, then reports success after erasing a graph that had already lost required data.
+- **Why it escaped:** Tests seeded independent valid-version rows and malformed only one surviving row; zero-row readback could not reveal preexisting loss.
+- **Guardrail:** Before the first destructive write, validate complete account-owned authority and required cross-store bindings for each accepted lifecycle state. Missing required authority is corrupt/unavailable.
+- **Verification:** From coherent published first, descendant, witnessed and terminal campaigns, remove or corrupt each required artifact/control/recovery/witness/address/generation/deletion receipt while other version-1 rows remain; reset and delete reject without account, receipt or surviving-byte changes. Pair with valid prepared, pending, deleted-address and closed controls and retry/restart.
+- **Applies to:** whole-account reset/delete, destructive migrations and multi-store retention cleanup.
+- **Evidence:** `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md`, F1.
+- **Status:** active.
+
 ## Completion Report Format
 
 For applicable runs include:
