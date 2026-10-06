@@ -1,10 +1,22 @@
 import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.ts';
-import { CampaignStoreError, ensureCampaignPublicationStores } from './src/game-shell/campaignIndexedDbStore.ts';
+import { evaluateAchievementProgress } from '../../packages/engines/game-engine/src/achievements.ts';
+import { admitCampaignMutation, type CampaignSessionControl } from '../../packages/engines/game-engine/src/campaign-session.ts';
+import { createPlayerQuestAcceptanceCommand, executePlayerQuestAcceptanceCommand } from '../../packages/engines/game-engine/src/player-quest-acceptance.ts';
+import { createPlayerTravelCommand, executePlayerTravelCommand } from '../../packages/engines/game-engine/src/player-travel.ts';
+import type { SaveSnapshot } from '../../packages/shared/types/src/index.ts';
+import { serializeSnapshot } from '../../packages/shared/persistence/src/index.ts';
+import { advanceAshenReefSurveyCaller } from './src/runtime/ashenReefSurveyCaller.ts';
+import { submitSoundingsTurnInCaller } from './src/runtime/soundingsTurnInCaller.ts';
+import { CampaignStoreError, ensureCampaignPublicationStores,
+  type CampaignStorePublication } from './src/game-shell/campaignIndexedDbStore.ts';
 import { CleanEpochAccountAdapter } from './src/game-shell/cleanEpochAccountAdapter.ts';
 import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.ts';
+import { CleanEpochDescendantAdapter } from './src/game-shell/cleanEpochDescendantAdapter.ts';
+import { CleanEpochTerminalAdapter } from './src/game-shell/cleanEpochTerminalAdapter.ts';
 import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from './src/game-shell/characterCreationCatalog.ts';
 import { createDefaultCharacterCreationFormState } from './src/game-shell/characterCreationForm.ts';
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.ts';
+import { buildSaveMetadata, type StoredSaveEnvelope } from './src/game-shell/saveManager.ts';
 import { accountLifecycleGeneration, openCleanEpochAccountStore,
   CLEAN_EPOCH_DATABASE_VERSION, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE,
   type CleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.ts';
@@ -33,7 +45,10 @@ function form() {
     backstoryId: 'backstory.craftsmans_child', continentId: 'region.myridian_chain',
     regionId: 'region.starfall_isle', startingSettlementId: 'settlement.starfall_port' };
 }
-async function test(name: string, run: () => Promise<void>) { await run(); cases.push(name); }
+async function test(name: string, run: () => Promise<void>) {
+  output.textContent = `RUNNING ${name} after ${cases.length}`;
+  await run(); cases.push(name);
+}
 function storage(): Storage {
   const values = new Map<string, string>();
   return { get length() { return values.size; }, clear: () => values.clear(),
@@ -49,15 +64,18 @@ async function raw(name: string): Promise<IDBDatabase> {
     request.onerror = () => reject(request.error);
   });
 }
-async function seed(name: string, accountId: string, malformed = false) {
+async function changeFirstRow(name: string, accountId: string, family: string,
+  change: (row: Record<string, any>, store: IDBObjectStore, key: IDBValidKey) => void) {
   const db = await raw(name);
   await new Promise<void>((resolve, reject) => {
-    const tx = db.transaction(families.map(family => family[0]), 'readwrite');
-    families.forEach((family, index) => {
-      const value: Record<string, unknown> = { version: malformed && index === 0 ? 99 : 1, accountId };
-      for (const key of family.slice(1)) value[key] = `${key}.${index}`;
-      tx.objectStore(family[0]).put(value);
-    });
+    const tx = db.transaction(family, 'readwrite');
+    const store = tx.objectStore(family);
+    const cursor = store.openCursor(IDBKeyRange.bound([accountId], [accountId, []]));
+    cursor.onsuccess = () => {
+      if (!cursor.result) { tx.abort(); reject(new Error(`Missing ${family} fixture row`)); return; }
+      change(cursor.result.value, store, cursor.result.primaryKey);
+    };
+    cursor.onerror = () => reject(cursor.error);
     tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
   });
   db.close();
@@ -84,8 +102,10 @@ async function setup(label: string, beforeWrite?: (tx: IDBTransaction) => void) 
   for (const id of [accountId, otherId])
     await owner.register(createDefaultAccountProfileState({ accountId: id, displayName: id }),
       await createCredentialRecord(id, 'synthetic-only-password', new Date().toISOString()));
-  await seed(name, accountId);
-  await seed(name, otherId);
+  for (const id of [accountId, otherId]) {
+    const first = await new CleanEpochFirstCampaignAdapter(owner).start(id, form());
+    check(first.status === 'ready', `Coherent first campaign failed: ${JSON.stringify(first)}`);
+  }
   const account = (await owner.read(accountId))!;
   return { name, accountId, otherId, owner,
     input: { accountId, expectedRevision: account.revision,
@@ -97,7 +117,378 @@ async function rejected(run: () => Promise<unknown>, code: string) {
   catch (error) { check(error instanceof CampaignStoreError && error.code === code,
     `Expected ${code}, got ${String(error)}`); }
 }
+async function resetOrDelete(kind: 'reset' | 'delete', x: Awaited<ReturnType<typeof setup>>) {
+  const account = (await x.owner.read(x.accountId))!;
+  return x.owner.transitionAccount(kind, { accountId: x.accountId,
+    expectedRevision: account.revision, expectedGeneration: accountLifecycleGeneration(account),
+    currentPassword: 'synthetic-only-password' });
+}
+async function assertBlockedWithoutErasure(kind: 'reset' | 'delete',
+  x: Awaited<ReturnType<typeof setup>>) {
+  const accountBefore = JSON.stringify(await x.owner.read(x.accountId));
+  const ownBefore = JSON.stringify(await rows(x.name, x.accountId));
+  const otherBefore = JSON.stringify(await rows(x.name, x.otherId));
+  await rejected(() => resetOrDelete(kind, x), 'invalid_record');
+  check(JSON.stringify(await x.owner.read(x.accountId)) === accountBefore &&
+    JSON.stringify(await rows(x.name, x.accountId)) === ownBefore &&
+    JSON.stringify(await rows(x.name, x.otherId)) === otherBefore &&
+    await x.owner.readLifecycleReceipt(x.accountId) === null,
+  `${kind} changed authority after graph preflight rejection`);
+}
+async function deleteFirstSlot(x: Awaited<ReturnType<typeof setup>>) {
+  const account = (await x.owner.readSelected(x.accountId))!;
+  const pointer = (await x.owner.readSlotGeneration(x.accountId, 'slot-1'))!;
+  const slot = await x.owner.readSlot(x.accountId, 'slot-1');
+  check(slot.status === 'ready', 'address deletion source missing');
+  const result = await x.owner.deleteSlotAddress({ accountId: x.accountId, slotId: 'slot-1',
+    expectedAccountRevision: account.revision, expectedSlotGenerationId: pointer.slotGenerationId,
+    expectedAddress: { artifactId: slot.loaded.sessionControl.loadedArtifactId,
+      publicationId: slot.loaded.sessionControl.loadedPublicationId },
+    deletedAt: new Date().toISOString() });
+  check(result.status === 'committed', 'address deletion failed');
+}
+async function closeTerminalGraph(x: Awaited<ReturnType<typeof setup>>) {
+  const source = await x.owner.readSlot(x.accountId, 'slot-1');
+  check(source.status === 'ready', 'terminal cleanup source missing');
+  const account = (await x.owner.readSelected(x.accountId))!;
+  const retired = await new CleanEpochTerminalAdapter(x.owner).retire({
+    accountId: x.accountId, sourceSlotId: 'slot-1', expectedAccountRevision: account.revision,
+    snapshot: source.loaded.snapshot, control: source.loaded.sessionControl,
+    expectedSourceAddress: { artifactId: source.loaded.sessionControl.loadedArtifactId,
+      publicationId: source.loaded.sessionControl.loadedPublicationId } });
+  check(retired.status === 'completed', `terminal cleanup retirement failed: ${JSON.stringify(retired)}`);
+  const closed = await x.owner.closeTerminalAddresses(x.accountId,
+    retired.recovery.campaignId, retired.recovery.publicationId,
+    retired.account.revision, new Date().toISOString());
+  check(closed.status === 'committed' &&
+    (await x.owner.readSlot(x.accountId, 'slot-1')).status === 'empty' &&
+    closed.recovery.addressClosure?.receipts.length === 1 &&
+    closed.account.profile.history.runRecords[0]?.saveSlotIds.length === 0 &&
+    (await rows(x.name, x.accountId)).addressDeletionReceipts.length === 1,
+    'terminal cleanup did not retain closed history with zero live addresses');
+}
+async function publishWitness(x: Awaited<ReturnType<typeof setup>>) {
+  const first = await x.owner.readSlot(x.accountId, 'slot-1');
+  check(first.status === 'ready', 'Soundings fixture has no first campaign');
+  let state: { snapshot: SaveSnapshot; control: CampaignSessionControl } = {
+    snapshot: first.loaded.snapshot, control: first.loaded.sessionControl };
+  const admit = (result: { accepted: boolean; snapshot: SaveSnapshot }, mutationId: string) => {
+    check(result.accepted, `Soundings ${mutationId} rejected`);
+    const accepted = admitCampaignMutation(state.control, { mutationId,
+      sourceArtifactId: state.control.loadedArtifactId, sourceRevision: state.control.sessionRevision,
+      ownerKind: 'engine_result', accepted: true, sourceSnapshot: state.snapshot,
+      proposedSnapshot: result.snapshot });
+    check(accepted.accepted, `Soundings session ${mutationId} rejected`);
+    state = { snapshot: accepted.snapshot, control: accepted.control };
+  };
+  const travel = (destination: string) => {
+    const command = createPlayerTravelCommand(state.snapshot, destination);
+    admit(executePlayerTravelCommand(state.snapshot, command), `mutation.${command.commandId}`);
+  };
+  const quest = createPlayerQuestAcceptanceCommand(state.snapshot, 'quest.ashen_reef_survey');
+  admit(executePlayerQuestAcceptanceCommand(state.snapshot, quest), `mutation.${quest.commandId}`);
+  travel('location.ashen_reef');
+  const cache = new Map();
+  for (let index = 1; index <= 4; index++) {
+    const requestId = `survey_request.00000000-0000-4000-8000-${String(index).padStart(12, '0')}`;
+    const result = advanceAshenReefSurveyCaller(state.snapshot, state.control, requestId, cache);
+    check(result.outcome.kind === 'accepted' && result.acceptedState, 'survey fixture rejected');
+    state = result.acceptedState!;
+  }
+  travel('settlement.starfall_port');
+  const turnIn = submitSoundingsTurnInCaller(state.snapshot, state.control,
+    `soundings_turn_in_request.${crypto.randomUUID()}`, new Map());
+  check(turnIn.outcome.kind === 'accepted' && turnIn.acceptedState, 'Soundings turn-in rejected');
+  state = turnIn.acceptedState!;
+  const account = (await x.owner.readSelected(x.accountId))!;
+  const saved = await new CleanEpochDescendantAdapter(x.owner).save({ accountId: x.accountId,
+    sourceSlotId: 'slot-1', destinationSlotId: 'slot-1', expectedAccountRevision: account.revision,
+    snapshot: state.snapshot, control: state.control });
+  check(saved.status === 'ready', `witness publication failed: ${JSON.stringify(saved)}`);
+  check((await rows(x.name, x.accountId)).witnesses.length === 1,
+    'Soundings fixture did not retain first witness');
+}
+async function publishPendingDescendant(x: Awaited<ReturnType<typeof setup>>) {
+  const source = await x.owner.readSlot(x.accountId, 'slot-1');
+  check(source.status === 'ready', 'pending descendant source missing');
+  const account = (await x.owner.readSelected(x.accountId))!;
+  const savedAt = new Date().toISOString();
+  const snapshot = evaluateAchievementProgress(source.loaded.snapshot, account.profile,
+    { slotId: 'slot-1', touchHistory: true, recordedAt: savedAt }).nextSnapshot;
+  const control = source.loaded.sessionControl;
+  const campaignId = snapshot.campaignIdentity!.campaignId;
+  const artifactId = `artifact.${crypto.randomUUID()}`;
+  const publicationId = `publication.${crypto.randomUUID()}`;
+  const envelope: StoredSaveEnvelope = { version: 7, accountId: x.accountId,
+    slotId: 'slot-1', savedAt,
+    metadata: { ...buildSaveMetadata('slot-1', snapshot), lastSavedAt: savedAt,
+      snapshotVersion: snapshot.snapshotVersion },
+    snapshotFormatId: snapshot.snapshotVersion, campaignId,
+    continuityId: snapshot.campaignIdentity!.continuityId,
+    characterId: snapshot.playerState.playerId, artifactId,
+    generationId: `generation.${crypto.randomUUID()}`, publicationId,
+    headRevision: control.campaignHeadRevision + 1, terminal: false,
+    snapshot: serializeSnapshot(snapshot) };
+  const publication: CampaignStorePublication = { accountId: x.accountId, campaignId,
+    slotId: 'slot-1', expectedSlotAddress: { artifactId: control.loadedArtifactId,
+      publicationId: control.loadedPublicationId },
+    expectedHead: { artifactId: control.campaignHeadArtifactId,
+      publicationId: control.loadedPublicationId, revision: control.campaignHeadRevision },
+    artifactRaw: JSON.stringify(envelope),
+    control: { version: 1, accountId: x.accountId, campaignId,
+      headArtifactId: artifactId, headPublicationId: publicationId,
+      headRevision: envelope.headRevision,
+      previousHeadArtifactId: control.campaignHeadArtifactId,
+      previousHeadPublicationId: control.loadedPublicationId,
+      closed: false, updatedAt: savedAt } };
+  const payloadFingerprint = JSON.stringify({ slotId: 'slot-1',
+    capturedAtTick: snapshot.capturedAtTick,
+    characterAchievementIds: snapshot.playerState.achievements.unlocked.map(entry => entry.achievementId) });
+  await x.owner.publishDescendant({ publication, expectedAccountRevision: account.revision,
+    sourceSlotId: 'slot-1', sourceArtifactId: control.loadedArtifactId,
+    sourcePublicationId: control.loadedPublicationId,
+    sourceSnapshotRaw: serializeSnapshot(source.loaded.snapshot),
+    consumerPlans: (['active_history', 'account_achievements', 'legacy_rewards', 'last_played'] as const)
+      .map(kind => ({ kind, payloadFingerprint })) });
+  const recovery = await x.owner.readCurrentDescendantRecovery(x.accountId, 'slot-1');
+  check(recovery?.status === 'accepted_pending_consumers', 'pending descendant recovery missing');
+}
 async function suite() {
+  // F1 regression: every corrupt fixture begins as a real published campaign.
+  // Raw IndexedDB writes remove one required edge while other v1 rows remain.
+  for (const kind of ['reset', 'delete'] as const) {
+    for (const family of ['artifacts', 'controls', 'firstPublicationRecoveriesV6',
+      'slots', 'currentSlotGenerations', 'campaignAttemptsV6'] as const) {
+      await test(`${kind} rejects missing ${family} in a published campaign`, async () => {
+        const x = await setup(`${kind}-missing-${family}`);
+        await changeFirstRow(x.name, x.accountId, family, (_row, store, key) => store.delete(key));
+        check((await rows(x.name, x.accountId)).campaignAttemptsV6.length === (family === 'campaignAttemptsV6' ? 0 : 1),
+          'corrupt fixture did not retain expected campaign attempt state');
+        await assertBlockedWithoutErasure(kind, x);
+        x.owner.close();
+      });
+    }
+    await test(`${kind} accepts a coherent published campaign`, async () => {
+      const x = await setup(`${kind}-coherent-published`);
+      const result = await resetOrDelete(kind, x);
+      check(result.status === 'committed' && Object.values(await rows(x.name, x.accountId))
+        .every(values => values.length === 0), `${kind} did not erase coherent graph`);
+      x.owner.close();
+    });
+    await test(`${kind} accepts a second prepared first campaign`, async () => {
+      const x = await setup(`${kind}-prepared-first`);
+      const prepared = await new CleanEpochFirstCampaignAdapter(x.owner).prepare(x.accountId,
+        { ...form(), saveSlotId: 'slot-2', playerName: 'Second prepared campaign' });
+      check(prepared.status === 'ready' &&
+        (await rows(x.name, x.accountId)).campaignAttemptsV6.length === 2,
+        'prepared first-campaign fixture missing');
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected valid prepared first campaign`);
+      x.owner.close();
+    });
+    await test(`${kind} accepts pending first-campaign consumers`, async () => {
+      const x = await setup(`${kind}-pending-first`);
+      const creator = new CleanEpochFirstCampaignAdapter(x.owner);
+      const prepared = await creator.prepare(x.accountId,
+        { ...form(), saveSlotId: 'slot-2', playerName: 'Second pending campaign' });
+      check(prepared.status === 'ready', 'pending first campaign did not prepare');
+      x.owner.close();
+      let writes = 0;
+      const failing = await openCleanEpochAccountStore({ name: x.name,
+        afterWrite: tx => { if (++writes === 6) tx.abort(); } });
+      const interrupted = await new CleanEpochFirstCampaignAdapter(failing).resume(x.accountId, 'slot-2');
+      check(interrupted.status === 'blocked', 'first-campaign consumer fixture did not interrupt');
+      failing.close();
+      const owner = await openCleanEpochAccountStore({ name: x.name });
+      const pending = await owner.readRecovery(x.accountId, 'slot-2');
+      check(pending?.status === 'accepted_pending_consumers', 'pending first recovery missing');
+      check((await resetOrDelete(kind, { ...x, owner })).status === 'committed',
+        `${kind} rejected valid pending first recovery`);
+      owner.close();
+    });
+    await test(`${kind} accepts a completed descendant with retained first history`, async () => {
+      const x = await setup(`${kind}-descendant`);
+      const source = await x.owner.readSlot(x.accountId, 'slot-1');
+      check(source.status === 'ready', 'descendant source missing');
+      const account = (await x.owner.readSelected(x.accountId))!;
+      const descendant = await new CleanEpochDescendantAdapter(x.owner).save({
+        accountId: x.accountId, sourceSlotId: 'slot-1', destinationSlotId: 'quick-save',
+        expectedAccountRevision: account.revision, snapshot: source.loaded.snapshot,
+        control: source.loaded.sessionControl, expectedDestinationAddress: null });
+      check(descendant.status === 'ready', `descendant fixture failed: ${JSON.stringify(descendant)}`);
+      check((await resetOrDelete(kind, x)).status === 'committed', `${kind} rejected valid descendant`);
+      x.owner.close();
+    });
+    await test(`${kind} accepts pending descendant consumers`, async () => {
+      const x = await setup(`${kind}-pending-descendant`);
+      await publishPendingDescendant(x);
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected valid pending descendant recovery`);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing pending descendant recovery`, async () => {
+      const x = await setup(`${kind}-pending-descendant-missing`);
+      await publishPendingDescendant(x);
+      await changeFirstRow(x.name, x.accountId, 'descendantPublicationRecoveries',
+        (_row, store, key) => store.delete(key));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing descendant recovery`, async () => {
+      const x = await setup(`${kind}-descendant-recovery-missing`);
+      const source = await x.owner.readSlot(x.accountId, 'slot-1');
+      check(source.status === 'ready', 'descendant source missing');
+      const account = (await x.owner.readSelected(x.accountId))!;
+      const saved = await new CleanEpochDescendantAdapter(x.owner).save({ accountId: x.accountId,
+        sourceSlotId: 'slot-1', destinationSlotId: 'quick-save',
+        expectedAccountRevision: account.revision, snapshot: source.loaded.snapshot,
+        control: source.loaded.sessionControl, expectedDestinationAddress: null });
+      check(saved.status === 'ready', 'descendant recovery fixture failed');
+      await changeFirstRow(x.name, x.accountId, 'descendantPublicationRecoveries',
+        (_row, store, key) => store.delete(key));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} accepts terminal settlement and closed head`, async () => {
+      const x = await setup(`${kind}-terminal`);
+      const source = await x.owner.readSlot(x.accountId, 'slot-1');
+      check(source.status === 'ready', 'terminal source missing');
+      const account = (await x.owner.readSelected(x.accountId))!;
+      const retired = await new CleanEpochTerminalAdapter(x.owner).retire({
+        accountId: x.accountId, sourceSlotId: 'slot-1', expectedAccountRevision: account.revision,
+        snapshot: source.loaded.snapshot, control: source.loaded.sessionControl,
+        expectedSourceAddress: { artifactId: source.loaded.sessionControl.loadedArtifactId,
+          publicationId: source.loaded.sessionControl.loadedPublicationId } });
+      check(retired.status === 'completed', `terminal fixture failed: ${JSON.stringify(retired)}`);
+      check((await resetOrDelete(kind, x)).status === 'committed', `${kind} rejected settled terminal`);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing terminal recovery`, async () => {
+      const x = await setup(`${kind}-terminal-recovery-missing`);
+      const source = await x.owner.readSlot(x.accountId, 'slot-1');
+      check(source.status === 'ready', 'terminal source missing');
+      const account = (await x.owner.readSelected(x.accountId))!;
+      const retired = await new CleanEpochTerminalAdapter(x.owner).retire({
+        accountId: x.accountId, sourceSlotId: 'slot-1', expectedAccountRevision: account.revision,
+        snapshot: source.loaded.snapshot, control: source.loaded.sessionControl,
+        expectedSourceAddress: { artifactId: source.loaded.sessionControl.loadedArtifactId,
+          publicationId: source.loaded.sessionControl.loadedPublicationId } });
+      check(retired.status === 'completed', 'terminal recovery fixture failed');
+      await changeFirstRow(x.name, x.accountId, 'terminalLifecycleRecoveries',
+        (_row, store, key) => store.delete(key));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} accepts pending terminal settlement`, async () => {
+      const x = await setup(`${kind}-pending-terminal`);
+      const source = await x.owner.readSlot(x.accountId, 'slot-1');
+      check(source.status === 'ready', 'pending terminal source missing');
+      const account = (await x.owner.readSelected(x.accountId))!;
+      x.owner.close();
+      let writes = 0;
+      const failing = await openCleanEpochAccountStore({ name: x.name,
+        afterWrite: tx => { if (++writes === 5) tx.abort(); } });
+      const retired = await new CleanEpochTerminalAdapter(failing).retire({
+        accountId: x.accountId, sourceSlotId: 'slot-1', expectedAccountRevision: account.revision,
+        snapshot: source.loaded.snapshot, control: source.loaded.sessionControl,
+        expectedSourceAddress: { artifactId: source.loaded.sessionControl.loadedArtifactId,
+          publicationId: source.loaded.sessionControl.loadedPublicationId } });
+      check(retired.status === 'blocked', 'terminal settlement fixture did not interrupt');
+      failing.close();
+      const owner = await openCleanEpochAccountStore({ name: x.name });
+      check((await owner.readPendingTerminalForAccount(x.accountId))?.status === 'accepted_pending_settlement',
+        'pending terminal recovery missing');
+      check((await resetOrDelete(kind, { ...x, owner })).status === 'committed',
+        `${kind} rejected valid pending terminal settlement`);
+      owner.close();
+    });
+    await test(`${kind} accepts terminal cleanup with zero live addresses`, async () => {
+      const x = await setup(`${kind}-terminal-cleanup`);
+      await closeTerminalGraph(x);
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected valid terminal cleanup`);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing terminal closure receipt`, async () => {
+      const x = await setup(`${kind}-terminal-closure-receipt-missing`);
+      await closeTerminalGraph(x);
+      await changeFirstRow(x.name, x.accountId, 'addressDeletionReceipts',
+        (_row, store, key) => store.delete(key));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} rejects corrupt terminal closure binding`, async () => {
+      const x = await setup(`${kind}-terminal-closure-binding-corrupt`);
+      await closeTerminalGraph(x);
+      await changeFirstRow(x.name, x.accountId, 'terminalLifecycleRecoveries', (row, store) =>
+        store.put({ ...row, addressClosure: { ...row.addressClosure,
+          receipts: [{ ...row.addressClosure.receipts[0], artifactId: 'artifact.wrong' }] } }));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} rejects corrupt terminal closure receipt time`, async () => {
+      const x = await setup(`${kind}-terminal-closure-time-corrupt`);
+      await closeTerminalGraph(x);
+      await changeFirstRow(x.name, x.accountId, 'addressDeletionReceipts', (row, store) =>
+        store.put({ ...row, deletedAt: '2026-01-01T00:00:00.000Z' }));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} accepts first witnessed Soundings publication`, async () => {
+      const x = await setup(`${kind}-witnessed`);
+      await publishWitness(x);
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected valid witnessed publication`);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing first Soundings witness`, async () => {
+      const x = await setup(`${kind}-witness-missing`);
+      await publishWitness(x);
+      await changeFirstRow(x.name, x.accountId, 'witnesses', (_row, store, key) => store.delete(key));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} accepts G9E deleted address with retained history`, async () => {
+      const x = await setup(`${kind}-address-deleted`);
+      await deleteFirstSlot(x);
+      check((await x.owner.readSlot(x.accountId, 'slot-1')).status === 'empty' &&
+        (await rows(x.name, x.accountId)).addressDeletionReceipts.length === 1,
+      'valid deleted-address fixture missing');
+      check((await resetOrDelete(kind, x)).status === 'committed', `${kind} rejected valid deleted address`);
+      x.owner.close();
+    });
+    await test(`${kind} accepts reused slot with prior-generation deletion receipt`, async () => {
+      const x = await setup(`${kind}-reused-slot`);
+      await deleteFirstSlot(x);
+      const replacement = await new CleanEpochFirstCampaignAdapter(x.owner).start(x.accountId,
+        { ...form(), playerName: 'Replacement after deletion' });
+      check(replacement.status === 'ready' &&
+        (await rows(x.name, x.accountId)).addressDeletionReceipts.length === 1,
+        'historical reused-slot fixture failed');
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected valid prior-generation history`);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing prior-generation deletion receipt after reuse`, async () => {
+      const x = await setup(`${kind}-reused-slot-receipt-missing`);
+      await deleteFirstSlot(x);
+      const replacement = await new CleanEpochFirstCampaignAdapter(x.owner).start(x.accountId,
+        { ...form(), playerName: 'Replacement before corruption' });
+      check(replacement.status === 'ready', 'historical reused-slot corruption fixture failed');
+      await changeFirstRow(x.name, x.accountId, 'addressDeletionReceipts',
+        (_row, store, key) => store.delete(key));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing G9E deletion receipt`, async () => {
+      const x = await setup(`${kind}-receipt-missing`);
+      await deleteFirstSlot(x);
+      await changeFirstRow(x.name, x.accountId, 'addressDeletionReceipts',
+        (_row, store, key) => store.delete(key));
+      await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+  }
   await test('v6 account upgrades additively and resets from generation one', async () => {
     const name = `lineage.epoch-g9f.qa.upgrade.${crypto.randomUUID()}`;
     const accountId = `account.local.${crypto.randomUUID()}`;
@@ -206,7 +597,8 @@ async function suite() {
     const current = reset.account!;
     await x.owner.updateProfile(x.accountId, current.revision,
       { ...current.profile, updatedAt: new Date().toISOString() });
-    await seed(x.name, x.accountId);
+    check((await new CleanEpochFirstCampaignAdapter(x.owner).start(x.accountId, form())).status === 'ready',
+      'newer-generation campaign did not publish');
     const retry = await x.owner.transitionAccount('reset', x.input);
     check(retry.status === 'same_source_retry' && retry.account === null &&
       (await rows(x.name, x.accountId)).artifacts?.length === 1,
@@ -258,7 +650,8 @@ async function suite() {
   });
   await test('malformed source row and receipt fail closed without partial erasure', async () => {
     const x = await setup('malformed');
-    await seed(x.name, x.accountId, true);
+    await changeFirstRow(x.name, x.accountId, 'campaignAttemptsV6', (row, store) =>
+      store.put({ ...row, version: 99 }));
     const prior = JSON.stringify(await rows(x.name, x.accountId));
     await rejected(() => x.owner.transitionAccount('reset', x.input), 'invalid_record');
     check(JSON.stringify(await rows(x.name, x.accountId)) === prior &&

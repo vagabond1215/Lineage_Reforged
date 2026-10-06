@@ -5,7 +5,8 @@ import { EpochApp } from './src/EpochApp.tsx';
 import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from './src/game-shell/characterCreationCatalog.ts';
 import { createDefaultCharacterCreationFormState } from './src/game-shell/characterCreationForm.ts';
 import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.ts';
-import { accountLifecycleGeneration, CLEAN_EPOCH_SESSION_STORAGE_KEY,
+import { accountLifecycleGeneration, CLEAN_EPOCH_DATABASE_NAME, CLEAN_EPOCH_DATABASE_VERSION,
+  CLEAN_EPOCH_SESSION_STORAGE_KEY,
   openCleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.ts';
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.ts';
 import './src/index.css';
@@ -55,6 +56,30 @@ async function start() {
           credentialRetained: !!current?.credential, runCount: current?.profile.history.runRecords.length ?? null,
           receipt, slots: slots.map(slot => ({ id: slot.slotId, status: slot.status })) }, null, 2);
       } finally { inspect.close(); }
+    })().catch(error => { inspection.textContent = String(error); }); };
+    document.querySelector<HTMLButtonElement>('#corrupt-artifact')!.onclick = () => { void (async () => {
+      const inspect = await openCleanEpochAccountStore();
+      let artifactId: string;
+      try {
+        const slot = await inspect.readSlot(accountId!, 'slot-1');
+        if (slot.status !== 'ready') throw new Error('Synthetic Slot 1 is not ready.');
+        artifactId = slot.loaded.sessionControl.loadedArtifactId;
+      } finally { inspect.close(); }
+      const db = await new Promise<IDBDatabase>((resolve, reject) => {
+        const request = indexedDB.open(CLEAN_EPOCH_DATABASE_NAME, CLEAN_EPOCH_DATABASE_VERSION);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const tx = db.transaction('artifacts', 'readwrite');
+          tx.objectStore('artifacts').delete([accountId!, artifactId]);
+          tx.oncomplete = () => resolve();
+          tx.onabort = () => reject(tx.error);
+        });
+      } finally { db.close(); }
+      inspection.textContent = `SYNTHETIC CORRUPTION: removed required artifact ${artifactId}.\n` +
+        'Use Settings reset/delete or picker delete and verify blocked presentation.';
     })().catch(error => { inspection.textContent = String(error); }); };
   } finally { owner.close(); }
   createRoot(document.querySelector('#root')!).render(<EpochApp />);

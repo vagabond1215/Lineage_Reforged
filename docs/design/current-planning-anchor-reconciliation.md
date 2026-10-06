@@ -1,3 +1,7 @@
+## 2026-10-05 — G9 F1 repair and parent re-audit gate
+
+**F1_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD.** DEV-0.7.1.2 on synchronized `master` `f528df39` repaired whole-account reset/delete with an account-wide campaign-graph preflight before erasure. Coherent valid/corrupt browser cases pass 64/64, including historical slot reuse and zero-address terminal cleanup; selected App blocked presentation, focused Node and build checks pass. The focused evidence is `docs/dev/dev-0.7.1.2-g9-destructive-graph-preflight-repair-record.md`. The next support run independently re-audits G9 parent. Neither this repair nor prior G9 slice checks accept planned `DEV-0.7.1` or authorize G10, deployment or Game-version change. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
+
 ## 2026-10-05 — G9 parent audit repair gate
 
 **G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD.** Synchronized source `de5b1cab`; `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md` documents F1. Both whole-account destructive actions succeeded after required campaign-graph authority was removed, erasing surviving version-1 rows. The installed route is `DEV-0.7.1.2` destructive graph-preflight repair, followed by independent G9 parent re-audit. Planned `DEV-0.7.1`, G10, deployment and Game-version acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. Older G9F-next pointers remain historical.

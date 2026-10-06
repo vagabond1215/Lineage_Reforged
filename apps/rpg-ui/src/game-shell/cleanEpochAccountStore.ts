@@ -671,6 +671,317 @@ function terminalReceiptsMatch(account: CleanEpochAccountRecord, recovery: Clean
         tx.id === recovery.payoutTransactionId).length === 1);
 }
 
+/** Destruction cannot turn preexisting partial storage loss into a successful reset or delete. */
+function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<string, unknown[]>): void {
+  const accountId = account.accountId;
+  const family = (name: string) => rows.get(name) ?? [];
+  const indexed = (name: string, field: string): Map<string, Record<string, unknown>> => {
+    const result = new Map<string, Record<string, unknown>>();
+    for (const raw of family(name)) {
+      if (!object(raw) || !nonblank(raw[field]) || result.has(raw[field] as string))
+        fail("invalid_record", `${name} has a malformed or duplicate graph identity.`);
+      result.set(raw[field] as string, raw);
+    }
+    return result;
+  };
+  const attempts = new Map<string, CleanEpochAttemptRecord>();
+  for (const raw of family(CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE)) {
+    if (!object(raw) || !nonblank(raw.campaignId) || !validSlotId(raw.slotId) || attempts.has(raw.campaignId))
+      fail("invalid_record", "Campaign attempt graph identity is invalid.");
+    attempts.set(raw.campaignId, checkedAttempt(raw, accountId, raw.slotId));
+  }
+  const firstRows = indexed(CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, "campaignId");
+  const controls = indexed("controls", "campaignId");
+  const artifacts = indexed("artifacts", "artifactId");
+  const addresses = indexed("slots", "slotId");
+  const pointers = indexed(CLEAN_EPOCH_SLOT_GENERATION_STORE, "slotId");
+  const witnesses = indexed("witnesses", "campaignId");
+  const descendants = new Map<string, CleanEpochDescendantRecovery[]>();
+  const terminals = new Map<string, CleanEpochTerminalRecovery[]>();
+  const deletionReceipts = new Map<string, CleanEpochAddressDeletionReceipt>();
+  const expectedArtifacts = new Set<string>();
+  const expectedPublications = new Set<string>();
+  const witnessedCampaigns = new Set<string>();
+  for (const raw of family(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE)) {
+    if (!object(raw) || !nonblank(raw.campaignId) || !nonblank(raw.publicationId))
+      fail("invalid_record", "Descendant graph identity is invalid.");
+    const checked = checkedDescendantRecovery(raw, accountId, raw.campaignId, raw.publicationId);
+    descendants.set(checked.campaignId, [...(descendants.get(checked.campaignId) ?? []), checked]);
+  }
+  for (const raw of family(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)) {
+    if (!object(raw) || !nonblank(raw.campaignId) || !nonblank(raw.publicationId))
+      fail("invalid_record", "Terminal graph identity is invalid.");
+    const checked = checkedTerminalRecovery(raw, accountId, raw.campaignId, raw.publicationId);
+    terminals.set(checked.campaignId, [...(terminals.get(checked.campaignId) ?? []), checked]);
+  }
+  for (const raw of family(CLEAN_EPOCH_ADDRESS_DELETION_STORE)) {
+    if (!object(raw) || !validSlotId(raw.slotId) || !nonblank(raw.slotGenerationId) ||
+        !nonblank(raw.campaignId)) fail("invalid_record", "Deletion receipt graph identity is invalid.");
+    const id = `${raw.slotId}\u0000${raw.slotGenerationId}`;
+    if (deletionReceipts.has(id)) fail("invalid_record", "Deletion receipt is duplicated.");
+    const attempt = attempts.get(raw.campaignId);
+    const pointer: CleanEpochSlotGeneration = { version: 1, accountId, slotId: raw.slotId as SaveSlotId,
+      slotGenerationId: raw.slotGenerationId, campaignId: raw.campaignId,
+      attemptId: attempt?.attemptId ?? "", status: "deleted" };
+    if (!attempt || !validAddressDeletionReceipt(raw, pointer, account))
+      fail("invalid_record", "Deletion receipt lacks its exact retained campaign and history.");
+    const artifact = artifacts.get(raw.artifactId);
+    if (!artifact || artifact.campaignId !== raw.campaignId || artifact.publicationId !== raw.publicationId ||
+        artifact.raw !== raw.addressRaw) fail("invalid_record", "Deletion receipt lost its immutable artifact.");
+    deletionReceipts.set(id, raw as CleanEpochAddressDeletionReceipt);
+  }
+  const artifactEnvelope = (artifactId: string, campaignId: string): StoredSaveEnvelope => {
+    const raw = artifacts.get(artifactId);
+    if (!raw || typeof raw.raw !== "string") fail("invalid_record", "Campaign artifact is missing.");
+    const envelope = envelopeFromRaw(raw.raw);
+    if (raw.campaignId !== campaignId || !retainedArtifactMatches(raw, envelope))
+      fail("invalid_record", "Campaign artifact identity is inconsistent.");
+    return envelope;
+  };
+  for (const raw of family(CLEAN_EPOCH_ATTEMPT_STORE)) {
+    if (!object(raw) || !validSlotId(raw.slotId)) fail("invalid_record", "Retained v5 attempt is malformed.");
+    const old = checkedAttempt(raw, accountId, raw.slotId);
+    if (!exactEqual(attempts.get(old.campaignId), old))
+      fail("invalid_record", "Retained v5 attempt lost its v6 campaign authority.");
+  }
+  for (const raw of family(CLEAN_EPOCH_RECOVERY_STORE)) {
+    if (!object(raw) || !nonblank(raw.campaignId)) fail("invalid_record", "Retained v5 recovery is malformed.");
+    const attempt = attempts.get(raw.campaignId);
+    if (!attempt || !firstRows.has(raw.campaignId) ||
+        !sameRecoverySource(checkedRecovery(raw, attempt), checkedRecovery(firstRows.get(raw.campaignId), attempt)))
+      fail("invalid_record", "Retained v5 recovery lost its v6 campaign authority.");
+  }
+  for (const [campaignId, attempt] of attempts) {
+    const firstRaw = firstRows.get(campaignId);
+    const controlRaw = controls.get(campaignId);
+    const chain = descendants.get(campaignId) ?? [];
+    const terminalRows = terminals.get(campaignId) ?? [];
+    const campaignArtifacts = [...artifacts.values()].filter(row => row.campaignId === campaignId);
+    const campaignAddresses = [...addresses.values()].filter(row => row.campaignId === campaignId);
+    const campaignPointers = [...pointers.values()].filter(row => row.campaignId === campaignId);
+    const campaignDeletions = [...deletionReceipts.values()].filter(row => row.campaignId === campaignId);
+    if (!firstRaw) {
+      if (controlRaw || chain.length || terminalRows.length || campaignArtifacts.length ||
+          campaignAddresses.length || campaignDeletions.length || witnesses.has(campaignId) ||
+          campaignPointers.length !== 1)
+        fail("invalid_record", "Prepared campaign has unexpected or missing graph authority.");
+      const pointer = checkedSlotGeneration(campaignPointers[0], accountId, attempt.slotId);
+      if (pointer.status !== "prepared" || pointer.campaignId !== campaignId ||
+          pointer.attemptId !== attempt.attemptId)
+        fail("invalid_record", "Prepared campaign lost its current generation.");
+      continue;
+    }
+    const first = checkedRecovery(firstRaw, attempt);
+    if (!controlRaw || controlRaw.version !== 1 || controlRaw.accountId !== accountId ||
+        !isStoredCampaignControl(controlRaw.value) || controlRaw.value.accountId !== accountId ||
+        controlRaw.value.campaignId !== campaignId)
+      fail("invalid_record", "Published campaign control is missing or malformed.");
+    const control = controlRaw.value;
+    const firstEnvelope = artifactEnvelope(first.artifactId, campaignId);
+    if (artifacts.get(first.artifactId)?.raw !== first.envelopeRaw ||
+        firstEnvelope.publicationId !== first.publicationId || firstEnvelope.headRevision !== 1)
+      fail("invalid_record", "First publication lost its immutable artifact.");
+    if (expectedPublications.has(first.publicationId))
+      fail("invalid_record", "First publication identity repeats.");
+    expectedArtifacts.add(first.artifactId); expectedPublications.add(first.publicationId);
+    if (first.status === "consumers_completed") {
+      if (!completedReceiptsMatch(account, first))
+        fail("invalid_record", "Completed first publication lacks account receipts.");
+    } else if (account.revision !== first.expectedAccountRevision || chain.length || terminalRows.length ||
+        control.headRevision !== 1 || (account.profile.campaignPublicationReceipts ?? [])
+          .some(receipt => receipt.publicationId === first.publicationId))
+      fail("invalid_record", "Pending first publication changed account or head.");
+    const byRevision = new Map<number, CleanEpochDescendantRecovery>();
+    for (const entry of chain) {
+      if (byRevision.has(entry.headRevision) || expectedPublications.has(entry.publicationId))
+        fail("invalid_record", "Descendant publication identity repeats.");
+      byRevision.set(entry.headRevision, entry);
+      expectedPublications.add(entry.publicationId); expectedArtifacts.add(entry.artifactId);
+      const envelope = artifactEnvelope(entry.artifactId, campaignId);
+      const source = artifactEnvelope(entry.sourceArtifactId, campaignId);
+      const sourceIdentity = deserializeSnapshot(source.snapshot).campaignIdentity;
+      const targetIdentity = deserializeSnapshot(envelope.snapshot).campaignIdentity;
+      if (artifacts.get(entry.artifactId)?.raw !== entry.envelopeRaw ||
+          source.publicationId !== entry.sourcePublicationId || source.snapshot !== entry.sourceSnapshotRaw ||
+          source.headRevision >= entry.headRevision || envelope.publicationId !== entry.publicationId ||
+          envelope.headRevision !== entry.headRevision || entry.sourceSlotId !== source.slotId ||
+          (entry.expectedSlotAddress !== null && entry.expectedSlotAddress.artifactId === entry.artifactId) ||
+          !sourceIdentity || !targetIdentity ||
+          (entry.sourceArtifactId === entry.expectedHead.artifactId
+            ? targetIdentity.continuityId !== sourceIdentity.continuityId
+            : targetIdentity.parentContinuityId !== sourceIdentity.continuityId ||
+              targetIdentity.forkedFromArtifactId !== entry.sourceArtifactId ||
+              targetIdentity.forkedFromPublicationId !== entry.sourcePublicationId ||
+              !nonblank(targetIdentity.firstDivergentMutationId)))
+        fail("invalid_record", "Descendant immutable source or result is inconsistent.");
+      if (entry.status === "consumers_completed") {
+        if (!descendantReceiptsMatch(account, entry))
+          fail("invalid_record", "Completed descendant lacks account receipts.");
+      } else if (account.revision !== entry.expectedAccountRevision ||
+          control.headRevision !== entry.headRevision ||
+          (account.profile.campaignPublicationReceipts ?? []).some(receipt =>
+            receipt.publicationId === entry.publicationId))
+        fail("invalid_record", "Pending descendant changed account or head.");
+    }
+    if (terminalRows.length > 1 || (control.closed ? terminalRows.length !== 1 : terminalRows.length !== 0))
+      fail("invalid_record", "Terminal recovery and closed control disagree.");
+    const regularHead = control.headRevision - (control.closed ? 1 : 0);
+    if (byRevision.size !== regularHead - 1) fail("invalid_record", "Descendant chain is incomplete.");
+    let priorArtifact = first.artifactId;
+    let priorPublication = first.publicationId;
+    for (let revision = 2; revision <= regularHead; revision++) {
+      const entry = byRevision.get(revision);
+      if (!entry || entry.expectedHead.artifactId !== priorArtifact ||
+          entry.expectedHead.publicationId !== priorPublication ||
+          entry.expectedHead.revision !== revision - 1 ||
+          (revision < regularHead && entry.status !== "consumers_completed"))
+        fail("invalid_record", "Descendant predecessor chain is incomplete.");
+      priorArtifact = entry.artifactId; priorPublication = entry.publicationId;
+    }
+    const terminal = terminalRows[0];
+    if (terminal) {
+      const envelope = artifactEnvelope(terminal.artifactId, campaignId);
+      if (expectedPublications.has(terminal.publicationId))
+        fail("invalid_record", "Terminal publication identity repeats.");
+      expectedArtifacts.add(terminal.artifactId); expectedPublications.add(terminal.publicationId);
+      if (terminal.expectedHead.artifactId !== priorArtifact ||
+          terminal.expectedHead.publicationId !== priorPublication ||
+          terminal.expectedHead.revision !== regularHead ||
+          terminal.sourceArtifactId !== priorArtifact || terminal.sourcePublicationId !== priorPublication ||
+          artifactEnvelope(terminal.sourceArtifactId, campaignId).snapshot !== terminal.sourceSnapshotRaw ||
+          artifacts.get(terminal.artifactId)?.raw !== terminal.envelopeRaw || !envelope.terminal ||
+          envelope.headRevision !== control.headRevision ||
+          control.headArtifactId !== terminal.artifactId ||
+          control.headPublicationId !== terminal.publicationId ||
+          (terminal.status === "settlement_completed" && !terminalReceiptsMatch(account, terminal)) ||
+          (terminal.status === "accepted_pending_settlement" &&
+            (account.revision !== terminal.expectedAccountRevision ||
+              !exactEqual(account.profile, terminal.sourceProfile) ||
+              (account.profile.campaignPublicationReceipts ?? []).some(receipt =>
+                receipt.publicationId === terminal.publicationId))))
+        fail("invalid_record", "Terminal campaign authority is incomplete.");
+      if (terminal.addressClosure) {
+        if (terminal.addressClosure.receipts.length !== terminal.addressSlotIds.length ||
+            terminal.addressClosure.receipts.some(ref => {
+              const receipt = deletionReceipts.get(`${ref.slotId}\u0000${ref.slotGenerationId}`);
+              return !receipt || receipt.reason !== "terminal" || receipt.campaignId !== campaignId ||
+                receipt.artifactId !== ref.artifactId || receipt.publicationId !== ref.publicationId ||
+                receipt.characterId !== terminal.characterId ||
+                receipt.completedAccountRevision !== terminal.addressClosure!.completedAccountRevision ||
+                receipt.deletedAt !== terminal.addressClosure!.closedAt;
+            })) fail("invalid_record", "Terminal closure lost a deletion receipt.");
+      }
+    } else if (control.headArtifactId !== priorArtifact ||
+               control.headPublicationId !== priorPublication)
+      fail("invalid_record", "Open campaign control lost its head artifact.");
+    const head = artifactEnvelope(control.headArtifactId, campaignId);
+    const headPublishedAt = terminal?.createdAt ??
+      (regularHead === 1 ? first.updatedAt : byRevision.get(regularHead)?.createdAt);
+    if (head.headRevision !== control.headRevision || head.terminal !== control.closed ||
+        control.updatedAt !== headPublishedAt ||
+        control.previousHeadArtifactId !== (regularHead === 1 && !terminal ? null :
+          terminal ? priorArtifact : byRevision.get(regularHead)?.expectedHead.artifactId) ||
+        control.previousHeadPublicationId !== (regularHead === 1 && !terminal ? null :
+          terminal ? priorPublication : byRevision.get(regularHead)?.expectedHead.publicationId))
+      fail("invalid_record", "Campaign control predecessor is inconsistent.");
+    const headSnapshot = deserializeSnapshot(head.snapshot);
+    const requestId = headSnapshot.authorityLedger?.soundingsTurnIn?.version === 2
+      ? headSnapshot.authorityLedger.soundingsTurnIn.requests[0]?.requestId : null;
+    const witnessedRequests = [first.witnessRequestId, ...chain.map(entry => entry.witnessRequestId), requestId]
+      .filter((id): id is string => id !== null && id !== undefined);
+    const witnessRaw = witnesses.get(campaignId);
+    if (witnessedRequests.length) {
+      if (new Set(witnessedRequests).size !== 1 || requestId !== witnessedRequests[0])
+        fail("invalid_record", "Soundings provenance changed across retained publications.");
+      if (!object(witnessRaw) || witnessRaw.version !== 1 || witnessRaw.accountId !== accountId ||
+          witnessRaw.requestId !== requestId || !isSoundingsAdmissionWitness(witnessRaw.value) ||
+          witnessRaw.value.posture !== "applied" ||
+          witnessRaw.value.campaignId !== campaignId)
+        fail("invalid_record", "Published Soundings witness is missing or malformed.");
+      const witness = witnessRaw.value;
+      const firstWitnessed = artifactEnvelope(witness.firstDurableArtifactId, campaignId);
+      const source = artifactEnvelope(witness.sourceArtifactId, campaignId);
+      if (firstWitnessed.publicationId !== witness.firstDurablePublicationId ||
+          firstWitnessed.headRevision !== witness.firstDurableHeadRevision ||
+          firstWitnessed.characterId !== witness.characterId ||
+          source.publicationId !== witness.sourcePublicationId ||
+          source.headRevision > witness.sourceRevision ||
+          verifySoundingsAdmissionProvenance(deserializeSnapshot(firstWitnessed.snapshot),
+            { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified" ||
+          verifySoundingsAdmissionProvenance(deserializeSnapshot(head.snapshot),
+            { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified")
+        fail("invalid_record", "Published Soundings witness lost source provenance.");
+      witnessedCampaigns.add(campaignId);
+    } else if (witnessRaw) fail("invalid_record", "Campaign has an orphan Soundings witness.");
+    if (campaignPointers.length + campaignDeletions.length === 0 ||
+        (first.status === "accepted_pending_consumers" && campaignAddresses.length === 0))
+      fail("invalid_record", "Published campaign lacks an address-generation history.");
+  }
+  for (const [id, raw] of artifacts) if (!expectedArtifacts.has(id) || !attempts.has(raw.campaignId as string))
+    fail("invalid_record", "Orphan immutable artifact would be erased.");
+  for (const [campaignId] of firstRows) if (!attempts.has(campaignId))
+    fail("invalid_record", "Orphan first recovery would be erased.");
+  for (const [campaignId] of controls) if (!attempts.has(campaignId))
+    fail("invalid_record", "Orphan campaign control would be erased.");
+  for (const campaignId of descendants.keys()) if (!attempts.has(campaignId))
+    fail("invalid_record", "Orphan descendant recovery would be erased.");
+  for (const campaignId of terminals.keys()) if (!attempts.has(campaignId))
+    fail("invalid_record", "Orphan terminal recovery would be erased.");
+  for (const campaignId of witnesses.keys()) if (!witnessedCampaigns.has(campaignId))
+    fail("invalid_record", "Orphan Soundings witness would be erased.");
+  for (const [slotId, raw] of pointers) {
+    const pointer = checkedSlotGeneration(raw, accountId, slotId);
+    const attempt = attempts.get(pointer.campaignId);
+    const address = addresses.get(slotId);
+    const receipt = deletionReceipts.get(`${slotId}\u0000${pointer.slotGenerationId}`);
+    if (!attempt || pointer.attemptId !== attempt.attemptId ||
+        (pointer.status === "prepared" && (attempt.slotId !== slotId || firstRows.has(pointer.campaignId) || address)) ||
+        (pointer.status === "published" && (!firstRows.has(pointer.campaignId) || !address || receipt)) ||
+        (pointer.status === "deleted" && (address || !receipt)))
+      fail("invalid_record", "Current slot generation disagrees with address history.");
+  }
+  for (const [slotId, raw] of addresses) {
+    const pointer = pointers.get(slotId);
+    if (!pointer || pointer.status !== "published" || pointer.campaignId !== raw.campaignId ||
+        raw.version !== 1 || raw.accountId !== accountId || typeof raw.raw !== "string")
+      fail("invalid_record", "Address lacks its current published generation.");
+    const envelope = artifactEnvelope(raw.artifactId as string, raw.campaignId as string);
+    if (raw.raw !== artifacts.get(raw.artifactId as string)?.raw ||
+        envelope.publicationId !== raw.publicationId || envelope.slotId !== slotId)
+      fail("invalid_record", "Address lost its retained artifact.");
+    const first = firstRows.get(raw.campaignId as string);
+    const descendant = (descendants.get(raw.campaignId as string) ?? [])
+      .find(item => item.publicationId === raw.publicationId);
+    const terminal = terminals.get(raw.campaignId as string)?.[0];
+    const addressControl = controls.get(raw.campaignId as string)?.value;
+    const publication = envelope.headRevision === 1 ? first :
+      envelope.terminal ? terminal : descendant;
+    if (!publication || publication.artifactId !== raw.artifactId ||
+        publication.envelopeRaw !== raw.raw ||
+        (envelope.headRevision > 1 && !envelope.terminal && descendant?.slotId !== slotId) ||
+        (envelope.terminal && terminal?.slotId !== slotId) ||
+        (publication.status !== "consumers_completed" && publication.status !== "settlement_completed" &&
+          (!isStoredCampaignControl(addressControl) || addressControl.headArtifactId !== raw.artifactId)))
+      fail("invalid_record", "Address lacks its exact publication recovery.");
+    const run = account.profile.history.runRecords.filter(item => item.characterId === envelope.characterId);
+    if (run.length !== 1 || !run[0]!.saveSlotIds.includes(slotId)) {
+      if (!(first?.status === "accepted_pending_consumers" ||
+            descendant?.status === "accepted_pending_consumers" ||
+            terminal?.status === "accepted_pending_settlement"))
+        fail("invalid_record", "Completed address lacks retained account history.");
+    }
+  }
+  for (const run of account.profile.history.runRecords) {
+    if (![...artifacts.values()].some(row => {
+      if (typeof row.raw !== "string") return false;
+      return envelopeFromRaw(row.raw).characterId === run.characterId;
+    })) fail("invalid_record", "Account history lost its campaign artifact.");
+  }
+  for (const receipt of account.profile.campaignPublicationReceipts ?? [])
+    if (!expectedPublications.has(receipt.publicationId))
+      fail("invalid_record", "Account consumer receipt lost its publication authority.");
+}
+
 export async function openCleanEpochAccountStore(options: CleanEpochAccountStoreOptions = {}): Promise<CleanEpochAccountStore> {
   const name = options.name ?? CLEAN_EPOCH_DATABASE_NAME;
   if (!nonblank(name) || name === CAMPAIGN_DATABASE_NAME) fail("invalid_record", "Clean-epoch database must be separate from legacy staging.");
@@ -916,18 +1227,26 @@ export class CleanEpochAccountStore {
         // Validate the entire account prefix before the first write. Incomplete rows
         // cannot be silently mistaken for a successful destructive transition.
         const keys = new Map<string, IDBValidKey[]>();
+        const graphRows = new Map<string, unknown[]>();
         const range = IDBKeyRange.bound([input.accountId], [input.accountId, []]);
         for (const name of ACCOUNT_DATA_STORES) {
           const store = tx.objectStore(name);
           const found = await requestValue(store.getAllKeys(range));
+          const keyPath = store.keyPath;
+          if (!Array.isArray(keyPath)) fail("invalid_record", `Malformed ${name} account key path.`);
+          const retained: unknown[] = [];
           for (const key of found) {
             const raw = await requestValue(store.get(key) as IDBRequest<unknown>);
             if (!Array.isArray(key) || key[0] !== input.accountId ||
-                !object(raw) || raw.version !== 1 || raw.accountId !== input.accountId)
+                !object(raw) || raw.version !== 1 || raw.accountId !== input.accountId ||
+                !exactEqual(key, keyPath.map(field => raw[field])))
               fail("invalid_record", `Malformed ${name} account row blocks lifecycle transition.`);
+            retained.push(raw);
           }
           keys.set(name, found);
+          graphRows.set(name, retained);
         }
+        validateDestructiveGraph(account, graphRows);
         const write = async <T,>(request: () => IDBRequest<T>) => {
           this.beforeWrite?.(tx);
           await requestValue(request());
