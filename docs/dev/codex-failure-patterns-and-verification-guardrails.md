@@ -242,7 +242,7 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Guardrail:** Before the first destructive write, validate complete account-owned authority and required cross-store bindings for each accepted lifecycle state. Missing required authority is corrupt/unavailable.
 - **Verification:** From coherent published first, descendant, witnessed and terminal campaigns, remove or corrupt each required artifact/control/recovery/witness/address/generation/deletion receipt while other version-1 rows remain; reset and delete reject without account, receipt or surviving-byte changes. Pair with valid prepared, pending, deleted-address and closed controls and retry/restart.
 - **Applies to:** whole-account reset/delete, destructive migrations and multi-store retention cleanup.
-- **Evidence:** `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md`, F1.
+- **Evidence:** `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md`, F1; `docs/design/dev-0.7.1.3-g9-lifecycle-parent-independent-reaudit.md`, F2/F3.
 - **Status:** active.
 
 ## Completion Report Format
