@@ -230,9 +230,9 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Pattern:** Account deletion is blocked in the main transaction, but a stale registration retry or session hint can reselect a reset identity because it checks only account ID and password.
 - **Why it escaped:** Revision CAS protected campaign writes while account selection and registration retry were treated as independent convenience paths.
 - **Guardrail:** Persist a monotonic lifecycle generation and deletion tombstone, bind hints and in-memory sessions to the generation, and make registration and destructive retries consult the same durable authority. Require current credential verification in the destructive owner itself.
-- **Verification:** Reset and delete with two owners; retry old registration and session selection; reopen after reset/delete; inject malformed or missing lifecycle authority and abort/quota at every destructive write. Verify another account and legacy staging remain untouched.
+- **Verification:** Reset and delete with two owners; retry old registration and session selection; carry the picker-observed revision/generation across a second-tab reset; prove exact tombstone retry after lost selected-caller acknowledgement; reopen after reset/delete; inject malformed or missing lifecycle authority and abort/quota at every destructive write. Verify another account and legacy staging remain untouched.
 - **Applies to:** account reset/delete, sign-in/session bootstrap, registration retry, destructive recovery and selected-App lifecycle controls.
-- **Evidence:** `docs/dev/dev-0.7.1-slice-g9f-account-lifecycle-record.md`.
+- **Evidence:** `docs/dev/dev-0.7.1-slice-g9f-account-lifecycle-record.md`; `docs/design/dev-0.7.1.5-g9-lifecycle-parent-independent-reaudit.md`, F6/F7.
 - **Status:** active.
 
 ### FP-019 — Destructive Erasure Must Prove Preexisting Graph Completeness
@@ -240,9 +240,9 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Pattern:** Reset/delete checks only surviving row shapes, then reports success after erasing a graph that had already lost required data.
 - **Why it escaped:** Tests seeded independent valid-version rows and malformed only one surviving row; zero-row readback could not reveal preexisting loss.
 - **Guardrail:** Before the first destructive write, validate complete account-owned authority and required cross-store bindings for each accepted lifecycle state. Missing required authority is corrupt/unavailable.
-- **Verification:** From coherent published first, descendant, witnessed and terminal campaigns, remove or corrupt each required artifact/control/recovery/witness/address/generation/deletion receipt while other version-1 rows remain; reset and delete reject without account, receipt or surviving-byte changes. Pair with valid prepared, pending, deleted-address and closed controls and retry/restart.
+- **Verification:** From coherent published first, descendant, witnessed and terminal campaigns, remove or corrupt each required artifact/control/recovery/witness/address/generation/deletion receipt while other version-1 rows remain; check account run slot membership and outcome against the exact live address set in both directions; reset and delete reject before writes without account, receipt or surviving-byte changes. Pair with valid prepared, pending, deleted-address and closed controls and retry/restart.
 - **Applies to:** whole-account reset/delete, destructive migrations and multi-store retention cleanup.
-- **Evidence:** `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md`, F1; `docs/design/dev-0.7.1.3-g9-lifecycle-parent-independent-reaudit.md`, F2/F3; `docs/dev/dev-0.7.1.4-g9-residual-destructive-graph-preflight-repair-record.md`, paired repair controls. Independent parent re-audit remains required.
+- **Evidence:** `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md`, F1; `docs/design/dev-0.7.1.3-g9-lifecycle-parent-independent-reaudit.md`, F2/F3; `docs/dev/dev-0.7.1.4-g9-residual-destructive-graph-preflight-repair-record.md`, paired repair controls; `docs/design/dev-0.7.1.5-g9-lifecycle-parent-independent-reaudit.md`, F4/F5. Independent parent re-audit remains required after repair.
 - **Status:** active.
 
 ## Completion Report Format

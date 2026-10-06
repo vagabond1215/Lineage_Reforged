@@ -1,3 +1,7 @@
+## 2026-10-06 — G9 residual history and retry repair gate
+
+**G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD.** DEV-0.7.1.5 independent audit of hosted `637fec3b` found account run/address F4 corruption still laundered by reset/delete, valid historical G9E deletion F5 exact retry falsely rejected after same-campaign reoccupation, and selected picker F6/F7 generation/retry gaps. See `docs/design/dev-0.7.1.5-g9-lifecycle-parent-independent-reaudit.md`. Install only `DEV-0.7.1.6` repair, followed by another independent parent audit. No G10, deployment, planned-primary or Game-version acceptance; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
+
 ## 2026-10-06 — G9 independent parent re-audit gate
 
 **F2_F3_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD.** DEV-0.7.1.4 repair is pushed and read back at `39d886350a7dfb7d94c1514df3e9c5833456177e`. Both reset and delete now require current deleted-generation authority and exact retained destination address history before erasure. Native repair controls and corruptions pass **80/80**; this is repair evidence only. The installed `DEV-0.7.1.5` prompt requires an independent G9A–F parent audit before any `G9_PARENT_ACCEPTED` decision. G10, deployment, planned-primary and Game-version acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
