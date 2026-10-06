@@ -1,3 +1,7 @@
+## 2026-10-06 — G9 independent parent re-audit gate
+
+**F2_F3_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD.** DEV-0.7.1.4 repair is pushed and read back at `39d886350a7dfb7d94c1514df3e9c5833456177e`. Both reset and delete now require current deleted-generation authority and exact retained destination address history before erasure. Native repair controls and corruptions pass **80/80**; this is repair evidence only. The installed `DEV-0.7.1.5` prompt requires an independent G9A–F parent audit before any `G9_PARENT_ACCEPTED` decision. G10, deployment, planned-primary and Game-version acceptance remain held; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
+
 ## 2026-10-06 — G9 residual graph preflight repair gate
 
 **G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD.** Independent DEV-0.7.1.3 re-audit of repaired hosted source `cf6e27b4` confirmed two reset/delete fail-open states: missing current deleted-generation authority after a valid G9E address deletion, and a forged descendant prior-destination address binding. The focused record is `docs/design/dev-0.7.1.3-g9-lifecycle-parent-independent-reaudit.md`. Install only `DEV-0.7.1.4` preflight repair, then repeat an independent parent audit. No G10, deployment, planned-primary or Game-version acceptance; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
