@@ -65,7 +65,8 @@ async function raw(name: string): Promise<IDBDatabase> {
   });
 }
 async function changeFirstRow(name: string, accountId: string, family: string,
-  change: (row: Record<string, any>, store: IDBObjectStore, key: IDBValidKey) => void) {
+  change: (row: Record<string, any>, store: IDBObjectStore, key: IDBValidKey) => void,
+  matches: (row: Record<string, any>) => boolean = () => true) {
   const db = await raw(name);
   await new Promise<void>((resolve, reject) => {
     const tx = db.transaction(family, 'readwrite');
@@ -73,6 +74,7 @@ async function changeFirstRow(name: string, accountId: string, family: string,
     const cursor = store.openCursor(IDBKeyRange.bound([accountId], [accountId, []]));
     cursor.onsuccess = () => {
       if (!cursor.result) { tx.abort(); reject(new Error(`Missing ${family} fixture row`)); return; }
+      if (!matches(cursor.result.value)) { cursor.result.continue(); return; }
       change(cursor.result.value, store, cursor.result.primaryKey);
     };
     cursor.onerror = () => reject(cursor.error);
@@ -135,6 +137,15 @@ async function assertBlockedWithoutErasure(kind: 'reset' | 'delete',
     await x.owner.readLifecycleReceipt(x.accountId) === null,
   `${kind} changed authority after graph preflight rejection`);
 }
+async function assertRejectedBeforeWrite(kind: 'reset' | 'delete',
+  x: Awaited<ReturnType<typeof setup>>) {
+  x.owner.close();
+  let writes = 0;
+  x.owner = await openCleanEpochAccountStore({ name: x.name,
+    beforeWrite: () => { writes++; } });
+  await assertBlockedWithoutErasure(kind, x);
+  check(writes === 0, `${kind} reached a destructive write before graph rejection`);
+}
 async function deleteFirstSlot(x: Awaited<ReturnType<typeof setup>>) {
   const account = (await x.owner.readSelected(x.accountId))!;
   const pointer = (await x.owner.readSlotGeneration(x.accountId, 'slot-1'))!;
@@ -146,6 +157,23 @@ async function deleteFirstSlot(x: Awaited<ReturnType<typeof setup>>) {
       publicationId: slot.loaded.sessionControl.loadedPublicationId },
     deletedAt: new Date().toISOString() });
   check(result.status === 'committed', 'address deletion failed');
+}
+async function saveDescendant(x: Awaited<ReturnType<typeof setup>>,
+  sourceSlotId: 'slot-1' | 'quick-save', destinationSlotId: 'slot-1' | 'quick-save') {
+  const source = await x.owner.readSlot(x.accountId, sourceSlotId);
+  const destination = await x.owner.readSlot(x.accountId, destinationSlotId);
+  check(source.status === 'ready' && ['ready', 'empty'].includes(destination.status),
+    'descendant source or destination fixture is unavailable');
+  const account = (await x.owner.readSelected(x.accountId))!;
+  const expectedDestinationAddress = destination.status === 'ready'
+    ? { artifactId: destination.loaded.sessionControl.loadedArtifactId,
+        publicationId: destination.loaded.sessionControl.loadedPublicationId } : null;
+  const saved = await new CleanEpochDescendantAdapter(x.owner).save({ accountId: x.accountId,
+    sourceSlotId, destinationSlotId, expectedAccountRevision: account.revision,
+    snapshot: source.loaded.snapshot, control: source.loaded.sessionControl,
+    expectedDestinationAddress });
+  check(saved.status === 'ready', `descendant fixture failed: ${JSON.stringify(saved)}`);
+  return saved;
 }
 async function closeTerminalGraph(x: Awaited<ReturnType<typeof setup>>) {
   const source = await x.owner.readSlot(x.accountId, 'slot-1');
@@ -349,6 +377,48 @@ async function suite() {
       await assertBlockedWithoutErasure(kind, x);
       x.owner.close();
     });
+    await test(`${kind} accepts same-slot and occupied cross-slot descendant address history`, async () => {
+      const x = await setup(`${kind}-descendant-address-history`);
+      await saveDescendant(x, 'slot-1', 'slot-1');
+      await saveDescendant(x, 'slot-1', 'quick-save');
+      await saveDescendant(x, 'quick-save', 'slot-1');
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected valid descendant destination history`);
+      x.owner.close();
+    });
+    await test(`${kind} rejects forged prior address for empty descendant destination`, async () => {
+      const x = await setup(`${kind}-descendant-empty-binding-corrupt`);
+      await saveDescendant(x, 'slot-1', 'quick-save');
+      await changeFirstRow(x.name, x.accountId, 'descendantPublicationRecoveries', (row, store) =>
+        store.put({ ...row, expectedSlotAddress: {
+          artifactId: 'artifact.not-retained', publicationId: 'publication.not-retained' } }));
+      await assertRejectedBeforeWrite(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing prior address for occupied descendant destination`, async () => {
+      const x = await setup(`${kind}-descendant-occupied-binding-corrupt`);
+      await saveDescendant(x, 'slot-1', 'quick-save');
+      await saveDescendant(x, 'quick-save', 'slot-1');
+      await changeFirstRow(x.name, x.accountId, 'descendantPublicationRecoveries',
+        (row, store) => store.put({ ...row, expectedSlotAddress: null }),
+        row => row.headRevision === 3);
+      await assertRejectedBeforeWrite(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} rejects a retained but wrong-slot descendant destination address`, async () => {
+      const x = await setup(`${kind}-descendant-wrong-slot-binding`);
+      await saveDescendant(x, 'slot-1', 'quick-save');
+      await saveDescendant(x, 'quick-save', 'slot-1');
+      const quick = (await rows(x.name, x.accountId)).descendantPublicationRecoveries
+        .find((row: any) => row.headRevision === 2) as any;
+      check(quick?.artifactId && quick?.publicationId, 'prior quick-save publication missing');
+      await changeFirstRow(x.name, x.accountId, 'descendantPublicationRecoveries',
+        (row, store) => store.put({ ...row, expectedSlotAddress: {
+          artifactId: quick.artifactId, publicationId: quick.publicationId } }),
+        row => row.headRevision === 3);
+      await assertRejectedBeforeWrite(kind, x);
+      x.owner.close();
+    });
     await test(`${kind} accepts terminal settlement and closed head`, async () => {
       const x = await setup(`${kind}-terminal`);
       const source = await x.owner.readSlot(x.accountId, 'slot-1');
@@ -457,6 +527,14 @@ async function suite() {
       check((await resetOrDelete(kind, x)).status === 'committed', `${kind} rejected valid deleted address`);
       x.owner.close();
     });
+    await test(`${kind} rejects missing current deleted generation with retained receipt`, async () => {
+      const x = await setup(`${kind}-deleted-generation-missing`);
+      await deleteFirstSlot(x);
+      await changeFirstRow(x.name, x.accountId, 'currentSlotGenerations',
+        (_row, store, key) => store.delete(key));
+      await assertRejectedBeforeWrite(kind, x);
+      x.owner.close();
+    });
     await test(`${kind} accepts reused slot with prior-generation deletion receipt`, async () => {
       const x = await setup(`${kind}-reused-slot`);
       await deleteFirstSlot(x);
@@ -478,6 +556,38 @@ async function suite() {
       await changeFirstRow(x.name, x.accountId, 'addressDeletionReceipts',
         (_row, store, key) => store.delete(key));
       await assertBlockedWithoutErasure(kind, x);
+      x.owner.close();
+    });
+    await test(`${kind} accepts multi-address history after first-slot reuse`, async () => {
+      const x = await setup(`${kind}-multi-address-reuse`);
+      await saveDescendant(x, 'slot-1', 'quick-save');
+      await deleteFirstSlot(x);
+      const replacement = await new CleanEpochFirstCampaignAdapter(x.owner).start(x.accountId,
+        { ...form(), playerName: 'Replacement beside retained quick save' });
+      check(replacement.status === 'ready', 'multi-address replacement fixture failed');
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected valid multi-address reuse`);
+      x.owner.close();
+    });
+    await test(`${kind} accepts descendant publication into a deleted destination generation`, async () => {
+      const x = await setup(`${kind}-descendant-deleted-destination-reuse`);
+      await saveDescendant(x, 'slot-1', 'quick-save');
+      await deleteFirstSlot(x);
+      await saveDescendant(x, 'quick-save', 'slot-1');
+      check((await resetOrDelete(kind, x)).status === 'committed',
+        `${kind} rejected descendant reuse of a deleted destination`);
+      x.owner.close();
+    });
+    await test(`${kind} rejects missing first-slot receipt after multi-address reuse`, async () => {
+      const x = await setup(`${kind}-multi-address-receipt-missing`);
+      await saveDescendant(x, 'slot-1', 'quick-save');
+      await deleteFirstSlot(x);
+      const replacement = await new CleanEpochFirstCampaignAdapter(x.owner).start(x.accountId,
+        { ...form(), playerName: 'Replacement beside corrupt history' });
+      check(replacement.status === 'ready', 'multi-address corruption fixture failed');
+      await changeFirstRow(x.name, x.accountId, 'addressDeletionReceipts',
+        (_row, store, key) => store.delete(key));
+      await assertRejectedBeforeWrite(kind, x);
       x.owner.close();
     });
     await test(`${kind} rejects missing G9E deletion receipt`, async () => {

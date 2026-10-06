@@ -123,7 +123,7 @@ function checkedSlotGeneration(value: unknown, accountId: string, slotId: string
   return value as CleanEpochSlotGeneration;
 }
 function validAddressDeletionReceipt(value: unknown, pointer: CleanEpochSlotGeneration,
-  account: CleanEpochAccountRecord): value is CleanEpochAddressDeletionReceipt {
+  account: CleanEpochAccountRecord, allowReoccupiedSlot = false): value is CleanEpochAddressDeletionReceipt {
   if (!object(value) || value.version !== 1 || value.accountId !== pointer.accountId ||
       value.slotId !== pointer.slotId || value.slotGenerationId !== pointer.slotGenerationId ||
       value.campaignId !== pointer.campaignId || !nonblank(value.characterId) ||
@@ -139,7 +139,7 @@ function validAddressDeletionReceipt(value: unknown, pointer: CleanEpochSlotGene
     return envelope.accountId === pointer.accountId && envelope.slotId === pointer.slotId &&
       envelope.campaignId === pointer.campaignId && envelope.characterId === value.characterId &&
       envelope.artifactId === value.artifactId && envelope.publicationId === value.publicationId &&
-      runs.length === 1 && !runs[0]!.saveSlotIds.includes(pointer.slotId);
+      runs.length === 1 && (allowReoccupiedSlot || !runs[0]!.saveSlotIds.includes(pointer.slotId));
   } catch { return false; }
 }
 /** Publication recovery records the exact pending or completed account-consumer transition. */
@@ -702,6 +702,11 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
   const expectedArtifacts = new Set<string>();
   const expectedPublications = new Set<string>();
   const witnessedCampaigns = new Set<string>();
+  type GraphAddress = { campaignId: string; artifactId: string; publicationId: string; raw: string };
+  type GraphAddressEvent = { revision: number; slotId: string;
+    expected: { artifactId: string; publicationId: string } | null;
+    expectedRaw?: string; next: GraphAddress | null };
+  const addressEvents: GraphAddressEvent[] = [];
   for (const raw of family(CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE)) {
     if (!object(raw) || !nonblank(raw.campaignId) || !nonblank(raw.publicationId))
       fail("invalid_record", "Descendant graph identity is invalid.");
@@ -723,12 +728,19 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
     const pointer: CleanEpochSlotGeneration = { version: 1, accountId, slotId: raw.slotId as SaveSlotId,
       slotGenerationId: raw.slotGenerationId, campaignId: raw.campaignId,
       attemptId: attempt?.attemptId ?? "", status: "deleted" };
-    if (!attempt || !validAddressDeletionReceipt(raw, pointer, account))
+    const currentPointer = pointers.get(raw.slotId);
+    const reoccupiedBySameCampaign = currentPointer?.status === "published" &&
+      currentPointer.campaignId === raw.campaignId &&
+      currentPointer.slotGenerationId !== raw.slotGenerationId;
+    if (!attempt || !validAddressDeletionReceipt(raw, pointer, account, reoccupiedBySameCampaign))
       fail("invalid_record", "Deletion receipt lacks its exact retained campaign and history.");
     const artifact = artifacts.get(raw.artifactId);
     if (!artifact || artifact.campaignId !== raw.campaignId || artifact.publicationId !== raw.publicationId ||
         artifact.raw !== raw.addressRaw) fail("invalid_record", "Deletion receipt lost its immutable artifact.");
     deletionReceipts.set(id, raw as CleanEpochAddressDeletionReceipt);
+    addressEvents.push({ revision: raw.expectedAccountRevision, slotId: raw.slotId,
+      expected: { artifactId: raw.artifactId, publicationId: raw.publicationId },
+      expectedRaw: raw.addressRaw, next: null });
   }
   const artifactEnvelope = (artifactId: string, campaignId: string): StoredSaveEnvelope => {
     const raw = artifacts.get(artifactId);
@@ -784,6 +796,9 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
     if (expectedPublications.has(first.publicationId))
       fail("invalid_record", "First publication identity repeats.");
     expectedArtifacts.add(first.artifactId); expectedPublications.add(first.publicationId);
+    addressEvents.push({ revision: first.expectedAccountRevision, slotId: first.slotId,
+      expected: null, next: { campaignId, artifactId: first.artifactId,
+        publicationId: first.publicationId, raw: first.envelopeRaw } });
     if (first.status === "consumers_completed") {
       if (!completedReceiptsMatch(account, first))
         fail("invalid_record", "Completed first publication lacks account receipts.");
@@ -814,6 +829,10 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
               targetIdentity.forkedFromPublicationId !== entry.sourcePublicationId ||
               !nonblank(targetIdentity.firstDivergentMutationId)))
         fail("invalid_record", "Descendant immutable source or result is inconsistent.");
+      addressEvents.push({ revision: entry.expectedAccountRevision, slotId: entry.slotId,
+        expected: entry.expectedSlotAddress,
+        next: { campaignId, artifactId: entry.artifactId,
+          publicationId: entry.publicationId, raw: entry.envelopeRaw } });
       if (entry.status === "consumers_completed") {
         if (!descendantReceiptsMatch(account, entry))
           fail("invalid_record", "Completed descendant lacks account receipts.");
@@ -860,6 +879,10 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
               (account.profile.campaignPublicationReceipts ?? []).some(receipt =>
                 receipt.publicationId === terminal.publicationId))))
         fail("invalid_record", "Terminal campaign authority is incomplete.");
+      addressEvents.push({ revision: terminal.expectedAccountRevision, slotId: terminal.slotId,
+        expected: terminal.sourceAddress,
+        next: { campaignId, artifactId: terminal.artifactId,
+          publicationId: terminal.publicationId, raw: terminal.envelopeRaw } });
       if (terminal.addressClosure) {
         if (terminal.addressClosure.receipts.length !== terminal.addressSlotIds.length ||
             terminal.addressClosure.receipts.some(ref => {
@@ -940,6 +963,25 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
         (pointer.status === "deleted" && (address || !receipt)))
       fail("invalid_record", "Current slot generation disagrees with address history.");
   }
+  for (const receipt of deletionReceipts.values()) if (!pointers.has(receipt.slotId))
+    fail("invalid_record", "Deleted address lost its current slot generation.");
+  const replayedAddresses = new Map<string, GraphAddress>();
+  for (const event of addressEvents.sort((left, right) => left.revision - right.revision)) {
+    const prior = replayedAddresses.get(event.slotId);
+    const observed = prior ? { artifactId: prior.artifactId, publicationId: prior.publicationId } : null;
+    if (!exactEqual(observed, event.expected) ||
+        (prior && event.next && prior.campaignId !== event.next.campaignId) ||
+        (event.expectedRaw !== undefined && prior?.raw !== event.expectedRaw))
+      fail("invalid_record", "Retained address history disagrees with publication or deletion provenance.");
+    if (event.next) replayedAddresses.set(event.slotId, event.next);
+    else replayedAddresses.delete(event.slotId);
+  }
+  if (replayedAddresses.size !== addresses.size || [...replayedAddresses].some(([slotId, address]) => {
+    const retained = addresses.get(slotId);
+    return !retained || retained.campaignId !== address.campaignId ||
+      retained.artifactId !== address.artifactId || retained.publicationId !== address.publicationId ||
+      retained.raw !== address.raw;
+  })) fail("invalid_record", "Retained address history disagrees with current slots.");
   for (const [slotId, raw] of addresses) {
     const pointer = pointers.get(slotId);
     if (!pointer || pointer.status !== "published" || pointer.campaignId !== raw.campaignId ||
