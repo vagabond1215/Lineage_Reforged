@@ -142,6 +142,24 @@ function validAddressDeletionReceipt(value: unknown, pointer: CleanEpochSlotGene
       runs.length === 1 && (allowReoccupiedSlot || !runs[0]!.saveSlotIds.includes(pointer.slotId));
   } catch { return false; }
 }
+function reoccupiedDeletionSlot(pointerRaw: unknown, addressRaw: unknown,
+  receipt: CleanEpochAddressDeletionReceipt): boolean {
+  if (!object(pointerRaw) || pointerRaw.status !== "published" ||
+      pointerRaw.slotGenerationId === receipt.slotGenerationId ||
+      pointerRaw.campaignId !== receipt.campaignId ||
+      !object(addressRaw) || addressRaw.version !== 1 ||
+      addressRaw.accountId !== receipt.accountId || addressRaw.slotId !== receipt.slotId ||
+      addressRaw.campaignId !== receipt.campaignId || typeof addressRaw.raw !== "string") return false;
+  try {
+    const current = checkedSlotGeneration(pointerRaw, receipt.accountId, receipt.slotId);
+    const envelope = envelopeFromRaw(addressRaw.raw);
+    return current.campaignId === envelope.campaignId &&
+      envelope.accountId === receipt.accountId && envelope.slotId === receipt.slotId &&
+      envelope.characterId === receipt.characterId &&
+      envelope.artifactId === addressRaw.artifactId &&
+      envelope.publicationId === addressRaw.publicationId;
+  } catch { return false; }
+}
 /** Publication recovery records the exact pending or completed account-consumer transition. */
 type CleanEpochRecoveryBase = {
   version: 1;
@@ -1007,17 +1025,29 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
       fail("invalid_record", "Address lacks its exact publication recovery.");
     const run = account.profile.history.runRecords.filter(item => item.characterId === envelope.characterId);
     if (run.length !== 1 || !run[0]!.saveSlotIds.includes(slotId)) {
-      if (!(first?.status === "accepted_pending_consumers" ||
-            descendant?.status === "accepted_pending_consumers" ||
-            terminal?.status === "accepted_pending_settlement"))
+      if (!(publication.status === "accepted_pending_consumers" ||
+            publication.status === "accepted_pending_settlement"))
         fail("invalid_record", "Completed address lacks retained account history.");
     }
   }
   for (const run of account.profile.history.runRecords) {
-    if (![...artifacts.values()].some(row => {
+    const campaignArtifacts = [...artifacts.values()].filter(row => {
       if (typeof row.raw !== "string") return false;
       return envelopeFromRaw(row.raw).characterId === run.characterId;
-    })) fail("invalid_record", "Account history lost its campaign artifact.");
+    });
+    if (!campaignArtifacts.length) fail("invalid_record", "Account history lost its campaign artifact.");
+    const campaigns = new Set(campaignArtifacts.map(row => row.campaignId as string));
+    if (campaigns.size !== 1) fail("invalid_record", "Account run spans multiple campaigns.");
+    const campaignId = [...campaigns][0]!;
+    const runControl = controls.get(campaignId)?.value;
+    const live = [...addresses].filter(([slotId, row]) => row.campaignId === campaignId &&
+      envelopeFromRaw(row.raw as string).characterId === run.characterId).map(([slotId]) => slotId);
+    if (run.saveSlotIds.some(slotId => !live.includes(slotId)) ||
+        (run.outcome === "deleted" && live.length > 0) ||
+        (run.outcome === "active" && live.length === 0) ||
+        (run.outcome === "archived" &&
+          (!isStoredCampaignControl(runControl) || !runControl.closed)))
+      fail("invalid_record", "Account run membership or outcome disagrees with live addresses.");
   }
   for (const receipt of account.profile.campaignPublicationReceipts ?? [])
     if (!expectedPublications.has(receipt.publicationId))
@@ -2853,11 +2883,15 @@ export class CleanEpochAccountStore {
       fail("invalid_record", "Deletion receipt identity is invalid.");
     try {
       const tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE,
-        CLEAN_EPOCH_ADDRESS_DELETION_STORE, "artifacts", "controls"], "readonly");
-      const [accountRaw, raw] = await Promise.all([
+        CLEAN_EPOCH_ADDRESS_DELETION_STORE, CLEAN_EPOCH_SLOT_GENERATION_STORE,
+        "artifacts", "controls", "slots"], "readonly");
+      const [accountRaw, raw, currentPointerRaw, currentAddressRaw] = await Promise.all([
         requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
         requestValue(tx.objectStore(CLEAN_EPOCH_ADDRESS_DELETION_STORE)
-          .get([accountId, slotId, slotGenerationId]) as IDBRequest<unknown>)
+          .get([accountId, slotId, slotGenerationId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_SLOT_GENERATION_STORE)
+          .get([accountId, slotId]) as IDBRequest<unknown>),
+        requestValue(tx.objectStore("slots").get([accountId, slotId]) as IDBRequest<unknown>)
       ]);
       if (accountRaw === undefined) fail("invalid_record", "Deletion receipt account is missing.");
       const account = checkedAccount(accountRaw, accountId);
@@ -2866,7 +2900,9 @@ export class CleanEpochAccountStore {
       const attempt = await this.campaignAttempt(tx, accountId, raw.campaignId);
       const pointer: CleanEpochSlotGeneration = { version: 1, accountId, slotId,
         slotGenerationId, campaignId: raw.campaignId, attemptId: attempt.attemptId, status: "deleted" };
-      if (!validAddressDeletionReceipt(raw, pointer, account))
+      if (!validAddressDeletionReceipt(raw, pointer, account,
+          reoccupiedDeletionSlot(currentPointerRaw, currentAddressRaw,
+            raw as CleanEpochAddressDeletionReceipt)))
         fail("invalid_record", "Historical address deletion receipt is malformed.");
       const artifact = await requestValue(tx.objectStore("artifacts")
         .get([accountId, raw.artifactId]) as IDBRequest<unknown>);
@@ -2914,7 +2950,9 @@ export class CleanEpochAccountStore {
         const priorPointer: CleanEpochSlotGeneration = { version: 1, accountId: input.accountId,
           slotId: input.slotId, slotGenerationId: input.expectedSlotGenerationId,
           campaignId: receiptRaw.campaignId, attemptId: attempt.attemptId, status: "deleted" };
-        if (!validAddressDeletionReceipt(receiptRaw, priorPointer, account) ||
+        if (!validAddressDeletionReceipt(receiptRaw, priorPointer, account,
+            reoccupiedDeletionSlot(pointerRaw, addressRaw,
+              receiptRaw as CleanEpochAddressDeletionReceipt)) ||
             receiptRaw.reason !== "player" ||
             receiptRaw.expectedAccountRevision !== input.expectedAccountRevision ||
             receiptRaw.artifactId !== input.expectedAddress.artifactId ||

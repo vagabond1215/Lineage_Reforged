@@ -21,7 +21,8 @@ export type EpochAccountAdapterResult<T> =
 
 export type EpochSessionSelection =
   | { mode: "signed_in"; account: CleanEpochAccountRecord; session: LauncherRuntimeSession }
-  | { mode: "pick_account"; accounts: Array<{ accountId: string; displayName: string; lastPlayedAt?: string }> };
+  | { mode: "pick_account"; accounts: Array<{ accountId: string; displayName: string;
+      lastPlayedAt?: string; observedRevision: number; observedGeneration: number }> };
 
 type EpochSessionHint = { version: 1 | 2; accountId: string; issuedAt: string; lifecycleGeneration?: number };
 
@@ -163,6 +164,8 @@ export class CleanEpochAccountAdapter {
         const accounts = (await this.owner.list()).map(account => ({
           accountId: account.accountId,
           displayName: account.profile.displayName,
+          observedRevision: account.revision,
+          observedGeneration: accountLifecycleGeneration(account),
           ...(account.profile.lastPlayedAt ? { lastPlayedAt: account.profile.lastPlayedAt } : {})
         }));
         return { status: "ready", value: { mode: "pick_account", accounts } };

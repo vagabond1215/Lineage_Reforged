@@ -22,6 +22,8 @@ type LocalAccountAccessScreenProps = {
   onDeleteAccount: (options: {
     accountId: string;
     password: string;
+    observedRevision?: number;
+    observedGeneration?: number;
   }) => Promise<LauncherAccountDeletionResult>;
   allowAccountDeletion?: boolean;
   onCreateAccount: (options: {
@@ -152,7 +154,11 @@ export function LocalAccountAccessScreen({
     try {
       const result = await onDeleteAccount({
         accountId: selectedAccount.accountId,
-        password
+        password,
+        ...(selectedAccount.observedRevision === undefined ? {} :
+          { observedRevision: selectedAccount.observedRevision }),
+        ...(selectedAccount.observedGeneration === undefined ? {} :
+          { observedGeneration: selectedAccount.observedGeneration })
       });
       if (!result.ok) { setDeletionError(result.message); return; }
       setDeletionError(null);

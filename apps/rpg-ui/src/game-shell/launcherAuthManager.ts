@@ -59,6 +59,8 @@ export interface LocalAccountPickerEntry {
   accountId: string;
   displayName: string;
   lastPlayedAt?: string;
+  observedRevision?: number;
+  observedGeneration?: number;
 }
 
 export type LauncherAuthBootstrapState =

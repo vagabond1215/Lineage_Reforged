@@ -12,7 +12,6 @@ import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/
 import { SettingsScreen } from './game-shell/components/SettingsScreen.js';
 import { CleanEpochAccountAdapter, createEpochAccountId } from './game-shell/cleanEpochAccountAdapter.js';
 import { CLEAN_EPOCH_SESSION_STORAGE_KEY, openCleanEpochAccountStore,
-  accountLifecycleGeneration,
   type CleanEpochAccountStore, type CleanEpochSlotSummary } from './game-shell/cleanEpochAccountStore.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
@@ -117,12 +116,13 @@ export function EpochApp() {
   const notice = (value: GameShellNotice) => dispatch({ type: 'SET_NOTICE', notice: value });
   const unsupported = (action: string) => notice(heldNotice(action));
   const failed = (title: string, detail: string) => notice({ tone: 'warning', title, detail });
-  const guarded = async <T,>(work: () => Promise<T>, fallback: T): Promise<T> => {
+  const guarded = async <T,>(work: () => Promise<T>, fallback: T,
+    validateSession = true): Promise<T> => {
     if (actionPending.current) return fallback;
     actionPending.current = true;
     setBusy(true);
     try {
-      if (state.screen !== 'ACCOUNT_ACCESS' && services)
+      if (validateSession && state.screen !== 'ACCOUNT_ACCESS' && services)
         await services.accounts.validateSession(state.launcherSession);
       return await work();
     }
@@ -477,10 +477,11 @@ export function EpochApp() {
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}
     onDeleteAccount={options => guarded(async (): Promise<LauncherAccountDeletionResult> => {
       if (!services) throw new Error('Epoch owner is unavailable.');
-      const current = await services.owner.readSelected(options.accountId);
-      if (!current) return { ok: false, message: 'Account is missing.' };
+      if (!Number.isSafeInteger(options.observedRevision) ||
+          !Number.isSafeInteger(options.observedGeneration))
+        return { ok: false, message: 'Picker account source is unavailable.' };
       const result = await services.accounts.deleteAccount({ ...options,
-        expectedRevision: current.revision, expectedGeneration: accountLifecycleGeneration(current) });
+        expectedRevision: options.observedRevision!, expectedGeneration: options.observedGeneration! });
       if (result.status === 'blocked') return { ok: false, message: result.message };
       await initialize();
       return { ok: true, accountId: result.value.accountId, displayName: result.value.displayName };
@@ -545,7 +546,7 @@ export function EpochApp() {
       if (result.status === 'blocked') return { ok: false, message: result.message };
       await initialize();
       return { ok: true };
-    }, { ok: false, message: 'Account operation is already pending or blocked.' })}
+    }, { ok: false, message: 'Account operation is already pending or blocked.' }, false)}
     onContinue={loadLatest} onExit={() => window.close()} onLogout={logout} themeMode={themeMode}
     themePreference={themePreference} onThemePreferenceChange={setThemePreference}
     timeZone={timeSettings.timeZone} onTimeZoneChange={timeZone => setTimeSettings(current => ({ ...current, timeZone }))}

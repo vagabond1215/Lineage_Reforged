@@ -18,7 +18,7 @@ import { createDefaultCharacterCreationFormState } from './src/game-shell/charac
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.ts';
 import { buildSaveMetadata, type StoredSaveEnvelope } from './src/game-shell/saveManager.ts';
 import { accountLifecycleGeneration, openCleanEpochAccountStore,
-  CLEAN_EPOCH_DATABASE_VERSION, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE,
+  CLEAN_EPOCH_DATABASE_VERSION, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, CLEAN_EPOCH_ACCOUNT_STORE,
   type CleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.ts';
 
 // Synthetic, isolated browser fixtures. No ordinary player account is touched.
@@ -78,6 +78,22 @@ async function changeFirstRow(name: string, accountId: string, family: string,
       change(cursor.result.value, store, cursor.result.primaryKey);
     };
     cursor.onerror = () => reject(cursor.error);
+    tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
+  });
+  db.close();
+}
+async function changeAccount(name: string, accountId: string,
+  change: (row: Record<string, any>) => Record<string, any>) {
+  const db = await raw(name);
+  await new Promise<void>((resolve, reject) => {
+    const tx = db.transaction(CLEAN_EPOCH_ACCOUNT_STORE, 'readwrite');
+    const store = tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE);
+    const get = store.get(accountId);
+    get.onsuccess = () => {
+      if (!get.result) { tx.abort(); reject(new Error('Missing account fixture row')); return; }
+      store.put(change(get.result));
+    };
+    get.onerror = () => reject(get.error);
     tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
   });
   db.close();
@@ -151,12 +167,14 @@ async function deleteFirstSlot(x: Awaited<ReturnType<typeof setup>>) {
   const pointer = (await x.owner.readSlotGeneration(x.accountId, 'slot-1'))!;
   const slot = await x.owner.readSlot(x.accountId, 'slot-1');
   check(slot.status === 'ready', 'address deletion source missing');
-  const result = await x.owner.deleteSlotAddress({ accountId: x.accountId, slotId: 'slot-1',
+  const input = { accountId: x.accountId, slotId: 'slot-1' as const,
     expectedAccountRevision: account.revision, expectedSlotGenerationId: pointer.slotGenerationId,
     expectedAddress: { artifactId: slot.loaded.sessionControl.loadedArtifactId,
       publicationId: slot.loaded.sessionControl.loadedPublicationId },
-    deletedAt: new Date().toISOString() });
+    deletedAt: new Date().toISOString() };
+  const result = await x.owner.deleteSlotAddress(input);
   check(result.status === 'committed', 'address deletion failed');
+  return input;
 }
 async function saveDescendant(x: Awaited<ReturnType<typeof setup>>,
   sourceSlotId: 'slot-1' | 'quick-save', destinationSlotId: 'slot-1' | 'quick-save') {
@@ -285,6 +303,19 @@ async function suite() {
   // F1 regression: every corrupt fixture begins as a real published campaign.
   // Raw IndexedDB writes remove one required edge while other v1 rows remain.
   for (const kind of ['reset', 'delete'] as const) {
+    for (const corruption of ['ghost-slot', 'deleted-live-run'] as const) {
+      await test(`${kind} rejects ${corruption} before any destructive write`, async () => {
+        const x = await setup(`${kind}-${corruption}`);
+        await changeAccount(x.name, x.accountId, row => {
+          const run = row.profile.history.runRecords[0];
+          return { ...row, profile: { ...row.profile, history: { ...row.profile.history,
+            runRecords: [{ ...run, ...(corruption === 'ghost-slot'
+              ? { saveSlotIds: ['slot-1', 'slot-2'] } : { outcome: 'deleted' }) }] } } };
+        });
+        await assertRejectedBeforeWrite(kind, x);
+        x.owner.close();
+      });
+    }
     for (const family of ['artifacts', 'controls', 'firstPublicationRecoveriesV6',
       'slots', 'currentSlotGenerations', 'campaignAttemptsV6'] as const) {
       await test(`${kind} rejects missing ${family} in a published campaign`, async () => {
@@ -599,6 +630,48 @@ async function suite() {
       x.owner.close();
     });
   }
+  await test('historical same-campaign deletion receipt reads and retries exactly after reoccupation', async () => {
+    const x = await setup('same-campaign-historical-retry');
+    await saveDescendant(x, 'slot-1', 'quick-save');
+    const old = await deleteFirstSlot(x);
+    const prior = await x.owner.readAddressDeletionReceipt(x.accountId, 'slot-1',
+      old.expectedSlotGenerationId);
+    check(prior?.slotGenerationId === old.expectedSlotGenerationId, 'old receipt missing before reuse');
+    await saveDescendant(x, 'quick-save', 'slot-1');
+    const before = JSON.stringify(await rows(x.name, x.accountId));
+    const current = await x.owner.readSlotGeneration(x.accountId, 'slot-1');
+    check(current?.status === 'published' && current.slotGenerationId !== old.expectedSlotGenerationId,
+      'same-campaign reoccupation did not publish a newer generation');
+    const read = await x.owner.readAddressDeletionReceipt(x.accountId, 'slot-1',
+      old.expectedSlotGenerationId);
+    check(JSON.stringify(read) === JSON.stringify(prior), 'historical receipt changed after reuse');
+    x.owner.close();
+    const reopened = await openCleanEpochAccountStore({ name: x.name });
+    const retry = await reopened.deleteSlotAddress(old);
+    check(retry.status === 'same_source_retry' && JSON.stringify(retry.receipt) === JSON.stringify(prior) &&
+      JSON.stringify(await rows(x.name, x.accountId)) === before,
+      'exact historical retry mutated or exposed newer occupant');
+    await rejected(() => reopened.deleteSlotAddress({ ...old, deletedAt: '2026-01-01T00:00:00.000Z' }),
+      'conflict');
+    check(JSON.stringify(await rows(x.name, x.accountId)) === before,
+      'changed historical retry mutated newer occupant');
+    reopened.close();
+  });
+  await test('corrupt historical same-campaign deletion receipt cannot retry after reoccupation', async () => {
+    const x = await setup('same-campaign-historical-corrupt');
+    await saveDescendant(x, 'slot-1', 'quick-save');
+    const old = await deleteFirstSlot(x);
+    await saveDescendant(x, 'quick-save', 'slot-1');
+    await changeFirstRow(x.name, x.accountId, 'addressDeletionReceipts', (row, store) =>
+      store.put({ ...row, addressRaw: 'corrupt historical address' }));
+    const before = JSON.stringify(await rows(x.name, x.accountId));
+    await rejected(() => x.owner.readAddressDeletionReceipt(x.accountId, 'slot-1',
+      old.expectedSlotGenerationId), 'invalid_record');
+    await rejected(() => x.owner.deleteSlotAddress(old), 'conflict');
+    check(JSON.stringify(await rows(x.name, x.accountId)) === before,
+      'corrupt historical retry changed the newer occupant');
+    x.owner.close();
+  });
   await test('v6 account upgrades additively and resets from generation one', async () => {
     const name = `lineage.epoch-g9f.qa.upgrade.${crypto.randomUUID()}`;
     const accountId = `account.local.${crypto.randomUUID()}`;
