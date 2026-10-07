@@ -1,5 +1,27 @@
 # Current Codex Output
 
+## 2026-10-07 DEV-0.7.1.9 independent G9 lifecycle parent re-audit
+
+Source **DEV-0.7.1.9**, support suffix of planned `DEV-0.7.1`; clean fetched local/hosted `master` `efe5630e5c9fb76a084ce977e0ef4e82b603788f` at inspection. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD**. Focused audit: `docs/design/dev-0.7.1.9-g9-lifecycle-parent-independent-reaudit.md`.
+
+### A. Files changed
+
+Fresh independent owner and mounted-App synthetic QA entrypoints (`g9-parent-independent-20261007.ts`/`.html`, `g9-parent-selected-20261007.tsx`/`.html`), focused audit, FP-018, installed current prompt, this output, current handoff, planning/historical route and branch register. No production code, schema, dependency, tracked generated output, deployment, G10 or Game-version change.
+
+### B. Patch summary
+
+Independent owner checks **229 assertions passed** across paired reset/delete F1–F4 corruptions and valid graph controls, F5 historical deletion retry, competing exact request/restart, malformed/legacy tombstone, first-write abort/quota, and stale generation. The actual mounted `EpochApp` passed **8/9** independent picker/Settings modes for F6–F8 but failed one newly derived F9 mode: after a committed delete lost readback, picker selection moved to another account and back; the second click reused the original request ID, removed the target entry and showed no stale warning. Tombstone/other-account bytes stayed unchanged. The completed earlier action cannot authorize a changed selection's new success. Parent acceptance remains blocked. Install only **DEV-0.7.1.10 F9 Selected Deletion Intent Change Repair**, then a separate fresh parent audit.
+
+### C. Tests and checks run
+
+Run `npm --prefix apps/rpg-ui run dev -- --host 127.0.0.1 --port 5173`, then native Chromium IAB read `#result` from `/g9-parent-independent-20261007.html` (**PASS 229 assertions**) and `/g9-parent-selected-20261007.html?mode=` for `external-picker`, `external-settings`, `stale-reset`, `stale-revision`, `wrong-password`, `lost-picker`, `lost-settings`, `changed-password`, `changed-selection` (**8 PASS, F9 expected FAIL**, repeated). Supporting native URLs in the focused audit: G9B **8/8**, G9C **6/6**, G9D **14/14**, G9E **13/13**, first **5/5**, descendant **16/16**, witnessed **11/11**, G9F **90/90** (total **163/163**). `$files=rg --files tests/unit | rg '(campaign|soundings|survey)'; node --test $files` returned **172/172, zero fail**. `npm run typecheck:ui:node` passed. `npm run typecheck:ui` returned **137** preexisting diagnostics and zero in audited production/probe paths. From `apps/rpg-ui`, `./node_modules/.bin/vite.cmd build` passed after a sandbox `EPERM` retry outside that restriction. `git diff --cached --check` passed. Synthetic fixtures do not prove production-account reachability.
+
+Applicable FP-001/002/003/004/005/006/008/009/011/012/014/015/017/018/019: actual selected caller and F9 selection change, independent parent gate, exact retry/competing request, malformed authority, restart/abort/quota, graph prewrite, source/branch identity, synthetic limit and other-account stability. FP-018 was generalized for F9.
+
+### D. Risks / follow-up notes
+
+Fetch/prune found two local and six hosted refs including `master`; repository-scoped connector found zero open PRs. Protected readiness/prompt refs and held administration/creator refs retain their exact register triggers; F9 consumes none. No integration, merge, rebase, branch deletion, PR or disposition change was due/performed. Suggested commit `docs(persistence): hold G9 on changed selected deletion intent`. G10, planned-primary, deployment and Game-version acceptance stay held. Final commit/push/readback identity is reported after publication.
+
 ## 2026-10-07 DEV-0.7.1.8 F8 exact selected deletion request repair
 
 Source `DEV-0.7.1.8`, support suffix of planned `DEV-0.7.1`; parent not accepted. Inspected clean fetched `master`/hosted `master` `00bd7ce727bae9d04287c1faa56fbe3de5f50af0`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Result **F8_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD**. Focused record: `docs/dev/dev-0.7.1.8-f8-exact-selected-deletion-request-repair-record.md`.
