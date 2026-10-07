@@ -230,9 +230,9 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Pattern:** Account deletion is blocked in the main transaction, but a stale registration retry or session hint can reselect a reset identity because it checks only account ID and password.
 - **Why it escaped:** Revision CAS protected campaign writes while account selection and registration retry were treated as independent convenience paths.
 - **Guardrail:** Persist a monotonic lifecycle generation and deletion tombstone, bind hints and in-memory sessions to the generation, and make registration and destructive retries consult the same durable authority. Require current credential verification in the destructive owner itself.
-- **Verification:** Reset and delete with two owners; retry old registration and session selection; carry the picker-observed revision/generation across a second-tab reset; prove exact tombstone retry after lost selected-caller acknowledgement; reopen after reset/delete; inject malformed or missing lifecycle authority and abort/quota at every destructive write. Verify another account and legacy staging remain untouched.
+- **Verification:** Reset and delete with two owners; retry old registration and session selection; carry the picker-observed revision/generation across a second-tab reset; prove exact tombstone retry after lost selected-caller acknowledgement **and refuse a matching tombstone when this selected caller never submitted that delete**; reopen after reset/delete; inject malformed or missing lifecycle authority and abort/quota at every destructive write. Verify another account and legacy staging remain untouched.
 - **Applies to:** account reset/delete, sign-in/session bootstrap, registration retry, destructive recovery and selected-App lifecycle controls.
-- **Evidence:** `docs/dev/dev-0.7.1-slice-g9f-account-lifecycle-record.md`; `docs/design/dev-0.7.1.5-g9-lifecycle-parent-independent-reaudit.md`, F6/F7.
+- **Evidence:** `docs/dev/dev-0.7.1-slice-g9f-account-lifecycle-record.md`; `docs/design/dev-0.7.1.5-g9-lifecycle-parent-independent-reaudit.md`, F6/F7; `docs/design/dev-0.7.1.7-g9-lifecycle-parent-independent-reaudit.md`, F8.
 - **Status:** active.
 
 ### FP-019 — Destructive Erasure Must Prove Preexisting Graph Completeness
