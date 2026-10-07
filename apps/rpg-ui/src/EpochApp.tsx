@@ -109,6 +109,7 @@ export function EpochApp() {
   const menuAccountRevision = useRef<number | null>(null);
   const observedAddresses = useRef<Partial<Record<SaveSlotId, Address | null>>>({});
   const menuDeletionSources = useRef<Partial<Record<SaveSlotId, MenuDeletionSource>>>({});
+  const submittedAccountDeletion = useRef<{ key: string; requestId: string } | null>(null);
   const initializationGeneration = useRef(0);
   const activeOwner = useRef<CleanEpochAccountStore | null>(null);
 
@@ -116,6 +117,13 @@ export function EpochApp() {
   const notice = (value: GameShellNotice) => dispatch({ type: 'SET_NOTICE', notice: value });
   const unsupported = (action: string) => notice(heldNotice(action));
   const failed = (title: string, detail: string) => notice({ tone: 'warning', title, detail });
+  const deletionRequestId = (accountId: string, revision: number, generation: number,
+    password: string): string => {
+    const key = JSON.stringify([accountId, revision, generation, password]);
+    if (submittedAccountDeletion.current?.key !== key)
+      submittedAccountDeletion.current = { key, requestId: crypto.randomUUID() };
+    return submittedAccountDeletion.current.requestId;
+  };
   const guarded = async <T,>(work: () => Promise<T>, fallback: T,
     validateSession = true): Promise<T> => {
     if (actionPending.current) return fallback;
@@ -481,9 +489,12 @@ export function EpochApp() {
           !Number.isSafeInteger(options.observedGeneration))
         return { ok: false, message: 'Picker account source is unavailable.' };
       const result = await services.accounts.deleteAccount({ ...options,
-        expectedRevision: options.observedRevision!, expectedGeneration: options.observedGeneration! });
+        expectedRevision: options.observedRevision!, expectedGeneration: options.observedGeneration!,
+        requestId: deletionRequestId(options.accountId, options.observedRevision!,
+          options.observedGeneration!, options.password) });
       if (result.status === 'blocked') return { ok: false, message: result.message };
       await initialize();
+      submittedAccountDeletion.current = null;
       return { ok: true, accountId: result.value.accountId, displayName: result.value.displayName };
     }, { ok: false, message: 'Account operation is already pending or blocked.' })}
     themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')} />;
@@ -540,11 +551,14 @@ export function EpochApp() {
     onDeleteAccount={options => guarded(async () => {
       if (!services || state.screen !== 'SETTINGS' || menuAccountRevision.current === null)
         return { ok: false, message: 'Account deletion source is unavailable.' };
+      const generation = Number(state.launcherSession.metadata?.epochGeneration);
       const result = await services.accounts.deleteAccount({ ...options,
-        expectedRevision: menuAccountRevision.current,
-        expectedGeneration: Number(state.launcherSession.metadata?.epochGeneration) });
+        expectedRevision: menuAccountRevision.current, expectedGeneration: generation,
+        requestId: deletionRequestId(options.accountId, menuAccountRevision.current,
+          generation, options.password) });
       if (result.status === 'blocked') return { ok: false, message: result.message };
       await initialize();
+      submittedAccountDeletion.current = null;
       return { ok: true };
     }, { ok: false, message: 'Account operation is already pending or blocked.' }, false)}
     onContinue={loadLatest} onExit={() => window.close()} onLogout={logout} themeMode={themeMode}

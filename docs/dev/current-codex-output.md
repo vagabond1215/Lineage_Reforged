@@ -1,5 +1,27 @@
 # Current Codex Output
 
+## 2026-10-07 DEV-0.7.1.8 F8 exact selected deletion request repair
+
+Source `DEV-0.7.1.8`, support suffix of planned `DEV-0.7.1`; parent not accepted. Inspected clean fetched `master`/hosted `master` `00bd7ce727bae9d04287c1faa56fbe3de5f50af0`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Result **F8_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD**. Focused record: `docs/dev/dev-0.7.1.8-f8-exact-selected-deletion-request-repair-record.md`.
+
+### A. Files changed
+
+`cleanEpochAccountStore.ts`, `cleanEpochAccountAdapter.ts`, actual selected `EpochApp.tsx`, native G9F and selected-App QA, focused repair record, current prompt/output/handoff, planning/historical route and branch register. No database version upgrade, new production dependency, generated output, deployment, G10 or Game-version change.
+
+### B. Patch summary
+
+Before production edits, actual selected picker and Settings each claimed another owner's same-generation tombstone before any selected delete submission. New deletes persist a UUID request identity in an additive version-2 tombstone; owner and adapter require exact identity on absent-account retry. Old version-1 tombstones stay readable but cannot fabricate an identity. Selected App retains the originally submitted request across uncertain acknowledgement and mints a new identity for changed input. Current password remains required and verified before first deletion. Reset/session generation fences remain intact. Repair checks cannot accept G9 parent.
+
+### C. Tests and checks run
+
+Synthetic actual selected-App F8 picker/Settings now show `Account changed before deletion.` without clearing as success; changed request blocks; exact lost acknowledgement retry works from picker and Settings; fresh, wrong-password, stale reset generation and stale ordinary revision controls pass. Native G9F **90/90** (including all eight abort/quota write points, restart/two-owner and malformed/missing/legacy tombstones); adjacent G9B **8/8**, G9C **6/6**, G9D **14/14**, G9E **13/13**, first **5/5**, descendant **16/16**, witnessed **11/11**. Focused campaign/Soundings/survey Node **172/172**; Node UI-config typecheck and app-local Vite build pass. Broad UI typecheck remains at **137** known diagnostics, zero in changed paths. `git diff --check` passes. Synthetic fixtures do not establish production reachability.
+
+Applicable FP-001/002/003/004/005/006/008/009/011/012/014/015/017/018/019: selected caller and exact retry, independent acceptance gate, contention/rollback/readback, no newer-account mutation, branch/source identity, retained provenance, malformed duplicate rejection, synthetic limit and destructive prewrite graph regression. Exact evidence is in the focused record.
+
+### D. Risks / follow-up notes
+
+Fresh fetch/prune found two local/six hosted refs including `master`; repository-scoped GitHub connector found zero open PRs. Readiness and prompt-integrity remain protected; administration, creator planning and creator implementation retain named-consumer holds. No integration, deletion, PR or disposition change due/performed. Suggested commit `fix(persistence): bind account deletion retry to exact request`. Install `DEV-0.7.1.9` independent G9 parent re-audit on read-back hosted repair; G10, planned primary, deployment and Game-version acceptance remain held. Final commit/push/readback identities are reported after publication.
+
 ## 2026-10-07 DEV-0.7.1.7 independent G9 lifecycle parent re-audit
 
 Source **DEV-0.7.1.7 — Independent G9 Lifecycle Parent Re-audit**, support suffix of planned `DEV-0.7.1`, from clean freshly fetched `master`/hosted `master` `b4a1aeb5230ae9bb6f25617775273f837dde98c4`, including independently read-back F4–F7 repair `1c8791c7`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD**. Focused audit: `docs/design/dev-0.7.1.7-g9-lifecycle-parent-independent-reaudit.md`.

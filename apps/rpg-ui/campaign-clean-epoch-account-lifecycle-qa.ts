@@ -128,7 +128,7 @@ async function setup(label: string, beforeWrite?: (tx: IDBTransaction) => void) 
   return { name, accountId, otherId, owner,
     input: { accountId, expectedRevision: account.revision,
       expectedGeneration: accountLifecycleGeneration(account),
-      currentPassword: 'synthetic-only-password' } };
+      currentPassword: 'synthetic-only-password', requestId: crypto.randomUUID() } };
 }
 async function rejected(run: () => Promise<unknown>, code: string) {
   try { await run(); throw new Error(`Expected ${code} rejection`); }
@@ -139,7 +139,7 @@ async function resetOrDelete(kind: 'reset' | 'delete', x: Awaited<ReturnType<typ
   const account = (await x.owner.read(x.accountId))!;
   return x.owner.transitionAccount(kind, { accountId: x.accountId,
     expectedRevision: account.revision, expectedGeneration: accountLifecycleGeneration(account),
-    currentPassword: 'synthetic-only-password' });
+    currentPassword: 'synthetic-only-password', requestId: crypto.randomUUID() });
 }
 async function assertBlockedWithoutErasure(kind: 'reset' | 'delete',
   x: Awaited<ReturnType<typeof setup>>) {
@@ -911,6 +911,94 @@ async function suite() {
     damaged.close();
     await rejected(() => missing.owner.readSelected(missing.accountId), 'invalid_record');
     missing.owner.close();
+  });
+  await test('competing same-generation delete cannot claim another request tombstone', async () => {
+    const x = await setup('request-contention');
+    const second = await openCleanEpochAccountStore({ name: x.name });
+    const competing = { ...x.input, requestId: crypto.randomUUID() };
+    await second.transitionAccount('delete', competing);
+    const after = JSON.stringify(await rows(x.name, x.accountId));
+    const other = JSON.stringify(await rows(x.name, x.otherId));
+    const adapter = new CleanEpochAccountAdapter(x.owner, storage());
+    const rejectedClaim = await adapter.deleteAccount({ accountId: x.accountId,
+      expectedRevision: x.input.expectedRevision, expectedGeneration: x.input.expectedGeneration,
+      password: x.input.currentPassword, requestId: x.input.requestId });
+    check(rejectedClaim.status === 'blocked' && rejectedClaim.code === 'stale_head',
+      'Adapter claimed another owner deletion.');
+    await rejected(() => x.owner.transitionAccount('delete', x.input), 'conflict');
+    check(JSON.stringify(await rows(x.name, x.accountId)) === after &&
+      JSON.stringify(await rows(x.name, x.otherId)) === other,
+      'Competing request changed deleted or other-account storage.');
+    x.owner.close(); second.close();
+    const restarted = await openCleanEpochAccountStore({ name: x.name });
+    check((await restarted.transitionAccount('delete', competing)).status === 'same_source_retry',
+      'Exact retained request did not survive restart/two owners.');
+    await rejected(() => restarted.transitionAccount('delete',
+      { ...competing, requestId: crypto.randomUUID() }), 'conflict');
+    restarted.close();
+  });
+  await test('simultaneous different delete requests have one durable winner', async () => {
+    const x = await setup('request-race');
+    const second = await openCleanEpochAccountStore({ name: x.name });
+    const competing = { ...x.input, requestId: crypto.randomUUID() };
+    const results = await Promise.allSettled([
+      x.owner.transitionAccount('delete', x.input),
+      second.transitionAccount('delete', competing)
+    ]);
+    check(results.filter(result => result.status === 'fulfilled').length === 1,
+      'Two different delete requests both claimed one tombstone.');
+    const receipt = await x.owner.readLifecycleReceipt(x.accountId);
+    check(receipt?.kind === 'delete' && receipt.version === 2 &&
+      receipt.requestId === (results[0].status === 'fulfilled' ? x.input.requestId : competing.requestId) &&
+      await x.owner.read(x.accountId) === null,
+      'Competing delete winner did not retain exact request identity.');
+    x.owner.close(); second.close();
+  });
+  await test('delete requires verified credential and valid request identity', async () => {
+    const x = await setup('request-credential');
+    const before = JSON.stringify(await rows(x.name, x.accountId));
+    await rejected(() => x.owner.transitionAccount('delete',
+      { ...x.input, currentPassword: 'wrong-password' }), 'conflict');
+    await rejected(() => x.owner.transitionAccount('delete',
+      { ...x.input, requestId: undefined }), 'invalid_record');
+    check(JSON.stringify(await rows(x.name, x.accountId)) === before &&
+      await x.owner.readLifecycleReceipt(x.accountId) === null,
+      'Unverified delete modified storage.');
+    x.owner.close();
+  });
+  await test('legacy and malformed delete tombstones never invent request identity', async () => {
+    for (const shape of ['legacy', 'missing-id', 'missing-row'] as const) {
+      const x = await setup(`request-${shape}`);
+      await x.owner.transitionAccount('delete', x.input);
+      const db = await raw(x.name);
+      await new Promise<void>((resolve, reject) => {
+        const tx = db.transaction(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, 'readwrite');
+        const store = tx.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE);
+        const get = store.get(x.accountId);
+        get.onsuccess = () => {
+          const receipt = get.result;
+          if (shape === 'missing-row') store.delete(x.accountId);
+          else if (shape === 'legacy') { delete receipt.requestId; store.put({ ...receipt, version: 1 }); }
+          else { delete receipt.requestId; store.put(receipt); }
+        };
+        tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
+      });
+      db.close();
+      const after = JSON.stringify(await rows(x.name, x.accountId));
+      const other = JSON.stringify(await rows(x.name, x.otherId));
+      if (shape === 'legacy') {
+        check((await x.owner.readLifecycleReceipt(x.accountId))?.version === 1,
+          'Legacy v7 tombstone became unreadable.');
+        await rejected(() => x.owner.transitionAccount('delete', x.input), 'conflict');
+      } else if (shape === 'missing-id') {
+        await rejected(() => x.owner.readLifecycleReceipt(x.accountId), 'invalid_record');
+        await rejected(() => x.owner.transitionAccount('delete', x.input), 'invalid_record');
+      } else await rejected(() => x.owner.transitionAccount('delete', x.input), 'invalid_record');
+      check(JSON.stringify(await rows(x.name, x.accountId)) === after &&
+        JSON.stringify(await rows(x.name, x.otherId)) === other,
+        `${shape} tombstone retry changed storage.`);
+      x.owner.close();
+    }
   });
 }
 suite().then(() => { output.textContent = `PASS ${cases.length}/${cases.length}\n${cases.join('\n')}`; })

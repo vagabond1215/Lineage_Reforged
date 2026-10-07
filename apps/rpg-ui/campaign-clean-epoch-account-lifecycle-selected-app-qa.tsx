@@ -31,8 +31,9 @@ const setPassword = (value: string) => {
   field.dispatchEvent(new Event('input', { bubbles: true }));
 };
 async function run() {
-  if (!['f6', 'f7', 'f7-settings', 'fresh', 'wrong-password'].includes(probe ?? ''))
-    throw new Error('Select ?probe=f6, f7, f7-settings, fresh or wrong-password.');
+  if (!['f6', 'f6-revision', 'f7', 'f7-settings', 'changed-request',
+    'f8-picker', 'f8-settings', 'fresh', 'wrong-password'].includes(probe ?? ''))
+    throw new Error('Select a supported F6, F7, F8, fresh or wrong-password probe.');
   const owner = await openCleanEpochAccountStore();
   try {
     await owner.register(createDefaultAccountProfileState({ accountId, displayName }),
@@ -46,14 +47,48 @@ async function run() {
     await waitFor(() => button('Delete Account'), 'picker deletion button');
     const observed = await owner.readSelected(accountId);
     if (!observed) throw new Error('Selected account disappeared before probe.');
-    if (probe === 'f6') {
-      await owner.transitionAccount('reset', { accountId, expectedRevision: observed.revision,
-        expectedGeneration: accountLifecycleGeneration(observed), currentPassword: password });
+    if (probe === 'f8-picker' || probe === 'f8-settings') {
+      if (probe === 'f8-settings') {
+        button('Log In')!.click();
+        await waitFor(() => button('Settings'), 'main-menu Settings');
+        button('Settings')!.click();
+        await waitFor(() => button('Delete Account'), 'Settings delete action');
+        button('Delete Account')!.click();
+        await waitFor(() => document.querySelector<HTMLInputElement>('#root input[placeholder="Account password"]'),
+          'Settings password confirmation');
+        setPassword(password);
+      }
+      const second = await openCleanEpochAccountStore();
+      try { await second.transitionAccount('delete', { accountId, expectedRevision: observed.revision,
+        expectedGeneration: accountLifecycleGeneration(observed), currentPassword: password,
+        requestId: crypto.randomUUID() }); }
+      finally { second.close(); }
+      const receiptBefore = JSON.stringify(await owner.readLifecycleReceipt(accountId));
+      const accountsBefore = JSON.stringify(await owner.list());
+      (probe === 'f8-settings' ? lastButton('Delete Account') : button('Delete Account'))!.click();
+      await waitFor(() => (document.querySelector('#root')?.textContent ?? '').includes(
+        'Account changed before deletion.') ||
+        (probe === 'f8-picker' && button(displayName) === null),
+        'pre-submit external deletion outcome');
+      const error = (document.querySelector('#root')?.textContent ?? '').includes('Account changed before deletion.');
+      check(error && await owner.read(accountId) === null &&
+        (probe === 'f8-settings' || button(displayName) !== null) &&
+        JSON.stringify(await owner.readLifecycleReceipt(accountId)) === receiptBefore &&
+        JSON.stringify(await owner.list()) === accountsBefore,
+        'Unsubmitted selected deletion claimed another owner tombstone.');
+      result.textContent = `PASS ${probe}: stale account shown without manufactured deletion success.`;
+    } else if (probe === 'f6' || probe === 'f6-revision') {
+      if (probe === 'f6') await owner.transitionAccount('reset', { accountId,
+        expectedRevision: observed.revision, expectedGeneration: accountLifecycleGeneration(observed),
+        currentPassword: password });
+      else await owner.updateProfile(accountId, observed.revision,
+        { ...observed.profile, updatedAt: new Date().toISOString() });
       button('Delete Account')!.click();
       await waitFor(() => button(displayName) === null ||
         !!document.querySelector('#root [role="alert"]'), 'picker deletion outcome');
       const after = await owner.read(accountId);
-      check(after?.revision === observed.revision + 1 && accountLifecycleGeneration(after) === 2 &&
+      check(after?.revision === observed.revision + 1 &&
+        accountLifecycleGeneration(after) === (probe === 'f6' ? 2 : 1) &&
         document.querySelector('#root [role="alert"]')?.textContent === 'Account changed before deletion.',
         'Stale picker deleted or accepted an unseen generation.');
       result.textContent = `PASS ${probe}\n` + JSON.stringify({ probe, observedRevision: observed.revision,
@@ -94,7 +129,17 @@ async function run() {
           'Synthetic lost delete acknowledgement.'), 'lost acknowledgement alert');
         const firstAlert = 'Synthetic lost delete acknowledgement.';
         if (await owner.read(accountId)) throw new Error('Synthetic delete did not commit before acknowledgement loss.');
+        if (probe === 'changed-request') setPassword('changed-synthetic-password');
         deleteAction()!.click();
+        if (probe === 'changed-request') {
+          await waitFor(() => (document.querySelector('#root')?.textContent ?? '').includes(
+            'Account changed before deletion.'), 'changed request outcome');
+          check(button(displayName) !== null &&
+            (await owner.readLifecycleReceipt(accountId))?.kind === 'delete',
+            'Changed request claimed completed deletion.');
+          result.textContent = 'PASS changed-request: retained tombstone rejected changed selected request.';
+          return;
+        }
         await waitFor(() => button(displayName) === null &&
           !!document.querySelector('#root h1')?.textContent?.includes('Account Login'), 'exact retry outcome');
         check(!document.querySelector('#root [role="alert"]') &&

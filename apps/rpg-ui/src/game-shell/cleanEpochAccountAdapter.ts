@@ -212,7 +212,7 @@ export class CleanEpochAccountAdapter {
   }
 
   async deleteAccount(input: { accountId: string; expectedRevision: number;
-    expectedGeneration: number; password: string }): Promise<EpochAccountAdapterResult<{ accountId: string; displayName: string }>> {
+    expectedGeneration: number; password: string; requestId: string }): Promise<EpochAccountAdapterResult<{ accountId: string; displayName: string }>> {
     try {
       const current = await this.owner.read(input.accountId);
       if (current) {
@@ -223,7 +223,8 @@ export class CleanEpochAccountAdapter {
           return rejected("invalid_credentials", "Current password did not match.", input.accountId);
       } else {
         const prior = await this.owner.readLifecycleReceipt(input.accountId);
-        if (prior?.kind !== "delete" || prior.expectedRevision !== input.expectedRevision ||
+        if (prior?.kind !== "delete" || prior.version !== 2 ||
+            prior.requestId !== input.requestId || prior.expectedRevision !== input.expectedRevision ||
             prior.expectedGeneration !== input.expectedGeneration)
           return rejected("stale_head", "Account changed before deletion.", input.accountId);
       }

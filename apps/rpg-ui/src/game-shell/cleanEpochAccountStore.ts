@@ -88,13 +88,13 @@ export type CleanEpochAddressDeletionReceipt = {
   reason: "player" | "terminal"; deletedAt: string;
 };
 export type CleanEpochAccountLifecycleReceipt = {
-  version: 1; accountId: string; kind: "reset" | "delete";
+  version: 1 | 2; accountId: string; kind: "reset" | "delete";
   expectedRevision: number; expectedGeneration: number; completedGeneration: number;
-  completedRevision: number | null; completedAt: string;
+  completedRevision: number | null; completedAt: string; requestId?: string;
 };
 export type CleanEpochAccountLifecycleRequest = {
   accountId: string; expectedRevision: number; expectedGeneration: number;
-  currentPassword: string;
+  currentPassword: string; requestId?: string;
 };
 export type CleanEpochAccountLifecycleResult = {
   status: "committed" | "same_source_retry";
@@ -290,6 +290,10 @@ function object(value: unknown): value is Record<string, unknown> {
 function nonblank(value: unknown): value is string {
   return typeof value === "string" && value.length > 0 && value.trim() === value;
 }
+function validDeletionRequestId(value: unknown): value is string {
+  return typeof value === "string" &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(value);
+}
 function fail(code: ConstructorParameters<typeof CampaignStoreError>[0], message: string): never {
   throw new CampaignStoreError(code, message);
 }
@@ -342,8 +346,10 @@ export function accountLifecycleGeneration(account: CleanEpochAccountRecord): nu
   return account.lifecycleGeneration ?? 1;
 }
 function checkedLifecycle(value: unknown, accountId: string): CleanEpochAccountLifecycleReceipt {
-  if (!object(value) || value.version !== 1 || value.accountId !== accountId ||
+  if (!object(value) || (value.version !== 1 && value.version !== 2) || value.accountId !== accountId ||
       (value.kind !== "reset" && value.kind !== "delete") ||
+      (value.version === 2 ? value.kind !== "delete" || !validDeletionRequestId(value.requestId) :
+        value.requestId !== undefined) ||
       !Number.isSafeInteger(value.expectedRevision) || (value.expectedRevision as number) < 1 ||
       !Number.isSafeInteger(value.expectedGeneration) || (value.expectedGeneration as number) < 1 ||
       value.completedGeneration !== (value.expectedGeneration as number) + 1 ||
@@ -1246,7 +1252,8 @@ export class CleanEpochAccountStore {
     if (!object(input) || !nonblank(input.accountId) ||
         !Number.isSafeInteger(input.expectedRevision) || input.expectedRevision < 1 ||
         !Number.isSafeInteger(input.expectedGeneration) || input.expectedGeneration < 1 ||
-        typeof input.currentPassword !== "string" || !input.currentPassword.trim())
+        typeof input.currentPassword !== "string" || !input.currentPassword.trim() ||
+        (kind === "delete" && !validDeletionRequestId(input.requestId)))
       fail("invalid_record", "Account lifecycle request is invalid.");
     const verified = await this.read(input.accountId);
     if (verified && !await verifyPassword(input.currentPassword, verified.credential))
@@ -1268,7 +1275,8 @@ export class CleanEpochAccountStore {
       ]);
       const prior = receiptRaw === undefined ? null : checkedLifecycle(receiptRaw, input.accountId);
       if (prior && prior.expectedRevision === input.expectedRevision &&
-          prior.expectedGeneration === input.expectedGeneration && prior.kind === kind) {
+          prior.expectedGeneration === input.expectedGeneration && prior.kind === kind &&
+          (kind === "reset" || (prior.version === 2 && prior.requestId === input.requestId))) {
         status = "same_source_retry";
         receipt = prior;
         next = accountRaw === undefined ? null : checkedAccount(accountRaw, input.accountId);
@@ -1292,10 +1300,11 @@ export class CleanEpochAccountStore {
           profile: createDefaultAccountProfileState({ accountId: input.accountId,
             displayName: account.profile.displayName, createdAt: account.profile.createdAt,
             updatedAt: completedAt }) } : null;
-        receipt = { version: 1, accountId: input.accountId, kind,
+        receipt = { version: kind === "delete" ? 2 : 1, accountId: input.accountId, kind,
           expectedRevision: input.expectedRevision, expectedGeneration: input.expectedGeneration,
           completedGeneration: input.expectedGeneration + 1,
-          completedRevision: next?.revision ?? null, completedAt };
+          completedRevision: next?.revision ?? null, completedAt,
+          ...(kind === "delete" ? { requestId: input.requestId } : {}) };
         // Validate the entire account prefix before the first write. Incomplete rows
         // cannot be silently mistaken for a successful destructive transition.
         const keys = new Map<string, IDBValidKey[]>();

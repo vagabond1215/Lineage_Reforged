@@ -1,3 +1,7 @@
+## 2026-10-07 — G9 F8 repair and independent parent gate
+
+**F8_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD.** From inspected hosted `master` `00bd7ce7`, the selected App's picker and Settings now require a retained exact delete request identity to claim a version-2 tombstone after uncertain acknowledgement. Pre-submit external deletion and changed request show stale/unavailable; exact lost acknowledgement retry remains. Native G9F **90/90** and adjacent checks pass; see `docs/dev/dev-0.7.1.8-f8-exact-selected-deletion-request-repair-record.md`. Install `DEV-0.7.1.9` independent G9A–F parent re-audit on repaired hosted source. The repair does not accept G9 or activate G10, planned primary, deployment or Game-version change; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
+
 ## 2026-10-07 — G9 F8 selected deletion request gate
 
 **G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD.** DEV-0.7.1.7 independently re-audited hosted `b4a1aeb5`: the paired graph/F5 50/50 matrix and six selected-App controls passed, but picker and Settings falsely claimed another owner's matching tombstone on their first delete submission. Focused audit: `docs/design/dev-0.7.1.7-g9-lifecycle-parent-independent-reaudit.md`. Install only `DEV-0.7.1.8` exact selected request repair, then independently repeat G9 parent acceptance. G10 activation/post-epoch durability, deployment, planned primary and Game-version acceptance remain held. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
