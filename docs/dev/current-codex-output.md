@@ -2,7 +2,7 @@
 
 ## 2026-10-08 DEV-0.7.1.12 independent G9 evidence completion audit
 
-Source **DEV-0.7.1.12**, support suffix of planned parent `DEV-0.7.1`; inspected clean `master` and fetched/read-back hosted `master` `a4012d451638a833ea45d7229d33ab4546c0db82`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Development milestone impact `supports_current_band`; Game-version impact `none`. Decision **G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD**. Focused pre-probe and completed row matrix: `docs/design/dev-0.7.1.12-g9-independent-evidence-completion-audit.md`.
+Source **DEV-0.7.1.12**, support suffix of planned parent `DEV-0.7.1`; inspected clean `master` and fetched/read-back hosted `master` `a4012d451638a833ea45d7229d33ab4546c0db82`. Audit evidence commit `6417b561b776c414e8eecec9596afa097c81cabb` was pushed and independently read back from hosted `master`; installed prompt and focused audit blobs matched local. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Development milestone impact `supports_current_band`; Game-version impact `none`. Decision **G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD**. Focused pre-probe and completed row matrix: `docs/design/dev-0.7.1.12-g9-independent-evidence-completion-audit.md`.
 
 ### A. Files changed
 
