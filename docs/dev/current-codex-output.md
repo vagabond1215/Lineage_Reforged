@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-08 DEV-0.7.1.10 F9 selected deletion intent repair
+
+Source **DEV-0.7.1.10**, support suffix of planned `DEV-0.7.1`; starting clean fetched local/hosted `master` `85034c6d5418bb956dc7adcfd979a81a52be6b5c`. Repair commit `d1f5e2fdb6a1b773f2a57cd1350d701170cf8099` was pushed and independently read back from hosted `master`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **F9_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD**.
+
+### A. Files changed
+
+`apps/rpg-ui/src/EpochApp.tsx`, `apps/rpg-ui/src/game-shell/components/LocalAccountAccessScreen.tsx`, `apps/rpg-ui/src/game-shell/components/SettingsScreen.tsx`, `apps/rpg-ui/g9-parent-selected-20261007.tsx`, and `docs/dev/dev-0.7.1.10-f9-selected-deletion-intent-repair-record.md` in the repair commit. This routing publication updates current output, handoff, prompt, planning/historical route and branch register. No owner/adapter/schema/dependency/generated-output, deployment, G10 or Game-version edit.
+
+### B. Patch summary
+
+Before production edits, the mounted selected App reproduced F9: changed picker selection after a committed delete with lost acknowledgement reused an old request and reported false success while target tombstone and other-account bytes stayed fixed. The selected picker/Settings now mint and invalidate a delete intent on selection, action, password and abandonment changes; `EpochApp` keys its retained request by source, intent and exact observed request fields. Unchanged lost-acknowledgement retry retains the same request. Version-2 tombstone owner/adapter binding is unchanged. A fresh **DEV-0.7.1.11 independent full G9A–F parent re-audit** is installed; this repair cannot accept G9. Focused record: `docs/dev/dev-0.7.1.10-f9-selected-deletion-intent-repair-record.md`.
+
+### C. Tests and checks run
+
+`npm --prefix apps/rpg-ui run dev -- --host 127.0.0.1 --port 5173` and native Chromium pages: selected repair `/g9-parent-selected-20261007.html?mode=` **15/15** (changed-selection, toggle, create, password-return, Settings cancel/action change, competing pre-submit deletes, lost acknowledgement exact retries, stale and other-account controls); retained selected `/campaign-clean-epoch-account-lifecycle-selected-app-qa.html?probe=` **9/9**; owner G9B **8/8**, G9C **6/6**, G9D **14/14**, G9E **13/13**, first **5/5**, descendant **16/16**, witnessed **11/11**, G9F **90/90**: **163/163**. `$files=rg --files tests/unit | rg '(campaign|soundings|survey)'; node --test $files`: **172/172**, zero fail. `npm run typecheck:ui:node`: pass. `npm run typecheck:ui`: **137 existing diagnostics**, zero in changed paths. `./node_modules/.bin/vite.cmd build` from `apps/rpg-ui`: pass. `git diff --check`: pass. All browser accounts/faults synthetic; repair QA is not parent-acceptance evidence.
+
+### D. Risks / follow-up notes
+
+Applicable FP-001/002/003/004/005/006/008/009/011/012/014/015/017/018/019: actual selected caller and abandon/retry boundary, independent parent gate, exact competing and restarted owner, graph/receipt failures, no newer-account mutation, source/branch identity and synthetic evidence limit. Fetch/prune inspected two local/six hosted refs and zero open repository PRs. Readiness/prompt-integrity remain protected; administration/creator planning/creator implementation remain held for named consumers. No trigger, disposition change, integration, merge, rebase, deletion or PR action was due. Inspected merge bases/unique commits/paths and triggers are in the branch register. Suggested routing commit: `docs(dev): install independent G9 parent re-audit`. The next run must derive new full G9A–F probes; no G10 until an explicit independent `G9_PARENT_ACCEPTED`.
+
 ## 2026-10-07 DEV-0.7.1.9 independent G9 lifecycle parent re-audit
 
 Source **DEV-0.7.1.9**, support suffix of planned `DEV-0.7.1`; clean fetched local/hosted `master` `efe5630e5c9fb76a084ce977e0ef4e82b603788f` at inspection. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **G9_PARENT_REPAIR_REQUIRED; G10_ACTIVATION_HELD**. Focused audit: `docs/design/dev-0.7.1.9-g9-lifecycle-parent-independent-reaudit.md`.
