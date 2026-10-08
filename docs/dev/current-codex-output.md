@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-08 DEV-0.7.1.11 independent full G9A–F parent re-audit
+
+Source **DEV-0.7.1.11**, support suffix of planned `DEV-0.7.1`; clean fetched local/hosted `master` `c606b491c4457dcacc378e359a0f06d673781a39` at inspection. Audit evidence commit `04d3942bae4fb1f5147884acdb9b4bb5f91bed17` was pushed and independently read back from hosted `master`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD**. Focused matrix and exact gaps: `docs/design/dev-0.7.1.11-g9-lifecycle-parent-independent-reaudit.md`.
+
+### A. Files changed
+
+Fresh independent owner and mounted selected-App synthetic audit pages (`apps/rpg-ui/g9-full-parent-20261008.{html,ts}`, `apps/rpg-ui/g9-full-selected-20261008.{html,tsx}`), focused audit matrix, current prompt/output/handoff, planning/historical route and branch register. No production source, schema, dependency, tracked generated output, deployment, G10 or Game-version edit. Initial worktree was clean.
+
+### B. Patch summary
+
+The full G9A–F matrix was written before authoring probes. New owner probes passed **398 assertions**, including fresh Normal-defeat recovery, Legacy CAS, terminal retirement, address deletion and reuse, paired destructive graph corruptions, 8 abort/quota write positions per transition, retained exact version-2 delete request and reset/delete retry. Actual mounted `EpochApp` passed **22/22 modes, 155 assertions** for picker/Settings F6–F9 intent boundaries and selected defeat/Legacy/terminal/address/reset. The committed F9 probe, earlier F1–F9 harnesses and G9F repair QA were not imported or counted as acceptance evidence. Multiple required rows remain unexercised: genuine witnessed Soundings graph, complete G9B/G9D fault/restart surfaces, all simultaneously populated 12-family erasure and several G9C/E/reentry boundaries. Thus no `G9_PARENT_ACCEPTED` decision is supportable. Install only **DEV-0.7.1.12 independent G9 evidence completion**; G10 remains held.
+
+### C. Tests and checks run
+
+`npm --prefix apps/rpg-ui run dev -- --host 127.0.0.1 --port 5173`; native Chromium `/g9-full-parent-20261008.html` **398/398** and `/g9-full-selected-20261008.html?mode=` **22/22 modes, 155/155 assertions** (all modes/counts in focused audit). Supporting existing G9 browser pages **163/163**, separate from acceptance. `$files=rg --files tests/unit | rg '(campaign|soundings|survey)'; node --test $files`: **172/172**, zero failed. `npm run typecheck:ui:node`: pass. `npm run typecheck:ui`: **137 existing diagnostics**, zero in new audit paths. `./node_modules/.bin/vite.cmd build` from `apps/rpg-ui`: pass after sandbox realpath retry. `git diff --check` and final branch/source review recorded before publication. All browser accounts/faults synthetic; no production-account reachability claim.
+
+### D. Risks / follow-up notes
+
+Applicable FP-001/002/003/004/005/006/008/009/011/012/014/015/017/018/019: production caller, independent gate, competing/exact retries, malformed graph/tombstone, restart and atomicity, source/branch identity and synthetic evidence limits. Their observed coverage and remaining gaps are row-by-row in focused audit; repair suites cannot fill the gaps. Fetch/prune inspected two local/six hosted refs including `master`, with zero open repository PRs. Readiness/prompt-integrity remain protected; administration/creator planning/creator implementation retain named-consumer holds and review triggers in branch register. No trigger, disposition change, integration, merge, rebase, deletion or PR action was due. Suggested commit `test(persistence): record independent G9 parent evidence gaps`. Next `DEV-0.7.1.12` must close gaps before a full parent decision; no G10, planned-primary, deployment or Game-version acceptance.
+
 ## 2026-10-08 DEV-0.7.1.10 F9 selected deletion intent repair
 
 Source **DEV-0.7.1.10**, support suffix of planned `DEV-0.7.1`; starting clean fetched local/hosted `master` `85034c6d5418bb956dc7adcfd979a81a52be6b5c`. Repair commit `d1f5e2fdb6a1b773f2a57cd1350d701170cf8099` was pushed and independently read back from hosted `master`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **F9_REPAIR_VERIFIED; INDEPENDENT_G9_PARENT_REAUDIT_REQUIRED; G10_ACTIVATION_HELD**.
