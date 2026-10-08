@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Card } from "../../components/ui/Card";
 import { Icon } from "../../components/icons";
 import type {
@@ -22,9 +22,11 @@ type LocalAccountAccessScreenProps = {
   onDeleteAccount: (options: {
     accountId: string;
     password: string;
+    intentId: string;
     observedRevision?: number;
     observedGeneration?: number;
   }) => Promise<LauncherAccountDeletionResult>;
+  onDeletionIntentChanged?: () => void;
   allowAccountDeletion?: boolean;
   onCreateAccount: (options: {
     displayName: string;
@@ -60,6 +62,7 @@ export function LocalAccountAccessScreen({
   onDismissNotice,
   onSignIn,
   onDeleteAccount,
+  onDeletionIntentChanged,
   allowAccountDeletion = true,
   onCreateAccount,
   themeMode,
@@ -75,6 +78,12 @@ export function LocalAccountAccessScreen({
   const [createStayLoggedIn, setCreateStayLoggedIn] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [deletionError, setDeletionError] = useState<string | null>(null);
+  const deletionIntentId = useRef(crypto.randomUUID());
+
+  const invalidateDeletionIntent = () => {
+    deletionIntentId.current = crypto.randomUUID();
+    onDeletionIntentChanged?.();
+  };
 
   useEffect(() => {
     if (mode === "create_first_account") {
@@ -105,6 +114,7 @@ export function LocalAccountAccessScreen({
   };
 
   const handleSelectAccount = (accountId: string) => {
+    invalidateDeletionIntent();
     setDeletionError(null);
     setShowCreateForm(false);
     setSelectedAccountId((current) => (current === accountId ? null : accountId));
@@ -112,6 +122,7 @@ export function LocalAccountAccessScreen({
   };
 
   const handleShowCreateForm = () => {
+    invalidateDeletionIntent();
     setSelectedAccountId(null);
     resetAccountForm();
     setShowCreateForm(true);
@@ -132,6 +143,7 @@ export function LocalAccountAccessScreen({
     }
 
     setSubmitting(true);
+    invalidateDeletionIntent();
 
     try {
       await onSignIn({
@@ -155,6 +167,7 @@ export function LocalAccountAccessScreen({
       const result = await onDeleteAccount({
         accountId: selectedAccount.accountId,
         password,
+        intentId: deletionIntentId.current,
         ...(selectedAccount.observedRevision === undefined ? {} :
           { observedRevision: selectedAccount.observedRevision }),
         ...(selectedAccount.observedGeneration === undefined ? {} :
@@ -353,7 +366,10 @@ export function LocalAccountAccessScreen({
                       <input
                         type="password"
                         value={password}
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={(event) => {
+                          invalidateDeletionIntent();
+                          setPassword(event.target.value);
+                        }}
                         className="w-full rounded-[20px] border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-4 py-3 text-[color:var(--color-text-strong)] outline-none transition focus:border-[color:var(--color-border-strong)]"
                         autoComplete="current-password"
                       />

@@ -46,7 +46,7 @@ async function run() {
   const account = (await owner.readSelected(id))!;
   const revision = account.revision;
   const generation = accountLifecycleGeneration(account);
-  const settings = mode.endsWith('-settings');
+  const settings = mode.endsWith('-settings') || mode.startsWith('settings-');
   if (settings) {
     button('Log In')!.click();
     await until(() => button('Settings'), 'main menu'); button('Settings')!.click();
@@ -83,7 +83,10 @@ async function run() {
         'wrong password result');
       assert(JSON.stringify(await owner.read(id)) === before, 'wrong credential mutated account');
     } else if (mode === 'lost-picker' || mode === 'lost-settings' ||
-      mode === 'changed-password' || mode === 'changed-selection') {
+      mode === 'changed-password' || mode === 'changed-password-return' ||
+      mode === 'changed-selection' || mode === 'toggle-selection' ||
+      mode === 'create-form' || mode === 'other-account' ||
+      mode === 'settings-cancel' || mode === 'settings-switch-action') {
       const original = CleanEpochAccountStore.prototype.readLifecycleReceipt;
       let armed = true;
       CleanEpochAccountStore.prototype.readLifecycleReceipt = async function(accountId) {
@@ -97,14 +100,48 @@ async function run() {
         const receipt = JSON.stringify(await owner.readLifecycleReceipt(id));
         const otherBefore = JSON.stringify(await owner.read(otherId));
         if (mode === 'changed-password') enter('different-parent-password');
+        if (mode === 'changed-password-return') {
+          enter('different-parent-password'); enter(password);
+        }
         if (mode === 'changed-selection') {
           button(otherName)!.click();
           await until(() => button('Log In'), 'other selected');
           button(name)!.click();
           await until(passwordField, 'target reselected'); enter(password);
         }
+        if (mode === 'other-account') {
+          button(otherName)!.click();
+          await until(passwordField, 'other account selected'); enter('wrong-other-password');
+          submit();
+          await until(() => alert().includes('Current password did not match.') ? true : null,
+            'other account wrong credential');
+          assert(JSON.stringify(await owner.read(otherId)) === otherBefore,
+            'switched account changed without its credential');
+          button(name)!.click();
+          await until(passwordField, 'target after other account'); enter(password);
+        }
+        if (mode === 'toggle-selection') {
+          button(name)!.click(); button(name)!.click();
+          await until(passwordField, 'target toggled back'); enter(password);
+        }
+        if (mode === 'create-form') {
+          button('Create Account')!.click();
+          await until(() => button('Back'), 'create form'); button('Back')!.click();
+          await until(() => button(name), 'picker after create form'); button(name)!.click();
+          await until(passwordField, 'target after create form'); enter(password);
+        }
+        if (mode === 'settings-cancel') {
+          button('Cancel')!.click(); button('Delete Account')!.click();
+          await until(passwordField, 'reopened Settings confirmation'); enter(password);
+        }
+        if (mode === 'settings-switch-action') {
+          button('Reset Account')!.click(); button('Delete Account')!.click();
+          await until(passwordField, 'changed Settings action'); enter(password);
+        }
         submit();
-        if (mode === 'changed-password' || mode === 'changed-selection') {
+        if (['changed-password', 'changed-password-return', 'changed-selection',
+          'toggle-selection', 'create-form', 'other-account',
+          'settings-cancel', 'settings-switch-action'].includes(mode)) {
           await until(() => alert().includes('Account changed before deletion.') || button(name) === null ? true : null,
             'changed request result');
           assert(JSON.stringify(await owner.readLifecycleReceipt(id)) === receipt &&

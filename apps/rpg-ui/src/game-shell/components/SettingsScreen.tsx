@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { AccountProfileState } from '../../../../../packages/shared/types/src/index.js';
 import { AppShell, SidebarNav } from './AppShell.js';
 import type { LauncherSectionId } from './MainMenuScreen.js';
@@ -38,7 +38,8 @@ type SettingsScreenProps = {
   onDismissNotice: () => void;
   onOpenLauncherSection: (section: LauncherSectionId) => void;
   onResetAccount: (options: { accountId: string; password: string }) => Promise<AccountActionResult>;
-  onDeleteAccount: (options: { accountId: string; password: string }) => Promise<AccountActionResult>;
+  onDeleteAccount: (options: { accountId: string; password: string; intentId: string }) => Promise<AccountActionResult>;
+  onDeletionIntentChanged?: () => void;
   allowAccountLifecycle?: boolean;
   onContinue: () => void;
   onExit: () => void;
@@ -306,6 +307,7 @@ export function SettingsScreen({
   onOpenLauncherSection,
   onResetAccount,
   onDeleteAccount,
+  onDeletionIntentChanged,
   allowAccountLifecycle = true,
   onContinue,
   onExit,
@@ -326,6 +328,11 @@ export function SettingsScreen({
   const [accountPassword, setAccountPassword] = useState('');
   const [accountActionError, setAccountActionError] = useState<string | null>(null);
   const [accountActionPending, setAccountActionPending] = useState(false);
+  const deletionIntentId = useRef(crypto.randomUUID());
+  const invalidateDeletionIntent = () => {
+    deletionIntentId.current = crypto.randomUUID();
+    onDeletionIntentChanged?.();
+  };
   const savedCharacterCount = slots.filter((slot) => slot.hasSave).length;
   const latestSave = useMemo(
     () =>
@@ -373,6 +380,7 @@ export function SettingsScreen({
   const activeActionCopy = accountAction ? getAccountActionCopy(accountAction) : null;
 
   const beginAccountAction = (action: AccountActionKind) => {
+    invalidateDeletionIntent();
     setAccountAction(action);
     setAccountPassword('');
     setAccountActionError(null);
@@ -399,7 +407,8 @@ export function SettingsScreen({
           })
         : await onDeleteAccount({
             accountId: accountProfile.accountId,
-            password: accountPassword
+            password: accountPassword,
+            intentId: deletionIntentId.current
           });
 
     setAccountActionPending(false);
@@ -629,13 +638,17 @@ export function SettingsScreen({
                 <input
                   type="password"
                   value={accountPassword}
-                  onChange={(event) => setAccountPassword(event.target.value)}
+                  onChange={(event) => {
+                    invalidateDeletionIntent();
+                    setAccountPassword(event.target.value);
+                  }}
                   className="creator-forged-input min-w-0 flex-1 px-3 py-2 text-sm text-[color:var(--color-text-strong)] outline-none transition"
                   placeholder="Account password"
                 />
                 <button
                   type="button"
                   onClick={() => {
+                    invalidateDeletionIntent();
                     setAccountAction(null);
                     setAccountPassword('');
                     setAccountActionError(null);

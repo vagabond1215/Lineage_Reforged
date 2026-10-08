@@ -117,9 +117,9 @@ export function EpochApp() {
   const notice = (value: GameShellNotice) => dispatch({ type: 'SET_NOTICE', notice: value });
   const unsupported = (action: string) => notice(heldNotice(action));
   const failed = (title: string, detail: string) => notice({ tone: 'warning', title, detail });
-  const deletionRequestId = (accountId: string, revision: number, generation: number,
-    password: string): string => {
-    const key = JSON.stringify([accountId, revision, generation, password]);
+  const deletionRequestId = (source: 'picker' | 'settings', intentId: string,
+    accountId: string, revision: number, generation: number, password: string): string => {
+    const key = JSON.stringify([source, intentId, accountId, revision, generation, password]);
     if (submittedAccountDeletion.current?.key !== key)
       submittedAccountDeletion.current = { key, requestId: crypto.randomUUID() };
     return submittedAccountDeletion.current.requestId;
@@ -483,6 +483,7 @@ export function EpochApp() {
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
     allowAccountDeletion
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}
+    onDeletionIntentChanged={() => { submittedAccountDeletion.current = null; }}
     onDeleteAccount={options => guarded(async (): Promise<LauncherAccountDeletionResult> => {
       if (!services) throw new Error('Epoch owner is unavailable.');
       if (!Number.isSafeInteger(options.observedRevision) ||
@@ -490,7 +491,7 @@ export function EpochApp() {
         return { ok: false, message: 'Picker account source is unavailable.' };
       const result = await services.accounts.deleteAccount({ ...options,
         expectedRevision: options.observedRevision!, expectedGeneration: options.observedGeneration!,
-        requestId: deletionRequestId(options.accountId, options.observedRevision!,
+        requestId: deletionRequestId('picker', options.intentId, options.accountId, options.observedRevision!,
           options.observedGeneration!, options.password) });
       if (result.status === 'blocked') return { ok: false, message: result.message };
       await initialize();
@@ -536,6 +537,7 @@ export function EpochApp() {
   else if (current.screen === 'SETTINGS') content = <SettingsScreen {...common} accountProfile={current.accountProfile}
     allowAccountLifecycle
     slots={current.slots} onOpenLauncherSection={section => void refreshMenu(null, section)}
+    onDeletionIntentChanged={() => { submittedAccountDeletion.current = null; }}
     onResetAccount={options => guarded(async () => {
       if (!services || state.screen !== 'SETTINGS' || menuAccountRevision.current === null)
         return { ok: false, message: 'Account reset source is unavailable.' };
@@ -554,7 +556,7 @@ export function EpochApp() {
       const generation = Number(state.launcherSession.metadata?.epochGeneration);
       const result = await services.accounts.deleteAccount({ ...options,
         expectedRevision: menuAccountRevision.current, expectedGeneration: generation,
-        requestId: deletionRequestId(options.accountId, menuAccountRevision.current,
+        requestId: deletionRequestId('settings', options.intentId, options.accountId, menuAccountRevision.current,
           generation, options.password) });
       if (result.status === 'blocked') return { ok: false, message: result.message };
       await initialize();
