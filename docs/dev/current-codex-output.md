@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-08 DEV-0.7.1.12 independent G9 evidence completion audit
+
+Source **DEV-0.7.1.12**, support suffix of planned parent `DEV-0.7.1`; inspected clean `master` and fetched/read-back hosted `master` `a4012d451638a833ea45d7229d33ab4546c0db82`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Development milestone impact `supports_current_band`; Game-version impact `none`. Decision **G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD**. Focused pre-probe and completed row matrix: `docs/design/dev-0.7.1.12-g9-independent-evidence-completion-audit.md`.
+
+### A. Files changed
+
+Five new independent browser entrypoints and their scripts (`apps/rpg-ui/g9-completion-{witness,defeat,terminal,account,selected}-20261008` with terminal two modes), focused audit, current output/handoff/prompt, planning/historical route and branch register. No production owner, adapter, selected App, schema, dependency, tracked generated output, G10, deployment or Game-version source edit. Initial worktree clean.
+
+### B. Patch summary
+
+The matrix was saved before probes. New production-path/native browser checks pass **937/937 independent assertions**: genuine production-authorized Soundings witness; paired coherent/missing/malformed/cross-bound witnessed reset/delete; all **12 account families simultaneously populated**; **25** destructive writes each for reset and delete under abort and quota; Normal-defeat **6** publication/consumer writes under both faults plus restart/lost readback; terminal **6** publication/settlement and **8** closure writes under both faults plus malformed membership and lost readback; account/profile/credential/Legacy CAS and exact retries; actual mounted selected `EpochApp` picker/Settings changed versus unchanged request identity and competing owner. No new production defect was observed. Several exact rows remain independently unexercised (selected defeat/retirement/address/reset, retired-source inheritance race and invalid history, prepared/pending/reused-slot corrupt/coherent graph variants, lifecycle receipt malformations and stale reentry); no prior repair or audit suite substitutes. Install only `DEV-0.7.1.13` residual G9 evidence completion; no parent acceptance or G10.
+
+### C. Tests and checks run
+
+`npm --prefix apps/rpg-ui run dev -- --host 127.0.0.1 --port 5173`; native Chromium independent URLs/modes and exact counts: witness **391**, defeat **132**, terminal publication **177**, terminal closure **162**, account/Legacy **36**, mounted selected App **39**; all pass. Supporting existing G9 browser suites **176/176** separately (8 Normal defeat, 13 account adapter, 6 Legacy, 14 terminal, 13 slot generation, 90 lifecycle, 5 first campaign, 16 descendant, 11 witnessed descendant). `$files = rg --files tests/unit | rg '(campaign|soundings|survey)'; node --test $files`: **172/172**. `npm run typecheck:ui:node`: pass. `npm run typecheck:ui`: **137 existing diagnostics**, zero in new probe/G9 production paths. App-local `./node_modules/.bin/vite.cmd build`: pass. `git diff --cached --check`: pass after staging. Synthetic fixtures do not prove production-account reachability.
+
+### D. Risks / follow-up notes
+
+Applicable FP-001/002/003/004/005/006/008/009/011/012/014/015/017/018/019: evidence and exact limits recorded row-by-row in focused audit. Fetch/prune reviewed two local and six hosted refs, merge bases/unique commits/paths and zero open repository PRs. Protected readiness/prompt-integrity and named-consumer administration/creator holds retain existing exact triggers; no integration, merge, rebase, deletion, PR or disposition change due/performed. Suggested commit `test(persistence): record independent G9 evidence completion gaps`. Next `DEV-0.7.1.13` is evidence-only; planned primary, deployment and Game-version remain held.
+
 ## 2026-10-08 DEV-0.7.1.11 independent full G9A–F parent re-audit
 
 Source **DEV-0.7.1.11**, support suffix of planned `DEV-0.7.1`; clean fetched local/hosted `master` `c606b491c4457dcacc378e359a0f06d673781a39` at inspection. Audit evidence commit `04d3942bae4fb1f5147884acdb9b4bb5f91bed17` was pushed and independently read back from hosted `master`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD**. Focused matrix and exact gaps: `docs/design/dev-0.7.1.11-g9-lifecycle-parent-independent-reaudit.md`.

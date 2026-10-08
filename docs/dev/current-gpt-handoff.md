@@ -1,3 +1,7 @@
+## 2026-10-08 DEV-0.7.1.12 independent G9 evidence completion and residual route
+
+**G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD.** On clean fetched/read-back hosted `master` `a4012d45`, a pre-probe matrix led to **937/937 new independent** production owner/adapter and mounted selected-App assertions. A genuine production Soundings witness now covers coherent and corrupt paired reset/delete; both all-12-family graphs fault at every one of 25 destructive writes under abort and quota. New G9B/D publication, closure, lost-readback and restart suites cover 6/6/8 write positions; account/Legacy and actual selected picker/Settings request identity also pass. Supporting browser **176/176**, focused Node **172/172**, UI Node config and Vite pass; broad UI retains 137 baseline diagnostics, none in new/G9 paths. Exact unexercised rows and limits: `docs/design/dev-0.7.1.12-g9-independent-evidence-completion-audit.md`. Prior G9F QA, F9 repair, DEV-0.7.1.11 and other audit harnesses were not counted as acceptance. Install **DEV-0.7.1.13 residual independent G9 evidence completion only**; no G9 acceptance, G10 implementation, planned-primary, deployment or Game-version decision. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
+
 ## 2026-10-08 DEV-0.7.1.11 independent G9 parent audit and completion route
 
 Audit evidence commit `04d3942bae4fb1f5147884acdb9b4bb5f91bed17` was pushed and independently read back from hosted `master`.
