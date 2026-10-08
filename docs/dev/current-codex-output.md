@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-08 DEV-0.7.1.13 residual G9 evidence completion and parent acceptance
+
+Source **DEV-0.7.1.13**, support suffix of planned parent `DEV-0.7.1`; initial clean `master`, fetched `origin/master` and independently hosted `master` all `3e72e6c1d14571602c43f2cd0861d7d4bb778028`. Focused acceptance evidence commit `fb8e2c6743893e647142771a9f8a9ee874990c5c` was pushed and independently read back from hosted `master`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Development impact `supports_current_band`; Game-version impact `none`. Decision **G9_PARENT_ACCEPTED**; no planned-primary, G10 implementation, deployment or Game-version acceptance. Exact matrix: `docs/design/dev-0.7.1.13-g9-residual-evidence-completion-audit.md`.
+
+### A. Files changed
+
+Eight independently authored residual native browser entrypoints and scripts (`apps/rpg-ui/g9-residual-{owner,selected,defeat-selected,inheritance,graphs,lifecycle,witness-selected,intent-selected}-20261008`), focused acceptance audit, current output/handoff/prompt, planning/historical route and branch register. No production owner/adapter/App, schema, dependency, tracked generated output, G10 implementation, deployment or Game-version source edit.
+
+### B. Patch summary
+
+The residual matrix was saved before probes and only DEV-.12 `INCOMPLETE` cells were closed. New production owner/adapter and actual mounted selected `EpochApp` probes passed **374/374** independent assertions: accepted-pending first account fence; selected Normal-defeat blocked/Retry/ready; selected Legacy preparation, retirement, address deletion, reset and fully witnessed delete; positive terminal payout/newer-head refusal; one-use synthetic eligible retired-source inheritance; paired six-shape corrupt/coherent reset/delete; old persisted hint/tab/session/prepared reentry; lost reset/delete receipt readback, malformed/legacy/v2 tombstones, fresh same-ID registration refusal; picker/Settings wrong/stale/changed request behavior and all-family other-account bytes. DEV-.12's exact witnessed/fault/restart scope remains **937/937**, rerun here as regression. Final G9A–F/F1–F9 matrix is all `PASS`; no production defect was found. Install **separate docs-first G10A activation entry decision**, not activation.
+
+### C. Tests and checks run
+
+`npm --prefix apps/rpg-ui run dev -- --host 127.0.0.1 --port 5173`; native Chromium `#audit` on eight new residual URLs **43 + 50 + 10 + 11 + 157 + 39 + 44 + 20 = 374/374**. Six preserved DEV-.12 URL/modes **391 + 132 + 177 + 162 + 36 + 39 = 937/937** separately. Supporting nine G9 browser URLs **176/176** (8 Normal defeat, 13 account, 6 Legacy, 14 terminal, 13 slot generation, 90 lifecycle, 5 first, 16 descendant, 11 witnessed). `$files = rg --files tests/unit | rg '(campaign|soundings|survey)'; node --test $files`: **172/172**. `npm run typecheck:ui:node`: pass. `npm run typecheck:ui`: **137 existing diagnostics**, zero in new/G9 paths. App-local `./node_modules/.bin/vite.cmd build`: pass after sandbox-only Vite `realpath EPERM` retry with filesystem escalation. `git diff --cached --check`: pass. A first synthetic inheritance setup hit a full legacy localStorage origin; an independently new fixture passed 11/11 without clearing retained user QA data.
+
+### D. Risks / follow-up notes
+
+Applicable FP-001/002/003/004/005/006/008/009/011/012/014/015/017/018/019: exact production/selected caller, genuine witness, atomic fault/retry/restart/two-owner, malformed graph/receipt and prewrite, stale/newer and request identity, independent acceptance and hosted source/branch checks are mapped in the focused audit. Eligible retired inheritance source and injected faults are synthetic; they do not claim production-account reachability or long-run G10 durability. Fresh fetch/prune inspected two local/six hosted refs, merge bases, unique commits/paths and zero open repository PRs. Protected readiness/prompt-integrity and named-consumer administration/creator holds retain their exact review triggers. No integration, merge, rebase, deletion, PR or disposition change due/performed. Suggested routing commit `docs(dev): install G10 activation entry decision`; next separate run **DEV-0.7.1 Slice G10A**. Planned primary, deployment and Game-version decisions remain separate.
+
 ## 2026-10-08 DEV-0.7.1.12 independent G9 evidence completion audit
 
 Source **DEV-0.7.1.12**, support suffix of planned parent `DEV-0.7.1`; inspected clean `master` and fetched/read-back hosted `master` `a4012d451638a833ea45d7229d33ab4546c0db82`. Audit evidence commit `6417b561b776c414e8eecec9596afa097c81cabb` was pushed and independently read back from hosted `master`; installed prompt and focused audit blobs matched local. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Development milestone impact `supports_current_band`; Game-version impact `none`. Decision **G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD**. Focused pre-probe and completed row matrix: `docs/design/dev-0.7.1.12-g9-independent-evidence-completion-audit.md`.

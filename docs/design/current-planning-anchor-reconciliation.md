@@ -1,3 +1,7 @@
+## 2026-10-08 — G9 parent accepted; G10A entry decision next
+
+**G9_PARENT_ACCEPTED.** DEV-0.7.1.13 against clean hosted `3e72e6c1` closed exactly DEV-.12's listed residuals with **374/374** fresh production owner/adapter and mounted selected-App assertions. DEV-.12's **937/937** exact scope reran green; supporting browser 176/176, Node 172/172, Node UI-config and Vite passed. The final G9A–F/F1–F9 row disposition is `docs/design/dev-0.7.1.13-g9-residual-evidence-completion-audit.md`, hosted evidence `fb8e2c6743893e647142771a9f8a9ee874990c5c`. Install only a separate docs-first **DEV-0.7.1 Slice G10A** activation/durability entry decision. G10 implementation, deployment, planned-primary and Game-version acceptance have not occurred; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
+
 ## 2026-10-08 — G9 independent evidence completion remains gated
 
 **G9_PARENT_AUDIT_INCOMPLETE; G10_ACTIVATION_HELD.** DEV-0.7.1.12 on hosted `a4012d45` wrote its matrix before new probes. Genuine production-authorized Soundings witness, 12-family 25-position destructive faults, G9B/D restart/fault/readback and actual selected picker/Settings identity passed **937/937** independent assertions. The focused row matrix records remaining selected, inherited-source, historical graph and lifecycle receipt gaps; no prior repair or audit suite fills them. Install `DEV-0.7.1.13` evidence-only closure; no G9 acceptance, G10, planned-primary, deployment or Game-version change. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
