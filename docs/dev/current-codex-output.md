@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-09 DEV-0.7.1 Slice G10A coordinated activation entry decision
+
+Source **DEV-0.7.1 Slice G10A**, docs-first decision under planned parent `DEV-0.7.1`; initial clean `master` and fetched `origin/master` both `31e8a0d9560692e24c516c1cd71c614532d3b94b`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Label class: unversioned coordination decision using a slice identifier; development milestone impact `supports_current_band`, Game-version impact `none`. Decision **G10_ENTRY_SEQUENCE_DEFINED; ACTIVATION_AND_POST_EPOCH_DURABILITY_HELD**. Focused authority: `docs/design/dev-0.7.1-slice-g10a-coordinated-activation-entry-decision.md`.
+
+### A. Files changed
+
+Focused G10A decision, current prompt/output/handoff, planning/historical route and branch register only. No production code, schema, dependency, tracked built output, deployment, site data or `GAME_VERSION` change.
+
+### B. Patch summary
+
+The selected boot chain is `main.tsx` → `App` default → `EpochApp`; retained `LegacyApp` and old localStorage owners are source references. The selected App routes account/creator/load/manual/quick save, Normal defeat, Soundings, Legacy, terminal, address and account lifecycle through epoch adapters and `lineage.campaigns.epoch1` v7. Its localStorage writes are limited to the epoch session hint and theme/time preferences. Fresh built-client inspection found the epoch database/hint and no old auth/account/save/attempt prefix; inactive legacy UI wording remains bundled. Same-origin old tabs can still write obsolete keys, so cutover needs exact origin/profile and tab preflight. No selected backup/restore or storage-estimate/persistence handling exists. Genuine two-context, ordinary lineage/Soundings/non-head long-run growth, dynamic quota/eviction and verified user backup/restore are unproven. Install only **G10B development-local selected-client and two-context proof**, followed by G10C backup/restore, G10D long-run capacity/eviction, G10E independent durability readiness and a separate operational cutover.
+
+### C. Tests or checks run
+
+Fresh `git fetch --prune origin`; `HEAD == origin/master == 31e8a0d9`, independently confirmed by hosted `git ls-remote`; clean initial tree and `GAME_VERSION` readback. Selected source/import/storage search and exact old-writer prefix comparison; app-local Vite build **PASS** (244 modules, `index-wcwuW0xv.js`) after a sandbox-only dependency `realpath EPERM` retry outside the sandbox. Built HTML/JS string and localStorage context inspection. Repository-scoped GitHub search found zero open PRs. `git diff --check` passed. No native-browser G10 action, long-run workload, quota/eviction test, backup/restore, deployment or broad typecheck ran; G9 counts are prior evidence only. Final hosted readback is a completion gate.
+
+### D. Risks / follow-up notes
+
+Applicable FP-001/017, FP-002, FP-003/004/005/006, FP-008/009, FP-011/012/013/014/015 and FP-018/019 set the actual-caller, reachability, held-parent, fail-closed/retry, source/branch and complete-history/destructive graph gates for G10B-D; G10A makes no executable acceptance claim. Two local/six hosted refs including master were inspected; readiness/prompt-integrity remain protected and administration/creator planning/creator implementation retain named consumers and exact triggers in the branch register. No disposition change, integration, merge, rebase, deletion or PR action was due/performed. Suggested commit: `docs(decision): define G10 activation and durability gates`. Next run: **DEV-0.7.1 Slice G10B**. No separate Game-version decision proposed.
+
 ## 2026-10-08 DEV-0.7.1.13 residual G9 evidence completion and parent acceptance
 
 Source **DEV-0.7.1.13**, support suffix of planned parent `DEV-0.7.1`; initial clean `master`, fetched `origin/master` and independently hosted `master` all `3e72e6c1d14571602c43f2cd0861d7d4bb778028`. Focused acceptance evidence commit `fb8e2c6743893e647142771a9f8a9ee874990c5c` was pushed and independently read back from hosted `master`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Development impact `supports_current_band`; Game-version impact `none`. Decision **G9_PARENT_ACCEPTED**; no planned-primary, G10 implementation, deployment or Game-version acceptance. Exact matrix: `docs/design/dev-0.7.1.13-g9-residual-evidence-completion-audit.md`.
