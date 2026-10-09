@@ -2,7 +2,7 @@
 
 ## 2026-10-09 DEV-0.7.1 Slice G10A coordinated activation entry decision
 
-Source **DEV-0.7.1 Slice G10A**, docs-first decision under planned parent `DEV-0.7.1`; initial clean `master` and fetched `origin/master` both `31e8a0d9560692e24c516c1cd71c614532d3b94b`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Label class: unversioned coordination decision using a slice identifier; development milestone impact `supports_current_band`, Game-version impact `none`. Decision **G10_ENTRY_SEQUENCE_DEFINED; ACTIVATION_AND_POST_EPOCH_DURABILITY_HELD**. Focused authority: `docs/design/dev-0.7.1-slice-g10a-coordinated-activation-entry-decision.md`.
+Source **DEV-0.7.1 Slice G10A**, docs-first decision under planned parent `DEV-0.7.1`; initial clean `master` and fetched `origin/master` both `31e8a0d9560692e24c516c1cd71c614532d3b94b`. Decision commit `3c575a631a9ebb4bd034a468f495277d20a7d799` was pushed and independently read back from hosted `master`; the final handoff-annotation head is checked separately. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Label class: unversioned coordination decision using a slice identifier; development milestone impact `supports_current_band`, Game-version impact `none`. Decision **G10_ENTRY_SEQUENCE_DEFINED; ACTIVATION_AND_POST_EPOCH_DURABILITY_HELD**. Focused authority: `docs/design/dev-0.7.1-slice-g10a-coordinated-activation-entry-decision.md`.
 
 ### A. Files changed
 
