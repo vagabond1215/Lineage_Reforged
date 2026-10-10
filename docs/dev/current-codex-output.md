@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-09 DEV-0.7.1 Slice G10B selected-client and two-context gate
+
+Source **DEV-0.7.1 Slice G10B**, unversioned executable gate under planned parent `DEV-0.7.1`; initial clean fetched local/hosted `master` `ffadd05448fa8f49724a3d4a3727d5da2ef98ad9`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **G10B_REPAIR_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD**. Focused row ledger: `docs/design/dev-0.7.1-slice-g10b-selected-client-two-context-evidence-and-repair-decision.md`. Final committed/hosted identity must be reported after publication.
+
+### A. Files changed
+
+Test-only two-context and selected-heir browser harnesses under `apps/rpg-ui/g10b-*`, focused G10B evidence/decision, current output/handoff/prompt, planning/historical route and branch register. No production code, schema, dependency, generated asset, deployment, site-data or `GAME_VERSION` edit.
+
+### B. Patch summary
+
+Fresh exact-source build emitted the same selected epoch client before and after the test-only pages. A fresh disposable same-origin two-frame default-App run passed **15/15** for ordinary registration/creator/first campaign, manual and quick save, second-context stale head block/Retry, quota and aborted publication block/Retry with both accepted addresses fixed, old localStorage and old IndexedDB writer isolation, restart, and another-account epoch byte stability. Mounted selected G9 regressions independently passed Legacy/terminal/address/account, Normal-defeat fixture, witnessed Soundings fixture and exact lost-acknowledgement deletion retry. **F1 reproduced:** production resolver finds one synthetically eligible retired source, but mounted default App creator has no Heir Start because selected `EpochApp` passes `eligibleHeirSources={[]}`. Ordinary terminal retirement archives its run with zero inheritance uses, so the fixture is not ordinary lineage reachability. Selected ordinary Soundings completion, HP-zero Normal defeat, two-context lost-save/pending/account-generation and exact selected history growth are not closed by supporting suites. Install only **G10B.1 selected creator eligible-source presentation repair**, followed by independent G10B completion proof; do not advance G10C.
+
+### C. Tests or checks run
+
+Fresh fetch/prune, exact SHA/readback, clean initial tree, zero open repository PRs, five non-default branch merge bases/commits/paths. App-local Vite build twice **PASS**, 244 modules, identical `index-wcwuW0xv.js`; built old auth/accounts/save/attempt prefix check absent. Native browser: new G10B two-context **15/15**, selected eligible-source **REPRO**; retained selected **50/50**, **10/10**, **44/44**, **39/39**; supporting graph/owner/witness/defeat/descendant **157/157**, **43/43**, **391/391**, **132/132**, **16/16**. Unavailable/blocked-open App views displayed blocked/Retry. Focused Node campaign/Soundings/survey **172/172**; UI Node-config typecheck **PASS**. Focused TS probe found no new G10B harness diagnostics; transitive UI source diagnostics are baseline, so no broad UI green claim. `git diff --check` and hosted post-push readback are final gates. The earlier disposable harness attempts at ports 5277 and 5279 failed test assumptions and were corrected; no data clear occurred.
+
+### D. Risks / follow-up notes
+
+FP-001/017 (actual caller and synthetic eligibility distinction) exposed F1; FP-002 withholds gate/parent acceptance; FP-003/004/005/006 bound fault, retry and contention claims; FP-008/009 govern branch and final head; FP-011/012/013/014/015 and FP-018/019 limit witnessed/history and destructive conclusions to observed cases. Branches/PRs: two local/six hosted refs including master, zero open PRs; readiness/prompt-integrity `PROTECTED_REFERENCE`, administration/creator planning/creator implementation `HOLD_NAMED_CONSUMER`, triggers unchanged. No disposition change, integration, deletion or PR action was due/performed. Suggested commit: `test(audit): record G10B selected-client repair gate`. Next: **DEV-0.7.1 Slice G10B.1** only. No Game-version decision proposed.
+
 ## 2026-10-09 DEV-0.7.1 Slice G10A coordinated activation entry decision
 
 Source **DEV-0.7.1 Slice G10A**, docs-first decision under planned parent `DEV-0.7.1`; initial clean `master` and fetched `origin/master` both `31e8a0d9560692e24c516c1cd71c614532d3b94b`. Decision commit `3c575a631a9ebb4bd034a468f495277d20a7d799` was pushed and independently read back from hosted `master`; the final handoff-annotation head is checked separately. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`. Label class: unversioned coordination decision using a slice identifier; development milestone impact `supports_current_band`, Game-version impact `none`. Decision **G10_ENTRY_SEQUENCE_DEFINED; ACTIVATION_AND_POST_EPOCH_DURABILITY_HELD**. Focused authority: `docs/design/dev-0.7.1-slice-g10a-coordinated-activation-entry-decision.md`.
