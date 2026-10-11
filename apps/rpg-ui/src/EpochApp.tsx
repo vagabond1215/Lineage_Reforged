@@ -19,6 +19,7 @@ import { CleanEpochTerminalAdapter } from './game-shell/cleanEpochTerminalAdapte
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochLauncherRead } from './game-shell/cleanEpochLauncherRead.js';
 import { CleanEpochLegacyActionAdapter, type EpochLegacyAction } from './game-shell/cleanEpochLegacyActionAdapter.js';
+import { resolveEligibleHeirSources } from './game-shell/runLifecycle.js';
 import type { LauncherAccountDeletionResult, LauncherAuthResult, LauncherRuntimeSession } from './game-shell/launcherAuthManager.js';
 import { createAccountAccessState, gameShellReducer, getPreferredLoadSlotId, getPreferredSaveSlotId,
   getSaveSlotLabel, SAVE_SLOT_ORDER, type GameShellNotice, type GameShellState, type ManualSaveSlotId,
@@ -520,7 +521,8 @@ export function EpochApp() {
     content = <CharacterCreationScreen {...common} form={current.form} accountProfile={current.accountProfile}
       appliedLegacyPreparationIds={preparation.selectedUnlockIds}
       appliedLegacyPreparationChoices={preparation.selectedChoicePayloads}
-      eligibleHeirSources={[]} slots={current.slots} pendingOverwriteSlotId={current.pendingOverwriteSlotId}
+      eligibleHeirSources={resolveEligibleHeirSources(current.accountProfile)}
+      slots={current.slots} pendingOverwriteSlotId={current.pendingOverwriteSlotId}
       onReturnToMainMenu={() => void refreshMenu()}
       onChange={form => dispatch({ type: 'UPDATE_CHARACTER_CREATION_FORM', form })}
       onCreateGame={options => void createCampaign(false, options)}
