@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-10 DEV-0.7.1 Slice G10B.1 selected creator repair
+
+Source and implementation start: clean local/hosted `master` `d4bbddf96293b4e45093b4edb3b4ce4610dc109b`; repair commit `46c3a3e637e65e39cc1014348733e9361b34a71e` pushed and independently read back from hosted `master`. Planned parent `DEV-0.7.1`; label class: bounded unversioned repair slice; development impact `supports_current_band`; Game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. Decision **G10B_1_REPAIR_VERIFIED; G10B_COMPLETION_PROOF_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD**. Focused record: `docs/dev/dev-0.7.1-slice-g10b-1-selected-creator-repair-record.md`.
+
+### A. Files changed
+
+Production `apps/rpg-ui/src/EpochApp.tsx`; mounted default-App `apps/rpg-ui/g10b-heir-selected-repro-20261009.tsx`; focused repair record; current output, handoff, prompt, planning/historical route and branch register. No schema, retirement, inheritance-grant, creator design, dependency, generated asset, deployment, site-data or `GAME_VERSION` change.
+
+### B. Patch summary
+
+The corrected pre-edit repro reached creator Finalize and failed with a synthetic eligible retired source retained by production account CAS but absent from the selected creator. `EpochApp` now passes `resolveEligibleHeirSources(current.accountProfile)` through the existing creator prop. Eligibility policy and epoch account authority stay intact. The repaired mounted default App passed **31/31** for eligible presentation, exact selected source and accepted slot-2 `sourceRunId`, zero-use/archived exclusion, pre-action no-write, restart/readback and unrelated-account stability. The fixture is synthetic; ordinary retirement still archives with zero uses. A separate independent G10B completion proof is installed in the current prompt for remaining lost-save/pending/account-generation and ordinary Soundings/Normal-defeat/history rows; no G10B acceptance follows from this repair.
+
+### C. Tests or checks run
+
+Pre-edit selected Finalize failure reproduced on disposable origin. Repaired mounted default App **31/31**; adjacent fresh-origin two-context selected App **15/15**. Focused campaign/Soundings/survey Node **172/172**; UI Node-config typecheck **PASS**; app-local Vite build **PASS**, 244 client modules, `index-CyVGQ0Rd.js`; built HTML/asset epoch identity present and old auth/account/save/attempt/legacy-copy strings absent. Broad UI typecheck **137 existing diagnostics**, zero in changed `EpochApp.tsx`; not green. Staged diff check **PASS**; repair commit hosted readback **PASS**. A sandboxed build first hit `realpath EPERM` and passed under filesystem escalation. An adjacent harness run on the heir fixture's origin failed its fresh-account assumption; fresh port 5283 passed. No existing site data was cleared.
+
+### D. Risks / follow-up notes
+
+FP-001/017: actual Finalize and synthetic/ordinary distinction; FP-002: no G10B/parent acceptance; FP-003/004/005/006: bounded two-context retry evidence; FP-008/009: five held refs and exact hosted readback; FP-011/012/013/014/015 and FP-018/019: existing owner/history/destructive limits remain separate. Two local and six hosted refs including master, zero open PRs. Readiness/prompt-integrity `PROTECTED_REFERENCE`; administration/creator planning/creator implementation `HOLD_NAMED_CONSUMER`, triggers unchanged. No branch disposition change, integration, deletion or PR action due/performed. Suggested repair commit: `fix(creator): present eligible epoch heir sources` (committed). Next: **DEV-0.7.1 Slice G10B.2 independent selected-client completion proof**. G10C, deployment and Game-version decision remain held. Final handoff publication/readback is a separate identity.
+
 ## 2026-10-09 DEV-0.7.1 Slice G10B selected-client and two-context gate
 
 Source **DEV-0.7.1 Slice G10B**, unversioned executable gate under planned parent `DEV-0.7.1`; initial clean fetched local/hosted `master` `ffadd05448fa8f49724a3d4a3727d5da2ef98ad9`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0`; development impact `supports_current_band`, Game-version impact `none`. Decision **G10B_REPAIR_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD**. Focused row ledger: `docs/design/dev-0.7.1-slice-g10b-selected-client-two-context-evidence-and-repair-decision.md`. Evidence commit `a90e12d156cbaa814e1f9a5f8f8af0e56ffb5f1f` was pushed and independently read back from hosted `master`; the final handoff-annotation head is checked separately.
