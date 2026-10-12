@@ -1716,6 +1716,29 @@ export interface CampaignAuthorityLedgerState {
   entries: CampaignAuthorityLedgerEntryState[];
   ashenReefSurvey?: AshenReefSurveyAuthorityState;
   soundingsTurnIn?: SoundingsTurnInAuthorityState;
+  nearbyEncounters?: {
+    version: 1;
+    admissions: Array<{
+      requestId: string;
+      candidate: ResolvedSpawnCandidateState;
+      sourceArtifactId: string;
+      sourceRevision: number;
+      sourceContinuityId: string;
+      encounterId: string;
+      admittedAtTick: number;
+    }>;
+    commands: Array<{
+      requestId: string;
+      encounterId: string;
+      actorCombatantId: string;
+      sourceArtifactId: string;
+      sourceRevision: number;
+      expectedTick: number;
+      actionType: string;
+      targetId: string | null;
+      result: "active" | "allies_victorious" | "enemies_victorious";
+    }>;
+  };
 }
 
 export interface SoundingsTurnInNormalizedIntentState {

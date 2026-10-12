@@ -42,6 +42,12 @@ import {
 export type { AshenReefSurveyCallerOutcome } from './ashenReefSurveyCaller.js';
 import { submitSoundingsTurnInCaller, type SoundingsTurnInCommand, type SoundingsTurnInCallerOutcome } from './soundingsTurnInCaller.js';
 import { advanceNearbyExplorationCaller } from './nearbyExplorationCaller.js';
+import {
+  admitNearbyEncounter,
+  createNearbyEncounterAdmissionCommand,
+  createNearbyEncounterStepCommand,
+  executeNearbyEncounterStep
+} from '../../../../packages/engines/game-engine/src/player-nearby-encounter.js';
 
 export interface GameSessionState {
   accountProfile: AccountProfileState;
@@ -53,6 +59,8 @@ export interface GameSessionState {
 export interface GameSessionContextValue extends GameSessionState {
   campaignSessionControl: CampaignSessionControl;
   exploreNearby: () => ReturnType<typeof advanceNearbyExplorationCaller>['outcome'];
+  admitNearbyEncounter: () => ReturnType<typeof admitNearbyEncounter>;
+  advanceNearbyEncounter: (actionType: string, targetId: string | null) => ReturnType<typeof executeNearbyEncounterStep>;
   updateSnapshot: (
     snapshot: SaveSnapshot,
     options?: {
@@ -153,6 +161,18 @@ export function GameSessionProvider({
           onSnapshotChange(transition.acceptedState.snapshot, transition.acceptedState.control);
         }
         return transition.outcome;
+      },
+      admitNearbyEncounter: () => {
+        const command = createNearbyEncounterAdmissionCommand(snapshot, campaignSessionControl);
+        const result = admitNearbyEncounter(snapshot, campaignSessionControl, command);
+        if (result.accepted) onSnapshotChange(result.snapshot, result.control);
+        return result;
+      },
+      advanceNearbyEncounter: (actionType, targetId) => {
+        const command = createNearbyEncounterStepCommand(snapshot, campaignSessionControl, actionType, targetId);
+        const result = executeNearbyEncounterStep(snapshot, campaignSessionControl, command);
+        if (result.accepted) onSnapshotChange(result.snapshot, result.control);
+        return result;
       },
       updateSnapshot: (proposedSnapshot, options = {}) => {
         const admission = admitCampaignMutation(campaignSessionControl, {

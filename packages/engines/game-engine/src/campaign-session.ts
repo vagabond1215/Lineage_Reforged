@@ -47,6 +47,7 @@ export interface CampaignSessionControl {
 
 export type CampaignMutationOwnerKind =
   | "engine_result"
+  | "nearby_encounter"
   | "legacy_bridge"
   | "persisted_preference"
   | "recovery_repair";
@@ -698,6 +699,11 @@ export function admitCampaignMutation(
   control: CampaignSessionControl,
   submission: CampaignMutationSubmission
 ): CampaignMutationAdmission {
+  if (submission.ownerKind !== "nearby_encounter" &&
+      JSON.stringify(submission.sourceSnapshot.authorityLedger?.nearbyEncounters ?? null) !==
+      JSON.stringify(submission.proposedSnapshot.authorityLedger?.nearbyEncounters ?? null)) {
+    return { accepted: false, duplicate: false, reason: "rejected", snapshot: submission.sourceSnapshot, control, resultId: null };
+  }
   // Submission receipts may be introduced only through their prepared owner.
   // Other accepted mutations may preserve valid existing authority, never rewrite it.
   if (submission.sourceSnapshot.authorityLedger?.soundingsTurnIn || submission.proposedSnapshot.authorityLedger?.soundingsTurnIn) {

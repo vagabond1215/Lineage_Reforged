@@ -21,13 +21,13 @@ import {
   loadSkillContent,
   loadSkillEffectContent,
   loadTitleContent
-} from "../../../civilization-engine/src/content.ts";
+} from "./player-content.js";
 import { loadCombatFoundationContent } from "./content.js";
 import {
   resolvePlayerEchoProgression,
   resolveSkillBand,
   resolveSkillRankGainPolicy
-} from "../../../player-engine/src/progression.ts";
+} from "../../../player-engine/src/progression.js";
 import { loadSpawnFoundationContent } from "../../../world-engine/src/spawn/content.js";
 
 type ActionTemplate = {
@@ -615,8 +615,8 @@ function getSkillLabel(skillId: string): string {
     return skillName;
   }
 
-  const fallback = skillId.split(".").at(-1)?.replace(/_/g, " ") ?? skillId;
-  return fallback.replace(/\b\w/g, (letter) => letter.toUpperCase());
+  const fallback = skillId.split(".").pop()?.replace(/_/g, " ") ?? skillId;
+  return fallback.replace(/\b\w/g, (letter: string) => letter.toUpperCase());
 }
 
 function applyCombatSkillGainAttempt(
@@ -827,6 +827,39 @@ function getActionTemplate(actor: CombatantState, actionType: string): ActionTem
   return resolveGrantedActionTemplate(actor, actionType) ?? ACTION_LIBRARY[actionType] ?? ACTION_LIBRARY["combat.attack.melee.basic"]!;
 }
 
+export function listLegalPlayerCombatCommands(encounter: CombatEncounterState): Array<{
+  actionType: string;
+  targetId: string;
+  sourceType: CombatActionState["source"]["sourceType"];
+  sourceId: string | null;
+  hpCost: number;
+  staminaCost: number;
+  mpCost: number;
+}> {
+  if (encounter.state !== "active" || encounter.paused) return [];
+  const actor = encounter.combatants.find((entry) => entry.kind === "player" && entry.disposition === "ally");
+  if (!actor || actor.defeated || actor.incapacitated || actor.timing.currentActionId || actor.timing.queuedActionIds.length) return [];
+  const targets = encounter.enemyCombatantIds.filter((id) => {
+    const target = encounter.combatants.find((entry) => entry.id === id);
+    return target && !target.defeated && !target.incapacitated;
+  });
+  // The engine's basic melee action is available to a player even when passive
+  // equipment grants make the candidate-action set nonempty.
+  return [...new Set(["combat.attack.melee.basic", ...buildCandidateActionTypes(actor)])].flatMap((actionType) => {
+    const template = getActionTemplate(actor, actionType);
+    if (template.actionType !== actionType || template.targetDisposition !== "enemy" ||
+        !template.resolutionHooks.some((hook) => hook.startsWith("damage."))) return [];
+    const staminaCost = template.resourceCosts.stamina ?? 0;
+    const mpCost = template.resourceCosts.mp ?? 0;
+    const hpCost = template.resourceCosts.hp ?? 0;
+    if (![hpCost, staminaCost, mpCost].every((cost) => Number.isSafeInteger(cost) && cost >= 0)) return [];
+    if (hpCost > actor.resources.hp.current || staminaCost > actor.resources.stamina.current ||
+        mpCost > actor.resources.mp.current) return [];
+    return targets.map((targetId) => ({ actionType, targetId, sourceType: template.sourceType,
+      sourceId: template.sourceId, hpCost, staminaCost, mpCost }));
+  });
+}
+
 function resolveSkillEffectValue(scaling: CombatantState["hooks"]["skillEffectGrants"][number]["scaling"], rank: number): number {
   const base = scaling.base ?? 0;
   if (scaling.mode === "per_rank") {
@@ -838,25 +871,25 @@ function resolveSkillEffectValue(scaling: CombatantState["hooks"]["skillEffectGr
 function buildActionDescriptorTags(action: CombatActionState): string[] {
   const tags = new Set<string>();
   if (action.source.weaponSkillId) {
-    const weaponFamily = action.source.weaponSkillId.split(".").at(-1);
+    const weaponFamily = action.source.weaponSkillId.split(".").pop();
     if (weaponFamily) {
       tags.add(`weapon.${weaponFamily}`);
     }
   }
   if (action.source.defensiveSkillId) {
-    const defenseFamily = action.source.defensiveSkillId.split(".").at(-1);
+    const defenseFamily = action.source.defensiveSkillId.split(".").pop();
     if (defenseFamily) {
       tags.add(`defense.${defenseFamily}`);
     }
   }
   if (action.source.armorSkillId) {
-    const armorFamily = action.source.armorSkillId.split(".").at(-1);
+    const armorFamily = action.source.armorSkillId.split(".").pop();
     if (armorFamily) {
       tags.add(`armor.${armorFamily}`);
     }
   }
   if (action.source.shieldSkillId) {
-    const shieldFamily = action.source.shieldSkillId.split(".").at(-1);
+    const shieldFamily = action.source.shieldSkillId.split(".").pop();
     if (shieldFamily) {
       tags.add(`armor.${shieldFamily}`);
       tags.add(`shield.${shieldFamily}`);
@@ -1340,7 +1373,7 @@ function buildStatusEffectFromHook(
     return null;
   }
   return {
-    id: `${target.id}.status.${hook.replaceAll(".", "_")}.${currentTimeTick}`,
+    id: `${target.id}.status.${hook.split(".").join("_")}.${currentTimeTick}`,
     label: definition.label,
     sourceType: definition.sourceType,
     sourceId: source.sourceId,

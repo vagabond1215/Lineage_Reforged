@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import rolesJson from "../../../../content/base/game/combat_roles.json" with { type: "json" };
+import presetsJson from "../../../../content/base/game/tactics_presets.json" with { type: "json" };
 import type { CombatRoleRecord, TacticsPresetRecord } from "../../../../shared/types/src/index.js";
 
 type CachedCombatContent = {
@@ -10,20 +11,13 @@ type CachedCombatContent = {
 
 let cachedCombatContent: CachedCombatContent | null = null;
 
-function readJson<T>(relativePath: string): T {
-  const raw = readFileSync(new URL(relativePath, import.meta.url), "utf8");
-  return JSON.parse(raw) as T;
-}
-
 export function loadCombatFoundationContent(): CachedCombatContent {
   if (cachedCombatContent) {
     return cachedCombatContent;
   }
 
-  const rolesParsed = readJson<{ records: CombatRoleRecord[] }>("../../../../content/base/game/combat_roles.json");
-  const presetsParsed = readJson<{ records: TacticsPresetRecord[] }>(
-    "../../../../content/base/game/tactics_presets.json"
-  );
+  const rolesParsed = rolesJson as { records: CombatRoleRecord[] };
+  const presetsParsed = presetsJson as { records: TacticsPresetRecord[] };
 
   cachedCombatContent = {
     roleRecords: rolesParsed.records,

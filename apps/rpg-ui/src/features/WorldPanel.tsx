@@ -20,6 +20,7 @@ import {
 import type { GameShellNotice } from '../game-shell/state';
 import { buildActionOutcomePreview } from '../runtime/bodyStatePresentation';
 import { resolveNearbyExplorationPlan } from '../../../../packages/engines/game-engine/src/player-nearby-exploration.js';
+import { listLegalPlayerCombatCommands } from '../../../../packages/engines/game-engine/src/combat/index.js';
 
 type WorldPanelProps = {
   accent: string;
@@ -30,7 +31,7 @@ type WorldPanelProps = {
 
 export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: WorldPanelProps) {
   const worldData = useUiViewModel().world;
-  const { snapshot, updateSnapshot, bodyStatePresentation, exploreNearby } = useGameSession();
+  const { snapshot, updateSnapshot, bodyStatePresentation, exploreNearby, admitNearbyEncounter, advanceNearbyEncounter } = useGameSession();
   const [activeSection, setActiveSection] = useState('world-map');
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({
     'world-map': worldData.lists['world-map']?.[0]?.id ?? '',
@@ -43,6 +44,8 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
   const [zoom, setZoom] = useState(1);
   const [panelNotice, setPanelNotice] = useState<GameShellNotice | null>(null);
   const [confirmTravel, setConfirmTravel] = useState(false);
+  const activeEncounter = snapshot.gameState.activeEncounter;
+  const legalCombatCommands = activeEncounter ? listLegalPlayerCombatCommands(activeEncounter) : [];
 
   const listItems = worldData.lists[activeSection] ?? [];
   const filteredItems = listItems.filter((item) =>
@@ -183,7 +186,14 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                 ? 'Explore an authored nearby approach for one watch. Applies low-intensity strain and a 2 Stamina action cost; an encounter may or may not be found.'
                 : nearbyPlan.reason}</p>
               {snapshot.worldState.nearbyExplorationCandidate && (
-                <p>Earlier exploration found signs of danger. No encounter has begun; exploring again replaces those signs.</p>
+                <div className="space-y-2">
+                  <p>Exploration found signs of hostile foes. No encounter has begun.</p>
+                  <GameActionButton label="Approach the encounter" tone="accent" onClick={() => {
+                    const result = admitNearbyEncounter();
+                    setPanelNotice({ tone: result.accepted ? 'success' : 'warning',
+                      title: result.accepted ? 'Encounter Begun' : 'Encounter Unavailable', detail: result.message });
+                  }} />
+                </div>
               )}
               <GameActionButton
                 label="Explore nearby environs"
@@ -200,6 +210,35 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
               />
             </div>
           </Card>
+          {activeEncounter && (
+            <Card title="Nearby Encounter" accent={accent}>
+              <div className="space-y-3 text-sm text-[color:var(--color-text-secondary)]" aria-live="polite">
+                <p>Combat beat {activeEncounter.currentTimeTick}. HP {snapshot.playerState.resources.hp.current}/{snapshot.playerState.resources.hp.max}, MP {snapshot.playerState.resources.mp.current}/{snapshot.playerState.resources.mp.max}, Stamina {snapshot.playerState.resources.stamina.current}/{snapshot.playerState.resources.stamina.max}.</p>
+                <p>Foes: {activeEncounter.enemyCombatantIds.map((id, index) => {
+                  const foe = activeEncounter.combatants.find((item) => item.id === id);
+                  return `Foe ${index + 1}${foe?.defeated ? ' (defeated)' : ''}`;
+                }).join(', ')}.</p>
+                <p>{activeEncounter.paused ? 'Combat is paused.' : legalCombatCommands.length ? 'Choose an available action or let combat advance.' : 'No attack is currently available; combat can advance.'}</p>
+                <div className="flex flex-wrap gap-2">
+                  {legalCombatCommands.map((command) => {
+                    const foeNumber = activeEncounter.enemyCombatantIds.indexOf(command.targetId) + 1;
+                    return <GameActionButton key={`${command.actionType}.${command.targetId}`}
+                      label={`${command.actionType === 'combat.attack.melee.basic' ? 'Basic melee attack' : command.actionType.split('.').slice(1).join(' ')} — Foe ${foeNumber} (${command.staminaCost} Stamina, ${command.mpCost} MP${command.hpCost ? `, ${command.hpCost} HP` : ''})`}
+                      disabled={activeEncounter.paused}
+                      onClick={() => {
+                        const result = advanceNearbyEncounter(command.actionType, command.targetId);
+                        setPanelNotice({ tone: result.accepted ? 'success' : 'warning', title: result.accepted ? 'Combat Advanced' : 'Combat Unavailable', detail: result.message });
+                      }} />;
+                  })}
+                  <GameActionButton label="Continue combat one beat" disabled={activeEncounter.paused}
+                    onClick={() => {
+                      const result = advanceNearbyEncounter('combat.advance', null);
+                      setPanelNotice({ tone: result.accepted ? 'success' : 'warning', title: result.accepted ? 'Combat Advanced' : 'Combat Unavailable', detail: result.message });
+                    }} />
+                </div>
+              </div>
+            </Card>
+          )}
           <Card title="Travel Actions" accent={accent}>
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-4">
