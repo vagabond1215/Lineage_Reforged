@@ -1,6 +1,6 @@
 # DEV-0.7.1 Slice G10B.2 — Independent Selected-Client Completion Proof
 
-Date: 2026-10-12. Inspected source: clean, fetched local and hosted `master` `232b97cee0a14cdc6dc07c63fa874a50b97c3502`. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted DEV `DEV-0.7.0`. This is an independent development-local gate. Earlier G10B/G10B.1 harnesses, retained G9 suites, and synthetic eligibility are regression or context only.
+Date: 2026-10-12. Inspected source: clean, fetched local and hosted `master` `232b97cee0a14cdc6dc07c63fa874a50b97c3502`; evidence commit `0f5f07f325b598ff9b0d542d8f9ce4802cb43200` pushed and independently hosted-read back. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted DEV `DEV-0.7.0`. This is an independent development-local gate. Earlier G10B/G10B.1 harnesses, retained G9 suites, and synthetic eligibility are regression or context only.
 
 ## Independent evidence matrix
 

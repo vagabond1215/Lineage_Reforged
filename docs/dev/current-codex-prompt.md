@@ -4,7 +4,7 @@
 > **Repository boundary — mandatory:** This document applies only to `vagabond1215/Lineage_Reforged`. All repository work must stay in this repository. Cross-repository mutation is unauthorized.
 <!-- /repo-scope-guard -->
 
-Date: 2026-10-12. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. Source for this route is the hosted G10B.2 evidence/handoff head recorded in the current output, not the earlier inspected `232b97ce` source. **G10B_SELECTED_CLIENT_NOT_PROVEN; G10C_NOT_INSTALLED; ACTIVATION_HELD.**
+Date: 2026-10-12. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. Evidence commit `0f5f07f325b598ff9b0d542d8f9ce4802cb43200` was pushed and independently hosted-read back. Synchronize to the final G10B.2 handoff head before work. **G10B_SELECTED_CLIENT_NOT_PROVEN; G10C_NOT_INSTALLED; ACTIVATION_HELD.**
 
 ## Objective
 

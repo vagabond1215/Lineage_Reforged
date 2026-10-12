@@ -2,7 +2,7 @@
 
 ## 2026-10-12 DEV-0.7.1 Slice G10B.2 independent selected-client proof
 
-Source: clean fetched local/hosted `master` `232b97cee0a14cdc6dc07c63fa874a50b97c3502`. Label class: unversioned executable gate under planned parent `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted DEV `DEV-0.7.0`. Date 2026-10-12; branch/status assumption: `master`, initially clean and synchronized, held branches untouched. **G10B_SELECTED_CLIENT_NOT_PROVEN; G10B_REPAIR_AND_REACHABILITY_ROUTE_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD.** Detailed row matrix and exact IDs: `docs/design/dev-0.7.1-slice-g10b-2-independent-selected-client-proof.md`.
+Source: clean fetched local/hosted `master` `232b97cee0a14cdc6dc07c63fa874a50b97c3502`. Evidence commit `0f5f07f325b598ff9b0d542d8f9ce4802cb43200` was pushed and independently read back at hosted `master`. Label class: unversioned executable gate under planned parent `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted DEV `DEV-0.7.0`. Date 2026-10-12; branch/status assumption: `master`, initially clean and synchronized, held branches untouched. **G10B_SELECTED_CLIENT_NOT_PROVEN; G10B_REPAIR_AND_REACHABILITY_ROUTE_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD.** Detailed row matrix and exact IDs: `docs/design/dev-0.7.1-slice-g10b-2-independent-selected-client-proof.md`.
 
 ### A. Files changed
 
@@ -18,7 +18,7 @@ Fresh two-context mounted default-App harness: **19 supporting assertions**, wit
 
 ### D. Risks / follow-up notes
 
-Five hosted non-default branches were re-inventoried; protected readiness/prompt-integrity and held administration/creator planning/creator implementation dispositions unchanged. GitHub repository-scoped search found zero open PRs. No merge, rebase, deletion, integration or PR action was due. Suggested commit message: `docs: record held G10B.2 selected-client proof`. Next route: `DEV-0.7.1 Slice G10B.3 — Selected Save Request Identity Repair`, followed by a separate fresh G10B re-audit and an accepted ordinary defeat reachability route; G10C, G10D, planned-primary acceptance, deployment and Game-version change remain held. Evidence commit and final hosted handoff head are recorded after publication.
+Five hosted non-default branches were re-inventoried; protected readiness/prompt-integrity and held administration/creator planning/creator implementation dispositions unchanged. GitHub repository-scoped search found zero open PRs. No merge, rebase, deletion, integration or PR action was due. Suggested commit message: `docs: record held G10B.2 selected-client proof`. Next route: `DEV-0.7.1 Slice G10B.3 — Selected Save Request Identity Repair`, followed by a separate fresh G10B re-audit and an accepted ordinary defeat reachability route; G10C, G10D, planned-primary acceptance, deployment and Game-version change remain held. Evidence commit is recorded above; final hosted handoff head is reported after publication.
 
 ## 2026-10-10 DEV-0.7.1 Slice G10B.1 selected creator repair
 
