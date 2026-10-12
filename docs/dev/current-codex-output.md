@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-12 DEV-0.7.1 Slice G10B.2 independent selected-client proof
+
+Source: clean fetched local/hosted `master` `232b97cee0a14cdc6dc07c63fa874a50b97c3502`. Label class: unversioned executable gate under planned parent `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted DEV `DEV-0.7.0`. Date 2026-10-12; branch/status assumption: `master`, initially clean and synchronized, held branches untouched. **G10B_SELECTED_CLIENT_NOT_PROVEN; G10B_REPAIR_AND_REACHABILITY_ROUTE_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD.** Detailed row matrix and exact IDs: `docs/design/dev-0.7.1-slice-g10b-2-independent-selected-client-proof.md`.
+
+### A. Files changed
+
+Added six disposable development-local selected App/owner probe files under `apps/rpg-ui/g10b2-*` and the focused independent evidence decision. Updated current output, handoff, prompt, planning/historical route and branch register. No production source, schema, dependency, generated asset, Game version, deployment or user/site data was changed.
+
+### B. Patch summary and decision
+
+P1 first/descendant selected pending completion **PASS** in two contexts. S1 ordinary selected Soundings offer/accept/four shifts/turn-in/save/restart **PASS** with one applied witness, one 5g credit, quest/activity/notification/Chronicle and later fork all read back. C1 creator regression **PASS 31/31**, synthetic eligibility only. L1 **FAIL**: genuine post-commit lost acknowledgement and selected Retry/restart read the exact revision-3 head, but unchanged Save after restart minted distinct revision-4 artifact/publication; selected exact same-intent replay identity is not established. F1 **INCOMPLETE**: stale revision contender blocked; automatic approval review rejected the selected stale-generation Save after a disposable reset because it might recreate campaign data, and it was not retried. D1 **INCOMPLETE/unreachable**: selected authored gameplay has no observed HP-zero Normal-Stakes emitter; no fixture was substituted. H1 **INCOMPLETE**: a four-artifact non-head fork preserved one witness/payment and nine Chronicle/notification rows through 16 ticks, but representative defeat/lineage and longer growth cannot be claimed. The evidence matrix was written during the first ordinary probe rather than before all probes, so it cannot support a fully prewritten-matrix claim.
+
+### C. Tests or checks run
+
+Fresh two-context mounted default-App harness: **19 supporting assertions**, with an explicit L1 FAIL gate; fresh creator regression **31/31**; focused campaign/Soundings/survey Node **172/172**; UI Node-config typecheck **PASS**; app-local Vite production build **PASS** (244 client modules), emitted selected `index-CyVGQ0Rd.js` SHA-256 `DA3684F179A0AB3BA5D4820D0CDB83748E9E47FDD19A45D361B9FFDCCE0E76D1`, old auth/account/save/attempt prefixes absent. Broad UI typecheck remains **137 baseline diagnostics**, none in new files; not a green gate. Full diff and `git diff --check` are publication gates. Failure-pattern IDs applied: FP-001/002/003/004/005/006/008/009/011/012/013/014/015/017/018/019, with row-specific evidence and limits in the focused decision.
+
+### D. Risks / follow-up notes
+
+Five hosted non-default branches were re-inventoried; protected readiness/prompt-integrity and held administration/creator planning/creator implementation dispositions unchanged. GitHub repository-scoped search found zero open PRs. No merge, rebase, deletion, integration or PR action was due. Suggested commit message: `docs: record held G10B.2 selected-client proof`. Next route: `DEV-0.7.1 Slice G10B.3 — Selected Save Request Identity Repair`, followed by a separate fresh G10B re-audit and an accepted ordinary defeat reachability route; G10C, G10D, planned-primary acceptance, deployment and Game-version change remain held. Evidence commit and final hosted handoff head are recorded after publication.
+
 ## 2026-10-10 DEV-0.7.1 Slice G10B.1 selected creator repair
 
 Source and implementation start: clean local/hosted `master` `d4bbddf96293b4e45093b4edb3b4ce4610dc109b`; repair commit `46c3a3e637e65e39cc1014348733e9361b34a71e` pushed and independently read back from hosted `master`. Planned parent `DEV-0.7.1`; label class: bounded unversioned repair slice; development impact `supports_current_band`; Game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. Decision **G10B_1_REPAIR_VERIFIED; G10B_COMPLETION_PROOF_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD**. Focused record: `docs/dev/dev-0.7.1-slice-g10b-1-selected-creator-repair-record.md`.
