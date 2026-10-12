@@ -102,6 +102,10 @@ G8C closes the two decision blockers discovered by G8B without activating caller
 
 # Current Planning Anchor Reconciliation
 
+## 2026-10-12 — G10B.4 ordinary defeat route; independent G10B completion next
+
+**G10B4_ORDINARY_NORMAL_STAKES_REACHABILITY_VERIFIED; G10B_SELECTED_CLIENT_NOT_PROVEN; G10C_NOT_INSTALLED; ACTIVATION_HELD.** The preimplementation Stonevein capacity gate passed before source edits; narrow selected candidate admission, legal basic combat/beat caller and existing Normal-Stakes recovery now reach actual HP zero through the ordinary creator and World controls. Focused evidence and measured growth: `docs/design/dev-0.7.1-slice-g10b-4-capacity-and-reachability-record.md`, checkpoint `7e4e94f0` hosted-read back. G10B.3 Save classification remains no repair. The active successor is **G10B.5 fresh matrix-first independent selected-client completion re-audit** with two-context Retry, pending first/descendant, stale generation, ordinary Soundings, ordinary defeat/recovery, non-head/fork and representative history. G10B.1–4 harnesses are prerequisite/regression evidence, not completion. No G10C/G10D, deployment, activation, data clear, planned DEV/Game acceptance or held branch integration. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged.
+
 ## 2026-10-02 DEV-0.7.1 Slice G9E prerequisite
 
 Hardened G9D is verified on synchronized `4ebfc220` (terminal 14/14, adjacent browser 130/130, Node 127/127; build and UI-config pass; broad UI known 137 diagnostics). G9E address deletion is held on the accepted v5 slot-key contradiction: historical first attempt/recovery must survive deletion, but their `[accountId,slotId]` keys prevent a replacement campaign. The focused G9E address-generation decision installs additive v6 generation authority before player deletion and terminal cleanup. G9F, G10, parent and Game-version acceptance remain held.
