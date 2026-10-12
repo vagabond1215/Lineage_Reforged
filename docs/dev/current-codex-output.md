@@ -2,6 +2,8 @@
 
 ## 2026-10-12 DEV-0.7.1 Slice G10B.3 selected Save classification
 
+Evidence commit `b254233a90906f302e6a16c5ec1e72f822f7585f` was pushed and independently read back from hosted `master`; the final handoff-annotation head is checked separately.
+
 Source: clean synchronized local/hosted `master` `65abab40991870746ac18133dda71c4af065bc47`. Date 2026-10-12; branch/status assumption: `master`, initially clean; no unrelated work overwritten. Label class: unversioned executable support investigation under planned parent `DEV-0.7.1`; development impact `supports_current_band`, game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10B_3_SAVE_INTENT_CLASSIFIED_NO_REPAIR; G10B_SELECTED_CLIENT_NOT_PROVEN; G10C_NOT_INSTALLED; ACTIVATION_HELD.** Focused pre-probe matrix and exact IDs: `docs/design/dev-0.7.1-slice-g10b-3-reproduce-and-classify-decision.md`.
 
 ### A. Files changed

@@ -1,5 +1,7 @@
 # DEV-0.7.1 Slice G10B.4 — Authored Normal-Stakes Reachability Gate
 
+G10B.3 evidence commit: `b254233a90906f302e6a16c5ec1e72f822f7585f`. Synchronize to the later final hosted `master` handoff head before work.
+
 <!-- repo-scope-guard -->
 > **Repository boundary — mandatory:** This document applies only to `vagabond1215/Lineage_Reforged`. All repository work must stay in this repository. Cross-repository mutation is unauthorized.
 <!-- /repo-scope-guard -->
