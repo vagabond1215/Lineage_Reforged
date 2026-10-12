@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-12 DEV-0.7.1 Slice G10B.3 selected Save classification
+
+Source: clean synchronized local/hosted `master` `65abab40991870746ac18133dda71c4af065bc47`. Date 2026-10-12; branch/status assumption: `master`, initially clean; no unrelated work overwritten. Label class: unversioned executable support investigation under planned parent `DEV-0.7.1`; development impact `supports_current_band`, game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10B_3_SAVE_INTENT_CLASSIFIED_NO_REPAIR; G10B_SELECTED_CLIENT_NOT_PROVEN; G10C_NOT_INSTALLED; ACTIVATION_HELD.** Focused pre-probe matrix and exact IDs: `docs/design/dev-0.7.1-slice-g10b-3-reproduce-and-classify-decision.md`.
+
+### A. Files changed
+
+Added six development-local `apps/rpg-ui/g10b3-*` selected-UI and isolated generation probe files and the focused decision. Updated current output, handoff, prompt, planning/historical routes and branch register. No production source, schema, dependency, generated asset, deployment, site/user data or `GAME_VERSION` changed.
+
+### B. Patch summary and decision
+
+Mounted default-App two-context **16/16**: pre-submit failure left owner fixed; post-commit lost acknowledgement produced exactly one head; both `Retry campaign data` actions and restart reread it without publication; stale contender Save blocked. A later explicit same-content `Save` with `All Changes Saved` produced one *new intent* and head at the same tick; an accepted shift followed by explicit Save produced one later head at tick 2. Accepted G8C authority directs lost callers to resume by publication/recovery identity. Thus G10B.2 L1's duplicate-intent inference is superseded, and no production request-ID repair is warranted. Isolated unique-database lifecycle-generation/revision harness **14/14** fenced old session/hint/Save after a synthetic reset, with no target resurrection or unrelated-account mutation; it is not selected acceptance. Current World action only creates a candidate, so ordinary selected HP-zero combat/Normal-Stakes remains unreachable. The smallest separately owned route is bounded Stonevein candidate admission/legal combat/outcome/recovery with capacity preflight, followed by a **new matrix-first independent G10B re-audit** with representative ordinary history growth. G10B is not accepted.
+
+### C. Tests or checks run
+
+Selected browser 16/16; isolated generation browser 14/14; focused Node campaign/Soundings/survey **103/103**; UI Node-config typecheck **PASS**; app-local Vite production build **PASS** (244 client modules, selected asset `index-CyVGQ0Rd.js`); broad UI typecheck **137 existing diagnostics**, zero in G10B.3 probe files, not green. `git diff --check`, build identity inspection and exact hosted readback are final publication gates. Applied FP-001/002/003/008/009/011/012/017: real selected Retry and owner IDs, no parent acceptance from focused pass, explicit unreachable defeat, held branch semantics, source/published head separation, stale authority and genuine duplicate evidence, and ordinary reachability distinct from synthetic fixtures.
+
+### D. Risks / follow-up notes
+
+Five hosted non-default branches inspected; protected readiness/prompt-integrity and held administration/creator planning/creator implementation dispositions unchanged. Repository-scoped GitHub search found zero open PRs. No branch action was due or performed; exact review triggers remain in the branch register. Suggested commit message: `docs: classify G10B.3 selected Save intent and hold defeat route`. Next route: **G10B.4 authored Normal-Stakes reachability gate**, then a separate fresh G10B completion re-audit. G10C/G10D, deployment, activation, data clear, planned-primary/Game-version acceptance and held-branch integration stay blocked.
+
 ## 2026-10-12 DEV-0.7.1 Slice G10B.2 independent selected-client proof
 
 Source: clean fetched local/hosted `master` `232b97cee0a14cdc6dc07c63fa874a50b97c3502`. Evidence commit `0f5f07f325b598ff9b0d542d8f9ce4802cb43200` was pushed and independently read back at hosted `master`. Label class: unversioned executable gate under planned parent `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted DEV `DEV-0.7.0`. Date 2026-10-12; branch/status assumption: `master`, initially clean and synchronized, held branches untouched. **G10B_SELECTED_CLIENT_NOT_PROVEN; G10B_REPAIR_AND_REACHABILITY_ROUTE_REQUIRED; G10C_NOT_INSTALLED; ACTIVATION_HELD.** Detailed row matrix and exact IDs: `docs/design/dev-0.7.1-slice-g10b-2-independent-selected-client-proof.md`.
