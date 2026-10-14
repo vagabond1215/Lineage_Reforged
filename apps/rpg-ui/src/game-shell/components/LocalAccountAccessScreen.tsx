@@ -34,6 +34,7 @@ type LocalAccountAccessScreenProps = {
     confirmPassword: string;
     stayLoggedIn: boolean;
   }) => Promise<LauncherAuthResult>;
+  onImportArchive?: (file: File) => Promise<{ ok: boolean; message: string }>;
   themeMode: "dark" | "light";
   onToggleThemeMode: () => void;
 };
@@ -65,6 +66,7 @@ export function LocalAccountAccessScreen({
   onDeletionIntentChanged,
   allowAccountDeletion = true,
   onCreateAccount,
+  onImportArchive,
   themeMode,
   onToggleThemeMode
 }: LocalAccountAccessScreenProps) {
@@ -78,6 +80,7 @@ export function LocalAccountAccessScreen({
   const [createStayLoggedIn, setCreateStayLoggedIn] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [deletionError, setDeletionError] = useState<string | null>(null);
+  const [archiveError, setArchiveError] = useState<string | null>(null);
   const deletionIntentId = useRef(crypto.randomUUID());
 
   const invalidateDeletionIntent = () => {
@@ -256,6 +259,25 @@ export function LocalAccountAccessScreen({
         </div>
 
         {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}
+
+        {onImportArchive && <Card title="Restore epoch backup" accent="var(--color-world)">
+          <p className="text-sm text-[color:var(--color-text-soft)]">
+            Backup files contain sensitive sign-in verifier and game-state material. Keep the file private.
+            Restore requires an entirely empty epoch and cannot replace or merge existing data.
+          </p>
+          <input type="file" accept=".json,application/json" className="mt-3 block text-sm"
+            aria-label="Choose epoch backup file" disabled={submitting}
+            onChange={event => { const file = event.currentTarget.files?.[0];
+              event.currentTarget.value = '';
+              if (!file) return;
+              setArchiveError(null); setSubmitting(true);
+              void onImportArchive(file).then(result => {
+                if (!result.ok) setArchiveError(result.message);
+              }).catch(() => setArchiveError('Epoch backup restore failed. No import success was confirmed.'))
+                .finally(() => setSubmitting(false));
+            }} />
+          {archiveError && <p role="alert" className="mt-2 text-sm text-rose-700 dark:text-rose-100">{archiveError}</p>}
+        </Card>}
 
         <div className="flex-1 space-y-4">
           {showCreateForm ? (

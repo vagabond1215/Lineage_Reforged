@@ -11,7 +11,8 @@ import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAc
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen.js';
 import { SettingsScreen } from './game-shell/components/SettingsScreen.js';
 import { CleanEpochAccountAdapter, createEpochAccountId } from './game-shell/cleanEpochAccountAdapter.js';
-import { CLEAN_EPOCH_SESSION_STORAGE_KEY, openCleanEpochAccountStore,
+import { CampaignStoreError } from './game-shell/campaignIndexedDbStore.js';
+import { CLEAN_EPOCH_ARCHIVE_MAX_BYTES, CLEAN_EPOCH_SESSION_STORAGE_KEY, openCleanEpochAccountStore,
   type CleanEpochAccountStore, type CleanEpochSlotSummary } from './game-shell/cleanEpochAccountStore.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
@@ -20,7 +21,8 @@ import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCamp
 import { CleanEpochLauncherRead } from './game-shell/cleanEpochLauncherRead.js';
 import { CleanEpochLegacyActionAdapter, type EpochLegacyAction } from './game-shell/cleanEpochLegacyActionAdapter.js';
 import { resolveEligibleHeirSources } from './game-shell/runLifecycle.js';
-import type { LauncherAccountDeletionResult, LauncherAuthResult, LauncherRuntimeSession } from './game-shell/launcherAuthManager.js';
+import { verifyPassword, type LauncherAccountDeletionResult, type LauncherAuthResult,
+  type LauncherRuntimeSession } from './game-shell/launcherAuthManager.js';
 import { createAccountAccessState, gameShellReducer, getPreferredLoadSlotId, getPreferredSaveSlotId,
   getSaveSlotLabel, SAVE_SLOT_ORDER, type GameShellNotice, type GameShellState, type ManualSaveSlotId,
   type SaveSlotId, type SaveSlotSummary } from './game-shell/state.js';
@@ -484,6 +486,28 @@ export function EpochApp() {
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
     allowAccountDeletion
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}
+    onImportArchive={file => guarded(async () => {
+      if (!services || state.screen !== 'ACCOUNT_ACCESS')
+        return { ok: false, message: 'Epoch restore is available at account access.' };
+      if (file.size > CLEAN_EPOCH_ARCHIVE_MAX_BYTES)
+        return { ok: false, message: 'Epoch backup exceeds the supported size.' };
+      let committed = false;
+      try {
+        await services.owner.restoreArchive(await file.text());
+        committed = true;
+        try { window.localStorage.removeItem(CLEAN_EPOCH_SESSION_STORAGE_KEY); } catch { /* hint only */ }
+        await initialize();
+        notice({ tone: 'success', title: 'Epoch Backup Restored',
+          detail: 'The complete epoch graph was read back. Sign in with the restored account password.' });
+        return { ok: true, message: 'Epoch backup restored.' };
+      } catch (error) {
+        if (committed)
+          return { ok: false, message: 'Restore was verified, but the account list could not refresh. Reload before signing in.' };
+        if (error instanceof CampaignStoreError && error.code === 'readback_failed')
+          return { ok: false, message: 'Restore committed, but verification was interrupted. Reload and inspect the account list before attempting another import.' };
+        return { ok: false, message: 'Restore failed. Check the file and use a fresh empty epoch. No import success was confirmed.' };
+      }
+    }, { ok: false, message: 'Epoch restore is already pending or unavailable.' }, false)}
     onDeletionIntentChanged={() => { submittedAccountDeletion.current = null; }}
     onDeleteAccount={options => guarded(async (): Promise<LauncherAccountDeletionResult> => {
       if (!services) throw new Error('Epoch owner is unavailable.');
@@ -540,6 +564,24 @@ export function EpochApp() {
     allowAccountLifecycle
     slots={current.slots} onOpenLauncherSection={section => void refreshMenu(null, section)}
     onDeletionIntentChanged={() => { submittedAccountDeletion.current = null; }}
+    onExportArchive={password => guarded(async () => {
+      if (!services || state.screen !== 'SETTINGS')
+        return { ok: false, message: 'Epoch backup is unavailable.' };
+      const account = await services.owner.read(state.accountProfile.accountId);
+      if (!account || !password || !await verifyPassword(password, account.credential))
+        return { ok: false, message: 'Current account password did not match.' };
+      try {
+        const archive = await services.owner.exportArchive();
+        const url = URL.createObjectURL(new Blob([archive], { type: 'application/json' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `lineage-epoch-backup-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.append(link);
+        link.click(); link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
+        return { ok: true };
+      } catch { return { ok: false, message: 'Epoch backup could not be created.' }; }
+    }, { ok: false, message: 'Epoch backup is already pending or unavailable.' })}
     onResetAccount={options => guarded(async () => {
       if (!services || state.screen !== 'SETTINGS' || menuAccountRevision.current === null)
         return { ok: false, message: 'Account reset source is unavailable.' };

@@ -39,6 +39,7 @@ type SettingsScreenProps = {
   onOpenLauncherSection: (section: LauncherSectionId) => void;
   onResetAccount: (options: { accountId: string; password: string }) => Promise<AccountActionResult>;
   onDeleteAccount: (options: { accountId: string; password: string; intentId: string }) => Promise<AccountActionResult>;
+  onExportArchive?: (password: string) => Promise<AccountActionResult>;
   onDeletionIntentChanged?: () => void;
   allowAccountLifecycle?: boolean;
   onContinue: () => void;
@@ -307,6 +308,7 @@ export function SettingsScreen({
   onOpenLauncherSection,
   onResetAccount,
   onDeleteAccount,
+  onExportArchive,
   onDeletionIntentChanged,
   allowAccountLifecycle = true,
   onContinue,
@@ -328,6 +330,9 @@ export function SettingsScreen({
   const [accountPassword, setAccountPassword] = useState('');
   const [accountActionError, setAccountActionError] = useState<string | null>(null);
   const [accountActionPending, setAccountActionPending] = useState(false);
+  const [archivePassword, setArchivePassword] = useState('');
+  const [archiveError, setArchiveError] = useState<string | null>(null);
+  const [archivePending, setArchivePending] = useState(false);
   const deletionIntentId = useRef(crypto.randomUUID());
   const invalidateDeletionIntent = () => {
     deletionIntentId.current = crypto.randomUUID();
@@ -625,6 +630,26 @@ export function SettingsScreen({
               {!allowAccountLifecycle && <span className="text-xs text-[color:var(--color-text-secondary)]">Account reset and deletion are unavailable during the epoch cutover.</span>}
             </div>
           </div>
+
+          {onExportArchive && <div className="mt-4 rounded-md border border-[color:var(--color-border)] p-4">
+            <div className="text-sm font-semibold">Portable epoch backup</div>
+            <p className="mt-1 text-sm">The downloaded file contains sensitive sign-in verifier and game-state material for every local epoch account. Keep it private.</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <input type="password" value={archivePassword} placeholder="Current account password"
+                aria-label="Password to export epoch backup" className="creator-forged-input px-3 py-2"
+                onChange={event => setArchivePassword(event.target.value)} />
+              <button type="button" disabled={archivePending || !archivePassword}
+                className={neutralButtonClass} onClick={() => {
+                  setArchivePending(true); setArchiveError(null);
+                  void onExportArchive(archivePassword).then(result => {
+                    if (!result.ok) setArchiveError(result.message);
+                    else setArchivePassword('');
+                  }).catch(() => setArchiveError('Epoch backup export failed.'))
+                    .finally(() => setArchivePending(false));
+                }}>Download epoch backup</button>
+            </div>
+            {archiveError && <p role="alert" className="mt-2 text-sm text-rose-700 dark:text-rose-100">{archiveError}</p>}
+          </div>}
 
           {activeActionCopy && (
             <div className="forged-subpanel border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] p-4">

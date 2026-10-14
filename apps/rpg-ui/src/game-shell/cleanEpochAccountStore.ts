@@ -44,6 +44,122 @@ const ACCOUNT_DATA_STORES = [CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STO
   CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE,
   CLEAN_EPOCH_SLOT_GENERATION_STORE, CLEAN_EPOCH_ADDRESS_DELETION_STORE,
   "artifacts", "controls", "slots", "witnesses"] as const;
+const ARCHIVE_FORMAT = "lineage.clean-epoch.archive";
+const ARCHIVE_VERSION = 1;
+export const CLEAN_EPOCH_ARCHIVE_MAX_BYTES = 64 * 1024 * 1024;
+const ARCHIVE_FAMILIES = [
+  [CLEAN_EPOCH_ACCOUNT_STORE, "accountId"],
+  [CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, "accountId"],
+  [CLEAN_EPOCH_ATTEMPT_STORE, ["accountId", "slotId"]],
+  [CLEAN_EPOCH_RECOVERY_STORE, ["accountId", "slotId"]],
+  [CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, ["accountId", "campaignId"]],
+  [CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE, ["accountId", "campaignId"]],
+  [CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, ["accountId", "campaignId", "publicationId"]],
+  [CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, ["accountId", "campaignId", "publicationId"]],
+  [CLEAN_EPOCH_SLOT_GENERATION_STORE, ["accountId", "slotId"]],
+  [CLEAN_EPOCH_ADDRESS_DELETION_STORE, ["accountId", "slotId", "slotGenerationId"]],
+  ["artifacts", ["accountId", "artifactId"]],
+  ["controls", ["accountId", "campaignId"]],
+  ["slots", ["accountId", "slotId"]],
+  ["witnesses", ["accountId", "campaignId", "requestId"]]
+] as const;
+type ArchiveFamily = { name: string; keyPath: string | string[]; count: number; sha256: string; rows: unknown[] };
+type EpochArchive = { format: string; archiveVersion: number; databaseName: string;
+  databaseVersion: number; createdAt: string; families: ArchiveFamily[]; sha256: string };
+
+async function archiveDigest(value: string): Promise<string> {
+  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function archiveFailure(): never {
+  // Import errors never include archive content, verifier data or row identities.
+  fail("invalid_record", "Epoch archive failed complete integrity or graph preflight.");
+}
+
+function portableJson(value: unknown): boolean {
+  if (value === null || typeof value === "string" || typeof value === "boolean") return true;
+  if (typeof value === "number") return Number.isFinite(value);
+  if (typeof value !== "object" || Object.getOwnPropertySymbols(value).length) return false;
+  if (Array.isArray(value)) return Object.keys(value).length === value.length && value.every((item, index) =>
+    Object.prototype.hasOwnProperty.call(value, index) && portableJson(item));
+  if (Object.getPrototypeOf(value) !== Object.prototype) return false;
+  return Object.values(value).every(portableJson);
+}
+
+function validateArchiveGraph(families: ArchiveFamily[]): void {
+  const rows = new Map(families.map(family => [family.name, family.rows]));
+  const accounts = new Map<string, CleanEpochAccountRecord>();
+  const receipts = new Map<string, CleanEpochAccountLifecycleReceipt>();
+  for (const raw of rows.get(CLEAN_EPOCH_ACCOUNT_STORE) ?? []) {
+    if (!object(raw) || !nonblank(raw.accountId) || accounts.has(raw.accountId)) archiveFailure();
+    accounts.set(raw.accountId, checkedAccount(raw, raw.accountId));
+  }
+  for (const raw of rows.get(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE) ?? []) {
+    if (!object(raw) || !nonblank(raw.accountId) || receipts.has(raw.accountId)) archiveFailure();
+    receipts.set(raw.accountId, checkedLifecycle(raw, raw.accountId));
+  }
+  for (const [accountId, receipt] of receipts) {
+    const account = accounts.get(accountId);
+    if (receipt.kind === "delete" ? account !== undefined :
+        !account || accountLifecycleGeneration(account) !== receipt.completedGeneration ||
+        account.revision < receipt.completedRevision!) archiveFailure();
+  }
+  for (const [accountId, account] of accounts) {
+    const receipt = receipts.get(accountId);
+    if (!receipt && accountLifecycleGeneration(account) !== 1) archiveFailure();
+    const graph = new Map<string, unknown[]>();
+    for (const name of ACCOUNT_DATA_STORES)
+      graph.set(name, (rows.get(name) ?? []).filter(row => object(row) && row.accountId === accountId));
+    validateDestructiveGraph(account, graph);
+  }
+  for (const name of ACCOUNT_DATA_STORES)
+    for (const raw of rows.get(name) ?? [])
+      if (!object(raw) || !nonblank(raw.accountId) || !accounts.has(raw.accountId)) archiveFailure();
+}
+
+async function checkedArchive(text: string): Promise<EpochArchive> {
+  if (new TextEncoder().encode(text).byteLength > CLEAN_EPOCH_ARCHIVE_MAX_BYTES) archiveFailure();
+  let parsed: unknown;
+  try { parsed = JSON.parse(text); } catch { archiveFailure(); }
+  if (!object(parsed) || parsed.format !== ARCHIVE_FORMAT || parsed.archiveVersion !== ARCHIVE_VERSION ||
+      parsed.databaseName !== CLEAN_EPOCH_DATABASE_NAME ||
+      parsed.databaseVersion !== CLEAN_EPOCH_DATABASE_VERSION ||
+      typeof parsed.createdAt !== "string" || !Array.isArray(parsed.families) ||
+      parsed.families.length !== ARCHIVE_FAMILIES.length || typeof parsed.sha256 !== "string" ||
+      Object.keys(parsed).sort().join() !==
+        ["archiveVersion", "createdAt", "databaseName", "databaseVersion", "families", "format", "sha256"].join())
+    archiveFailure();
+  const archive = parsed as EpochArchive;
+  for (let i = 0; i < ARCHIVE_FAMILIES.length; i++) {
+    const [name, keyPath] = ARCHIVE_FAMILIES[i]!;
+    const family = archive.families[i];
+    if (!object(family) || family.name !== name ||
+        !exactEqual(family.keyPath, keyPath) || !Array.isArray(family.rows) ||
+        !Number.isSafeInteger(family.count) || family.count !== family.rows.length ||
+        typeof family.sha256 !== "string" ||
+        Object.keys(family).sort().join() !== ["count", "keyPath", "name", "rows", "sha256"].join() ||
+        await archiveDigest(JSON.stringify(family.rows)) !== family.sha256) archiveFailure();
+    const keys = new Set<string>();
+    let previousKey: string[] | null = null;
+    for (const row of family.rows) {
+      if (!object(row) || !nonblank(row.accountId) ||
+          (name !== CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE && row.version !== 1)) archiveFailure();
+      const key = (typeof keyPath === "string" ? [keyPath] : keyPath).map(field => row[field]);
+      if (key.some(part => !nonblank(part))) archiveFailure();
+      const orderedKey = key as string[];
+      if (previousKey !== null && indexedDB.cmp(previousKey, orderedKey) >= 0) archiveFailure();
+      previousKey = orderedKey;
+      const identity = JSON.stringify(key);
+      if (keys.has(identity)) archiveFailure();
+      keys.add(identity);
+    }
+  }
+  const { sha256, ...payload } = archive;
+  if (await archiveDigest(JSON.stringify(payload)) !== sha256) archiveFailure();
+  try { validateArchiveGraph(archive.families); } catch { archiveFailure(); }
+  return archive;
+}
 
 export type CleanEpochAccountRecord = {
   version: 1;
@@ -1223,6 +1339,84 @@ export class CleanEpochAccountStore {
   constructor(private readonly db: IDBDatabase,
     private readonly beforeWrite?: CleanEpochAccountStoreOptions["beforeWrite"],
     private readonly afterWrite?: CleanEpochAccountStoreOptions["afterWrite"]) {}
+
+  /** The complete epoch, including deleted-account tombstones, is one read snapshot. */
+  async exportArchive(): Promise<string> {
+    let tx: IDBTransaction;
+    try { tx = this.db.transaction(ARCHIVE_FAMILIES.map(([name]) => name), "readonly"); }
+    catch { archiveFailure(); }
+    const done = complete(tx);
+    const families: ArchiveFamily[] = [];
+    try {
+      if (this.db.version !== CLEAN_EPOCH_DATABASE_VERSION ||
+          this.db.objectStoreNames.length !== ARCHIVE_FAMILIES.length) archiveFailure();
+      for (const [name, keyPath] of ARCHIVE_FAMILIES) {
+        const store = tx.objectStore(name);
+        if (!exactEqual(store.keyPath, keyPath)) archiveFailure();
+        const rows = await requestValue(store.getAll() as IDBRequest<unknown[]>);
+        if (!rows.every(portableJson)) archiveFailure();
+        families.push({ name, keyPath: typeof keyPath === "string" ? keyPath : [...keyPath],
+          count: rows.length, sha256: "", rows });
+      }
+      await done;
+    } catch {
+      try { tx.abort(); } catch { /* already settled */ }
+      try { await done; } catch { /* retain generic archive error */ }
+      archiveFailure();
+    }
+    // Validate the whole snapshot before offering a file. No verifier is rendered.
+    try { validateArchiveGraph(families); } catch { archiveFailure(); }
+    for (const family of families) family.sha256 = await archiveDigest(JSON.stringify(family.rows));
+    const payload = { format: ARCHIVE_FORMAT, archiveVersion: ARCHIVE_VERSION,
+      databaseName: CLEAN_EPOCH_DATABASE_NAME, databaseVersion: CLEAN_EPOCH_DATABASE_VERSION,
+      createdAt: new Date().toISOString(), families };
+    const archive: EpochArchive = { ...payload, sha256: await archiveDigest(JSON.stringify(payload)) };
+    const text = JSON.stringify(archive);
+    if (new TextEncoder().encode(text).byteLength > CLEAN_EPOCH_ARCHIVE_MAX_BYTES) archiveFailure();
+    return text;
+  }
+
+  /** Preflight everything first, then admit only one empty-target transaction. */
+  async restoreArchive(text: string): Promise<void> {
+    const archive = await checkedArchive(text);
+    let tx: IDBTransaction;
+    try { tx = this.db.transaction(ARCHIVE_FAMILIES.map(([name]) => name), "readwrite"); }
+    catch { archiveFailure(); }
+    const done = complete(tx);
+    try {
+      if (this.db.version !== CLEAN_EPOCH_DATABASE_VERSION ||
+          this.db.objectStoreNames.length !== ARCHIVE_FAMILIES.length) archiveFailure();
+      // The emptiness fence is in the write transaction. A competing writer must
+      // serialize before or after it; an occupied target is never merged.
+      for (const [name, keyPath] of ARCHIVE_FAMILIES) {
+        const store = tx.objectStore(name);
+        if (!exactEqual(store.keyPath, keyPath) || await requestValue(store.count()) !== 0)
+          fail("conflict", "Epoch restore requires a fresh empty target.");
+      }
+      for (const family of archive.families) {
+        const store = tx.objectStore(family.name);
+        for (const row of family.rows) {
+          this.beforeWrite?.(tx);
+          await requestValue(store.add(row));
+          this.afterWrite?.(tx);
+        }
+      }
+      await done;
+    } catch (error) {
+      try { tx.abort(); } catch { /* already settled */ }
+      try { await done; } catch { /* retain original failure */ }
+      if (error instanceof CampaignStoreError && error.code === "conflict") throw error;
+      throw classify(error, "aborted");
+    }
+    // A lost acknowledgement can be resolved by a fresh empty/occupied read.
+    // Never report success until the complete committed graph is observed.
+    let actual: EpochArchive;
+    try { actual = await checkedArchive(await this.exportArchive()); }
+    catch { fail("readback_failed", "Epoch restore committed; reopen to verify the complete graph."); }
+    if (actual.families.some((family, i) =>
+      family.count !== archive.families[i]!.count || family.sha256 !== archive.families[i]!.sha256))
+      fail("readback_failed", "Epoch restore committed but exact readback changed.");
+  }
 
   close(): void { this.db.close(); }
 
