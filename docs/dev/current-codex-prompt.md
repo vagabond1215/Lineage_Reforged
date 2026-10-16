@@ -4,7 +4,7 @@
 > **Repository boundary — mandatory:** This document applies only to `vagabond1215/Lineage_Reforged`. All repository work must stay in this repository. Cross-repository mutation is unauthorized.
 <!-- /repo-scope-guard -->
 
-Date: 2026-10-16. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10B_SELECTED_CLIENT_PROVEN; SAVE_INTENT_CLASSIFIED_NO_REPAIR; G10C_BACKUP_RESTORE_ACCEPTED; G10D_D1_D2_SELECTED_PROVEN; G10D_D3_D6_PROOF_REQUIRED; G10E_NOT_INSTALLED; ACTIVATION_HELD.** The fixed G10D matrix and fresh G10D.1 exact checkpoints are `docs/design/dev-0.7.1-slice-g10d-long-run-capacity-quota-eviction-matrix.md` and `docs/dev/evidence/g10d1-selected-corrected-2026-10-16.json`. Start from the latest independently verified hosted `master`, reread the current handoff, and preserve accepted G10B/G10C and G10D.1 boundaries.
+Date: 2026-10-16. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10B_SELECTED_CLIENT_PROVEN; SAVE_INTENT_CLASSIFIED_NO_REPAIR; G10C_BACKUP_RESTORE_ACCEPTED; G10D_D1_D2_SELECTED_PROVEN; G10D_D3_D6_PROOF_REQUIRED; G10E_NOT_INSTALLED; ACTIVATION_HELD.** The fixed G10D matrix and conclusive one-graph G10D.1 exact checkpoints are `docs/design/dev-0.7.1-slice-g10d-long-run-capacity-quota-eviction-matrix.md` and `docs/dev/evidence/g10d1-combined-selected-2026-10-16.json`. The earlier `:5341` ordinary branches and `:5342` 120-save ledger are supporting evidence only, because they were separate graphs. Start from the latest independently verified hosted `master`, reread the current handoff, and preserve accepted G10B/G10C and reconciled G10D.1 boundaries.
 
 ## Objective and exclusions
 
