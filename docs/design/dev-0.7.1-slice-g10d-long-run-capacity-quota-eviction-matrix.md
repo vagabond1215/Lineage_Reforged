@@ -164,3 +164,21 @@ The separate focused decision `dev-0.7.1-slice-g10d-3-d6-authority-disposition.m
 | E1 authority/environment | **CLOSED on contractual recoverability basis.** | Actual involuntary eviction was not observed or safely reproducible. Denied persistence and simulation are not actual eviction evidence. Existing authority requires fail-closed detectable missing data plus complete user-held recovery, not an induced event. |
 
 **D6 PASS within that exact contract; G10D overall remains unaccepted.** D1/D2 combined-graph and D3–D5 independent evidence are unchanged. A separate overall D1–D7 ledger acceptance and publication decision must precede any G10E routing. No production edit, browser stress, capacity/fault rerun, activation, deployment, DEV/Game acceptance, `GAME_VERSION` change or held-branch integration occurred in G10D.3.
+
+## 2026-10-17 G10D.4 independent overall-ledger audit
+
+`dev-0.7.1-slice-g10d-4-independent-overall-ledger-audit.md` reconstructs every original fixed row from existing evidence. Its independent parser rechecked the exact seven `:5343` checkpoint identities, fourteen signatures per row, baseline-plus-save growth, retained artifacts and fixed witness/other heads. D1 remains PASS and the core D2 combined-graph measurements remain accepted. D3/D4 independently grown-graph faults, D5 selected restore plus valid near-cap owner boundary, and G10D.3 contractual D6 retain their published scopes. **Actual involuntary eviction remains unobserved.** D7 prior focused validations are historical, with the current documentation/hosted publication checked separately.
+
+The **first unproven original fixed-plan subcheck** is in the measurement paragraph above: “Check actual G10C export size and selected download at baseline/final.” The `:5343` combined ledger has owner-export bytes/digests at exactly 0 and 120, but its pre-run checklist and result record no selected Settings download or selected file identity at either exact point. G10D.2's later selected download is 10,394,105 bytes after further growth, versus the combined run's 8,732,446-byte final checkpoint; it is D5 evidence, not an exact D2 selected-download row. The earlier `:5330` selected download is from a different graph. No off-checkpoint or owner export substitutes for the missing selected row.
+
+| Original gate | G10D.4 overall audit |
+| --- | --- |
+| D1 | **PASS**, combined selected graph only. |
+| D2 | **OPEN** for exact baseline/final selected-download identity; all seven combined 14-family owner-export checkpoint measurements remain accepted. |
+| D3 | **PASS** within independent quota/abort and mounted blocked/Retry scope. |
+| D4 | **PASS** within independent terminal/lifecycle/deletion/Soundings fault scope. |
+| D5 | **PASS** within selected restore, atomic import, export-read and valid near-cap owner scope. |
+| D6 | **PASS on contractual recoverability basis**; actual involuntary eviction not observed. |
+| D7 | Prior focused validation evidence is present; this audit's documentation/commit/push/hosted readback closes only when published. D7 cannot override the missing D2 row. |
+
+**G10D_OVERALL_OPEN_SELECTED_BASELINE_FINAL_DOWNLOAD_PROOF_REQUIRED; G10E_NOT_INSTALLED; ACTIVATION_HELD.** No production repair is justified. Install only a narrow G10D.5 proof route: seek contemporaneous exact selected-download evidence first; absent that, repeat a fresh disposable selected combined graph with the required baseline and 120 downloads and fixed checkpoint/restart requirements. Do not infer a historical receipt or relax the original row. No G10E, deployment, activation, site/user data clear, planned DEV/Game acceptance, `GAME_VERSION` change or held-branch integration.
