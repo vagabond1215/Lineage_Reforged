@@ -1,5 +1,26 @@
 # Current Codex Output
 
+## 2026-10-17 DEV-0.7.1 Slice G10D.3 D6 authority disposition
+
+Source: initially clean fetched/authenticated local and independently verified hosted `master` `80051b2a7da5d0bd3162dde0a50cc8c002d24b6a`; branch/status assumption `master`. Date 2026-10-17. Label class: support evidence/authority slice under planned parent `DEV-0.7.1`; development milestone impact `supports_current_band`; game-version impact `none`. Current Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10D_D1_D2_SELECTED_PROVEN_ON_COMBINED_GRAPH; G10D_D3_D5_FAULT_AND_BOUNDARY_PROVEN; G10D_D6_CONTRACTUAL_RECOVERABILITY_PROVEN; ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED; G10D_OVERALL_NOT_ACCEPTED; G10E_NOT_INSTALLED; ACTIVATION_HELD.**
+
+### A. Files changed
+
+Added `docs/design/dev-0.7.1-slice-g10d-3-d6-authority-disposition.md`; appended the bounded D6-E1 decision to the fixed G10D matrix; updated this output, current handoff and prompt, historical/planning route and branch register. No production source, test harness, schema, dependency, generated output, browser/site/user data or `GAME_VERSION` changed.
+
+### B. Patch summary
+
+The focused comparison places the original capacity/retention, clean-epoch, G9A and G10A recovery requirements before the fixed G10D conditional D6 wording and the later G10D.2 conservative open-row rule. G10A explicitly treats profile deletion/browser eviction as a **recoverability scenario** with a user-held verified backup as recovery path; the fixed G10D row says an actual **required** eviction behavior that cannot safely be exercised stays open. No accepted pre-G10D.2 decision requires inducing involuntary eviction. D6-E1 is therefore closed by this explicit authority interpretation, preserving G10D.2's measured `persist()=false`/`persisted()=false`, exact estimates, safe origin-loss simulation and selected complete archive restores as separate facts. Actual involuntary eviction remains unobserved. Current selected source read-only inspection confirms retained-session missing-account and selected-account missing-data paths reject, while a wholly lost origin without a hint is indistinguishable from a fresh origin and uses user-held import. The first focused D6 decision/matrix checkpoint was committed and hosted-read back at `642b60bb3802e6b01c58a079eb10edd88934cd02`. G10D overall was **not** accepted here; only G10D.4 independent overall-ledger disposition is installed.
+
+### C. Tests or checks run
+
+Fresh fetch/prune; exact local/upstream and hosted prompt identity; repository-scoped PR search (zero open); five non-default hosted refs and local creator ref with live merge bases, unique paths and semantic overlap; original/fixed/later authority comparison; read-only selected fail-closed caller trace; G10D.1/G10D.2 nonsecret evidence reconciliation; staged documentation diff check; independent hosted focused decision and commit readback. No browser, capacity, fault, disk-pressure, profile-clear, production test/build or persistence probe was run in G10D.3. Applied FP-001/002 (do not inflate source or partial evidence to parent acceptance), FP-003 (reachable blocked/recovery contract), FP-007 (bounded edits to large current files), FP-008/009 (held branch and distinct source/checkpoint/final heads), FP-017 (selected path retained as the D1/D2 authority) and FP-019 (complete archive graph rather than partial recovery). Checks cover only the documentation/authority scope.
+
+### D. Risks / follow-up notes
+
+Actual involuntary eviction was not observed and there is no browser-specific eviction-protection guarantee. User-held backups must exist before a loss; an entirely erased origin cannot locally distinguish loss from first visit. D6 is closed only on the documented product contract and tested selected restore path. G10D overall and G10E remain held until a separate D1–D7 ledger disposition and its hosted publication. Five hosted refs remain protected/held, zero open PRs, no disposition/integration/deletion was due or performed. Suggested commits: `docs(decision): settle G10D D6 recoverability authority` (published checkpoint) and `docs(handoff): install separate G10D overall ledger audit`. Next recommended run: **DEV-0.7.1 Slice G10D.4 independent overall G10D ledger disposition**; no separate Game-version decision is proposed.
+
+
 ## 2026-10-17 DEV-0.7.1 Slice G10D.2 separate fault and persistence proof
 
 Source: initially clean synchronized authenticated local/hosted `master` `0c13999ea832661dc35db74a69d8371e8b3fd485`; fixed pre-injection checklist committed/pushed at `f47179625d1921100ce15f29893da1c3612b953b`. Date 2026-10-17; branch/status assumption `master`. Label class: support evidence slice under planned parent `DEV-0.7.1`; development milestone impact `supports_current_band`; game-version impact `none`. Current Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10D_D1_D2_SELECTED_PROVEN_ON_COMBINED_GRAPH; G10D_D3_D5_FAULT_AND_BOUNDARY_PROVEN; G10D_D6_RECOVERY_PROVEN_ACTUAL_EVICTION_OPEN; G10E_NOT_INSTALLED; ACTIVATION_HELD.** The G10D.1 exact 0/20/40/60/80/100/120 14-family ledger remains the sole D1/D2 authority; no D1/D2 rerun is claimed.
