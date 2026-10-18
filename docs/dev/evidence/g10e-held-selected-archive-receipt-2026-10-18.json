@@ -1,0 +1,21 @@
+{
+  "status": "PASS_G10E_EXACT_SELECTED_GRAPH",
+  "selectedBytes": 6197782,
+  "selectedSha256": "04e008760827875277337a9a2368490b60b3d672f151c1f90dacb6aae670957b",
+  "selectedCreatedAt": "2026-10-18T14:35:01.403Z",
+  "adjacentOwnerBytes": 6197782,
+  "adjacentOwnerSha256": "1734bbb05b373112140fd69f4470f7c6b33f80de0658453cdf787150640d9308",
+  "fileShaEqual": false,
+  "checks": {
+    "manifestSelfDigest": true,
+    "fourteenCompleteFamilyDigests": true,
+    "exactFamilySignatures": true,
+    "accountAndRunIdentity": true,
+    "headIdentity": true,
+    "addressIdentity": true,
+    "generationIdentity": true,
+    "artifactIdentity": true,
+    "witnessIdentity": true,
+    "lifecycleFamilySignature": true
+  }
+}

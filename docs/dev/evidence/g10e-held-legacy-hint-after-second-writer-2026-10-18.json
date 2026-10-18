@@ -1,0 +1,91 @@
+{
+  "legacyKeys": [
+    {
+      "key": "cataclysm-rpg-ui.accounts.v1.account.account.local.994123bc-795b-4ab2-8400-6c53457244e0",
+      "bytes": 1254,
+      "sha256": "34a9516a48069bcc18c941b97bdd53f58b2b658b2b22a6759df0e05c30cf08da",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.accounts.v1.account.account.local.a8769ea7-befc-4e10-af08-c19ff512a403",
+      "bytes": 1254,
+      "sha256": "4aeffb01ccf02c138a4d5e717630d90224906fe33561031b16163ba691639452",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.accounts.v1.active-account",
+      "bytes": 50,
+      "sha256": "83c4f8bb6bdff7b84a051f6fb42001173c95ee417726b3fddfdeab5d334c9c3a",
+      "parses": false
+    },
+    {
+      "key": "cataclysm-rpg-ui.auth.v1.credential.account.local.994123bc-795b-4ab2-8400-6c53457244e0",
+      "bytes": 339,
+      "sha256": "410c526453aa2f8e46aa5b72bceaeb77d8d3b9f42ad45023e7b7ffd52a400d08",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.auth.v1.credential.account.local.a8769ea7-befc-4e10-af08-c19ff512a403",
+      "bytes": 339,
+      "sha256": "af876211657e218b7722e9bae7327bcf2041e26a2a376606ff7961c2896782fc",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.auth.v1.session",
+      "bytes": 199,
+      "sha256": "5518923f1e7dac2e335918d964fbdcd1a3c743567ffec1ff17cbe01eec997a42",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.994123bc-795b-4ab2-8400-6c53457244e0.artifact.artifact.3071c8f9-36fb-4686-b64c-51364b79c1c0",
+      "bytes": 16135,
+      "sha256": "88a6599daa8414c99571d0601931a0721cbc2db62486f90db9a71f671914f4f0",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.994123bc-795b-4ab2-8400-6c53457244e0.campaign.campaign.2441e958-45f6-4069-b10b-4ccac07ddea2.control",
+      "bytes": 409,
+      "sha256": "ab64a93a2893add1e5b2b8852dabb3e65aedead1c8c6ef0aaa8aae30735842fa",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.994123bc-795b-4ab2-8400-6c53457244e0.candidate.generation.81a35ada-aca8-4758-b4c5-27f7b8ac56d9",
+      "bytes": 16135,
+      "sha256": "88a6599daa8414c99571d0601931a0721cbc2db62486f90db9a71f671914f4f0",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.994123bc-795b-4ab2-8400-6c53457244e0.slot.slot-1",
+      "bytes": 16135,
+      "sha256": "88a6599daa8414c99571d0601931a0721cbc2db62486f90db9a71f671914f4f0",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.a8769ea7-befc-4e10-af08-c19ff512a403.artifact.artifact.e1970725-476c-422c-b824-c2f97b76b48d",
+      "bytes": 16135,
+      "sha256": "55ea46a5c0c7f66d902ade3ecde7bc57d250a880776b7cc1ba5a7cbdb2098909",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.a8769ea7-befc-4e10-af08-c19ff512a403.campaign.campaign.2441e958-45f6-4069-b10b-4ccac07ddea2.control",
+      "bytes": 409,
+      "sha256": "456d0552416a0833f2329c122819e7b2d859f81f9418cc4e382a4559bcbc25c3",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.a8769ea7-befc-4e10-af08-c19ff512a403.candidate.generation.c31fceed-1d77-4233-bcd5-e7fb403a0322",
+      "bytes": 16135,
+      "sha256": "55ea46a5c0c7f66d902ade3ecde7bc57d250a880776b7cc1ba5a7cbdb2098909",
+      "parses": true
+    },
+    {
+      "key": "cataclysm-rpg-ui.saves.v7.account.account.local.a8769ea7-befc-4e10-af08-c19ff512a403.slot.slot-1",
+      "bytes": 16135,
+      "sha256": "55ea46a5c0c7f66d902ade3ecde7bc57d250a880776b7cc1ba5a7cbdb2098909",
+      "parses": true
+    }
+  ],
+  "epochHintPresent": true,
+  "epochHintBytes": 140,
+  "epochHintSha256": "74512194830d0ff45b0075bca05371434b03febf48482736c9b0fb5e834397b7"
+}

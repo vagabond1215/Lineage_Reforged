@@ -1,0 +1,235 @@
+{
+  "createdAt": "2026-10-18T03:41:15.977Z",
+  "archiveBytes": 3783620,
+  "fileSha256": "2f075ad1320223930b91ef5cbd3ba90e10a3eaf6b867ab2dc8628dd8ddbfa63c",
+  "manifestSha256": "4d426aaee5af7a7adeb2ec8125a95809fe755864e8e45cffe42ea2787abbac5a",
+  "families": [
+    {
+      "name": "accounts",
+      "count": 1,
+      "serializedRowsBytes": 28417,
+      "sha256": "f5d98daec9986f51097257a63b66f1d47b3d8084881b7dea49a1bd69cbb5a736"
+    },
+    {
+      "name": "accountLifecycle",
+      "count": 0,
+      "serializedRowsBytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "newCampaignAttempts",
+      "count": 0,
+      "serializedRowsBytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "pendingPublicationRecoveries",
+      "count": 0,
+      "serializedRowsBytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "campaignAttemptsV6",
+      "count": 2,
+      "serializedRowsBytes": 33341,
+      "sha256": "d7bfb67506594201b734e0f863eebb781df228b34fa219c482a8827ba6f8b45e"
+    },
+    {
+      "name": "firstPublicationRecoveriesV6",
+      "count": 2,
+      "serializedRowsBytes": 40802,
+      "sha256": "92fd5970766863101776bb847bc1b80c25b660d33a088ba3cf194a94952106b9"
+    },
+    {
+      "name": "descendantPublicationRecoveries",
+      "count": 8,
+      "serializedRowsBytes": 1957019,
+      "sha256": "0393283c97b6b399184ec156288ebfd40cb5411579af40ca87bbfba47a2d2d6d"
+    },
+    {
+      "name": "terminalLifecycleRecoveries",
+      "count": 0,
+      "serializedRowsBytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "currentSlotGenerations",
+      "count": 3,
+      "serializedRowsBytes": 947,
+      "sha256": "1a45671d17eeea72635acc6901c340ffea295e8b3b1a1a788296cf0cfddb489e"
+    },
+    {
+      "name": "addressDeletionReceipts",
+      "count": 0,
+      "serializedRowsBytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "name": "artifacts",
+      "count": 10,
+      "serializedRowsBytes": 1292523,
+      "sha256": "7242e63020227d0ad1d088eeecd9b414034323fec7f1e3ec7d960dae8f7e8e93"
+    },
+    {
+      "name": "controls",
+      "count": 2,
+      "serializedRowsBytes": 1295,
+      "sha256": "5eb31f9fbd6c597b0a68a9a5c6b73a74f0d536a04e45ca515764a44e63258b27"
+    },
+    {
+      "name": "slots",
+      "count": 3,
+      "serializedRowsBytes": 425143,
+      "sha256": "3bc9c70eb3395c55f935de86c93a6356ba62dbe9691bb70a545fbdae0a6ad0c5"
+    },
+    {
+      "name": "witnesses",
+      "count": 1,
+      "serializedRowsBytes": 1607,
+      "sha256": "1785db421f87f60eebf53038c06dfb468a1577358e8c1b7d0bb8a105c4f07826"
+    }
+  ],
+  "accounts": [
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "revision": 11,
+      "lifecycleGeneration": 1,
+      "runCharacterIds": [
+        "character.6fbd5b08-1a56-4a14-926f-5f0d36022023",
+        "character.9f85c6d8-6063-4e28-8ab1-085ae1449432"
+      ]
+    }
+  ],
+  "heads": [
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa",
+      "headArtifactId": "artifact.64ac6527-a721-4b77-b441-731baa6c619b",
+      "headPublicationId": "publication.806c698b-c6b5-4794-bfd5-024e4c5b78dd",
+      "headRevision": 6
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.b411eef8-5150-4095-8e2c-938c60c53b82",
+      "headArtifactId": "artifact.783d4b93-c085-44ce-80cf-f2995fbb6bd5",
+      "headPublicationId": "publication.c167af44-8cff-4132-84b8-be5492636b35",
+      "headRevision": 4
+    }
+  ],
+  "addresses": [
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "slotId": "quick-save",
+      "artifactId": "artifact.8db455e8-4b32-4291-a7a7-a33c0c1e6208",
+      "publicationId": "publication.dfae8b8c-ff4e-45dd-ae1c-611cdecdc9f8"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "slotId": "slot-1",
+      "artifactId": "artifact.64ac6527-a721-4b77-b441-731baa6c619b",
+      "publicationId": "publication.806c698b-c6b5-4794-bfd5-024e4c5b78dd"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "slotId": "slot-2",
+      "artifactId": "artifact.783d4b93-c085-44ce-80cf-f2995fbb6bd5",
+      "publicationId": "publication.c167af44-8cff-4132-84b8-be5492636b35"
+    }
+  ],
+  "generations": [
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "slotId": "quick-save",
+      "slotGenerationId": "slot.d0cb699b-9b60-48b8-9532-1ee310eaf78f",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "slotId": "slot-1",
+      "slotGenerationId": "slot.0aa03786-abf0-4c61-8b26-46b82a880218",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "slotId": "slot-2",
+      "slotGenerationId": "slot.4ee649ef-eaf2-4de9-8e04-319bc032b1f8",
+      "campaignId": "campaign.b411eef8-5150-4095-8e2c-938c60c53b82"
+    }
+  ],
+  "artifacts": [
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa",
+      "artifactId": "artifact.12f52a8f-57e6-4f50-b64b-61ff9e7ff761",
+      "publicationId": "publication.94aa8faa-b790-4df1-a95a-7b9d2a3b13f0"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa",
+      "artifactId": "artifact.30960f82-45d8-44c7-8a74-57f450916e98",
+      "publicationId": "publication.2e14bc93-68ae-498e-9795-0a70322c0b42"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.b411eef8-5150-4095-8e2c-938c60c53b82",
+      "artifactId": "artifact.3198d89b-1c3c-4165-85c8-9c42dde5022e",
+      "publicationId": "publication.ae8a1d6f-1db3-4a9c-b61f-b05d7f0e5aff"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.b411eef8-5150-4095-8e2c-938c60c53b82",
+      "artifactId": "artifact.35ba8523-e93b-4842-bc50-03922a122b10",
+      "publicationId": "publication.5f68d69e-720f-4536-b64c-1212f137dae6"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa",
+      "artifactId": "artifact.64ac6527-a721-4b77-b441-731baa6c619b",
+      "publicationId": "publication.806c698b-c6b5-4794-bfd5-024e4c5b78dd"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.b411eef8-5150-4095-8e2c-938c60c53b82",
+      "artifactId": "artifact.783d4b93-c085-44ce-80cf-f2995fbb6bd5",
+      "publicationId": "publication.c167af44-8cff-4132-84b8-be5492636b35"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa",
+      "artifactId": "artifact.8db455e8-4b32-4291-a7a7-a33c0c1e6208",
+      "publicationId": "publication.dfae8b8c-ff4e-45dd-ae1c-611cdecdc9f8"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa",
+      "artifactId": "artifact.b0690a5d-943e-4d9b-b9d2-005ebaf8e7f7",
+      "publicationId": "publication.76dcdef6-55b9-421c-b900-47e029b779a2"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.b411eef8-5150-4095-8e2c-938c60c53b82",
+      "artifactId": "artifact.df4dd363-29bb-40ed-8fe8-4824e81ce863",
+      "publicationId": "publication.e47433aa-44f9-416f-868c-5b73962897bd"
+    },
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.84b2bbb2-bd1d-4652-bbbb-28f84f7aa2aa",
+      "artifactId": "artifact.e058804e-2496-4523-b4f2-e6f6713008fe",
+      "publicationId": "publication.83879a83-cb48-4a52-95e9-5ab974647594"
+    }
+  ],
+  "witnesses": [
+    {
+      "accountId": "account.local.d6d91cce-712c-4e73-a842-5c53fec5dbbf",
+      "campaignId": "campaign.b411eef8-5150-4095-8e2c-938c60c53b82",
+      "requestId": "soundings_turn_in_request.144c6b67-ba5f-4745-ba42-469b5b803f79"
+    }
+  ],
+  "lifecycle": [],
+  "storage": {
+    "usage": 2491039,
+    "quota": 10739909279,
+    "persisted": false
+  },
+  "epochHintPresent": true
+}
