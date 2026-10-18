@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-18 DEV-0.7.1 Slice G10F operational epoch cutover preflight
+
+Source: clean fetched/authenticated local/hosted `master` `7c16b5a8041cc27fa7c299d41acb66007a36a70c`. Date 2026-10-18. Branch/status assumption `master`. Label class: parent-specific support preflight under planned `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10_DURABILITY_READY; G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT; ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED; G10F_ACTIVATION_HELD_TARGET_AND_ROLLBACK_PROOF_OPEN.** Focused decision: `docs/design/dev-0.7.1-slice-g10f-operational-epoch-cutover-preflight-decision.md`.
+
+### A. Files changed
+
+Added only the focused G10F operational decision; updated current output, handoff, next prompt, historical/planning route and branch register. No production source, schema, test, generated asset, site/profile/user data, deployment, `GAME_VERSION` or held branch changed.
+
+### B. Patch summary
+
+Read-only Sites metadata established owner-only hosted project `appgprj_6a92239b7f5c8191a91bcf4ee1f0e136` at `https://lineage-reforged-preview.vagabond1215.chatgpt.site`, current successful version 2/deployment `appgdep_6a979a45c5548191947f9d31aa730b85`, historical source `8857c08bb272f36938fde0a72087c5c0865be80b`, updated 2026-09-02. It is not the G10E validated epoch client. The local ignored G10E asset remains 2,842,595 bytes with SHA-256 `C95D70960DF7F26B6EB53B1A4C90D15C657E4B8F9B52677545CE4084DA6B44AE`; neither listed Sites version is established as epoch-compatible rollback. Normal local origin `http://127.0.0.1:5173` was not listening; `localhost:5173` is a separate conditional origin. Fresh accessible Codex in-app-browser inventory returned zero tabs but did not expose other owner browsers/profiles. Exact profile pairs, tab census, per-pair data age, operational backup and deployable epoch-compatible rollback remain unknown. No clear is authorized on an ambiguous or already-epoch pair. Installed only G10F.1 target/backup/rollback evidence completion, not operational cutover.
+
+### C. Tests or checks run
+
+Fresh fetch/prune and local/hosted source identity; read-only Sites `get_site`, two saved versions, zero custom domains and current deployment status; local built asset bytes/SHA and HTML; local listener check; accessible browser tab inventory; accepted G10A/E/reset authorities; live branch merge-base/unique-commit/path review and zero open repository PRs; documentation diff/readback and final hosted publication check. No G10B–E browser test, new build, typecheck, fault/capacity test, storage mutation or operational site action ran. Applied FP-002 (readiness distinct from activation/parent), FP-007 (bounded docs edits), FP-008/009 (semantic held refs and exact source/final identities), FP-011/014 (backup provenance), FP-018/019 (exact pair/graph before destructive clear). No new generalized pattern.
+
+### D. Risks / follow-up notes
+
+The old Sites version 2 cannot be used to edit a new epoch account; the unknown owner profile/data-age census and missing preserved compatible rollback are hard stops. G10E synthetic off-browser archive is not a target-specific user-held operational backup. Persistence denial, safe origin-loss recovery and unobserved involuntary eviction remain distinct. Five hosted non-default refs remain protected/held with unchanged triggers; no integration, deletion or PR action due/performed. Suggested commit: `docs(decision): hold G10F cutover on target and rollback evidence`. Next run: **DEV-0.7.1 Slice G10F.1 target, backup and rollback evidence completion**; no Game-version decision. Final hosted publication SHA follows independent readback.
+
 ## 2026-10-18 DEV-0.7.1 Slice G10E independent durability readiness
 
 Source: clean fetched/authenticated local/hosted `master` `9e606a789a8eca8bd1f4c8d0093aab80968243b3`; fixed E1–E9 pre-probe matrix `c395cc80b0f57d7d4c148b1023690809e3bb4fca`; nonsecret evidence checkpoint `94487dc64e8433d473cae3514c892a218aeb5fbf`; focused decision `d251c2c979c8debc8bdc5a56fab1a7ffd9c33a54`, all pushed and independently hosted-read back. Date 2026-10-18. Branch/status assumption `master`. Label class: parent-specific support readiness audit under planned `DEV-0.7.1`; development milestone impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10_DURABILITY_READY; G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT; ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED; ACTIVATION_HELD.** Complete row dispositions: `docs/design/dev-0.7.1-slice-g10e-independent-durability-readiness-disposition.md`.
