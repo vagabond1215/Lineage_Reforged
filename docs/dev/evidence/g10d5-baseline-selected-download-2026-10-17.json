@@ -1,0 +1,194 @@
+{
+  "status": "PASS_EXACT_GRAPH_SELECTED_DOWNLOAD",
+  "checkpointAccepted": 0,
+  "selectedSettingsDownload": {
+    "bytes": 1658326,
+    "sha256": "b30215132f8c51e27c4a070772e5b282c8dcb9f8be93fbc576305e135eb5cc60",
+    "createdAt": "2026-10-18T00:14:11.904Z",
+    "manifestSha256": "a1e6f0e4cd6656633697b9c823ef5d3b5c4a3c4bdbf179491b3b83ae7b624dfa",
+    "families": [
+      {
+        "name": "accounts",
+        "count": 1,
+        "serializedRowsBytes": 24330,
+        "sha256": "292f78b2126fe3a0bcb3a94d522082963710558d53fd04f0527a01e5bfc63bad"
+      },
+      {
+        "name": "accountLifecycle",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "newCampaignAttempts",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "pendingPublicationRecoveries",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "campaignAttemptsV6",
+        "count": 3,
+        "serializedRowsBytes": 49003,
+        "sha256": "b8f4d42cea8820b48fb2d63555ec7dec07a98f7d417c340f98a0e5fc3c655b0b"
+      },
+      {
+        "name": "firstPublicationRecoveriesV6",
+        "count": 3,
+        "serializedRowsBytes": 60193,
+        "sha256": "b0e880c4abd3893b559d864ec3a5e7728439b7b22a9194e779d865a9094899df"
+      },
+      {
+        "name": "descendantPublicationRecoveries",
+        "count": 5,
+        "serializedRowsBytes": 547373,
+        "sha256": "56b8f451e169a3bd406090ff653951acae039bd0fa451d73616cdee889257b05"
+      },
+      {
+        "name": "terminalLifecycleRecoveries",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "currentSlotGenerations",
+        "count": 4,
+        "serializedRowsBytes": 1261,
+        "sha256": "277ee0032fc1c5c8497fc9f707ae5b0d55e2f5d48cd2430f04eca0e8b936fb40"
+      },
+      {
+        "name": "addressDeletionReceipts",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "artifacts",
+        "count": 8,
+        "serializedRowsBytes": 523485,
+        "sha256": "dff8572f0645a41a6283d19f8ed242f30d8a7eba15c4ccaf59ef4c6128d99855"
+      },
+      {
+        "name": "controls",
+        "count": 3,
+        "serializedRowsBytes": 1942,
+        "sha256": "56d6680c38f0ddca903f35797bf6ffec69e6039c9a179bcfcc8e83aca43c9a9e"
+      },
+      {
+        "name": "slots",
+        "count": 4,
+        "serializedRowsBytes": 446607,
+        "sha256": "6a3571b9ceda4dc3667d49b42141c2e2e0dffe74065df98dc204450f6c0188df"
+      },
+      {
+        "name": "witnesses",
+        "count": 1,
+        "serializedRowsBytes": 1607,
+        "sha256": "984729f69fac1c519675775f26ffcecfbd806c1e358c6fdbc9d09f0f8468e75f"
+      }
+    ],
+    "accounts": [
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "revision": 9,
+        "lifecycleGeneration": 1,
+        "runCount": 3,
+        "historicalCharacterIds": [
+          "character.efe17510-f6ba-4f86-a0c8-ab1a33fd3b4c",
+          "character.737041be-a2dc-4bb7-a5d4-a05a3e2e4e3b",
+          "character.d03dbbfd-745b-4705-a62b-16b8afd25f47"
+        ]
+      }
+    ],
+    "heads": [
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "campaignId": "campaign.7610ab39-2071-4784-ac41-5dc1c3a14def",
+        "artifactId": "artifact.5d0af460-404e-4bc2-bd1a-e2d2c7099256",
+        "publicationId": "publication.f94b5bf8-bef8-4d7a-9e43-750f70923c08",
+        "revision": 2
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "campaignId": "campaign.ba76840c-ab39-441f-833e-9693fbd829a1",
+        "artifactId": "artifact.31d23ad2-d13b-4bef-aa54-ed1be7f27e78",
+        "publicationId": "publication.66c34027-5af7-4f0d-b318-5a7a94fde769",
+        "revision": 4
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "campaignId": "campaign.d00c93f1-7bc1-4808-90aa-edf0dca5ae7f",
+        "artifactId": "artifact.04bc9b83-219c-489c-b710-3748cdfd13d5",
+        "publicationId": "publication.27915bc5-a614-4191-849f-2d72ef9f7c6f",
+        "revision": 2
+      }
+    ],
+    "addresses": [
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "quick-save",
+        "artifactId": "artifact.44d46545-cf43-4974-891b-dccc9cfb9f33",
+        "publicationId": "publication.d0f34739-fe1d-44bb-b684-917da4861002",
+        "slotGenerationId": "slot.e96a1f84-9fe1-45ab-b2e5-51f7f4d79c94",
+        "campaignId": "campaign.ba76840c-ab39-441f-833e-9693fbd829a1"
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "slot-1",
+        "artifactId": "artifact.31d23ad2-d13b-4bef-aa54-ed1be7f27e78",
+        "publicationId": "publication.66c34027-5af7-4f0d-b318-5a7a94fde769",
+        "slotGenerationId": "slot.e79111d7-acce-44ca-afcd-e13effc1d7c9",
+        "campaignId": "campaign.ba76840c-ab39-441f-833e-9693fbd829a1"
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "slot-2",
+        "artifactId": "artifact.04bc9b83-219c-489c-b710-3748cdfd13d5",
+        "publicationId": "publication.27915bc5-a614-4191-849f-2d72ef9f7c6f",
+        "slotGenerationId": "slot.d42b5f56-3aa3-4420-a92e-af44496e5fd6",
+        "campaignId": "campaign.d00c93f1-7bc1-4808-90aa-edf0dca5ae7f"
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "slot-3",
+        "artifactId": "artifact.5d0af460-404e-4bc2-bd1a-e2d2c7099256",
+        "publicationId": "publication.f94b5bf8-bef8-4d7a-9e43-750f70923c08",
+        "slotGenerationId": "slot.6f84d516-6f6d-45b1-9512-bdb2a8b58b4b",
+        "campaignId": "campaign.7610ab39-2071-4784-ac41-5dc1c3a14def"
+      }
+    ],
+    "historicalArtifactIds": [
+      "artifact.04bc9b83-219c-489c-b710-3748cdfd13d5",
+      "artifact.0b7e72f9-e80b-440a-b976-2549b9951a4d",
+      "artifact.274b9416-a2ce-4ea6-9c4c-351390ad6773",
+      "artifact.31d23ad2-d13b-4bef-aa54-ed1be7f27e78",
+      "artifact.44d46545-cf43-4974-891b-dccc9cfb9f33",
+      "artifact.5d0af460-404e-4bc2-bd1a-e2d2c7099256",
+      "artifact.dee5af4c-1f8f-4502-abfd-a63847469037",
+      "artifact.edc555bd-3193-4eab-bf83-e8ec1e88ae2c"
+    ]
+  },
+  "adjacentOwnerCheckpoint": {
+    "bytes": 1658326,
+    "sha256": "bd1e763ebf65808c1d63ff96dc4e2bf670268a8554a9bfe76ef095d0f7bce994",
+    "createdAt": "2026-10-18T00:11:34.294Z",
+    "manifestSha256": "a0459ec089a4bd17bbd08935f9bcca4ad0ca5999be996e66c3da24106cb87ac7"
+  },
+  "wholeFileSha256Equal": false,
+  "wholeFileSha256Difference": "Archive createdAt is generated separately for each export; compare exact family row digests and graph identities.",
+  "checks": {
+    "selectedManifestSelfDigest": true,
+    "selectedFamilySelfDigests": true,
+    "exactFourteenFamilies": true,
+    "archiveBytes": true,
+    "accounts": true,
+    "heads": true,
+    "addresses": true,
+    "historicalArtifacts": true
+  }
+}

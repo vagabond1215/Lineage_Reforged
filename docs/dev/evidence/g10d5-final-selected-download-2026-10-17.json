@@ -1,0 +1,314 @@
+{
+  "status": "PASS_EXACT_GRAPH_SELECTED_DOWNLOAD",
+  "checkpointAccepted": 120,
+  "selectedSettingsDownload": {
+    "bytes": 9106532,
+    "sha256": "fb95ecdbcbeeedfcd2ed489293f26f33875d8cbea32f84a89af25d881bffc777",
+    "createdAt": "2026-10-18T00:25:28.985Z",
+    "manifestSha256": "a6ac8dc88cc0f25c8957d9a384a9673a437549d9b05edd8787eaed828dc2cbce",
+    "families": [
+      {
+        "name": "accounts",
+        "count": 1,
+        "serializedRowsBytes": 298492,
+        "sha256": "be83c4e354b31d495540b86695adf58ff63322a1488a66df26ca8c48cf41902d"
+      },
+      {
+        "name": "accountLifecycle",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "newCampaignAttempts",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "pendingPublicationRecoveries",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "campaignAttemptsV6",
+        "count": 3,
+        "serializedRowsBytes": 49003,
+        "sha256": "b8f4d42cea8820b48fb2d63555ec7dec07a98f7d417c340f98a0e5fc3c655b0b"
+      },
+      {
+        "name": "firstPublicationRecoveriesV6",
+        "count": 3,
+        "serializedRowsBytes": 60193,
+        "sha256": "b0e880c4abd3893b559d864ec3a5e7728439b7b22a9194e779d865a9094899df"
+      },
+      {
+        "name": "descendantPublicationRecoveries",
+        "count": 125,
+        "serializedRowsBytes": 5195965,
+        "sha256": "16e0d1a95382cea76cf76dcf95df828096e336fe2f0473a8d0b3c9d6ec60b673"
+      },
+      {
+        "name": "terminalLifecycleRecoveries",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "currentSlotGenerations",
+        "count": 4,
+        "serializedRowsBytes": 1261,
+        "sha256": "277ee0032fc1c5c8497fc9f707ae5b0d55e2f5d48cd2430f04eca0e8b936fb40"
+      },
+      {
+        "name": "addressDeletionReceipts",
+        "count": 0,
+        "serializedRowsBytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "name": "artifacts",
+        "count": 128,
+        "serializedRowsBytes": 3047485,
+        "sha256": "88f044720e7dbede8defbca527b3d5d1eca0977af15fc3f7e9bd6c7445bce6bf"
+      },
+      {
+        "name": "controls",
+        "count": 3,
+        "serializedRowsBytes": 1944,
+        "sha256": "75f34155c514d52f64790e8cb53bd434a6498ce26e8134267107dfea068c54bf"
+      },
+      {
+        "name": "slots",
+        "count": 4,
+        "serializedRowsBytes": 448053,
+        "sha256": "f3437f20d03982449e27905f9fea2ea792ad57928ec090799c022cbf9a5e5ccc"
+      },
+      {
+        "name": "witnesses",
+        "count": 1,
+        "serializedRowsBytes": 1607,
+        "sha256": "984729f69fac1c519675775f26ffcecfbd806c1e358c6fdbc9d09f0f8468e75f"
+      }
+    ],
+    "accounts": [
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "revision": 129,
+        "lifecycleGeneration": 1,
+        "runCount": 3,
+        "historicalCharacterIds": [
+          "character.efe17510-f6ba-4f86-a0c8-ab1a33fd3b4c",
+          "character.737041be-a2dc-4bb7-a5d4-a05a3e2e4e3b",
+          "character.d03dbbfd-745b-4705-a62b-16b8afd25f47"
+        ]
+      }
+    ],
+    "heads": [
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "campaignId": "campaign.7610ab39-2071-4784-ac41-5dc1c3a14def",
+        "artifactId": "artifact.5d0af460-404e-4bc2-bd1a-e2d2c7099256",
+        "publicationId": "publication.f94b5bf8-bef8-4d7a-9e43-750f70923c08",
+        "revision": 2
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "campaignId": "campaign.ba76840c-ab39-441f-833e-9693fbd829a1",
+        "artifactId": "artifact.89bcbf0d-82c3-49a1-8606-5873d846ee75",
+        "publicationId": "publication.72883cf6-1520-4764-822a-c8e394b3b6fe",
+        "revision": 124
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "campaignId": "campaign.d00c93f1-7bc1-4808-90aa-edf0dca5ae7f",
+        "artifactId": "artifact.04bc9b83-219c-489c-b710-3748cdfd13d5",
+        "publicationId": "publication.27915bc5-a614-4191-849f-2d72ef9f7c6f",
+        "revision": 2
+      }
+    ],
+    "addresses": [
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "quick-save",
+        "artifactId": "artifact.89bcbf0d-82c3-49a1-8606-5873d846ee75",
+        "publicationId": "publication.72883cf6-1520-4764-822a-c8e394b3b6fe",
+        "slotGenerationId": "slot.e96a1f84-9fe1-45ab-b2e5-51f7f4d79c94",
+        "campaignId": "campaign.ba76840c-ab39-441f-833e-9693fbd829a1"
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "slot-1",
+        "artifactId": "artifact.33c587d1-1db1-4902-a7fb-6c6c37e4e5b6",
+        "publicationId": "publication.8dccef81-3438-4603-9660-dbaa77c68139",
+        "slotGenerationId": "slot.e79111d7-acce-44ca-afcd-e13effc1d7c9",
+        "campaignId": "campaign.ba76840c-ab39-441f-833e-9693fbd829a1"
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "slot-2",
+        "artifactId": "artifact.04bc9b83-219c-489c-b710-3748cdfd13d5",
+        "publicationId": "publication.27915bc5-a614-4191-849f-2d72ef9f7c6f",
+        "slotGenerationId": "slot.d42b5f56-3aa3-4420-a92e-af44496e5fd6",
+        "campaignId": "campaign.d00c93f1-7bc1-4808-90aa-edf0dca5ae7f"
+      },
+      {
+        "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+        "slotId": "slot-3",
+        "artifactId": "artifact.5d0af460-404e-4bc2-bd1a-e2d2c7099256",
+        "publicationId": "publication.f94b5bf8-bef8-4d7a-9e43-750f70923c08",
+        "slotGenerationId": "slot.6f84d516-6f6d-45b1-9512-bdb2a8b58b4b",
+        "campaignId": "campaign.7610ab39-2071-4784-ac41-5dc1c3a14def"
+      }
+    ],
+    "historicalArtifactIds": [
+      "artifact.04bc9b83-219c-489c-b710-3748cdfd13d5",
+      "artifact.0b7e72f9-e80b-440a-b976-2549b9951a4d",
+      "artifact.0f5075f9-0cd2-4f4b-9d36-f08ac9373eb4",
+      "artifact.12ec856f-334e-4633-98a3-6a250ec3f0b1",
+      "artifact.137c5e12-c8cf-438f-8dfb-b1a356557f1e",
+      "artifact.1394664b-eec4-41f7-adeb-899d74e46317",
+      "artifact.143b6a62-db67-4477-a776-cd1922b23cf5",
+      "artifact.1bf57151-2605-4125-b21f-ad7442366ff8",
+      "artifact.1e59ea3b-3902-4ece-bf6d-d59666d15d8a",
+      "artifact.20f5a111-aa83-4857-b7cf-6fe240169269",
+      "artifact.23d8938f-bb79-47bd-b3b3-a33448c60cbe",
+      "artifact.23f73b17-32a5-4407-bbf2-988072b94c61",
+      "artifact.2479d072-a1aa-44ed-a2d7-63ca73edab8e",
+      "artifact.274b9416-a2ce-4ea6-9c4c-351390ad6773",
+      "artifact.2a00cc46-6fde-4f92-a2f5-6f4914b52e05",
+      "artifact.2c36b434-c758-4874-8fb1-9bfddb53cfae",
+      "artifact.2d827a70-5e1e-4d04-9642-a5e19645decc",
+      "artifact.302126ef-8ee2-4b7f-aff0-3400f41e7c14",
+      "artifact.31d23ad2-d13b-4bef-aa54-ed1be7f27e78",
+      "artifact.323ee3ee-4b26-42fe-a67f-fa615645fabd",
+      "artifact.33c587d1-1db1-4902-a7fb-6c6c37e4e5b6",
+      "artifact.35095a72-8ceb-473b-b0f0-c5d7a6265896",
+      "artifact.35918014-1866-4749-833c-65381871b611",
+      "artifact.37c2cc3e-b51d-483b-95ad-390bb17ac556",
+      "artifact.3edbb479-88c0-4136-b990-3adba1c87189",
+      "artifact.3edebc8c-8a37-428f-9da5-9cd8276cdbe0",
+      "artifact.3f292fd8-3f7e-4f17-af1a-abf2e5399a43",
+      "artifact.44d46545-cf43-4974-891b-dccc9cfb9f33",
+      "artifact.45b0c37e-221d-4af9-add6-f40d5620431a",
+      "artifact.46b95eb5-b7b1-4ca6-90b1-80232a5ba726",
+      "artifact.491a5268-dfc7-48e0-8796-5944f42506d1",
+      "artifact.4944097b-a021-4708-8240-3d49138d03da",
+      "artifact.4ab06188-a31b-4432-8a91-f70f70f1fdd3",
+      "artifact.50b52116-3c8c-44f0-83e9-47c8b676118f",
+      "artifact.5165d847-dd54-43c2-bed3-0a62c726097a",
+      "artifact.51718fa3-f2b4-448c-87e9-1e2cf21ab87d",
+      "artifact.520257c3-99bf-4c26-8010-13d98e290142",
+      "artifact.5a4c65f4-aa90-4ed1-80fb-7ad129c824f8",
+      "artifact.5a4fd422-ffe5-4eaa-a4bd-5124ac84baa3",
+      "artifact.5bc6f0be-829e-4155-898d-79686901e472",
+      "artifact.5d0af460-404e-4bc2-bd1a-e2d2c7099256",
+      "artifact.5d53dc54-2a49-40c9-9716-87c33d02d955",
+      "artifact.5e07cd8a-ffd8-4974-a786-f1b62563cd61",
+      "artifact.61163fff-1718-491d-a3ce-2c7a9bd27043",
+      "artifact.6358f0cc-bb5d-423b-b88f-79b93e64fc21",
+      "artifact.6401dadc-bdf3-49eb-b38d-ee923694f4bb",
+      "artifact.649dcf90-58a3-4937-b15a-5980292e9eea",
+      "artifact.65982c9a-8bdd-4b2f-9af3-165ecd1928b6",
+      "artifact.6627cad3-f8cf-4a0c-989d-10dc1be6da6d",
+      "artifact.67c13b73-21d0-4f09-a358-d194cb938fdc",
+      "artifact.69fa7c1e-cd09-458a-ba47-4ded213c7920",
+      "artifact.6bc68648-5861-4f76-a91f-5e004556d73e",
+      "artifact.6d8dbcaa-f856-42ac-b1c2-f35c4bf990bb",
+      "artifact.6dbd7168-adbd-4aa5-93fb-95f64478a1e4",
+      "artifact.6e966e56-bbec-4a18-bf6b-81e64b944100",
+      "artifact.73a60f60-1db8-4d9a-87be-8a79e401adcc",
+      "artifact.741b5460-97f0-42b4-aad1-37644dd5e9a4",
+      "artifact.756b5add-08a0-49dc-bebd-8c24a541d110",
+      "artifact.78e18e86-45ee-438f-bf53-19f40d2a682d",
+      "artifact.7f36d467-75bf-492d-9e75-4c725fc64f9d",
+      "artifact.837188f2-68d4-4d09-ae8c-7e95a815de4a",
+      "artifact.85f8ee0c-f31b-4c81-8cf3-bc582490a8ab",
+      "artifact.86c7dcb9-0212-4e20-9e0f-1503844092ea",
+      "artifact.89bcbf0d-82c3-49a1-8606-5873d846ee75",
+      "artifact.8c17816c-8a87-4105-b3bc-b21ed977cfb7",
+      "artifact.8cbad2ea-be92-4886-9c9a-8312ce926abb",
+      "artifact.8cde5291-9f53-4097-adb0-df9ca1756c08",
+      "artifact.8d4be84c-d41d-4228-a007-1753a9819f6b",
+      "artifact.90456214-7f8a-4074-a7b1-f28aad15981b",
+      "artifact.9295be14-8fcd-4a4f-894f-2d0fb14963b0",
+      "artifact.92bd0379-5fe2-4e05-94c1-7d8d15bdf10f",
+      "artifact.9459d33d-c293-4720-9c70-bafabce4e41d",
+      "artifact.96acde68-83ca-40fb-8bd0-5d0ec3224e8d",
+      "artifact.978ac829-db45-426b-95e3-38a181992fc9",
+      "artifact.97f913e1-52d1-484e-b1b1-09afd0b36598",
+      "artifact.9a282199-9a64-4f58-ae96-2ac93ae62335",
+      "artifact.9d271015-3ef0-4209-987d-51a2267923f1",
+      "artifact.9ec12939-504b-4052-b0b3-bdac5b4ba2b6",
+      "artifact.9f8fda9a-2f46-47d5-b27b-036b7c68c9c5",
+      "artifact.9fb24a5a-fd68-4cd1-8339-54264e7c7034",
+      "artifact.a0b847be-3266-4dce-ab9a-4fca4b06e880",
+      "artifact.a19312fc-f830-4c4d-8ed2-528223068768",
+      "artifact.a6a13ad1-f0f1-477d-90a5-27c9cc7a38c1",
+      "artifact.a6c5d04e-8306-4d72-a02b-964c7c11f3a9",
+      "artifact.a878da13-7efe-42de-81c2-5f5ef6c43a39",
+      "artifact.a9291aa2-2867-4625-b2a2-76a16260cfcc",
+      "artifact.a98757cd-4ce2-48f6-a938-9d219a9acc8a",
+      "artifact.a9a21b65-f68b-48c4-bc7c-b91cebc37254",
+      "artifact.abd9c15c-fcf2-4f75-b7f3-f0e96d511913",
+      "artifact.acef5e47-9b99-4c8b-9ad8-82d14a5bffbf",
+      "artifact.ae72e9c7-6f22-459a-ae61-b0b188a4f339",
+      "artifact.afcd5fd2-200d-4860-a516-17e6ccf57fa6",
+      "artifact.b1e61b73-1429-4a39-9202-cb34bece0bce",
+      "artifact.b725ebe1-15a3-4c2d-9a00-f2e6de7c3456",
+      "artifact.be2db073-5d14-4a18-856e-41ef7488bca0",
+      "artifact.c0286292-ab99-4884-8c9f-774872896e37",
+      "artifact.c1565ecd-5c91-492a-ae83-3b8f95bbe1a6",
+      "artifact.c4cb3138-3c69-486e-bfb4-ffc3a5affd4c",
+      "artifact.c70aac88-f492-4009-8018-061f9918ec40",
+      "artifact.c86bf7e2-363d-4daa-ae8b-a13fcc88f506",
+      "artifact.c8b4b8c8-d447-4576-b7ab-8902edea2a1f",
+      "artifact.cb311aa6-59d4-4567-81f8-0fcf4e665ac6",
+      "artifact.ccd4525a-87ce-46f3-9090-d78fd2378d13",
+      "artifact.d04c2cd0-1010-4b8e-95e7-62da67e2d7a3",
+      "artifact.d07a2905-343c-48b8-b781-4dd534213ce6",
+      "artifact.d10f2ecc-388e-43a4-9795-796e916a29d5",
+      "artifact.d571a128-2e9e-4ad9-b65f-3507c63479a8",
+      "artifact.d92b6d75-d054-4606-8cd1-cbc62c5adf96",
+      "artifact.de5ccdc3-a56c-4273-b33b-05edd27a3005",
+      "artifact.de66e001-b4a9-4b9a-beaa-80464329a6f1",
+      "artifact.dee5af4c-1f8f-4502-abfd-a63847469037",
+      "artifact.e3845b41-8830-4bdb-9b3a-0f3fddaca883",
+      "artifact.e40fe39a-896d-4570-aef8-08fcc93fff33",
+      "artifact.e4b71052-1754-4245-82c7-b50fcf3598d5",
+      "artifact.e5a841b6-d7a8-4a31-aa80-6912327b79be",
+      "artifact.e76dbf55-b6fd-4cbe-9b59-ecb04ee31e33",
+      "artifact.ed170e56-be3e-4b77-ac33-8848f2a39810",
+      "artifact.edc555bd-3193-4eab-bf83-e8ec1e88ae2c",
+      "artifact.ee908cde-7db4-44cc-8443-9be8bde5142a",
+      "artifact.ef4ad976-da64-4e17-92bb-fdce8358a974",
+      "artifact.f13ebcf3-731a-4c3e-b15b-09eba2594132",
+      "artifact.f2d2c27e-06c3-4ffd-8835-1e66bf4eb1ee",
+      "artifact.f47c8626-86e9-432e-9187-80fe089d8cd0",
+      "artifact.f68fbe7a-99da-4cc0-b75d-5cb43b77ee40",
+      "artifact.f7d22cce-2843-44dc-9571-e46467ed6a53",
+      "artifact.fbdf2d94-ffc5-4ebb-935b-223ed9a6aefa",
+      "artifact.fe3c0d61-713a-455a-9578-e4f954a86f13",
+      "artifact.fe7f4d8f-a53a-4f00-97df-72b213a55509"
+    ]
+  },
+  "adjacentOwnerCheckpoint": {
+    "bytes": 9106532,
+    "sha256": "d5a3cbcc69d2e3d51eb11d4d19e7535b1f1b5492fbb6a23307fbee4e597e7d31",
+    "createdAt": "2026-10-18T00:24:18.888Z",
+    "manifestSha256": "71d2c976ecb179b98da2ec19c89ddc9689772cd2e990426c45f0eaa01e73579b"
+  },
+  "wholeFileSha256Equal": false,
+  "wholeFileSha256Difference": "Archive createdAt is generated separately for each export; compare exact family row digests and graph identities.",
+  "checks": {
+    "selectedManifestSelfDigest": true,
+    "selectedFamilySelfDigests": true,
+    "exactFourteenFamilies": true,
+    "archiveBytes": true,
+    "accounts": true,
+    "heads": true,
+    "addresses": true,
+    "historicalArtifacts": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "status": "PASS_G10D5_INDEPENDENT_RECONCILIATION",
+  "ledgerSha256": "ff9ab531894f14861b2b21e7ee17718434ec803c8a56a44bbc86973755a8e79a",
+  "receiptSha256": [
+    "d5fa182b31558eda814aaa58870ca1a65f5aa70b97eb2ab0bfee33c2860fa1a9",
+    "8ec6dae48ccfbfbc3a69d34c89b2cb3c27e89766066510d53e48e4eb1b156fb1"
+  ],
+  "accepted": 120,
+  "loads": 39,
+  "restarts": 10,
+  "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+  "baselineAccountRevision": 9,
+  "finalAccountRevision": 129,
+  "baselineHeadRevision": 4,
+  "finalHeadRevision": 124,
+  "runCount": 3,
+  "witnessCount": 1,
+  "baselineDescendants": 5,
+  "finalDescendants": 125,
+  "baselineArtifacts": 8,
+  "finalArtifacts": 128,
+  "baselineArchiveBytes": 1658326,
+  "finalArchiveBytes": 9106532,
+  "deltas": [
+    {
+      "accepted": 20,
+      "archiveBytes": 2900344,
+      "blockByteDelta": 1242018
+    },
+    {
+      "accepted": 40,
+      "archiveBytes": 4141544,
+      "blockByteDelta": 1241200
+    },
+    {
+      "accepted": 60,
+      "archiveBytes": 5382744,
+      "blockByteDelta": 1241200
+    },
+    {
+      "accepted": 80,
+      "archiveBytes": 6623944,
+      "blockByteDelta": 1241200
+    },
+    {
+      "accepted": 100,
+      "archiveBytes": 7865192,
+      "blockByteDelta": 1241248
+    },
+    {
+      "accepted": 120,
+      "archiveBytes": 9106532,
+      "blockByteDelta": 1241340
+    }
+  ],
+  "illustration1000": 63726709,
+  "illustrationIsGuarantee": false
+}
