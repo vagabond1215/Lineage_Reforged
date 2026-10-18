@@ -1,0 +1,284 @@
+{
+  "status": "PASS_G10D6_EXISTING_SELECTED_LEDGER_RECONCILIATION",
+  "acceptedLongRun": {
+    "sourceFile": "g10d1-combined-selected-2026-10-16.json",
+    "evidenceSha256": "03160b8548dcfbcadd471c8cf2dbb2b1bb924af1b4c0a2cf9ae25d3ed1c086ae",
+    "accountId": "account.local.0129cd2a-738a-494b-b7c1-716218afbf81",
+    "historicalCharacterIds": [
+      "character.e02f265e-b704-4bc2-8e05-e6dc255c952e",
+      "character.a10857e9-c30a-4626-af43-fd865e0055ff",
+      "character.482536e6-379b-4101-ac8c-9aca2e91731b"
+    ],
+    "targetCampaignId": "campaign.985267eb-77b8-432a-8f04-2116d3a4bfcc",
+    "loads": 39,
+    "restarts": 10,
+    "rows": [
+      {
+        "accepted": 0,
+        "bytes": 1628697,
+        "archiveSha256": "f742b3653c06c77ae600809c76f54d82cdf139b3ea96fc89ee7b30602bcc2c4e",
+        "accountRevision": 8,
+        "targetHeadRevision": 3,
+        "descendants": 4,
+        "artifacts": 7,
+        "usage": 1440124,
+        "quota": 10738858364,
+        "persisted": false
+      },
+      {
+        "accepted": 20,
+        "bytes": 2812865,
+        "archiveSha256": "edec1faed874175511bed48e2c9b27e79f1571f0fd4918e6ebe3ffb480ada387",
+        "accountRevision": 28,
+        "targetHeadRevision": 23,
+        "descendants": 24,
+        "artifacts": 27,
+        "usage": 3771950,
+        "quota": 10741190190,
+        "persisted": false
+      },
+      {
+        "accepted": 40,
+        "bytes": 3996745,
+        "archiveSha256": "3ff2d733422497991180fc3cbbc0fddb00fd382a70273b4e590ca3ddf94051ef",
+        "accountRevision": 48,
+        "targetHeadRevision": 43,
+        "descendants": 44,
+        "artifacts": 47,
+        "usage": 2803183,
+        "quota": 10740221423,
+        "persisted": false
+      },
+      {
+        "accepted": 60,
+        "bytes": 5180625,
+        "archiveSha256": "c7ef2a116e18524f57bbafaeb2f69ccf0b3d9acda488bf0074c7a02d6e76f12c",
+        "accountRevision": 68,
+        "targetHeadRevision": 63,
+        "descendants": 64,
+        "artifacts": 67,
+        "usage": 2997081,
+        "quota": 10740415321,
+        "persisted": false
+      },
+      {
+        "accepted": 80,
+        "bytes": 6364505,
+        "archiveSha256": "5bda321749966bf402d266f9c789f3e077d8549453c2ce2ef883199afda57821",
+        "accountRevision": 88,
+        "targetHeadRevision": 83,
+        "descendants": 84,
+        "artifacts": 87,
+        "usage": 3324770,
+        "quota": 10740743010,
+        "persisted": false
+      },
+      {
+        "accepted": 100,
+        "bytes": 7548426,
+        "archiveSha256": "a32e1be53a6395ce69ca26cba4964c39c1708785f0d821dcc1ecf787dabca7c9",
+        "accountRevision": 108,
+        "targetHeadRevision": 103,
+        "descendants": 104,
+        "artifacts": 107,
+        "usage": 3830481,
+        "quota": 10741248721,
+        "persisted": false
+      },
+      {
+        "accepted": 120,
+        "bytes": 8732446,
+        "archiveSha256": "08afff9c4f15734fedf02442ee3ebbf3e98c95b86dcb78baa03e8fdd230ff67d",
+        "accountRevision": 128,
+        "targetHeadRevision": 123,
+        "descendants": 124,
+        "artifacts": 127,
+        "usage": 4458169,
+        "quota": 10741876409,
+        "persisted": false
+      }
+    ],
+    "finalFamilySignatures": [
+      [
+        "accounts",
+        1,
+        296408,
+        "c47bd1651cc4ed8a9742fda773c597c3b627d9213de4a7be40eabb297865ecbd"
+      ],
+      [
+        "accountLifecycle",
+        0,
+        2,
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      [
+        "newCampaignAttempts",
+        0,
+        2,
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      [
+        "pendingPublicationRecoveries",
+        0,
+        2,
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      [
+        "campaignAttemptsV6",
+        3,
+        49634,
+        "2e1719f54ae81c7c61d447d0cbf26fa17450b3dfedfe89a6b0f99ccc6cfd65c2"
+      ],
+      [
+        "firstPublicationRecoveriesV6",
+        3,
+        60864,
+        "ee6345859dfa605ca4494b599f79124e30d5bdc6bcf1b49ec32800ba9f221442"
+      ],
+      [
+        "descendantPublicationRecoveries",
+        124,
+        4942064,
+        "18750d786c5571fd177e764a4903f28b4baa74c5bb9834067598c3645d62b6e9"
+      ],
+      [
+        "terminalLifecycleRecoveries",
+        0,
+        2,
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      [
+        "currentSlotGenerations",
+        4,
+        1261,
+        "7318e252d89581f03914c773f0e665b215e04fa2b5cb14456c6caff75fb85fce"
+      ],
+      [
+        "addressDeletionReceipts",
+        0,
+        2,
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      [
+        "artifacts",
+        127,
+        2919970,
+        "aab03c2a520bbd9abbc1a7df3ba743e612f8d21e38615d3589630549f8602829"
+      ],
+      [
+        "controls",
+        3,
+        1944,
+        "f8ff4c3328c7701de34256dc88f5c0a117da3d1f4fc32306e8033b40287faa22"
+      ],
+      [
+        "slots",
+        4,
+        456165,
+        "d9d8e416f4fa5c3c694e6878132234ee310ed7a74cb148d79c9ade2934303379"
+      ],
+      [
+        "witnesses",
+        1,
+        1607,
+        "6ab7cccc7666b4a2048c9b575a380fc5adf6c254c3611128192313fbb2183efe"
+      ]
+    ]
+  },
+  "additionalExactDownloads": {
+    "sourceFile": "g10d5-combined-selected-2026-10-17.json",
+    "evidenceSha256": "ff9ab531894f14861b2b21e7ee17718434ec803c8a56a44bbc86973755a8e79a",
+    "accountId": "account.local.59c5c655-5258-4740-8808-1bfab50ddb37",
+    "loads": 39,
+    "restarts": 10,
+    "rows": [
+      {
+        "accepted": 0,
+        "bytes": 1658326,
+        "archiveSha256": "bd1e763ebf65808c1d63ff96dc4e2bf670268a8554a9bfe76ef095d0f7bce994",
+        "accountRevision": 9,
+        "targetHeadRevision": 4,
+        "descendants": 5,
+        "artifacts": 8,
+        "usage": 1638859,
+        "quota": 10739057099,
+        "persisted": false
+      },
+      {
+        "accepted": 20,
+        "bytes": 2900344,
+        "archiveSha256": "a47c1cc665079c2bbc081710bd3d48999ce0fcdab9b9eba268bb98a6914bbf37",
+        "accountRevision": 29,
+        "targetHeadRevision": 24,
+        "descendants": 25,
+        "artifacts": 28,
+        "usage": 4129427,
+        "quota": 10741547667,
+        "persisted": false
+      },
+      {
+        "accepted": 40,
+        "bytes": 4141544,
+        "archiveSha256": "37b396ae7b4632259ade5066ffbbb69df8163c678c186e674a3b9cf2f3ee0158",
+        "accountRevision": 49,
+        "targetHeadRevision": 44,
+        "descendants": 45,
+        "artifacts": 48,
+        "usage": 3241085,
+        "quota": 10740659325,
+        "persisted": false
+      },
+      {
+        "accepted": 60,
+        "bytes": 5382744,
+        "archiveSha256": "a8abb4b10d99e0b5c528bb9e9ec891963779af9c46bf79c66b30ae06ea869338",
+        "accountRevision": 69,
+        "targetHeadRevision": 64,
+        "descendants": 65,
+        "artifacts": 68,
+        "usage": 3587271,
+        "quota": 10741005511,
+        "persisted": false
+      },
+      {
+        "accepted": 80,
+        "bytes": 6623944,
+        "archiveSha256": "8112129fb952d4d27570ec040e3b11c3f4955c6cabbc8c287829c5ebbfffa1cf",
+        "accountRevision": 89,
+        "targetHeadRevision": 84,
+        "descendants": 85,
+        "artifacts": 88,
+        "usage": 4108520,
+        "quota": 10741526760,
+        "persisted": false
+      },
+      {
+        "accepted": 100,
+        "bytes": 7865192,
+        "archiveSha256": "2b97307ba423a607d5501a9c8721dc3dc01f2ca3079a1169763687a93e061be0",
+        "accountRevision": 109,
+        "targetHeadRevision": 104,
+        "descendants": 105,
+        "artifacts": 108,
+        "usage": 4782233,
+        "quota": 10742200473,
+        "persisted": false
+      },
+      {
+        "accepted": 120,
+        "bytes": 9106532,
+        "archiveSha256": "d5a3cbcc69d2e3d51eb11d4d19e7535b1f1b5492fbb6a23307fbee4e597e7d31",
+        "accountRevision": 129,
+        "targetHeadRevision": 124,
+        "descendants": 125,
+        "artifacts": 128,
+        "usage": 5597567,
+        "quota": 10743015807,
+        "persisted": false
+      }
+    ]
+  },
+  "distinctGraphIdentities": true,
+  "selectedFileVersusAdjacentOwnerSignaturesExact": true,
+  "wholeFileShaEqualityRequired": false
+}
