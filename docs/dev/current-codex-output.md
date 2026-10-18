@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-18 DEV-0.7.1 Slice G10F.2 owner pre-cutover disposal decision
+
+Source: clean fetched local/hosted `master` `b46d581dbca4ece6d7d3f509e158e035420ea99c`. Date 2026-10-18. Branch/status assumption `master`; label class: parent-specific support suffix under planned `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10F2_PRECUTOVER_DISPOSAL_WAIVER_ACCEPTED; OPERATIONAL_CUTOVER_NOT_EXECUTED.** Preserve `G10_DURABILITY_READY`, `G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT`, and `ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED`. Focused authority: `docs/design/dev-0.7.1-slice-g10f-2-precutover-development-data-disposal-owner-decision.md`.
+
+### A. Files changed
+
+Added the focused owner decision; marked G10F/G10F.1 historical preservation gates superseded; updated current output, handoff, prompt, planning/historical route and branch register. No production source, schema, tests, generated asset, account, Site or `GAME_VERSION` changed.
+
+### B. Patch summary
+
+The owner's explicit instruction makes every existing Lineage hosted-preview/local-development account and save created before operational cutover disposable, including pre-cutover epoch-schema tests. Target-specific old-data backup, migration, age inventory solely for preservation, and saved rollback as an old-data precondition are waived. No clearing is required; optional deactivation/flagging/deletion remains exact-account/origin/profile and generation-fenced. Close retained old tabs, serve the validated epoch client, and verify a fresh post-cutover account/campaign/save/load/restart. The first successful durable post-cutover epoch account begins protected new-data authority. Historical Sites version 2 cannot edit it. The separate Sites source repository still needs its own named work order for any source write. No cutover action occurred.
+
+### C. Tests or checks run
+
+Fetched/pruned Lineage refs; independently read back the starting hosted commit and zero open PRs; rechecked five non-default refs' merge bases, unique commits and changed-path counts; reviewed current G10F/G10F.1 and accepted clean-development reset authority; checked the bounded documentation diff and final hosted publication. No browser, deployment, build, storage or production test was run for this docs-only decision. Applied FP-002, FP-007, FP-008/009, FP-011/014 and FP-018/019 by keeping acceptance separate, using bounded supersession notes, preserving evidence provenance, and retaining exact targeting for destructive operations.
+
+### D. Risks / follow-up notes
+
+The owner waiver resolves old-data preservation blockers but does not itself deploy the epoch build or create a protected account. At the later cutover, recheck retained old-tab closure and served asset/deployment identity; any optional deletion must target only authorized Lineage data. Existing post-cutover data must never be covered by this waiver. Five protected/held refs retain their registered dispositions; zero open PRs; no branch integration/deletion due or performed. Suggested commit: `docs(decision): accept pre-cutover development data disposal waiver`. Install only **DEV-0.7.1 Slice G10F.3 — Operational Epoch Cutover And First Protected Readback**. `DEV-0.7.1` acceptance and Game-version decision remain separate. Final publication SHA follows independent hosted readback.
+
 ## 2026-10-18 DEV-0.7.1 Slice G10F.1 target, backup and rollback evidence completion
 
 Source: clean fetched/authenticated local/hosted `master` `9778a3ec8d2fdd39945b8dadb75d1a426faa1cd9`. Date 2026-10-18. Branch/status assumption `master`. Label class: parent-specific support pre-operation evidence under planned `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10_DURABILITY_READY; G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT; ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED; G10F_ACTIVATION_HELD_TARGET_AND_ROLLBACK_PROOF_OPEN; G10F1_OWNER_PAIR_AND_SAVED_ROLLBACK_OPEN.** Focused row decision: `docs/design/dev-0.7.1-slice-g10f-1-target-backup-rollback-evidence-disposition.md`.

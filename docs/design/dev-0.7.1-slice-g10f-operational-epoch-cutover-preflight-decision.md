@@ -1,5 +1,7 @@
 # DEV-0.7.1 Slice G10F — operational epoch cutover preflight
 
+**Later owner authority (2026-10-18):** `dev-0.7.1-slice-g10f-2-precutover-development-data-disposal-owner-decision.md` supersedes this preflight's requirements to inventory, back up or preserve rollback for pre-cutover development data, including old epoch-schema test data. The no-wildcard/no-unrelated-origin deletion, old-tab closure, validated-build and post-cutover data-protection boundaries remain in force. The rows below preserve this run's historical evidence and are not the current cutover gate.
+
 Date: 2026-10-18. Repository: `vagabond1215/Lineage_Reforged`. Inspected clean, fetched local/hosted `master` `7c16b5a8041cc27fa7c299d41acb66007a36a70c`. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted development milestone `DEV-0.7.0`. **G10_DURABILITY_READY; G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT; ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED; G10F_ACTIVATION_HELD_TARGET_AND_ROLLBACK_PROOF_OPEN.** This is a documentation-only, no-operation decision. It does not accept the parent or authorize deployment, clearing, tab closure, live registration or a Game-version change.
 
 ## Authority and exact build/deployment identities

@@ -1,5 +1,7 @@
 # DEV-0.7.1 Slice G10F.1 — target, backup and rollback evidence disposition
 
+**Later owner authority (2026-10-18):** `dev-0.7.1-slice-g10f-2-precutover-development-data-disposal-owner-decision.md` resolves the old-data preservation blockers below by explicit waiver, not by newly observed browser/profile facts. The old account/profile backup, migration, age-census and preserved rollback requirements no longer gate the pre-cutover data. Exact targeting remains mandatory for any actual deletion, and the first successful post-cutover epoch account starts the new protected persistence boundary.
+
 Date: 2026-10-18. Repository: `vagabond1215/Lineage_Reforged`. Inspected clean fetched local/hosted `master` `9778a3ec8d2fdd39945b8dadb75d1a426faa1cd9`. Planned parent `DEV-0.7.1`; Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted DEV `DEV-0.7.0`. **G10_DURABILITY_READY; G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT; ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED; G10F_ACTIVATION_HELD_TARGET_AND_ROLLBACK_PROOF_OPEN; G10F1_OWNER_PAIR_AND_SAVED_ROLLBACK_OPEN.** G10F.1 is evidence completion only. No cutover, deployment, tab closure, site/profile/user data clear, live account, production edit, parent acceptance, Game-version change or held-branch integration occurred.
 
 ## Fixed evidence boundary and current findings
