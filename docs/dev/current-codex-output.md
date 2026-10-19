@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-19 DEV-0.7.1 Slice G10F.4 source-only local closeout
+
+Source: clean fetched local/hosted `master` `1468bd522b7b64a8c201f0cf9ae2d0151fd498d5`. Branch/status: `master`; label class: parent-specific support suffix under planned `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10F3_LOCAL_EPOCH_CUTOVER_FUNCTIONALLY_PROVEN_WITH_EVIDENCE_LIMIT; PROTECTED_VALIDATION_ACCOUNT_RETAINED; SELECTED_BACKUP_FAILURE_UNCLASSIFIED_NONDIAGNOSTIC; HOSTED_CUTOVER_NOT_EXECUTED.** Preserve `G10_DURABILITY_READY`, `G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT`, `ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED`, and `G10F2_PRECUTOVER_DISPOSAL_WAIVER_ACCEPTED`. Focused disposition: `docs/design/dev-0.7.1-slice-g10f-4-local-cutover-source-only-closeout.md`.
+
+### A. Files changed
+
+Added only the focused source-only disposition; updated current output, handoff, prompt, planning/historical route and branch register. No production source, schema, test, generated asset, browser account/data, Site-source repository, hosted deployment, `GAME_VERSION` or held branch changed.
+
+### B. Patch summary
+
+Directly reconciled the G10F.3 selected observations against `EpochApp.tsx`, `CleanEpochAccountStore.exportArchive()`, `CleanEpochAccountAdapter.deleteAccount()` and `g10e-readback.ts`. The Settings backup catch covers export through download setup, so its generic error cannot identify a stage or defect. Production export is a complete fourteen-family validated/digested snapshot with a 64 MiB cap. Accepted G10E selected export/restore succeeded on unchanged production client source and the same built asset. Existing-account deletion requires exact revision/generation and current password; the retained first account cannot be normally deleted without its unavailable credential. The G10E helper itself exports the complete epoch, so it was not used to recover missing IDs from the mixed origin. Local registration/campaign/Save/load/restart and exact temporary deletion remain historical G10F.3 selected evidence. Missing IDs are an automation evidence gap, not graph-failure evidence; no production repair is justified. Install only G10F.5 separate hosted publication work-order boundary.
+
+### C. Tests or checks run
+
+Fetched/pruned and matched requested hosted/local source; repository-scoped GitHub search found zero open PRs; inspected five non-default ref heads, merge bases, unique commits/paths and semantic overlap. `git diff` against accepted G10E production-client source returned no delta. Fresh `npm run typecheck:node` and `npx vite build` passed; the 256-module client again emitted `index-DRiJsDUZ.js`, 2,842,595 bytes, SHA-256 `C95D70960DF7F26B6EB53B1A4C90D15C657E4B8F9B52677545CE4084DA6B44AE`. Source/control-flow and focused G10E E6/E7 evidence inspected. Documentation diff check and hosted readback follow publication. No new browser, protected-data, whole-epoch export, G10B–E stress/fault/capacity or eviction work. Applied FP-001/002/007/008/009/011/014/018/019 through selected-evidence provenance, acceptance separation, bounded edits, exact ref/source identity, archive-scope caution and intact credential/generation deletion guard; no new pattern.
+
+### D. Risks / follow-up notes
+
+The first protected local account remains inaccessible by known password and has no verified selected backup; exact IDs remain unrecorded. The generic Settings error is unclassified, not a diagnosed production defect. Future owner-created accounts are protected from creation. The hosted preview's last verified revision is historical pre-epoch; no hosted cutover occurred. A separate named work order/context is required before any `cloudflare_artifact` Site-source Git mutation. Five held/protected refs retain their dispositions, no branch integration/deletion or PR action due/performed. Suggested commit: `docs(decision): close local epoch cutover with evidence limit`. Next run G10F.5 hosted publication work-order boundary only; no parent/Game acceptance. Final publication SHA follows independent hosted readback.
+
 ## 2026-10-19 DEV-0.7.1 Slice G10F.3 partial local cutover and temporary account deletion
 
 Source: clean synchronized local/hosted `master` `801ce23ad03f15c1551086d21ce96cb04bc8e89b`. Branch/status: `master`; label class: parent-specific support suffix under planned `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10F3_LOCAL_CUTOVER_PARTIAL_PROTECTED_DATA_HELD.** Preserve `G10_DURABILITY_READY`, `G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT`, `ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED`, and `G10F2_PRECUTOVER_DISPOSAL_WAIVER_ACCEPTED`. Focused record: `docs/design/dev-0.7.1-slice-g10f-3-local-cutover-partial-record.md`.
