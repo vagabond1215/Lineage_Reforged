@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-19 DEV-0.7.1 Slice G10F.3 partial local cutover and temporary account deletion
+
+Source: clean synchronized local/hosted `master` `801ce23ad03f15c1551086d21ce96cb04bc8e89b`. Branch/status: `master`; label class: parent-specific support suffix under planned `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10F3_LOCAL_CUTOVER_PARTIAL_PROTECTED_DATA_HELD.** Preserve `G10_DURABILITY_READY`, `G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT`, `ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED`, and `G10F2_PRECUTOVER_DISPOSAL_WAIVER_ACCEPTED`. Focused record: `docs/design/dev-0.7.1-slice-g10f-3-local-cutover-partial-record.md`.
+
+### A. Files changed
+
+Added the focused partial-cutover record and updated current output, handoff, prompt, planning/historical route and branch register. No production source, schema, generated asset, hosted Site, other repository, Game version or held branch was changed. On the exact local origin, one protected account/campaign/save was created and one separate temporary zero-save account was created, restarted, signed in and deleted with action-time owner confirmation.
+
+### B. Patch summary
+
+The owner confirmed old tabs closed. The exact accepted epoch asset was rebuilt and served locally at `127.0.0.1:5173`; selected first-account campaign/save/load and full-page restart succeeded. The first account is the new protected persistence boundary. Browser automation then lost its generated password, so exact nonsecret account/head/history IDs and a selected backup are absent. Settings reported a generic archive failure, without an underlying cause. The owner directed preservation of that account and no replacement. A separate requested temporary account was deleted through the App's bounded Delete Account flow; after restart it was absent and the protected account remained listed. Hosted Site publication was not performed because it would require a separately authorized Site-source Git repository write.
+
+### C. Tests or checks run
+
+Fetched/pruned source and reviewed five held/protected refs and zero open Lineage PRs; fresh Vite build passed (256 modules), exact served asset returned HTTP 200 with matching 2,842,595-byte SHA-256 `C95D70960DF7F26B6EB53B1A4C90D15C657E4B8F9B52677545CE4084DA6B44AE`. Mounted default-App registration/campaign/Save/load/restart passed at the displayed level; temporary-account restart/sign-in/Delete Account/post-restart absence passed. No broad typecheck, G10B–E stress, fault, capacity or eviction probe was run. Applicable FP-001, FP-002, FP-007, FP-008/009, FP-011/014, FP-018/019: selected caller, bounded evidence, precise source/ref/graph claims and exact-account destructive action. No new reusable pattern registered.
+
+### D. Risks / follow-up notes
+
+G10F.3 is **not accepted**: the protected first account remains on the local origin but its password is unavailable, exact graph identities were not captured, selected backup failed generically, and hosted preview remains historical. The automatic approval review rejected a later whole-archive attempt through the temporary account because it would expose other accounts' material; no retry was made. Preserve the protected account; classify the backup failure and identity recovery separately before any repair/destructive step. Five held/protected refs retain their dispositions; no integration/deletion/PR action due or performed. Suggested commit: `docs(evidence): record partial local epoch cutover and temporary deletion`. Install only G10F.4 bounded recovery/readback classification. No DEV/Game acceptance or held-branch integration. Final publication SHA follows hosted readback.
+
 ## 2026-10-18 DEV-0.7.1 Slice G10F.2 owner pre-cutover disposal decision
 
 Source: clean fetched local/hosted `master` `b46d581dbca4ece6d7d3f509e158e035420ea99c`. Date 2026-10-18. Branch/status assumption `master`; label class: parent-specific support suffix under planned `DEV-0.7.1`; development impact `supports_current_band`; game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted DEV `DEV-0.7.0` unchanged. **G10F2_PRECUTOVER_DISPOSAL_WAIVER_ACCEPTED; OPERATIONAL_CUTOVER_NOT_EXECUTED.** Preserve `G10_DURABILITY_READY`, `G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT`, and `ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED`. Focused authority: `docs/design/dev-0.7.1-slice-g10f-2-precutover-development-data-disposal-owner-decision.md`.
