@@ -27,7 +27,9 @@ Descriptor identity is the stable **presentation key** for the same owner + conc
 
 ## 3. Minimal contextual action descriptor
 
-A read-only descriptor contains: presentation identity; owner route and concrete command identity (or an explicit unresolved expansion); family; human label/verb; observable target reference and source context; owner-derived availability; interaction shape; ranking group/priority; and an owner-supplied invocation handle or input requirements. Optional structured previews include known duration, resources/currency, risk and consequences, each with exact/estimate/unknown provenance. Optional expansion supplies owner-backed target/method/quantity/recipe/destination choices, refreshed on selection. Blocked descriptors carry a concise safe reason. No speculative universal payload seed, arbitrary sub-action provider registry, new persistence schema or central legality formula is frozen here.
+A read-only **world-action descriptor** contains: presentation identity; owner route and concrete command identity (or an explicit unresolved expansion); family; human label/verb; observable target reference and source context; owner-derived availability; interaction shape; ranking group/priority; and an owner-supplied invocation handle or input requirements. Optional structured previews include known duration, resources/currency, risk and consequences, each with exact/estimate/unknown provenance. Optional expansion supplies owner-backed target/method/quantity/recipe/destination choices, refreshed on selection. Blocked descriptors carry a concise safe reason. No speculative universal payload seed, arbitrary sub-action provider registry, new persistence schema or central legality formula is frozen here.
+
+A **management navigation affordance** such as `Manage Workshop`, `Personnel`, `Property`, `Ledger`, `Crew` or `Policies` is not a world-action descriptor. It opens a domain management surface and must not be logged, persisted or treated as character action history merely because it appears near executable actions.
 
 The UI may render, filter, sort, focus, confirm and invoke. It must not infer a command from a label, assemble a privileged payload from hidden state, calculate cost/damage/yield or convert a preview into acceptance. On invocation, the domain owner checks current head/tick, target, permissions, timing, resources and conflict; rejection refreshes the scene and shows the owner reason. UI confirmation acknowledges known risk but never bypasses owner admission.
 
@@ -55,19 +57,28 @@ Taxonomy is a discovery vocabulary, **not** a permanent engine enum. Owners issu
 | Survive | Camp, Rest, Sleep, Build Fire, Cook/Prepare: current settlement Rest exists; camp/fire/sleep/cooking require their own owners. Cooking remains crafting/process owned. |
 | Produce/work | Craft, Repair, Operate, Perform Work: recipe/process, station and work-order operations remain separate. |
 | Transport | Board/Disembark, Mount/Dismount, Pilot/Row/Sail, Dock/Moor/Anchor, Load/Unload: vessel/vehicle/control and cargo owners are missing. |
-| Social/economy | Talk, Ask/Inquire, Browse, Trade, Seek Work, Offer/Give: conversation, stock view, transaction and transfer have distinct authority. |
-| Farm/property | Farm, Tend Animals, Manage Property, Build/Improve: plot-stage actions and legitimate management/project rights are distinct. |
+| Social/economy | Greet/Talk, Ask/Inquire, Joke, Compliment, Flirt, Apologize, Persuade/Negotiate, Browse, Trade, Seek Work, Offer/Give, Request Service/Aid/Training, and immediate subordinate orders: dialogue, relationship, transaction, service, employment and command owners remain distinct. |
+| Farm/property | Plow/Sow/Water/Weed/Harvest, Tend Animals, Inspect/Repair/Build when physically performed: plot-stage and project actions remain owner-specific. Property/business administration belongs in management UI rather than this world-command taxonomy. |
 | Items | Take, Drop/Place, Store/Retrieve, Equip/Ready, Eat/Drink/Use: selected item context is invocation, not nutrition/transaction authority. |
 | Quest/contract | Accept, Track/Untrack, Report/Turn In: each is an existing or future quest-owner operation, not a global quest menu permission. |
 | Hostile/risky | Steal/Pickpocket, Lockpick/Force, Trespass/Sneak, Engage/Attack, Flee/Disengage: separate crime, access, encounter and combat owners must exist before playability is claimed. |
 
 ## 7. Home / Current Situation consumption
 
-Home is the default re-entry action surface described by the accepted UI boundary, not a seventh equal domain or a static dashboard. It answers **Where am I? What is around me? What is happening? What can I do now?** Its first screen shows current place/time and uncertainty, current activity or encounter, an optional tracked objective, selected nearby entity/resource, two or three high-value primary actions and a small number of meaningful blocked actions. A compact “More actions” route exposes **all currently legitimate observed** actions, with family grouping and keyboard/controller/screen-reader access; the six domain panels remain deeper information and management views. “All” never means hidden or unimplemented commands.
+Home is the default re-entry action surface described by the accepted UI boundary, not a seventh equal domain or a static dashboard. It answers **Where am I? What is around me? What is happening? What can I do now?** Its first screen shows current place/time and uncertainty, current activity or encounter, an optional tracked objective, selected nearby entity/resource, two or three high-value primary actions and a small number of meaningful blocked actions. A compact “More actions” route exposes **all currently legitimate observed world actions**, with family grouping and keyboard/controller/screen-reader access; the six domain panels remain deeper information and management views. “All” never means hidden or unimplemented commands.
+
+When the character controls an asset, crew, subordinate or institution, Home may separately expose concise management navigation such as `Personnel`, `Manage Workshop`, `Property` or `Policies`. These links do not enter the world-action list and do not consume an action merely by being opened.
 
 Rank deterministically after owner availability: immediate danger and active encounter first; then selected target, current activity/urgent obligation, tracked objective, current place and nearby opportunity; then recent use and capability relevance. Profession/knowledge is a weak relevance input, not a permission filter. Show a stable reason for promotion where helpful and avoid reshuffling while a target picker or confirmation is open. Selected target/context refreshes descriptors. Completing or rejecting a contextual flow returns to the recomputed Home situation with focus restored near the originating action; opening a full domain panel preserves a return path. Presentation state such as open menus and ranking remains ephemeral.
 
 Previews state what the character can reasonably know: destination, time/tick estimate, known stamina/material/currency costs, capacity, tool/station, visible threat, legal/trespass warning and body strain. Mark uncertain risk/yield honestly and hide secret rolls, undiscovered entities, exact unseen stock and private simulation values. After execution show accepted/rejected result, spent resources, state change, partial progress and history links. Combat in particular needs visible target HP/status and applied damage/progression feedback where observable, plus distinct action costs and timing; the present selected UI's action labels/costs alone are insufficient for tactical choice. The combat owner supplies those outcomes, respecting hidden enemy information.
+
+
+### 7.1 Promoted contextual shortcuts
+
+A concrete interaction that would normally appear inside an entity interaction may be promoted to Home when the scene already establishes the target and likely intent. For example, a toll bridge may show `Pay Toll` beside `Talk to Toll Collector`; a guildhall may show `Apply to Guild`; a healer may show `Request Healing`; a merchant may show `Trade`.
+
+Promotion changes only presentation/ranking. The promoted action invokes the **same concrete owner command** as the deeper interaction and cannot duplicate price, result, permission or history logic. `Talk` is not a mandatory parent menu when a more useful concrete action is already obvious.
 
 ## 8. First integration and later loop
 
