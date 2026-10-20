@@ -101,6 +101,10 @@ One interaction away:
 
 Home does not compute eligibility or mutate state. Its actions route to owner pages or invoke already-authoritative commands.
 
+### Entity-first interaction and contract postings
+
+Within the future contextual Home/World presentation, interacting with a real **guild clerk** reveals eligible membership, dues, service and turn-in actions. Interacting with an observed **contract board, notice desk or posting counter** directly opens **Browse Contracts** as its default view; selecting a posting opens the contract card, which contains **Accept** if the actual offer owner permits it. Completion goes through a designated receiving clerk/contact rather than an extra board submenu. Commissioning work begins with a selected **crafter** or an authorized crafting-guild broker, distinct from personal crafting at a workshop station. Promoted contextual shortcuts may reduce clicks but must invoke the same owner command, not duplicate an NPC, quest, contract or transaction route. Browse and card inspection are read/navigation by default, never simulated gameplay mutations. See [interaction endpoint routing](contextual-interaction-endpoints-and-contract-station-routing-decision.md). All of these richer interactions remain deferred until their owners exist and do not expand the existing-command Home slice.
+
 ## 7. Linked-Record And Search Model
 
 Use a common presentation shell without creating a common canonical owner. A linked record projection may include type, stable id, title, summary, asset/fallback, known-state label, provenance, related records, recent relevant events, and owner-routed actions.
