@@ -83,6 +83,8 @@ biome / climate envelope
   ↓
 world hex + locality band
   ↓
+named semantic map feature
+  ↓
 local habitat / geomorphology / hydrology / disturbance
   ↓
 edge / route / crossing
@@ -159,6 +161,38 @@ Coarse spatial context already includes concepts such as:
 This can shape discovery, route/movement, expected opportunities and Home summaries.
 
 It still does not prove exact local adjacency.
+
+### Named semantic map feature
+
+The map-feature authority provides static authored semantic identities for features such as:
+
+- river;
+- lake;
+- wetland;
+- coastline;
+- estuary;
+- mountain range;
+- mountain pass;
+- cliff;
+- forest;
+- grove;
+- desert;
+- swamp;
+- plain;
+- natural harbor;
+- natural landmark;
+- cultural landscape.
+
+It can anchor a named feature to a region, region locality or settlement with relationships such as contains, crosses, borders, near or named context.
+
+This is useful scene **identity/context**, but the schema explicitly does not define runtime position, geometry, route topology, ecology execution, POI placement, commands or gameplay state.
+
+Therefore:
+
+- knowing a named estuary exists near a settlement does not prove the player is standing in it;
+- a named river can inform route/scene narration and local-feature resolution after an owner establishes proximity;
+- map-feature identity should be preserved when available so the UI can say `River Sable` rather than generic `river`;
+- map-feature records must not directly mint Cross, Fish, Gather, Sail or other commands.
 
 ### Habitat / feature
 
