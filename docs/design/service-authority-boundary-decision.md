@@ -53,6 +53,10 @@ A static service descriptor answers "what kind of capability is represented." It
 - what command executes;
 - what history or save state changes.
 
+### Presentation does not create a provider
+
+A future `contract_board` capability may be presented by a real observed notice board, desk or counter. Selecting that station can open a **Browse Contracts** read view by default; an actual posted offer's card, not the service type, supplies the owner-backed **Accept** action. Guild membership/dues and contract reports ordinarily route through a present authorized guild clerk; commissioning another artisan routes to that crafter or an authorized guild broker. See [contextual interaction endpoints](contextual-interaction-endpoints-and-contract-station-routing-decision.md). These presentation decisions do **not** convert a planned `civilization.services` descriptor into a provider, contract instance, NPC, payment or executable service.
+
 ## 4. Existing service-like surfaces
 
 Current docs and content already expose service-like surfaces without a dedicated service authority:
