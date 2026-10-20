@@ -82,3 +82,88 @@ The separately bounded first **new** sandbox loop candidate is environmental res
 Unresolved: exact local position/interior/vehicle identity; nearby observable entity/resource instance registry; dynamic weather/light and local depletion; ownership, law/crime and illicit consequences; generic item-instance/transfer/container and full consumption owner; station/recipe production; merchant stock/transaction; NPC social/offer; work/employment; farming/animal/plot; property/building/projects; mounts/vessels/cargo; camp/survival; generic timed activity and interruption; non-Soundings quest completion migration. Accepted static data is not proof of executable owners. Each requires its own bounded contract/schema and real caller before action exposure.
 
 Sequence: current combat repair → independent encounter victory/choice acceptance → separate Game-version decision → accept this architecture → first existing-command Home slice → structural UI overhaul consuming these same descriptors and owner routes → first new resource loop → broader Game `0.2` vertical-slice work. This package does not change `GAME_VERSION`, active prompt, combat, epoch persistence, deployment or held branches.
+
+
+## 10. Ecology-grounded environmental context
+
+The contextual system must not equate a **biome** with an executable local scene. Repository ecology has several distinct environmental layers with different authority and affordance meaning:
+
+1. **regional ecology profile** — broad climate, native flora/fauna, supply strengths, hazard/infrastructure pressure and economic/ecological tendencies;
+2. **biome** — broad ecological envelope such as steppe, savanna, marsh, taiga, hot desert, tropical rainforest, marine or tundra;
+3. **world hex / locality band** — coarse terrain, elevation, freshwater context, barriers, hazards, resource affinities, industry and route access;
+4. **habitat / feature** — nearer observable feature such as estuary, seasonal creek, riverbank, tidal flat, forest edge, thicket, cliff, ravine, cave, spring, coral reef, burn scar or planar rift;
+5. **edge / route feature** — road, trail, river, ferry, pass, sea lane and barrier/crossing state;
+6. **site / structure / interior / vehicle / resource instance** — exact local interactable when a domain owner provides stable identity;
+7. **transient state** — weather, flood, fire, disturbance, depletion, encounter, closure or supernatural event.
+
+The scene resolver may use broader layers to rank, describe or modify possibilities, but a broad ecology record alone does not prove a local interactable. For example:
+
+- `biome.grasslands.steppe` can raise the relevance of open-country travel, herd/game, drought and sparse-water concerns, but does not prove that a seasonal creek or herd is physically beside the player;
+- `habitat.coastal.estuary` can support estuary-specific observation/navigation/resource candidates only when the player-relative scene can actually establish that habitat or an equivalent local feature;
+- a regional profile listing native trout does not create a fishable target at every river;
+- a hex-level resource availability score can support discovery/prospecting probability and informative scene summaries, but is not itself a harvestable resource instance.
+
+### 10.1 Current authored environmental breadth
+
+At the architecture source line the repository contains:
+
+- 36 authored biomes across desert, subterranean, temperate, wetlands, polar, shrublands, marine, tropical and grasslands climate bands;
+- 93 habitats across marine, coastal, hydrology, vegetation, disturbance, subterranean, geomorphology and supernatural families;
+- habitat shapes including patch, linear, point, edge and volume;
+- 9 regional ecology profiles;
+- 47 region-locality/world-hex records;
+- 49 world-hex edges;
+- travel edge types including road, trail, river, ferry, pass and sea lane;
+- travel modes including foot, horseback, pack animal, wagon, river craft and sea vessel.
+
+Representative authored habitats include estuary, tidal flat, beach, shoreline, sea cliff, coral reef, kelp forest, current front, river, stream, seasonal creek, oxbow lake, marsh pool, riverbank, floodplain terrace, meadow, thicket, forest edge, fallen log, burn scar, windthrow, landslide, cave, flooded cave, subterranean river, chasm, cliff, mountain pass, ravine, canyon, salt pan, geothermal field, planar rift, leyline and corrupted ground.
+
+These are **coverage inputs**, not an instruction to create one bespoke command set per content record.
+
+### 10.2 Environmental affordance composition
+
+Environmental actions should be composed from observable feature semantics rather than from a giant biome switch.
+
+Candidate semantic contributions include:
+
+- **surface/traversal**: open ground, steep edge, cliff, fordable water, deep water, submerged, confined, unstable, slippery;
+- **water**: fresh, brackish, salt, still, flowing, rapid, tidal, seasonal, flooded;
+- **vegetation**: forested, meadow, scrub, thicket, fallen timber, ancient tree;
+- **resource opportunity**: flora, fauna, timber, fish, shellfish, mineral, clay, salt, salvage;
+- **exposure/hazard**: heat, cold, storm, fire, miasma, disease, rockfall, cave-in, current, tide, magical hazard;
+- **mobility**: foot, mounted, wagon, river craft, sea vessel, climb, swim;
+- **land use / authority**: wild, claimed, farmed, protected, settlement, workplace, route-controlled;
+- **feature geometry**: point, patch, linear, edge, volume;
+- **special state**: disturbed, depleted, flooded, burning, corrupted, sanctified, unstable.
+
+A concrete descriptor emerges from the intersection of scene facts and an owner-backed command, not from the label of the broad biome alone.
+
+### 10.3 Resource ecology as candidate evidence, not instance authority
+
+The current spatial-world engine already derives hex-level flora/fauna/mineral availability from compatible biome, climate, elevation, freshwater, locality and resource-affinity data. Preserve that distinction:
+
+`ecological suitability / availability tier`
+is not the same thing as
+`observed local resource instance`
+is not the same thing as
+`accepted gather command`.
+
+A later resource owner may use ecology scores to seed, discover or refresh local instances, but the contextual UI must not turn a compatibility score directly into free inventory output.
+
+### 10.4 Coverage requirement
+
+Future contextual-action acceptance should demonstrate that the resolver generalizes across contrasting environment classes rather than only the original forest/creek examples. At minimum, architecture and later selected tests should cover representative cases from:
+
+- open grassland/steppe;
+- temperate or tropical forest;
+- wetland/marsh/mangrove;
+- freshwater river/stream/seasonal creek;
+- coast/estuary/tidal flat;
+- alpine/cliff/pass;
+- desert/scrub;
+- subterranean/cave;
+- marine/vessel context where a transport owner exists;
+- disturbed terrain;
+- supernatural habitat only after an appropriate consequence/interaction owner exists.
+
+The system should gain new authored environments primarily through data and owner capabilities, not through new top-level UI code for every biome.
