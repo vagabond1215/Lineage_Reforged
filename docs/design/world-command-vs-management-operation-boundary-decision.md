@@ -247,6 +247,14 @@ Other likely examples:
 
 Promotion is a presentation/ranking decision only.
 
+### 8.1 Clerk, station, listing and crafter routing
+
+The [interaction endpoint and contract-station routing decision](contextual-interaction-endpoints-and-contract-station-routing-decision.md) specifies which **selected entity** ordinarily carries each stage. A guild clerk provides membership/dues/eligible guild services and reports; selecting an observed contract board, desk or posting counter opens **Browse Contracts by default**; selecting a listing/card provides **Accept Contract** under its offer owner; completion is reported to an authorized clerk or designated recipient. Merely browsing a board/card is read-only presentation, not an additional gameplay command. Do not create `Talk -> Services -> Contracts -> Browse` and `Use Board -> Browse` as redundant paths.
+
+`Commission Work` belongs to an interaction with the actual crafter or an authorized crafting-guild brokerage counter. It is not synonymous with the player's own `Craft` action, and a posted contract/commission request is not automatically the same provider-order operation. Service/order/transaction owners must authorize any real quotation, deposit, order, delivery or settlement.
+
+A promoted clerk shortcut, contract card action or domain-panel action invokes the *same owner command* that would be reached through a deeper conversation. The observable board, clerk and offer must have owner-grounded presence and identity; descriptions alone cannot instantiate them.
+
 ## 9. Social action architecture
 
 A selected NPC/person may expose several social-action families. These are future presentation vocabulary, not proof of current social execution.
@@ -377,8 +385,8 @@ This preserves quick play without flattening every NPC into one generic Talk sub
 | Crew | board, sail/row/pilot, direct immediate order | crew assignments, watches, payroll, berth roster, routine duty schedule |
 | Logistics | personally load/unload, travel/lead caravan, deliver cargo | dispatch, route plan for autonomous transport, cargo assignment, recurring convoy policy |
 | Leadership | immediate crisis/tactical order | policy, edict, standing order, staffing, routine coordination |
-| Guild | apply/join, pay dues, take trial, accept/report contract, request service | guild administration, officer rosters, policy, treasury, facility planning |
-| Crafting | personally craft/process/repair/operate | owned-workshop production queue/priorities and workforce administration |
+| Guild | apply/pay dues/report at an eligible clerk; undertake required trial at its real target; select a posted offer card to accept; request authorized guild services | guild administration, officer rosters, policy, treasury, facility planning |
+| Crafting | personally craft/process/repair/operate at a station; commission an eligible crafter or authorized guild broker through a separate order/service owner | owned-workshop production queue/priorities and workforce administration |
 | Farming | personally plow/sow/water/harvest/tend | crop plan, field assignment, labor roster, recurring husbandry policy |
 | Social | talk, joke, flirt, apologize, persuade, give, request, threaten, direct order | relationship/personnel card configuration only where a domain explicitly supports administrative settings |
 
