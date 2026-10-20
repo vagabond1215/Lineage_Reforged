@@ -79,12 +79,12 @@ Current Lineage: Reforged state:
 - **Game version:** `0.1.1-prealpha`
 - **Game phase:** Early Pre-Alpha / First Playable
 - **Playability posture:** `INTEGRATED_LOOP`
-- **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` complete and accepted on 2026-09-11
-- **Deployment posture:** historical owner-only Sites preview; no hosted acceptance for this patch
+- **Development milestone:** `DEV-0.7.1` accepted with documented limits; `DEV-0.7.0` remains its accepted band-entry predecessor
+- **Deployment posture:** owner-private hosted epoch version 3 accepted under G10F, separately from the prior local-only Game `0.1.1-prealpha` publication decision
 
-The playability posture is already `INTEGRATED_LOOP` because the representative ordinary loop was independently accepted before the now-completed development-milestone publication package.
+The playability posture is already `INTEGRATED_LOOP` because the representative ordinary Soundings loop was independently accepted. Later DEV-0.7.1 adds durable epoch and a scoped ordinary Stonevein encounter/defeat path without satisfying `VERTICAL_SLICE` or an additional Game-version decision.
 
-Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED` on 2026-09-14, and the selected Soundings authored terms then completed with `AUTHORED_TERMS_ACCEPTED`. The owner-contract decision subsequently returned `OWNER_CONTRACT_ACCEPTED`; Soundings subsequently passed independent post-F3 acceptance. Game `0.1.1-prealpha` is now accepted by `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md`. The next route is `Post-Soundings Playability Gap Prioritization Decision`.
+Accepting `DEV-0.7.0` did not promote playability; it formalized the corresponding technical development band `DEV-0.7.x`. The unversioned `Game 0.1.x Playability Gap Prioritization Decision` completed with `PLAYABILITY_PRIORITY_SELECTED` on 2026-09-14, and the selected Soundings authored terms then completed with `AUTHORED_TERMS_ACCEPTED`. The owner-contract decision subsequently returned `OWNER_CONTRACT_ACCEPTED`; Soundings subsequently passed independent post-F3 acceptance. Game `0.1.1-prealpha` was accepted by `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md`. The later post-Soundings priority selected and completed truthful Activity Revenue presentation. The current next route is the bounded ordinary encounter victory/choice completion proof named in `docs/design/post-dev-0.7.1-playability-and-game-version-eligibility-decision.md`.
 
 ## 5. Current Accepted Player Path
 
@@ -133,7 +133,7 @@ That decision should:
 6. decide only after implementation/acceptance whether the resulting build warrants `0.1.1-prealpha`;
 7. keep `0.2.0-prealpha` reserved for the vertical-slice gate.
 
-That Soundings package is now independently accepted and published as Game `0.1.1-prealpha`. Reapply the prioritization method to the remaining gaps; no next capability or version is pre-assigned.
+That Soundings package is now independently accepted and published as Game `0.1.1-prealpha`. The later Activity Revenue truthfulness repair and DEV-0.7.1 durable epoch are accepted without a Game increment. `docs/design/post-dev-0.7.1-playability-and-game-version-eligibility-decision.md` records `GAME_VERSION_NOT_READY` and selects one bounded ordinary encounter victory/choice completion proof as the next eligibility step. No next Game version is pre-assigned.
 
 ## 8. Reporting Rule
 

@@ -47,12 +47,12 @@ The repository is currently classified as:
 - **Game version:** `0.1.1-prealpha`
 - **Development phase:** Early Pre-Alpha / First Playable
 - **Playability posture:** `INTEGRATED_LOOP`
-- **Development milestone:** `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` is complete with `MILESTONE_ENTRY_ACCEPTED` on 2026-09-11
-- **Deployment posture:** historical owner-only Sites preview; this version accepts the local development build only
+- **Development milestone:** `DEV-0.7.1` is accepted with documented limits by `docs/design/dev-0.7.1-parent-acceptance-audit.md`; `DEV-0.7.0 - Integrated Gameplay Systems Band Entry` remains the accepted band-entry predecessor
+- **Deployment posture:** owner-private hosted epoch version 3 is live under the accepted G10F cutover; the prior Game `0.1.1-prealpha` decision itself accepted its local development gameplay build only
 
 `0.1.1-prealpha` is accepted by `docs/design/game-0.1.1-prealpha-publication-acceptance-decision.md`. The previous `0.1.0-prealpha` path reached four survey shifts with Soundings active and unturned-in. The accepted patch adds authoritative four-tick no-fare return, immediate exact +5g submission, completed history, save/restart without replay, and later travel/save.
 
-This remains a narrow first playable with `INTEGRATED_LOOP` posture. The known storage, UI diagnostics, harbor recovery, presentation, accessibility and deployment limits remain explicit in the publication decision.
+This remains a narrow first playable with `INTEGRATED_LOOP` posture. The `0.1.1-prealpha` publication decision records the limits of that accepted build; later DEV-0.7.1 resolves its old storage/deployment path while retaining the separate G10D/G10F limits. UI diagnostics, harbor recovery, presentation, accessibility and broader playability gaps remain distinct.
 
 ## 4. Core Game-Version Rule
 
@@ -315,9 +315,9 @@ Current crosswalk:
 
 The current sequence is:
 
-1. preserve accepted Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, accepted `DEV-0.7.0` and development band `DEV-0.7.x`;
-2. preserve accepted Soundings authored terms, owner contract, implementation and independent post-F3 acceptance;
-3. execute **Post-Soundings Playability Gap Prioritization Decision** to select the next smallest coherent player-visible package from current evidence;
-4. require a separate implementation and acceptance route before any further game-version decision.
+1. preserve accepted Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, and accepted `DEV-0.7.1` with its documented persistence/operational limits;
+2. preserve accepted Soundings closure and the completed post-Soundings Activity Revenue truthfulness repair;
+3. follow `docs/design/post-dev-0.7.1-playability-and-game-version-eligibility-decision.md`: `GAME_VERSION_NOT_READY` until a coherent player-facing delta is independently demonstrated;
+4. prove one bounded ordinary context-driven encounter victory/choice and Normal-Stakes continuation loop, then make a separate Game-version decision under §7 only if the complete proposed patch gate passes.
 
-`0.2.0-prealpha` remains reserved for the accepted vertical-slice gate above.
+No `0.1.x` patch is preallocated. `0.2.0-prealpha` remains reserved for the accepted vertical-slice gate above.
