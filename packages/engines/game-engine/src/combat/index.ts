@@ -824,6 +824,9 @@ function resolveGrantedActionTemplate(actor: CombatantState, actionType: string)
 }
 
 function getActionTemplate(actor: CombatantState, actionType: string): ActionTemplate {
+  // Family-matched equipment grants supply their own actions; they must not
+  // replace the separately selectable engine basic melee action.
+  if (actionType === "combat.attack.melee.basic") return ACTION_LIBRARY[actionType]!;
   return resolveGrantedActionTemplate(actor, actionType) ?? ACTION_LIBRARY[actionType] ?? ACTION_LIBRARY["combat.attack.melee.basic"]!;
 }
 
@@ -1458,7 +1461,7 @@ function createCombatAction(
     source: {
       sourceType: template.sourceType,
       sourceId: template.sourceId,
-      itemId: template.itemId ?? actor.equipment.mainHandItemId ?? null,
+      itemId: template.sourceType === "basic_attack" ? null : template.itemId ?? actor.equipment.mainHandItemId ?? null,
       skillIds: template.skillIds,
       weaponSkillId: template.weaponSkillId ?? null,
       defensiveSkillId: template.defensiveSkillId ?? null,

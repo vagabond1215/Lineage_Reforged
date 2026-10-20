@@ -4,6 +4,8 @@ import { createDefaultCharacterCreationFormState } from "../../apps/rpg-ui/src/g
 import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from "../../apps/rpg-ui/src/game-shell/characterCreationCatalog.ts";
 import { createNewGameSnapshot } from "../../apps/rpg-ui/src/game-shell/newGameSnapshot.ts";
 import { advanceNearbyExplorationCaller } from "../../apps/rpg-ui/src/runtime/nearbyExplorationCaller.ts";
+import { listLegalPlayerCombatCommands } from "../../packages/engines/game-engine/src/combat/index.ts";
+import { admitNearbyEncounter, createNearbyEncounterAdmissionCommand, createNearbyEncounterStepCommand, executeNearbyEncounterStep } from "../../packages/engines/game-engine/src/player-nearby-encounter.ts";
 import { createCampaignSessionControl } from "../../packages/engines/game-engine/src/campaign-session.ts";
 import {
   createNearbyExplorationCommand,
@@ -84,6 +86,47 @@ test("ordinary creator and campaign caller reach authored edge without admitting
   assert.notEqual(repeated.acceptedState.snapshot.worldState.nearbyExplorationCandidate?.sourceActionId, positive.sourceActionId);
   assert.equal(repeated.acceptedState.snapshot.worldState.pendingSpawnCandidates?.length ?? 0, 0);
   assert.equal(repeated.acceptedState.snapshot.gameState.activeEncounter, null);
+});
+
+test("ordinary Warrior creator exposes and accepts basic melee beside Arming Sword attack", () => {
+  const identity = getLineageIdentityCatalog("lineage.human");
+  const bundle = "starting_bundle.warrior";
+  const form = {
+    ...createDefaultCharacterCreationFormState("slot-warrior-combat"),
+    playerName: "Warrior Combat",
+    hairColorId: identity.hairColorOptions[0].id,
+    eyeColorId: identity.eyeColorOptions[0].id,
+    skinToneId: identity.skinToneOptions[0].id,
+    startingBundleId: bundle,
+    startingBundleChoiceSelections: createDefaultStartingBundleChoiceSelections(bundle),
+    backstoryId: "backstory.craftsmans_child",
+    continentId: "region.kaelvar", regionId: "region.auric_marches",
+    startingSettlementId: "settlement.stonevein"
+  };
+  let snapshot = createNewGameSnapshot(form, "account.warrior_combat");
+  let control = controlFor(snapshot);
+  assert.equal(snapshot.playerState.equipment["slot.weapon.right"]?.itemId, "item.arming_sword");
+  for (let attempt = 0; !snapshot.worldState.nearbyExplorationCandidate && attempt < 100; attempt += 1) {
+    const result = advanceNearbyExplorationCaller(snapshot, control);
+    assert.equal(result.outcome.accepted, true);
+    ({ snapshot, control } = result.acceptedState);
+  }
+  assert.ok(snapshot.worldState.nearbyExplorationCandidate);
+  const admitted = admitNearbyEncounter(snapshot, control, createNearbyEncounterAdmissionCommand(snapshot, control));
+  assert.equal(admitted.accepted, true);
+  ({ snapshot, control } = admitted);
+  const legal = listLegalPlayerCombatCommands(snapshot.gameState.activeEncounter);
+  const firstTarget = snapshot.gameState.activeEncounter.enemyCombatantIds[0];
+  for (const actionType of ["combat.attack.melee.basic", "combat.melee.primary"]) {
+    const choice = legal.find((entry) => entry.actionType === actionType && entry.targetId === firstTarget);
+    assert.ok(choice, `${actionType} must be offered to the real caller`);
+    const command = createNearbyEncounterStepCommand(snapshot, control, actionType, firstTarget, `step.${actionType}`);
+    const result = executeNearbyEncounterStep(snapshot, control, command);
+    assert.equal(result.accepted, true, `${actionType} must be accepted`);
+    const player = result.snapshot.gameState.activeEncounter.combatants.find((entry) => entry.kind === "player");
+    assert.ok(result.snapshot.gameState.activeEncounter.actions.some((entry) =>
+      entry.actorCombatantId === player.id && entry.manualOverride && entry.actionType === actionType));
+  }
 });
 
 test("other creator origin and unlinked action have no authored encounter", () => {

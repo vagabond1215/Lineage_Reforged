@@ -13,6 +13,7 @@ import {
 import {
   createEncounterFromSpawnCandidate,
   deriveCombatSkillGainCandidates,
+  listLegalPlayerCombatCommands,
   queueManualCombatCommand,
   resolveCombatDamagePreview,
   resolveCombatSkillGainAttempts,
@@ -569,6 +570,60 @@ test("item-profile weapon actions receive basic weapon skill effects through act
   assert.equal(action.source.itemId, "item.arming_sword");
   assert.equal(action.source.weaponSkillId, "skill.combat.weapon.sword");
   assert.ok(preview.skillBonus > 0, "sword damage grants should apply to combat.melee.primary via aliases");
+});
+
+test("equipped sword leaves basic melee and weapon profile independently legal and queueable", () => {
+  const { encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  const legal = listLegalPlayerCombatCommands(encounter).filter((entry) => entry.targetId === enemy.id);
+  const basic = legal.find((entry) => entry.actionType === "combat.attack.melee.basic");
+  const sword = legal.find((entry) => entry.actionType === "combat.melee.primary");
+  assert.deepEqual(basic && { sourceType: basic.sourceType, sourceId: basic.sourceId, staminaCost: basic.staminaCost },
+    { sourceType: "basic_attack", sourceId: null, staminaCost: 4 });
+  assert.deepEqual(sword && { sourceType: sword.sourceType, sourceId: sword.sourceId, staminaCost: sword.staminaCost },
+    { sourceType: "weapon_profile", sourceId: "combat.melee.primary", staminaCost: 4 });
+  for (const command of [basic, sword]) {
+    const copy = structuredClone(encounter);
+    const copyPlayer = findPlayerCombatant(copy);
+    const action = queueActionFixture(copy, copyPlayer, command.actionType, [enemy.id], command.sourceType, command.sourceId);
+    assert.equal(action.actionType, command.actionType);
+    assert.equal(action.source.sourceType, command.sourceType);
+    assert.equal(action.source.sourceId, command.sourceId);
+    assert.equal(action.source.itemId, command.actionType === "combat.melee.primary" ? "item.arming_sword" : null);
+    assert.deepEqual(action.resourceCosts, { stamina: command.staminaCost });
+  }
+  player.resources.stamina.current = 3;
+  assert.ok(!listLegalPlayerCombatCommands(encounter).some((entry) =>
+    entry.targetId === enemy.id && [basic.actionType, sword.actionType].includes(entry.actionType)));
+  player.resources.stamina.current = 4;
+  enemy.defeated = true;
+  assert.ok(!listLegalPlayerCombatCommands(encounter).some((entry) => entry.targetId === enemy.id));
+  enemy.defeated = false;
+  player.timing.queuedActionIds.push("already.queued");
+  assert.deepEqual(listLegalPlayerCombatCommands(encounter), []);
+});
+
+test("basic melee fallback and legal gates do not depend on an equipped weapon", () => {
+  const { encounter } = createEncounterFixture(createPlayerStateFixture({
+    equipmentOverrides: { "slot.weapon.right": null }
+  }));
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  const legal = () => listLegalPlayerCombatCommands(encounter);
+  assert.ok(legal().some((entry) => entry.actionType === "combat.attack.melee.basic" && entry.targetId === enemy.id));
+  assert.ok(!legal().some((entry) => entry.actionType === "combat.melee.primary"));
+  player.resources.stamina.current = 3;
+  assert.ok(!legal().some((entry) => entry.actionType === "combat.attack.melee.basic"));
+  player.resources.stamina.current = 4;
+  enemy.incapacitated = true;
+  assert.ok(!legal().some((entry) => entry.targetId === enemy.id));
+  enemy.incapacitated = false;
+  player.timing.queuedActionIds.push("already.queued");
+  assert.deepEqual(legal(), []);
+  player.timing.queuedActionIds = [];
+  encounter.paused = true;
+  assert.deepEqual(legal(), []);
 });
 
 test("passive combat skill candidates map resolved weapon profile attacks only", () => {
