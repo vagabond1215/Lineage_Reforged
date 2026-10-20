@@ -69,37 +69,20 @@ These facts justify command-family planning. They do not authorize runtime behav
 
 ### 4.1 Guild and institutional participation
 
-The following are **possible guild lifecycle stages**, not a flat menu of commands each guild hall must expose:
+The guild content suggests the following **contextual interaction endpoints and lifecycle stages**, not a permanent set of nested guild commands:
 
-- View / Inspect Guild Presence
-- Browse Guild Board
-- Apply / Petition to Join
-- Pay Buy-In where authored
-- Attempt Entry Task / Trial
-- Complete Probation / Sponsorship requirement
-- View Membership Obligations
-- Pay Dues / Fees
-- Fulfill Guild Obligation
-- Leave / Resign
-- Browse Guild Contracts
-- Accept Guild Contract
-- Report / Submit Guild Contract
-- Use Member Service
-- Rent / Reserve Shared Facility
-- Lease Storage / Warehouse Space
-- Request Financing / Credit
-- Request Arbitration / Brokerage
-- Request or Exercise Licensed Rights such as fishing/mining/market access
-- Begin Apprenticeship / Training
-- Submit Work for Inspection / Masterwork Review
-- Commission Work
-- Offer Goods through Member Sale / Exchange
+| Selected target | Natural player flow | Read/navigation versus owner-executed operation |
+| --- | --- | --- |
+| Authorized guild clerk / membership counter | Discuss membership, apply/petition, present sponsorship, pay buy-in or dues, inquire about obligations/benefits, request apprenticeship, services, access/rights, financing, arbitration or brokerage, resign | Conversation/inspection is read; apply, payment, obligation fulfillment, leave and approved service transactions invoke their individual guild/transaction/attempt owners. No compulsory nested `Talk -> Guild -> Services` path. |
+| Actual examiner / trial site | Inspect terms; undertake entry task, probation step or trial | Examination may require a distinct owner-executed activity at the actual location/person. |
+| Observed guild contract board / notice desk / posting counter | Select station -> **Browse Contracts** by default -> filter and inspect posting | Browse, filters and opening a card are read/navigation, not world commands; no redundant `Use Board -> Browse` action. |
+| Selected eligible contract card / posting | Inspect requirements and terms -> **Accept Contract** | Offer/quest/contract owner checks current eligibility and admits one accepted instance; multiple boards or clerks may present it without duplicating the offer. |
+| Authorized receiving clerk / designated recipient | **Report / Submit Contract** with proof or delivery; claim/settle only when allowed | Owner validates active contract, evidence, completion, payout and receipt; board/card is not automatic turn-in. |
+| Member facility / authorized workshop or storage provider | Request shared workspace/storage, leasing or exercise licensed rights when supported | Actual local provider/access/payment/item owner executes; static guild benefit does not grant access. |
+| Authorized quality reviewer / artisan / guild broker | Submit completed work for inspection/masterwork review; commission another crafter through service/broker | Review and external orders belong to their separate service, contract, crafting-order and transaction owners, not to personally Craft. |
+| Guild officer administration | Open authorized roster, treasury, policies or facility management | Management navigation/mutation, not character-world commands. |
 
-**Gate:** guild identity and local presence are not enough. Actual membership, affiliation/rank, dues, contract, provider/service, payment/access and attempt owners must exist first.
-
-The canonical guild boundary explicitly says descriptive `membershipModel` policy does not establish current membership, rank, dues, standing or access.
-
-**Interaction routing:** with an authorized present guild clerk, membership application, buy-in/dues, ordinary member services, resignation, apprenticeship inquiry, arbitration and contract **reporting** are clerk conversations/service choices (a useful choice can be promoted). A physical entry trial routes to its actual examiner/site. A contract **board, notice desk or posting counter** defaults to a **Browse Contracts** read view; **Accept** is on the selected eligible posting/card, never a redundant generic guild command. Only an owner-authorized clerk/recipient receives completion evidence. See [interaction endpoints and station routing](contextual-interaction-endpoints-and-contract-station-routing-decision.md).
+**Gate:** guild identity and local presence are not enough. Actual membership, affiliation/rank, dues, contract, provider/service, payment/access, offer/attempt and recipient owners must exist first. The canonical guild boundary says descriptive `membershipModel` policy does not establish current membership, rank, dues, standing or access. See [interaction endpoints and station routing](contextual-interaction-endpoints-and-contract-station-routing-decision.md).
 
 ### 4.2 Employment and workplace lifecycle
 
@@ -143,12 +126,11 @@ Potential contextual commands:
 - Refine / Process Material
 - Preserve / Smoke / Dry / Bake / Cook
 - Salvage / Disassemble where a future recipe/process owner supports it
-- Commission Crafting
 - Submit Work for Quality / Masterwork Review
 - Inspect Result / Quality
 - Learn / Study Recipe only after recipe-knowledge ownership exists
 
-Existing `resolveCraftAtSettlement(...)` is an estimate, not a craft command. Recipe existence does not consume inputs or create outputs.
+Existing `resolveCraftAtSettlement(...)` is an estimate, not a craft command. Recipe existence does not consume inputs or create outputs. Browsing recipes, choosing variants/inputs/tools and inspecting quality are read/choice stages; the owner-executed world action is the eligible craft/repair/process attempt or collection.
 
 **Commissioning versus personal crafting:** a player commissions **another** artisan by talking to that actual crafter or an authorized crafting-guild broker/counter; a player **Craft** command belongs at their eligible workshop station. An artisan order, a posted commission solicitation/contract and personally crafting are different lifecycles. Quotes, deposits, order identity, materials, delivery and receipt await their dedicated owners, not recipe estimates.
 
@@ -280,16 +262,12 @@ Future command lifecycle:
 - Cancel Order where permitted
 - Collect Order
 - Offer Goods for Sale
-- Create Shipment / Caravan
-- Assign Cargo
-- Select Route
-- Assign Vehicle / Animals / Crew
-- Dispatch
-- Track Shipment
-- Receive / Unload / Deliver
-- Settle Payment
+- Personally Receive / Unload / Deliver
+- Settle Payment where an actual counterparty/owner requires a transaction
 
-Market prices, settlement demand, routes and transport profiles are inputs, not transaction authority. The `Assign Cargo`, `Select Route`, `Assign Vehicle / Animals / Crew`, `Dispatch` and routine `Track Shipment` entries above refer to **management/dispatch surface operations** for autonomous logistics, not character commands. Personally loading, traveling with, receiving or delivering cargo stays in world interaction when modeled.
+Separate **management** operations for autonomous logistics include: Create Shipment / Caravan, Assign Cargo, Select Route, Assign Vehicle / Animals / Crew, Dispatch, Track Shipment and standing delivery policies.
+
+Market prices, settlement demand, routes and transport profiles are inputs, not transaction authority. Personally loading, traveling with, receiving or delivering cargo stays in world interaction when modeled.
 
 ### 4.10 Business, property and management
 
