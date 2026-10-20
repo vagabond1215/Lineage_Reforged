@@ -69,7 +69,7 @@ These facts justify command-family planning. They do not authorize runtime behav
 
 ### 4.1 Guild and institutional participation
 
-Potential contextual commands:
+The following are **possible guild lifecycle stages**, not a flat menu of commands each guild hall must expose:
 
 - View / Inspect Guild Presence
 - Browse Guild Board
@@ -98,6 +98,8 @@ Potential contextual commands:
 **Gate:** guild identity and local presence are not enough. Actual membership, affiliation/rank, dues, contract, provider/service, payment/access and attempt owners must exist first.
 
 The canonical guild boundary explicitly says descriptive `membershipModel` policy does not establish current membership, rank, dues, standing or access.
+
+**Interaction routing:** with an authorized present guild clerk, membership application, buy-in/dues, ordinary member services, resignation, apprenticeship inquiry, arbitration and contract **reporting** are clerk conversations/service choices (a useful choice can be promoted). A physical entry trial routes to its actual examiner/site. A contract **board, notice desk or posting counter** defaults to a **Browse Contracts** read view; **Accept** is on the selected eligible posting/card, never a redundant generic guild command. Only an owner-authorized clerk/recipient receives completion evidence. See [interaction endpoints and station routing](contextual-interaction-endpoints-and-contract-station-routing-decision.md).
 
 ### 4.2 Employment and workplace lifecycle
 
@@ -147,6 +149,8 @@ Potential contextual commands:
 - Learn / Study Recipe only after recipe-knowledge ownership exists
 
 Existing `resolveCraftAtSettlement(...)` is an estimate, not a craft command. Recipe existence does not consume inputs or create outputs.
+
+**Commissioning versus personal crafting:** a player commissions **another** artisan by talking to that actual crafter or an authorized crafting-guild broker/counter; a player **Craft** command belongs at their eligible workshop station. An artisan order, a posted commission solicitation/contract and personally crafting are different lifecycles. Quotes, deposits, order identity, materials, delivery and receipt await their dedicated owners, not recipe estimates.
 
 ### 4.4 Resource discovery and extraction
 
@@ -285,7 +289,7 @@ Future command lifecycle:
 - Receive / Unload / Deliver
 - Settle Payment
 
-Market prices, settlement demand, routes and transport profiles are inputs, not transaction authority.
+Market prices, settlement demand, routes and transport profiles are inputs, not transaction authority. The `Assign Cargo`, `Select Route`, `Assign Vehicle / Animals / Crew`, `Dispatch` and routine `Track Shipment` entries above refer to **management/dispatch surface operations** for autonomous logistics, not character commands. Personally loading, traveling with, receiving or delivering cargo stays in world interaction when modeled.
 
 ### 4.10 Business, property and management
 
@@ -465,12 +469,12 @@ Examples:
 - `Request Healing` beside `Talk to Healer`;
 - `Apply to Guild` beside `Talk to Guild Clerk`;
 - `Pay Dues` beside broader guild interaction;
-- `Turn In Contract` beside issuer conversation;
+- `Report Contract` beside authorized receiving-clerk conversation;
 - `Trade` beside merchant conversation;
 - `Ask for Work` beside employer conversation;
 - `Train` beside teacher conversation.
 
-Promotion is presentation/ranking only. It must not create a second command identity, duplicate payment/result logic or bypass the interaction owner.
+Promotion is presentation/ranking only. It must not create a second command identity, duplicate payment/result logic or bypass the interaction owner. Unlike an owner-executed payment/report/acceptance, choosing an observed contract board opens its **Browse Contracts** view by default; selecting the posted **card** is the path to owner-backed `Accept Contract`. Selecting an artisan or guild broker is the path to **Commission Work**. These are endpoint-specific routes, not extra nested world commands.
 
 `Talk` is therefore **not a mandatory parent menu** for every entity action. It remains available for broader conversation while high-value context-specific interactions can be surfaced directly.
 
@@ -478,7 +482,7 @@ Promotion is presentation/ranking only. It must not create a second command iden
 
 Several verbs recur across domains and should be modeled as lifecycle stages rather than separate universal command owners:
 
-- **Browse / Inspect**: read projection before commitment.
+- **Browse / Inspect**: read projection before commitment; opening a board or a posting/card is UI/read navigation by default, not a gameplay mutation.
 - **Apply / Request**: asks another authority for eligibility/access.
 - **Accept**: commits to an offer, assignment, quest, contract or work order.
 - **Start**: creates an owner-specific attempt/activity.
@@ -517,10 +521,10 @@ These are presentation families, not engine enums.
 
 Examples:
 
-- A guildhall may show `Browse Contracts`, `Apply to Guild`, `Use Guild Services`, not a permanent global Guild menu.
-- A forge may show `Craft`, `Take Work`, `Rent Station`, `Commission Work` according to access and actor role.
+- Selecting a **guild clerk** may show `Apply to Guild`, `Pay Dues`, `Request Member Service` or `Report Contract` when eligible; the guild hall itself does not mint those commands.
+- Selecting an observed **board/counter/desk** defaults to `Browse Contracts`; an individual **contract card** provides `Accept Contract` if its owner allows.
+- Selecting a **forge/station** may offer personal `Craft`, `Repair` or `Operate`; selecting an actual **crafter** or authorized crafting-guild broker may offer `Commission Work` through a separate order/transaction owner.
 - A teacher may show `Train` or `Study Spell`.
-- A contract board may show `Browse Contracts`.
 - An owned workshop may show `Manage Workshop` as a navigation affordance, not a world command.
 - A selected subordinate may show immediate `Give Order` plus `Manage...` to open their personnel card.
 - A sacred site may show `Pray`, `Request Rite`, or only `Inspect` until ritual/service owners exist.
