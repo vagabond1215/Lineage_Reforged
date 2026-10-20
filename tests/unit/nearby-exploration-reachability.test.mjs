@@ -14,6 +14,7 @@ import {
   resolveNearbyExplorationPlan
 } from "../../packages/engines/game-engine/src/player-nearby-exploration.ts";
 import { deserializeSnapshot, serializeSnapshot } from "../../packages/shared/persistence/src/index.ts";
+import { buildSaveMetadata, createSave, loadSave } from "../../apps/rpg-ui/src/game-shell/saveManager.ts";
 import { loadSpawnFoundationContent } from "../../packages/engines/world-engine/src/spawn/content.ts";
 import { resolveSpawnCandidates } from "../../packages/engines/world-engine/src/spawn/index.ts";
 
@@ -46,6 +47,150 @@ function controlFor(snapshot) {
     headRevision: 1
   });
 }
+
+function admittedSyntheticCombatCase() {
+  let snapshot = creator();
+  let control = controlFor(snapshot);
+  for (let attempt = 0; !snapshot.worldState.nearbyExplorationCandidate && attempt < 100; attempt += 1) {
+    const result = advanceNearbyExplorationCaller(snapshot, control);
+    assert.equal(result.outcome.accepted, true);
+    ({ snapshot, control } = result.acceptedState);
+  }
+  assert.ok(snapshot.worldState.nearbyExplorationCandidate);
+  const admitted = admitNearbyEncounter(snapshot, control, createNearbyEncounterAdmissionCommand(snapshot, control));
+  assert.equal(admitted.accepted, true);
+  return { snapshot: admitted.snapshot, control: admitted.control };
+}
+
+function withSyntheticLocalSave(run) {
+  const priorWindow = globalThis.window;
+  const values = new Map();
+  globalThis.window = { localStorage: {
+    get length() { return values.size; },
+    key(index) { return [...values.keys()][index] ?? null; },
+    getItem(key) { return values.get(String(key)) ?? null; },
+    setItem(key, value) { values.set(String(key), String(value)); },
+    removeItem(key) { values.delete(String(key)); },
+    clear() { values.clear(); }
+  } };
+  try { return run(); } finally {
+    if (priorWindow === undefined) delete globalThis.window;
+    else globalThis.window = priorWindow;
+  }
+}
+
+test("synthetic terminal owner fixtures admit real victory and defeat with durable receipts", () => {
+  for (const expected of ["allies_victorious", "enemies_victorious"]) {
+    let { snapshot, control } = admittedSyntheticCombatCase();
+    const encounterId = snapshot.gameState.activeEncounter.encounterId;
+    const playerId = snapshot.gameState.activeEncounter.alliedCombatantIds[0];
+    if (expected === "allies_victorious") {
+      for (const enemy of snapshot.gameState.activeEncounter.combatants.filter((entry) => entry.disposition === "enemy")) {
+        enemy.resources.hp.current = 1;
+        enemy.timing.readyAtTick = snapshot.clock.tick + 1000;
+      }
+    } else {
+      const player = snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === playerId);
+      player.resources.hp.current = 1;
+      snapshot.playerState.resources.hp.current = 1;
+    }
+    const rejectedSource = serializeSnapshot(snapshot);
+    const rejectedControl = structuredClone(control);
+    const rejectedCommand = createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null,
+      `terminal.${expected}.rejected`);
+    assert.equal(executeNearbyEncounterStep(snapshot, control,
+      { ...rejectedCommand, sourceRevision: rejectedCommand.sourceRevision + 1 }).code, "stale_snapshot");
+    assert.equal(executeNearbyEncounterStep(snapshot, control,
+      { ...rejectedCommand, actorCombatantId: "combatant.wrong_actor" }).code, "wrong_actor");
+    assert.equal(serializeSnapshot(snapshot), rejectedSource);
+    assert.deepEqual(control, rejectedControl);
+    let terminalCommand = null;
+    for (let beat = 0; snapshot.gameState.activeEncounter && beat < 150; beat += 1) {
+      const legal = listLegalPlayerCombatCommands(snapshot.gameState.activeEncounter);
+      const attack = expected === "allies_victorious"
+        ? legal.find((entry) => entry.actionType === "combat.attack.melee.basic") : null;
+      const actionType = attack?.actionType ?? "combat.advance";
+      terminalCommand = createNearbyEncounterStepCommand(snapshot, control, actionType, attack?.targetId ?? null,
+        `terminal.${expected}.${beat}`);
+      const source = serializeSnapshot(snapshot);
+      const sourceRevision = control.sessionRevision;
+      const result = executeNearbyEncounterStep(snapshot, control, terminalCommand);
+      assert.equal(result.accepted, true, `${expected} beat ${beat}: ${result.code}`);
+      assert.equal(result.control.sessionRevision, sourceRevision + 1);
+      assert.equal(result.control.acceptedMutationIds.at(-1), terminalCommand.requestId);
+      assert.equal(serializeSnapshot(snapshot), source, "source snapshot must remain unchanged");
+      ({ snapshot, control } = result);
+    }
+    assert.equal(snapshot.gameState.activeEncounter, null, `${expected} fixture must terminate via the real caller`);
+    assert.equal(snapshot.gameState.combatHistory.at(-1).result, expected);
+    assert.equal(snapshot.gameState.combatHistory.at(-1).encounterId, encounterId);
+    assert.equal(snapshot.gameState.combatHistory.at(-1).endedAtTick, terminalCommand.expectedTick + 1);
+    assert.equal(snapshot.gameState.party.leaderCombatantId, null);
+    assert.ok(snapshot.gameState.party.members.every((entry) => entry.combatantId === null));
+    const terminalLedger = snapshot.authorityLedger.nearbyEncounters.commands.filter((entry) =>
+      entry.encounterId === encounterId && entry.result === expected);
+    assert.equal(terminalLedger.length, 1);
+    assert.equal(terminalLedger[0].requestId, terminalCommand.requestId);
+    assert.equal(executeNearbyEncounterStep(snapshot, control, terminalCommand).code, "duplicate");
+    assert.equal(executeNearbyEncounterStep(snapshot, control,
+      { ...terminalCommand, targetId: "combatant.conflict" }).code, "request_conflict");
+    const restored = deserializeSnapshot(serializeSnapshot(snapshot));
+    assert.deepEqual(restored.gameState.combatHistory.at(-1), snapshot.gameState.combatHistory.at(-1));
+    assert.deepEqual(restored.authorityLedger.nearbyEncounters.commands.at(-1),
+      snapshot.authorityLedger.nearbyEncounters.commands.at(-1));
+    assert.equal(restored.gameState.activeEncounter, null);
+    if (expected === "enemies_victorious") {
+      assert.equal(restored.normalDefeatReceipts.at(-1).posture, "playable");
+      assert.ok(restored.playerState.resources.hp.current > 0);
+    } else {
+      assert.equal(restored.normalDefeatReceipts?.length ?? 0, 0);
+    }
+    withSyntheticLocalSave(() => {
+      createSave(snapshot.accountId, "manual-1", snapshot, buildSaveMetadata("manual-1", snapshot));
+      const loaded = loadSave(snapshot.accountId, "manual-1");
+      assert.ok(loaded);
+      assert.deepEqual(loaded.gameState.combatHistory.at(-1), snapshot.gameState.combatHistory.at(-1));
+      assert.deepEqual(loaded.authorityLedger.nearbyEncounters.commands.at(-1),
+        snapshot.authorityLedger.nearbyEncounters.commands.at(-1));
+      assert.equal(loaded.gameState.activeEncounter, null);
+      assert.equal(resolveNearbyExplorationPlan(loaded).available, true);
+    });
+    assert.equal(resolveNearbyExplorationPlan(restored).available, true);
+    const continued = advanceNearbyExplorationCaller(restored, control);
+    assert.equal(continued.outcome.accepted, true);
+  }
+});
+
+test("synthetic defeat without a safe destination retains the recovery gate", () => {
+  let { snapshot, control } = admittedSyntheticCombatCase();
+  const player = snapshot.gameState.activeEncounter.combatants.find((entry) => entry.kind === "player");
+  player.resources.hp.current = 1;
+  snapshot.playerState.resources.hp.current = 1;
+  snapshot.playerState.location.settlementId = null;
+  snapshot.sessionState.knownLocations = [];
+  snapshot.playerState.flags = snapshot.playerState.flags.filter((flag) => !flag.startsWith("player.start."));
+  let terminalCommand = null;
+  for (let beat = 0; snapshot.gameState.activeEncounter && beat < 80; beat += 1) {
+    const command = createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null, `pending.defeat.${beat}`);
+    terminalCommand = command;
+    const result = executeNearbyEncounterStep(snapshot, control, command);
+    assert.equal(result.accepted, true, `beat ${beat}: ${result.code}`);
+    ({ snapshot, control } = result);
+  }
+  assert.equal(snapshot.gameState.activeEncounter, null);
+  assert.equal(snapshot.gameState.combatHistory.at(-1).result, "enemies_victorious");
+  assert.equal(snapshot.normalDefeatReceipts.at(-1).posture, "recovery_pending");
+  assert.equal(resolveNearbyExplorationPlan(snapshot).code, "recovery_pending");
+  const reopened = deserializeSnapshot(serializeSnapshot(snapshot));
+  assert.equal(reopened.normalDefeatReceipts.at(-1).posture, "recovery_pending");
+  assert.equal(resolveNearbyExplorationPlan(reopened).code, "recovery_pending");
+  const replay = createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null, "pending.defeat.blocked");
+  assert.equal(replay, null, "no encounter can mint a new step while recovery is pending");
+  assert.equal(executeNearbyEncounterStep(snapshot, control, {
+    ...terminalCommand, requestId: "pending.defeat.blocked", sourceArtifactId: control.loadedArtifactId,
+    sourceRevision: control.sessionRevision, sourceSnapshot: serializeSnapshot(snapshot), expectedTick: snapshot.clock.tick
+  }).code, "recovery_pending");
+});
 
 test("ordinary creator and campaign caller reach authored edge without admitting combat", () => {
   let snapshot = creator();
