@@ -1,5 +1,8 @@
 # Current Codex Output
 
+> **2026-10-20 owner-directed routing note (connector documentation, NOT a Codex run):** The project owner now prioritizes the reusable combat skeleton and complete owner-validated action/target/effect/outcome interfaces over diagnosing why the current unfinished Stonevein Warrior lost two natural encounters. See `docs/design/combat-skeleton-first-priority-and-acceptance-boundary-decision.md`. **Current next Codex prompt: Combat Skeleton Capability And Owner-Contract Audit.** The selected results below remain accurate historical observations, including basic/sword acceptance, genuine Normal-Stakes defeats and unproven natural victory. This reroute does not establish a new combat implementation, Codex test run, selected victory, Game acceptance or altered G10/branch/protected-account authority.
+
+
 ## 2026-10-20 Ordinary Encounter Victory And Choice Independent Selected Acceptance
 
 Source run: **Ordinary Encounter Victory And Choice Independent Selected Acceptance**, unversioned; parent milestone not applicable. Date 2026-10-20. Clean synchronized `master`/`origin/master` source `85867a8cb0f0ff21fcef7b61bf8cf0776880f247`; repository `vagabond1215/Lineage_Reforged`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. Development impact `none`; Game-version impact `none`; `GAME_VERSION_NOT_READY`. **SELECTED_BASIC_AND_SWORD_COMMANDS_AVAILABLE_AND_ACCEPTED; ORDINARY_ENCOUNTER_VICTORY_AND_CHOICE_NOT_PROVEN.** Focused record: `docs/design/ordinary-encounter-selected-choice-and-victory-boundary-2026-10-20.md`.
