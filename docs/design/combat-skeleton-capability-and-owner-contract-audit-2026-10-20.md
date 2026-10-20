@@ -46,3 +46,7 @@ The separate [terminal owner/durability record](dev-0.7.2.1-combat-terminal-owne
 ## Later evidence note: DEV-0.7.2.2
 
 The separate [equipped ranged owner/caller record](dev-0.7.2.2-equipped-ranged-owner-and-caller-verification-record-2026-10-20.md) proves Short and Composite Bow owner/caller command, resolved ranged damage and archery gain in controlled encounters. Current shots do not require or consume arrows. This does not upgrade selected UI or create ammunition, range, hand or durability ownership. The current prompt selects bounded enemy AI candidate/target legality.
+
+## Later evidence note: DEV-0.7.2.3
+
+The separate [enemy AI record](dev-0.7.2.3-enemy-ai-candidate-legality-and-target-record-2026-10-20.md) proves an authored Scout action through actual nearby Continue and repairs repeated scoring of unpayable ranged attacks over payable supported melee. This does not establish broad spell, ability or gambit ownership. The current prompt selects one owned physical ability legality check.

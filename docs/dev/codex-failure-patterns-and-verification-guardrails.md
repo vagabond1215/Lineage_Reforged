@@ -246,6 +246,16 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Evidence:** `docs/design/dev-0.7.1.1-g9-lifecycle-parent-acceptance-audit.md`, F1; `docs/design/dev-0.7.1.3-g9-lifecycle-parent-independent-reaudit.md`, F2/F3; `docs/dev/dev-0.7.1.4-g9-residual-destructive-graph-preflight-repair-record.md`, paired repair controls; `docs/design/dev-0.7.1.5-g9-lifecycle-parent-independent-reaudit.md`, F4/F5. Independent parent re-audit remains required after repair.
 - **Status:** active.
 
+### FP-020 — Scored Actions Must Be Executable Candidates
+
+- **Pattern:** A planner ranks actions before applying hard cost eligibility, so the highest-scored but unpayable action is queued and cancelled every ready tick while a payable supported alternative is ignored.
+- **Why it escaped:** Action-start validation prevented negative resources, but did not stop repeated invalid selection or preserve useful action economy.
+- **Guardrail:** Apply each hard eligibility gate at the owner that knows it before committing a scored candidate; filter unaffordable actions before score ordering. Keep action-start revalidation for facts that can change after selection; when no candidate is executable, wait without queue churn or invented fallback.
+- **Verification:** Pair an unaffordable preferred action with a payable supported alternative, then test only-unaffordable, later retry, source/target identity, exactly-once payment, and real tick/caller behavior. Preserve unrelated manual fallback contracts.
+- **Applies to:** combat AI, automated action planners and other scored queues that commit or reserve resources.
+- **Evidence:** `docs/design/dev-0.7.2.3-enemy-ai-candidate-legality-and-target-record-2026-10-20.md`.
+- **Status:** active.
+
 ## Completion Report Format
 
 For applicable runs include:

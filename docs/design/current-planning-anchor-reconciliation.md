@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.3 enemy AI legality route
+
+The [enemy AI record](dev-0.7.2.3-enemy-ai-candidate-legality-and-target-record-2026-10-20.md) proves one authored Scout action through ordinary nearby Continue and repairs repeated unaffordable scored selection. Hard target exclusions, no-target behavior and blocked/busy action economy have focused tests. The next bounded task verifies one owned active physical ability's exact provenance and legality; magic, all-ability activation, companions, gambits, balance and Game-version acceptance remain separate.
+
 ## 2026-10-20 DEV-0.7.2.2 ranged owner route
 
 The [equipped ranged owner/caller record](dev-0.7.2.2-equipped-ranged-owner-and-caller-verification-record-2026-10-20.md) proves Hunter Short Bow and synthetic equipped Composite Bow through real nearby commands, with ranged damage and archery gain. It records current arrow independence without approving an ammunition system. The next bounded slice checks enemy AI candidate and target legality. Selected UI, ammo/range/hand/durability decisions, natural victory, balance and Game-version acceptance remain later.
