@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-19 Ordinary Encounter selected basic-action and victory boundary
+
+Source: clean fetched `master`/`origin/master` `55249da5ed24d021b9f62069b61bf737c71fe330`; repository `vagabond1215/Lineage_Reforged`. Label class: unversioned selected-path proof, parent milestone not applicable; development impact `none`, Game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. **SELECTED_COMBAT_BASIC_ACTION_NOT_PROJECTED; ORDINARY_ENCOUNTER_VICTORY_AND_CHOICE_NOT_PROVEN; GAME_VERSION_NOT_READY.** Focused selected record: `docs/design/ordinary-encounter-selected-basic-action-and-victory-boundary.md`.
+
+### A. Files changed
+
+Added the focused selected boundary record; advanced current output, handoff, prompt, historical/planning route and branch register. No production source, test, schema, generated asset, `GAME_VERSION`, Site-source repository, deployment, protected account or held branch changed.
+
+### B. Patch summary
+
+A newly empty Chrome profile on fresh local `127.0.0.1:5471` reached the actual selected App. One disposable account and one ordinary Stonevein Warrior/Arming Sword character explored six times, with five displayed no-candidate results and one natural candidate; visible Approach admitted a three-foe encounter. At the first legal command point, `combat.melee.primary` and `combat.interrupt.shield_bash` were offered, but `combat.attack.melee.basic` was not. The selected sword and shield actions were accepted with distinct 4/8 Stamina costs. The same encounter naturally ended in Normal-Stakes defeat/recovery, with World HP 33/132 and a Chronicle defeat/recovery entry at tick 41. No victory, post-victory continued play, Save/load or restart was observed. The disposable origin had one initial artifact, so the terminal defeat is not described as durable evidence. A source hypothesis points to family-matched sword grant resolution shadowing the basic template, then the legal-list action-type guard dropping it. Install only the separate **Ordinary Combat Basic Action Selection Repair**, then an independent replay of the fixed selected matrix. One defeat does not prove balance is broken or justify tuning.
+
+### C. Tests or checks run
+
+Fresh focused Node combat equipment/spawn and nearby exploration tests 38/38; Node UI-config typecheck PASS; app-local Vite build PASS, 256 client modules, `index-DRiJsDUZ.js`. Broad UI typecheck exit 2 with 137 TypeScript diagnostics, equal to the recorded baseline and not green. Read-only selected UI/DOM, profile-command-line, initial empty fourteen-store and post-run one-artifact checks were performed; no direct IndexedDB writes or engine/fixture mutation. Fresh fetch/prune and repository-scoped PR check found zero open PRs. Five non-default heads/merge bases, unique commits/paths and named dispositions were reviewed; no integration/deletion or disposition change due. Documentation diff and final publication checks follow. FP-001/017: selected gap prevails over source/test prediction; FP-002: no Game promotion; FP-007: bounded docs; FP-008/009: held refs and inspected/final/hosted identities distinguished. No new general failure-pattern entry required.
+
+### D. Risks / follow-up notes
+
+The selected UI omits the intended basic melee option while a sword profile is equipped; sword versus shield bash action identity and cost were visible, but tactical effect was not exposed. Victory remains unproven; the natural defeat is not a substitute. Preserve `G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT`, `ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED`, `G10_DURABILITY_READY`, G10F local evidence limit and both distinct protected accounts. The disposable proof profile is retained. No data clear, G10 capacity/fault rerun, deployment, held-branch integration, `GAME_VERSION` change, Game acceptance or UI overhaul. Suggested commit: `docs(proof): record selected combat basic-action boundary`. Next recommended run: **Ordinary Combat Basic Action Selection Repair**; independent selected victory/choice acceptance follows that repair, and any Game-version decision remains separate. Final publication SHA follows push/readback.
+
 ## 2026-10-19 Ordinary Encounter Victory And Choice selected-browser access hold
 
 Source: clean fetched `master`/`origin/master` `da20ea31804f34e29da179d8be53f569caa7c720`; repository `vagabond1215/Lineage_Reforged`. Label class: unversioned selected-path proof/feasibility, parent milestone not applicable; development impact `none`, Game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. **ORDINARY_ENCOUNTER_SELECTED_PROOF_UNEXECUTED_BROWSER_ORIGIN_UNAVAILABLE; GAME_VERSION_NOT_READY.** Focused matrix/disposition: `docs/design/ordinary-encounter-victory-and-choice-browser-access-hold.md`.
