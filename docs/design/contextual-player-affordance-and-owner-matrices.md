@@ -97,3 +97,26 @@ Use the authored ecology stack to test generalization across the following famil
 Biome/habitat compatibility changes relevance and method. It does not by itself mint executable commands.
 
 A future environmental resource implementation should prove at owner level that a command consumes **capabilities and observed target provenance**, not a fixed list of biome IDs. Steppe and Estuary are required regression examples because they stress different concerns from forest/creek: open-country water scarcity and mobility versus tidal/brackish/current/shore interactions.
+
+
+## 5. Cross-domain command and owner census
+
+This matrix supplements the location/environment matrix.
+
+| Domain | Candidate contextual commands | Current evidence | Execution posture |
+| --- | --- | --- | --- |
+| Guild | browse board, apply/join, entry trial, dues, contracts, facilities, apprenticeship, commission, quality review, resign | 18 canonical guild identities with rich descriptive policies/services | Membership, dues, access and contract execution owners missing; future only. |
+| Employment | browse work, apply/accept role, start/advance/pause/resume/cancel shift, report, collect pay | 58 workplaces, 208 job rows, 110 unique job ids | Job ids are local role vocabulary; employment/pay/attempt owner missing. |
+| Crafting | browse recipe, select inputs/tools, start/continue/cancel process, collect result, repair, salvage, commission | 28 recipes, production chains, craft estimates and workplace capability | Estimate/read-only foundation exists; durable craft attempt and item mutation owner missing. |
+| Resource | spot, identify, gather, forage, fish, hunt, trap, mine, quarry, harvest, butcher, dredge, salt, water | 121 skills, ecology/resource availability and 22 extraction methods | Resource instance/discovery/depletion/attempt owner missing. |
+| Advancement | train, practice, attempt breakthrough/trial, checkpoint choice, retry | progression helpers and 4 trials | Pure/simple helpers exist; durable attempt/cooldown/event owner incomplete. |
+| Knowledge | inspect, identify, study/read, consult archives, analyze, knowledge trial | domains/snippets/spot-identify skills and planning | Observation/knowledge evidence exists in parts; general study/trial commands deferred. |
+| Magic | cast, study spell, teacher/institutional study, ritual study, request enchantment/healing | 55 spells, 32 abilities, known-spell/study/readiness planning | Narrow combat hooks exist; general study/acquisition/cast/service owners incomplete. |
+| Services | lodging, storage, archives, contract board, clinic, bath/laundry, ferry/port, workspace rental | 5 service identities and 22 building templates/service functions | Services are provider-independent vocabulary; provider/access/payment/result owner missing. |
+| Market/logistics | quote, buy/sell/barter, reserve, commission, shipment/caravan dispatch/receive | economy projections, routes, markets, transport profiles | Read-only/simulation foundations exist; transaction/shipment item/currency owners missing. |
+| Business/property | manage, staff, schedule, stock, upgrade, repair, lease, collect revenue | planning/projections/account estate surfaces | Broad runtime identity/control/ledger/project owners incomplete. |
+| Social/NPC | talk, ask, negotiate, give, hire, recruit, dismiss, teach, request aid/service | future People/NPC and social boundaries | Canonical person/social mutation broadly deferred. |
+| Religion/ritual | pray, offer, blessing, healing, oath/funeral/seasonal rite, doctrine study | religion/orders, sacred sites, religious hotspots, magic infrastructure | Current content explicitly non-executing; ritual/service owner missing. |
+| Leadership/civic | coordinate labor, command group, administer, negotiate, crisis response | settlement/leadership skills and civic planning | Skill is modifier only; requires controlled target and office/property/group authority. |
+
+The architecture should model **one owner-backed loop at a time**. Do not expose commands from these rows merely because their content/projection inputs exist.

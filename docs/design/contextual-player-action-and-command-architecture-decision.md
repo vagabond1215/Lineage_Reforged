@@ -167,3 +167,29 @@ Future contextual-action acceptance should demonstrate that the resolver general
 - supernatural habitat only after an appropriate consequence/interaction owner exists.
 
 The system should gain new authored environments primarily through data and owner capabilities, not through new top-level UI code for every biome.
+
+
+## 11. Domain and lifecycle command expansion
+
+The repository-wide command census in [Contextual Command Domain Census And Expansion Plan](contextual-command-domain-census-and-expansion-plan.md) expands the taxonomy beyond physical/environmental verbs.
+
+The architecture must also support contextual **institutional, economic, advancement and management** commands without promoting them to permanent Home buttons.
+
+Additional presentation families include:
+
+| Family | Examples | Boundary |
+| --- | --- | --- |
+| Learn / Train | practice, teacher training, institutional study, mastery trial, spell study | Advancement/study owner required. Skill presence alone is not a command. |
+| Participate / Join | guild application, entry trial, dues, resignation, guild contract | Membership/affiliation/contract owner required. |
+| Request Service | lodging, treatment, archive consultation, storage, ferry, magical service, permit | Provider/access/payment/result owner required. |
+| Work | browse work, accept shift/order, start/advance/pause/resume/report/collect pay | Employment and durable activity owner required. |
+| Manage | property, business, workplace, staffing, production, storage, convoy | Actor control/ownership and target-specific owner required. |
+| Commission / Reserve / Lease | crafted order, offer reservation, workspace/storage/berth lease | Transaction/contract/property/service owner required. |
+
+These are discovery/presentation families, not generic executable commands.
+
+Cross-domain lifecycle words such as `Apply`, `Accept`, `Start`, `Continue`, `Pause`, `Resume`, `Cancel`, `Submit`, `Collect` and `Leave` describe stages of an owner-specific command lifecycle. Do not create one central lifecycle executor.
+
+Home remains concise. A scene may promote `Browse Guild Contracts` or `Take Work` when immediately relevant, while detailed dues, staffing, recipe selection, facility rental or business administration stay in contextual subflows or management views.
+
+The first Home implementation remains unchanged: existing production commands only. This section defines future extensibility, not authorization.

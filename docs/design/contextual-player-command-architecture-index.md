@@ -9,7 +9,8 @@ Status: **ARCHITECTURE DEFINED; IMPLEMENTATION NOT YET AUTHORIZED**. Unversioned
 1. [Contextual Player Action And Command Architecture](contextual-player-action-and-command-architecture-decision.md) — identity, descriptor, gating, interaction, Home, migration, first slices and deferred owners.
 2. [Local Scene / Context Projection](local-scene-context-projection-decision.md) — source ownership, observation, persistence and reconstruction.
 3. [Location / Surroundings Affordance And Owner Matrices](contextual-player-affordance-and-owner-matrices.md) — required scene cases, ecology coverage families, owner routing and concrete current command inventory.
-4. [Ecology-Grounded Contextual Affordance Expansion Plan](ecology-grounded-contextual-affordance-expansion-plan.md) — environmental hierarchy, authored biome/habitat breadth, geometry semantics, staged ecology coverage and anti-hardcoding rules.
+4. [Ecology-Grounded Contextual Affordance Expansion Plan](ecology-grounded-contextual-affordance-expansion-plan.md) - environmental hierarchy, authored biome/habitat breadth, geometry semantics, staged ecology coverage and anti-hardcoding rules.
+5. [Contextual Command Domain Census And Expansion Plan](contextual-command-domain-census-and-expansion-plan.md) - guild, employment, crafting, resource, advancement, magic, service, market, business, social and ritual command coverage with owner gates and lifecycle semantics.
 
 These decisions extend the [accepted contextual action surface](contextual-action-surfaces-inventory-crafting-and-trade-decision.md) and [UI information architecture](ui-information-architecture-boundary.md). They do not supersede either. The [temporary audit input](../dev/temp/contextual-gameplay-command-system-audit-input-2026-10-19.md) is marked superseded as design input and retained for a separate cleanup commit. Its candidate fields and verbs are not a schema or implementation order.
 
