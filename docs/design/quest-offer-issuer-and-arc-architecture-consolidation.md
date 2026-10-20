@@ -229,6 +229,10 @@ A clerk, notice board, guild hall, priest, messenger or local official may prese
 
 That does not necessarily make the presenter a second issuer.
 
+### Offer presentation and turn-in location
+
+The [contextual interaction routing clarification](contextual-interaction-endpoints-and-contract-station-routing-decision.md) makes this delegation distinction concrete in the UI: an observed board/desk/counter defaults to **Browse Contracts**; its selected offer card invokes the one applicable owner-backed **Accept** operation; reporting completion occurs through an authorized clerk/contact or explicitly designated recipient after progress and evidence validation. A clerk, board, and card are **presentation/interaction endpoints**, not automatically additional issuers, offer instances or reward owners. Multiple such surfaces must point to the same eligible offer/acceptance route where canon says they represent the same offer. The board view or listing card must not mark completion, award payment or mutate contract state by itself. An issuer's receiving delegate must be grounded in owner-provided facts rather than guessed from a quest-giver display string.
+
 ### Co-issuer / multi-authority quest
 
 A quest truly has multiple issuers only when two or more authorities jointly own the request or consequences—for example, a joint civic-guild commission or treaty obligation.
