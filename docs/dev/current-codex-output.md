@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-19 Ordinary Encounter Victory And Choice selected-browser access hold
+
+Source: clean fetched `master`/`origin/master` `da20ea31804f34e29da179d8be53f569caa7c720`; repository `vagabond1215/Lineage_Reforged`. Label class: unversioned selected-path proof/feasibility, parent milestone not applicable; development impact `none`, Game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. **ORDINARY_ENCOUNTER_SELECTED_PROOF_UNEXECUTED_BROWSER_ORIGIN_UNAVAILABLE; GAME_VERSION_NOT_READY.** Focused matrix/disposition: `docs/design/ordinary-encounter-victory-and-choice-browser-access-hold.md`.
+
+### A. Files changed
+
+Added the focused browser-access hold/fixed selected matrix; updated this output, current handoff/prompt, historical/planning route and branch register. No production source, tests, schema, generated asset, `GAME_VERSION`, protected account, Site-source repository, deployment or held branch changed.
+
+### B. Patch summary
+
+Fresh source inspection confirmed ordinary World Explore/Approach/legal-command/Continue controls, GameSessionContext production owner routing, encounter active/victory/defeat ledger outcomes, authored low-difficulty hostile Kaelvar patrol, and default Warrior Arming Sword equipment/weapon action alongside basic melee. Those facts and tests are support only. Local Vite served a fresh `127.0.0.1:5348` origin, but the selected in-app browser timed out on both `127.0.0.1:5348` and `localhost:5348`; hosted preview opened with a protected account in the picker. No selected account/campaign was made or touched. Therefore no no-candidate, candidate, admission, selected command, victory, continuation or Save/load/restart evidence exists in this run. This is tool/origin access, not a demonstrated product failure. Resume the same fixed proof with a reachable isolated browser origin/profile; only a completed selected result can route a product repair or separate Game policy section 7 decision.
+
+### C. Tests or checks run
+
+Fresh focused Node combat equipment, spawn foundation and nearby exploration tests 38/38; Node UI-config typecheck PASS; app-local Vite build PASS, 256 modules, `index-DRiJsDUZ.js`, 2,842,595 bytes, SHA-256 `C95D70960DF7F26B6EB53B1A4C90D15C657E4B8F9B52677545CE4084DA6B44AE`. Broad UI typecheck exit 1 with 137 diagnostics, matching the recorded baseline, not green. Fresh repository-scoped GitHub PR search found zero open PRs. Five non-default heads, merge bases, unique commits/path counts and named dispositions were inspected; no trigger, disposition change, integration or deletion due. Documentation diff check and publication readback follow. Applicable FP-001/017: no source/fixture promotion to selected proof; FP-002: no Game acceptance from technical checks; FP-007: bounded documentation patch; FP-008/009: semantic held-ref and inspected/final-hosted identity review. No new reusable pattern identified.
+
+### D. Risks / follow-up notes
+
+The required selected campaign and durable victory/choice proof remain unrun. Existing G10B.5 selected genuine defeat/recovery remains separate supporting evidence. Preserve `G10D_ACCEPTED_WITH_DOCUMENTED_EVICTION_LIMIT`, `ACTUAL_INVOLUNTARY_EVICTION_NOT_OBSERVED`, `G10_DURABILITY_READY`, G10F local evidence limit and distinct protected local/hosted accounts. No data clear, capacity/fault rerun, deployment, Site-source mutation, `GAME_VERSION` change, Game acceptance, held-branch integration or UI overhaul. Suggested commit: `docs(proof): record selected encounter browser access hold`. Next recommended run: resume **Ordinary Encounter Victory And Choice Completion Proof** on a reachable isolated selected browser origin. No separate Game-version decision is yet installed. Final publication SHA follows push and independent hosted readback.
+
 ## 2026-10-19 Post-DEV-0.7.1 Playability And Game-Version Eligibility Decision
 
 Source: clean fetched Lineage `master`/`origin/master` `334fae75b1cd7935d965f051f296cf27d3ee936d`; branch/status assumption `master`. Label class: unversioned documentation decision, no parent; development impact `none`, Game-version impact `none`. **GAME_VERSION_NOT_READY.** Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS` unchanged. Focused decision: `docs/design/post-dev-0.7.1-playability-and-game-version-eligibility-decision.md`.
