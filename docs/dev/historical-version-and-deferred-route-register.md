@@ -1,3 +1,7 @@
+## 2026-10-20 — DEV-0.7.2.1 terminal owner/durability proof
+
+Controlled tests through ordinary nearby admission and step owners now prove both terminal branches, playable and pending Normal-Stakes defeat, exact history/ledger and app SaveManager load/continued play. No production repair or selected natural victory. The active successor is **DEV-0.7.2.2 Equipped Ranged Weapon Owner And Caller Verification**, with ammo/hand/durability decisions still separate. Six intervening design-only connector prework commits are reference material, not active scope. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` and later balance/representative playability gates remain unchanged.
+
 ## 2026-10-20 — DEV-0.7.2 shield Block implementation
 
 Equipped self-target `combat.defense.block` is now projected through the existing owner legality and ordinary nearby caller, with truthful WorldPanel self label. Owner/caller and build checks pass; selected UI remains unproven. Install `DEV-0.7.2.1 Combat Terminal Owner And Durability Slice` for deterministic real owner victory/defeat, continued play and durability without balance tuning. Natural selected victory, magic/items, Home and separate Game-version decision remain later gates. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` unchanged.

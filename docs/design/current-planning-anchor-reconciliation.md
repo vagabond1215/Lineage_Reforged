@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.1 terminal owner route
+
+The [terminal owner/durability record](dev-0.7.2.1-combat-terminal-owner-and-durability-record-2026-10-20.md) closes deterministic fixture evidence for victory and defeat through the real nearby caller, ledger, SaveManager load and continued play; pending recovery remains gated. The next installed bounded slice verifies equipped ranged weapons through the owner/caller without adding ammunition, slot or wear semantics. Natural selected victory, balance and a separate Game-version decision remain later.
+
 ## 2026-10-20 DEV-0.7.2 self Block implementation route
 
 The first skeleton implementation exposes equipped shield Block as an owner-validated self action with focused ordinary caller, resource, status, replay and serialization tests. [Focused record](dev-0.7.2-self-target-shield-block-implementation-record-2026-10-20.md) retains selected UI as an open evidence class. The active successor is deterministic terminal owner and durability proof, then ranged caller proof. Natural selected victory/balance and a separate Game-version decision remain later.

@@ -38,3 +38,7 @@ Date: 2026-10-20. Repository: `vagabond1215/Lineage_Reforged`. Read-only source 
 5. **Magic, in-combat consumables, companions and ordered gambits.** Distinct owner decisions and implementation slices after their contracts exist.
 
 No combat code, content, schema, tests, Game version, deployment, browser profile or branch was changed in this audit. Documentation links/diff and hosted readback are its validation. Applied FP-001 (real caller required for next slice), FP-002/017 (fixture/green tests are not selected acceptance), FP-007 (bounded docs edits), FP-008/009 (held branch and source/publication identity). No new failure pattern is needed.
+
+## Later evidence note: DEV-0.7.2.1
+
+The separate [terminal owner/durability record](dev-0.7.2.1-combat-terminal-owner-and-durability-record-2026-10-20.md) proves both terminal mechanics, playable/pending defeat, ledger, serialization, local SaveManager load and continued play through controlled owner/caller fixtures. It does not upgrade natural selected victory or full selected restart evidence. The current prompt now selects equipped ranged owner/caller verification; ammunition remains a separate owner decision.
