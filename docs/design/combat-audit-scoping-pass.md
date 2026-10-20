@@ -4,6 +4,8 @@ Source route: ChatGPT via GitHub Connector
 Date: 2026-05-19
 Status: promoted audit scope; no runtime/source/UI/content changes
 
+2026-10-20 owner-directed current-routing note: the more recent [Combat Skeleton First: Priority And Acceptance Boundary](combat-skeleton-first-priority-and-acceptance-boundary-decision.md) and installed `docs/dev/current-codex-prompt.md` prioritize a complete action/target/owner/effect/outcome/persistence skeleton before balancing an unfinished character's natural encounter. This file is a historical scope/reference and its ranked audit questions are not a current authority to tune combat or delay mechanics until a naturally selected victory is observed.
+
 0.5.82 sequencing note: this audit has been promoted into `docs/design/combat-equipment-mapping-audit-plan.md`, which is the active source for `Version 0.5.82 - Combat Equipment Mapping Audit`. Keep this audit for source detail, but do not treat historical prompt targets in this file as current pipeline authority.
 
 ## Purpose
