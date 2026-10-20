@@ -18,9 +18,9 @@ import { buildSaveMetadata, createSave, loadSave } from "../../apps/rpg-ui/src/g
 import { loadSpawnFoundationContent } from "../../packages/engines/world-engine/src/spawn/content.ts";
 import { resolveSpawnCandidates } from "../../packages/engines/world-engine/src/spawn/index.ts";
 
-function creator(settlementId = "settlement.stonevein", regionId = "region.auric_marches", continentId = "region.kaelvar") {
+function creator(settlementId = "settlement.stonevein", regionId = "region.auric_marches", continentId = "region.kaelvar",
+  startingBundleId = "starting_bundle.traveler") {
   const identity = getLineageIdentityCatalog("lineage.human");
-  const startingBundleId = "starting_bundle.traveler";
   const form = {
     ...createDefaultCharacterCreationFormState("slot-nearby-exploration"),
     playerName: "Nearby Explorer",
@@ -48,8 +48,8 @@ function controlFor(snapshot) {
   });
 }
 
-function admittedSyntheticCombatCase() {
-  let snapshot = creator();
+function admittedSyntheticCombatCase(startSnapshot = creator()) {
+  let snapshot = startSnapshot;
   let control = controlFor(snapshot);
   for (let attempt = 0; !snapshot.worldState.nearbyExplorationCandidate && attempt < 100; attempt += 1) {
     const result = advanceNearbyExplorationCaller(snapshot, control);
@@ -61,6 +61,140 @@ function admittedSyntheticCombatCase() {
   assert.equal(admitted.accepted, true);
   return { snapshot: admitted.snapshot, control: admitted.control };
 }
+
+function hunterSnapshot() {
+  return creator("settlement.stonevein", "region.auric_marches", "region.kaelvar", "starting_bundle.hunter");
+}
+
+test("equipped bows reach ranged damage and archery through the ordinary nearby caller", () => {
+  for (const { bowId, arrows } of [
+    { bowId: "item.short_bow", arrows: true },
+    { bowId: "item.short_bow", arrows: false },
+    { bowId: "item.composite_bow", arrows: true }
+  ]) {
+    const start = hunterSnapshot();
+    assert.equal(start.playerState.equipment["slot.weapon.right"].itemId, "item.short_bow");
+    if (bowId === "item.composite_bow") {
+      start.playerState.equipment["slot.weapon.right"] = {
+        itemId: bowId, itemKey: "composite_bow", quantity: 1, durability: 1
+      };
+    }
+    if (!arrows) for (const bag of start.playerState.inventory.bags)
+      bag.stacks = bag.stacks.filter((stack) => stack.itemId !== "item.arrow_bundle");
+    const inventoryBefore = structuredClone(start.playerState.inventory);
+    let { snapshot, control } = admittedSyntheticCombatCase(start);
+    const encounter = snapshot.gameState.activeEncounter;
+    const player = encounter.combatants.find((entry) => entry.kind === "player");
+    const targetId = encounter.enemyCombatantIds[0];
+    for (const enemy of encounter.combatants.filter((entry) => entry.disposition === "enemy")) {
+      enemy.resources.hp.current = 999;
+      enemy.resources.hp.max = 999;
+      enemy.timing.readyAtTick = snapshot.clock.tick + 1000;
+    }
+    const legal = listLegalPlayerCombatCommands(encounter);
+    const archeryRankBefore = snapshot.playerState.skills.find((entry) =>
+      entry.id === "skill.combat.weapon.archery")?.rank ?? 0;
+    const ranged = legal.find((entry) => entry.actionType === "combat.ranged.primary" && entry.targetId === targetId);
+    assert.ok(ranged, `${bowId} must be projected to the ordinary caller`);
+    assert.equal(ranged.sourceType, "weapon_profile");
+    assert.equal(ranged.sourceId, "combat.ranged.primary");
+    assert.equal(ranged.staminaCost, 5);
+    assert.equal(ranged.hpCost, 0);
+    assert.equal(ranged.mpCost, 0);
+    assert.ok(legal.some((entry) => entry.actionType === "combat.attack.melee.basic"));
+    const sourceBefore = serializeSnapshot(snapshot);
+    const wrongTarget = createNearbyEncounterStepCommand(snapshot, control, "combat.ranged.primary", player.id,
+      `ranged.${bowId}.${arrows}.wrong_target`);
+    assert.equal(executeNearbyEncounterStep(snapshot, control, wrongTarget).code, "illegal_command");
+    assert.equal(serializeSnapshot(snapshot), sourceBefore);
+    const command = createNearbyEncounterStepCommand(snapshot, control, "combat.ranged.primary", targetId,
+      `ranged.${bowId}.${arrows}.shot`);
+    const accepted = executeNearbyEncounterStep(snapshot, control, command);
+    assert.equal(accepted.accepted, true, `${bowId} must be admitted by the nearby caller`);
+    assert.equal(serializeSnapshot(snapshot), sourceBefore);
+    assert.equal(accepted.control.sessionRevision, control.sessionRevision + 1);
+    assert.equal(accepted.control.acceptedMutationIds.at(-1), command.requestId);
+    assert.equal(executeNearbyEncounterStep(accepted.snapshot, accepted.control, command).code, "duplicate");
+    assert.equal(executeNearbyEncounterStep(accepted.snapshot, accepted.control,
+      { ...command, targetId: player.id }).code, "request_conflict");
+    assert.ok(accepted.snapshot.authorityLedger.nearbyEncounters.commands.some((entry) =>
+      entry.requestId === command.requestId && entry.actionType === "combat.ranged.primary" &&
+      entry.targetId === targetId && entry.result === "active"));
+    assert.equal(executeNearbyEncounterStep(accepted.snapshot, accepted.control,
+      createNearbyEncounterStepCommand(snapshot, control, "combat.ranged.primary", targetId,
+        `ranged.${bowId}.${arrows}.stale`)).code, "stale_snapshot");
+    ({ snapshot, control } = accepted);
+    const action = snapshot.gameState.activeEncounter.actions.find((entry) =>
+      entry.actorCombatantId === player.id && entry.manualOverride && entry.actionType === "combat.ranged.primary");
+    assert.ok(action);
+    assert.equal(action.lifecycle, "executing");
+    assert.equal(action.source.sourceType, "weapon_profile");
+    assert.equal(action.source.sourceId, "combat.ranged.primary");
+    assert.equal(action.source.itemId, bowId);
+    assert.equal(action.source.weaponSkillId, "skill.combat.weapon.archery");
+    assert.equal(action.source.itemHandlingType, "weapon");
+    assert.deepEqual(action.targeting.targetIds, [targetId]);
+    assert.ok(action.resolutionHooks.includes("damage.ranged"));
+    assert.equal(action.resourceCosts.stamina, 5);
+    assert.equal(action.executionTimeTicks > 0 && action.recoveryTimeTicks > 0, true);
+    assert.notEqual(action.startedAtTick, null);
+    assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === player.id)
+      .resources.stamina.current, player.resources.stamina.current - 5);
+    const observedLifecycles = new Set([action.lifecycle]);
+    for (let beat = 0; snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === action.id).lifecycle !== "resolved" &&
+        beat < 20; beat += 1) {
+      const result = executeNearbyEncounterStep(snapshot, control,
+        createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null,
+          `ranged.${bowId}.${arrows}.advance.${beat}`));
+      assert.equal(result.accepted, true, `${bowId} beat ${beat}: ${result.code}`);
+      ({ snapshot, control } = result);
+      observedLifecycles.add(snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === action.id).lifecycle);
+    }
+    const resolved = snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === action.id);
+    assert.equal(resolved.lifecycle, "resolved");
+    assert.ok(observedLifecycles.has("recovering"));
+    assert.ok(resolved.resolvesAtTick > resolved.startedAtTick);
+    assert.ok(resolved.recoveryEndsAtTick > resolved.resolvesAtTick);
+    assert.ok(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === targetId).resources.hp.current < 999);
+    assert.ok(snapshot.gameState.activeEncounter.skillGainAttemptState.attemptedCapKeys.includes(
+      "combat_action:weapon_attack:skill.combat.weapon.archery"));
+    assert.equal(snapshot.playerState.skills.find((entry) => entry.id === "skill.combat.weapon.archery")?.rank,
+      archeryRankBefore + 1);
+    assert.ok(listLegalPlayerCombatCommands(snapshot.gameState.activeEncounter).some((entry) =>
+      entry.actionType === "combat.ranged.primary" && entry.targetId === targetId));
+    assert.deepEqual(snapshot.playerState.inventory, inventoryBefore, "current ranged action does not debit arrows");
+    const reopened = deserializeSnapshot(serializeSnapshot(snapshot));
+    assert.deepEqual(reopened.gameState.activeEncounter.actions.find((entry) => entry.id === action.id), resolved);
+    assert.deepEqual(reopened.authorityLedger.nearbyEncounters.commands, snapshot.authorityLedger.nearbyEncounters.commands);
+    assert.deepEqual(reopened.playerState.inventory, inventoryBefore);
+  }
+});
+
+test("inventory-only bow and insufficient stamina do not project an equipped ranged command", () => {
+  for (const condition of ["inventory_only", "unaffordable"]) {
+    const start = hunterSnapshot();
+    if (condition === "inventory_only") {
+      start.playerState.equipment["slot.weapon.right"] = null;
+      start.playerState.inventory.bags[0].stacks.push({ itemId: "item.short_bow", itemKey: "short_bow", quantity: 1 });
+    }
+    const { snapshot, control } = admittedSyntheticCombatCase(start);
+    if (condition === "unaffordable") {
+      snapshot.playerState.resources.stamina.current = 4;
+      snapshot.gameState.activeEncounter.combatants.find((entry) => entry.kind === "player")
+        .resources.stamina.current = 4;
+    }
+    const targetId = snapshot.gameState.activeEncounter.enemyCombatantIds[0];
+    assert.equal(listLegalPlayerCombatCommands(snapshot.gameState.activeEncounter).some((entry) =>
+      entry.actionType === "combat.ranged.primary"), false, condition);
+    assert.ok(listLegalPlayerCombatCommands(snapshot.gameState.activeEncounter).some((entry) =>
+      entry.actionType === "combat.attack.melee.basic"));
+    const sourceBefore = serializeSnapshot(snapshot);
+    assert.equal(executeNearbyEncounterStep(snapshot, control,
+      createNearbyEncounterStepCommand(snapshot, control, "combat.ranged.primary", targetId,
+        `ranged.${condition}.rejected`)).code, "illegal_command");
+    assert.equal(serializeSnapshot(snapshot), sourceBefore);
+  }
+});
 
 function withSyntheticLocalSave(run) {
   const priorWindow = globalThis.window;
