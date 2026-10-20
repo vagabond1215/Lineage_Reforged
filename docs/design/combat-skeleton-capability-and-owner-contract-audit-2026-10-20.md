@@ -50,3 +50,7 @@ The separate [equipped ranged owner/caller record](dev-0.7.2.2-equipped-ranged-o
 ## Later evidence note: DEV-0.7.2.3
 
 The separate [enemy AI record](dev-0.7.2.3-enemy-ai-candidate-legality-and-target-record-2026-10-20.md) proves an authored Scout action through actual nearby Continue and repairs repeated scoring of unpayable ranged attacks over payable supported melee. This does not establish broad spell, ability or gambit ownership. The current prompt selects one owned physical ability legality check.
+
+## Later evidence note: DEV-0.7.2.4
+
+The [physical ability record](dev-0.7.2.4-owned-physical-ability-provenance-and-legality-record-2026-10-20.md) stops at the acquisition gate: Village Hunter's active Quick Shot is Tier 2 locked, and the ordinary creator supplies no earned/source-run evidence records to eligibility. No real owner/caller Quick Shot acceptance, production repair or synthetic grant promotion followed. The next installed prompt decides the legitimate evidence projection contract before a separate combat ability slice.

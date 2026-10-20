@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.4 physical ability acquisition gate
+
+The [DEV-0.7.2.4 record](dev-0.7.2.4-owned-physical-ability-provenance-and-legality-record-2026-10-20.md) finds no currently reachable ordinary creator grant of an active physical ability: Village Hunter's Quick Shot is Tier 2 locked and the creator supplies no earned/source-run evidence records. No combat ability acceptance or repair was claimed. The next bounded run decides the legitimate acquisition evidence contract before a separate Quick Shot legality/caller slice. Selected combat victory, balance, Home UI and Game-version acceptance remain separate.
+
 ## 2026-10-20 DEV-0.7.2.3 enemy AI legality route
 
 The [enemy AI record](dev-0.7.2.3-enemy-ai-candidate-legality-and-target-record-2026-10-20.md) proves one authored Scout action through ordinary nearby Continue and repairs repeated unaffordable scored selection. Hard target exclusions, no-target behavior and blocked/busy action economy have focused tests. The next bounded task verifies one owned active physical ability's exact provenance and legality; magic, all-ability activation, companions, gambits, balance and Game-version acceptance remain separate.
