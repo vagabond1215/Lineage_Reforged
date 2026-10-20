@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-20 Ordinary Combat Basic Action Selection Repair
+
+Source run: **Ordinary Combat Basic Action Selection Repair**, unversioned; parent milestone not applicable. Date 2026-10-20. Clean synchronized `master`/`origin/master` source `66f42e27`; code checkpoint `42c0fcd5` pushed. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. Development impact `none`; Game-version impact `none`; `GAME_VERSION_NOT_READY`. **BASIC_MELEE_OWNER_AND_CALLER_REPAIR_VERIFIED; INDEPENDENT_SELECTED_ACCEPTANCE_PENDING.**
+
+### A. Files changed
+
+Production `packages/engines/game-engine/src/combat/index.ts`; tests `tests/unit/combat-spawn-foundation.test.mjs` and `tests/unit/nearby-exploration-reachability.test.mjs`. Focused record `docs/design/ordinary-combat-basic-action-selection-repair-record.md`; current output/handoff/prompt, historical/planning route and branch register. No content, schema, UI layout, persistence, generated/vendor file, Game version or Site-source repository changed.
+
+### B. Patch summary
+
+The exact ordinary Warrior/Arming Sword owner and caller tests failed before the fix because family-matched sword grant resolution shadowed the engine's basic action and the legal-list identity guard dropped it. Exact basic melee now resolves to its engine template while sword profile remains its own action. Basic source no longer falsely claims the sword item. The selected App's existing `WorldPanel` maps the returned legal commands to distinct buttons; the ordinary creator-to-encounter caller accepted each through `executeNearbyEncounterStep`. The unchanged selected acceptance matrix is installed next, after the separately committed repair.
+
+### C. Tests or checks run
+
+Pre-edit red owner and ordinary caller reproductions; focused combat/equipment/exploration/encounter tests 100/100, final narrower rerun 41/41; Node UI-config typecheck pass; app-local Vite build pass, 256 client modules; broad UI typecheck 137 diagnostics, matching baseline, not green; `git diff --check` pass. FP-001: genuine creator, exploration, admission and encounter-step caller exercised; FP-017: automated evidence is not selected browser acceptance; FP-002: no Game promotion; FP-008/009: five held/protected refs and inspected/pushed identities distinguished. No new failure-pattern entry is needed.
+
+### D. Risks / follow-up notes
+
+No new selected browser victory, continued play or durable terminal readback is claimed. The prior selected Normal-Stakes defeat remains distinct. G10D/G10F limits and both protected account authorities remain. Five non-default hosted refs were inspected at source; zero open repository PRs; no branch action or disposition change due. Suggested code commit: `fix(combat): keep basic melee separate from sword profile` (`42c0fcd5`). Suggested documentation commit: `docs(combat): hand repaired action to independent selected proof`. Next run: **Ordinary Encounter Victory And Choice Independent Selected Acceptance**; a separate Game-version decision may follow a proven matrix.
+
 ## 2026-10-19 Contextual Player Action And Command Architecture
 
 Source development run: **Contextual Player Action And Command Architecture**, unversioned parallel documentation run; parent milestone not applicable. Source `master`/`origin/master` `bc66a5460c7a77b12b4eda997749ad42a620c554`, initially clean after fetch/fast-forward. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. Development impact `none`; Game-version impact `none`; `GAME_VERSION_NOT_READY`. **ARCHITECTURE DEFINED; IMPLEMENTATION NOT YET AUTHORIZED.** The Ordinary Combat Basic Action Selection Repair remains the active executable route in the unchanged current prompt.
