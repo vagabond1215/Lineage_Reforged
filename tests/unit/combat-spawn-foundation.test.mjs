@@ -604,6 +604,35 @@ test("equipped sword leaves basic melee and weapon profile independently legal a
   assert.deepEqual(listLegalPlayerCombatCommands(encounter), []);
 });
 
+test("equipped shield projects its authored self Block without replacing enemy attacks", () => {
+  const { encounter } = createEncounterFixture();
+  const player = findPlayerCombatant(encounter);
+  const enemy = findEnemyCombatant(encounter);
+  const legal = listLegalPlayerCombatCommands(encounter);
+  assert.ok(legal.some((entry) => entry.actionType === "combat.attack.melee.basic" && entry.targetId === enemy.id));
+  assert.ok(legal.some((entry) => entry.actionType === "combat.melee.primary" && entry.targetId === enemy.id));
+  assert.deepEqual(legal.filter((entry) => entry.actionType === "combat.defense.block").map((entry) =>
+    ({ targetId: entry.targetId, sourceType: entry.sourceType, staminaCost: entry.staminaCost })),
+    [{ targetId: player.id, sourceType: "item", staminaCost: 2 }]);
+  const noShield = createEncounterFixture(createPlayerStateFixture({
+    equipmentOverrides: { "slot.weapon.left": null }
+  })).encounter;
+  assert.ok(!listLegalPlayerCombatCommands(noShield).some((entry) => entry.actionType === "combat.defense.block"));
+  assert.ok(!legal.some((entry) => entry.actionType === "combat.defense.block" && entry.targetId === enemy.id));
+  const unsupported = structuredClone(encounter);
+  const unsupportedPlayer = findPlayerCombatant(unsupported);
+  unsupportedPlayer.hooks.itemUseProfileGrants.find((grant) => grant.actionType === "combat.defense.block").resolutionHooks = ["future.unsupported"];
+  assert.ok(!listLegalPlayerCombatCommands(unsupported).some((entry) => entry.actionType === "combat.defense.block"));
+  player.resources.stamina.current = 1;
+  assert.ok(!listLegalPlayerCombatCommands(encounter).some((entry) => entry.actionType === "combat.defense.block"));
+  player.resources.stamina.current = 2;
+  player.timing.queuedActionIds.push("already.queued");
+  assert.deepEqual(listLegalPlayerCombatCommands(encounter), []);
+  player.timing.queuedActionIds = [];
+  encounter.paused = true;
+  assert.deepEqual(listLegalPlayerCombatCommands(encounter), []);
+});
+
 test("basic melee fallback and legal gates do not depend on an equipped weapon", () => {
   const { encounter } = createEncounterFixture(createPlayerStateFixture({
     equipmentOverrides: { "slot.weapon.right": null }

@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2 self Block implementation route
+
+The first skeleton implementation exposes equipped shield Block as an owner-validated self action with focused ordinary caller, resource, status, replay and serialization tests. [Focused record](dev-0.7.2-self-target-shield-block-implementation-record-2026-10-20.md) retains selected UI as an open evidence class. The active successor is deterministic terminal owner and durability proof, then ranged caller proof. Natural selected victory/balance and a separate Game-version decision remain later.
+
 ## 2026-10-20 Combat skeleton audit route
 
 The owner-directed skeleton priority now has a current-source capability matrix in [Combat Skeleton Capability And Owner-Contract Audit](combat-skeleton-capability-and-owner-contract-audit-2026-10-20.md). It selects equipped self-target shield Block legality, ordinary caller and truthful UI as the first bounded implementation. Terminal deterministic owner/durability and ranged caller proof follow as separate evidence gates. This audit does not change Game `0.1.1-prealpha`, accepted DEV-0.7.1, `INTEGRATED_LOOP`, Game-version not-ready, or the later natural victory/balance gate.

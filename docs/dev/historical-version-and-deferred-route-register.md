@@ -1,3 +1,7 @@
+## 2026-10-20 — DEV-0.7.2 shield Block implementation
+
+Equipped self-target `combat.defense.block` is now projected through the existing owner legality and ordinary nearby caller, with truthful WorldPanel self label. Owner/caller and build checks pass; selected UI remains unproven. Install `DEV-0.7.2.1 Combat Terminal Owner And Durability Slice` for deterministic real owner victory/defeat, continued play and durability without balance tuning. Natural selected victory, magic/items, Home and separate Game-version decision remain later gates. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` unchanged.
+
 ## 2026-10-20 — Combat skeleton audit and shield Block route
 
 The read-only combat skeleton capability audit at `19e8acd3` found the smallest implementable gap: shield `combat.defense.block` already has equipped self-target content and a recognized status/mitigation hook, but ordinary legal projection excludes every non-enemy-damage action. Install **Self-Target Shield Block Legal Command Slice** before terminal owner/durability and ranged selected proof. The audit is documentation-only; no new selected or Game acceptance. Natural victory, balance, magic, combat consumables, ordered gambits and Home overhaul remain deferred by the owner-directed priority decision. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` unchanged.

@@ -117,6 +117,8 @@ test("ordinary Warrior creator exposes and accepts basic melee beside Arming Swo
   ({ snapshot, control } = admitted);
   const legal = listLegalPlayerCombatCommands(snapshot.gameState.activeEncounter);
   const firstTarget = snapshot.gameState.activeEncounter.enemyCombatantIds[0];
+  const self = snapshot.gameState.activeEncounter.combatants.find((entry) => entry.kind === "player");
+  assert.ok(legal.some((entry) => entry.actionType === "combat.defense.block" && entry.targetId === self.id));
   for (const actionType of ["combat.attack.melee.basic", "combat.melee.primary"]) {
     const choice = legal.find((entry) => entry.actionType === actionType && entry.targetId === firstTarget);
     assert.ok(choice, `${actionType} must be offered to the real caller`);
@@ -127,6 +129,48 @@ test("ordinary Warrior creator exposes and accepts basic melee beside Arming Swo
     assert.ok(result.snapshot.gameState.activeEncounter.actions.some((entry) =>
       entry.actorCombatantId === player.id && entry.manualOverride && entry.actionType === actionType));
   }
+  const sourceBefore = serializeSnapshot(snapshot);
+  const wrongTarget = createNearbyEncounterStepCommand(snapshot, control, "combat.defense.block", firstTarget, "step.block.wrong_target");
+  assert.equal(executeNearbyEncounterStep(snapshot, control, wrongTarget).code, "illegal_command");
+  assert.equal(serializeSnapshot(snapshot), sourceBefore);
+  const blockCommand = createNearbyEncounterStepCommand(snapshot, control, "combat.defense.block", self.id, "step.block.self");
+  const blockResult = executeNearbyEncounterStep(snapshot, control, blockCommand);
+  assert.equal(blockResult.accepted, true);
+  assert.equal(serializeSnapshot(snapshot), sourceBefore, "admission must not mutate the source snapshot");
+  const blockEncounter = blockResult.snapshot.gameState.activeEncounter;
+  const blockPlayer = blockEncounter.combatants.find((entry) => entry.id === self.id);
+  const blockAction = blockEncounter.actions.find((entry) => entry.actorCombatantId === self.id &&
+    entry.manualOverride && entry.actionType === "combat.defense.block");
+  assert.ok(blockAction);
+  assert.deepEqual(blockAction.targeting.targetIds, [self.id]);
+  assert.equal(blockAction.source.itemId, "item.buckler_shield");
+  assert.equal(blockPlayer.resources.stamina.current, self.resources.stamina.current - 2);
+  assert.ok(blockResult.snapshot.authorityLedger.nearbyEncounters.commands.some((entry) =>
+    entry.requestId === "step.block.self" && entry.actionType === "combat.defense.block" && entry.targetId === self.id));
+  assert.equal(executeNearbyEncounterStep(blockResult.snapshot, blockResult.control, blockCommand).code, "duplicate");
+  assert.equal(executeNearbyEncounterStep(blockResult.snapshot, blockResult.control,
+    { ...blockCommand, targetId: firstTarget }).code, "request_conflict");
+  const staleBlock = createNearbyEncounterStepCommand(snapshot, control, "combat.defense.block", self.id, "step.block.stale");
+  assert.equal(executeNearbyEncounterStep(blockResult.snapshot, blockResult.control, staleBlock).code, "stale_snapshot");
+  const continued = executeNearbyEncounterStep(blockResult.snapshot, blockResult.control,
+    createNearbyEncounterStepCommand(blockResult.snapshot, blockResult.control, "combat.advance", null, "step.block.continue"));
+  assert.equal(continued.accepted, true);
+  const continuedPlayer = continued.snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === self.id);
+  assert.ok(continuedPlayer.statusEffects.some((entry) => entry.tags.includes("block")));
+  const reopened = deserializeSnapshot(serializeSnapshot(continued.snapshot));
+  assert.ok(reopened.gameState.activeEncounter.combatants.find((entry) => entry.id === self.id)
+    .statusEffects.some((entry) => entry.tags.includes("block")));
+  let resumed = continued;
+  for (let beat = 0; beat < 3; beat += 1) {
+    resumed = executeNearbyEncounterStep(resumed.snapshot, resumed.control,
+      createNearbyEncounterStepCommand(resumed.snapshot, resumed.control, "combat.advance", null,
+        `step.block.recovery.${beat}`));
+    assert.equal(resumed.accepted, true);
+  }
+  assert.equal(resumed.snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === blockAction.id).lifecycle,
+    "resolved");
+  assert.ok(listLegalPlayerCombatCommands(resumed.snapshot.gameState.activeEncounter).some((entry) =>
+    entry.actionType === "combat.defense.block" && entry.targetId === self.id));
 });
 
 test("other creator origin and unlinked action have no authored encounter", () => {

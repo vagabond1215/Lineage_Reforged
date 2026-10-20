@@ -218,12 +218,14 @@ export function WorldPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Worl
                   const foe = activeEncounter.combatants.find((item) => item.id === id);
                   return `Foe ${index + 1}${foe?.defeated ? ' (defeated)' : ''}`;
                 }).join(', ')}.</p>
-                <p>{activeEncounter.paused ? 'Combat is paused.' : legalCombatCommands.length ? 'Choose an available action or let combat advance.' : 'No attack is currently available; combat can advance.'}</p>
+                <p>{activeEncounter.paused ? 'Combat is paused.' : legalCombatCommands.length ? 'Choose an available action or let combat advance.' : 'No action is currently available; combat can advance.'}</p>
                 <div className="flex flex-wrap gap-2">
                   {legalCombatCommands.map((command) => {
                     const foeNumber = activeEncounter.enemyCombatantIds.indexOf(command.targetId) + 1;
+                    const isSelfBlock = command.actionType === 'combat.defense.block' && activeEncounter.combatants.some((item) =>
+                      item.id === command.targetId && item.kind === 'player');
                     return <GameActionButton key={`${command.actionType}.${command.targetId}`}
-                      label={`${command.actionType === 'combat.attack.melee.basic' ? 'Basic melee attack' : command.actionType.split('.').slice(1).join(' ')} — Foe ${foeNumber} (${command.staminaCost} Stamina, ${command.mpCost} MP${command.hpCost ? `, ${command.hpCost} HP` : ''})`}
+                      label={`${isSelfBlock ? 'Shield Block' : command.actionType === 'combat.attack.melee.basic' ? 'Basic melee attack' : command.actionType.split('.').slice(1).join(' ')} — ${isSelfBlock ? 'Self' : `Foe ${foeNumber}`} (${command.staminaCost} Stamina, ${command.mpCost} MP${command.hpCost ? `, ${command.hpCost} HP` : ''})`}
                       disabled={activeEncounter.paused}
                       onClick={() => {
                         const result = advanceNearbyEncounter(command.actionType, command.targetId);

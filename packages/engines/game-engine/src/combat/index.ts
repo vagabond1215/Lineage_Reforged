@@ -850,15 +850,22 @@ export function listLegalPlayerCombatCommands(encounter: CombatEncounterState): 
   // equipment grants make the candidate-action set nonempty.
   return [...new Set(["combat.attack.melee.basic", ...buildCandidateActionTypes(actor)])].flatMap((actionType) => {
     const template = getActionTemplate(actor, actionType);
-    if (template.actionType !== actionType || template.targetDisposition !== "enemy" ||
-        !template.resolutionHooks.some((hook) => hook.startsWith("damage."))) return [];
+    const selfShieldBlock = actionType === "combat.defense.block" &&
+      template.sourceType === "item" && template.targetDisposition === "self" && template.targetShape === "self" &&
+      template.resolutionHooks.length === 1 &&
+      ["defense.shield.small", "defense.shield.medium", "defense.shield.large"].includes(template.resolutionHooks[0]!) &&
+      actor.hooks.itemUseProfileGrants.some((grant) => grant.itemId === template.itemId &&
+        grant.actionType === actionType && grant.handlingType === "shield");
+    const enemyDamage = template.targetDisposition === "enemy" &&
+      template.resolutionHooks.some((hook) => hook.startsWith("damage."));
+    if (template.actionType !== actionType || (!selfShieldBlock && !enemyDamage)) return [];
     const staminaCost = template.resourceCosts.stamina ?? 0;
     const mpCost = template.resourceCosts.mp ?? 0;
     const hpCost = template.resourceCosts.hp ?? 0;
     if (![hpCost, staminaCost, mpCost].every((cost) => Number.isSafeInteger(cost) && cost >= 0)) return [];
     if (hpCost > actor.resources.hp.current || staminaCost > actor.resources.stamina.current ||
         mpCost > actor.resources.mp.current) return [];
-    return targets.map((targetId) => ({ actionType, targetId, sourceType: template.sourceType,
+    return (selfShieldBlock ? [actor.id] : targets).map((targetId) => ({ actionType, targetId, sourceType: template.sourceType,
       sourceId: template.sourceId, hpCost, staminaCost, mpCost }));
   });
 }
