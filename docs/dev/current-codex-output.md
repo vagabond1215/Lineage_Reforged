@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-19 Contextual Player Action And Command Architecture
+
+Source development run: **Contextual Player Action And Command Architecture**, unversioned parallel documentation run; parent milestone not applicable. Source `master`/`origin/master` `bc66a5460c7a77b12b4eda997749ad42a620c554`, initially clean after fetch/fast-forward. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; accepted `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. Development impact `none`; Game-version impact `none`; `GAME_VERSION_NOT_READY`. **ARCHITECTURE DEFINED; IMPLEMENTATION NOT YET AUTHORIZED.** The Ordinary Combat Basic Action Selection Repair remains the active executable route in the unchanged current prompt.
+
+### A. Files changed
+
+Added `docs/design/contextual-player-command-architecture-index.md`, `contextual-player-action-and-command-architecture-decision.md`, `local-scene-context-projection-decision.md`, and `contextual-player-affordance-and-owner-matrices.md`. Marked the temporary audit input superseded while retaining it. Updated current output, handoff, historical/planning route and branch register. No production source, tests, schema, generated output, Game version, Site source, deployment, account or held branch changed.
+
+### B. Patch summary
+
+Defined owner-preserving local scene and action projection, concrete command identity distinct from family/compatibility tags, minimum descriptor, availability/disclosure, composable interaction shapes, fifteen-scene affordance matrix, domain routing, Home consumption, migration from existing controls, existing-command first slice and separate environmental resource loop recommendation. Current engine commands and current UI bridges are distinguished from design-only or missing owners. The temporary audit's material requirements are individually disposed in its appended §24; deletion is deferred to a separate cleanup commit after durable readback. The active combat repair route is preserved verbatim.
+
+### C. Tests or checks run
+
+Fresh fetch/prune and exact source head; complete temporary input; accepted contextual/UI and focused encounter authorities; relevant live types, production callers and owner boundaries; five retained branch heads, merge bases, unique paths and zero open repository PRs. Documentation link/readback, `git diff --check`, staged diff, final commit/push and hosted SHA readback are publication checks. No executable test, selected browser proof, build or typecheck is claimed for this documentation-only package. Applicable FP-001: real caller mapping, not invented playability; FP-002/017: no Game/selected acceptance from design; FP-007: bounded additions/top-of-file coordination patches; FP-008/009: semantic held-ref review and source/final-head separation.
+
+### D. Risks / follow-up notes
+
+Exact local/interior/resource/vessel identity, law/crime, timed work, general trade/crafting/property and broader item/quest owner migration require separate decisions. The first Home implementation follows combat repair, independent encounter acceptance and separate Game-version decision, and uses existing commands only. Five retained non-default refs keep their registered protected/held dispositions; no integration, deletion or PR action is due. Suggested commit: `docs(design): define contextual player command architecture`. Next active run: **Ordinary Combat Basic Action Selection Repair**; architecture acceptance is parallel, not its replacement. Final publication SHA follows push/readback.
+
 ## 2026-10-19 Ordinary Encounter selected basic-action and victory boundary
 
 Source: clean fetched `master`/`origin/master` `55249da5ed24d021b9f62069b61bf737c71fe330`; repository `vagabond1215/Lineage_Reforged`. Label class: unversioned selected-path proof, parent milestone not applicable; development impact `none`, Game-version impact `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. **SELECTED_COMBAT_BASIC_ACTION_NOT_PROJECTED; ORDINARY_ENCOUNTER_VICTORY_AND_CHOICE_NOT_PROVEN; GAME_VERSION_NOT_READY.** Focused selected record: `docs/design/ordinary-encounter-selected-basic-action-and-victory-boundary.md`.

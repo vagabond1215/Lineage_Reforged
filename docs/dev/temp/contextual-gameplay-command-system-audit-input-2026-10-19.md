@@ -4,7 +4,7 @@ Date: 2026-10-19
 Repository: `vagabond1215/Lineage_Reforged`  
 Source head at publication: `c58a5c81abf4337140a1e4687af2dcdf3a8db513`
 
-Status: **temporary, non-authoritative design-consumption artifact**
+Status: **SUPERSEDED DESIGN INPUT; retained pending a separate cleanup commit**. Durable authority: `docs/design/contextual-player-command-architecture-index.md` and its three linked decisions. This file remains non-authoritative.
 
 This file intentionally gathers player-facing gameplay, location, contextual-action, UI, sandbox-role, and selected-proof findings into one place for a later architecture/design pass.
 
@@ -862,3 +862,22 @@ A character should be able to change behavior because of:
 A warrior can trade. A trader can fight. A farmer can travel. A landowner can gather wood. A crafter can take contracts. The contextual system should make those affordances legible without hard-wiring the UI around a permanent profession identity.
 
 The UI should feel like interacting with a world, not navigating a database of future systems.
+
+## 24. 2026-10-19 durable-consumption disposition
+
+The durable index and decisions independently reconciled this input against accepted repository authority and current production callers. Material requirements are accounted for as follows:
+
+| Audit material | Disposition and durable location |
+| --- | --- |
+| Contextual presentation with domain execution; classless sandbox; Home as current situation (§§1–3, 5, 13–14, 23) | Adopted in architecture §§1, 7 and local-scene decision. The accepted contextual-surface and UI IA decisions retain precedence. |
+| Local scene candidate shape and source facts (§§4, 6, 12) | Modified in local-scene decision: short-lived observed projection with typed references; no large persisted `PlayerLocationState` or claimed local owner. |
+| Action descriptor candidate and command pipeline (§§5, 7) | Modified in architecture §§1, 3: minimum presentation/invocation contract; speculative payload seed and universal sub-action registry not frozen. |
+| Family/concrete/compatibility split and combat example (§8) | Adopted in architecture §2; live combat repair remains the installed independent route. |
+| Skill modifiers, hard gates, illegal actions, blocked disclosure (§§9, 15) | Adopted with owner-present limitation in architecture §4; no crime path claimed without consequence owner. |
+| Direct/expand/activity/confirm and interruption (§10, §20) | Adopted in architecture §5; interaction stages may compose, timed work requires a durable owner. |
+| Large candidate verb table (§11) | Normalized into architecture §6 taxonomy and 15-scene affordance matrix; rejected as a permanent enum or proof of executable systems. |
+| Previews and tactical feedback (§16) | Adopted in architecture §7, with character-observable provenance and owner result feedback. |
+| Owner candidates (§17) | Modified in routing matrix to separate current engine commands, UI bridges, accepted design owners and missing runtime owners. |
+| Existing-command first slice, later environmental loop, UI overhaul order (§§18–19, 22) | Adopted in architecture §§8–9 and migration inventory; no implementation authorized. |
+| Twenty open questions (§20) | Resolved at architecture level where current owners suffice. Exact interior/vehicle/resource identity, law/crime, long activity and future schema remain explicitly deferred in local-scene decision and architecture §9. |
+| Non-goals and temporary retirement (§§21–22) | Adopted. Retain this file until separate cleanup commit after durable readback; no production, version, persistence, deployment or branch mutation. |
