@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-20 Ordinary Encounter Victory And Choice Independent Selected Acceptance
+
+Source run: **Ordinary Encounter Victory And Choice Independent Selected Acceptance**, unversioned; parent milestone not applicable. Date 2026-10-20. Clean synchronized `master`/`origin/master` source `85867a8cb0f0ff21fcef7b61bf8cf0776880f247`; repository `vagabond1215/Lineage_Reforged`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. Development impact `none`; Game-version impact `none`; `GAME_VERSION_NOT_READY`. **SELECTED_BASIC_AND_SWORD_COMMANDS_AVAILABLE_AND_ACCEPTED; ORDINARY_ENCOUNTER_VICTORY_AND_CHOICE_NOT_PROVEN.** Focused record: `docs/design/ordinary-encounter-selected-choice-and-victory-boundary-2026-10-20.md`.
+
+### A. Files changed
+
+Added the focused selected boundary record. Advanced current output, handoff, prompt, historical/planning route and branch register. No production source, tests, content, schema, generated/vendor file, `GAME_VERSION`, Site-source repository, deployment, protected account or held branch changed.
+
+### B. Patch summary
+
+One newly empty disposable Chrome profile reached the locally served default App at `http://localhost:5472/`; one synthetic/disposable account created one ordinary Stonevein Human Warrior/Arming Sword campaign in Slot 1. Visible World exploration produced no-candidate feedback, then an authentic candidate and separate Approach; the three-foe encounter opened at beat 4. Basic melee and Arming Sword profile were simultaneously visible against legal foes. Basic against Foe 1 was accepted at beat 4 with 4 Stamina spent; sword profile against Foe 1 was independently accepted at beat 13 with 4 Stamina spent. Later legal sword actions targeted Foe 1 at beats 21 and 29; Foe 1 was visibly defeated at beat 33. The player fell under Normal Stakes after Continue from beat 34; World showed recovery at 33/132 HP. The fixed matrix stopped at this first remaining failed victory boundary. No post-victory continuation, Save/load, restart/sign-in/load, exact terminal ledger/head/revision readback or Game-version acceptance is claimed. The installed next route is separate read-only outcome diagnosis and smallest repair decision, not speculative combat tuning.
+
+### C. Tests or checks run
+
+Fresh selected default-App caller actions and visible receipts described in the focused record. Focused combat/equipment/exploration tests 41/41; Node UI-config typecheck pass; app-local Vite build pass with 256 client modules. Broad UI typecheck exit 1, 137 TypeScript diagnostics, equal to baseline and not green. Fresh fetch/prune, exact `master`/`origin/master` status, five retained ref heads/merge bases/unique path scopes, zero open repository PRs through the repository-scoped connector; local `gh` CLI unavailable. Documentation links, `git diff --check`, complete diff, commit/push and hosted readback are publication checks. FP-001/017: real selected creator-to-World/admission/combat caller and strict separation from owner tests; FP-002: failed victory blocks overall/Game acceptance despite green focused tests; FP-007: bounded documentation-only closeout; FP-008/009: held refs and source/final/hosted heads separated. No new generalized failure-pattern entry.
+
+### D. Risks / follow-up notes
+
+Selected UI does not expose command/source IDs, target HP/damage, or exact terminal persistence identities; none are invented. Two natural selected defeats do not establish unwinnability or a combat balance defect. Preserve the fixed matrix for later independent replay, previous defeat as separate evidence, G10D/G10F limits, both protected account authorities and both retained proof-only profiles. Five non-default branches remain in registered protected/held states; no disposition change, merge, rebase, integration, deletion or PR action due/performed. Suggested commit: `docs(combat): record selected choice and victory boundary`. Next recommended run: **Ordinary Encounter Outcome Diagnosis And Smallest Repair Decision**; a separate Game-version decision remains gated on full selected victory/continuation/durability proof. Final publication SHA follows push/readback.
+
 ## 2026-10-20 Ordinary Combat Basic Action Selection Repair
 
 Source run: **Ordinary Combat Basic Action Selection Repair**, unversioned; parent milestone not applicable. Date 2026-10-20. Clean synchronized `master`/`origin/master` source `66f42e27`; code checkpoint `42c0fcd5` pushed. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; `DEV-0.7.1_ACCEPTED_WITH_DOCUMENTED_LIMITS`. Development impact `none`; Game-version impact `none`; `GAME_VERSION_NOT_READY`. **BASIC_MELEE_OWNER_AND_CALLER_REPAIR_VERIFIED; INDEPENDENT_SELECTED_ACCEPTANCE_PENDING.**
