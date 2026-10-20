@@ -89,6 +89,8 @@ Future contract or task-board authorities may add stable distribution surfaces, 
 
 Generated contract/offer instances, refresh timing, acceptance, expiration, objective progress, payout, standing changes, and board UI are runtime/state concerns. Static unique quest definitions must not absorb them.
 
+A future contract station is a **presentation endpoint**, not a second contract-definition or offer owner. Selecting a reachable board/notice desk/counter opens `Browse Contracts` by default as a read projection; the selected posting/card is where eligible `Accept Contract` invokes the owner. Reporting accepted work normally uses an owner-authorized receiving clerk/contact, with delivery/proof and completion consequences owned by the quest/contract runtime. Different presenting clerks and boards cannot multiply the underlying accepted offer or claim. This is the [contextual interaction routing](contextual-interaction-endpoints-and-contract-station-routing-decision.md) clarification, not an extension of current generic Turn In or an implementation authorization.
+
 ## 9. Event and Storylet Boundary
 
 Future events and storylets remain authored seeds, not runtime event execution. A seed may describe stable narrative possibility, scope, prerequisite descriptors, candidate outcomes, recurrence/visibility posture, references, provenance, and notes.
