@@ -60,7 +60,7 @@ Taxonomy is a discovery vocabulary, **not** a permanent engine enum. Owners issu
 | Social/economy | Greet/Talk, Ask/Inquire, Joke, Compliment, Flirt, Apologize, Persuade/Negotiate, Browse, Trade, Seek Work, Offer/Give, Request Service/Aid/Training, and immediate subordinate orders: dialogue, relationship, transaction, service, employment and command owners remain distinct. |
 | Farm/property | Plow/Sow/Water/Weed/Harvest, Tend Animals, Inspect/Repair/Build when physically performed: plot-stage and project actions remain owner-specific. Property/business administration belongs in management UI rather than this world-command taxonomy. |
 | Items | Take, Drop/Place, Store/Retrieve, Equip/Ready, Eat/Drink/Use: selected item context is invocation, not nutrition/transaction authority. |
-| Quest/contract | Accept, Track/Untrack, Report/Turn In: each is an existing or future quest-owner operation, not a global quest menu permission. |
+| Quest/contract | Board/desk **Browse** is a read view; a selected posting/card exposes owner-backed **Accept**; an authorized clerk/recipient exposes **Report/Turn In**. Track/Untrack remains journal state. None is a global menu permission. |
 | Hostile/risky | Steal/Pickpocket, Lockpick/Force, Trespass/Sneak, Engage/Attack, Flee/Disengage: separate crime, access, encounter and combat owners must exist before playability is claimed. |
 
 ## 7. Home / Current Situation consumption
@@ -79,6 +79,14 @@ Previews state what the character can reasonably know: destination, time/tick es
 A concrete interaction that would normally appear inside an entity interaction may be promoted to Home when the scene already establishes the target and likely intent. For example, a toll bridge may show `Pay Toll` beside `Talk to Toll Collector`; a guildhall may show `Apply to Guild`; a healer may show `Request Healing`; a merchant may show `Trade`.
 
 Promotion changes only presentation/ranking. The promoted action invokes the **same concrete owner command** as the deeper interaction and cannot duplicate price, result, permission or history logic. `Talk` is not a mandatory parent menu when a more useful concrete action is already obvious.
+
+### 7.2 Entity-first guild, commission and contract interactions
+
+The [clerk/station/contract-card routing decision](contextual-interaction-endpoints-and-contract-station-routing-decision.md) is the specific extension of the promoted-shortcut rule. In a guild hall, membership application, dues and ordinary guild-service requests are interactions with an authorized present clerk, not a permanent `Guild` command tree. Commissioning is a conversation/service transaction with a specific crafter or authorized crafting-guild brokerage counter, distinct from personally crafting at a workshop.
+
+An observed **contract board, posting desk or counter** is a station endpoint whose default selection opens the **Browse Contracts** read view; it is not `Use -> Browse` plus a second nested command. The player selects an eligible listing/card and accepts via the **same quest/contract acceptance owner** as any other entry. An accepted contract is later reported to an **authorized clerk or designated recipient**, not silently completed by reopening the board/card. Browse/filter/inspect are views unless a separate owner models consequential reading or discovery. Different presenting boards and clerks must not duplicate a canonical issuer, offer instance, active obligation or receipt.
+
+These are presentation and lifecycle *routes*, not a new schema or evidence of executable guild/contract/order services. Existing quest Accept/Track and Soundings Submit remain distinct from the currently weaker generic Turn In bridge. Home should surface only the nearest meaningful entry for an actually observed target and must not generate redundant `Talk -> Services -> Guild -> ...` ladders.
 
 ## 8. First integration and later loop
 
