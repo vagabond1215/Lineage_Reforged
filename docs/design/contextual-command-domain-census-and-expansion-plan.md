@@ -119,8 +119,7 @@ Potential contextual commands:
 - Collect Produced Output
 - Use / Rent / Reserve Workplace
 - Inspect Work Output
-- Change Assigned Role where authority permits
-- Assign Worker / Schedule Work / Coordinate Labor for managed property or business
+**Management boundary:** employer-side role assignment, worker assignment, shift scheduling, wage policy, staffing and labor coordination belong in Personnel / Work Roster / Business management surfaces rather than the character's world-command list.
 
 **Gate:** workplace job ids are nested role vocabulary, not employee records. A future employment/work owner needs actor, employer/workplace, assignment, schedule, pay, attempt/progress, interruption, completion and payout authority.
 
@@ -290,67 +289,136 @@ Market prices, settlement demand, routes and transport profiles are inputs, not 
 
 ### 4.10 Business, property and management
 
-For owned/controlled entities:
+Business and property administration are **not ordinary world-command families**.
 
-- Inspect Business / Property
-- Manage Business
-- Open / Close operation where meaningful
-- Set Production / Work Priority
-- Assign Staff
-- Schedule Work
-- Manage Payroll
-- Buy / Restock Inputs
-- Collect / Move Output
-- Manage Storage
-- Upgrade / Improve
-- Repair / Maintain
-- Lease / Rent
-- Claim / Transfer when property authority supports it
-- Manage Tenancy / Access
-- Manage Farm / Animals / Projects
-- Review Ledger / Revenue / Expenses
-- Collect Revenue
-- Pay Expense / Tax / Fee
+The character may still perform physical or direct-interaction actions involving owned assets:
 
-These are mostly **management-surface commands**, not first-level Home verbs. Home should expose a concise `Manage Property`, `Manage Workshop`, or `Review Business` entry point when relevant.
+- Inspect Site / Property;
+- Enter / Exit;
+- Repair or Build when personally performing the work;
+- Store / Retrieve / Move goods when physically modeled;
+- personally Buy / Sell / Deliver;
+- collect a physical payment or item where a domain explicitly models that interaction.
+
+Administration belongs in dedicated management UI:
+
+- staffing and personnel;
+- wages / payroll;
+- schedules and work rosters;
+- production priorities and queues;
+- budgets and ledgers;
+- pricing or restock policy;
+- storage policy;
+- tenancy / permissions;
+- leases;
+- upgrade planning;
+- maintenance policy;
+- farm plans;
+- project administration;
+- routine revenue/expense review.
+
+Home or an asset card may expose `Manage Workshop`, `Property`, `Personnel`, `Ledger`, or similar **navigation affordances**. Opening those surfaces is not a world command and should not be persisted as gameplay history.
+
+If the player changes business/property state through a management panel, that mutation remains domain-owned and may still have cost, timing, contracts, location or authority gates.
 
 ### 4.11 Social, NPC and party interaction
 
-Future contextual verbs:
+Social actions deserve a richer vocabulary than a single generic `Talk` command.
 
-- Talk
+**Conversation / information**
+- Greet / Talk
 - Ask / Inquire
-- Negotiate
-- Persuade / Bargain where a social resolver exists
+- Ask About a visible/known topic
+- Ask Directions
+- Ask About Work
+- Ask About Rumors / News
+- Tell / Inform / Report
+- Discuss
+- Request Explanation / Introduction
+
+**Friendly / expressive**
+- Joke
+- Compliment
+- Thank
+- Congratulate
+- Encourage
+- Comfort / Console
+- Apologize
+- Offer Help
+
+**Affection / romance-facing**
+- Flirt
+- Express Interest
+- Court / Invite only after dedicated relationship/romance authority exists
+
+Flirting is a social act, not automatic romance progression.
+
+**Influence / negotiation**
+- Persuade
+- Negotiate / Bargain
+- Request Favor
+- Appeal
+- Bribe only after transaction/law/social consequence ownership exists
+- Intimidate / Threaten only after consequence ownership exists
+
+**Provocative / hostile social**
+- Insult / Mock / Taunt
+- Provoke
+- Challenge
+- Accuse
+- Threaten
+
+**Exchange / relationship**
 - Offer / Give
-- Request Aid
+- Offer Payment
+- Trade
 - Hire
 - Recruit / Invite
-- Dismiss
-- Assign Role
-- Command / Coordinate
-- Teach / Train
+- Dismiss / Release
+- Ask to Follow / Accompany
+- Request Aid
 - Request Service
-- Threaten / Intimidate only after social/consequence ownership exists
+- Request Training
+
+**Immediate subordinate order**
+- Give Order
+- Warn
+- Rally
+- Direct Crisis Response
+- Command Tactical Action
+
+Routine role assignment, schedules, wages, crew slots and other personnel configuration belong in management UI. A selected subordinate may offer a `Manage...` navigation entry that opens their personnel/NPC card; that entry is not itself a gameplay command.
 
 Canonical People/NPC identity and social mutation remain deferred. Do not infer executable NPCs from quest contact strings, workplace roles or prose.
 
 ### 4.12 Leadership, settlement and civic actions
 
-Skills such as administration, logistics, agriculture, ranching, production management, trade, command, diplomacy, stewardship and labor coordination indicate future **capability modifiers**, not automatic commands.
+Skills such as administration, logistics, agriculture, ranching, production management, trade, command, diplomacy, stewardship and labor coordination are usually **capability modifiers**, not buttons.
 
-When the player actually controls a relevant group/property/settlement role, possible commands include:
+Use **direct world commands** for immediate leadership acts in an active situation:
 
-- Coordinate Labor
-- Assign Work
-- Set Priority
-- Organize Convoy
-- Command Formation / Unit
-- Issue Local Order where office authority permits
-- Negotiate Agreement
-- Manage Supplies
-- Respond to Crisis
-- Administer Property / Enterprise
+- Command Formation / Unit;
+- Rally;
+- Warn;
+- order Fall Back / Hold / Focus where the unit owner supports it;
+- Respond to Crisis with a concrete immediate order;
+- Negotiate Agreement through an actual counterparty interaction.
+
+Use **management UI** for:
+
+- Coordinate Labor as routine staffing;
+- Assign Work;
+- Set Priority;
+- Organize autonomous convoy/dispatch;
+- Manage Supplies as policy;
+- standing orders;
+- settlement/business policy;
+- edicts;
+- patrol policy;
+- staffing;
+- property/enterprise administration.
+
+A crisis may permit both an immediate order and a policy/edict change. They are separate interaction classes.
 
 Authority must come from party/unit/employment/property/office/settlement ownership, not from having the skill.
 
@@ -385,6 +453,26 @@ Some player-state actions are legitimate but should not be mistaken for world af
 - Review discoveries
 
 These belong to management/UI context. They normally should not occupy Home's primary world-action slots.
+
+## 5. Promoted contextual shortcuts
+
+A concrete sub-action may be promoted to Home/current-situation level when the target and likely intent are already obvious, while preserving the exact same authoritative command reachable through the deeper interaction.
+
+Examples:
+
+- `Pay Toll` beside `Talk to Toll Collector`;
+- `Board Ferry` beside `Talk to Ferryman`;
+- `Request Healing` beside `Talk to Healer`;
+- `Apply to Guild` beside `Talk to Guild Clerk`;
+- `Pay Dues` beside broader guild interaction;
+- `Turn In Contract` beside issuer conversation;
+- `Trade` beside merchant conversation;
+- `Ask for Work` beside employer conversation;
+- `Train` beside teacher conversation.
+
+Promotion is presentation/ranking only. It must not create a second command identity, duplicate payment/result logic or bypass the interaction owner.
+
+`Talk` is therefore **not a mandatory parent menu** for every entity action. It remains available for broader conversation while high-value context-specific interactions can be surfaced directly.
 
 ## 5. Cross-cutting lifecycle verbs
 
@@ -422,7 +510,7 @@ Candidate **entry families**:
 - Participate / Join
 - Request Service
 - Rest / Camp
-- Manage
+- Direct / Command
 - Engage / Defend
 
 These are presentation families, not engine enums.
@@ -433,10 +521,11 @@ Examples:
 - A forge may show `Craft`, `Take Work`, `Rent Station`, `Commission Work` according to access and actor role.
 - A teacher may show `Train` or `Study Spell`.
 - A contract board may show `Browse Contracts`.
-- An owned workshop may show `Manage Workshop`.
+- An owned workshop may show `Manage Workshop` as a navigation affordance, not a world command.
+- A selected subordinate may show immediate `Give Order` plus `Manage...` to open their personnel card.
 - A sacred site may show `Pray`, `Request Rite`, or only `Inspect` until ritual/service owners exist.
 
-Home promotes a few relevant concrete actions. `More Actions` exposes the rest of the legitimate observed set. Deep management remains in Character, Activity, World, Quests or future specialized views.
+Home promotes a few relevant concrete world actions and direct interactions. `More Actions` exposes the rest of the legitimate observed set. Business/property/personnel/crew/policy administration lives in Character, Activity, World or future specialized management views and does not need to masquerade as gameplay commands.
 
 ## 7. Important owner gaps before implementation
 
@@ -450,7 +539,7 @@ The following missing owners should be treated as architectural dependencies, no
 6. local resource-instance/depletion/discovery;
 7. provider/service availability/access/payment/result;
 8. market/vendor stock/offer/transaction;
-9. NPC/person/social relationship/service source;
+9. NPC/person/dialogue/social relationship, memory, service-source and consequence authority;
 10. contract/work-order lifecycle beyond current quests;
 11. business/property/lease/project/staffing;
 12. vehicle/vessel/cargo/crew ownership;
