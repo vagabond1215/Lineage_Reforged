@@ -474,7 +474,7 @@ Promotion is presentation/ranking only. It must not create a second command iden
 
 `Talk` is therefore **not a mandatory parent menu** for every entity action. It remains available for broader conversation while high-value context-specific interactions can be surfaced directly.
 
-## 5. Cross-cutting lifecycle verbs
+## 6. Cross-cutting lifecycle verbs
 
 Several verbs recur across domains and should be modeled as lifecycle stages rather than separate universal command owners:
 
@@ -492,7 +492,7 @@ Several verbs recur across domains and should be modeled as lifecycle stages rat
 
 Do **not** create one central `activity.start` or `request.accept` command. These are shared UX semantics over domain-specific commands.
 
-## 6. Base UI action structure after the census
+## 7. Base UI action structure after the census
 
 The first-level contextual vocabulary should remain compact.
 
@@ -527,7 +527,7 @@ Examples:
 
 Home promotes a few relevant concrete world actions and direct interactions. `More Actions` exposes the rest of the legitimate observed set. Business/property/personnel/crew/policy administration lives in Character, Activity, World or future specialized management views and does not need to masquerade as gameplay commands.
 
-## 7. Important owner gaps before implementation
+## 8. Important owner gaps before implementation
 
 The following missing owners should be treated as architectural dependencies, not UI TODOs:
 
@@ -548,7 +548,7 @@ The following missing owners should be treated as architectural dependencies, no
 15. religion/ritual service/consequence;
 16. law/permit/crime/enforcement where risky/illegal actions require it.
 
-## 8. Revised sequencing
+## 9. Revised sequencing
 
 Do not insert all of these command families into the first Home implementation.
 
@@ -578,7 +578,7 @@ A useful progression is to prove **one full loop per owner class**, not one comm
 - institution/social;
 - property/management.
 
-## 9. Acceptance principle
+## 10. Acceptance principle
 
 A command family is not ready merely because:
 
