@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.2 ranged owner route
+
+The [equipped ranged owner/caller record](dev-0.7.2.2-equipped-ranged-owner-and-caller-verification-record-2026-10-20.md) proves Hunter Short Bow and synthetic equipped Composite Bow through real nearby commands, with ranged damage and archery gain. It records current arrow independence without approving an ammunition system. The next bounded slice checks enemy AI candidate and target legality. Selected UI, ammo/range/hand/durability decisions, natural victory, balance and Game-version acceptance remain later.
+
 ## 2026-10-20 DEV-0.7.2.1 terminal owner route
 
 The [terminal owner/durability record](dev-0.7.2.1-combat-terminal-owner-and-durability-record-2026-10-20.md) closes deterministic fixture evidence for victory and defeat through the real nearby caller, ledger, SaveManager load and continued play; pending recovery remains gated. The next installed bounded slice verifies equipped ranged weapons through the owner/caller without adding ammunition, slot or wear semantics. Natural selected victory, balance and a separate Game-version decision remain later.

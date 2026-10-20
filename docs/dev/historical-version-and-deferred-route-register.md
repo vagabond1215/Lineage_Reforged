@@ -1,3 +1,7 @@
+## 2026-10-20 — DEV-0.7.2.2 equipped ranged owner/caller proof
+
+Ordinary Hunter Short Bow and synthetic equipped Composite Bow now have focused real nearby owner/caller proof for exact source, legal target/cost, queued/resolved ranged damage, archery gain, ledger and serialization. No production repair. Current runtime permits the Short Bow shot without an arrow bundle and does not debit one; ammunition, range, hand and durability semantics are separate owner decisions. The active successor is **DEV-0.7.2.3 Enemy AI Candidate Legality And Target Verification**. Selected ranged UI and natural victory remain unproven. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` and later balance/representative playability gates remain unchanged.
+
 ## 2026-10-20 — DEV-0.7.2.1 terminal owner/durability proof
 
 Controlled tests through ordinary nearby admission and step owners now prove both terminal branches, playable and pending Normal-Stakes defeat, exact history/ledger and app SaveManager load/continued play. No production repair or selected natural victory. The active successor is **DEV-0.7.2.2 Equipped Ranged Weapon Owner And Caller Verification**, with ammo/hand/durability decisions still separate. Six intervening design-only connector prework commits are reference material, not active scope. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` and later balance/representative playability gates remain unchanged.

@@ -42,3 +42,7 @@ No combat code, content, schema, tests, Game version, deployment, browser profil
 ## Later evidence note: DEV-0.7.2.1
 
 The separate [terminal owner/durability record](dev-0.7.2.1-combat-terminal-owner-and-durability-record-2026-10-20.md) proves both terminal mechanics, playable/pending defeat, ledger, serialization, local SaveManager load and continued play through controlled owner/caller fixtures. It does not upgrade natural selected victory or full selected restart evidence. The current prompt now selects equipped ranged owner/caller verification; ammunition remains a separate owner decision.
+
+## Later evidence note: DEV-0.7.2.2
+
+The separate [equipped ranged owner/caller record](dev-0.7.2.2-equipped-ranged-owner-and-caller-verification-record-2026-10-20.md) proves Short and Composite Bow owner/caller command, resolved ranged damage and archery gain in controlled encounters. Current shots do not require or consume arrows. This does not upgrade selected UI or create ammunition, range, hand or durability ownership. The current prompt selects bounded enemy AI candidate/target legality.
