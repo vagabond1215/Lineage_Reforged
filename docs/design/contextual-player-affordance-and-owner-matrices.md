@@ -71,3 +71,29 @@ The current shell starts in Character and routes six panels (`InGameShell.tsx`).
 | Equip/Unequip, Use Consumable | Selected carried item/slot | Direct or quantity choice only where current caller supports it; preserve bridge until separate owner migration. |
 
 Other quest Turn In remains in the Quests panel as currently implemented but is excluded from the first Home slice's durable accepted-command claim. No “Look Around” discovery command, Shop/Browse, Gather, generic Craft or new traversal is smuggled into that slice. After command completion, the UI recomputes current situation from the accepted snapshot; save/load/restart rebuilds it without saved descriptors.
+
+
+## 4. Ecology coverage families
+
+The location matrix above gives concrete scene examples. It is not the complete environmental taxonomy.
+
+Use the authored ecology stack to test generalization across the following families:
+
+| Environmental family | Authored examples | Contextual-action pressure | Key gates/modifiers |
+| --- | --- | --- | --- |
+| Open grassland | Steppe, Stormbound Prairie, Savanna, Alpine Meadow | travel, track/hunt, forage, camp, herd/work, seek water | drought, fire, storms, water, visibility, mount/load |
+| Temperate/tropical forest | Taiga, mixed/deciduous/coniferous forest, rainforest, cloud forest | explore, forage, gather wood/plants, track, camp, climb | canopy/light, rain/snow, fire/blight, ownership, depletion |
+| Wetland | Bog, marsh, swamp, fen, mangrove | wade/navigate, fish, forage, water/resource interaction | flood, miasma, insects, roots, soft ground, water quality |
+| Coast/brackish | Estuary, tidal flat, shoreline, beach, tide pools | tide/current observation, fish/shellfish, wade, boat/landing, shoreline travel | tide, salinity, current, storm surge, rights, vessel draft |
+| Freshwater | river, stream, seasonal creek, spring, lake, pond, rapids, riverbank | follow, cross, collect, fish, boat, inspect | flow, depth, flood, seasonality, water quality, crossings |
+| Marine | reef, kelp forest, seagrass, current front, shelf break | sail, navigate, fish, dive/harvest later | waves, current, depth, storm, vessel, salinity |
+| Desert/scrub | hot/cold desert, glass waste, dry scrub, chaparral, dune/dry wash/salt pan | navigate, seek water, forage sparse resources, camp, prospect | heat/cold, drought, storm, glare, water, fire |
+| Polar/alpine | tundra, ice cap, alpine tundra, mountain pass, scree | shelter, traverse, climb, hunt/fish, camp | cold, whiteout, avalanche, crevasse, thin air |
+| Subterranean | grotto, cave, cavern, tunnel, chasm, underground river/lake | enter, explore, navigate, climb, mine, water/resource interaction | light, air, cave-in, gas/mold, flooding, confinement |
+| Disturbance | burn scar, windthrow, landslide, flood debris, dust bowl, blight | altered travel, salvage/gather, hazard avoidance, clear/repair later | recency, hazard, blockage, temporary resource/depletion |
+| Geomorphology | cliff, escarpment, ravine, canyon, ridge, basin, sinkhole, rock spire | cross, climb, descend, follow, route around, prospect | slope, stability, weather, load, rope, mode |
+| Supernatural | rift, ley node/line, corrupted ground, sanctuary, elemental zone | initially observe/avoid/traverse; later owner-specific interaction | knowledge, magical hazard, consequence owner, access |
+
+Biome/habitat compatibility changes relevance and method. It does not by itself mint executable commands.
+
+A future environmental resource implementation should prove at owner level that a command consumes **capabilities and observed target provenance**, not a fixed list of biome IDs. Steppe and Estuary are required regression examples because they stress different concerns from forest/creek: open-country water scarcity and mobility versus tidal/brackish/current/shore interactions.
