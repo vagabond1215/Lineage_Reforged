@@ -33,3 +33,24 @@ Combat has modal priority: while an active encounter owns control, the scene pre
 ## Restart boundary and unresolved identity
 
 Save/load/full restart restores existing authoritative snapshot and authored references, then recomputes the scene and action list. Do not persist action descriptors, ranking, open submenus, previews or blocked labels as gameplay truth. Owner-specific attempts/progress, results and history persist only under their accepted contracts. If a future interior, crossing, resource node, farm plot, property, vessel or long activity requires durable exact identity/progress, its domain owner must first define an ID, lifecycle, visibility and save/retry contract. This decision deliberately leaves that schema choice open; it does not inflate `PlayerLocationState` or reopen epoch persistence.
+
+
+## Ecology and habitat layering
+
+The local scene must treat environment as layered provenance rather than one `biome` string.
+
+A scene may reference, when owner-observable:
+
+- regional ecology profile as broad background;
+- canonical biome IDs as ecological compatibility;
+- world-hex/locality band for coarse terrain, elevation, freshwater, barriers, hazards and resource affinities;
+- one or more actual local habitat/feature references;
+- route/edge references and current travel method;
+- exact site/interior/resource/vehicle instances where their domain owners provide durable identity;
+- transient weather, disturbance, depletion, closure, encounter or supernatural state.
+
+The current content distinguishes habitat geometry (`point`, `patch`, `linear`, `edge`, `volume`). Preserve that information because it affects interaction semantics: a river or leyline is traversed/followed differently from a spring or ancient tree; a cave/fungal grotto volume can contain the player rather than merely sit adjacent; shoreline/cliff edges mediate crossing/access; patches such as estuaries, marsh pools, burn scars or meadows may contain multiple discoverable resources or hazards.
+
+Broad ecological compatibility remains background evidence. A steppe hex does not imply a nearby seasonal creek; an estuary habitat does not imply drinkable fresh water; a marine region does not imply a currently boardable vessel. Scene projection must preserve the strongest available local provenance and uncertainty.
+
+The current spatial-world resource availability model may be consumed as **candidate ecological evidence**. Its availability tier and compatibility score can inform summaries, discovery/prospecting, or future instance generation, but must not be surfaced as an observed harvestable target until a resource/observation owner establishes one.
