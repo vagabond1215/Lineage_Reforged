@@ -70,4 +70,19 @@ One underlying operation may be exposed from a contextual shortcut, person dialo
 
 This is **routing and presentation architecture**, not executable authority. Before any new clerk/station/contract/order behavior becomes playable: prove observable identity and local reachability; authority/delegation of presenter versus issuer; board/listing/offer identity and visibility; owner-supplied eligibility/price/consent; unique command route from every entry; accepted/rejected/retry admission; durable active obligation/attempt/receipt where applicable; evidence-based completion/settlement; consequences, inventory and payment ownership; and save/restart fidelity. Preserve existing quest Accept, Soundings Submit and generic Turn In limitations; do not silently elevate the generic bridge to a durable contract-completion owner.
 
+### Adversarial acceptance scenarios for a later bounded implementation
+
+These are **future test obligations**, not tests claimed passing now:
+
+1. **Board without a clerk:** selecting a reachable authorized board opens its Browse view; it must not create a clerk or require an NPC dialog merely to browse.
+2. **Clerk without a board:** an authorized clerk can offer membership/payment/report services for which an actual owner provides actions; no synthetic contract board or listing is inferred.
+3. **Board with no eligible postings:** show an honest empty/blocked read view, not a dummy Accept command.
+4. **One posting visible at two boards and through a clerk:** all presentations resolve to the same stable runtime offer, owner command and accepted obligation; no duplicate acceptance on retry.
+5. **Posting selected:** card selection shows terms and eligibility; only explicit Accept with revalidation changes quest/contract state. Filtering/opening the card never does.
+6. **Completion near the board but not the recipient:** a complete-looking objective or opening the board/card alone cannot report, pay or settle; the authorized receiving clerk/contact and evidence gate must be honored.
+7. **Payment or membership changed since preview:** promoted Pay Dues/Apply or contract Accept must reject or refresh via current owner state; the shortcut and deeper interaction have the same result.
+8. **Artisan versus forge:** selecting an actual crafter offers an eligible external commission/order flow; selecting a forge offers the character's own craft/process flow. Neither falsely executes the other.
+9. **Guild broker with no actual artisan/order owner:** present descriptive brokerage only, not a pretend quote, escrow, delivery promise or executable commission.
+10. **Save/restart and retargeting:** accepted offer/order/progress/receipt remain owned and reprojected at the current head; ephemeral board filters, selected card, submenu and action descriptors are not persisted as contract authority.
+
 The first Home implementation still uses **currently executable commands only**, after the installed combat repair, independent acceptance and separate Game-version decision. No new NPC, guild, service, crafting, contract or commission capability, schema, Game version, production source, or Codex work is approved by this clarification.
