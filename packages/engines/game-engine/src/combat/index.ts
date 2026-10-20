@@ -448,7 +448,7 @@ function isManualOverrideActive(encounter: CombatEncounterState, combatantId: st
   );
 }
 
-function canPayCosts(combatant: CombatantState, action: CombatActionState): boolean {
+function canPayCosts(combatant: CombatantState, action: Pick<CombatActionState, "resourceCosts">): boolean {
   return (
     combatant.resources.hp.current >= (action.resourceCosts.hp ?? 0) &&
     combatant.resources.mp.current >= (action.resourceCosts.mp ?? 0) &&
@@ -2231,12 +2231,13 @@ function scoreTargetByRule(
   return score;
 }
 
-function chooseAiActionType(encounter: CombatEncounterState, actor: CombatantState): string {
+function chooseAiActionType(encounter: CombatEncounterState, actor: CombatantState): string | null {
   const actionTypes = buildCandidateActionTypes(actor);
   return (
     actionTypes
+      .filter((actionType) => canPayCosts(actor, getActionTemplate(actor, actionType)))
       .map((actionType) => ({ actionType, score: scoreActionType(encounter, actor, actionType) }))
-      .sort((left, right) => right.score - left.score)[0]?.actionType ?? "combat.attack.melee.basic"
+      .sort((left, right) => right.score - left.score)[0]?.actionType ?? null
   );
 }
 
@@ -2456,6 +2457,9 @@ function queueAiActions(encounter: CombatEncounterState): void {
       continue;
     }
     const actionType = chooseAiActionType(encounter, combatant);
+    if (!actionType) {
+      continue;
+    }
     const targetIds = chooseAiTargetIds(encounter, combatant, actionType);
     if (targetIds.length === 0) {
       continue;

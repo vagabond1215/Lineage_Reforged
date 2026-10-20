@@ -66,6 +66,88 @@ function hunterSnapshot() {
   return creator("settlement.stonevein", "region.auric_marches", "region.kaelvar", "starting_bundle.hunter");
 }
 
+test("ordinary nearby caller advances one authored enemy ranged AI action through damage and recovery", () => {
+  let { snapshot, control } = admittedSyntheticCombatCase();
+  const encounter = snapshot.gameState.activeEncounter;
+  const scout = encounter.combatants.find((entry) => entry.sourceRefs?.monsterId === "monster.kobold_scout");
+  const player = encounter.combatants.find((entry) => entry.kind === "player");
+  assert.ok(scout);
+  assert.ok(player);
+  assert.equal(scout.controlMode, "ai");
+  assert.ok(scout.hooks.roleModifierIds.includes("ranged_harrier"));
+  scout.resources.stamina.current = 20;
+  scout.resources.stamina.max = 20;
+  for (const enemy of encounter.combatants.filter((entry) => entry.disposition === "enemy" && entry.id !== scout.id))
+    enemy.timing.readyAtTick = snapshot.clock.tick + 1000;
+  player.resources.hp.current = 999;
+  player.resources.hp.max = 999;
+  snapshot.playerState.resources.hp.current = 999;
+  snapshot.playerState.resources.hp.max = 999;
+  const staminaBefore = scout.resources.stamina.current;
+  const sourceBefore = serializeSnapshot(snapshot);
+  const wrongActor = createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null, "ai.baseline.wrong_actor");
+  assert.equal(executeNearbyEncounterStep(snapshot, control,
+    { ...wrongActor, actorCombatantId: scout.id }).code, "wrong_actor");
+  const stale = createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null, "ai.baseline.stale");
+  assert.equal(executeNearbyEncounterStep(snapshot, control,
+    { ...stale, sourceRevision: stale.sourceRevision + 1 }).code, "stale_snapshot");
+  assert.equal(serializeSnapshot(snapshot), sourceBefore);
+  const first = createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null, "ai.baseline.continue");
+  const accepted = executeNearbyEncounterStep(snapshot, control, first);
+  assert.equal(accepted.accepted, true);
+  assert.equal(serializeSnapshot(snapshot), sourceBefore);
+  assert.equal(accepted.control.sessionRevision, control.sessionRevision + 1);
+  assert.equal(accepted.control.acceptedMutationIds.at(-1), first.requestId);
+  assert.equal(executeNearbyEncounterStep(accepted.snapshot, accepted.control, first).code, "duplicate");
+  assert.equal(accepted.snapshot.authorityLedger.nearbyEncounters.commands.at(-1).requestId, first.requestId);
+  ({ snapshot, control } = accepted);
+  let active = snapshot.gameState.activeEncounter;
+  const aiActions = () => active.actions.filter((entry) => entry.actorCombatantId === scout.id);
+  assert.equal(aiActions().length, 1);
+  const actionId = aiActions()[0].id;
+  assert.equal(aiActions()[0].actionType, "combat.attack.ranged.basic");
+  assert.equal(aiActions()[0].source.sourceType, "basic_attack");
+  assert.equal(aiActions()[0].source.sourceId, null);
+  assert.equal(aiActions()[0].source.itemId, null);
+  assert.deepEqual(aiActions()[0].resolutionHooks, ["damage.ranged"]);
+  assert.deepEqual(aiActions()[0].targeting.targetIds, [player.id]);
+  assert.equal(aiActions()[0].targeting.targetDisposition, "enemy");
+  assert.notEqual(active.combatants.find((entry) => entry.id === scout.id).teamId, player.teamId);
+  assert.equal(aiActions()[0].lifecycle, "executing");
+  assert.equal(active.combatants.find((entry) => entry.id === scout.id).resources.stamina.current,
+    staminaBefore - aiActions()[0].resourceCosts.stamina);
+  const observed = new Set([aiActions()[0].lifecycle]);
+  for (let beat = 0; active.actions.find((entry) => entry.id === actionId).lifecycle !== "resolved" && beat < 20; beat += 1) {
+    const command = createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null, `ai.baseline.beat.${beat}`);
+    const result = executeNearbyEncounterStep(snapshot, control, command);
+    assert.equal(result.accepted, true, `AI beat ${beat}: ${result.code}`);
+    ({ snapshot, control } = result);
+    active = snapshot.gameState.activeEncounter;
+    assert.equal(aiActions().length, 1, "busy or recovering enemy must not queue another action");
+    observed.add(active.actions.find((entry) => entry.id === actionId).lifecycle);
+  }
+  const resolved = active.actions.find((entry) => entry.id === actionId);
+  assert.equal(resolved.lifecycle, "resolved");
+  assert.ok(observed.has("recovering"));
+  assert.ok(resolved.resolvesAtTick > resolved.startedAtTick);
+  assert.ok(resolved.recoveryEndsAtTick > resolved.resolvesAtTick);
+  assert.equal(active.combatants.find((entry) => entry.id === scout.id).resources.stamina.current,
+    staminaBefore - resolved.resourceCosts.stamina);
+  assert.ok(active.combatants.find((entry) => entry.id === player.id).resources.hp.current < 999);
+  const reopened = deserializeSnapshot(serializeSnapshot(snapshot));
+  assert.deepEqual(reopened.gameState.activeEncounter.actions.find((entry) => entry.id === actionId), resolved);
+  assert.deepEqual(reopened.authorityLedger.nearbyEncounters.commands, snapshot.authorityLedger.nearbyEncounters.commands);
+  const next = executeNearbyEncounterStep(snapshot, control,
+    createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null, "ai.baseline.next_ready"));
+  assert.equal(next.accepted, true);
+  const nextActions = next.snapshot.gameState.activeEncounter.actions.filter((entry) => entry.actorCombatantId === scout.id);
+  assert.equal(nextActions.length, 2, "enemy may select only once on the next ready interval");
+  assert.notEqual(nextActions[1].id, actionId);
+  assert.equal(nextActions[1].lifecycle, "executing");
+  assert.equal(next.snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === scout.id)
+    .resources.stamina.current, staminaBefore - resolved.resourceCosts.stamina - nextActions[1].resourceCosts.stamina);
+});
+
 test("equipped bows reach ranged damage and archery through the ordinary nearby caller", () => {
   for (const { bowId, arrows } of [
     { bowId: "item.short_bow", arrows: true },

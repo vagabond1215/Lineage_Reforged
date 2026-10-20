@@ -526,6 +526,142 @@ test("ranged enemy packages resolve to ranged damage instead of the melee fallba
   assert.ok(preview.amount > 0);
 });
 
+test("AI uses a payable supported package when its preferred ranged package is unaffordable", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  gameState.activeEncounter = encounter;
+  const scout = findEnemyCombatant(encounter, "monster.kobold_scout");
+  const player = findPlayerCombatant(encounter);
+  assert.equal(scout.roleId, "ranged_pressure");
+  scout.hooks.roleModifierIds = ["ranged_harrier", "melee_skirmisher"];
+  scout.resources.stamina.current = 4;
+  player.resources.hp.current = 999;
+  player.resources.hp.max = 999;
+  playerState.resources.hp.current = 999;
+  playerState.resources.hp.max = 999;
+  for (const enemy of encounter.combatants.filter((entry) => entry.kind === "enemy" && entry.id !== scout.id))
+    enemy.timing.readyAtTick = encounter.currentTimeTick + 1000;
+  tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick + 1);
+  const actions = encounter.actions.filter((entry) => entry.actorCombatantId === scout.id);
+  assert.equal(actions.length, 1);
+  if (actions[0].actionType === "combat.attack.ranged.basic") {
+    assert.equal(actions[0].lifecycle, "cancelled");
+    assert.equal(scout.resources.stamina.current, 4);
+    tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick + 1);
+    const retry = encounter.actions.filter((entry) => entry.actorCombatantId === scout.id);
+    assert.equal(retry.length, 2);
+    assert.equal(retry[1].actionType, "combat.attack.ranged.basic");
+    assert.equal(retry[1].lifecycle, "cancelled");
+    assert.equal(scout.resources.stamina.current, 4);
+  }
+  assert.equal(actions[0].actionType, "combat.attack.melee.basic");
+  assert.equal(actions[0].lifecycle, "executing");
+  assert.deepEqual(actions[0].targeting.targetIds, [player.id]);
+  assert.equal(scout.resources.stamina.current, 0);
+});
+
+test("AI waits without queue churn when its only supported package is unaffordable", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  gameState.activeEncounter = encounter;
+  const scout = findEnemyCombatant(encounter, "monster.kobold_scout");
+  scout.hooks.roleModifierIds = ["ranged_harrier"];
+  scout.resources.stamina.current = 4;
+  for (const enemy of encounter.combatants.filter((entry) => entry.kind === "enemy" && entry.id !== scout.id))
+    enemy.timing.readyAtTick = encounter.currentTimeTick + 1000;
+  for (let beat = 1; beat <= 3; beat += 1) {
+    tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick + 1);
+    assert.equal(encounter.actions.filter((entry) => entry.actorCombatantId === scout.id).length, 0);
+    assert.equal(scout.resources.stamina.current, 4);
+    assert.deepEqual(scout.timing.queuedActionIds, []);
+  }
+});
+
+test("unknown enemy action package retains the explicit basic attack fallback source", () => {
+  const { gameState, playerState, encounter } = createEncounterFixture();
+  gameState.activeEncounter = encounter;
+  const scout = findEnemyCombatant(encounter, "monster.kobold_scout");
+  const player = findPlayerCombatant(encounter);
+  scout.hooks.roleModifierIds = ["future.unmapped.package"];
+  for (const enemy of encounter.combatants.filter((entry) => entry.kind === "enemy" && entry.id !== scout.id))
+    enemy.timing.readyAtTick = encounter.currentTimeTick + 1000;
+  tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick + 1);
+  const action = encounter.actions.find((entry) => entry.actorCombatantId === scout.id);
+  assert.ok(action);
+  assert.equal(action.actionType, "combat.attack.melee.basic");
+  assert.equal(action.source.sourceType, "basic_attack");
+  assert.equal(action.source.sourceId, null);
+  assert.equal(action.source.itemId, null);
+  assert.deepEqual(action.resolutionHooks, ["damage.melee"]);
+  assert.deepEqual(action.targeting.targetIds, [player.id]);
+});
+
+test("AI excludes a defeated favored target and emits no action with no living opponent", () => {
+  for (const targetState of ["defeated", "incapacitated"]) for (const noLivingOpponent of [false, true]) {
+    const { gameState, playerState, encounter } = createEncounterFixture();
+    gameState.activeEncounter = encounter;
+    const scout = findEnemyCombatant(encounter, "monster.kobold_scout");
+    const player = findPlayerCombatant(encounter);
+    const defeated = structuredClone(player);
+    defeated.id = "combatant.fixture.defeated_ally";
+    defeated.defeated = targetState === "defeated";
+    defeated.incapacitated = targetState === "incapacitated";
+    if (defeated.defeated) defeated.resources.hp.current = 0;
+    encounter.combatants.push(defeated);
+    encounter.alliedCombatantIds.push(defeated.id);
+    encounter.teams.find((team) => team.id === "allies").combatantIds.push(defeated.id);
+    scout.focusDirectives.priorityTargetIds = [defeated.id];
+    for (const enemy of encounter.combatants.filter((entry) => entry.kind === "enemy" && entry.id !== scout.id))
+      enemy.timing.readyAtTick = encounter.currentTimeTick + 1000;
+    if (noLivingOpponent) {
+      player.defeated = targetState === "defeated";
+      player.incapacitated = targetState === "incapacitated";
+      if (player.defeated) player.resources.hp.current = 0;
+    }
+    tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick + 1);
+    const action = encounter.actions.find((entry) => entry.actorCombatantId === scout.id);
+    if (noLivingOpponent) {
+      assert.equal(action, undefined);
+      if (targetState === "defeated") {
+        assert.equal(gameState.activeEncounter, null);
+        assert.equal(gameState.combatHistory.at(-1).result, "enemies_victorious");
+      } else {
+        assert.equal(gameState.activeEncounter, encounter,
+          "temporary incapacitation has no legal AI target but does not itself declare defeat");
+        assert.equal(gameState.combatHistory.length, 0);
+      }
+    } else {
+      assert.ok(action);
+      assert.deepEqual(action.targeting.targetIds, [player.id]);
+      assert.notEqual(action.targeting.targetIds[0], defeated.id);
+      assert.notEqual(scout.teamId, player.teamId);
+    }
+  }
+});
+
+test("blocked or busy enemy actors do not queue or pay an AI action", () => {
+  const conditions = ["paused", "controlled", "defeated", "incapacitated", "manual", "busy", "queued", "override"];
+  for (const condition of conditions) {
+    const { gameState, playerState, encounter } = createEncounterFixture();
+    gameState.activeEncounter = encounter;
+    const scout = findEnemyCombatant(encounter, "monster.kobold_scout");
+    for (const enemy of encounter.combatants.filter((entry) => entry.kind === "enemy" && entry.id !== scout.id))
+      enemy.timing.readyAtTick = encounter.currentTimeTick + 1000;
+    const staminaBefore = scout.resources.stamina.current;
+    if (condition === "paused") { encounter.pauseAllowed = true; encounter.paused = true; }
+    if (condition === "controlled") scout.statusEffects.push({ id: "fixture.control", label: "Control", tags: ["control"],
+      stacks: 1, magnitude: 1, startedAtTick: 0, expiresAtTick: encounter.currentTimeTick + 10 });
+    if (condition === "defeated") scout.defeated = true;
+    if (condition === "incapacitated") scout.incapacitated = true;
+    if (condition === "manual") scout.controlMode = "manual";
+    if (condition === "busy") scout.timing.currentActionId = "fixture.running";
+    if (condition === "queued") scout.timing.queuedActionIds = ["fixture.queued"];
+    if (condition === "override") encounter.manualOverrides.push({ actorCombatantId: scout.id,
+      forcedTargetIds: [], forcedControlMode: "manual", suspendAiUntilTick: encounter.currentTimeTick + 10 });
+    tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick + 1);
+    assert.equal(encounter.actions.filter((entry) => entry.actorCombatantId === scout.id).length, 0, condition);
+    assert.equal(scout.resources.stamina.current, staminaBefore, condition);
+  }
+});
+
 test("unknown manual combat actions currently fall back to basic melee", () => {
   const { encounter } = createEncounterFixture();
   const player = findPlayerCombatant(encounter);
