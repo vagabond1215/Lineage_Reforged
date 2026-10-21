@@ -13,6 +13,7 @@ This brief is the strategic north star and compact source map for Lineage: Refor
 - `docs/dev/current-codex-output.md` owns the latest exact inspection or implementation report.
 - `docs/dev/historical-version-and-deferred-route-register.md` owns canonical route identities, active/deferred posture, and reopening triggers.
 - `docs/design/current-planning-anchor-reconciliation.md` controls conflicts caused by stale current-anchor wording.
+- `docs/design/ui-design-intent-and-migration-guidance-index.md` is the UI navigation map; `docs/design/ui-information-architecture-boundary.md` is the accepted presentation-design boundary, with contextual/feature-specific decisions controlling each action owner. Neither authorizes a broad UI rework.
 - `docs/design/validation-command-matrix-plan.md`, `docs/design/validation-source-map.md`, and `docs/dev/typecheck-blocker-triage-plan.md` control validation command classification and the known-failing workspace typecheck posture.
 - `docs/dev/project-roadmap.md` owns version-band meaning, playability checkpoints, and non-conflicting long-term direction.
 - `docs/dev/codex-sequenced-implementation-plan.md` owns detailed historical sequencing and non-conflicting queue context.
