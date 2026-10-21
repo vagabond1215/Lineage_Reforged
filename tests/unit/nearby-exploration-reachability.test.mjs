@@ -252,6 +252,73 @@ test("equipped bows reach ranged damage and archery through the ordinary nearby 
   }
 });
 
+test("nearby basic, sword and bow receipts retain a paid action when its target becomes incapacitated", () => {
+  for (const { actionType, start } of [
+    { actionType: "combat.attack.melee.basic", start: () => creator("settlement.stonevein", "region.auric_marches", "region.kaelvar", "starting_bundle.warrior") },
+    { actionType: "combat.melee.primary", start: () => creator("settlement.stonevein", "region.auric_marches", "region.kaelvar", "starting_bundle.warrior") },
+    { actionType: "combat.ranged.primary", start: hunterSnapshot }
+  ]) {
+    let { snapshot, control } = admittedSyntheticCombatCase(start());
+    const encounter = snapshot.gameState.activeEncounter;
+    const player = encounter.combatants.find((entry) => entry.kind === "player");
+    const targetId = encounter.enemyCombatantIds[0];
+    for (const enemy of encounter.combatants.filter((entry) => entry.disposition === "enemy")) {
+      enemy.resources.hp.current = 999;
+      enemy.resources.hp.max = 999;
+      enemy.timing.readyAtTick = snapshot.clock.tick + 1000;
+    }
+    const legal = listLegalPlayerCombatCommands(encounter).find((entry) =>
+      entry.actionType === actionType && entry.targetId === targetId);
+    assert.ok(legal, `${actionType} must reach the nearby caller`);
+    const wrong = createNearbyEncounterStepCommand(snapshot, control, actionType, player.id,
+      `target_change.${actionType}.wrong`);
+    const sourceBefore = serializeSnapshot(snapshot);
+    assert.equal(executeNearbyEncounterStep(snapshot, control, wrong).code, "illegal_command");
+    assert.equal(serializeSnapshot(snapshot), sourceBefore);
+    const command = createNearbyEncounterStepCommand(snapshot, control, actionType, targetId,
+      `target_change.${actionType}.attack`);
+    const accepted = executeNearbyEncounterStep(snapshot, control, command);
+    assert.equal(accepted.accepted, true);
+    assert.equal(serializeSnapshot(snapshot), sourceBefore);
+    assert.equal(accepted.control.sessionRevision, control.sessionRevision + 1);
+    assert.equal(executeNearbyEncounterStep(accepted.snapshot, accepted.control, command).code, "duplicate");
+    assert.equal(executeNearbyEncounterStep(accepted.snapshot, accepted.control,
+      { ...command, targetId: player.id }).code, "request_conflict");
+    assert.equal(executeNearbyEncounterStep(accepted.snapshot, accepted.control,
+      createNearbyEncounterStepCommand(snapshot, control, actionType, targetId,
+        `target_change.${actionType}.stale`)).code, "stale_snapshot");
+    ({ snapshot, control } = accepted);
+    const action = snapshot.gameState.activeEncounter.actions.find((entry) =>
+      entry.actorCombatantId === player.id && entry.manualOverride && entry.actionType === actionType);
+    assert.ok(action);
+    assert.equal(action.lifecycle, "executing");
+    assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === player.id)
+      .resources.stamina.current, player.resources.stamina.current - legal.staminaCost);
+    const target = snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === targetId);
+    const hpBefore = target.resources.hp.current;
+    target.incapacitated = true;
+    for (let beat = 0; snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === action.id).lifecycle !== "resolved" &&
+        beat < 20; beat += 1) {
+      const next = executeNearbyEncounterStep(snapshot, control,
+        createNearbyEncounterStepCommand(snapshot, control, "combat.advance", null,
+          `target_change.${actionType}.advance.${beat}`));
+      assert.equal(next.accepted, true, `${actionType} beat ${beat}: ${next.code}`);
+      ({ snapshot, control } = next);
+    }
+    const ended = snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === action.id);
+    assert.equal(ended.lifecycle, "resolved");
+    assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === targetId)
+      .resources.hp.current, hpBefore);
+    assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === player.id)
+      .resources.stamina.current, player.resources.stamina.current - legal.staminaCost);
+    assert.ok(snapshot.authorityLedger.nearbyEncounters.commands.some((entry) =>
+      entry.requestId === command.requestId && entry.targetId === targetId));
+    const reopened = deserializeSnapshot(serializeSnapshot(snapshot));
+    assert.deepEqual(reopened.gameState.activeEncounter.actions.find((entry) => entry.id === action.id), ended);
+    assert.deepEqual(reopened.authorityLedger.nearbyEncounters.commands, snapshot.authorityLedger.nearbyEncounters.commands);
+  }
+});
+
 test("inventory-only bow and insufficient stamina do not project an equipped ranged command", () => {
   for (const condition of ["inventory_only", "unaffordable"]) {
     const start = hunterSnapshot();

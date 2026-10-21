@@ -58,3 +58,7 @@ The [physical ability record](dev-0.7.2.4-owned-physical-ability-provenance-and-
 ## Later evidence note: DEV-0.7.2.5
 
 The [acquisition decision](dev-0.7.2.5-physical-ability-acquisition-evidence-contract-decision-2026-10-20.md) finds no live Village Hunter family Legacy purchase, archived earned hunting proof or validated family/evidence creator projection. Quick Shot activation remains held behind those separate owner gates. The installed next combat prompt verifies target change and resource payment for existing basic, sword and bow actions, without widening ability availability.
+
+## Later evidence note: DEV-0.7.2.6
+
+The [queued target record](dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md) repairs payment on a queued enemy attack after its target becomes invalid, excludes newly same-team targets from player projection and filters ineligible enemy effects after payment. Controlled owner and nearby caller proof covers basic, sword and bow. The next installed support run decides whether spent cost and full recovery after post-payment target loss are the accepted rule; no refund or retarget was invented.

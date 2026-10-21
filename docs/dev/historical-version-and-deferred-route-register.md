@@ -1,3 +1,7 @@
+## 2026-10-20 — DEV-0.7.2.6 queued target legality
+
+Pre-payment enemy target legality and post-payment effect safety are repaired for existing basic/sword/bow attacks; controlled owner and nearby caller evidence is in `docs/design/dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md`. Post-payment refund/recovery/retarget policy is not accepted; DEV-0.7.2.7 decides it before another runtime change. Quick Shot acquisition, selected victory, balance, Home UI and Game-version decisions remain deferred. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY`.
+
 ## 2026-10-20 — DEV-0.7.2.5 acquisition evidence decision
 
 Quick Shot remains held: live Village Hunter family Legacy purchase, source-run earned hunting evidence and validated creator family/evidence projection are absent. Existing IDs, account history and pure resolver fixtures cannot substitute. The focused decision orders separate owner gates and preserves the Tier 2 rule. The active successor is **DEV-0.7.2.6 Queued Combat Target Legality And Payment Verification** for already supported attacks. Expanded eligibility tests have two pre-existing draft status/copy assertion failures, separate from 58/58 passing live-owner tests. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` and selected/balance limits remain unchanged.

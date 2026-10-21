@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.6 queued combat target legality
+
+The [DEV-0.7.2.6 record](dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md) repairs queued enemy target revalidation before payment and effect filtering after payment for current basic/sword/bow commands. Controlled owner and nearby caller tests pass; spent cost and full recovery after post-payment target loss are observed behavior, not yet accepted policy. DEV-0.7.2.7 decides that narrow contract. Quick Shot acquisition, selected natural victory, balance, Home UI and Game-version acceptance remain separate.
+
 ## 2026-10-20 DEV-0.7.2.5 physical ability acquisition decision
 
 The [DEV-0.7.2.5 decision](dev-0.7.2.5-physical-ability-acquisition-evidence-contract-decision-2026-10-20.md) confirms three independent absent owners for ordinary Quick Shot acquisition: live family Legacy purchase, durable earned hunting/source-run evidence and validated family/evidence projection to creator. Ability activation stays held. The next bounded combat-skeleton run verifies target change and payment for existing basic, sword and bow commands. Two stale draft-document tests remain separate debt; no Game-version, balance or Home UI decision follows.

@@ -266,6 +266,16 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Evidence:** `docs/design/dev-0.7.2.5-physical-ability-acquisition-evidence-contract-decision-2026-10-20.md`.
 - **Status:** active.
 
+### FP-022 — Queued Target Legality Must Be Rechecked At Payment And Effect
+
+- **Pattern:** A target is legal when projected or queued, but is defeated, incapacitated, missing or on the actor's team before payment or resolution; the action still pays for no live target or applies damage to an ineligible one.
+- **Why it escaped:** Projection, action-start affordability and effect resolution each checked different parts of eligibility.
+- **Guardrail:** Recheck the action's target disposition and live combatant facts before cost commitment and before applying enemy effects. Cancel an enemy action with no valid pre-payment target without debit; do not infer refunds or retargeting after payment without an accepted policy.
+- **Verification:** Pair each supported attack identity with target loss before start and after payment, wrong side, unaffordable cost, remaining legal alternatives, real caller receipt/replay and serialized recovery. Record post-payment cost/recovery as observed behavior until policy is decided.
+- **Applies to:** queued combat attacks and other mutable-target action queues.
+- **Evidence:** `docs/design/dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md`.
+- **Status:** active.
+
 ## Completion Report Format
 
 For applicable runs include:

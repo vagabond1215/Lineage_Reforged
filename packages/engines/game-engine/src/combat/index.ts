@@ -844,7 +844,7 @@ export function listLegalPlayerCombatCommands(encounter: CombatEncounterState): 
   if (!actor || actor.defeated || actor.incapacitated || actor.timing.currentActionId || actor.timing.queuedActionIds.length) return [];
   const targets = encounter.enemyCombatantIds.filter((id) => {
     const target = encounter.combatants.find((entry) => entry.id === id);
-    return target && !target.defeated && !target.incapacitated;
+    return target && target.teamId !== actor.teamId && !target.defeated && !target.incapacitated;
   });
   // The engine's basic melee action is available to a player even when passive
   // equipment grants make the candidate-action set nonempty.
@@ -1410,9 +1410,12 @@ function applyStatusHook(
 }
 
 function resolveActionTargets(encounter: CombatEncounterState, action: CombatActionState): CombatantState[] {
+  const actor = findCombatant(encounter, action.actorCombatantId);
   return action.targeting.targetIds
     .map((targetId) => findCombatant(encounter, targetId))
-    .filter((target): target is CombatantState => target !== null && !target.defeated);
+    .filter((target): target is CombatantState => target !== null && !target.defeated &&
+      (action.targeting.targetDisposition !== "enemy" ||
+        (actor !== null && target.teamId !== actor.teamId && !target.incapacitated)));
 }
 
 function resolveActionPackageActionType(packageId: string): string {
@@ -2418,7 +2421,8 @@ function startReadyActions(encounter: CombatEncounterState): void {
       continue;
     }
 
-    if (!canPayCosts(combatant, action)) {
+    if ((action.targeting.targetDisposition === "enemy" && !hasValidEnemyTarget(encounter, action)) ||
+        !canPayCosts(combatant, action)) {
       action.lifecycle = "cancelled";
       combatant.timing.queuedActionIds = combatant.timing.queuedActionIds.slice(1);
       continue;

@@ -740,6 +740,94 @@ test("equipped sword leaves basic melee and weapon profile independently legal a
   assert.deepEqual(listLegalPlayerCombatCommands(encounter), []);
 });
 
+test("queued basic, sword and bow attacks reject targets lost before payment", () => {
+  const profiles = [
+    { actionType: "combat.attack.melee.basic", itemId: "item.arming_sword" },
+    { actionType: "combat.melee.primary", itemId: "item.arming_sword" },
+    { actionType: "combat.ranged.primary", itemId: "item.short_bow" }
+  ];
+  for (const { actionType, itemId } of profiles) {
+    for (const lost of ["defeated", "incapacitated", "missing", "wrong_side", "unaffordable"]) {
+      const playerState = createPlayerStateFixture({ equipmentOverrides: {
+        "slot.weapon.right": { itemId, itemKey: itemId.slice(5), quantity: 1, durability: 1 }
+      } });
+      const { gameState, encounter } = createEncounterFixture(playerState);
+      const player = findPlayerCombatant(encounter);
+      const target = findEnemyCombatant(encounter);
+      const legal = listLegalPlayerCombatCommands(encounter).find((entry) =>
+        entry.actionType === actionType && entry.targetId === target.id);
+      assert.ok(legal, `${actionType} must initially be legal`);
+      const action = queueActionFixture(encounter, player, actionType, [target.id], legal.sourceType, legal.sourceId);
+      if (lost === "defeated") { target.defeated = true; target.incapacitated = true; target.resources.hp.current = 0; }
+      if (lost === "incapacitated") target.incapacitated = true;
+      if (lost === "missing") encounter.combatants = encounter.combatants.filter((entry) => entry.id !== target.id);
+      if (lost === "wrong_side") target.teamId = player.teamId;
+      if (lost === "unaffordable") player.resources.stamina.current = action.resourceCosts.stamina - 1;
+      const staminaBefore = player.resources.stamina.current;
+      gameState.activeEncounter = encounter;
+      suppressEnemyAi(encounter);
+      player.timing.readyAtTick = encounter.currentTimeTick;
+      tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick);
+      assert.equal(action.lifecycle, "cancelled", `${actionType}/${lost}`);
+      assert.equal(action.startedAtTick, null, `${actionType}/${lost}`);
+      assert.equal(player.resources.stamina.current, staminaBefore, `${actionType}/${lost}`);
+      assert.equal(player.timing.currentActionId, null, `${actionType}/${lost}`);
+      assert.deepEqual(player.timing.queuedActionIds, [], `${actionType}/${lost}`);
+      if (lost !== "unaffordable") {
+        const alternate = encounter.combatants.find((entry) => entry.kind === "enemy" && entry.id !== target.id);
+        assert.ok(alternate);
+        assert.ok(!listLegalPlayerCombatCommands(encounter).some((entry) =>
+          entry.actionType === actionType && entry.targetId === target.id), `${actionType}/${lost} stale target`);
+        assert.ok(listLegalPlayerCombatCommands(encounter).some((entry) =>
+          entry.actionType === actionType && entry.targetId === alternate.id), `${actionType}/${lost} alternate`);
+      }
+    }
+  }
+});
+
+test("paid attacks do not damage an incapacitated, missing or newly allied target", () => {
+  for (const { actionType, itemId } of [
+    { actionType: "combat.attack.melee.basic", itemId: "item.arming_sword" },
+    { actionType: "combat.melee.primary", itemId: "item.arming_sword" },
+    { actionType: "combat.ranged.primary", itemId: "item.short_bow" }
+  ]) {
+    for (const lost of ["defeated", "incapacitated", "missing", "wrong_side"]) {
+      const playerState = createPlayerStateFixture({ equipmentOverrides: {
+        "slot.weapon.right": { itemId, itemKey: itemId.slice(5), quantity: 1, durability: 1 }
+      } });
+      const { gameState, encounter } = createEncounterFixture(playerState);
+      const player = findPlayerCombatant(encounter);
+      const target = findEnemyCombatant(encounter);
+      const alternate = encounter.combatants.find((entry) => entry.kind === "enemy" && entry.id !== target.id);
+      assert.ok(alternate);
+      const legal = listLegalPlayerCombatCommands(encounter).find((entry) =>
+        entry.actionType === actionType && entry.targetId === target.id);
+      assert.ok(legal);
+      const action = queueActionFixture(encounter, player, actionType, [target.id], legal.sourceType, legal.sourceId);
+      const staminaBefore = player.resources.stamina.current;
+      gameState.activeEncounter = encounter;
+      suppressEnemyAi(encounter);
+      player.timing.readyAtTick = encounter.currentTimeTick;
+      tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick);
+      assert.equal(action.lifecycle, "executing", `${actionType}/${lost}`);
+      assert.equal(player.resources.stamina.current, staminaBefore - action.resourceCosts.stamina);
+      const targetHp = target.resources.hp.current;
+      const alternateHp = alternate.resources.hp.current;
+      if (lost === "defeated") { target.defeated = true; target.incapacitated = true; }
+      if (lost === "incapacitated") target.incapacitated = true;
+      if (lost === "missing") encounter.combatants = encounter.combatants.filter((entry) => entry.id !== target.id);
+      if (lost === "wrong_side") target.teamId = player.teamId;
+      tickCombatFoundation(gameState, playerState, [], action.resolvesAtTick);
+      assert.equal(action.lifecycle, "recovering", `${actionType}/${lost}`);
+      assert.equal(target.resources.hp.current, targetHp, `${actionType}/${lost}`);
+      assert.equal(alternate.resources.hp.current, alternateHp, `${actionType}/${lost}`);
+      assert.equal(player.resources.stamina.current, staminaBefore - action.resourceCosts.stamina);
+      tickCombatFoundation(gameState, playerState, [], action.recoveryEndsAtTick);
+      assert.equal(action.lifecycle, "resolved", `${actionType}/${lost}`);
+    }
+  }
+});
+
 test("equipped shield projects its authored self Block without replacing enemy attacks", () => {
   const { encounter } = createEncounterFixture();
   const player = findPlayerCombatant(encounter);
