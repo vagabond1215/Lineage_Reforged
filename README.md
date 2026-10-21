@@ -19,6 +19,7 @@ Strategic continuity lives in:
 - `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue.
 - `docs/design/future-system-design-ledger.md` for durable system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic source map.
+- `docs/design/ui-design-intent-and-migration-guidance-index.md` for consolidated gameplay UI design intent, contextual commands, historical shell plans, and incremental migration gates; use its linked accepted authorities for implementation.
 
 ## Codex Workspace
 
