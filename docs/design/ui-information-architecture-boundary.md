@@ -12,6 +12,8 @@ This document is the durable UI information-architecture boundary for Lineage: R
 
 It controls future presentation planning where it is more specific than older UI-prep documents. It does not override live code, authored content, shared contracts, engine ownership, save ownership, or newer Codex handoffs. It is not a React implementation plan and does not authorize a broad shell rewrite.
 
+**Cross-document navigation (2026-10-21):** [UI Design Intent, Source Map, And Incremental Migration Guidance](ui-design-intent-and-migration-guidance-index.md) indexes this boundary's later concept refinement, the contextual command package, combat feedback, supporting theme/asset and shell audits, and historical sequencing. This boundary remains controlling UI design authority; the index is not a new mandate to implement a broad rewrite. For active execution use the current prompt and focused audit, not dated implementation-order prose below.
+
 ## 2. Current Repository Reality
 
 - `InGameShell.tsx` currently routes six domains: Character, World, Activity, Codex, Quests, and Chronicle.
