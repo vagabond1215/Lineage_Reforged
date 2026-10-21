@@ -1,3 +1,7 @@
+## 2026-10-21 — DEV-0.7.2.9 parent acceptance hold
+
+The [independent parent matrix](../design/dev-0.7.2.9-combat-skeleton-parent-acceptance-audit-2026-10-21.md) records `DEV-0.7.2_NOT_READY`: fresh 89/89 focused tests and source/caller review support bounded skeleton mechanics, while Layer A selected Block and ranged UI plus selected restart/readback remain missing. Natural selected victory remains Layer C representative evidence, not an invented Layer A prerequisite. Active successor: **DEV-0.7.2.10 Selected Shield Block UI And Restart Verification**, one selected row before ranged and later parent re-audit. Acquisition-held Quick Shot, ammo/range/hand/durability, wider combat systems, balance, Home UI and Game-version acceptance remain deferred. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY`.
+
 ## 2026-10-20 — DEV-0.7.2.8 paid target-loss verification
 
 Controlled combat owner and ordinary nearby caller tests independently verify the DEV-0.7.2.7 policy for current basic/sword/bow attacks, including invalid and valid targets, skill attempt/cap boundaries, exact receipt/replay and serialized state. [Focused record](../design/dev-0.7.2.8-paid-combat-target-loss-contract-verification-record-2026-10-20.md); no production defect or selected acceptance. The active successor is DEV-0.7.2.9 parent combat-skeleton acceptance audit. Quick Shot acquisition, selected Block/ranged UI, natural victory, Home UI, balance and Game-version decisions remain separate; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY`.

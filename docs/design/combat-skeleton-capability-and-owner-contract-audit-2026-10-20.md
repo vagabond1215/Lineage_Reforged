@@ -70,3 +70,7 @@ The [post-payment decision](dev-0.7.2.7-post-payment-combat-target-loss-policy-d
 ## Later evidence note: DEV-0.7.2.8
 
 The [paid target-loss verification](dev-0.7.2.8-paid-combat-target-loss-contract-verification-record-2026-10-20.md) confirms no invalid-target effects or weapon skill attempts/cap use, unchanged alternate targets, spent cost/full recovery, valid-target positive effects, one nearby attack receipt and serialized duplicate/conflict/stale behavior. No production repair or selected acceptance follows. The installed successor is a separate parent combat-skeleton acceptance audit.
+
+## Later evidence note: DEV-0.7.2.9
+
+The [parent acceptance matrix](dev-0.7.2.9-combat-skeleton-parent-acceptance-audit-2026-10-21.md) records `DEV-0.7.2_NOT_READY` because Layer A selected self Block and ranged UI checks and selected restart/readback are missing. Fresh owner/caller tests pass 89/89 without a source-backed defect. Natural selected victory is deferred Layer C representative evidence, not a new skeleton prerequisite. The installed next gate verifies only selected self Block and restart.

@@ -1,3 +1,7 @@
+## 2026-10-21 DEV-0.7.2.9 parent combat skeleton acceptance hold
+
+The [parent audit](dev-0.7.2.9-combat-skeleton-parent-acceptance-audit-2026-10-21.md) separates owner/caller proof from selected UI and records `DEV-0.7.2_NOT_READY`. Selected basic/sword choice is historical proof; selected Block/ranged UI and combat restart/readback are still missing Layer A rows. DEV-0.7.2.10 verifies self Block in an isolated ordinary selected client first, then ranged and any remaining selected durability gate can be routed independently. Natural selected victory and balance remain Layer C/representative playability; Quick Shot, ammo/hand/range/durability and broader magic/items/companions/gambits retain distinct owners. No Game-version or Home UI route change follows.
+
 ## 2026-10-20 DEV-0.7.2.8 paid target-loss verification
 
 The [DEV-0.7.2.8 record](dev-0.7.2.8-paid-combat-target-loss-contract-verification-record-2026-10-20.md) independently verifies the accepted post-payment rule through controlled owner and ordinary nearby caller tests, including no skill-gain attempt/cap use after target loss, positive valid-target effects and serialized receipt/replay. No production repair or selected-playability claim follows. DEV-0.7.2.9 audits the bounded combat skeleton's parent acceptance rows before selecting another gate.
