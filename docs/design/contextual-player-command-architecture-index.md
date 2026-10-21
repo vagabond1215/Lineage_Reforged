@@ -4,6 +4,8 @@ Date: 2026-10-19
 Source: hosted `master` `bc66a5460c7a77b12b4eda997749ad42a620c554`
 Status: **ARCHITECTURE DEFINED; IMPLEMENTATION NOT YET AUTHORIZED**. Original parallel documentation decision, with 2026-10-20 owner-priority routing note. Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and `GAME_VERSION_NOT_READY` remain unchanged. Active next Codex task is **Combat Skeleton Capability And Owner-Contract Audit**, not the historical basic-action repair or immediate encounter-winnability diagnosis.
 
+**Cross-document UI guidance (2026-10-21):** [UI Design Intent And Migration Index](ui-design-intent-and-migration-guidance-index.md) connects this command architecture to the permanent UI boundary, gameplay-shell concept, World/Home composition and combat-result disclosure. The dated active-task wording in this index is historical; consult `docs/dev/current-codex-prompt.md` and the current parent audit for the live route. The command decisions remain design-only unless a named owner and executable slice authorize implementation.
+
 ## Decisions
 
 1. [Contextual Player Action And Command Architecture](contextual-player-action-and-command-architecture-decision.md) — identity, descriptor, gating, interaction, Home, migration, first slices and deferred owners.
