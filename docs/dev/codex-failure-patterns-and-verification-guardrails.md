@@ -256,6 +256,16 @@ Do not copy full defect narratives into this register. Link the focused audit or
 - **Evidence:** `docs/design/dev-0.7.2.3-enemy-ai-candidate-legality-and-target-record-2026-10-20.md`.
 - **Status:** active.
 
+### FP-021 — Policy And Fixture Reachability Require The Whole Acquisition Chain
+
+- **Pattern:** A pure eligibility resolver accepts a constructed typed record, but no live catalog purchase, persisted evidence producer, owner scope or ordinary caller can supply the complete record; downstream capability work treats the fixture as a reachable grant.
+- **Why it escaped:** Inspection followed the policy requirement and a fixture-positive test without checking live purchase definitions, source-run archive fields, family ownership and creator projection together.
+- **Guardrail:** Before activating a policy-gated capability, trace each prerequisite from an accepted producer through durable owner, exact scope, live catalog transaction, ordinary caller and final grant. A missing link is a held acquisition gate; never fill it with UI-provided IDs, final ranks or direct fixture mutation.
+- **Verification:** Pair a legitimate ordinary producer-to-grant path with absent/non-live purchase, wrong family/source run, starter-only rank, missing evidence, stale/deleted source, restart and duplicate cases. Label pure resolver fixtures separately.
+- **Applies to:** backstory/Legacy ability acquisition and other policy-gated gameplay grants.
+- **Evidence:** `docs/design/dev-0.7.2.5-physical-ability-acquisition-evidence-contract-decision-2026-10-20.md`.
+- **Status:** active.
+
 ## Completion Report Format
 
 For applicable runs include:

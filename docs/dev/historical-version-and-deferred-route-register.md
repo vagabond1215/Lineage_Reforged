@@ -1,3 +1,7 @@
+## 2026-10-20 — DEV-0.7.2.5 acquisition evidence decision
+
+Quick Shot remains held: live Village Hunter family Legacy purchase, source-run earned hunting evidence and validated creator family/evidence projection are absent. Existing IDs, account history and pure resolver fixtures cannot substitute. The focused decision orders separate owner gates and preserves the Tier 2 rule. The active successor is **DEV-0.7.2.6 Queued Combat Target Legality And Payment Verification** for already supported attacks. Expanded eligibility tests have two pre-existing draft status/copy assertion failures, separate from 58/58 passing live-owner tests. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` and selected/balance limits remain unchanged.
+
 ## 2026-10-20 — DEV-0.7.2.4 physical ability acquisition gate
 
 The only backstory starting active physical attack is Quick Shot from Village Hunter. Its Tier 2 backstory requires a family Legacy purchase plus earned/source-run evidence; the ordinary creator adapter does not supply evidence records, and real snapshot creation rejected Village Hunter before combat. Hold Formation is a locked allied command. No direct synthetic ability grant is promoted to owner/caller acceptance and no runtime change occurred. The active successor is **DEV-0.7.2.5 Physical Ability Acquisition Evidence Contract Decision**, docs-first on legitimate evidence projection before a separate Quick Shot combat legality slice. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY` and selected/balance gates remain unchanged.

@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.5 physical ability acquisition decision
+
+The [DEV-0.7.2.5 decision](dev-0.7.2.5-physical-ability-acquisition-evidence-contract-decision-2026-10-20.md) confirms three independent absent owners for ordinary Quick Shot acquisition: live family Legacy purchase, durable earned hunting/source-run evidence and validated family/evidence projection to creator. Ability activation stays held. The next bounded combat-skeleton run verifies target change and payment for existing basic, sword and bow commands. Two stale draft-document tests remain separate debt; no Game-version, balance or Home UI decision follows.
+
 ## 2026-10-20 DEV-0.7.2.4 physical ability acquisition gate
 
 The [DEV-0.7.2.4 record](dev-0.7.2.4-owned-physical-ability-provenance-and-legality-record-2026-10-20.md) finds no currently reachable ordinary creator grant of an active physical ability: Village Hunter's Quick Shot is Tier 2 locked and the creator supplies no earned/source-run evidence records. No combat ability acceptance or repair was claimed. The next bounded run decides the legitimate acquisition evidence contract before a separate Quick Shot legality/caller slice. Selected combat victory, balance, Home UI and Game-version acceptance remain separate.
