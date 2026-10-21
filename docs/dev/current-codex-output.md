@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-21 — DEV-0.7.2.12 Combat Skeleton Layer A Parent Re-Audit
+
+**DEV-0.7.2_NOT_READY; LAYER_A_RESULT_DISCLOSURE_FAILED; GAME_VERSION_NOT_READY.** Inspected clean fetched/pruned synchronized `master`/`origin/master` `008533e635a4b2e62977e738d2f11790169586fd`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
+
+### A. Files changed
+
+[Focused parent re-audit](../design/dev-0.7.2.12-combat-skeleton-layer-a-parent-reaudit-2026-10-21.md), current output/handoff/prompt, historical/deferred and planning route, branch register. No production source, test, content, schema, save format, generated/vendor file or `GAME_VERSION` edit.
+
+### B. Patch summary
+
+The parent matrix now credits DEV-0.7.2.10 selected Block and DEV-0.7.2.11 selected bow/restart evidence without treating it as action-specific damage proof. The first remaining Layer A failure is player-facing result disclosure: World labels the equipped Short Bow `ranged primary`, returns `Combat advanced one beat`, and does not show target HP, hit/miss, damage or action phase after later beats. This does not meet the accepted action/target/cost/result feedback dimension. Install **DEV-0.7.2.13 Combat Action Result Disclosure Contract And Repair**; independently re-audit the parent afterward. Suggested commit: `docs(combat): hold Layer A on result disclosure`.
+
+### C. Tests and checks run
+
+Fresh five-file combat, nearby, equipment and persistence `node --test`: **96/96 passed**. Source review traced item grants, legal projection, World UI, session caller, nearby revalidation/ledger, tick/effects, terminal history and SaveManager snapshot serialization. Historical DEV-0.7.2.9 89/89 and earlier selected observations remain separately labeled. Fetch/prune, five branch heads/merge bases/unique scopes and zero open repository PRs were checked; documentation diff/check and hosted readback follow this edit. FP-001/002/008/009/010/017/020/021/022 applied through caller, parent, branch, acquisition and target-loss evidence; no new pattern.
+
+### D. Risks / follow-up notes
+
+No UI owner for a per-action hit/damage result was established in this audit; computing one from aggregate HP would misattribute concurrent effects. The next run must decide exact result ownership and compatibility before any repair. Controlled victory remains Layer A mechanics evidence; natural selected victory, broader systems, balance, Home UI and Game version remain separate. Two `PROTECTED_REFERENCE` and three `HOLD_NAMED_CONSUMER` refs are retained; no disposition, integration, deletion or PR action was due.
+
 ## 2026-10-21 — DEV-0.7.2.11 Selected Equipped Ranged UI And Restart Verification
 
 **SELECTED_EQUIPPED_RANGED_AND_RESTART_VERIFIED; DEV-0.7.2_NOT_READY; GAME_VERSION_NOT_READY.** Source and implementation starting head: clean fetched/pruned synchronized `master`/`origin/master` `838fa936fae1f7434d7f2e1bbf66f42793173fb9`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. No parent or Game-version acceptance occurred.

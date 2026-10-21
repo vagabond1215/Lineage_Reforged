@@ -504,3 +504,7 @@ Latest calibration update (2026-09-28): `0.1.1-prealpha` is justified as the sma
 ## 2026-10-21 DEV-0.7.2.11 selected Hunter bow row
 
 The [selected ranged record](dev-0.7.2.11-selected-equipped-ranged-ui-and-restart-record-2026-10-21.md) closes the bounded ordinary Hunter equipped Short Bow UI/payment and selected combat Save/restart readback row. It does not claim a selected hit or exact target damage because World exposes neither. DEV-0.7.2 remains `DEV-0.7.2_NOT_READY` pending the installed **DEV-0.7.2.12 Combat Skeleton Layer A Parent Re-Audit**, which must decide whether the generic action/result presentation meets the accepted disclosure gate. Natural selected victory, Quick Shot acquisition, ammunition/range/hand/durability, broader systems, Home UI, balance and Game-version acceptance remain separate.
+
+## 2026-10-21 DEV-0.7.2.12 Layer A parent re-audit
+
+The [parent decision](dev-0.7.2.12-combat-skeleton-layer-a-parent-reaudit-2026-10-21.md) keeps `DEV-0.7.2_NOT_READY`: selected Block, bow choice/payment and active-combat restart are boundedly proven, but selected World cannot tell the player whether the Short Bow attack hit, missed, damaged or remains in progress. The generic source label and admission notice fail the accepted action/result disclosure dimension. **DEV-0.7.2.13 Combat Action Result Disclosure Contract And Repair** is the smallest next route, with independent parent review after repair. Layer C victory/balance, Quick Shot acquisition, broader systems, Home UI and Game-version acceptance remain separate.
