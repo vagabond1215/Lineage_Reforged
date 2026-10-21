@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-21 — DEV-0.7.2.10 Selected Shield Block UI And Restart Verification
+
+**SELECTED_SHIELD_BLOCK_AND_RESTART_VERIFIED; DEV-0.7.2_NOT_READY; GAME_VERSION_NOT_READY.** Source: clean fetched/pruned synchronized `master`/`origin/master` `c4b4a5c5cef5ed665fcda2bdad55349b67537653`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; date 2026-10-21; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
+
+### A. Files changed
+
+[Focused selected record](../design/dev-0.7.2.10-selected-shield-block-ui-and-restart-record-2026-10-21.md), current output/handoff/prompt, historical/deferred and planning route, branch register. No production source, tests, content, schema, save format, generated/vendor file or `GAME_VERSION` changed. The user-authorized synthetic proof account and Slot 1 reside only in an isolated local Brave profile.
+
+### B. Patch summary
+
+Ordinary shield-equipped Warrior creator, five World explorations and authentic Approach reached three-foe combat at beat 5. `Shield Block — Self (2 Stamina, 0 MP)` was visible beside independent basic melee and equipped attacks. Selected Block click was accepted; beat 6 showed 91/95 Stamina after 93/95 and a Continue control. Save, client close/restart, sign-in and same Slot 1 load retained beat 6 and the paid state. One ordinary Continue reached beat 7 with active `Shield Block` in Character Overview and Traits / Effects; a second selected Save/restart/sign-in/load retained Tick/combat beat 7, 91/95 Stamina, the active effect and Continue. The UI did not expose exact ledger IDs or mitigation. The Layer A selected Block and restart row is verified; selected ranged and later parent/Layer C gates remain open. Suggested commit: `docs(combat): verify selected shield block and restart`.
+
+### C. Tests and checks run
+
+Fresh selected UI actions and two client-window close/restart/sign-in/Slot 1 readbacks described in the focused record. No code was changed, so no new unit test, typecheck or build was run; DEV-0.7.2.9's 89/89 is historical supporting evidence only. Git fetch/prune, clean exact source/status, five branch heads/merge bases/unique path scopes and zero open repository PRs were checked. Documentation diff/check and hosted publication readback follow this edit. FP-001/017: authentic creator/World/Approach/selected Block path; FP-002: one row does not accept parent/Game; FP-008/009: retained branch and inspected/final/hosted identities remain distinct. No new pattern.
+
+### D. Risks / follow-up notes
+
+Selected status persistence and continued combat control are proven; no selected enemy hit, mitigation amount, status expiry, complete recovery, victory or terminal readback is claimed. Five nondefault refs retain two `PROTECTED_REFERENCE` and three `HOLD_NAMED_CONSUMER` dispositions; no branch/PR action or named trigger due. Next: **DEV-0.7.2.11 Selected Equipped Ranged UI And Restart Verification**; Quick Shot acquisition, ammo/range/hand/durability, natural victory, balance, Home UI and Game-version decision stay separate.
+
 ## 2026-10-21 — DEV-0.7.2.9 Combat Skeleton Parent Acceptance Audit
 
 **DEV-0.7.2_NOT_READY; SELECTED_BLOCK_RANGED_AND_RESTART_ROWS_OPEN; GAME_VERSION_NOT_READY.** Source and implementation starting head: clean fetched/pruned synchronized `master`/`origin/master` `f7cc87ab4faef483785f38e13b32975e4379032b`; final publication SHA follows push/readback. Support suffix of DEV-0.7.2; parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; date 2026-10-21; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. The [focused parent audit](../design/dev-0.7.2.9-combat-skeleton-parent-acceptance-audit-2026-10-21.md) separates exact owner, ordinary nearby caller and historical selected-client rows. Basic/sword are independently selected-proven; Block, Short Bow, authored AI, both terminal branches, target legality/payment, replay and serialization have bounded owner/caller proof. Layer A requires selected UI checks for exposed actions: Block and ranged remain unproven, as does selected combat Save/restart readback. Natural selected victory remains the later representative Layer C gate, not the reason for this Layer A hold. No source-backed defect or production repair was found.

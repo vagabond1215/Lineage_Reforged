@@ -1,3 +1,7 @@
+## 2026-10-21 DEV-0.7.2.10 selected Shield Block row
+
+The [selected Block record](dev-0.7.2.10-selected-shield-block-ui-and-restart-record-2026-10-21.md) closes ordinary self-target Block UI, accepted cost, visible status and selected combat Save/restart readback. DEV-0.7.2 parent remains `DEV-0.7.2_NOT_READY`; the next independent Layer A row is ordinary equipped Short Bow UI and restart in DEV-0.7.2.11. Later representative selected victory, acquisition-held Quick Shot, ammunition/range/hand/durability, broader systems, Home UI, balance and Game-version acceptance do not follow from this Block proof.
+
 ## 2026-10-21 DEV-0.7.2.9 parent combat skeleton acceptance hold
 
 The [parent audit](dev-0.7.2.9-combat-skeleton-parent-acceptance-audit-2026-10-21.md) separates owner/caller proof from selected UI and records `DEV-0.7.2_NOT_READY`. Selected basic/sword choice is historical proof; selected Block/ranged UI and combat restart/readback are still missing Layer A rows. DEV-0.7.2.10 verifies self Block in an isolated ordinary selected client first, then ranged and any remaining selected durability gate can be routed independently. Natural selected victory and balance remain Layer C/representative playability; Quick Shot, ammo/hand/range/durability and broader magic/items/companions/gambits retain distinct owners. No Game-version or Home UI route change follows.
