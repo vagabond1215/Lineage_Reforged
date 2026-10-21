@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-21 — DEV-0.7.2.11 Selected Equipped Ranged UI And Restart Verification
+
+**SELECTED_EQUIPPED_RANGED_AND_RESTART_VERIFIED; DEV-0.7.2_NOT_READY; GAME_VERSION_NOT_READY.** Source and implementation starting head: clean fetched/pruned synchronized `master`/`origin/master` `838fa936fae1f7434d7f2e1bbf66f42793173fb9`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. No parent or Game-version acceptance occurred.
+
+### A. Files changed
+
+[Focused selected record](../design/dev-0.7.2.11-selected-equipped-ranged-ui-and-restart-record-2026-10-21.md), current output/handoff/prompt, historical/deferred and planning route, branch register. No production source, tests, content, schema, save format, generated/vendor file or `GAME_VERSION` changed. The local proof account/profile and Slot 1 remain outside repository evidence.
+
+### B. Patch summary
+
+The user-prepared ordinary Hunter Slot 1 campaign showed an equipped right-hand Short Bow. One selected World exploration found a candidate; visible Approach opened three-foe combat at beat 1. `ranged primary — Foe 1/2/3 (5 Stamina, 0 MP)` was offered separately from basic melee (4 Stamina). Clicking Foe 1 advanced to beat 2 and spent five Stamina, 101/103 to 96/103. Continue remained available through beat 6. Selected Save reported verified Slot 1. After Chrome client close, host-server recovery and user-assisted isolated-profile reopen/load, the agent read back the same character, beat 6, HP 65/108, MP 82/82, Stamina 96/103, three foes, Continue, equipped Short Bow and Archery rank 1. The UI's generic action notice does not expose hit/miss, Foe 1 HP or damage; no such selected result is claimed. Suggested commit: `docs(combat): verify selected hunter bow and restart`.
+
+### C. Tests and checks run
+
+Fresh selected UI action/save and post-restart readback are detailed in the focused record. No code changed and no new unit test, typecheck or build was needed; historical DEV-0.7.2.9 89/89 and DEV-0.7.2.2 owner/caller evidence remain supporting only. Live Git fetch/prune, exact source/status, five branch heads/merge bases/unique paths and zero open repository PRs were checked. Documentation diff/check and hosted publication readback follow this edit. FP-001/017: actual World/Settings/load caller path; FP-002: no parent/Game promotion; FP-008/009: branch and SHA identities kept distinct. No new pattern.
+
+### D. Risks / follow-up notes
+
+The selected action/payment and retained combat state are proven; exact hit, damage, completed recovery, natural victory or terminal result are not. The generic `ranged primary` label and `Combat advanced one beat` notice are a disclosure limit requiring independent Layer A parent judgment. Five nondefault refs retain two `PROTECTED_REFERENCE` and three `HOLD_NAMED_CONSUMER` dispositions; no branch/PR action or named trigger due. Install **DEV-0.7.2.12 Combat Skeleton Layer A Parent Re-Audit**. Quick Shot acquisition, ammo/range/hand/durability, wider combat systems, balance, Home UI and Game-version decision stay separate.
+
 ## 2026-10-21 — DEV-0.7.2.10 Selected Shield Block UI And Restart Verification
 
 **SELECTED_SHIELD_BLOCK_AND_RESTART_VERIFIED; DEV-0.7.2_NOT_READY; GAME_VERSION_NOT_READY.** Source: clean fetched/pruned synchronized `master`/`origin/master` `c4b4a5c5cef5ed665fcda2bdad55349b67537653`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; date 2026-10-21; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
