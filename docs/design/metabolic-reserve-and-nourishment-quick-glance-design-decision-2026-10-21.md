@@ -177,6 +177,8 @@ Required regression suite includes food receipt/inventory decrement exactly once
 
 Until decided, these remain **explicit held decisions**, not invented numbers or new code.
 
+**Proposed next owner-review prompt (not installed):** [Human-Normalized Metabolic Reserve Owner Contract And First Safe Slice](../dev/proposed-human-normalized-metabolic-owner-codex-prompt-2026-10-21.md). It is an isolated post-/parallel-combat handoff, not a replacement for the current DEV-0.7.2.13 prompt. Read and reconcile with live `master` and review the draft PR before using.
+
 ## 10. Disposition
 
 **NOURISHMENT_PRESENTATION_INTENT_CAPTURED; METABOLIC_RESERVE_CONTRACT_NOT_IMPLEMENTED; NO_RUNTIME_OR_GAME_VERSION_AUTHORIZATION.**
