@@ -62,3 +62,7 @@ The [acquisition decision](dev-0.7.2.5-physical-ability-acquisition-evidence-con
 ## Later evidence note: DEV-0.7.2.6
 
 The [queued target record](dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md) repairs payment on a queued enemy attack after its target becomes invalid, excludes newly same-team targets from player projection and filters ineligible enemy effects after payment. Controlled owner and nearby caller proof covers basic, sword and bow. The next installed support run decides whether spent cost and full recovery after post-payment target loss are the accepted rule; no refund or retarget was invented.
+
+## Later evidence note: DEV-0.7.2.7
+
+The [post-payment decision](dev-0.7.2.7-post-payment-combat-target-loss-policy-decision-2026-10-20.md) explicitly accepts spent cost and full recovery, with no retarget, effect or weapon skill-gain attempt for an invalid target, for the three current single-target basic/sword/bow attacks. It distinguishes action lifecycle and nearby admission from a hit. Current code matches controlled evidence; the next support run independently verifies skill-gain, receipt/replay and serialization edges. No selected or broader-system acceptance follows.

@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.7 paid target-loss policy
+
+The [DEV-0.7.2.7 decision](dev-0.7.2.7-post-payment-combat-target-loss-policy-decision-2026-10-20.md) closes the post-payment ambiguity for current basic/sword/bow enemy attacks: spent cost and full recovery remain, invalid targets receive no effect or weapon skill gain, and no alternative target is chosen automatically. The nearby receipt is admission evidence, not a hit. DEV-0.7.2.8 verifies the contract independently; broader systems and selected playability remain separate.
+
 ## 2026-10-20 DEV-0.7.2.6 queued combat target legality
 
 The [DEV-0.7.2.6 record](dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md) repairs queued enemy target revalidation before payment and effect filtering after payment for current basic/sword/bow commands. Controlled owner and nearby caller tests pass; spent cost and full recovery after post-payment target loss are observed behavior, not yet accepted policy. DEV-0.7.2.7 decides that narrow contract. Quick Shot acquisition, selected natural victory, balance, Home UI and Game-version acceptance remain separate.

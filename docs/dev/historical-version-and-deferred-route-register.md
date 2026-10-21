@@ -1,3 +1,7 @@
+## 2026-10-20 — DEV-0.7.2.7 paid target-loss policy decision
+
+The [focused decision](../design/dev-0.7.2.7-post-payment-combat-target-loss-policy-decision-2026-10-20.md) accepts spent cost, full recovery, no silent retarget, no effect and no weapon skill-gain attempt for current basic/sword/bow attacks whose target becomes invalid after payment. No runtime or balance change. DEV-0.7.2.8 independently verifies skill-gain, receipt/replay and serialized contract edges. Quick Shot acquisition, selected natural victory, Home UI, balance and Game-version acceptance remain separate; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY`.
+
 ## 2026-10-20 — DEV-0.7.2.6 queued target legality
 
 Pre-payment enemy target legality and post-payment effect safety are repaired for existing basic/sword/bow attacks; controlled owner and nearby caller evidence is in `docs/design/dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md`. Post-payment refund/recovery/retarget policy is not accepted; DEV-0.7.2.7 decides it before another runtime change. Quick Shot acquisition, selected victory, balance, Home UI and Game-version decisions remain deferred. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY`.

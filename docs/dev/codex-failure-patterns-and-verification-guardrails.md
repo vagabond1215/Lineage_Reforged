@@ -270,10 +270,10 @@ Do not copy full defect narratives into this register. Link the focused audit or
 
 - **Pattern:** A target is legal when projected or queued, but is defeated, incapacitated, missing or on the actor's team before payment or resolution; the action still pays for no live target or applies damage to an ineligible one.
 - **Why it escaped:** Projection, action-start affordability and effect resolution each checked different parts of eligibility.
-- **Guardrail:** Recheck the action's target disposition and live combatant facts before cost commitment and before applying enemy effects. Cancel an enemy action with no valid pre-payment target without debit; do not infer refunds or retargeting after payment without an accepted policy.
-- **Verification:** Pair each supported attack identity with target loss before start and after payment, wrong side, unaffordable cost, remaining legal alternatives, real caller receipt/replay and serialized recovery. Record post-payment cost/recovery as observed behavior until policy is decided.
+- **Guardrail:** Recheck the action's target disposition and live combatant facts before cost commitment and before applying enemy effects. Cancel an enemy action with no valid pre-payment target without debit. For current single-target basic/sword/bow attacks, the accepted post-payment rule retains spent cost and full recovery without retarget or effect on an invalid enemy.
+- **Verification:** Pair each supported attack identity with target loss before start and after payment, wrong side, unaffordable cost, remaining legal alternatives, real caller receipt/replay and serialized recovery. After payment, verify no enemy effect or weapon skill-gain attempt when the target is invalid at resolution.
 - **Applies to:** queued combat attacks and other mutable-target action queues.
-- **Evidence:** `docs/design/dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md`.
+- **Evidence:** `docs/design/dev-0.7.2.6-queued-combat-target-legality-and-payment-record-2026-10-20.md`; `docs/design/dev-0.7.2.7-post-payment-combat-target-loss-policy-decision-2026-10-20.md`.
 - **Status:** active.
 
 ## Completion Report Format
