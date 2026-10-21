@@ -179,6 +179,8 @@ Until decided, these remain **explicit held decisions**, not invented numbers or
 
 **Proposed next owner-review prompt (not installed):** [Human-Normalized Metabolic Reserve Owner Contract And First Safe Slice](../dev/proposed-human-normalized-metabolic-owner-codex-prompt-2026-10-21.md). It is an isolated post-/parallel-combat handoff, not a replacement for the current DEV-0.7.2.13 prompt. Read and reconcile with live `master` and review the draft PR before using.
 
+**Next-step source evidence (2026-10-21):** [Normalized Metabolic Units, Food Conversion, And Save Migration Connector Preflight](normalized-metabolic-units-food-conversion-and-save-migration-preflight-2026-10-21.md) inventories all nine authored foods, current conversion formulas and save/caller risks. A separate [Codex Human-Normalized Metabolic Reserve Owner Contract](https://github.com/vagabond1215/Lineage_Reforged/blob/codex/human-metabolic-reserve-contract/docs/design/human-normalized-metabolic-reserve-owner-contract-2026-10-21.md) records `STRUCTURAL_CONTRACT_DEFINED; IMPLEMENTATION_HELD_ON_CALIBRATION_AND_SAVE_MIGRATION`. Both are evidence/branch documents, not merged numerical balance or runtime authority. Reconcile them with live `master` before implementation.
+
 ## 10. Disposition
 
 **NOURISHMENT_PRESENTATION_INTENT_CAPTURED; METABOLIC_RESERVE_CONTRACT_NOT_IMPLEMENTED; NO_RUNTIME_OR_GAME_VERSION_AUTHORIZATION.**
