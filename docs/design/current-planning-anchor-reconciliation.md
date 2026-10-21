@@ -1,3 +1,7 @@
+## 2026-10-20 DEV-0.7.2.8 paid target-loss verification
+
+The [DEV-0.7.2.8 record](dev-0.7.2.8-paid-combat-target-loss-contract-verification-record-2026-10-20.md) independently verifies the accepted post-payment rule through controlled owner and ordinary nearby caller tests, including no skill-gain attempt/cap use after target loss, positive valid-target effects and serialized receipt/replay. No production repair or selected-playability claim follows. DEV-0.7.2.9 audits the bounded combat skeleton's parent acceptance rows before selecting another gate.
+
 ## 2026-10-20 DEV-0.7.2.7 paid target-loss policy
 
 The [DEV-0.7.2.7 decision](dev-0.7.2.7-post-payment-combat-target-loss-policy-decision-2026-10-20.md) closes the post-payment ambiguity for current basic/sword/bow enemy attacks: spent cost and full recovery remain, invalid targets receive no effect or weapon skill gain, and no alternative target is chosen automatically. The nearby receipt is admission evidence, not a hit. DEV-0.7.2.8 verifies the contract independently; broader systems and selected playability remain separate.

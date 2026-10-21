@@ -1,3 +1,7 @@
+## 2026-10-20 — DEV-0.7.2.8 paid target-loss verification
+
+Controlled combat owner and ordinary nearby caller tests independently verify the DEV-0.7.2.7 policy for current basic/sword/bow attacks, including invalid and valid targets, skill attempt/cap boundaries, exact receipt/replay and serialized state. [Focused record](../design/dev-0.7.2.8-paid-combat-target-loss-contract-verification-record-2026-10-20.md); no production defect or selected acceptance. The active successor is DEV-0.7.2.9 parent combat-skeleton acceptance audit. Quick Shot acquisition, selected Block/ranged UI, natural victory, Home UI, balance and Game-version decisions remain separate; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY`.
+
 ## 2026-10-20 — DEV-0.7.2.7 paid target-loss policy decision
 
 The [focused decision](../design/dev-0.7.2.7-post-payment-combat-target-loss-policy-decision-2026-10-20.md) accepts spent cost, full recovery, no silent retarget, no effect and no weapon skill-gain attempt for current basic/sword/bow attacks whose target becomes invalid after payment. No runtime or balance change. DEV-0.7.2.8 independently verifies skill-gain, receipt/replay and serialized contract edges. Quick Shot acquisition, selected natural victory, Home UI, balance and Game-version acceptance remain separate; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, `GAME_VERSION_NOT_READY`.

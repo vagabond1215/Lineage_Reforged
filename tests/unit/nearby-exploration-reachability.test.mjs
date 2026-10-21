@@ -295,7 +295,13 @@ test("nearby basic, sword and bow receipts retain a paid action when its target 
     assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === player.id)
       .resources.stamina.current, player.resources.stamina.current - legal.staminaCost);
     const target = snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === targetId);
+    const alternateId = snapshot.gameState.activeEncounter.enemyCombatantIds.find((id) => id !== targetId);
+    assert.ok(alternateId);
     const hpBefore = target.resources.hp.current;
+    const alternateHpBefore = snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === alternateId)
+      .resources.hp.current;
+    const skillsBefore = structuredClone(snapshot.playerState.skills);
+    const skillAttemptsBefore = structuredClone(snapshot.gameState.activeEncounter.skillGainAttemptState);
     target.incapacitated = true;
     for (let beat = 0; snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === action.id).lifecycle !== "resolved" &&
         beat < 20; beat += 1) {
@@ -307,15 +313,33 @@ test("nearby basic, sword and bow receipts retain a paid action when its target 
     }
     const ended = snapshot.gameState.activeEncounter.actions.find((entry) => entry.id === action.id);
     assert.equal(ended.lifecycle, "resolved");
+    assert.deepEqual(ended.targeting.targetIds, [targetId]);
+    assert.ok(ended.recoveryEndsAtTick > ended.resolvesAtTick);
     assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === targetId)
       .resources.hp.current, hpBefore);
+    assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === alternateId)
+      .resources.hp.current, alternateHpBefore);
     assert.equal(snapshot.gameState.activeEncounter.combatants.find((entry) => entry.id === player.id)
       .resources.stamina.current, player.resources.stamina.current - legal.staminaCost);
-    assert.ok(snapshot.authorityLedger.nearbyEncounters.commands.some((entry) =>
-      entry.requestId === command.requestId && entry.targetId === targetId));
+    assert.deepEqual(snapshot.playerState.skills, skillsBefore);
+    assert.deepEqual(snapshot.gameState.activeEncounter.skillGainAttemptState, skillAttemptsBefore);
+    assert.ok(listLegalPlayerCombatCommands(snapshot.gameState.activeEncounter).some((entry) =>
+      entry.actionType === actionType && entry.targetId === alternateId));
+    const attackReceipts = snapshot.authorityLedger.nearbyEncounters.commands.filter((entry) =>
+      entry.requestId === command.requestId);
+    assert.equal(attackReceipts.length, 1);
+    assert.equal(attackReceipts[0].targetId, targetId);
+    assert.equal(attackReceipts[0].result, "active");
     const reopened = deserializeSnapshot(serializeSnapshot(snapshot));
     assert.deepEqual(reopened.gameState.activeEncounter.actions.find((entry) => entry.id === action.id), ended);
     assert.deepEqual(reopened.authorityLedger.nearbyEncounters.commands, snapshot.authorityLedger.nearbyEncounters.commands);
+    assert.deepEqual(reopened.gameState.activeEncounter.skillGainAttemptState, skillAttemptsBefore);
+    assert.equal(executeNearbyEncounterStep(reopened, control, command).code, "duplicate");
+    assert.equal(executeNearbyEncounterStep(reopened, control, { ...command, targetId: player.id }).code,
+      "request_conflict");
+    assert.equal(executeNearbyEncounterStep(reopened, control,
+      createNearbyEncounterStepCommand(accepted.snapshot, accepted.control, "combat.advance", null,
+        `target_change.${actionType}.stale_after_readback`)).code, "stale_snapshot");
   }
 });
 

@@ -66,3 +66,7 @@ The [queued target record](dev-0.7.2.6-queued-combat-target-legality-and-payment
 ## Later evidence note: DEV-0.7.2.7
 
 The [post-payment decision](dev-0.7.2.7-post-payment-combat-target-loss-policy-decision-2026-10-20.md) explicitly accepts spent cost and full recovery, with no retarget, effect or weapon skill-gain attempt for an invalid target, for the three current single-target basic/sword/bow attacks. It distinguishes action lifecycle and nearby admission from a hit. Current code matches controlled evidence; the next support run independently verifies skill-gain, receipt/replay and serialization edges. No selected or broader-system acceptance follows.
+
+## Later evidence note: DEV-0.7.2.8
+
+The [paid target-loss verification](dev-0.7.2.8-paid-combat-target-loss-contract-verification-record-2026-10-20.md) confirms no invalid-target effects or weapon skill attempts/cap use, unchanged alternate targets, spent cost/full recovery, valid-target positive effects, one nearby attack receipt and serialized duplicate/conflict/stale behavior. No production repair or selected acceptance follows. The installed successor is a separate parent combat-skeleton acceptance audit.

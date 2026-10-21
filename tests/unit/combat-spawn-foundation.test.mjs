@@ -805,12 +805,15 @@ test("paid attacks do not damage an incapacitated, missing or newly allied targe
       assert.ok(legal);
       const action = queueActionFixture(encounter, player, actionType, [target.id], legal.sourceType, legal.sourceId);
       const staminaBefore = player.resources.stamina.current;
+      const skillsBefore = structuredClone(playerState.skills);
+      const skillAttemptsBefore = structuredClone(encounter.skillGainAttemptState);
       gameState.activeEncounter = encounter;
       suppressEnemyAi(encounter);
       player.timing.readyAtTick = encounter.currentTimeTick;
       tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick);
       assert.equal(action.lifecycle, "executing", `${actionType}/${lost}`);
       assert.equal(player.resources.stamina.current, staminaBefore - action.resourceCosts.stamina);
+      const recoveryEndsAtTick = action.recoveryEndsAtTick;
       const targetHp = target.resources.hp.current;
       const alternateHp = alternate.resources.hp.current;
       if (lost === "defeated") { target.defeated = true; target.incapacitated = true; }
@@ -819,12 +822,61 @@ test("paid attacks do not damage an incapacitated, missing or newly allied targe
       if (lost === "wrong_side") target.teamId = player.teamId;
       tickCombatFoundation(gameState, playerState, [], action.resolvesAtTick);
       assert.equal(action.lifecycle, "recovering", `${actionType}/${lost}`);
+      assert.deepEqual(action.targeting.targetIds, [target.id], `${actionType}/${lost}`);
+      assert.equal(action.recoveryEndsAtTick, recoveryEndsAtTick, `${actionType}/${lost}`);
       assert.equal(target.resources.hp.current, targetHp, `${actionType}/${lost}`);
       assert.equal(alternate.resources.hp.current, alternateHp, `${actionType}/${lost}`);
       assert.equal(player.resources.stamina.current, staminaBefore - action.resourceCosts.stamina);
+      assert.deepEqual(deriveCombatSkillGainCandidates(encounter, action), [], `${actionType}/${lost}`);
+      assert.deepEqual(encounter.skillGainAttemptState, skillAttemptsBefore, `${actionType}/${lost}`);
+      assert.deepEqual(playerState.skills, skillsBefore, `${actionType}/${lost}`);
       tickCombatFoundation(gameState, playerState, [], action.recoveryEndsAtTick);
       assert.equal(action.lifecycle, "resolved", `${actionType}/${lost}`);
+      assert.equal(player.timing.currentActionId, null, `${actionType}/${lost}`);
+      assert.equal(player.timing.lastCompletedActionId, action.id, `${actionType}/${lost}`);
+      assert.equal(player.resources.stamina.current, staminaBefore - action.resourceCosts.stamina);
     }
+  }
+});
+
+test("valid basic, sword and bow targets still receive effects and profile skill attempts", () => {
+  for (const { actionType, itemId, skillId } of [
+    { actionType: "combat.attack.melee.basic", itemId: "item.arming_sword", skillId: null },
+    { actionType: "combat.melee.primary", itemId: "item.arming_sword", skillId: "skill.combat.weapon.sword" },
+    { actionType: "combat.ranged.primary", itemId: "item.short_bow", skillId: "skill.combat.weapon.archery" }
+  ]) {
+    const playerState = createPlayerStateFixture({ equipmentOverrides: {
+      "slot.weapon.right": { itemId, itemKey: itemId.slice(5), quantity: 1, durability: 1 }
+    } });
+    const { gameState, encounter } = createEncounterFixture(playerState);
+    const player = findPlayerCombatant(encounter);
+    const target = findEnemyCombatant(encounter);
+    const alternate = encounter.combatants.find((entry) => entry.kind === "enemy" && entry.id !== target.id);
+    assert.ok(alternate);
+    target.resources.hp.current = target.resources.hp.max = 999;
+    const alternateHp = alternate.resources.hp.current;
+    const legal = listLegalPlayerCombatCommands(encounter).find((entry) =>
+      entry.actionType === actionType && entry.targetId === target.id);
+    assert.ok(legal);
+    const skillBefore = skillId ? getSkillRank(playerState, skillId) : null;
+    const action = queueActionFixture(encounter, player, actionType, [target.id], legal.sourceType, legal.sourceId);
+    const staminaBefore = player.resources.stamina.current;
+    gameState.activeEncounter = encounter;
+    suppressEnemyAi(encounter);
+    player.timing.readyAtTick = encounter.currentTimeTick;
+    tickCombatFoundation(gameState, playerState, [], encounter.currentTimeTick);
+    assert.equal(action.lifecycle, "executing", actionType);
+    assert.equal(player.resources.stamina.current, staminaBefore - action.resourceCosts.stamina, actionType);
+    tickCombatFoundation(gameState, playerState, [], action.resolvesAtTick);
+    assert.equal(action.lifecycle, "recovering", actionType);
+    assert.ok(target.resources.hp.current < 999, actionType);
+    assert.equal(alternate.resources.hp.current, alternateHp, actionType);
+    assert.deepEqual(encounter.skillGainAttemptState.attemptedActionIds, skillId ? [action.id] : [], actionType);
+    assert.deepEqual(encounter.skillGainAttemptState.attemptedCapKeys,
+      skillId ? [`combat_action:weapon_attack:${skillId}`] : [], actionType);
+    if (skillId) assert.equal(getSkillRank(playerState, skillId), skillBefore + 1, actionType);
+    tickCombatFoundation(gameState, playerState, [], action.recoveryEndsAtTick);
+    assert.equal(action.lifecycle, "resolved", actionType);
   }
 });
 
