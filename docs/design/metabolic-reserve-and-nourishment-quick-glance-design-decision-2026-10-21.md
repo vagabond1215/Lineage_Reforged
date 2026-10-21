@@ -57,6 +57,25 @@ This is a **target semantic separation**, not a mandate to add each named field 
 
 A depleted carb, fat or protein microbar means **that specific available pool is low**, not that the body has zero calories, water or long-term fat. A deficit indicator with sizable stored body fat can be legitimate because mobilization is rate-limited.
 
+## 3A. Human-reference calibration and simple lineage variation (2026-10-21 refinement)
+
+**Decision for the design proposal:** use an ordinary **Human** as the normalized physiological reference, then apply modest, explainable *fantasy lineage* multipliers and individual/activity context to that shared model. Do **not** copy real-world kilocalories, grams, dietary percentage quotas, organ-level metabolic formulas or a single real-world “average person's diet” into game content or the persistent UI. The Human reference may be calibrated *offline* against broadly established human relationships, then expressed in consistent, intentionally simple **game-scale energy and nutrient units**. One authoritative owner performs every conversion.
+
+The reason to use real human physiology as the starting reference is **behavioral plausibility**, not numerical fidelity. Human energy expenditure reflects resting needs, body size/composition, food processing and activity; macronutrients have different energy, maintenance and recovery uses. The human baseline is a *reference character profile*, not a claim that every real adult has identical needs. Good external calibration sources include [FAO/WHO/UNU Human Energy Requirements](https://www.fao.org/4/y5686e/y5686e00.htm), [National Academies Dietary Reference Intakes for Energy (2023)](https://www.ncbi.nlm.nih.gov/books/NBK591031/), and [National Academies macronutrient ranges (2023 review)](https://www.nationalacademies.org/read/27957/chapter/5). These references inform **relative directions and rough order of magnitude only**, not mandatory in-game targets. Their human “race/ethnicity” categories must never be used as a basis for fantasy lineage bonuses.
+
+**Already implemented:** [`player-origins.ts`](../../packages/shared/types/src/player-origins.ts) defines default metabolic coefficients at `1.0` and uses that default for `lineage.human`, with small authored Human food-tag preferences; Elf, Dwarf, Orc, Gnome, Halfling, Dark Elf, Goblin, Troll and other authored playable lineages have small deviations in absorption, protein recovery, rapid-energy handling, fat handling, water retention and deficiency sensitivity. This is an **existing game-specific lineage profile**, not a validated new reserve-availability model. Do not replace these coefficients, change them to imagined biological “truth,” or multiply them twice during migration without tests.
+
+**Simple authoring hierarchy, subject to owner decision:**
+
+1. **Human reference:** one normalized basal/sleep/metabolic response profile, with standard available nutrient capacities, digestion/release and fuel substitution semantics expressed in game units; reference values are calibratable constants, not a player-facing dietary chart.
+2. **Individual demand:** body size/build or other **already owned and validated** character inputs when useful, elapsed time, physical intensity, recovery, environment and conditions; do not assume every stat, level, sex or resource pool must alter energy needs.
+3. **Playable lineage multipliers:** modest modifiers for supported biological fantasy differences in fuel use, digestive release, protein recovery, hydration and reserve response; each must have an authored explanation and observable test. Variation in daily energy need should not be automatically inferred from a race's HP, MP or class reputation.
+4. **Special workloads:** future magical exertion, unusual physiologies or sustained rituals are *activity-owner inputs*, not a universal Intelligence tax or mandatory fatty-food benefit. Keep MP and metabolism separate unless a specific accepted magic contract connects them.
+
+**Keep it deliberately small:** the initial decision should prefer a few owner-owned fuel pools, one signed rolling Energy balance, one stored-body-fat reserve and a minimal timed digestion queue over a full biochemical simulation, hormonal mechanics, per-organ models, exact amino-acid accounting or arbitrarily separate need meters. An individual nutrient pool has a **positive amount and capacity**, not an artificial daily quota. Energy is a signed **balance**, not a fourth permanently positive resource. The three nutrient strips describe available reserves; their **visual fill need not encode a human daily consumption ratio**.
+
+**Calibration and acceptance:** use a few reference scenarios rather than an encyclopedia of real numbers: normal Human awake/resting and asleep, routine travel, short intense effort, high-protein/low-energy intake, abundant energy/low-protein intake, surplus over time and moderate deficit with stored body fat. Repeat with at least two contrasting fictional lineages at comparable body/build and activity; show an explainable difference without wildly destabilizing food consumption. Require an authored deterministic cost/conservation rule and old-save compatibility before publishing real bars. If relative race profiles or source units cannot be reconciled, publish the smallest held owner decision rather than manufacture new physics.
+
 ## 4. One conserved, time-aware metabolic pipeline
 
 ```text
@@ -133,12 +152,12 @@ These are **illustrative interpretation rules**, not claims that the current eng
 
 Before any game/UI runtime implementation, decide and record:
 
-1. **Exact owner state**: live versus aggregate pools, nutrition basis/units and cap definitions, pending digestion and meal receipt, body-fat mass/reserve, stable ids, save/version migration and old-snapshot fallback.
+1. **Exact owner state**: game-normalized Human baseline and existing lineage deltas, live versus aggregate pools, positive amounts/caps, pending digestion and meal receipt, body-fat reserve, stable ids, save/version migration and old-snapshot fallback.
 2. **Metabolic accounting**: food-calorie/macronutrient consistency, absorbed energy, fuel-specific availability, expenditure, storage/mobilization, no double credit, rounding and deterministic repeat/reload.
 3. **Timing**: consumption admission, release curve and daily rollover, tick versus rest/travel duration, long actions, variable difficulty and any legitimate account/run overrides.
 4. **Allocation rules**: baseline versus burst demand, available carbs/dietary fat/stored body fat/protein usage, substrate substitution, overflow, caps, deficit consequences, maintenance/recovery and atrophy onset.
 5. **Producer/caller contracts**: travel, rest, activity, combat and later magic each provide *duration/physical/metabolic demand facts* to one shared owner; UI never privately spends nutrients.
-6. **Authoring reconciliation**: nine game-scale consumable profiles, existing calorie/protein/hydration target rules, lineage multipliers/food-tag biases and backwards compatibility; no silent conversion to real-world kilocalories or grams.
+6. **Human-reference authoring reconciliation**: calibrate broad human relationships outside the gameplay data, then retain one consistent game-unit basis for nine consumables, existing calorie/protein/hydration rules, Human `1.0` coefficients and small authored lineage/food-tag differences; no direct import of real-world kcal, grams or diet percentages.
 7. **Projection/detail permissions**: actual signed balance, three available pools, hydration, stored fat, severity and pending digestion exposed through one read-only view-model with distinct metadata for `known`, `estimated` and `not available`.
 8. **Selected-client proof**: baseline/deficit/surplus, high-calorie low-protein food, carb depletion with exercise, protein recovery, hydration and food selection, rest, day rollover, save/restart, narrow/keyboard access, difficulty alternatives and no false normal-state badges.
 
@@ -148,9 +167,9 @@ Required regression suite includes food receipt/inventory decrement exactly once
 
 ## 9. Open product choices that cannot be inferred from current authority
 
-- Is the signed balance measured in exact kcal, game-scaled energy units, or an owner-defined normalized rolling index; what is its horizon and reset/buffer policy?
+- **Choose game-normalized units, not literal Earth kcal/grams.** What stable game-unit basis, horizon and reset/buffer policy makes the signed balance intelligible, comparable and conserved?
 - Which intake is instantly *registered* versus *absorbed*, which macro subpools have time-deferred release, and how are existing simplified quick/stored energy saves migrated?
-- Which reserve limits and substitution rates are physiologically plausible and fun at the game's timescale? When should the UI say `Low` rather than merely show an empty strip?
+- Which Human-reference reserve limits, substitution rates and small race/lineage deltas are physiologically plausible *in relative shape* and fun at game timescales? When should the UI say `Low` rather than merely show an empty strip?
 - How do independent protein-demand and activity/skill-growth policies connect without forcing a high-protein diet on every character?
 - Does a magic-specific physiology profile privilege dietary fat, mixed energy, or another fictional resource? Who owns the cost, and what are its observable consequences?
 - Which difficulty/accessibility setting shows numeric ranges, broad qualitative bands, or conceals optional detail without hiding serious actionable danger?
