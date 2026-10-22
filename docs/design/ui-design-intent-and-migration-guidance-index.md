@@ -15,6 +15,14 @@ This index consolidates *where to read* the accepted intent, current source, bou
 
 When two sources disagree, preserve both as dated evidence and resolve the conflict through live owner contracts, later accepted specific decisions and current route documents. Do not edit old selected-playtest findings to make a newer design look complete.
 
+## Current next UI route (2026-10-22): Equipment + Inventory UX with stacked dependencies
+
+**Current actionable UI candidate, not installed as the active combat prompt:** [Equipment/Inventory owner and stacked PR preflight](equipment-inventory-ui-owner-projection-and-pr-stack-preflight-2026-10-22.md) and [proposed Codex Equipment/Inventory UX stacked first slice](../dev/proposed-equipment-inventory-ux-stacked-first-slice-codex-prompt-2026-10-22.md). The earlier Character, top-bar, combined rehearsal, mobile repair and Composite Bow prompts below are retained as **dated task history**, not instructions to repeat work already published.
+
+Published independent implementation drafts: [#7 Character](https://github.com/vagabond1215/Lineage_Reforged/pull/7), [#8 top bar](https://github.com/vagabond1215/Lineage_Reforged/pull/8), [#9 mobile shell](https://github.com/vagabond1215/Lineage_Reforged/pull/9), and [#10 canonical equipment slot/re-equip](https://github.com/vagabond1215/Lineage_Reforged/pull/10). PR #9's local controlled viewport work reports 248px usable Character content at 375×667 with critical state; PR #10's controlled tests cover Composite/Short Bow and item state conservation. **No authorized authenticated selected-client Save/restart acceptance yet; all remain draft and unmerged.** PR #6 nutrition is separately held.
+
+**Branch rule:** new Equipment UI source should be an isolated **stacked child of PR #7**, not a duplicate CharacterPanel fork from master. PR #10 is an **unmerged owner dependency for composed tests only**, not code to copy; PRs #8/#9 provide responsive composite test context. The shared dated `docs/dev/branch-disposition-register.md` entries from #7, #8 and #10 must survive future integration. No merge, Game-version change or active DEV-0.7.2.13 replacement is authorized by this index.
+
 ## What the intended player-facing UI is
 
 Lineage is a **text-/systems-first tabletop and grand-strategy gameplay interface**, not an FPS/MMO combat HUD and not a flat dashboard of unrelated cards. The 2026-09-14 accepted direction in [UI Information Architecture Boundary, concept refinement](ui-information-architecture-boundary.md#22-concept-derived-gameplay-shell-direction) specifies:
