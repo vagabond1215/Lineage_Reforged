@@ -1,6 +1,6 @@
 # Persistent Top-Bar UI: Bounded Implementation Record
 
-Date: 2026-10-22. Repository: `vagabond1215/Lineage_Reforged`.
+Date: 2026-10-22. Repository: `vagabond1215/Lineage_Reforged`. Draft implementation [PR #8](https://github.com/vagabond1215/Lineage_Reforged/pull/8), branch `codex/persistent-top-bar-ui`.
 Run class: unversioned UI presentation slice. Development milestone impact: `none`. Game-version impact: `none`; `GAME_VERSION` remains `0.1.1-prealpha`, playability posture `INTEGRATED_LOOP`.
 
 ## Source and scope
