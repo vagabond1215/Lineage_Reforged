@@ -7,9 +7,10 @@ import { createServer } from 'vite';
 test('Character Overview renders owner-backed identity, nine attributes and section routes', async () => {
   const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
   try {
-    const [{ CharacterPanel }, { GameSessionProvider }, { demoSnapshot }, { createDefaultAccountProfileState }] = await Promise.all([
+    const [{ CharacterPanel }, { GameSessionProvider }, { useUiViewModel }, { demoSnapshot }, { createDefaultAccountProfileState }] = await Promise.all([
       vite.ssrLoadModule('/src/features/CharacterPanel.tsx'),
       vite.ssrLoadModule('/src/runtime/GameSessionContext.tsx'),
+      vite.ssrLoadModule('/src/runtime/UiViewModelContext.tsx'),
       vite.ssrLoadModule('/src/runtime/demoSnapshot.ts'),
       vite.ssrLoadModule('/../../packages/engines/game-engine/src/legacy-account.ts')
     ]);
@@ -38,6 +39,26 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(html, /View Equipment/);
     assert.match(html, new RegExp(demoSnapshot.playerState.coreData.playerName));
     assert.match(html, new RegExp(demoSnapshot.playerState.originProfile.lineageLabel));
+    assert.match(html, /Background: Local Champion/, 'show the canonical backstory label');
+    assert.match(html, /Origin -1/);
+    assert.match(html, /Origin \+1/);
+    let projectedAttributes;
+    renderToStaticMarkup(React.createElement(GameSessionProvider, {
+      accountProfile: createDefaultAccountProfileState(),
+      snapshot: demoSnapshot,
+      campaignSessionControl: {},
+      onSnapshotChange: () => {}
+    }, React.createElement(() => {
+      projectedAttributes = useUiViewModel().character.lists.attributes;
+      return null;
+    })));
+    assert.equal(projectedAttributes.length, 9);
+    for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {
+      const detail = projectedAttributes[index];
+      assert.equal(detail.id, `attr.${key.toLowerCase()}`);
+      assert.match(detail.detailSummary, new RegExp(`currently sits at ${demoSnapshot.playerState.attributes[key]}`));
+      assert.equal(detail.detailGroups[0].entries[0].value, String(demoSnapshot.playerState.attributes[key]));
+    }
 
     const attributeButtons = [...html.matchAll(/<button[^>]*aria-expanded="false"[^>]*>(.*?)<\/button>/gs)];
     assert.equal(attributeButtons.length, 9);
@@ -52,6 +73,15 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     const sparseSnapshot = structuredClone(demoSnapshot);
     sparseSnapshot.playerState.skills = [];
     sparseSnapshot.playerState.titles = [];
+    sparseSnapshot.playerState.coreData.backstoryId = 'backstory.not_in_catalog';
+    sparseSnapshot.playerState.inventory.bags = [];
+    sparseSnapshot.playerState.inventory.overflow = [];
+    for (const slot of Object.keys(sparseSnapshot.playerState.equipment)) {
+      sparseSnapshot.playerState.equipment[slot] = null;
+    }
+    for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {
+      sparseSnapshot.playerState.attributes[key] = 21 + index;
+    }
     const sparseHtml = renderToStaticMarkup(
       React.createElement(GameSessionProvider, {
         accountProfile: createDefaultAccountProfileState(),
@@ -66,7 +96,14 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
       }))
     );
     assert.match(sparseHtml, /No developed skills yet/);
-    assert.doesNotMatch(sparseHtml, /Other Earned Titles|Title:/);
+    assert.match(sparseHtml, /Equipment/);
+    assert.match(sparseHtml, /Inventory/);
+    assert.doesNotMatch(sparseHtml, /Other Earned Titles|Title:|Equipped Gear|Background:/);
+    const sparseAttributeButtons = [...sparseHtml.matchAll(/<button[^>]*aria-expanded="false"[^>]*>(.*?)<\/button>/gs)];
+    assert.equal(sparseAttributeButtons.length, 9);
+    for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {
+      assert.ok(sparseAttributeButtons[index][1].includes(`>${21 + index}</span>`), `${key} changed owner value`);
+    }
   } finally {
     await vite.close();
   }

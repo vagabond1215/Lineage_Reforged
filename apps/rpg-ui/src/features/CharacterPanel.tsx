@@ -7,6 +7,7 @@ import { SelectionList } from '../components/ui/SelectionList';
 import { Tooltip } from '../components/ui/Tooltip';
 import { Icon } from '../components/icons';
 import { CHARACTER_ATTRIBUTE_ORDER, getCharacterAttributePresentation } from '../game-shell/characterAttributes';
+import { backstoryOptions } from '../game-shell/characterCreationCatalog';
 import { useGameSession } from '../runtime/GameSessionContext';
 import { useUiViewModel } from '../runtime/UiViewModelContext';
 import {
@@ -287,10 +288,7 @@ export function CharacterPanel({
   );
 
   const backstoryId = snapshot.playerState.coreData.backstoryId;
-  const backstoryParts = backstoryId?.split('.') ?? [];
-  const background = backstoryParts.length > 0
-    ? backstoryParts[backstoryParts.length - 1]?.split('_').map((part: string) => part[0]?.toUpperCase() + part.slice(1)).join(' ')
-    : null;
+  const background = backstoryOptions.find((option) => option.id === backstoryId)?.label;
   const equippedTitle = snapshot.playerState.titles.find((title) => title.equipped);
   const otherTitles = snapshot.playerState.titles.filter((title) => !title.equipped);
   const leadingSkills = snapshot.playerState.skills
