@@ -36,17 +36,20 @@ type CharacterPanelProps = {
   searchQuery: string;
   pinnedIds: string[];
   onTogglePin: (id: string) => void;
+  initialSection?: string;
 };
 
 function ActionButton({
   label,
   onClick,
   disabled = false,
+  descriptionId,
   tone = 'neutral'
 }: {
   label: string;
   onClick?: () => void;
   disabled?: boolean;
+  descriptionId?: string;
   tone?: 'neutral' | 'accent' | 'warning';
 }) {
   const toneClass =
@@ -61,7 +64,8 @@ function ActionButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-full border px-4 py-2 text-sm transition ${toneClass} disabled:cursor-not-allowed disabled:opacity-50`}
+      aria-describedby={descriptionId}
+      className={`rounded-full border px-4 py-2 text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200 ${toneClass} disabled:cursor-not-allowed disabled:opacity-50`}
     >
       {label}
     </button>
@@ -79,11 +83,13 @@ function ItemStarButton({
     <Tooltip content={active ? 'Remove favorite' : 'Favorite item'}>
       <button
         type="button"
+          aria-label={active ? 'Remove favorite' : 'Favorite item'}
+          aria-pressed={active}
         onClick={(event) => {
           event.stopPropagation();
           onToggle();
         }}
-        className={`rounded-full border p-2 transition ${
+          className={`rounded-full border p-2 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200 ${
           active
             ? 'border-amber-300/30 bg-amber-300/14 text-amber-200'
             : 'border-white/10 bg-white/5 text-slate-400 hover:text-slate-200'
@@ -107,15 +113,20 @@ function toDetail(item: ListItem | undefined) {
   };
 }
 
+export function selectVisibleItem<T extends { id: string }>(entries: T[], requestedId?: string): T | undefined {
+  return requestedId ? entries.find((entry) => entry.id === requestedId) : entries[0];
+}
+
 export function CharacterPanel({
   accent,
   searchQuery,
   pinnedIds,
-  onTogglePin
+  onTogglePin,
+  initialSection = 'overview'
 }: CharacterPanelProps) {
   const { snapshot, updateSnapshot } = useGameSession();
   const characterData = useUiViewModel().character;
-  const [activeSection, setActiveSection] = useState('overview');
+  const [activeSection, setActiveSection] = useState(initialSection);
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({});
   const [inventoryCategory, setInventoryCategory] = useState<CharacterInventoryCategory>('all');
   const [inventorySort, setInventorySort] = useState<CharacterInventorySort>('default');
@@ -123,6 +134,7 @@ export function CharacterPanel({
   const [overviewAttributeId, setOverviewAttributeId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(true);
   const sectionButtons = useRef<Record<string, HTMLButtonElement | null>>({});
+  const noticeRef = useRef<HTMLDivElement | null>(null);
 
   const skillItems = useMemo(() => buildSkillItems(snapshot), [snapshot]);
   const equipmentEntries = useMemo(() => buildEquipmentEntries(snapshot), [snapshot]);
@@ -160,6 +172,10 @@ export function CharacterPanel({
   useEffect(() => {
     sectionButtons.current[activeSection]?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
   }, [activeSection]);
+
+  useEffect(() => {
+    if (panelNotice) noticeRef.current?.focus();
+  }, [panelNotice]);
 
   const changeSection = (id: string) => {
     setActiveSection(id);
@@ -216,8 +232,8 @@ export function CharacterPanel({
 
   const selectedAttribute = attributeItems.find((item) => item.id === selectedIds.attributes) ?? attributeItems[0];
   const selectedSkill = filteredSkillItems.find((item) => item.id === selectedIds.skills) ?? filteredSkillItems[0];
-  const selectedEquipment = filteredEquipmentEntries.find((entry) => entry.id === selectedIds.equipment) ?? filteredEquipmentEntries[0];
-  const selectedInventory = filteredInventoryEntries.find((entry) => entry.id === selectedIds.inventory) ?? filteredInventoryEntries[0];
+  const selectedEquipment = selectVisibleItem(filteredEquipmentEntries, selectedIds.equipment);
+  const selectedInventory = selectVisibleItem(filteredInventoryEntries, selectedIds.inventory);
   const selectedTrait = filteredTraitItems.find((item) => item.id === selectedIds.traits) ?? filteredTraitItems[0];
   const selectedGeographicKnowledge =
     geographicKnowledgeItems.find((item) => item.id === selectedIds['geographic-knowledge']) ?? geographicKnowledgeItems[0];
@@ -247,7 +263,7 @@ export function CharacterPanel({
                   : toDetail(selectedDiscovery);
 
   const applyNotice = (nextSnapshot: typeof snapshot, notice: CharacterPanelNotice) => {
-    updateSnapshot(nextSnapshot);
+    if (nextSnapshot !== snapshot) updateSnapshot(nextSnapshot);
     setPanelNotice(notice);
   };
 
@@ -265,7 +281,7 @@ export function CharacterPanel({
   };
 
   const noticeBlock = panelNotice ? (
-    <div className={`rounded-[22px] border px-4 py-3 ${toneClasses(panelNotice.tone)}`}>
+    <div ref={noticeRef} tabIndex={-1} role={panelNotice.tone === 'warning' ? 'alert' : 'status'} className={`rounded-[22px] border px-4 py-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200 ${toneClasses(panelNotice.tone)}`}>
       <div className="text-sm font-semibold">{panelNotice.title}</div>
       <div className="mt-1 text-sm text-white/80">{panelNotice.detail}</div>
     </div>
@@ -402,6 +418,9 @@ export function CharacterPanel({
     <div className="panel-scroll h-full space-y-4 overflow-auto">
       {noticeBlock}
       <Card title="Equipment Loadout" accent={accent}>
+        <p className="mb-4 text-sm text-slate-300">
+          {equipmentEntries.filter((entry) => entry.item).length} occupied of {equipmentEntries.length} slots. Select a slot to inspect its current item.
+        </p>
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {filteredEquipmentEntries.map((entry) => {
             const isSelected = entry.id === selectedEquipment?.id;
@@ -409,19 +428,24 @@ export function CharacterPanel({
             const isFavorite = entry.item ? favoriteItemKeys.has(entry.item.itemKey) : false;
 
             return (
-              <button
+              <div
                 key={entry.id}
-                type="button"
-                onClick={() => setSelectedId('equipment', entry.id)}
-                className={`rounded-[22px] border p-4 text-left transition ${
-                  isSelected ? 'border-white/20 bg-white/10' : 'border-white/8 bg-black/10 hover:border-white/15 hover:bg-white/6'
+                className={`rounded-[18px] border p-3 transition ${
+                  isSelected ? 'border-amber-200/40 bg-amber-200/10' : 'border-white/10 bg-black/10 hover:border-white/20'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{entry.slotLabel}</div>
-                    <div className="mt-2 text-base font-semibold text-slate-50">{entry.itemTitle}</div>
-                  </div>
+                  <button
+                    type="button"
+                    aria-pressed={isSelected}
+                    aria-label={`Inspect ${entry.slotLabel}: ${entry.itemTitle}`}
+                    onClick={() => setSelectedId('equipment', entry.id)}
+                    className="min-w-0 flex-1 text-left focus-visible:rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
+                  >
+                    <span className="block text-[11px] uppercase tracking-[0.16em] text-slate-400">{entry.slotLabel}</span>
+                    <span className="mt-1 block break-words text-base font-semibold text-slate-50">{entry.itemTitle}</span>
+                    <span className="mt-2 block text-xs text-slate-300">{entry.item ? 'Occupied' : 'Empty'}</span>
+                  </button>
                   {entry.item && (
                     <div className="flex items-center gap-2">
                       <ItemStarButton active={isFavorite} onToggle={() => toggleFavorite(entry.item!.itemKey, entry.itemTitle)} />
@@ -430,28 +454,29 @@ export function CharacterPanel({
                   )}
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses(entry.item ? 'accent' : 'neutral')}`}>
-                    {entry.item ? 'Equipped' : 'Empty'}
-                  </span>
+                  {entry.item && <span className="text-xs text-slate-300">Quantity {entry.item.quantity}</span>}
                   {entry.item?.durability !== undefined && (
-                    <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">
+                    <span className="text-xs text-slate-300">
                       {Math.round(entry.item.durability * 100)}% durability
                     </span>
                   )}
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
       </Card>
-      <Card title="Equipment Actions" accent={accent}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="text-sm text-slate-300">
-            {selectedEquipment?.item ? `${selectedEquipment.itemTitle} is selected.` : 'Select a slot to inspect it.'}
+      <Card title="Selected Slot" accent={accent}>
+        <div className="space-y-3">
+          <div className="text-sm text-slate-200">
+            {selectedEquipment
+              ? <><strong>{selectedEquipment.slotLabel}</strong>: {selectedEquipment.item ? selectedEquipment.itemTitle : 'Empty'}</>
+              : 'The selected slot is no longer shown. Choose a visible slot.'}
           </div>
           <div className="flex flex-wrap gap-3">
             <ActionButton
               label="Unequip Item"
+              descriptionId="equipment-unequip-reason"
               onClick={() => {
                 if (!selectedEquipment) {
                   return;
@@ -468,25 +493,55 @@ export function CharacterPanel({
               onClick={() => selectedEquipment?.item && toggleFavorite(selectedEquipment.item.itemKey, selectedEquipment.itemTitle)}
               disabled={!selectedEquipment?.item}
             />
+            <ActionButton label="Browse carried items" onClick={() => changeSection('inventory')} />
           </div>
+          <p id="equipment-unequip-reason" className="text-xs text-slate-400">
+            {selectedEquipment?.item
+              ? 'Unequip moves the selected item into carried inventory.'
+              : selectedEquipment
+                ? 'This slot is empty; there is no item to unequip or favorite.'
+                : 'Choose a visible slot before using equipment actions.'}
+          </p>
+          <p className="text-xs text-slate-400">Choose a carried item in Inventory to see its current Equip availability.</p>
         </div>
       </Card>
     </div>
   );
 
   const inventoryCategories = getInventoryCategories(inventoryEntries);
+  const inventoryStackReady = Boolean(selectedInventory && Number.isSafeInteger(selectedInventory.quantity) && selectedInventory.quantity > 0);
+  const canEquipSelected = inventoryStackReady && Boolean(selectedInventory?.preferredSlotId);
+  const canUseSelected = inventoryStackReady && Boolean(selectedInventory?.consumePreview);
+  const inventorySelectionReason = selectedIds.inventory
+    ? 'The selected stack is no longer shown. Choose a current stack.'
+    : 'Select a carried stack to manage it.';
+  const equipReason = !selectedInventory
+    ? inventorySelectionReason
+    : !inventoryStackReady
+      ? 'This stack has no items available to equip.'
+      : selectedInventory.preferredSlotId
+        ? 'Equip moves one item to its currently supported slot; an occupied item returns to inventory.'
+        : 'No supported equipment slot for this item.';
+  const useReason = !selectedInventory
+    ? inventorySelectionReason
+    : !inventoryStackReady
+      ? 'This stack has no items available to use.'
+      : selectedInventory.consumePreview
+        ? 'Use consumes one item with its authored consume profile.'
+        : 'No authored consume profile for this item.';
   const inventoryMain = (
     <div className="panel-scroll h-full space-y-4 overflow-auto">
       {noticeBlock}
       <Card title="Inventory Controls" accent={accent}>
         <div className="space-y-4">
-          <div className="flex flex-wrap gap-2">
+          <div role="group" aria-label="Filter inventory by category" className="flex flex-wrap gap-2">
             {inventoryCategories.map((category) => (
               <button
                 key={category}
                 type="button"
                 onClick={() => setInventoryCategory(category)}
-                className={`rounded-full border px-3 py-1.5 text-sm transition ${
+                aria-pressed={inventoryCategory === category}
+                className={`rounded-full border px-3 py-1.5 text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200 ${
                   inventoryCategory === category ? 'border-white/20 bg-white/10 text-slate-50' : 'border-white/10 bg-white/5 text-slate-300 hover:bg-white/10'
                 }`}
               >
@@ -494,13 +549,14 @@ export function CharacterPanel({
               </button>
             ))}
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div role="group" aria-label="Sort inventory" className="flex flex-wrap gap-2">
             {(['default', 'name', 'quantity', 'category', 'favorites'] as CharacterInventorySort[]).map((sortId) => (
               <button
                 key={sortId}
                 type="button"
                 onClick={() => setInventorySort(sortId)}
-                className={`rounded-full border px-3 py-1.5 text-sm transition ${
+                aria-pressed={inventorySort === sortId}
+                className={`rounded-full border px-3 py-1.5 text-sm transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200 ${
                   inventorySort === sortId ? 'border-white/20 bg-white/10 text-slate-50' : 'border-white/10 bg-white/5 text-slate-300 hover:bg-white/10'
                 }`}
               >
@@ -511,6 +567,7 @@ export function CharacterPanel({
         </div>
       </Card>
       <Card title="Inventory Stacks" accent={accent}>
+        <p className="mb-4 text-sm text-slate-300">Showing {filteredInventoryEntries.length} of {inventoryEntries.length} carried stacks across bags and overflow.</p>
         <div className="space-y-3">
           {filteredInventoryEntries.length === 0 && (
             <div className="rounded-2xl border border-dashed border-white/10 px-4 py-8 text-center text-sm text-slate-400">
@@ -521,37 +578,42 @@ export function CharacterPanel({
             const isSelected = entry.id === selectedInventory?.id;
             const isPinned = pinnedIds.includes(entry.id);
             const isFavorite = favoriteItemKeys.has(entry.itemKey);
+            const hasItems = Number.isSafeInteger(entry.quantity) && entry.quantity > 0;
 
             return (
-              <button
+              <div
                 key={entry.id}
-                type="button"
-                onClick={() => setSelectedId('inventory', entry.id)}
-                className={`w-full rounded-[22px] border p-4 text-left transition ${
-                  isSelected ? 'border-white/20 bg-white/10' : 'border-white/8 bg-black/10 hover:border-white/15 hover:bg-white/6'
+                className={`w-full rounded-[18px] border p-3 transition ${
+                  isSelected ? 'border-amber-200/40 bg-amber-200/10' : 'border-white/10 bg-black/10 hover:border-white/20'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="text-base font-semibold text-slate-50">{entry.title}</div>
-                    <div className="mt-1 text-sm text-slate-400">{entry.containerLabel}</div>
-                  </div>
+                  <button
+                    type="button"
+                    aria-pressed={isSelected}
+                    aria-label={`Inspect ${entry.title}, quantity ${entry.quantity}, ${entry.containerLabel}`}
+                    onClick={() => setSelectedId('inventory', entry.id)}
+                    className="min-w-0 flex-1 text-left focus-visible:rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
+                  >
+                    <span className="block break-words text-base font-semibold text-slate-50">{entry.title}</span>
+                    <span className="mt-1 block text-sm text-slate-300">{entry.containerLabel} · Quantity {entry.quantity}</span>
+                  </button>
                   <div className="flex items-center gap-2">
                     <ItemStarButton active={isFavorite} onToggle={() => toggleFavorite(entry.itemKey, entry.title)} />
                     <FavoriteButton active={isPinned} onToggle={() => onTogglePin(entry.id)} />
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">x{entry.quantity}</span>
                   <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">{entry.category}</span>
-                  {entry.preferredSlotId && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('accent')}`}>Equipable</span>}
+                  {hasItems && entry.preferredSlotId && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('accent')}`}>Equip available</span>}
+                  {hasItems && entry.consumePreview && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('success')}`}>Use available</span>}
                   {entry.consumePreview?.highlightLabel && (
                     <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('success')}`}>
                       {entry.consumePreview.highlightLabel}
                     </span>
                   )}
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>
@@ -560,13 +622,16 @@ export function CharacterPanel({
         <ConsumableEffectPreview preview={selectedInventory.consumePreview} />
       )}
       <Card title="Item Actions" accent={accent}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="text-sm text-slate-300">
-            {selectedInventory ? `${selectedInventory.title} is selected.` : 'Select a stack to manage it.'}
+        <div className="space-y-3">
+          <div className="text-sm text-slate-200">
+            {selectedInventory
+              ? <><strong>{selectedInventory.title}</strong> · {selectedInventory.containerLabel} · Quantity {selectedInventory.quantity}</>
+              : inventorySelectionReason}
           </div>
           <div className="flex flex-wrap gap-3">
             <ActionButton
               label="Equip Item"
+              descriptionId="inventory-equip-reason"
               onClick={() => {
                 if (!selectedInventory) {
                   return;
@@ -575,7 +640,7 @@ export function CharacterPanel({
                 const result = equipInventoryItem(snapshot, selectedInventory);
                 applyNotice(result.snapshot, result.notice);
               }}
-              disabled={!selectedInventory?.preferredSlotId}
+              disabled={!canEquipSelected}
               tone="accent"
             />
             <ActionButton
@@ -585,6 +650,7 @@ export function CharacterPanel({
             />
             <ActionButton
               label="Use Consumable"
+              descriptionId="inventory-use-reason"
               onClick={() => {
                 if (!selectedInventory) {
                   return;
@@ -593,9 +659,13 @@ export function CharacterPanel({
                 const result = consumeInventoryItem(snapshot, selectedInventory);
                 applyNotice(result.snapshot, result.notice);
               }}
-              disabled={!selectedInventory || selectedInventory.category !== 'consumable'}
+              disabled={!canUseSelected}
               tone="warning"
             />
+          </div>
+          <div className="space-y-1 text-xs text-slate-400">
+            <p id="inventory-equip-reason">Equip: {equipReason}</p>
+            <p id="inventory-use-reason">Use: {useReason}</p>
           </div>
         </div>
       </Card>
