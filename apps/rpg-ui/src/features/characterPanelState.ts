@@ -12,6 +12,7 @@ import {
 } from '../../../../packages/engines/player-engine/src/index.js';
 import itemCatalog from '../../../../packages/content/base/items/items.json';
 import consumableProfileCatalog from '../../../../packages/content/base/items/consumable_profiles.json';
+import { resolveSupportedEquipmentSlot } from '../game-shell/equipmentSlotEligibility.js';
 import type {
   ConsumableEffectPreviewViewModel,
   DetailGroup,
@@ -99,21 +100,6 @@ const EQUIPMENT_SLOT_LABELS: Record<EquipmentSlotId, string> = {
   'slot.accessory.fingers': 'Fingers',
   'slot.accessory.waist': 'Accessory Waist',
   'slot.accessory.ankle': 'Ankle'
-};
-
-const EQUIPPABLE_ITEM_SLOT_HINTS: Partial<Record<string, EquipmentSlotId>> = {
-  wayfinder_knife: 'slot.weapon.right',
-  militia_sword: 'slot.weapon.right',
-  deck_hook: 'slot.weapon.right',
-  surveyor_cutlass: 'slot.weapon.right',
-  militia_brigandine: 'slot.armor.chest',
-  shipwright_harness: 'slot.armor.chest',
-  oilskin_coat: 'slot.armor.chest',
-  craft_gloves: 'slot.armor.hand',
-  apprentice_focus: 'slot.accessory.neck',
-  trade_ledger: 'slot.weapon.left',
-  field_chart_case: 'slot.accessory.waist',
-  waterproof_chart_case: 'slot.accessory.waist'
 };
 
 const ITEM_CONTENT_BY_ID = new Map(
@@ -221,55 +207,12 @@ function restoreStashedItem(flags: string[], itemId: string): EquippedItemRef | 
   }
 }
 
-function inferEquipmentSlot(itemKey: string): EquipmentSlotId | null {
-  const directMatch = EQUIPPABLE_ITEM_SLOT_HINTS[itemKey];
-
-  if (directMatch) {
-    return directMatch;
-  }
-
-  if (
-    itemKey.includes('sword') ||
-    itemKey.includes('knife') ||
-    itemKey.includes('cutlass') ||
-    itemKey.includes('hook')
-  ) {
-    return 'slot.weapon.right';
-  }
-
-  if (
-    itemKey.includes('brigandine') ||
-    itemKey.includes('coat') ||
-    itemKey.includes('harness')
-  ) {
-    return 'slot.armor.chest';
-  }
-
-  if (itemKey.includes('glove')) {
-    return 'slot.armor.hand';
-  }
-
-  if (itemKey.includes('focus')) {
-    return 'slot.accessory.neck';
-  }
-
-  if (itemKey.includes('ledger')) {
-    return 'slot.weapon.left';
-  }
-
-  if (itemKey.includes('case')) {
-    return 'slot.accessory.waist';
-  }
-
-  return null;
-}
-
-function getItemCategory(itemKey: string): Exclude<CharacterInventoryCategory, 'all'> {
+function getItemCategory(itemId: string, itemKey: string): Exclude<CharacterInventoryCategory, 'all'> {
   if (itemKey.includes('ledger')) {
     return 'tool';
   }
 
-  const hintedSlot = inferEquipmentSlot(itemKey);
+  const hintedSlot = resolveSupportedEquipmentSlot(itemId, itemKey);
 
   if (hintedSlot?.startsWith('slot.weapon')) {
     return 'weapon';
@@ -629,9 +572,9 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
   return [
     ...snapshot.playerState.inventory.bags.flatMap((bag, bagIndex) =>
       bag.stacks.map((stack, stackIndex) => {
-        const category = getItemCategory(stack.itemKey);
+        const category = getItemCategory(stack.itemId, stack.itemKey);
         const title = humanizeId(stack.itemKey);
-        const preferredSlotId = inferEquipmentSlot(stack.itemKey);
+        const preferredSlotId = resolveSupportedEquipmentSlot(stack.itemId, stack.itemKey);
         const consumePreview = resolveConsumablePreview(snapshot, stack.itemId);
 
         return {
@@ -675,9 +618,9 @@ export function buildInventoryEntries(snapshot: SaveSnapshot): InventoryEntry[] 
       })
     ),
     ...snapshot.playerState.inventory.overflow.map((stack, stackIndex) => {
-      const category = getItemCategory(stack.itemKey);
+      const category = getItemCategory(stack.itemId, stack.itemKey);
       const title = humanizeId(stack.itemKey);
-      const preferredSlotId = inferEquipmentSlot(stack.itemKey);
+      const preferredSlotId = resolveSupportedEquipmentSlot(stack.itemId, stack.itemKey);
       const consumePreview = resolveConsumablePreview(snapshot, stack.itemId);
 
       return {
@@ -956,13 +899,54 @@ export function equipInventoryItem(
   snapshot: SaveSnapshot;
   notice: CharacterPanelNotice;
 } {
-  if (!entry.preferredSlotId) {
+  const bag = entry.location === 'bag'
+    ? snapshot.playerState.inventory.bags[entry.containerIndex]
+    : null;
+  const stack = Number.isInteger(entry.stackIndex) && entry.stackIndex >= 0
+    ? entry.location === 'overflow'
+      ? snapshot.playerState.inventory.overflow[entry.stackIndex]
+      : bag?.stacks[entry.stackIndex]
+    : null;
+  const currentEntryId = entry.location === 'overflow'
+    ? `inventory.overflow.${stack?.itemId}.${entry.stackIndex}`
+    : `inventory.${bag?.id}.${stack?.itemId}.${entry.stackIndex}`;
+  if (
+    !stack || !Number.isSafeInteger(stack.quantity) || stack.quantity < 1 ||
+    stack.itemId !== entry.itemId || stack.itemKey !== entry.itemKey ||
+    stack.quantity !== entry.quantity || entry.id !== currentEntryId ||
+    (entry.location === 'bag' && bag?.id !== entry.containerId) ||
+    (entry.location === 'overflow' && (
+      entry.containerId !== 'overflow' || entry.containerIndex !== snapshot.playerState.inventory.bags.length
+    ))
+  ) {
+    return {
+      snapshot,
+      notice: {
+        tone: 'warning',
+        title: 'Inventory Changed',
+        detail: 'The selected stack no longer matches the active inventory.'
+      }
+    };
+  }
+
+  const slotId = resolveSupportedEquipmentSlot(stack.itemId, stack.itemKey);
+  if (!slotId) {
     return {
       snapshot,
       notice: {
         tone: 'warning',
         title: 'No Equip Mapping',
         detail: `${entry.title} does not yet have a stable equipment slot mapping in the current UI layer.`
+      }
+    };
+  }
+  if (entry.preferredSlotId !== slotId) {
+    return {
+      snapshot,
+      notice: {
+        tone: 'warning',
+        title: 'Inventory Changed',
+        detail: 'The selected item has a different current equipment slot.'
       }
     };
   }
@@ -1034,7 +1018,12 @@ export function equipInventoryItem(
   }
 
   const restoredItem = restoreStashedItem(nextFlags, selectedStack.itemId);
-  const equippedItem: EquippedItemRef = restoredItem ?? {
+  const matchingStash = restoredItem?.itemId === selectedStack.itemId &&
+    restoredItem.itemKey === selectedStack.itemKey &&
+    Number.isSafeInteger(restoredItem.quantity) && restoredItem.quantity > 0
+      ? restoredItem
+      : null;
+  const equippedItem: EquippedItemRef = matchingStash ? { ...matchingStash, quantity: 1 } : {
     itemId: selectedStack.itemId,
     itemKey: selectedStack.itemKey,
     quantity: 1
@@ -1042,9 +1031,9 @@ export function equipInventoryItem(
   const nextEquipment = {
     ...snapshot.playerState.equipment
   };
-  const displacedItem = nextEquipment[entry.preferredSlotId];
+  const displacedItem = nextEquipment[slotId];
 
-  nextEquipment[entry.preferredSlotId] = equippedItem;
+  nextEquipment[slotId] = equippedItem;
 
   let finalFlags = clearStashedItemFlags(nextFlags, selectedStack.itemId);
 
@@ -1069,7 +1058,7 @@ export function equipInventoryItem(
     notice: {
       tone: 'success',
       title: 'Item Equipped',
-      detail: `${entry.title} is now equipped in ${EQUIPMENT_SLOT_LABELS[entry.preferredSlotId]}.`
+      detail: `${entry.title} is now equipped in ${EQUIPMENT_SLOT_LABELS[slotId]}.`
     }
   };
 }
@@ -1081,7 +1070,8 @@ export function unequipItem(
   snapshot: SaveSnapshot;
   notice: CharacterPanelNotice;
 } {
-  if (!entry.item) {
+  const currentItem = snapshot.playerState.equipment[entry.slotId];
+  if (!currentItem) {
     return {
       snapshot,
       notice: {
@@ -1091,22 +1081,35 @@ export function unequipItem(
       }
     };
   }
+  if (
+    !entry.item || JSON.stringify(entry.item) !== JSON.stringify(currentItem) ||
+    !Number.isSafeInteger(currentItem.quantity) || currentItem.quantity < 1
+  ) {
+    return {
+      snapshot,
+      notice: {
+        tone: 'warning',
+        title: 'Equipment Changed',
+        detail: 'The selected slot no longer matches the active equipment.'
+      }
+    };
+  }
 
   const nextInventory = cloneInventory(snapshot);
   const inventoryResult = addStackToInventory(
     nextInventory.bags,
     nextInventory.overflow,
     {
-      itemId: entry.item.itemId,
-      itemKey: entry.item.itemKey,
-      quantity: entry.item.quantity
+      itemId: currentItem.itemId,
+      itemKey: currentItem.itemKey,
+      quantity: currentItem.quantity
     }
   );
   const nextEquipment = {
     ...snapshot.playerState.equipment,
     [entry.slotId]: null
   };
-  const nextFlags = stashItem(snapshot.sessionState.flags, entry.item);
+  const nextFlags = stashItem(snapshot.sessionState.flags, currentItem);
 
   nextInventory.bags = inventoryResult.bags;
   nextInventory.overflow = inventoryResult.overflow;
