@@ -5,7 +5,7 @@ Date: 2026-10-21. Status: **proposed independent follow-up; NOT the installed ac
 ## Exact inputs
 
 - [Draft implementation PR #7](https://github.com/vagabond1215/Lineage_Reforged/pull/7), head `codex/character-first-ui` at verified publication `06e9ff02311f93c3d9accb5da819d6ae1378ec28`, base `master` `f56229dde859b9374a54368bd8a8fd2a9872daa1`.
-- [First-slice evidence record](../dev/character-first-gameplay-ui-first-slice-record-2026-10-21.md) **exists on PR #7 branch, not PR #5**. It records `CHARACTER_UI_SLICE_IMPLEMENTED_PENDING_SELECTED_INTERACTION_REVIEW`.
+- [First-slice evidence record](https://github.com/vagabond1215/Lineage_Reforged/blob/codex/character-first-ui/docs/dev/character-first-gameplay-ui-first-slice-record-2026-10-21.md) **exists on PR #7 branch, not PR #5**. It records `CHARACTER_UI_SLICE_IMPLEMENTED_PENDING_SELECTED_INTERACTION_REVIEW`.
 - [Draft UI guidance PR #5](https://github.com/vagabond1215/Lineage_Reforged/pull/5), [User-directed Character-first UI decision](../design/gameplay-ui-redesign-character-priority-and-first-migration-decision-2026-10-21.md), [durable UI IA](../design/ui-information-architecture-boundary.md).
 - Draft [nutrition PR #6](https://github.com/vagabond1215/Lineage_Reforged/pull/6) is **held**, not a dependency to implement nutrient bars. No separate top-bar shell redesign in this acceptance run.
 
