@@ -25,7 +25,7 @@ The clean starting checkout was on `codex/human-metabolic-reserve-contract`; an 
 - Character keyboard index test: **1/1**. Arrow/Home/End bounds and ordinary Tab behavior are checked. The component additionally exposes `nav`/section labels, `aria-current`, visible focus styles and selected-section scroll behavior; no live keyboard or screen-reader session was available.
 - Focused attribute/equipment-profile/save-roundtrip tests: **43/43**. A later targeted attribute/navigation/save run: **8/8**. Node UI-config typecheck **pass**. App-local Vite production build **pass**, 255 client modules. `git diff --check` **pass**.
 - Broad UI typecheck remains failing at **136 diagnostics**, including **18** in CharacterPanel's existing indexed-list and optional-prop patterns; no diagnostic points to a newly introduced expression. It is not a green gate.
-- The available browser inventory had no selected game tab or native app. The in-app browser could not reach the local Vite server (`ERR_CONNECTION_TIMED_OUT`), so no selected Character → Skills → Equipment → Inventory operation, keyboard traversal, Save/load or restart result is claimed.
+- The initial browser inventory had no selected game tab, and the first in-app connection timed out. On the continuation pass, the in-app browser reached the local Vite app at `127.0.0.1:5173`; it displayed Account Login with existing accounts. Selecting `DEV12 selected 300a2b06` exposed a password field and Log In action. No credential was available, so authenticated Character → Skills → Equipment → Inventory operations, keyboard traversal, Save/load and restart remain unverified in a selected client. No account or saved state was changed.
 
 ## Disposition and next slice
 
