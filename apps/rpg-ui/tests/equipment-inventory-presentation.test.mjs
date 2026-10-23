@@ -12,7 +12,7 @@ test('Equipment and Inventory show selected owner state and truthful action reas
     originalConsoleError(...args);
   };
   try {
-    const [{ CharacterPanel, selectVisibleItem }, { GameSessionProvider }, { demoSnapshot }, { createDefaultAccountProfileState }, itemActions] = await Promise.all([
+    const [{ CharacterPanel, selectVisibleItem, selectVisibleInventoryItem }, { GameSessionProvider }, { demoSnapshot }, { createDefaultAccountProfileState }, itemActions] = await Promise.all([
       vite.ssrLoadModule('/src/features/CharacterPanel.tsx'),
       vite.ssrLoadModule('/src/runtime/GameSessionContext.tsx'),
       vite.ssrLoadModule('/src/runtime/demoSnapshot.ts'),
@@ -66,7 +66,7 @@ test('Equipment and Inventory show selected owner state and truthful action reas
       assert.match(inventory, /Use consumes one item with its authored consume profile/);
       assert.match(inventory, /role="group" aria-label="Filter inventory by category"/);
       assert.match(inventory, /role="group" aria-label="Sort inventory"/);
-      const useButton = inventory.match(/<button([^>]*)>Use Consumable<\/button>/)?.[1];
+      const useButton = inventory.match(/<button([^>]*)>Use Item<\/button>/)?.[1];
       assert.ok(useButton);
       assert.doesNotMatch(useButton, /\sdisabled(?:=|\s|$)/);
       assert.match(inventory, /Quantity 2/);
@@ -77,7 +77,7 @@ test('Equipment and Inventory show selected owner state and truthful action reas
       assert.match(arrows, /No supported equipment slot for this item/);
       assert.match(arrows, /No authored consume profile for this item/);
       assert.match(arrows.match(/<button([^>]*)>Equip Item<\/button>/)?.[1] ?? '', /\sdisabled(?:=|\s|$)/);
-      assert.match(arrows.match(/<button([^>]*)>Use Consumable<\/button>/)?.[1] ?? '', /\sdisabled(?:=|\s|$)/);
+      assert.match(arrows.match(/<button([^>]*)>Use Item<\/button>/)?.[1] ?? '', /\sdisabled(?:=|\s|$)/);
       const empty = renderSection('inventory', singleStack('item.bread_loaf', 'bread_loaf', 0));
       assert.match(empty, /This stack has no items available to use/);
       assert.doesNotMatch(empty, /Use available/);
@@ -98,7 +98,7 @@ test('Equipment and Inventory show selected owner state and truthful action reas
         const inventory = renderSection('inventory', snapshot);
         const equipButton = inventory.match(/<button([^>]*)>Equip Item<\/button>/)?.[1] ?? '';
         assert.equal(/\sdisabled(?:=|\s|$)/.test(equipButton), !entry.preferredSlotId);
-        assert.equal(inventory.includes('Equip available'), Boolean(entry.preferredSlotId));
+        assert.equal(inventory.includes('Supported equip slot'), Boolean(entry.preferredSlotId));
       }
     });
 
@@ -113,6 +113,30 @@ test('Equipment and Inventory show selected owner state and truthful action reas
       assert.equal(selectVisibleItem(itemActions.buildInventoryEntries(used.snapshot), bread.id), undefined);
       const roundTrip = JSON.parse(JSON.stringify(used.snapshot));
       assert.deepEqual(roundTrip.playerState.inventory, used.snapshot.playerState.inventory);
+    });
+
+    await t.test('same-item stack compaction invalidates the old actionable selection', () => {
+      for (const location of ['bag', 'overflow']) {
+        const snapshot = singleStack('item.breast_cut', 'breast_cut', 1, location);
+        const stacks = location === 'bag' ? snapshot.playerState.inventory.bags[0].stacks : snapshot.playerState.inventory.overflow;
+        stacks.push({ itemId: 'item.breast_cut', itemKey: 'breast_cut', quantity: 1 });
+        const [first, second] = itemActions.buildInventoryEntries(snapshot);
+        const selection = { id: first.id, inventory: snapshot.playerState.inventory };
+        assert.equal(selectVisibleInventoryItem([second, first], selection, snapshot.playerState.inventory)?.id, first.id,
+          `${location} sort order must not change selection`);
+        assert.equal(selectVisibleInventoryItem([second], selection, snapshot.playerState.inventory), undefined,
+          `${location} filter hiding the selection must disable actions`);
+        const favorited = itemActions.toggleFavoriteItem(snapshot, first.itemKey);
+        assert.equal(selectVisibleInventoryItem(itemActions.buildInventoryEntries(favorited), selection, favorited.playerState.inventory)?.id, first.id,
+          `${location} favorite change must keep the same inventory selection`);
+        const used = itemActions.consumeInventoryItem(snapshot, first);
+        const remaining = itemActions.buildInventoryEntries(used.snapshot);
+        assert.equal(remaining.length, 1);
+        assert.equal(remaining[0].id, first.id);
+        assert.notEqual(remaining[0].id, second.id);
+        assert.equal(selectVisibleInventoryItem(remaining, selection, used.snapshot.playerState.inventory), undefined,
+          `${location} compaction must invalidate the old selection`);
+      }
     });
   } finally {
     console.error = originalConsoleError;

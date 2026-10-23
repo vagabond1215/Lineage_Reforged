@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-22 — Equipment and Inventory Integration Hardening
+
+Unversioned UI support; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; development and game-version impact `none`. Master source `f56229dd`; PR #11 starting head `58f2634e`, stacked on PR #7 `8610260f`. Active DEV-0.7.2.13 combat prompt and route remain unchanged. The [focused record](equipment-inventory-integration-hardening-record-2026-10-22.md) contains exact reproduction, composition, screenshots and holds.
+
+### A. Files changed
+
+`CharacterPanel.tsx`, its focused presentation test, this output, current handoff, branch register, focused record and two controlled browser screenshots. No owner, shared contract, save schema, combat, nutrition or Game-version source changed.
+
+### B. Patch summary
+
+Same-item stack compaction reused the selected row ID and could silently target another stack. Inventory selection now binds to its inventory state and becomes inactive after inventory change until reselected. Equip badge and Use action labels were made owner-accurate. A separate direct stale-consume owner probe reproduced wrong-stack consumption; this PR does not change that owner.
+
+### C. Checks
+
+Pre-repair new regression failed; repaired stacked UI **9/9** (focused presentation **7/7**), composed UI **16/16**, composed owner/combat/SaveSnapshot **119/119**, Node UI typecheck and Vite build pass. Broad TypeScript remains red: master **137**, PR #7 **136**, repaired PR #11 **136**, composition **135**, zero new normalized signatures versus PR #7. `git diff --check` passes. Controlled browser widths 320, 375, 768 and 1440 showed no document overflow; 375×667 critical visible Character area **286px** with fixture controls hidden. Keyboard section routing, condition popup Escape/focus return, and a fixture Compass occupied-slot swap were observed. No authenticated selected campaign was available.
+
+### D. Risks / follow-up
+
+`EQUIPMENT_INVENTORY_SELECTED_INTERACTION_UNVERIFIED`; direct `consumeInventoryItem` stale-stack revalidation requires a separate owner repair. PRs #5/#7/#8/#9/#10/#11 remain draft/unmerged; no branch disposition changed. Review PR #11 after the owner gap is assigned and selected Equip/Use/Save/restart plus composite zoom checks are possible. Applicable FP-001/002/008/009/015/016 are documented in the focused record. Suggested commit: `fix(ui): invalidate changed inventory selection`.
+
 ## 2026-10-21 — DEV-0.7.2.12 Combat Skeleton Layer A Parent Re-Audit
 
 **DEV-0.7.2_NOT_READY; LAYER_A_RESULT_DISCLOSURE_FAILED; GAME_VERSION_NOT_READY.** Inspected clean fetched/pruned synchronized `master`/`origin/master` `008533e635a4b2e62977e738d2f11790169586fd`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.

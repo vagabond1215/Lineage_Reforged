@@ -30,6 +30,7 @@ import {
 import { matchesQuery, toneClasses } from '../utils';
 import type { ListItem } from '../types';
 import { getNextCharacterSectionIndex } from './characterSectionNavigation';
+import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
 
 type CharacterPanelProps = {
   accent: string;
@@ -117,6 +118,16 @@ export function selectVisibleItem<T extends { id: string }>(entries: T[], reques
   return requestedId ? entries.find((entry) => entry.id === requestedId) : entries[0];
 }
 
+type InventorySelection = { id: string; inventory: SaveSnapshot['playerState']['inventory'] };
+
+export function selectVisibleInventoryItem<T extends { id: string }>(
+  entries: T[],
+  selection: InventorySelection | null,
+  inventory: SaveSnapshot['playerState']['inventory']
+): T | undefined {
+  return selection?.inventory === inventory ? entries.find((entry) => entry.id === selection.id) : undefined;
+}
+
 export function CharacterPanel({
   accent,
   searchQuery,
@@ -128,6 +139,10 @@ export function CharacterPanel({
   const characterData = useUiViewModel().character;
   const [activeSection, setActiveSection] = useState(initialSection);
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({});
+  const [inventorySelection, setInventorySelection] = useState<InventorySelection | null>(() => {
+    const first = buildInventoryEntries(snapshot)[0];
+    return first ? { id: first.id, inventory: snapshot.playerState.inventory } : null;
+  });
   const [inventoryCategory, setInventoryCategory] = useState<CharacterInventoryCategory>('all');
   const [inventorySort, setInventorySort] = useState<CharacterInventorySort>('default');
   const [panelNotice, setPanelNotice] = useState<CharacterPanelNotice | null>(null);
@@ -233,7 +248,7 @@ export function CharacterPanel({
   const selectedAttribute = attributeItems.find((item) => item.id === selectedIds.attributes) ?? attributeItems[0];
   const selectedSkill = filteredSkillItems.find((item) => item.id === selectedIds.skills) ?? filteredSkillItems[0];
   const selectedEquipment = selectVisibleItem(filteredEquipmentEntries, selectedIds.equipment);
-  const selectedInventory = selectVisibleItem(filteredInventoryEntries, selectedIds.inventory);
+  const selectedInventory = selectVisibleInventoryItem(filteredInventoryEntries, inventorySelection, snapshot.playerState.inventory);
   const selectedTrait = filteredTraitItems.find((item) => item.id === selectedIds.traits) ?? filteredTraitItems[0];
   const selectedGeographicKnowledge =
     geographicKnowledgeItems.find((item) => item.id === selectedIds['geographic-knowledge']) ?? geographicKnowledgeItems[0];
@@ -512,8 +527,8 @@ export function CharacterPanel({
   const inventoryStackReady = Boolean(selectedInventory && Number.isSafeInteger(selectedInventory.quantity) && selectedInventory.quantity > 0);
   const canEquipSelected = inventoryStackReady && Boolean(selectedInventory?.preferredSlotId);
   const canUseSelected = inventoryStackReady && Boolean(selectedInventory?.consumePreview);
-  const inventorySelectionReason = selectedIds.inventory
-    ? 'The selected stack is no longer shown. Choose a current stack.'
+  const inventorySelectionReason = inventorySelection
+    ? 'Inventory changed or the selected stack is hidden. Choose a current stack.'
     : 'Select a carried stack to manage it.';
   const equipReason = !selectedInventory
     ? inventorySelectionReason
@@ -592,7 +607,7 @@ export function CharacterPanel({
                     type="button"
                     aria-pressed={isSelected}
                     aria-label={`Inspect ${entry.title}, quantity ${entry.quantity}, ${entry.containerLabel}`}
-                    onClick={() => setSelectedId('inventory', entry.id)}
+                    onClick={() => setInventorySelection({ id: entry.id, inventory: snapshot.playerState.inventory })}
                     className="min-w-0 flex-1 text-left focus-visible:rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
                   >
                     <span className="block break-words text-base font-semibold text-slate-50">{entry.title}</span>
@@ -605,7 +620,7 @@ export function CharacterPanel({
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-[11px] text-slate-300">{entry.category}</span>
-                  {hasItems && entry.preferredSlotId && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('accent')}`}>Equip available</span>}
+                  {hasItems && entry.preferredSlotId && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('accent')}`}>Supported equip slot</span>}
                   {hasItems && entry.consumePreview && <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('success')}`}>Use available</span>}
                   {entry.consumePreview?.highlightLabel && (
                     <span className={`rounded-full border px-2 py-1 text-[11px] ${toneClasses('success')}`}>
@@ -649,7 +664,7 @@ export function CharacterPanel({
               disabled={!selectedInventory}
             />
             <ActionButton
-              label="Use Consumable"
+              label="Use Item"
               descriptionId="inventory-use-reason"
               onClick={() => {
                 if (!selectedInventory) {
