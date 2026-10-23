@@ -12,7 +12,7 @@ test('Equipment and Inventory show selected owner state and truthful action reas
     originalConsoleError(...args);
   };
   try {
-    const [{ CharacterPanel, selectVisibleItem, selectVisibleInventoryItem }, { GameSessionProvider }, { demoSnapshot }, { createDefaultAccountProfileState }, itemActions] = await Promise.all([
+    const [{ CharacterPanel, inventorySelectionFor, selectVisibleItem, selectVisibleInventoryItem }, { GameSessionProvider }, { demoSnapshot }, { createDefaultAccountProfileState }, itemActions] = await Promise.all([
       vite.ssrLoadModule('/src/features/CharacterPanel.tsx'),
       vite.ssrLoadModule('/src/runtime/GameSessionContext.tsx'),
       vite.ssrLoadModule('/src/runtime/demoSnapshot.ts'),
@@ -121,7 +121,7 @@ test('Equipment and Inventory show selected owner state and truthful action reas
         const stacks = location === 'bag' ? snapshot.playerState.inventory.bags[0].stacks : snapshot.playerState.inventory.overflow;
         stacks.push({ itemId: 'item.breast_cut', itemKey: 'breast_cut', quantity: 1 });
         const [first, second] = itemActions.buildInventoryEntries(snapshot);
-        const selection = { id: first.id, inventory: snapshot.playerState.inventory };
+        const selection = inventorySelectionFor(first, snapshot.playerState.inventory);
         assert.equal(selectVisibleInventoryItem([second, first], selection, snapshot.playerState.inventory)?.id, first.id,
           `${location} sort order must not change selection`);
         assert.equal(selectVisibleInventoryItem([second], selection, snapshot.playerState.inventory), undefined,
