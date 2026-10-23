@@ -1,0 +1,9 @@
+# Compact landscape domain rail — 2026-10-23
+
+Unversioned UI presentation support. Source: PR #9 `codex/mobile-shell-usable-height` at `69215b6fa6b4bcc805363171541120645f365d8c`; implementation branch `codex/compact-landscape-domain-rail`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; development and Game-version impact: `none`. Active DEV-0.7.2.13 combat work is untouched.
+
+The six existing gameplay destinations use a 108px left rail in landscape, or 144px from 1024px width. Each remains a real focusable button with its existing action and active state. Portrait keeps the horizontal navigation. The compact rail may scroll vertically on exceptionally short viewports; no content or control is hidden. No gameplay owner, save schema or site deployment changes.
+
+Checks: isolated `mobile-shell-navigation.test.mjs` **1/1 pass**; disposable combined PR #14 + owner/UI draft checkout with this branch and the stacked top-resource branch **31/31 pass** across Character, Equipment, Inventory, shell, top bar and owner actions; Node UI typecheck **pass**; Vite production build **pass**. Broad UI TypeScript has **137/137** diagnostics versus clean PR #9 with no new normalized signature; disposable composition has **135/135** versus its prior combined baseline. `git diff --check` passes. These are source/rendering and controlled owner checks, not a measured browser viewport or authenticated selected-client acceptance. The existing selected-client hold remains.
+
+Disposition: retain as a draft stacked on PR #9. Review on the next UI integration pass with PRs #7–#14 and fresh viewport/focus checks. No existing PR was merged, retargeted or modified. Relevant guardrails: FP-001 (real shell caller), FP-002 (evidence class), FP-008 (semantic branch composition), FP-009 (exact source), FP-016 (responsive placement; live measurement still open).

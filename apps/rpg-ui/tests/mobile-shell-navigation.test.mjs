@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
+import { readFileSync } from 'node:fs';
 
 test('responsive shell retains the six keyboard-reachable gameplay domains and main panel', async () => {
   const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
@@ -23,6 +24,13 @@ test('responsive shell retains the six keyboard-reachable gameplay domains and m
     for (const id of ids) assert.match(html, new RegExp(`>${id}<`));
     assert.match(html, /<main id="active-gameplay-panel">Character workspace<\/main>/);
     assert.doesNotMatch(html, /aria-hidden="true"/);
+    assert.match(html, /class="gameplay-main-grid /);
+    assert.match(html, /class="gameplay-side-nav /);
+    const styles = readFileSync(new URL('../src/styles/mobile-shell.css', import.meta.url), 'utf8');
+    const landscape = styles.slice(styles.indexOf('@media (orientation: landscape)'));
+    assert.match(landscape, /\.gameplay-main-grid\s*\{[^}]*grid-template-columns:\s*108px minmax\(0, 1fr\)/s);
+    assert.match(landscape, /\.gameplay-domain-list\s*\{[^}]*flex-direction:\s*column/s);
+    assert.match(landscape, /\.gameplay-side-nav\s*\{[^}]*overflow-x:\s*hidden/s);
   } finally {
     await vite.close();
   }

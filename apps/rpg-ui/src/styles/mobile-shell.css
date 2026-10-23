@@ -41,3 +41,54 @@
     right: 0;
   }
 }
+
+/* Landscape keeps all six primary destinations in a compact left rail. */
+@media (orientation: landscape) {
+  .gameplay-main-grid {
+    grid-template-columns: 108px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .gameplay-side-nav {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .gameplay-domain-list {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.125rem;
+  }
+
+  .gameplay-domain-tooltip {
+    width: 100%;
+  }
+
+  .gameplay-domain-button {
+    padding: 0;
+  }
+
+  .gameplay-domain-content {
+    min-height: 2.25rem;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    padding: 0.25rem 0.375rem;
+    text-align: left;
+  }
+
+  .gameplay-domain-icon {
+    flex: none;
+  }
+
+  .gameplay-domain-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 1024px) {
+  .gameplay-main-grid {
+    grid-template-columns: 144px minmax(0, 1fr);
+  }
+}
