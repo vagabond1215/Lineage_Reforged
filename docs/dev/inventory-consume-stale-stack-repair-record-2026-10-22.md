@@ -3,7 +3,7 @@
 ## Scope and source
 
 - Repository: `vagabond1215/Lineage_Reforged`; isolated [draft PR #12](https://github.com/vagabond1215/Lineage_Reforged/pull/12) on `codex/inventory-consume-stale-guard` from draft PR #10 head `9f390e03a26011213dee53929da309f470adba62`.
-- Inspected `origin/master` `f56229dde859b9374a54368bd8a8fd2a9872daa1`, PR #7 `8610260f`, #8 `20825cce`, #9 `69215b6f`, #10 `9f390e03`, and #11 `2d140c4a`. All existing drafts and the DEV-0.7.2.13 combat route remain held and untouched.
+- Inspected `origin/master` `f56229dde859b9374a54368bd8a8fd2a9872daa1`, design PR #5 live head `1522bb2d` (its `c6da1e64..1522bb2d` delta is documentation-only owner/UI guidance), PR #7 `8610260f`, #8 `20825cce`, #9 `69215b6f`, #10 `9f390e03`, and #11 `2d140c4a`. All existing drafts and the DEV-0.7.2.13 combat route remain held and untouched.
 - Game `0.1.1-prealpha`; `INTEGRATED_LOOP`; no development or game-version advancement. This unversioned owner repair has development impact `supports_current_band` and game-version impact `none`.
 
 ## Reproduction and repair
