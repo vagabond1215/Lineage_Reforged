@@ -42,6 +42,9 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     const html = renderBar(normal);
     assert.doesNotMatch(html, /Condition: Stable|forged-meter|Carbs|Fat reserve|Protein reserve/);
     assert.equal((html.match(/role="meter"/g) ?? []).length, 3);
+    assert.doesNotMatch(html, /overflow-x-auto/, 'top resources must not introduce a horizontal scrollbar');
+    assert.match(html, /aria-label="Character resources"[^>]*><div[^>]*grid-template-columns:minmax\(0, 1fr\)/);
+    assert.match(html, /aria-label="Stamina">ST/);
     for (const meter of ownerMeters) {
       assert.match(html, new RegExp(`${meter.label}.*?${meter.current} / ${meter.max}`, 's'));
       assert.match(html, new RegExp(`aria-label="${meter.label}"`));

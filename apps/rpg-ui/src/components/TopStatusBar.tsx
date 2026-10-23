@@ -208,8 +208,8 @@ export function TopStatusBar({
             )}
           </div>
 
-          <div className="order-3 min-w-0 w-full overflow-x-auto pb-1 xl:order-none xl:flex-[1_1_36rem]" role="group" aria-label="Character resources">
-            <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+          <div className="order-3 min-w-0 w-full xl:order-none xl:flex-[1_1_36rem]" role="group" aria-label="Character resources">
+            <div className="grid min-w-0 grid-cols-1 gap-0.5" style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
               {meters.map((meter) => <TopResourceMeter key={meter.label} meter={meter} />)}
             </div>
           </div>
