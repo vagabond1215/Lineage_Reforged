@@ -1,6 +1,6 @@
 # Inventory exact-bag Equip/Consume owner repair — 2026-10-23
 
-**Repository:** `vagabond1215/Lineage_Reforged`. **Branch:** `codex/inventory-bag-exact-target-repair`, from draft PR #12 `7b6dccf592adbbef05361bb501fceb461dd1f5e5`; proposed stacked draft base `codex/inventory-consume-stale-guard`. **Run:** unversioned bounded owner support, development impact `supports_current_band`, Game-version impact `none`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`. Active DEV-0.7.2.13 combat prompt/output/handoff remain untouched.
+**Repository:** `vagabond1215/Lineage_Reforged`. **Branch:** [draft PR #13](https://github.com/vagabond1215/Lineage_Reforged/pull/13) on `codex/inventory-bag-exact-target-repair`, from draft PR #12 `7b6dccf592adbbef05361bb501fceb461dd1f5e5`; stacked base `codex/inventory-consume-stale-guard`. **Run:** unversioned bounded owner support, development impact `supports_current_band`, Game-version impact `none`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`. Active DEV-0.7.2.13 combat prompt/output/handoff remain untouched.
 
 ## Exact source and defect
 
