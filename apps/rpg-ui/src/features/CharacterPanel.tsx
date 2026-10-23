@@ -25,7 +25,8 @@ import {
   unequipItem,
   type CharacterInventoryCategory,
   type CharacterInventorySort,
-  type CharacterPanelNotice
+  type CharacterPanelNotice,
+  type InventoryEntry
 } from './characterPanelState';
 import { matchesQuery, toneClasses } from '../utils';
 import type { ListItem } from '../types';
@@ -118,14 +119,22 @@ export function selectVisibleItem<T extends { id: string }>(entries: T[], reques
   return requestedId ? entries.find((entry) => entry.id === requestedId) : entries[0];
 }
 
-type InventorySelection = { id: string; inventory: SaveSnapshot['playerState']['inventory'] };
+type InventorySelection = { key: string; inventory: SaveSnapshot['playerState']['inventory'] };
 
-export function selectVisibleInventoryItem<T extends { id: string }>(
+export function inventoryPresentationId(entry: Pick<InventoryEntry, 'id' | 'itemId' | 'itemKey' | 'location' | 'containerIndex' | 'stackIndex'>): string {
+  return JSON.stringify([entry.location, entry.containerIndex, entry.stackIndex, entry.itemId, entry.itemKey, entry.id]);
+}
+
+export function inventorySelectionFor(entry: InventoryEntry, inventory: SaveSnapshot['playerState']['inventory']): InventorySelection {
+  return { key: inventoryPresentationId(entry), inventory };
+}
+
+export function selectVisibleInventoryItem<T extends InventoryEntry>(
   entries: T[],
   selection: InventorySelection | null,
   inventory: SaveSnapshot['playerState']['inventory']
 ): T | undefined {
-  return selection?.inventory === inventory ? entries.find((entry) => entry.id === selection.id) : undefined;
+  return selection?.inventory === inventory ? entries.find((entry) => inventoryPresentationId(entry) === selection.key) : undefined;
 }
 
 export function CharacterPanel({
@@ -141,7 +150,7 @@ export function CharacterPanel({
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({});
   const [inventorySelection, setInventorySelection] = useState<InventorySelection | null>(() => {
     const first = buildInventoryEntries(snapshot)[0];
-    return first ? { id: first.id, inventory: snapshot.playerState.inventory } : null;
+    return first ? inventorySelectionFor(first, snapshot.playerState.inventory) : null;
   });
   const [inventoryCategory, setInventoryCategory] = useState<CharacterInventoryCategory>('all');
   const [inventorySort, setInventorySort] = useState<CharacterInventorySort>('default');
@@ -590,14 +599,17 @@ export function CharacterPanel({
             </div>
           )}
           {filteredInventoryEntries.map((entry) => {
-            const isSelected = entry.id === selectedInventory?.id;
-            const isPinned = pinnedIds.includes(entry.id);
+            const presentationId = inventoryPresentationId(entry);
+            const isSelected = presentationId === inventorySelection?.key && inventorySelection.inventory === snapshot.playerState.inventory;
+            const pinIdIsAmbiguous = inventoryEntries.some((other) => other !== entry && other.id === entry.id);
+            const isPinned = !pinIdIsAmbiguous && pinnedIds.includes(entry.id);
             const isFavorite = favoriteItemKeys.has(entry.itemKey);
             const hasItems = Number.isSafeInteger(entry.quantity) && entry.quantity > 0;
+            const sourceLabel = entry.location === 'bag' ? `${entry.containerLabel}, bag ${entry.containerIndex + 1}` : entry.containerLabel;
 
             return (
               <div
-                key={entry.id}
+                key={presentationId}
                 className={`w-full rounded-[18px] border p-3 transition ${
                   isSelected ? 'border-amber-200/40 bg-amber-200/10' : 'border-white/10 bg-black/10 hover:border-white/20'
                 }`}
@@ -606,16 +618,18 @@ export function CharacterPanel({
                   <button
                     type="button"
                     aria-pressed={isSelected}
-                    aria-label={`Inspect ${entry.title}, quantity ${entry.quantity}, ${entry.containerLabel}`}
-                    onClick={() => setInventorySelection({ id: entry.id, inventory: snapshot.playerState.inventory })}
+                    aria-label={`Inspect ${entry.title}, quantity ${entry.quantity}, ${sourceLabel}`}
+                    onClick={() => setInventorySelection(inventorySelectionFor(entry, snapshot.playerState.inventory))}
                     className="min-w-0 flex-1 text-left focus-visible:rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
                   >
                     <span className="block break-words text-base font-semibold text-slate-50">{entry.title}</span>
-                    <span className="mt-1 block text-sm text-slate-300">{entry.containerLabel} · Quantity {entry.quantity}</span>
+                    <span className="mt-1 block text-sm text-slate-300">{sourceLabel} · Quantity {entry.quantity}</span>
                   </button>
                   <div className="flex items-center gap-2">
                     <ItemStarButton active={isFavorite} onToggle={() => toggleFavorite(entry.itemKey, entry.title)} />
-                    <FavoriteButton active={isPinned} onToggle={() => onTogglePin(entry.id)} />
+                    {pinIdIsAmbiguous
+                      ? <button type="button" disabled aria-label={`Pin unavailable for ${sourceLabel}: shared bag ID`} title="Pin unavailable: these bags share a stored ID" className="rounded-full border border-white/10 p-2 text-slate-500">Pin</button>
+                      : <FavoriteButton active={isPinned} onToggle={() => onTogglePin(entry.id)} />}
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -640,7 +654,7 @@ export function CharacterPanel({
         <div className="space-y-3">
           <div className="text-sm text-slate-200">
             {selectedInventory
-              ? <><strong>{selectedInventory.title}</strong> · {selectedInventory.containerLabel} · Quantity {selectedInventory.quantity}</>
+              ? <><strong>{selectedInventory.title}</strong> · {selectedInventory.containerLabel}{selectedInventory.location === 'bag' ? `, bag ${selectedInventory.containerIndex + 1}` : ''} · Quantity {selectedInventory.quantity}</>
               : inventorySelectionReason}
           </div>
           <div className="flex flex-wrap gap-3">
