@@ -980,10 +980,14 @@ export function equipInventoryItem(
       nextInventory.overflow.splice(entry.stackIndex, 1);
     }
   } else {
-    const bag = nextInventory.bags.find((candidate) => candidate.id === entry.containerId);
+    const bag = nextInventory.bags[entry.containerIndex];
     const stack = bag?.stacks[entry.stackIndex];
 
-    if (!bag || !stack) {
+    if (
+      !bag || bag.id !== entry.containerId || !stack ||
+      stack.itemId !== entry.itemId || stack.itemKey !== entry.itemKey ||
+      !Number.isSafeInteger(stack.quantity) || stack.quantity < 1 || stack.quantity !== entry.quantity
+    ) {
       return {
         snapshot,
         notice: {
@@ -1215,10 +1219,14 @@ export function consumeInventoryItem(
       nextInventory.overflow.splice(entry.stackIndex, 1);
     }
   } else {
-    const bag = nextInventory.bags.find((candidate) => candidate.id === entry.containerId);
+    const bag = nextInventory.bags[entry.containerIndex];
     const stack = bag?.stacks[entry.stackIndex];
 
-    if (!bag || !stack) {
+    if (
+      !bag || bag.id !== entry.containerId || !stack ||
+      stack.itemId !== entry.itemId || stack.itemKey !== entry.itemKey ||
+      !Number.isSafeInteger(stack.quantity) || stack.quantity < 1 || stack.quantity !== entry.quantity
+    ) {
       return {
         snapshot,
         notice: {
