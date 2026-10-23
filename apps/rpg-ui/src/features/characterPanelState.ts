@@ -103,7 +103,7 @@ const EQUIPMENT_SLOT_LABELS: Record<EquipmentSlotId, string> = {
 };
 
 const ITEM_CONTENT_BY_ID = new Map(
-  (itemCatalog.records as Array<{ id: string; tags?: string[]; consumableProfileId?: string }>).map((record) => [
+  (itemCatalog.records as Array<{ id: string; itemKey: string; tags?: string[]; consumableProfileId?: string }>).map((record) => [
     record.id,
     record
   ])
@@ -1131,8 +1131,42 @@ export function consumeInventoryItem(
   snapshot: SaveSnapshot;
   notice: CharacterPanelNotice;
 } {
-  const beforeSummary = createBodyStatePresentationSnapshot(snapshot);
+  const inventory = snapshot.playerState.inventory;
+  const validIndex = Number.isSafeInteger(entry.stackIndex) && entry.stackIndex >= 0;
+  const bag = entry.location === 'bag' && Number.isSafeInteger(entry.containerIndex) && entry.containerIndex >= 0
+    ? inventory.bags[entry.containerIndex]
+    : null;
+  const stack = validIndex
+    ? entry.location === 'bag'
+      ? bag?.stacks[entry.stackIndex]
+      : entry.location === 'overflow'
+        ? inventory.overflow[entry.stackIndex]
+        : null
+    : null;
+  const currentEntryId = entry.location === 'overflow'
+    ? `inventory.overflow.${stack?.itemId}.${entry.stackIndex}`
+    : `inventory.${bag?.id}.${stack?.itemId}.${entry.stackIndex}`;
   const itemRecord = ITEM_CONTENT_BY_ID.get(entry.itemId);
+
+  if (
+    !stack || !Number.isSafeInteger(stack.quantity) || stack.quantity < 1 ||
+    stack.itemId !== entry.itemId || stack.itemKey !== entry.itemKey ||
+    stack.quantity !== entry.quantity || entry.id !== currentEntryId ||
+    itemRecord?.itemKey !== stack.itemKey ||
+    (entry.location === 'bag' && bag?.id !== entry.containerId) ||
+    (entry.location === 'overflow' && (
+      entry.containerId !== 'overflow' || entry.containerIndex !== inventory.bags.length
+    ))
+  ) {
+    return {
+      snapshot,
+      notice: {
+        tone: 'warning',
+        title: 'Inventory Changed',
+        detail: 'The selected stack no longer matches the active inventory.'
+      }
+    };
+  }
 
   if (!itemRecord?.consumableProfileId) {
     return {
@@ -1158,6 +1192,7 @@ export function consumeInventoryItem(
     };
   }
 
+  const beforeSummary = createBodyStatePresentationSnapshot(snapshot);
   const nextInventory = cloneInventory(snapshot);
 
   if (entry.location === 'overflow') {
