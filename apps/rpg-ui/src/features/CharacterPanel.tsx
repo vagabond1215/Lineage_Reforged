@@ -1,14 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { ConsumableEffectPreview } from '../components/body-state/ConsumableEffectPreview';
-import { ReadinessCard } from '../components/body-state/ReadinessCard';
 import { FavoriteButton } from '../components/ui/FavoriteButton';
-import { PanelLayout } from '../components/layout/PanelLayout';
 import { Card } from '../components/ui/Card';
 import { PanelDetailStack } from '../components/ui/PanelDetailStack';
 import { SelectionList } from '../components/ui/SelectionList';
-import { SidebarMenu } from '../components/ui/SidebarMenu';
 import { Tooltip } from '../components/ui/Tooltip';
 import { Icon } from '../components/icons';
+import { CHARACTER_ATTRIBUTE_ORDER, getCharacterAttributePresentation } from '../game-shell/characterAttributes';
+import { backstoryOptions } from '../game-shell/characterCreationCatalog';
 import { useGameSession } from '../runtime/GameSessionContext';
 import { useUiViewModel } from '../runtime/UiViewModelContext';
 import {
@@ -21,7 +20,6 @@ import {
   equipInventoryItem,
   getFavoriteItemKeys,
   getInventoryCategories,
-  getTrackedSkill,
   sortInventoryEntries,
   toggleFavoriteItem,
   unequipItem,
@@ -31,6 +29,7 @@ import {
 } from './characterPanelState';
 import { matchesQuery, toneClasses } from '../utils';
 import type { ListItem } from '../types';
+import { getNextCharacterSectionIndex } from './characterSectionNavigation';
 
 type CharacterPanelProps = {
   accent: string;
@@ -108,28 +107,6 @@ function toDetail(item: ListItem | undefined) {
   };
 }
 
-function renderMetricTooltip(metric: { tooltip?: { title: string; body: string; footer?: string } }) {
-  if (!metric.tooltip) {
-    return null;
-  }
-
-  return (
-    <span className="block text-left">
-      <span className="font-semibold text-[color:var(--color-text-strong)]">
-        {metric.tooltip.title}
-      </span>
-      <span className="mt-1 block text-[color:var(--color-text-soft)]">
-        {metric.tooltip.body}
-      </span>
-      {metric.tooltip.footer && (
-        <span className="mt-2 block text-[color:var(--color-muted-strong)]">
-          {metric.tooltip.footer}
-        </span>
-      )}
-    </span>
-  );
-}
-
 export function CharacterPanel({
   accent,
   searchQuery,
@@ -143,13 +120,16 @@ export function CharacterPanel({
   const [inventoryCategory, setInventoryCategory] = useState<CharacterInventoryCategory>('all');
   const [inventorySort, setInventorySort] = useState<CharacterInventorySort>('default');
   const [panelNotice, setPanelNotice] = useState<CharacterPanelNotice | null>(null);
+  const [overviewAttributeId, setOverviewAttributeId] = useState<string | null>(null);
+  const [detailOpen, setDetailOpen] = useState(true);
+  const sectionButtons = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const skillItems = useMemo(() => buildSkillItems(snapshot), [snapshot]);
   const equipmentEntries = useMemo(() => buildEquipmentEntries(snapshot), [snapshot]);
   const inventoryEntries = useMemo(() => buildInventoryEntries(snapshot), [snapshot]);
   const traitItems = useMemo(() => buildTraitEffectItems(snapshot), [snapshot]);
   const favoriteItemKeys = useMemo(() => getFavoriteItemKeys(snapshot), [snapshot]);
-  const trackedSkillId = getTrackedSkill(snapshot);
+
 
   const sectionItems = useMemo(
     () =>
@@ -176,6 +156,26 @@ export function CharacterPanel({
       traitItems.length
     ]
   );
+
+  useEffect(() => {
+    sectionButtons.current[activeSection]?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
+  }, [activeSection]);
+
+  const changeSection = (id: string) => {
+    setActiveSection(id);
+    setPanelNotice(null);
+    sectionButtons.current[id]?.focus();
+  };
+
+  const handleSectionKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    const nextIndex = getNextCharacterSectionIndex(event.key, index, sectionItems.length);
+    if (nextIndex === null) return;
+    event.preventDefault();
+    const next = sectionItems[nextIndex];
+    if (next) {
+      changeSection(next.id);
+    }
+  };
 
   const attributeItems = characterData.lists.attributes.filter((item) =>
     matchesQuery(searchQuery, item.title, item.subtitle, item.tags, item.detailSummary)
@@ -227,7 +227,7 @@ export function CharacterPanel({
 
   const primaryDetail =
     activeSection === 'overview'
-      ? characterData.overviewDetail
+      ? undefined
       : activeSection === 'attributes'
         ? toDetail(selectedAttribute)
         : activeSection === 'skills'
@@ -287,76 +287,98 @@ export function CharacterPanel({
     </div>
   );
 
+  const backstoryId = snapshot.playerState.coreData.backstoryId;
+  const background = backstoryOptions.find((option) => option.id === backstoryId)?.label;
+  const equippedTitle = snapshot.playerState.titles.find((title) => title.equipped);
+  const otherTitles = snapshot.playerState.titles.filter((title) => !title.equipped);
+  const leadingSkills = snapshot.playerState.skills
+    .map((skill) => ({ skill, item: skillItems.find((item) => item.id === skill.id) }))
+    .filter(({ skill, item }) => skill.rank > 0 && item)
+    .sort((left, right) => right.skill.rank - left.skill.rank)
+    .slice(0, 4);
+  const shownGear = equipmentEntries.filter((entry) => entry.item).slice(0, 4);
+  const allAttributeItems = characterData.lists.attributes ?? [];
+  const overviewAttribute = allAttributeItems.find((item) => item.id === overviewAttributeId);
+
   const overviewMain = (
-    <div className="panel-scroll h-full space-y-4 overflow-auto">
+    <div className="panel-scroll h-full space-y-4 overflow-auto pr-1">
       {noticeBlock}
-      <ReadinessCard
-        readiness={characterData.readinessCard}
-        projection={characterData.recoveryProjection}
-      />
-      <Card title="Progression Snapshot" accent={accent}>
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          {characterData.overviewMetrics.map((metric) => (
-            <div key={metric.id} className="rounded-[22px] border border-white/8 bg-black/10 p-4">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">{metric.label}</div>
-              <div className="mt-2 text-2xl text-slate-50">{metric.value}</div>
-              <div className="mt-2 text-sm text-slate-400">{metric.detail}</div>
-            </div>
-          ))}
+      <Card title="Character" accent={accent}>
+        <h2 className="text-2xl font-semibold text-amber-50">{snapshot.playerState.coreData.playerName}</h2>
+        <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-300">
+          {snapshot.playerState.originProfile.lineageLabel && <span>Ancestry: {snapshot.playerState.originProfile.lineageLabel}</span>}
+          {background && <span>Background: {background}</span>}
+          {equippedTitle && <span>Title: {equippedTitle.name}</span>}
         </div>
       </Card>
-      <Card title="Core Stats" accent={accent}>
-        <div className="rounded-[22px] border border-white/8 bg-black/10">
-          {characterData.coreStats.map((metric) => (
-            <div
-              key={metric.id}
-              className="flex items-start justify-between gap-4 border-b border-white/8 px-4 py-3 last:border-b-0"
-            >
-              <div>
-                <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                  {metric.tooltip ? (
-                    <Tooltip
-                      content={renderMetricTooltip(metric)}
-                      panelClassName="w-72 max-w-[min(18rem,calc(100vw-2rem))] text-left leading-5"
-                      portal
-                      align="start"
-                    >
-                      <span className="cursor-help">{metric.label}</span>
-                    </Tooltip>
-                  ) : (
-                    metric.label
-                  )}
-                </div>
-                <div className="mt-1 text-sm text-slate-400">{metric.detail}</div>
-              </div>
-              <div className="text-xl font-semibold text-slate-50">{metric.value}</div>
-            </div>
-          ))}
+      <Card title="Attributes" accent={accent}>
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {CHARACTER_ATTRIBUTE_ORDER.map((key) => {
+            const presentation = getCharacterAttributePresentation(key);
+            const item = allAttributeItems.find((entry) => entry.id === `attr.${key.toLowerCase()}`);
+            const adjustment = snapshot.playerState.originProfile.attributeAdjustments[key] ?? 0;
+            return (
+              <button
+                key={key}
+                type="button"
+                aria-expanded={overviewAttributeId === item?.id}
+                aria-controls={overviewAttributeId === item?.id ? 'character-attribute-detail' : undefined}
+                onClick={() => setOverviewAttributeId(overviewAttributeId === item?.id ? null : item?.id ?? null)}
+                className="rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-left hover:border-amber-200/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
+              >
+                <span className="flex items-baseline justify-between gap-2">
+                  <span className="font-semibold text-amber-100">{key} <span className="font-normal text-slate-300">{presentation.fullName}</span></span>
+                  <span className="text-xl font-semibold text-slate-50">{snapshot.playerState.attributes[key]}</span>
+                </span>
+                {adjustment !== 0 && <span className="text-xs text-amber-200">Origin {adjustment > 0 ? '+' : ''}{adjustment}</span>}
+              </button>
+            );
+          })}
         </div>
-      </Card>
-      <div className="grid gap-4 xl:grid-cols-2">
-        <Card title="Active Effects" accent={accent}>
-          <div className="flex flex-wrap gap-2">
-            {characterData.activeEffects.map((effect) => (
-              <span key={effect} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-slate-200">
-                {effect}
-              </span>
+        {overviewAttribute && (
+          <div id="character-attribute-detail" role="region" aria-label={`${overviewAttribute.title} detail`} className="mt-3 rounded-xl border border-white/10 bg-black/10 p-3 text-sm text-slate-300">
+            <h3 className="font-semibold text-slate-50">{overviewAttribute.detailTitle}</h3>
+            <p className="mt-1">{overviewAttribute.detailSummary}</p>
+            {overviewAttribute.detailGroups?.map((group) => (
+              <dl key={group.title} className="mt-2 grid gap-x-4 gap-y-1 sm:grid-cols-2">
+                {group.entries.map((entry) => (
+                  <div key={entry.label}><dt className="text-slate-400">{entry.label}</dt><dd>{entry.value}</dd></div>
+                ))}
+              </dl>
             ))}
           </div>
+        )}
+      </Card>
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card title="Developed Skills" accent={accent}>
+          {leadingSkills.length === 0 ? <p className="text-sm text-slate-400">No developed skills yet.</p> : (
+            <ul className="space-y-2 text-sm text-slate-200">
+              {leadingSkills.map(({ skill, item }) => <li key={skill.id} className="flex justify-between gap-3"><span>{item?.title}</span><span>Rank {skill.rank}</span></li>)}
+            </ul>
+          )}
+          <button type="button" onClick={() => changeSection('skills')} className="mt-3 text-sm text-amber-200 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">View Skills</button>
         </Card>
-        <Card title="Field Shortcuts" accent={accent}>
-          <div className="grid gap-3 md:grid-cols-2">
-            <div className="rounded-[20px] border border-white/10 bg-black/10 p-3 text-sm text-slate-300">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Tracked Skill</div>
-              <div className="mt-2 text-base text-slate-50">{trackedSkillId ? trackedSkillId.split('.').at(-1)?.replace(/_/g, ' ') : 'None'}</div>
-            </div>
-            <div className="rounded-[20px] border border-white/10 bg-black/10 p-3 text-sm text-slate-300">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-slate-500">Favorite Items</div>
-              <div className="mt-2 text-base text-slate-50">{favoriteItemKeys.size}</div>
-            </div>
+        <Card title="Echo & Growth" accent={accent}>
+          <div className="grid grid-cols-2 gap-3 text-sm text-slate-300">
+            <div><span className="block text-slate-400">Echo Level</span><strong className="text-xl text-slate-50">{snapshot.playerState.progression.level}</strong></div>
+            <div><span className="block text-slate-400">Resource Growth</span><strong className="text-xl text-slate-50">{snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel}</strong></div>
           </div>
+          <p className="mt-2 text-sm text-slate-400">Echo adjusted {snapshot.playerState.progression.echo.echoAdjusted.toFixed(2)}</p>
         </Card>
       </div>
+      {shownGear.length > 0 && (
+        <Card title="Equipped Gear" accent={accent}>
+          <ul className="grid gap-2 text-sm text-slate-200 sm:grid-cols-2">
+            {shownGear.map((entry) => <li key={entry.id}><span className="text-slate-400">{entry.slotLabel}:</span> {entry.itemTitle}</li>)}
+          </ul>
+          <button type="button" onClick={() => changeSection('equipment')} className="mt-3 text-sm text-amber-200 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">View Equipment</button>
+        </Card>
+      )}
+      {otherTitles.length > 0 && (
+        <Card title="Other Earned Titles" accent={accent}>
+          <p className="text-sm text-slate-200">{otherTitles.slice(0, 3).map((title) => title.name).join(' · ')}</p>
+        </Card>
+      )}
     </div>
   );
 
@@ -602,29 +624,52 @@ export function CharacterPanel({
                   : listSection('Discoveries', discoveryItems, selectedDiscovery?.id, 'discoveries', 'No discoveries match the active search.');
 
   return (
-    <PanelLayout
-      leftSidebar={
-        <SidebarMenu
-          title="Character"
-          items={sectionItems}
-          activeId={activeSection}
-          onChange={(id) => {
-            setActiveSection(id);
-            setPanelNotice(null);
-          }}
-          accent={accent}
-        />
-      }
-      mainContent={mainContent}
-      detailPanel={
-        <PanelDetailStack
-          accent={accent}
-          primary={primaryDetail}
-          sectionDetail={characterData.windowDetails[activeSection]}
-          emptyTitle="Details"
-          emptyMessage="Choose a character record to inspect."
-        />
-      }
-    />
+    <div className="flex h-full min-h-0 flex-col gap-3">
+      <nav aria-label="Character sections" className="min-w-0 shrink-0 rounded-xl border border-white/10 bg-black/20 px-2 py-2">
+        <div className="panel-scroll flex gap-1 overflow-x-auto whitespace-nowrap pb-1" aria-label="Scroll horizontally for more Character sections">
+          {sectionItems.map((item, index) => (
+            <button
+              key={item.id}
+              ref={(element) => { sectionButtons.current[item.id] = element; }}
+              type="button"
+              aria-current={activeSection === item.id ? 'page' : undefined}
+              aria-controls="character-section-content"
+              onClick={() => changeSection(item.id)}
+              onKeyDown={(event) => handleSectionKeyDown(event, index)}
+              title={item.description}
+              className={`shrink-0 rounded-lg px-3 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200 ${activeSection === item.id ? 'bg-amber-200/15 text-amber-50' : 'text-slate-300 hover:bg-white/10 hover:text-slate-50'}`}
+            >
+              {item.label}{typeof item.count === 'number' && <span className="ml-2 text-xs text-slate-400">{item.count}</span>}
+            </button>
+          ))}
+        </div>
+      </nav>
+      <div className="panel-scroll relative min-h-0 flex-1 overflow-y-auto pr-7 xl:overflow-visible">
+        <div className={`grid min-h-full min-w-0 gap-4 xl:h-full ${activeSection !== 'overview' && detailOpen ? 'xl:grid-cols-[minmax(0,1fr)_320px]' : ''}`}>
+          <section id="character-section-content" aria-label={`${sectionItems.find((item) => item.id === activeSection)?.label ?? 'Character'} section`} className={`min-w-0 ${activeSection === 'overview' ? 'min-h-[20rem] xl:min-h-0' : 'h-[min(60vh,36rem)] xl:h-full'}`}>{mainContent}</section>
+          {activeSection !== 'overview' && detailOpen && (
+            <div className="h-[min(35vh,20rem)] min-w-0 xl:h-full">
+              <PanelDetailStack
+                accent={accent}
+                primary={primaryDetail}
+                sectionDetail={characterData.windowDetails[activeSection]}
+                emptyTitle="Details"
+                emptyMessage="Choose a character record to inspect."
+              />
+            </div>
+          )}
+        </div>
+        {activeSection !== 'overview' && (
+          <button
+            type="button"
+            onClick={() => setDetailOpen((current) => !current)}
+            className="forged-icon-button absolute right-0 top-1/2 z-10 -translate-y-1/2 p-2.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
+            aria-label={detailOpen ? 'Hide information pane' : 'Show information pane'}
+          >
+            <Icon name="info" className="h-5 w-5" />
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
