@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-24 — Dismissible notices across the active Epoch app
+
+**Run:** unversioned UI support from `master` `4d128c65`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development-milestone and game-version impacts `none`. DEV-0.7.2.13 remains parked. [Focused record](dismissible-notices-all-screens-2026-10-24.md).
+
+### A. Files changed
+
+`EpochApp`, `InGameShell`, shared `NoticeToast`, focused notice test and this focused/coordination handoff.
+
+### B. Patch summary
+
+Account, menu, creator, load and settings notices now use the same eight-second in-page popup as gameplay notices. Hover/focus pauses expiry; explicit timeout and persistence are honored. The saving badge no longer overlaps the popup. Existing notice owner/reducer and gameplay state are unchanged.
+
+### C. Tests and checks run
+
+Focused UI 34/34, Node UI typecheck and Vite build pass. Broad TypeScript remains at 117 prior-baseline diagnostics with none in touched files. `git diff --check` passes. FP-001/002/009/016 applied as described in the focused record.
+
+### D. Risks / follow-up notes
+
+Local browser route timed out; hosted app reaches Account Login, so authenticated selected notice interactions and Save/restart remain held. Twelve open PRs #5–#16 retain their prior dispositions; no branch action is due. Suggested commit: `ui: use timed notice popups across Epoch screens`. Next bounded review: selected notice timing and keyboard behavior when authorized access exists; no new milestone or Game-version decision.
+
 ## 2026-10-24 — In-game notice toast and marked nutrition layout preview
 
 **Run:** unversioned UI presentation support on `master` from `5d9ad83b`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development-milestone and game-version impacts `none`. DEV-0.7.2.13 stays parked. [Focused record](in-game-notice-and-nutrition-preview-2026-10-24.md).

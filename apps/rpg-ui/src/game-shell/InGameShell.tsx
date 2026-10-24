@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { startTransition, useEffect, useRef, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import type {
   AccountProfileState,
   SaveSnapshot
@@ -19,7 +19,7 @@ import { WorldPanel } from '../features/WorldPanel';
 import { GameSessionProvider, useGameSession } from '../runtime/GameSessionContext';
 import type { TabId } from '../types';
 import { InGameSaveControls } from './components/InGameSaveControls';
-import { NoticeBanner } from './components/NoticeBanner';
+import { NoticeToast } from './components/NoticeToast';
 import type { GameShellNotice, SaveSlotId, SaveSlotSummary } from './state.js';
 
 type InGameShellProps = {
@@ -46,14 +46,6 @@ type InGameShellContentProps = Omit<
   'accountProfile' | 'snapshot' | 'campaignSessionControl' | 'onSnapshotChange'
 >;
 
-export function getInGameNoticeAutoDismissMs(notice: GameShellNotice): number | null {
-  const requested = notice.autoDismissMs;
-  if (requested === null) return null;
-  return typeof requested === 'number' && Number.isFinite(requested) && requested > 0
-    ? requested
-    : 8000;
-}
-
 function InGameShellContent({
   slots,
   activeSlotId,
@@ -78,10 +70,7 @@ function InGameShellContent({
   const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
   const activeNotice = notice ?? bodyStatePresentation.toast;
   const dismissActiveNotice = notice ? onDismissNotice : dismissBodyStateToast;
-  const dismissActiveNoticeRef = useRef(dismissActiveNotice);
-  dismissActiveNoticeRef.current = dismissActiveNotice;
   const activeNoticeIdentity = notice ?? bodyStatePresentation.toastId;
-  const activeNoticeDuration = activeNotice ? getInGameNoticeAutoDismissMs(activeNotice) : null;
   const pinnedIds = snapshot.sessionState.pinnedRecordIds;
   const activeNav =
     uiViewModel.navItems.find((item) => item.id === activeTab) ??
@@ -129,20 +118,6 @@ function InGameShellContent({
   }
 
   useEffect(() => {
-    if (!activeNoticeIdentity || activeNoticeDuration === null) {
-      return;
-    }
-
-    const timeoutId = window.setTimeout(() => {
-      dismissActiveNoticeRef.current();
-    }, activeNoticeDuration);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-    };
-  }, [activeNoticeIdentity, activeNoticeDuration]);
-
-  useEffect(() => {
     if (notice && bodyStatePresentation.toast) {
       dismissBodyStateToast();
     }
@@ -188,18 +163,7 @@ function InGameShellContent({
         }
         activePanel={activePanel}
       />
-      {activeNotice && (
-        <div
-          className="pointer-events-none fixed bottom-4 right-4 z-[70] max-h-[calc(100dvh-2rem)] w-[min(28rem,calc(100vw-2rem))] overflow-y-auto"
-          role={activeNotice.tone === 'danger' ? 'alert' : 'status'}
-          aria-live={activeNotice.tone === 'danger' ? 'assertive' : 'polite'}
-          aria-atomic="true"
-        >
-          <div className="pointer-events-auto">
-            <NoticeBanner notice={activeNotice} onDismiss={dismissActiveNotice} />
-          </div>
-        </div>
-      )}
+      {activeNotice && <NoticeToast notice={activeNotice} identity={activeNoticeIdentity} onDismiss={dismissActiveNotice} />}
     </div>
   );
 }

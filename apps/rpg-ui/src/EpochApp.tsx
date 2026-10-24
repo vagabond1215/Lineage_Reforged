@@ -9,6 +9,7 @@ import { CharacterCreationScreen } from './game-shell/components/CharacterCreati
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
 import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen.js';
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen.js';
+import { NoticeToast } from './game-shell/components/NoticeToast.js';
 import { SettingsScreen } from './game-shell/components/SettingsScreen.js';
 import { CleanEpochAccountAdapter, createEpochAccountId } from './game-shell/cleanEpochAccountAdapter.js';
 import { CampaignStoreError } from './game-shell/campaignIndexedDbStore.js';
@@ -481,7 +482,8 @@ export function EpochApp() {
   </div>;
 
   const current = state;
-  const common = { notice: current.notice, onDismissNotice: () => dispatch({ type: 'SET_NOTICE', notice: null }) };
+  const dismissNotice = () => dispatch({ type: 'SET_NOTICE', notice: null });
+  const common = { notice: current.screen === 'IN_GAME' ? current.notice : null, onDismissNotice: dismissNotice };
   let content;
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
     allowAccountDeletion
@@ -626,6 +628,8 @@ export function EpochApp() {
     }} />;
   return <div data-theme={themeMode} className={`min-h-screen ${busy ? 'pointer-events-none opacity-75' : ''}`}>
     {content}
-    {busy && <div role="status" className="fixed bottom-4 right-4 rounded bg-black px-4 py-2 text-white">Saving campaign data…</div>}
+    {current.screen !== 'IN_GAME' && current.notice &&
+      <NoticeToast notice={current.notice} identity={current.notice} onDismiss={dismissNotice} />}
+    {busy && <div role="status" className="fixed bottom-4 left-4 rounded bg-black px-4 py-2 text-white">Saving campaign data…</div>}
   </div>;
 }

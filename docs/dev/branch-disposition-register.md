@@ -1,3 +1,7 @@
+## 2026-10-24 active notice completion checkpoint
+
+Fetched/pruned current `master` and confirmed twelve open PRs #5–#16. This bounded active-app notice pass consumes no named branch or PR retirement trigger. No merge, rebase, retarget, close or deletion is due; retained draft, protected, creator and administration dispositions and their prior review triggers stand. [Focused record](dismissible-notices-all-screens-2026-10-24.md). Reinspect exact refs before a later cleanup or selected acceptance decision.
+
 ## 2026-10-24 notice and nutrition presentation checkpoint
 
 The bounded notice/nutrition preview change on `master` consumes no named branch or PR retirement trigger. No merge, rebase, retarget, close or deletion is due. PRs #5–#16 remain draft and `HOLD_NAMED_CONSUMER` pending exact-main selected gameplay/Save and preservation of their unique evidence. Protected/creator/administration references retain their prior dispositions. [Focused record](in-game-notice-and-nutrition-preview-2026-10-24.md). Reinspect live heads before any later cleanup.
