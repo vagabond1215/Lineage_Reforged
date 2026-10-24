@@ -95,7 +95,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.equal(getResourceFillPercent(25, 100), 25);
     const edgeHtml = renderBar(normal, [
       { label: 'HP', current: 0, max: 0, color: 'var(--color-hp-fill)' },
-      { label: 'MP', current: 999, max: 100, color: 'var(--color-mp-fill)' },
+      { label: 'MP', current: 999, max: 100, color: 'var(--color-mp-fill)', visualState: 'warning' },
       { label: 'Stamina', current: -5, max: 100, color: 'var(--color-stamina-fill)', visualState: 'warning' }
     ]);
     assert.equal((edgeHtml.match(/role="meter"/g) ?? []).length, 4);
@@ -103,6 +103,8 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.match(edgeHtml, /0 \/ 0/);
     assert.match(edgeHtml, /999 \/ 100/);
     assert.match(edgeHtml, /data-visual-state="warning"/);
+    assert.match(edgeHtml, /warning resource level/, 'Other resource warnings retain their existing visual marker');
+    assert.doesNotMatch(edgeHtml, /aria-label="Stamina">ST<span/, 'Stamina does not append an exclamation mark');
     assert.match(edgeHtml, /width:100%/);
   } finally {
     await vite.close();
