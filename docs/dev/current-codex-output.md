@@ -18,7 +18,7 @@ Fresh branch/PR inventory and semantic changed-path comparison; Site source/depl
 
 ### D. Risks / follow-up notes
 
-No PR merge/closure or branch deletion; all prior named consumers remain. Site source is byte-equivalent for app code after line-ending normalization, so no new Site version is needed for this docs-only integration. Selected-client UI/Save acceptance and live external Creator-image delivery remain unverified. Suggested commit: `docs(ui): reconcile Character-first intent and branch holds`. Next run: exact-main selected UI/Save acceptance and evidence-preserving PR supersession; separate Creator/nutrition owner reviews, no Game-version decision.
+No PR merge/closure or branch deletion; all prior named consumers remain. Lineage design-reconciliation commit `184e75e709b28c03d68d488e89430b4d914ba24f` was pushed/read back. Site source is app-equivalent after line-ending normalization, and saved Site version 6 was redeployed successfully as `appgdep_6add196ce5588191a5eecd7ad658fc27`; no new Site version was created. Selected-client UI/Save acceptance and live external Creator-image delivery remain unverified. Next run: exact-main selected UI/Save acceptance and evidence-preserving PR supersession; separate Creator/nutrition owner reviews, no Game-version decision.
 
 ## 2026-10-24 — Dismissible notices across the active Epoch app
 
