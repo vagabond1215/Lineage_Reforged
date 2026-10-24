@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-24 — Safe UI branch integration and Site synchronization
+
+**Run:** unversioned branch integration review from `master` `ea9dc17f`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development-milestone and game-version impacts `none`. DEV-0.7.2.13 remains parked. [Focused decision](ui-safe-integration-and-deployment-review-2026-10-24.md).
+
+### A. Files changed
+
+UI information-architecture boundary §23, focused branch/deployment review, current output/handoff and branch register. No production source, tests, schemas, assets or Game version changed.
+
+### B. Patch summary
+
+Re-authored the still-valid Character-first priority from PR #5 against current main, including the selected-client acceptance hold and marked macro-prototype exception. No old PR branch is safe to Git-merge directly; #7–#16 source is already re-authored on main, while unique evidence/selected gates remain held. #6 and the distinct Creator branch remain separate.
+
+### C. Tests and checks run
+
+Fresh branch/PR inventory and semantic changed-path comparison; Site source/deployment readback. Focused current-main UI **34/34 pass**, Node typecheck pass, Vite build pass (unchanged JS/CSS assets), broad TypeScript exit 2 with **117 existing diagnostics**, and `git diff --check` pass. FP-002/008/009/016 apply; evidence is in the focused decision.
+
+### D. Risks / follow-up notes
+
+No PR merge/closure or branch deletion; all prior named consumers remain. Site source is byte-equivalent for app code after line-ending normalization, so no new Site version is needed for this docs-only integration. Selected-client UI/Save acceptance and live external Creator-image delivery remain unverified. Suggested commit: `docs(ui): reconcile Character-first intent and branch holds`. Next run: exact-main selected UI/Save acceptance and evidence-preserving PR supersession; separate Creator/nutrition owner reviews, no Game-version decision.
+
 ## 2026-10-24 — Dismissible notices across the active Epoch app
 
 **Run:** unversioned UI support from `master` `4d128c65`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development-milestone and game-version impacts `none`. DEV-0.7.2.13 remains parked. [Focused record](dismissible-notices-all-screens-2026-10-24.md).

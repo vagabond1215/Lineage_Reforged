@@ -499,3 +499,11 @@ Current priority:
 6. preserve Character/Codex/Chronicle as owner-specific pages while reusable shell primitives stabilize.
 
 A full visual rebuild is therefore **deferred as implementation, but not deferred as design intent**.
+
+## 23. Character-First Migration And Current Source Checkpoint (2026-10-24)
+
+The §22.8 Soundings-first and World-first order records an earlier stage. The later user-directed Character-first priority from [draft UI design PR #5](https://github.com/vagabond1215/Lineage_Reforged/pull/5) has now been reconciled with current `master`: the nine-attribute Character Overview, horizontal Character subsections, separate Equipment and Inventory destinations, compact resource/condition top bar, and responsive six-domain dock are present as production source. Their original draft PR histories remain separate. This source integration does **not** establish authenticated selected-client actions, Save/restart acceptance, or completion of the whole UI redesign.
+
+Character Overview should answer identity, developed capabilities, growth and equipped gear without permanent recovery/readiness dashboards or repeated HP/MP/ST. Home remains a distinct future current-situation and owner-action surface; the current six-domain routing does not activate it. Equipment and Inventory retain their authoritative action owners. Global resources and meaningful conditions use owner-backed values. The visible Protein/Carbs/Fat and zero-centered balance bars are an explicitly marked, user-authorized **visual prototype**; their fills are illustrative and do not establish nutrition reserves, metabolic mechanics or save authority. Actual Energy and Water remain owner-backed.
+
+Continue bounded presentation work on current `master` where safe, while preserving keyboard access, narrow layouts, settings, notifications and Save controls. Treat draft preflights and prompts from PR #5 as dated planning evidence; read the current handoff and focused owner contracts before another implementation. Combat result disclosure DEV-0.7.2.13 remains parked, Character Creator and nutrition owner changes remain separate, and Game `0.1.1-prealpha` is unchanged.

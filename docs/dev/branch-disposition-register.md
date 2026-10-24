@@ -1,3 +1,7 @@
+## 2026-10-24 safe UI integration review checkpoint
+
+At fetched/pruned `master` `ea9dc17f`, all twelve UI/nutrition PRs #5–#16 remain open draft. [Exact branch decision and next triggers](ui-safe-integration-and-deployment-review-2026-10-24.md): no PR head is safe for direct Git merge; current main already re-authored #7–#16 source, while branch evidence and selected-client gates remain open. #5's durable Character-first design priority was selectively reconciled into UI Boundary §23, not merged as a branch. #6 nutrition, Character Creator planning/implementation, protected refs and dirty detached rehearsal worktrees remain held. No PR close, rebase, retarget, branch deletion or disposition change; review on exact-main selected acceptance and evidence promotion, or on dedicated creator/nutrition owner decisions.
+
 ## 2026-10-24 active notice completion checkpoint
 
 Fetched/pruned current `master` and confirmed twelve open PRs #5–#16. This bounded active-app notice pass consumes no named branch or PR retirement trigger. No merge, rebase, retarget, close or deletion is due; retained draft, protected, creator and administration dispositions and their prior review triggers stand. [Focused record](dismissible-notices-all-screens-2026-10-24.md). Reinspect exact refs before a later cleanup or selected acceptance decision.
