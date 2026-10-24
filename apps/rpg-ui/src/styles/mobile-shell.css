@@ -1,0 +1,141 @@
+/* Keep the existing top-bar resources readable without consuming the full
+   mobile viewport when a condition needs its own visible row. */
+@media (max-width: 639px) {
+  .gameplay-shell > header > div {
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .gameplay-shell > header > div > div {
+    row-gap: 0.25rem;
+  }
+
+  .gameplay-shell [aria-label="Character resources"] {
+    padding-bottom: 0;
+  }
+
+  .gameplay-shell [aria-label="Character resources"] > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem 0.5rem;
+  }
+
+  .gameplay-shell [aria-label="Character resources"] > div > :last-child {
+    grid-column: 1 / -1;
+  }
+
+  .gameplay-shell > header + div {
+    padding: 0.25rem 0.5rem 0;
+  }
+
+  .gameplay-shell > header + div > div {
+    padding: 0.375rem 0.625rem;
+  }
+
+  .gameplay-shell [aria-label="Character sections"] {
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .gameplay-shell #top-bar-condition-detail {
+    left: auto;
+    right: 0;
+  }
+}
+
+/* Landscape keeps all six primary destinations in a compact left rail. */
+.gameplay-shell .gameplay-side-nav {
+  background: var(--color-shell-bar-bg);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.gameplay-shell .gameplay-domain-list { gap: 0; }
+.gameplay-shell .gameplay-domain-tooltip:not(:last-child) {
+  border-right: 1px solid var(--color-border-soft);
+}
+
+.gameplay-shell .gameplay-domain-button {
+  display: block;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.gameplay-shell .gameplay-domain-button:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text-primary);
+}
+
+.gameplay-shell .gameplay-domain-button:focus-visible {
+  outline: 2px solid var(--color-border-active);
+  outline-offset: -2px;
+}
+
+.gameplay-shell .gameplay-domain-button.is-active {
+  background: color-mix(in srgb, var(--forged-accent, var(--color-border-active)) 12%, var(--color-shell-bar-bg));
+  color: var(--color-text-primary);
+  box-shadow: inset 2px 0 0 var(--forged-accent, var(--color-border-active));
+}
+
+@media (orientation: landscape) {
+  .gameplay-shell .gameplay-content-frame { padding: 0; }
+
+  .gameplay-shell .gameplay-main-grid {
+    grid-template-columns: 108px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .gameplay-shell .gameplay-active-pane {
+    padding: 0.5rem;
+  }
+
+  .gameplay-shell .gameplay-side-nav {
+    border-right: 1px solid var(--color-border-soft);
+    border-bottom: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .gameplay-shell .gameplay-domain-list {
+    flex-direction: column;
+    width: 100%;
+    gap: 0;
+  }
+
+  .gameplay-shell .gameplay-domain-tooltip:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .gameplay-shell .gameplay-domain-tooltip {
+    width: 100%;
+  }
+
+  .gameplay-shell .gameplay-domain-button {
+    padding: 0;
+  }
+
+  .gameplay-shell .gameplay-domain-content {
+    min-height: 2.75rem;
+    justify-content: flex-start;
+    gap: 0.25rem;
+    padding: 0.25rem 0.375rem;
+    text-align: left;
+  }
+
+  .gameplay-shell .gameplay-domain-icon {
+    flex: none;
+  }
+
+  .gameplay-shell .gameplay-domain-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (orientation: landscape) and (min-width: 1024px) {
+  .gameplay-shell .gameplay-main-grid {
+    grid-template-columns: 144px minmax(0, 1fr);
+  }
+}

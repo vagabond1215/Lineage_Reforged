@@ -11,21 +11,18 @@ type SideNavProps = {
 
 export function SideNav({ items, activeTab, onChange }: SideNavProps) {
   return (
-    <aside className="panel-scroll h-full overflow-auto pr-1">
-      <nav className="space-y-2">
+    <aside className="gameplay-side-nav panel-scroll h-full overflow-x-auto overflow-y-hidden">
+      <nav className="gameplay-domain-list flex w-max" aria-label="Gameplay destinations">
         {items.map((item) => {
           const isActive = item.id === activeTab;
 
           return (
-            <Tooltip key={item.id} content={item.hint} className="flex w-full">
+            <Tooltip key={item.id} content={item.hint} className="gameplay-domain-tooltip flex shrink-0">
               <button
                 type="button"
                 onClick={() => onChange(item.id)}
-                className={`forged-list-item w-full px-2.5 py-2.5 text-left transition ${
-                  isActive
-                    ? 'is-active opacity-100'
-                    : 'opacity-95'
-                }`}
+                aria-current={isActive ? 'page' : undefined}
+                className={`gameplay-domain-button w-full text-left transition ${isActive ? 'is-active' : ''}`}
                 style={
                   isActive
                     ? {
@@ -34,22 +31,16 @@ export function SideNav({ items, activeTab, onChange }: SideNavProps) {
                     : undefined
                 }
               >
-                <div
-                  className={`flex min-h-[86px] flex-col items-center justify-center gap-3 rounded-md border px-3 py-4 text-center transition ${
-                    isActive
-                      ? 'border-[color:var(--color-border-active)] bg-[color:var(--color-surface-elevated)] text-[color:var(--color-text-primary)]'
-                      : 'border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] text-[color:var(--color-text-secondary)]'
-                  }`}
-                >
+                <div className="gameplay-domain-content flex min-h-[2.25rem] flex-row items-center justify-center gap-1.5 px-2 py-1 text-center transition">
                   <span
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-overlay)]"
+                    className="gameplay-domain-icon inline-flex h-5 w-5 items-center justify-center"
                     style={{
                       color: item.accent
                     }}
                   >
                     <Icon name={item.icon} className="h-5 w-5" />
                   </span>
-                  <div className="text-sm font-semibold">{item.label}</div>
+                  <div className="gameplay-domain-label text-xs font-semibold">{item.label}</div>
                 </div>
               </button>
             </Tooltip>

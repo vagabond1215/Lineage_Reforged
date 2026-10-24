@@ -82,6 +82,7 @@ import {
 } from './legacyPreparationApplication.js';
 import { resolveWorldSelection } from './worldSelectionCatalog.js';
 import { fillCoreResourcesToMax } from './newGameResourceInitialization.js';
+import { resolveSupportedEquipmentSlot } from './equipmentSlotEligibility.js';
 
 const CURRENT_SNAPSHOT_VERSION = 'lineage.save_snapshot.v2';
 
@@ -558,20 +559,16 @@ function resolveLoreSkillLabels(skills: PlayerSkillState[]): string[] {
     .map((skill) => humanizeId(skill.id));
 }
 
-function isWeaponItem(itemKey: string): boolean {
-  return ['sword', 'spear', 'bow', 'axe', 'knife', 'staff'].some((token) => itemKey.includes(token));
-}
-
 function buildStarterEquipment(stacks: InventoryStack[]): EquipmentState {
   const equipment = { ...EMPTY_EQUIPMENT };
   const equipOne = (slot: keyof EquipmentState, stack: InventoryStack) => {
     equipment[slot] = { itemId: stack.itemId, itemKey: stack.itemKey, quantity: 1, durability: 1 };
   };
   for (const stack of stacks) {
-    if (stack.itemKey.includes('shield') && !equipment['slot.weapon.left']) equipOne('slot.weapon.left', stack);
-    else if ((stack.itemKey.includes('armor') || stack.itemKey.includes('tunic') || stack.itemKey.includes('cloak')) && !equipment['slot.armor.chest']) equipOne('slot.armor.chest', stack);
-    else if (stack.itemKey === 'compass' && !equipment['slot.accessory.waist']) equipOne('slot.accessory.waist', stack);
-    else if (isWeaponItem(stack.itemKey) && !equipment['slot.weapon.right']) equipOne('slot.weapon.right', stack);
+    const slotId = resolveSupportedEquipmentSlot(stack.itemId, stack.itemKey);
+    if (slotId && Number.isInteger(stack.quantity) && stack.quantity > 0 && !equipment[slotId]) {
+      equipOne(slotId, stack);
+    }
   }
   return equipment;
 }

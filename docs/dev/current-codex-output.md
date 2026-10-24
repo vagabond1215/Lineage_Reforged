@@ -1,5 +1,26 @@
 # Current Codex Output
 
+## 2026-10-24 — Full preview UI source integration to main
+
+**Run:** unversioned UI presentation integration from current master `2b7bd6ee`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development and Game-version impacts `none`. DEV-0.7.2.13 combat remains parked. [Focused record](topbar-dock-main-integration-record-2026-10-24.md).
+
+### A. Files changed
+
+CharacterPanel and section navigation; characterPanelState and equipment-slot owner; new-game snapshot; TopStatusBar, TopResourceMeter and owner projection; SideNav, AppLayout and responsive CSS; nine focused UI tests, one root navigation test and integration/coordination documentation.
+
+### B. Patch summary
+
+Re-authored the full current Character/Equipment/Inventory, owner, top-bar and shell production stack from draft #7–#16 on current master. The clearly illustrative Protein/Carbs/Fat review fixture is excluded. A narrow CharacterPanel optional-type repair removed 18 new broad TypeScript diagnostics without changing owner actions.
+
+### C. Tests and checks run
+
+Composed focused UI tests 32/32; adjacent SaveSnapshot, Character navigation, equipment/combat-profile and body-state tests 51/51; Node UI typecheck and Vite production build pass; broad UI TypeScript 117 existing diagnostics versus clean master 137, zero new lines; `git diff --check` pass. Exact-source controlled browser checked nine attributes, Equipment/Inventory, Composite Bow round trip, navigation, focus, disclosures and 375/667/768/1440px overflow. FP-001/002/008/009/016 applied. Authenticated selected-client Save/restart acceptance remains open.
+
+### D. Risks / follow-up notes
+
+This source push does not merge or accept PR histories, nutrition or design guidance. #7–#16 remain draft and held for selected gameplay/Save review and evidence-preserving disposition. Suggested commit: `ui: integrate Character and status shell on main`.
+
+
 ## 2026-10-23 — UI branch consolidation and preview access decision
 
 **Run:** unversioned UI coordination on synchronized `master`/`origin/master` `8981bf02aa9fef535862ed92947ab2326e129343` before publication. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development and Game-version impacts `none`. DEV-0.7.2.13 combat remains parked. [Focused decision and full branch map](ui-branch-consolidation-and-preview-access-decision-2026-10-23.md).

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type {
   ConditionStripViewModel,
   NotificationItem,
@@ -9,15 +9,32 @@ import type {
   CalendarClimatePopupViewModel,
   CalendarClimateRow
 } from '../game-shell/calendarClimatePresentation';
-import { ConditionStrip } from './body-state/ConditionStrip';
+import type { BodyStatePresentationSnapshot } from '../runtime/bodyStatePresentation';
 import { NotificationBell } from './NotificationBell';
 import { Icon } from './icons';
-import { ProgressBar } from './ui/ProgressBar';
+import { TopResourceMeter } from './ui/TopResourceMeter';
+import './top-status-layout.css';
 
 type CalendarClimateSectionProps = {
   title: string;
   rows: CalendarClimateRow[];
 };
+
+export function TopConditionDetails({ strip }: { strip: ConditionStripViewModel }) {
+  return (
+    <ul className="space-y-2">
+      {[...strip.primary, ...strip.secondary].map((pill) => (
+        <li key={pill.id} className="rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] p-2 text-sm text-[color:var(--color-text-primary)]">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <strong>{pill.label}</strong>
+            <span className="capitalize">{pill.severity} · {pill.trend}</span>
+          </div>
+          <p className="mt-1 text-[color:var(--color-text-secondary)]">{pill.tooltip}</p>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 type TopStatusBarProps = {
   name: string;
@@ -27,6 +44,7 @@ type TopStatusBarProps = {
   conditionStrip: ConditionStripViewModel;
   calendarClimate: CalendarClimatePopupViewModel;
   readinessCard?: ReadinessCardViewModel;
+  bodyState: BodyStatePresentationSnapshot;
   meters: StatMeter[];
   notifications: NotificationItem[];
   settingsOpen: boolean;
@@ -80,6 +98,28 @@ function CalendarClimateSection({ title, rows }: CalendarClimateSectionProps) {
   );
 }
 
+function BodyLevel({ label, value, state }: { label: string; value: number; state: string }) {
+  const current = Number.isFinite(value) ? Math.max(0, Math.min(100, value)) : 0;
+  return (
+    <div className="top-status-body-level">
+      <span className="top-status-body-label">{label}</span>
+      <div
+        className="top-status-body-track"
+        role="meter"
+        aria-label={label}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={current}
+        aria-valuetext={`${Math.round(current)} of 100, ${state}`}
+        title={`${label}: ${Math.round(current)} of 100 · ${state}`}
+      >
+        <span className="top-status-body-fill" style={{ width: `${current}%` }} />
+      </div>
+      <span className="top-status-body-value">{Math.round(current)}</span>
+    </div>
+  );
+}
+
 export function TopStatusBar({
   name,
   date,
@@ -88,6 +128,7 @@ export function TopStatusBar({
   conditionStrip,
   calendarClimate,
   readinessCard,
+  bodyState,
   meters,
   notifications,
   settingsOpen,
@@ -96,22 +137,20 @@ export function TopStatusBar({
 }: TopStatusBarProps) {
   const [conditionOpen, setConditionOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const conditionTrigger = useRef<HTMLButtonElement | null>(null);
+  const calendarTrigger = useRef<HTMLButtonElement | null>(null);
   const topBarButtonClass =
     'forged-icon-button text-[color:var(--color-text-primary)]';
   const overlayPanelClass =
     'forged-overlay bg-[color:var(--color-surface-overlay)]';
-  const strongestConditionSeverity =
-    [...conditionStrip.primary, ...conditionStrip.secondary].some((pill) => pill.severity === 'critical')
-      ? 'critical'
-      : [...conditionStrip.primary, ...conditionStrip.secondary].some((pill) => pill.severity === 'warning')
-        ? 'warning'
-        : 'normal';
-  const conditionButtonClass =
-    strongestConditionSeverity === 'critical'
-      ? 'border-[color:var(--color-action-danger)] bg-[color:var(--color-action-danger)] text-[color:var(--color-action-danger-text)]'
-      : strongestConditionSeverity === 'warning'
-        ? 'border-[color:var(--color-action-warning)] bg-[color:var(--color-action-warning)] text-[color:var(--color-action-warning-text)]'
-        : 'border-[color:var(--color-border-strong)] bg-[color:var(--color-surface-selected)] text-[color:var(--color-text-primary)]';
+  const activeConditions = [...conditionStrip.primary, ...conditionStrip.secondary]
+    .filter((pill) => pill.severity === 'warning' || pill.severity === 'critical');
+  const climateLabel = calendarClimate.climateRows[0]?.valueLabel;
+  const seasonalBandLabel = calendarClimate.temperatureRows[0]?.valueLabel;
+
+  useEffect(() => {
+    if (activeConditions.length === 0) setConditionOpen(false);
+  }, [activeConditions.length]);
 
   return (
     <header
@@ -121,24 +160,39 @@ export function TopStatusBar({
         boxShadow: 'var(--shadow-shell-bar)'
       }}
     >
-      <div className="mx-auto max-w-[112rem] px-4 py-2.5">
-        <div className="flex items-center gap-3">
-          <div className="relative min-w-0 shrink-0">
-            <h1 className="truncate text-lg font-semibold leading-tight text-[color:var(--color-text-primary)] md:text-[1.35rem]">
+      <div className="mx-auto max-w-[112rem] px-3 py-2">
+        <div className="top-status-layout">
+          <div className="top-status-identity relative min-w-0">
+            <h1 className="truncate text-lg font-semibold leading-tight text-[color:var(--color-text-primary)] md:text-[1.25rem]">
               {name}
             </h1>
             <button
+              ref={calendarTrigger}
               type="button"
               onClick={() => setCalendarOpen((current) => !current)}
-              className="mt-0.5 block max-w-full text-left text-[11px] uppercase tracking-[0.16em] text-[color:var(--color-text-secondary)] transition hover:text-[color:var(--color-text-primary)] focus-visible:outline-none focus-visible:text-[color:var(--color-text-primary)] md:text-xs"
+              onKeyDown={(event) => {
+                if (event.key === 'Escape') setCalendarOpen(false);
+              }}
+              className="mt-0.5 block max-w-full text-left text-xs tracking-[0.06em] text-[color:var(--color-text-secondary)] transition hover:text-[color:var(--color-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)]"
               aria-expanded={calendarOpen}
+              aria-controls="top-bar-calendar-detail"
               aria-label="Open calendar and climate context"
             >
               {date} | {season} | {timeOfDay}
             </button>
             {calendarOpen && (
               <div
-                className={`absolute left-0 top-[calc(100%+12px)] z-[130] w-[min(34rem,calc(100vw-2rem))] p-4 ${overlayPanelClass}`}
+                id="top-bar-calendar-detail"
+                role="region"
+                aria-label="Calendar and climate detail"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === 'Escape') {
+                    setCalendarOpen(false);
+                    calendarTrigger.current?.focus();
+                  }
+                }}
+                className={`absolute left-0 top-[calc(100%+12px)] z-[130] max-h-[calc(100vh-8rem)] w-[min(34rem,calc(100vw-2rem))] overflow-y-auto p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${overlayPanelClass}`}
               >
                 <div>
                   <h2 className="text-lg font-semibold leading-tight text-[color:var(--color-text-primary)]">
@@ -182,38 +236,89 @@ export function TopStatusBar({
             )}
           </div>
 
-          <div className="min-w-0 flex-1 overflow-x-auto pb-1">
-            <div className="flex min-w-max items-center justify-center gap-2 pr-1">
-              <div className="relative shrink-0">
-                <button
-                  type="button"
-                  onClick={() => setConditionOpen((current) => !current)}
-                  className={`rounded-full border px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition ${conditionButtonClass}`}
-                >
-                  {conditionStrip.expandedByDefault
-                    ? 'Condition Alert'
-                    : conditionStrip.collapsedLabel}
-                </button>
+          <div className="top-status-resources min-w-0" role="group" aria-label="Character resources">
+            <div className="grid min-w-0 grid-cols-1 gap-0" style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
+              {meters.map((meter) => <TopResourceMeter key={meter.label} meter={meter} />)}
+            </div>
+          </div>
+
+          <div className="top-status-body min-w-0" role="group" aria-label="Energy and hydration">
+            <Icon name="grain" className="top-status-body-icon" />
+            <div className="top-status-body-bars">
+              <BodyLevel label="Energy" value={bodyState.values.energy} state={bodyState.labels.energy} />
+              <BodyLevel label="Water" value={bodyState.values.hydration} state={bodyState.labels.hydration} />
+            </div>
+          </div>
+
+          <div className="top-status-climate min-w-0" role="group" aria-label="Climate context, not current weather">
+            <Icon name="sun" className="top-status-climate-icon" />
+            <div className="top-status-climate-lines">
+              <span title={`Climate profile: ${calendarClimate.climateRows[0]?.valueLabel ?? 'Unknown'}`}>
+                {climateLabel && climateLabel !== 'Unknown' ? climateLabel : 'Climate unknown'}
+              </span>
+              <span title={`Expected seasonal temperature band: ${calendarClimate.temperatureRows[0]?.valueLabel ?? 'Unavailable'}`}>
+                {seasonalBandLabel && seasonalBandLabel !== 'Unavailable' ? seasonalBandLabel : 'Seasonal band n/a'}
+              </span>
+            </div>
+          </div>
+
+          <div className="top-status-alerts min-w-0" role="group" aria-label="Active conditions">
+            {activeConditions.length > 0 && (
+              <div className="relative flex min-w-0 flex-col gap-0.5">
+                {activeConditions.map((pill) => (
+                  <button
+                    key={pill.id}
+                    type="button"
+                    aria-label={`${pill.label}, ${pill.severity}. Inspect condition details`}
+                    aria-expanded={conditionOpen}
+                    aria-controls="top-bar-condition-detail"
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') setConditionOpen(false);
+                    }}
+                    onClick={(event) => {
+                      conditionTrigger.current = event.currentTarget;
+                      setConditionOpen((current) => !current);
+                    }}
+                    className={`top-status-alert rounded-md border px-1.5 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${pill.severity === 'critical'
+                      ? 'border-[color:var(--color-action-danger)] bg-[color:var(--color-tone-warning-bg)] text-[color:var(--color-text-primary)]'
+                      : 'border-[color:var(--color-action-warning)] bg-[color:var(--color-tone-warning-bg)] text-[color:var(--color-tone-warning-text)]'}`}
+                  >
+                    <span className="truncate">{pill.label}</span>
+                  </button>
+                ))}
                 {conditionOpen && (
                   <div
-                    className={`absolute left-1/2 top-[calc(100%+10px)] z-[120] w-[min(24rem,calc(100vw-2rem))] -translate-x-1/2 p-4 ${overlayPanelClass}`}
+                    id="top-bar-condition-detail"
+                    role="region"
+                    aria-label="Condition details"
+                    tabIndex={0}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') {
+                        setConditionOpen(false);
+                        conditionTrigger.current?.focus();
+                      }
+                    }}
+                    className={`absolute right-0 top-[calc(100%+10px)] z-[120] max-h-[calc(100vh-12rem)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${overlayPanelClass}`}
                   >
-                    <ConditionStrip strip={conditionStrip} />
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <h2 className="text-sm font-semibold text-[color:var(--color-text-primary)]">Condition details</h2>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setConditionOpen(false);
+                          conditionTrigger.current?.focus();
+                        }}
+                        className="rounded-sm px-2 py-1 text-sm text-[color:var(--color-text-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)]"
+                      >Close</button>
+                    </div>
+                    <TopConditionDetails strip={conditionStrip} />
                     {readinessCard && readinessCard.recommendedActions.length > 0 && (
                       <div className="mt-4 rounded-[18px] border border-[color:var(--color-border-soft)] bg-[color:var(--color-surface-muted)] p-3">
-                        <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">
-                          Recommended Actions
-                        </div>
+                        <div className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-text-muted)]">Recommended Actions</div>
                         <div className="mt-2 space-y-2">
                           {readinessCard.recommendedActions.map((action) => (
-                            <div
-                              key={action.id}
-                              className="text-sm text-[color:var(--color-text-primary)]"
-                            >
-                              {action.label}:{' '}
-                              <span className="text-[color:var(--color-text-secondary)]">
-                                {action.detail}
-                              </span>
+                            <div key={action.id} className="text-sm text-[color:var(--color-text-primary)]">
+                              {action.label}: <span className="text-[color:var(--color-text-secondary)]">{action.detail}</span>
                             </div>
                           ))}
                         </div>
@@ -222,20 +327,9 @@ export function TopStatusBar({
                   </div>
                 )}
               </div>
-              {meters.map((meter) => (
-                <ProgressBar
-                  key={meter.label}
-                  label={meter.label}
-                  value={meter.current}
-                  max={meter.max}
-                  color={meter.color}
-                  visualState={meter.visualState}
-                />
-              ))}
-            </div>
+            )}
           </div>
-
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="top-status-controls flex items-center justify-end gap-1.5">
             <NotificationBell items={notifications} />
             <div className="relative z-[110]">
               <button
@@ -243,12 +337,15 @@ export function TopStatusBar({
                 onClick={onToggleSettings}
                 className={`p-2.5 ${topBarButtonClass}`}
                 aria-label="Open settings"
+                aria-expanded={settingsOpen}
+                aria-controls="top-bar-settings-detail"
               >
                 <Icon name="gear" className="h-5 w-5" />
               </button>
               {settingsOpen && (
                 <div
-                  className={`absolute right-0 top-[calc(100%+12px)] z-[120] w-[min(36rem,calc(100vw-2rem))] p-4 ${overlayPanelClass}`}
+                  id="top-bar-settings-detail"
+                  className={`absolute right-0 top-[calc(100%+12px)] z-[120] max-h-[calc(100vh-8rem)] w-[min(36rem,calc(100vw-2rem))] overflow-y-auto p-4 ${overlayPanelClass}`}
                 >
                   {settingsContent}
                 </div>

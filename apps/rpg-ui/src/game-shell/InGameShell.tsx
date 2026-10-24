@@ -143,6 +143,7 @@ function InGameShellContent({
             <TopStatusBar
               {...uiViewModel.topBar}
               readinessCard={uiViewModel.character.readinessCard}
+              bodyState={bodyStatePresentation.snapshot}
               meters={uiViewModel.topBarMeters}
               notifications={uiViewModel.notifications}
               settingsOpen={settingsOpen}
