@@ -16,7 +16,6 @@ export function TopResourceMeter({ meter }: { meter: StatMeter }) {
     <div className="grid min-w-0 grid-cols-[3.25rem_minmax(0,1fr)_auto] items-center gap-1.5 text-xs leading-3">
       <span className="flex items-center gap-1 font-semibold text-[color:var(--color-text-primary)]" aria-label={meter.label}>
         {shortLabel}
-        {state !== 'normal' && <span className="font-bold text-[color:var(--color-tone-warning-text)]" aria-label={`${state} resource level`} title={state}>!</span>}
       </span>
       <div
         role={validRange ? 'meter' : 'group'}

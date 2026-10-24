@@ -18,6 +18,11 @@
   text-overflow: ellipsis;
 }
 .top-status-resources { grid-area: resources; }
+.top-status-resources {
+  --color-hp-fill: #c33b50; /* Ruby */
+  --color-mp-fill: #397ecb; /* Sapphire */
+  --color-stamina-fill: #2ca779; /* Emerald */
+}
 .top-status-body { grid-area: body; }
 .top-status-climate { grid-area: climate; }
 .top-status-alerts { grid-area: alerts; }

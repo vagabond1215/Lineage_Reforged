@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
+import { readFileSync } from 'node:fs';
 
 test('top bar presents owner resources and only meaningful condition alerts', async () => {
   const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
@@ -56,7 +57,12 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.match(html, /Expected seasonal temperature band/);
     assert.match(html, /class="top-status-controls/);
     assert.match(html, /aria-label="Character resources"[^>]*><div[^>]*grid-template-columns:minmax\(0, 1fr\)/);
-    assert.match(html, /aria-label="Stamina">ST/);
+    assert.match(html, /aria-label="Stamina">ST<\/span>/);
+    assert.doesNotMatch(html, /warning resource level/, 'Stamina warning stays in meter accessibility text and condition alerts');
+    const layoutStyles = readFileSync(new URL('../src/components/top-status-layout.css', import.meta.url), 'utf8');
+    assert.match(layoutStyles, /--color-hp-fill:\s*#c33b50/);
+    assert.match(layoutStyles, /--color-mp-fill:\s*#397ecb/);
+    assert.match(layoutStyles, /--color-stamina-fill:\s*#2ca779/);
     for (const meter of ownerMeters) {
       assert.match(html, new RegExp(`${meter.label}.*?${meter.current} / ${meter.max}`, 's'));
       assert.match(html, new RegExp(`aria-label="${meter.label}"`));
