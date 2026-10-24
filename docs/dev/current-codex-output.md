@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-24 — UI branch and worktree consolidation
+
+**Run:** unversioned repository coordination at synchronized `master`/`origin/master` `f6c7b504`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development-milestone and game-version impacts `none`. DEV-0.7.2.13 remains parked. [Focused record](ui-branch-worktree-consolidation-2026-10-24.md).
+
+### A. Files changed
+
+Focused consolidation record, branch-disposition register, current output and handoff. No product source, tests, schemas, dependencies or Game version changed.
+
+### B. Patch summary
+
+Removed eight clean, remote-backed local implementation worktrees and their verified residual dependency junctions. Preserved all local/remote branch refs, twelve open draft PRs, dirty rehearsal worktrees and protected references. No branch disposition changed because unique PR evidence and exact-main selected acceptance still have named consumers.
+
+### C. Tests and checks run
+
+Fetched/pruned; inspected open PRs #5–#16, exact refs, branch/worktree status, remote-head equivalence and junction targets; post-cleanup worktree inventory; `git diff --check` before commit. No product tests were rerun for coordination-only cleanup. FP-002, FP-008 and FP-009 applied through explicit acceptance hold, semantic stack retention and exact ref checks.
+
+### D. Risks / follow-up notes
+
+Review each dirty detached composition's unique evidence before removal. Reconcile #5 design, then prove exact-main selected Character/Equipment/Inventory/top-bar/shell actions and Save/restart before closing draft PRs or deleting branches. The installed UI readiness prompt predates the master source integration and needs a dedicated refresh before reuse. Suggested commit: `docs(ui): record safe worktree consolidation`.
+
 ## 2026-10-24 — Full preview UI source integration to main
 
 **Run:** unversioned UI presentation integration from current master `2b7bd6ee`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development and Game-version impacts `none`. DEV-0.7.2.13 combat remains parked. [Focused record](topbar-dock-main-integration-record-2026-10-24.md).
