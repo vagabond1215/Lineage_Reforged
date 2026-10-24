@@ -28,9 +28,9 @@ test('responsive shell retains the six keyboard-reachable gameplay domains and m
     assert.match(html, /class="gameplay-side-nav /);
     const styles = readFileSync(new URL('../src/styles/mobile-shell.css', import.meta.url), 'utf8');
     const landscape = styles.slice(styles.indexOf('@media (orientation: landscape)'));
-    assert.match(landscape, /\.gameplay-main-grid\s*\{[^}]*grid-template-columns:\s*108px minmax\(0, 1fr\)/s);
-    assert.match(landscape, /\.gameplay-domain-list\s*\{[^}]*flex-direction:\s*column/s);
-    assert.match(landscape, /\.gameplay-side-nav\s*\{[^}]*overflow-x:\s*hidden/s);
+    assert.match(landscape, /\.gameplay-shell \.gameplay-main-grid\s*\{[^}]*grid-template-columns:\s*108px minmax\(0, 1fr\)/s);
+    assert.match(landscape, /\.gameplay-shell \.gameplay-domain-list\s*\{[^}]*flex-direction:\s*column/s);
+    assert.match(landscape, /\.gameplay-shell \.gameplay-side-nav\s*\{[^}]*overflow-x:\s*hidden/s);
   } finally {
     await vite.close();
   }

@@ -44,32 +44,32 @@
 
 /* Landscape keeps all six primary destinations in a compact left rail. */
 @media (orientation: landscape) {
-  .gameplay-main-grid {
+  .gameplay-shell .gameplay-main-grid {
     grid-template-columns: 108px minmax(0, 1fr);
     grid-template-rows: minmax(0, 1fr);
     gap: 0.5rem;
   }
 
-  .gameplay-side-nav {
+  .gameplay-shell .gameplay-side-nav {
     overflow-x: hidden;
     overflow-y: auto;
   }
 
-  .gameplay-domain-list {
+  .gameplay-shell .gameplay-domain-list {
     flex-direction: column;
     width: 100%;
     gap: 0.125rem;
   }
 
-  .gameplay-domain-tooltip {
+  .gameplay-shell .gameplay-domain-tooltip {
     width: 100%;
   }
 
-  .gameplay-domain-button {
+  .gameplay-shell .gameplay-domain-button {
     padding: 0;
   }
 
-  .gameplay-domain-content {
+  .gameplay-shell .gameplay-domain-content {
     min-height: 2.25rem;
     justify-content: flex-start;
     gap: 0.25rem;
@@ -77,18 +77,18 @@
     text-align: left;
   }
 
-  .gameplay-domain-icon {
+  .gameplay-shell .gameplay-domain-icon {
     flex: none;
   }
 
-  .gameplay-domain-label {
+  .gameplay-shell .gameplay-domain-label {
     min-width: 0;
     overflow-wrap: anywhere;
   }
 }
 
 @media (orientation: landscape) and (min-width: 1024px) {
-  .gameplay-main-grid {
+  .gameplay-shell .gameplay-main-grid {
     grid-template-columns: 144px minmax(0, 1fr);
   }
 }
