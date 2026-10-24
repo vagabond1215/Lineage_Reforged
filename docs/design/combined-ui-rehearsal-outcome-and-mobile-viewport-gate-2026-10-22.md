@@ -1,0 +1,39 @@
+# Combined Character + Top Bar Rehearsal: Reported Outcome And Mobile Viewport Gate
+
+Date: 2026-10-22. Repository: `vagabond1215/Lineage_Reforged`. Status: **user-supplied Codex report intake and follow-up scope, documentation-only**. Current hosted source inspection: `master` `f56229dde859b9374a54368bd8a8fd2a9872daa1`; Character [PR #7](https://github.com/vagabond1215/Lineage_Reforged/pull/7) `8610260f`, top bar [PR #8](https://github.com/vagabond1215/Lineage_Reforged/pull/8) `20825cce`, design [PR #5](https://github.com/vagabond1215/Lineage_Reforged/pull/5). All still draft and unmerged.
+
+**Evidence provenance:** The user supplied a screenshot containing Codex sections **A. Files changed**, **B. Patch summary**, **C. Tests and checks**, **D. Risks and follow-up**. It states that review records, original/repaired mobile and desktop screenshots and all repairs were produced only in a **temporary detached worktree**. It explicitly states **no PR branch was changed, committed, pushed or merged**, and the active checkout remained clean. The connector does not have the temporary record/screenshots. Therefore **none of the following reported test outcomes or visual measurements is independently rerun/hosted-verified**; do not convert them into selected-playtest acceptance or invent artifact URLs.
+
+## 1. Reported combined result
+
+- PR #7 and PR #8 were composed over master `f56229dd` in the actual `InGameShell`. Both branches' historical branch-register entries were retained in the local combination.
+- Local-only fixes **constrained shell grid**, positioned the six-domain rail **horizontally below desktop width**, kept the **mobile condition popover on-screen**, and removed one Character **optional-prop** TypeScript diagnostic.
+- The user-supplied report says **combined UI tests 3/3 passed**, focused owner/attribute/equipment/body-state/calendar/SaveSnapshot **60/60 passed**; Node UI typecheck, Vite production build and `git diff --check` passed.
+- The *broad* UI typecheck was **not green**: clean master **121** diagnostics, combined worktree **118**, with no new diagnostic signatures after the local repairs. These counts are the reported rehearsal environment, not a correction of earlier independent PR-specific 137/136 counts; each run must report its own exact command, branch and environment.
+- Reported browser review at **375, 768 and 1440 px** exercised Character sections, nine attributes, Skills, Equipment, Inventory, item actions, conditions, popups, settings and Arrow/Home/End/Tab/Escape behavior. Its screenshots are local only.
+- **Critical remaining layout failure:** with a critical condition at **375 × 667**, **only ~106px of Character content is initially visible**. Despite successful controlled interaction tests and local repairs, this fails ordinary narrow-screen usability; do **not** classify the combined UI visually accepted or integration-ready.
+- **Independent owner issue:** a controlled fixture showed an unequipped `composite_bow` cannot be re-equipped through Inventory, consistent with the earlier missing slot inference. This needs a separate **Equipment/Inventory owner-backed eligibility** repair, not a CSS workaround or UI-only exception.
+- **`COMBINED_SELECTED_INTERACTION_UNVERIFIED`:** no authorized authenticated selected campaign was available, so real Save/load/restart, actual gameplay tick resource changes and end-to-end selected state were not verified.
+
+## 2. Immediate route decision
+
+**Move the next bounded task to mobile shell usable-height repair and preservation of the composite rehearsal evidence.** Do not start a broad Equipment/Inventory redesign yet. The issue affects all content domains and blocks a coherent combined Character/topbar UX on narrow screens.
+
+Suggested **measurable test gate**, not a previously accepted engine requirement: at 375×667 with a critical status present and no overlay intentionally open, show **at least 240px of immediately visible primary Character workspace** with functional horizontal Character navigation, readable HP/MP/Stamina and genuine critical status visibility; no hidden action/critical warning, no second permanent vertical rail, no body-level clipping/focus trap. If this threshold is impractical without breaking accessible text scale or content hierarchy, record observed dimensions and the smallest honest alternative; do not game the measurement by hiding controls or using transforms. Review at desktop 1440, tablet 768, 375×812 and 375×667, plus browser zoom/large text as feasible.
+
+**Avoid an unauthorized global redesign:** Existing owners are `InGameShell.tsx` → `AppLayout.tsx` (global three-region shell), `SideNav.tsx` (six-domain rail), `TopStatusBar.tsx` (resource meters/typed conditions from PR #8), and `CharacterPanel.tsx` (horizontal sibling navigation from PR #7). Favor minimal responsive `AppLayout`/`SideNav` composition and top-bar density refinements only when needed and proven; preserve owner-backed resource/warning details, calendar/settings/save, six domains, keyboard routes and popup focus. **Don't** change gameplay state, view-model authority, metabolic reserves, Home activation, combat result disclosure or `GAME_VERSION`.
+
+## 3. Worktree, publication and verification boundaries
+
+1. Inspect latest master, PRs #5/#7/#8, the active combat route and their full diffs/metadata. Discover whether the **original detached rehearsal worktree** still exists. If yes, **inventory its record, local-only patch, and screenshots**, preserve them without overwriting user work, and report their exact paths/checksums. Do not assert that unavailable local artifacts can be retrieved from GitHub. If the detached worktree no longer exists, **reproduce** the findings on a new isolated checkout; never claim the original assets are recovered.
+2. Recreate PR #7 plus PR #8 in a private combined **test worktree**, preserve the independent history-register entries and first establish a reproducible failing 375×667 critical-condition test with measured content viewport. Repair only minimal shell responsive code, record screenshots and compare to baseline and the supplied report.
+3. Keep PR #7 and #8 unchanged/draft, and keep the integration rehearsal isolated. If the minimal shell fix is coherent, publish an independent **draft shared-shell viewport repair PR** with only its owning source/tests and its actual evidence; it must not bundle both UI feature branches or mark them accepted. Alternatively if the owner boundary cannot be isolated safely, document a held staged integration proposal rather than invent a merge.
+4. Re-run actual composite tests, responsive/keyboard checks, Node UI typecheck, Vite build and **clean-master-relative** broad diagnostics, with exact commands and fixture-versus-selected provenance. No unprovided credentials; don't bypass authentication. Publish only real screenshot/record artifacts that can be verified; else provide precise file paths in the Codex run output.
+5. Preserve `docs/dev/branch-disposition-register.md` entries for both PRs in the preview; **no merge to master**. Do not change installed `DEV-0.7.2.13` prompt/output/handoff, save schemas, nutrition, combat, owner item eligibility or protected/held branches.
+6. Treat the `composite_bow` re-equip issue as a **subsequent independent item-owner task** with a before/after fail, authored item metadata, slot-rule verification, rejected/invalid equips and save/readback tests. Do not fix it in the shell-layout slice.
+
+## 4. Disposition
+
+**COMBINED_UI_REPORTED_REHEARSAL_COMPLETE; CRITICAL_MOBILE_VISIBLE_CONTENT_FAILURE; LOCAL_PATCH_NOT_HOSTED; SELECTED_INTERACTION_UNVERIFIED; NO_MERGE.**
+
+The next Codex task is **mobile shell usable-height remediation** with a repro and verified published evidence, not a repeat of Character or top-bar implementation. PR #7 and PR #8 remain drafts pending authorized selected play and staged merge decisions.

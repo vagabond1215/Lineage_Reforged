@@ -12,6 +12,8 @@ This document is the durable UI information-architecture boundary for Lineage: R
 
 It controls future presentation planning where it is more specific than older UI-prep documents. It does not override live code, authored content, shared contracts, engine ownership, save ownership, or newer Codex handoffs. It is not a React implementation plan and does not authorize a broad shell rewrite.
 
+**Cross-document navigation (2026-10-21):** [UI Design Intent, Source Map, And Incremental Migration Guidance](ui-design-intent-and-migration-guidance-index.md) indexes this boundary's later concept refinement, the contextual command package, combat feedback, supporting theme/asset and shell audits, and historical sequencing. This boundary remains controlling UI design authority; the index is not a new mandate to implement a broad rewrite. For active execution use the current prompt and focused audit, not dated implementation-order prose below.
+
 ## 2. Current Repository Reality
 
 - `InGameShell.tsx` currently routes six domains: Character, World, Activity, Codex, Quests, and Chronicle.
@@ -499,3 +501,18 @@ Current priority:
 6. preserve Character/Codex/Chronicle as owner-specific pages while reusable shell primitives stabilize.
 
 A full visual rebuild is therefore **deferred as implementation, but not deferred as design intent**.
+
+## 23. 2026-10-21 User-Directed UI Priority And Character-First Refinement
+
+**Later scoped product-direction update, documentation-only.** The older §22.8 Soundings-first / World-first sequencing described its historical implementation stage. With the accepted Soundings representative loop complete and the currently unusable Character presentation documented, the user has prioritized a **bounded Character-first UI redesign** while the independent combat-result owner issue continues. The next detailed design and migration source is [Gameplay UI Redesign: Character-First Priority, Shell Intent, And Incremental Migration](gameplay-ui-redesign-character-priority-and-first-migration-decision-2026-10-21.md); source routing and current acceptance boundaries are summarized in [the UI design/migration index](ui-design-intent-and-migration-guidance-index.md).
+
+This update refines **presentation priority**, without authorizing a wholesale `InGameShell` rewrite, changing combat/nutrition simulation, making a Home command available, superseding six-domain ownership, or incrementing the Game version. It specifically records:
+
+- retain six global left-rail domains, but replace a second permanent vertical **Character** section rail with one accessible, responsive horizontal sibling section strip just below the top context;
+- present all nine actual STR/DEX/AGI/CON/VIT/INT/WIS/SPT/CHA current attribute values in a compact Character Overview matrix, with source/adjustment details on demand, instead of both an oversized Attributes list and a partial three-attribute `Core Stats` summary;
+- make Character Overview answer identity, developed strengths, growth, notable gear and distinctions, while Home answers current situation, activity, objectives and next owner-backed actions;
+- keep Equipment and Inventory separate owner-backed workspaces; show only a small gear preview on Overview and never duplicate authoritative item operations;
+- favor larger legible HP/MP/ST bars without per-meter capsules, compact substantive active-effect/condition signals instead of permanent neutral `Condition: Stable`, and accessible owner-sourced tooltips/inspectors;
+- defer the proposed signed-calorie plus Carbs/Fat/Protein stacked reserve visual until the true metabolic pool, conservation and save-migration contracts exist. Do not rebrand daily intake, abstract quick/stored gauges or protein sufficiency as actual available macronutrients.
+
+**First candidate production consumer:** bounded, real-data, read-only Character Overview plus horizontal Character subsection navigation, preserving current item actions and Save behavior. Separate later slices should address top-bar shell styling, Equipment/Inventory ergonomics, World/combat after engine-owned result disclosure, Home, and remaining domains. Each needs focused owner, a real caller or rendering acceptance matrix, responsive/keyboard checks, and independent validation. The installed active `DEV-0.7.2.13 Combat Action Result Disclosure Contract And Repair` remains unmodified.

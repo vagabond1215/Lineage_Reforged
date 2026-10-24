@@ -10,6 +10,8 @@ This file preserves stable future-system design criteria, vocabulary decisions, 
 
 Use this file when a future ChatGPT, GitHub Connector, Deep Research, Agent Mode, or Codex thread needs the durable conceptual intent behind systems that are not fully implemented yet.
 
+For the **UI-specific design source map**, read [UI Design Intent And Incremental Migration Guidance](ui-design-intent-and-migration-guidance-index.md), then [UI Information Architecture Boundary](ui-information-architecture-boundary.md) and the corresponding contextual/feature owner decisions. This ledger preserves system philosophy; it does not replace the UI design boundary or the active route.
+
 This file exists to prevent long-running design intent from being lost when:
 
 - a ChatGPT thread is restarted

@@ -26,6 +26,7 @@ This roadmap is a repo-readable planning document for long-term version directio
 - `docs/dev/current-gpt-handoff.md` for current connector-side audits, immediate risks, and prompt guardrails.
 - `docs/dev/codex-sequenced-implementation-plan.md` for the ordered near-term Codex queue after the current handoff.
 - `docs/design/future-system-design-ledger.md` for durable future-system criteria, vocabulary, boundaries, and open conceptual questions.
+- `docs/design/ui-design-intent-and-migration-guidance-index.md` for UI design/source classification and migration readiness; `docs/design/ui-information-architecture-boundary.md` remains the accepted UI design authority. Dated Home/visual-rework sequencing here must be rechecked against the current Codex prompt and later parent audits.
 - `docs/design/static-content-expansion-program.md` for live catalog readiness, the static/runtime boundary, and the `0.6.4`-`0.6.7` milestone.
 - `docs/dev/historical-version-and-deferred-route-register.md` for canonical aliases, suffixes, historical conflicts, deferred classifications, and reopening triggers.
 - `docs/design/survival-builder-rpg-mmo-content-gap-audit.md` for broad survival/builder/RPG/MMO gap context after the current narrow Religion/hotspot lane.
