@@ -9,9 +9,11 @@ import type {
   CalendarClimatePopupViewModel,
   CalendarClimateRow
 } from '../game-shell/calendarClimatePresentation';
+import type { BodyStatePresentationSnapshot } from '../runtime/bodyStatePresentation';
 import { NotificationBell } from './NotificationBell';
 import { Icon } from './icons';
 import { TopResourceMeter } from './ui/TopResourceMeter';
+import './top-status-layout.css';
 
 type CalendarClimateSectionProps = {
   title: string;
@@ -42,6 +44,7 @@ type TopStatusBarProps = {
   conditionStrip: ConditionStripViewModel;
   calendarClimate: CalendarClimatePopupViewModel;
   readinessCard?: ReadinessCardViewModel;
+  bodyState: BodyStatePresentationSnapshot;
   meters: StatMeter[];
   notifications: NotificationItem[];
   settingsOpen: boolean;
@@ -95,6 +98,28 @@ function CalendarClimateSection({ title, rows }: CalendarClimateSectionProps) {
   );
 }
 
+function BodyLevel({ label, value, state }: { label: string; value: number; state: string }) {
+  const current = Number.isFinite(value) ? Math.max(0, Math.min(100, value)) : 0;
+  return (
+    <div className="top-status-body-level">
+      <span className="top-status-body-label">{label}</span>
+      <div
+        className="top-status-body-track"
+        role="meter"
+        aria-label={label}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={current}
+        aria-valuetext={`${Math.round(current)} of 100, ${state}`}
+        title={`${label}: ${Math.round(current)} of 100 · ${state}`}
+      >
+        <span className="top-status-body-fill" style={{ width: `${current}%` }} />
+      </div>
+      <span className="top-status-body-value">{Math.round(current)}</span>
+    </div>
+  );
+}
+
 export function TopStatusBar({
   name,
   date,
@@ -103,6 +128,7 @@ export function TopStatusBar({
   conditionStrip,
   calendarClimate,
   readinessCard,
+  bodyState,
   meters,
   notifications,
   settingsOpen,
@@ -119,6 +145,8 @@ export function TopStatusBar({
     'forged-overlay bg-[color:var(--color-surface-overlay)]';
   const activeConditions = [...conditionStrip.primary, ...conditionStrip.secondary]
     .filter((pill) => pill.severity === 'warning' || pill.severity === 'critical');
+  const climateLabel = calendarClimate.climateRows[0]?.valueLabel;
+  const seasonalBandLabel = calendarClimate.temperatureRows[0]?.valueLabel;
 
   useEffect(() => {
     if (activeConditions.length === 0) setConditionOpen(false);
@@ -132,10 +160,10 @@ export function TopStatusBar({
         boxShadow: 'var(--shadow-shell-bar)'
       }}
     >
-      <div className="mx-auto max-w-[112rem] px-4 py-3">
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
-          <div className="relative min-w-0 flex-[1_1_12rem] xl:flex-none">
-            <h1 className="max-w-[min(24rem,75vw)] truncate text-lg font-semibold leading-tight text-[color:var(--color-text-primary)] md:text-[1.35rem]">
+      <div className="mx-auto max-w-[112rem] px-3 py-2">
+        <div className="top-status-layout">
+          <div className="top-status-identity relative min-w-0">
+            <h1 className="truncate text-lg font-semibold leading-tight text-[color:var(--color-text-primary)] md:text-[1.25rem]">
               {name}
             </h1>
             <button
@@ -208,15 +236,35 @@ export function TopStatusBar({
             )}
           </div>
 
-          <div className="order-3 min-w-0 w-full overflow-x-auto pb-1 xl:order-none xl:flex-[1_1_36rem]" role="group" aria-label="Character resources">
-            <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
+          <div className="top-status-resources min-w-0" role="group" aria-label="Character resources">
+            <div className="grid min-w-0 grid-cols-1 gap-0" style={{ gridTemplateColumns: 'minmax(0, 1fr)' }}>
               {meters.map((meter) => <TopResourceMeter key={meter.label} meter={meter} />)}
             </div>
           </div>
 
-          <div className="ml-auto flex min-w-0 flex-wrap items-center justify-end gap-2">
+          <div className="top-status-body min-w-0" role="group" aria-label="Energy and hydration">
+            <Icon name="grain" className="top-status-body-icon" />
+            <div className="top-status-body-bars">
+              <BodyLevel label="Energy" value={bodyState.values.energy} state={bodyState.labels.energy} />
+              <BodyLevel label="Water" value={bodyState.values.hydration} state={bodyState.labels.hydration} />
+            </div>
+          </div>
+
+          <div className="top-status-climate min-w-0" role="group" aria-label="Climate context, not current weather">
+            <Icon name="sun" className="top-status-climate-icon" />
+            <div className="top-status-climate-lines">
+              <span title={`Climate profile: ${calendarClimate.climateRows[0]?.valueLabel ?? 'Unknown'}`}>
+                {climateLabel && climateLabel !== 'Unknown' ? climateLabel : 'Climate unknown'}
+              </span>
+              <span title={`Expected seasonal temperature band: ${calendarClimate.temperatureRows[0]?.valueLabel ?? 'Unavailable'}`}>
+                {seasonalBandLabel && seasonalBandLabel !== 'Unavailable' ? seasonalBandLabel : 'Seasonal band n/a'}
+              </span>
+            </div>
+          </div>
+
+          <div className="top-status-alerts min-w-0" role="group" aria-label="Active conditions">
             {activeConditions.length > 0 && (
-              <div className="relative flex flex-wrap items-center justify-end gap-1" role="group" aria-label="Active conditions">
+              <div className="relative flex min-w-0 flex-col gap-0.5">
                 {activeConditions.map((pill) => (
                   <button
                     key={pill.id}
@@ -231,11 +279,11 @@ export function TopStatusBar({
                       conditionTrigger.current = event.currentTarget;
                       setConditionOpen((current) => !current);
                     }}
-                    className={`rounded-md border px-2 py-1 text-xs font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${pill.severity === 'critical'
+                    className={`top-status-alert rounded-md border px-1.5 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${pill.severity === 'critical'
                       ? 'border-[color:var(--color-action-danger)] bg-[color:var(--color-tone-warning-bg)] text-[color:var(--color-text-primary)]'
                       : 'border-[color:var(--color-action-warning)] bg-[color:var(--color-tone-warning-bg)] text-[color:var(--color-tone-warning-text)]'}`}
                   >
-                    {pill.label} <span className="capitalize">{pill.severity}</span>
+                    <span className="truncate">{pill.label}</span>
                   </button>
                 ))}
                 {conditionOpen && (
@@ -250,7 +298,7 @@ export function TopStatusBar({
                         conditionTrigger.current?.focus();
                       }
                     }}
-                    className={`absolute left-0 top-[calc(100%+10px)] z-[120] max-h-[calc(100vh-12rem)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] sm:left-auto sm:right-0 ${overlayPanelClass}`}
+                    className={`absolute right-0 top-[calc(100%+10px)] z-[120] max-h-[calc(100vh-12rem)] w-[min(24rem,calc(100vw-2rem))] overflow-y-auto p-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${overlayPanelClass}`}
                   >
                     <div className="mb-3 flex items-center justify-between gap-2">
                       <h2 className="text-sm font-semibold text-[color:var(--color-text-primary)]">Condition details</h2>
@@ -280,6 +328,8 @@ export function TopStatusBar({
                 )}
               </div>
             )}
+          </div>
+          <div className="top-status-controls flex items-center justify-end gap-1.5">
             <NotificationBell items={notifications} />
             <div className="relative z-[110]">
               <button
