@@ -7,14 +7,16 @@ import { createServer } from 'vite';
 test('top bar presents owner resources and only meaningful condition alerts', async () => {
   const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
   try {
-    const [{ TopStatusBar, TopConditionDetails }, { getResourceFillPercent }, { GameSessionProvider }, { useUiViewModel }, { demoSnapshot }, { createDefaultAccountProfileState }] = await Promise.all([
+    const [{ TopStatusBar, TopConditionDetails }, { getResourceFillPercent }, { GameSessionProvider }, { useUiViewModel }, { demoSnapshot }, { createDefaultAccountProfileState }, { createBodyStatePresentationSnapshot }] = await Promise.all([
       vite.ssrLoadModule('/src/components/TopStatusBar.tsx'),
       vite.ssrLoadModule('/src/components/ui/TopResourceMeter.tsx'),
       vite.ssrLoadModule('/src/runtime/GameSessionContext.tsx'),
       vite.ssrLoadModule('/src/runtime/UiViewModelContext.tsx'),
       vite.ssrLoadModule('/src/runtime/demoSnapshot.ts'),
-      vite.ssrLoadModule('/../../packages/engines/game-engine/src/legacy-account.ts')
+      vite.ssrLoadModule('/../../packages/engines/game-engine/src/legacy-account.ts'),
+      vite.ssrLoadModule('/src/runtime/bodyStatePresentation.ts')
     ]);
+    const bodyState = createBodyStatePresentationSnapshot(demoSnapshot);
     let ownerMeters;
     const renderBar = (conditionStrip, meters, settingsOpen = false) => {
       function Probe() {
@@ -25,6 +27,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
           conditionStrip: conditionStrip ?? viewModel.topBar.conditionStrip,
           meters: meters ?? ownerMeters,
           readinessCard: viewModel.character.readinessCard,
+          bodyState,
           notifications: viewModel.notifications,
           settingsOpen,
           onToggleSettings: () => {},
@@ -41,8 +44,17 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     const normal = { primary: [], secondary: [], collapsedLabel: 'Condition: Stable', expandedByDefault: false };
     const html = renderBar(normal);
     assert.doesNotMatch(html, /Condition: Stable|forged-meter|Carbs|Fat reserve|Protein reserve/);
-    assert.equal((html.match(/role="meter"/g) ?? []).length, 3);
+    assert.equal((html.match(/role="meter"/g) ?? []).length, 5);
     assert.doesNotMatch(html, /overflow-x-auto/, 'top resources must not introduce a horizontal scrollbar');
+    assert.match(html, /class="top-status-layout"/);
+    assert.match(html, /class="top-status-identity/);
+    assert.match(html, /class="top-status-resources/);
+    assert.match(html, /aria-label="Energy and hydration"/);
+    assert.match(html, new RegExp(`aria-label="Energy"[^>]*aria-valuenow="${bodyState.values.energy}"`));
+    assert.match(html, new RegExp(`aria-label="Water"[^>]*aria-valuenow="${bodyState.values.hydration}"`));
+    assert.match(html, /Climate context, not current weather/);
+    assert.match(html, /Expected seasonal temperature band/);
+    assert.match(html, /class="top-status-controls/);
     assert.match(html, /aria-label="Character resources"[^>]*><div[^>]*grid-template-columns:minmax\(0, 1fr\)/);
     assert.match(html, /aria-label="Stamina">ST/);
     for (const meter of ownerMeters) {
@@ -80,7 +92,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
       { label: 'MP', current: 999, max: 100, color: 'var(--color-mp-fill)' },
       { label: 'Stamina', current: -5, max: 100, color: 'var(--color-stamina-fill)', visualState: 'warning' }
     ]);
-    assert.equal((edgeHtml.match(/role="meter"/g) ?? []).length, 2);
+    assert.equal((edgeHtml.match(/role="meter"/g) ?? []).length, 4);
     assert.match(edgeHtml, /role="group" aria-label="HP"/);
     assert.match(edgeHtml, /0 \/ 0/);
     assert.match(edgeHtml, /999 \/ 100/);

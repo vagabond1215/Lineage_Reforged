@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-23 — Inline top-status layout review follow-up
+
+**Run:** unversioned UI presentation support on `codex/stacked-top-resource-meters` (draft PR #16, stacked on draft #8), inspected from `e6470be5` against current master `2b7bd6ee`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development and Game-version impacts `none`. DEV-0.7.2.13 combat remains parked. [Focused implementation and visual record](stacked-top-resource-meters-record-2026-10-23.md).
+
+### A. Files changed
+
+TopStatusBar, a dedicated responsive layout stylesheet, InGameShell owner projection, focused rendering test and this evidence/handoff/branch record. No auth, save, combat, nutrition reserve, current-weather owner or Game-version edit.
+
+### B. Patch summary
+
+At wide widths, name/calendar, HP/MP/ST, owner-backed Energy/Hydration, honest climate context, condition warnings and notification/settings controls share one compact header row. Narrow widths wrap within the bar without a horizontal scrollbar. Existing disclosures and Save controls remain accessible.
+
+### C. Tests and checks run
+
+Top-bar rendering 1/1; Node UI typecheck pass; Vite production build pass; broad UI TypeScript 136 diagnostics versus current clean master 137, zero new normalized signatures; `git diff --check` pass. The controlled combined-shell preview rendered at 375×667, 667×375, 768×1024 and direct 1153×930; desktop header measured 63px. Calendar/condition keyboard disclosure, focus return, notifications and settings were observed. FP-001/002/008/009/016 applied. Selected-client gameplay/Save acceptance remains unverified.
+
+### D. Risks / follow-up notes
+
+The current owner has no live weather or Carbs/Fat/Protein reserve values; climate unknown is labeled honestly. PR #16 remains draft on #8, and #5/#7–#15 retain their existing holds. No merge, retarget, deletion or disposition change is due; review at the next combined selected-client/integration gate. Suggested commit: `ui: align persistent status groups in compact header`.
+
 ## 2026-10-21 — DEV-0.7.2.12 Combat Skeleton Layer A Parent Re-Audit
 
 **DEV-0.7.2_NOT_READY; LAYER_A_RESULT_DISCLOSURE_FAILED; GAME_VERSION_NOT_READY.** Inspected clean fetched/pruned synchronized `master`/`origin/master` `008533e635a4b2e62977e738d2f11790169586fd`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
