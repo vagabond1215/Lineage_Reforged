@@ -26,11 +26,17 @@ test('responsive shell retains the six keyboard-reachable gameplay domains and m
     assert.doesNotMatch(html, /aria-hidden="true"/);
     assert.match(html, /class="gameplay-main-grid /);
     assert.match(html, /class="gameplay-side-nav /);
+    assert.match(html, /aria-label="Gameplay destinations"/);
+    assert.match(html, /aria-current="page"/);
+    assert.doesNotMatch(html, /forged-list-item|gameplay-domain-content[^\"]*border/);
     const styles = readFileSync(new URL('../src/styles/mobile-shell.css', import.meta.url), 'utf8');
     const landscape = styles.slice(styles.indexOf('@media (orientation: landscape)'));
     assert.match(landscape, /\.gameplay-shell \.gameplay-main-grid\s*\{[^}]*grid-template-columns:\s*108px minmax\(0, 1fr\)/s);
     assert.match(landscape, /\.gameplay-shell \.gameplay-domain-list\s*\{[^}]*flex-direction:\s*column/s);
     assert.match(landscape, /\.gameplay-shell \.gameplay-side-nav\s*\{[^}]*overflow-x:\s*hidden/s);
+    assert.match(landscape, /\.gameplay-shell \.gameplay-content-frame\s*\{\s*padding:\s*0/s);
+    assert.match(landscape, /\.gameplay-shell \.gameplay-side-nav\s*\{[^}]*border-right:\s*1px solid/s);
+    assert.match(landscape, /\.gameplay-shell \.gameplay-domain-tooltip:not\(:last-child\)\s*\{[^}]*border-bottom:\s*1px solid/s);
   } finally {
     await vite.close();
   }

@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-24 — Flush landscape gameplay dock follow-up
+
+**Run:** unversioned UI presentation support on draft PR #15, stacked on draft #9. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; development and Game-version impact `none`. DEV-0.7.2.13 combat is untouched. See [focused record](compact-landscape-domain-rail-record-2026-10-23.md).
+
+### A. Files changed
+
+SideNav, AppLayout, mobile-shell CSS, focused shell test, this output and focused record.
+
+### B. Patch summary
+
+The six gameplay destinations form a flush left dock in landscape with flat rows, subtle separators, active marker and focus outline. Portrait retains a divided horizontal strip. Actions and owner state are unchanged.
+
+### C. Tests and checks run
+
+Focused shell test 1/1, combined fixture top-bar and shell 2/2, Node UI typecheck and Vite production build pass. Broad UI TypeScript: 137 existing diagnostics versus clean master 137, zero new lines. `git diff --check` pass. Combined preview: dock x=0 at 667, 768, 1280 and 1440px; no document horizontal overflow at these or 375px portrait. Keyboard Tab reached World from Character with visible outline; click navigation worked. FP-001/002/008/009/016 applied through real shell, fixture labeling, branch isolation and responsive rendering.
+
+### D. Risks / follow-up notes
+
+This is controlled fixture evidence; authenticated selected-client acceptance remains open. PR #15 stays draft; no branch disposition, merge or deletion is due. Review after dependency #9 and combined UI stack. Suggested commit: `ui: dock landscape gameplay navigation`.
+
 ## 2026-10-21 — DEV-0.7.2.12 Combat Skeleton Layer A Parent Re-Audit
 
 **DEV-0.7.2_NOT_READY; LAYER_A_RESULT_DISCLOSURE_FAILED; GAME_VERSION_NOT_READY.** Inspected clean fetched/pruned synchronized `master`/`origin/master` `008533e635a4b2e62977e738d2f11790169586fd`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
