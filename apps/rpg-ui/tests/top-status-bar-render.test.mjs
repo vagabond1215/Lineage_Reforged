@@ -19,7 +19,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     ]);
     const bodyState = createBodyStatePresentationSnapshot(demoSnapshot);
     let ownerMeters;
-    const renderBar = (conditionStrip, meters, settingsOpen = false) => {
+    const renderBar = (conditionStrip, meters, settingsOpen = false, body = bodyState) => {
       function Probe() {
         const viewModel = useUiViewModel();
         ownerMeters = viewModel.topBarMeters;
@@ -28,7 +28,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
           conditionStrip: conditionStrip ?? viewModel.topBar.conditionStrip,
           meters: meters ?? ownerMeters,
           readinessCard: viewModel.character.readinessCard,
-          bodyState,
+          bodyState: body,
           notifications: viewModel.notifications,
           settingsOpen,
           onToggleSettings: () => {},
@@ -44,14 +44,22 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     };
     const normal = { primary: [], secondary: [], collapsedLabel: 'Condition: Stable', expandedByDefault: false };
     const html = renderBar(normal);
-    assert.doesNotMatch(html, /Condition: Stable|forged-meter|Carbs|Fat reserve|Protein reserve/);
-    assert.equal((html.match(/role="meter"/g) ?? []).length, 5);
+    assert.doesNotMatch(html, /Condition: Stable|forged-meter|Fat reserve|Protein reserve/);
+    assert.equal((html.match(/role="meter"/g) ?? []).length, 4);
     assert.doesNotMatch(html, /overflow-x-auto/, 'top resources must not introduce a horizontal scrollbar');
     assert.match(html, /class="top-status-layout"/);
     assert.match(html, /class="top-status-identity/);
     assert.match(html, /class="top-status-resources/);
     assert.match(html, /aria-label="Energy and hydration"/);
-    assert.match(html, new RegExp(`aria-label="Energy"[^>]*aria-valuenow="${bodyState.values.energy}"`));
+    assert.match(html, /aria-label="Illustrative energy balance with zero at the center; not tracked gameplay data"/);
+    assert.match(html, new RegExp(`aria-label="Tracked energy ${Math.round(bodyState.values.energy)} of 100"`));
+    assert.match(html, /class="nutrition-preview-zero-line"/);
+    assert.match(html, /Protein, carbs and fat bars are a visual prototype, not tracked reserves/);
+    assert.match(html, /PREVIEW/);
+    assert.match(html, /Protein illustrative preview/);
+    assert.match(html, /Carbs illustrative preview/);
+    assert.match(html, /Fat illustrative preview/);
+    assert.doesNotMatch(html, /aria-label="(?:Protein|Carbs|Fat)"[^>]*aria-valuenow/);
     assert.match(html, new RegExp(`aria-label="Water"[^>]*aria-valuenow="${bodyState.values.hydration}"`));
     assert.match(html, /Climate context, not current weather/);
     assert.match(html, /Expected seasonal temperature band/);
@@ -63,6 +71,8 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.match(layoutStyles, /--color-hp-fill:\s*#c33b50/);
     assert.match(layoutStyles, /--color-mp-fill:\s*#397ecb/);
     assert.match(layoutStyles, /--color-stamina-fill:\s*#2ca779/);
+    assert.match(layoutStyles, /\.nutrition-preview\s*\{[^}]*height:\s*2rem/s);
+    assert.match(layoutStyles, /\.nutrition-preview\s*\{[^}]*grid-template-columns:\s*3\.25rem minmax\(0, 1fr\) 4\.25rem/s);
     for (const meter of ownerMeters) {
       assert.match(html, new RegExp(`${meter.label}.*?${meter.current} / ${meter.max}`, 's'));
       assert.match(html, new RegExp(`aria-label="${meter.label}"`));
@@ -83,6 +93,12 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.match(alertHtml, /critical/i);
     assert.match(alertHtml, /Save controls test/);
     assert.doesNotMatch(alertHtml, /Condition: Stable/);
+    const dryHtml = renderBar(normal, undefined, false, {
+      ...bodyState,
+      values: { ...bodyState.values, hydration: 25 },
+      labels: { ...bodyState.labels, hydration: 'Severe Dehydration' }
+    });
+    assert.match(dryHtml, /class="nutrition-preview-water severe"[^>]*aria-valuenow="25"/);
     const detailHtml = renderToStaticMarkup(React.createElement(TopConditionDetails, { strip: active }));
     assert.match(detailHtml, /Thirsty/);
     assert.match(detailHtml, /Water needed/);
@@ -98,7 +114,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
       { label: 'MP', current: 999, max: 100, color: 'var(--color-mp-fill)', visualState: 'warning' },
       { label: 'Stamina', current: -5, max: 100, color: 'var(--color-stamina-fill)', visualState: 'warning' }
     ]);
-    assert.equal((edgeHtml.match(/role="meter"/g) ?? []).length, 4);
+    assert.equal((edgeHtml.match(/role="meter"/g) ?? []).length, 3);
     assert.match(edgeHtml, /role="group" aria-label="HP"/);
     assert.match(edgeHtml, /0 \/ 0/);
     assert.match(edgeHtml, /999 \/ 100/);

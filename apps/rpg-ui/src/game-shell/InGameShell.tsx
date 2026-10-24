@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { startTransition, useEffect, useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 import type {
   AccountProfileState,
   SaveSnapshot
@@ -46,6 +46,14 @@ type InGameShellContentProps = Omit<
   'accountProfile' | 'snapshot' | 'campaignSessionControl' | 'onSnapshotChange'
 >;
 
+export function getInGameNoticeAutoDismissMs(notice: GameShellNotice): number | null {
+  const requested = notice.autoDismissMs;
+  if (requested === null) return null;
+  return typeof requested === 'number' && Number.isFinite(requested) && requested > 0
+    ? requested
+    : 8000;
+}
+
 function InGameShellContent({
   slots,
   activeSlotId,
@@ -68,6 +76,12 @@ function InGameShellContent({
   } = useGameSession();
   const activeSlot = slots.find((slot) => slot.id === activeSlotId) ?? null;
   const quickSaveSlot = slots.find((slot) => slot.kind === 'quick') ?? null;
+  const activeNotice = notice ?? bodyStatePresentation.toast;
+  const dismissActiveNotice = notice ? onDismissNotice : dismissBodyStateToast;
+  const dismissActiveNoticeRef = useRef(dismissActiveNotice);
+  dismissActiveNoticeRef.current = dismissActiveNotice;
+  const activeNoticeIdentity = notice ?? bodyStatePresentation.toastId;
+  const activeNoticeDuration = activeNotice ? getInGameNoticeAutoDismissMs(activeNotice) : null;
   const pinnedIds = snapshot.sessionState.pinnedRecordIds;
   const activeNav =
     uiViewModel.navItems.find((item) => item.id === activeTab) ??
@@ -115,19 +129,18 @@ function InGameShellContent({
   }
 
   useEffect(() => {
-    if (!bodyStatePresentation.toast || notice) {
+    if (!activeNoticeIdentity || activeNoticeDuration === null) {
       return;
     }
 
-    const autoDismissMs = bodyStatePresentation.toast.autoDismissMs ?? 6000;
     const timeoutId = window.setTimeout(() => {
-      dismissBodyStateToast();
-    }, autoDismissMs);
+      dismissActiveNoticeRef.current();
+    }, activeNoticeDuration);
 
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [bodyStatePresentation.toast, dismissBodyStateToast, notice]);
+  }, [activeNoticeIdentity, activeNoticeDuration]);
 
   useEffect(() => {
     if (notice && bodyStatePresentation.toast) {
@@ -139,39 +152,27 @@ function InGameShellContent({
     <div className="h-screen overflow-hidden" style={{ '--tab-accent': accent } as CSSProperties}>
       <AppLayout
         topBar={
-          <>
-            <TopStatusBar
-              {...uiViewModel.topBar}
-              readinessCard={uiViewModel.character.readinessCard}
-              bodyState={bodyStatePresentation.snapshot}
-              meters={uiViewModel.topBarMeters}
-              notifications={uiViewModel.notifications}
-              settingsOpen={settingsOpen}
-              onToggleSettings={() => setSettingsOpen((current) => !current)}
-              settingsContent={
-                <InGameSaveControls
-                  activeSlot={activeSlot}
-                  quickSaveSlot={quickSaveSlot}
-                  hasUnsavedChanges={hasUnsavedChanges}
-                  onSave={onSave}
-                  onQuickSave={onQuickSave}
-                  onRetireCharacter={onRetireCharacter}
-                  onReturnToMainMenu={onReturnToMainMenu}
-                  embedded
-                />
-              }
-            />
-            {notice && (
-              <div className="px-4 pt-4">
-                <NoticeBanner notice={notice} onDismiss={onDismissNotice} />
-              </div>
-            )}
-            {!notice && bodyStatePresentation.toast && (
-              <div className="px-4 pt-4">
-                <NoticeBanner notice={bodyStatePresentation.toast} onDismiss={dismissBodyStateToast} />
-              </div>
-            )}
-          </>
+          <TopStatusBar
+            {...uiViewModel.topBar}
+            readinessCard={uiViewModel.character.readinessCard}
+            bodyState={bodyStatePresentation.snapshot}
+            meters={uiViewModel.topBarMeters}
+            notifications={uiViewModel.notifications}
+            settingsOpen={settingsOpen}
+            onToggleSettings={() => setSettingsOpen((current) => !current)}
+            settingsContent={
+              <InGameSaveControls
+                activeSlot={activeSlot}
+                quickSaveSlot={quickSaveSlot}
+                hasUnsavedChanges={hasUnsavedChanges}
+                onSave={onSave}
+                onQuickSave={onQuickSave}
+                onRetireCharacter={onRetireCharacter}
+                onReturnToMainMenu={onReturnToMainMenu}
+                embedded
+              />
+            }
+          />
         }
         sideNav={
           <SideNav
@@ -187,6 +188,18 @@ function InGameShellContent({
         }
         activePanel={activePanel}
       />
+      {activeNotice && (
+        <div
+          className="pointer-events-none fixed bottom-4 right-4 z-[70] max-h-[calc(100dvh-2rem)] w-[min(28rem,calc(100vw-2rem))] overflow-y-auto"
+          role={activeNotice.tone === 'danger' ? 'alert' : 'status'}
+          aria-live={activeNotice.tone === 'danger' ? 'assertive' : 'polite'}
+          aria-atomic="true"
+        >
+          <div className="pointer-events-auto">
+            <NoticeBanner notice={activeNotice} onDismiss={dismissActiveNotice} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,3 +1,7 @@
+## 2026-10-24 notice and nutrition presentation checkpoint
+
+The bounded notice/nutrition preview change on `master` consumes no named branch or PR retirement trigger. No merge, rebase, retarget, close or deletion is due. PRs #5–#16 remain draft and `HOLD_NAMED_CONSUMER` pending exact-main selected gameplay/Save and preservation of their unique evidence. Protected/creator/administration references retain their prior dispositions. [Focused record](in-game-notice-and-nutrition-preview-2026-10-24.md). Reinspect live heads before any later cleanup.
+
 ## 2026-10-24 UI branch/worktree cleanup checkpoint
 
 At fetched/pruned synchronized `master`/`origin/master` `f6c7b504`, all twelve PRs #5–#16 remain open draft. Their exact heads, named consumers and review triggers are recorded in the [focused consolidation record](ui-branch-worktree-consolidation-2026-10-24.md). The re-authored UI source on master does not carry all PR evidence or selected-client acceptance. All UI/nutrition refs remain `HOLD_NAMED_CONSUMER`; protected and creator/administration refs retain their prior dispositions. Eight clean, remote-backed local implementation worktrees were removed after exact-head and status checks; branch refs and dirty detached rehearsal worktrees remain. No merge, PR closure, branch deletion or disposition change was safe. Recheck exact refs and the named evidence/acceptance gates before any retirement.

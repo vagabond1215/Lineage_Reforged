@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-24 — In-game notice toast and marked nutrition layout preview
+
+**Run:** unversioned UI presentation support on `master` from `5d9ad83b`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development-milestone and game-version impacts `none`. DEV-0.7.2.13 stays parked. [Focused record](in-game-notice-and-nutrition-preview-2026-10-24.md).
+
+### A. Files changed
+
+TopStatusBar, top-status CSS, InGameShell, NoticeBanner, two focused UI tests, focused record, current output/handoff and branch register.
+
+### B. Patch summary
+
+Ordinary notices become fixed, dismissible eight-second in-page toasts with explicit timeout/persistence support. The top bar presents a visibly marked illustrative Protein/Carbs/Fat and zero-centered balance prototype while showing actual tracked Energy and Water. Water is a vertical owner-backed meter; no nutrition or save owner changed.
+
+### C. Tests and checks run
+
+Focused UI tests 33/33, Node typecheck and Vite build pass. Broad UI TypeScript remains at 117 pre-existing diagnostics with none in touched files. `git diff --check` passes. Local in-app browser visual route timed out, so selected visual/Save acceptance remains open. FP-001, FP-002, FP-009 and FP-016 applied as detailed in the focused record.
+
+### D. Risks / follow-up notes
+
+Review the published desktop/mobile rendering and selected gameplay/Save when a reachable authorized session is available. The static macro fills are deliberately labeled preview. No Lineage branch/PR disposition changes or cleanup are due; #5–#16 remain draft with exact-main selected acceptance/evidence triggers. Suggested commit: `ui: present marked nutrition preview and timed notices`. Next run: bounded hosted UI layout and selected-client review; no new development milestone or Game-version decision.
+
 ## 2026-10-24 — UI branch and worktree consolidation
 
 **Run:** unversioned repository coordination at synchronized `master`/`origin/master` `f6c7b504`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, development-milestone and game-version impacts `none`. DEV-0.7.2.13 remains parked. [Focused record](ui-branch-worktree-consolidation-2026-10-24.md).

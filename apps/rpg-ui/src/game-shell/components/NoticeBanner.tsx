@@ -78,7 +78,8 @@ export function NoticeBanner({ notice, onDismiss }: NoticeBannerProps) {
           <button
             type="button"
             onClick={onDismiss}
-            className={`shrink-0 rounded-full border px-3 py-1 text-xs uppercase tracking-[0.18em] transition ${palette.dismiss}`}
+            aria-label={`Dismiss ${notice.title} notification`}
+            className={`shrink-0 rounded-full border px-3 py-1 text-xs uppercase tracking-[0.18em] transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--color-border-active)] ${palette.dismiss}`}
           >
             Dismiss
           </button>

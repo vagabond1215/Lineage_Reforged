@@ -98,24 +98,63 @@ function CalendarClimateSection({ title, rows }: CalendarClimateSectionProps) {
   );
 }
 
-function BodyLevel({ label, value, state }: { label: string; value: number; state: string }) {
-  const current = Number.isFinite(value) ? Math.max(0, Math.min(100, value)) : 0;
+function NutritionPreview({ bodyState }: { bodyState: BodyStatePresentationSnapshot }) {
+  const energy = Number.isFinite(bodyState.values.energy)
+    ? Math.max(0, Math.min(100, bodyState.values.energy))
+    : 0;
+  const water = Number.isFinite(bodyState.values.hydration)
+    ? Math.max(0, Math.min(100, bodyState.values.hydration))
+    : 0;
+  const waterTone = water > 66 ? 'hydrated' : water >= 33 ? 'low' : 'severe';
+  const macroRows = [
+    { label: 'Protein', icon: '🥩', fill: 'protein', width: '72%' },
+    { label: 'Carbs', icon: '🌾', fill: 'carbs', width: '48%' },
+    { label: 'Fat', icon: '🧈', fill: 'fat', width: '61%' }
+  ];
+
   return (
-    <div className="top-status-body-level">
-      <span className="top-status-body-label">{label}</span>
-      <div
-        className="top-status-body-track"
-        role="meter"
-        aria-label={label}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={current}
-        aria-valuetext={`${Math.round(current)} of 100, ${state}`}
-        title={`${label}: ${Math.round(current)} of 100 · ${state}`}
-      >
-        <span className="top-status-body-fill" style={{ width: `${current}%` }} />
+    <div className="nutrition-preview" role="group" aria-label="Nutrition layout preview and tracked hydration">
+      <div className="nutrition-preview-energy-group">
+        <div
+          className="nutrition-preview-energy"
+          role="img"
+          aria-label="Illustrative energy balance with zero at the center; not tracked gameplay data"
+          title="Energy balance is illustrative; the center line marks zero."
+        >
+          <span className="nutrition-preview-energy-fill" />
+          <span className="nutrition-preview-zero-line" aria-hidden="true" />
+        </div>
+        <span className="nutrition-preview-owner-value" aria-label={`Tracked energy ${Math.round(energy)} of 100`} title={`Tracked energy: ${Math.round(energy)} of 100 · ${bodyState.labels.energy}`}>
+          {Math.round(energy)}
+        </span>
       </div>
-      <span className="top-status-body-value">{Math.round(current)}</span>
+      <div className="nutrition-preview-macros" role="group" aria-label="Protein, carbs and fat bars are a visual prototype, not tracked reserves">
+        <span className="nutrition-preview-mark">PREVIEW</span>
+        {macroRows.map((row) => (
+          <div className="nutrition-preview-row" key={row.label} title={`${row.label} bar is illustrative; no reserve is tracked`}>
+            <span className="nutrition-preview-icon" aria-hidden="true">{row.icon}</span>
+            <span className="nutrition-preview-track" aria-hidden="true">
+              <span className={`nutrition-preview-fill nutrition-preview-${row.fill}`} style={{ width: row.width }} />
+            </span>
+            <span className="sr-only">{row.label} illustrative preview</span>
+          </div>
+        ))}
+      </div>
+      <div className="nutrition-preview-water-group">
+        <div
+          className={`nutrition-preview-water ${waterTone}`}
+          role="meter"
+          aria-label="Water"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={water}
+          aria-valuetext={`${Math.round(water)} of 100, ${bodyState.labels.hydration}`}
+          title={`Water: ${Math.round(water)} of 100 · ${bodyState.labels.hydration}`}
+        >
+          <span className="nutrition-preview-water-fill" style={{ height: `${water}%` }} />
+        </div>
+        <span className="nutrition-preview-owner-value" aria-hidden="true">{Math.round(water)}</span>
+      </div>
     </div>
   );
 }
@@ -243,11 +282,7 @@ export function TopStatusBar({
           </div>
 
           <div className="top-status-body min-w-0" role="group" aria-label="Energy and hydration">
-            <Icon name="grain" className="top-status-body-icon" />
-            <div className="top-status-body-bars">
-              <BodyLevel label="Energy" value={bodyState.values.energy} state={bodyState.labels.energy} />
-              <BodyLevel label="Water" value={bodyState.values.hydration} state={bodyState.labels.hydration} />
-            </div>
+            <NutritionPreview bodyState={bodyState} />
           </div>
 
           <div className="top-status-climate min-w-0" role="group" aria-label="Climate context, not current weather">

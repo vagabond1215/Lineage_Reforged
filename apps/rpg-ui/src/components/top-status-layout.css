@@ -28,7 +28,6 @@
 .top-status-alerts { grid-area: alerts; }
 .top-status-controls { grid-area: controls; }
 
-.top-status-body,
 .top-status-climate {
   display: flex;
   align-items: center;
@@ -37,7 +36,6 @@
   color: var(--color-text-secondary);
 }
 
-.top-status-body-icon,
 .top-status-climate-icon {
   width: 1rem;
   height: 1rem;
@@ -45,7 +43,6 @@
   color: var(--color-tone-warning-text);
 }
 
-.top-status-body-bars,
 .top-status-climate-lines {
   display: grid;
   min-width: 0;
@@ -55,40 +52,120 @@
   line-height: 1rem;
 }
 
-.top-status-body-level {
-  display: grid;
-  grid-template-columns: 2.6rem minmax(0, 1fr) 1.3rem;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.top-status-body-label,
-.top-status-body-value,
 .top-status-climate-lines > span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.top-status-body-value { text-align: right; font-variant-numeric: tabular-nums; }
-.top-status-body-track {
-  height: 0.35rem;
+.nutrition-preview {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr) 4.25rem;
+  align-items: stretch;
+  gap: 0.375rem;
+  height: 2rem;
   min-width: 0;
+}
+
+.nutrition-preview-energy-group,
+.nutrition-preview-water-group {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.nutrition-preview-owner-value {
+  color: var(--color-text-primary);
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.nutrition-preview-energy,
+.nutrition-preview-water {
+  position: relative;
+  flex: none;
+  width: 1rem;
+  height: 100%;
   overflow: hidden;
   border: 1px solid var(--color-border-soft);
-  border-radius: 0.15rem;
+  border-radius: 2px;
   background: var(--color-surface-muted);
 }
 
-.top-status-body-fill {
-  display: block;
-  height: 100%;
-  background: var(--color-stamina-fill);
+.nutrition-preview-energy-fill,
+.nutrition-preview-water-fill {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
-.top-status-body-level:nth-child(2) .top-status-body-fill {
-  background: var(--color-mp-fill);
+.nutrition-preview-energy-fill {
+  bottom: 50%;
+  height: 32.5%;
+  background: #a9c43f;
 }
+
+.nutrition-preview-zero-line {
+  position: absolute;
+  top: calc(50% - 1px);
+  right: -1px;
+  left: -1px;
+  height: 2px;
+  background: #f3e6ad;
+}
+
+.nutrition-preview-macros {
+  display: grid;
+  grid-template-rows: 7px repeat(3, minmax(0, 1fr));
+  min-width: 0;
+}
+
+.nutrition-preview-mark {
+  overflow: hidden;
+  color: var(--color-tone-warning-text);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 7px;
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.nutrition-preview-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.nutrition-preview-icon {
+  position: absolute;
+  left: -1.25rem;
+  width: 0.8rem;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.nutrition-preview-track {
+  display: block;
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 2px;
+  background: var(--color-surface-muted);
+}
+
+.nutrition-preview-fill { display: block; height: 100%; opacity: 0.8; }
+.nutrition-preview-protein { background: #b97163; }
+.nutrition-preview-carbs { background: #d4aa60; }
+.nutrition-preview-fat { background: #dec77d; }
+
+.nutrition-preview-water.hydrated .nutrition-preview-water-fill { background: #5b9ecd; }
+.nutrition-preview-water.low .nutrition-preview-water-fill { background: #dba94d; }
+.nutrition-preview-water.severe .nutrition-preview-water-fill { background: #ad5a43; }
 
 .top-status-alert {
   display: flex;
@@ -120,7 +197,7 @@
 
 @media (min-width: 1100px) {
   .top-status-layout {
-    grid-template-columns: minmax(15rem, 15.5rem) minmax(12rem, 1fr) minmax(8rem, 9rem) minmax(7rem, 8rem) minmax(6rem, 8rem) auto;
+    grid-template-columns: minmax(15rem, 15.5rem) minmax(12rem, 1fr) minmax(12rem, 1fr) minmax(7rem, 8rem) minmax(6rem, 8rem) auto;
     grid-template-areas: "identity resources body climate alerts controls";
   }
 }
