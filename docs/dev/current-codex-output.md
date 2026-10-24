@@ -1,5 +1,25 @@
 # Current Codex Output
 
+## 2026-10-23 — UI branch consolidation and preview access decision
+
+**Run:** unversioned UI coordination on synchronized `master`/`origin/master` `8981bf02aa9fef535862ed92947ab2326e129343` before publication. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development and Game-version impacts `none`. DEV-0.7.2.13 combat remains parked. [Focused decision and full branch map](ui-branch-consolidation-and-preview-access-decision-2026-10-23.md).
+
+### A. Files changed
+
+Focused branch/access decision, this output, current handoff and branch-disposition register. No product source, auth owner, tests, schemas, generated output or Game version changed.
+
+### B. Patch summary
+
+The existing combined-shell fixture provides sign-in-free visual review, so a shared simple-password development login would add a recoverable credential path without proving authenticated selected gameplay or persistence. Primary checkout returned to current `master`; one clean detached PR #7 baseline worktree was removed after exact-head/clean-status verification. Twelve live draft PRs and all held or protected branches remain retained. No PR merge, retarget, closure, force update or remote branch deletion was safe at this checkpoint.
+
+### C. Tests and checks run
+
+Fetched/pruned; read all twelve draft PRs; checked branch/worktree inventory, merge bases, unique scopes and auth owner; verified the removed worktree was clean and its head remained reachable; ran `git diff --check` for these documentation edits. No gameplay test or selected-client acceptance was performed. FP-002, FP-008, FP-009 and FP-017 applied: fixture evidence is labeled, stacks remain separate, exact refs were recorded, and selected reachability remains a hold.
+
+### D. Risks / follow-up notes
+
+Dirty composed worktrees retain unpromoted evidence and must be reviewed individually before removal. Integrate only after current design guidance reconciliation, owner stack #10→#12→#13, Character stack #7→#11→#14, top-bar #8→#16 and responsive shell #9→#15 pass their dedicated semantic and selected gates. PR #6 nutrition remains separate. No disposition changed; next review trigger for each retained ref is in the focused decision. Suggested commit: `docs(ui): record safe branch consolidation and preview access`.
+
 ## 2026-10-21 — DEV-0.7.2.12 Combat Skeleton Layer A Parent Re-Audit
 
 **DEV-0.7.2_NOT_READY; LAYER_A_RESULT_DISCLOSURE_FAILED; GAME_VERSION_NOT_READY.** Inspected clean fetched/pruned synchronized `master`/`origin/master` `008533e635a4b2e62977e738d2f11790169586fd`; final publication SHA follows push/readback. Support suffix of parent DEV-0.7.2; development impact `supports_current_band`, Game-version impact `none`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
