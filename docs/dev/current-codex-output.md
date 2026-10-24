@@ -18,7 +18,7 @@ Focused UI tests 33/33, Node typecheck and Vite build pass. Broad UI TypeScript 
 
 ### D. Risks / follow-up notes
 
-Review the published desktop/mobile rendering and selected gameplay/Save when a reachable authorized session is available. The static macro fills are deliberately labeled preview. No Lineage branch/PR disposition changes or cleanup are due; #5–#16 remain draft with exact-main selected acceptance/evidence triggers. Suggested commit: `ui: present marked nutrition preview and timed notices`. Next run: bounded hosted UI layout and selected-client review; no new development milestone or Game-version decision.
+Lineage source `a5e49c18b7fe2298bdc25e5e1e92c536782448b0` is pushed/read back. The separately authorized companion Site source `b5b78531754bb9bed3d498f61fc7987865d3a280` is pushed/read back and Sites **version 5** deployed successfully at `https://lineage-reforged-preview.vagabond1215.chatgpt.site`. Hosted browser reaches Account Login; authenticated in-game visual/Save acceptance remains held. The static macro fills are deliberately labeled preview. No Lineage branch/PR disposition changes or cleanup are due; #5–#16 remain draft with exact-main selected acceptance/evidence triggers. Next run: bounded hosted UI layout and selected-client review; no new development milestone or Game-version decision.
 
 ## 2026-10-24 — UI branch and worktree consolidation
 

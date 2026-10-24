@@ -21,3 +21,10 @@ Applied failure patterns: FP-001 (actual `InGameShell` render and top-bar render
 ## Branch disposition
 
 No Lineage PR or branch is merged, closed, rebased or deleted by this presentation patch. Draft PRs #5–#16 and their retained review triggers remain as recorded in `branch-disposition-register.md`; exact-main selected gameplay, Save/restart and evidence preservation still govern later retirement. The companion Site source receives only the four corresponding production files under the user's separate publication authorization. The next bounded UI review is actual hosted desktop/mobile layout and authenticated selected gameplay when access is available.
+
+## Publication readback
+
+- Lineage source commit `a5e49c18b7fe2298bdc25e5e1e92c536782448b0` was pushed to `origin/master` and read back exactly. The companion source began at remote `d08250cfac7e283194934a0436fd6b8cfa561cd5`; its four copied production blobs match the Lineage commit's blobs exactly.
+- The separately authorized companion source commit `b5b78531754bb9bed3d498f61fc7987865d3a280` was pushed and read back exactly on its `main`. Its Node typecheck and Vite build passed; the emitted `index-J7m_nQMv.js` and `index-CqtSiWBH.css` hashes match the Lineage build. The archive contains those assets and the hosting manifest.
+- Sites saved **version 5** from that exact companion SHA and reported deployment `appgdep_6add0df46d708191995bdf4b66e784a9` **succeeded** at `https://lineage-reforged-preview.vagabond1215.chatgpt.site`. The saved version readback confirms the same source SHA and an archive-backed version.
+- The hosted browser opens to Account Login. No credential was requested, guessed or bypassed, and no authenticated in-game visual, navigation or Save/restart acceptance is claimed. The earlier local in-app preview route timed out independently of this successful hosted deployment.
