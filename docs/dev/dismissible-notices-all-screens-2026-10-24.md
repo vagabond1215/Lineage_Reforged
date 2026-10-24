@@ -20,3 +20,10 @@ The shared toast defaults to eight seconds, honors a positive explicit timeout, 
 ## Branch and publication
 
 Fetched/pruned and reconfirmed the twelve open Lineage PRs #5–#16. This bounded notice pass does not consume any retained branch/PR review or deletion trigger. No PR merge, retarget, closure, branch deletion, schema or version change is due. The separately authorized companion Site source may receive only the exact matching production files from this pass; record its source SHA, archive and Sites version after publication.
+
+## Publication readback
+
+- Lineage implementation commit `e555c569c33d0fe7b798d3b10be380b5473d847d` was pushed to `origin/master` and read back exactly.
+- The separately authorized companion Site source began at remote `b5b78531754bb9bed3d498f61fc7987865d3a280`. Only `EpochApp.tsx`, `InGameShell.tsx` and new `NoticeToast.tsx` were copied; their Git blobs match the Lineage implementation commit. Companion commit `dfb74ac9d2fc102888e43070d441ad4f820abd6d` was pushed and read back exactly.
+- Companion Node typecheck and Vite build passed. The emitted `index-CIueNr_4.js` SHA-256 matches the Lineage build (`95C9ECFF6544C81352B6B1FF85299513BF0E317B86568F27E2988E49DE19E383`). The archive contains the client bundle, index and hosting manifest.
+- Sites saved **version 6** from that exact companion commit and reported deployment `appgdep_6add105a72c881918a4a06390a2024bd` **succeeded** at `https://lineage-reforged-preview.vagabond1215.chatgpt.site`. Saved-version readback confirmed the same source SHA and archive-backed version. Authenticated selected notice timing remains a separate hold.

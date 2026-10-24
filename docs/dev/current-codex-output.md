@@ -18,7 +18,7 @@ Focused UI 34/34, Node UI typecheck and Vite build pass. Broad TypeScript remain
 
 ### D. Risks / follow-up notes
 
-Local browser route timed out; hosted app reaches Account Login, so authenticated selected notice interactions and Save/restart remain held. Twelve open PRs #5–#16 retain their prior dispositions; no branch action is due. Suggested commit: `ui: use timed notice popups across Epoch screens`. Next bounded review: selected notice timing and keyboard behavior when authorized access exists; no new milestone or Game-version decision.
+Lineage implementation `e555c569c33d0fe7b798d3b10be380b5473d847d` and companion Site source `dfb74ac9d2fc102888e43070d441ad4f820abd6d` were pushed/read back; Sites **version 6** deployed successfully at `https://lineage-reforged-preview.vagabond1215.chatgpt.site`. Local browser route timed out; hosted app reaches Account Login, so authenticated selected notice interactions and Save/restart remain held. Twelve open PRs #5–#16 retain their prior dispositions; no branch action is due. Next bounded review: selected notice timing and keyboard behavior when authorized access exists; no new milestone or Game-version decision.
 
 ## 2026-10-24 — In-game notice toast and marked nutrition layout preview
 
