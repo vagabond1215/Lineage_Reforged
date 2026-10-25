@@ -16,7 +16,7 @@ Focused UI/owner **34/34 pass**, Character keyboard unit **1/1 pass**, Node type
 
 ### D. Risks / follow-up notes
 
-Localhost browser access was denied and authenticated hosted gameplay was unavailable, so selected viewport, action and Save/restart acceptance remain held. Draft #5–#16, creator/nutrition/protected branches and Game version are unchanged. Suggested commit: `ui: compact Character sheet and promote Inventory navigation`. Next bounded run: selected responsive/navigation review on exact main, followed by an owner-backed weather projection only if accepted.
+Localhost browser access was denied and authenticated hosted gameplay was unavailable, so selected viewport, action and Save/restart acceptance remain held. Lineage source commit `5f735b816df4461d26db61d2000fc5134d1b4798` and companion Site source `ccb0e004584eeb0cf5c86cae416ef0211aa811d6` were pushed/read back; private Site version 7 deployed successfully as `appgdep_6add699e55e081919c144ae099d663af`. Draft #5–#16, creator/nutrition/protected branches and Game version are unchanged. Suggested commit: `docs(ui): record Character sheet publication readback`. Next bounded run: selected responsive/navigation review on exact main, followed by an owner-backed weather projection only if accepted.
 
 # Current Codex Output
 
