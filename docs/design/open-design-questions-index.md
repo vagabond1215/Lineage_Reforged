@@ -172,6 +172,19 @@ Trigger: reopen when recipe learning/quality, bulk crafting, or family recipe in
 | Should recipe inheritance preserve one/multiple recipes, quality flags, or access rights? | Wait for inheritance/Prestige owner. | `DEFERRED_WITH_TRIGGER` |
 | Should crafting trials apply to every craft or only meaningful/high-risk/high-value work? | Planning favors meaningful work; exact runtime threshold waits for crafting execution authority. | `DEFERRED_WITH_TRIGGER` |
 
+## Deferred With Trigger - Attribute Precision, Wearable Fit, And Artisan Output
+
+User-settled direction (not an open question): all nine character attributes remain; the character-facing tile shows an integer while eligible engine calculations use a resolved value precise to **three decimal places**; meaningful training and recovery create gradual real gains. Armor/clothing must conditionally accommodate or block accessories, and belts, pockets, pouches, packs, sheaths and mounts must preserve physical compatibility, capacity and item identity. Craft output quality must have domain-specific material/workmanship/property variance; generated NPC artisans have stable individual skill variation around a trade-appropriate norm. See [consolidated deferred design intent](character-capability-equipment-storage-and-artisan-quality-deferred-intent-2026-10-25.md).
+
+Trigger: a narrowly scoped attribute-persistence/consumer migration, equipment-and-container item-instance feature, actual item-producing crafting command, or persistent generated-worker consumer becomes active.
+
+| Question | Current posture | Disposition |
+| --- | --- | --- |
+| What fixed-point representation and modifier order reconcile immutable base, developed adjustment, structural loss, recovery progress and effective three-decimal attributes without double-counting? | Integer-only player display and three-decimal mechanical effect are settled; save migration, bounds, threshold admission, arithmetic and formula consumers need focused ownership. | `DEFERRED_WITH_TRIGGER` |
+| Where do detailed body footprints, layers, sided attachments and allowed/conditional/blocked accommodation live without duplicating armor profile coverage, and what is the atomic relocation policy for filled equipment containers? | Equipment fit and persistent contents are settled intent; exact static-fit owner, runtime graph and migration require item-instance and container consumers. | `DEFERRED_WITH_TRIGGER` |
+| Which per-family functional workmanship dimensions and numeric grade thresholds apply, including material ceilings, repair/condition and quality inspection visibility? | Six-grade workmanship names are provisional; market assortment `band_0..band_3` is separate. Numeric bonuses, grade cutoffs and inspection authority are not yet accepted. | `DEFERRED_WITH_TRIGGER` |
+| What generated-artisan skill distributions, specializations and stage-specific STR/DEX/CON/INT/WIS contributions should drive consistent per-craft outputs, and when does mentorship affect production versus learning? | Stable per-NPC variance and bounded seeded output variation are settled intent; exact rank bands, probability curves, mentor/facility rules and identity owner are deferred. | `DEFERRED_WITH_TRIGGER` |
+
 ## Deferred With Trigger - Ecology, Agriculture, And Managed Breeding
 
 Trigger: reopen only when macro ecology or managed estate/workplace production becomes an active runtime lane.
