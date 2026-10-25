@@ -27,6 +27,7 @@ import {
   type CharacterInventoryCategory,
   type CharacterInventorySort,
   type CharacterPanelNotice,
+  type EquipmentEntry,
   type InventoryEntry
 } from './characterPanelState';
 import { matchesQuery, toneClasses } from '../utils';
@@ -119,6 +120,11 @@ function toDetail(item: ListItem | undefined) {
   };
 }
 
+function savedIdentityLabel(lineageId: string, collection: 'hairColorOptions' | 'eyeColorOptions' | 'skinToneOptions', optionId: string): string {
+  return getIdentityOptionLabel(lineageId, collection, optionId)
+    ?? optionId.split('.').pop()!.split('_').map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
+}
+
 export function selectVisibleItem<T extends { id: string }>(entries: T[], requestedId?: string): T | undefined {
   return requestedId ? entries.find((entry) => entry.id === requestedId) : entries[0];
 }
@@ -139,6 +145,37 @@ export function selectVisibleInventoryItem<T extends InventoryEntry>(
   inventory: SaveSnapshot['playerState']['inventory']
 ): T | undefined {
   return selection?.inventory === inventory ? entries.find((entry) => inventoryPresentationId(entry) === selection.key) : undefined;
+}
+
+export function EquipmentSlotPreview({
+  entry,
+  onInspect
+}: {
+  entry: EquipmentEntry;
+  onInspect: () => void;
+}) {
+  const artworkUrl = entry.item && entry.artworkUrl
+    ? resolveCharacterCreatorAssetUrl(entry.artworkUrl)
+    : null;
+  const [failedArtwork, setFailedArtwork] = useState<string | null>(null);
+  const showArtwork = artworkUrl !== null && artworkUrl !== failedArtwork;
+
+  return (
+    <button
+      type="button"
+      className={`character-sheet-slot ${entry.item ? 'is-occupied' : 'is-unoccupied'}`}
+      aria-label={`Inspect ${entry.slotLabel} slot: ${entry.item ? entry.itemTitle : 'unoccupied'}`}
+      onClick={onInspect}
+    >
+      <span className="character-sheet-slot-frame" aria-hidden="true">
+        {entry.item && (showArtwork
+          ? <img src={artworkUrl} alt="" loading="lazy" onError={() => setFailedArtwork(artworkUrl)} />
+          : <span className="character-sheet-slot-fallback">◆</span>)}
+      </span>
+      <span className="character-sheet-slot-label">{entry.slotLabel}</span>
+      {entry.item && <span className="character-sheet-slot-item">{entry.itemTitle}</span>}
+    </button>
+  );
 }
 
 export function CharacterPanel({
@@ -328,54 +365,40 @@ export function CharacterPanel({
   const background = backstoryOptions.find((option) => option.id === backstoryId)?.label;
   const equippedTitle = snapshot.playerState.titles.find((title) => title.equipped);
   const otherTitles = snapshot.playerState.titles.filter((title) => !title.equipped);
-  const leadingSkills = snapshot.playerState.skills
-    .map((skill) => ({ skill, item: skillItems.find((item) => item.id === skill.id) }))
-    .filter(({ skill, item }) => skill.rank > 0 && item)
-    .sort((left, right) => right.skill.rank - left.skill.rank)
-    .slice(0, 4);
-  const shownGear = equipmentEntries.filter((entry) => entry.item);
+  const overviewTraits = traitItems.filter((item) => item.subtitle === 'Trait');
+  const overviewEffects = traitItems.filter((item) => item.subtitle !== 'Trait');
   const allAttributeItems = characterData.lists.attributes ?? [];
   const overviewAttribute = allAttributeItems.find((item) => item.id === overviewAttributeId);
   const core = snapshot.playerState.coreData;
   const identity = core.identityProfile;
   const lineageArt = getLineageCardArt(core.lineageId);
-  const appearanceDetails = [
+  const baseDetails = [
+    ['Lineage', snapshot.playerState.originProfile.lineageLabel],
+    ['Background', background ?? null],
     ['Sex', core.sexId === 'female' ? 'Female' : core.sexId === 'male' ? 'Male' : null],
     ['Age', identity?.ageBandId ? getAgeBandLabel(identity.ageBandId) : null],
     ['Height', identity?.heightCm ? `${identity.heightCm} cm` : null],
     ['Build', identity?.physiqueId ? getPhysiqueLabel(identity.physiqueId) : null],
     ['Nature', identity?.natureId ? getNatureLabel(identity.natureId) : null],
     ['Focus', identity?.focusId ? getFocusLabel(identity.focusId) : null],
-    ['Hair', identity?.hairColorId ? getIdentityOptionLabel(core.lineageId, 'hairColorOptions', identity.hairColorId) : null],
-    ['Eyes', identity?.eyeColorId ? getIdentityOptionLabel(core.lineageId, 'eyeColorOptions', identity.eyeColorId) : null],
-    ['Skin', identity?.skinToneId ? getIdentityOptionLabel(core.lineageId, 'skinToneOptions', identity.skinToneId) : null]
+    ['Hair', identity?.hairColorId ? savedIdentityLabel(core.lineageId, 'hairColorOptions', identity.hairColorId) : null],
+    ['Eyes', identity?.eyeColorId ? savedIdentityLabel(core.lineageId, 'eyeColorOptions', identity.eyeColorId) : null],
+    ['Skin', identity?.skinToneId ? savedIdentityLabel(core.lineageId, 'skinToneOptions', identity.skinToneId) : null]
   ].filter((entry): entry is string[] => Boolean(entry[1]));
 
   const overviewMain = (
-    <div className="character-sheet panel-scroll h-full overflow-auto pr-1">
+    <div className="character-sheet panel-scroll h-full overflow-auto">
       {noticeBlock}
-      <section className="character-sheet-panel character-sheet-identity" aria-labelledby="character-sheet-name">
-        <div className="character-sheet-art">
-          {lineageArt
-            ? <img src={resolveCharacterCreatorAssetUrl(lineageArt.imageUrl)} alt={`${snapshot.playerState.originProfile.lineageLabel} lineage illustration, not a personal portrait`} loading="lazy" />
-            : <Icon name="character" className="h-12 w-12" />}
-          <span>Lineage illustration</span>
-        </div>
-        <div className="character-sheet-identity-copy">
-          <p className="character-sheet-kicker">Name &amp; appearance</p>
-          <h2 id="character-sheet-name" className="text-xl font-semibold text-amber-50">{core.playerName}</h2>
-          <p className="text-sm text-slate-300">
-            {[snapshot.playerState.originProfile.lineageLabel, background ? `Background: ${background}` : null, equippedTitle ? `Title: ${equippedTitle.name}` : null].filter(Boolean).join(' · ')}
-          </p>
-          {appearanceDetails.length > 0 && <dl className="character-sheet-appearance">
-            {appearanceDetails.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
-          </dl>}
-        </div>
-      </section>
-      <section className="character-sheet-panel character-sheet-attributes" aria-labelledby="character-sheet-attributes-title">
-        <h3 id="character-sheet-attributes-title">Attributes</h3>
-        <div className="character-sheet-attribute-grid">
-          {CHARACTER_ATTRIBUTE_ORDER.map((key) => {
+      <section className="character-sheet-upper" aria-labelledby="character-sheet-name">
+        <div className="character-sheet-rail">
+          <div className="character-sheet-art">
+            {lineageArt
+              ? <img src={resolveCharacterCreatorAssetUrl(lineageArt.imageUrl)} alt={`${snapshot.playerState.originProfile.lineageLabel} lineage illustration, not a personal portrait`} loading="lazy" />
+              : <Icon name="character" className="h-12 w-12" />}
+            <span>Lineage illustration</span>
+          </div>
+          <div className="character-sheet-attribute-stack" role="group" aria-label="Character attributes">
+            {CHARACTER_ATTRIBUTE_ORDER.map((key) => {
             const presentation = getCharacterAttributePresentation(key);
             const item = allAttributeItems.find((entry) => entry.id === `attr.${key.toLowerCase()}`);
             const adjustment = snapshot.playerState.originProfile.attributeAdjustments[key] ?? 0;
@@ -385,62 +408,80 @@ export function CharacterPanel({
                 type="button"
                 aria-expanded={overviewAttributeId === item?.id}
                 aria-controls={overviewAttributeId === item?.id ? 'character-attribute-detail' : undefined}
+                aria-label={`${presentation.fullName}, ${snapshot.playerState.attributes[key]}${adjustment ? `, origin adjustment ${adjustment > 0 ? '+' : ''}${adjustment}` : ''}`}
                 onClick={() => setOverviewAttributeId(overviewAttributeId === item?.id ? null : item?.id ?? null)}
                 className="character-sheet-attribute focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
               >
-                <span className="flex items-baseline justify-between gap-2">
-                  <span className="font-semibold text-amber-100">{key} <span className="font-normal text-slate-300">{presentation.fullName}</span></span>
-                  <span className="text-lg font-semibold text-slate-50">{snapshot.playerState.attributes[key]}</span>
-                </span>
-                {adjustment !== 0 && <span className="text-xs text-amber-200">Origin {adjustment > 0 ? '+' : ''}{adjustment}</span>}
+                <span className="character-sheet-attribute-abbr" aria-hidden="true">{key}</span>
+                <span className="character-sheet-attribute-value" aria-hidden="true">{snapshot.playerState.attributes[key]}</span>
+                {adjustment !== 0 && <span className="character-sheet-attribute-adjustment" aria-hidden="true">{adjustment > 0 ? '+' : ''}{adjustment}</span>}
               </button>
             );
-          })}
+            })}
+          </div>
+          {overviewAttribute && (
+            <div id="character-attribute-detail" role="region" aria-label={`${overviewAttribute.title} detail`} className="character-sheet-attribute-detail">
+              <strong>{overviewAttribute.detailTitle}</strong>
+              <p>{overviewAttribute.detailSummary}</p>
+              {overviewAttribute.detailGroups?.map((group) => (
+                <dl key={group.title}>
+                  {group.entries.map((entry) => (
+                    <div key={entry.label}><dt>{entry.label}</dt><dd>{entry.value}</dd></div>
+                  ))}
+                </dl>
+              ))}
+            </div>
+          )}
         </div>
-        {overviewAttribute && (
-          <div id="character-attribute-detail" role="region" aria-label={`${overviewAttribute.title} detail`} className="mt-3 rounded-xl border border-white/10 bg-black/10 p-3 text-sm text-slate-300">
-            <h3 className="font-semibold text-slate-50">{overviewAttribute.detailTitle}</h3>
-            <p className="mt-1">{overviewAttribute.detailSummary}</p>
-            {overviewAttribute.detailGroups?.map((group) => (
-              <dl key={group.title} className="mt-2 grid gap-x-4 gap-y-1 sm:grid-cols-2">
-                {group.entries.map((entry) => (
-                  <div key={entry.label}><dt className="text-slate-400">{entry.label}</dt><dd>{entry.value}</dd></div>
-                ))}
-              </dl>
+        <div className="character-sheet-profile">
+          <h2 id="character-sheet-name">{core.playerName}</h2>
+          {equippedTitle && <p className="character-sheet-title">{equippedTitle.name}</p>}
+          <dl className="character-sheet-base-data">
+            {baseDetails.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+          </dl>
+          <div className="character-sheet-equipment-matrix" role="group" aria-label="Equipped item slots">
+            {equipmentEntries.map((entry) => (
+              <EquipmentSlotPreview
+                key={entry.id}
+                entry={entry}
+                onInspect={() => {
+                  setSelectedId('equipment', entry.id);
+                  changeSection('equipment');
+                }}
+              />
             ))}
           </div>
-        )}
+        </div>
       </section>
-      <section className="character-sheet-panel character-sheet-skills" aria-labelledby="character-sheet-skills-title">
-          <h3 id="character-sheet-skills-title">Developed Skills</h3>
-          {leadingSkills.length === 0 ? <p className="text-sm text-slate-400">No developed skills yet.</p> : (
-            <ul className="space-y-2 text-sm text-slate-200">
-              {leadingSkills.map(({ skill, item }) => <li key={skill.id} className="flex justify-between gap-3"><span>{item?.title}</span><span>Rank {skill.rank}</span></li>)}
-            </ul>
-          )}
+      <div className="character-sheet-progression">
+        <details className="character-sheet-expandable">
+          <summary>Skills <span>{skillItems.length}</span></summary>
+          {skillItems.length ? <ul>{skillItems.map((item) => <li key={item.id}><span>{item.title}</span><span>{item.meta}</span></li>)}</ul> : <p>No developed skills yet.</p>}
           <button type="button" onClick={() => changeSection('skills')} className="character-sheet-link">View Skills</button>
-      </section>
-      <section className="character-sheet-panel character-sheet-growth" aria-labelledby="character-sheet-growth-title">
-          <h3 id="character-sheet-growth-title">Echo &amp; Growth</h3>
-          <div className="grid grid-cols-2 gap-3 text-sm text-slate-300">
-            <div><span className="block text-slate-400">Echo Level</span><strong className="text-xl text-slate-50">{snapshot.playerState.progression.level}</strong></div>
-            <div><span className="block text-slate-400">Resource Growth</span><strong className="text-xl text-slate-50">{snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel}</strong></div>
-          </div>
-          <p className="mt-2 text-sm text-slate-400">Echo adjusted {snapshot.playerState.progression.echo.echoAdjusted.toFixed(2)}</p>
-      </section>
-      <section className="character-sheet-panel character-sheet-traits" aria-labelledby="character-sheet-traits-title">
-        <h3 id="character-sheet-traits-title">Traits &amp; Effects</h3>
-        {traitItems.length ? <ul className="character-sheet-compact-list">{traitItems.slice(0, 4).map((item) => <li key={item.id}>{item.title}</li>)}</ul> : <p className="text-sm text-slate-400">No recorded traits or effects.</p>}
-        <button type="button" onClick={() => changeSection('traits')} className="character-sheet-link">View Traits &amp; Effects</button>
-      </section>
-      <section className="character-sheet-panel character-sheet-equipment" aria-labelledby="character-sheet-equipment-title">
-          <h3 id="character-sheet-equipment-title">Equipped Gear <span className="text-xs font-normal text-slate-400">{shownGear.length} / {equipmentEntries.length} slots</span></h3>
-          {shownGear.length ? <ul className="character-sheet-gear-list">
-            {shownGear.map((entry) => <li key={entry.id}><span className="text-slate-400">{entry.slotLabel}:</span> {entry.itemTitle}</li>)}
-          </ul> : <p className="text-sm text-slate-400">No gear equipped.</p>}
-          <button type="button" onClick={() => changeSection('equipment')} className="character-sheet-link">View Equipment</button>
-      </section>
-      {otherTitles.length > 0 && <section className="character-sheet-panel character-sheet-titles" aria-labelledby="character-sheet-titles-title"><h3 id="character-sheet-titles-title">Other Earned Titles</h3><p className="text-sm text-slate-200">{otherTitles.slice(0, 3).map((title) => title.name).join(' · ')}</p></section>}
+        </details>
+        <details className="character-sheet-expandable">
+          <summary>Traits <span>{overviewTraits.length}</span></summary>
+          {overviewTraits.length ? <ul>{overviewTraits.map((item) => <li key={item.id}>{item.title}</li>)}</ul> : <p>No recorded traits.</p>}
+          <button type="button" onClick={() => changeSection('traits')} className="character-sheet-link">View Traits &amp; Effects</button>
+        </details>
+        <details className="character-sheet-expandable">
+          <summary>Effects <span>{overviewEffects.length}</span></summary>
+          {overviewEffects.length ? <ul>{overviewEffects.map((item) => <li key={item.id}>{item.title}</li>)}</ul> : <p>No active effects.</p>}
+          <button type="button" onClick={() => changeSection('traits')} className="character-sheet-link">View Traits &amp; Effects</button>
+        </details>
+        <details className="character-sheet-expandable">
+          <summary>Echo &amp; Growth</summary>
+          <dl>
+            <div><dt>Echo Level</dt><dd>{snapshot.playerState.progression.level}</dd></div>
+            <div><dt>Resource Growth</dt><dd>{snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel}</dd></div>
+            <div><dt>Echo adjusted</dt><dd>{snapshot.playerState.progression.echo.echoAdjusted.toFixed(2)}</dd></div>
+          </dl>
+        </details>
+        {otherTitles.length > 0 && <details className="character-sheet-expandable">
+          <summary>Earned Titles <span>{otherTitles.length}</span></summary>
+          <ul>{otherTitles.map((title, index) => <li key={`${title.name}.${index}`}>{title.name}</li>)}</ul>
+        </details>}
+      </div>
     </div>
   );
 

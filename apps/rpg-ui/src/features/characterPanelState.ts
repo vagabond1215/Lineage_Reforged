@@ -74,6 +74,7 @@ export type EquipmentEntry = {
   slotLabel: string;
   item: EquippedItemRef | null;
   itemTitle: string;
+  artworkUrl: string | null;
   category: Exclude<CharacterInventoryCategory, 'all'>;
   detail: CharacterDetailCardData;
 };
@@ -103,11 +104,18 @@ const EQUIPMENT_SLOT_LABELS: Record<EquipmentSlotId, string> = {
 };
 
 const ITEM_CONTENT_BY_ID = new Map(
-  (itemCatalog.records as Array<{ id: string; itemKey: string; tags?: string[]; consumableProfileId?: string }>).map((record) => [
+  (itemCatalog.records as Array<{ id: string; itemKey: string; tags?: string[]; consumableProfileId?: string; imageUrl?: string }>).map((record) => [
     record.id,
     record
   ])
 );
+
+function getItemArtworkUrl(itemId: string | null): string | null {
+  const imageUrl = itemId ? ITEM_CONTENT_BY_ID.get(itemId)?.imageUrl : null;
+  return typeof imageUrl === 'string' && /^\/(?:items|character-creator)\/[A-Za-z0-9/_-]+\.(?:png|webp|jpe?g|svg)$/.test(imageUrl)
+    ? imageUrl
+    : null;
+}
 const CONSUMABLE_PROFILE_BY_ID = new Map(
   (
     consumableProfileCatalog.records as Array<{
@@ -674,6 +682,7 @@ export function buildEquipmentEntries(snapshot: SaveSnapshot): EquipmentEntry[] 
       slotLabel: EQUIPMENT_SLOT_LABELS[slotId],
       item,
       itemTitle,
+      artworkUrl: getItemArtworkUrl(item?.itemId ?? null),
       category,
       detail: {
         title: itemTitle,

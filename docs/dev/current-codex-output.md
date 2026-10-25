@@ -1,3 +1,23 @@
+## 2026-10-25 — Compact scalable Character Overview
+
+**Run:** unversioned Character UI presentation on `master` from `401b9761536d38635ac6945ad010c64c71666835`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development-milestone impact `none`, game-version impact `none`. DEV-0.7.2.13 remains parked. [Focused record](compact-character-overview-sheet-2026-10-25.md).
+
+### A. Files changed
+
+CharacterPanel, character-sheet CSS, equipment presentation projection, Overview render test, UI boundary and current coordination records.
+
+### B. Patch summary
+
+Portrait and all nine inspectable attributes form the left rail; saved base identity and all 17 canonical equipment frames occupy the adjacent area. Empty frames have no item image or visible Empty label; current items use the restrained fallback because no item artwork is authored. Skills, Traits, Effects, Echo/Growth and earned titles expand independently without preview truncation. Equipment and Inventory owner actions and save state are unchanged.
+
+### C. Tests and checks run
+
+Overview rendering **1/1**, full UI **35/35**, relevant owner actions **13/13**, Node UI typecheck and Vite build pass. Broad UI TypeScript **115 existing diagnostics**, equal to clean-main baseline, with none newly introduced in touched files. `git diff --check` passes. FP-001/002/009/016 evidence and the visual-check limitation are in the focused record.
+
+### D. Risks / follow-up notes
+
+Windows Computer Use stopped after it could not verify the active browser URL; live viewport, keyboard and authenticated selected-client acceptance remain open. UI drafts #5–#16, creator/nutrition/protected branches and Game version retain their dispositions; no branch action was due. Suggested commit: `feat(ui): compact scalable Character Overview`. Next: authorized selected Character viewport/keyboard/Save review, then separately add real item art if authored.
+
 ## 2026-10-25 — Six-season calendar and top-bar emblems
 
 **Run:** unversioned UI/calendar support on `master` from `c74ba8cbd`; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; development-milestone and game-version impacts `none`. DEV-0.7.2.13 stays parked. [Focused record](six-season-calendar-topbar-2026-10-25.md).
