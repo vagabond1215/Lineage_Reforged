@@ -1,3 +1,23 @@
+## 2026-10-25 — Selected Character sheet completion
+
+**Source run:** unversioned Character UI presentation completion; branch/status `master`, source `03f668795d0c331944471c030f8fb054890ab865` pushed/read back; Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; parent development milestone n/a; development-milestone impact `none`; game-version impact `none`. [Focused evidence](character-sheet-selected-finish-2026-10-25.md).
+
+### A. Files changed
+
+CharacterPanel, Character sheet CSS, InGameShell, focused Overview/navigation tests, three selected screenshots, focused record and current coordination records.
+
+### B. Patch summary
+
+Square bounded art and right-column attribute/progression detail removed the unused desktop sheet band. Distinct Character/Inventory component identities fixed selected navigation showing Inventory heading above stale Equipment content. The profile grid's explicit bounded column removed selected 375px horizontal clipping (`719` to `295` scroll width inside a `295`px profile). Gameplay owners and save schemas are unchanged.
+
+### C. Tests and checks run
+
+Three red-before-green focused assertions; final UI **36/36**, Node UI typecheck pass, Vite build pass, broad UI TypeScript **115 preexisting diagnostics** equal to baseline, `git diff --check` pass. Authorized selected Brave Slot 1 proved nine attributes, 17 slots, Enter toggle, Pickaxe unequip→bag→Save/restart→re-equip→Save/restart with quantity 1 and 100% durability. Selected layouts inspected at 375×667, 768×812 and desktop. FP-001/002/009/016 evidence is in the focused record.
+
+### D. Risks / follow-up notes
+
+Normal-zoom Equipment selected-slot action reachability remains a separate UI defect; 80% browser zoom exposed the control for the selected round trip. No authored item art, live weather mapping or nutrition reserve owner was invented. Lineage source commits `77ed9747`, `0882a026`, `03f66879` and companion Site source `89c52e14` were pushed/read back; owner-private Site version 13 deployed successfully as `appgdep_6ade1f6cfe608191a6921ad562639724`. Draft PRs #5–#16 retain their existing holds; no branch action due. Suggested commit: `docs(dev): record selected Character sheet completion`. Next: bounded Equipment action reachability at 100% zoom; preserve DEV-0.7.2.13 and Game version.
+
 ## 2026-10-25 — Weather artwork and root scaffold placement
 
 **Run:** unversioned Lineage asset organization on `master` after compact Character source `508f1ea0`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development-milestone and game-version impacts `none`. DEV-0.7.2.13 remains parked. [Focused record](weather-artwork-root-placement-2026-10-25.md).

@@ -1,3 +1,7 @@
+## 2026-10-25 selected Character sheet checkpoint
+
+Fetched/pruned `master` began at `f7685d49` and finished source work at pushed/read-back `03f66879`; the authorized Site version 13 is deployed. [Exact selected evidence and screenshots](character-sheet-selected-finish-2026-10-25.md) prove the current-main Character/Pickaxe route, but do not merge historical draft heads or exhaust their unique evidence. Draft PRs #5–#16 retain `HOLD_NAMED_CONSUMER`; creator, nutrition, protected and administrative refs retain prior dispositions. No merge, rebase, retarget, closure or deletion is due. Reinspect exact heads and named consumers during a dedicated evidence-promotion/branch-retirement pass; next functional UI repair is normal-zoom Equipment action reachability.
+
 ## 2026-10-25 compact Character Overview checkpoint
 
 At fetched/pruned `master` `401b9761536d38635ac6945ad010c64c71666835`, this bounded presentation pass consumes no draft UI PR's unique evidence or selected-client acceptance trigger. Draft PRs #5–#16 remain `HOLD_NAMED_CONSUMER`; creator, nutrition, protected and administrative refs retain their dispositions. No merge, rebase, retarget, closure or deletion is due. Reinspect exact refs after authenticated Character navigation/Save acceptance and evidence promotion. [Focused record](compact-character-overview-sheet-2026-10-25.md).
