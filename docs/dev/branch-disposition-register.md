@@ -1,3 +1,7 @@
+## 2026-10-24 Character Attributes and Codex Atlas checkpoint
+
+At fetched/pruned inspected `master` `7428c66d`, this bounded navigation change consumes no draft PR's unique evidence or exact-main selected-client acceptance trigger. UI draft PRs #5–#16 remain `HOLD_NAMED_CONSUMER`; creator, nutrition, protected and administrative refs retain their existing dispositions. No merge, rebase, retarget, close or deletion is due. Lineage implementation `1989abcff5d5862ffa6c65169de21c6dcacaff11` was pushed/read back; the separately authorized Site source `25020c69c3ee5c2cd50328ad653a03a77efdafe5` was deployed as owner-private Site version 8. [Focused record](character-attributes-and-codex-atlas-2026-10-24.md). Reinspect exact refs when authenticated selected navigation/Save acceptance and unique evidence promotion are available; no branch disposition changed.
+
 ## 2026-10-24 compact Character sheet checkpoint
 
 At fetched/pruned `master` `ea8923fe`, this bounded presentation pass adds Inventory as a main dock destination and condenses Character Overview. It does not consume the unique evidence or selected-client acceptance required to close drafts #5–#16. Those PRs retain `HOLD_NAMED_CONSUMER`; no merge, rebase, retarget, close or branch deletion is due. Creator, nutrition and protected branches retain their prior dispositions. [Focused record](compact-character-sheet-ui-2026-10-24.md). Reinspect exact refs when selected gameplay/Save acceptance or evidence promotion closes a named consumer.

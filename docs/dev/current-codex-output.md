@@ -18,6 +18,26 @@ Focused UI/owner **34/34 pass**, Character keyboard unit **1/1 pass**, Node type
 
 Localhost browser access was denied and authenticated hosted gameplay was unavailable, so selected viewport, action and Save/restart acceptance remain held. Lineage source commit `5f735b816df4461d26db61d2000fc5134d1b4798` and companion Site source `ccb0e004584eeb0cf5c86cae416ef0211aa811d6` were pushed/read back; private Site version 7 deployed successfully as `appgdep_6add699e55e081919c144ae099d663af`. Draft #5–#16, creator/nutrition/protected branches and Game version are unchanged. Suggested commit: `docs(ui): record Character sheet publication readback`. Next bounded run: selected responsive/navigation review on exact main, followed by an owner-backed weather projection only if accepted.
 
+## 2026-10-24 — Character Attributes and Codex Atlas
+
+**Run:** unversioned UI navigation on `master` from inspected `7428c66d`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development milestone and game-version impacts `none`. DEV-0.7.2.13 stays parked. [Focused record](character-attributes-and-codex-atlas-2026-10-24.md).
+
+### A. Files changed
+
+CharacterPanel, CodexPanel, section/view-model navigation, Atlas/Overview/keyboard tests, UI boundary and focused/coordination records.
+
+### B. Patch summary
+
+Removed duplicate Character Attributes and Geographic Knowledge subsections. Overview retains nine selectable attribute details; Codex Atlas reuses visible owner-backed lands, regions and settlements with search, count and a read-only detail view. No map, travel or save owner changed.
+
+### C. Tests and checks run
+
+UI **35/35** and keyboard/geographic unit **4/4** pass; Node UI typecheck and Vite build pass. Broad TypeScript retains **117 baseline diagnostics** after a new nullable count was repaired. `git diff --check` passes. FP-001/002/009/016 evidence is in the focused record.
+
+### D. Risks / follow-up notes
+
+Lineage implementation `1989abcff5d5862ffa6c65169de21c6dcacaff11` and companion Site source `25020c69c3ee5c2cd50328ad653a03a77efdafe5` were pushed/read back; owner-private Site version 8 deployed as `appgdep_6add7e3e999c8191be99f00849796ca8`. Hosted preview remains at Account Login, so selected navigation and Save/restart are held. Draft #5–#16 retain named consumers; no branch action was due. Suggested commit: `docs(ui): record Atlas publication readback`. Next run: authorized selected viewport/navigation and Save review; no Game-version decision.
+
 # Current Codex Output
 
 ## 2026-10-24 — Safe UI branch integration and Site synchronization
