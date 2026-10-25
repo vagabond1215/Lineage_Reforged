@@ -48,6 +48,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     const sheetStyles = readFileSync(new URL('../src/features/character-sheet.css', import.meta.url), 'utf8');
     assert.match(sheetStyles, /\.character-sheet-upper\s*\{[^}]*grid-template-columns:\s*minmax\(8\.5rem, 10\.5rem\) minmax\(0, 1fr\)/s);
     assert.match(sheetStyles, /\.character-sheet-art\s*\{[^}]*aspect-ratio:\s*1\s*\/\s*1/s);
+    assert.match(sheetStyles, /\.character-sheet-profile\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)/s, 'profile grid must stay within the mobile content column');
     assert.match(sheetStyles, /\.character-sheet-attribute-stack\s*\{[^}]*display:\s*grid/s);
     assert.match(sheetStyles, /@media \(max-width: 640px\)/);
     assert.match(html, /View Skills/);

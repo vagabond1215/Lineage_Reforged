@@ -19,7 +19,7 @@
 
 .character-sheet-rail, .character-sheet-profile { min-width: 0; }
 .character-sheet-rail { display: grid; align-content: start; gap: 0.35rem; }
-.character-sheet-profile { display: grid; align-content: start; }
+.character-sheet-profile { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; }
 .character-sheet-art {
   position: relative;
   display: grid;
