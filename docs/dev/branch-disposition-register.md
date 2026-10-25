@@ -1,6 +1,6 @@
 ## 2026-10-25 six-season calendar/top-bar checkpoint
 
-At fetched/pruned synchronized `master` `c74ba8cbd`, this bounded calendar/art pass consumes no draft UI PR's unique evidence or exact-main selected-client acceptance trigger. Draft PRs #5–#16 remain `HOLD_NAMED_CONSUMER`; creator, nutrition, protected and administrative refs retain their existing dispositions. No merge, rebase, retarget, closure or deletion is due. Reinspect exact refs after selected gameplay/Save acceptance and evidence promotion. [Focused record](six-season-calendar-topbar-2026-10-25.md).
+At fetched/pruned synchronized `master` `c74ba8cbd`, this bounded calendar/art pass consumes no draft UI PR's unique evidence or exact-main selected-client acceptance trigger. Lineage implementation `9222f564460403098d397d4393ab286d68e460cf` was pushed/read back; the authorized companion Site version 9 was deployed. Draft PRs #5–#16 remain `HOLD_NAMED_CONSUMER`; creator, nutrition, protected and administrative refs retain their existing dispositions. No merge, rebase, retarget, closure or deletion is due. Reinspect exact refs after selected gameplay/Save acceptance and evidence promotion. [Focused record](six-season-calendar-topbar-2026-10-25.md).
 
 ## 2026-10-24 Character Attributes and Codex Atlas checkpoint
 

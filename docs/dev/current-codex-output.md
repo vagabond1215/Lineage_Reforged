@@ -16,7 +16,7 @@ Focused calendar/art/SaveSnapshot **14/14**, full UI **35/35**, owner/economy/sn
 
 ### D. Risks / follow-up notes
 
-Authenticated selected UI and Save/restart proof remains held. UI drafts #5–#16, creator/nutrition/protected branches and Game version retain current dispositions; no branch action was due. Suggested commit: `feat(calendar): name six seasons and show emblems in top bar`. Next: authorized selected calendar/viewport review and later owner-backed weather projection.
+Authenticated selected UI and Save/restart proof remains held. Lineage implementation `9222f564460403098d397d4393ab286d68e460cf` and separately authorized Site source `47e66ad3aa265d1724395ba87dc7d65200492cb8` were pushed/read back; owner-private Site version 9 deployed successfully as `appgdep_6add8208aaf0819195a34e7dfcf93b2b`. UI drafts #5–#16, creator/nutrition/protected branches and Game version retain current dispositions; no branch action was due. Suggested commit: `docs(ui): record six-season Site publication`. Next: authorized selected calendar/viewport review and later owner-backed weather projection.
 
 ## 2026-10-24 — Compact Character sheet and Inventory dock
 
