@@ -575,6 +575,14 @@ Rules:
 - Combat skill gain should stay policy-routed and source-capped.
 - Species-slayer/family titles should wait for durable combat history, enemy taxonomy, and family ledger ownership.
 
+### Deferred Wearable Equipment, Item Instances, And Physical Storage (2026-10-25)
+
+User direction: equipment occupies anatomical footprints and layers rather than only exclusive broad slots; armor/clothing may allow, restrict, conceal, or block accessories independently of whether they provide attachment hardware. Belts, straps, pockets, pouches, sheaths, scabbards, quivers, satchels and backpacks need authored attachment/compartment constraints, finite bulk and mass, independent or integrated construction, and durable host/child relationships. An accessory fitting under a layer is distinct from being accessible or usable there.
+
+Item quality can affect fastening reliability, safe loads, articulation and physical tolerances, but cannot invent mounts or bypass genuine collisions. Static capabilities belong to reconciled equipment fit and container authorities; runtime owns specific attachment/containment graph, condition, movement, persistence and atomic validity. The compact Character sheet should reveal contextual item slots/attachments when selected rather than displaying permanent labels for every possible pocket or loop.
+
+Focused owner map, migrations, fixtures, and reopening triggers: [Character Capability, Wearable Equipment, Storage, And Artisan Quality Deferred Intent](character-capability-equipment-storage-and-artisan-quality-deferred-intent-2026-10-25.md). No schema or UI migration is authorized by this ledger note.
+
 ## Economy, Production, And Opportunity Criteria
 
 Do economic clarity before full economic simulation.
@@ -629,6 +637,14 @@ Guardrails:
 - Magical conductivity or affinity must not itself grant spell ownership, spell execution, enchantment success, or free energy; those remain separate magic/runtime authorities.
 - Economy-owned value should remain contextual and derived from scarcity, demand, workmanship, provenance, and use rather than being copied as a crafting-owned field.
 - Avoid combinatorial content explosion. Prefer reusable property profiles plus authored constraints and bounded outcome rules over hand-authoring every possible material/item permutation.
+
+### Deferred Fractional Attributes, Workmanship, And Artisan Competence (2026-10-25)
+
+The nine player attributes remain one growth/current-attribute system: immutable base plus developed/structural/temporary adjustments. Ordinary tiles show an integer, but eligible calculations should ultimately use a resolved three-decimal attribute (e.g. STR 12 displayed while 12.527 is effective). Preserve qualified-load/recovery conversion, anti-triviality, seeded variance and no duplicate muscle-growth ledger. Exact persistence, rounding and formula consumers require focused integration and migration.
+
+Item workmanship should use domain-specific property vectors (e.g. sword edge/balance/maximum durability; pouch seams/closure/load; armor fit/articulation), not universal grade bonuses. Poor/Standard/Good/Fine/Excellent/Masterwork is a provisional crafting vocabulary, independent of market assortment bands, item material, rarity, current damage and price. Generated artisans should have stable personal skill variation around trade-appropriate competence and produce bounded, individualized results influenced by actual attributes, skill, recipe, tools, facilities, material, mentor involvement and recovery. Civilization's current `qualityFactor` remains an economic estimate, not actual per-instance output.
+
+Details, current gaps, authority references, acceptance fixtures and reopening triggers: [Character Capability, Wearable Equipment, Storage, And Artisan Quality Deferred Intent](character-capability-equipment-storage-and-artisan-quality-deferred-intent-2026-10-25.md). These are deferred design criteria, not accepted numeric formulas or implementation authority.
 
 ## Calendar, Climate, Travel, And World Criteria
 
