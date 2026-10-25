@@ -16,7 +16,7 @@ Weather copy SHA-256 **27/27**, season SHA-256 **6/6**, weather PNG decode **27/
 
 ### D. Risks / follow-up notes
 
-Nonempty `C:\Codex\2026-09-12` belongs to another project and remains outside this repository's mutation authority. Draft PRs #5–#16 and protected refs retain dispositions; no branch action due. Suggested commit: `chore(assets): organize weather source artwork`. Next: define a weather owner/mapping before publishing or displaying these icons.
+Nonempty `C:\Codex\2026-09-12` belongs to another project and remains outside this repository's mutation authority. Asset commit `ac813b30e5138ae512c36a68d4b3939ec7f92a96` was pushed/read back. Draft PRs #5–#16 and protected refs retain dispositions; no branch action due. Suggested commit: `chore(assets): organize weather source artwork`. Next: define a weather owner/mapping before publishing or displaying these icons.
 
 ## 2026-10-25 — Compact scalable Character Overview
 
@@ -36,7 +36,7 @@ Overview rendering **1/1**, full UI **35/35**, relevant owner actions **13/13**,
 
 ### D. Risks / follow-up notes
 
-Windows Computer Use stopped after it could not verify the active browser URL; live viewport, keyboard and authenticated selected-client acceptance remain open. UI drafts #5–#16, creator/nutrition/protected branches and Game version retain their dispositions; no branch action was due. Suggested commit: `feat(ui): compact scalable Character Overview`. Next: authorized selected Character viewport/keyboard/Save review, then separately add real item art if authored.
+Windows Computer Use stopped after it could not verify the active browser URL; live viewport, keyboard and authenticated selected-client acceptance remain open. Lineage implementation `508f1ea086b185949cfefed4a76024aa19fc35e4` and authorized Site source `813fc0c2d442874168741c60a9e7ad07a0f61452` were pushed/read back; owner-private Site version 10 deployed successfully as `appgdep_6ade178d91d48191a731e7dbebe9a58d`. UI drafts #5–#16, creator/nutrition/protected branches and Game version retain their dispositions; no branch action was due. Suggested commit: `feat(ui): compact scalable Character Overview`. Next: authorized selected Character viewport/keyboard/Save review, then separately add real item art if authored.
 
 ## 2026-10-25 — Six-season calendar and top-bar emblems
 
