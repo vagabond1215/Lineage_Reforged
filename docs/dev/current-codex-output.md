@@ -1,3 +1,23 @@
+## 2026-10-25 — Weather artwork and root scaffold placement
+
+**Run:** unversioned Lineage asset organization on `master` after compact Character source `508f1ea0`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development-milestone and game-version impacts `none`. DEV-0.7.2.13 remains parked. [Focused record](weather-artwork-root-placement-2026-10-25.md).
+
+### A. Files changed
+
+27 source weather PNGs under `assets/weather/source/`, asset README, focused record and current coordination records. Outside the repository, 33 hash-verified duplicate/copied root PNGs and two empty task scaffolds were removed; the user-retained Wind Mage image and unrelated project work were left in place.
+
+### B. Patch summary
+
+Weather art is organized as source material without shipping it or implying current weather owner state. Already-published season art remains in its canonical UI asset folder. No gameplay, calendar, save or UI behavior changed.
+
+### C. Tests and checks run
+
+Weather copy SHA-256 **27/27**, season SHA-256 **6/6**, weather PNG decode **27/27**; empty scaffold predelete file count zero and path checks passed. No runtime test applies to unreferenced source artwork. FP-009: exact hashes and deletion inventory read back. No other failure pattern applies.
+
+### D. Risks / follow-up notes
+
+Nonempty `C:\Codex\2026-09-12` belongs to another project and remains outside this repository's mutation authority. Draft PRs #5–#16 and protected refs retain dispositions; no branch action due. Suggested commit: `chore(assets): organize weather source artwork`. Next: define a weather owner/mapping before publishing or displaying these icons.
+
 ## 2026-10-25 — Compact scalable Character Overview
 
 **Run:** unversioned Character UI presentation on `master` from `401b9761536d38635ac6945ad010c64c71666835`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development-milestone impact `none`, game-version impact `none`. DEV-0.7.2.13 remains parked. [Focused record](compact-character-overview-sheet-2026-10-25.md).
