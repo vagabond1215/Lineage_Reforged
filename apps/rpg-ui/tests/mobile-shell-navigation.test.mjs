@@ -41,3 +41,9 @@ test('responsive shell retains seven keyboard-reachable gameplay destinations an
     await vite.close();
   }
 });
+
+test('Character and Inventory mount distinct panel instances so subsection state cannot cross destinations', () => {
+  const shell = readFileSync(new URL('../src/game-shell/InGameShell.tsx', import.meta.url), 'utf8');
+  assert.match(shell, /activeTab === 'character'[\s\S]*?<CharacterPanel key="character"/);
+  assert.match(shell, /activeTab === 'inventory'[\s\S]*?<CharacterPanel key="inventory"[^>]*initialSection="inventory" inventoryOnly/);
+});
