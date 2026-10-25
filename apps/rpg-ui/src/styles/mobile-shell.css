@@ -24,11 +24,6 @@
     padding: 0.375rem 0.625rem;
   }
 
-  .gameplay-shell [aria-label="Character sections"] {
-    padding-top: 0.375rem;
-    padding-bottom: 0.375rem;
-  }
-
   .gameplay-shell #top-bar-condition-detail {
     left: auto;
     right: 0;

@@ -33,13 +33,9 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     );
 
     assert.equal(JSON.stringify(demoSnapshot), before, 'render must not mutate the snapshot');
-    assert.match(html, /aria-label="Character sections"/);
-    assert.match(html, /aria-current="page"[^>]*>Overview/);
-    const characterSections = html.match(/<nav aria-label="Character sections"[\s\S]*?<\/nav>/)?.[0] ?? '';
-    assert.doesNotMatch(characterSections, />Attributes(?:<|\s)/, 'attribute details live on Overview');
-    assert.doesNotMatch(characterSections, /Geographic Knowledge|Atlas/, 'Atlas lives in Codex');
-    assert.match(html, /Equipment/);
-    assert.doesNotMatch(html.match(/<nav aria-label="Character sections"[\s\S]*?<\/nav>/)?.[0] ?? '', /Inventory/, 'Inventory is a main dock destination');
+    assert.doesNotMatch(html, /aria-label="Character sections"/, 'the sheet has no redundant subsection bar');
+    assert.doesNotMatch(html, /Back to Character/, 'the Overview does not need a return control');
+    assert.match(html, /Manage Equipment/, 'equipment actions remain reachable from the matrix');
     assert.match(html, /character-sheet/);
     assert.doesNotMatch(html, /Name &amp; appearance|Equipped Gear/);
     assert.match(html, /lineage illustration, not a personal portrait/);
@@ -113,8 +109,9 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(artHtml, /<img[^>]*src="\/character-creator\/lineages\/lineage-human.png"/, 'controlled available asset renders');
     assert.doesNotMatch(artHtml, /character-sheet-slot-fallback/);
     assert.match(renderToStaticMarkup(React.createElement(EquipmentSlotPreview, { entry: { ...illustratedEntry, artworkUrl: null }, onInspect: () => {} })), /character-sheet-slot-fallback/);
-    assert.equal((html.match(/<details class="character-sheet-expandable"/g) ?? []).length, 5, 'existing earned titles remain independently expandable');
-    for (const name of ['Skills', 'Traits', 'Effects', 'Echo &amp; Growth']) assert.match(html, new RegExp(`<summary>${name}`));
+    assert.equal((html.match(/<details class="character-sheet-expandable"/g) ?? []).length, 8, 'all records and earned titles remain independently expandable');
+    for (const name of ['Skills', 'Traits', 'Effects', 'Echo &amp; Growth', 'Standing', 'Reputation', 'Discoveries']) assert.match(html, new RegExp(`<summary>${name}`));
+    for (const name of ['Skills', 'Standing', 'Reputation', 'Discoveries']) assert.match(html, new RegExp(`View ${name}`), `${name} detailed view remains reachable`);
     assert.match(sheetStyles, /\.character-sheet-equipment-matrix\s*\{[^}]*repeat\(auto-fill, minmax\(5\.1rem, 1fr\)\)/s);
     assert.match(sheetStyles, /@media \(max-width: 640px\)[\s\S]*?\.character-sheet-upper\s*\{\s*grid-template-columns:\s*minmax\(0, 1fr\)/);
 
@@ -146,7 +143,8 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     );
     assert.match(sparseHtml, /No developed skills yet/);
     assert.equal((sparseHtml.match(/class="character-sheet-slot is-unoccupied"/g) ?? []).length, 17);
-    assert.doesNotMatch(sparseHtml.match(/<nav aria-label="Character sections"[\s\S]*?<\/nav>/)?.[0] ?? '', /Inventory/);
+    assert.doesNotMatch(sparseHtml, /aria-label="Character sections"/);
+    assert.match(sparseHtml, /<summary>Standing <span>2<\/span><\/summary>/, 'unrelated owner records survive a sparse inventory');
     assert.doesNotMatch(sparseHtml, /Other Earned Titles|Title:|Background:/);
     assert.doesNotMatch(sparseHtml, />Empty(?: Slot)?</);
     assert.doesNotMatch(sparseHtml, /<dt>Height<\/dt>|<dt>Hair<\/dt>/);
@@ -173,6 +171,14 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(progressedHtml, /Effect 10/);
     assert.match(progressedHtml, /<summary>Skills <span>18<\/span><\/summary>/);
     assert.match(progressedHtml, /<summary>Traits <span>12<\/span><\/summary>/);
+    const equipmentHtml = renderToStaticMarkup(React.createElement(GameSessionProvider, {
+      accountProfile: createDefaultAccountProfileState(), snapshot: demoSnapshot, campaignSessionControl: {}, onSnapshotChange: () => {}
+    }, React.createElement(CharacterPanel, {
+      accent: 'var(--color-character)', searchQuery: '', pinnedIds: [], onTogglePin: () => {}, initialSection: 'equipment'
+    })));
+    assert.match(equipmentHtml, /Back to Character/);
+    assert.match(equipmentHtml, /Equipment Loadout/, 'the detailed equipment view remains available');
+    assert.doesNotMatch(equipmentHtml, /aria-label="Character sections"/);
   } finally {
     await vite.close();
   }

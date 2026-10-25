@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ConsumableEffectPreview } from '../components/body-state/ConsumableEffectPreview';
 import { FavoriteButton } from '../components/ui/FavoriteButton';
 import { Card } from '../components/ui/Card';
@@ -32,7 +32,6 @@ import {
 } from './characterPanelState';
 import { matchesQuery, toneClasses } from '../utils';
 import type { ListItem } from '../types';
-import { getNextCharacterSectionIndex } from './characterSectionNavigation';
 import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
 import './character-sheet.css';
 
@@ -200,7 +199,9 @@ export function CharacterPanel({
   const [panelNotice, setPanelNotice] = useState<CharacterPanelNotice | null>(null);
   const [overviewAttributeId, setOverviewAttributeId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(true);
-  const sectionButtons = useRef<Record<string, HTMLButtonElement | null>>({});
+  const overviewHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const backButtonRef = useRef<HTMLButtonElement | null>(null);
+  const previousSectionRef = useRef(initialSection);
   const noticeRef = useRef<HTMLDivElement | null>(null);
   const inventoryHeadingRef = useRef<HTMLHeadingElement | null>(null);
 
@@ -241,8 +242,11 @@ export function CharacterPanel({
   );
 
   useEffect(() => {
-    sectionButtons.current[activeSection]?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' });
-  }, [activeSection]);
+    if (inventoryOnly || previousSectionRef.current === activeSection) return;
+    previousSectionRef.current = activeSection;
+    if (activeSection === 'overview') overviewHeadingRef.current?.focus();
+    else backButtonRef.current?.focus();
+  }, [activeSection, inventoryOnly]);
 
   useEffect(() => {
     if (panelNotice) noticeRef.current?.focus();
@@ -251,17 +255,6 @@ export function CharacterPanel({
   const changeSection = (id: string) => {
     setActiveSection(id);
     setPanelNotice(null);
-    sectionButtons.current[id]?.focus();
-  };
-
-  const handleSectionKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    const nextIndex = getNextCharacterSectionIndex(event.key, index, sectionItems.length);
-    if (nextIndex === null) return;
-    event.preventDefault();
-    const next = sectionItems[nextIndex];
-    if (next) {
-      changeSection(next.id);
-    }
   };
 
   const standingItems = standing.filter((item) =>
@@ -421,7 +414,7 @@ export function CharacterPanel({
           </div>
         </div>
         <div className="character-sheet-profile">
-          <h2 id="character-sheet-name">{core.playerName}</h2>
+          <h2 id="character-sheet-name" ref={overviewHeadingRef} tabIndex={-1}>{core.playerName}</h2>
           {equippedTitle && <p className="character-sheet-title">{equippedTitle.name}</p>}
           <dl className="character-sheet-base-data">
             {baseDetails.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
@@ -438,6 +431,7 @@ export function CharacterPanel({
               />
             ))}
           </div>
+          <button type="button" onClick={() => changeSection('equipment')} className="character-sheet-link mt-1 justify-self-start">Manage Equipment</button>
           {overviewAttribute && (
             <div id="character-attribute-detail" role="region" aria-label={`${overviewAttribute.title} detail`} className="character-sheet-attribute-detail">
               <strong>{overviewAttribute.detailTitle}</strong>
@@ -475,6 +469,17 @@ export function CharacterPanel({
             <div><dt>Echo adjusted</dt><dd>{snapshot.playerState.progression.echo.echoAdjusted.toFixed(2)}</dd></div>
           </dl>
         </details>
+        {([
+          ['Standing', standing, 'standing', 'No faction standing recorded.'],
+          ['Reputation', reputation, 'reputation', 'No reputation recorded.'],
+          ['Discoveries', discoveries, 'discoveries', 'No discoveries recorded.']
+        ] as const).map(([label, items, section, emptyMessage]) => (
+          <details className="character-sheet-expandable" key={section}>
+            <summary>{label} <span>{items.length}</span></summary>
+            {items.length ? <ul>{items.map((item) => <li key={item.id}><span>{item.title}</span>{item.subtitle && <span>{item.subtitle}</span>}</li>)}</ul> : <p>{emptyMessage}</p>}
+            <button type="button" onClick={() => changeSection(section)} className="character-sheet-link">View {label}</button>
+          </details>
+        ))}
         {otherTitles.length > 0 && <details className="character-sheet-expandable">
           <summary>Earned Titles <span>{otherTitles.length}</span></summary>
           <ul>{otherTitles.map((title, index) => <li key={`${title.name}.${index}`}>{title.name}</li>)}</ul>
@@ -784,25 +789,7 @@ export function CharacterPanel({
   return (
     <div className="flex h-full min-h-0 flex-col gap-3">
       {inventoryOnly && <h2 ref={inventoryHeadingRef} tabIndex={-1} className="shrink-0 text-lg font-semibold text-amber-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">Inventory</h2>}
-      {!inventoryOnly && <nav aria-label="Character sections" className="min-w-0 shrink-0 rounded-xl border border-white/10 bg-black/20 px-2 py-2">
-        <div className="panel-scroll flex gap-1 overflow-x-auto whitespace-nowrap pb-1" aria-label="Scroll horizontally for more Character sections">
-          {sectionItems.map((item, index) => (
-            <button
-              key={item.id}
-              ref={(element) => { sectionButtons.current[item.id] = element; }}
-              type="button"
-              aria-current={activeSection === item.id ? 'page' : undefined}
-              aria-controls="character-section-content"
-              onClick={() => changeSection(item.id)}
-              onKeyDown={(event) => handleSectionKeyDown(event, index)}
-              title={item.description}
-              className={`shrink-0 rounded-lg px-3 py-2 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200 ${activeSection === item.id ? 'bg-amber-200/15 text-amber-50' : 'text-slate-300 hover:bg-white/10 hover:text-slate-50'}`}
-            >
-              {item.label}{typeof item.count === 'number' && <span className="ml-2 text-xs text-slate-400">{item.count}</span>}
-            </button>
-          ))}
-        </div>
-      </nav>}
+      {!inventoryOnly && activeSection !== 'overview' && <button ref={backButtonRef} type="button" onClick={() => changeSection('overview')} className="w-fit shrink-0 text-sm font-semibold text-amber-100 underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">Back to Character</button>}
       <div className="panel-scroll relative min-h-0 flex-1 overflow-y-auto pr-7 xl:overflow-visible">
         <div className={`grid min-h-full min-w-0 gap-4 xl:h-full ${activeSection !== 'overview' && detailOpen ? 'xl:grid-cols-[minmax(0,1fr)_320px]' : ''}`}>
           <section id="character-section-content" aria-label={`${inventoryOnly ? 'Inventory' : sectionItems.find((item) => item.id === activeSection)?.label ?? 'Character'} section`} className={`min-w-0 ${activeSection === 'overview' ? 'min-h-[20rem] xl:min-h-0' : 'h-[min(60vh,36rem)] xl:h-full'}`}>{mainContent}</section>
