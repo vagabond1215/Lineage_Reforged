@@ -1,4 +1,5 @@
 import type { SeasonName, SimulationClock } from "../../../../packages/shared/types/src/index.js";
+import { getFormalSeasonName, normalizeSeasonName } from "../../../../packages/shared/time/src/index.js";
 
 export type CalendarClimateTone = "neutral" | "info" | "warning" | "unavailable";
 
@@ -266,7 +267,7 @@ function buildSeasonRows(
     createRow(
       "runtime-season",
       "Runtime Season",
-      clock.season,
+      getFormalSeasonName(clock.season) ?? "Unknown",
       "Runtime season comes from shared time month mapping.",
       "info"
     )
@@ -378,28 +379,29 @@ function buildTemperatureRows(
     ];
   }
 
-  const band = profile.seasonalTemperatureProfiles?.[clock.season] ?? null;
+  const season = normalizeSeasonName(clock.season);
+  const band = season ? profile.seasonalTemperatureProfiles?.[season] ?? null : null;
   if (!band) {
-    warningNotes.push(`No expected temperature band is authored for ${clock.season}.`);
+    warningNotes.push(`No expected temperature band is authored for ${season ?? clock.season}.`);
     return [
       createRow(
         "expected-seasonal-band",
         "Expected seasonal band",
         "Unavailable",
-        `No expected temperature band is authored for ${clock.season}.`,
+        `No expected temperature band is authored for ${season ?? clock.season}.`,
         "unavailable"
       )
     ];
   }
 
   if (!isUsefulNumber(band.low) || !isUsefulNumber(band.high)) {
-    warningNotes.push(`Expected seasonal temperature band has invalid values for ${clock.season}.`);
+    warningNotes.push(`Expected seasonal temperature band has invalid values for ${season ?? clock.season}.`);
     return [
       createRow(
         "expected-seasonal-band",
         "Expected seasonal band",
         "Unavailable",
-        `Expected seasonal temperature band has invalid values for ${clock.season}.`,
+        `Expected seasonal temperature band has invalid values for ${season ?? clock.season}.`,
         "unavailable"
       )
     ];
@@ -410,7 +412,7 @@ function buildTemperatureRows(
       "expected-seasonal-band",
       "Expected seasonal band",
       formatTemperatureBand(band, profile.temperatureRangeTemplate?.unit),
-      `${clock.season} band from ${getProfileLabel(profileSource) ?? humanizeId(profile.id)}.`,
+      `${season} band from ${getProfileLabel(profileSource) ?? humanizeId(profile.id)}.`,
       "info"
     )
   ];

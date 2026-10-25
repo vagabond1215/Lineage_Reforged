@@ -21,7 +21,7 @@ The project uses a hierarchical clock:
 - subday ticks
 - days
 - months
-- seasons (`Winter`, `Thaw`, `Spring`, `Summer`, `Harvest`, `Withering`)
+- seasons (`Deepfrost`, `Thaw`, `Waking`, `Swelter`, `Harvest`, `Withering`; formal names add "The")
 - years
 
 This supports farming windows, weather shifts, and economy cadence without full simulation overkill.

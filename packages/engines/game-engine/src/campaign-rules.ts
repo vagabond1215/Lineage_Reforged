@@ -21,7 +21,7 @@ import {
   resolvePlayerOriginProfile,
   resolvePlayerResources
 } from "../../../shared/types/src/index.js";
-import { advanceClock } from "../../../shared/time/src/index.js";
+import { advanceClock, normalizeSeasonName } from "../../../shared/time/src/index.js";
 import {
   advancePlayerBodyState,
   applyActionAttributeLoad,
@@ -421,8 +421,7 @@ function validateClock(value: unknown): boolean {
     Number.isInteger(value.subday) && Number(value.subday) >= 1 && Number(value.subday) <= 4 &&
     Number.isInteger(value.day) && Number(value.day) >= 1 &&
     Number.isInteger(value.month) && Number(value.month) >= 1 && Number(value.month) <= 13 &&
-    (value.season === "Winter" || value.season === "Thaw" || value.season === "Spring" ||
-      value.season === "Summer" || value.season === "Harvest" || value.season === "Withering") &&
+    normalizeSeasonName(value.season) !== null &&
     Number.isInteger(value.year) && Number(value.year) >= 1;
 }
 

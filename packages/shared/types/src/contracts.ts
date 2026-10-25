@@ -10,7 +10,7 @@ import type { PlayerCombatProfileState } from "./tactics.js";
 
 export type DomainKey = "world" | "civilization" | "player" | "game";
 
-export type SeasonName = "Winter" | "Thaw" | "Spring" | "Summer" | "Harvest" | "Withering";
+export type SeasonName = "Deepfrost" | "Thaw" | "Waking" | "Swelter" | "Harvest" | "Withering";
 
 export interface SimulationClock {
   tick: number;

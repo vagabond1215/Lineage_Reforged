@@ -16,20 +16,38 @@ const DEFAULT_CONFIG: ClockConfig = {
 
 // Temporary runtime source of month->season mapping until profile-driven season progression is implemented.
 const SEASON_BY_MONTH: Record<number, SeasonName> = {
-  1: "Winter",
-  2: "Winter",
+  1: "Deepfrost",
+  2: "Deepfrost",
   3: "Thaw",
-  4: "Spring",
-  5: "Spring",
-  6: "Summer",
-  7: "Summer",
+  4: "Waking",
+  5: "Waking",
+  6: "Swelter",
+  7: "Swelter",
   8: "Harvest",
   9: "Harvest",
   10: "Withering",
   11: "Withering",
-  12: "Winter",
+  12: "Deepfrost",
   13: "Thaw"
 };
+
+const SEASONS: readonly SeasonName[] = ["Deepfrost", "Thaw", "Waking", "Swelter", "Harvest", "Withering"];
+const LEGACY_SEASONS: Record<string, SeasonName> = {
+  Winter: "Deepfrost",
+  Spring: "Waking",
+  Summer: "Swelter"
+};
+
+export function normalizeSeasonName(value: unknown): SeasonName | null {
+  if (typeof value !== "string") return null;
+  if (SEASONS.includes(value as SeasonName)) return value as SeasonName;
+  return Object.prototype.hasOwnProperty.call(LEGACY_SEASONS, value) ? LEGACY_SEASONS[value] ?? null : null;
+}
+
+export function getFormalSeasonName(value: string): string | null {
+  const season = normalizeSeasonName(value);
+  return season ? `The ${season}` : null;
+}
 
 export function createInitialClock(): SimulationClock {
   return {
@@ -37,7 +55,7 @@ export function createInitialClock(): SimulationClock {
     subday: 1,
     day: 1,
     month: 1,
-    season: SEASON_BY_MONTH[1],
+    season: SEASON_BY_MONTH[1]!,
     year: 1
   };
 }
@@ -81,7 +99,7 @@ export function advanceClock(
     subday,
     day,
     month,
-    season: SEASON_BY_MONTH[month],
+    season: SEASON_BY_MONTH[month]!,
     year
   };
 }

@@ -8,6 +8,7 @@ import type {
   ResourceFlowRate,
   SimulationClock
 } from "../../../shared/types/src/index.js";
+import { normalizeSeasonName } from "../../../shared/time/src/index.js";
 import {
   loadGuildContent,
   loadRegionContent,
@@ -327,39 +328,41 @@ function getRegionPopulationMillions(region: RegionContentRecord): number {
 
 function getSeasonalProductionFactor(itemKey: string, clock: SimulationClock): number {
   const families = new Set(resolveResourceFamilies(itemKey));
+  const season = normalizeSeasonName(clock.season);
 
   if (families.has("grain")) {
-    return clock.season === "Harvest" ? 1.35 : clock.season === "Summer" ? 1.12 : clock.season === "Winter" ? 0.72 : 0.95;
+    return season === "Harvest" ? 1.35 : season === "Swelter" ? 1.12 : season === "Deepfrost" ? 0.72 : 0.95;
   }
 
   if (families.has("vegetables") || families.has("fruit") || families.has("herbs") || families.has("tea")) {
-    return clock.season === "Summer" ? 1.3 : clock.season === "Harvest" ? 1.16 : clock.season === "Winter" ? 0.58 : 0.92;
+    return season === "Swelter" ? 1.3 : season === "Harvest" ? 1.16 : season === "Deepfrost" ? 0.58 : 0.92;
   }
 
   if (families.has("fish") || families.has("maritime_goods")) {
-    return clock.season === "Harvest" ? 1.08 : clock.season === "Winter" ? 0.9 : 1;
+    return season === "Harvest" ? 1.08 : season === "Deepfrost" ? 0.9 : 1;
   }
 
   if (families.has("luxury_goods")) {
-    return clock.season === "Harvest" ? 1.15 : 1;
+    return season === "Harvest" ? 1.15 : 1;
   }
 
-  return clock.season === "Winter" ? 0.92 : 1;
+  return season === "Deepfrost" ? 0.92 : 1;
 }
 
 function getSeasonalDemandFactor(itemKey: string, clock: SimulationClock): number {
   const families = new Set(resolveResourceFamilies(itemKey));
+  const season = normalizeSeasonName(clock.season);
 
   if (itemKey === "firewood" || itemKey === "charcoal" || itemKey === "winter_cloth") {
-    return clock.season === "Winter" ? 1.5 : clock.season === "Withering" ? 1.22 : clock.season === "Summer" ? 0.7 : 1;
+    return season === "Deepfrost" ? 1.5 : season === "Withering" ? 1.22 : season === "Swelter" ? 0.7 : 1;
   }
 
   if (families.has("grain") || families.has("vegetables") || families.has("fruit") || families.has("meat")) {
-    return clock.season === "Winter" ? 1.14 : clock.season === "Withering" ? 1.08 : clock.season === "Harvest" ? 0.96 : 1;
+    return season === "Deepfrost" ? 1.14 : season === "Withering" ? 1.08 : season === "Harvest" ? 0.96 : 1;
   }
 
   if (families.has("tea") || families.has("herbs")) {
-    return clock.season === "Winter" || clock.season === "Thaw" ? 1.12 : 1;
+    return season === "Deepfrost" || season === "Thaw" ? 1.12 : 1;
   }
 
   return 1;

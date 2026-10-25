@@ -21,23 +21,23 @@ test("clock month-to-season mapping remains stable", async () => {
   const mapping = extractSeasonByMonth(source);
 
   const expected = {
-    "1": "Winter",
-    "2": "Winter",
+    "1": "Deepfrost",
+    "2": "Deepfrost",
     "3": "Thaw",
-    "4": "Spring",
-    "5": "Spring",
-    "6": "Summer",
-    "7": "Summer",
+    "4": "Waking",
+    "5": "Waking",
+    "6": "Swelter",
+    "7": "Swelter",
     "8": "Harvest",
     "9": "Harvest",
     "10": "Withering",
     "11": "Withering",
-    "12": "Winter",
+    "12": "Deepfrost",
     "13": "Thaw"
   };
 
   assert.deepEqual(mapping, expected);
-  assert.equal(mapping["1"], "Winter");
+  assert.equal(mapping["1"], "Deepfrost");
   assert.equal(mapping["13"], "Thaw");
 
   assert.match(source, /season:\s*SEASON_BY_MONTH\[1\]/, "createInitialClock must derive season from month 1");

@@ -48,7 +48,9 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.equal((html.match(/role="meter"/g) ?? []).length, 4);
     assert.doesNotMatch(html, /overflow-x-auto/, 'top resources must not introduce a horizontal scrollbar');
     assert.match(html, /class="top-status-layout"/);
-    assert.match(html, /class="top-status-identity/);
+    assert.match(html, /class="top-status-calendar/);
+    assert.doesNotMatch(html, /Arden Voss/);
+    assert.match(html, /src="\/seasons\/season-withering\.png"/);
     assert.match(html, /class="top-status-resources/);
     assert.match(html, /aria-label="Energy and hydration"/);
     assert.match(html, /aria-label="Illustrative energy balance with zero at the center; not tracked gameplay data"/);
@@ -62,7 +64,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.doesNotMatch(html, /aria-label="(?:Protein|Carbs|Fat)"[^>]*aria-valuenow/);
     assert.match(html, new RegExp(`aria-label="Water"[^>]*aria-valuenow="${bodyState.values.hydration}"`));
     assert.match(html, /Current weather is unavailable/);
-    assert.match(html, /Withering season; not a current weather report/);
+    assert.match(html, /Weather unavailable/);
     assert.match(html, /class="top-status-controls/);
     assert.match(html, /aria-label="Character resources"[^>]*><div[^>]*grid-template-columns:minmax\(0, 1fr\)/);
     assert.match(html, /aria-label="Stamina">ST<\/span>/);

@@ -2,7 +2,7 @@
     "records":  [
                     {
                         "id":  "climate.mild_winter",
-                        "name":  "Mild Winter",
+                        "name":  "Mild Deepfrost",
                         "seasonLengths":  [
                                               8,
                                               7,
@@ -23,7 +23,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -35,13 +35,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -84,7 +84,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -96,13 +96,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -145,7 +145,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -157,13 +157,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -206,7 +206,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -218,13 +218,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -246,7 +246,7 @@
                     },
                     {
                         "id":  "climate.long_summer",
-                        "name":  "Long Summer",
+                        "name":  "Long Swelter",
                         "seasonLengths":  [
                                               8,
                                               7,
@@ -267,7 +267,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -279,13 +279,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -307,7 +307,7 @@
                     },
                     {
                         "id":  "climate.long_winter",
-                        "name":  "Long Winter",
+                        "name":  "Long Deepfrost",
                         "seasonLengths":  [
                                               10,
                                               9,
@@ -328,7 +328,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -340,13 +340,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -389,7 +389,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -401,13 +401,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -450,7 +450,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -462,13 +462,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -511,7 +511,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -523,13 +523,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -572,7 +572,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -584,13 +584,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -633,7 +633,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -645,13 +645,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -673,7 +673,7 @@
                     },
                     {
                         "id":  "climate.early_spring",
-                        "name":  "Early Spring",
+                        "name":  "Early Waking",
                         "seasonLengths":  [
                                               8,
                                               7,
@@ -694,7 +694,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -706,13 +706,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -755,7 +755,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -767,13 +767,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -816,7 +816,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -828,13 +828,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -877,7 +877,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -889,13 +889,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -917,7 +917,7 @@
                     },
                     {
                         "id":  "climate.harsh_winter",
-                        "name":  "Harsh Winter",
+                        "name":  "Harsh Deepfrost",
                         "seasonLengths":  [
                                               11,
                                               9,
@@ -938,7 +938,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -950,13 +950,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -978,7 +978,7 @@
                     },
                     {
                         "id":  "climate.scorching_summer",
-                        "name":  "Scorching Summer",
+                        "name":  "Scorching Swelter",
                         "seasonLengths":  [
                                               7,
                                               7,
@@ -999,7 +999,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -1011,13 +1011,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,
@@ -1060,7 +1060,7 @@
                                                          "range":  60
                                                      },
                         "seasonalTemperatureProfiles":  {
-                                                            "Winter":  {
+                                                            "Deepfrost":  {
                                                                            "lowOffsetRatio":  0,
                                                                            "highOffsetRatio":  0.3,
                                                                            "low":  -20,
@@ -1072,13 +1072,13 @@
                                                                          "low":  -14,
                                                                          "high":  13
                                                                      },
-                                                            "Spring":  {
+                                                            "Waking":  {
                                                                            "lowOffsetRatio":  0.25,
                                                                            "highOffsetRatio":  0.75,
                                                                            "low":  -5,
                                                                            "high":  25
                                                                        },
-                                                            "Summer":  {
+                                                            "Swelter":  {
                                                                            "lowOffsetRatio":  0.55,
                                                                            "highOffsetRatio":  1,
                                                                            "low":  13,

@@ -10,6 +10,7 @@ import type {
   CalendarClimateRow
 } from '../game-shell/calendarClimatePresentation';
 import type { BodyStatePresentationSnapshot } from '../runtime/bodyStatePresentation';
+import { getSeasonArtworkUrl } from '../game-shell/seasonArtwork';
 import { NotificationBell } from './NotificationBell';
 import { Icon } from './icons';
 import { TopResourceMeter } from './ui/TopResourceMeter';
@@ -37,7 +38,6 @@ export function TopConditionDetails({ strip }: { strip: ConditionStripViewModel 
 }
 
 type TopStatusBarProps = {
-  name: string;
   date: string;
   season: string;
   timeOfDay: string;
@@ -160,7 +160,6 @@ function NutritionPreview({ bodyState }: { bodyState: BodyStatePresentationSnaps
 }
 
 export function TopStatusBar({
-  name,
   date,
   season,
   timeOfDay,
@@ -184,8 +183,7 @@ export function TopStatusBar({
     'forged-overlay bg-[color:var(--color-surface-overlay)]';
   const activeConditions = [...conditionStrip.primary, ...conditionStrip.secondary]
     .filter((pill) => pill.severity === 'warning' || pill.severity === 'critical');
-  const seasonIcon = season === 'Winter' ? 'snow' : season === 'Harvest' || season === 'Withering' ? 'wind' : season === 'Spring' || season === 'Summer' ? 'sun' : 'cloud';
-  const dayIcon = timeOfDay === 'Night Watch' ? 'moon' : 'sun';
+  const seasonArtwork = getSeasonArtworkUrl(season);
 
   useEffect(() => {
     if (activeConditions.length === 0) setConditionOpen(false);
@@ -201,10 +199,8 @@ export function TopStatusBar({
     >
       <div className="mx-auto max-w-[112rem] px-3 py-1">
         <div className="top-status-layout">
-          <div className="top-status-identity relative min-w-0">
-            <h1 className="truncate text-lg font-semibold leading-tight text-[color:var(--color-text-primary)] md:text-[1.25rem]">
-              {name}
-            </h1>
+          <div className="top-status-calendar relative min-w-0">
+            <h1 className="sr-only">Lineage: Reforged</h1>
             <button
               ref={calendarTrigger}
               type="button"
@@ -212,12 +208,16 @@ export function TopStatusBar({
               onKeyDown={(event) => {
                 if (event.key === 'Escape') setCalendarOpen(false);
               }}
-              className="mt-0.5 block max-w-full text-left text-xs tracking-[0.06em] text-[color:var(--color-text-secondary)] transition hover:text-[color:var(--color-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)]"
+              className="top-status-calendar-button max-w-full text-left text-[color:var(--color-text-secondary)] transition hover:text-[color:var(--color-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)]"
               aria-expanded={calendarOpen}
               aria-controls="top-bar-calendar-detail"
-              aria-label="Open calendar and climate context"
+              aria-label={`Open calendar and climate context: ${date}, ${season}, ${timeOfDay}. Current weather is unavailable.`}
             >
-              {date} | {season} | {timeOfDay}
+              {seasonArtwork ? <img className="top-status-season-art" src={seasonArtwork} alt="" aria-hidden="true" /> : null}
+              <span className="top-status-calendar-lines">
+                <span>{date} · {season}</span>
+                <span>{timeOfDay} · Weather unavailable</span>
+              </span>
             </button>
             {calendarOpen && (
               <div
@@ -283,11 +283,6 @@ export function TopStatusBar({
 
           <div className="top-status-body min-w-0" role="group" aria-label="Energy and hydration">
             <NutritionPreview bodyState={bodyState} />
-          </div>
-
-          <div className="top-status-climate min-w-0" role="group" aria-label={`Season ${season}; ${timeOfDay}. Current weather is unavailable. Open calendar for climate details.`}>
-            <span title={`${season} season; not a current weather report`}><Icon name={seasonIcon} className="top-status-climate-icon" /></span>
-            <span title={timeOfDay}><Icon name={dayIcon} className="top-status-climate-icon" /></span>
           </div>
 
           <div className="top-status-alerts min-w-0" role="group" aria-label="Active conditions">

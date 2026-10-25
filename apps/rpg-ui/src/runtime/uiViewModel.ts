@@ -12,6 +12,7 @@ import type {
   QuestJournalEntryState,
   SaveSnapshot
 } from '../../../../packages/shared/types/src/contracts.js';
+import { normalizeSeasonName } from '../../../../packages/shared/time/src/index.js';
 import type {
   ConditionStripViewModel,
   DetailGroup,
@@ -126,7 +127,6 @@ export type UiViewModel = {
   notifications: NotificationItem[];
   topBar: {
     portraitInitials: string;
-    name: string;
     region: string;
     settlement: string;
     date: string;
@@ -2257,11 +2257,10 @@ export function createUiViewModel(
         .join('')
         .slice(0, 2)
         .toUpperCase(),
-      name: snapshot.playerState.coreData.playerName,
       region: regionLabel,
       settlement: settlementLabel,
       date: formatDate(snapshot),
-      season: snapshot.clock.season,
+      season: normalizeSeasonName(snapshot.clock.season) ?? 'Unknown',
       timeOfDay: formatTimeOfDay(snapshot),
       conditionStrip: bodyStatePresentation.conditionStrip,
       calendarClimate

@@ -48,12 +48,12 @@
     },
     "seasonalTemperatureProfiles": {
       "type": "object",
-      "required": ["Winter", "Thaw", "Spring", "Summer", "Harvest", "Withering"],
+      "required": ["Deepfrost", "Thaw", "Waking", "Swelter", "Harvest", "Withering"],
       "properties": {
-        "Winter": { "$ref": "#/$defs/winterSeasonProfile" },
+        "Deepfrost": { "$ref": "#/$defs/deepfrostSeasonProfile" },
         "Thaw": { "$ref": "#/$defs/thawSeasonProfile" },
-        "Spring": { "$ref": "#/$defs/springSeasonProfile" },
-        "Summer": { "$ref": "#/$defs/summerSeasonProfile" },
+        "Waking": { "$ref": "#/$defs/wakingSeasonProfile" },
+        "Swelter": { "$ref": "#/$defs/swelterSeasonProfile" },
         "Harvest": { "$ref": "#/$defs/harvestSeasonProfile" },
         "Withering": { "$ref": "#/$defs/witheringSeasonProfile" }
       },
@@ -72,7 +72,7 @@
       },
       "additionalProperties": false
     },
-    "winterSeasonProfile": {
+    "deepfrostSeasonProfile": {
       "allOf": [
         { "$ref": "#/$defs/seasonProfileBase" },
         {
@@ -96,7 +96,7 @@
         }
       ]
     },
-    "springSeasonProfile": {
+    "wakingSeasonProfile": {
       "allOf": [
         { "$ref": "#/$defs/seasonProfileBase" },
         {
@@ -108,7 +108,7 @@
         }
       ]
     },
-    "summerSeasonProfile": {
+    "swelterSeasonProfile": {
       "allOf": [
         { "$ref": "#/$defs/seasonProfileBase" },
         {

@@ -6,7 +6,7 @@ import { buildCalendarClimatePopupViewModel } from "../../apps/rpg-ui/src/game-s
 function createClimateProfile(overrides = {}) {
   return {
     id: "climate.mild_winter",
-    name: "Mild Winter",
+    name: "Mild Deepfrost",
     seasonLengths: [8, 7, 10, 10, 10, 7],
     temperatureRangeTemplate: {
       unit: "celsius",
@@ -15,13 +15,13 @@ function createClimateProfile(overrides = {}) {
       range: 60
     },
     seasonalTemperatureProfiles: {
-      Winter: {
+      Deepfrost: {
         lowOffsetRatio: 0,
         highOffsetRatio: 0.3,
         low: -20,
         high: -2
       },
-      Summer: {
+      Swelter: {
         lowOffsetRatio: 0.55,
         highOffsetRatio: 1,
         low: 13,
@@ -57,7 +57,7 @@ function assertNoActions(viewModel) {
   assert.deepEqual(viewModel.actionIds, []);
 }
 
-test("initial clock renders year, month, day, watch, tick, and Winter from runtime clock", () => {
+test("initial clock renders year, month, day, watch, tick, and The Deepfrost from runtime clock", () => {
   const viewModel = buildCalendarClimatePopupViewModel({
     clock: createInitialClock()
   });
@@ -69,7 +69,7 @@ test("initial clock renders year, month, day, watch, tick, and Winter from runti
   assert.equal(findRow(viewModel.currentTimeRows, "day")?.valueLabel, "Day 1");
   assert.equal(findRow(viewModel.currentTimeRows, "watch")?.valueLabel, "Dawn Watch");
   assert.equal(findRow(viewModel.currentTimeRows, "tick")?.valueLabel, "Tick 0");
-  assert.equal(findRow(viewModel.seasonRows, "runtime-season")?.valueLabel, "Winter");
+  assert.equal(findRow(viewModel.seasonRows, "runtime-season")?.valueLabel, "The Deepfrost");
   assertNoActions(viewModel);
 });
 
@@ -80,7 +80,7 @@ test("runtime month-to-season language stays informational and does not use prof
       subday: 2,
       day: 4,
       month: 6,
-      season: "Summer",
+      season: "Swelter",
       year: 1
     },
     profileSource: {
@@ -93,7 +93,7 @@ test("runtime month-to-season language stays informational and does not use prof
   const seasonRow = findRow(viewModel.seasonRows, "runtime-season");
   const profileLengthRow = findRow(viewModel.seasonRows, "profile-season-lengths");
 
-  assert.equal(seasonRow?.valueLabel, "Summer");
+  assert.equal(seasonRow?.valueLabel, "The Swelter");
   assert.equal(seasonRow?.detailLabel, "Runtime season comes from shared time month mapping.");
   assert.equal(profileLengthRow?.detailLabel, "Authored climate profile season lengths are reference data only.");
   assert.ok(
@@ -118,12 +118,23 @@ test("known supplied climate profile renders profile label, source label, and cu
   const climateRow = findRow(viewModel.climateRows, "climate-profile");
   const temperatureRow = findRow(viewModel.temperatureRows, "expected-seasonal-band");
 
-  assert.equal(climateRow?.valueLabel, "Mild Winter");
+  assert.equal(climateRow?.valueLabel, "Mild Deepfrost");
   assert.equal(climateRow?.detailLabel, "climate.mild_winter via Verdant Thalos Climate");
   assert.equal(temperatureRow?.label, "Expected seasonal band");
   assert.equal(temperatureRow?.valueLabel, "-20C to -2C");
-  assert.match(temperatureRow?.detailLabel ?? "", /Winter band from Mild Winter/);
+  assert.match(temperatureRow?.detailLabel ?? "", /Deepfrost band from Mild Deepfrost/);
   assertNoActions(viewModel);
+});
+
+test("legacy saved season still resolves the canonical climate band and formal label", () => {
+  const clock = { ...createInitialClock(), season: "Winter" };
+  const viewModel = buildCalendarClimatePopupViewModel({
+    clock,
+    profileSource: { climateProfile: createClimateProfile() }
+  });
+  assert.equal(clock.season, "Winter", "view projection does not rewrite a loaded save");
+  assert.equal(findRow(viewModel.seasonRows, "runtime-season")?.valueLabel, "The Deepfrost");
+  assert.equal(findRow(viewModel.temperatureRows, "expected-seasonal-band")?.valueLabel, "-20C to -2C");
 });
 
 test("missing climate profile renders unknown or unavailable rows and no inferred settlement climate", () => {
@@ -168,7 +179,7 @@ test("profile missing current-season temperature band warns and keeps the temper
     profileSource: {
       climateProfile: createClimateProfile({
         seasonalTemperatureProfiles: {
-          Summer: {
+          Swelter: {
             low: 13,
             high: 40
           }
@@ -180,9 +191,9 @@ test("profile missing current-season temperature band warns and keeps the temper
   assert.equal(findRow(viewModel.temperatureRows, "expected-seasonal-band")?.valueLabel, "Unavailable");
   assert.equal(
     findRow(viewModel.temperatureRows, "expected-seasonal-band")?.detailLabel,
-    "No expected temperature band is authored for Winter."
+    "No expected temperature band is authored for Deepfrost."
   );
-  assert.ok(viewModel.warningNotes.includes("No expected temperature band is authored for Winter."));
+  assert.ok(viewModel.warningNotes.includes("No expected temperature band is authored for Deepfrost."));
 });
 
 test("view model always emits actionIds as an empty array", () => {

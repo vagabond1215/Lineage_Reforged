@@ -70,13 +70,13 @@ const FAUNA_REPRODUCTION_TYPES = new Set(["oviparous", "viviparous", "asexual"])
 const FAUNA_PRODUCER_SEX = new Set(["female", "male", "any"]);
 const FAUNA_PRODUCER_WINDOWS = new Set(["daily", "seasonal", "weekly"]);
 
-const CLIMATE_SEASONS = ["Winter", "Thaw", "Spring", "Summer", "Harvest", "Withering"];
+const CLIMATE_SEASONS = ["Deepfrost", "Thaw", "Waking", "Swelter", "Harvest", "Withering"];
 const CLIMATE_UNITS = new Set(["celsius", "fahrenheit", "kelvin"]);
 const CLIMATE_SEASON_RATIOS = {
-  Winter: { low: 0, high: 0.3 },
+  Deepfrost: { low: 0, high: 0.3 },
   Thaw: { low: 0.1, high: 0.55 },
-  Spring: { low: 0.25, high: 0.75 },
-  Summer: { low: 0.55, high: 1 },
+  Waking: { low: 0.25, high: 0.75 },
+  Swelter: { low: 0.55, high: 1 },
   Harvest: { low: 0.4, high: 0.85 },
   Withering: { low: 0.15, high: 0.6 }
 };
@@ -1790,7 +1790,7 @@ function validateFaunaTemplate(relativePath, records) {
 
 function validateCalendarDefinition(relativePath, parsed) {
   const calendarKeys = Object.keys(parsed);
-  const allowedCalendarKeys = new Set(["months", "seasons"]);
+  const allowedCalendarKeys = new Set(["months", "seasons", "formalNames"]);
   const unknownCalendarKeys = calendarKeys.filter((key) => !allowedCalendarKeys.has(key));
   if (unknownCalendarKeys.length > 0) {
     throw new Error(`${relativePath} has unsupported keys: ${unknownCalendarKeys.join(",")}`);
@@ -1842,6 +1842,11 @@ function validateCalendarDefinition(relativePath, parsed) {
         `${relativePath} has invalid seasons order/content; expected ${CLIMATE_SEASONS.join(",")}, received ${parsed.seasons.join(",")}`
       );
     }
+  }
+  if (!isObject(parsed.formalNames) ||
+      Object.keys(parsed.formalNames).length !== CLIMATE_SEASONS.length ||
+      CLIMATE_SEASONS.some((season) => parsed.formalNames[season] !== `The ${season}`)) {
+    throw new Error(`${relativePath} has invalid formal season names`);
   }
 }
 function validateClimateProfiles(relativePath, records) {

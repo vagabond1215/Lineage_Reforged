@@ -1,3 +1,23 @@
+## 2026-10-25 — Six-season calendar and top-bar emblems
+
+**Run:** unversioned UI/calendar support on `master` from `c74ba8cbd`; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; development-milestone and game-version impacts `none`. DEV-0.7.2.13 stays parked. [Focused record](six-season-calendar-topbar-2026-10-25.md).
+
+### A. Files changed
+
+Shared time/types, calendar and climate content/schema/lint, economy and clock validation, top-bar/calendar presentation and CSS, six public emblems, focused tests and current documentation.
+
+### B. Patch summary
+
+Canonical season order is Deepfrost, Thaw, Waking, Swelter, Harvest, Withering, with formal `The` names. The top-bar name area now contains a season emblem and owner-backed date/watch; current weather is disclosed as unavailable. Legacy Winter/Spring/Summer save values remain readable and normalize on the next clock tick. No numeric economy, climate or save schema changes.
+
+### C. Tests and checks run
+
+Focused calendar/art/SaveSnapshot **14/14**, full UI **35/35**, owner/economy/snapshot **100/100**, content lint **72 files**, Node UI typecheck and Vite build pass. Broad UI TypeScript **115 diagnostics** against prior **117** baseline, with none newly introduced in touched files. `git diff --check` passes. FP-001/002/009/016 evidence is in the focused record.
+
+### D. Risks / follow-up notes
+
+Authenticated selected UI and Save/restart proof remains held. UI drafts #5–#16, creator/nutrition/protected branches and Game version retain current dispositions; no branch action was due. Suggested commit: `feat(calendar): name six seasons and show emblems in top bar`. Next: authorized selected calendar/viewport review and later owner-backed weather projection.
+
 ## 2026-10-24 — Compact Character sheet and Inventory dock
 
 **Run:** unversioned UI presentation on `master` from `ea8923fe`; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; milestone and game-version impacts `none`. DEV-0.7.2.13 stays parked. [Focused record](compact-character-sheet-ui-2026-10-24.md).

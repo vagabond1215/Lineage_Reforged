@@ -517,3 +517,9 @@ The top bar uses the same maximum width for HP, MP, ST and prototype macro track
 ## 25. Character Overview Attributes And Codex Atlas (2026-10-24)
 
 The nine owner-backed attributes and their inspection controls are already present on Character Overview, so remove the duplicate Attributes subsection. Keep the Overview controls keyboard reachable and preserve their existing detail data. Move the read-only geographic-knowledge projection to a Codex subsection named **Atlas**. It lists only currently known lands, regions and settlements, with its count and selection drawn from the existing player-state projection. Atlas is a knowledge index, not an interactive map or travel owner. The geographic-knowledge save data, visibility rule and World navigation remain unchanged. Standing, reputation and discoveries remain Character subsections pending separate placement decisions.
+
+## 26. Six-Season Calendar Emblems And Top-Bar Calendar (2026-10-25)
+
+The authored calendar order is Deepfrost, Thaw, Waking, Swelter, Harvest, Withering; formal names are The Deepfrost, The Thaw, The Waking, The Swelter, The Harvest, The Withering. Runtime and compact UI use the short labels. The six user-supplied PNG emblems are public UI assets at `apps/rpg-ui/public/seasons/`; their file mapping is explicit in `seasonArtwork.ts`. They represent the known season, not live weather. The top-bar name space now presents the season emblem, calendar date, watch and an explicit weather-unavailable statement. The Character sheet retains the player's name.
+
+Existing saved Winter, Spring and Summer values remain readable as Deepfrost, Waking and Swelter in presentation and relevant owner calculations; loading does not silently rewrite the save. The next clock tick uses canonical labels. Climate profile IDs, numeric temperature bands, economic factors, save schema and world version remain stable.

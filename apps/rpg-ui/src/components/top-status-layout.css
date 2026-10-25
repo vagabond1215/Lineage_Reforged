@@ -2,21 +2,20 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   grid-template-areas:
-    "identity controls"
+    "calendar controls"
     "resources resources"
-    "body climate"
+    "body body"
     "alerts alerts";
   align-items: center;
   column-gap: 0.5rem;
   row-gap: 0.25rem;
 }
 
-.top-status-identity { grid-area: identity; }
-.top-status-identity > button {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
+.top-status-calendar { grid-area: calendar; }
+.top-status-calendar-button { display: flex; align-items: center; gap: 0.375rem; width: 100%; min-height: 2.5rem; }
+.top-status-season-art { width: 2.5rem; height: 2.5rem; flex: none; object-fit: contain; }
+.top-status-calendar-lines { display: grid; min-width: 0; gap: 0.1rem; font-size: 0.65rem; line-height: 1rem; }
+.top-status-calendar-lines > span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .top-status-resources { grid-area: resources; }
 .top-status-resources > div { width: min(100%, 17rem); }
 .top-status-resources {
@@ -25,39 +24,9 @@
   --color-stamina-fill: #2ca779; /* Emerald */
 }
 .top-status-body { grid-area: body; }
-.top-status-climate { grid-area: climate; }
 .top-status-alerts { grid-area: alerts; }
 .top-status-controls { grid-area: controls; }
 
-.top-status-climate {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  min-width: 0;
-  color: var(--color-text-secondary);
-}
-
-.top-status-climate-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  flex: none;
-  color: var(--color-tone-warning-text);
-}
-
-.top-status-climate-lines {
-  display: grid;
-  min-width: 0;
-  width: 100%;
-  gap: 0.1rem;
-  font-size: 0.65rem;
-  line-height: 1rem;
-}
-
-.top-status-climate-lines > span {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
 
 .nutrition-preview {
   display: grid;
@@ -191,7 +160,7 @@
   .top-status-layout {
     grid-template-columns: minmax(10rem, 1fr) minmax(7rem, 0.7fr) minmax(6rem, 0.7fr) auto;
     grid-template-areas:
-      "identity climate alerts controls"
+      "calendar calendar alerts controls"
       "resources resources body body";
     row-gap: 0.1rem;
   }
@@ -199,8 +168,8 @@
 
 @media (min-width: 1100px) {
   .top-status-layout {
-    grid-template-columns: minmax(13rem, 15.5rem) minmax(0, 17rem) minmax(0, 17rem) minmax(3rem, 7rem) minmax(5rem, 7rem) auto;
-    grid-template-areas: "identity resources body climate alerts controls";
+    grid-template-columns: minmax(13rem, 15.5rem) minmax(0, 17rem) minmax(0, 17rem) minmax(5rem, 7rem) auto;
+    grid-template-areas: "calendar resources body alerts controls";
     justify-content: space-between;
   }
 }
