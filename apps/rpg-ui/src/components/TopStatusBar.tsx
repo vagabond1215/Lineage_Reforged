@@ -184,8 +184,8 @@ export function TopStatusBar({
     'forged-overlay bg-[color:var(--color-surface-overlay)]';
   const activeConditions = [...conditionStrip.primary, ...conditionStrip.secondary]
     .filter((pill) => pill.severity === 'warning' || pill.severity === 'critical');
-  const climateLabel = calendarClimate.climateRows[0]?.valueLabel;
-  const seasonalBandLabel = calendarClimate.temperatureRows[0]?.valueLabel;
+  const seasonIcon = season === 'Winter' ? 'snow' : season === 'Harvest' || season === 'Withering' ? 'wind' : season === 'Spring' || season === 'Summer' ? 'sun' : 'cloud';
+  const dayIcon = timeOfDay === 'Night Watch' ? 'moon' : 'sun';
 
   useEffect(() => {
     if (activeConditions.length === 0) setConditionOpen(false);
@@ -199,7 +199,7 @@ export function TopStatusBar({
         boxShadow: 'var(--shadow-shell-bar)'
       }}
     >
-      <div className="mx-auto max-w-[112rem] px-3 py-2">
+      <div className="mx-auto max-w-[112rem] px-3 py-1">
         <div className="top-status-layout">
           <div className="top-status-identity relative min-w-0">
             <h1 className="truncate text-lg font-semibold leading-tight text-[color:var(--color-text-primary)] md:text-[1.25rem]">
@@ -285,16 +285,9 @@ export function TopStatusBar({
             <NutritionPreview bodyState={bodyState} />
           </div>
 
-          <div className="top-status-climate min-w-0" role="group" aria-label="Climate context, not current weather">
-            <Icon name="sun" className="top-status-climate-icon" />
-            <div className="top-status-climate-lines">
-              <span title={`Climate profile: ${calendarClimate.climateRows[0]?.valueLabel ?? 'Unknown'}`}>
-                {climateLabel && climateLabel !== 'Unknown' ? climateLabel : 'Climate unknown'}
-              </span>
-              <span title={`Expected seasonal temperature band: ${calendarClimate.temperatureRows[0]?.valueLabel ?? 'Unavailable'}`}>
-                {seasonalBandLabel && seasonalBandLabel !== 'Unavailable' ? seasonalBandLabel : 'Seasonal band n/a'}
-              </span>
-            </div>
+          <div className="top-status-climate min-w-0" role="group" aria-label={`Season ${season}; ${timeOfDay}. Current weather is unavailable. Open calendar for climate details.`}>
+            <span title={`${season} season; not a current weather report`}><Icon name={seasonIcon} className="top-status-climate-icon" /></span>
+            <span title={timeOfDay}><Icon name={dayIcon} className="top-status-climate-icon" /></span>
           </div>
 
           <div className="top-status-alerts min-w-0" role="group" aria-label="Active conditions">

@@ -27,7 +27,8 @@ test('Equipment and Inventory show selected owner state and truthful action reas
             campaignSessionControl: {},
             onSnapshotChange: () => {}
           }, React.createElement(CharacterPanel, {
-            accent: 'var(--color-character)', searchQuery: '', pinnedIds: [], onTogglePin: () => {}, initialSection: section
+            accent: 'var(--color-character)', searchQuery: '', pinnedIds: [], onTogglePin: () => {}, initialSection: section,
+            inventoryOnly: section === 'inventory', onOpenInventory: () => {}
           }))
         );
     };
@@ -62,6 +63,9 @@ test('Equipment and Inventory show selected owner state and truthful action reas
       assert.notEqual(entry.category, 'consumable');
       assert.ok(entry.consumePreview);
       const inventory = renderSection('inventory', breastCut);
+      assert.match(inventory, /aria-label="Inventory section"/);
+      assert.doesNotMatch(inventory, /aria-label="Character sections"/, 'Inventory has its own main dock destination');
+      assert.match(inventory, /Hide information pane/, 'item inspection remains available on narrow screens');
       assert.match(inventory, /Use available/);
       assert.match(inventory, /Use consumes one item with its authored consume profile/);
       assert.match(inventory, /role="group" aria-label="Filter inventory by category"/);

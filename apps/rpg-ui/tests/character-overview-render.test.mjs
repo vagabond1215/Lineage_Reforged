@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
+import { readFileSync } from 'node:fs';
 
 test('Character Overview renders owner-backed identity, nine attributes and section routes', async () => {
   const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
@@ -34,7 +35,16 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(html, /aria-label="Character sections"/);
     assert.match(html, /aria-current="page"[^>]*>Overview/);
     assert.match(html, /Equipment/);
-    assert.match(html, /Inventory/);
+    assert.doesNotMatch(html.match(/<nav aria-label="Character sections"[\s\S]*?<\/nav>/)?.[0] ?? '', /Inventory/, 'Inventory is a main dock destination');
+    assert.match(html, /character-sheet/);
+    assert.match(html, /Name &amp; appearance/);
+    assert.match(html, /lineage illustration, not a personal portrait/);
+    assert.match(html, /Traits &amp; Effects/);
+    assert.match(html, /<dt>Height<\/dt><dd>170 cm<\/dd>/, 'physical identity comes from the saved character');
+    const sheetStyles = readFileSync(new URL('../src/features/character-sheet.css', import.meta.url), 'utf8');
+    assert.match(sheetStyles, /grid-template-columns:\s*repeat\(12, minmax\(0, 1fr\)\)/);
+    assert.match(sheetStyles, /\.character-sheet-attribute-grid\s*\{[^}]*repeat\(3, minmax\(0, 1fr\)\)/s);
+    assert.match(sheetStyles, /@media \(max-width: 600px\)/);
     assert.match(html, /View Skills/);
     assert.match(html, /View Equipment/);
     assert.match(html, new RegExp(demoSnapshot.playerState.coreData.playerName));
@@ -43,16 +53,20 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(html, /Origin -1/);
     assert.match(html, /Origin \+1/);
     let projectedAttributes;
+    let projectedNav;
     renderToStaticMarkup(React.createElement(GameSessionProvider, {
       accountProfile: createDefaultAccountProfileState(),
       snapshot: demoSnapshot,
       campaignSessionControl: {},
       onSnapshotChange: () => {}
     }, React.createElement(() => {
-      projectedAttributes = useUiViewModel().character.lists.attributes;
+      const viewModel = useUiViewModel();
+      projectedAttributes = viewModel.character.lists.attributes;
+      projectedNav = viewModel.navItems;
       return null;
     })));
     assert.equal(projectedAttributes.length, 9);
+    assert.deepEqual(projectedNav.map((item) => item.id), ['character', 'inventory', 'world', 'activity', 'codex', 'quests', 'chronicle']);
     for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {
       const detail = projectedAttributes[index];
       assert.equal(detail.id, `attr.${key.toLowerCase()}`);
@@ -74,6 +88,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     sparseSnapshot.playerState.skills = [];
     sparseSnapshot.playerState.titles = [];
     sparseSnapshot.playerState.coreData.backstoryId = 'backstory.not_in_catalog';
+    sparseSnapshot.playerState.coreData.identityProfile = null;
     sparseSnapshot.playerState.inventory.bags = [];
     sparseSnapshot.playerState.inventory.overflow = [];
     for (const slot of Object.keys(sparseSnapshot.playerState.equipment)) {
@@ -97,8 +112,10 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     );
     assert.match(sparseHtml, /No developed skills yet/);
     assert.match(sparseHtml, /Equipment/);
-    assert.match(sparseHtml, /Inventory/);
-    assert.doesNotMatch(sparseHtml, /Other Earned Titles|Title:|Equipped Gear|Background:/);
+    assert.doesNotMatch(sparseHtml.match(/<nav aria-label="Character sections"[\s\S]*?<\/nav>/)?.[0] ?? '', /Inventory/);
+    assert.doesNotMatch(sparseHtml, /Other Earned Titles|Title:|Background:/);
+    assert.match(sparseHtml, /No gear equipped/);
+    assert.doesNotMatch(sparseHtml, /<dt>Height<\/dt>|<dt>Hair<\/dt>/);
     const sparseAttributeButtons = [...sparseHtml.matchAll(/<button[^>]*aria-expanded="false"[^>]*>(.*?)<\/button>/gs)];
     assert.equal(sparseAttributeButtons.length, 9);
     for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {

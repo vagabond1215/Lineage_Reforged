@@ -512,7 +512,6 @@ export function buildCharacterSectionItems(
     { id: 'attributes', label: 'Attributes', description: 'Stat breakdown and threshold bands', count: counts.attributes },
     { id: 'skills', label: 'Skills', description: 'Trainable proficiencies and tracked focus', count: counts.skills },
     { id: 'equipment', label: 'Equipment', description: 'Current loadout and slot management', count: counts.equipment },
-    { id: 'inventory', label: 'Inventory', description: 'Carried items, filters, and sorting', count: counts.inventory },
     {
       id: 'traits',
       label: 'Traits / Effects',

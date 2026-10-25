@@ -1,0 +1,124 @@
+.character-sheet {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-content: start;
+  gap: 0.5rem;
+}
+
+.character-sheet > [role="status"],
+.character-sheet > [role="alert"] { grid-column: 1 / -1; }
+
+.character-sheet-panel {
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 0.65rem;
+  background: var(--color-surface-muted);
+}
+
+.character-sheet-panel h3 {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-border-soft);
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.character-sheet-kicker {
+  color: var(--color-text-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.character-sheet-identity { grid-column: span 5; display: flex; gap: 0.75rem; }
+.character-sheet-attributes { grid-column: span 7; }
+.character-sheet-skills { grid-column: span 3; }
+.character-sheet-growth { grid-column: span 3; }
+.character-sheet-traits { grid-column: span 3; }
+.character-sheet-equipment { grid-column: span 3; }
+.character-sheet-titles { grid-column: 1 / -1; }
+
+.character-sheet-art {
+  position: relative;
+  display: grid;
+  flex: 0 0 clamp(5rem, 28%, 8rem);
+  place-items: center;
+  min-height: 8rem;
+  overflow: hidden;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 0.5rem;
+  color: var(--color-text-muted);
+  background: var(--color-shell-bar-bg);
+}
+
+.character-sheet-art img { width: 100%; height: 100%; object-fit: cover; }
+.character-sheet-art span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.2rem 0.3rem;
+  background: rgba(0, 0, 0, 0.76);
+  color: #f2e8d2;
+  font-size: 0.56rem;
+  text-align: center;
+}
+
+.character-sheet-identity-copy { min-width: 0; }
+.character-sheet-appearance {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.1rem 0.7rem;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+}
+.character-sheet-appearance div { min-width: 0; display: flex; gap: 0.25rem; }
+.character-sheet-appearance dt { color: var(--color-text-muted); }
+.character-sheet-appearance dd { color: var(--color-text-primary); overflow-wrap: anywhere; }
+
+.character-sheet-attribute-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.3rem;
+}
+.character-sheet-attribute {
+  min-width: 0;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--color-border-soft);
+  border-radius: 0.35rem;
+  background: var(--color-shell-bar-bg);
+  text-align: left;
+}
+.character-sheet-attribute:hover { border-color: var(--color-border-active); }
+.character-sheet-attribute span { min-width: 0; }
+.character-sheet-attribute span span { font-size: 0.72rem; }
+.character-sheet-link {
+  margin-top: 0.5rem;
+  color: var(--color-tone-accent-text);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.character-sheet-link:focus-visible { outline: 2px solid var(--color-border-active); }
+.character-sheet-compact-list,
+.character-sheet-gear-list { display: grid; gap: 0.2rem; color: var(--color-text-primary); font-size: 0.75rem; }
+.character-sheet-gear-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.character-sheet-gear-list li { min-width: 0; overflow-wrap: anywhere; }
+
+@media (max-width: 1100px) {
+  .character-sheet-identity, .character-sheet-attributes { grid-column: 1 / -1; }
+  .character-sheet-skills, .character-sheet-growth, .character-sheet-traits, .character-sheet-equipment { grid-column: span 6; }
+}
+
+@media (max-width: 600px) {
+  .character-sheet-identity, .character-sheet-attributes, .character-sheet-skills,
+  .character-sheet-growth, .character-sheet-traits, .character-sheet-equipment { grid-column: 1 / -1; }
+  .character-sheet-identity { gap: 0.5rem; }
+  .character-sheet-art { flex-basis: 5rem; min-height: 6rem; }
+  .character-sheet-appearance { grid-template-columns: 1fr; }
+  .character-sheet-attribute-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .character-sheet-attribute span span { display: none; }
+}

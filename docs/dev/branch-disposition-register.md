@@ -1,3 +1,7 @@
+## 2026-10-24 compact Character sheet checkpoint
+
+At fetched/pruned `master` `ea8923fe`, this bounded presentation pass adds Inventory as a main dock destination and condenses Character Overview. It does not consume the unique evidence or selected-client acceptance required to close drafts #5–#16. Those PRs retain `HOLD_NAMED_CONSUMER`; no merge, rebase, retarget, close or branch deletion is due. Creator, nutrition and protected branches retain their prior dispositions. [Focused record](compact-character-sheet-ui-2026-10-24.md). Reinspect exact refs when selected gameplay/Save acceptance or evidence promotion closes a named consumer.
+
 ## 2026-10-24 safe UI integration review checkpoint
 
 At fetched/pruned `master` `ea9dc17f`, all twelve UI/nutrition PRs #5–#16 remain open draft. [Exact branch decision and next triggers](ui-safe-integration-and-deployment-review-2026-10-24.md): no PR head is safe for direct Git merge; current main already re-authored #7–#16 source, while branch evidence and selected-client gates remain open. #5's durable Character-first design priority was selectively reconciled into UI Boundary §23, not merged as a branch. #6 nutrition, Character Creator planning/implementation, protected refs and dirty detached rehearsal worktrees remain held. No PR close, rebase, retarget, branch deletion or disposition change; review on exact-main selected acceptance and evidence promotion, or on dedicated creator/nutrition owner decisions.

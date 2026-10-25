@@ -104,7 +104,9 @@ function InGameShellContent({
   let activePanel = <div className="h-full" />;
 
   if (activeTab === 'character') {
-    activePanel = <CharacterPanel {...sharedPanelProps} />;
+    activePanel = <CharacterPanel {...sharedPanelProps} onOpenInventory={() => setActiveTab('inventory')} />;
+  } else if (activeTab === 'inventory') {
+    activePanel = <CharacterPanel {...sharedPanelProps} initialSection="inventory" inventoryOnly />;
   } else if (activeTab === 'world') {
     activePanel = <WorldPanel {...sharedPanelProps} />;
   } else if (activeTab === 'activity') {

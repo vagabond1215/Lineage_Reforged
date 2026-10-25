@@ -1,5 +1,6 @@
 export type TabId =
   | 'character'
+  | 'inventory'
   | 'world'
   | 'activity'
   | 'codex'
@@ -8,6 +9,7 @@ export type TabId =
 
 export type IconName =
   | 'character'
+  | 'inventory'
   | 'world'
   | 'activity'
   | 'codex'
@@ -35,6 +37,9 @@ export type IconName =
   | 'arrowLeft'
   | 'menu'
   | 'sun'
+  | 'cloud'
+  | 'snow'
+  | 'wind'
   | 'moon'
   | 'dice'
   | 'info'

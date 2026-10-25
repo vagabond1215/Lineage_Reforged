@@ -1,3 +1,23 @@
+## 2026-10-24 — Compact Character sheet and Inventory dock
+
+**Run:** unversioned UI presentation on `master` from `ea8923fe`; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; milestone and game-version impacts `none`. DEV-0.7.2.13 stays parked. [Focused record](compact-character-sheet-ui-2026-10-24.md).
+
+### A. Files changed
+
+CharacterPanel and new sheet CSS, InGameShell/dock/view-model navigation, top bar/icons/layout/mobile CSS, UI types, focused UI and keyboard tests, UI boundary and current coordination records.
+
+### B. Patch summary
+
+Character Overview now groups known-size identity, lineage illustration, nine attributes, leading skills, traits, growth and equipped gear into a compact sheet. Inventory moves to the main dock with owner actions unchanged. Top padding shrinks, Energy/Water vertical meters grow, horizontal resource/macro tracks share a maximum width, and calendar-derived SVG symbols replace climate text without claiming live weather.
+
+### C. Tests and checks run
+
+Focused UI/owner **34/34 pass**, Character keyboard unit **1/1 pass**, Node typecheck and Vite build pass. Broad TypeScript remains at **117 existing diagnostics**, none in touched files; `git diff --check` passes. FP-001/002/009/016 apply with evidence in the focused record.
+
+### D. Risks / follow-up notes
+
+Localhost browser access was denied and authenticated hosted gameplay was unavailable, so selected viewport, action and Save/restart acceptance remain held. Draft #5–#16, creator/nutrition/protected branches and Game version are unchanged. Suggested commit: `ui: compact Character sheet and promote Inventory navigation`. Next bounded run: selected responsive/navigation review on exact main, followed by an owner-backed weather projection only if accepted.
+
 # Current Codex Output
 
 ## 2026-10-24 — Safe UI branch integration and Site synchronization

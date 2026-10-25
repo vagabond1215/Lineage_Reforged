@@ -5,14 +5,14 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer } from 'vite';
 import { readFileSync } from 'node:fs';
 
-test('responsive shell retains the six keyboard-reachable gameplay domains and main panel', async () => {
+test('responsive shell retains seven keyboard-reachable gameplay destinations and main panel', async () => {
   const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
   try {
     const [{ AppLayout }, { SideNav }] = await Promise.all([
       vite.ssrLoadModule('/src/components/layout/AppLayout.tsx'),
       vite.ssrLoadModule('/src/components/SideNav.tsx')
     ]);
-    const ids = ['character', 'world', 'activity', 'codex', 'quests', 'chronicle'];
+    const ids = ['character', 'inventory', 'world', 'activity', 'codex', 'quests', 'chronicle'];
     const items = ids.map((id) => ({ id, label: id, icon: id, accent: '#a0a0a0', hint: `Open ${id}` }));
     const html = renderToStaticMarkup(React.createElement(AppLayout, {
       topBar: React.createElement('header', null, 'Owner resources'),
@@ -20,7 +20,7 @@ test('responsive shell retains the six keyboard-reachable gameplay domains and m
       activePanel: React.createElement('main', { id: 'active-gameplay-panel' }, 'Character workspace')
     }));
 
-    assert.equal((html.match(/<button\b/g) ?? []).length, 6);
+    assert.equal((html.match(/<button\b/g) ?? []).length, 7);
     for (const id of ids) assert.match(html, new RegExp(`>${id}<`));
     assert.match(html, /<main id="active-gameplay-panel">Character workspace<\/main>/);
     assert.doesNotMatch(html, /aria-hidden="true"/);

@@ -61,8 +61,8 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.match(html, /Fat illustrative preview/);
     assert.doesNotMatch(html, /aria-label="(?:Protein|Carbs|Fat)"[^>]*aria-valuenow/);
     assert.match(html, new RegExp(`aria-label="Water"[^>]*aria-valuenow="${bodyState.values.hydration}"`));
-    assert.match(html, /Climate context, not current weather/);
-    assert.match(html, /Expected seasonal temperature band/);
+    assert.match(html, /Current weather is unavailable/);
+    assert.match(html, /Withering season; not a current weather report/);
     assert.match(html, /class="top-status-controls/);
     assert.match(html, /aria-label="Character resources"[^>]*><div[^>]*grid-template-columns:minmax\(0, 1fr\)/);
     assert.match(html, /aria-label="Stamina">ST<\/span>/);
@@ -71,7 +71,9 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     assert.match(layoutStyles, /--color-hp-fill:\s*#c33b50/);
     assert.match(layoutStyles, /--color-mp-fill:\s*#397ecb/);
     assert.match(layoutStyles, /--color-stamina-fill:\s*#2ca779/);
-    assert.match(layoutStyles, /\.nutrition-preview\s*\{[^}]*height:\s*2rem/s);
+    assert.match(layoutStyles, /\.nutrition-preview\s*\{[^}]*height:\s*2\.5rem/s);
+    assert.match(layoutStyles, /\.top-status-resources > div\s*\{[^}]*17rem/s);
+    assert.match(layoutStyles, /\.nutrition-preview\s*\{[^}]*width:\s*min\(100%, 17rem\)/s);
     assert.match(layoutStyles, /\.nutrition-preview\s*\{[^}]*grid-template-columns:\s*3\.25rem minmax\(0, 1fr\) 4\.25rem/s);
     for (const meter of ownerMeters) {
       assert.match(html, new RegExp(`${meter.label}.*?${meter.current} / ${meter.max}`, 's'));

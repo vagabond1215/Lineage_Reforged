@@ -24,6 +24,13 @@ export function Icon({ name, className = 'h-5 w-5' }: IconProps) {
           <path d="M5 20a7 7 0 0 1 14 0" />
         </svg>
       );
+    case 'inventory':
+      return (
+        <svg {...shared}>
+          <path d="M5 8h14l-1 12H6L5 8Z" />
+          <path d="M9 8V6a3 3 0 0 1 6 0v2" />
+        </svg>
+      );
     case 'world':
       return (
         <svg {...shared}>
@@ -223,6 +230,25 @@ export function Icon({ name, className = 'h-5 w-5' }: IconProps) {
           <path d="M19.1 12h2.4" />
           <path d="m5.4 18.6 1.7-1.7" />
           <path d="m16.9 7.1 1.7-1.7" />
+        </svg>
+      );
+    case 'cloud':
+      return (
+        <svg {...shared}>
+          <path d="M6.5 18h11a4 4 0 0 0 .1-8 5.5 5.5 0 0 0-10.7 1.2A3.5 3.5 0 0 0 6.5 18Z" />
+        </svg>
+      );
+    case 'snow':
+      return (
+        <svg {...shared}>
+          <path d="M12 2v20M3.3 7l17.4 10M3.3 17l17.4-10" />
+          <path d="m9 5 3 2 3-2m-6 14 3-2 3 2" />
+        </svg>
+      );
+    case 'wind':
+      return (
+        <svg {...shared}>
+          <path d="M3 8h12a3 3 0 1 0-3-3M2 12h17a2 2 0 1 1-2 2M4 16h8a3 3 0 1 1-3 3" />
         </svg>
       );
     case 'moon':

@@ -172,6 +172,13 @@ const navItems: NavItem[] = [
     hint: 'Build, gear, and personal progression'
   },
   {
+    id: 'inventory',
+    label: 'Inventory',
+    icon: 'inventory',
+    accent: 'var(--color-character)',
+    hint: 'Carried items, bags, and item actions'
+  },
+  {
     id: 'world',
     label: 'World',
     icon: 'world',
@@ -212,7 +219,6 @@ const characterSections: SidebarItem[] = [
   { id: 'overview', label: 'Overview', description: 'Progression, role identity, and active runtime state' },
   { id: 'attributes', label: 'Attributes', description: 'Base attribute values and threshold bands' },
   { id: 'skills', label: 'Skills', description: 'Known skills, rank progression, and sources' },
-  { id: 'inventory', label: 'Inventory', description: 'Wallet, carried items, bag capacity, and overflow' },
   { id: 'equipment', label: 'Equipment', description: 'Equipped gear, durability, and slot usage' },
   { id: 'traits', label: 'Traits', description: 'Passive identity traits and active conditions' },
   { id: 'geographic-knowledge', label: 'Geographic Knowledge', description: 'Known lands, regions, settlements, and place knowledge' },

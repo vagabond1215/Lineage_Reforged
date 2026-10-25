@@ -7,7 +7,8 @@ import { SelectionList } from '../components/ui/SelectionList';
 import { Tooltip } from '../components/ui/Tooltip';
 import { Icon } from '../components/icons';
 import { CHARACTER_ATTRIBUTE_ORDER, getCharacterAttributePresentation } from '../game-shell/characterAttributes';
-import { backstoryOptions } from '../game-shell/characterCreationCatalog';
+import { backstoryOptions, getAgeBandLabel, getFocusLabel, getIdentityOptionLabel, getLineageCardArt, getNatureLabel, getPhysiqueLabel } from '../game-shell/characterCreationCatalog';
+import { resolveCharacterCreatorAssetUrl } from '../game-shell/characterCreatorAssetUrl';
 import { useGameSession } from '../runtime/GameSessionContext';
 import { useUiViewModel } from '../runtime/UiViewModelContext';
 import {
@@ -32,6 +33,7 @@ import { matchesQuery, toneClasses } from '../utils';
 import type { ListItem } from '../types';
 import { getNextCharacterSectionIndex } from './characterSectionNavigation';
 import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
+import './character-sheet.css';
 
 type CharacterPanelProps = {
   accent: string;
@@ -39,6 +41,8 @@ type CharacterPanelProps = {
   pinnedIds: string[];
   onTogglePin: (id: string) => void;
   initialSection?: string;
+  inventoryOnly?: boolean;
+  onOpenInventory?: () => void;
 };
 
 function ActionButton({
@@ -142,7 +146,9 @@ export function CharacterPanel({
   searchQuery,
   pinnedIds,
   onTogglePin,
-  initialSection = 'overview'
+  initialSection = 'overview',
+  inventoryOnly = false,
+  onOpenInventory
 }: CharacterPanelProps) {
   const { snapshot, updateSnapshot } = useGameSession();
   const characterData = useUiViewModel().character;
@@ -159,6 +165,11 @@ export function CharacterPanel({
   const [detailOpen, setDetailOpen] = useState(true);
   const sectionButtons = useRef<Record<string, HTMLButtonElement | null>>({});
   const noticeRef = useRef<HTMLDivElement | null>(null);
+  const inventoryHeadingRef = useRef<HTMLHeadingElement | null>(null);
+
+  useEffect(() => {
+    if (inventoryOnly) inventoryHeadingRef.current?.focus();
+  }, [inventoryOnly]);
 
   const skillItems = useMemo(() => buildSkillItems(snapshot), [snapshot]);
   const equipmentEntries = useMemo(() => buildEquipmentEntries(snapshot), [snapshot]);
@@ -341,23 +352,48 @@ export function CharacterPanel({
     .filter(({ skill, item }) => skill.rank > 0 && item)
     .sort((left, right) => right.skill.rank - left.skill.rank)
     .slice(0, 4);
-  const shownGear = equipmentEntries.filter((entry) => entry.item).slice(0, 4);
+  const shownGear = equipmentEntries.filter((entry) => entry.item);
   const allAttributeItems = characterData.lists.attributes ?? [];
   const overviewAttribute = allAttributeItems.find((item) => item.id === overviewAttributeId);
+  const core = snapshot.playerState.coreData;
+  const identity = core.identityProfile;
+  const lineageArt = getLineageCardArt(core.lineageId);
+  const appearanceDetails = [
+    ['Sex', core.sexId === 'female' ? 'Female' : core.sexId === 'male' ? 'Male' : null],
+    ['Age', identity?.ageBandId ? getAgeBandLabel(identity.ageBandId) : null],
+    ['Height', identity?.heightCm ? `${identity.heightCm} cm` : null],
+    ['Build', identity?.physiqueId ? getPhysiqueLabel(identity.physiqueId) : null],
+    ['Nature', identity?.natureId ? getNatureLabel(identity.natureId) : null],
+    ['Focus', identity?.focusId ? getFocusLabel(identity.focusId) : null],
+    ['Hair', identity?.hairColorId ? getIdentityOptionLabel(core.lineageId, 'hairColorOptions', identity.hairColorId) : null],
+    ['Eyes', identity?.eyeColorId ? getIdentityOptionLabel(core.lineageId, 'eyeColorOptions', identity.eyeColorId) : null],
+    ['Skin', identity?.skinToneId ? getIdentityOptionLabel(core.lineageId, 'skinToneOptions', identity.skinToneId) : null]
+  ].filter((entry): entry is string[] => Boolean(entry[1]));
 
   const overviewMain = (
-    <div className="panel-scroll h-full space-y-4 overflow-auto pr-1">
+    <div className="character-sheet panel-scroll h-full overflow-auto pr-1">
       {noticeBlock}
-      <Card title="Character" accent={accent}>
-        <h2 className="text-2xl font-semibold text-amber-50">{snapshot.playerState.coreData.playerName}</h2>
-        <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-300">
-          {snapshot.playerState.originProfile.lineageLabel && <span>Ancestry: {snapshot.playerState.originProfile.lineageLabel}</span>}
-          {background && <span>Background: {background}</span>}
-          {equippedTitle && <span>Title: {equippedTitle.name}</span>}
+      <section className="character-sheet-panel character-sheet-identity" aria-labelledby="character-sheet-name">
+        <div className="character-sheet-art">
+          {lineageArt
+            ? <img src={resolveCharacterCreatorAssetUrl(lineageArt.imageUrl)} alt={`${snapshot.playerState.originProfile.lineageLabel} lineage illustration, not a personal portrait`} loading="lazy" />
+            : <Icon name="character" className="h-12 w-12" />}
+          <span>Lineage illustration</span>
         </div>
-      </Card>
-      <Card title="Attributes" accent={accent}>
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="character-sheet-identity-copy">
+          <p className="character-sheet-kicker">Name &amp; appearance</p>
+          <h2 id="character-sheet-name" className="text-xl font-semibold text-amber-50">{core.playerName}</h2>
+          <p className="text-sm text-slate-300">
+            {[snapshot.playerState.originProfile.lineageLabel, background ? `Background: ${background}` : null, equippedTitle ? `Title: ${equippedTitle.name}` : null].filter(Boolean).join(' · ')}
+          </p>
+          {appearanceDetails.length > 0 && <dl className="character-sheet-appearance">
+            {appearanceDetails.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+          </dl>}
+        </div>
+      </section>
+      <section className="character-sheet-panel character-sheet-attributes" aria-labelledby="character-sheet-attributes-title">
+        <h3 id="character-sheet-attributes-title">Attributes</h3>
+        <div className="character-sheet-attribute-grid">
           {CHARACTER_ATTRIBUTE_ORDER.map((key) => {
             const presentation = getCharacterAttributePresentation(key);
             const item = allAttributeItems.find((entry) => entry.id === `attr.${key.toLowerCase()}`);
@@ -369,11 +405,11 @@ export function CharacterPanel({
                 aria-expanded={overviewAttributeId === item?.id}
                 aria-controls={overviewAttributeId === item?.id ? 'character-attribute-detail' : undefined}
                 onClick={() => setOverviewAttributeId(overviewAttributeId === item?.id ? null : item?.id ?? null)}
-                className="rounded-xl border border-white/10 bg-black/10 px-3 py-2 text-left hover:border-amber-200/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
+                className="character-sheet-attribute focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200"
               >
                 <span className="flex items-baseline justify-between gap-2">
                   <span className="font-semibold text-amber-100">{key} <span className="font-normal text-slate-300">{presentation.fullName}</span></span>
-                  <span className="text-xl font-semibold text-slate-50">{snapshot.playerState.attributes[key]}</span>
+                  <span className="text-lg font-semibold text-slate-50">{snapshot.playerState.attributes[key]}</span>
                 </span>
                 {adjustment !== 0 && <span className="text-xs text-amber-200">Origin {adjustment > 0 ? '+' : ''}{adjustment}</span>}
               </button>
@@ -393,37 +429,37 @@ export function CharacterPanel({
             ))}
           </div>
         )}
-      </Card>
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card title="Developed Skills" accent={accent}>
+      </section>
+      <section className="character-sheet-panel character-sheet-skills" aria-labelledby="character-sheet-skills-title">
+          <h3 id="character-sheet-skills-title">Developed Skills</h3>
           {leadingSkills.length === 0 ? <p className="text-sm text-slate-400">No developed skills yet.</p> : (
             <ul className="space-y-2 text-sm text-slate-200">
               {leadingSkills.map(({ skill, item }) => <li key={skill.id} className="flex justify-between gap-3"><span>{item?.title}</span><span>Rank {skill.rank}</span></li>)}
             </ul>
           )}
-          <button type="button" onClick={() => changeSection('skills')} className="mt-3 text-sm text-amber-200 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">View Skills</button>
-        </Card>
-        <Card title="Echo & Growth" accent={accent}>
+          <button type="button" onClick={() => changeSection('skills')} className="character-sheet-link">View Skills</button>
+      </section>
+      <section className="character-sheet-panel character-sheet-growth" aria-labelledby="character-sheet-growth-title">
+          <h3 id="character-sheet-growth-title">Echo &amp; Growth</h3>
           <div className="grid grid-cols-2 gap-3 text-sm text-slate-300">
             <div><span className="block text-slate-400">Echo Level</span><strong className="text-xl text-slate-50">{snapshot.playerState.progression.level}</strong></div>
             <div><span className="block text-slate-400">Resource Growth</span><strong className="text-xl text-slate-50">{snapshot.playerState.progression.legacyGrowth.resourceGrowthLevel}</strong></div>
           </div>
           <p className="mt-2 text-sm text-slate-400">Echo adjusted {snapshot.playerState.progression.echo.echoAdjusted.toFixed(2)}</p>
-        </Card>
-      </div>
-      {shownGear.length > 0 && (
-        <Card title="Equipped Gear" accent={accent}>
-          <ul className="grid gap-2 text-sm text-slate-200 sm:grid-cols-2">
+      </section>
+      <section className="character-sheet-panel character-sheet-traits" aria-labelledby="character-sheet-traits-title">
+        <h3 id="character-sheet-traits-title">Traits &amp; Effects</h3>
+        {traitItems.length ? <ul className="character-sheet-compact-list">{traitItems.slice(0, 4).map((item) => <li key={item.id}>{item.title}</li>)}</ul> : <p className="text-sm text-slate-400">No recorded traits or effects.</p>}
+        <button type="button" onClick={() => changeSection('traits')} className="character-sheet-link">View Traits &amp; Effects</button>
+      </section>
+      <section className="character-sheet-panel character-sheet-equipment" aria-labelledby="character-sheet-equipment-title">
+          <h3 id="character-sheet-equipment-title">Equipped Gear <span className="text-xs font-normal text-slate-400">{shownGear.length} / {equipmentEntries.length} slots</span></h3>
+          {shownGear.length ? <ul className="character-sheet-gear-list">
             {shownGear.map((entry) => <li key={entry.id}><span className="text-slate-400">{entry.slotLabel}:</span> {entry.itemTitle}</li>)}
-          </ul>
-          <button type="button" onClick={() => changeSection('equipment')} className="mt-3 text-sm text-amber-200 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">View Equipment</button>
-        </Card>
-      )}
-      {otherTitles.length > 0 && (
-        <Card title="Other Earned Titles" accent={accent}>
-          <p className="text-sm text-slate-200">{otherTitles.slice(0, 3).map((title) => title.name).join(' · ')}</p>
-        </Card>
-      )}
+          </ul> : <p className="text-sm text-slate-400">No gear equipped.</p>}
+          <button type="button" onClick={() => changeSection('equipment')} className="character-sheet-link">View Equipment</button>
+      </section>
+      {otherTitles.length > 0 && <section className="character-sheet-panel character-sheet-titles" aria-labelledby="character-sheet-titles-title"><h3 id="character-sheet-titles-title">Other Earned Titles</h3><p className="text-sm text-slate-200">{otherTitles.slice(0, 3).map((title) => title.name).join(' · ')}</p></section>}
     </div>
   );
 
@@ -522,7 +558,7 @@ export function CharacterPanel({
               onClick={() => selectedEquipment?.item && toggleFavorite(selectedEquipment.item.itemKey, selectedEquipment.itemTitle)}
               disabled={!selectedEquipment?.item}
             />
-            <ActionButton label="Browse carried items" onClick={() => changeSection('inventory')} />
+            <ActionButton label="Browse carried items" onClick={() => onOpenInventory?.()} disabled={!onOpenInventory} />
           </div>
           <p id="equipment-unequip-reason" className="text-xs text-slate-400">
             {selectedEquipment?.item
@@ -729,7 +765,8 @@ export function CharacterPanel({
 
   return (
     <div className="flex h-full min-h-0 flex-col gap-3">
-      <nav aria-label="Character sections" className="min-w-0 shrink-0 rounded-xl border border-white/10 bg-black/20 px-2 py-2">
+      {inventoryOnly && <h2 ref={inventoryHeadingRef} tabIndex={-1} className="shrink-0 text-lg font-semibold text-amber-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">Inventory</h2>}
+      {!inventoryOnly && <nav aria-label="Character sections" className="min-w-0 shrink-0 rounded-xl border border-white/10 bg-black/20 px-2 py-2">
         <div className="panel-scroll flex gap-1 overflow-x-auto whitespace-nowrap pb-1" aria-label="Scroll horizontally for more Character sections">
           {sectionItems.map((item, index) => (
             <button
@@ -747,10 +784,10 @@ export function CharacterPanel({
             </button>
           ))}
         </div>
-      </nav>
+      </nav>}
       <div className="panel-scroll relative min-h-0 flex-1 overflow-y-auto pr-7 xl:overflow-visible">
         <div className={`grid min-h-full min-w-0 gap-4 xl:h-full ${activeSection !== 'overview' && detailOpen ? 'xl:grid-cols-[minmax(0,1fr)_320px]' : ''}`}>
-          <section id="character-section-content" aria-label={`${sectionItems.find((item) => item.id === activeSection)?.label ?? 'Character'} section`} className={`min-w-0 ${activeSection === 'overview' ? 'min-h-[20rem] xl:min-h-0' : 'h-[min(60vh,36rem)] xl:h-full'}`}>{mainContent}</section>
+          <section id="character-section-content" aria-label={`${inventoryOnly ? 'Inventory' : sectionItems.find((item) => item.id === activeSection)?.label ?? 'Character'} section`} className={`min-w-0 ${activeSection === 'overview' ? 'min-h-[20rem] xl:min-h-0' : 'h-[min(60vh,36rem)] xl:h-full'}`}>{mainContent}</section>
           {activeSection !== 'overview' && detailOpen && (
             <div className="h-[min(35vh,20rem)] min-w-0 xl:h-full">
               <PanelDetailStack
