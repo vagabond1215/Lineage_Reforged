@@ -1,3 +1,23 @@
+## 2026-10-25 — Character sheet navigation consolidation
+
+**Source run:** unversioned bounded Character presentation; `master` base `5facfee1df8fc740a26191cb576e0d789c5cdfbb`, implementation `e36370fc1037ab8d8d7b0210ba45c56df667ceb0` pushed/read back. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; label class unversioned; parent development milestone n/a; development impact `none`; game-version impact `none`. [Focused evidence](character-sheet-navigation-consolidation-2026-10-25.md).
+
+### A. Files changed
+
+`CharacterPanel.tsx`, `mobile-shell.css`, Character Overview render test, obsolete Character nav helper/unit test, UI information-architecture boundary and focused evidence record. This output, handoff and branch register are the completion coordination update.
+
+### B. Patch summary
+
+Removed the repeating horizontal Character subsection bar. Added owner-backed, collapsed Standing, Reputation and Discoveries sections below the sheet's existing expanders. Preserved detail views via inline links, Equipment management via matrix/link, separate Inventory dock and focusable return navigation. No gameplay/save/schema change. Companion Site source `57a128f7735af8af8dc2e6bab48d44b6af439af0` was pushed/read back; owner-private version 14 deployed successfully as `appgdep_6ade8f2572988191a64caca9db10a993`.
+
+### C. Tests and checks run
+
+Focused Character render 1/1; UI suite 36/36; Node UI typecheck pass in both Lineage and Site checkout; Vite production build pass in both; broad UI TypeScript 115 existing diagnostics, none in changed source, matching prior clean-master baseline; `git diff --check` pass. The incorrect initial directory-form Node test invocation was rerun with explicit files. The Site version readback matched pushed source SHA and archive hash. FP-001 caller-path rendering/route reachability is tested; FP-002 selected acceptance remains held; FP-009 inspected base, implementation and deployed source are distinct above.
+
+### D. Risks / follow-up notes
+
+Authenticated interaction for this exact navigation change remains held: IAB showed Account Login, while the authorized Brave window was in active use on an unrelated page. No credentials were used. Draft PRs #5–#16 and protected/creator/nutrition refs retain their prior holds; no branch action due. Suggested commit message for this coordination update: `docs(dev): record Character sheet navigation publication`. Next: selected click/keyboard/Save-restart check when the signed-in game is available, then a separate normal-zoom Equipment action reachability repair. Preserve parked DEV-0.7.2.13 and Game version.
+
 ## 2026-10-25 — Selected Character sheet completion
 
 **Source run:** unversioned Character UI presentation completion; branch/status `master`, source `03f668795d0c331944471c030f8fb054890ab865` pushed/read back; Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; parent development milestone n/a; development-milestone impact `none`; game-version impact `none`. [Focused evidence](character-sheet-selected-finish-2026-10-25.md).
