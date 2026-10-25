@@ -496,12 +496,10 @@ function recalculateSnapshot(
 
 export function buildCharacterSectionItems(
   counts: {
-    attributes: number;
     skills: number;
     equipment: number;
     inventory: number;
     traits: number;
-    'geographic-knowledge': number;
     standing: number;
     reputation: number;
     discoveries: number;
@@ -509,7 +507,6 @@ export function buildCharacterSectionItems(
 ): SidebarItem[] {
   return [
     { id: 'overview', label: 'Overview', description: 'Core progression and active session summary' },
-    { id: 'attributes', label: 'Attributes', description: 'Stat breakdown and threshold bands', count: counts.attributes },
     { id: 'skills', label: 'Skills', description: 'Trainable proficiencies and tracked focus', count: counts.skills },
     { id: 'equipment', label: 'Equipment', description: 'Current loadout and slot management', count: counts.equipment },
     {
@@ -517,12 +514,6 @@ export function buildCharacterSectionItems(
       label: 'Traits / Effects',
       description: 'Identity traits, modifiers, and active conditions',
       count: counts.traits
-    },
-    {
-      id: 'geographic-knowledge',
-      label: 'Geographic Knowledge',
-      description: 'Known lands, regions, settlements, and place knowledge',
-      count: counts['geographic-knowledge']
     },
     { id: 'standing', label: 'Standing', description: 'Faction and guild access standing', count: counts.standing },
     { id: 'reputation', label: 'Reputation', description: 'Public fame and notoriety by scope', count: counts.reputation },

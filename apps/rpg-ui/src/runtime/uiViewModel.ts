@@ -217,11 +217,9 @@ const navItems: NavItem[] = [
 
 const characterSections: SidebarItem[] = [
   { id: 'overview', label: 'Overview', description: 'Progression, role identity, and active runtime state' },
-  { id: 'attributes', label: 'Attributes', description: 'Base attribute values and threshold bands' },
   { id: 'skills', label: 'Skills', description: 'Known skills, rank progression, and sources' },
   { id: 'equipment', label: 'Equipment', description: 'Equipped gear, durability, and slot usage' },
   { id: 'traits', label: 'Traits', description: 'Passive identity traits and active conditions' },
-  { id: 'geographic-knowledge', label: 'Geographic Knowledge', description: 'Known lands, regions, settlements, and place knowledge' },
   { id: 'standing', label: 'Standing', description: 'Faction and guild standing, scores, and access effects' },
   { id: 'reputation', label: 'Reputation', description: 'Public fame, notoriety, and cross-scope recognition' },
   { id: 'titles', label: 'Titles', description: 'Unlocked titles, equip state, and milestone effects' },
@@ -249,6 +247,7 @@ const activitySections: SidebarItem[] = [
 ];
 
 const codexSections: SidebarItem[] = [
+  { id: 'atlas', label: 'Atlas', description: 'Known lands, regions, and settlements from the current character' },
   { id: 'flora', label: 'Flora', description: 'Plant records, habitats, uses, and region tags' },
   { id: 'fauna', label: 'Fauna', description: 'Creature records, behavior, and drop usage' },
   { id: 'minerals', label: 'Minerals', description: 'Ore, stone, rarity, and extraction notes' },
@@ -2208,6 +2207,7 @@ export function createUiViewModel(
     operations: Math.max(activityLists.operations.length, snapshot.sessionState.operations.length)
   };
   const codexCounts = {
+    atlas: characterLists.geographicKnowledge?.length ?? 0,
     flora: codexEntries.filter((entry) => entry.category === 'flora').length,
     fauna: codexEntries.filter((entry) => entry.category === 'fauna').length,
     minerals: codexEntries.filter((entry) => entry.category === 'minerals').length,

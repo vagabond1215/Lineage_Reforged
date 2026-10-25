@@ -13,15 +13,19 @@ type CodexPanelProps = {
   searchQuery: string;
   pinnedIds: string[];
   onTogglePin: (id: string) => void;
+  initialSection?: string;
 };
 
-export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: CodexPanelProps) {
-  const codexData = useUiViewModel().codex;
-  const [activeSection, setActiveSection] = useState('flora');
+export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin, initialSection = 'flora' }: CodexPanelProps) {
+  const viewModel = useUiViewModel();
+  const codexData = viewModel.codex;
+  const atlasItems = viewModel.character.lists.geographicKnowledge ?? [];
+  const [activeSection, setActiveSection] = useState(initialSection);
   const [localSearch, setLocalSearch] = useState('');
   const [regionFilter, setRegionFilter] = useState('All Regions');
   const [showDiscoveredOnly, setShowDiscoveredOnly] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Record<string, string>>({
+    atlas: atlasItems[0]?.id ?? '',
     flora: codexData.entries.find((item) => item.category === 'flora' && !item.locked)?.id ?? '',
     fauna: codexData.entries.find((item) => item.category === 'fauna')?.id ?? '',
     minerals: codexData.entries.find((item) => item.category === 'minerals')?.id ?? '',
@@ -35,13 +39,17 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
   });
 
   const combinedQuery = `${searchQuery} ${localSearch}`.trim();
-  const regionScopedSection = !['deeds', 'chronicles', 'spells'].includes(activeSection);
+  const regionScopedSection = !['atlas', 'deeds', 'chronicles', 'spells'].includes(activeSection);
   const activeSectionLabel = codexData.sections.find((section) => section.id === activeSection)?.label ?? 'Codex';
   const searchPlaceholder =
-    activeSection === 'spells'
+    activeSection === 'atlas'
+      ? 'Search known lands, regions, and settlements'
+      : activeSection === 'spells'
       ? 'Search entries, compatibility, tags, or hooks'
       : 'Search entries, habitats, uses, or regions';
-  const filteredItems = codexData.entries.filter((item) => {
+  const filteredItems = activeSection === 'atlas' ? atlasItems.filter((item) =>
+    matchesQuery(combinedQuery, item.title, item.subtitle, item.tags, item.detailSummary)
+  ) : codexData.entries.filter((item) => {
     if (item.category !== activeSection) {
       return false;
     }
@@ -59,7 +67,17 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
 
   const selectedItem =
     filteredItems.find((item) => item.id === selectedIds[activeSection]) ?? filteredItems[0];
-  const windowDetail = codexData.windowDetails[activeSection];
+  const geographicDetail = viewModel.character.windowDetails['geographic-knowledge'];
+  const windowDetail = activeSection === 'atlas' && geographicDetail
+    ? {
+        ...geographicDetail,
+        title: 'Atlas',
+        summary: 'Lands, regions, and settlements known to this character.',
+        groups: geographicDetail.groups
+          .filter((group) => group.title === 'Standard Fields')
+          .map((group) => ({ ...group, title: 'Known Places' }))
+      }
+    : codexData.windowDetails[activeSection];
   const primaryDetail = selectedItem
     ? {
         title: selectedItem.detailTitle ?? selectedItem.title,
@@ -89,7 +107,7 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
                 placeholder={searchPlaceholder}
               />
               <div className="flex flex-wrap gap-2">
-                {activeSection !== 'spells' ? (
+                {activeSection !== 'spells' && activeSection !== 'atlas' ? (
                   <button
                     type="button"
                     onClick={() => setShowDiscoveredOnly((current) => !current)}
@@ -134,7 +152,7 @@ export function CodexPanel({ accent, searchQuery, pinnedIds, onTogglePin }: Code
             pinnedIds={pinnedIds}
             onTogglePin={onTogglePin}
             accent={accent}
-            emptyMessage="No codex entries match the active filters."
+            emptyMessage={activeSection === 'atlas' ? 'No known places match the active search.' : 'No codex entries match the active filters.'}
           />
         </div>
       }

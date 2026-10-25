@@ -34,6 +34,9 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.equal(JSON.stringify(demoSnapshot), before, 'render must not mutate the snapshot');
     assert.match(html, /aria-label="Character sections"/);
     assert.match(html, /aria-current="page"[^>]*>Overview/);
+    const characterSections = html.match(/<nav aria-label="Character sections"[\s\S]*?<\/nav>/)?.[0] ?? '';
+    assert.doesNotMatch(characterSections, />Attributes(?:<|\s)/, 'attribute details live on Overview');
+    assert.doesNotMatch(characterSections, /Geographic Knowledge|Atlas/, 'Atlas lives in Codex');
     assert.match(html, /Equipment/);
     assert.doesNotMatch(html.match(/<nav aria-label="Character sections"[\s\S]*?<\/nav>/)?.[0] ?? '', /Inventory/, 'Inventory is a main dock destination');
     assert.match(html, /character-sheet/);
@@ -54,6 +57,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(html, /Origin \+1/);
     let projectedAttributes;
     let projectedNav;
+    let viewModelCharacterSections;
     renderToStaticMarkup(React.createElement(GameSessionProvider, {
       accountProfile: createDefaultAccountProfileState(),
       snapshot: demoSnapshot,
@@ -63,9 +67,11 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
       const viewModel = useUiViewModel();
       projectedAttributes = viewModel.character.lists.attributes;
       projectedNav = viewModel.navItems;
+      viewModelCharacterSections = viewModel.character.sections;
       return null;
     })));
     assert.equal(projectedAttributes.length, 9);
+    assert.ok(!viewModelCharacterSections.some((section) => section.id === 'attributes' || section.id === 'geographic-knowledge'));
     assert.deepEqual(projectedNav.map((item) => item.id), ['character', 'inventory', 'world', 'activity', 'codex', 'quests', 'chronicle']);
     for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {
       const detail = projectedAttributes[index];

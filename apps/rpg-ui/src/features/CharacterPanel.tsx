@@ -176,8 +176,6 @@ export function CharacterPanel({
   const inventoryEntries = useMemo(() => buildInventoryEntries(snapshot), [snapshot]);
   const traitItems = useMemo(() => buildTraitEffectItems(snapshot), [snapshot]);
   const favoriteItemKeys = useMemo(() => getFavoriteItemKeys(snapshot), [snapshot]);
-  const attributes = characterData.lists.attributes ?? [];
-  const geographicKnowledge = characterData.lists.geographicKnowledge ?? [];
   const standing = characterData.lists.standing ?? [];
   const reputation = characterData.lists.reputation ?? [];
   const discoveries = characterData.lists.discoveries ?? [];
@@ -186,20 +184,16 @@ export function CharacterPanel({
   const sectionItems = useMemo(
     () =>
       buildCharacterSectionItems({
-        attributes: attributes.length,
         skills: skillItems.length,
         equipment: equipmentEntries.filter((entry) => entry.item).length,
         inventory: inventoryEntries.length,
         traits: traitItems.length,
-        'geographic-knowledge': geographicKnowledge.length,
         standing: standing.length,
         reputation: reputation.length,
         discoveries: discoveries.length
       }),
     [
-      attributes.length,
       discoveries.length,
-      geographicKnowledge.length,
       reputation.length,
       standing.length,
       equipmentEntries,
@@ -233,13 +227,7 @@ export function CharacterPanel({
     }
   };
 
-  const attributeItems = attributes.filter((item) =>
-    matchesQuery(searchQuery, item.title, item.subtitle, item.tags, item.detailSummary)
-  );
   const standingItems = standing.filter((item) =>
-    matchesQuery(searchQuery, item.title, item.subtitle, item.tags, item.detailSummary)
-  );
-  const geographicKnowledgeItems = geographicKnowledge.filter((item) =>
     matchesQuery(searchQuery, item.title, item.subtitle, item.tags, item.detailSummary)
   );
   const reputationItems = reputation.filter((item) =>
@@ -270,13 +258,10 @@ export function CharacterPanel({
     return sortInventoryEntries(bySearch, inventorySort, favoriteItemKeys, inventoryCategory);
   }, [favoriteItemKeys, inventoryCategory, inventoryEntries, inventorySort, searchQuery]);
 
-  const selectedAttribute = attributeItems.find((item) => item.id === selectedIds.attributes) ?? attributeItems[0];
   const selectedSkill = filteredSkillItems.find((item) => item.id === selectedIds.skills) ?? filteredSkillItems[0];
   const selectedEquipment = selectVisibleItem(filteredEquipmentEntries, selectedIds.equipment);
   const selectedInventory = selectVisibleInventoryItem(filteredInventoryEntries, inventorySelection, snapshot.playerState.inventory);
   const selectedTrait = filteredTraitItems.find((item) => item.id === selectedIds.traits) ?? filteredTraitItems[0];
-  const selectedGeographicKnowledge =
-    geographicKnowledgeItems.find((item) => item.id === selectedIds['geographic-knowledge']) ?? geographicKnowledgeItems[0];
   const selectedStanding = standingItems.find((item) => item.id === selectedIds.standing) ?? standingItems[0];
   const selectedReputation = reputationItems.find((item) => item.id === selectedIds.reputation) ?? reputationItems[0];
   const selectedDiscovery = discoveryItems.find((item) => item.id === selectedIds.discoveries) ?? discoveryItems[0];
@@ -284,9 +269,7 @@ export function CharacterPanel({
   const primaryDetail =
     activeSection === 'overview'
       ? undefined
-      : activeSection === 'attributes'
-        ? toDetail(selectedAttribute)
-        : activeSection === 'skills'
+      : activeSection === 'skills'
           ? toDetail(selectedSkill)
           : activeSection === 'equipment'
             ? selectedEquipment?.detail
@@ -294,9 +277,7 @@ export function CharacterPanel({
             ? selectedInventory?.detail
             : activeSection === 'traits'
               ? toDetail(selectedTrait)
-              : activeSection === 'geographic-knowledge'
-                ? toDetail(selectedGeographicKnowledge)
-                : activeSection === 'standing'
+              : activeSection === 'standing'
                   ? toDetail(selectedStanding)
                 : activeSection === 'reputation'
                   ? toDetail(selectedReputation)
@@ -745,9 +726,7 @@ export function CharacterPanel({
   const mainContent =
     activeSection === 'overview'
       ? overviewMain
-      : activeSection === 'attributes'
-        ? listSection('Attributes', attributeItems, selectedAttribute?.id, 'attributes', 'No attributes match the active search.')
-        : activeSection === 'skills'
+      : activeSection === 'skills'
           ? skillsMain
           : activeSection === 'equipment'
             ? equipmentMain
@@ -755,8 +734,6 @@ export function CharacterPanel({
               ? inventoryMain
               : activeSection === 'traits'
                 ? listSection('Traits And Effects', filteredTraitItems, selectedTrait?.id, 'traits', 'No traits or effects match the active search.')
-                : activeSection === 'geographic-knowledge'
-                  ? listSection('Geographic Knowledge', geographicKnowledgeItems, selectedGeographicKnowledge?.id, 'geographic-knowledge', 'No known places match the active search.')
                 : activeSection === 'standing'
                   ? listSection('Standing', standingItems, selectedStanding?.id, 'standing', 'No faction standing records match the active search.')
                 : activeSection === 'reputation'
