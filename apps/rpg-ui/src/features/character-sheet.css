@@ -19,11 +19,13 @@
 
 .character-sheet-rail, .character-sheet-profile { min-width: 0; }
 .character-sheet-rail { display: grid; align-content: start; gap: 0.35rem; }
+.character-sheet-profile { display: grid; align-content: start; }
 .character-sheet-art {
   position: relative;
   display: grid;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  max-width: 9rem;
+  aspect-ratio: 1 / 1;
   place-items: center;
   overflow: hidden;
   border: 1px solid var(--color-border-soft);
@@ -61,7 +63,7 @@
 .character-sheet-attribute-abbr { color: var(--color-tone-accent-text); font-size: 0.72rem; font-weight: 700; }
 .character-sheet-attribute-value { color: var(--color-text-primary); font-size: 0.86rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .character-sheet-attribute-adjustment { color: var(--color-tone-accent-text); font-size: 0.62rem; font-variant-numeric: tabular-nums; }
-.character-sheet-attribute-detail { padding: 0.45rem; border: 1px solid var(--color-border-soft); border-radius: 0.3rem; color: var(--color-text-secondary); font-size: 0.73rem; }
+.character-sheet-attribute-detail { margin-top: 0.4rem; padding: 0.45rem; border: 1px solid var(--color-border-soft); border-radius: 0.3rem; color: var(--color-text-secondary); font-size: 0.73rem; }
 .character-sheet-attribute-detail strong { color: var(--color-text-primary); }
 .character-sheet-attribute-detail p { margin-top: 0.2rem; }
 .character-sheet-attribute-detail dl { margin-top: 0.35rem; }
@@ -118,7 +120,7 @@
 .character-sheet-slot-label { font-size: 0.62rem; line-height: 1.05; }
 .character-sheet-slot-item { color: var(--color-text-primary); font-size: 0.65rem; line-height: 1.05; overflow-wrap: anywhere; }
 
-.character-sheet-progression { display: grid; align-content: start; gap: 0.25rem; }
+.character-sheet-progression { display: grid; align-content: start; gap: 0.25rem; margin-top: 0.4rem; }
 .character-sheet-expandable { min-width: 0; border: 1px solid var(--color-border-soft); border-radius: 0.4rem; background: var(--color-surface-muted); color: var(--color-text-secondary); font-size: 0.75rem; }
 .character-sheet-expandable summary { cursor: pointer; padding: 0.36rem 0.55rem; color: var(--color-text-primary); font-weight: 650; }
 .character-sheet-expandable summary:focus-visible { outline: 2px solid var(--color-border-active); outline-offset: 1px; }
@@ -133,7 +135,7 @@
 
 @media (max-width: 640px) {
   .character-sheet-upper { grid-template-columns: minmax(0, 1fr); }
-  .character-sheet-art { max-width: 9.5rem; }
+  .character-sheet-art { max-width: 9rem; }
   .character-sheet-base-data { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 390px) {

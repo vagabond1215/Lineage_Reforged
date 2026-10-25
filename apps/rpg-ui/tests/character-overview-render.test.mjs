@@ -47,6 +47,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(html, /<dt>Height<\/dt><dd>170 cm<\/dd>/, 'physical identity comes from the saved character');
     const sheetStyles = readFileSync(new URL('../src/features/character-sheet.css', import.meta.url), 'utf8');
     assert.match(sheetStyles, /\.character-sheet-upper\s*\{[^}]*grid-template-columns:\s*minmax\(8\.5rem, 10\.5rem\) minmax\(0, 1fr\)/s);
+    assert.match(sheetStyles, /\.character-sheet-art\s*\{[^}]*aspect-ratio:\s*1\s*\/\s*1/s);
     assert.match(sheetStyles, /\.character-sheet-attribute-stack\s*\{[^}]*display:\s*grid/s);
     assert.match(sheetStyles, /@media \(max-width: 640px\)/);
     assert.match(html, /View Skills/);
@@ -99,12 +100,13 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     }
     const entries = buildEquipmentEntries(demoSnapshot);
     assert.equal(entries.length, 17);
-    const matrix = upper.match(/<div class="character-sheet-equipment-matrix"[\s\S]*?<\/div><\/div><\/section>/)?.[0] ?? '';
+    const matrix = upper.match(/<div class="character-sheet-equipment-matrix"[\s\S]*?<\/div>/)?.[0] ?? '';
     assert.equal((matrix.match(/class="character-sheet-slot /g) ?? []).length, 17);
     assert.equal((matrix.match(/class="character-sheet-slot-frame"/g) ?? []).length, 17);
     assert.equal((matrix.match(/class="character-sheet-slot-fallback"/g) ?? []).length, entries.filter((entry) => entry.item).length);
     assert.doesNotMatch(matrix, />Empty(?: Slot)?</);
     for (const entry of entries) assert.ok(matrix.includes(`Inspect ${entry.slotLabel} slot:`), `${entry.slotLabel} is inspectable`);
+    assert.ok(upper.indexOf('character-sheet-equipment-matrix') < upper.indexOf('character-sheet-progression'), 'progression fills the right column below equipment');
     const illustratedEntry = { ...entries.find((entry) => entry.item), artworkUrl: '/character-creator/lineages/lineage-human.png' };
     const artHtml = renderToStaticMarkup(React.createElement(EquipmentSlotPreview, { entry: illustratedEntry, onInspect: () => {} }));
     assert.match(artHtml, /<img[^>]*src="\/character-creator\/lineages\/lineage-human.png"/, 'controlled available asset renders');
@@ -147,7 +149,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.doesNotMatch(sparseHtml, /Other Earned Titles|Title:|Background:/);
     assert.doesNotMatch(sparseHtml, />Empty(?: Slot)?</);
     assert.doesNotMatch(sparseHtml, /<dt>Height<\/dt>|<dt>Hair<\/dt>/);
-    const sparseMatrix = sparseHtml.match(/<div class="character-sheet-equipment-matrix"[\s\S]*?<\/div><\/div><\/section>/)?.[0] ?? '';
+    const sparseMatrix = sparseHtml.match(/<div class="character-sheet-equipment-matrix"[\s\S]*?<\/div>/)?.[0] ?? '';
     assert.doesNotMatch(sparseMatrix, /<img|>Empty(?: Slot)?</);
     const sparseAttributeButtons = [...sparseHtml.matchAll(/<button[^>]*aria-expanded="false"[^>]*>(.*?)<\/button>/gs)];
     assert.equal(sparseAttributeButtons.length, 9);

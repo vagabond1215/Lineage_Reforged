@@ -419,19 +419,6 @@ export function CharacterPanel({
             );
             })}
           </div>
-          {overviewAttribute && (
-            <div id="character-attribute-detail" role="region" aria-label={`${overviewAttribute.title} detail`} className="character-sheet-attribute-detail">
-              <strong>{overviewAttribute.detailTitle}</strong>
-              <p>{overviewAttribute.detailSummary}</p>
-              {overviewAttribute.detailGroups?.map((group) => (
-                <dl key={group.title}>
-                  {group.entries.map((entry) => (
-                    <div key={entry.label}><dt>{entry.label}</dt><dd>{entry.value}</dd></div>
-                  ))}
-                </dl>
-              ))}
-            </div>
-          )}
         </div>
         <div className="character-sheet-profile">
           <h2 id="character-sheet-name">{core.playerName}</h2>
@@ -451,9 +438,20 @@ export function CharacterPanel({
               />
             ))}
           </div>
-        </div>
-      </section>
-      <div className="character-sheet-progression">
+          {overviewAttribute && (
+            <div id="character-attribute-detail" role="region" aria-label={`${overviewAttribute.title} detail`} className="character-sheet-attribute-detail">
+              <strong>{overviewAttribute.detailTitle}</strong>
+              <p>{overviewAttribute.detailSummary}</p>
+              {overviewAttribute.detailGroups?.map((group) => (
+                <dl key={group.title}>
+                  {group.entries.map((entry) => (
+                    <div key={entry.label}><dt>{entry.label}</dt><dd>{entry.value}</dd></div>
+                  ))}
+                </dl>
+              ))}
+            </div>
+          )}
+          <div className="character-sheet-progression">
         <details className="character-sheet-expandable">
           <summary>Skills <span>{skillItems.length}</span></summary>
           {skillItems.length ? <ul>{skillItems.map((item) => <li key={item.id}><span>{item.title}</span><span>{item.meta}</span></li>)}</ul> : <p>No developed skills yet.</p>}
@@ -481,7 +479,9 @@ export function CharacterPanel({
           <summary>Earned Titles <span>{otherTitles.length}</span></summary>
           <ul>{otherTitles.map((title, index) => <li key={`${title.name}.${index}`}>{title.name}</li>)}</ul>
         </details>}
-      </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 
