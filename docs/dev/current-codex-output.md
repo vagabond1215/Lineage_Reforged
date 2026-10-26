@@ -18,7 +18,7 @@ FP-001: actual creator, progression caller and SaveManager publish/load/readback
 
 ## D. Branch review and follow-up
 
-Open draft PR inventory #5–#21 was inspected. PR #19 remains fresh-save direction, #20 inactive gear owner, #21 design evidence. None was merged/rebased/deleted; no existing review trigger was consumed. New `codex/echo-dev-console` awaits independent source and selected-client review. Time-watch mutation needs a full idle-time/publication owner plus QA isolation; item grant needs PR #20 caller/Save cutover; weather override needs typed regional authority; future authored spawn filters need world-owner tests. Suggested source commit `feat(dev): exclude origin Echo and add developer inspection menu` (committed). Next branch-local prompt preserves the active master equipment route. No DEV-0.7.2.13 or Game-version decision follows.
+Open draft PR inventory #5–#21 was inspected. PR #19 remains fresh-save direction, #20 inactive gear owner, #21 design evidence. None was merged/rebased/deleted; no existing review trigger was consumed. New [draft PR #22](https://github.com/vagabond1215/Lineage_Reforged/pull/22) awaits independent source and selected-client review. Time-watch mutation needs a full idle-time/publication owner plus QA isolation; item grant needs PR #20 caller/Save cutover; weather override needs typed regional authority; future authored spawn filters need world-owner tests. Suggested source commit `feat(dev): exclude origin Echo and add developer inspection menu` (committed). Next branch-local prompt preserves the active master equipment route. No DEV-0.7.2.13 or Game-version decision follows.
 
 ## 2026-10-26 — Stage 2 durable item-location owner gate
 
