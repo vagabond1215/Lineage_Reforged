@@ -227,6 +227,10 @@ These were exposed by accepted work after the original June index. They are deli
 | What compatibility-safe migration/alias policy should eventually retire misleading runtime travel keys whose names no longer match canonical settlement/place identity? | Reopen after `0.6.11` and its audit are accepted, when a dedicated generic travel-identity cleanup is prioritized. Do not rename current keys opportunistically. | `DEFERRED_WITH_TRIGGER` |
 | What exact typed semantics and refusal/consequence rules should distinguish Quest, Mission, Order, Favor, and Trial when organization/law/rank owners are mature enough to consume them? | Reopen with a dedicated quest-kind/assignment-semantics decision. | `DEFERRED_WITH_TRIGGER` |
 
+### 2026-10-26 resolved direction, remaining owner definitions
+
+**Resolved:** all characters start with zero **earned** Echo (including unlocked higher-tier backstory starter proficiency); World-Stray is an **unlockable special origin** with a bounded future boon rather than a generic skill threshold; visible expandable Dev top-bar menu is **on by default** through current development until explicit owner policy change. Proposed Dev groups: Items, Time, Weather, Spawn/Encounter and Diagnostics. **Still needs source/consumer decisions:** Echo earned-growth accounting baseline/ledger; World-Stray special narrative qualification and exact boon; typed weather/climate transition authority and authored time/weather/season spawn eligibility. See [focused decision and tests](zero-inherited-echo-dev-console-and-environment-spawn-test-contract-2026-10-26.md). These unresolved implementation specifics do not reopen the already accepted owner direction.
+
 ## Durable Resolved User Direction
 
 The detailed June 17 and June 18 decisions remain preserved in:
