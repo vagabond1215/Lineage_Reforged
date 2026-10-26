@@ -222,6 +222,10 @@ Forbidden or risky drift:
 
 The [accepted user direction](founder-backstory-lineage-skill-unlocks-and-dev-item-spawner-intent-2026-10-26.md) sets low/no-boon founder backgrounds and earned skill milestones that unlock profession backstories for **downstream descendants only**, preserving source-aware skill evidence and one selected backstory without retroactive class gating. The 27 live backstories and creator eligibility policy require a future focused pass; World-Stray/isekai needs an intentional founder exception and low-power rebalance. Separately, add a sandboxed **developer-only item spawner** after native gear ownership: it grants through the real item-instance/fungible inventory owner, keeps individual durability and condition and does not contaminate legitimate family/achievement progression. Neither work item is part of active gear PR #20.
 
+### 2026-10-26 Zero-Origin Echo and Default-On Dev Console
+
+**Every character** (founder or descendant) must begin with zero earned/latent Echo and zero Echo-derived level, regardless of starting skill familiarity, attribute adjustments, knowledge or backstory boon. The current live total-rank Echo calculation violates that invariant when recomputed. A source-aware earned progression/baseline owner is required to prevent starter-skill farming. World-Stray/isekai is a **special unlocked origin** with non-skill narrative requirements and a future bounded boon, not a free default. A compact **Dev** button should appear in the gameplay top bar, **on by default for current development and preview**, with expandable Items, Time, Weather, Spawns and Diagnostics menus. The owner must explicitly direct any future removal. Time and weather tests must use real environment/world/time owners rather than raw snapshot edits. See [focused contract](zero-inherited-echo-dev-console-and-environment-spawn-test-contract-2026-10-26.md).
+
 ## Legacy / Chronicle / Bloodlines Criteria
 
 Top-level meta-progression should conceptually be:
