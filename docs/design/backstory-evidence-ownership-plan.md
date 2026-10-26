@@ -2,6 +2,8 @@
 
 > **2026-10-26 owner refinement:** Newly earned skill milestones can unlock profession-themed **backstory selection for verified descendants**; starter-granted skills, developer-granted ranks, account-wide IDs or unverified family grouping do not satisfy that ancestry-scoped predicate. Persist qualifying source-run/character, verified descent and earned evidence through the appropriate family/Chronicle owner, without fabricating heir records before existing eligibility. See [founder/descendant contract](founder-backstory-lineage-skill-unlocks-and-dev-item-spawner-intent-2026-10-26.md). Existing historical implementation non-goals remain until a scoped code route.
 
+> **2026-10-26 Echo/provenance safeguard:** Backstory starter skill levels, inherited origin proficiency, character-creation attribute/knowledge offsets and dev-scenario grants are **capability/evidence inputs, not earned Echo**. The progression owner must distinguish them from qualified earned growth even after Save/restart or recomputation. The [Echo/Dev console decision](zero-inherited-echo-dev-console-and-environment-spawn-test-contract-2026-10-26.md) also keeps World-Stray's future special unlock outside normal skill thresholds.
+
 Source version/run: Version 0.5.52 - Backstory Evidence Ownership Plan
 Date: 2026-05-17
 Status: planning-only design document
