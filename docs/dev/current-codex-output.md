@@ -1,3 +1,23 @@
+## 2026-10-26 — Fresh gear-instance owner foundation checkpoint
+
+**Source run:** unversioned Character Equipment fresh-format owner support. Inspected `master`/`origin/master` `a596112acf3945f2bf7c625e943f2511d12aa710`; PR #19 docs head `62d6cc7b00fdd9f17a4424aafd6527a754b1906c` supersedes obsolete-save migration. Branch `codex/gear-instance-fresh-epoch`, review-held. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
+
+### A. Files changed
+
+`packages/engines/game-engine/src/gear-instance-owner.ts`, `packages/content/base/items/equipment_fit_profiles.json`, `tests/unit/gear-instance-owner.test.mjs`, [focused decision](../design/character-fresh-gear-instance-owner-foundation-2026-10-26.md), current output/handoff/prompt and branch register.
+
+### B. Patch summary
+
+Implemented an executable version-1 item-instance/location owner. Generated IDs and individual durability persist through owner JSON readback; grants, worn/bag/overflow movement, displacement and bag-capacity handling are atomic. Stale and duplicate requests do not mutate. Native Equipment/Clothing/Accessory positions include Back, sided Ear/Eye and ten rings; six item profiles author the initial proven fit subset. The owner is deliberately **not activated** in 17-slot gameplay, UI or SaveSnapshot v2, because doing so without a full caller/save/survey cutover would create a second physical ledger.
+
+### C. Tests or checks run
+
+Red-before-green: new suite initially failed with `ERR_MODULE_NOT_FOUND`; owner 5/5 final. Root owner/combat/Save suite 45/45; adjacent app Equipment/Inventory/Character suite 29/29 from `apps/rpg-ui`; content lint 72 existing registered files; `typecheck:node` pass; isolated owner `tsc --strict` pass; direct Vite production build pass. Broad UI TypeScript 115 error signatures on clean master and 115 on branch, zero delta. Staged `git diff --check` passed. The first app test invocation from repository root failed because its Vite `/src` root was wrong; it was rerun successfully from the required app directory. No new owner selected-client Save/restart, actual campaign creation, combat/resource parity, interrupted publication or survey witness proof is claimed.
+
+### D. Risks / follow-up notes
+
+FP-001: actual caller cutover remains required; FP-002: green foundation tests do not accept the parent; FP-005: stale/duplicate owner requests tested; FP-009: source and draft branch identities separated; FP-013: future nested Save owner must survive all campaign rewrites; FP-014/FP-016: new-format graph/witness publication requires independent verification. Open PRs #5–#19 were inspected; #19 remains draft design direction, #17/#18 remain evidence, all prior holds retain review triggers. No merge, closure, deletion, Site deployment or Game version change. Suggested commit: `feat(equipment): add native gear instance owner foundation`. Next run: atomic real-caller and fresh-format Save cutover, including fit coverage, starter/quest/combat/resource/survey integration and incompatible-save guidance.
+
 ## 2026-10-26 — Stage 2 durable item-location owner gate
 
 **Source run:** unversioned Character equipment owner support; fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`, source/test/decision commit `dae9e6e6`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused Stage 2 decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).
