@@ -47,6 +47,7 @@ type TopStatusBarProps = {
   bodyState: BodyStatePresentationSnapshot;
   meters: StatMeter[];
   notifications: NotificationItem[];
+  devContent?: ReactNode;
   settingsOpen: boolean;
   onToggleSettings: () => void;
   settingsContent: ReactNode;
@@ -169,12 +170,16 @@ export function TopStatusBar({
   bodyState,
   meters,
   notifications,
+  devContent,
   settingsOpen,
   onToggleSettings,
   settingsContent
 }: TopStatusBarProps) {
   const [conditionOpen, setConditionOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [devOpen, setDevOpen] = useState(false);
+  const devTrigger = useRef<HTMLButtonElement | null>(null);
+  const devPanel = useRef<HTMLDivElement | null>(null);
   const conditionTrigger = useRef<HTMLButtonElement | null>(null);
   const calendarTrigger = useRef<HTMLButtonElement | null>(null);
   const topBarButtonClass =
@@ -188,6 +193,22 @@ export function TopStatusBar({
   useEffect(() => {
     if (activeConditions.length === 0) setConditionOpen(false);
   }, [activeConditions.length]);
+
+  useEffect(() => {
+    if (settingsOpen) setDevOpen(false);
+  }, [settingsOpen]);
+
+  useEffect(() => {
+    if (!devOpen) return;
+    devPanel.current?.focus();
+    const onPointerDown = (event: PointerEvent) => {
+      if (!devPanel.current?.contains(event.target as Node) && !devTrigger.current?.contains(event.target as Node)) {
+        setDevOpen(false);
+      }
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [devOpen]);
 
   return (
     <header
@@ -353,6 +374,42 @@ export function TopStatusBar({
             )}
           </div>
           <div className="top-status-controls flex items-center justify-end gap-1.5">
+            <div className="relative z-[110]">
+              <button
+                ref={devTrigger}
+                type="button"
+                className={`px-2 py-1 text-xs font-semibold ${topBarButtonClass}`}
+                onClick={() => {
+                  setCalendarOpen(false);
+                  setConditionOpen(false);
+                  setDevOpen((current) => !current);
+                }}
+                aria-expanded={devOpen}
+                aria-controls="top-bar-dev-detail"
+              >Dev</button>
+              {devOpen && (
+                <div
+                  ref={devPanel}
+                  id="top-bar-dev-detail"
+                  role="region"
+                  aria-label="Developer tools"
+                  tabIndex={-1}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      setDevOpen(false);
+                      devTrigger.current?.focus();
+                    }
+                  }}
+                  className={`absolute right-0 top-[calc(100%+12px)] z-[130] max-h-[calc(100vh-6rem)] w-[min(32rem,calc(100vw-1rem))] overflow-y-auto p-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${overlayPanelClass}`}
+                >
+                  <div className="mb-2 flex items-center justify-between gap-2">
+                    <h2 className="font-semibold">Developer tools</h2>
+                    <button type="button" onClick={() => { setDevOpen(false); devTrigger.current?.focus(); }} className="text-sm underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)]">Close</button>
+                  </div>
+                  {devContent ?? <p>Developer state is unavailable.</p>}
+                </div>
+              )}
+            </div>
             <NotificationBell items={notifications} />
             <div className="relative z-[110]">
               <button

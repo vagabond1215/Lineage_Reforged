@@ -397,6 +397,37 @@ test("calculatePlayerEcho only counts stats above authored defaults", () => {
   assert.ok(stronger.echoAdjusted > baseline.echoAdjusted);
 });
 
+test("creation baseline excludes starter capability while later earned growth survives recomputation", () => {
+  const attributes = { STR: 16, DEX: 9, AGI: 10, CON: 10, VIT: 10, WIS: 10, INT: 10, SPT: 10, CHA: 10 };
+  const skills = [
+    { id: "skill.combat.weapon.sword", rank: 25, source: "trained" },
+    { id: "skill.knowledge.general_lore", rank: 25, source: "trained" }
+  ];
+  const originBaseline = {
+    attributes: { ...attributes },
+    skillRanks: {
+      "skill.combat.weapon.sword": 25,
+      "skill.knowledge.general_lore": 25
+    }
+  };
+  const starter = createEchoPlayerFixture({ attributes, skills, progression: createPlayerProgressionState({ originBaseline }) });
+  const initial = resolvePlayerEchoProgression(starter);
+  assert.equal(initial.echo.echoAdjusted, 0);
+  assert.equal(initial.echo.diversityCount, 0);
+  assert.equal(initial.level, 0);
+
+  const earned = { ...starter, attributes: { ...attributes, STR: 17 }, skills: [
+    { ...skills[0], rank: 26 }, skills[1]
+  ], progression: initial };
+  const first = resolvePlayerEchoProgression(earned);
+  const repeated = resolvePlayerEchoProgression({ ...earned, progression: first });
+  assert.ok(first.echo.skillContribution > 0);
+  assert.ok(first.echo.statContribution > 0);
+  assert.equal(first.echo.knowledgeContribution, 0);
+  assert.deepEqual(repeated, first);
+  assert.deepEqual(resolvePlayerEchoProgression(JSON.parse(JSON.stringify({ ...earned, progression: first }))), first);
+});
+
 test("calculatePlayerEcho uses stable skill references with diminishing returns", () => {
   const novice = calculatePlayerEcho(
     createEchoPlayerFixture({

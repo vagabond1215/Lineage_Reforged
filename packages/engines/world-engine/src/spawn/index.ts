@@ -13,28 +13,66 @@ function hashText(value: string): number {
   return hash;
 }
 
-function matchesSpawnProfile(profile: SpawnProfileRecord, context: NonNullable<WorldState["encounterContext"]>, ancestry: string[]): boolean {
-  if (!profile.regionIds.some((id) => ancestry.includes(id))) {
-    return false;
-  }
-  if (profile.worldHexIds.length > 0 && !profile.worldHexIds.includes(context.worldHexId ?? "")) {
-    return false;
-  }
-  if (profile.settlementIds.length > 0 && !profile.settlementIds.includes(context.settlementId ?? "")) {
-    return false;
-  }
-  if (profile.siteIds.length > 0 && !profile.siteIds.includes(context.siteId ?? "")) {
-    return false;
-  }
+function spawnProfileFailures(profile: SpawnProfileRecord, context: NonNullable<WorldState["encounterContext"]>, ancestry: string[]): string[] {
+  const failures: string[] = [];
+  if (!profile.regionIds.some((id) => ancestry.includes(id))) failures.push("region");
+  if (profile.worldHexIds.length > 0 && !profile.worldHexIds.includes(context.worldHexId ?? "")) failures.push("world hex");
+  if (profile.settlementIds.length > 0 && !profile.settlementIds.includes(context.settlementId ?? "")) failures.push("settlement");
+  if (profile.siteIds.length > 0 && !profile.siteIds.includes(context.siteId ?? "")) failures.push("site");
   if (
     profile.habitatTags.length > 0 &&
     !profile.habitatTags.some((tag) => context.habitatTags.includes(tag))
   ) {
-    return false;
+    failures.push("habitat");
   }
 
   const hazardPressure = context.hazardPressure;
-  return hazardPressure >= profile.minHazardPressure && hazardPressure <= profile.maxHazardPressure;
+  if (hazardPressure < profile.minHazardPressure || hazardPressure > profile.maxHazardPressure) failures.push("hazard pressure");
+  return failures;
+}
+
+function regionAncestry(regionId: string, parentById: Map<string, string | null>): string[] {
+  const ancestry: string[] = [];
+  const seen = new Set<string>();
+  let cursorId: string | null = regionId;
+  while (cursorId) {
+    if (seen.has(cursorId) || !parentById.has(cursorId)) return [];
+    seen.add(cursorId);
+    ancestry.push(cursorId);
+    cursorId = parentById.get(cursorId) ?? null;
+  }
+  return ancestry;
+}
+
+export function inspectSpawnEligibility(state: WorldState, tick: number, seed = 0) {
+  const content = loadSpawnFoundationContent();
+  const context = state.encounterContext ?? null;
+  const ancestry = context ? regionAncestry(context.regionId, content.regionParentById) : [];
+  const contextError = !context ? "No authored encounter context is active." :
+    ancestry.length === 0 ? "Encounter region is unknown." :
+    !Number.isFinite(context.hazardPressure) || context.hazardPressure < 0 || context.hazardPressure > 100 ? "Hazard pressure is invalid." :
+    context.habitatTags.length === 0 ? "No authored habitat is active." : null;
+  const profiles = content.spawnProfiles.map((profile) => {
+    const failures = contextError ? [contextError] : spawnProfileFailures(profile, context!, ancestry);
+    return {
+      id: profile.id,
+      passed: failures.length === 0,
+      failures,
+      spawnRollPassed: failures.length === 0 &&
+        hashText(`${seed}:${tick}:${profile.id}:${context!.regionId}`) % 100 < profile.spawnRatePerDay
+    };
+  });
+  return {
+    context,
+    contextError,
+    profiles,
+    candidates: contextError ? [] : resolveSpawnCandidates(state, tick, seed, { strict: true }).map((candidate) => ({
+      id: candidate.id,
+      encounterTemplateId: candidate.encounterTemplateId,
+      spawnProfileId: candidate.spawnProfileId
+    })),
+    unsupportedFilters: ["time of day", "season", "weather"]
+  };
 }
 
 export function buildDefaultEncounterContext(state: WorldState): NonNullable<WorldState["encounterContext"]> {
@@ -61,18 +99,11 @@ export function resolveSpawnCandidates(
   const hazardPressure = encounterContext.hazardPressure;
   if (options.strict && (!Number.isFinite(hazardPressure) || hazardPressure < 0 || hazardPressure > 100 ||
       !encounterContext.habitatTags.length)) return [];
-  const ancestry: string[] = [];
-  const seen = new Set<string>();
-  let cursorId: string | null = regionId;
-  while (cursorId) {
-    if (seen.has(cursorId) || !content.regionParentById.has(cursorId)) return [];
-    seen.add(cursorId);
-    ancestry.push(cursorId);
-    cursorId = content.regionParentById.get(cursorId) ?? null;
-  }
+  const ancestry = regionAncestry(regionId, content.regionParentById);
+  if (ancestry.length === 0) return [];
 
   const matchedProfiles = content.spawnProfiles
-    .filter((profile) => matchesSpawnProfile(profile, encounterContext, ancestry))
+    .filter((profile) => spawnProfileFailures(profile, encounterContext, ancestry).length === 0)
     .sort((a, b) => a.id.localeCompare(b.id));
 
   const candidates: ResolvedSpawnCandidateState[] = [];

@@ -7,7 +7,8 @@ import {
   resolveLegacyStarterSkillPolicy
 } from "../../packages/engines/game-engine/src/index.ts";
 import {
-  createDefaultPlayerStatGrowthState
+  createDefaultPlayerStatGrowthState,
+  resolvePlayerEchoProgression
 } from "../../packages/engines/player-engine/src/index.ts";
 import { createInitialClock } from "../../packages/shared/time/src/index.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
@@ -124,6 +125,18 @@ test("createNewGameSnapshot preserves current backstory starter skills exactly",
       expectedBackstorySkillSignature(backstory.id),
       backstory.id
     );
+  }
+});
+
+test("all selectable new backstories retain skills without creating latent Echo", () => {
+  const profile = createDefaultAccountProfileState();
+  for (const backstory of getBackstoryOptionsForSelection("lineage.human").filter((option) => option.selectable)) {
+    const snapshot = createNewGameSnapshot(createCompleteCharacterForm(backstory.id), profile.accountId, { accountProfile: profile });
+    const recomputed = resolvePlayerEchoProgression(snapshot.playerState);
+    assert.equal(recomputed.echo.echoAdjusted, 0, backstory.id);
+    assert.equal(recomputed.echo.diversityCount, 0, backstory.id);
+    assert.equal(recomputed.level, 0, backstory.id);
+    assert.deepEqual(recomputed, resolvePlayerEchoProgression({ ...snapshot.playerState, progression: recomputed }));
   }
 });
 

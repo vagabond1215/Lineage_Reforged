@@ -21,6 +21,7 @@ import {
   createDefaultPlayerBodyState,
   createDefaultPlayerStatGrowthState,
   createRunDifficultyState,
+  createPlayerEchoOriginBaseline,
   createPlayerProgressionState,
   syncPlayerRuntimeState
 } from '../../../../packages/engines/player-engine/src/index.js';
@@ -915,7 +916,13 @@ function deriveCharacterCreationState(
       bodyState,
       resources: resources.resources,
       resourceRuntime: resources.resourceRuntime,
-      progression,
+      progression: {
+        ...progression,
+        originBaseline: createPlayerEchoOriginBaseline({
+          attributes,
+          skills: backstory ? backstory.startingSkills : []
+        })
+      },
       skills: backstory ? [...backstory.startingSkills] : [],
       spells: [],
       abilities: backstory ? getStartingAbilityStates(form.backstoryId) : [],

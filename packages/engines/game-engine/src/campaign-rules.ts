@@ -559,8 +559,17 @@ function validateSkill(value: unknown): boolean {
 }
 
 function validateProgression(value: unknown): value is PlayerProgression {
-  if (!isPlainRecord(value) || !hasExactKeys(value, ["level", "echo", "legacyGrowth"])) return false;
+  if (!isPlainRecord(value) || !hasExactKeys(value, ["level", "echo", "legacyGrowth"], ["originBaseline"])) return false;
   if (!isNonnegativeInteger(value.level)) return false;
+  if (value.originBaseline !== undefined) {
+    if (!isPlainRecord(value.originBaseline) ||
+      !hasExactKeys(value.originBaseline, ["attributes", "skillRanks"]) ||
+      !validateAttributes(value.originBaseline.attributes) ||
+      !isPlainRecord(value.originBaseline.skillRanks) ||
+      !Object.entries(value.originBaseline.skillRanks).every(([id, rank]) =>
+        isExactNonblank(id) && Number.isInteger(rank) && Number(rank) >= 0 && Number(rank) <= 125
+      )) return false;
+  }
   const echo = value.echo;
   if (!isPlainRecord(echo) || !hasExactKeys(echo, [
     "balanceRuleId", "balanceRuleVersion", "skillContribution", "statContribution", "knowledgeContribution",

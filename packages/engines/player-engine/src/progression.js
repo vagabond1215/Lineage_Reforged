@@ -220,7 +220,14 @@ export function createPlayerProgressionState(params = {}) {
     return {
         level: normalizeInteger(params.level, 0, 0),
         echo: createDefaultPlayerEchoState(),
-        legacyGrowth: createPlayerLegacyGrowthState(params.legacyGrowth)
+        legacyGrowth: createPlayerLegacyGrowthState(params.legacyGrowth),
+        ...(params.originBaseline ? { originBaseline: params.originBaseline } : {})
+    };
+}
+export function createPlayerEchoOriginBaseline(playerState) {
+    return {
+        attributes: { ...playerState.attributes },
+        skillRanks: Object.fromEntries(playerState.skills.map((skill) => [skill.id, skill.rank]))
     };
 }
 export function normalizePlayerProgression(progression) {
@@ -234,17 +241,19 @@ export function normalizePlayerProgression(progression) {
     return {
         level: oldLevel,
         echo: createDefaultPlayerEchoState(),
-        legacyGrowth
+        legacyGrowth,
+        ...(progression?.originBaseline ? { originBaseline: progression.originBaseline } : {})
     };
 }
 export function calculatePlayerEcho(playerState) {
     const { balanceRule, attributeDefaults, skillById } = loadEchoCatalog();
+    const baseline = playerState.progression?.originBaseline;
     let nonKnowledgeSkillUnits = 0;
     let knowledgeSkillUnits = 0;
     for (const skill of playerState.skills) {
         const skillRecord = skillById.get(skill.id);
         const isKnowledgeSkill = skillRecord?.category === "knowledge";
-        const unit = normalizedEchoUnit(skill.rank, isKnowledgeSkill
+        const unit = normalizedEchoUnit(Math.max(0, skill.rank - (baseline?.skillRanks[skill.id] ?? 0)), isKnowledgeSkill
             ? balanceRule.normalization.knowledgeSkillReferenceRank
             : balanceRule.normalization.skillReferenceRank, isKnowledgeSkill ? balanceRule.exponents.knowledge : balanceRule.exponents.skill);
         if (isKnowledgeSkill) {
@@ -255,7 +264,7 @@ export function calculatePlayerEcho(playerState) {
     }
     const skillContribution = round(100 *
         Math.min(1, nonKnowledgeSkillUnits / balanceRule.normalization.skillReferenceSlots));
-    const statUnits = balanceRule.normalization.trackedAttributeKeys.map((attributeKey) => normalizedEchoUnit(Math.max(0, playerState.attributes[attributeKey] - attributeDefaults[attributeKey]), balanceRule.normalization.statReferenceDelta, balanceRule.exponents.stat));
+    const statUnits = balanceRule.normalization.trackedAttributeKeys.map((attributeKey) => normalizedEchoUnit(Math.max(0, playerState.attributes[attributeKey] - (baseline?.attributes[attributeKey] ?? attributeDefaults[attributeKey])), balanceRule.normalization.statReferenceDelta, balanceRule.exponents.stat));
     const statContribution = round(100 *
         (statUnits.length === 0
             ? 0
@@ -265,7 +274,7 @@ export function calculatePlayerEcho(playerState) {
     const echoBase = round(skillContribution * balanceRule.weights.skills +
         statContribution * balanceRule.weights.stats +
         knowledgeContribution * balanceRule.weights.knowledge);
-    const diversityCount = playerState.skills.filter((skill) => skill.rank >= balanceRule.diversity.thresholdRank).length;
+    const diversityCount = playerState.skills.filter((skill) => skill.rank - (baseline?.skillRanks[skill.id] ?? 0) >= balanceRule.diversity.thresholdRank).length;
     const diversityBonus = round(Math.min(balanceRule.diversity.maxMultiplier, 1 + diversityCount * balanceRule.diversity.bonusPerSkill));
     const echoAdjusted = round(echoBase * diversityBonus);
     return {
@@ -287,7 +296,8 @@ export function resolvePlayerEchoProgression(playerState) {
     return {
         level,
         echo,
-        legacyGrowth: normalizedProgression.legacyGrowth
+        legacyGrowth: normalizedProgression.legacyGrowth,
+        ...(normalizedProgression.originBaseline ? { originBaseline: normalizedProgression.originBaseline } : {})
     };
 }
 export function syncPlayerEchoProgression(playerState) {
