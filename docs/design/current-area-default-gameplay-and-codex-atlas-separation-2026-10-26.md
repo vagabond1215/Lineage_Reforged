@@ -80,6 +80,8 @@ An individual illustration may be generated for named existing canon areas (e.g.
 
 If the map viewer adds no locally useful information beyond the illustration and travel/Atlas links, **remove it from Area**. It should not consume the largest part of the page merely to preserve an existing component.
 
+> **2026-10-26 extended deferred-intent audit:** Before activating a visually rich Area, consume [Area-first deferred design and dependency audit](area-first-deferred-design-intent-pull-forward-and-dependency-audit-2026-10-26.md). It adds source-grounded current-place precision (including the Ashen survey anchorage compatibility key), ecology-derived **plausibility vs observation vs interactable** distinctions, bounded Chronicle feedback, short/extended action shape, recovery and active-combat priority, and explicit NPC/station and weather absence rules. This expands **read-only preplanning**, not action authorizations or an Atlas map database.
+
 ## 6. Incremental implementation slices and acceptance
 
 **AREA-0 (source-only):** Derive a typed `CurrentAreaScene` read projection anchored to current accepted campaign head, actual location identity, current observation, live owner plans and recent accepted events. Document unknown vs known vs reachable and link destinations. Do not mint a `localScene` persisted owner or static content by guessing.
