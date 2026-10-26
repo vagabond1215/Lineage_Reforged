@@ -1,6 +1,6 @@
 ## 2026-10-26 — Fresh gear-instance owner foundation checkpoint
 
-**Source run:** unversioned Character Equipment fresh-format owner support. Inspected `master`/`origin/master` `a596112acf3945f2bf7c625e943f2511d12aa710`; PR #19 docs head `62d6cc7b00fdd9f17a4424aafd6527a754b1906c` supersedes obsolete-save migration. Branch `codex/gear-instance-fresh-epoch`, review-held. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
+**Source run:** unversioned Character Equipment fresh-format owner support. Inspected `master`/`origin/master` `a596112acf3945f2bf7c625e943f2511d12aa710`; PR #19 docs head `62d6cc7b00fdd9f17a4424aafd6527a754b1906c` supersedes obsolete-save migration. Branch `codex/gear-instance-fresh-epoch`, pushed implementation head `5464858bde0ac2c2bf715a43480b394837f04fac`, draft [PR #20](https://github.com/vagabond1215/Lineage_Reforged/pull/20), review-held. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
 
 ### A. Files changed
 
