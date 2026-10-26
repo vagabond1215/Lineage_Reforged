@@ -453,6 +453,8 @@ Primary actions should normally live in the contextual inspector or immediately 
 
 Do not require a player to infer readiness by comparing several disconnected cards.
 
+> **2026-10-26 current-development exception:** The owner explicitly requests a compact **`Dev` button on the gameplay top menu bar, enabled by default** at the current pre-playable stage (including preview), with an expandable Dev console for item grant, time/calendar, weather/climate, spawn/encounter and diagnostics commands. This supplements the normal diagnostics abstraction below and is not a general production-facing feature promise. Disabling or hiding the default-on button later requires **explicit owner direction**. Mutating test commands must still use actual item/time/weather/spawn owners with truthful, sourced outcomes, not UI-only simulation. See [focused source audit](zero-inherited-echo-dev-console-and-environment-spawn-test-contract-2026-10-26.md).
+
 ### 22.6 Development Diagnostics Versus Player Presentation
 
 Current Runtime Bridge, source-reference, Window Standards, raw owner/debug, placeholder revenue, and similar foundation diagnostics are not part of the intended normal gameplay presentation.
