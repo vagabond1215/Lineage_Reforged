@@ -7,6 +7,8 @@ Game/development version impact: none
 Scope: future player/NPC attribute precision, use-driven development, wearable compatibility, physical storage, item quality, and artisan output.
 Non-goal: this document does not authorize content, schema, balance, runtime, migration, save, UI, combat, crafting, NPC, or economic implementation.
 
+> **2026-10-26 live UI follow-up:** The owner's Equipment/Casual/Accessories cycling, two accessory presets, real sided slots, simultaneous wearable layers, and one-watch apply now have a [source-grounded owner/save addendum](character-layered-loadouts-owner-follow-up-audit-2026-10-26.md). That addendum inspects default-head `cf8eb7a8d1e4a3acf389b5f02ed036047fc58737` and the [live layered-loadout preflight](character-layered-loadouts-and-sided-slots-preflight-2026-10-26.md). It refines migration/owner readiness only; the draft PR and this broader quality/artisan work remain non-executing design evidence.
+
 ## 1. Purpose and precedence
 
 Capture the user-directed interconnected mechanics without creating a second owner for any accepted system. This is a focused *future implementation consumer and decision checklist*, not a replacement for accepted source contracts. More specific previously accepted owner boundaries continue to control until a dedicated decision reconciles exact new fields, formulas, migrations, and tests.
