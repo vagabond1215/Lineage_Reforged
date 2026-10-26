@@ -2,6 +2,14 @@
 
 Last reviewed: 2026-09-14 during Soundings owner-contract and durable-completion route reconciliation
 
+## 2026-10-26 current playable-UI and deferred-consumer timing overlay (PR #24, review-held)
+
+> **Connector planning status: `QUEUED_NOT_INSTALLED`.** The latest owner direction selects **default Current Area**, the actual current location name, nearby legal gameplay and recent truthful consequences; the former World Map/Region/Settlement/Trade Routes/Travel/Local Market submenu retires, with wider known geography living in **Codex → Atlas**. Do not create a separate Home dashboard. [Area source contract](../design/current-area-default-gameplay-and-codex-atlas-separation-2026-10-26.md), [detailed screen/command plan](../design/current-area-and-atlas-interaction-presentation-detailed-plan-2026-10-26.md).
+>
+> Today's **conditional timing** for the original 30 deferred authority families and October-only additions is in the [consumer/timing matrix](../design/deferred-and-outstanding-design-consumer-timing-map-2026-10-26.md): **G0** independently review/accept PR #19–#23 equipment/Echo/Dev owners, **G1** prepare source-only default Area + Atlas, **G2** selected-client playable UI/ordinary Soundings-combat-restart coherence, **G3** one observed resource→item (+ optional actual recipe) micro-loop, **G4** one named second-owner interaction, **G5** validated descendant/provider/estate expansion, **G6** deeper simulation. G0/G1 preparation may run in parallel. These are **evidence gates, not release dates or development milestone numbers**. Lore/name/visual authoring follows the [canon review plan](../design/lore-grounded-naming-and-area-content-authoring-plan-2026-10-26.md).
+>
+> **Prompt isolation:** Do not replace `docs/dev/current-codex-prompt.md`, current GPT handoff/output, in-progress PR #20 gear or PR #22 Echo/Dev prompts. The current master prompt still requests obsolete development-save migration, superseded by PR #19; do not restore compatibility obligations. New future UI implementation is staged only in [queued Area/Atlas prompt](queued-area-atlas-playable-ui-implementation-prompt-2026-10-26.md) and separate source prep [queued Area/Atlas preflight](queued-current-situation-world-ui-source-prep-prompt-2026-10-26.md) until a reviewer selects the route. The existing Soundings `INTEGRATED_LOOP` is real; Game `0.1.1-prealpha` and held combat `DEV-0.7.2.13` remain. Earlier `0.5.x`/`0.6.11` pipeline chronology below is retained as history, not an automatic executable priority queue.
+
 ## Current Runtime Transition Override
 
 - Latest implemented and accepted primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`; independent `0.6.11.1` returned `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`.
