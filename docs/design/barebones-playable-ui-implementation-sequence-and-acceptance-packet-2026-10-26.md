@@ -1,5 +1,7 @@
 # Barebones Playable UI: Bounded Sequence, Dependencies, and Acceptance Packet
 
+> **Owner UI correction (2026-10-26):** The recommended extra **Home/Current Situation** destination is superseded by a **single Current Area gameplay/default scene**. The current location name is the main header; when no left/domain button is selected, show the Area by default, with an explicit return affordance. The former World submenu (World Map, Region, Settlement, Trade Routes, Travel, Local Market) is removed. Broad known geography/reference maps move to **Codex → Atlas**, while actual nearby observation/actions, current quest/activity/combat, recent activity log and Travel remain on Area. See [Current Area And Atlas Separation](current-area-default-gameplay-and-codex-atlas-separation-2026-10-26.md). All historical Home descriptions below are to be read as **Area**, not a second UI surface. The implementation slices are otherwise proposed, not accepted gameplay.
+
 Date: 2026-10-26
 Status: `QUEUED_PREPLANNING; USER_ROUTE_REVIEW_REQUIRED; NO_INSTALLED_CODE_PROMPT`
 Companion: [cross-domain intent, source and gap audit](barebones-playable-ui-cross-domain-gap-and-pull-forward-audit-2026-10-26.md).
