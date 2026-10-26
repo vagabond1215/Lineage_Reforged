@@ -1,5 +1,7 @@
 # Barebones Playable UI: Cross-Domain Gap And Pull-Forward Audit
 
+> **Owner correction (2026-10-26):** The P1 "Home / Current Situation" concept below must become **the default Current Area gameplay screen**, rather than a seventh Home screen alongside World. Current location name, immediately observable surroundings, locally legal actions, travel and recent activities occupy Area. Broader geographic browsing and maps reside in **Codex → Atlas**. The six World subsections disappear. See [source-grounded Area/Atlas routing decision](current-area-default-gameplay-and-codex-atlas-separation-2026-10-26.md). Historical prioritization still applies to the presentation/owner contract, not the earlier UI destination names.
+
 Date: 2026-10-26
 Status: `CONNECTOR_PREPLANNING_ONLY; CURRENT_SOURCE_CENSUS; NO_FEATURE_ACTIVATION`
 Baseline: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, plus read-only review of isolated PR #19 (fresh saves), #20 (gear-instance foundation), #21 (founder/Dev intent), #22 (Echo and Dev read-only UI), and #23 (Echo/Dev acceptance preflight).
