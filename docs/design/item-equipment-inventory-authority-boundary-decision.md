@@ -1,5 +1,7 @@
 # Item Equipment Inventory Authority Boundary Decision
 
+> **2026-10-26 implementation scope clarification:** The canonical-static versus mutable-instance ownership boundaries in this accepted decision remain in force. The owner has explicitly waived backward compatibility with old **development-only equipment saves**. [Fresh-format equipment decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md) permits a clean new item-instance/equipment save schema without converting prior 17-slot records; it does not permit duplicated live item-location owners or loss of new-format Save/restart integrity.
+
 Version: `Version 0.5.209 - Item Equipment Inventory Authority Boundary Decision`
 
 Status: approved documentation-only authority boundary
