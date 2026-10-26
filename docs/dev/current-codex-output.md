@@ -1,3 +1,23 @@
+## 2026-10-25 — Humanoid Character equipment diagram
+
+**Source run:** unversioned bounded Character presentation on `master`, inspected base `58355b40dd1c3014902a1bb5b68d0e3e48799dc4`, implementation `4144c179b44bb74e8247b403b9902623bcceac63` pushed/read back. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; label class unversioned; parent development milestone n/a; development impact `none`; game-version impact `none`. [Focused evidence](humanoid-character-equipment-layout-2026-10-25.md).
+
+### A. Files changed
+
+`CharacterPanel.tsx`, `character-sheet.css`, focused Overview render test, UI information-architecture boundary and focused record; this output, handoff and branch register record final publication.
+
+### B. Patch summary
+
+All 17 canonical slots appear once in a six-row humanoid diagram with row-major Tab order. Head/eyes/ear are above neck/shoulder and torso; hands/weapons/waist sit beside the middle; fingers are below hands; legs, feet and ankle finish the layout. No equipment owner, item art, compatibility, action or save change. Companion Site source `b9da49fe80ea5147122f009a674315999c30c175` was pushed/read back and owner-private version 15 deployed as `appgdep_6adea1a1b938819191e9adeedc48eee9`.
+
+### C. Tests and checks run
+
+Focused render 1/1, UI suite 36/36, Node typecheck and Vite production build pass in both Lineage and private Site source, broad TypeScript 115 prior-baseline diagnostics with none in changed source, `git diff --check` pass. Signed-in Merrit Slot 1 selected desktop check showed the new spatial/AX order, Head inspection reached the correct Equipment detail, and Back returned to Character. FP-001 actual caller and route, FP-002 selected limits, FP-008 PR #17 semantic boundary and FP-009 source/deployment identities are recorded in the focused evidence.
+
+### D. Risks / follow-up notes
+
+Local in-app browser could not reach the temporary Vite preview; the temp files and server were removed. A signed-in desktop visual check passed, while narrow-screen viewport and physical keyboard Tab/Enter checks remain unobserved. PRs #5–#16 retain prior holds; new docs-only PR #17 is deferred mechanics, not this visual owner. No branch integration or retirement was due. Suggested commit for this coordination update: `docs(dev): record humanoid Equipment layout publication`. Next: bounded narrow-screen/keyboard acceptance and separately scoped normal-zoom Equipment action reachability. Parked DEV-0.7.2.13 and Game version remain unchanged.
+
 ## 2026-10-25 — Character sheet navigation consolidation
 
 **Source run:** unversioned bounded Character presentation; `master` base `5facfee1df8fc740a26191cb576e0d789c5cdfbb`, implementation `e36370fc1037ab8d8d7b0210ba45c56df667ceb0` pushed/read back. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; label class unversioned; parent development milestone n/a; development impact `none`; game-version impact `none`. [Focused evidence](character-sheet-navigation-consolidation-2026-10-25.md).
