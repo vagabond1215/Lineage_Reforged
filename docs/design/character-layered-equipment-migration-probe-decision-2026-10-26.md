@@ -1,5 +1,7 @@
 # Character layered equipment: historical migration probe checkpoint
 
+> **2026-10-26 owner correction:** Old pre-cutover development saves are disposable. This read-only migration probe stays valid evidence of the old model's defects but is **not an activation gate** or a prerequisite to implementing the new item-instance/slot owner. Do not extend its left-first proposals, `capturedAtTick` identity scheme, old-history migration receipts, or legacy survey-shape compatibility for the new equipment feature. See [clean equipment save epoch decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md). The older "next owner slice" below is historical and superseded to this extent.
+
 Date: 2026-10-26
 Status: `READ_ONLY_PROBE_VERIFIED; LIVE_MIGRATION_HELD`
 
