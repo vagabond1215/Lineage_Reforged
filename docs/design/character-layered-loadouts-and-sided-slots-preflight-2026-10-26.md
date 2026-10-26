@@ -4,6 +4,8 @@ Date: 2026-10-26
 Status: `USER_DIRECTION_CAPTURED; OWNER_AND_SAVE_IMPLEMENTATION_PENDING`
 Game-version impact: none
 
+The [2026-10-26 historical migration probe](character-layered-equipment-migration-probe-decision-2026-10-26.md) is read-only and leaves this owner/save implementation gate open.
+
 ## Settled product direction
 
 - Character Overview cycles through Equipment, Casual clothing, and Accessories. Clothing remains worn beneath armor when compatible; removing armor does not discard its saved configuration. The Accessories view alone exposes a Combat/Casual preset selector. The selected configuration is applied with an adjacent, context-aware **Equip** action, not merely by viewing it.
