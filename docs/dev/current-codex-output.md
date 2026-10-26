@@ -1,3 +1,23 @@
+## 2026-10-26 — Stage 2 durable item-location owner gate
+
+**Source run:** unversioned Character equipment owner support; fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`, source/test/decision commit `dae9e6e6`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused Stage 2 decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).
+
+### A. Files changed
+
+`packages/engines/game-engine/src/legacy-item-location-audit.ts`, `apps/rpg-ui/tests/legacy-item-location-audit.test.mjs`, focused Stage 2 decision, linked Stage 1 decision and next installed prompt; this output, handoff and branch register record completion.
+
+### B. Patch summary
+
+Added a read-only source-location audit of old equipped, bag and overflow quantities. It retains original source records, enumerates bounded source units, and blocks legacy stash flags, malformed equipment/inventory, duplicate bag ids and invalid quantities. A real UI Equip/Unequip test proves that old item-type stash flags cannot identify which of two merged identical bows owns durability after Save. No live instance ID, location ledger, save migration, new slots, gameplay action, UI toggle or Site deployment was activated. The complete durable owner cutover is held on this information-loss boundary and requires an owner-backed repair/quarantine path.
+
+### C. Tests or checks run
+
+Red-before-green: the new suite failed before the module existed; malformed inventory and equipment tests failed before their fail-closed guards, then passed. Final UI **41/41**, focused equipment/combat/resource/Save and historical-survey/persistence **99/99**, Node UI typecheck pass, direct Vite production build pass. Broad TypeScript on an independent clean `0d4fbbac` worktree and changed checkout: **115 vs 115 diagnostics, zero delta**. `npm run ui:build` exits 2 on those existing errors; isolated new-module typecheck reports only existing `settlement-institutions.ts:1111`. Staged `git diff --check` passed. No selected-client conversion or Save/restart claim is made: the feature remains inactive.
+
+### D. Risks / follow-up notes
+
+FP-001: real `unequipItem` plus SaveSnapshot serialization reproduces merged-copy identity loss. FP-002: green tests do not accept the live owner or layered-loadout parent. FP-003: any future migration quarantine needs a reachable repair owner before activation. FP-009: fetched base, source commit and final remote head are distinct identities. FP-016: existing exact 17-slot Ashen Reef witness/Save tests pass, but no new live projection is accepted. Draft PRs #5–#17 were reinspected as open draft and retained; #17 `9f427961` is design evidence only. Protected/creator/nutrition refs and parked DEV-0.7.2.13 retain their prior holds; no merge or deletion trigger was consumed. Suggested source commit: `test(equipment): audit legacy item-location conversion gate`. Next: one isolated-branch non-fungible owner/action/Save cutover with an explicit ambiguity repair policy; no UI loadout controls yet.
+
 ## 2026-10-26 — Layered equipment historical migration probe
 
 **Source run:** unversioned Character layered-equipment owner support; fetched/pruned clean tracked `master`/`origin/master` `cf8eb7a8d1e4a3acf389b5f02ed036047fc58737`; source/test/decision commit `aae4eb0b`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused owner decision](../design/character-layered-equipment-migration-probe-decision-2026-10-26.md).
