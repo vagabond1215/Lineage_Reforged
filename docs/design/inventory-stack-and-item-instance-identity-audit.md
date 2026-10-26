@@ -1,5 +1,7 @@
 # Inventory Stack And Item Instance Identity Audit
 
+> **2026-10-26 activation clarification:** This historical audit documents the **old** fungible inventory/equipment defects. The owner has chosen a [fresh development equipment/save epoch](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md), so it is permissible to replace the legacy inventory/equipment shape without migrating existing development saves. Its enduring requirements are one instance/location owner, sensible fungible cargo boundaries and validated new-format persistence, not old stack reconstruction.
+
 Date: 2026-08-27
 
 Status: `AUDIT_COMPLETE_CURRENT_STACKS_FUNGIBLE_INSTANCE_MODEL_DEFERRED`
