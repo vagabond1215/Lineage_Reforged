@@ -1,38 +1,31 @@
-# Queued Codex: Current Situation / World Context Source Prep
+# Queued Codex: Default Current Area Gameplay And Codex Atlas Source Prep
 
 Date: 2026-10-26
-Status: `QUEUED_PREPLANNING_ONLY; NOT_INSTALLED; NO_EXECUTION_AUTHORIZED_BY_THIS_FILE`
-Current inspected `master`: `a596112acf3945f2bf7c625e943f2511d12aa710`; Game `0.1.1-prealpha`.
-Source packets: [cross-domain gap audit](../design/barebones-playable-ui-cross-domain-gap-and-pull-forward-audit-2026-10-26.md), [implementation and selected-client acceptance sequence](../design/barebones-playable-ui-implementation-sequence-and-acceptance-packet-2026-10-26.md).
-This is the **next UI prework candidate**, not a replacement for current PR #20/#22 implementation, PR #23 hardening, or parked `DEV-0.7.2.13`.
+Status: `QUEUED_SOURCE_PREWORK_ONLY; NOT_INSTALLED_ON_MASTER; NO_GAMEPLAY_EXECUTION_AUTHORIZED`
+Source baseline: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`.
+User intent: **replace the old World screen with a named local Area gameplay scene**, shown by default when no domain nav is selected. Move non-immediate geographic information and reference maps to existing `Codex → Atlas`; eliminate the six-item World submenu. **Do not create a separate Home page**. Full source decision: `docs/design/current-area-default-gameplay-and-codex-atlas-separation-2026-10-26.md`.
+This file's historical filename reflects earlier planning. Its controlling **content** is now Area/Atlas only. Game `0.1.1-prealpha` and parked `DEV-0.7.2.13` remain unchanged.
 
-## Proposed copy/paste source-prep task (later when selected)
+## Proposed copyable preflight task (when route selected)
 
-Read the latest `AGENTS.md`, `docs/dev/current-gpt-handoff.md`, current branch disposition, exact PR #19–#23 changes, `docs/design/ui-information-architecture-boundary.md`, `docs/design/local-scene-context-projection-decision.md`, `docs/design/contextual-player-action-and-command-architecture-decision.md`, `docs/design/contextual-player-affordance-and-owner-matrices.md`, and both connected playable-UI planning packets.
+Operate only in `vagabond1215/Lineage_Reforged`, from freshly synchronized source, following `AGENTS.md`, current handoff, protected-branch policy and current selected routing decision. Fetch PR #24's Area/Atlas decision and [playable UI gap/acceptance packet](../design/barebones-playable-ui-implementation-sequence-and-acceptance-packet-2026-10-26.md); reconcile actual PR #19 (clean saves), PR #20 (gear owner), PR #21 (founder/Dev), PR #22 (Echo/Dev) and PR #23 (hardening) without automatic merging. Read `ui-information-architecture-boundary.md`, `local-scene-context-projection-decision.md`, `contextual-player-action-and-command-architecture-decision.md`, `world-geography-authority-boundary-decision.md` and `discovery-poi-boundary-decision.md`.
 
-From a clean synchronized source checkout, inspect:
-- `apps/rpg-ui/src/game-shell/InGameShell.tsx`, `components/SideNav.tsx`, `components/layout/AppLayout.tsx`, `components/TopStatusBar.tsx`, `runtime/uiViewModel.ts` and `runtime/GameSessionContext.tsx`;
-- `features/WorldPanel.tsx`, `ActivityPanel.tsx`, `QuestsPanel.tsx`, `CharacterPanel.tsx`, plus real combat/legal-action and Soundings commands;
-- current-format `SaveSnapshot`, campaign admission, locale/context known-location and current activity/encounter owner facts.
+Inspect exact current source:
+- `apps/rpg-ui/src/game-shell/InGameShell.tsx`, `components/SideNav.tsx`, `components/layout/AppLayout.tsx`, `components/TopStatusBar.tsx`, `types.ts`, `runtime/uiViewModel.ts` and `runtime/GameSessionContext.tsx`;
+- `features/WorldPanel.tsx`, `CodexPanel.tsx`, `ActivityPanel.tsx`, `QuestsPanel.tsx`, `CharacterPanel.tsx`;
+- `game-shell/gameplayLoop.ts` current-location/travel preview functions, actual nearby Explore/Approach/combat, Rest and Soundings owners; `sessionState.knownLocations`, `playerState.geographicKnowledge`, `worldRecords`, Chronicle and actual campaign revision;
+- any existing local artwork, reference map and geographic asset IDs.
 
-Prepare **one source-verified pure read-only Current Situation / local-scene projection** over real existing facts and legal actions, with an explicit mapping table from every Home link/shortcut to the existing owner function and panel entry. It must never mint new `activity`, `npc`, `site`, `resource`, `quest` or `action` identity, and must never persist a second scene/action state. One canonical source of current campaign head/tick/revision controls freshness; resolve after each admitted transition and restart.
+Produce a **bounded ready-to-implement Area/Atlas routing contract and a first UI slice proposal**:
 
-Propose at most six representative situations:
-1. Fresh newly created character with accepted location, current health and actual Soundings offer;
-2. Accepted tracked contract, known Travel to Ashen;
-3. Active Soundings with legal next shift and actual energy cost;
-4. Completed survey back at Starfall with accepted one-time Submit and receipt;
-5. Nearby candidate / active encounter with legal owner actions, possible Normal-Stakes recovery;
-6. No immediate quest/encounter: honest rest/explore/inspect or only navigation, not invented activity.
+1. **Single gameplay destination:** Current Area is the default when `activeTab === null`; new campaign and resume land there. Current place name is the main page title; nav may show `Area` as stable label or use topbar/return-to-area action. An explicit keyboard-accessible return must work when a domain is selected. Do not add a separate Home route.
+2. **No old World subnavigation:** Retire the `World Map/Region/Settlement/Trade Routes/Travel/Local Market` `SidebarMenu` from the Area scene. Preserve live Explore/Approach/legal combat/travel with correct previews and accepted receipts; no independent action registry or guessed active location.
+3. **Local Area presentation:** Intro/observation; current actual place, time/conditions, active quest/activity/encounter; one primary legal action with 2–3 secondary shortcuts where eligible; owner-projected recent local Chronicle/result log; travel/leave-area access; appropriate links to Character, Inventory, Quests, Activity and Atlas. A place reference never proves a local present NPC, market stall, site resource or exact coordinates.
+4. **Atlas separation:** `CodexPanel` already exposes `atlas` through geographic knowledge. Scope known world/regional map, region, settlement and geographic route views here, with actual player discovery/visibility. Keep current-area situational facts and actual Travel **execution** on Area. Market action is local only if real provider owner and current presence exist, not encyclopedia data. `Atlas place clicked` never teleports.
+5. **Map/art choice:** Evaluate illustrated scene as default versus an optional overhead local map. Current World map is decorative percent-positioned pins, not reliable spatial geometry. If no grounded local geometry exists, ship art plus description with optional Codex Atlas reference, **not interactive coordinates**. A future source-grounded concept map can be labeled illustrative until canon/local movement exists. No automatic image generation or missing-authored-city details invented.
+6. **Six precise state fixtures:** new at Starfall, tracked quest and travel, ongoing survey, ready-to-submit, nearby candidate/active encounter, neutral/no action. Include long place names, region-only current location, unsupported/unknown exact site, no art, mobile/keyboard, after accepted travel and after Save/restart.
+7. **Minimal typed scene projection:** source campaign/revision/tick, currentPlace name/source certainty, observation text if authored/known, actual owner-reported action choices/blocked reason/previews, safe recent event references, Atlas cross-link. Projection remains ephemeral and read-only. If a direct action from Area needs an adapter, **navigate to its existing owner control** in first slice instead of duplicating mutation.
 
-Each situation must expose owner-backed **primary action**, 2–3 secondary legal actions (if any), source cost/reason/disclosure, correct link to World/Quests/Activity/Character, and a truthful empty state. Include compact portrait/status/topbar and meaningful Chronicle consequence sources, preserving desktop/mobile constraints. Distinguish what the player **knows** from hidden world facts; an ecology hint is not a resource instance and a settlement record is not a present NPC.
+**Outputs:** Source-to-UI migration map for every former World subsection; Atlas vs Area information taxonomy; current-area screen content/action hierarchy; optional local-art/map specification; exact test/selected-client scenario plan and one coherent future Codex UI implementation prompt. Stop after these documents. Do not modify `docs/dev/current-codex-prompt.md` or protected feature branches from this preflight.
 
-Use existing data flow to prevent double command execution. Initially prefer **navigate-to-existing-panel** over executing commands from Home; direct actions require a separately accepted command adapter, stale/revision validation and exact mutation receipts.
-
-If a future user/route authorizes limited UI implementation, the **smallest reversible first slice** is one Current Situation view consuming a pure resolver and existing navigation. It must not alter combat, Save schema, inventory, quest payment, clock, weather, legal action ownership or the source layout's fundamental shell. Keep separate active Dev popup and gear branches intact.
-
-**Tests and acceptance plan:** pure projection fixtures from actual new-campaign, active survey, returned submission, encounter and neutral states; hide secrets; no phantom effects; rederive after Save/restart; ordinary user click routes to the same existing owner entry; keyboard and narrow viewport; actual selected-client desktop/narrow test; source-level clean baseline typecheck/Vite and diagnostic comparison. Report a precise blocked source/required owner where a truthful action cannot yet be projected. Do not manufacture readiness from static catalogs, an imagined UI prototype, or a partial demo.
-
-Preserve all active draft PRs #5–#23 and any later heads, `master`, protected branches, parked `DEV-0.7.2.13`, Game `0.1.1-prealpha`, and the deployed Site. No forced Game-version acceptance, automatic merge, cleanup/reset, or retrograde old-save importer. Commit documentation-only source prep on a separate branch and await an explicit UI implementation route rather than changing the active installed Codex prompt.
-
-**Prework deliverables:** (1) exact source-to-projection ownership table; (2) six-state wireframe/action matrix; (3) minimal typed pure projection contract; (4) existing test/selected-client acceptance mapping; (5) one self-contained UI implementation route with blockers/merge order. Do not produce endless duplicate planners after those five artifacts are complete.
+**Acceptance later, not claimed now:** Ordinary new character enters named Area; active Soundings route, four shifts, return and 5g submission accessible; accepted Travel updates Area title and local context; Codex Atlas browsing reveals no unknowns or teleport; combat choices and recovery project to Area; activity log reflects authenticated owner evidence; no World submenu and no parallel Home tab; mobile/keyboard/focus and actual Save/restart valid. No Game-version promotion, Site deployment, stale-save migration or merge without explicit route approval.
