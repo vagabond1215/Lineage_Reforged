@@ -2,6 +2,8 @@
 
 Date: 2026-10-26
 Status: `READ_ONLY_PROBE_VERIFIED; LIVE_MIGRATION_HELD`
+
+The [Stage 2 conversion gate](character-durable-item-location-stage-2-decision-2026-10-26.md) proves the ordinary merged-stack durability ambiguity and retains live activation as held.
 Source: fetched `master` `cf8eb7a8d1e4a3acf389b5f02ed036047fc58737`; draft PR #17 follow-up audit at `9f427961ebcc2945522aa09e6a4b8985dfd01e65` is design evidence only. Game `0.1.1-prealpha` and the parked DEV-0.7.2.13 route are unchanged.
 
 ## Decision and implemented boundary

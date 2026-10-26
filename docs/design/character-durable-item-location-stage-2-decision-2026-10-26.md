@@ -1,0 +1,27 @@
+# Character equipment Stage 2: item-location conversion gate
+
+Date: 2026-10-26
+Status: `SOURCE_AMBIGUITY_PROVEN; LIVE_INSTANCE_OWNER_HELD`
+Game version: `0.1.1-prealpha`; development route: unversioned owner support
+
+## Decision
+
+Do not activate a second equipment/inventory authority or write a partial `SaveSnapshot` migration. The live 17-slot equipment map and fungible bag/overflow stacks remain the sole current physical-state owner. Stage 2 adds a read-only `auditLegacyItemLocations` probe that counts current physical units across those sources, retains the source data, and blocks ambiguous or malformed conversion inputs. It never mints an instance ID, changes an item, moves a location, saves a marker, or alters the current 17-slot Overview. Its `structural_candidate` result is not fit or migration approval; every result says `activation: not_authorized`.
+
+The real `unequipItem` caller proves the decisive information loss. Start with a worn Composite Bow carrying durability and another Composite Bow in a bag. Unequip merges the two into one quantity-two stack while the worn copy's metadata is stored only in `ui.character.item-stash.<itemId>...`. Save/restart preserves the stack and flag but does not say which physical bow owns the durability. Two different physical histories now have the same saved representation. No deterministic ID algorithm can reconstruct that missing association without inventing provenance. The audit therefore blocks any legacy stash flag, while retaining original equipment, inventory and flag bytes for a future repair policy.
+
+The old format also permits an equipped ref with quantity above one and only a single durability/modifier scalar. Stage 1 already blocks that ambiguity. This stage additionally checks bag and overflow counts, duplicated bag identities, invalid stacks, excessive enumeration and malformed inventory containers. It enumerates units only as source-location observations; a bag index or stack index is not a durable ID. The audit bounds rows at 256 but retains the source quantity and marks larger inputs blocked.
+
+## Required cutover contract
+
+1. One new versioned owner must atomically replace the old mutable representation for non-fungible gear. Each instance needs a stable ID that survives movement, sorting, Save/restart and retries; one authoritative location is equipped position, bag, overflow or another established location. Fungible consumables may remain stacks, but the boundary and exact split/merge behavior must be explicit. Bag/overflow capacity, displaced items, source quantity and per-instance durability must be conserved.
+2. Old-save admission must remain playable and preserve the exact original source. A conversion receipt must bind source artifact/campaign/character and version, be persisted once, reject duplicate IDs and stale source, and make retries idempotent. Ambiguous stash or shared metadata requires a reachable owner-backed repair/quarantine path; blocking forever without a repair owner would violate FP-003. Do not silently give one durability value to multiple copies or choose an arbitrary copy after merged-stack history.
+3. The entire current Equip/Unequip action surface and any other gear-producing/moving callers must mutate only that owner. Until that cutover, persisting a parallel ledger would create divergent physical truths on the next ordinary action. Existing consumable and quest cargo mutations can remain their established fungible owners if the new contract explicitly excludes them.
+4. Combat hooks, resource modifiers, progression, carried quantities and UI projections must derive from one effective worn projection. Saved Equipment/Clothing/Accessories plans, when added later, contain references to IDs, not duplicate items. One ID may appear in multiple plans but has one physical location. Historical Ashen Reef witnesses retain their exact 17-key bytes; future capture needs an explicit history-compatible projection or a separately versioned witness. SaveManager's `0.6.0` admission/readback gate must be reconciled rather than relabeled.
+5. The later one-watch command validates the complete target, state revision, owned IDs, occupancy, fit, condition and active encounter before one atomic accepted mutation and one six-tick owner advancement. No-op, stale, denied and duplicate requests charge no time. The timing of effects and interruption behavior remains a separate accepted owner decision. Viewing categories and presets is read-only.
+
+## Verification boundary
+
+Five red-before-green UI/owner tests exercise the ordinary merge/stash caller, bag plus overflow counting, duplicate/invalid source, and malformed admitted inventory and equipment shapes. Existing equipment, resource, combat, persistence and survey tests guard current behavior; the new audit is not invoked from gameplay or SaveManager. No converted live save, new slot, stable ID, loadout, timed command or selected-client acceptance has been implemented. The next safe implementation package is the complete non-fungible gear owner cutover with a versioned Save migration and caller projection, on an isolated branch because a partial save cutover could make persisted campaigns unrecoverable.
+
+Draft PR #17's follow-up audit was inspected as design evidence only. PRs #5–#17 and the parked DEV-0.7.2.13 route remain unmerged and unchanged. No Site deployment or Game-version change follows.
