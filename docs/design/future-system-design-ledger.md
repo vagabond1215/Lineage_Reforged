@@ -218,6 +218,10 @@ Forbidden or risky drift:
 - Do not call bequests bloodline traits.
 - Do not call heirlooms bequests when the item-chain identity matters.
 
+### 2026-10-26 Founder-Only Origins and Developer Gear Testing
+
+The [accepted user direction](founder-backstory-lineage-skill-unlocks-and-dev-item-spawner-intent-2026-10-26.md) sets low/no-boon founder backgrounds and earned skill milestones that unlock profession backstories for **downstream descendants only**, preserving source-aware skill evidence and one selected backstory without retroactive class gating. The 27 live backstories and creator eligibility policy require a future focused pass; World-Stray/isekai needs an intentional founder exception and low-power rebalance. Separately, add a sandboxed **developer-only item spawner** after native gear ownership: it grants through the real item-instance/fungible inventory owner, keeps individual durability and condition and does not contaminate legitimate family/achievement progression. Neither work item is part of active gear PR #20.
+
 ## Legacy / Chronicle / Bloodlines Criteria
 
 Top-level meta-progression should conceptually be:
