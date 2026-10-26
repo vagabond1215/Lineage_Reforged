@@ -146,6 +146,28 @@ export function selectVisibleInventoryItem<T extends InventoryEntry>(
   return selection?.inventory === inventory ? entries.find((entry) => inventoryPresentationId(entry) === selection.key) : undefined;
 }
 
+// Insertion order follows the visible rows, so Tab follows the diagram rather than the save shape.
+const EQUIPMENT_SHEET_AREAS: Record<EquipmentEntry['slotId'], string> = {
+  'slot.accessory.ear': 'ear',
+  'slot.armor.head': 'head',
+  'slot.accessory.eyes': 'eyes',
+  'slot.armor.shoulder': 'shoulder',
+  'slot.accessory.neck': 'neck',
+  'slot.armor.arm': 'arm',
+  'slot.armor.chest': 'chest',
+  'slot.accessory.arms': 'arms',
+  'slot.weapon.left': 'offhand',
+  'slot.armor.hand': 'hands',
+  'slot.armor.waist': 'waist',
+  'slot.accessory.waist': 'belt',
+  'slot.weapon.right': 'weapon',
+  'slot.accessory.fingers': 'fingers',
+  'slot.armor.leg': 'legs',
+  'slot.armor.foot': 'feet',
+  'slot.accessory.ankle': 'ankle'
+};
+const EQUIPMENT_SHEET_ORDER = Object.keys(EQUIPMENT_SHEET_AREAS) as EquipmentEntry['slotId'][];
+
 export function EquipmentSlotPreview({
   entry,
   onInspect
@@ -163,6 +185,8 @@ export function EquipmentSlotPreview({
     <button
       type="button"
       className={`character-sheet-slot ${entry.item ? 'is-occupied' : 'is-unoccupied'}`}
+      data-slot-id={entry.slotId}
+      style={{ gridArea: EQUIPMENT_SHEET_AREAS[entry.slotId] }}
       aria-label={`Inspect ${entry.slotLabel} slot: ${entry.item ? entry.itemTitle : 'unoccupied'}`}
       onClick={onInspect}
     >
@@ -420,7 +444,7 @@ export function CharacterPanel({
             {baseDetails.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>
           <div className="character-sheet-equipment-matrix" role="group" aria-label="Equipped item slots">
-            {equipmentEntries.map((entry) => (
+            {[...equipmentEntries].sort((a, b) => EQUIPMENT_SHEET_ORDER.indexOf(a.slotId) - EQUIPMENT_SHEET_ORDER.indexOf(b.slotId)).map((entry) => (
               <EquipmentSlotPreview
                 key={entry.id}
                 entry={entry}

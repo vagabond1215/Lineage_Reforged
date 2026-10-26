@@ -100,6 +100,17 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     const matrix = upper.match(/<div class="character-sheet-equipment-matrix"[\s\S]*?<\/div>/)?.[0] ?? '';
     assert.equal((matrix.match(/class="character-sheet-slot /g) ?? []).length, 17);
     assert.equal((matrix.match(/class="character-sheet-slot-frame"/g) ?? []).length, 17);
+    const placedSlots = [...matrix.matchAll(/data-slot-id="([^"]+)" style="grid-area:([^"]+)"/g)].map((match) => [match[1], match[2]]);
+    assert.deepEqual(placedSlots, [
+      ['slot.accessory.ear', 'ear'], ['slot.armor.head', 'head'], ['slot.accessory.eyes', 'eyes'],
+      ['slot.armor.shoulder', 'shoulder'], ['slot.accessory.neck', 'neck'],
+      ['slot.armor.arm', 'arm'], ['slot.armor.chest', 'chest'], ['slot.accessory.arms', 'arms'],
+      ['slot.weapon.left', 'offhand'], ['slot.armor.hand', 'hands'], ['slot.armor.waist', 'waist'],
+      ['slot.accessory.waist', 'belt'], ['slot.weapon.right', 'weapon'],
+      ['slot.accessory.fingers', 'fingers'], ['slot.armor.leg', 'legs'],
+      ['slot.armor.foot', 'feet'], ['slot.accessory.ankle', 'ankle']
+    ], 'all canonical slots appear once in body order for keyboard traversal');
+    assert.deepEqual(new Set(placedSlots.map(([id]) => id)), new Set(entries.map((entry) => entry.slotId)));
     assert.equal((matrix.match(/class="character-sheet-slot-fallback"/g) ?? []).length, entries.filter((entry) => entry.item).length);
     assert.doesNotMatch(matrix, />Empty(?: Slot)?</);
     for (const entry of entries) assert.ok(matrix.includes(`Inspect ${entry.slotLabel} slot:`), `${entry.slotLabel} is inspectable`);
@@ -112,7 +123,13 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.equal((html.match(/<details class="character-sheet-expandable"/g) ?? []).length, 8, 'all records and earned titles remain independently expandable');
     for (const name of ['Skills', 'Traits', 'Effects', 'Echo &amp; Growth', 'Standing', 'Reputation', 'Discoveries']) assert.match(html, new RegExp(`<summary>${name}`));
     for (const name of ['Skills', 'Standing', 'Reputation', 'Discoveries']) assert.match(html, new RegExp(`View ${name}`), `${name} detailed view remains reachable`);
-    assert.match(sheetStyles, /\.character-sheet-equipment-matrix\s*\{[^}]*repeat\(auto-fill, minmax\(5\.1rem, 1fr\)\)/s);
+    assert.match(sheetStyles, /\.character-sheet-equipment-matrix\s*\{[^}]*repeat\(5, minmax\(0, 1fr\)\)/s);
+    const equipmentRows = ['. ear head eyes .', '. shoulder neck . .', '. arm chest arms .', 'offhand hands waist belt weapon', '. fingers legs . .', '. . feet ankle .'];
+    const areaBlock = sheetStyles.match(/grid-template-areas:([\s\S]*?);/)?.[1] ?? '';
+    for (const [index, row] of equipmentRows.entries()) {
+      assert.ok(areaBlock.includes(`"${row}"`), `body row ${index + 1} remains placed`);
+    }
+    assert.match(sheetStyles, /@media \(max-width: 390px\)[\s\S]*?\.character-sheet-slot-frame\s*\{[^}]*width: 1\.9rem; height: 1\.9rem/);
     assert.match(sheetStyles, /@media \(max-width: 640px\)[\s\S]*?\.character-sheet-upper\s*\{\s*grid-template-columns:\s*minmax\(0, 1fr\)/);
 
     const sparseSnapshot = structuredClone(demoSnapshot);
