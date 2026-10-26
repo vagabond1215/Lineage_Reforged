@@ -1,5 +1,7 @@
 # Backstory Tiered Lane Design
 
+> **2026-10-26 user direction:** The first non-heir founder is limited to low/no-boon basic origins, while occupational backstories such as Village Hunter become **available to verified downstream descendants** once an ancestor earns qualifying skills through play. One backstory, no stacked bonuses and no inherited full skill ranks remain mandatory. See [Founder Backstories and Descendant Skill Unlocks](founder-backstory-lineage-skill-unlocks-and-dev-item-spawner-intent-2026-10-26.md). The historical Tier 1 default/purchase suggestions below are superseded where they imply founder profession bonuses or extra account-wide purchases for earned descendant access. Runtime policy remains unchanged pending implementation.
+
 Source version/run: Version 0.5.44 - Tiered Backstory Lane And Naming Design Audit
 Date: 2026-05-15
 Status: planning-only design document
