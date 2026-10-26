@@ -2,6 +2,8 @@
 
 Date: 2026-09-29. Inspected clean synchronized `master` at `18ef8008e398cf13c316374a403d7069e7fedc7d`. Unversioned owner-policy decision supporting planned `DEV-0.7.1`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
 
+> **2026-10-26 equipment application:** The owner reconfirmed that the project is development-only and specifically does not want old equipment saves supported or migrated. [The focused clean equipment/save decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md) applies this already-accepted clean-data policy to native sided/layered equipment and durable item instances. Existing post-epoch current-format durability/publication safeguards still matter. Do not auto-clear local/hosted browser data in a connector pass.
+
 ## Decision and scope
 
 **CLEAN_DEVELOPMENT_EPOCH_ROUTE_ACCEPTED; IMPLEMENTATION_AND_ACTIVATION_HELD.** The owner confirms that the existing Sites deployment is development/testing only, has one user, and no pre-cutover browser-local account, credential, session, campaign, save, history, migration record or other test data must survive. A deliberate one-time reset and fresh registration/campaign are accepted. This supersedes the earlier requirement to prove that every old same-origin writer has been technically excluded before beginning the clean epoch. It does not assert that new code can terminate an already-open old script. The owner will close/reload all development tabs as an operational cutover condition; existing obsolete writes are never promoted into new authority.
