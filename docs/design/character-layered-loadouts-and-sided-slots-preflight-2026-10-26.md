@@ -1,5 +1,7 @@
 # Character layered loadouts and sided equipment slots — implementation preflight
 
+> **2026-10-26 supersession: obsolete-save migration is no longer required.** The owner has confirmed the project is not in live play and old development saves need no compatibility, recovery or conversion. [The clean equipment save decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md) supersedes this historical preflight's demands for 17-slot legacy player-save migration, left-side old-slot conversion, `0.6.0` admission, and old Ashen Reef witness/hash retention. The new equipment system can start directly with native Back, sided Eye/Ear/Ring slots, layered clothing and real instance ownership. Current-format Save/restart, combat/resources/survey provenance and atomic transaction tests **remain mandatory**. Earlier historical wording below remains an account of the first preflight, not a current blocker.
+
 Date: 2026-10-26
 Status: `USER_DIRECTION_CAPTURED; OWNER_AND_SAVE_IMPLEMENTATION_PENDING`
 Game-version impact: none
