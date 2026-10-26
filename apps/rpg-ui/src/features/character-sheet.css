@@ -46,13 +46,13 @@
   text-align: center;
 }
 
-.character-sheet-attribute-stack { display: grid; gap: 0.16rem; }
+.character-sheet-attribute-stack { display: grid; justify-items: start; gap: 0.16rem; }
 .character-sheet-attribute {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-columns: 3ch 3ch auto;
   align-items: baseline;
-  gap: 0.25rem;
-  min-width: 0;
+  column-gap: 2ch;
+  min-width: 8rem;
   padding: 0.16rem 0.35rem;
   border: 1px solid var(--color-border-soft);
   border-radius: 0.3rem;
@@ -104,21 +104,21 @@
   justify-items: center;
   gap: 0.12rem;
   min-width: 0;
-  min-height: 4.25rem;
-  padding: 0.22rem;
-  border: 1px solid var(--color-border-soft);
-  border-radius: 0.35rem;
-  background: var(--color-shell-bar-bg);
+  min-height: 5.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--color-text-secondary);
   text-align: center;
 }
-.character-sheet-slot:hover, .character-sheet-slot:focus-visible { border-color: var(--color-border-active); }
-.character-sheet-slot:focus-visible { outline: 2px solid var(--color-border-active); outline-offset: 1px; }
+.character-sheet-slot:hover .character-sheet-slot-frame,
+.character-sheet-slot:focus-visible .character-sheet-slot-frame { border-color: var(--color-border-active); }
+.character-sheet-slot:focus-visible { outline: 2px solid var(--color-border-active); outline-offset: 2px; }
 .character-sheet-slot.is-unoccupied { opacity: 0.6; }
 .character-sheet-slot-frame {
   display: grid;
-  width: 2.35rem;
-  height: 2.35rem;
+  width: 3.525rem;
+  height: 3.525rem;
   place-items: center;
   overflow: hidden;
   border: 1px solid var(--color-border-soft);
@@ -151,7 +151,7 @@
 @media (max-width: 390px) {
   .character-sheet-base-data { grid-template-columns: minmax(0, 1fr); }
   .character-sheet-equipment-matrix { gap: 0.15rem; }
-  .character-sheet-slot { min-height: 3.8rem; padding: 0.15rem; }
-  .character-sheet-slot-frame { width: 1.9rem; height: 1.9rem; }
+  .character-sheet-slot { min-height: 4.5rem; }
+  .character-sheet-slot-frame { width: 2.85rem; height: 2.85rem; }
   .character-sheet-slot-label, .character-sheet-slot-item { font-size: 0.55rem; }
 }

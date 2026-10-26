@@ -1,3 +1,23 @@
+## 2026-10-26 — Character equipment frame refinement and layered-loadout preflight
+
+**Source run:** unversioned Character presentation and owner preflight; inspected clean tracked `master`/`origin/master` `18260c6a5a64eeb918f000cef57e0a0d23eaf768`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Detailed record](character-equipment-layout-and-loadout-preflight-record-2026-10-26.md).
+
+### A. Files changed
+
+`apps/rpg-ui/src/features/character-sheet.css`, `apps/rpg-ui/tests/character-overview-render.test.mjs`, focused layered-loadout preflight, UI information-architecture boundary, focused run record, current/deferred prompts, current output/handoff, historical/planning reconciliation and branch register.
+
+### B. Patch summary
+
+Outer Overview slot boxes removed; inner item squares enlarged 50%; nine stat tiles tightened for 3-digit values. Existing 17 owner-backed slots and actions remain. Owner's real layered/preset/sided-slot/one-watch direction is recorded, with functional UI held until versioned save/item-instance/fit/action owners can preserve item conservation and time semantics.
+
+### C. Checks run
+
+Focused Overview 1/1, full UI 36/36, Node UI typecheck and Vite build pass; broad UI TypeScript 115 prior-baseline diagnostics (exit 2). Final validation and publication identities are in the focused record. Local browser reached Account Login only; no authenticated new-layout acceptance or Save/restart claim.
+
+### D. Risks / follow-up notes
+
+FP-001/002/009/016: actual owner and Save caller paths were inspected; fixture tests do not establish selected gameplay; base versus final publication identities are separate; slot byte sizing was checked at desktop/mobile breakpoints but authenticated post-change viewport is held. Draft PRs #5–#17 inspected and retained; no merge/deletion trigger. Suggested commit: `ui: enlarge Character item frames and tighten attributes`. Next: bounded layered-equipment owner and migration decision, then implementation, then real UI controls. DEV-0.7.2.13 and Game version remain unchanged.
+
 ## 2026-10-25 — Humanoid Character equipment diagram
 
 **Source run:** unversioned bounded Character presentation on `master`, inspected base `58355b40dd1c3014902a1bb5b68d0e3e48799dc4`, implementation `4144c179b44bb74e8247b403b9902623bcceac63` pushed/read back. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; label class unversioned; parent development milestone n/a; development impact `none`; game-version impact `none`. [Focused evidence](humanoid-character-equipment-layout-2026-10-25.md).

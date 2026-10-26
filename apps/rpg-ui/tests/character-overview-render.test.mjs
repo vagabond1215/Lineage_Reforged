@@ -46,6 +46,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     assert.match(sheetStyles, /\.character-sheet-art\s*\{[^}]*aspect-ratio:\s*1\s*\/\s*1/s);
     assert.match(sheetStyles, /\.character-sheet-profile\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)/s, 'profile grid must stay within the mobile content column');
     assert.match(sheetStyles, /\.character-sheet-attribute-stack\s*\{[^}]*display:\s*grid/s);
+    assert.match(sheetStyles, /\.character-sheet-attribute\s*\{[^}]*grid-template-columns:\s*3ch 3ch auto;[^}]*column-gap:\s*2ch/s, 'abbreviation and three-digit value use a two-character gap');
     assert.match(sheetStyles, /@media \(max-width: 640px\)/);
     assert.match(html, /View Skills/);
     assert.match(html, /aria-label="Equipped item slots"/);
@@ -129,7 +130,10 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     for (const [index, row] of equipmentRows.entries()) {
       assert.ok(areaBlock.includes(`"${row}"`), `body row ${index + 1} remains placed`);
     }
-    assert.match(sheetStyles, /@media \(max-width: 390px\)[\s\S]*?\.character-sheet-slot-frame\s*\{[^}]*width: 1\.9rem; height: 1\.9rem/);
+    assert.match(sheetStyles, /\.character-sheet-slot\s*\{[^}]*padding:\s*0;[^}]*border:\s*0;[^}]*background:\s*transparent/s, 'slot button has no outer container box');
+    assert.match(sheetStyles, /\.character-sheet-slot-frame\s*\{[^}]*width:\s*3\.525rem;[^}]*height:\s*3\.525rem/s, 'desktop item frame is 50% larger');
+    assert.match(sheetStyles, /\.character-sheet-slot:focus-visible\s*\{[^}]*outline:\s*2px/s, 'borderless slots retain a visible keyboard focus ring');
+    assert.match(sheetStyles, /@media \(max-width: 390px\)[\s\S]*?\.character-sheet-slot-frame\s*\{[^}]*width: 2\.85rem; height: 2\.85rem/, 'narrow item frame is 50% larger');
     assert.match(sheetStyles, /@media \(max-width: 640px\)[\s\S]*?\.character-sheet-upper\s*\{\s*grid-template-columns:\s*minmax\(0, 1fr\)/);
 
     const sparseSnapshot = structuredClone(demoSnapshot);
@@ -143,7 +147,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
       sparseSnapshot.playerState.equipment[slot] = null;
     }
     for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {
-      sparseSnapshot.playerState.attributes[key] = 21 + index;
+      sparseSnapshot.playerState.attributes[key] = index === 0 ? 123 : 21 + index;
     }
     const sparseHtml = renderToStaticMarkup(
       React.createElement(GameSessionProvider, {
@@ -170,7 +174,7 @@ test('Character Overview renders owner-backed identity, nine attributes and sect
     const sparseAttributeButtons = [...sparseHtml.matchAll(/<button[^>]*aria-expanded="false"[^>]*>(.*?)<\/button>/gs)];
     assert.equal(sparseAttributeButtons.length, 9);
     for (const [index, key] of CHARACTER_ATTRIBUTE_ORDER.entries()) {
-      assert.ok(sparseAttributeButtons[index][1].includes(`>${21 + index}</span>`), `${key} changed owner value`);
+      assert.ok(sparseAttributeButtons[index][1].includes(`>${index === 0 ? 123 : 21 + index}</span>`), `${key} changed owner value`);
     }
     const progressed = structuredClone(demoSnapshot);
     progressed.playerState.skills = Array.from({ length: 18 }, (_, index) => ({ id: `skill.test.extra_${index}`, rank: index + 1, source: 'trained' }));
