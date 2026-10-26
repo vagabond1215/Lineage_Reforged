@@ -53,6 +53,8 @@ The main pane replaces its primary context when navigation changes. A selected c
 
 At most one temporary drawer, popover, modal, or decision surface may sit over these regions. Temporary context must have an obvious return path and must not become gameplay authority.
 
+> **2026-10-26 latest player-facing Area/Atlas direction:** The earlier "Home plus World domain" split and broad World geographic map composition in this document are superseded for future UI implementation. Use a **single default Current Area gameplay screen** when no navigation domain is selected, with a source-named current-location heading, local description/action/travel/recent activity view and an explicit return affordance. Non-immediate geographic records, reference maps, regions, settlements and route browsing move to **Codex → Atlas**. The old World subnavigation is removed, not replicated; contextual local market only appears when actually owner-backed. This direction is [source-mapped here](current-area-default-gameplay-and-codex-atlas-separation-2026-10-26.md), and does **not** change current code or data ownership. Earlier §5/6/12/22 and "Home" terminology below remain historical until that route is implemented.
+
 ## 5. Primary And Secondary Navigation
 
 Primary navigation remains:
