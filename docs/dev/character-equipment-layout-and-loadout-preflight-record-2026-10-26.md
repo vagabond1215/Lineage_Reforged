@@ -17,6 +17,8 @@ Lineage implementation `3c9a71e2d5722101ee45be8b5b1d7e0753cc5c4a` was pushed and
 
 Current `EquipmentState` is one 17-slot record. The requested Back, sided Ear/Eye and ten Ring positions are not persisted. Current bag stacks are fungible and equipped durability is stashed without durable instance identity. The requested saved presets and simultaneous clothing/armor cannot safely use those records as copies. One watch is six clock ticks; accepted time actions also advance body and synchronized gameplay. Combat has an active-encounter guard, but swimming, captivity and future bypass abilities lack a general equipment-change permission owner. A UI-only switch would claim behavior the current save and action path cannot perform.
 
+Post-publication isolated owner inspection also found that the historical Ashen Reef survey witness requires exactly the old 17 equipment keys in `campaign-rules.ts`, while `saveManager.ts` has exact `0.6.0` snapshot-format admission checks. A direct slot-union replacement would risk rejecting existing campaign history. The inspection branch had no edits, was never pushed and was deleted after returning to `master`. The next owner pass must explicitly preserve historical witnesses and reconcile those admission gates.
+
 The owner's replies establish layered clothing under armor, left-side legacy migration, real saved positions, a one-watch apply cost, and accessory presets as saved configurations applied by Equip. Draft PR #17's broader physical-fit design remains an unmerged, documentation-only reference. Its identity and fit invariants are preserved; no PR was altered.
 
 ## Verification

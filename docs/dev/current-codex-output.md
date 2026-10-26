@@ -16,7 +16,7 @@ Focused Overview 1/1 after final test assertion, full UI 36/36 before that asser
 
 ### D. Risks / follow-up notes
 
-FP-001/002/009/016: actual owner and Save caller paths were inspected; fixture tests do not establish selected gameplay; base versus final publication identities are separate; slot byte sizing was checked at desktop/mobile breakpoints but authenticated post-change viewport is held. Draft PRs #5–#17 inspected and retained; no merge/deletion trigger. Suggested commit: `ui: enlarge Character item frames and tighten attributes`. Next: bounded layered-equipment owner and migration decision, then implementation, then real UI controls. DEV-0.7.2.13 and Game version remain unchanged.
+FP-001/002/009/016: actual owner and Save caller paths were inspected; fixture tests do not establish selected gameplay; base versus final publication identities are separate; slot byte sizing was checked at desktop/mobile breakpoints but authenticated post-change viewport is held. The historical survey exact-17-key validator and `0.6.0` save admission gates require a backward-compatible owner migration. Draft PRs #5–#17 inspected and retained; no merge/deletion trigger. An empty, unpushed owner inspection branch was deleted after returning to `master`. Suggested commit: `ui: enlarge Character item frames and tighten attributes`. Next: bounded layered-equipment owner and migration decision, then implementation, then real UI controls. DEV-0.7.2.13 and Game version remain unchanged.
 
 ## 2026-10-25 — Humanoid Character equipment diagram
 
