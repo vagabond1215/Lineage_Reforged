@@ -1,3 +1,23 @@
+## 2026-10-26 — Layered equipment historical migration probe
+
+**Source run:** unversioned Character layered-equipment owner support; fetched/pruned clean tracked `master`/`origin/master` `cf8eb7a8d1e4a3acf389b5f02ed036047fc58737`; source/test/decision commit `aae4eb0b`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused owner decision](../design/character-layered-equipment-migration-probe-decision-2026-10-26.md).
+
+### A. Files changed
+
+`packages/engines/game-engine/src/equipment-migration-plan.ts`, `tests/unit/equipment-migration-plan.test.mjs`, focused migration decision, linked preflight and next installed prompt; this output, handoff and branch register record completion.
+
+### B. Patch summary
+
+Added a pure, versioned 17-slot historical save inspection probe. It proposes snapshot-scoped per-unit IDs and deterministic left-side Ear/Eye/Ring positions, retains complete source quantity/durability/modifiers, and blocks invalid or ambiguous multi-unit records. `activation: not_authorized` explicitly prevents the probe from being treated as live migration authority. No live save, slot, item action, combat/resource reader, clock, UI, or Site deployment changed. Durable instance/location ownership, actual sided slots, layered clothing/presets, authored fit and one-watch Equip remain deferred.
+
+### C. Tests or checks run
+
+Red-before-green: new focused test failed on missing module; revised left-side/excess assertion failed against an initial right-side proposal, then passed after repair. Final focused migration **4/4**; equipment/combat/resource/Save selection **55/55**; campaign persistence and historical survey **44/44**; UI suite from `apps/rpg-ui` **36/36**. Node UI typecheck passed. Clean-master broad TypeScript comparison: **115 vs 115 diagnostics, zero delta**. `npm run ui:build` stopped at those same preexisting diagnostics; direct `npx vite build` from `apps/rpg-ui` succeeded. Staged `git diff --check` passed. The first root-invoked UI test run failed due Vite's working-directory resolution; rerun from the UI package passed. An overbroad owner invocation was interrupted after stalled session output; the bounded owner and persistence suites above completed separately. Isolated typecheck of the new module reported only the preexisting `settlement-institutions.ts:1111` error, no new-module diagnostic.
+
+### D. Risks / follow-up notes
+
+FP-001: actual live readers/action paths were inspected, but this probe is not installed in them. FP-002: passing fixtures do not accept the layered-loadout parent or selected gameplay. FP-009: baseline, source commit and final pushed head are distinguished. FP-016: historical Ashen Reef validation and exact source bytes remain unchanged; a future migrated live record still needs history-safe projection and restart proof. Selected-client acceptance is held because no new interactive behavior exists in this slice. Draft PRs #5–#17 were inspected and retained; #17's `9f427961` follow-up is design evidence only, no merge or deletion trigger. Protected refs, nutrition and parked DEV-0.7.2.13 remain untouched. Suggested source commit: `feat(equipment): add read-only legacy migration probe`; next route: durable wearable instance/location owner and versioned conversion, not UI toggles.
+
 ## 2026-10-26 — Character equipment frame refinement and layered-loadout preflight
 
 **Source run:** unversioned Character presentation and owner preflight; inspected clean tracked `master`/`origin/master` `18260c6a5a64eeb918f000cef57e0a0d23eaf768`, implemented/pushed/read back `3c9a71e2d5722101ee45be8b5b1d7e0753cc5c4a`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Detailed record](character-equipment-layout-and-loadout-preflight-record-2026-10-26.md).
