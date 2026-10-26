@@ -100,6 +100,8 @@ One neutral situation should truthfully render no primary action if no owner rep
 - Focused Node/unit/UI, Vite, clean-baseline broad TypeScript diagnostic signature comparison and diff checks; report any preexisting warnings separately.
 - Separate authenticated selected-client results, controlled browser fixture tests and unverified hosted-preview checks. Do not treat one as equivalent to the others.
 
+> **2026-10-26 second-wave design triage:** The [Area-first deferred intent pull-forward audit](area-first-deferred-design-intent-pull-forward-and-dependency-audit-2026-10-26.md) extends the Area/Atlas owner correction with 15 source-grounded opportunities and five precise hidden dependencies. Prioritize a truthful environmental/observation/nearby-action projection, safe place-title/source precision, a short actual-receipt feed, and context-aware Travel/Combat/Quest action modes **before** adding new NPCs, ecology actions or dynamic weather. This plan's historical `Home` references mean **default Area**, not a new page.
+
 ## 5. Prep packets safe to complete during Codex allowance pauses
 
 | Packet | Exact offline/connector prep | Where future Codex starts | What it **must not** create |
