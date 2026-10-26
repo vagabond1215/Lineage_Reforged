@@ -1,3 +1,25 @@
+# 2026-10-26 — Echo origin repair and developer inspection menu
+
+Source run: **Echo Progression Repair and Developer Inspection Menu**, unversioned supporting owner repair; parent milestone n/a. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. Source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; implementation branch `codex/echo-dev-console`; source commit `979ce791`; final handoff publication identity is reported after push. [Focused decision and limits](../design/echo-origin-and-developer-inspection-checkpoint-2026-10-26.md).
+
+## A. Files changed
+
+Progression/types and JS mirrors; creator snapshot; Ashen Reef progression validation; spawn inspector; TopStatusBar, InGameShell and DevConsole; focused unit/UI tests; focused decision and current coordination files. No content catalog, save-format version, Game version, combat resolution, equipment, browser data or Site mutation.
+
+## B. Patch summary
+
+Creator saves a durable initial attribute/skill baseline. Echo recomputation now excludes that starting tranche while counting positive later growth without accumulating duplicate event rewards. Existing baseline-less snapshots keep historical behavior because creation values are unknown. The top bar always shows `Dev`; its accessible popup reads real clock/owner diagnostics and deterministic spawn profile failures/rate results. Items, time and weather explain their unavailable mutation owners instead of offering fake commands.
+
+## C. Checks and evidence
+
+Red-before-green: fresh Local starter recalculation produced 7.8987 Echo; direct starter-baseline fixture produced 3.424. Both tests passed after repair. Focused owner/combat/survey **105/105**, creator/backstory/persistence **55/55**, SaveManager/spawn-focused **35/35**, complete UI **42/42**. Node UI typecheck and direct Vite production build pass; broad UI TypeScript **115 master / 115 branch**, zero new normalized diagnostic signatures. `git diff --check` passed. Local controlled browser at `127.0.0.1:5174` verified Dev open, Spawn disclosure and Escape focus return. A separate gameplay-loop quest turn-in test fails with `warning` versus `success` on both clean master and this branch. No authenticated selected-client, mobile viewport or hosted Save/restart evidence for this new branch.
+
+FP-001: actual creator, progression caller and SaveManager publish/load/readback tested. FP-002/017: fixture browser and seeded inspector do not prove selected campaign or ordinary encounter reachability. FP-008/009: PRs #19–#21 inspected but not merged; base, source and publication heads separated. FP-015: Echo and spawn facts recompute from saved owner inputs, not UI labels. No new generalized pattern.
+
+## D. Branch review and follow-up
+
+Open draft PR inventory #5–#21 was inspected. PR #19 remains fresh-save direction, #20 inactive gear owner, #21 design evidence. None was merged/rebased/deleted; no existing review trigger was consumed. New [draft PR #22](https://github.com/vagabond1215/Lineage_Reforged/pull/22) awaits independent source and selected-client review. Time-watch mutation needs a full idle-time/publication owner plus QA isolation; item grant needs PR #20 caller/Save cutover; weather override needs typed regional authority; future authored spawn filters need world-owner tests. Suggested source commit `feat(dev): exclude origin Echo and add developer inspection menu` (committed). Next branch-local prompt preserves the active master equipment route. No DEV-0.7.2.13 or Game-version decision follows.
+
 ## 2026-10-26 — Stage 2 durable item-location owner gate
 
 **Source run:** unversioned Character equipment owner support; fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`, source/test/decision commit `dae9e6e6`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused Stage 2 decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).

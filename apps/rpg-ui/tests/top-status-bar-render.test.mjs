@@ -83,6 +83,7 @@ test('top bar presents owner resources and only meaningful condition alerts', as
     }
     assert.match(html, /Open calendar and climate context/);
     assert.match(html, /Open settings/);
+    assert.match(html, /aria-controls="top-bar-dev-detail"[^>]*>Dev<\/button>/);
 
     const active = {
       ...normal,

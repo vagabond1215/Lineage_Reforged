@@ -19,6 +19,7 @@ import { WorldPanel } from '../features/WorldPanel';
 import { GameSessionProvider, useGameSession } from '../runtime/GameSessionContext';
 import type { TabId } from '../types';
 import { InGameSaveControls } from './components/InGameSaveControls';
+import { DevConsole } from './components/DevConsole';
 import { NoticeToast } from './components/NoticeToast';
 import type { GameShellNotice, SaveSlotId, SaveSlotSummary } from './state.js';
 
@@ -61,6 +62,7 @@ function InGameShellContent({
   const [settingsOpen, setSettingsOpen] = useState(false);
   const {
     snapshot,
+    campaignSessionControl,
     uiViewModel,
     updateSnapshot,
     bodyStatePresentation,
@@ -135,6 +137,7 @@ function InGameShellContent({
             bodyState={bodyStatePresentation.snapshot}
             meters={uiViewModel.topBarMeters}
             notifications={uiViewModel.notifications}
+            devContent={<DevConsole snapshot={snapshot} control={campaignSessionControl} />}
             settingsOpen={settingsOpen}
             onToggleSettings={() => setSettingsOpen((current) => !current)}
             settingsContent={

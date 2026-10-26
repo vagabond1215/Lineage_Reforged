@@ -2117,6 +2117,11 @@ export interface PlayerEchoState {
   echoAdjusted: number;
 }
 
+export interface PlayerEchoOriginBaselineState {
+  attributes: PlayerAttributes;
+  skillRanks: Record<string, number>;
+}
+
 export interface PlayerLegacyGrowthState {
   resourceGrowthLevel: number;
   classLevel: number;
@@ -2128,6 +2133,7 @@ export interface PlayerProgression {
   level: number;
   echo: PlayerEchoState;
   legacyGrowth: PlayerLegacyGrowthState;
+  originBaseline?: PlayerEchoOriginBaselineState;
 }
 
 export type SkillProgressionBandId = "clumsy" | "familiar" | "proficient" | "skilled" | "mastery";

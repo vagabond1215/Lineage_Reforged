@@ -31,6 +31,7 @@ export {
   canAttemptTrial,
   calculatePlayerEcho,
   createDefaultPlayerEchoState,
+  createPlayerEchoOriginBaseline,
   createPlayerLegacyGrowthState,
   createPlayerProgressionState,
   applyBreakthroughGating,

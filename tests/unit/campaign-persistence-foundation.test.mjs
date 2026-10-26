@@ -20,6 +20,7 @@ import {
 } from "../../packages/engines/game-engine/src/index.ts";
 import { serializeSnapshot } from "../../packages/shared/persistence/src/index.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
+import { resolvePlayerEchoProgression } from "../../packages/engines/player-engine/src/progression.ts";
 import {
   loadAccountProfile,
   saveAccountProfile
@@ -106,6 +107,20 @@ function withMockWindow(run, fault = null) {
     }
   }
 }
+
+test("fresh creator Echo baseline survives actual Save/load and restart readback", () => {
+  withMockWindow(() => {
+    const accountId = "account.echo_origin_roundtrip";
+    const source = createNewGameSnapshot(createCompleteCharacterForm("Echo Origin"), accountId);
+    assert.equal(resolvePlayerEchoProgression(source.playerState).echo.echoAdjusted, 0);
+    publishSave(accountId, "slot-1", source, buildSaveMetadata("slot-1", source));
+    const firstLoad = loadSaveWithAuthority(accountId, "slot-1");
+    const restarted = loadSaveWithAuthority(accountId, "slot-1");
+    assert.deepEqual(restarted.snapshot.playerState.progression.originBaseline, source.playerState.progression.originBaseline);
+    assert.equal(resolvePlayerEchoProgression(firstLoad.snapshot.playerState).echo.echoAdjusted, 0);
+    assert.equal(resolvePlayerEchoProgression(restarted.snapshot.playerState).echo.echoAdjusted, 0);
+  });
+});
 
 function createLegacySnapshot(accountId, playerId = "player.persistence_test") {
   const snapshot = structuredClone(demoSnapshot);
