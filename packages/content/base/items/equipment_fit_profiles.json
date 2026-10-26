@@ -1,0 +1,10 @@
+{
+  "records": [
+    { "itemId": "item.composite_bow", "itemKey": "composite_bow", "slots": ["slot.equipment.weapon.right"] },
+    { "itemId": "item.short_bow", "itemKey": "short_bow", "slots": ["slot.equipment.weapon.right"] },
+    { "itemId": "item.arming_sword", "itemKey": "arming_sword", "slots": ["slot.equipment.weapon.left", "slot.equipment.weapon.right"] },
+    { "itemId": "item.pickaxe", "itemKey": "pickaxe", "slots": ["slot.equipment.weapon.right"] },
+    { "itemId": "item.casual_tunic", "itemKey": "casual_tunic", "slots": ["slot.clothing.chest"] },
+    { "itemId": "item.leather_light_armor", "itemKey": "leather_light_armor", "slots": ["slot.equipment.armor.chest"] }
+  ]
+}
