@@ -1,6 +1,6 @@
 ## 2026-10-26 — Character equipment frame refinement and layered-loadout preflight
 
-**Source run:** unversioned Character presentation and owner preflight; inspected clean tracked `master`/`origin/master` `18260c6a5a64eeb918f000cef57e0a0d23eaf768`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Detailed record](character-equipment-layout-and-loadout-preflight-record-2026-10-26.md).
+**Source run:** unversioned Character presentation and owner preflight; inspected clean tracked `master`/`origin/master` `18260c6a5a64eeb918f000cef57e0a0d23eaf768`, implemented/pushed/read back `3c9a71e2d5722101ee45be8b5b1d7e0753cc5c4a`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Detailed record](character-equipment-layout-and-loadout-preflight-record-2026-10-26.md).
 
 ### A. Files changed
 
@@ -12,7 +12,7 @@ Outer Overview slot boxes removed; inner item squares enlarged 50%; nine stat ti
 
 ### C. Checks run
 
-Focused Overview 1/1, full UI 36/36, Node UI typecheck and Vite build pass; broad UI TypeScript 115 prior-baseline diagnostics (exit 2). Final validation and publication identities are in the focused record. Local browser reached Account Login only; no authenticated new-layout acceptance or Save/restart claim.
+Focused Overview 1/1 after final test assertion, full UI 36/36 before that assertion, Node UI typecheck and Vite build pass; broad UI TypeScript 115 prior-baseline diagnostics (exit 2). Companion Site Node check/build pass; its byte-matched CSS was pushed/read back at `5ce989ff0a7f4e49be7d95b017854e65513686d9` and owner-private version 16 deployed. Local/hosted browser reached Account Login only; no authenticated new-layout acceptance or Save/restart claim.
 
 ### D. Risks / follow-up notes
 

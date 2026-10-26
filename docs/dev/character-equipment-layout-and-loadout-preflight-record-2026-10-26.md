@@ -5,6 +5,8 @@ Run: unversioned Character presentation and owner preflight
 Base: `master`/`origin/master` `18260c6a5a64eeb918f000cef57e0a0d23eaf768`
 Game: `0.1.1-prealpha`; playability: `INTEGRATED_LOOP`; development impact: `supports_current_band`; game-version impact: `none`
 
+Lineage implementation `3c9a71e2d5722101ee45be8b5b1d7e0753cc5c4a` was pushed and read back on `origin/master`. The authorized owner-private companion Site source has only the byte-matched CSS change at pushed/read-back `5ce989ff0a7f4e49be7d95b017854e65513686d9`; Site version **16** deployed successfully as `appgdep_6adf4bca03948191a73097051ad9bf9b` at `https://lineage-reforged-preview.vagabond1215.chatgpt.site`.
+
 ## Changed now
 
 - Removed the outer button border/background from the 17 existing Overview equipment slots while retaining an inspectable button and visible keyboard focus ring. Increased item frames from 2.35rem to 3.525rem on standard widths and 1.9rem to 2.85rem at 390px and below. No new slot or item image is fabricated.
@@ -19,12 +21,13 @@ The owner's replies establish layered clothing under armor, left-side legacy mig
 
 ## Verification
 
-- `node --test tests/character-overview-render.test.mjs`: 1/1 pass after the CSS change. Re-run after the three-digit assertion in the final validation set.
-- `node --test tests/*.test.mjs`: 36/36 pass before the final three-digit assertion; warnings about SSR `useLayoutEffect`, browserslist age and a parallel-test WebSocket port were non-failing.
+- `node --test tests/character-overview-render.test.mjs`: 1/1 pass after the final three-digit assertion.
+- `node --test tests/*.test.mjs`: 36/36 pass before the final three-digit assertion; the independently rerun affected test passed. Warnings about SSR `useLayoutEffect`, browserslist age and a parallel-test WebSocket port were non-failing.
 - `npm run typecheck:node`: pass.
 - `npx vite build`: pass; chunk-size/plugin timing warnings only.
 - `npm run typecheck`: exit 2, 115 diagnostics, equal to the previously recorded clean-main baseline; changed production file is CSS only.
-- Local Vite started at `127.0.0.1:5175`; browser reached Account Login. No password was requested or entered and no authenticated post-change Character screenshot or selected Save/restart was claimed.
+- Authorized companion Site source Node typecheck and Vite production build passed; source CSS SHA-256 matched Lineage `6F8C6B72383F36EA06B982B8200D843E48AAE64799E4897934ABD21DA0C90305`. Its remote head matched local before and after the one-file publication commit. Site version 16 provenance readback matched that commit.
+- Local Vite started at `127.0.0.1:5175`; both local and deployed in-app browser tabs reached Account Login. No password was requested or entered and no authenticated post-change Character screenshot or selected Save/restart was claimed.
 
 ## Retained work and next route
 
