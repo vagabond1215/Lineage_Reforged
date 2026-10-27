@@ -1,3 +1,25 @@
+# 2026-10-26 — Echo integrity and developer console hardening
+
+Source run: **Echo Integrity and Developer Console Hardening**, unversioned supporting owner repair; parent milestone n/a. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; date 2026-10-26; branch `codex/echo-dev-hardening` from PR #22 `8ea456e0`, current master `a596112a`; development impact `supports_current_band`, game-version impact `none`. [Focused decision](../design/echo-integrity-and-dev-console-hardening-checkpoint-2026-10-26.md). Source implementation commit `b553c63e8e8f46d987d2b35eddefd69b8b5dbc6d`.
+
+## A. Files changed
+
+Player progression/types and JS mirror, real advancement callers, creator snapshot, campaign validation/SaveManager, shared spawn inspection, top-bar popup components, focused owner tests, focused decision, branch-local next prompt and coordination records. No content, game version, equipment, combat resolution, Site or browser data mutation.
+
+## B. Patch summary
+
+Fresh founder/descendant creation starts with zero earned Echo using character-bound, versioned origin/growth evidence. Only accepted advancement callers credit growth; malformed/missing evidence and incoherent Echo cache fail new-campaign admission. Obsolete development saves remain stored and are reported incompatible. Dev/Settings and other top-bar popups are mutually exclusive with keyboard focus restoration. Spawn inspection now explains encounter-template and monster failures using the resolver's eligibility rules. Watch/item/weather commands remain unavailable on the named owner boundaries.
+
+## C. Tests or checks run
+
+Red-before-green Echo cache, missing evidence and template-failure regressions. Focused creator/Echo/combat/survey/persistence/spawn **200 pass, 1 baseline fail**; clean master reproduces the quest turn-in `warning` versus `success` assertion at `gameplay-loop-skill-gating.test.mjs:264`. Full UI **42/42**; post-popup targeted top-bar **1/1**. Node UI typecheck pass; direct Vite build pass (259 client modules, size/Browserslist advisories). Combined `npm run build` exits 1 on existing TypeScript; broad diagnostics **115 clean master / 115 branch**, zero normalized delta. `git diff --check` pass. Controlled local browser verified Dev/Settings mutual closure, Calendar/Conditions/Notifications, tab change, Escape/focus and outside pointer; no authenticated selected-client or mobile viewport proof for this branch.
+
+Applied FP-001 (real creator/advancement/Save callers), FP-002/017 (fixture and seed probe limits), FP-005/012 (recalculation, replay and restart), FP-008/009 (branch and head provenance), FP-015 (owner recomputation). No new generalized pattern.
+
+## D. Risks / follow-up notes
+
+Fetched/pruned and inspected draft PRs #5–#23; #22 is the stacked implementation base and #23 design-only preflight. All remain draft and unchanged. No merge, retarget, rebase, deletion or disposition trigger was consumed. Review this branch after independent source and authenticated selected-client checks; review #20 at native gear caller/Save cutover; preserve protected, creator, nutrition and parked combat routes. Generic idle-watch needs a typed gameplay/publication owner before a Dev command. Suggested implementation commit: `fix(echo): require earned growth evidence and harden Dev inspection` (committed). Next run: [Echo/Dev selected acceptance and idle-watch owner contract](next-echo-dev-hardening-selected-acceptance-prompt-2026-10-26.md); no Game-version decision.
+
 # 2026-10-26 — Echo origin repair and developer inspection menu
 
 Source run: **Echo Progression Repair and Developer Inspection Menu**, unversioned supporting owner repair; parent milestone n/a. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. Source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; implementation branch `codex/echo-dev-console`; source commit `979ce791`; final handoff publication identity is reported after push. [Focused decision and limits](../design/echo-origin-and-developer-inspection-checkpoint-2026-10-26.md).
