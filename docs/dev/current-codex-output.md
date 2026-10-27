@@ -1,6 +1,6 @@
 ## 2026-10-26 — Native gear fresh-format activation gate
 
-**Source run:** unversioned native gear cutover checkpoint; source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, PR #20 base `0d6debe5`, implementation branch `codex/native-gear-fresh-cutover` stacked on #20. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status: `OWNER_FIT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused evidence](../design/native-gear-fresh-format-activation-gate-2026-10-26.md).
+**Source run:** unversioned native gear cutover checkpoint; source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, PR #20 base `0d6debe5`, implementation/evidence commit `50a63fdaa4c22cd7beea4ea6dda3949844197a03` on `codex/native-gear-fresh-cutover`, stacked draft [PR #27](https://github.com/vagabond1215/Lineage_Reforged/pull/27) targeting #20. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status: `OWNER_FIT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused evidence](../design/native-gear-fresh-format-activation-gate-2026-10-26.md).
 
 ### A. Files changed
 
