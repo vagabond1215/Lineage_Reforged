@@ -242,6 +242,12 @@ export function moveGear(
   fits: readonly GearFit[],
   bags: readonly GearBagCapacity[]
 ): GearResult {
+  if (!record(request) || !nonblank(request.itemInstanceId) || !record(request.destination) ||
+    !(request.destination.kind === 'carried' && Object.keys(request.destination).length === 1 ||
+      request.destination.kind === 'worn' && Object.keys(request.destination).length === 2 &&
+      typeof request.destination.slotId === 'string' && slots.has(request.destination.slotId))) {
+    return { status: 'invalid', state, reason: 'Invalid gear move request.' };
+  }
   const fingerprint = JSON.stringify(['move', request.itemInstanceId, request.destination.kind,
     request.destination.kind === 'worn' ? request.destination.slotId : null]);
   const blocked = preflight(state, request, fingerprint, fits, bags);
