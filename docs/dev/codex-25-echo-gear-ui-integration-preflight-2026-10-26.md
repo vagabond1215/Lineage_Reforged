@@ -41,6 +41,8 @@ GitHub comparisons against current master showed the following old branches **di
 - `codex/mobile-shell-usable-height` (#9): 1 / 39.
 - `codex/equipment-slot-reequip-repair` (#10): 1 / 39.
 - `codex/equipment-inventory-ux-stacked` (#11): 5 / 39.
+- `codex/inventory-consume-stale-guard` (#12): 4 / 39.
+- `codex/inventory-bag-exact-target-repair` (#13): 6 / 39.
 - `codex/inventory-ui-selection-safety` (#14): 6 / 39.
 - `codex/compact-landscape-domain-rail` (#15): 4 / 39.
 - `codex/stacked-top-resource-meters` (#16): 7 / 39.
