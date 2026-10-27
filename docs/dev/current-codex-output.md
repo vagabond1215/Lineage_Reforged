@@ -1,3 +1,23 @@
+## 2026-10-27 — Unselected native v3 artifact publication and restart
+
+**Source run:** unversioned native gear activation support, isolated `codex/native-gear-v3-publication` from PR #29 `1e93174129f0bc0f2ebb82b34c4db43c4bc4085c`, verified master `a596112acf3945f2bf7c625e943f2511d12aa710`; implementation `4773c06d`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `UNSELECTED_NATIVE_V3_FIRST_ARTIFACT_AND_RESTART_VERIFIED; SELECTED_ACTIVATION_HELD`. [Focused decision](../design/native-gear-v3-artifact-publication-and-restart-checkpoint-2026-10-27.md).
+
+### A. Files changed
+
+`apps/rpg-ui/src/game-shell/saveManager.ts`, `campaignIndexedDbStore.ts`, `cleanEpochAccountStore.ts`, `cleanEpochFirstCampaignAdapter.ts`; `apps/rpg-ui/tests/native-gear-current-caller-gate.test.mjs`; `apps/rpg-ui/native-gear-v3-publication-qa.ts`, `.html`; focused decision, output/handoff/register and next prompt. Selected `App`, master prompt, gameplay owner, IndexedDB schema version, Site and Game version unchanged.
+
+### B. Patch summary
+
+Real creator v3 output now prepares a version-8 envelope and publishes through the existing atomic artifact/head/address store. An explicit unselected clean-epoch adapter mode reserves the account/slot, publishes the first v3 artifact, commits ordinary consumer receipts and restarts with exact gear graph and account identity. Cross-format campaign heads and retained v2/v3 attempts conflict without deleting records. Native Soundings remains blocked. Default selected adapter remains v2.
+
+### C. Tests or checks run
+
+Red-before-green missing artifact builder. Native browser QA **8/8**; existing v2 first-campaign browser **5/5**; existing campaign IndexedDB browser **12/12**. Focused app Node **13/13**, adjacent root owner/creator/combat/resource/survey/persistence **93/93**. Content lint **72 files**, Node UI typecheck, direct Vite build **264 client modules**, `git diff --check` pass. Broad UI diagnostics **115 master / 115 PR #29 / 115 branch**; root **763 / 763 / 763**, none in changed files. Broad TypeScript remains baseline failing. No full workspace suite or authenticated selected v3 gameplay.
+
+### D. Risks / follow-up notes
+
+FP-001/002/005/009/012/013/014/015/016/017 applied as detailed in focused decision. Vite reports known large chunk and ineffective dynamic import because the unselected native rules are statically reachable by the candidate store. Selected App still creates/loads v2; native Equipment/Inventory callers, effective-worn combat/resources/Character, native survey witnesses and v3 descendant/terminal acceptance remain. PRs #19/#20/#22/#25/#26/#27/#28/#29 inspected and retained draft; no merge/retarget/closure/deletion due or performed. Suggested commit `feat(gear): publish unselected native v3 campaign artifacts`. Next named run: [connected owner-action, effective-worn and survey cutover](next-native-gear-owner-action-effective-worn-survey-2026-10-27.md). No Game-version decision proposed.
+
 ## 2026-10-27 — Positive native v3 creator and Save read admission
 
 **Source run:** unversioned native gear activation support, isolated `codex/native-gear-positive-v3`, implementation/evidence `f89e29797bb7a1d1106911d1c95527cd4d1c8f16`, draft [PR #29](https://github.com/vagabond1215/Lineage_Reforged/pull/29) targeting #28 `bcdedd4dd448158a326c0299c6ab19551ca53d59`; master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `POSITIVE_FRESH_V3_CREATOR_AND_READ_ADMISSION_VERIFIED; PUBLICATION_AND_ACTIVATION_HELD`. [Focused evidence](../design/native-gear-positive-v3-creator-admission-checkpoint-2026-10-27.md).
