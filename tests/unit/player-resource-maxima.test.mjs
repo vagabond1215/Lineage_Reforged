@@ -128,3 +128,21 @@ test("resource maxima respond to attribute changes in the shared resolver", () =
   );
   assert.ok(improved.resources.stamina.max > baseline.resources.stamina.max);
 });
+
+test("native worn modifiers use the same resource calculation without a legacy equipment map", () => {
+  const attributes = Object.fromEntries(["STR", "DEX", "AGI", "CON", "VIT", "INT", "WIS", "SPT", "CHA"].map(key => [key, 10]));
+  const state = createResourceState(attributes);
+  const modifier = {
+    id: "equipment.test.resource", label: "Test equipment", sourceType: "equipment", sourceId: "item.test",
+    maxFlat: { hp: 7, mp: 3 }, maxPercent: {}, tickDeltaFlat: {}, notes: []
+  };
+  const legacy = resolvePlayerResources({ ...state, equipment: { ...state.equipment,
+    "slot.armor.chest": { itemId: "item.test", itemKey: "test", durability: 1, resourceModifiers: [modifier] }
+  } }, [], 0);
+  const { equipment: _discarded, ...nonPhysical } = state;
+  const native = resolvePlayerResources({ ...nonPhysical, wornResourceModifiers: [modifier] }, [], 0);
+  assert.deepEqual(native.resources, legacy.resources);
+  assert.deepEqual(native.activeModifiers, legacy.activeModifiers);
+  assert.equal(native.resources.hp.max, 127);
+  assert.equal(native.resources.mp.max, 63);
+});

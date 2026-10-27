@@ -2,13 +2,16 @@ import items from '../../../content/base/items/items.json' with { type: 'json' }
 import fitProfiles from '../../../content/base/items/equipment_fit_profiles.json' with { type: 'json' };
 import type { EquipmentState, NativeGearSaveSnapshot, SaveSnapshot } from '../../../shared/types/src/index.js';
 import type { GearFit, GearOwner } from './gear-instance-owner.js';
+import { isNativeFungibleUseLedger, type NativeFungibleUseLedger } from './native-fungible-use-ledger.js';
 import { isTargetCampaignSnapshot, TARGET_SNAPSHOT_FORMAT } from './campaign-rules.js';
 import {
   validateNativeGearPhysicalBoundary
 } from './native-gear-physical-boundary.js';
 
 /** Fresh campaigns only. Survey receipts require a separate native witness version. */
-export type NativeFreshCampaignSnapshot = NativeGearSaveSnapshot<GearOwner>;
+export type NativeFreshCampaignSnapshot = NativeGearSaveSnapshot<GearOwner> & {
+  nativeInventoryUse: NativeFungibleUseLedger;
+};
 
 const emptyLegacyProjection: EquipmentState = {
   'slot.weapon.left': null, 'slot.weapon.right': null,
@@ -28,6 +31,7 @@ export function isNativeTargetCampaignSnapshot(value: unknown): value is NativeF
   if (!validateNativeGearPhysicalBoundary(value, fits, items.records).ok) return false;
   try {
     const snapshot = value as NativeFreshCampaignSnapshot;
+    if (!isNativeFungibleUseLedger(snapshot.nativeInventoryUse)) return false;
     const survey = snapshot.authorityLedger?.ashenReefSurvey;
     // A v2 survey witness must never be admitted as native historical evidence.
     if (survey && (survey.requests.length > 0 || survey.occurrences.length > 0 ||
