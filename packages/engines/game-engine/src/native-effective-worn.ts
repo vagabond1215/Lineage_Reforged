@@ -1,10 +1,10 @@
-import itemCatalog from '../../../../packages/content/base/items/items.json' with { type: 'json' };
-import type { PlayerResourceModifierState } from '../../../../packages/shared/types/src/index.js';
-import { getWornGear, type GearItemInstance } from '../../../../packages/engines/game-engine/src/gear-instance-owner.js';
+import itemCatalog from '../../../content/base/items/items.json' with { type: 'json' };
+import type { PlayerResourceModifierState } from '../../../shared/types/src/index.js';
+import { getWornGear, type GearItemInstance } from './gear-instance-owner.js';
 import {
   isNativeTargetCampaignSnapshot,
   type NativeFreshCampaignSnapshot
-} from '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
+} from './native-campaign-rules.js';
 
 type AuthoredItem = {
   id: string;

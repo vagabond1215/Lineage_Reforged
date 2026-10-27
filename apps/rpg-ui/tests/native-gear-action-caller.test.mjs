@@ -9,7 +9,7 @@ const vite = await createServer({ server: { middlewareMode: true }, appType: 'cu
 after(() => vite.close());
 const { createNativeNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/nativeNewGameSnapshot.ts');
 const { moveNativeGear } = await vite.ssrLoadModule('/src/game-shell/nativeCharacterActions.ts');
-const { projectNativeEffectiveWorn } = await vite.ssrLoadModule('/src/game-shell/nativeEffectiveWorn.ts');
+const { projectNativeEffectiveWorn } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-effective-worn.ts');
 const { readNativeFreshSaveSnapshot } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
 
 function created() {
