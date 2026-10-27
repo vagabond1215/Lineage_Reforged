@@ -1,6 +1,6 @@
 ## 2026-10-27 — Positive native v3 creator and Save read admission
 
-**Source run:** unversioned native gear activation support, isolated `codex/native-gear-positive-v3` from draft PR #28 `bcdedd4dd448158a326c0299c6ab19551ca53d59`; master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `POSITIVE_FRESH_V3_CREATOR_AND_READ_ADMISSION_VERIFIED; PUBLICATION_AND_ACTIVATION_HELD`. [Focused evidence](../design/native-gear-positive-v3-creator-admission-checkpoint-2026-10-27.md).
+**Source run:** unversioned native gear activation support, isolated `codex/native-gear-positive-v3`, implementation/evidence `f89e29797bb7a1d1106911d1c95527cd4d1c8f16`, draft [PR #29](https://github.com/vagabond1215/Lineage_Reforged/pull/29) targeting #28 `bcdedd4dd448158a326c0299c6ab19551ca53d59`; master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `POSITIVE_FRESH_V3_CREATOR_AND_READ_ADMISSION_VERIFIED; PUBLICATION_AND_ACTIVATION_HELD`. [Focused evidence](../design/native-gear-positive-v3-creator-admission-checkpoint-2026-10-27.md).
 
 ### A. Files changed
 
