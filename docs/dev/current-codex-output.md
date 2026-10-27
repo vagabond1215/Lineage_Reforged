@@ -1,6 +1,6 @@
 ## 2026-10-27 — Unselected native v3 artifact publication and restart
 
-**Source run:** unversioned native gear activation support, isolated `codex/native-gear-v3-publication` from PR #29 `1e93174129f0bc0f2ebb82b34c4db43c4bc4085c`, verified master `a596112acf3945f2bf7c625e943f2511d12aa710`; implementation `4773c06d`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `UNSELECTED_NATIVE_V3_FIRST_ARTIFACT_AND_RESTART_VERIFIED; SELECTED_ACTIVATION_HELD`. [Focused decision](../design/native-gear-v3-artifact-publication-and-restart-checkpoint-2026-10-27.md).
+**Source run:** unversioned native gear activation support, isolated `codex/native-gear-v3-publication` from PR #29 `1e93174129f0bc0f2ebb82b34c4db43c4bc4085c`, verified master `a596112acf3945f2bf7c625e943f2511d12aa710`; implementation `4773c06d`, evidence `5b51ca00`, draft [PR #30](https://github.com/vagabond1215/Lineage_Reforged/pull/30) targeting #29. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `UNSELECTED_NATIVE_V3_FIRST_ARTIFACT_AND_RESTART_VERIFIED; SELECTED_ACTIVATION_HELD`. [Focused decision](../design/native-gear-v3-artifact-publication-and-restart-checkpoint-2026-10-27.md).
 
 ### A. Files changed
 
@@ -16,7 +16,7 @@ Red-before-green missing artifact builder. Native browser QA **8/8**; existing v
 
 ### D. Risks / follow-up notes
 
-FP-001/002/005/009/012/013/014/015/016/017 applied as detailed in focused decision. Vite reports known large chunk and ineffective dynamic import because the unselected native rules are statically reachable by the candidate store. Selected App still creates/loads v2; native Equipment/Inventory callers, effective-worn combat/resources/Character, native survey witnesses and v3 descendant/terminal acceptance remain. PRs #19/#20/#22/#25/#26/#27/#28/#29 inspected and retained draft; no merge/retarget/closure/deletion due or performed. Suggested commit `feat(gear): publish unselected native v3 campaign artifacts`. Next named run: [connected owner-action, effective-worn and survey cutover](next-native-gear-owner-action-effective-worn-survey-2026-10-27.md). No Game-version decision proposed.
+FP-001/002/005/009/012/013/014/015/016/017 applied as detailed in focused decision. Vite reports known large chunk and ineffective dynamic import because the unselected native rules are statically reachable by the candidate store. Selected App still creates/loads v2; native Equipment/Inventory callers, effective-worn combat/resources/Character, native survey witnesses and v3 descendant/terminal acceptance remain. PRs #19/#20/#22/#25/#26/#27/#28/#29 inspected and retained draft; new #30 remains draft, with no merge/retarget/closure/deletion due or performed. Suggested commit `feat(gear): publish unselected native v3 campaign artifacts`. Next named run: [connected owner-action, effective-worn and survey cutover](next-native-gear-owner-action-effective-worn-survey-2026-10-27.md). No Game-version decision proposed.
 
 ## 2026-10-27 — Positive native v3 creator and Save read admission
 

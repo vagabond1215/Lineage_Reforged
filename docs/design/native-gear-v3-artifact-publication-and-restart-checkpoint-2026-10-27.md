@@ -1,6 +1,6 @@
 # Native Gear V3 Artifact Publication And Restart Checkpoint
 
-Date: 2026-10-27. Source master `a596112acf3945f2bf7c625e943f2511d12aa710`; stacked source PR #29 `1e93174129f0bc0f2ebb82b34c4db43c4bc4085c`. Implementation `4773c06d` on `codex/native-gear-v3-publication`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. Status: `UNSELECTED_NATIVE_V3_FIRST_ARTIFACT_AND_RESTART_VERIFIED; SELECTED_ACTIVATION_HELD`.
+Date: 2026-10-27. Source master `a596112acf3945f2bf7c625e943f2511d12aa710`; stacked source PR #29 `1e93174129f0bc0f2ebb82b34c4db43c4bc4085c`. Implementation `4773c06d` and evidence `5b51ca00` on [draft PR #30](https://github.com/vagabond1215/Lineage_Reforged/pull/30), targeting #29. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. Status: `UNSELECTED_NATIVE_V3_FIRST_ARTIFACT_AND_RESTART_VERIFIED; SELECTED_ACTIVATION_HELD`.
 
 ## Implemented and verified
 
