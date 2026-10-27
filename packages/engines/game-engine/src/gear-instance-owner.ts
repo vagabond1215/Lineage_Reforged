@@ -180,7 +180,7 @@ export function getWornGear(state: GearOwner): readonly GearItemInstance[] {
 
 function preflight(state: GearOwner, request: Request, fingerprint: string, fits: readonly GearFit[], bags: readonly GearBagCapacity[]): GearResult | null {
   const validity = validateGearOwner(state, fits, bags);
-  if (!validity.ok) return { status: 'invalid', state, reason: validity.reason };
+  if (!validity.ok) return { status: 'invalid', state, reason: validity.reason ?? 'Invalid gear owner.' };
   if (!nonblank(request.requestId) || !integer(request.expectedRevision)) {
     return { status: 'invalid', state, reason: 'Invalid request identity or revision.' };
   }
@@ -200,7 +200,7 @@ function commit(state: GearOwner, instances: GearItemInstance[], requestId: stri
   };
   const validity = validateGearOwner(next, fits, bags);
   return validity.ok ? { status: 'accepted', state: next } :
-    { status: 'invalid', state, reason: validity.reason };
+    { status: 'invalid', state, reason: validity.reason ?? 'Invalid gear owner.' };
 }
 
 export function grantGear(

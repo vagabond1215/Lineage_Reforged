@@ -8,6 +8,7 @@ import type {
   SaveSnapshot,
   SoundingsAdmissionWitness
 } from "../../../../packages/shared/types/src/index.js";
+import type { NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
 import {
   TARGET_SNAPSHOT_FORMAT,
   createAuthorityId,
@@ -564,6 +565,23 @@ function isSaveSnapshot(value: unknown): value is SaveSnapshot {
     isRecord(value.sessionState) &&
     isRecord(value.sessionState.combatUi)
   );
+}
+
+/** Candidate v3 read admission; publication remains disabled until all writers migrate. */
+export async function isNativeFreshSaveSnapshot(value: unknown): Promise<boolean> {
+  if (!isSaveSnapshot(value)) return false;
+  const { isNativeTargetCampaignSnapshot } = await import(
+    "../../../../packages/engines/game-engine/src/native-campaign-rules.js"
+  );
+  return isNativeTargetCampaignSnapshot(value);
+}
+
+export async function readNativeFreshSaveSnapshot(raw: string): Promise<NativeFreshCampaignSnapshot> {
+  const parsed: unknown = deserializeSnapshot(raw);
+  if (!(await isNativeFreshSaveSnapshot(parsed))) {
+    throw new Error('Native campaign save is incompatible or corrupt; no record was changed.');
+  }
+  return parsed as NativeFreshCampaignSnapshot;
 }
 
 function isSaveSlotMetadata(value: unknown): value is SaveSlotMetadata {

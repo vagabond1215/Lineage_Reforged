@@ -3535,3 +3535,22 @@ export interface SaveSnapshot {
   civilizationState: CivilizationState;
   sessionState: SessionState;
 }
+
+/** Epoch-specific physical state: v3 has no serialized 17-slot equipment map. */
+export type NativeGearPlayerState<TGear> = Omit<PlayerState, "equipment"> & {
+  gear: TGear;
+  equipment?: never;
+};
+
+export type HistoricalEquipmentSaveSnapshot = SaveSnapshot & {
+  snapshotVersion: "lineage.save_snapshot.v2";
+};
+
+export type NativeGearSaveSnapshot<TGear> = Omit<SaveSnapshot, "snapshotVersion" | "playerState"> & {
+  snapshotVersion: "lineage.save_snapshot.v3";
+  playerState: NativeGearPlayerState<TGear>;
+};
+
+export type VersionedEquipmentSaveSnapshot<TGear> =
+  | HistoricalEquipmentSaveSnapshot
+  | NativeGearSaveSnapshot<TGear>;
