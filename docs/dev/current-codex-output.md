@@ -1,6 +1,6 @@
 ## 2026-10-27 — Candidate native physical contract checkpoint
 
-**Source run:** unversioned native gear fresh-format support on new `codex/native-gear-contract-cutover`, based on draft PR #27 `b1bb93c82b45dee9a6f64a496c0dd3b67ae1375e`; synchronized master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `CANDIDATE_PHYSICAL_CONTRACT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused gate](../design/native-gear-physical-boundary-and-atomic-caller-gate-2026-10-27.md).
+**Source run:** unversioned native gear fresh-format support on new `codex/native-gear-contract-cutover`, implementation/evidence `fd67a0e343a880932dd1b973c80ec076c42dda30`, draft [PR #28](https://github.com/vagabond1215/Lineage_Reforged/pull/28) targeting #27 `b1bb93c82b45dee9a6f64a496c0dd3b67ae1375e`; synchronized master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `CANDIDATE_PHYSICAL_CONTRACT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused gate](../design/native-gear-physical-boundary-and-atomic-caller-gate-2026-10-27.md).
 
 ### A. Files changed
 
