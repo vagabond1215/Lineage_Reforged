@@ -1,3 +1,9 @@
+# Status update, 2026-10-26: SUPERSEDED BY PR #27 CHECKPOINT
+
+PR #27 (`b1bb93c82b45dee9a6f64a496c0dd3b67ae1375e`) completed the isolated 50-fit/starter-fixture portion and documented why selected activation is still held. **Do not re-run the broad task below as the next command.** Its successor is [Native Gear Contract + Atomic Selected-Path Activation after PR #27](queued-codex-native-gear-activation-contract-after-pr27-2026-10-26.md). Master prompt remains untouched.
+
+---
+
 # Queued Codex: Native Gear Fresh-Format Caller + Save Cutover
 
 Date: 2026-10-26
