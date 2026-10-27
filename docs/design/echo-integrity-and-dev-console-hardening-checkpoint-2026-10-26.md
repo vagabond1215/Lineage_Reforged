@@ -1,6 +1,6 @@
 # Echo Integrity and Dev Console Hardening Checkpoint
 
-Date: 2026-10-26. Source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; stacked source PR #22 `8ea456e03f12bb059ab5c12a63101749638786a9`; implementation source commit `b553c63e8e8f46d987d2b35eddefd69b8b5dbc6d`. PR #23's preflight is design evidence, not merged implementation authority. Game `0.1.1-prealpha`; no Site deployment.
+Date: 2026-10-26. Source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; stacked source PR #22 `8ea456e03f12bb059ab5c12a63101749638786a9`; implementation source commit `b553c63e8e8f46d987d2b35eddefd69b8b5dbc6d`. New [draft PR #25](https://github.com/vagabond1215/Lineage_Reforged/pull/25) targets PR #22. PR #23's preflight is design evidence, not merged implementation authority. Game `0.1.1-prealpha`; no Site deployment.
 
 ## Accepted owner boundary
 
