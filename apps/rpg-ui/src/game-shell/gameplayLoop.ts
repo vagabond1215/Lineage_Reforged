@@ -57,6 +57,8 @@ import {
   advancePlayerBodyState,
   convertPlayerStatGrowthOnRecovery,
   loadBodyStateBalanceRule,
+  recordEarnedAttributeGrowth,
+  recordEarnedSkillGrowth,
   resolveSkillRankGainPolicy,
   syncPlayerRuntimeState
 } from '../../../../packages/engines/player-engine/src/index.js';
@@ -327,13 +329,17 @@ function advanceSnapshotClock(
       options.convertStatGrowthOnRecovery !== false &&
       index === stepCount - 1
     ) {
-      convertPlayerStatGrowthOnRecovery(
+      const conversion = convertPlayerStatGrowthOnRecovery(
         snapshot.playerState,
         nextClock.tick,
         nextClock.day,
         recoveryAssessment,
         runDifficulty
       );
+      for (const key of conversion.gainedAttributes) {
+        const current = snapshot.playerState.attributes[key];
+        recordEarnedAttributeGrowth(snapshot.playerState.progression, key, current - 1, current);
+      }
     }
     syncPlayerRuntimeState(snapshot.playerState, nextClock.tick, nextClock.day, [], runDifficulty);
   }
@@ -1136,7 +1142,9 @@ export function advanceCurrentActivity(snapshot: SaveSnapshot): GameplayActionRe
       1,
       'Rivet cargo procurement'
     );
+    const priorSkillRank = nextSnapshot.playerState.skills.find((skill) => skill.id === 'skill.resource.identify.minerals')?.rank ?? 0;
     nextSnapshot.playerState.skills = skillGain.skills;
+    recordEarnedSkillGrowth(nextSnapshot.playerState.progression, 'skill.resource.identify.minerals', priorSkillRank, priorSkillRank + skillGain.appliedDelta);
     nextSnapshot.sessionState.operations = upsertOperation(
       nextSnapshot.sessionState.operations,
       buildPorterOperation(nextSnapshot)
@@ -1360,7 +1368,9 @@ export function turnInQuest(snapshot: SaveSnapshot, questId: string): GameplayAc
       1,
       'Rivet shortfall turn-in'
     );
+    const priorSkillRank = nextSnapshot.playerState.skills.find((skill) => skill.id === 'skill.knowledge.mineral_lore')?.rank ?? 0;
     nextSnapshot.playerState.skills = skillGain.skills;
+    recordEarnedSkillGrowth(nextSnapshot.playerState.progression, 'skill.knowledge.mineral_lore', priorSkillRank, priorSkillRank + skillGain.appliedDelta);
     nextSnapshot.playerState.standing = addOrUpdateStanding(
       nextSnapshot.playerState.standing,
       'rep.guild_consortium',

@@ -50,6 +50,8 @@ type TopStatusBarProps = {
   devContent?: ReactNode;
   settingsOpen: boolean;
   onToggleSettings: () => void;
+  onCloseSettings: () => void;
+  activeViewKey?: string | null;
   settingsContent: ReactNode;
 };
 
@@ -173,13 +175,18 @@ export function TopStatusBar({
   devContent,
   settingsOpen,
   onToggleSettings,
+  onCloseSettings,
+  activeViewKey,
   settingsContent
 }: TopStatusBarProps) {
   const [conditionOpen, setConditionOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [devOpen, setDevOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const devTrigger = useRef<HTMLButtonElement | null>(null);
   const devPanel = useRef<HTMLDivElement | null>(null);
+  const settingsTrigger = useRef<HTMLButtonElement | null>(null);
+  const settingsPanel = useRef<HTMLDivElement | null>(null);
   const conditionTrigger = useRef<HTMLButtonElement | null>(null);
   const calendarTrigger = useRef<HTMLButtonElement | null>(null);
   const topBarButtonClass =
@@ -199,6 +206,13 @@ export function TopStatusBar({
   }, [settingsOpen]);
 
   useEffect(() => {
+    setDevOpen(false);
+    setCalendarOpen(false);
+    setConditionOpen(false);
+    setNotificationsOpen(false);
+  }, [activeViewKey]);
+
+  useEffect(() => {
     if (!devOpen) return;
     devPanel.current?.focus();
     const onPointerDown = (event: PointerEvent) => {
@@ -209,6 +223,18 @@ export function TopStatusBar({
     document.addEventListener('pointerdown', onPointerDown);
     return () => document.removeEventListener('pointerdown', onPointerDown);
   }, [devOpen]);
+
+  useEffect(() => {
+    if (!settingsOpen) return;
+    settingsPanel.current?.focus();
+    const onPointerDown = (event: PointerEvent) => {
+      if (!settingsPanel.current?.contains(event.target as Node) && !settingsTrigger.current?.contains(event.target as Node)) {
+        onCloseSettings();
+      }
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [settingsOpen]);
 
   return (
     <header
@@ -225,7 +251,7 @@ export function TopStatusBar({
             <button
               ref={calendarTrigger}
               type="button"
-              onClick={() => setCalendarOpen((current) => !current)}
+              onClick={() => { setDevOpen(false); setConditionOpen(false); setNotificationsOpen(false); onCloseSettings(); setCalendarOpen((current) => !current); }}
               onKeyDown={(event) => {
                 if (event.key === 'Escape') setCalendarOpen(false);
               }}
@@ -321,6 +347,7 @@ export function TopStatusBar({
                     }}
                     onClick={(event) => {
                       conditionTrigger.current = event.currentTarget;
+                      setCalendarOpen(false); setDevOpen(false); setNotificationsOpen(false); onCloseSettings();
                       setConditionOpen((current) => !current);
                     }}
                     className={`top-status-alert rounded-md border px-1.5 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-[color:var(--color-border-active)] ${pill.severity === 'critical'
@@ -382,6 +409,8 @@ export function TopStatusBar({
                 onClick={() => {
                   setCalendarOpen(false);
                   setConditionOpen(false);
+                  setNotificationsOpen(false);
+                  onCloseSettings();
                   setDevOpen((current) => !current);
                 }}
                 aria-expanded={devOpen}
@@ -410,11 +439,13 @@ export function TopStatusBar({
                 </div>
               )}
             </div>
-            <NotificationBell items={notifications} />
+            <NotificationBell items={notifications} open={notificationsOpen} onClose={() => setNotificationsOpen(false)}
+              onToggle={() => { setDevOpen(false); setCalendarOpen(false); setConditionOpen(false); onCloseSettings(); setNotificationsOpen((current) => !current); }} />
             <div className="relative z-[110]">
               <button
+                ref={settingsTrigger}
                 type="button"
-                onClick={onToggleSettings}
+                onClick={() => { setDevOpen(false); setCalendarOpen(false); setConditionOpen(false); setNotificationsOpen(false); onToggleSettings(); }}
                 className={`p-2.5 ${topBarButtonClass}`}
                 aria-label="Open settings"
                 aria-expanded={settingsOpen}
@@ -424,7 +455,17 @@ export function TopStatusBar({
               </button>
               {settingsOpen && (
                 <div
+                  ref={settingsPanel}
                   id="top-bar-settings-detail"
+                  role="region"
+                  aria-label="Settings"
+                  tabIndex={-1}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Escape') {
+                      onCloseSettings();
+                      settingsTrigger.current?.focus();
+                    }
+                  }}
                   className={`absolute right-0 top-[calc(100%+12px)] z-[120] max-h-[calc(100vh-8rem)] w-[min(36rem,calc(100vw-2rem))] overflow-y-auto p-4 ${overlayPanelClass}`}
                 >
                   {settingsContent}

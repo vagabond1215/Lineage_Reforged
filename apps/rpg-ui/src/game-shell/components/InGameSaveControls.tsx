@@ -33,7 +33,7 @@ export function InGameSaveControls({
               {activeSlot?.hasSave
                 ? activeSlot.lastSavedLabel
                 : activeSlot?.status === 'incompatible'
-                  ? 'This slot contains data from an older incompatible save format that predates the account-scoped Legacy ledger.'
+                  ? 'This slot contains an older unsupported development save. Start a new campaign to use the current format.'
                 : activeSlot?.status === 'corrupt'
                   ? 'This slot previously held unreadable data.'
                   : 'No persisted save has been written yet.'}

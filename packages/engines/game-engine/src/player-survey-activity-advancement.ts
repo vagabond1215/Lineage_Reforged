@@ -30,6 +30,7 @@ import {
   loadBodyStateBalanceRule,
   loadStatGrowthBalanceRule,
   resolveSkillRankGainPolicy,
+  recordEarnedSkillGrowth,
   syncPlayerRuntimeState
 } from "../../player-engine/src/index.js";
 import {
@@ -522,6 +523,7 @@ function applySkill(
     sourceType: "noncombat"
   });
   if (policy.appliedDelta > 0) {
+    recordEarnedSkillGrowth(snapshot.playerState.progression, skillId, policy.previousRank, policy.appliedRank);
     if (existing) {
       snapshot.playerState.skills = snapshot.playerState.skills.map((entry) =>
         entry.id === skillId

@@ -5,6 +5,7 @@ import {
   accumulateBreakthroughProgress,
   applyBreakthroughGating,
   calculatePlayerEcho,
+  recordEarnedSkillGrowth,
   canAttemptTrial,
   createPlayerProgressionState,
   evaluateTrialOutcome,
@@ -23,21 +24,33 @@ import {
 import { resolveRunDifficultyModifiers } from "../../packages/engines/player-engine/src/difficulty.ts";
 
 function createEchoPlayerFixture(overrides = {}) {
+  const attributes = {
+    STR: 10, DEX: 10, AGI: 10, CON: 10, VIT: 10,
+    WIS: 10, INT: 10, SPT: 10, CHA: 10,
+    ...(overrides.attributes ?? {})
+  };
+  const skills = overrides.skills ?? [];
+  const originBaseline = {
+    attributes: Object.fromEntries(Object.keys(attributes).map((key) => [key, 10])),
+    skillRanks: {}
+  };
+  const progression = overrides.progression?.originBaseline
+    ? overrides.progression
+    : {
+        ...(overrides.progression ?? createPlayerProgressionState()),
+        echoEvidenceVersion: 1,
+        originBaseline,
+        earnedGrowth: {
+          skillRanks: Object.fromEntries(skills.map((skill) => [skill.id, skill.rank])),
+          attributes: Object.fromEntries(Object.entries(attributes).map(([key, value]) => [key, Math.max(0, value - 10)])),
+          skillPeakRanks: Object.fromEntries(skills.map((skill) => [skill.id, skill.rank])),
+          attributePeakValues: { ...attributes }
+        }
+      };
   return {
-    attributes: {
-      STR: 10,
-      DEX: 10,
-      AGI: 10,
-      CON: 10,
-      VIT: 10,
-      WIS: 10,
-      INT: 10,
-      SPT: 10,
-      CHA: 10,
-      ...(overrides.attributes ?? {})
-    },
-    skills: overrides.skills ?? [],
-    progression: overrides.progression ?? createPlayerProgressionState()
+    attributes,
+    skills,
+    progression
   };
 }
 
@@ -45,6 +58,55 @@ test("resolveSkillBand returns the authored overlapping bands", () => {
   assert.equal(resolveSkillBand(20).id, "clumsy");
   assert.equal(resolveSkillBand(52).id, "familiar");
   assert.equal(resolveSkillBand(110).id, "mastery");
+});
+
+test("missing origin or earned evidence fails closed and direct non-earned rank edits cannot create Echo", () => {
+  const player = createEchoPlayerFixture({
+    skills: [{ id: "skill.combat.weapon.sword", rank: 25, source: "trained" }],
+    progression: createPlayerProgressionState()
+  });
+  delete player.progression.originBaseline;
+  assert.equal(calculatePlayerEcho(player).echoAdjusted, 0);
+  player.progression.originBaseline = {
+    attributes: { ...player.attributes },
+    skillRanks: { "skill.combat.weapon.sword": 25 }
+  };
+  player.progression.earnedGrowth = { skillRanks: {}, attributes: {}, skillPeakRanks: {}, attributePeakValues: {} };
+  player.skills[0].rank = 40;
+  assert.equal(calculatePlayerEcho(player).echoAdjusted, 0);
+  recordEarnedSkillGrowth(player.progression, "skill.combat.weapon.sword", 39, 40);
+  assert.ok(calculatePlayerEcho(player).echoAdjusted > 0);
+  const first = calculatePlayerEcho(player);
+  assert.deepEqual(calculatePlayerEcho(player), first);
+  player.skills[0].rank = 25;
+  assert.equal(calculatePlayerEcho(player).echoAdjusted, 0);
+  player.skills[0].rank = 40;
+  assert.deepEqual(calculatePlayerEcho(player), first);
+});
+
+test("rank loss and retraining to the credited peak cannot become an extra award after a scripted rank grant", () => {
+  const player = createEchoPlayerFixture({
+    skills: [{ id: "skill.combat.weapon.sword", rank: 25, source: "trained" }],
+    progression: createPlayerProgressionState({
+      originBaseline: {
+        attributes: { STR: 10, DEX: 10, AGI: 10, CON: 10, VIT: 10, INT: 10, WIS: 10, SPT: 10, CHA: 10 },
+        skillRanks: { "skill.combat.weapon.sword": 25 }
+      }
+    })
+  });
+  player.skills[0].rank = 26;
+  recordEarnedSkillGrowth(player.progression, player.skills[0].id, 25, 26);
+  const earned = calculatePlayerEcho(player);
+  player.skills[0].rank = 25;
+  recordEarnedSkillGrowth(player.progression, player.skills[0].id, 25, 26);
+  player.skills[0].rank = 26;
+  assert.deepEqual(calculatePlayerEcho(player), earned);
+  player.skills[0].rank = 40;
+  assert.deepEqual(calculatePlayerEcho(player), earned);
+  recordEarnedSkillGrowth(player.progression, player.skills[0].id, 40, 41);
+  player.skills[0].rank = 41;
+  assert.ok(calculatePlayerEcho(player).echoAdjusted > earned.echoAdjusted);
+  assert.equal(player.progression.earnedGrowth.skillRanks[player.skills[0].id], 2);
 });
 
 test("applyBreakthroughGating blocks rank gain above locked gates", () => {
@@ -419,6 +481,8 @@ test("creation baseline excludes starter capability while later earned growth su
   const earned = { ...starter, attributes: { ...attributes, STR: 17 }, skills: [
     { ...skills[0], rank: 26 }, skills[1]
   ], progression: initial };
+  recordEarnedSkillGrowth(earned.progression, "skill.combat.weapon.sword", 25, 26);
+  earned.progression.earnedGrowth.attributes.STR = 1;
   const first = resolvePlayerEchoProgression(earned);
   const repeated = resolvePlayerEchoProgression({ ...earned, progression: first });
   assert.ok(first.echo.skillContribution > 0);

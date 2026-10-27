@@ -44,33 +44,76 @@ function regionAncestry(regionId: string, parentById: Map<string, string | null>
   return ancestry;
 }
 
-export function inspectSpawnEligibility(state: WorldState, tick: number, seed = 0) {
-  const content = loadSpawnFoundationContent();
+type SpawnContent = ReturnType<typeof loadSpawnFoundationContent>;
+type EncounterWeight = SpawnProfileRecord["encounterWeights"][number];
+
+function encounterWeightFailures(
+  profile: SpawnProfileRecord,
+  entry: EncounterWeight,
+  context: NonNullable<WorldState["encounterContext"]>,
+  ancestry: string[],
+  content: SpawnContent
+): string[] {
+  const failures: string[] = [];
+  const template = content.encounterTemplateById.get(entry.encounterTemplateId);
+  if (entry.weight <= 0) failures.push("nonpositive encounter weight");
+  if (context.hazardPressure < (entry.minHazardPressure ?? profile.minHazardPressure) ||
+      context.hazardPressure > (entry.maxHazardPressure ?? profile.maxHazardPressure)) failures.push("encounter hazard band");
+  if (!template) return [...failures, "encounter template missing"];
+  if (!template.regionIds.some((id) => ancestry.includes(id))) failures.push("template region");
+  if (!template.habitatTags.some((tag) => context.habitatTags.includes(tag))) failures.push("template habitat");
+  if (!profile.allowedMovementModes.includes(template.movementMode)) failures.push("movement mode");
+  if (profile.hostilityWeights[template.disposition] <= 0) failures.push("disposition weight");
+  if (template.members.length === 0) failures.push("template has no members");
+  for (const member of template.members) {
+    const monster = content.monsterById.get(member.monsterId);
+    if (!monster) failures.push(`monster ${member.monsterId} missing`);
+    else if (!monster.habitatTags.some((tag) => context.habitatTags.includes(tag))) failures.push(`monster ${member.monsterId} habitat`);
+  }
+  return failures;
+}
+
+export function inspectSpawnEligibility(
+  state: WorldState, tick: number, seed = 0,
+  options: { selectionKey?: string; content?: SpawnContent } = {}
+) {
+  const content = options.content ?? loadSpawnFoundationContent();
   const context = state.encounterContext ?? null;
   const ancestry = context ? regionAncestry(context.regionId, content.regionParentById) : [];
   const contextError = !context ? "No authored encounter context is active." :
     ancestry.length === 0 ? "Encounter region is unknown." :
     !Number.isFinite(context.hazardPressure) || context.hazardPressure < 0 || context.hazardPressure > 100 ? "Hazard pressure is invalid." :
     context.habitatTags.length === 0 ? "No authored habitat is active." : null;
+  const candidates = contextError ? [] : resolveSpawnCandidates(state, tick, seed, { ...options, strict: true });
   const profiles = content.spawnProfiles.map((profile) => {
     const failures = contextError ? [contextError] : spawnProfileFailures(profile, context!, ancestry);
+    const spawnRoll = contextError ? null : hashText(`${options.selectionKey ?? seed}:${tick}:${profile.id}:${context!.regionId}`) % 100;
+    const spawnRollPassed = failures.length === 0 && spawnRoll !== null && spawnRoll < profile.spawnRatePerDay;
+    const encounters = profile.encounterWeights.map((entry) => ({
+      encounterTemplateId: entry.encounterTemplateId,
+      weight: entry.weight,
+      failures: contextError ? [contextError] : encounterWeightFailures(profile, entry, context!, ancestry, content)
+    }));
+    const chosen = candidates.find((candidate) => candidate.spawnProfileId === profile.id);
     return {
       id: profile.id,
       passed: failures.length === 0,
       failures,
-      spawnRollPassed: failures.length === 0 &&
-        hashText(`${seed}:${tick}:${profile.id}:${context!.regionId}`) % 100 < profile.spawnRatePerDay
+      spawnRoll,
+      spawnRatePerDay: profile.spawnRatePerDay,
+      spawnRollPassed,
+      encounters,
+      selectedCandidateId: chosen?.id ?? null,
+      noCandidateReason: failures.length > 0 ? "Spawn profile constraints failed." :
+        !spawnRollPassed ? "Spawn rate roll missed." :
+        encounters.every((entry) => entry.failures.length > 0) ? "No encounter template passes its authored constraints." : null
     };
   });
   return {
     context,
     contextError,
     profiles,
-    candidates: contextError ? [] : resolveSpawnCandidates(state, tick, seed, { strict: true }).map((candidate) => ({
-      id: candidate.id,
-      encounterTemplateId: candidate.encounterTemplateId,
-      spawnProfileId: candidate.spawnProfileId
-    })),
+    candidates,
     unsupportedFilters: ["time of day", "season", "weather"]
   };
 }
@@ -113,20 +156,9 @@ export function resolveSpawnCandidates(
       continue;
     }
 
-    const eligibleEncounterWeights = profile.encounterWeights.filter((entry) => {
-      const minHazard = entry.minHazardPressure ?? profile.minHazardPressure;
-      const maxHazard = entry.maxHazardPressure ?? profile.maxHazardPressure;
-      const template = content.encounterTemplateById.get(entry.encounterTemplateId);
-      return entry.weight > 0 && hazardPressure >= minHazard && hazardPressure <= maxHazard &&
-        !!template && template.regionIds.some((id) => ancestry.includes(id)) &&
-        template.habitatTags.some((tag) => encounterContext.habitatTags.includes(tag)) &&
-        profile.allowedMovementModes.includes(template.movementMode) &&
-        profile.hostilityWeights[template.disposition] > 0 &&
-        template.members.length > 0 && template.members.every((member) => {
-          const monster = content.monsterById.get(member.monsterId);
-          return !!monster && monster.habitatTags.some((tag) => encounterContext.habitatTags.includes(tag));
-        });
-    }).sort((a, b) => a.encounterTemplateId.localeCompare(b.encounterTemplateId));
+    const eligibleEncounterWeights = profile.encounterWeights.filter((entry) =>
+      encounterWeightFailures(profile, entry, encounterContext, ancestry, content).length === 0
+    ).sort((a, b) => a.encounterTemplateId.localeCompare(b.encounterTemplateId));
 
     if (eligibleEncounterWeights.length === 0) {
       continue;

@@ -140,6 +140,8 @@ function InGameShellContent({
             devContent={<DevConsole snapshot={snapshot} control={campaignSessionControl} />}
             settingsOpen={settingsOpen}
             onToggleSettings={() => setSettingsOpen((current) => !current)}
+            onCloseSettings={() => setSettingsOpen(false)}
+            activeViewKey={activeTab}
             settingsContent={
               <InGameSaveControls
                 activeSlot={activeSlot}

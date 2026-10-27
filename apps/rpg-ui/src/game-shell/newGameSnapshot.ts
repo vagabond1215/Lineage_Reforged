@@ -919,6 +919,7 @@ function deriveCharacterCreationState(
       progression: {
         ...progression,
         originBaseline: createPlayerEchoOriginBaseline({
+          playerId,
           attributes,
           skills: backstory ? backstory.startingSkills : []
         })
@@ -1073,6 +1074,10 @@ export function createNewGameSnapshot(
   const appliedLegacyPreparationChoices = derived.appliedLegacyPreparationChoices;
   const sourceRunId = options.sourceRunId?.trim();
 
+  if (!snapshot.playerState.progression.originBaseline) {
+    throw new Error('Character creation did not produce Echo origin evidence.');
+  }
+
   const characterId = createAuthorityId('character');
   const targetSnapshot = initializeTargetCampaignSnapshot(
     {
@@ -1081,6 +1086,13 @@ export function createNewGameSnapshot(
       playerState: {
         ...snapshot.playerState,
         playerId: characterId,
+        progression: {
+          ...snapshot.playerState.progression,
+          originBaseline: {
+            ...snapshot.playerState.progression.originBaseline,
+            characterId
+          }
+        },
         saveMeta: {
           ...snapshot.playerState.saveMeta,
           ...(appliedLegacyPreparationIds.length > 0 ? { appliedLegacyPreparationIds } : {}),

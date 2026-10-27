@@ -126,7 +126,7 @@ export function LoadGameScreen({
                     </div>
                   ) : slot.status === 'incompatible' ? (
                     <div className="mt-3 rounded-lg border border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)] px-3 py-3 text-sm text-[color:var(--color-tone-warning-text)]">
-                      This slot was created before the account-scoped Legacy ledger and current snapshot revision, so it is intentionally marked incompatible.
+                      This development save uses an older unsupported format. Start a new campaign to use the current Echo evidence contract.
                     </div>
                   ) : (
                     <div className="mt-3 text-sm text-slate-500">
@@ -262,10 +262,10 @@ export function LoadGameScreen({
           ) : selectedSlot?.status === 'incompatible' ? (
             <div className="space-y-4">
               <div className="forged-subpanel border-[color:var(--color-tone-warning-border)] bg-[color:var(--color-tone-warning-bg)] p-4 text-sm leading-6 text-[color:var(--color-tone-warning-text)]">
-                This slot belongs to an older local save format from before the account-scoped Legacy ledger and current structured snapshot revision, and it cannot be loaded by the current build.
+                This development save uses an older unsupported format and cannot be loaded by this build. Start a new campaign to use the current Echo evidence contract.
               </div>
               <div className="forged-subpanel p-4 text-sm leading-6 text-slate-300">
-                Delete the slot from the action card to clear the incompatible localStorage record, or use Reset Save Data from the main menu to clear every save slot at once.
+                The stored data remains until you choose to delete this slot. You can start a new campaign in another slot.
               </div>
             </div>
           ) : (

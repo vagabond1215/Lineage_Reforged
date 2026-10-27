@@ -25,6 +25,7 @@ import {
 import { loadCombatFoundationContent } from "./content.js";
 import {
   resolvePlayerEchoProgression,
+  recordEarnedSkillGrowth,
   resolveSkillBand,
   resolveSkillRankGainPolicy
 } from "../../../player-engine/src/progression.js";
@@ -663,6 +664,7 @@ function applyCombatSkillGainAttempt(
     ].sort((left, right) => left.id.localeCompare(right.id));
   }
 
+  recordEarnedSkillGrowth(playerState.progression, attempt.candidate.skillId, policy.previousRank, policy.appliedRank);
   const actor = findCombatant(encounter, attempt.candidate.actorCombatantId);
   if (actor?.kind === "player") {
     actor.hooks.skillIds = addUniqueValue(actor.hooks.skillIds, attempt.candidate.skillId).sort();
