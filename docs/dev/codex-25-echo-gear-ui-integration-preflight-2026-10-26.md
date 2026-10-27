@@ -66,7 +66,7 @@ Source catalog `packages/content/base/player/starting_bundles.json` has seven st
 - Traveler: `butcher_knife`, `travel_cloak`, `bedroll_kit`, `rope`, `compass`.
 - Trader: `ledger`, `travel_pouch`, `casual_tunic`, `compass`, `ration_bundle`.
 
-**Correction to summary count:** distinct item keys across these seven bundles are **17**, not 19; use the enumerated actual IDs as canonical. (Two duplicates beyond shared starting classes are not extra authored items.)
+The **19 distinct starter item keys** in the seven bundles above have been de-duplicated across bundles. Their quantities and starter destinations still require separate owner-level grant tests.
 
 PR #20 `equipment_fit_profiles.json` seeds only `composite_bow`, `short_bow`, `arming_sword`, `pickaxe`, `casual_tunic`, `leather_light_armor`. Of those, only `short_bow`, `casual_tunic`, `leather_light_armor` are starter bundle matches. The class-level catalog identifies `buckler_shield` as armor, `battle_staff` as weapon, `travel_cloak` as clothing, `herb_pouch` and `travel_pouch` as accessories, and various creator tools as tool-class items. It would be a mistake to claim all seven bundles are migrated based on the six-profile owner test.
 
