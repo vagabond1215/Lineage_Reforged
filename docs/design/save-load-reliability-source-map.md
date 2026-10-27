@@ -1,5 +1,7 @@
 # Save Load Reliability Source Map
 
+> **2026-10-26 applicability clarification:** The historical checklist below asks which older saves still load. The product owner has expressly waived pre-cutover development-save compatibility for the equipment overhaul, consistent with [the accepted clean development persistence epoch](development-only-clean-persistence-epoch-route-decision.md) and [new equipment decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md). For this active feature, test **fresh-format** Save/restart, integrity, interruption/retry, schema rejection, rollback/non-interference and valid in-format history. Do **not** require old 17-slot, old v0.6.0, old stash or historical pre-cutover witness migration. Do not weaken validation for newly created campaign data.
+
 Source route: ChatGPT via GitHub Connector
 Date: 2026-06-05
 Status: connector-only prep for future save/load/persistence reliability work; no source, schema, content JSON, UI implementation, generated output, roadmap advancement, or runtime behavior changes

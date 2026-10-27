@@ -227,6 +227,10 @@ These were exposed by accepted work after the original June index. They are deli
 | What compatibility-safe migration/alias policy should eventually retire misleading runtime travel keys whose names no longer match canonical settlement/place identity? | Reopen after `0.6.11` and its audit are accepted, when a dedicated generic travel-identity cleanup is prioritized. Do not rename current keys opportunistically. | `DEFERRED_WITH_TRIGGER` |
 | What exact typed semantics and refusal/consequence rules should distinguish Quest, Mission, Order, Favor, and Trial when organization/law/rank owners are mature enough to consume them? | Reopen with a dedicated quest-kind/assignment-semantics decision. | `DEFERRED_WITH_TRIGGER` |
 
+### Resolved 2026-10-26: Old development equipment-save compatibility waived
+
+The owner has explicitly decided that the project is not live and old development saves do not need backward compatibility. The [fresh equipment save epoch decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md) supersedes requirements to convert old 17-key equipment, legacy item-stash flags, old left-side Ear/Eye/Ring mappings, v0.6.0 readback, and historical pre-cutover survey evidence. No additional product choice or old-save repair/quarantine policy should be sought. New-format item identity, real layered/sided equipment, valid Save/restart and atomic commands are still required. **Status: `RESOLVED_OWNER_DIRECTION`; implementation pending.**
+
 ## Durable Resolved User Direction
 
 The detailed June 17 and June 18 decisions remain preserved in:

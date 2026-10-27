@@ -1,5 +1,7 @@
 # Character equipment Stage 2: item-location conversion gate
 
+> **2026-10-26 owner correction:** Because the project is not live, the owner waives compatibility and recovery for obsolete development saves. This Stage 2 audit remains valuable proof that old item-type stash flags destroy per-copy provenance; it does **not** require that history to be reconstructed, imported or quarantined in the replacement schema. The cutover can initialize fresh current-format campaigns with stable item instances, new sided/layered slots and valid fresh Save/restart. This supersedes historical requirements below for legacy receipts, `0.6.0` migration and 17-key witness preservation. See [clean equipment save epoch decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md).
+
 Date: 2026-10-26
 Status: `SOURCE_AMBIGUITY_PROVEN; LIVE_INSTANCE_OWNER_HELD`
 Game version: `0.1.1-prealpha`; development route: unversioned owner support

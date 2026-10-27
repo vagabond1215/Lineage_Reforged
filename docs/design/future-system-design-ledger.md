@@ -548,6 +548,12 @@ Allowed later, gated:
 - recovery/preparation support
 - known-spell capacity only if future design still needs it
 
+### Clean Equipment Format And Future Instance Extensibility (2026-10-26)
+
+The owner has explicitly waived compatibility with old development saves. The [fresh-save equipment decision](development-only-equipment-fresh-save-epoch-and-instance-owner-decision-2026-10-26.md) supersedes the recent old 17-slot migration/recovery gate: new campaigns can start directly with native layered Clothing, Equipment and Accessories, sided Ear/Eye/Ring and Back positions, actual worn state, presets as references, and durable item-instance IDs. Do not reimplement old stash flags, infer compatibility from labels, or force newly created games through an obsolete slot map. Continue current-format Save/restart integrity, single physical item location, combat/resource truth, explicit action legality and future event history validity.
+
+Differentiated quality/condition, accessory attachment/carrying containers, crafter provenance and bequests should later extend those same item identities through their own consumer-owned decisions. This direction does not accelerate craftsmanship or nested-container execution as part of the UI cutover.
+
 ## Combat And Equipment Criteria
 
 Combat is high ROI, but broad rewrites are risky.
