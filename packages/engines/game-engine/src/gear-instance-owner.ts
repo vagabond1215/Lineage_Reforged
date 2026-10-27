@@ -85,7 +85,7 @@ export function validateGearFits(fits: readonly GearFit[]): boolean {
   const ids = new Set<string>();
   return Array.isArray(fits) && fits.every(fit => {
     if (!record(fit) || !nonblank(fit.itemKey) || fit.itemId !== `item.${fit.itemKey}` ||
-      ids.has(fit.itemId) || !Array.isArray(fit.slots) || fit.slots.length === 0 ||
+      ids.has(fit.itemId) || !Array.isArray(fit.slots) ||
       new Set(fit.slots).size !== fit.slots.length ||
       !fit.slots.every(slot => typeof slot === 'string' && slots.has(slot))) return false;
     ids.add(fit.itemId);

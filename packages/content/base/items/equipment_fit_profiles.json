@@ -1,10 +1,385 @@
 {
   "records": [
-    { "itemId": "item.composite_bow", "itemKey": "composite_bow", "slots": ["slot.equipment.weapon.right"] },
-    { "itemId": "item.short_bow", "itemKey": "short_bow", "slots": ["slot.equipment.weapon.right"] },
-    { "itemId": "item.arming_sword", "itemKey": "arming_sword", "slots": ["slot.equipment.weapon.left", "slot.equipment.weapon.right"] },
-    { "itemId": "item.pickaxe", "itemKey": "pickaxe", "slots": ["slot.equipment.weapon.right"] },
-    { "itemId": "item.casual_tunic", "itemKey": "casual_tunic", "slots": ["slot.clothing.chest"] },
-    { "itemId": "item.leather_light_armor", "itemKey": "leather_light_armor", "slots": ["slot.equipment.armor.chest"] }
+    {
+      "itemId": "item.composite_bow",
+      "itemKey": "composite_bow",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.short_bow",
+      "itemKey": "short_bow",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.arming_sword",
+      "itemKey": "arming_sword",
+      "slots": [
+        "slot.equipment.weapon.left",
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.pickaxe",
+      "itemKey": "pickaxe",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.casual_tunic",
+      "itemKey": "casual_tunic",
+      "slots": [
+        "slot.clothing.chest"
+      ]
+    },
+    {
+      "itemId": "item.leather_light_armor",
+      "itemKey": "leather_light_armor",
+      "slots": [
+        "slot.equipment.armor.chest"
+      ]
+    },
+    {
+      "itemId": "item.lumber_axe",
+      "itemKey": "lumber_axe",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.skinning_knife",
+      "itemKey": "skinning_knife",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.buckler_shield",
+      "itemKey": "buckler_shield",
+      "slots": [
+        "slot.equipment.weapon.left"
+      ]
+    },
+    {
+      "itemId": "item.war_spear",
+      "itemKey": "war_spear",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.agriculture_kit",
+      "itemKey": "agriculture_kit",
+      "slots": []
+    },
+    {
+      "itemId": "item.awl",
+      "itemKey": "awl",
+      "slots": []
+    },
+    {
+      "itemId": "item.battle_staff",
+      "itemKey": "battle_staff",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.herb_pouch",
+      "itemKey": "herb_pouch",
+      "slots": []
+    },
+    {
+      "itemId": "item.butcher_knife",
+      "itemKey": "butcher_knife",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.travel_cloak",
+      "itemKey": "travel_cloak",
+      "slots": [
+        "slot.clothing.chest"
+      ]
+    },
+    {
+      "itemId": "item.bedroll_kit",
+      "itemKey": "bedroll_kit",
+      "slots": []
+    },
+    {
+      "itemId": "item.compass",
+      "itemKey": "compass",
+      "slots": [
+        "slot.accessory.waist"
+      ]
+    },
+    {
+      "itemId": "item.ledger",
+      "itemKey": "ledger",
+      "slots": []
+    },
+    {
+      "itemId": "item.travel_pouch",
+      "itemKey": "travel_pouch",
+      "slots": []
+    },
+    {
+      "itemId": "item.balanced_javelin",
+      "itemKey": "balanced_javelin",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.battle_axe",
+      "itemKey": "battle_axe",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.blow_gun",
+      "itemKey": "blow_gun",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.casual_cloak",
+      "itemKey": "casual_cloak",
+      "slots": [
+        "slot.clothing.chest"
+      ]
+    },
+    {
+      "itemId": "item.chain_flail",
+      "itemKey": "chain_flail",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.chain_whip",
+      "itemKey": "chain_whip",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.chakram",
+      "itemKey": "chakram",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.dirk_dagger",
+      "itemKey": "dirk_dagger",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.dusk_blowgun",
+      "itemKey": "dusk_blowgun",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.ember_greataxe",
+      "itemKey": "ember_greataxe",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.executioner_greatsword",
+      "itemKey": "executioner_greatsword",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.exotic_whip",
+      "itemKey": "exotic_whip",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.formal_cloak",
+      "itemKey": "formal_cloak",
+      "slots": [
+        "slot.clothing.chest"
+      ]
+    },
+    {
+      "itemId": "item.formal_doublet",
+      "itemKey": "formal_doublet",
+      "slots": [
+        "slot.clothing.chest"
+      ]
+    },
+    {
+      "itemId": "item.greatsword",
+      "itemKey": "greatsword",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.hand_axe",
+      "itemKey": "hand_axe",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.heavy_crossbow",
+      "itemKey": "heavy_crossbow",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.javelin",
+      "itemKey": "javelin",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.kite_shield",
+      "itemKey": "kite_shield",
+      "slots": [
+        "slot.equipment.weapon.left"
+      ]
+    },
+    {
+      "itemId": "item.light_crossbow",
+      "itemKey": "light_crossbow",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.long_bow",
+      "itemKey": "long_bow",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.quarterstaff",
+      "itemKey": "quarterstaff",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.short_sword",
+      "itemKey": "short_sword",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.sling",
+      "itemKey": "sling",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.steel_fan",
+      "itemKey": "steel_fan",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.stiletto_dagger",
+      "itemKey": "stiletto_dagger",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.throwing_axe",
+      "itemKey": "throwing_axe",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.throwing_dart",
+      "itemKey": "throwing_dart",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.throwing_knife",
+      "itemKey": "throwing_knife",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.throwing_star",
+      "itemKey": "throwing_star",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.tower_shield",
+      "itemKey": "tower_shield",
+      "slots": [
+        "slot.equipment.weapon.left"
+      ]
+    },
+    {
+      "itemId": "item.war_fan",
+      "itemKey": "war_fan",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.war_hammer",
+      "itemKey": "war_hammer",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.war_mace",
+      "itemKey": "war_mace",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.war_sling",
+      "itemKey": "war_sling",
+      "slots": [
+        "slot.equipment.weapon.right"
+      ]
+    },
+    {
+      "itemId": "item.apron",
+      "itemKey": "apron",
+      "slots": [
+        "slot.clothing.chest"
+      ]
+    }
   ]
 }
