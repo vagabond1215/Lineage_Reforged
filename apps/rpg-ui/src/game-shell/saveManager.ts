@@ -73,6 +73,12 @@ export type StoredSaveEnvelope = {
   snapshot: string;
 };
 
+/** Unselected native-gear artifact format. The selected v2 envelope stays version 7. */
+export type StoredNativeGearEnvelope = Omit<StoredSaveEnvelope, "version" | "snapshotFormatId"> & {
+  version: 8;
+  snapshotFormatId: "lineage.save_snapshot.v3";
+};
+
 export type StoredCampaignControl = {
   version: 1;
   accountId: string;
@@ -582,6 +588,67 @@ export async function readNativeFreshSaveSnapshot(raw: string): Promise<NativeFr
     throw new Error('Native campaign save is incompatible or corrupt; no record was changed.');
   }
   return parsed as NativeFreshCampaignSnapshot;
+}
+
+export function isStoredNativeGearEnvelope(value: unknown): value is StoredNativeGearEnvelope {
+  if (!isRecord(value)) return false;
+  return value.version === 8 && value.snapshotFormatId === 'lineage.save_snapshot.v3' &&
+    typeof value.accountId === 'string' && typeof value.slotId === 'string' &&
+    typeof value.savedAt === 'string' && typeof value.snapshot === 'string' &&
+    typeof value.campaignId === 'string' && typeof value.continuityId === 'string' &&
+    typeof value.characterId === 'string' && typeof value.artifactId === 'string' &&
+    typeof value.generationId === 'string' && typeof value.publicationId === 'string' &&
+    Number.isSafeInteger(value.headRevision) && (value.headRevision as number) > 0 &&
+    typeof value.terminal === 'boolean' && isSaveSlotMetadata(value.metadata) &&
+    value.metadata.snapshotVersion === 'lineage.save_snapshot.v3';
+}
+
+/** Prepare immutable v3 bytes for the existing atomic campaign artifact store. */
+export async function buildNativeGearArtifactPublication(
+  snapshot: NativeFreshCampaignSnapshot,
+  slotId: SaveSlotId,
+  input: {
+    artifactId: string;
+    generationId: string;
+    publicationId: string;
+    savedAt: string;
+    expectedHead: { artifactId: string; publicationId: string; revision: number } | null;
+    expectedSlotAddress?: { artifactId: string; publicationId: string } | null;
+  }
+): Promise<import('./campaignIndexedDbStore.js').CampaignStorePublication> {
+  // Admission completes before the caller opens a storage transaction.
+  if (!(await isNativeFreshSaveSnapshot(snapshot)))
+    throw new Error('Native artifact requires a valid fresh v3 campaign.');
+  if (![input.artifactId, input.generationId, input.publicationId, input.savedAt].every(
+        value => typeof value === 'string' && value.trim().length > 0))
+    throw new Error('Native artifact identity or slot is invalid.');
+  const revision = (input.expectedHead?.revision ?? 0) + 1;
+  if (!Number.isSafeInteger(revision) || revision < 1) throw new Error('Native head revision is invalid.');
+  const campaign = snapshot.campaignIdentity!;
+  const metadata = {
+    ...buildSaveMetadata(slotId, snapshot as unknown as SaveSnapshot),
+    lastSavedAt: input.savedAt,
+    snapshotVersion: 'lineage.save_snapshot.v3'
+  };
+  const envelope: StoredNativeGearEnvelope = {
+    version: 8, accountId: snapshot.accountId, slotId, savedAt: input.savedAt,
+    metadata, snapshotFormatId: 'lineage.save_snapshot.v3',
+    campaignId: campaign.campaignId, continuityId: campaign.continuityId,
+    characterId: snapshot.playerState.playerId, artifactId: input.artifactId,
+    generationId: input.generationId, publicationId: input.publicationId,
+    headRevision: revision, terminal: false, snapshot: JSON.stringify(snapshot)
+  };
+  return {
+    accountId: snapshot.accountId, campaignId: campaign.campaignId, slotId,
+    expectedHead: input.expectedHead,
+    ...(input.expectedSlotAddress === undefined ? {} : { expectedSlotAddress: input.expectedSlotAddress }),
+    artifactRaw: JSON.stringify(envelope),
+    control: { version: 1, accountId: snapshot.accountId, campaignId: campaign.campaignId,
+      headArtifactId: input.artifactId, headPublicationId: input.publicationId,
+      headRevision: revision, previousHeadArtifactId: input.expectedHead?.artifactId ?? null,
+      previousHeadPublicationId: input.expectedHead?.publicationId ?? null,
+      closed: false, updatedAt: input.savedAt }
+  };
 }
 
 function isSaveSlotMetadata(value: unknown): value is SaveSlotMetadata {

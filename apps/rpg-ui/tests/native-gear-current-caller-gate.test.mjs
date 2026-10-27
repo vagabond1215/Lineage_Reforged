@@ -20,7 +20,7 @@ const { validateNativeGearPhysicalBoundary } = await vite.ssrLoadModule('/../../
 const { createNativeNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/nativeNewGameSnapshot.ts');
 const { isNativeTargetCampaignSnapshot } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-campaign-rules.ts');
 const { isTargetCampaignSnapshot } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/campaign-rules.ts');
-const { isNativeFreshSaveSnapshot, readNativeFreshSaveSnapshot, publishSave } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
+const { isNativeFreshSaveSnapshot, readNativeFreshSaveSnapshot, buildNativeGearArtifactPublication, publishSave } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
 const records = path => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8').replace(/^\uFEFF/, '')).records;
 const fits = records('../../../packages/content/base/items/equipment_fit_profiles.json');
 const items = records('../../../packages/content/base/items/items.json');
@@ -104,6 +104,20 @@ test('native creator grants Legacy Bedroll as one durable instance and not a sta
   assert.equal(await isNativeFreshSaveSnapshot(snapshot), true);
   assert.equal(snapshot.playerState.gear.instances.filter(item => item.itemId === 'item.bedroll_kit').length, 1);
   assert.equal(snapshot.playerState.inventory.bags.flatMap(bag => bag.stacks).some(stack => stack.itemId === 'item.bedroll_kit'), false);
+});
+
+test('real native creator snapshot prepares a versioned v3 artifact for durable publication', async () => {
+  const snapshot = createNativeNewGameSnapshot(completeForm('starting_bundle.hunter'), 'account.native.publish');
+  const request = await buildNativeGearArtifactPublication(snapshot, 'slot-1', {
+    artifactId: 'artifact.native.1', generationId: 'generation.native.1',
+    publicationId: 'publication.native.1', savedAt: '2026-10-27T00:00:00.000Z',
+    expectedHead: null
+  });
+  const envelope = JSON.parse(request.artifactRaw);
+  assert.equal(envelope.version, 8);
+  assert.equal(envelope.snapshotFormatId, 'lineage.save_snapshot.v3');
+  assert.deepEqual(JSON.parse(envelope.snapshot).playerState.gear, snapshot.playerState.gear);
+  assert.equal(request.control.headRevision, 1);
 });
 
 test('native campaign admission rejects a parallel map, corrupt instance and v2 survey evidence', async () => {
