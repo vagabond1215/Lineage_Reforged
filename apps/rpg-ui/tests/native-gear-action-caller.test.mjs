@@ -9,6 +9,7 @@ const vite = await createServer({ server: { middlewareMode: true }, appType: 'cu
 after(() => vite.close());
 const { createNativeNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/nativeNewGameSnapshot.ts');
 const { moveNativeGear } = await vite.ssrLoadModule('/src/game-shell/nativeCharacterActions.ts');
+const { projectNativeEffectiveWorn } = await vite.ssrLoadModule('/src/game-shell/nativeEffectiveWorn.ts');
 const { readNativeFreshSaveSnapshot } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
 
 function created() {
@@ -104,4 +105,23 @@ test('malformed native action input fails closed without mutating the admitted g
     itemInstanceId: original.playerState.gear.instances[0].itemInstanceId, destination: null }).status, 'invalid');
   assert.equal(moveNativeGear(original, null).status, 'invalid');
   assert.equal(JSON.stringify(original), before);
+});
+
+test('one native worn projection changes combat and Character facts after physical moves', () => {
+  const original = created();
+  const bow = original.playerState.gear.instances.find(item => item.itemId === 'item.short_bow');
+  const worn = projectNativeEffectiveWorn(original);
+  assert.equal(worn.mainHandItemId, 'item.short_bow');
+  assert.equal(worn.items.some(item => item.itemInstanceId === bow.itemInstanceId), true);
+  assert.deepEqual(worn.combatItemIds, worn.items.map(item => item.itemId));
+  assert.deepEqual(worn.resourceModifiers, []);
+  const carried = moveNativeGear(original, { requestId: 'projection.1', expectedRevision: original.playerState.gear.revision,
+    itemInstanceId: bow.itemInstanceId, destination: { kind: 'carried' } });
+  assert.equal(carried.status, 'accepted');
+  const after = projectNativeEffectiveWorn(carried.snapshot);
+  assert.equal(after.mainHandItemId, null);
+  assert.equal(after.items.some(item => item.itemInstanceId === bow.itemInstanceId), false);
+  assert.equal(after.combatItemIds.includes('item.short_bow'), false);
+  assert.deepEqual(after.resourceModifiers, []);
+  assert.equal(projectNativeEffectiveWorn(original).mainHandItemId, 'item.short_bow');
 });
