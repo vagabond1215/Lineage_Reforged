@@ -105,3 +105,22 @@ Acceptance packet to hand to the *next selected* Codex run (not executed here):
 - **G4+** first actual service/NPC/descendant/weather/crafting consumer as source evidence warrants.
 
 Evidence method: GitHub connector PR metadata, per-PR changed-file lists, comparisons to master, readback of named source files and parsed static JSON. No checkout, test run, authenticated browser, build, gameplay interaction, Save migration, environment mutation, schema/content approval, PR merging or deployment was performed. Future recheck at exact PR heads required.
+
+
+## 7. Late-arriving implementation: draft PR #25 (discovered after the initial census)
+
+**Repository changed during this audit.** The initial 20-open-PR / 27-branch count above is a **point-in-time** count *before* PR #25 and this evidence PR #26 were opened, not the current total. At PR #26 creation the open draft count reached 22, with new head branches `codex/echo-dev-hardening` and `connector/area-integration-source-evidence-2026-10-26`. Do not treat an earlier census as a standing merge queue.
+
+PR **#25, Echo earned-growth integrity and Dev console hardening** (`codex/echo-dev-hardening`, head inspected `4ce26ee1b4c3bbb5e2bbd4d77289aca3a79aa2f0`), is **stacked on PR #22**, not based on `master`. Compare against #22's `8ea456e0` head showed 3 ahead, 0 behind and **29 files changed relative to #22**. Its checkpoint `docs/design/echo-integrity-and-dev-console-hardening-checkpoint-2026-10-26.md` states:
+- Fresh creation requires character-bound origin and earned-growth evidence; only accepted advancement callers credit positive growth; no starter Echo, direct QA/script rank edit Echo or rank-loss/retraining replay.
+- Dev remains visible; Dev, Settings, Calendar, Conditions and Notifications mutually dismiss, with controlled keyboard/focus/outside-pointer checks. Spawn inspection gains more template/monster rejection and selection parity.
+- Generic idle Advance Watch, Dev item grants and weather overrides **remain unavailable**, with real owner, QA and Save requirements still open.
+- Reported focused tests: 200 pass/1 pre-existing quest assertion failure also on clean master; UI 42/42; Node typecheck and Vite build pass; broad TS 115/115 existing diagnostics. **Authenticated selected-client/mobile and hosted restart not proved.**
+
+Recomputed changed-path overlaps for PR #25:
+- **#25 vs #16: 5 shared files**, including source `TopStatusBar.tsx` and `InGameShell.tsx`. Previous #22/#16 conflict remains and must now compose with the **#22→#25 stack**, not just #22.
+- **#25 vs #20: 4 shared docs**, the branch register, current Codex prompt/output/handoff. Do not drop current gear or Echo task history.
+- **#25 vs #19: 3 shared docs**, the branch register, current prompt and handoff. Keep accepted fresh-format compatibility boundary.
+- **#25 vs #24: branch-disposition-register only**; Area planning still has no runtime implementation collision with #25 yet.
+
+**Updated G0 recommendation:** independent acceptance should now treat Echo/Dev as the exact #22→#25 stacked source, with #23 as prior source-audit guidance, and compose #16 topbar and #19/#20 gear/Save decisions intentionally. This does not merge #22 or #25, install its queued prompt, authorize Dev mutation, or close selected-client proof.
