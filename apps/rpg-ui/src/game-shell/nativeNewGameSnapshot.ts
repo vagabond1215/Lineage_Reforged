@@ -21,6 +21,7 @@ import {
 import { getStartingBundleSelectedStacks } from './characterCreationCatalog.js';
 import type { CharacterCreationFormState } from './characterCreationForm.js';
 import { applyLegacyPreparationBonuses } from './legacyPreparationApplication.js';
+import { resolveNativeStartingResourceState } from './nativeStartingResources.js';
 import { createNewGameSnapshot } from './newGameSnapshot.js';
 
 const fits = fitCatalog.records as GearFit[];
@@ -112,8 +113,8 @@ export function createNativeNewGameSnapshot(
     crossLineageStart?: boolean;
   } = {}
 ): NativeFreshCampaignSnapshot {
-  // The existing creator supplies world, identity, progression, quest offer and
-  // current resource setup. Its physical map/inventory are discarded unread.
+  // The existing creator supplies world, identity, progression and quest offer.
+  // Its physical map/inventory and resource result are discarded unread.
   const source = createNewGameSnapshot(form, accountId, options);
   const physical = buildNativeStarterPhysicalState(
     form,
@@ -127,6 +128,9 @@ export function createNativeNewGameSnapshot(
     nativeInventoryUse: createNativeFungibleUseLedger(),
     playerState: { ...nonPhysicalPlayer, ...physical }
   };
+  const startingResources = resolveNativeStartingResourceState(native.playerState, native.clock.tick);
+  native.playerState.resources = startingResources.resources;
+  native.playerState.resourceRuntime = startingResources.resourceRuntime;
   if (!isNativeTargetCampaignSnapshot(native)) {
     throw new Error('Native fresh campaign failed complete candidate admission.');
   }

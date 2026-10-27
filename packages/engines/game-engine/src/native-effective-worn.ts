@@ -1,6 +1,6 @@
 import itemCatalog from '../../../content/base/items/items.json' with { type: 'json' };
 import type { PlayerResourceModifierState } from '../../../shared/types/src/index.js';
-import { getWornGear, type GearItemInstance } from './gear-instance-owner.js';
+import { getWornGear, type GearItemInstance, type GearOwner } from './gear-instance-owner.js';
 import {
   isNativeTargetCampaignSnapshot,
   type NativeFreshCampaignSnapshot
@@ -27,7 +27,12 @@ export type NativeEffectiveWorn = {
 /** One read-only source for v3 Character, combat provenance and resource facts. */
 export function projectNativeEffectiveWorn(snapshot: NativeFreshCampaignSnapshot): NativeEffectiveWorn {
   if (!isNativeTargetCampaignSnapshot(snapshot)) throw new Error('Native campaign is not admitted.');
-  const worn = getWornGear(snapshot.playerState.gear);
+  return projectNativeEffectiveWornFromGear(snapshot.playerState.gear);
+}
+
+/** Creator can read its completed graph before the campaign snapshot exists. */
+export function projectNativeEffectiveWornFromGear(gear: GearOwner): NativeEffectiveWorn {
+  const worn = getWornGear(gear);
   const projected = worn.map(instance => {
     const authored = items.get(instance.itemId);
     if (!authored || authored.itemKey !== instance.itemKey) throw new Error('Worn item lacks canonical content.');
