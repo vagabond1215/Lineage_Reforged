@@ -11,8 +11,9 @@ import { createDefaultAccountProfileState } from "../../../../packages/engines/g
 import { projectRetirementSettlement, retirementSettlementFingerprint, RETIREMENT_CONSUMERS } from "./cleanEpochTerminalProjection.js";
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
+import { isNativeTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
 import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
-import { isStoredCampaignControl, isStoredSaveEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope } from "./saveManager.js";
+import { isStoredCampaignControl, isStoredSaveEnvelope, isStoredNativeGearEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope, type StoredNativeGearEnvelope } from "./saveManager.js";
 import { SAVE_SLOT_ORDER, type SaveSlotId, type SaveSlotMetadata } from "./state.js";
 import {
   CAMPAIGN_DATABASE_NAME,
@@ -495,7 +496,8 @@ function validAttempt(value: unknown, accountId: string, slotId: string): value 
   try {
     const snapshot = deserializeSnapshot(value.snapshotRaw);
     return snapshot.accountId === accountId && snapshot.campaignIdentity?.campaignId === value.campaignId &&
-      snapshot.campaignRules?.source === "new_campaign" && isTargetCampaignSnapshot(snapshot);
+      snapshot.campaignRules?.source === "new_campaign" &&
+      (isTargetCampaignSnapshot(snapshot) || isNativeTargetCampaignSnapshot(snapshot));
   } catch { return false; }
 }
 function checkedAttempt(value: unknown, accountId: string, slotId: string): CleanEpochAttemptRecord {
@@ -505,13 +507,14 @@ function checkedAttempt(value: unknown, accountId: string, slotId: string): Clea
 function validSlotId(value: unknown): value is string {
   return typeof value === "string" && (value === "quick-save" || /^slot-[1-9][0-9]*$/.test(value));
 }
-function envelopeFromRaw(raw: string): StoredSaveEnvelope {
+function envelopeFromRaw(raw: string): StoredSaveEnvelope | StoredNativeGearEnvelope {
   let parsed: unknown;
   try { parsed = JSON.parse(raw); } catch { return fail("invalid_record", "First-publication envelope is malformed."); }
-  if (!isStoredSaveEnvelope(parsed)) fail("invalid_record", "First-publication envelope is invalid.");
+  if (!isStoredSaveEnvelope(parsed) && !isStoredNativeGearEnvelope(parsed))
+    fail("invalid_record", "First-publication envelope is invalid.");
   return parsed;
 }
-function retainedArtifactMatches(value: unknown, envelope: StoredSaveEnvelope): boolean {
+function retainedArtifactMatches(value: unknown, envelope: StoredSaveEnvelope | StoredNativeGearEnvelope): boolean {
   return object(value) && value.version === 1 && value.accountId === envelope.accountId &&
     value.campaignId === envelope.campaignId && value.slotId === envelope.slotId &&
     value.artifactId === envelope.artifactId && value.generationId === envelope.generationId &&
@@ -882,7 +885,7 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
       expected: { artifactId: raw.artifactId, publicationId: raw.publicationId },
       expectedRaw: raw.addressRaw, next: null });
   }
-  const artifactEnvelope = (artifactId: string, campaignId: string): StoredSaveEnvelope => {
+  const artifactEnvelope = (artifactId: string, campaignId: string): StoredSaveEnvelope | StoredNativeGearEnvelope => {
     const raw = artifacts.get(artifactId);
     if (!raw || typeof raw.raw !== "string") fail("invalid_record", "Campaign artifact is missing.");
     const envelope = envelopeFromRaw(raw.raw);
