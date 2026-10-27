@@ -1,3 +1,23 @@
+## 2026-10-27 — Candidate native physical contract checkpoint
+
+**Source run:** unversioned native gear fresh-format support on new `codex/native-gear-contract-cutover`, based on draft PR #27 `b1bb93c82b45dee9a6f64a496c0dd3b67ae1375e`; synchronized master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `CANDIDATE_PHYSICAL_CONTRACT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused gate](../design/native-gear-physical-boundary-and-atomic-caller-gate-2026-10-27.md).
+
+### A. Files changed
+
+`packages/engines/game-engine/src/native-gear-physical-boundary.ts`; `apps/rpg-ui/tests/native-gear-physical-boundary.test.mjs`, `native-gear-current-caller-gate.test.mjs`; focused gate, this output/handoff/register and next prompt. No production caller, current master prompt, Save schema, Site or Game version changed.
+
+### B. Patch summary
+
+Added a versioned candidate physical-state validator: one owner graph, fungible-only stacks, canonical identities, capacity, old-map/stash rejection and explicit incompatible-development-save guidance. Tested two distinct bow instances and 300 rations through JSON readback. All seven real creator callers still output v2/17-slot state; no v3 creator, UI action, combat/resource/survey/Save activation is claimed. The full atomic cutover is held on the exact campaign-rules/survey/SaveManager dependencies in the focused gate.
+
+### C. Tests or checks run
+
+Red-before-green module absence; candidate boundary 5/5; seven real creator bundle gate 1/1; adjacent root 82/82; app group 8/8; content lint 72 files; Node UI typecheck and direct Vite build pass. Broad UI TypeScript 115 clean master / 115 branch; broad root 763 clean master / 765 PR #27 base / 765 branch, zero new module diagnostics. `git diff --check` pass. No v3 selected-client Save/restart, interrupted publication, full workspace suite or Site check.
+
+### D. Risks / follow-up notes
+
+FP-001/002/005/009/012/013/014/015/016/017 applied as detailed in focused gate. PRs #19/#20/#22/#25/#26/#27 inspected and retained draft; no integration, closure or deletion trigger consumed. Suggested commit `feat(gear): define candidate native physical save boundary`. Next recommended run: atomic v3 campaign, survey, SaveManager, creator, action, projection and current-format restart cutover, with failing real-caller tests first. No Game-version decision proposed.
+
 ## 2026-10-26 — Native gear fresh-format activation gate
 
 **Source run:** unversioned native gear cutover checkpoint; source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, PR #20 base `0d6debe5`, implementation/evidence commit `50a63fdaa4c22cd7beea4ea6dda3949844197a03` on `codex/native-gear-fresh-cutover`, stacked draft [PR #27](https://github.com/vagabond1215/Lineage_Reforged/pull/27) targeting #20. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status: `OWNER_FIT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused evidence](../design/native-gear-fresh-format-activation-gate-2026-10-26.md).
