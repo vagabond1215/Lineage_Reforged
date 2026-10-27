@@ -1,3 +1,23 @@
+## 2026-10-26 — Native gear fresh-format activation gate
+
+**Source run:** unversioned native gear cutover checkpoint; source `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, PR #20 base `0d6debe5`, implementation/evidence commit `50a63fdaa4c22cd7beea4ea6dda3949844197a03` on `codex/native-gear-fresh-cutover`, stacked draft [PR #27](https://github.com/vagabond1215/Lineage_Reforged/pull/27) targeting #20. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status: `OWNER_FIT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused evidence](../design/native-gear-fresh-format-activation-gate-2026-10-26.md).
+
+### A. Files changed
+
+`packages/engines/game-engine/src/gear-instance-owner.ts`, `packages/content/base/items/equipment_fit_profiles.json`, `tests/unit/gear-instance-owner.test.mjs`, `apps/rpg-ui/tests/native-gear-fit-parity.test.mjs`, focused decision and this branch's output/handoff/register/next prompt. The current master prompt is untouched.
+
+### B. Patch summary
+
+Extended the unactivated #20 owner with explicit fit profiles for all 50 types accepted by the current resolver, plus six carried-only starter types. All seven bundles have complete classification (24 identities: 19 durable and five fungible); ten choice-resolved native-owner grant/readback fixtures prove unique IDs, location and condition. The selected creator, equipment/Inventory actions, combat/resources, survey and Save still use the prior authority. A partial activation would publish two physical ledgers, so the requested atomic cutover remains incomplete.
+
+### C. Tests or checks run
+
+Red-before-green starter test failed on `item.lumber_axe`, then native owner 9/9, live-resolver parity 1/1, adjacent owner/combat/persistence/survey 89/89, app Equipment/Inventory set 14/14, master creator/combat/Save fixture 37/37. Content lint 72 files, Node UI typecheck, strict owner typecheck, direct Vite build and `git diff --check` pass. Broad TypeScript 115 master / 115 candidate, zero normalized delta. These do not establish current-format real-caller Save/restart or selected-client acceptance.
+
+### D. Risks / follow-up notes
+
+FP-001/002 real caller is unactivated; FP-005/012 stale/duplicate owner fixtures only; FP-008/009 exact branch and source heads separated; FP-013/014/015/016 new graph publication, witness and effects require atomic contracts; FP-017 creator fixture is not selected gameplay. PRs #19, #20, #22, #25 and #26 inspected and retained draft; #22→#25 Echo stack is separate. No merge, close, deletion, deployment or Game-version change. Suggested commit: `docs(gear): record native activation gate`. Next recommended run: fresh-format PlayerState/Save/survey contract and full caller activation after red real-caller tests; no separate game-version decision proposed.
+
 ## 2026-10-26 — Fresh gear-instance owner foundation checkpoint
 
 **Source run:** unversioned Character Equipment fresh-format owner support. Inspected `master`/`origin/master` `a596112acf3945f2bf7c625e943f2511d12aa710`; PR #19 docs head `62d6cc7b00fdd9f17a4424aafd6527a754b1906c` supersedes obsolete-save migration. Branch `codex/gear-instance-fresh-epoch`, pushed implementation head `5464858bde0ac2c2bf715a43480b394837f04fac`, draft [PR #20](https://github.com/vagabond1215/Lineage_Reforged/pull/20), review-held. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
