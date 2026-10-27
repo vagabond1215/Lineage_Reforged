@@ -1,6 +1,6 @@
 # Native v3 instance-action checkpoint
 
-Date: 2026-10-27. Verified master `a596112acf3945f2bf7c625e943f2511d12aa710`; implementation base draft PR #30 `2d7f809e34e5c90ff2a9c6c63a1bc735e9d1a1e4`. Branch `codex/native-gear-owner-action` targets #30. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. Status: **UNSELECTED_INSTANCE_ACTION_VERIFIED; CONNECTED_V3_ACTIVATION_HELD**.
+Date: 2026-10-27. Verified master `a596112acf3945f2bf7c625e943f2511d12aa710`; implementation base draft PR #30 `2d7f809e34e5c90ff2a9c6c63a1bc735e9d1a1e4`. Implementation `e0fe34f98b945eb5b930ec615d4c996e099b4dbd` is [draft PR #31](https://github.com/vagabond1215/Lineage_Reforged/pull/31) targeting #30. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. Status: **UNSELECTED_INSTANCE_ACTION_VERIFIED; CONNECTED_V3_ACTIVATION_HELD**.
 
 The new game-shell candidate `moveNativeGear` accepts an admitted v3 snapshot and one item-instance ID, delegates the only physical mutation to the PR #20 gear owner, and rechecks complete native campaign admission before returning an accepted snapshot. It never writes the old 17-slot map or type-level item stash. The owner now rejects malformed move request shapes before reading destination fields. A failed, duplicate, stale, invalid or no-op request returns the unchanged snapshot.
 
