@@ -13,6 +13,7 @@ import {
 import {
   CANDIDATE_NATIVE_GEAR_SNAPSHOT_VERSION
 } from '../../../../packages/engines/game-engine/src/native-gear-physical-boundary.js';
+import { createNativeFungibleUseLedger } from '../../../../packages/engines/game-engine/src/native-fungible-use-ledger.js';
 import {
   isNativeTargetCampaignSnapshot,
   type NativeFreshCampaignSnapshot
@@ -123,6 +124,7 @@ export function createNativeNewGameSnapshot(
   const native: NativeFreshCampaignSnapshot = {
     ...source,
     snapshotVersion: CANDIDATE_NATIVE_GEAR_SNAPSHOT_VERSION,
+    nativeInventoryUse: createNativeFungibleUseLedger(),
     playerState: { ...nonPhysicalPlayer, ...physical }
   };
   if (!isNativeTargetCampaignSnapshot(native)) {

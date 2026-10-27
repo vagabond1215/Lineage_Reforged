@@ -112,7 +112,9 @@ function collectEventChangeRequests(events, playerId) {
 }
 function collectActiveModifiers(state, tick) {
     const runtimeModifiers = state.resourceRuntime.modifiers.filter((modifier) => isModifierActive(modifier, tick));
-    const equipmentModifiers = Object.values(state.equipment).flatMap((item) => item?.resourceModifiers?.filter((modifier) => isModifierActive(modifier, tick)) ?? []);
+    const equipmentModifiers = Array.isArray(state.wornResourceModifiers)
+        ? state.wornResourceModifiers.filter((modifier) => isModifierActive(modifier, tick))
+        : Object.values(state.equipment ?? {}).flatMap((item) => item?.resourceModifiers?.filter((modifier) => isModifierActive(modifier, tick)) ?? []);
     return [...runtimeModifiers, ...equipmentModifiers];
 }
 function sumModifierField(modifiers, field) {
@@ -171,7 +173,9 @@ export function resolvePlayerResources(state, events, tick) {
         modifiers: syncedRuntimeModifiers.filter((modifier) => isModifierActive(modifier, tick))
     };
     const activeModifiers = collectActiveModifiers({
-        equipment: state.equipment,
+        ...(Array.isArray(state.wornResourceModifiers)
+            ? { wornResourceModifiers: state.wornResourceModifiers }
+            : { equipment: state.equipment }),
         resourceRuntime: runtimeState
     }, tick);
     const maxFlat = sumModifierField(activeModifiers, "maxFlat");
