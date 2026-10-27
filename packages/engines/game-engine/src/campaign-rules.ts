@@ -2030,6 +2030,8 @@ export function isTargetCampaignSnapshot(
   const rules = snapshot.campaignRules;
   return (
     snapshot.snapshotVersion === TARGET_SNAPSHOT_FORMAT &&
+    !('gear' in snapshot.playerState) &&
+    validateEquipment(snapshot.playerState.equipment) &&
     rules?.version === CAMPAIGN_RULES_VERSION &&
     rules.policyRevision === STAKES_POLICY_REVISION &&
     (rules.difficultyPreset === "favored" ||

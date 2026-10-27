@@ -1,3 +1,23 @@
+## 2026-10-27 — Positive native v3 creator and Save read admission
+
+**Source run:** unversioned native gear activation support, isolated `codex/native-gear-positive-v3` from draft PR #28 `bcdedd4dd448158a326c0299c6ab19551ca53d59`; master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `POSITIVE_FRESH_V3_CREATOR_AND_READ_ADMISSION_VERIFIED; PUBLICATION_AND_ACTIVATION_HELD`. [Focused evidence](../design/native-gear-positive-v3-creator-admission-checkpoint-2026-10-27.md).
+
+### A. Files changed
+
+`apps/rpg-ui/src/game-shell/nativeNewGameSnapshot.ts`, `legacyPreparationApplication.ts`, `saveManager.ts`; `apps/rpg-ui/tests/native-gear-current-caller-gate.test.mjs`; `packages/shared/types/src/contracts.ts`; `packages/engines/game-engine/src/native-campaign-rules.ts`, `campaign-rules.ts`, `gear-instance-owner.ts`; focused decision, failure pattern, output/handoff/register and next prompt. Master prompt and selected App route unchanged.
+
+### B. Patch summary
+
+An unselected native creator successor grants actual seven-bundle/ten-choice equipment from canonical grants into the existing graph, plus Legacy Bedroll, while keeping fungible stacks. Shared v2/v3 types, fresh native campaign admission and SaveManager read admission accept those complete v3 outputs. A red regression found v2 format-string spoof admission; exact v2 physical-shape validation now blocks it. Actual v3 publication, selected UI actions, effective-worn readers and native survey evidence remain unimplemented, so no selected cutover occurred.
+
+### C. Tests or checks run
+
+Red-before-green native creator module missing and v2 spoof assertion failed before repair. Final focused app **12/12**, adjacent root owner/creator/combat/resource/survey/persistence **93/93**, content lint **72 files**, Node UI typecheck and direct Vite build pass; `git diff --check` pass. Broad UI TypeScript **115 master / 115 #28 / 115 branch**; root **763 master / 765 #28 / 763 branch**. No full workspace suite, actual v3 artifact/restart or selected-client acceptance.
+
+### D. Risks / follow-up notes
+
+FP-001/002/005/009/012/013/014/015/016/017 applied; exact evidence and unmet gates are in focused decision. PRs #19/#20/#22/#25/#26/#27/#28 inspected, all retained draft; no integration, closure, retarget or deletion trigger consumed. Suggested commit `feat(gear): admit positive native creator campaigns`. Next run: unselected v3 SaveManager artifact publication/readback/restart with mixed-format fencing, then connected actions/effective-worn/survey activation. No Game-version decision proposed.
+
 ## 2026-10-27 — Candidate native physical contract checkpoint
 
 **Source run:** unversioned native gear fresh-format support on new `codex/native-gear-contract-cutover`, implementation/evidence `fd67a0e343a880932dd1b973c80ec076c42dda30`, draft [PR #28](https://github.com/vagabond1215/Lineage_Reforged/pull/28) targeting #27 `b1bb93c82b45dee9a6f64a496c0dd3b67ae1375e`; synchronized master `a596112acf3945f2bf7c625e943f2511d12aa710`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent n/a, development impact `supports_current_band`, game-version impact `none`. Status `CANDIDATE_PHYSICAL_CONTRACT_VERIFIED; ATOMIC_CALLER_SAVE_CUTOVER_HELD`. [Focused gate](../design/native-gear-physical-boundary-and-atomic-caller-gate-2026-10-27.md).
