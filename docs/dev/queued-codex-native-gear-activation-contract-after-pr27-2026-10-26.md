@@ -1,3 +1,9 @@
+# Superseded by PR #28 and a positive v3 creator/Save acceptance target
+
+PR #28 (`bcdedd4dd448158a326c0299c6ab19551ca53d59`) implemented the candidate physical boundary but left every actual creator on v2. **Do not re-run the broad PR #27 successor below.** For the next Codex task use [positive real v3 creator→Save/restart and atomic gear activation](queued-codex-native-gear-positive-v3-creator-save-after-pr28-2026-10-27.md) with the [connector-source caller matrix](native-gear-pr28-connector-source-gates-2026-10-27.md). Master prompt was not changed.
+
+---
+
 # Next Codex: Native Gear Contract + Atomic Selected-Path Activation (after PR #27)
 
 Date: 2026-10-26 (America/New_York). Game: `0.1.1-prealpha`, `INTEGRATED_LOOP`.
