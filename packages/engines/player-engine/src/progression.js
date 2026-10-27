@@ -221,14 +221,46 @@ export function createPlayerProgressionState(params = {}) {
         level: normalizeInteger(params.level, 0, 0),
         echo: createDefaultPlayerEchoState(),
         legacyGrowth: createPlayerLegacyGrowthState(params.legacyGrowth),
-        ...(params.originBaseline ? { originBaseline: params.originBaseline } : {})
+        echoEvidenceVersion: 1,
+        ...(params.originBaseline ? { originBaseline: params.originBaseline } : {}),
+        earnedGrowth: { skillRanks: {}, attributes: {}, skillPeakRanks: {}, attributePeakValues: {} }
     };
 }
 export function createPlayerEchoOriginBaseline(playerState) {
     return {
+        ...(playerState.playerId ? { characterId: playerState.playerId } : {}),
         attributes: { ...playerState.attributes },
         skillRanks: Object.fromEntries(playerState.skills.map((skill) => [skill.id, skill.rank]))
     };
+}
+export function recordEarnedSkillGrowth(progression, skillId, previousRank, appliedRank) {
+    if (!progression.originBaseline || !progression.earnedGrowth || !Number.isInteger(previousRank) ||
+        !Number.isInteger(appliedRank) || appliedRank <= previousRank || !skillId.trim()) return;
+    const growth = progression.earnedGrowth;
+    const peak = growth.skillPeakRanks[skillId] ?? (progression.originBaseline.skillRanks[skillId] ?? 0);
+    growth.skillRanks[skillId] = (growth.skillRanks[skillId] ?? 0) + Math.max(0, appliedRank - Math.max(previousRank, peak));
+    growth.skillPeakRanks[skillId] = Math.max(peak, appliedRank);
+}
+export function recordEarnedAttributeGrowth(progression, key, previousValue, appliedValue) {
+    if (!progression.originBaseline || !progression.earnedGrowth || !Number.isInteger(previousValue) ||
+        !Number.isInteger(appliedValue) || appliedValue <= previousValue) return;
+    const growth = progression.earnedGrowth;
+    const peak = growth.attributePeakValues[key] ?? progression.originBaseline.attributes[key];
+    growth.attributes[key] = (growth.attributes[key] ?? 0) + Math.max(0, appliedValue - Math.max(previousValue, peak));
+    growth.attributePeakValues[key] = Math.max(peak, appliedValue);
+}
+export function hasValidPlayerEchoEvidence(progression) {
+    const baseline = progression?.originBaseline;
+    const growth = progression?.earnedGrowth;
+    if (progression?.echoEvidenceVersion !== 1 || !baseline || !growth || !baseline.attributes || !baseline.skillRanks ||
+        !growth.skillRanks || !growth.attributes || !growth.skillPeakRanks || !growth.attributePeakValues) return false;
+    const attributes = ["STR", "DEX", "AGI", "CON", "VIT", "INT", "WIS", "SPT", "CHA"];
+    return attributes.every((key) => Number.isFinite(baseline.attributes[key])) &&
+        Object.values(baseline.skillRanks).every((rank) => Number.isInteger(rank) && rank >= 0 && rank <= 125) &&
+        Object.values(growth.skillRanks).every((rank) => Number.isInteger(rank) && rank >= 0 && rank <= 125) &&
+        Object.values(growth.attributes).every((delta) => Number.isInteger(delta) && delta >= 0) &&
+        Object.values(growth.skillPeakRanks).every((rank) => Number.isInteger(rank) && rank >= 0 && rank <= 125) &&
+        Object.values(growth.attributePeakValues).every((value) => Number.isInteger(value));
 }
 export function normalizePlayerProgression(progression) {
     const oldLevel = normalizeInteger(progression?.level, 0, 0);
@@ -242,18 +274,22 @@ export function normalizePlayerProgression(progression) {
         level: oldLevel,
         echo: createDefaultPlayerEchoState(),
         legacyGrowth,
-        ...(progression?.originBaseline ? { originBaseline: progression.originBaseline } : {})
+        ...(progression?.echoEvidenceVersion === 1 ? { echoEvidenceVersion: 1 } : {}),
+        ...(progression?.originBaseline ? { originBaseline: progression.originBaseline } : {}),
+        ...(progression?.earnedGrowth ? { earnedGrowth: progression.earnedGrowth } : {})
     };
 }
 export function calculatePlayerEcho(playerState) {
-    const { balanceRule, attributeDefaults, skillById } = loadEchoCatalog();
+    const { balanceRule, skillById } = loadEchoCatalog();
     const baseline = playerState.progression?.originBaseline;
+    const growth = playerState.progression?.earnedGrowth;
+    if (!hasValidPlayerEchoEvidence(playerState.progression)) return createDefaultPlayerEchoState(balanceRule);
     let nonKnowledgeSkillUnits = 0;
     let knowledgeSkillUnits = 0;
     for (const skill of playerState.skills) {
         const skillRecord = skillById.get(skill.id);
         const isKnowledgeSkill = skillRecord?.category === "knowledge";
-        const unit = normalizedEchoUnit(Math.max(0, skill.rank - (baseline?.skillRanks[skill.id] ?? 0)), isKnowledgeSkill
+        const unit = normalizedEchoUnit(Math.min(Math.max(0, skill.rank - (baseline.skillRanks[skill.id] ?? 0)), growth.skillRanks[skill.id] ?? 0), isKnowledgeSkill
             ? balanceRule.normalization.knowledgeSkillReferenceRank
             : balanceRule.normalization.skillReferenceRank, isKnowledgeSkill ? balanceRule.exponents.knowledge : balanceRule.exponents.skill);
         if (isKnowledgeSkill) {
@@ -264,7 +300,7 @@ export function calculatePlayerEcho(playerState) {
     }
     const skillContribution = round(100 *
         Math.min(1, nonKnowledgeSkillUnits / balanceRule.normalization.skillReferenceSlots));
-    const statUnits = balanceRule.normalization.trackedAttributeKeys.map((attributeKey) => normalizedEchoUnit(Math.max(0, playerState.attributes[attributeKey] - (baseline?.attributes[attributeKey] ?? attributeDefaults[attributeKey])), balanceRule.normalization.statReferenceDelta, balanceRule.exponents.stat));
+    const statUnits = balanceRule.normalization.trackedAttributeKeys.map((attributeKey) => normalizedEchoUnit(Math.min(Math.max(0, playerState.attributes[attributeKey] - baseline.attributes[attributeKey]), growth.attributes[attributeKey] ?? 0), balanceRule.normalization.statReferenceDelta, balanceRule.exponents.stat));
     const statContribution = round(100 *
         (statUnits.length === 0
             ? 0
@@ -274,7 +310,7 @@ export function calculatePlayerEcho(playerState) {
     const echoBase = round(skillContribution * balanceRule.weights.skills +
         statContribution * balanceRule.weights.stats +
         knowledgeContribution * balanceRule.weights.knowledge);
-    const diversityCount = playerState.skills.filter((skill) => skill.rank - (baseline?.skillRanks[skill.id] ?? 0) >= balanceRule.diversity.thresholdRank).length;
+    const diversityCount = playerState.skills.filter((skill) => Math.min(Math.max(0, skill.rank - (baseline.skillRanks[skill.id] ?? 0)), growth.skillRanks[skill.id] ?? 0) >= balanceRule.diversity.thresholdRank).length;
     const diversityBonus = round(Math.min(balanceRule.diversity.maxMultiplier, 1 + diversityCount * balanceRule.diversity.bonusPerSkill));
     const echoAdjusted = round(echoBase * diversityBonus);
     return {
@@ -297,7 +333,9 @@ export function resolvePlayerEchoProgression(playerState) {
         level,
         echo,
         legacyGrowth: normalizedProgression.legacyGrowth,
-        ...(normalizedProgression.originBaseline ? { originBaseline: normalizedProgression.originBaseline } : {})
+        ...(normalizedProgression.echoEvidenceVersion === 1 ? { echoEvidenceVersion: 1 } : {}),
+        ...(normalizedProgression.originBaseline ? { originBaseline: normalizedProgression.originBaseline } : {}),
+        ...(normalizedProgression.earnedGrowth ? { earnedGrowth: normalizedProgression.earnedGrowth } : {})
     };
 }
 export function syncPlayerEchoProgression(playerState) {

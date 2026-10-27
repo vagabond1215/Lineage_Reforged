@@ -27,6 +27,7 @@ import {
   applyActionAttributeLoad,
   applyAttributeTensionToActionProfile,
   loadEchoBalanceRule,
+  hasValidPlayerEchoEvidence,
   normalizePlayerBodyState,
   normalizePlayerStatGrowth,
   resolvePlayerEchoProgression,
@@ -559,17 +560,40 @@ function validateSkill(value: unknown): boolean {
 }
 
 function validateProgression(value: unknown): value is PlayerProgression {
-  if (!isPlainRecord(value) || !hasExactKeys(value, ["level", "echo", "legacyGrowth"], ["originBaseline"])) return false;
+  if (!isPlainRecord(value) || !hasExactKeys(value, ["level", "echo", "legacyGrowth"], ["originBaseline", "echoEvidenceVersion", "earnedGrowth"])) return false;
   if (!isNonnegativeInteger(value.level)) return false;
   if (value.originBaseline !== undefined) {
     if (!isPlainRecord(value.originBaseline) ||
-      !hasExactKeys(value.originBaseline, ["attributes", "skillRanks"]) ||
+      !hasExactKeys(value.originBaseline, ["attributes", "skillRanks"], ["characterId"]) ||
+      (value.originBaseline.characterId !== undefined && !isExactNonblank(value.originBaseline.characterId)) ||
       !validateAttributes(value.originBaseline.attributes) ||
       !isPlainRecord(value.originBaseline.skillRanks) ||
       !Object.entries(value.originBaseline.skillRanks).every(([id, rank]) =>
         isExactNonblank(id) && Number.isInteger(rank) && Number(rank) >= 0 && Number(rank) <= 125
       )) return false;
   }
+  if (value.echoEvidenceVersion !== undefined && value.echoEvidenceVersion !== 1) return false;
+  if (value.earnedGrowth !== undefined && (
+    !isPlainRecord(value.earnedGrowth) ||
+    !hasExactKeys(value.earnedGrowth, ["skillRanks", "attributes", "skillPeakRanks", "attributePeakValues"]) ||
+    !isPlainRecord(value.earnedGrowth.skillRanks) ||
+    !Object.entries(value.earnedGrowth.skillRanks).every(([id, rank]) =>
+      isExactNonblank(id) && Number.isInteger(rank) && Number(rank) >= 0 && Number(rank) <= 125
+    ) ||
+    !isPlainRecord(value.earnedGrowth.skillPeakRanks) ||
+    !Object.entries(value.earnedGrowth.skillPeakRanks).every(([id, rank]) =>
+      isExactNonblank(id) && Number.isInteger(rank) && Number(rank) >= 0 && Number(rank) <= 125
+    ) ||
+    !isPlainRecord(value.earnedGrowth.attributes) ||
+    !Object.entries(value.earnedGrowth.attributes).every(([key, delta]) =>
+      ["STR", "DEX", "AGI", "CON", "VIT", "INT", "WIS", "SPT", "CHA"].includes(key) &&
+      Number.isInteger(delta) && Number(delta) >= 0
+    ) ||
+    !isPlainRecord(value.earnedGrowth.attributePeakValues) ||
+    !Object.entries(value.earnedGrowth.attributePeakValues).every(([key, value]) =>
+      ["STR", "DEX", "AGI", "CON", "VIT", "INT", "WIS", "SPT", "CHA"].includes(key) && Number.isInteger(value)
+    )
+  )) return false;
   const echo = value.echo;
   if (!isPlainRecord(echo) || !hasExactKeys(echo, [
     "balanceRuleId", "balanceRuleVersion", "skillContribution", "statContribution", "knowledgeContribution",
@@ -2037,8 +2061,19 @@ export function isTargetCampaignSnapshot(
   snapshot: SaveSnapshot
 ): boolean {
   const rules = snapshot.campaignRules;
+  const projectedEcho = rules?.source === "new_campaign"
+    ? resolvePlayerEchoProgression(snapshot.playerState)
+    : null;
   return (
     snapshot.snapshotVersion === TARGET_SNAPSHOT_FORMAT &&
+    (rules?.source !== "new_campaign" || (
+      hasValidPlayerEchoEvidence(snapshot.playerState.progression) &&
+      snapshot.playerState.progression.originBaseline?.characterId === snapshot.playerState.playerId &&
+      snapshot.playerState.progression.level === projectedEcho?.level &&
+      Object.entries(projectedEcho.echo).every(([key, value]) =>
+        snapshot.playerState.progression.echo[key as keyof typeof projectedEcho.echo] === value
+      )
+    )) &&
     rules?.version === CAMPAIGN_RULES_VERSION &&
     rules.policyRevision === STAKES_POLICY_REVISION &&
     (rules.difficultyPreset === "favored" ||

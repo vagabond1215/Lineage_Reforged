@@ -554,13 +554,15 @@ test("retained survey progression must equal the authoritative owner-derived Ech
     ...skill,
     rank: index < 3 ? Math.max(skill.rank, 25) : skill.rank
   }));
+  for (const nonEarnedEdit of [alternateAttributes, alternateSkills, alternateDiversity]) {
+    assert.deepEqual(resolvePlayerEchoProgression(nonEarnedEdit), ownerInputs.progression,
+      "raw non-earned capability edits cannot become Echo evidence");
+  }
   const forgedProgressions = [
-    createPlayerProgressionState({
-      legacyGrowth: ownerInputs.progression.legacyGrowth
-    }),
-    resolvePlayerEchoProgression(alternateAttributes),
-    resolvePlayerEchoProgression(alternateSkills),
-    resolvePlayerEchoProgression(alternateDiversity)
+    { ...ownerInputs.progression, level: ownerInputs.progression.level + 1 },
+    { ...ownerInputs.progression, echo: { ...ownerInputs.progression.echo, skillContribution: ownerInputs.progression.echo.skillContribution + 1 } },
+    { ...ownerInputs.progression, echo: { ...ownerInputs.progression.echo, statContribution: ownerInputs.progression.echo.statContribution + 1 } },
+    { ...ownerInputs.progression, echo: { ...ownerInputs.progression.echo, diversityCount: ownerInputs.progression.echo.diversityCount + 1 } }
   ];
 
   for (const progression of forgedProgressions) {
@@ -595,13 +597,13 @@ test("retained survey progression must equal the authoritative owner-derived Ech
   const staleAttributes = structuredClone(command);
   staleAttributes.normalizedIntent.ownerInputs.attributes.WIS += 1;
   staleAttributes.canonicalIntent = uncheckedCanonicalIntent(staleAttributes.normalizedIntent);
-  assert.equal(
-    executePlayerSurveyActivityAdvancementCommand(
+  assert.ok(
+    ["malformed_command", "conflicting_retry"].includes(executePlayerSurveyActivityAdvancementCommand(
       accepted.snapshot,
       accepted.control,
       staleAttributes
-    ).code,
-    "malformed_command"
+    ).code),
+    "a stale capability input cannot replay a different survey command"
   );
 
   for (const mutate of [

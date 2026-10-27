@@ -2118,8 +2118,16 @@ export interface PlayerEchoState {
 }
 
 export interface PlayerEchoOriginBaselineState {
+  characterId?: string;
   attributes: PlayerAttributes;
   skillRanks: Record<string, number>;
+}
+
+export interface PlayerEarnedEchoGrowthState {
+  skillRanks: Record<string, number>;
+  attributes: Partial<Record<PlayerAttributeKey, number>>;
+  skillPeakRanks: Record<string, number>;
+  attributePeakValues: Partial<Record<PlayerAttributeKey, number>>;
 }
 
 export interface PlayerLegacyGrowthState {
@@ -2133,7 +2141,9 @@ export interface PlayerProgression {
   level: number;
   echo: PlayerEchoState;
   legacyGrowth: PlayerLegacyGrowthState;
+  echoEvidenceVersion?: 1;
   originBaseline?: PlayerEchoOriginBaselineState;
+  earnedGrowth?: PlayerEarnedEchoGrowthState;
 }
 
 export type SkillProgressionBandId = "clumsy" | "familiar" | "proficient" | "skilled" | "mastery";

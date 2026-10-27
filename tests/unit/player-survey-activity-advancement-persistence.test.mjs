@@ -697,6 +697,7 @@ test("version-7 publication quarantines owner-incoherent retained progression wi
     forgedCommand.normalizedIntent.ownerInputs.progression = createPlayerProgressionState({
       legacyGrowth: command.normalizedIntent.ownerInputs.progression.legacyGrowth
     });
+    forgedCommand.normalizedIntent.ownerInputs.progression.earnedGrowth.skillRanks = { "skill.invalid": -1 };
     forgedCommand.canonicalIntent = uncheckedCanonicalIntent(forgedCommand.normalizedIntent);
     const forgedRetry = executePlayerSurveyActivityAdvancementCommand(
       loaded.snapshot,

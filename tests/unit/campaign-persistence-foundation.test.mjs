@@ -18,9 +18,9 @@ import {
   resolvePendingNormalDefeatRecoveryDestination,
   resolveNormalDefeat
 } from "../../packages/engines/game-engine/src/index.ts";
-import { serializeSnapshot } from "../../packages/shared/persistence/src/index.ts";
+import { deserializeSnapshot, serializeSnapshot } from "../../packages/shared/persistence/src/index.ts";
 import { demoSnapshot } from "../../apps/rpg-ui/src/runtime/demoSnapshot.ts";
-import { resolvePlayerEchoProgression } from "../../packages/engines/player-engine/src/progression.ts";
+import { createPlayerEchoOriginBaseline, createPlayerProgressionState, recordEarnedSkillGrowth, resolvePlayerEchoProgression } from "../../packages/engines/player-engine/src/progression.ts";
 import {
   loadAccountProfile,
   saveAccountProfile
@@ -31,6 +31,7 @@ import {
   deleteSave,
   inspectCampaignPublicationRecoveryForSlot,
   loadSaveWithAuthority,
+  listSaves,
   publishSave,
   recoverPendingCampaignPublications
 } from "../../apps/rpg-ui/src/game-shell/saveManager.ts";
@@ -122,6 +123,71 @@ test("fresh creator Echo baseline survives actual Save/load and restart readback
   });
 });
 
+test("new campaign admission rejects missing or malformed Echo origin evidence", () => {
+  withMockWindow(() => {
+    const source = createNewGameSnapshot(createCompleteCharacterForm("Echo Admission"), "account.echo_admission");
+    for (const mutate of [
+      (snapshot) => { delete snapshot.playerState.progression.originBaseline; },
+      (snapshot) => { delete snapshot.playerState.progression.earnedGrowth; },
+      (snapshot) => { snapshot.playerState.progression.earnedGrowth.skillPeakRanks = { "skill.invalid": -1 }; },
+      (snapshot) => { delete snapshot.playerState.progression.echoEvidenceVersion; },
+      (snapshot) => { snapshot.playerState.progression.originBaseline.characterId = "player.other_character"; }
+    ]) {
+      const invalid = structuredClone(source);
+      mutate(invalid);
+      assert.equal(isTargetCampaignSnapshot(invalid), false);
+      assert.throws(() => publishSave(invalid.accountId, "slot-1", invalid, buildSaveMetadata("slot-1", invalid)));
+    }
+  });
+});
+
+test("new campaign admission rejects an Echo cache unsupported by earned evidence", () => {
+  const source = createNewGameSnapshot(createCompleteCharacterForm("Echo Cache"), "account.echo_cache");
+  const forged = structuredClone(source);
+  forged.playerState.progression.echo.echoAdjusted = 10;
+  assert.equal(isTargetCampaignSnapshot(forged), false);
+});
+
+test("an obsolete development save remains stored and is labeled incompatible", () => {
+  withMockWindow((storage) => {
+    const accountId = "account.echo_obsolete";
+    const source = createNewGameSnapshot(createCompleteCharacterForm("Echo Obsolete"), accountId);
+    publishSave(accountId, "slot-1", source, buildSaveMetadata("slot-1", source));
+    for (let index = 0; index < storage.length; index += 1) {
+      const key = storage.key(index);
+      const raw = storage.getItem(key);
+      const envelope = JSON.parse(raw);
+      if (envelope.version !== 7 || !envelope.snapshot) continue;
+      const obsolete = deserializeSnapshot(envelope.snapshot);
+      delete obsolete.playerState.progression.echoEvidenceVersion;
+      delete obsolete.playerState.progression.earnedGrowth;
+      envelope.snapshot = serializeSnapshot(obsolete);
+      storage.setItem(key, JSON.stringify(envelope));
+    }
+    assert.equal(listSaves(accountId).find((slot) => slot.id === "slot-1")?.status, "incompatible");
+    assert.ok(storage.length > 0, "inspection never deletes existing browser data");
+  });
+});
+
+test("genuine earned skill evidence survives Save/load and repeated readback", () => {
+  withMockWindow(() => {
+    const source = createNewGameSnapshot(createCompleteCharacterForm("Echo Growth"), "account.echo_growth");
+    const skill = source.playerState.skills[0];
+    assert.ok(skill);
+    const prior = skill.rank;
+    skill.rank += 1;
+    recordEarnedSkillGrowth(source.playerState.progression, skill.id, prior, skill.rank);
+    source.playerState.progression = resolvePlayerEchoProgression(source.playerState);
+    assert.ok(source.playerState.progression.echo.echoAdjusted > 0);
+    publishSave(source.accountId, "slot-1", source, buildSaveMetadata("slot-1", source));
+    const loaded = loadSaveWithAuthority(source.accountId, "slot-1").snapshot;
+    const restarted = loadSaveWithAuthority(source.accountId, "slot-1").snapshot;
+    assert.equal(restarted.playerState.progression.echo.echoAdjusted, source.playerState.progression.echo.echoAdjusted);
+    assert.deepEqual(restarted.playerState.progression.earnedGrowth, loaded.playerState.progression.earnedGrowth);
+    assert.deepEqual(resolvePlayerEchoProgression(restarted.playerState), restarted.playerState.progression);
+  });
+});
+
 function createLegacySnapshot(accountId, playerId = "player.persistence_test") {
   const snapshot = structuredClone(demoSnapshot);
   snapshot.accountId = accountId;
@@ -137,10 +203,14 @@ function createLegacySnapshot(accountId, playerId = "player.persistence_test") {
 }
 
 function createTargetSnapshot(accountId) {
-  return initializeTargetCampaignSnapshot(
+  const snapshot = initializeTargetCampaignSnapshot(
     createLegacySnapshot(accountId),
     { source: "new_campaign" }
   );
+  snapshot.playerState.progression = createPlayerProgressionState({
+    originBaseline: createPlayerEchoOriginBaseline(snapshot.playerState)
+  });
+  return snapshot;
 }
 
 function assertCanonicalStagedAshenOffer(snapshot) {

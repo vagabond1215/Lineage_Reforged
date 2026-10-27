@@ -32,14 +32,20 @@ export function DevConsole({ snapshot, control }: DevConsoleProps) {
       </details>
       <details className={sectionClass}>
         <summary className={summaryClass}>Spawns &amp; Encounters</summary>
-        <p className="mt-2 text-[color:var(--color-text-secondary)]">Read-only deterministic inspection at tick {clock.tick}, seed 0. Time of day, season and weather filters are not implemented.</p>
+        <p className="mt-2 text-[color:var(--color-text-secondary)]">Read-only illustrative probe at tick {clock.tick}, seed 0. Ordinary encounter actions may use a different selection key. Time of day, season and weather filters are not implemented.</p>
         <p className="mt-1">{inspection.contextError ?? `Region ${inspection.context?.regionId}; habitat ${inspection.context?.habitatTags.join(', ') || 'none'}; hazard ${inspection.context?.hazardPressure}`}</p>
         <ul className="mt-2 max-h-40 space-y-1 overflow-y-auto" aria-label="Spawn profile eligibility">
           {inspection.profiles.map((profile) => (
             <li key={profile.id}>
               {profile.id}: {profile.passed
-                ? `profile conditions pass; spawn rate roll ${profile.spawnRollPassed ? 'passes' : 'misses'}`
+                ? `profile conditions pass; spawn rate ${profile.spawnRoll ?? 'n/a'} / ${profile.spawnRatePerDay} ${profile.spawnRollPassed ? 'passes' : 'misses'}`
                 : `blocked by ${profile.failures.join(', ')}`}
+              {profile.noCandidateReason && <span> · {profile.noCandidateReason}</span>}
+              <ul className="ml-3" aria-label={`Encounter templates for ${profile.id}`}>
+                {profile.encounters.map((entry) => <li key={entry.encounterTemplateId}>
+                  {entry.encounterTemplateId} (weight {entry.weight}): {entry.failures.length ? `blocked by ${entry.failures.join(', ')}` : 'eligible'}
+                </li>)}
+              </ul>
             </li>
           ))}
         </ul>

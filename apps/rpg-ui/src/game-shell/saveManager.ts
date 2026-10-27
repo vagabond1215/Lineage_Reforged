@@ -753,7 +753,8 @@ function writePublicationRecovery(
 function readVerifiedArtifactForAddress(
   storage: Storage,
   accountId: string,
-  address: StoredSaveEnvelope
+  address: StoredSaveEnvelope,
+  requireCurrentTarget = true
 ): {
   envelope: StoredSaveEnvelope;
   snapshot: SaveSnapshot;
@@ -785,7 +786,7 @@ function readVerifiedArtifactForAddress(
       return null;
     }
     const snapshot = deserializeSnapshot(artifact.snapshot);
-    return isTargetCampaignSnapshot(snapshot)
+    return (!requireCurrentTarget || isTargetCampaignSnapshot(snapshot))
       ? { envelope: artifact, snapshot, raw }
       : null;
   } catch {
@@ -923,7 +924,7 @@ function inspectStoredSave(accountId: string, slotId: SaveSlotId): SaveInspectRe
 
     if (
       isTargetEnvelope &&
-      !readVerifiedArtifactForAddress(storage, accountId, parsed)
+      !readVerifiedArtifactForAddress(storage, accountId, parsed, false)
     ) {
       return {
         status: "corrupt",
@@ -940,6 +941,11 @@ function inspectStoredSave(accountId: string, slotId: SaveSlotId): SaveInspectRe
         envelope: null,
         snapshot: null
       };
+    }
+
+    if (isTargetEnvelope && snapshot.campaignRules?.source === "new_campaign" &&
+        snapshot.playerState.progression.echoEvidenceVersion !== 1) {
+      return { status: "incompatible", envelope: null, snapshot: null };
     }
 
     if (
