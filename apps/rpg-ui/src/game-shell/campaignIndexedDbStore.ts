@@ -2,6 +2,9 @@ import { deserializeSnapshot } from "../../../../packages/shared/persistence/src
 import type { SaveSnapshot, SoundingsAdmissionWitness } from "../../../../packages/shared/types/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
+import { commitNativeSurveyFirstShift } from "../../../../packages/engines/game-engine/src/native-survey-ledger.js";
+import { prepareNativeSurveySource } from "../../../../packages/engines/game-engine/src/native-survey-source.js";
+import { canonicalNativeSurveyJson } from "../../../../packages/engines/game-engine/src/native-survey-material.js";
 import { isSoundingsAdmissionWitness, verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
 import {
   isStoredCampaignControl,
@@ -105,6 +108,45 @@ function validatedEnvelope(raw: string, accountId: string, campaignId: string, s
     }
     return { envelope: parsed, snapshot };
   } catch { return fail("invalid_record", "Artifact snapshot cannot be decoded."); }
+}
+
+/** Pure retained-artifact replay used at both native publication and readback. */
+export function validateNativeSurveyRetainedSource(
+  envelope: CampaignArtifactEnvelope,
+  snapshot: CampaignArtifactSnapshot,
+  retainedRaw: string | null
+): void {
+  if (envelope.version !== 8) return;
+  const ledger = (snapshot as NativeFreshCampaignSnapshot).nativeSurvey;
+  if (!ledger) return;
+  const result = ledger.results[0];
+  const witness = result?.sourceWitness;
+  if (!witness || witness.sourceRevision + 1 !== envelope.headRevision ||
+      witness.sourceArtifactId === envelope.artifactId || !retainedRaw)
+    fail("invalid_record", "Native survey result lacks its immediate retained source.");
+  const source = validatedEnvelope(retainedRaw, envelope.accountId, envelope.campaignId);
+  if (source.envelope.version !== 8 || source.envelope.terminal ||
+      source.envelope.artifactId !== witness.sourceArtifactId ||
+      source.envelope.publicationId !== witness.sourcePublicationId ||
+      source.envelope.headRevision !== witness.sourceRevision ||
+      source.envelope.slotId !== envelope.slotId ||
+      source.envelope.continuityId !== envelope.continuityId ||
+      source.envelope.characterId !== envelope.characterId ||
+      (source.snapshot as NativeFreshCampaignSnapshot).nativeSurvey)
+    fail("invalid_record", "Native survey source is not an admitted pre-shift v3 head.");
+  const identity = {
+    accountId: envelope.accountId, campaignId: envelope.campaignId,
+    continuityId: envelope.continuityId, artifactId: witness.sourceArtifactId,
+    publicationId: witness.sourcePublicationId, revision: witness.sourceRevision
+  };
+  const preparation = prepareNativeSurveySource(source.snapshot, identity);
+  if (!preparation.accepted ||
+      canonicalNativeSurveyJson(preparation.witness) !== canonicalNativeSurveyJson(witness))
+    fail("invalid_record", "Native survey witness differs from its retained source.");
+  const replayed = commitNativeSurveyFirstShift({ snapshot: source.snapshot as NativeFreshCampaignSnapshot,
+    sourceIdentity: identity, witness: preparation.witness }, result.requestId);
+  if (canonicalNativeSurveyJson(replayed.snapshot) !== canonicalNativeSurveyJson(snapshot))
+    fail("invalid_record", "Native survey result differs from retained-source replay.");
 }
 function validatedLegacyEnvelope(raw: string, accountId: string, campaignId: string):
   { envelope: StoredSaveEnvelope; snapshot: SaveSnapshot } {
@@ -265,7 +307,8 @@ export class CampaignIndexedDbStore {
           artifact.headRevision !== control.value.headRevision) {
         fail("invalid_record", "Stored head, artifact and slot disagree.");
       }
-      const { snapshot } = validatedEnvelope(artifact.raw, accountId, campaignId);
+      const { snapshot, envelope } = validatedEnvelope(artifact.raw, accountId, campaignId);
+      await this.verifyNativeSurveyInTransaction(tx, envelope, snapshot);
       const requestId = snapshot.authorityLedger?.soundingsTurnIn?.requests[0]?.requestId;
       let witness: SoundingsAdmissionWitness | null = null;
       const retainedWitnesses = await requestValue(tx.objectStore("witnesses").index("byAccountCampaign").getAll([accountId, campaignId]) as IDBRequest<unknown[]>);
@@ -349,6 +392,7 @@ export class CampaignIndexedDbStore {
       if (existingWitness && appliedWitness && !equal((existingWitness as WitnessRecord).value, appliedWitness)) fail("conflict", "Immutable Soundings witness conflicts.");
       if (current && equal(current.value, input.control)) {
         if (!existingArtifact || !address || address.raw !== input.artifactRaw || address.campaignId !== input.campaignId) fail("conflict", "Same-head retry has incomplete or conflicting records.");
+        await this.verifyNativeSurveyInTransaction(tx, envelope, snapshot);
         await this.verifySoundingsInTransaction(tx, acceptedInput, envelope, snapshot, requestId, existingWitness, !!sessionWitness);
         await completion;
         const readback = await this.exactReadback(acceptedInput);
@@ -370,6 +414,7 @@ export class CampaignIndexedDbStore {
           fail("conflict", "Destination belongs to another campaign.");
       } else if (address && (address.campaignId !== input.campaignId || (expected && address.artifactId !== expected.artifactId)))
         fail("conflict", "Slot points to another verified publication.");
+      await this.verifyNativeSurveyInTransaction(tx, envelope, snapshot);
       await this.verifySoundingsInTransaction(tx, acceptedInput, envelope, snapshot, requestId, existingWitness, !!sessionWitness);
       const writes: { family: Family; value: ArtifactRecord | ControlRecord | SlotRecord | WitnessRecord }[] = [
         { family: "artifacts", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, artifactId: envelope.artifactId, generationId: envelope.generationId, publicationId: envelope.publicationId, slotId: input.slotId, headRevision: envelope.headRevision, raw: input.artifactRaw } },
@@ -418,6 +463,24 @@ export class CampaignIndexedDbStore {
     if (verifySoundingsAdmissionProvenance(legacySnapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") fail("invalid_record", "Soundings descendant conflicts with retained provenance.");
     if (input.witness && witness.firstDurableArtifactId !== envelope.artifactId && !existing) fail("invalid_record", "Publication cannot introduce unrelated first provenance.");
     if (input.expectedHead && !existing && !sessionIntroduced) fail("invalid_record", "First descendant provenance requires session evidence.");
+  }
+
+  /** First native shift must replay from its immutable v3 predecessor inside the publication transaction. */
+  private async verifyNativeSurveyInTransaction(tx: IDBTransaction, envelope: CampaignArtifactEnvelope, snapshot: CampaignArtifactSnapshot): Promise<void> {
+    if (envelope.version !== 8) return;
+    const ledger = (snapshot as NativeFreshCampaignSnapshot).nativeSurvey;
+    if (!ledger) return;
+    const result = ledger.results[0];
+    const witness = result?.sourceWitness;
+    if (!witness || witness.sourceRevision + 1 !== envelope.headRevision ||
+        witness.sourceArtifactId === envelope.artifactId)
+      fail("invalid_record", "Native survey result lacks its immediate retained source.");
+    const retained = await requestValue(tx.objectStore("artifacts").get([envelope.accountId, witness.sourceArtifactId]) as IDBRequest<unknown>);
+    if (!artifactRecord(retained, envelope.accountId, witness.sourceArtifactId) ||
+        retained.campaignId !== envelope.campaignId || retained.publicationId !== witness.sourcePublicationId ||
+        retained.headRevision !== witness.sourceRevision || retained.slotId !== envelope.slotId)
+      fail("invalid_record", "Native survey retained source artifact is missing or conflicting.");
+    validateNativeSurveyRetainedSource(envelope, snapshot, retained.raw);
   }
 
   private async exactReadback(input: CampaignStorePublication): Promise<CampaignStoreReadback> {
