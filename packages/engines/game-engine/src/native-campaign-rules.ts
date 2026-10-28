@@ -3,7 +3,8 @@ import fitProfiles from '../../../content/base/items/equipment_fit_profiles.json
 import type { EquipmentState, NativeGearSaveSnapshot, SaveSnapshot } from '../../../shared/types/src/index.js';
 import type { GearFit, GearOwner } from './gear-instance-owner.js';
 import { isNativeFungibleUseLedger, type NativeFungibleUseLedger } from './native-fungible-use-ledger.js';
-import { isTargetCampaignSnapshot, TARGET_SNAPSHOT_FORMAT } from './campaign-rules.js';
+import { isTargetCampaignSnapshotCore, TARGET_SNAPSHOT_FORMAT } from './campaign-rules.js';
+import { validateNativeSurveyLedger, type NativeSurveyLedger } from './native-survey-ledger.js';
 import {
   validateNativeGearPhysicalBoundary
 } from './native-gear-physical-boundary.js';
@@ -11,6 +12,7 @@ import {
 /** Fresh campaigns only. Survey receipts require a separate native witness version. */
 export type NativeFreshCampaignSnapshot = NativeGearSaveSnapshot<GearOwner> & {
   nativeInventoryUse: NativeFungibleUseLedger;
+  nativeSurvey?: NativeSurveyLedger;
 };
 
 const emptyLegacyProjection: EquipmentState = {
@@ -38,16 +40,7 @@ export function isNativeTargetCampaignSnapshot(value: unknown): value is NativeF
       survey.results.length > 0 || survey.consequenceReceipts.length > 0 ||
       survey.projectionRepairs.length > 0 || survey.corrections.length > 0)) return false;
 
-    // A native shift has no retained command/replay contract yet. Refuse its
-    // recognizable progression markers rather than admitting unwitnessed stages.
-    if (snapshot.sessionState.flags.some(flag =>
-      flag.startsWith('gameplay.quest.ashen_reef_survey.sector.') ||
-      flag === 'gameplay.quest.ashen_reef_survey.ruins_confirmed' ||
-      flag === 'gameplay.discovery.stormglass_bloom') ||
-      snapshot.sessionState.operations.some(row =>
-        row.id === 'operation.quest.ashen_reef_survey' && row.progress > 0) ||
-      snapshot.playerState.discoveryChronicle.entries.some(row =>
-        row.sourceType === 'survey' && row.sourceId === 'quest.ashen_reef_survey')) return false;
+    if (!validateNativeSurveyLedger(snapshot)) return false;
 
     // Existing nonphysical campaign checks are reused through an ephemeral read-only
     // projection. No v2 equipment map is sourced from or stored beside native gear.
@@ -57,7 +50,7 @@ export function isNativeTargetCampaignSnapshot(value: unknown): value is NativeF
       snapshotVersion: TARGET_SNAPSHOT_FORMAT,
       playerState: { ...nonPhysicalPlayer, equipment: emptyLegacyProjection }
     };
-    return isTargetCampaignSnapshot(legacyValidationView);
+    return isTargetCampaignSnapshotCore(legacyValidationView);
   } catch {
     return false;
   }

@@ -7,7 +7,7 @@ import {
   type NativeSurveySourceWitness
 } from './native-survey-source.js';
 
-function canonicalJson(value: unknown): string {
+export function canonicalNativeSurveyJson(value: unknown): string {
   const normalize = (entry: unknown): unknown => {
     if (entry === null || typeof entry === 'string' || typeof entry === 'boolean') return entry;
     if (typeof entry === 'number' && Number.isFinite(entry)) return entry;
@@ -31,7 +31,7 @@ export function resolveNativeSurveyMaterialEvidence(
   witness: NativeSurveySourceWitness
 ) {
   const prepared = prepareNativeSurveySource(sourceSnapshot, sourceIdentity);
-  if (!prepared.accepted || canonicalJson(witness) !== canonicalJson(prepared.witness)) {
+  if (!prepared.accepted || canonicalNativeSurveyJson(witness) !== canonicalNativeSurveyJson(prepared.witness)) {
     throw new Error('Native survey source witness conflicts with the current source campaign.');
   }
   const snapshot = sourceSnapshot as NativeFreshCampaignSnapshot;

@@ -2037,6 +2037,11 @@ export function initializeTargetCampaignSnapshot(
 export function isTargetCampaignSnapshot(
   snapshot: SaveSnapshot
 ): boolean {
+  return isTargetCampaignSnapshotCore(snapshot) && validateAshenReefSurveyAuthority(snapshot);
+}
+
+/** Nonphysical campaign admission reused by fresh native gear without a v2 survey witness. */
+export function isTargetCampaignSnapshotCore(snapshot: SaveSnapshot): boolean {
   const rules = snapshot.campaignRules;
   return (
     snapshot.snapshotVersion === TARGET_SNAPSHOT_FORMAT &&
@@ -2075,7 +2080,6 @@ export function isTargetCampaignSnapshot(
     snapshot.authorityLedger?.version === 1 &&
     Array.isArray(snapshot.authorityLedger.entries) &&
     Array.isArray(snapshot.normalDefeatReceipts) &&
-    validateAshenReefSurveyAuthority(snapshot) &&
     validateSoundingsTurnInAuthority(snapshot)
   );
 }

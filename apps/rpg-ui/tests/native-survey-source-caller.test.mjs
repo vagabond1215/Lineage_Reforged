@@ -23,6 +23,8 @@ const { createNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/newG
 const { readNativeFreshSaveSnapshot, buildNativeGearArtifactPublication } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
 const { readRetainedNativeSurveyMaterial } = await vite.ssrLoadModule('/src/game-shell/nativeSurveyRetainedSource.ts');
 const { executeNativeSurveyShiftCandidate } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-shift-candidate.ts');
+const { commitNativeSurveyFirstShift } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-ledger.ts');
+const { validateNativeSurveyRetainedSource } = await vite.ssrLoadModule('/src/game-shell/campaignIndexedDbStore.ts');
 
 function sourceIdentity(snapshot) {
   return {
@@ -256,4 +258,68 @@ test('real native survey source produces one isolated first-shift owner mutation
   forged.witness.ownerInputs.worn[0].durability = -1;
   assert.throws(() => executeNativeSurveyShiftCandidate(forged,
     'survey_request.12345678-1234-4123-8123-123456789abc'));
+});
+
+test('first native survey result is versioned, replay-admitted and survives JSON Save readback', async () => {
+  const { snapshot } = reachSurvey('starting_bundle.hunter');
+  const publication = await buildNativeGearArtifactPublication(snapshot, 'slot-1', {
+    artifactId: 'artifact.native.ledger.1', generationId: 'generation.native.ledger.1',
+    publicationId: 'publication.native.ledger.1', savedAt: '2026-10-28T00:00:00.000Z',
+    expectedHead: null
+  });
+  const bound = await readRetainedNativeSurveyMaterial({ read: async () => ({
+    artifactRaw: publication.artifactRaw, slotRaw: publication.artifactRaw,
+    control: publication.control, witness: null
+  }) }, snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1');
+  const commandId = 'survey_request.12345678-1234-4123-8123-123456789abc';
+  const accepted = commitNativeSurveyFirstShift(bound, commandId);
+  assert.deepEqual(commitNativeSurveyFirstShift(bound, commandId), accepted,
+    'same source and request replay cannot charge another shift');
+  assert.equal(accepted.snapshot.nativeSurvey.version, 1);
+  assert.equal(accepted.snapshot.nativeSurvey.results.length, 1);
+  assert.equal(accepted.snapshot.nativeSurvey.results[0].requestId, commandId);
+  assert.equal(isNativeTargetCampaignSnapshot(accepted.snapshot), true);
+  assert.deepEqual((await readNativeFreshSaveSnapshot(JSON.stringify(accepted.snapshot))).nativeSurvey,
+    accepted.snapshot.nativeSurvey);
+  const forgedMaterial = structuredClone(accepted.snapshot);
+  forgedMaterial.nativeSurvey.results[0].material.resourcesAfter.stamina.current += 1;
+  assert.equal(isNativeTargetCampaignSnapshot(forgedMaterial), false);
+  const forgedBody = structuredClone(accepted.snapshot);
+  forgedBody.playerState.bodyState.fatigue += 1;
+  assert.equal(isNativeTargetCampaignSnapshot(forgedBody), false);
+  const forgedGear = structuredClone(accepted.snapshot);
+  forgedGear.playerState.gear.instances.find(item => item.location.kind === 'worn').durability = 0.5;
+  assert.equal(isNativeTargetCampaignSnapshot(forgedGear), false);
+  const duplicated = structuredClone(accepted.snapshot);
+  duplicated.nativeSurvey.results.push(structuredClone(duplicated.nativeSurvey.results[0]));
+  assert.equal(isNativeTargetCampaignSnapshot(duplicated), false);
+  const skippedStage = structuredClone(accepted.snapshot);
+  skippedStage.sessionState.flags.push('gameplay.quest.ashen_reef_survey.sector.2');
+  assert.equal(isNativeTargetCampaignSnapshot(skippedStage), false);
+  const forgedSkill = structuredClone(accepted.snapshot);
+  forgedSkill.playerState.skills.find(row => row.id === 'skill.knowledge.general_lore').rank += 1;
+  assert.equal(isNativeTargetCampaignSnapshot(forgedSkill), false);
+  const descendant = await buildNativeGearArtifactPublication(accepted.snapshot, 'slot-1', {
+    artifactId: 'artifact.native.ledger.2', generationId: 'generation.native.ledger.2',
+    publicationId: 'publication.native.ledger.2', savedAt: '2026-10-28T00:01:00.000Z',
+    expectedHead: { artifactId: publication.control.headArtifactId,
+      publicationId: publication.control.headPublicationId, revision: 1 }
+  });
+  assert.equal(JSON.parse(descendant.artifactRaw).version, 8);
+  assert.equal(descendant.control.previousHeadArtifactId, publication.control.headArtifactId);
+  const envelope = JSON.parse(descendant.artifactRaw);
+  assert.doesNotThrow(() => validateNativeSurveyRetainedSource(envelope,
+    JSON.parse(envelope.snapshot), publication.artifactRaw));
+  assert.throws(() => validateNativeSurveyRetainedSource(envelope,
+    JSON.parse(envelope.snapshot), null), /retained source/i);
+  const changedSource = JSON.parse(publication.artifactRaw);
+  const changedSourceSnapshot = JSON.parse(changedSource.snapshot);
+  changedSourceSnapshot.playerState.resources.stamina.current -= 1;
+  changedSource.snapshot = JSON.stringify(changedSourceSnapshot);
+  assert.throws(() => validateNativeSurveyRetainedSource(envelope,
+    JSON.parse(envelope.snapshot), JSON.stringify(changedSource)), /witness differs/i);
+  const changedResult = JSON.parse(envelope.snapshot);
+  changedResult.playerState.skills.find(row => row.id === 'skill.knowledge.general_lore').source = 'origin';
+  assert.throws(() => validateNativeSurveyRetainedSource(envelope,
+    changedResult, publication.artifactRaw), /replay/i);
 });

@@ -4,6 +4,7 @@ import { getDefaultWorldSelection } from './src/game-shell/worldSelectionCatalog
 import { createNativeNewGameSnapshot } from './src/game-shell/nativeNewGameSnapshot.js';
 import { buildNativeGearArtifactPublication, readNativeFreshSaveSnapshot } from './src/game-shell/saveManager.js';
 import { readRetainedNativeSurveyMaterial } from './src/game-shell/nativeSurveyRetainedSource.js';
+import { commitNativeSurveyFirstShift } from '../../packages/engines/game-engine/src/native-survey-ledger.js';
 import { createPlayerQuestAcceptanceCommand, executePlayerQuestAcceptanceCommand } from '../../packages/engines/game-engine/src/player-quest-acceptance.js';
 import { createPlayerTravelCommand, executePlayerTravelCommand } from '../../packages/engines/game-engine/src/player-travel.js';
 import { openCampaignIndexedDbStore, CampaignStoreError } from './src/game-shell/campaignIndexedDbStore.js';
@@ -176,6 +177,60 @@ async function suite() {
       'restarted material did not bind to the retained head');
     check(JSON.stringify(bound.snapshot.playerState.gear) ===
       JSON.stringify(nativeTraveled.playerState.gear), 'retained material changed native gear');
+    store.close();
+  });
+  await test('first native survey result publishes from retained source and survives restart', async () => {
+    const accountId = id('account');
+    const identity = getLineageIdentityCatalog('lineage.human')!;
+    const form = { ...formFixture(), backstoryId: 'backstory.craftsmans_child',
+      continentId: 'region.myridian_chain', regionId: 'region.starfall_isle',
+      startingSettlementId: 'settlement.starfall_port',
+      hairColorId: identity.hairColorOptions[0]!.id };
+    const first = createNativeNewGameSnapshot(form, accountId);
+    const accepted = executePlayerQuestAcceptanceCommand(first as unknown as SaveSnapshot,
+      createPlayerQuestAcceptanceCommand(first as unknown as SaveSnapshot, 'quest.ashen_reef_survey'));
+    check(accepted.accepted, 'authored quest acceptance failed');
+    if (!accepted.accepted) return;
+    const traveled = executePlayerTravelCommand(accepted.snapshot,
+      createPlayerTravelCommand(accepted.snapshot, 'location.ashen_reef'));
+    check(traveled.accepted, 'authored travel failed');
+    if (!traveled.accepted) return;
+    const source = traveled.snapshot as unknown as ReturnType<typeof fixture>;
+    const dbName = name(); let store = await openCampaignIndexedDbStore({ name: dbName });
+    const firstPublication = await attempt(source, null);
+    await store.publish(firstPublication);
+    const bound = await readRetainedNativeSurveyMaterial(store, accountId,
+      source.campaignIdentity!.campaignId, 'slot-1');
+    const commandId = `survey_request.${crypto.randomUUID()}`;
+    const committed = commitNativeSurveyFirstShift(bound, commandId);
+    const expectedHead = { artifactId: firstPublication.control.headArtifactId,
+      publicationId: firstPublication.control.headPublicationId, revision: 1 };
+    const descendant = await attempt(committed.snapshot, expectedHead);
+    check((await store.publish(descendant)).status === 'committed', 'native result was not published');
+    store.close(); store = await openCampaignIndexedDbStore({ name: dbName });
+    const retained = await store.read(accountId, source.campaignIdentity!.campaignId, 'slot-1');
+    check(retained?.artifactRaw === descendant.artifactRaw, 'restarted native result changed bytes');
+    const loaded = await readNativeFreshSaveSnapshot(JSON.parse(retained!.artifactRaw).snapshot);
+    check(loaded.nativeSurvey?.results[0].requestId === commandId &&
+      loaded.clock.tick === source.clock.tick + 2 &&
+      JSON.stringify(loaded.playerState.gear) === JSON.stringify(source.playerState.gear),
+      'restarted result lost command, time or native gear');
+    check((await store.publish(descendant)).status === 'same_source_retry', 'exact retry repeated effect');
+    const fork = await attempt(commitNativeSurveyFirstShift(bound,
+      `survey_request.${crypto.randomUUID()}`).snapshot, expectedHead);
+    await rejectCode(() => store.publish(fork), 'stale_head');
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      const open = indexedDB.open(dbName);
+      open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error);
+    });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction('artifacts', 'readwrite');
+      tx.objectStore('artifacts').delete([accountId, firstPublication.control.headArtifactId]);
+      tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
+      tx.onerror = () => reject(tx.error);
+    });
+    db.close();
+    await rejectCode(() => store.read(accountId, source.campaignIdentity!.campaignId, 'slot-1'), 'invalid_record');
     store.close();
   });
   await test('stale head, fork and changed same-ID retry cannot replace accepted artifact', async () => {
