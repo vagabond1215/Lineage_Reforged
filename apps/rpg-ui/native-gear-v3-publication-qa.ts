@@ -4,7 +4,7 @@ import { getDefaultWorldSelection } from './src/game-shell/worldSelectionCatalog
 import { createNativeNewGameSnapshot } from './src/game-shell/nativeNewGameSnapshot.js';
 import { buildNativeGearArtifactPublication, readNativeFreshSaveSnapshot } from './src/game-shell/saveManager.js';
 import { readRetainedNativeSurveyMaterial } from './src/game-shell/nativeSurveyRetainedSource.js';
-import { commitNativeSurveyFirstShift } from '../../packages/engines/game-engine/src/native-survey-ledger.js';
+import { commitNativeSurveyFirstShift, commitNativeSurveyShift } from '../../packages/engines/game-engine/src/native-survey-ledger.js';
 import { createPlayerQuestAcceptanceCommand, executePlayerQuestAcceptanceCommand } from '../../packages/engines/game-engine/src/player-quest-acceptance.js';
 import { createPlayerTravelCommand, executePlayerTravelCommand } from '../../packages/engines/game-engine/src/player-travel.js';
 import { openCampaignIndexedDbStore, CampaignStoreError } from './src/game-shell/campaignIndexedDbStore.js';
@@ -211,7 +211,7 @@ async function suite() {
     const retained = await store.read(accountId, source.campaignIdentity!.campaignId, 'slot-1');
     check(retained?.artifactRaw === descendant.artifactRaw, 'restarted native result changed bytes');
     const loaded = await readNativeFreshSaveSnapshot(JSON.parse(retained!.artifactRaw).snapshot);
-    check(loaded.nativeSurvey?.results[0].requestId === commandId &&
+    check(loaded.nativeSurvey?.results[0]?.requestId === commandId &&
       loaded.clock.tick === source.clock.tick + 2 &&
       JSON.stringify(loaded.playerState.gear) === JSON.stringify(source.playerState.gear),
       'restarted result lost command, time or native gear');
@@ -226,6 +226,83 @@ async function suite() {
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction('artifacts', 'readwrite');
       tx.objectStore('artifacts').delete([accountId, firstPublication.control.headArtifactId]);
+      tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
+      tx.onerror = () => reject(tx.error);
+    });
+    db.close();
+    await rejectCode(() => store.read(accountId, source.campaignIdentity!.campaignId, 'slot-1'), 'invalid_record');
+    store.close();
+  });
+  await test('all four native survey stages publish and restart through their retained artifact chain', async () => {
+    const accountId = id('account');
+    const identity = getLineageIdentityCatalog('lineage.human')!;
+    const form = { ...formFixture(), backstoryId: 'backstory.craftsmans_child',
+      continentId: 'region.myridian_chain', regionId: 'region.starfall_isle',
+      startingSettlementId: 'settlement.starfall_port',
+      hairColorId: identity.hairColorOptions[0]!.id };
+    const created = createNativeNewGameSnapshot(form, accountId);
+    const accepted = executePlayerQuestAcceptanceCommand(created as unknown as SaveSnapshot,
+      createPlayerQuestAcceptanceCommand(created as unknown as SaveSnapshot, 'quest.ashen_reef_survey'));
+    check(accepted.accepted, 'authored quest acceptance failed');
+    if (!accepted.accepted) return;
+    const traveled = executePlayerTravelCommand(accepted.snapshot,
+      createPlayerTravelCommand(accepted.snapshot, 'location.ashen_reef'));
+    check(traveled.accepted, 'authored survey travel failed');
+    if (!traveled.accepted) return;
+    const source = traveled.snapshot as unknown as ReturnType<typeof fixture>;
+    const dbName = name(); let store = await openCampaignIndexedDbStore({ name: dbName });
+    let publication = await attempt(source, null);
+    await store.publish(publication);
+    const stages = ['sector_1', 'sector_2', 'sector_3', 'ruins_confirmation'];
+    for (let index = 0; index < stages.length; index += 1) {
+      const bound = await readRetainedNativeSurveyMaterial(store, accountId,
+        source.campaignIdentity!.campaignId, 'slot-1');
+      check(bound.witness.stage === stages[index], `wrong native stage ${index + 1}`);
+      const commandId = `survey_request.${crypto.randomUUID()}`;
+      const next = commitNativeSurveyShift(bound, commandId);
+      const expected = { artifactId: publication.control.headArtifactId,
+        publicationId: publication.control.headPublicationId,
+        revision: publication.control.headRevision };
+      const proposed = await attempt(next.snapshot, expected);
+      if (index === 1) {
+        store.close();
+        const interrupted = await openCampaignIndexedDbStore({ name: dbName,
+          afterWrite: (family, tx) => { if (family === 'artifacts') tx.abort(); } });
+        await rejectCode(() => interrupted.publish(proposed), 'aborted');
+        interrupted.close(); store = await openCampaignIndexedDbStore({ name: dbName });
+        check((await store.read(accountId, source.campaignIdentity!.campaignId, 'slot-1'))?.artifactRaw ===
+          publication.artifactRaw, 'interrupted second shift changed the retained head');
+      }
+      publication = proposed;
+      check((await store.publish(publication)).status === 'committed', `stage ${index + 1} was not published`);
+      store.close(); store = await openCampaignIndexedDbStore({ name: dbName });
+      const retained = await store.read(accountId, source.campaignIdentity!.campaignId, 'slot-1');
+      check(retained?.artifactRaw === publication.artifactRaw, `stage ${index + 1} restart changed bytes`);
+      const loaded = await readNativeFreshSaveSnapshot(JSON.parse(retained!.artifactRaw).snapshot);
+      check(loaded.nativeSurvey?.results.length === index + 1 &&
+        loaded.nativeSurvey?.receipts.length === index + 1 &&
+        loaded.nativeSurvey?.results[index]?.requestId === commandId &&
+        JSON.stringify(loaded.playerState.gear) === JSON.stringify(source.playerState.gear),
+        `stage ${index + 1} lost result, receipt or physical gear`);
+      check((await store.publish(publication)).status === 'same_source_retry',
+        `stage ${index + 1} exact retry repeated effects`);
+    }
+    const final = await store.read(accountId, source.campaignIdentity!.campaignId, 'slot-1');
+    const loaded = await readNativeFreshSaveSnapshot(JSON.parse(final!.artifactRaw).snapshot);
+    check(loaded.clock.tick === source.clock.tick + 8 &&
+      loaded.sessionState.flags.includes('gameplay.quest.ashen_reef_survey.ruins_confirmed') &&
+      loaded.sessionState.flags.includes('gameplay.discovery.stormglass_bloom') &&
+      loaded.playerState.discoveryChronicle.entries.filter(row =>
+        row.id === 'discovery.stormglass_bloom').length === 1 &&
+      loaded.sessionState.currentActivity?.id === 'activity.return.survey_packet',
+      'four-stage retained survey owner effects are incomplete');
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      const open = indexedDB.open(dbName);
+      open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error);
+    });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction('artifacts', 'readwrite');
+      tx.objectStore('artifacts').delete([accountId, loaded.nativeSurvey!.results[1]!.sourceWitness.sourceArtifactId]);
       tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
       tx.onerror = () => reject(tx.error);
     });

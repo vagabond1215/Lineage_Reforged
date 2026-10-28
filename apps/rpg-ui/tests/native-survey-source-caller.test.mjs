@@ -23,7 +23,7 @@ const { createNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/newG
 const { readNativeFreshSaveSnapshot, buildNativeGearArtifactPublication } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
 const { readRetainedNativeSurveyMaterial } = await vite.ssrLoadModule('/src/game-shell/nativeSurveyRetainedSource.ts');
 const { executeNativeSurveyShiftCandidate } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-shift-candidate.ts');
-const { commitNativeSurveyFirstShift } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-ledger.ts');
+const { commitNativeSurveyFirstShift, commitNativeSurveyShift } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-ledger.ts');
 const { validateNativeSurveyRetainedSource } = await vite.ssrLoadModule('/src/game-shell/campaignIndexedDbStore.ts');
 
 function sourceIdentity(snapshot) {
@@ -322,4 +322,71 @@ test('first native survey result is versioned, replay-admitted and survives JSON
   changedResult.playerState.skills.find(row => row.id === 'skill.knowledge.general_lore').source = 'origin';
   assert.throws(() => validateNativeSurveyRetainedSource(envelope,
     changedResult, publication.artifactRaw), /replay/i);
+});
+
+test('real native creator progresses all four retained survey stages without losing physical gear', async () => {
+  const { snapshot: initial, gear } = reachSurvey('starting_bundle.hunter');
+  let snapshot = initial;
+  let publication = await buildNativeGearArtifactPublication(initial, 'slot-1', {
+    artifactId: 'artifact.native.four.0', generationId: 'generation.native.four.0',
+    publicationId: 'publication.native.four.0', savedAt: '2026-10-28T00:00:00.000Z',
+    expectedHead: null
+  });
+  const stages = ['sector_1', 'sector_2', 'sector_3', 'ruins_confirmation'];
+  for (let index = 0; index < stages.length; index += 1) {
+    const bound = await readRetainedNativeSurveyMaterial({ read: async () => ({
+      artifactRaw: publication.artifactRaw, slotRaw: publication.artifactRaw,
+      control: publication.control, witness: null
+    }) }, snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1');
+    assert.equal(bound.witness.stage, stages[index]);
+    const requestId = `survey_request.12345678-1234-4123-8123-123456789ab${index}`;
+    const committed = commitNativeSurveyShift(bound, requestId);
+    assert.equal(committed.snapshot.nativeSurvey.results.length, index + 1);
+    assert.equal(committed.snapshot.clock.tick, snapshot.clock.tick + 2);
+    assert.deepEqual(committed.snapshot.playerState.gear, gear);
+    assert.equal(isNativeTargetCampaignSnapshot(committed.snapshot), true);
+    assert.equal((await readNativeFreshSaveSnapshot(JSON.stringify(committed.snapshot))).clock.tick,
+      committed.snapshot.clock.tick);
+    const next = await buildNativeGearArtifactPublication(committed.snapshot, 'slot-1', {
+      artifactId: `artifact.native.four.${index + 1}`,
+      generationId: `generation.native.four.${index + 1}`,
+      publicationId: `publication.native.four.${index + 1}`,
+      savedAt: `2026-10-28T00:0${index + 1}:00.000Z`,
+      expectedHead: { artifactId: publication.control.headArtifactId,
+        publicationId: publication.control.headPublicationId, revision: index + 1 }
+    });
+    assert.doesNotThrow(() => validateNativeSurveyRetainedSource(JSON.parse(next.artifactRaw),
+      JSON.parse(JSON.parse(next.artifactRaw).snapshot), publication.artifactRaw));
+    publication = next;
+    snapshot = committed.snapshot;
+  }
+  assert.equal(snapshot.sessionState.flags.includes('gameplay.quest.ashen_reef_survey.ruins_confirmed'), true);
+  assert.equal(snapshot.sessionState.flags.includes('gameplay.discovery.stormglass_bloom'), true);
+  assert.equal(snapshot.playerState.discoveryChronicle.entries.filter(row =>
+    row.id === 'discovery.stormglass_bloom').length, 1);
+  assert.equal(snapshot.sessionState.operations.find(row => row.id ===
+    'operation.quest.ashen_reef_survey')?.progress, 100);
+  assert.equal(snapshot.sessionState.currentActivity?.id, 'activity.return.survey_packet');
+  assert.deepEqual(snapshot.sessionState.notifications.slice(0, 4).map(row => row.id),
+    [...snapshot.nativeSurvey.receipts].reverse().map(row => row.projectionIds.notification));
+  assert.deepEqual(snapshot.sessionState.chronicle.slice(0, 4).map(row => row.id),
+    [...snapshot.nativeSurvey.receipts].reverse().map(row => row.projectionIds.chronicle));
+  const duplicate = structuredClone(snapshot);
+  duplicate.nativeSurvey.receipts[2].requestId = duplicate.nativeSurvey.receipts[1].requestId;
+  assert.equal(isNativeTargetCampaignSnapshot(duplicate), false);
+  const missingProjection = structuredClone(snapshot);
+  missingProjection.sessionState.chronicle = missingProjection.sessionState.chronicle.filter(row =>
+    row.id !== snapshot.nativeSurvey.receipts[1].projectionIds.chronicle);
+  assert.equal(isNativeTargetCampaignSnapshot(missingProjection), false);
+  const alteredFinal = structuredClone(snapshot);
+  alteredFinal.nativeSurvey.results[3].material.resourcesAfter.stamina.current += 1;
+  assert.equal(isNativeTargetCampaignSnapshot(alteredFinal), false);
+  const pendingCorrection = structuredClone(snapshot);
+  pendingCorrection.nativeSurvey.pendingCorrection = { status: 'pending' };
+  assert.equal(isNativeTargetCampaignSnapshot(pendingCorrection), false);
+  const conflictingRetry = await readRetainedNativeSurveyMaterial({ read: async () => ({
+    artifactRaw: publication.artifactRaw, slotRaw: publication.artifactRaw,
+    control: publication.control, witness: null
+  }) }, snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1').catch(() => null);
+  assert.equal(conflictingRetry, null, 'completed survey cannot generate a fifth shift');
 });
