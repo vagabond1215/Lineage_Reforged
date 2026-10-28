@@ -9,6 +9,7 @@ import type {
   SoundingsAdmissionWitness
 } from "../../../../packages/shared/types/src/index.js";
 import type { NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
+import { prepareCharacterAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
 import {
   TARGET_SNAPSHOT_FORMAT,
   createAuthorityId,
@@ -624,26 +625,32 @@ export async function buildNativeGearArtifactPublication(
     throw new Error('Native artifact identity or slot is invalid.');
   const revision = (input.expectedHead?.revision ?? 0) + 1;
   if (!Number.isSafeInteger(revision) || revision < 1) throw new Error('Native head revision is invalid.');
-  const campaign = snapshot.campaignIdentity!;
+  // Character achievements are a deterministic Save-time projection. Use the
+  // artifact's retained timestamp so survey replay can reproduce these bytes.
+  const projected = prepareCharacterAchievementProgress(
+    snapshot as unknown as SaveSnapshot, input.savedAt).snapshot as unknown as NativeFreshCampaignSnapshot;
+  if (!(await isNativeFreshSaveSnapshot(projected)))
+    throw new Error('Native achievement projection changed the fresh v3 campaign.');
+  const campaign = projected.campaignIdentity!;
   const metadata = {
-    ...buildSaveMetadata(slotId, snapshot as unknown as SaveSnapshot),
+    ...buildSaveMetadata(slotId, projected as unknown as SaveSnapshot),
     lastSavedAt: input.savedAt,
     snapshotVersion: 'lineage.save_snapshot.v3'
   };
   const envelope: StoredNativeGearEnvelope = {
-    version: 8, accountId: snapshot.accountId, slotId, savedAt: input.savedAt,
+    version: 8, accountId: projected.accountId, slotId, savedAt: input.savedAt,
     metadata, snapshotFormatId: 'lineage.save_snapshot.v3',
     campaignId: campaign.campaignId, continuityId: campaign.continuityId,
-    characterId: snapshot.playerState.playerId, artifactId: input.artifactId,
+    characterId: projected.playerState.playerId, artifactId: input.artifactId,
     generationId: input.generationId, publicationId: input.publicationId,
-    headRevision: revision, terminal: false, snapshot: JSON.stringify(snapshot)
+    headRevision: revision, terminal: false, snapshot: JSON.stringify(projected)
   };
   return {
-    accountId: snapshot.accountId, campaignId: campaign.campaignId, slotId,
+    accountId: projected.accountId, campaignId: campaign.campaignId, slotId,
     expectedHead: input.expectedHead,
     ...(input.expectedSlotAddress === undefined ? {} : { expectedSlotAddress: input.expectedSlotAddress }),
     artifactRaw: JSON.stringify(envelope),
-    control: { version: 1, accountId: snapshot.accountId, campaignId: campaign.campaignId,
+    control: { version: 1, accountId: projected.accountId, campaignId: campaign.campaignId,
       headArtifactId: input.artifactId, headPublicationId: input.publicationId,
       headRevision: revision, previousHeadArtifactId: input.expectedHead?.artifactId ?? null,
       previousHeadPublicationId: input.expectedHead?.publicationId ?? null,

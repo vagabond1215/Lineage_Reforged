@@ -5,6 +5,7 @@ import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from
 import { commitNativeSurveyShift } from "../../../../packages/engines/game-engine/src/native-survey-ledger.js";
 import { prepareNativeSurveySource } from "../../../../packages/engines/game-engine/src/native-survey-source.js";
 import { canonicalNativeSurveyJson } from "../../../../packages/engines/game-engine/src/native-survey-material.js";
+import { prepareCharacterAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
 import { isSoundingsAdmissionWitness, verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
 import {
   isStoredCampaignControl,
@@ -146,7 +147,9 @@ export function validateNativeSurveyRetainedSource(
     fail("invalid_record", "Native survey witness differs from its retained source.");
   const replayed = commitNativeSurveyShift({ snapshot: source.snapshot as NativeFreshCampaignSnapshot,
     sourceIdentity: identity, witness: preparation.witness }, result.requestId);
-  if (canonicalNativeSurveyJson(replayed.snapshot) !== canonicalNativeSurveyJson(snapshot))
+  const projected = prepareCharacterAchievementProgress(
+    replayed.snapshot as unknown as SaveSnapshot, envelope.savedAt).snapshot;
+  if (canonicalNativeSurveyJson(projected) !== canonicalNativeSurveyJson(snapshot))
     fail("invalid_record", "Native survey result differs from retained-source replay.");
 }
 function validatedLegacyEnvelope(raw: string, accountId: string, campaignId: string):
@@ -380,14 +383,17 @@ export class CampaignIndexedDbStore {
       }
       if (requestId && existingWitness !== undefined && !witnessRecord(existingWitness, input.accountId, input.campaignId, requestId)) fail("invalid_record", "Stored witness is malformed.");
       if (retainedWitnesses.length > (requestId ? 1 : 0) || (!requestId && retainedWitnesses.length)) fail("invalid_record", "Campaign cannot discard or multiply retained Soundings provenance.");
+      let nativePredecessor: NativeFreshCampaignSnapshot | null = null;
       if (current) {
         const prior = await requestValue(tx.objectStore("artifacts").get([input.accountId, current.value.headArtifactId]) as IDBRequest<unknown>);
         if (!artifactRecord(prior, input.accountId, current.value.headArtifactId) || prior.campaignId !== input.campaignId ||
             prior.publicationId !== current.value.headPublicationId || prior.headRevision !== current.value.headRevision) {
           fail("invalid_record", "Stored predecessor head has no verified immutable artifact.");
         }
-        if (validatedEnvelope(prior.raw, input.accountId, input.campaignId).envelope.version !== envelope.version)
+        const predecessor = validatedEnvelope(prior.raw, input.accountId, input.campaignId);
+        if (predecessor.envelope.version !== envelope.version)
           fail("conflict", "Campaign snapshot epoch changed across an existing head.");
+        if (envelope.version === 8) nativePredecessor = predecessor.snapshot as NativeFreshCampaignSnapshot;
       }
       if (existingArtifact && existingArtifact.raw !== input.artifactRaw) fail("conflict", "Immutable artifact ID has conflicting bytes.");
       if (existingWitness && appliedWitness && !equal((existingWitness as WitnessRecord).value, appliedWitness)) fail("conflict", "Immutable Soundings witness conflicts.");
@@ -404,6 +410,18 @@ export class CampaignIndexedDbStore {
           (current?.value.headPublicationId ?? null) !== (expected?.publicationId ?? null) ||
           (current?.value.headRevision ?? 0) !== (expected?.revision ?? 0)) fail("stale_head", "Campaign head changed after publication source was captured.");
       if (current?.value.closed) fail("conflict", "Closed campaign cannot advance.");
+      if (nativePredecessor) {
+        const before = nativePredecessor.nativeSurvey;
+        const after = (snapshot as NativeFreshCampaignSnapshot).nativeSurvey;
+        const beforeCount = before?.results.length ?? 0;
+        const afterCount = after?.results.length ?? 0;
+        if (afterCount < beforeCount || afterCount > beforeCount + 1 ||
+            (afterCount === beforeCount && !equal(before, after)) ||
+            (afterCount === beforeCount + 1 &&
+              (!equal(before?.results ?? [], after?.results.slice(0, beforeCount)) ||
+               !equal(before?.receipts ?? [], after?.receipts.slice(0, beforeCount)))))
+          fail("invalid_record", "Native descendant changed retained survey history.");
+      }
       if (input.expectedSlotAddress !== undefined) {
         const wanted = input.expectedSlotAddress;
         if (wanted !== null && (!nonblank(wanted.artifactId) || !nonblank(wanted.publicationId)))
@@ -476,9 +494,30 @@ export class CampaignIndexedDbStore {
       const ledger = (currentSnapshot as NativeFreshCampaignSnapshot).nativeSurvey!;
       const result = ledger.results[ledger.results.length - 1];
       const witness = result?.sourceWitness;
-      if (!witness || witness.sourceRevision + 1 !== currentEnvelope.headRevision ||
-          witness.sourceArtifactId === currentEnvelope.artifactId ||
+      if (!witness || witness.sourceArtifactId === currentEnvelope.artifactId ||
           seen.has(witness.sourceArtifactId) || seen.size >= 4)
+        fail("invalid_record", "Native survey result lacks its immediate retained source.");
+      if (witness.sourceRevision + 1 < currentEnvelope.headRevision) {
+        // Ordinary descendants may carry a completed ledger without re-running
+        // its command. Anchor the complete ledger to its exact retained stage.
+        const rows = await requestValue(tx.objectStore("artifacts").index("byAccountCampaign")
+          .getAll([currentEnvelope.accountId, currentEnvelope.campaignId]) as IDBRequest<unknown[]>);
+        const stageRows = rows.filter(row => record(row) && row.headRevision === witness.sourceRevision + 1);
+        if (stageRows.length !== 1 || !artifactRecord(stageRows[0], currentEnvelope.accountId,
+            (stageRows[0] as ArtifactRecord).artifactId))
+          fail("invalid_record", "Native survey stage artifact is missing or ambiguous.");
+        const stage = validatedEnvelope((stageRows[0] as ArtifactRecord).raw,
+          currentEnvelope.accountId, currentEnvelope.campaignId);
+        if (stage.envelope.version !== 8 || stage.envelope.terminal ||
+            stage.envelope.continuityId !== currentEnvelope.continuityId ||
+            stage.envelope.characterId !== currentEnvelope.characterId ||
+            !equal((stage.snapshot as NativeFreshCampaignSnapshot).nativeSurvey, ledger))
+          fail("invalid_record", "Native descendant survey ledger differs from its retained stage.");
+        currentEnvelope = stage.envelope;
+        currentSnapshot = stage.snapshot;
+        continue;
+      }
+      if (witness.sourceRevision + 1 !== currentEnvelope.headRevision)
         fail("invalid_record", "Native survey result lacks its immediate retained source.");
       seen.add(witness.sourceArtifactId);
       const retained = await requestValue(tx.objectStore("artifacts").get([currentEnvelope.accountId, witness.sourceArtifactId]) as IDBRequest<unknown>);

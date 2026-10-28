@@ -1,5 +1,6 @@
 import { evaluateAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
 import { createAuthorityId, isTargetCampaignSnapshot, TARGET_SNAPSHOT_FORMAT } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
+import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
 import type { CampaignSessionControl } from "../../../../packages/engines/game-engine/src/campaign-session.js";
 import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
 import { verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
@@ -7,7 +8,7 @@ import { serializeSnapshot } from "../../../../packages/shared/persistence/src/i
 import type { SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
 import { CampaignStoreError, type CampaignStoreFailureCode, type CampaignStorePublication } from "./campaignIndexedDbStore.js";
 import { type CleanEpochAccountStore, type CleanEpochSlotRead } from "./cleanEpochAccountStore.js";
-import { buildSaveMetadata, type CampaignPublicationConsumerPlan, type StoredSaveEnvelope } from "./saveManager.js";
+import { buildNativeGearArtifactPublication, buildSaveMetadata, type CampaignPublicationConsumerPlan, type StoredSaveEnvelope } from "./saveManager.js";
 import type { SaveSlotId } from "./state.js";
 
 export type EpochDescendantResult =
@@ -32,17 +33,21 @@ export class CleanEpochDescendantAdapter {
   constructor(private readonly owner: CleanEpochAccountStore) {}
 
   async save(input: { accountId: string; sourceSlotId: SaveSlotId; destinationSlotId: SaveSlotId;
-    expectedAccountRevision: number; snapshot: SaveSnapshot; control: CampaignSessionControl;
+    expectedAccountRevision: number; snapshot: SaveSnapshot | NativeFreshCampaignSnapshot; control: CampaignSessionControl;
     expectedDestinationAddress?: { artifactId: string; publicationId: string } | null }):
     Promise<EpochDescendantResult> {
     const { accountId, sourceSlotId, destinationSlotId, expectedAccountRevision, snapshot, control } = input;
     try {
       if (sourceSlotId !== destinationSlotId && input.expectedDestinationAddress === undefined)
         throw new CampaignStoreError("invalid_record", "Cross-slot save requires an expected destination address.");
-      if (!isTargetCampaignSnapshot(snapshot) || hasPendingNormalDefeat(snapshot) || !snapshot.campaignIdentity ||
+      const native = isNativeTargetCampaignSnapshot(snapshot);
+      if ((!native && !isTargetCampaignSnapshot(snapshot)) ||
+          hasPendingNormalDefeat(snapshot as SaveSnapshot) || !snapshot.campaignIdentity ||
           snapshot.accountId !== accountId || control.accountId !== accountId ||
           control.campaignId !== snapshot.campaignIdentity.campaignId)
         throw new CampaignStoreError("invalid_record", "Ordinary descendant input requires an open target campaign.");
+      if (native && control.soundingsAdmissionWitness)
+        throw new CampaignStoreError("invalid_record", "Native descendant cannot carry a v2 Soundings witness.");
       const account = await this.owner.readSelected(accountId);
       if (!account) throw new CampaignStoreError("invalid_record", "Descendant account is missing.");
       if (account.revision !== expectedAccountRevision)
@@ -73,14 +78,18 @@ export class CleanEpochDescendantAdapter {
         : await this.owner.readHistoricalArtifact(accountId, sourceSlotId, control.loadedArtifactId);
       if (source.sessionControl.loadedPublicationId !== control.loadedPublicationId ||
           source.sessionControl.loadedHeadRevision !== control.loadedHeadRevision ||
-          source.sessionControl.loadedContinuityId !== control.loadedContinuityId)
+          source.sessionControl.loadedContinuityId !== control.loadedContinuityId ||
+          source.snapshot.snapshotVersion !== snapshot.snapshotVersion ||
+          current.loaded.snapshot.snapshotVersion !== snapshot.snapshotVersion)
         throw new CampaignStoreError("conflict", "Loaded source differs from retained campaign authority.");
       if (control.posture === "non_head_unmutated" && !control.hasUnpublishedGameplayState)
         throw new CampaignStoreError("conflict", "An unchanged non-head artifact cannot create a descendant.");
       const savedAt = new Date().toISOString();
-      const prepared = evaluateAchievementProgress(snapshot, account.profile,
+      const prepared = evaluateAchievementProgress(snapshot as SaveSnapshot, account.profile,
         { slotId: destinationSlotId, touchHistory: true, recordedAt: savedAt }).nextSnapshot;
-      const provenance = verifySoundingsAdmissionProvenance(prepared, control);
+      if (native && !isNativeTargetCampaignSnapshot(prepared))
+        throw new CampaignStoreError("invalid_record", "Native achievement projection changed the physical campaign owner.");
+      const provenance = native ? "not_completed" : verifySoundingsAdmissionProvenance(prepared, control);
       if (provenance !== "not_completed" && provenance !== "verified")
         throw new CampaignStoreError("invalid_record", `Soundings session provenance is ${provenance}.`);
       const firstCompletion = prepared.authorityLedger?.soundingsTurnIn?.version === 2 &&
@@ -99,23 +108,27 @@ export class CleanEpochDescendantAdapter {
       const artifactId = createAuthorityId("artifact");
       const generationId = createAuthorityId("generation");
       const publicationId = createAuthorityId("publication");
-      const metadata = { ...buildSaveMetadata(destinationSlotId, prepared), lastSavedAt: savedAt,
-        snapshotVersion: TARGET_SNAPSHOT_FORMAT };
-      const envelope: StoredSaveEnvelope = { version: 7, accountId, slotId: destinationSlotId,
-        savedAt, metadata, snapshotFormatId: TARGET_SNAPSHOT_FORMAT,
-        campaignId: identity.campaignId, continuityId: identity.continuityId,
-        characterId: prepared.playerState.playerId, artifactId, generationId, publicationId,
-        headRevision: headControl.campaignHeadRevision + 1, terminal: false,
-        snapshot: serializeSnapshot(prepared) };
-      const publication: CampaignStorePublication = { accountId, campaignId: identity.campaignId,
-        slotId: destinationSlotId,
-        expectedSlotAddress: input.expectedDestinationAddress ?? observedAddress,
-        expectedHead: head,
-        artifactRaw: JSON.stringify(envelope),
-        control: { version: 1, accountId, campaignId: identity.campaignId,
-          headArtifactId: artifactId, headPublicationId: publicationId,
-          headRevision: envelope.headRevision, previousHeadArtifactId: head.artifactId,
-          previousHeadPublicationId: head.publicationId, closed: false, updatedAt: savedAt } };
+      const publication: CampaignStorePublication = native
+        ? await buildNativeGearArtifactPublication(prepared as unknown as NativeFreshCampaignSnapshot,
+          destinationSlotId, { artifactId, generationId, publicationId, savedAt,
+            expectedHead: head, expectedSlotAddress: input.expectedDestinationAddress ?? observedAddress })
+        : (() => {
+          const metadata = { ...buildSaveMetadata(destinationSlotId, prepared), lastSavedAt: savedAt,
+            snapshotVersion: TARGET_SNAPSHOT_FORMAT };
+          const envelope: StoredSaveEnvelope = { version: 7, accountId, slotId: destinationSlotId,
+            savedAt, metadata, snapshotFormatId: TARGET_SNAPSHOT_FORMAT,
+            campaignId: identity.campaignId, continuityId: identity.continuityId,
+            characterId: prepared.playerState.playerId, artifactId, generationId, publicationId,
+            headRevision: headControl.campaignHeadRevision + 1, terminal: false,
+            snapshot: serializeSnapshot(prepared) };
+          return { accountId, campaignId: identity.campaignId, slotId: destinationSlotId,
+            expectedSlotAddress: input.expectedDestinationAddress ?? observedAddress,
+            expectedHead: head, artifactRaw: JSON.stringify(envelope),
+            control: { version: 1, accountId, campaignId: identity.campaignId,
+              headArtifactId: artifactId, headPublicationId: publicationId,
+              headRevision: envelope.headRevision, previousHeadArtifactId: head.artifactId,
+              previousHeadPublicationId: head.publicationId, closed: false, updatedAt: savedAt } };
+        })();
       await this.owner.publishDescendant({ publication,
         ...(sessionWitness ? { sessionWitness } : {}), expectedAccountRevision,
         sourceSlotId, sourceArtifactId: source.sessionControl.loadedArtifactId,
