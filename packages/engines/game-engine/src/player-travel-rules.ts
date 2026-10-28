@@ -313,7 +313,9 @@ export function getPlayerTravelDestinationFacts(locationId: string): PlayerTrave
   return destination ? toFacts(destination) : null;
 }
 
-export function getCurrentPlayerTravelLocationId(snapshot: SaveSnapshot): string | null {
+export function getCurrentPlayerTravelLocationId(
+  snapshot: { playerState: Pick<SaveSnapshot['playerState'], 'location'> }
+): string | null {
   const settlementId = snapshot.playerState.location.settlementId;
 
   if (settlementId === "settlement.aurelis") return "location.saltmere";

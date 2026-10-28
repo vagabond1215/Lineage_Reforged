@@ -1,3 +1,11 @@
+## 2026-10-27 — Unselected native v3 survey source caller
+
+**Source run:** unversioned native gear activation support. Clean master `a596112acf3945f2bf7c625e943f2511d12aa710`; parent draft PR #33 `017080ff0556a7471950b5c9c51b349e8645a161`; isolated [draft PR #34](https://github.com/vagabond1215/Lineage_Reforged/pull/34), implementation `071208e7a57bed8699db25ed42b9d4f4b8cac013`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; label class unversioned, parent n/a; development impact `supports_current_band`, game-version impact `none`. Status **UNSELECTED_NATIVE_SURVEY_SOURCE_VERIFIED; FULL_COMMAND_DESCENDANT_SELECTED_HELD**. [Focused evidence](../design/native-v3-survey-source-and-descendant-gate-2026-10-27.md).
+
+Files changed: `packages/engines/game-engine/src/native-survey-source.ts` (new read-only v3 source capture); `player-travel-rules.ts` (location-only reader type); `apps/rpg-ui/tests/native-survey-source-caller.test.mjs` (new real-caller and rejection coverage); focused decision, next prompt, this output, handoff and branch register. Red-before-green missing module, then tests **2/2**. Native app **28/28**, selected-v2 Character/Equipment/Inventory UI **30/30**, adjacent root survey/combat/resource/Save **61/61**; Node UI typecheck, content lint **72 files**, direct Vite build **267 client modules**, diff check pass. Broad UI **115 branch / 115 clean master**, root **763 / 763**, no changed-file diagnostics. No browser or selected-client proof. Applied FP-001/002/009/015/016/017; FP-005/012/013/014 remain future retained-command gates.
+
+Branch lifecycle: fetched/pruned; inspected master, #32/#33 and repository-scoped open PRs; #19–#34 plus separate stacks retained draft/held. No integration/deletion due or performed. Review at native command/replay, descendant/recovery and selected activation gate. Suggested commit `docs(gear): record native survey source gate`. Next [native survey command and retained publication](next-native-v3-survey-material-command-and-publication-2026-10-27.md). No Game-version decision.
+
 ## 2026-10-27 — Unselected native creator resource setup
 
 Additional adjacent selected-v2 Character/Equipment/Inventory UI regressions **22/22 passed**; nonfatal server-render and HMR-port warnings remain.
