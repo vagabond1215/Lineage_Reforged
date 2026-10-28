@@ -1,5 +1,6 @@
 import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { createServer } from 'vite';
 import { createDefaultCharacterCreationFormState } from '../src/game-shell/characterCreationForm.ts';
 import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from '../src/game-shell/characterCreationCatalog.ts';
@@ -14,6 +15,11 @@ const { createPlayerTravelCommand, executePlayerTravelCommand } =
   await vite.ssrLoadModule('/../../packages/engines/game-engine/src/player-travel.ts');
 const { prepareNativeSurveySource } =
   await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-source.ts');
+const { resolveNativeSurveyMaterialEvidence } =
+  await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-material.ts');
+const { resolvePlayerSurveyActivityAdvancementPlan } =
+  await vite.ssrLoadModule('/../../packages/engines/game-engine/src/player-survey-activity-advancement.ts');
+const { createNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/newGameSnapshot.ts');
 const { readNativeFreshSaveSnapshot } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
 
 function sourceIdentity(snapshot) {
@@ -27,9 +33,8 @@ function sourceIdentity(snapshot) {
   };
 }
 
-function form() {
+function form(bundle = 'starting_bundle.traveler') {
   const identity = getLineageIdentityCatalog('lineage.human');
-  const bundle = 'starting_bundle.traveler';
   return {
     ...createDefaultCharacterCreationFormState('slot-1'), playerName: 'Native Survey Caller',
     hairColorId: identity.hairColorOptions[0].id,
@@ -44,8 +49,8 @@ function form() {
   };
 }
 
-function reachSurvey() {
-  const first = createNativeNewGameSnapshot(form(), 'account.native.survey');
+function reachSurvey(bundle = 'starting_bundle.traveler') {
+  const first = createNativeNewGameSnapshot(form(bundle), 'account.native.survey');
   assert.equal(isNativeTargetCampaignSnapshot(first), true);
   const gear = structuredClone(first.playerState.gear);
   assert.equal(first.sessionState.questJournal.find(quest => quest.id === 'quest.ashen_reef_survey').category, 'contracts');
@@ -60,6 +65,17 @@ function reachSurvey() {
   assert.deepEqual(travel.snapshot.playerState.gear, gear);
   assert.equal(isNativeTargetCampaignSnapshot(travel.snapshot), true);
   return { first, snapshot: travel.snapshot, gear };
+}
+
+function reachLegacySurvey(bundle) {
+  const first = createNewGameSnapshot(form(bundle), 'account.native.survey');
+  const acceptance = executePlayerQuestAcceptanceCommand(first,
+    createPlayerQuestAcceptanceCommand(first, 'quest.ashen_reef_survey'));
+  assert.equal(acceptance.accepted, true);
+  const travel = executePlayerTravelCommand(acceptance.snapshot,
+    createPlayerTravelCommand(acceptance.snapshot, 'location.ashen_reef'));
+  assert.equal(travel.accepted, true);
+  return travel.snapshot;
 }
 
 test('native creator, quest acceptance and travel reach a gear-backed survey source', async () => {
@@ -98,4 +114,36 @@ test('native source capture refuses unaccepted quest, wrong place, stale identit
   malformed.playerState.gear.instances.push(structuredClone(malformed.playerState.gear.instances[0]));
   assert.deepEqual(prepareNativeSurveySource(malformed, sourceIdentity(malformed)),
     { accepted: false, code: 'invalid_source' });
+});
+
+test('native worn-instance survey material resolves the same first shift as the real v2 caller', async () => {
+  const bundles = JSON.parse(readFileSync(new URL('../../../packages/content/base/player/starting_bundles.json', import.meta.url), 'utf8').replace(/^\uFEFF/, '')).records;
+  assert.equal(bundles.length, 7);
+  for (const { id: bundle } of bundles) {
+    const { snapshot } = reachSurvey(bundle);
+    const gearBefore = structuredClone(snapshot.playerState.gear);
+    const captured = prepareNativeSurveySource(snapshot, sourceIdentity(snapshot));
+    assert.equal(captured.accepted, true);
+    const native = resolveNativeSurveyMaterialEvidence(snapshot, sourceIdentity(snapshot), captured.witness);
+    const restored = await readNativeFreshSaveSnapshot(JSON.stringify(snapshot));
+    assert.deepEqual(resolveNativeSurveyMaterialEvidence(restored, sourceIdentity(restored), captured.witness), native);
+    const legacy = resolvePlayerSurveyActivityAdvancementPlan(reachLegacySurvey(bundle));
+    assert.equal(legacy.accepted, true);
+    assert.equal(native.endClock.tick, snapshot.clock.tick + 2);
+    assert.deepEqual(native.profile, legacy.metabolicProfile);
+    assert.deepEqual(native.bodyAfter, legacy.projectedBodyState);
+    assert.deepEqual(native.bodyTimeline, legacy.timeline);
+    assert.deepEqual(native.resourcesAfter, legacy.projectedResources);
+    assert.equal(native.skill.appliedDelta, legacy.skill.appliedDelta);
+    assert.deepEqual(snapshot.playerState.gear, gearBefore);
+    const reordered = structuredClone(captured.witness);
+    reordered.ownerInputs = Object.fromEntries(Object.entries(reordered.ownerInputs).reverse());
+    assert.deepEqual(resolveNativeSurveyMaterialEvidence(snapshot, sourceIdentity(snapshot), reordered), native);
+    const forged = structuredClone(captured.witness);
+    forged.ownerInputs.worn[0].durability = -1;
+    assert.throws(() => resolveNativeSurveyMaterialEvidence(snapshot, sourceIdentity(snapshot), forged));
+    const staleGear = structuredClone(snapshot);
+    staleGear.playerState.gear.instances.find(item => item.location.kind === 'worn').durability = 0.5;
+    assert.throws(() => resolveNativeSurveyMaterialEvidence(staleGear, sourceIdentity(staleGear), captured.witness));
+  }
 });
