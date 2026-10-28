@@ -11,6 +11,7 @@ import { openCampaignIndexedDbStore, CampaignIndexedDbStore, CampaignStoreError 
 import { openCleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.js';
 import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochDescendantAdapter } from './src/game-shell/cleanEpochDescendantAdapter.js';
+import { CleanEpochTerminalAdapter } from './src/game-shell/cleanEpochTerminalAdapter.js';
 import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.js';
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.js';
 import type { SaveSlotId } from './src/game-shell/state.js';
@@ -211,6 +212,150 @@ async function suite() {
     const retained = await owner.readSlot(accountId, 'slot-1');
     check(retained.status === 'ready' && retained.loaded?.snapshot.snapshotVersion ===
       'lineage.save_snapshot.v2', 'incompatible old record was deleted or changed');
+    owner.close();
+  });
+  await test('native terminal retirement closes one physical campaign and settles the account', async () => {
+    const dbName = name(); const accountId = id('account');
+    let owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Terminal QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'native terminal first campaign did not publish');
+    if (first.status !== 'ready') return;
+    const source = first.value.loaded;
+    const request = { accountId,
+      sourceSlotId: 'slot-1', expectedAccountRevision: (await owner.read(accountId))!.revision,
+      snapshot: source.snapshot, control: source.sessionControl,
+      expectedSourceAddress: { artifactId: source.sessionControl.loadedArtifactId,
+        publicationId: source.sessionControl.loadedPublicationId } } as const;
+    const originalGear = JSON.stringify(native(source.snapshot).playerState.gear);
+    const result = await new CleanEpochTerminalAdapter(owner).retire(request);
+    check(result.status === 'completed', `native terminal did not settle: ${JSON.stringify(result)}`);
+    if (result.status !== 'completed') return;
+    const envelope = JSON.parse(result.recovery.envelopeRaw);
+    const terminal = JSON.parse(envelope.snapshot);
+    check(envelope.version === 8 && envelope.terminal === true &&
+      envelope.snapshotFormatId === 'lineage.save_snapshot.v3' &&
+      JSON.stringify(native(terminal).playerState.gear) === originalGear,
+    'native terminal artifact lost physical gear or format');
+    check((await owner.readSlot(accountId, 'slot-1')).status === 'closed' &&
+      (await owner.read(accountId))?.revision === 3 &&
+      result.account.profile.history.runRecords[0]?.archiveReason === 'retired' &&
+      result.account.profile.estate.deposits.length === 1 &&
+      result.account.profile.campaignPublicationReceipts?.filter(receipt =>
+        receipt.publicationId === result.recovery.publicationId).length === 6,
+    'native terminal did not close, archive, deposit or settle once');
+    const retry = await new CleanEpochTerminalAdapter(owner).retire(request);
+    check(retry.status === 'completed' && retry.recovery.publicationId === result.recovery.publicationId &&
+      (await owner.read(accountId))?.revision === 3,
+    'native terminal exact retry minted a duplicate');
+    const changed = await new CleanEpochTerminalAdapter(owner).retire({ ...request,
+      expectedAccountRevision: request.expectedAccountRevision + 1 });
+    check(changed.status === 'blocked' && (await owner.read(accountId))?.revision === 3,
+      'changed native terminal retry was admitted');
+    owner.close();
+    owner = await openCleanEpochAccountStore({ name: dbName });
+    const retained = await owner.readTerminalForSource(accountId,
+      result.recovery.campaignId, source.sessionControl.loadedPublicationId);
+    check(retained?.status === 'settlement_completed' &&
+      JSON.stringify(native(JSON.parse(JSON.parse(retained.envelopeRaw).snapshot)).playerState.gear) === originalGear &&
+      (await owner.readSlot(accountId, 'slot-1')).status === 'closed',
+    'native terminal restart lost settlement, closed state or gear');
+    owner.close();
+  });
+  await test('native terminal abort retains one recoverable closed artifact after restart', async () => {
+    const dbName = name(); const accountId = id('account');
+    let armed = false; let writes = 0;
+    let owner = await openCleanEpochAccountStore({ name: dbName,
+      afterWrite: tx => { if (armed && ++writes === 5) tx.abort(); } });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Terminal Fault QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'native terminal fault source did not publish');
+    if (first.status !== 'ready') return;
+    const source = first.value.loaded;
+    const gear = JSON.stringify(native(source.snapshot).playerState.gear);
+    armed = true;
+    const result = await new CleanEpochTerminalAdapter(owner).retire({ accountId,
+      sourceSlotId: 'slot-1', expectedAccountRevision: (await owner.read(accountId))!.revision,
+      snapshot: source.snapshot, control: source.sessionControl,
+      expectedSourceAddress: { artifactId: source.sessionControl.loadedArtifactId,
+        publicationId: source.sessionControl.loadedPublicationId } });
+    check(result.status === 'blocked', 'native terminal settlement abort unexpectedly completed');
+    const pending = await owner.readPendingTerminalForAccount(accountId);
+    check(pending?.status === 'accepted_pending_settlement' &&
+      (await owner.readSlot(accountId, 'slot-1')).status === 'closed' &&
+      (await owner.read(accountId))?.revision === 2,
+    'native terminal abort lost the pending artifact or changed account authority');
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    const resumed = await new CleanEpochTerminalAdapter(owner).resumePending(accountId);
+    check(resumed?.status === 'completed' && resumed.recovery.publicationId === pending?.publicationId &&
+      JSON.stringify(native(JSON.parse(JSON.parse(resumed.recovery.envelopeRaw).snapshot)).playerState.gear) === gear &&
+      (await owner.read(accountId))?.revision === 3 &&
+      (await owner.readSlot(accountId, 'slot-1')).status === 'closed',
+    `native terminal restart did not settle exact physical artifact: ${JSON.stringify(resumed)}`);
+    owner.close();
+  });
+  await test('native cross-slot retirement closes every retained address once', async () => {
+    const dbName = name(); const accountId = id('account');
+    const owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Cross-slot QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'native cross-slot first campaign did not publish');
+    if (first.status !== 'ready') return;
+    const originalGear = JSON.stringify(native(first.value.loaded.snapshot).playerState.gear);
+    const descendant = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: 'slot-1', destinationSlotId: 'quick-save', expectedDestinationAddress: null,
+      expectedAccountRevision: (await owner.read(accountId))!.revision,
+      snapshot: first.value.loaded.snapshot, control: first.value.loaded.sessionControl });
+    check(descendant.status === 'ready', `native cross-slot descendant failed: ${JSON.stringify(descendant)}`);
+    if (descendant.status !== 'ready') return;
+    const loaded = descendant.value.loaded;
+    const retired = await new CleanEpochTerminalAdapter(owner).retire({ accountId,
+      sourceSlotId: 'quick-save', expectedAccountRevision: (await owner.read(accountId))!.revision,
+      snapshot: loaded.snapshot, control: loaded.sessionControl,
+      expectedSourceAddress: { artifactId: loaded.sessionControl.loadedArtifactId,
+        publicationId: loaded.sessionControl.loadedPublicationId } });
+    check(retired.status === 'completed' && retired.recovery.addressSlotIds.length === 2 &&
+      retired.recovery.addressSlotIds.includes('slot-1') &&
+      retired.recovery.addressSlotIds.includes('quick-save') &&
+      JSON.stringify(native(JSON.parse(JSON.parse(retired.recovery.envelopeRaw).snapshot)).playerState.gear) === originalGear &&
+      (await owner.readSlot(accountId, 'slot-1')).status === 'closed' &&
+      (await owner.readSlot(accountId, 'quick-save')).status === 'closed',
+    `native cross-slot terminal lost an address or gear: ${JSON.stringify(retired)}`);
+    owner.close();
+  });
+  await test('missing native source artifact cannot mint a terminal settlement', async () => {
+    const dbName = name(); const accountId = id('account');
+    const owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Missing Source QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'missing-source setup did not publish');
+    if (first.status !== 'ready') return;
+    const source = first.value.loaded;
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      const open = indexedDB.open(dbName);
+      open.onsuccess = () => resolve(open.result); open.onerror = () => reject(open.error);
+    });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction('artifacts', 'readwrite');
+      tx.objectStore('artifacts').delete([accountId, source.sessionControl.loadedArtifactId]);
+      tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
+      tx.onerror = () => reject(tx.error);
+    });
+    db.close();
+    const result = await new CleanEpochTerminalAdapter(owner).retire({ accountId,
+      sourceSlotId: 'slot-1', expectedAccountRevision: (await owner.read(accountId))!.revision,
+      snapshot: source.snapshot, control: source.sessionControl,
+      expectedSourceAddress: { artifactId: source.sessionControl.loadedArtifactId,
+        publicationId: source.sessionControl.loadedPublicationId } });
+    check(result.status === 'blocked' &&
+      (await owner.readTerminalForSource(accountId, source.sessionControl.campaignId,
+        source.sessionControl.loadedPublicationId)) === null &&
+      (await owner.read(accountId))?.revision === 2,
+    'missing native source allowed a terminal artifact or account mutation');
     owner.close();
   });
   await test('native descendant consumer abort resumes one accepted artifact and receipts', async () => {

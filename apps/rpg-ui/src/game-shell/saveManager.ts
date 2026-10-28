@@ -615,6 +615,7 @@ export async function buildNativeGearArtifactPublication(
     savedAt: string;
     expectedHead: { artifactId: string; publicationId: string; revision: number } | null;
     expectedSlotAddress?: { artifactId: string; publicationId: string } | null;
+    terminal?: boolean;
   }
 ): Promise<import('./campaignIndexedDbStore.js').CampaignStorePublication> {
   // Admission completes before the caller opens a storage transaction.
@@ -643,7 +644,7 @@ export async function buildNativeGearArtifactPublication(
     campaignId: campaign.campaignId, continuityId: campaign.continuityId,
     characterId: projected.playerState.playerId, artifactId: input.artifactId,
     generationId: input.generationId, publicationId: input.publicationId,
-    headRevision: revision, terminal: false, snapshot: JSON.stringify(projected)
+    headRevision: revision, terminal: input.terminal === true, snapshot: JSON.stringify(projected)
   };
   return {
     accountId: projected.accountId, campaignId: campaign.campaignId, slotId,
@@ -654,7 +655,7 @@ export async function buildNativeGearArtifactPublication(
       headArtifactId: input.artifactId, headPublicationId: input.publicationId,
       headRevision: revision, previousHeadArtifactId: input.expectedHead?.artifactId ?? null,
       previousHeadPublicationId: input.expectedHead?.publicationId ?? null,
-      closed: false, updatedAt: input.savedAt }
+      closed: input.terminal === true, updatedAt: input.savedAt }
   };
 }
 
