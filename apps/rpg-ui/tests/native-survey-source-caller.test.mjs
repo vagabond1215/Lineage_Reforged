@@ -20,7 +20,8 @@ const { resolveNativeSurveyMaterialEvidence } =
 const { resolvePlayerSurveyActivityAdvancementPlan } =
   await vite.ssrLoadModule('/../../packages/engines/game-engine/src/player-survey-activity-advancement.ts');
 const { createNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/newGameSnapshot.ts');
-const { readNativeFreshSaveSnapshot } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
+const { readNativeFreshSaveSnapshot, buildNativeGearArtifactPublication } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
+const { readRetainedNativeSurveyMaterial } = await vite.ssrLoadModule('/src/game-shell/nativeSurveyRetainedSource.ts');
 
 function sourceIdentity(snapshot) {
   return {
@@ -146,4 +147,42 @@ test('native worn-instance survey material resolves the same first shift as the 
     staleGear.playerState.gear.instances.find(item => item.location.kind === 'worn').durability = 0.5;
     assert.throws(() => resolveNativeSurveyMaterialEvidence(staleGear, sourceIdentity(staleGear), captured.witness));
   }
+});
+
+test('native survey material binds to the retained v3 head instead of caller-supplied source identity', async () => {
+  const { snapshot } = reachSurvey('starting_bundle.hunter');
+  const publication = await buildNativeGearArtifactPublication(snapshot, 'slot-1', {
+    artifactId: 'artifact.native.survey.retained', generationId: 'generation.native.survey.retained',
+    publicationId: 'publication.native.survey.retained', savedAt: '2026-10-28T00:00:00.000Z',
+    expectedHead: null
+  });
+  const retained = { artifactRaw: publication.artifactRaw, slotRaw: publication.artifactRaw,
+    control: publication.control, witness: null };
+  const originalBytes = JSON.stringify(retained);
+  const store = { read: async (accountId, campaignId, slotId) => {
+    assert.deepEqual([accountId, campaignId, slotId],
+      [snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1']);
+    return retained;
+  } };
+  const result = await readRetainedNativeSurveyMaterial(store, snapshot.accountId,
+    snapshot.campaignIdentity.campaignId, 'slot-1');
+  assert.equal(result.sourceIdentity.artifactId, publication.control.headArtifactId);
+  assert.equal(result.sourceIdentity.publicationId, publication.control.headPublicationId);
+  assert.equal(result.witness.stage, 'sector_1');
+  assert.equal(result.material.endClock.tick, snapshot.clock.tick + 2);
+  assert.deepEqual(result.snapshot.playerState.gear, snapshot.playerState.gear);
+  assert.equal(JSON.stringify(retained), originalBytes, 'read must not alter retained authority');
+  await assert.rejects(readRetainedNativeSurveyMaterial({ read: async () => null },
+    snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1'));
+  await assert.rejects(readRetainedNativeSurveyMaterial({ read: async () => ({ ...retained,
+    control: { ...retained.control, headArtifactId: 'artifact.stale' }
+  }) }, snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1'));
+  await assert.rejects(readRetainedNativeSurveyMaterial({ read: async () => ({ ...retained,
+    control: { ...retained.control, closed: true }
+  }) }, snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1'));
+  await assert.rejects(readRetainedNativeSurveyMaterial({ read: async () => ({ ...retained,
+    slotRaw: 'different-address'
+  }) }, snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1'));
+  await assert.rejects(readRetainedNativeSurveyMaterial({ read: async () => retained },
+    'account.other', snapshot.campaignIdentity.campaignId, 'slot-1'));
 });

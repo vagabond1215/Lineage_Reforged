@@ -3,11 +3,15 @@ import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog 
 import { getDefaultWorldSelection } from './src/game-shell/worldSelectionCatalog.js';
 import { createNativeNewGameSnapshot } from './src/game-shell/nativeNewGameSnapshot.js';
 import { buildNativeGearArtifactPublication, readNativeFreshSaveSnapshot } from './src/game-shell/saveManager.js';
+import { readRetainedNativeSurveyMaterial } from './src/game-shell/nativeSurveyRetainedSource.js';
+import { createPlayerQuestAcceptanceCommand, executePlayerQuestAcceptanceCommand } from '../../packages/engines/game-engine/src/player-quest-acceptance.js';
+import { createPlayerTravelCommand, executePlayerTravelCommand } from '../../packages/engines/game-engine/src/player-travel.js';
 import { openCampaignIndexedDbStore, CampaignStoreError } from './src/game-shell/campaignIndexedDbStore.js';
 import { openCleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.js';
 import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.js';
 import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.js';
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.js';
+import type { SaveSnapshot } from '../../packages/shared/types/src/index.js';
 
 const output = document.querySelector<HTMLPreElement>('#result')!;
 const passed: string[] = [];
@@ -137,6 +141,41 @@ async function suite() {
     const reopened = await store.read(request.accountId, request.campaignId, request.slotId);
     check(reopened?.artifactRaw === request.artifactRaw && reopened.slotRaw === request.artifactRaw, 'restart bytes changed');
     check((await store.publish(request)).status === 'same_source_retry', 'retry duplicated publication');
+    store.close();
+  });
+  await test('native survey material reads the actual current retained v3 artifact after restart', async () => {
+    const accountId = id('account');
+    const identity = getLineageIdentityCatalog('lineage.human')!;
+    const form = {
+      ...formFixture(), backstoryId: 'backstory.craftsmans_child',
+      continentId: 'region.myridian_chain', regionId: 'region.starfall_isle',
+      startingSettlementId: 'settlement.starfall_port',
+      hairColorId: identity.hairColorOptions[0]!.id
+    };
+    const first = createNativeNewGameSnapshot(form, accountId);
+    const questInput = first as unknown as SaveSnapshot;
+    const accepted = executePlayerQuestAcceptanceCommand(questInput,
+      createPlayerQuestAcceptanceCommand(questInput, 'quest.ashen_reef_survey'));
+    check(accepted.accepted, 'authored quest acceptance failed');
+    if (!accepted.accepted) return;
+    const traveled = executePlayerTravelCommand(accepted.snapshot,
+      createPlayerTravelCommand(accepted.snapshot, 'location.ashen_reef'));
+    check(traveled.accepted, 'authored survey travel failed');
+    if (!traveled.accepted) return;
+    const nativeTraveled = traveled.snapshot as unknown as ReturnType<typeof fixture>;
+    const publication = await attempt(nativeTraveled, null);
+    const dbName = name(); let store = await openCampaignIndexedDbStore({ name: dbName });
+    await store.publish(publication);
+    store.close(); store = await openCampaignIndexedDbStore({ name: dbName });
+    const bound = await readRetainedNativeSurveyMaterial(store, accountId,
+      nativeTraveled.campaignIdentity!.campaignId, 'slot-1');
+    check(bound.sourceIdentity.artifactId === publication.control.headArtifactId &&
+      bound.sourceIdentity.publicationId === publication.control.headPublicationId &&
+      bound.witness.stage === 'sector_1' &&
+      bound.material.endClock.tick === nativeTraveled.clock.tick + 2,
+      'restarted material did not bind to the retained head');
+    check(JSON.stringify(bound.snapshot.playerState.gear) ===
+      JSON.stringify(nativeTraveled.playerState.gear), 'retained material changed native gear');
     store.close();
   });
   await test('stale head, fork and changed same-ID retry cannot replace accepted artifact', async () => {
