@@ -275,7 +275,7 @@ test('first native survey result is versioned, replay-admitted and survives JSON
   const accepted = commitNativeSurveyFirstShift(bound, commandId);
   assert.deepEqual(commitNativeSurveyFirstShift(bound, commandId), accepted,
     'same source and request replay cannot charge another shift');
-  assert.equal(accepted.snapshot.nativeSurvey.version, 1);
+  assert.equal(accepted.snapshot.nativeSurvey.version, 2);
   assert.equal(accepted.snapshot.nativeSurvey.results.length, 1);
   assert.equal(accepted.snapshot.nativeSurvey.results[0].requestId, commandId);
   assert.equal(isNativeTargetCampaignSnapshot(accepted.snapshot), true);

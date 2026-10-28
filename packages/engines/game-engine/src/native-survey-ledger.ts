@@ -39,7 +39,7 @@ export type NativeSurveyReceipt = {
 };
 
 /** A bounded, ordered native survey history with one command receipt per accepted shift. */
-export type NativeSurveyLedger = { version: 1; results: NativeSurveyResult[]; receipts: NativeSurveyReceipt[] };
+export type NativeSurveyLedger = { version: 2; results: NativeSurveyResult[]; receipts: NativeSurveyReceipt[] };
 
 /** Compute a durable result from a verified retained source, without mutating it. */
 export function commitNativeSurveyFirstShift(source: {
@@ -78,7 +78,7 @@ export function commitNativeSurveyShift(source: {
   };
   const prior = source.snapshot.nativeSurvey;
   const snapshot: NativeFreshCampaignSnapshot = { ...candidate.snapshot, nativeSurvey: {
-    version: 1, results: [...(prior?.results ?? []), result],
+    version: 2, results: [...(prior?.results ?? []), result],
     receipts: [...(prior?.receipts ?? []), receipt]
   } };
   if (!validateNativeSurveyLedger(snapshot)) throw new Error(`Native survey ${candidate.stage} result failed local replay.`);
@@ -99,7 +99,7 @@ export function validateNativeSurveyLedger(snapshot: NativeFreshCampaignSnapshot
       operation.every(row => row.progress === 0) && !hasDiscovery;
     const ledger = snapshot.nativeSurvey;
     if (!exactKeys(ledger, ['version', 'results', 'receipts']) ||
-      ledger.version !== 1 || !Array.isArray(ledger.results) || !Array.isArray(ledger.receipts) ||
+      ledger.version !== 2 || !Array.isArray(ledger.results) || !Array.isArray(ledger.receipts) ||
       ledger.results.length < 1 || ledger.results.length > 4 ||
       ledger.receipts.length !== ledger.results.length || operation.length !== 1) return false;
     const count = ledger.results.length;
