@@ -2,7 +2,7 @@
 
 ## Source and boundary
 
-This unselected child starts from draft PR #39 `ed351578f57a6f44a257c79715b55b46c3c9617b`, itself stacked on #38, while clean `master` is `a596112acf3945f2bf7c625e943f2511d12aa710`. The approved PR #19 fresh-save direction rejects obsolete development-save migration without erasing records. Game `0.1.1-prealpha`, selected v2 App, Site, separate drafts and parked DEV-0.7.2.13 remain unchanged.
+This unselected [draft PR #41](https://github.com/vagabond1215/Lineage_Reforged/pull/41), implementation commit `8532977ccdc4e797de8cc7dd62cbe428598e6441`, starts from draft PR #39 `ed351578f57a6f44a257c79715b55b46c3c9617b`, itself stacked on #38, while clean `master` is `a596112acf3945f2bf7c625e943f2511d12aa710`. The approved PR #19 fresh-save direction rejects obsolete development-save migration without erasing records. Game `0.1.1-prealpha`, selected v2 App, Site, separate drafts and parked DEV-0.7.2.13 remain unchanged.
 
 The ordinary `CleanEpochDescendantAdapter` now accepts a fully admitted native v3 snapshot, retains its source epoch and campaign head fence, projects account/character achievements, and sends one version-8 artifact through the existing atomic campaign and account descendant owners. Native input cannot introduce a v2 Soundings witness. The v2 branch keeps its version-7 and Soundings behavior. Current v3 account consumer receipts and recovery use the same accepted artifact identity; no parallel inventory, equipment or account owner is added.
 
