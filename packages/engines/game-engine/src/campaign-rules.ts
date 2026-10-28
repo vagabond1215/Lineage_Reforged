@@ -12,6 +12,7 @@ import type {
   NotorietyModifierId,
   PlayerProgression,
   PlayerReputationState,
+  PlayerResourceModifierState,
   ReputationScope,
   RunDifficultyState,
   SaveSnapshot
@@ -157,14 +158,14 @@ function clamp(value: number, minimum: number, maximum: number): number {
 }
 
 function surveySkillRank(
-  inputs: AshenReefSurveyOwnerInputsState,
+  inputs: Pick<AshenReefSurveyOwnerInputsState, 'relevantSkills'>,
   skillId: (typeof SURVEY_RELEVANT_SKILL_IDS)[number]
 ): number {
   return inputs.relevantSkills.find((entry) => entry?.id === skillId)?.rank ?? 0;
 }
 
 export function resolveAshenReefSurveyMetabolicProfile(
-  inputs: AshenReefSurveyOwnerInputsState
+  inputs: Pick<AshenReefSurveyOwnerInputsState, 'attributes' | 'relevantSkills'>
 ): ActionMetabolicProfileState {
   const attributeAverage =
     (inputs.attributes.AGI + inputs.attributes.WIS + inputs.attributes.INT) / 3;
@@ -195,10 +196,16 @@ export function resolveAshenReefSurveyMetabolicProfile(
   };
 }
 
-function resolveExpectedSurveyOwnerEvidence(
+type SurveyMaterialInputs = Omit<AshenReefSurveyOwnerInputsState, 'equipment'> & (
+  | Pick<AshenReefSurveyOwnerInputsState, 'equipment'>
+  | { wornResourceModifiers: readonly PlayerResourceModifierState[]; equipment?: never }
+);
+
+/** Shared survey material math. Physical resource inputs stay format-specific. */
+export function resolveExpectedSurveyOwnerEvidence(
   characterId: string,
   stage: AshenReefSurveyAuthorityState["results"][number]["stage"],
-  inputs: AshenReefSurveyOwnerInputsState
+  inputs: SurveyMaterialInputs
 ) {
   const profile = resolveAshenReefSurveyMetabolicProfile(inputs);
   let clock = clone(inputs.clock);
@@ -246,7 +253,9 @@ function resolveExpectedSurveyOwnerEvidence(
         attributes: inputs.attributes,
         resources,
         originProfile: inputs.originProfile,
-        equipment: inputs.equipment,
+        ...('wornResourceModifiers' in inputs
+          ? { wornResourceModifiers: inputs.wornResourceModifiers! }
+          : { equipment: inputs.equipment }),
         resourceRuntime,
         bodyState
       },
