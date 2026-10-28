@@ -2,7 +2,7 @@ import { deserializeSnapshot } from "../../../../packages/shared/persistence/src
 import type { SaveSnapshot, SoundingsAdmissionWitness } from "../../../../packages/shared/types/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
-import { commitNativeSurveyFirstShift } from "../../../../packages/engines/game-engine/src/native-survey-ledger.js";
+import { commitNativeSurveyShift } from "../../../../packages/engines/game-engine/src/native-survey-ledger.js";
 import { prepareNativeSurveySource } from "../../../../packages/engines/game-engine/src/native-survey-source.js";
 import { canonicalNativeSurveyJson } from "../../../../packages/engines/game-engine/src/native-survey-material.js";
 import { isSoundingsAdmissionWitness, verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
@@ -119,7 +119,7 @@ export function validateNativeSurveyRetainedSource(
   if (envelope.version !== 8) return;
   const ledger = (snapshot as NativeFreshCampaignSnapshot).nativeSurvey;
   if (!ledger) return;
-  const result = ledger.results[0];
+  const result = ledger.results[ledger.results.length - 1];
   const witness = result?.sourceWitness;
   if (!witness || witness.sourceRevision + 1 !== envelope.headRevision ||
       witness.sourceArtifactId === envelope.artifactId || !retainedRaw)
@@ -132,8 +132,9 @@ export function validateNativeSurveyRetainedSource(
       source.envelope.slotId !== envelope.slotId ||
       source.envelope.continuityId !== envelope.continuityId ||
       source.envelope.characterId !== envelope.characterId ||
-      (source.snapshot as NativeFreshCampaignSnapshot).nativeSurvey)
-    fail("invalid_record", "Native survey source is not an admitted pre-shift v3 head.");
+      ((source.snapshot as NativeFreshCampaignSnapshot).nativeSurvey?.results.length ?? 0) !==
+        ledger.results.length - 1)
+    fail("invalid_record", "Native survey source does not contain the exact preceding v3 stage.");
   const identity = {
     accountId: envelope.accountId, campaignId: envelope.campaignId,
     continuityId: envelope.continuityId, artifactId: witness.sourceArtifactId,
@@ -143,7 +144,7 @@ export function validateNativeSurveyRetainedSource(
   if (!preparation.accepted ||
       canonicalNativeSurveyJson(preparation.witness) !== canonicalNativeSurveyJson(witness))
     fail("invalid_record", "Native survey witness differs from its retained source.");
-  const replayed = commitNativeSurveyFirstShift({ snapshot: source.snapshot as NativeFreshCampaignSnapshot,
+  const replayed = commitNativeSurveyShift({ snapshot: source.snapshot as NativeFreshCampaignSnapshot,
     sourceIdentity: identity, witness: preparation.witness }, result.requestId);
   if (canonicalNativeSurveyJson(replayed.snapshot) !== canonicalNativeSurveyJson(snapshot))
     fail("invalid_record", "Native survey result differs from retained-source replay.");
@@ -468,19 +469,29 @@ export class CampaignIndexedDbStore {
   /** First native shift must replay from its immutable v3 predecessor inside the publication transaction. */
   private async verifyNativeSurveyInTransaction(tx: IDBTransaction, envelope: CampaignArtifactEnvelope, snapshot: CampaignArtifactSnapshot): Promise<void> {
     if (envelope.version !== 8) return;
-    const ledger = (snapshot as NativeFreshCampaignSnapshot).nativeSurvey;
-    if (!ledger) return;
-    const result = ledger.results[0];
-    const witness = result?.sourceWitness;
-    if (!witness || witness.sourceRevision + 1 !== envelope.headRevision ||
-        witness.sourceArtifactId === envelope.artifactId)
-      fail("invalid_record", "Native survey result lacks its immediate retained source.");
-    const retained = await requestValue(tx.objectStore("artifacts").get([envelope.accountId, witness.sourceArtifactId]) as IDBRequest<unknown>);
-    if (!artifactRecord(retained, envelope.accountId, witness.sourceArtifactId) ||
-        retained.campaignId !== envelope.campaignId || retained.publicationId !== witness.sourcePublicationId ||
-        retained.headRevision !== witness.sourceRevision || retained.slotId !== envelope.slotId)
-      fail("invalid_record", "Native survey retained source artifact is missing or conflicting.");
-    validateNativeSurveyRetainedSource(envelope, snapshot, retained.raw);
+    let currentEnvelope: CampaignArtifactEnvelope = envelope;
+    let currentSnapshot: CampaignArtifactSnapshot = snapshot;
+    const seen = new Set<string>();
+    while (currentEnvelope.version === 8 && (currentSnapshot as NativeFreshCampaignSnapshot).nativeSurvey) {
+      const ledger = (currentSnapshot as NativeFreshCampaignSnapshot).nativeSurvey!;
+      const result = ledger.results[ledger.results.length - 1];
+      const witness = result?.sourceWitness;
+      if (!witness || witness.sourceRevision + 1 !== currentEnvelope.headRevision ||
+          witness.sourceArtifactId === currentEnvelope.artifactId ||
+          seen.has(witness.sourceArtifactId) || seen.size >= 4)
+        fail("invalid_record", "Native survey result lacks its immediate retained source.");
+      seen.add(witness.sourceArtifactId);
+      const retained = await requestValue(tx.objectStore("artifacts").get([currentEnvelope.accountId, witness.sourceArtifactId]) as IDBRequest<unknown>);
+      if (!artifactRecord(retained, currentEnvelope.accountId, witness.sourceArtifactId) ||
+          retained.campaignId !== currentEnvelope.campaignId ||
+          retained.publicationId !== witness.sourcePublicationId ||
+          retained.headRevision !== witness.sourceRevision || retained.slotId !== currentEnvelope.slotId)
+        fail("invalid_record", "Native survey retained source artifact is missing or conflicting.");
+      validateNativeSurveyRetainedSource(currentEnvelope, currentSnapshot, retained.raw);
+      const prior = validatedEnvelope(retained.raw, currentEnvelope.accountId, currentEnvelope.campaignId);
+      currentEnvelope = prior.envelope;
+      currentSnapshot = prior.snapshot;
+    }
   }
 
   private async exactReadback(input: CampaignStorePublication): Promise<CampaignStoreReadback> {
