@@ -38,6 +38,17 @@ export function isNativeTargetCampaignSnapshot(value: unknown): value is NativeF
       survey.results.length > 0 || survey.consequenceReceipts.length > 0 ||
       survey.projectionRepairs.length > 0 || survey.corrections.length > 0)) return false;
 
+    // A native shift has no retained command/replay contract yet. Refuse its
+    // recognizable progression markers rather than admitting unwitnessed stages.
+    if (snapshot.sessionState.flags.some(flag =>
+      flag.startsWith('gameplay.quest.ashen_reef_survey.sector.') ||
+      flag === 'gameplay.quest.ashen_reef_survey.ruins_confirmed' ||
+      flag === 'gameplay.discovery.stormglass_bloom') ||
+      snapshot.sessionState.operations.some(row =>
+        row.id === 'operation.quest.ashen_reef_survey' && row.progress > 0) ||
+      snapshot.playerState.discoveryChronicle.entries.some(row =>
+        row.sourceType === 'survey' && row.sourceId === 'quest.ashen_reef_survey')) return false;
+
     // Existing nonphysical campaign checks are reused through an ephemeral read-only
     // projection. No v2 equipment map is sourced from or stored beside native gear.
     const { gear: _gear, ...nonPhysicalPlayer } = snapshot.playerState;
