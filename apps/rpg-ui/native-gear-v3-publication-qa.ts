@@ -7,16 +7,24 @@ import { readRetainedNativeSurveyMaterial } from './src/game-shell/nativeSurveyR
 import { commitNativeSurveyFirstShift, commitNativeSurveyShift } from '../../packages/engines/game-engine/src/native-survey-ledger.js';
 import { createPlayerQuestAcceptanceCommand, executePlayerQuestAcceptanceCommand } from '../../packages/engines/game-engine/src/player-quest-acceptance.js';
 import { createPlayerTravelCommand, executePlayerTravelCommand } from '../../packages/engines/game-engine/src/player-travel.js';
-import { openCampaignIndexedDbStore, CampaignStoreError } from './src/game-shell/campaignIndexedDbStore.js';
+import { openCampaignIndexedDbStore, CampaignIndexedDbStore, CampaignStoreError } from './src/game-shell/campaignIndexedDbStore.js';
 import { openCleanEpochAccountStore } from './src/game-shell/cleanEpochAccountStore.js';
 import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirstCampaignAdapter.js';
+import { CleanEpochDescendantAdapter } from './src/game-shell/cleanEpochDescendantAdapter.js';
 import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.js';
 import { createCredentialRecord } from './src/game-shell/launcherAuthManager.js';
+import type { SaveSlotId } from './src/game-shell/state.js';
+import { isNativeTargetCampaignSnapshot } from '../../packages/engines/game-engine/src/native-campaign-rules.js';
 import type { SaveSnapshot } from '../../packages/shared/types/src/index.js';
 
 const output = document.querySelector<HTMLPreElement>('#result')!;
 const passed: string[] = [];
 const check = (condition: unknown, message: string) => { if (!condition) throw new Error(message); };
+const native = (snapshot: unknown) => {
+  check(isNativeTargetCampaignSnapshot(snapshot), 'expected native v3 snapshot');
+  if (!isNativeTargetCampaignSnapshot(snapshot)) throw new Error('Expected native v3 snapshot.');
+  return snapshot;
+};
 const name = () => `lineage.native-v3.qa.${crypto.randomUUID()}`;
 const id = (kind: string) => `${kind}.${crypto.randomUUID()}`;
 const formFixture = () => {
@@ -92,6 +100,104 @@ async function suite() {
       'native retry changed publication or charged consumers twice');
     owner.close();
   });
+  await test('native account descendant saves authored quest travel through the selected account owner', async () => {
+    const dbName = name(); const accountId = id('account');
+    let owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Descendant QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const surveyForm = { ...formFixture(), backstoryId: 'backstory.craftsmans_child',
+      continentId: 'region.myridian_chain', regionId: 'region.starfall_isle',
+      startingSettlementId: 'settlement.starfall_port' };
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, surveyForm);
+    check(first.status === 'ready', 'native first campaign did not publish');
+    if (first.status !== 'ready') return;
+    const accepted = executePlayerQuestAcceptanceCommand(first.value.loaded.snapshot,
+      createPlayerQuestAcceptanceCommand(first.value.loaded.snapshot, 'quest.ashen_reef_survey'));
+    check(accepted.accepted, 'native quest acceptance failed');
+    if (!accepted.accepted) return;
+    const traveled = executePlayerTravelCommand(accepted.snapshot,
+      createPlayerTravelCommand(accepted.snapshot, 'location.ashen_reef'));
+    check(traveled.accepted, 'native travel failed');
+    if (!traveled.accepted) return;
+    const account = await owner.read(accountId);
+    const saved = await new CleanEpochDescendantAdapter(owner).save({
+      accountId, sourceSlotId: 'slot-1', destinationSlotId: 'slot-1',
+      expectedAccountRevision: account!.revision, snapshot: traveled.snapshot,
+      control: first.value.loaded.sessionControl
+    });
+    check(saved.status === 'ready' && saved.value.loaded.snapshot.snapshotVersion ===
+      'lineage.save_snapshot.v3', `native descendant did not publish: ${JSON.stringify(saved)}`);
+    if (saved.status !== 'ready') return;
+    const initialGear = JSON.stringify(native(first.value.loaded.snapshot).playerState.gear);
+    for (const stage of ['sector_1', 'sector_2', 'sector_3', 'ruins_confirmation']) {
+      const db = await new Promise<IDBDatabase>((resolve, reject) => {
+        const request = indexedDB.open(dbName);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+      const campaignStore = new CampaignIndexedDbStore(db);
+      const bound = await readRetainedNativeSurveyMaterial(campaignStore, accountId,
+        saved.value.loaded.sessionControl.campaignId, 'slot-1');
+      check(bound.witness.stage === stage, `native account source did not reach ${stage}`);
+      campaignStore.close();
+      const current = await owner.readSlot(accountId, 'slot-1');
+      check(current.status === 'ready', 'native source slot is not ready');
+      if (current.status !== 'ready') return;
+      const revision = (await owner.read(accountId))!.revision;
+      const command = commitNativeSurveyShift(bound, `survey_request.${crypto.randomUUID()}`);
+      const result = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+        sourceSlotId: 'slot-1', destinationSlotId: 'slot-1', expectedAccountRevision: revision,
+        snapshot: command.snapshot, control: current.loaded.sessionControl });
+      check(result.status === 'ready', `native account ${stage} did not publish: ${JSON.stringify(result)}`);
+      owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    }
+    const final = await owner.readSlot(accountId, 'slot-1');
+    check(final.status === 'ready' && native(final.loaded.snapshot).nativeSurvey?.results.length === 4 &&
+      JSON.stringify(native(final.loaded.snapshot).playerState.gear) === initialGear,
+      'native account restart lost survey history or physical gear');
+    if (final.status !== 'ready') return;
+    const afterSurvey = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: 'slot-1', destinationSlotId: 'slot-1',
+      expectedAccountRevision: (await owner.read(accountId))!.revision,
+      snapshot: final.loaded.snapshot, control: final.loaded.sessionControl });
+    check(afterSurvey.status === 'ready',
+      `ordinary Save after completed survey did not publish: ${JSON.stringify(afterSurvey)}`);
+    if (afterSurvey.status !== 'ready') return;
+    const beforeCross = await owner.read(accountId);
+    const cross = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: 'slot-1', destinationSlotId: 'slot-2',
+      expectedAccountRevision: beforeCross!.revision, expectedDestinationAddress: null,
+      snapshot: afterSurvey.value.loaded.snapshot, control: afterSurvey.value.loaded.sessionControl });
+    check(cross.status === 'ready', `native cross-slot descendant did not publish: ${JSON.stringify(cross)}`);
+    if (cross.status !== 'ready') return;
+    const crossPublication = cross.value.loaded.publication.publicationId;
+    const crossGear = JSON.stringify(native(cross.value.loaded.snapshot).playerState.gear);
+    const crossSurvey = JSON.stringify(native(cross.value.loaded.snapshot).nativeSurvey);
+    const accountAfterCross = await owner.read(accountId);
+    const receipts = accountAfterCross?.profile.campaignPublicationReceipts?.filter(
+      receipt => receipt.publicationId === crossPublication) ?? [];
+    const history = accountAfterCross?.profile.history.runRecords.filter(
+      record => record.characterId === cross.value.loaded.snapshot.playerState.playerId) ?? [];
+    check(crossGear === initialGear && crossSurvey === JSON.stringify(native(final.loaded.snapshot).nativeSurvey) &&
+      receipts.length === 4 && receipts.every(receipt => receipt.status === 'applied') &&
+      history.length === 1 && history[0]!.saveSlotIds.includes('slot-1') &&
+      history[0]!.saveSlotIds.includes('slot-2') &&
+      accountAfterCross?.revision === beforeCross!.revision + 1,
+      'cross-slot changed gear, survey evidence, history or consumer receipts');
+    const stale = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: 'slot-1', destinationSlotId: 'slot-2',
+      expectedAccountRevision: beforeCross!.revision, expectedDestinationAddress: null,
+      snapshot: afterSurvey.value.loaded.snapshot, control: afterSurvey.value.loaded.sessionControl });
+    check(stale.status === 'blocked' && stale.code === 'stale_head',
+      'stale account request changed cross-slot head');
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    const crossRestart = await owner.readSlot(accountId, 'slot-2');
+    check(crossRestart.status === 'ready' && crossRestart.loaded.publication.publicationId === crossPublication &&
+      JSON.stringify(native(crossRestart.loaded.snapshot).playerState.gear) === crossGear &&
+      JSON.stringify(native(crossRestart.loaded.snapshot).nativeSurvey) === crossSurvey,
+      'cross-slot restart lost accepted v3 state');
+    owner.close();
+  });
   await test('obsolete v2 slot is incompatible with native creator without deleting its records', async () => {
     const dbName = name(); const accountId = id('account');
     const owner = await openCleanEpochAccountStore({ name: dbName });
@@ -105,6 +211,70 @@ async function suite() {
     const retained = await owner.readSlot(accountId, 'slot-1');
     check(retained.status === 'ready' && retained.loaded?.snapshot.snapshotVersion ===
       'lineage.save_snapshot.v2', 'incompatible old record was deleted or changed');
+    owner.close();
+  });
+  await test('native descendant consumer abort resumes one accepted artifact and receipts', async () => {
+    const dbName = name(); const accountId = id('account');
+    let owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Recovery QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'native recovery first campaign did not publish');
+    if (first.status !== 'ready') return;
+    const revision = (await owner.read(accountId))!.revision;
+    const originalGear = JSON.stringify(native(first.value.loaded.snapshot).playerState.gear);
+    owner.close();
+    let writes = 0;
+    owner = await openCleanEpochAccountStore({ name: dbName,
+      afterWrite: tx => { if (++writes === 5) tx.abort(); } });
+    const interrupted = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: 'slot-1', destinationSlotId: 'slot-1', expectedAccountRevision: revision,
+      snapshot: first.value.loaded.snapshot, control: first.value.loaded.sessionControl });
+    check(interrupted.status === 'blocked' && interrupted.code === 'aborted',
+      `native descendant consumer fault did not interrupt: ${JSON.stringify(interrupted)}`);
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    const pending = await owner.readCurrentDescendantRecovery(accountId, 'slot-1');
+    check(pending?.status === 'accepted_pending_consumers',
+      'native descendant fault lost pending accepted artifact');
+    if (!pending) return;
+    const retryRequest = { publication: {
+      accountId, campaignId: pending.campaignId, slotId: pending.slotId as SaveSlotId,
+      expectedHead: pending.expectedHead, expectedSlotAddress: pending.expectedSlotAddress,
+      artifactRaw: pending.envelopeRaw,
+      control: { version: 1 as const, accountId, campaignId: pending.campaignId,
+        headArtifactId: pending.artifactId, headPublicationId: pending.publicationId,
+        headRevision: pending.headRevision,
+        previousHeadArtifactId: pending.expectedHead.artifactId,
+        previousHeadPublicationId: pending.expectedHead.publicationId,
+        closed: false, updatedAt: pending.createdAt }
+    }, expectedAccountRevision: pending.expectedAccountRevision,
+      sourceSlotId: pending.sourceSlotId as SaveSlotId, sourceArtifactId: pending.sourceArtifactId,
+      sourcePublicationId: pending.sourcePublicationId,
+      sourceSnapshotRaw: pending.sourceSnapshotRaw, consumerPlans: pending.consumerPlans };
+    const exactRetry = await owner.publishDescendant(retryRequest);
+    check(exactRetry.publication.status === 'same_source_retry' &&
+      exactRetry.recovery.publicationId === pending.publicationId &&
+      (await owner.read(accountId))?.revision === revision,
+      'lost-acknowledgement retry minted a second native descendant');
+    const changedEnvelope = JSON.parse(pending.envelopeRaw);
+    changedEnvelope.savedAt = new Date(Date.parse(changedEnvelope.savedAt) + 1000).toISOString();
+    await rejectCode(() => owner.publishDescendant({ ...retryRequest, publication: {
+      ...retryRequest.publication, artifactRaw: JSON.stringify(changedEnvelope) } }), 'conflict');
+    check((await owner.read(accountId))?.revision === revision,
+      'changed same-ID retry altered the pending native account');
+    const resumed = await new CleanEpochDescendantAdapter(owner).resumeCurrent(accountId, 'slot-1');
+    check(resumed.status === 'ready' && resumed.value.loaded.publication.publicationId === pending.publicationId &&
+      JSON.stringify(native(resumed.value.loaded.snapshot).playerState.gear) === originalGear,
+      'native descendant resume changed artifact or gear');
+    const account = await owner.read(accountId);
+    const receipts = account?.profile.campaignPublicationReceipts?.filter(
+      receipt => receipt.publicationId === pending.publicationId) ?? [];
+    check(account?.revision === revision + 1 && receipts.length === 4 &&
+      receipts.every(receipt => receipt.status === 'applied'),
+      'native descendant consumer completion did not commit exactly once');
+    const second = await new CleanEpochDescendantAdapter(owner).resumeCurrent(accountId, 'slot-1');
+    check(second.status === 'blocked' && (await owner.read(accountId))?.revision === revision + 1,
+      'second resume repeated native account effects');
     owner.close();
   });
   await test('native first-publication consumer abort resumes exact accepted artifact after restart', async () => {
