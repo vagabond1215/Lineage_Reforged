@@ -4,6 +4,8 @@
 
 This child starts from `codex/native-v3-account-descendant` at `a3f24c9177034adf4f4068f356d4b0c39337b207` (draft PR #41). Inspected clean `master` was `a596112acf3945f2bf7c625e943f2511d12aa710`; the four-stage parent PR #39 was `ed351578f57a6f44a257c79715b55b46c3c9617b`. PR #19's approved fresh-save direction applies: obsolete development saves are rejected, retained, and not migrated. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. This is an unversioned support run with development impact `supports_current_band` and game-version impact `none`.
 
+Published as [draft PR #42](https://github.com/vagabond1215/Lineage_Reforged/pull/42), stacked on #41; implementation/evidence commit `2f46abf6d34288381af2b2a657bd1c898e239e0e` was pushed and read back at that exact remote head before this PR-link handoff update.
+
 **Decision: unselected native terminal retirement is ready for stacked review; selected v3 activation is held.** The existing `CleanEpochTerminalAdapter` now accepts a fully admitted native v3 source through the same account, campaign-head, slot-address, terminal-recovery and settlement owners used for v2. The native branch publishes a terminal version-8 artifact with `closed` campaign control. Physical instance IDs, durability, locations and the native survey ledger remain in that artifact. Account history, Legacy payout, safe fungible estate deposit and six consumer receipts still use the established retirement projection; no estate transfer rule for nonfungible gear was invented. The v2 branch retains version-7/Soundings handling.
 
 The native publication builder gained an optional terminal posture used only by retirement. Ordinary v3 first/descendant publications remain open. No second equipment or account owner was added.
