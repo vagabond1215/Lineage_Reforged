@@ -299,6 +299,7 @@ export function resolveExpectedSurveyOwnerEvidence(
     resourcesBefore: clone(inputs.resources),
     resourcesAfterNatural,
     resourcesAfter: resources,
+    resourceRuntimeAfter: resourceRuntime,
     skill: {
       skillId,
       requestedDelta: 1 as const,

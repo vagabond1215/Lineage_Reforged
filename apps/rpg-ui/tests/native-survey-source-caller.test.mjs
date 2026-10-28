@@ -22,6 +22,7 @@ const { resolvePlayerSurveyActivityAdvancementPlan } =
 const { createNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/newGameSnapshot.ts');
 const { readNativeFreshSaveSnapshot, buildNativeGearArtifactPublication } = await vite.ssrLoadModule('/src/game-shell/saveManager.ts');
 const { readRetainedNativeSurveyMaterial } = await vite.ssrLoadModule('/src/game-shell/nativeSurveyRetainedSource.ts');
+const { executeNativeSurveyShiftCandidate } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-survey-shift-candidate.ts');
 
 function sourceIdentity(snapshot) {
   return {
@@ -185,4 +186,74 @@ test('native survey material binds to the retained v3 head instead of caller-sup
   }) }, snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1'));
   await assert.rejects(readRetainedNativeSurveyMaterial({ read: async () => retained },
     'account.other', snapshot.campaignIdentity.campaignId, 'slot-1'));
+});
+
+test('real native survey source produces one isolated first-shift owner mutation without publishing false authority', async () => {
+  const { snapshot, gear } = reachSurvey('starting_bundle.hunter');
+  const before = structuredClone(snapshot);
+  const published = await buildNativeGearArtifactPublication(snapshot, 'slot-1', {
+    artifactId: 'artifact.native.shift.1', generationId: 'generation.native.shift.1',
+    publicationId: 'publication.native.shift.1', savedAt: '2026-10-28T00:00:00.000Z',
+    expectedHead: null
+  });
+  const retained = { artifactRaw: published.artifactRaw, slotRaw: published.artifactRaw,
+    control: published.control, witness: null };
+  const bound = await readRetainedNativeSurveyMaterial({ read: async () => retained },
+    snapshot.accountId, snapshot.campaignIdentity.campaignId, 'slot-1');
+  const candidate = executeNativeSurveyShiftCandidate(bound,
+    'survey_request.12345678-1234-4123-8123-123456789abc');
+  assert.equal(candidate.version, 1);
+  assert.equal(candidate.stage, 'sector_1');
+  assert.equal(candidate.snapshot.clock.tick, snapshot.clock.tick + 2);
+  assert.equal(candidate.snapshot.capturedAtTick, candidate.snapshot.clock.tick);
+  assert.equal(candidate.snapshot.playerState.saveMeta.totalPlayTicks,
+    snapshot.playerState.saveMeta.totalPlayTicks + 2);
+  assert.deepEqual(candidate.snapshot.playerState.bodyState, bound.material.bodyAfter);
+  assert.deepEqual(candidate.snapshot.playerState.resources, bound.material.resourcesAfter);
+  assert.deepEqual(candidate.snapshot.playerState.resourceRuntime, bound.material.resourceRuntimeAfter);
+  assert.deepEqual(candidate.snapshot.playerState.statGrowth, bound.material.statGrowthAfter);
+  assert.deepEqual(candidate.snapshot.playerState.gear, gear);
+  assert.equal(candidate.snapshot.sessionState.flags.includes('gameplay.quest.ashen_reef_survey.sector.1'), true);
+  assert.equal(candidate.snapshot.sessionState.operations.find(row => row.id ===
+    'operation.quest.ashen_reef_survey')?.progress, 25);
+  assert.equal(candidate.snapshot.playerState.skills.find(row => row.id ===
+    'skill.knowledge.general_lore')?.rank, bound.material.skill.rankAfter);
+  const legacyPlan = resolvePlayerSurveyActivityAdvancementPlan(
+    reachLegacySurvey('starting_bundle.hunter'));
+  assert.equal(legacyPlan.accepted, true);
+  assert.deepEqual(candidate.snapshot.playerState.bodyState, legacyPlan.projectedBodyState);
+  assert.deepEqual(candidate.snapshot.playerState.resources, legacyPlan.projectedResources);
+  assert.equal(bound.material.skill.appliedDelta, legacyPlan.skill.appliedDelta);
+  assert.deepEqual(candidate.snapshot.sessionState.operations.find(row => row.id ===
+    'operation.quest.ashen_reef_survey'), legacyPlan.operation);
+  assert.equal(candidate.sourceArtifactId, published.control.headArtifactId);
+  assert.equal(candidate.sourcePublicationId, published.control.headPublicationId);
+  assert.deepEqual(snapshot, before, 'candidate must not mutate retained source');
+  assert.deepEqual(executeNativeSurveyShiftCandidate(bound,
+    'survey_request.12345678-1234-4123-8123-123456789abc'), candidate,
+  'recomputing the same unpublished candidate must not charge or change state');
+  assert.equal(isNativeTargetCampaignSnapshot(candidate.snapshot), false,
+    'unwitnessed candidate must remain outside Save admission');
+  const operationOnly = structuredClone(candidate.snapshot);
+  operationOnly.sessionState.flags = operationOnly.sessionState.flags.filter(flag =>
+    flag !== 'gameplay.quest.ashen_reef_survey.sector.1');
+  assert.equal(isNativeTargetCampaignSnapshot(operationOnly), false,
+    'operation progress alone cannot bypass the native witness gate');
+  const discoveryOnly = structuredClone(snapshot);
+  discoveryOnly.sessionState.flags.push('gameplay.discovery.stormglass_bloom');
+  assert.equal(isNativeTargetCampaignSnapshot(discoveryOnly), false,
+    'unwitnessed discovery cannot bypass the native witness gate');
+  await assert.rejects(readNativeFreshSaveSnapshot(JSON.stringify(candidate.snapshot)),
+    /incompatible or corrupt/i);
+  await assert.rejects(buildNativeGearArtifactPublication(candidate.snapshot, 'slot-1', {
+    artifactId: 'artifact.native.shift.2', generationId: 'generation.native.shift.2',
+    publicationId: 'publication.native.shift.2', savedAt: '2026-10-28T00:01:00.000Z',
+    expectedHead: { artifactId: published.control.headArtifactId,
+      publicationId: published.control.headPublicationId, revision: 1 }
+  }), /valid fresh v3 campaign/i);
+  assert.throws(() => executeNativeSurveyShiftCandidate(bound, 'not-a-request'));
+  const forged = structuredClone(bound);
+  forged.witness.ownerInputs.worn[0].durability = -1;
+  assert.throws(() => executeNativeSurveyShiftCandidate(forged,
+    'survey_request.12345678-1234-4123-8123-123456789abc'));
 });
