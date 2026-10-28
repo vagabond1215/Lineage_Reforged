@@ -1,0 +1,21 @@
+# Native v3 terminal lifecycle checkpoint — 2026-10-28
+
+## Source and decision
+
+This child starts from `codex/native-v3-account-descendant` at `a3f24c9177034adf4f4068f356d4b0c39337b207` (draft PR #41). Inspected clean `master` was `a596112acf3945f2bf7c625e943f2511d12aa710`; the four-stage parent PR #39 was `ed351578f57a6f44a257c79715b55b46c3c9617b`. PR #19's approved fresh-save direction applies: obsolete development saves are rejected, retained, and not migrated. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. This is an unversioned support run with development impact `supports_current_band` and game-version impact `none`.
+
+**Decision: unselected native terminal retirement is ready for stacked review; selected v3 activation is held.** The existing `CleanEpochTerminalAdapter` now accepts a fully admitted native v3 source through the same account, campaign-head, slot-address, terminal-recovery and settlement owners used for v2. The native branch publishes a terminal version-8 artifact with `closed` campaign control. Physical instance IDs, durability, locations and the native survey ledger remain in that artifact. Account history, Legacy payout, safe fungible estate deposit and six consumer receipts still use the established retirement projection; no estate transfer rule for nonfungible gear was invented. The v2 branch retains version-7/Soundings handling.
+
+The native publication builder gained an optional terminal posture used only by retirement. Ordinary v3 first/descendant publications remain open. No second equipment or account owner was added.
+
+## Executable evidence
+
+The first new real account-caller browser test failed before repair: `invalid_record` at the v2-only terminal guard. After repair, synthetic IndexedDB native publication QA passes **17/17**. New cases cover terminal version-8 artifact, exact gear bytes, closed slot and six receipts; exact retry and changed retry; Save/restart; settlement abort with retained pending terminal and restart completion; cross-slot closure of both addresses; and source-artifact deletion refusing settlement. Existing v2 terminal QA passes **14/14**, and v2 Normal-defeat QA **8/8**. All use disposable synthetic local accounts and are not authenticated selected gameplay.
+
+Focused native app owner tests **22/22**, adjacent native/selected-v2 app tests **24/24**, account/Save root tests **23/23**, and gear/adjacent v2 survey root tests **28/28** pass. Content lint checks **72 files**. Node UI typecheck passes. Direct app-local Vite build succeeds with **271 client modules**. App TypeScript diagnostics match exact #41 parent **115/115**; broad workspace diagnostics match **763/763** after a test-only nullability fix, with no changed-file diagnostics. `git diff --check` passes. The first root-cwd app test invocation failed because Vite SSR used the wrong root; the app-cwd serial rerun passed **22/22**.
+
+## Remaining activation gate
+
+`EpochApp.tsx` still constructs `CleanEpochFirstCampaignAdapter(owner)` with the default v2 format and uses v2-selected state/save/terminal flows. `CleanEpochNormalDefeatRecoveryAdapter.ts` and `completePendingNormalDefeatRecovery` in `campaign-session.ts` still require `SaveSnapshot` and v2 `isTargetCampaignSnapshot` authority. A native pending Normal-defeat caller, provenance, completion and descendant replay are not established. Mixed-format selected tabs and all selected App actions have not passed one coherent v3 end-to-end gate. No authenticated selected v3 gameplay, Save/restart or Site deployment was attempted. Existing v2 records remain untouched.
+
+Applied failure patterns: FP-001 real creator/account/terminal caller; FP-002 held selected parent; FP-003 pending terminal completion owner; FP-004 account and address scope; FP-005 exact/changed/restarted retry; FP-008 stacked semantic review; FP-009 inspected master/parent versus final branch; FP-011 source and terminal admission before settlement; FP-012 unique terminal artifact and six receipts; FP-013 preserved physical gear; FP-014/015 recomputed retirement projection; FP-016 closed address and retained artifact readback. Review this child only after the remaining Normal-defeat and selected v3 gates are executable. No merge, deletion or retargeting is authorized in this checkpoint.

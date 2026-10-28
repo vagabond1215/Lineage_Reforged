@@ -1,5 +1,6 @@
 import { prepareCharacterAchievementProgress } from '../../../../packages/engines/game-engine/src/achievements.js';
 import { createAuthorityId, isTargetCampaignSnapshot, TARGET_SNAPSHOT_FORMAT } from '../../../../packages/engines/game-engine/src/campaign-rules.js';
+import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
 import { hasPendingNormalDefeat } from '../../../../packages/engines/game-engine/src/normal-defeat.js';
 import { verifySoundingsAdmissionProvenance } from '../../../../packages/engines/game-engine/src/soundings-admission-witness.js';
 import { serializeSnapshot, deserializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
@@ -10,7 +11,7 @@ import { type CleanEpochAccountStore, type CleanEpochAccountRecord,
   type CleanEpochTerminalRecovery } from './cleanEpochAccountStore.js';
 import { projectRetirementSettlement, retirementSettlementFingerprint,
   RETIREMENT_CONSUMERS } from './cleanEpochTerminalProjection.js';
-import { buildSaveMetadata, type CampaignPublicationConsumerPlan,
+import { buildNativeGearArtifactPublication, buildSaveMetadata, type CampaignPublicationConsumerPlan,
   type StoredSaveEnvelope } from './saveManager.js';
 import type { SaveSlotId } from './state.js';
 
@@ -54,21 +55,24 @@ export class CleanEpochTerminalAdapter {
   }
 
   async retire(input: { accountId: string; sourceSlotId: SaveSlotId;
-    expectedAccountRevision: number; snapshot: SaveSnapshot; control: CampaignSessionControl;
+    expectedAccountRevision: number; snapshot: SaveSnapshot | NativeFreshCampaignSnapshot; control: CampaignSessionControl;
     expectedSourceAddress: { artifactId: string; publicationId: string } }): Promise<EpochTerminalResult> {
     try {
       const { accountId, sourceSlotId, snapshot, control, expectedAccountRevision,
         expectedSourceAddress } = input;
-      if (!isTargetCampaignSnapshot(snapshot) || !snapshot.campaignIdentity ||
-          snapshot.accountId !== accountId || hasPendingNormalDefeat(snapshot) ||
+      const native = isNativeTargetCampaignSnapshot(snapshot);
+      if ((!native && !isTargetCampaignSnapshot(snapshot)) || !snapshot.campaignIdentity ||
+          snapshot.accountId !== accountId || hasPendingNormalDefeat(snapshot as SaveSnapshot) ||
           control.accountId !== accountId || control.campaignId !== snapshot.campaignIdentity.campaignId ||
           !sameAddress(expectedSourceAddress, { artifactId: control.loadedArtifactId,
             publicationId: control.loadedPublicationId }))
         throw new CampaignStoreError('invalid_record', 'Retirement requires one exact retained open source.');
+      if (native && control.soundingsAdmissionWitness)
+        throw new CampaignStoreError('invalid_record', 'Native retirement cannot carry a v2 Soundings witness.');
       const existing = await this.owner.readTerminalForSource(accountId, control.campaignId,
         control.loadedPublicationId);
       if (existing) {
-        const prepared = prepareCharacterAchievementProgress(snapshot, existing.createdAt).snapshot;
+        const prepared = prepareCharacterAchievementProgress(snapshot as SaveSnapshot, existing.createdAt).snapshot;
         const terminal = deserializeSnapshot(
           (JSON.parse(existing.envelopeRaw) as StoredSaveEnvelope).snapshot);
         if (existing.slotId !== sourceSlotId || existing.expectedAccountRevision !== expectedAccountRevision ||
@@ -108,8 +112,10 @@ export class CleanEpochTerminalAdapter {
       }
       addressSlotIds.sort();
       const savedAt = new Date().toISOString();
-      const prepared = prepareCharacterAchievementProgress(snapshot, savedAt).snapshot;
-      const provenance = verifySoundingsAdmissionProvenance(prepared, control);
+      const prepared = prepareCharacterAchievementProgress(snapshot as SaveSnapshot, savedAt).snapshot;
+      if (native && !isNativeTargetCampaignSnapshot(prepared))
+        throw new CampaignStoreError('invalid_record', 'Native retirement projection changed the physical owner.');
+      const provenance = native ? 'not_completed' : verifySoundingsAdmissionProvenance(prepared, control);
       if (provenance !== 'not_completed' && provenance !== 'verified')
         throw new CampaignStoreError('invalid_record', `Retirement Soundings provenance is ${provenance}.`);
       const firstCompletion = prepared.authorityLedger?.soundingsTurnIn?.version === 2 &&
@@ -123,13 +129,6 @@ export class CleanEpochTerminalAdapter {
       const artifactId = createAuthorityId('artifact');
       const generationId = createAuthorityId('generation');
       const publicationId = createAuthorityId('publication');
-      const metadata = { ...buildSaveMetadata(sourceSlotId, prepared), lastSavedAt: savedAt,
-        snapshotVersion: TARGET_SNAPSHOT_FORMAT };
-      const envelope: StoredSaveEnvelope = { version: 7, accountId, slotId: sourceSlotId,
-        savedAt, metadata, snapshotFormatId: TARGET_SNAPSHOT_FORMAT,
-        campaignId: control.campaignId, continuityId: prepared.campaignIdentity!.continuityId,
-        characterId: prepared.playerState.playerId, artifactId, generationId, publicationId,
-        headRevision: head.revision + 1, terminal: true, snapshot: serializeSnapshot(prepared) };
       const publicationForProjection = { publicationId, campaignId: control.campaignId,
         continuityId: prepared.campaignIdentity!.continuityId,
         characterId: prepared.playerState.playerId, publishedAt: savedAt };
@@ -148,13 +147,26 @@ export class CleanEpochTerminalAdapter {
         estateDepositId: preliminary.estateDepositId });
       const consumerPlans: CampaignPublicationConsumerPlan[] = RETIREMENT_CONSUMERS.map(kind =>
         ({ kind, payloadFingerprint: fingerprint }));
-      const publication: CampaignStorePublication = { accountId, campaignId: control.campaignId,
-        slotId: sourceSlotId, expectedHead: head, expectedSlotAddress: expectedSourceAddress,
-        artifactRaw: JSON.stringify(envelope), control: { version: 1, accountId,
-          campaignId: control.campaignId, headArtifactId: artifactId,
-          headPublicationId: publicationId, headRevision: envelope.headRevision,
-          previousHeadArtifactId: head.artifactId, previousHeadPublicationId: head.publicationId,
-          closed: true, updatedAt: savedAt } };
+      const publication: CampaignStorePublication = native
+        ? await buildNativeGearArtifactPublication(prepared as unknown as NativeFreshCampaignSnapshot,
+          sourceSlotId, { artifactId, generationId, publicationId, savedAt,
+            expectedHead: head, expectedSlotAddress: expectedSourceAddress, terminal: true })
+        : (() => {
+          const metadata = { ...buildSaveMetadata(sourceSlotId, prepared), lastSavedAt: savedAt,
+            snapshotVersion: TARGET_SNAPSHOT_FORMAT };
+          const envelope: StoredSaveEnvelope = { version: 7, accountId, slotId: sourceSlotId,
+            savedAt, metadata, snapshotFormatId: TARGET_SNAPSHOT_FORMAT,
+            campaignId: control.campaignId, continuityId: prepared.campaignIdentity!.continuityId,
+            characterId: prepared.playerState.playerId, artifactId, generationId, publicationId,
+            headRevision: head.revision + 1, terminal: true, snapshot: serializeSnapshot(prepared) };
+          return { accountId, campaignId: control.campaignId, slotId: sourceSlotId,
+            expectedHead: head, expectedSlotAddress: expectedSourceAddress,
+            artifactRaw: JSON.stringify(envelope), control: { version: 1, accountId,
+              campaignId: control.campaignId, headArtifactId: artifactId,
+              headPublicationId: publicationId, headRevision: envelope.headRevision,
+              previousHeadArtifactId: head.artifactId, previousHeadPublicationId: head.publicationId,
+              closed: true, updatedAt: savedAt } };
+        })();
       const recovery = await this.owner.publishTerminal({ publication,
         ...(sessionWitness ? { sessionWitness } : {}), expectedAccountRevision,
         sourceArtifactId: control.loadedArtifactId,
