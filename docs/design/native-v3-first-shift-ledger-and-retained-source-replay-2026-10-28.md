@@ -1,6 +1,6 @@
 # Native v3 first-shift ledger and retained-source replay — 2026-10-28
 
-Source: clean master `a596112acf3945f2bf7c625e943f2511d12aa710`, draft PR #37 head `d5983b481761f07ec7d74dc343a1ef5c145cf182`. Isolated child `codex/native-v3-survey-ledger` targets #37. Game `0.1.1-prealpha`, selected v2 App, deployed Site and historical v2 survey records remain unchanged.
+Source: clean master `a596112acf3945f2bf7c625e943f2511d12aa710`, draft PR #37 head `d5983b481761f07ec7d74dc343a1ef5c145cf182`. Isolated [draft PR #38](https://github.com/vagabond1215/Lineage_Reforged/pull/38) `codex/native-v3-survey-ledger` targets #37; implementation `f093e05fd618d0c79295fec9dc51fd4ee088e4e7`. Game `0.1.1-prealpha`, selected v2 App, deployed Site and historical v2 survey records remain unchanged.
 
 ## Implemented boundary
 
