@@ -13,7 +13,8 @@ import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirst
 import { CleanEpochDescendantAdapter } from './src/game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochTerminalAdapter } from './src/game-shell/cleanEpochTerminalAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './src/game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
-import { admitNativeGearSessionAction } from './src/game-shell/nativeSessionItemActions.js';
+import { admitNativeFungibleSessionAction, admitNativeGearSessionAction } from './src/game-shell/nativeSessionItemActions.js';
+import { fingerprintNativeInventory } from './src/game-shell/nativeFungibleActions.js';
 import { resolveNormalDefeat } from '../../packages/engines/game-engine/src/normal-defeat.js';
 import { admitCampaignMutation, completePendingNormalDefeatRecovery,
   createCampaignSessionControl } from '../../packages/engines/game-engine/src/campaign-session.js';
@@ -70,6 +71,61 @@ async function rejectCode(run: () => Promise<unknown>, code: string) {
   throw new Error(`expected ${code} rejection`);
 }
 async function suite() {
+  await test('native exact-stack Use session action publishes and restarts without changing physical gear', async () => {
+    const dbName = name(); const accountId = id('account'); const slotId: SaveSlotId = 'slot-1';
+    let owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Use Session QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'native Use session creator failed');
+    if (first.status !== 'ready') return;
+    const snapshot = native(first.value.loaded.snapshot);
+    const control = first.value.loaded.sessionControl as CampaignSessionControl<typeof snapshot>;
+    const preparedCargo = structuredClone(snapshot);
+    const bag = preparedCargo.playerState.inventory.bags[0]!;
+    bag.stacks.push({ itemId: 'item.bread_loaf', itemKey: 'bread_loaf', quantity: 2 });
+    const prepared = admitCampaignMutation(control, {
+      mutationId: id('mutation.synthetic_cargo'), sourceArtifactId: control.loadedArtifactId,
+      sourceRevision: control.sessionRevision, ownerKind: 'engine_result', accepted: true,
+      sourceSnapshot: snapshot, proposedSnapshot: preparedCargo,
+      validateNativeSnapshot: isNativeTargetCampaignSnapshot
+    });
+    check(prepared.accepted, 'synthetic authored Bread Loaf was not admitted');
+    const request = { requestId: id('native.use.session'),
+      expectedRevision: prepared.snapshot.nativeInventoryUse.revision,
+      expectedInventoryFingerprint: fingerprintNativeInventory(prepared.snapshot.playerState.inventory),
+      itemId: 'item.bread_loaf', itemKey: 'bread_loaf', expectedQuantity: 2,
+      location: { kind: 'bag' as const, bagId: bag.id, stackIndex: bag.stacks.length - 1 } };
+    const used = admitNativeFungibleSessionAction(prepared.snapshot, prepared.control, request);
+    check(used.status === 'accepted' && used.control.retainedMutationResults.length === 2 &&
+      used.snapshot.playerState.inventory.bags[0]?.stacks.at(-1)?.quantity === 1 &&
+      JSON.stringify(used.snapshot.playerState.gear) === JSON.stringify(snapshot.playerState.gear),
+      'native Use session action changed the wrong stack or physical gear');
+    const saved = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 2,
+      snapshot: used.snapshot, control: used.control });
+    check(saved.status === 'ready', `native Use session action was not published: ${JSON.stringify(saved)}`);
+    if (saved.status !== 'ready') return;
+    const publicationId = saved.value.loaded.publication.publicationId;
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    const restarted = await owner.readSlot(accountId, slotId);
+    check(restarted.status === 'ready' && restarted.loaded.publication.publicationId === publicationId,
+      'native Use publication was not retained after restart');
+    if (restarted.status === 'ready') {
+      const current = native(restarted.loaded.snapshot);
+      check(current.playerState.inventory.bags[0]?.stacks.at(-1)?.quantity === 1 &&
+        current.nativeInventoryUse.receipts.length === 1 &&
+        JSON.stringify(current.playerState.gear) === JSON.stringify(snapshot.playerState.gear) &&
+        JSON.stringify(current.playerState.bodyState) === JSON.stringify(used.snapshot.playerState.bodyState) &&
+        JSON.stringify(current.playerState.resources) === JSON.stringify(used.snapshot.playerState.resources),
+        'native Use restart changed quantity, receipt, gear, body or resources');
+      const retry = admitNativeFungibleSessionAction(current,
+        restarted.loaded.sessionControl as CampaignSessionControl<typeof current>, request);
+      check(retry.status === 'duplicate' && retry.snapshot === current,
+        'native Use duplicate after restart charged another item or effect');
+    }
+    owner.close();
+  });
   await test('native creator gear session action publishes and restarts through the account owner', async () => {
     const dbName = name(); const accountId = id('account'); const slotId: SaveSlotId = 'slot-1';
     let owner = await openCleanEpochAccountStore({ name: dbName });
