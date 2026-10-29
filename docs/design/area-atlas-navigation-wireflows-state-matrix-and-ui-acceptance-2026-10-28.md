@@ -1,5 +1,8 @@
 # Area / Atlas: Navigation Wireflows, Screen States and UI Acceptance Preflight
 
+> **2026-10-29 owner-direction supersession (design-only):** The `World → [Area] [Atlas]` sibling proposal, second World Atlas, and cold-load Character-as-future-target ambiguity in this historical preflight are **SUPERSEDED** by the explicit user direction in held PR #24: **Current Area is the default gameplay/re-entry surface, with no separate Home or old World submenu; broader known geography belongs in the existing `Codex → Atlas`**. Preserve the source maps, evidence, prospective tests and owner restrictions, adapting navigation-dependent examples. Read `area-atlas-owner-direction-and-source-to-consumer-reconciliation-2026-10-29.md` **first**. No selected UI changed; no Codex source/Save/implementation acceptance is inferred.
+
+
 Date: 2026-10-28
 Status: **proposed UI interaction contract, docs-only; no selected UI, route, Save, gameplay, schema, command or Game-version activation**
 Source: selected `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; native v3 unselected head PR #44 `022fe22def299cf9fc357058a0214e83875af24b`.
