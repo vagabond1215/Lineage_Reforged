@@ -1,5 +1,8 @@
 # Area / Atlas Text-First Gameplay Surface and Source-to-Action Preflight
 
+> **2026-10-29 owner-direction supersession (design-only):** The `World → [Area] [Atlas]` sibling proposal, second World Atlas, and cold-load Character-as-future-target ambiguity in this historical preflight are **SUPERSEDED** by the explicit user direction in held PR #24: **Current Area is the default gameplay/re-entry surface, with no separate Home or old World submenu; broader known geography belongs in the existing `Codex → Atlas`**. Preserve the source maps, evidence, prospective tests and owner restrictions, adapting navigation-dependent examples. Read `area-atlas-owner-direction-and-source-to-consumer-reconciliation-2026-10-29.md` **first**. No selected UI changed; no Codex source/Save/implementation acceptance is inferred.
+
+
 Date: 2026-10-28
 Status: **CONNECTOR-ONLY DESIGN PREFLIGHT; CANDIDATE PRESENTATION DIRECTION; NO ACCEPTED NAV CHANGE, SCHEMA, COMMAND, GAMEPLAY, UI, SAVE OR ACTIVATION AUTHORITY**
 Repository: `vagabond1215/Lineage_Reforged`
