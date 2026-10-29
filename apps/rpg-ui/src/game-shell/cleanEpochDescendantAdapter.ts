@@ -2,7 +2,7 @@ import { evaluateAchievementProgress } from "../../../../packages/engines/game-e
 import { createAuthorityId, isTargetCampaignSnapshot, TARGET_SNAPSHOT_FORMAT } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
 import type { CampaignSessionControl } from "../../../../packages/engines/game-engine/src/campaign-session.js";
-import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
+import { hasPendingNormalDefeat, validatePendingNormalDefeatRecoveryProvenance } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
 import { verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
 import { serializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import type { SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
@@ -28,6 +28,19 @@ function plans(snapshot: SaveSnapshot, slotId: SaveSlotId): CampaignPublicationC
     .map(kind => ({ kind, payloadFingerprint }));
 }
 
+/** A pending defeat may be published only from its exact accepted session result. */
+export function validatePendingDefeatPublication(snapshot: SaveSnapshot | NativeFreshCampaignSnapshot,
+  control: CampaignSessionControl<SaveSnapshot | NativeFreshCampaignSnapshot>, receiptId: string): void {
+  const receipt = validatePendingNormalDefeatRecoveryProvenance(snapshot, receiptId);
+  const retained = control.retainedMutationResults.filter(row => row.mutationId === receipt.sourceMutationId);
+  if (receipt.sourceKind !== "accepted_mutation" || !control.hasUnpublishedGameplayState ||
+      control.lastAcceptedMutationId !== receipt.sourceMutationId ||
+      control.acceptedMutationIds.filter(id => id === receipt.sourceMutationId).length !== 1 ||
+      retained.length !== 1 || retained[0]!.sessionRevision !== control.sessionRevision ||
+      JSON.stringify(retained[0]!.snapshot) !== JSON.stringify(snapshot))
+    throw new CampaignStoreError("invalid_record", "Pending defeat lacks its exact accepted session result.");
+}
+
 /** Awaited ordinary descendant caller selected by the local App. Deployment activation remains separate. */
 export class CleanEpochDescendantAdapter {
   constructor(private readonly owner: CleanEpochAccountStore) {}
@@ -35,6 +48,7 @@ export class CleanEpochDescendantAdapter {
   async save(input: { accountId: string; sourceSlotId: SaveSlotId; destinationSlotId: SaveSlotId;
     expectedAccountRevision: number; snapshot: SaveSnapshot | NativeFreshCampaignSnapshot;
     control: CampaignSessionControl<SaveSnapshot | NativeFreshCampaignSnapshot>;
+    pendingDefeatReceiptId?: string;
     expectedDestinationAddress?: { artifactId: string; publicationId: string } | null }):
     Promise<EpochDescendantResult> {
     const { accountId, sourceSlotId, destinationSlotId, expectedAccountRevision, snapshot, control } = input;
@@ -43,10 +57,13 @@ export class CleanEpochDescendantAdapter {
         throw new CampaignStoreError("invalid_record", "Cross-slot save requires an expected destination address.");
       const native = isNativeTargetCampaignSnapshot(snapshot);
       if ((!native && !isTargetCampaignSnapshot(snapshot)) ||
-          hasPendingNormalDefeat(snapshot as SaveSnapshot) || !snapshot.campaignIdentity ||
+          (hasPendingNormalDefeat(snapshot) && !input.pendingDefeatReceiptId) ||
+          (!hasPendingNormalDefeat(snapshot) && input.pendingDefeatReceiptId) || !snapshot.campaignIdentity ||
           snapshot.accountId !== accountId || control.accountId !== accountId ||
           control.campaignId !== snapshot.campaignIdentity.campaignId)
         throw new CampaignStoreError("invalid_record", "Ordinary descendant input requires an open target campaign.");
+      if (input.pendingDefeatReceiptId)
+        validatePendingDefeatPublication(snapshot, control, input.pendingDefeatReceiptId);
       if (native && control.soundingsAdmissionWitness)
         throw new CampaignStoreError("invalid_record", "Native descendant cannot carry a v2 Soundings witness.");
       const account = await this.owner.readSelected(accountId);
@@ -133,6 +150,7 @@ export class CleanEpochDescendantAdapter {
         })();
       await this.owner.publishDescendant({ publication,
         ...(sessionWitness ? { sessionWitness } : {}), expectedAccountRevision,
+        ...(input.pendingDefeatReceiptId ? { pendingDefeatReceiptId: input.pendingDefeatReceiptId } : {}),
         sourceSlotId, sourceArtifactId: source.sessionControl.loadedArtifactId,
         sourcePublicationId: source.sessionControl.loadedPublicationId,
         sourceSnapshotRaw: serializeSnapshot(source.snapshot), consumerPlans: plans(prepared, destinationSlotId) });
