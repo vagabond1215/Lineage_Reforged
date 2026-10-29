@@ -29,6 +29,12 @@ The Dungeon repo also retains `docs/research/DUNGEON_SETTLEMENT_LONG_HORIZON_COM
 
 **Cross-project isolation:** No Dungeon file/branch/issue/PR/handoff, settings, rank ladder or implementation authorization is modified or imported. Where the Dungeon reference discusses Aether as a ninth elemental/metaphysical source, Lineage keeps its previously accepted **exactly eight intrinsic elements** and does not decide an Aether analogue by copying another game's lore.
 
+## 2A. Later refinement/facet clarification (2026-10-29)
+
+**Ordinary absorption is now selected as globally negligible relative to the immense source feeding established leylines.** The Core can capture mana while also using, exuding and losing it; net positive acquisition is not equal to permanent refinement. It must deliberately compress, shape and integrate available mana into successive stable layers of a faceted crystalline Core. Major breakthroughs may reconfigure more numerous, more nearly spherical stable facets; each facet can potentially sustain a **thread of consciousness**, but active/usable task capacity is separately limited by maturation, symmetry, synchronization, mana, capabilities and real World Time. See `dungeon-core-mana-refinement-crystalline-facets-and-consciousness-threads-direction-2026-10-29.md` (the newest applicable companion). A crude **six-faced cube** is the low-efficiency reference form, *not* proof of six immediately available active tasks. Exact facet-to-rank mapping and formulas remain unselected.
+
+This corrects the earlier open-ended question about **ordinary leyline depletion**: normal Core uptake must not materially diminish/move a vast deep current, even where a Core prospers. Any exceptional local exposure alteration or extraordinary high-tier magical intervention is a separate unresolved future decision; do not treat normal exploitation as a source crisis or free infinite energy.
+
 ## 3. Mana source versus captured Core resource
 
 - A real leyline or multi-element convergence is a **world-owned, geographically persistent magical source**. It remains independently real even if no Dungeon knows or touches it. Same-element reinforced nodes are valid concentrated source candidates without being multi-element confluences.
@@ -36,7 +42,7 @@ The Dungeon repo also retains `docs/research/DUNGEON_SETTLEMENT_LONG_HORIZON_COM
 - **Convergence value** can derive from available mana density, accessible throughput, stability, distinct elemental components, likely research/attunement opportunities, and long-term strategic position. Whether mixed-element fields need filtering, adaptation, safety controls or have antagonistic interference is future design, not an automatic mixed bonus.
 - The Core may extend real passages, territory, conduits or other later certified links toward a convergence. The local accessible segment/node may be enveloped by dungeon structures or contained within defended domain space. This does **not** drag, reroute or consume the entire gigantic deep leyline, and ordinary Core growth does not override the accepted exceptional slowness of leyline migration.
 - **Gross available mana is not identical to actual captured usable mana**. A future Core owner must separately certify sensing, legal/physical access, source magnitude, extraction/capture capacity, efficiency, storage, maintenance and interference. More external source does not guarantee more income if a capture/connection bottleneck exists; being near a source does not grant full access, possession or a magical monopoly.
-- Absorption is not automatically destructive depletion of a leyline. Ordinary claims/absorption should not cause the deep current to leap, stop, disappear or lose intrinsic elemental identity. Whether truly exceptional high-tier intervention can alter/deplete a local exposure remains **unselected**.
+- **Ordinary Core absorption cannot meaningfully deplete, displace, redirect or destabilize a massive deep leyline**; a Core is tiny compared with the leyline-feeding source. Separately account for finite Core capture/refinement/attention and legitimate Core emission, expenditure or loss. Whether truly exceptional high-tier intervention can alter a bounded local exposure remains **unselected**, never an ordinary automatic consequence.
 - The field continues to influence **natural elemental manifestations and qualified entities** outside the Dungeon according to the earlier leyline rules. Core absorption may affect that surrounding field only with explicit source-owned conservation/interaction rules; do not silently treat external ecology as switched off.
 
 ## 4. Target-directed growth has physical and political constraints
@@ -130,12 +136,14 @@ Suggested acceptance checks, **all prospective and unexecuted**:
 - DC-21: two dungeons pursuing one convergence cannot both receive exclusive claim or duplicated mana from one resource.
 - DC-22: cutting a conduit can halt capture while the natural leyline persists, preserving true source and history.
 
+**Companion CF-01 through CF-22:** ordinary source scale, mana loss/exudation, deliberate structural layer refinement, six-faced-to-near-spherical facet geometry, potential consciousness threads versus activated concurrent Tasks. No tests executed.
+
 No Code, Save, content JSON, schemas, tests, runnable world simulation, selected App, Game version, Site, Codex branch, coordination handoff or Dungeon repository modifications are authorized by this document.
 
 ## 9. Remaining decisions for owner direction
 
 1. Are all Dungeon Cores intelligent, independent persons, or can their cognition/temperament vary by origin, rank and development? Soul anchoring remains **Dungeon-only reference** until accepted for Lineage.
-2. Does Core absorption merely tap a renewable leyline flow, affect local intensity in a bounded way, or sometimes damage/temporarily deplete a near-surface exposure?
+2. What exceptional high-tier source interactions, if any, could change a *bounded local exposure* while preserving the now-selected rule that **ordinary Core absorption cannot meaningfully deplete the immense deep leyline**? Core consolidation and facet/task limits are in the newer companion.
 3. What sensing distance, proof, research and emergence-state criteria let a Core notice a convergence through earth, wards or foreign claim?
 4. Can a sufficiently advanced Core envelop a multi-line node with its territory while different lines retain separate world ownership and independent outside influences?
 5. Are resource yield/content chiefly determined by **core rank, acquired skill/research, geography and internal ecology together**, and what keeps dungeon bounty finite?
