@@ -17,6 +17,7 @@ import { createNativeSelectedQuestCommand, applyNativeSelectedQuest,
 import { advanceNativeSelectedExploration, createNativeSelectedEncounterAdmission,
   admitNativeSelectedEncounter, createNativeSelectedCombatStep,
   applyNativeSelectedCombatStep } from './game-shell/nativeSelectedCombat.js';
+import { retireNativeSelectedSession, resumeNativeSelectedTerminal } from './game-shell/nativeSelectedTerminal.js';
 import './index.css';
 
 async function seed() {
@@ -24,6 +25,7 @@ async function seed() {
   try {
     const gameplay = new URLSearchParams(location.search).has('gameplay');
     const combat = new URLSearchParams(location.search).has('combat');
+    const terminal = new URLSearchParams(location.search).has('terminal');
     const accountId = `account.native.selected.qa.${crypto.randomUUID()}`;
     const registered = await new CleanEpochAccountAdapter(owner).register({ accountId,
       displayName: 'Native Selected QA', password: 'synthetic-only-password',
@@ -45,6 +47,75 @@ async function seed() {
       startingBundleChoiceSelections: createDefaultStartingBundleChoiceSelections('starting_bundle.hunter') };
     const started = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, form);
     if (started.status !== 'ready') throw new Error(started.message);
+    if (terminal) Object.assign(window, { runNativeTerminalQa: async () => {
+      let qaOwner = await openCleanEpochAccountStore();
+      try {
+        const source = await qaOwner.readSlot(accountId, 'slot-1');
+        const account = await qaOwner.readSelected(accountId);
+        if (source.status !== 'ready' || !account) throw new Error('Selected native source was not retained.');
+        const first = createNativeSelectedSession({ snapshot: source.loaded.snapshot,
+          control: source.loaded.sessionControl, sourceSlotId: 'slot-1',
+          accountRevision: account.revision });
+        const bow = first.snapshot.playerState.gear.instances.find(item => item.itemId === 'item.short_bow');
+        if (!bow) throw new Error('Starter bow instance is missing.');
+        const moved = applyNativeSelectedItem(first, { kind: 'gear',
+          expectedRevision: first.snapshot.playerState.gear.revision,
+          itemInstanceId: bow.itemInstanceId, destination: { kind: 'carried' } },
+        'native.terminal.qa.bow.1');
+        if (moved.status !== 'accepted') throw new Error(`Terminal item move was ${moved.status}.`);
+        const saved = await saveNativeSelectedSession(qaOwner, moved.session, 'slot-1');
+        if (saved.status !== 'ready') throw new Error(`Terminal source Save blocked: ${saved.message}`);
+        const gear = JSON.stringify(saved.session.snapshot.playerState.gear);
+        const stale = await retireNativeSelectedSession(qaOwner, first);
+        if (stale.status !== 'blocked' || (await qaOwner.readSlot(accountId, 'slot-1')).status !== 'ready')
+          throw new Error('Stale terminal source changed the retained campaign.');
+        qaOwner.close();
+        qaOwner = await openCleanEpochAccountStore();
+        const restarted = await qaOwner.readSlot(accountId, 'slot-1');
+        const restartedSnapshot: unknown = restarted.status === 'ready' ? restarted.loaded.snapshot : null;
+        if (restarted.status !== 'ready' || !isNativeTargetCampaignSnapshot(restartedSnapshot) ||
+            JSON.stringify(restartedSnapshot.playerState.gear) !== gear ||
+            restarted.loaded.publication.publicationId !== saved.publicationId)
+          throw new Error('Terminal source Save/restart changed physical gear or publication.');
+        qaOwner.close();
+        let writes = 0;
+        qaOwner = await openCleanEpochAccountStore({ afterWrite: tx => { if (++writes === 5) tx.abort(); } });
+        const interrupted = await retireNativeSelectedSession(qaOwner, saved.session);
+        const pending = await qaOwner.readPendingTerminalForAccount(accountId);
+        if (interrupted.status !== 'blocked' || !interrupted.requiresReload ||
+            pending?.status !== 'accepted_pending_settlement' ||
+            pending.sourcePublicationId !== saved.publicationId ||
+            (await qaOwner.readSlot(accountId, 'slot-1')).status !== 'closed')
+          throw new Error('Interrupted terminal publication lost the accepted pending source.');
+        qaOwner.close();
+        qaOwner = await openCleanEpochAccountStore();
+        const completed = await resumeNativeSelectedTerminal(qaOwner, saved.session);
+        if (completed.status !== 'completed' ||
+            completed.recovery.publicationId !== pending.publicationId ||
+            JSON.stringify(JSON.parse(JSON.parse(completed.recovery.envelopeRaw).snapshot).playerState.gear) !== gear ||
+            completed.account.profile.history.runRecords[0]?.archiveReason !== 'retired')
+          throw new Error('Terminal restart failed to settle the exact physical source.');
+        const duplicate = await retireNativeSelectedSession(qaOwner, saved.session);
+        const changed = await retireNativeSelectedSession(qaOwner,
+          { ...saved.session, accountRevision: saved.session.accountRevision + 1 });
+        if (duplicate.status !== 'completed' ||
+            duplicate.recovery.publicationId !== completed.recovery.publicationId ||
+            changed.status !== 'blocked')
+          throw new Error('Terminal retry minted another publication or accepted a changed source.');
+        qaOwner.close();
+        qaOwner = await openCleanEpochAccountStore();
+        const retained = await qaOwner.readTerminalForSource(accountId,
+          saved.session.control.campaignId, saved.publicationId);
+        if (retained?.status !== 'settlement_completed' ||
+            retained.publicationId !== completed.recovery.publicationId ||
+            (await qaOwner.readSlot(accountId, 'slot-1')).status !== 'closed' ||
+            (await qaOwner.readSelected(accountId))?.profile.history.runRecords.length !== 1)
+          throw new Error('Terminal account history or exact publication was lost after restart.');
+        document.body.dataset.terminal = 'pass';
+        document.body.dataset.terminalPublicationId = retained.publicationId;
+        document.body.dataset.terminalBowId = bow.itemInstanceId;
+      } finally { qaOwner.close(); }
+    } });
     if (combat) {
       const account = await owner.readSelected(accountId);
       if (!account) throw new Error('Native combat account is missing.');
