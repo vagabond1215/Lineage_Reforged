@@ -29,6 +29,8 @@ An elemental formed at a Fire node remains an elemental manifestation under acce
 
 A **nearby real dungeon** can be substantially altered by a powerful elemental field, potentially to the point where its creatures, environments, encounter pressures and recognizable theme include that element. This is a *future dungeon-owned, causally sourced transformation*, not an immediate asset reskin or unconditional mutation of all dungeons in the same region.
 
+**Later Dungeon Core clarification (2026-10-29):** a Dungeon is sustained/expanded by a mana-absorbing Core; a Core with genuinely sensed knowledge of an exposed leyline convergence may direct physical expansion to encompass its locally accessible segment. This can create underground conflicts and a possible catacomb/sewer/surface breach into an existing metropolis, while Dungeon resources support dangerous but mutually beneficial city relationships. See `dungeon-core-leyline-convergence-expansion-city-breach-and-hostile-symbiosis-direction-2026-10-29.md` for source-limited absorption, geometry/ward legality, civic responses, and cross-project Dungeon read-only evidence. Mere magical proximity does not grant Core control, global leyline ownership, free mana or automatic dungeon/monster transformation.
+
 A future valid causal chain is:
 1. Certify dungeon identity and geometry/access, physical proximity or actual magical connection, the specific element and a source-backed exposed influence footprint through time.
 2. Establish degree, duration and means of environmental magical penetration: opening, seam, groundwater, portal/breach, dungeon infrastructure or other later owner-approved mechanism. Mere nearby map labels need not guarantee exposure.
@@ -110,7 +112,7 @@ These are proposed cross-owner checks for later deduplication into actual execut
 
 1. Which elemental species or entity forms can arise naturally at a field, versus only being summoned, authored, or dungeon-born, and what persistent identity and departure rules apply?
 2. What actual power/density/spatial attenuation/effective-time inputs govern elemental emergence and dungeon penetration?
-3. What establishes a dungeon origin and valid magical connection to a nearby field, and how rapidly may dungeon theming change?
+3. After accepting that every Dungeon has a mana-absorbing Core which may pursue sensed convergence access, what establishes valid physical connection, source-capture limits, and timing for dungeon-theme transitions? See the later Dungeon Core/city symbiosis companion.
 4. How is the narrower in-world "dungeon monster/dungeon folk" term reconciled with current `world.monsters` enemy-archetype vocabulary without retconning content?
 5. Which canonical races/species are magically susceptible and have innate element-specific strengthening, weakening or protection mechanisms?
 6. What development windows and proof constitute the required high-density gestational/majority-growth exposure, especially across ancestry-specific maturation lengths?
