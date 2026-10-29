@@ -40,6 +40,10 @@ Mathematical distinction for a future model: a logarithm describes one possible 
 
 **Owner/observer boundary:** future world source must certify distinct same-element line identities, intersection and near-surface geometry, effective exposed strength and age; environment/weather owner certifies any manifestation and actual event. Characters see effects or justified reports only through their legitimate observation and Knowledge, not omniscient field values or hidden node identities. Religious orders may assign meaning without gaining authority over the physical node or automatically converting a powerful node into a sacred site.
 
+## 1C. Living manifestation, dungeon provenance and developmental exposure (companion; 2026-10-29)
+
+See `leyline-entity-manifestation-dungeon-ecology-and-developmental-exposure-direction-2026-10-29.md` for the separate cross-owner user direction: sufficiently intense near-surface nodes increase the *eligibility and likelihood* of elemental creature emergence, which can have ecological hazards (for example Fire elementals in forested habitats), and may materially reshape a connected dungeon's environment and its dungeon-born populations. The user's in-world "dungeon monsters/dungeon folk originate in dungeons" rule must not be conflated with current broad technical `world.monsters` combat enemy archetypes: natural fauna and humanoids remain ecological, some qualifying populations may separately be dungeon-born, and elementals may emerge outside dungeons. Other naturally occurring beings require magical susceptibility plus either an authored ancestry-specific elemental response **or** unusually dense, sustained formative exposure through gestation and most postnatal development for lasting alteration eligibility. Adult exposure can be poisonous/harmful, and accessible breaches/ruptures are exceptional. This is all **future product direction**, not an active spawn or developmental system, a guaranteed effect, a new dungeon owner, or an automatic character/quest reward.
+
 ## 2. Relative rarity selected by the user
 
 | Distinct constituent elements at a site | Selected relative prevalence | Critical caveat |
@@ -108,6 +112,8 @@ Suggested candidate checks (not executed):
 - LY-25 observer-restricted node strength and position do not leak through weather/Atlas/Religion presentation as certified hidden facts.
 - LY-26 different-element confluence composition remains distinct from single-element strength amplification, with no automatic rarity-tier or reward promotion.
 
+**Companion checks EM-01 through EM-20** cover elemental emergence, dungeon origins and transformation, natural ecology, developmental exposure, high-density hazards and consent-safe cult plots. These are prospective checks only.
+
 ## 6. Unanswered questions, deliberately unselected
 
 1. What specific depth/distance rates, observable intensity curves and era-scale movement bounds should implement the now-selected **normally slow gradual change**, without treating the three-generation rarity heuristic as a numeric rate?
@@ -119,5 +125,6 @@ Suggested candidate checks (not executed):
 7. How do global historical single-element traditions fit counting when no active temple survives?
 8. Which specific extreme tectonic/geophysical phenomena count as source-certified catalysts, and when do they modify surface exposure versus truly displace deep topology?
 9. Which eligible elemental and weather manifestations may be influenced by a node, and how should terrain, subsurface depth, changing exposure, competing weather systems and observer uncertainty shape the spatial footprint?
+10. For entity emergence and developmental magic, see the companion's separately owner-gated taxonomy, dungeon, susceptibility, risk and exposure questions; do not fold them into an automatic leyline spawn formula.
 
 **Hold:** revision of this existing Markdown design addendum only on the held branch; no new source/data owner. No changes to master, live data, gameplay, UI, code, Save, Codex native v3, Area/Atlas, tools/stations, tests or version. Named future consumer: Elemental/Leyline Geography and Religion/World Generator design.
