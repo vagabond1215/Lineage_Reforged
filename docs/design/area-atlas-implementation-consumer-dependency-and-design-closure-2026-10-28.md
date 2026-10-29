@@ -1,5 +1,8 @@
 # Area / Atlas Implementation Consumer, Dependency Map and Design-Only Closure
 
+> **2026-10-29 owner-direction supersession (design-only):** The `World → [Area] [Atlas]` sibling proposal, second World Atlas, and cold-load Character-as-future-target ambiguity in this historical preflight are **SUPERSEDED** by the explicit user direction in held PR #24: **Current Area is the default gameplay/re-entry surface, with no separate Home or old World submenu; broader known geography belongs in the existing `Codex → Atlas`**. Preserve the source maps, evidence, prospective tests and owner restrictions, adapting navigation-dependent examples. Read `area-atlas-owner-direction-and-source-to-consumer-reconciliation-2026-10-29.md` **first**. No selected UI changed; no Codex source/Save/implementation acceptance is inferred.
+
+
 Date: 2026-10-28. Status: **CONNECTOR-ONLY INTEGRATION PREFLIGHT / HOLD_NAMED_CONSUMER**. This is not acceptance, Codex execution routing, runtime implementation, selected-client proof, merge authority, or game-version advancement.
 Selected `master` evidence base `a596112acf3945f2bf7c625e943f2511d12aa710`; current separate unselected native v3 PR #44 head `022fe22def299cf9fc357058a0214e83875af24b`. Independent docs-only Area/Atlas draft PR #45 is reviewed against the same master base.
 
