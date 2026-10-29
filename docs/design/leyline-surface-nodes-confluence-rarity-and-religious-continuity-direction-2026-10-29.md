@@ -26,6 +26,20 @@ Intrinsic elements remain Fire, Water, Earth, Wind, Thunder, Ice, Light and Dark
 
 No automatic modifiers, climate rules, node move tick, event probabilities, tectonic simulation, seeded geography re-roll or magic practice powers are approved here.
 
+## 1B. Same-element reinforcement and non-linear environmental influence (2026-10-29 clarification)
+
+**Accepted user direction:** two or more **distinct leylines of the same intrinsic element** may meet near the surface and reinforce one another. This is an intensified **single-element node**, not a multi-element confluence and not a newly invented element. A deep intersection without adequate near-surface exposure does not automatically create a surface manifestation zone. Co-location of unrelated ordinary terrain features is likewise not source evidence for multiple lines.
+
+The resulting node has a **spatial area of influence related to its effective magical power**, not merely a point effect. Its local elemental manifestations, non-natural elemental environmental changes, and element-related unusual weather are **markedly more likely** near the powerful intersection and become less likely farther away. A stronger verified node can affect a wider area and produce more intense or more frequent eligible phenomena. These remain *probabilities and environmental affordances*, not permanent guaranteed weather, a deterministic spawn, a new climate biome, or an automatic combat/item/magic buff. The particular possible phenomena and their actual outcomes require future elemental, environment/weather, and world-event owners.
+
+**Non-linear scaling, not simple multiplication:** the overlap of two equivalent lines must not be interpreted as exactly twice the radius, twice every effect, twice the weather-event rate or an exact additive power bonus. The user's desired shape is **logarithmic-style/diminishing-return amplification coupled with point-source-like spatial falloff**: strongest at/near the intersection, declining outward, with the effective affected area expanding with source strength but without unchecked linear doubling of every observable consequence. Additional same-element contributions can be meaningful without increasing all outputs proportionately. Exact equations, power units, saturation, thresholds, frequency caps, reach and falloff exponents remain **unselected**.
+
+Mathematical distinction for a future model: a logarithm describes one possible diminishing-return aggregation of source strength, whereas point-source decay describes how influence attenuates across distance (and need not itself be logarithmic). Do not treat them as equivalent laws or claim a settled inverse-square, logarithmic-distance or circular radius equation. Terrain, subsurface depth, temporal exposure, local conditions and multiple-source geometry may shape an irregular influence footprint when certified by their actual owners. A node can have graded, shifting observational bands rather than an abrupt visible border.
+
+**Temporal continuity:** the slow drift, deep stability and rare-catalyst constraints in §1A continue to apply. As exposure diminishes over generations, effective strength, manifestation likelihood and area of influence may contract gradually; strengthening may gradually expand them. Large changes within roughly three generations remain exceptional absent a supported catalyst. A confluence of different elements is separately defined in §1 and its probabilities/interaction effects cannot simply be inferred by applying same-element reinforcement independently to each element.
+
+**Owner/observer boundary:** future world source must certify distinct same-element line identities, intersection and near-surface geometry, effective exposed strength and age; environment/weather owner certifies any manifestation and actual event. Characters see effects or justified reports only through their legitimate observation and Knowledge, not omniscient field values or hidden node identities. Religious orders may assign meaning without gaining authority over the physical node or automatically converting a powerful node into a sacred site.
+
 ## 2. Relative rarity selected by the user
 
 | Distinct constituent elements at a site | Selected relative prevalence | Critical caveat |
@@ -64,7 +78,7 @@ Examples: storm does not itself prove distinct Wind/Thunder lines; freezing wate
 
 ## 5. Future source requirements, without inventing a schema
 
-A planned leyline/confluence world owner should eventually represent: canonical elements, distinct line identity, actual location and bounded physical extent, near-surface eligibility, era/validity, persistence or movement, observed physical manifestations and their gradual intensity/history, locality and climate provenance, deep-line versus exposed-node transition evidence, exceptional catalyst provenance, age/historical evidence, and known-vs-secret observer scopes. A related religion/seed owner may use *verified* site and history inputs to select institutions, mission/recruitment dependence, public reputation, names and inter-order rivalries. It cannot manufacture line intersections from flavor names or claim supernatural healing.
+A planned leyline/confluence world owner should eventually represent: canonical elements, distinct line identity, actual location and bounded physical extent, near-surface eligibility, era/validity, persistence or movement, observed physical manifestations and their gradual intensity/history, source-certified **same-element line intersection identity and reinforcement strength**, the spatial influence footprint, intensity/frequency gradients and effective exposed-area change through time, locality and climate provenance, deep-line versus exposed-node transition evidence, exceptional catalyst provenance, age/historical evidence, and known-vs-secret observer scopes. A related religion/seed owner may use *verified* site and history inputs to select institutions, mission/recruitment dependence, public reputation, names and inter-order rivalries. It cannot manufacture line intersections from flavor names or claim supernatural healing.
 
 Suggested candidate checks (not executed):
 - LY-01 an ocean and ordinary volcanic heat without magical lines is not a confluence.
@@ -84,6 +98,15 @@ Suggested candidate checks (not executed):
 - LY-15 a temporarily weakened surface manifestation does not by itself prove a line vanished or an active confluence migrated.
 - LY-16 a former confluence can become historical when an eligible component withdraws while its actual history and affiliated religion remain separately governed.
 - LY-17 a 1000+-year continuation can include accumulated movement and exceptional recorded changes, never an uncaused re-seed of prior geography or faith history.
+- LY-18 two certified near-surface Fire lines may create a stronger single-element Fire node without becoming a two-element confluence.
+- LY-19 a same-element intersection too deep for eligible exposure does not automatically generate a surface influence region.
+- LY-20 co-located ordinary weather or landform labels never stand in for distinct certified same-element line identities.
+- LY-21 same-element reinforcement increases eligible near-node manifestation likelihood and can widen its influence region without forcing every effect or radius to exactly double.
+- LY-22 spatial influence decays outward, probability stays bounded, and stronger exposure need not make every weather event certain or permanent.
+- LY-23 the eventual model distinguishes diminishing-return source amplification from distance attenuation; no unselected logarithmic or inverse-square formula is silently treated as canon.
+- LY-24 slow subsidence can gradually shrink observable influence without immediately removing the physical node, normal weather, institutional memory or intrinsic element.
+- LY-25 observer-restricted node strength and position do not leak through weather/Atlas/Religion presentation as certified hidden facts.
+- LY-26 different-element confluence composition remains distinct from single-element strength amplification, with no automatic rarity-tier or reward promotion.
 
 ## 6. Unanswered questions, deliberately unselected
 
@@ -91,9 +114,10 @@ Suggested candidate checks (not executed):
 2. How much physical geography and leyline topology may vary per seed rather than selecting from preauthored legal map sites?
 3. How does a future source verify a magically present leyline beyond surface appearance?
 4. Can magical practice deliberately create or redirect leylines?
-5. Can two same-element lines meet at a strengthened **single-element** node without counting as a multielement confluence?
+5. What effective-power aggregation, diminishing returns, outward attenuation, areal reach and probabilistic manifestation thresholds should implement the now-accepted **reinforced same-element surface node** without imposing a simple 2x multiplier?
 6. Does "perfect harmonic" require balance/stability beyond all eight merely meeting?
 7. How do global historical single-element traditions fit counting when no active temple survives?
 8. Which specific extreme tectonic/geophysical phenomena count as source-certified catalysts, and when do they modify surface exposure versus truly displace deep topology?
+9. Which eligible elemental and weather manifestations may be influenced by a node, and how should terrain, subsurface depth, changing exposure, competing weather systems and observer uncertainty shape the spatial footprint?
 
 **Hold:** revision of this existing Markdown design addendum only on the held branch; no new source/data owner. No changes to master, live data, gameplay, UI, code, Save, Codex native v3, Area/Atlas, tools/stations, tests or version. Named future consumer: Elemental/Leyline Geography and Religion/World Generator design.
