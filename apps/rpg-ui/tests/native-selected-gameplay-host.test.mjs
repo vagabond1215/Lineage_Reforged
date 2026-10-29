@@ -18,6 +18,7 @@ const { resolveNearbyExplorationPlan, createNearbyExplorationCommand,
 const { isNativeTargetCampaignSnapshot } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-campaign-rules.ts');
 const { createNearbyEncounterAdmissionCommand, admitNearbyEncounter,
   createNearbyEncounterStepCommand, executeNearbyEncounterStep } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/player-nearby-encounter.ts');
+const { listLegalPlayerCombatCommands } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/combat/index.ts');
 const { advanceNativeSelectedExploration, createNativeSelectedEncounterAdmission,
   admitNativeSelectedEncounter, createNativeSelectedCombatStep,
   applyNativeSelectedCombatStep } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedCombat.ts');
@@ -83,6 +84,20 @@ test('real native creator reaches an authored nearby encounter without losing ge
   const blockedExploration = advanceNativeSelectedExploration(admission.session);
   assert.equal(blockedExploration.status, 'rejected');
   assert.strictEqual(blockedExploration.session, admission.session);
+  const targetId = admission.session.snapshot.gameState.activeEncounter.enemyCombatantIds[0];
+  const ranged = listLegalPlayerCombatCommands(admission.session.snapshot.gameState.activeEncounter)
+    .find(item => item.actionType === 'combat.ranged.primary' && item.targetId === targetId);
+  assert.ok(ranged, 'worn native Short Bow must offer the authored ranged command');
+  const rangedCommand = createNativeSelectedCombatStep(admission.session,
+    ranged.actionType, targetId, 'native.combat.ranged.1');
+  const rangedResult = applyNativeSelectedCombatStep(admission.session, rangedCommand);
+  assert.equal(rangedResult.status, 'accepted', rangedResult.reason);
+  assert.deepEqual(rangedResult.session.snapshot.playerState.gear, gear);
+  const action = rangedResult.session.snapshot.gameState.activeEncounter.actions.find(item =>
+    item.actorCombatantId === player.id && item.manualOverride && item.actionType === 'combat.ranged.primary');
+  assert.equal(action?.source.itemId, 'item.short_bow');
+  assert.equal(action?.source.weaponSkillId, 'skill.combat.weapon.archery');
+  assert.equal(action?.resourceCosts.stamina, 5);
   const stepCommand = createNativeSelectedCombatStep(admission.session,
     'combat.advance', null, 'native.combat.step.1');
   const unvalidatedStep = executeNearbyEncounterStep(admission.session.snapshot,
