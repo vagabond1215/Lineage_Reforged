@@ -1,5 +1,6 @@
 import type {
   NormalDefeatReceiptState,
+  NativeGearSaveSnapshot,
   SoundingsAdmissionWitness,
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
@@ -19,13 +20,15 @@ import {
   validatePendingNormalDefeatRecoveryProvenance
 } from "./normal-defeat.js";
 
+type CampaignSnapshot = SaveSnapshot | NativeGearSaveSnapshot<unknown>;
+
 export type CampaignSessionPosture =
   | "at_head"
   | "non_head_unmutated"
   | "forked_unpublished"
   | "head_unpublished";
 
-export interface CampaignSessionControl {
+export interface CampaignSessionControl<TSnapshot extends CampaignSnapshot = SaveSnapshot> {
   soundingsAdmissionWitness?: SoundingsAdmissionWitness;
   accountId: string;
   campaignId: string;
@@ -41,7 +44,7 @@ export interface CampaignSessionControl {
   firstDivergentMutationId: string | null;
   lastAcceptedMutationId: string | null;
   acceptedMutationIds: string[];
-  retainedMutationResults: RetainedCampaignMutationResult[];
+  retainedMutationResults: RetainedCampaignMutationResult<TSnapshot>[];
   hasUnpublishedGameplayState: boolean;
 }
 
@@ -52,11 +55,11 @@ export type CampaignMutationOwnerKind =
   | "persisted_preference"
   | "recovery_repair";
 
-export interface RetainedCampaignMutationResult {
+export interface RetainedCampaignMutationResult<TSnapshot extends CampaignSnapshot = SaveSnapshot> {
   mutationId: string;
   submissionFingerprint: string;
   resultId: string | null;
-  snapshot: SaveSnapshot;
+  snapshot: TSnapshot;
   sessionRevision: number;
   posture: CampaignSessionPosture;
   pendingContinuityId: string | null;
@@ -66,19 +69,20 @@ export interface RetainedCampaignMutationResult {
   hasUnpublishedGameplayState: boolean;
 }
 
-export interface CampaignMutationSubmission {
+export interface CampaignMutationSubmission<TSnapshot extends CampaignSnapshot = SaveSnapshot> {
   mutationId: string;
   sourceArtifactId: string;
   sourceRevision: number;
   ownerKind: CampaignMutationOwnerKind;
   accepted: boolean;
-  sourceSnapshot: SaveSnapshot;
-  proposedSnapshot: SaveSnapshot;
+  sourceSnapshot: TSnapshot;
+  proposedSnapshot: TSnapshot;
   resultId?: string;
   explicitRecoveryDestinationId?: string | null;
+  validateNativeSnapshot?: (snapshot: TSnapshot) => boolean;
 }
 
-export type CampaignMutationAdmission = {
+export type CampaignMutationAdmission<TSnapshot extends CampaignSnapshot = SaveSnapshot> = {
   accepted: boolean;
   duplicate: boolean;
   reason:
@@ -89,8 +93,8 @@ export type CampaignMutationAdmission = {
     | "recovery_pending"
     | "stale_revision"
     | "wrong_artifact";
-  snapshot: SaveSnapshot;
-  control: CampaignSessionControl;
+  snapshot: TSnapshot;
+  control: CampaignSessionControl<TSnapshot>;
   resultId: string | null;
 };
 
@@ -127,8 +131,8 @@ export type PlayerSurveyCampaignPreparation =
       sourceSnapshotFingerprint: string;
     };
 
-function buildMutationSubmissionFingerprint(
-  submission: CampaignMutationSubmission
+function buildMutationSubmissionFingerprint<TSnapshot extends CampaignSnapshot>(
+  submission: CampaignMutationSubmission<TSnapshot>
 ): string {
   return JSON.stringify({
     mutationId: submission.mutationId,
@@ -139,15 +143,15 @@ function buildMutationSubmissionFingerprint(
     resultId: submission.resultId ?? null,
     explicitRecoveryDestinationId:
       submission.explicitRecoveryDestinationId ?? null,
-    sourceSnapshot: serializeSnapshot(submission.sourceSnapshot),
-    proposedSnapshot: serializeSnapshot(submission.proposedSnapshot)
+    sourceSnapshot: JSON.stringify(submission.sourceSnapshot),
+    proposedSnapshot: JSON.stringify(submission.proposedSnapshot)
   });
 }
 
-function restoreRetainedControl(
-  current: CampaignSessionControl,
-  retained: RetainedCampaignMutationResult
-): CampaignSessionControl {
+function restoreRetainedControl<TSnapshot extends CampaignSnapshot>(
+  current: CampaignSessionControl<TSnapshot>,
+  retained: RetainedCampaignMutationResult<TSnapshot>
+): CampaignSessionControl<TSnapshot> {
   return {
     ...current,
     sessionRevision: retained.sessionRevision,
@@ -183,9 +187,9 @@ function normalizeRecoveryReceiptId(
   return value;
 }
 
-function requireRecoveryControlAuthority(
-  control: CampaignSessionControl,
-  snapshot: SaveSnapshot,
+function requireRecoveryControlAuthority<TSnapshot extends CampaignSnapshot>(
+  control: CampaignSessionControl<TSnapshot>,
+  snapshot: TSnapshot,
   receipt: NormalDefeatReceiptState,
   mutationId: string,
   completed: boolean
@@ -695,10 +699,10 @@ export function commitPreparedPlayerSurveyCampaignMutation(
   };
 }
 
-export function admitCampaignMutation(
-  control: CampaignSessionControl,
-  submission: CampaignMutationSubmission
-): CampaignMutationAdmission {
+export function admitCampaignMutation<TSnapshot extends CampaignSnapshot>(
+  control: CampaignSessionControl<TSnapshot>,
+  submission: CampaignMutationSubmission<TSnapshot>
+): CampaignMutationAdmission<TSnapshot> {
   if (submission.ownerKind !== "nearby_encounter" &&
       JSON.stringify(submission.sourceSnapshot.authorityLedger?.nearbyEncounters ?? null) !==
       JSON.stringify(submission.proposedSnapshot.authorityLedger?.nearbyEncounters ?? null)) {
@@ -709,7 +713,8 @@ export function admitCampaignMutation(
   if (submission.sourceSnapshot.authorityLedger?.soundingsTurnIn || submission.proposedSnapshot.authorityLedger?.soundingsTurnIn) {
     let valid = false;
     try {
-      valid = isTargetCampaignSnapshot(submission.sourceSnapshot) && isTargetCampaignSnapshot(submission.proposedSnapshot) &&
+      valid = isTargetCampaignSnapshot(submission.sourceSnapshot as SaveSnapshot) &&
+        isTargetCampaignSnapshot(submission.proposedSnapshot as SaveSnapshot) &&
         JSON.stringify(submission.sourceSnapshot.authorityLedger?.soundingsTurnIn) === JSON.stringify(submission.proposedSnapshot.authorityLedger?.soundingsTurnIn);
     } catch { valid = false; }
     if (!valid) return { accepted: false, duplicate: false, reason: "rejected", snapshot: submission.sourceSnapshot, control, resultId: null };
@@ -733,6 +738,15 @@ export function admitCampaignMutation(
       control: restoreRetainedControl(control, retained),
       resultId: retained.resultId
     };
+  }
+
+  // A native command cannot retain an invalid physical graph, even while its
+  // publication is still pending. The v2 path keeps its existing admission.
+  if (submission.sourceSnapshot.snapshotVersion === "lineage.save_snapshot.v3" &&
+      (!submission.validateNativeSnapshot?.(submission.sourceSnapshot) ||
+       !submission.validateNativeSnapshot?.(submission.proposedSnapshot))) {
+    return { accepted: false, duplicate: false, reason: "rejected",
+      snapshot: submission.sourceSnapshot, control, resultId: null };
   }
 
   if (!submission.accepted) {
@@ -913,12 +927,18 @@ export function admitCampaignMutation(
     }).snapshot;
   }
 
+  if (nextSnapshot.snapshotVersion === "lineage.save_snapshot.v3" &&
+      !submission.validateNativeSnapshot?.(nextSnapshot)) {
+    return { accepted: false, duplicate: false, reason: "rejected",
+      snapshot: submission.sourceSnapshot, control, resultId: null };
+  }
+
   const nextRevision = control.sessionRevision + 1;
   const nextAcceptedMutationIds = [
     ...control.acceptedMutationIds,
     submission.mutationId
   ];
-  const retainedResult: RetainedCampaignMutationResult = {
+  const retainedResult: RetainedCampaignMutationResult<TSnapshot> = {
     mutationId: submission.mutationId,
     submissionFingerprint,
     resultId: submission.resultId ?? null,
@@ -954,12 +974,13 @@ export function admitCampaignMutation(
   };
 }
 
-export function completePendingNormalDefeatRecovery(
-  control: CampaignSessionControl,
-  snapshot: SaveSnapshot,
+export function completePendingNormalDefeatRecovery<TSnapshot extends CampaignSnapshot>(
+  control: CampaignSessionControl<TSnapshot>,
+  snapshot: TSnapshot,
   explicitDestinationId?: string | null,
-  targetReceiptId?: string | null
-): CampaignMutationAdmission {
+  targetReceiptId?: string | null,
+  validateNativeSnapshot?: (snapshot: TSnapshot) => boolean
+): CampaignMutationAdmission<TSnapshot> {
   const receipts = snapshot.normalDefeatReceipts ?? [];
   const pendingReceipts = receipts.filter(
     (receipt) => receipt.posture === "recovery_pending"
@@ -1069,6 +1090,7 @@ export function completePendingNormalDefeatRecovery(
     accepted: true,
     sourceSnapshot: snapshot,
     proposedSnapshot: snapshot,
+    ...(validateNativeSnapshot ? { validateNativeSnapshot } : {}),
     resultId: `result.recovery_repair.${receipt.receiptId}`,
     ...(explicitDestinationId !== undefined
       ? { explicitRecoveryDestinationId: explicitDestinationId }

@@ -33,7 +33,8 @@ export class CleanEpochDescendantAdapter {
   constructor(private readonly owner: CleanEpochAccountStore) {}
 
   async save(input: { accountId: string; sourceSlotId: SaveSlotId; destinationSlotId: SaveSlotId;
-    expectedAccountRevision: number; snapshot: SaveSnapshot | NativeFreshCampaignSnapshot; control: CampaignSessionControl;
+    expectedAccountRevision: number; snapshot: SaveSnapshot | NativeFreshCampaignSnapshot;
+    control: CampaignSessionControl<SaveSnapshot | NativeFreshCampaignSnapshot>;
     expectedDestinationAddress?: { artifactId: string; publicationId: string } | null }):
     Promise<EpochDescendantResult> {
     const { accountId, sourceSlotId, destinationSlotId, expectedAccountRevision, snapshot, control } = input;
@@ -89,7 +90,8 @@ export class CleanEpochDescendantAdapter {
         { slotId: destinationSlotId, touchHistory: true, recordedAt: savedAt }).nextSnapshot;
       if (native && !isNativeTargetCampaignSnapshot(prepared))
         throw new CampaignStoreError("invalid_record", "Native achievement projection changed the physical campaign owner.");
-      const provenance = native ? "not_completed" : verifySoundingsAdmissionProvenance(prepared, control);
+      const provenance = native ? "not_completed" : verifySoundingsAdmissionProvenance(
+        prepared, control as CampaignSessionControl<SaveSnapshot>);
       if (provenance !== "not_completed" && provenance !== "verified")
         throw new CampaignStoreError("invalid_record", `Soundings session provenance is ${provenance}.`);
       const firstCompletion = prepared.authorityLedger?.soundingsTurnIn?.version === 2 &&
