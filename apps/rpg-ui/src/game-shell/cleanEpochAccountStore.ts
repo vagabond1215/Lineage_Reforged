@@ -12,7 +12,7 @@ import { projectRetirementSettlement, retirementSettlementFingerprint, RETIREMEN
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { isNativeTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
-import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
+import { hasPendingNormalDefeat, validatePendingNormalDefeatRecoveryProvenance } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
 import { isStoredCampaignControl, isStoredSaveEnvelope, isStoredNativeGearEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope, type StoredNativeGearEnvelope } from "./saveManager.js";
 import { SAVE_SLOT_ORDER, type SaveSlotId, type SaveSlotMetadata } from "./state.js";
 import {
@@ -323,6 +323,7 @@ export type CleanEpochDescendantRecovery = {
   sourceSnapshotRaw: string;
   envelopeRaw: string;
   witnessRequestId: string | null;
+  pendingDefeatReceiptId?: string;
   consumerPlans: CampaignPublicationConsumerPlan[];
   completedConsumerKinds: CampaignPublicationConsumerKind[];
   completedAccountRevision?: number;
@@ -337,6 +338,7 @@ export type CleanEpochDescendantRequest = {
   sourceSlotId: SaveSlotId;
   sourcePublicationId: string;
   sourceSnapshotRaw: string;
+  pendingDefeatReceiptId?: string;
   consumerPlans: CampaignPublicationConsumerPlan[];
 };
 export type CleanEpochDescendantResult = {
@@ -673,6 +675,11 @@ function validDescendantRecovery(value: unknown, accountId: string, campaignId: 
     const envelope = envelopeFromRaw(value.envelopeRaw);
     const snapshot = deserializeSnapshot(envelope.snapshot);
     const source = deserializeSnapshot(value.sourceSnapshotRaw);
+    const pending = hasPendingNormalDefeat(snapshot);
+    if (pending !== (typeof value.pendingDefeatReceiptId === "string") ||
+        (!pending && value.pendingDefeatReceiptId !== undefined)) return false;
+    if (pending) validatePendingNormalDefeatRecoveryProvenance(snapshot,
+      value.pendingDefeatReceiptId as string);
     const requestId = snapshot.authorityLedger?.soundingsTurnIn?.version === 2
       ? snapshot.authorityLedger.soundingsTurnIn.requests[0]?.requestId ?? null : null;
     return envelope.accountId === accountId && envelope.campaignId === campaignId &&
@@ -2661,11 +2668,18 @@ export class CleanEpochAccountStore {
         (sessionWitness !== undefined && (!isSoundingsAdmissionWitness(sessionWitness) || sessionWitness.posture !== "session")))
       fail("invalid_record", "Descendant request identity is invalid.");
     const envelope = envelopeFromRaw(input.artifactRaw);
+    const proposedSnapshot = deserializeSnapshot(envelope.snapshot);
+    const pendingDefeat = hasPendingNormalDefeat(proposedSnapshot);
     if (envelope.accountId !== input.accountId || envelope.campaignId !== input.campaignId ||
         envelope.slotId !== input.slotId || envelope.headRevision < 2 || envelope.terminal ||
-        hasPendingNormalDefeat(deserializeSnapshot(envelope.snapshot)))
+        pendingDefeat !== (typeof request.pendingDefeatReceiptId === "string") ||
+        (!pendingDefeat && request.pendingDefeatReceiptId !== undefined))
       fail("invalid_record", "Ordinary descendant artifact is invalid or requires lifecycle settlement.");
-    const snapshot = deserializeSnapshot(envelope.snapshot);
+    if (pendingDefeat) {
+      try { validatePendingNormalDefeatRecoveryProvenance(proposedSnapshot, request.pendingDefeatReceiptId); }
+      catch { fail("invalid_record", "Pending defeat artifact lacks exact receipt provenance."); }
+    }
+    const snapshot = proposedSnapshot;
     const proposed: CleanEpochDescendantRecovery = {
       version: 1, status: "accepted_pending_consumers", accountId: input.accountId,
       campaignId: input.campaignId, slotId: input.slotId, sourceSlotId,
@@ -2676,6 +2690,7 @@ export class CleanEpochAccountStore {
       envelopeRaw: input.artifactRaw,
       witnessRequestId: snapshot.authorityLedger?.soundingsTurnIn?.version === 2
         ? snapshot.authorityLedger.soundingsTurnIn.requests[0]?.requestId ?? null : null,
+      ...(request.pendingDefeatReceiptId ? { pendingDefeatReceiptId: request.pendingDefeatReceiptId } : {}),
       consumerPlans, completedConsumerKinds: [], createdAt: input.control.updatedAt
     };
     if (!validDescendantRecovery(proposed, input.accountId, input.campaignId, envelope.publicationId))

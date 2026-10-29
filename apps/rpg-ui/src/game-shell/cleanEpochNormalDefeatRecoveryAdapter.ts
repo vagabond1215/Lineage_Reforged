@@ -7,7 +7,8 @@ import { deserializeSnapshot } from "../../../../packages/shared/persistence/src
 import type { SaveSnapshot } from "../../../../packages/shared/types/src/index.js";
 import { CampaignStoreError } from "./campaignIndexedDbStore.js";
 import { type CleanEpochAccountStore, type CleanEpochDescendantRecovery } from "./cleanEpochAccountStore.js";
-import { CleanEpochDescendantAdapter, type EpochDescendantResult } from "./cleanEpochDescendantAdapter.js";
+import { CleanEpochDescendantAdapter, validatePendingDefeatPublication,
+  type EpochDescendantResult } from "./cleanEpochDescendantAdapter.js";
 import type { SaveSlotId } from "./state.js";
 
 type Address = { artifactId: string; publicationId: string };
@@ -40,6 +41,62 @@ export class CleanEpochNormalDefeatRecoveryAdapter {
 
   constructor(private readonly owner: CleanEpochAccountStore) {
     this.descendants = new CleanEpochDescendantAdapter(owner);
+  }
+
+  private matchesPendingPublication(request: EpochNormalDefeatRecoveryRequest,
+    recovery: CleanEpochDescendantRecovery): boolean {
+    const control = request.control;
+    if (recovery.accountId !== request.accountId || recovery.sourceSlotId !== request.sourceSlotId ||
+        recovery.slotId !== request.destinationSlotId ||
+        recovery.pendingDefeatReceiptId !== request.receiptId ||
+        recovery.expectedAccountRevision !== request.expectedAccountRevision ||
+        !exactAddress(recovery.expectedSlotAddress, request.expectedDestinationAddress) ||
+        recovery.sourceArtifactId !== control.loadedArtifactId ||
+        recovery.sourcePublicationId !== control.loadedPublicationId ||
+        recovery.expectedHead.artifactId !== control.campaignHeadArtifactId ||
+        recovery.expectedHead.revision !== control.campaignHeadRevision) return false;
+    try {
+      const envelope = JSON.parse(recovery.envelopeRaw) as { snapshot?: string };
+      if (typeof envelope.snapshot !== "string") return false;
+      const accepted = deserializeSnapshot(envelope.snapshot) as SaveSnapshot | NativeFreshCampaignSnapshot;
+      if (accepted.snapshotVersion !== request.snapshot.snapshotVersion ||
+          (accepted.snapshotVersion === "lineage.save_snapshot.v3" &&
+           !isNativeTargetCampaignSnapshot(accepted))) return false;
+      const receipt = validatePendingNormalDefeatRecoveryProvenance(accepted, request.receiptId);
+      const sameGear = accepted.snapshotVersion !== "lineage.save_snapshot.v3" ||
+        (isNativeTargetCampaignSnapshot(accepted) && isNativeTargetCampaignSnapshot(request.snapshot) &&
+         JSON.stringify(accepted.playerState.gear) === JSON.stringify(request.snapshot.playerState.gear));
+      return receipt.sourceMutationId ===
+        request.snapshot.normalDefeatReceipts?.find(row => row.receiptId === request.receiptId)?.sourceMutationId &&
+        sameGear;
+    } catch { return false; }
+  }
+
+  /** Publish the exact accepted pending mutation before attempting retained recovery. */
+  async publishPending(request: EpochNormalDefeatRecoveryRequest): Promise<EpochDescendantResult> {
+    try {
+      const native = isNativeTargetCampaignSnapshot(request.snapshot);
+      if (!native && !isTargetCampaignSnapshot(request.snapshot as SaveSnapshot))
+        throw new CampaignStoreError("invalid_record", "Pending defeat source is not an admitted campaign format.");
+      validatePendingDefeatPublication(request.snapshot, request.control, request.receiptId);
+      const destination = await this.owner.readSlot(request.accountId, request.destinationSlotId);
+      if (destination.status === "pending_consumers") {
+        const retained = await this.owner.readCurrentDescendantRecovery(request.accountId, request.destinationSlotId);
+        if (!retained || !this.matchesPendingPublication(request, retained))
+          throw new CampaignStoreError("conflict", "Pending defeat differs from the accepted publication.");
+        return this.descendants.resumeCurrent(request.accountId, request.destinationSlotId);
+      }
+      if (destination.status === "ready" &&
+          (destination.loaded.snapshot.normalDefeatReceipts ?? []).some(row =>
+            row.receiptId === request.receiptId && row.posture === "recovery_pending")) {
+        const retained = await this.owner.readDescendantRecovery(request.accountId,
+          request.control.campaignId, destination.loaded.publication.publicationId);
+        if (!retained || !this.matchesPendingPublication(request, retained))
+          throw new CampaignStoreError("conflict", "Retained pending defeat differs from this request.");
+        return { status: "ready", value: destination };
+      }
+      return this.descendants.save({ ...request, pendingDefeatReceiptId: request.receiptId });
+    } catch (error) { return blocked(error, request); }
   }
 
   private matchesAccepted(request: EpochNormalDefeatRecoveryRequest, destinationId: string,

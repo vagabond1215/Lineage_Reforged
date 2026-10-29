@@ -69,6 +69,290 @@ async function rejectCode(run: () => Promise<unknown>, code: string) {
   throw new Error(`expected ${code} rejection`);
 }
 async function suite() {
+  await test('native creator HP-zero command retains pending defeat before recovery', async () => {
+    const dbName = name(); const accountId = id('account'); const slotId: SaveSlotId = 'slot-1';
+    let owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Pending Defeat QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'real native creator did not publish');
+    if (first.status !== 'ready') return;
+    const firstSnapshot = native(first.value.loaded.snapshot);
+    const withoutSafeSettlement = structuredClone(firstSnapshot);
+    withoutSafeSettlement.playerState.location.settlementId = null;
+    withoutSafeSettlement.playerState.flags = withoutSafeSettlement.playerState.flags.filter(flag =>
+      !flag.startsWith('player.start.'));
+    withoutSafeSettlement.sessionState.knownLocations = [{ id: 'location.recovery_haven',
+      name: 'Recovery Haven', regionLabel: 'Test March', settlementId: 'settlement.recovery_haven',
+      regionId: 'region.test_march', type: 'settlement', x: 1, y: 1,
+      note: 'Synthetic recovery destination.', known: true }];
+    const firstControl = first.value.loaded.sessionControl as CampaignSessionControl<typeof firstSnapshot>;
+    const staged = admitCampaignMutation(firstControl, {
+      mutationId: 'mutation.native.prepare_defeat.qa', sourceArtifactId: firstControl.loadedArtifactId,
+      sourceRevision: firstControl.sessionRevision, ownerKind: 'engine_result', accepted: true,
+      sourceSnapshot: firstSnapshot, proposedSnapshot: withoutSafeSettlement,
+      validateNativeSnapshot: isNativeTargetCampaignSnapshot
+    });
+    check(staged.accepted, 'pre-defeat owner mutation was not admitted');
+    const retained = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 2,
+      snapshot: staged.snapshot, control: staged.control });
+    check(retained.status === 'ready', `pre-defeat descendant did not publish: ${JSON.stringify(retained)}`);
+    if (retained.status !== 'ready') return;
+    const current = native(retained.value.loaded.snapshot);
+    const currentControl = retained.value.loaded.sessionControl as CampaignSessionControl<typeof current>;
+    const lethal = structuredClone(current);
+    lethal.playerState.resources.hp.current = 0;
+    const defeated = admitCampaignMutation(currentControl, {
+      mutationId: 'mutation.native.real_defeat.qa', sourceArtifactId: currentControl.loadedArtifactId,
+      sourceRevision: currentControl.sessionRevision, ownerKind: 'engine_result', accepted: true,
+      sourceSnapshot: current, proposedSnapshot: lethal,
+      validateNativeSnapshot: isNativeTargetCampaignSnapshot
+    });
+    check(defeated.accepted, 'real native HP-zero command was not admitted');
+    const receipt = defeated.snapshot.normalDefeatReceipts?.find(row => row.posture === 'recovery_pending');
+    check(receipt, 'real native HP-zero command did not produce pending receipt');
+    if (!receipt) return;
+    const pendingRequest = {
+      accountId, sourceSlotId: slotId, destinationSlotId: slotId,
+      expectedAccountRevision: 3,
+      expectedDestinationAddress: { artifactId: currentControl.loadedArtifactId,
+        publicationId: currentControl.loadedPublicationId },
+      snapshot: defeated.snapshot, control: defeated.control, receiptId: receipt.receiptId
+    };
+    const originalGear = JSON.stringify(current.playerState.gear);
+    const stalePending = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending({
+      ...pendingRequest, expectedAccountRevision: 2
+    });
+    check(stalePending.status === 'blocked' && stalePending.code === 'stale_head' &&
+      (await owner.read(accountId))?.revision === 3,
+      'stale pending request changed account authority');
+    const mixedPending = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending({
+      ...pendingRequest, snapshot: { ...defeated.snapshot,
+        snapshotVersion: 'lineage.save_snapshot.v2' } as unknown as SaveSnapshot
+    });
+    check(mixedPending.status === 'blocked' && (await owner.read(accountId))?.revision === 3,
+      'mixed-format pending request changed account authority');
+    owner.close();
+    let pendingWrites = 0;
+    owner = await openCleanEpochAccountStore({ name: dbName,
+      afterWrite: tx => { if (++pendingWrites === 5) tx.abort(); } });
+    const interruptedPending = await new CleanEpochNormalDefeatRecoveryAdapter(owner)
+      .publishPending(pendingRequest);
+    check(interruptedPending.status === 'blocked' && interruptedPending.code === 'aborted',
+      `pending publication did not interrupt at consumer write: ${JSON.stringify(interruptedPending)}`);
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    check((await owner.readCurrentDescendantRecovery(accountId, slotId))?.status ===
+      'accepted_pending_consumers' && (await owner.read(accountId))?.revision === 3,
+      'pending publication interruption lost accepted artifact');
+    const result = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending(pendingRequest);
+    check(result.status === 'ready', `real native pending defeat did not publish: ${JSON.stringify(result)}`);
+    if (result.status !== 'ready') return;
+    check(result.value.loaded.snapshot.normalDefeatReceipts?.some(row => row.receiptId ===
+      receipt.receiptId && row.posture === 'recovery_pending') &&
+      JSON.stringify(native(result.value.loaded.snapshot).playerState.gear) === originalGear &&
+      (await owner.read(accountId))?.revision === 4,
+      'real pending publication lost receipt, gear or account revision');
+    const pendingPublicationId = result.value.loaded.publication.publicationId;
+    const pendingReceipts = (await owner.read(accountId))?.profile.campaignPublicationReceipts
+      ?.filter(row => row.publicationId === pendingPublicationId) ?? [];
+    check(pendingReceipts.length === 4 &&
+      new Set(pendingReceipts.map(row => row.kind)).size === 4 &&
+      pendingReceipts.every(row => row.status === 'applied'),
+      'pending defeat publication did not apply four exact account consumers');
+    const duplicatePending = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending(pendingRequest);
+    check(duplicatePending.status === 'ready' &&
+      duplicatePending.value.loaded.publication.publicationId === pendingPublicationId &&
+      (await owner.read(accountId))?.revision === 4,
+      'duplicate pending publication minted another artifact or consumer revision');
+    const changedPending = structuredClone(defeated.snapshot);
+    changedPending.playerState.resources.mp.current = Math.max(0,
+      changedPending.playerState.resources.mp.current - 1);
+    const changedResult = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending({
+      ...pendingRequest, snapshot: changedPending
+    });
+    check(changedResult.status === 'blocked' &&
+      (await owner.read(accountId))?.revision === 4,
+      'changed pending retry altered accepted publication');
+    const recoveryRequest = { accountId, sourceSlotId: slotId, destinationSlotId: slotId,
+      expectedAccountRevision: 4, expectedDestinationAddress: {
+        artifactId: result.value.loaded.sessionControl.loadedArtifactId,
+        publicationId: result.value.loaded.sessionControl.loadedPublicationId },
+      snapshot: result.value.loaded.snapshot, control: result.value.loaded.sessionControl,
+      receiptId: receipt.receiptId };
+    owner.close();
+    let writes = 0;
+    owner = await openCleanEpochAccountStore({ name: dbName,
+      afterWrite: tx => { if (++writes === 5) tx.abort(); } });
+    const interrupted = await new CleanEpochNormalDefeatRecoveryAdapter(owner).recover(recoveryRequest);
+    check(interrupted.status === 'blocked' && interrupted.code === 'aborted',
+      `real recovery did not interrupt at consumer write: ${JSON.stringify(interrupted)}`);
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    check((await owner.readCurrentDescendantRecovery(accountId, slotId))?.status ===
+      'accepted_pending_consumers' && (await owner.read(accountId))?.revision === 4,
+      'interrupted real recovery lost its accepted artifact');
+    const recovered = await new CleanEpochNormalDefeatRecoveryAdapter(owner).recover(recoveryRequest);
+    check(recovered.status === 'ready', `real recovery did not resume: ${JSON.stringify(recovered)}`);
+    if (recovered.status !== 'ready') return;
+    const recoveredPublicationId = recovered.value.loaded.publication.publicationId;
+    const recoveryReceipts = (await owner.read(accountId))?.profile.campaignPublicationReceipts
+      ?.filter(row => row.publicationId === recoveredPublicationId) ?? [];
+    check(recoveryReceipts.length === 4 &&
+      new Set(recoveryReceipts.map(row => row.kind)).size === 4 &&
+      recoveryReceipts.every(row => row.status === 'applied'),
+      'playable recovery did not apply four exact account consumers');
+    check(recovered.value.loaded.snapshot.normalDefeatReceipts?.some(row => row.receiptId ===
+      receipt.receiptId && row.posture === 'playable') &&
+      JSON.stringify(native(recovered.value.loaded.snapshot).playerState.gear) === originalGear &&
+      (await owner.read(accountId))?.revision === 5,
+      'real recovery lost playable receipt, gear or account completion');
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    const restarted = await owner.readSlot(accountId, slotId);
+    check(restarted.status === 'ready' && restarted.loaded.publication.publicationId ===
+      recoveredPublicationId && JSON.stringify(native(restarted.loaded.snapshot).playerState.gear) ===
+      originalGear, 'real recovery restart lost physical owner or publication');
+    const duplicateRecovery = await new CleanEpochNormalDefeatRecoveryAdapter(owner).recover(recoveryRequest);
+    check(duplicateRecovery.status === 'ready' &&
+      duplicateRecovery.value.loaded.publication.publicationId === recoveredPublicationId &&
+      (await owner.read(accountId))?.revision === 5,
+      'duplicate recovery after restart changed account authority');
+    owner.close();
+  });
+  await test('missing retained native defeat source cannot publish pending artifact', async () => {
+    const dbName = name(); const accountId = id('account'); const slotId: SaveSlotId = 'slot-1';
+    const owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Lost Source QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'source-loss creator did not publish');
+    if (first.status !== 'ready') return;
+    const source = native(first.value.loaded.snapshot);
+    const control = first.value.loaded.sessionControl as CampaignSessionControl<typeof source>;
+    const lethal = structuredClone(source);
+    lethal.playerState.location.settlementId = null;
+    lethal.playerState.flags = lethal.playerState.flags.filter(flag => !flag.startsWith('player.start.'));
+    lethal.sessionState.knownLocations = [{ id: 'location.recovery_haven', name: 'Recovery Haven',
+      regionLabel: 'Test March', settlementId: 'settlement.recovery_haven', regionId: 'region.test_march',
+      type: 'settlement', x: 1, y: 1, note: 'Synthetic recovery destination.', known: true }];
+    lethal.playerState.resources.hp.current = 0;
+    const pending = admitCampaignMutation(control, { mutationId: 'mutation.native.lost_source.qa',
+      sourceArtifactId: control.loadedArtifactId, sourceRevision: control.sessionRevision,
+      ownerKind: 'engine_result', accepted: true, sourceSnapshot: source, proposedSnapshot: lethal,
+      validateNativeSnapshot: isNativeTargetCampaignSnapshot });
+    const receipt = pending.snapshot.normalDefeatReceipts?.find(row => row.posture === 'recovery_pending');
+    check(pending.accepted && receipt, 'source-loss defeat did not create pending result');
+    if (!receipt) return;
+    const db = await new Promise<IDBDatabase>((resolve, reject) => {
+      const request = indexedDB.open(dbName);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction('artifacts', 'readwrite');
+      tx.objectStore('artifacts').delete([accountId, control.loadedArtifactId]);
+      tx.oncomplete = () => resolve(); tx.onabort = () => reject(tx.error);
+      tx.onerror = () => reject(tx.error);
+    });
+    db.close();
+    const result = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending({
+      accountId, sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 2,
+      expectedDestinationAddress: { artifactId: control.loadedArtifactId,
+        publicationId: control.loadedPublicationId },
+      snapshot: pending.snapshot, control: pending.control, receiptId: receipt.receiptId });
+    const artifactCount = await new Promise<number>((resolve, reject) => {
+      const request = indexedDB.open(dbName);
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const opened = request.result;
+        const count = opened.transaction('artifacts', 'readonly').objectStore('artifacts').count();
+        count.onsuccess = () => { resolve(count.result); opened.close(); };
+        count.onerror = () => { reject(count.error); opened.close(); };
+      };
+    });
+    check(result.status === 'blocked' && (await owner.read(accountId))?.revision === 2 &&
+      artifactCount === 0,
+      'lost source allowed pending artifact or consumer effects');
+    owner.close();
+  });
+  await test('historical native source publishes pending defeat as a retained non-head fork', async () => {
+    const dbName = name(); const accountId = id('account'); const slotId: SaveSlotId = 'slot-1';
+    const owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Non-head Pending QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'non-head pending creator failed');
+    if (first.status !== 'ready') return;
+    const start = native(first.value.loaded.snapshot);
+    const startControl = first.value.loaded.sessionControl as CampaignSessionControl<typeof start>;
+    const next = structuredClone(start);
+    next.playerState.location.settlementId = null;
+    next.playerState.flags = next.playerState.flags.filter(flag => !flag.startsWith('player.start.'));
+    next.sessionState.knownLocations = [{ id: 'location.recovery_haven', name: 'Recovery Haven',
+      regionLabel: 'Test March', settlementId: 'settlement.recovery_haven', regionId: 'region.test_march',
+      type: 'settlement', x: 1, y: 1, note: 'Synthetic recovery destination.', known: true }];
+    const staged = admitCampaignMutation(startControl, { mutationId: 'mutation.native.nonhead.stage.qa',
+      sourceArtifactId: startControl.loadedArtifactId, sourceRevision: startControl.sessionRevision,
+      ownerKind: 'engine_result', accepted: true, sourceSnapshot: start, proposedSnapshot: next,
+      validateNativeSnapshot: isNativeTargetCampaignSnapshot });
+    const head = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 2,
+      snapshot: staged.snapshot, control: staged.control });
+    check(head.status === 'ready', 'non-head pending staging failed');
+    if (head.status !== 'ready') return;
+    const historical = await owner.readHistoricalArtifact(accountId, slotId, startControl.loadedArtifactId);
+    const old = native(historical.snapshot);
+    const historicalControl = historical.sessionControl as CampaignSessionControl<typeof old>;
+    const lethal = structuredClone(old);
+    lethal.playerState.location.settlementId = null;
+    lethal.playerState.flags = lethal.playerState.flags.filter(flag => !flag.startsWith('player.start.'));
+    lethal.sessionState.knownLocations = next.sessionState.knownLocations;
+    lethal.playerState.resources.hp.current = 0;
+    const defeated = admitCampaignMutation(historicalControl, {
+      mutationId: 'mutation.native.nonhead.pending.qa',
+      sourceArtifactId: historicalControl.loadedArtifactId,
+      sourceRevision: historicalControl.sessionRevision, ownerKind: 'engine_result', accepted: true,
+      sourceSnapshot: old, proposedSnapshot: lethal,
+      validateNativeSnapshot: isNativeTargetCampaignSnapshot });
+    check(defeated.accepted && defeated.control.posture === 'forked_unpublished',
+      'historical HP-zero command did not retain non-head fork');
+    const receipt = defeated.snapshot.normalDefeatReceipts?.find(row => row.posture === 'recovery_pending');
+    check(receipt, 'historical HP-zero command has no pending receipt');
+    if (!receipt) return;
+    const currentHead = head.value.loaded.sessionControl;
+    const published = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending({
+      accountId, sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 3,
+      expectedDestinationAddress: { artifactId: currentHead.loadedArtifactId,
+        publicationId: currentHead.loadedPublicationId },
+      snapshot: defeated.snapshot, control: defeated.control, receiptId: receipt.receiptId });
+    check(published.status === 'ready', `non-head pending publication failed: ${JSON.stringify(published)}`);
+    if (published.status !== 'ready') return;
+    check(published.value.loaded.snapshot.campaignIdentity?.parentContinuityId ===
+      old.campaignIdentity?.continuityId &&
+      published.value.loaded.snapshot.normalDefeatReceipts?.some(row => row.receiptId ===
+        receipt.receiptId && row.posture === 'recovery_pending') &&
+      JSON.stringify(native(published.value.loaded.snapshot).playerState.gear) ===
+      JSON.stringify(start.playerState.gear),
+      'non-head pending fork lost continuity, receipt or physical gear');
+    owner.close();
+    const reopened = await openCleanEpochAccountStore({ name: dbName });
+    const pendingRead = await reopened.readSlot(accountId, slotId);
+    check(pendingRead.status === 'ready' && pendingRead.loaded.publication.publicationId ===
+      published.value.loaded.publication.publicationId,
+      'non-head pending publication did not restart on retained fork');
+    const pendingControl = published.value.loaded.sessionControl;
+    const recovered = await new CleanEpochNormalDefeatRecoveryAdapter(reopened).recover({
+      accountId, sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 4,
+      expectedDestinationAddress: { artifactId: pendingControl.loadedArtifactId,
+        publicationId: pendingControl.loadedPublicationId },
+      snapshot: published.value.loaded.snapshot, control: pendingControl,
+      receiptId: receipt.receiptId });
+    check(recovered.status === 'ready' && recovered.value.loaded.snapshot.normalDefeatReceipts
+      ?.some(row => row.receiptId === receipt.receiptId && row.posture === 'playable') &&
+      JSON.stringify(native(recovered.value.loaded.snapshot).playerState.gear) ===
+      JSON.stringify(start.playerState.gear) && (await reopened.read(accountId))?.revision === 5,
+      'non-head pending fork did not complete one playable recovery');
+    reopened.close();
+  });
   await test('native mutation admission rejects damaged physical gear without retaining a result', async () => {
     const source = fixture(id('account'));
     const control = createCampaignSessionControl({
