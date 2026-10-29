@@ -13,6 +13,7 @@ import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirst
 import { CleanEpochDescendantAdapter } from './src/game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochTerminalAdapter } from './src/game-shell/cleanEpochTerminalAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './src/game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
+import { admitNativeGearSessionAction } from './src/game-shell/nativeSessionItemActions.js';
 import { resolveNormalDefeat } from '../../packages/engines/game-engine/src/normal-defeat.js';
 import { admitCampaignMutation, completePendingNormalDefeatRecovery,
   createCampaignSessionControl } from '../../packages/engines/game-engine/src/campaign-session.js';
@@ -69,6 +70,48 @@ async function rejectCode(run: () => Promise<unknown>, code: string) {
   throw new Error(`expected ${code} rejection`);
 }
 async function suite() {
+  await test('native creator gear session action publishes and restarts through the account owner', async () => {
+    const dbName = name(); const accountId = id('account'); const slotId: SaveSlotId = 'slot-1';
+    let owner = await openCleanEpochAccountStore({ name: dbName });
+    await owner.register(createDefaultAccountProfileState({ accountId, displayName: 'Native Gear Session QA' }),
+      await createCredentialRecord(accountId, 'synthetic-only-password', new Date().toISOString()));
+    const first = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, formFixture());
+    check(first.status === 'ready', 'native gear session creator failed');
+    if (first.status !== 'ready') return;
+    const snapshot = native(first.value.loaded.snapshot);
+    const control = first.value.loaded.sessionControl as CampaignSessionControl<typeof snapshot>;
+    const bow = snapshot.playerState.gear.instances.find(item => item.itemId === 'item.short_bow');
+    check(bow, 'native Hunter has no physical Short Bow');
+    if (!bow) return;
+    const request = { requestId: 'native.gear.session.browser.qa', expectedRevision: snapshot.playerState.gear.revision,
+      itemInstanceId: bow.itemInstanceId, destination: { kind: 'carried' as const } };
+    const action = admitNativeGearSessionAction(snapshot, control, request);
+    check(action.status === 'accepted' && action.control.hasUnpublishedGameplayState,
+      'native gear action was not admitted by session owner');
+    const saved = await new CleanEpochDescendantAdapter(owner).save({ accountId,
+      sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 2,
+      snapshot: action.snapshot, control: action.control });
+    check(saved.status === 'ready', `native gear action was not published: ${JSON.stringify(saved)}`);
+    if (saved.status !== 'ready') return;
+    const publicationId = saved.value.loaded.publication.publicationId;
+    const expectedGear = JSON.stringify(action.snapshot.playerState.gear);
+    check(JSON.stringify(native(saved.value.loaded.snapshot).playerState.gear) === expectedGear &&
+      (await owner.read(accountId))?.revision === 3,
+      'native gear action lost physical gear or account revision');
+    owner.close(); owner = await openCleanEpochAccountStore({ name: dbName });
+    const restarted = await owner.readSlot(accountId, slotId);
+    check(restarted.status === 'ready' && restarted.loaded.publication.publicationId === publicationId &&
+      JSON.stringify(native(restarted.loaded.snapshot).playerState.gear) === expectedGear,
+      'native gear session Save/restart changed item identity, durability or location');
+    if (restarted.status === 'ready') {
+      const reopened = native(restarted.loaded.snapshot);
+      const replay = admitNativeGearSessionAction(reopened,
+        restarted.loaded.sessionControl as CampaignSessionControl<typeof reopened>, request);
+      check(replay.status === 'duplicate' && replay.snapshot === reopened,
+        'native gear duplicate after restart changed physical or session state');
+    }
+    owner.close();
+  });
   await test('native creator HP-zero command retains pending defeat before recovery', async () => {
     const dbName = name(); const accountId = id('account'); const slotId: SaveSlotId = 'slot-1';
     let owner = await openCleanEpochAccountStore({ name: dbName });
