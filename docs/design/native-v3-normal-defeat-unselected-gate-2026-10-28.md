@@ -4,6 +4,8 @@
 
 This isolated child starts at draft PR #42 `4b68c864f8f8a58dffef6dededcdc75de429a43d`, stacked on draft PR #41 `a3f24c9177034adf4f4068f356d4b0c39337b207`. Inspected clean master was `a596112acf3945f2bf7c625e943f2511d12aa710`. PR #19's fresh-save decision still applies: obsolete development records remain untouched and incompatible. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; unversioned support; development impact `supports_current_band`; game-version impact `none`.
 
+Published as [draft PR #43](https://github.com/vagabond1215/Lineage_Reforged/pull/43) targeting #42. Verified implementation/evidence commit `885c987e8f30b1bb0ac4e158501bf8561fff1fd0` was pushed before this PR-link handoff update.
+
 **Decision: retain the selected v2 App and hold native v3 activation.** The existing Normal-defeat resolution, session mutation and retained recovery owners can now carry a native v3 snapshot without converting its physical gear to a v2 equipment map. The native caller supplies the existing native campaign validator at mutation admission and recovery completion; absent or failing validation rejects without retaining a mutation. The recovery adapter admits exact native sources, keeps format identity, requires retained source/control, and checks exact physical gear after completion. No second equipment or recovery authority was added.
 
 ## Verified and unverified behavior
