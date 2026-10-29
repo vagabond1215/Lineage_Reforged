@@ -309,6 +309,8 @@ export function EpochApp() {
 
   const recoverLoaded = async (accountId: string, slotId: SaveSlotId, expectedAccountRevision: number,
     loaded: { snapshot: SaveSnapshot; sessionControl: CampaignSessionControl }) => {
+    // The native selected review is read-only; v2 defeat recovery must never consume a v3 record.
+    if (loaded.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') return loaded;
     if (!services || !hasPendingNormalDefeat(loaded.snapshot)) return loaded;
     const recovered = await services.normalDefeat.recover({ accountId, sourceSlotId: slotId,
       destinationSlotId: slotId, expectedDestinationAddress: {
@@ -369,6 +371,8 @@ export function EpochApp() {
 
   const save = (destinationSlotId: SaveSlotId) => guarded(async () => {
     if (state.screen !== 'IN_GAME' || !services) return;
+    if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3')
+      throw new Error('Native v3 Save is held until the selected gameplay and recovery route is activated.');
     const defeatPending = hasPendingNormalDefeat(state.snapshot);
     const sourceSlotId = sourceSlot.current;
     const expectedDestinationAddress = observedAddresses.current[destinationSlotId];
@@ -398,6 +402,10 @@ export function EpochApp() {
 
   const retire = () => {
     if (state.screen !== 'IN_GAME' || !services) return;
+    if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
+      failed('Retirement Unavailable', 'Native v3 retirement is held until the selected lifecycle route is activated.');
+      return;
+    }
     if (!window.confirm(`Retire ${state.snapshot.playerState.coreData.playerName}? This closes the campaign, records its final history and empties its save slots after settlement.`)) return;
     void guarded(async () => {
       if (state.screen !== 'IN_GAME' || !services) return;
