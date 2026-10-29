@@ -67,6 +67,7 @@ test('native Character and Inventory present exact owner-backed records without 
     { snapshot, mode: 'character' }));
   assert.equal([...character.matchAll(/data-slot-id=/g)].length, GEAR_SLOT_IDS.length);
   assert.equal([...character.matchAll(/aria-label="(?:Strength|Dexterity|Agility|Constitution|Vitality|Intelligence|Wisdom|Spirit|Charisma) /g)].length, 9);
+  assert.equal([...character.matchAll(/role="group"[^>]+aria-label="(?:Strength|Dexterity|Agility|Constitution|Vitality|Intelligence|Wisdom|Spirit|Charisma) /g)].length, 9);
   assert.match(character, /Short Bow/);
   assert.match(character, /durability/);
   const inventory = renderToStaticMarkup(React.createElement(NativeCharacterPanel,

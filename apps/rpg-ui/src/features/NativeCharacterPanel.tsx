@@ -76,7 +76,7 @@ export function NativeCharacterPanel({ snapshot, mode, control, onSnapshotChange
       <div className="grid gap-3 lg:grid-cols-[minmax(9rem,12rem)_minmax(0,1fr)]">
         <section aria-label="Character attributes">
           <h3 className="mb-2 text-sm font-semibold">Attributes</h3>
-          <dl className="grid gap-1">{CHARACTER_ATTRIBUTE_ORDER.map(key => <div key={key}
+          <dl className="grid gap-1">{CHARACTER_ATTRIBUTE_ORDER.map(key => <div key={key} role="group"
             className="flex justify-between rounded border border-[color:var(--color-border-soft)] px-2 py-1 text-sm"
             aria-label={`${getCharacterAttributePresentation(key).fullName} ${view.attributes[key]}`}>
             <dt title={getCharacterAttributePresentation(key).fullName}>{key}</dt><dd>{view.attributes[key]}</dd>
