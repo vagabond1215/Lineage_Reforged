@@ -39,6 +39,19 @@ Completing one structurally sound layer enables **another layer of the same Core
 
 **Layer versus breakthrough:** ordinary layer work and intrarank cultivation primarily improve structural integrity, throughput, efficiency, control, refinement and quality. Major Rank/breakthrough changes may **reconfigure the number, geometry, and potential complexity of facets**, allowing a new level of parallel awareness. Do not infer one new facet, one new shell, one Star, one Rank or one task per unit of mana. Exact progression boundaries are unselected.
 
+## 2A. Selected Rank-versus-refinement distinction (2026-10-29)
+
+**User-approved direction (now resolved):** **Rank breakthrough is the ordinary authority for creating additional *functional* facets / increasing potential consciousness-thread topology.** Ordinary within-Rank mana refinement, further crystalline layering, symmetry correction, annealing and practice instead **improve the quality, stability and usable efficiency of the *existing* facets**. A well-refined Core can become vastly better at directing its current threads without gaining a new thread simply because it absorbed more mana, completed a layer or improved its Star/within-Rank maturity.
+
+A typical ordinary progression sequence is:
+
+1. **Within Rank:** absorb permitted mana; deliberately compress and integrate another coherent layer; improve existing facet alignment, stability, structural integrity, energy efficiency and the quality, precision or synchronization of already eligible attention threads.
+2. **Breakthrough preparation:** require actual source-backed consolidated layers, sufficient structure and appropriate owner-approved proof, skill and time. A full reserve is not itself proof of readiness.
+3. **Rank breakthrough:** a successful owner-certified topological reorganization **introduces additional stable functional facets**, making more potential consciousness threads possible. Existing structural layers and Core identity survive; no duplicate Core or reset of history.
+4. **Post-breakthrough maturation:** train, stabilize and coordinate the new potential facet threads until the active Task owner authorizes their use. New potential is not immediate guaranteed full concurrency, automatic independent judgment, a free ability or instant completion.
+
+**No ordinary facet creation from within-Rank refinement.** Within-Rank progress may make an already-existing inactive facet capable of contributing *within the topology authorized by the preceding breakthrough*, but cannot mint an entirely new functional facet beyond that topology. Other genuinely exceptional facet-generation mechanisms would require a fresh explicit product decision; none is inferred now. This leaves exact ranks, numerical facet counts, per-Rank thread caps, Star gates, polyhedral progression and breakthrough costs **unselected**.
+
 ## 3. Six-faced beginning, finer facets, increasing spherical efficiency
 
 **Accepted directional shape:** the least efficient primitive reference is a **six-faced cube**, where few broad faces and pronounced corners represent comparatively crude distribution of Core power and attention. As the Core advances through deliberate successful refinements and topology-changing breakthroughs, it can become more finely faceted and **closer to spherical**, signifying better overall structural refinement, even coverage, energy-control efficiency and attention partitioning.
@@ -48,7 +61,7 @@ Completing one structurally sound layer enables **another layer of the same Core
 - **Facet count** = the number of genuinely stable, owner-certified faces/regions capable of supporting conscious processing threads in the magical architecture. Quality matters: nominal faces, tiny imperfections, visual glints and shell growth do not automatically count as new functional facets.
 - **Sphericity/symmetry** = how evenly and coherently the Core is shaped. More faces are usually the route toward a smoother, more spherical Core **when properly aligned**, but arbitrary extra jagged faces are not inherently more efficient. A poorly formed high-face-count shape can perform worse than an orderly lower-count one until refined.
 - **Layer count / structural consolidation** = how much mana has been deliberately integrated into enduring coherent structure; not the current spendable reserve.
-- **Rank/breakthrough** = authorization for new structural topology and qualitative capability, not just total reserves or visible growth.
+- **Rank/breakthrough** = the normal, exclusive gate for **additional functional facets / newly available potential consciousness-thread topology** and qualitative capability, not just total reserves or visible growth; within-Rank refinement upgrades existing facets instead.
 - **Active thread capacity** = how many potential facet-generated conscious threads are **stable, awake, coordinated and permitted to perform tasks** at a given time, subject to Rank/maturity, attention, knowledge, world-time and any applicable active-work cap.
 
 Do not naively use `active threads = 6` for the first cube. **Each stable facet can produce/support a potential consciousness thread**, but the Core may initially be able to activate or coordinate **fewer than all its potential facets**. This accommodates very low early parallel Task capacity and a six-faced primitive structure. Later breakthroughs can grow both possible facet count and practical coordinated throughput. Any eventual exact one-to-one *active* thread rule must reconcile starting shape, maturation and future task caps explicitly.
@@ -71,7 +84,7 @@ many potential facets
 ≠ an ability to complete all tasks instantly
 ```
 
-A newer layer should not automatically increase thread count without an appropriately matured or reorganized facet topology. An unrelated magic supply does not increase concurrent attention unless the Core actually progresses. A Core with abundant energy but low activated attention can still be strategically constrained.
+A newer layer **does not add functional facets or raise potential thread-topology capacity without a Rank breakthrough**; within-Rank refinement improves existing facets, and the newly authorized potential after breakthrough requires maturation before active task use. An unrelated magic supply does not increase concurrent attention unless the Core actually progresses. A Core with abundant energy but low activated attention can still be strategically constrained.
 
 **Dungeon-only reference inspection (read-only):** `vagabond1215/Dungeon` `main`, `docs/design/CORE_WORK_THREADS_CONCURRENT_MANIPULATION.md`, `CORE_PROGRESSION.md`, `CORE_ABILITIES.md`, and `MAGIC_AND_ESSENCE.md`. That project distinguishes usable essence, structural essence, progress proofs and task concurrency; its current rank-banded working task-capacity example is Iron=2, Bronze=4, Silver=8, Gold=16, Platinum=32, Diamond=64, Mythril=128, with Stars generally improving thread quality rather than number. **These are useful compatibility observations, not approved Lineage numerical ranks/caps/formulas.** The six-faced visualization must not silently overwrite a preexisting two-active-task reference, nor does that reference force a six-faced Core to possess only two actual facets.
 
@@ -107,7 +120,7 @@ Suggested user-facing visual concepts after an owner selects a UI: a crude six-f
 - CF-07: committed active refinement requires legitimate mana, time, eligible capability, shaping/symmetry effort and appropriate task capacity.
 - CF-08: unfinished/misaligned refinement does not silently duplicate committed input, free work or force an unselected terminal/Core-death outcome.
 - CF-09: a completed layer adds to the **same persistent Core** without creating another independent Core/identity.
-- CF-10: Rank/breakthrough may permit facet-topology reconfiguration, while ordinary layer growth alone does not automatically add a facet/task.
+- CF-10: **only a certified Rank breakthrough ordinarily adds functional facets / potential thread topology**; within-Rank layer refinement, annealing or Star improvement upgrades existing facets and cannot mint new ones.
 - CF-11: a crude six-faced reference is less efficient than a properly consolidated higher-facet near-spherical Core, with no exact formula implied.
 - CF-12: nominal face count alone cannot beat severe asymmetry or bypass quality/maturity/synchronization requirements.
 - CF-13: each stable certified facet can support a potential consciousness thread, but a six-facet early Core need not run six simultaneous tasks.
@@ -127,7 +140,7 @@ No checks executed and no runtime/test files updated.
 
 1. Which initial cube facets are capable of producing conscious threads immediately, versus potential but inactive, and does first-task capacity remain less than six?
 2. Is sphericity a physical appearance and genuinely causal efficiency property, or a magical/geometric representation whose manifestation can change visually by ancestry/core kind?
-3. Which stable polyhedral forms or facet-count ranges, if any, are desirable per Rank/breakthrough without exponential unbounded Task capacity?
+3. Which stable polyhedral forms or facet-count ranges, if any, should **Rank breakthroughs alone** introduce without unbounded Task capacity, and how are those new potential facet-threads subsequently trained and activated?
 4. Can imperfect refinement be repaired or annealed; how much mana, attention and time does it require, and what failure/injury tradeoffs are appropriate?
 5. How much retained mana is free reserve vs integrated structure vs emitted/returned to surroundings, and how are effective bottlenecks calibrated?
 6. Can a Core intentionally exude mana to improve dungeon ecology, attract allies, manipulate hostile environments or enrich civic infrastructure, and under what real cost/permission and source-owner rules?
