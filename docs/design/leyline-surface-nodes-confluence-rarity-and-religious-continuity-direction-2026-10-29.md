@@ -12,6 +12,20 @@ Date: 2026-10-29. Status: **user-directed provisional design, docs only; not can
 
 Intrinsic elements remain Fire, Water, Earth, Wind, Thunder, Ice, Light and Darkness; Stone is an applied religious term for Earth. Real leyline topology and environmental manifestations do not prove gods, miracles, deity identities, orders, temples, magical rewards or character knowledge. A near-surface point is a world/geographic/magic fact; religious interpretation is a separate observer/social fact.
 
+## 1A. Deep stability, gradual migration and surface exposure (2026-10-29 clarification)
+
+**Three related layers have different rates and owners:**
+
+1. **Deep intrinsic leyline body/topology:** the vast subsurface magical pathways are ordinarily exceptionally stable, with slow, continuous drift analogous in *pace and persistence* to a long-established ocean current, not literal fluid dynamics. A deep leyline does not ordinarily jump locations, switch elements, disappear overnight or reform from a routine weather event. A genuinely large-scale phenomenon may exceptionally perturb or redirect it, subject to future certified world history and elemental/geographic causality.
+2. **Near-surface approach, node and confluence exposure:** the accessible or environmentally influential portions may change somewhat more readily than the massive deep network, yet **substantial appearance, loss, or migration of an established surface point within roughly three generations should be surprising without an external catalyst**. This is a qualitative rarity expectation, *not* a specified generation length, transition probability, guarantee of stasis or numeric world-simulation rate. Ordinary detectable fluctuation does not equal a newly created or relocated node.
+3. **Natural and religious consequences:** as a leyline gradually descends farther into the earth or withdraws from a particular surface location, its **elemental magical influence and resulting non-natural local manifestations generally diminish gradually**, with history and observational lag determined by their future respective owners. Conversely an approaching line may gradually strengthen eligible manifestations. An ordinary natural hot spring, volcano, climate feature or existing structure need not vanish when unusual magic diminishes. Temple authority, historical memory, recruitment and a faith's survival belong to separate cultural/institutional owners, never automatic functions of depth.
+
+**Exceptional catalyst:** a major tectonic/plate-shifting earthquake is a plausible more direct cause of changed surface access, and an exceptionally large, source-certified geophysical or magical event might also affect deeper topology. **Neither an ordinary earthquake nor plate movement automatically redirects a magical line.** Distinguish a displaced land surface that changes exposure from an actual deep-line shift; both require source-backed world-event evidence. Severity thresholds, physical coupling, geomancy and the power of magic users to manipulate leylines remain unselected.
+
+**Long timescales:** generational and 1000+-year world continuations may show cumulative gradual shifts or exceptional documented changes, but must maintain chronological cause, accepted node histories, confluence-element eligibility and distinction between actual world truth and what later observers know. A confluence ceases to be an *active near-surface confluence* if one of its required distinct line exposures truly withdraws; that does not undo its historical reality, abolish its constituent elements, automatically erase its religion or prove its myths.
+
+No automatic modifiers, climate rules, node move tick, event probabilities, tectonic simulation, seeded geography re-roll or magic practice powers are approved here.
+
 ## 2. Relative rarity selected by the user
 
 | Distinct constituent elements at a site | Selected relative prevalence | Critical caveat |
@@ -30,7 +44,7 @@ A real perfect eight-element harmony may support a significant optional discover
 
 ## 3. Confluence movement, religious survival and seeded orders
 
-Leyline exposure/confluence may shift, disappear, weaken, become inaccessible or end historically, subject to a future source-owned world transition. **That does not remove elemental magic from the world.** Religion is a human/elf/beastfolk institution; its strength after losing a founding site depends on mission, community, alternative practices, recruitment method, resources, adaptability and historical reputation. An order with strong schools, care, craft, service or political causes might thrive without its original node; a cult sustained solely by veneration of that node could collapse. Decline is a seed/history-specific possibility, **not an automatic effect**.
+Leyline exposure/confluence may slowly migrate, sink beyond near-surface eligibility, weaken, become inaccessible or end historically; these are usually long gradual processes, with abrupt transitions restricted to separately verified exceptional catalysts and source-owned world transitions. **That does not remove elemental magic from the world.** Religion is a human/elf/beastfolk institution; its strength after losing a founding site depends on mission, community, alternative practices, recruitment method, resources, adaptability and historical reputation. An order with strong schools, care, craft, service or political causes might thrive without its original node; a cult sustained solely by veneration of that node could collapse. Decline is a seed/history-specific possibility, **not an automatic effect**.
 
 The user accepts prior recommendations:
 - Seed-select an **order count between a future minimum and maximum**, considering world/continental demographics and culture. Numerical limits **still unselected**.
@@ -50,7 +64,7 @@ Examples: storm does not itself prove distinct Wind/Thunder lines; freezing wate
 
 ## 5. Future source requirements, without inventing a schema
 
-A planned leyline/confluence world owner should eventually represent: canonical elements, distinct line identity, actual location and bounded physical extent, near-surface eligibility, era/validity, persistence or movement, observed physical manifestations, locality and climate provenance, age/historical evidence, and known-vs-secret observer scopes. A related religion/seed owner may use *verified* site and history inputs to select institutions, mission/recruitment dependence, public reputation, names and inter-order rivalries. It cannot manufacture line intersections from flavor names or claim supernatural healing.
+A planned leyline/confluence world owner should eventually represent: canonical elements, distinct line identity, actual location and bounded physical extent, near-surface eligibility, era/validity, persistence or movement, observed physical manifestations and their gradual intensity/history, locality and climate provenance, deep-line versus exposed-node transition evidence, exceptional catalyst provenance, age/historical evidence, and known-vs-secret observer scopes. A related religion/seed owner may use *verified* site and history inputs to select institutions, mission/recruitment dependence, public reputation, names and inter-order rivalries. It cannot manufacture line intersections from flavor names or claim supernatural healing.
 
 Suggested candidate checks (not executed):
 - LY-01 an ocean and ordinary volcanic heat without magical lines is not a confluence.
@@ -63,15 +77,23 @@ Suggested candidate checks (not executed):
 - LY-08 same-world order counts can change by seed while all eight original single-element traditions have historical evidence.
 - LY-09 current six named organizations need not be present in each generated world.
 - LY-10 player UI does not expose unknown historical hidden sites and orders as verified facts.
+- LY-11 three ordinary generations do not routinely relocate established deep lines or substantial surface nodes without a supported catalyst.
+- LY-12 a slowly descending line yields gradually fading, source-owned non-natural manifestations; preexisting ordinary geology need not disappear.
+- LY-13 an ordinary earthquake is not automatically a change in deep leyline identity or position.
+- LY-14 a certified exceptional tectonic event can alter exposure, and a separately justified exceptional event may alter deep topology, without equating those two effects.
+- LY-15 a temporarily weakened surface manifestation does not by itself prove a line vanished or an active confluence migrated.
+- LY-16 a former confluence can become historical when an eligible component withdraws while its actual history and affiliated religion remain separately governed.
+- LY-17 a 1000+-year continuation can include accumulated movement and exceptional recorded changes, never an uncaused re-seed of prior geography or faith history.
 
 ## 6. Unanswered questions, deliberately unselected
 
-1. May leylines shift/decay over time, and by how much in 10, 100 or 1000 years?
+1. What specific depth/distance rates, observable intensity curves and era-scale movement bounds should implement the now-selected **normally slow gradual change**, without treating the three-generation rarity heuristic as a numeric rate?
 2. How much physical geography and leyline topology may vary per seed rather than selecting from preauthored legal map sites?
 3. How does a future source verify a magically present leyline beyond surface appearance?
 4. Can magical practice deliberately create or redirect leylines?
 5. Can two same-element lines meet at a strengthened **single-element** node without counting as a multielement confluence?
 6. Does "perfect harmonic" require balance/stability beyond all eight merely meeting?
 7. How do global historical single-element traditions fit counting when no active temple survives?
+8. Which specific extreme tectonic/geophysical phenomena count as source-certified catalysts, and when do they modify surface exposure versus truly displace deep topology?
 
-**Hold:** one new Markdown design addendum only. No changes to master, live data, gameplay, UI, code, Save, Codex native v3, Area/Atlas, tools/stations, tests or version. Named future consumer: Elemental/Leyline Geography and Religion/World Generator design.
+**Hold:** revision of this existing Markdown design addendum only on the held branch; no new source/data owner. No changes to master, live data, gameplay, UI, code, Save, Codex native v3, Area/Atlas, tools/stations, tests or version. Named future consumer: Elemental/Leyline Geography and Religion/World Generator design.
