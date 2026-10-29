@@ -4,6 +4,8 @@
 
 This isolated child starts at draft PR #43 `8a03c461ad8f06e7ea70389a7c3d6304b2368473`, stacked on #42. Fetched/pruned master was `a596112acf3945f2bf7c625e943f2511d12aa710`; 39 repository PRs were open before this child. PR #19's approved fresh-save epoch applies: obsolete development records are not converted or deleted. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, unversioned support, development impact `supports_current_band`, game-version impact `none`.
 
+Published as [draft PR #44](https://github.com/vagabond1215/Lineage_Reforged/pull/44) targeting #43. Verified implementation and evidence commit `a5e87c7f497bde7c3ba65b4ed47b7d1297d322c7` was pushed and read back before this link update.
+
 **Decision: the unselected pending-defeat publication owner is verified; selected native v3 activation remains held.** `CleanEpochNormalDefeatRecoveryAdapter.publishPending` now routes an exact accepted `recovery_pending` mutation through the existing descendant account publication and its four consumers before `recover` can make a playable descendant. The pending marker is retained on the descendant recovery row. Ordinary Save without the marker still refuses pending state. The adapter requires the exact receipt, accepted session result, source/control, account revision, destination address and current head. Pending retry resumes the retained publication; accepted duplicate returns its original artifact. No second mutation or physical gear owner is introduced.
 
 ## Executable evidence
