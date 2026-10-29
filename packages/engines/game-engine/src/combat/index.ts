@@ -6,6 +6,7 @@ import type {
   GameDelta,
   GameEventEnvelope,
   GameState,
+  NativeGearPlayerState,
   PlayerState,
   ResolvedSpawnCandidateState,
   SessionState
@@ -29,6 +30,22 @@ import {
   resolveSkillRankGainPolicy
 } from "../../../player-engine/src/progression.js";
 import { loadSpawnFoundationContent } from "../../../world-engine/src/spawn/content.js";
+import { projectNativeEffectiveWornFromGear } from "../native-worn-projection.js";
+import type { GearOwner } from "../gear-instance-owner.js";
+
+type CombatPlayerState = PlayerState | NativeGearPlayerState<GearOwner>;
+
+function wornCombatItems(playerState: CombatPlayerState) {
+  if ('gear' in playerState && playerState.gear) {
+    const worn = projectNativeEffectiveWornFromGear(playerState.gear);
+    return { mainHandItemId: worn.mainHandItemId, offHandItemId: worn.offHandItemId,
+      itemIds: worn.combatItemIds };
+  }
+  const legacy = playerState as PlayerState;
+  return { mainHandItemId: legacy.equipment['slot.weapon.right']?.itemId ?? null,
+    offHandItemId: legacy.equipment['slot.weapon.left']?.itemId ?? null,
+    itemIds: Object.values(legacy.equipment).flatMap(item => item?.itemId ? [item.itemId] : []) };
+}
 
 type ActionTemplate = {
   actionType: string;
@@ -602,7 +619,7 @@ function recordCombatSkillGainAttempts(
 
 function isPlayerOwnedCombatAction(
   encounter: CombatEncounterState,
-  playerState: PlayerState,
+  playerState: CombatPlayerState,
   action: CombatActionState
 ): boolean {
   const actor = findCombatant(encounter, action.actorCombatantId);
@@ -621,7 +638,7 @@ function getSkillLabel(skillId: string): string {
 
 function applyCombatSkillGainAttempt(
   encounter: CombatEncounterState,
-  playerState: PlayerState,
+  playerState: CombatPlayerState,
   attempt: CombatSkillGainAttempt
 ): string | null {
   if (!attempt.allowed) {
@@ -674,7 +691,7 @@ function applyCombatSkillGainAttempt(
 
 function applyCombatSkillGainsForResolvedActions(
   encounter: CombatEncounterState,
-  playerState: PlayerState,
+  playerState: CombatPlayerState,
   newlyResolvedActions: NewlyResolvedCombatAction[]
 ): string[] {
   if (newlyResolvedActions.length === 0) {
@@ -1493,17 +1510,17 @@ function createCombatAction(
   };
 }
 
-function deriveActorPreference(playerState: PlayerState, actorId: string) {
+function deriveActorPreference(playerState: CombatPlayerState, actorId: string) {
   return playerState.combatProfile.memberPreferences.find((entry) => entry.actorId === actorId) ?? null;
 }
 
-function buildPlayerHooks(playerState: PlayerState): CombatantState["hooks"] {
+function buildPlayerHooks(playerState: CombatPlayerState): CombatantState["hooks"] {
   const content = loadPlayerCombatContent();
   const skillIds = playerState.skills.map((entry) => entry.id);
   const spellIds = playerState.spells.map((entry) => entry.id);
   const abilityIds = playerState.abilities.map((entry) => entry.id);
   const traitIds = playerState.traits.map((entry) => entry.id);
-  const itemIds = Object.values(playerState.equipment).flatMap((item) => (item?.itemId ? [item.itemId] : []));
+  const itemIds = wornCombatItems(playerState).itemIds;
   const skillRankById = new Map(playerState.skills.map((entry) => [entry.id, entry.rank]));
   const skillEffectGrants: CombatantState["hooks"]["skillEffectGrants"] = [];
   const tacticalGrants: CombatantState["hooks"]["tacticalGrants"] = [];
@@ -1688,7 +1705,7 @@ function buildPlayerHooks(playerState: PlayerState): CombatantState["hooks"] {
   };
 }
 
-function resolvePlayerThreatRating(playerState: PlayerState): number {
+function resolvePlayerThreatRating(playerState: CombatPlayerState): number {
   const combatSkillRanks = playerState.skills
     .filter(
       (skill) => skill.id.startsWith("skill.combat.") || skill.id.startsWith("skill.magic.")
@@ -1713,9 +1730,10 @@ function resolvePlayerThreatRating(playerState: PlayerState): number {
   );
 }
 
-function buildPlayerCombatant(playerState: PlayerState, encounterId: string): CombatantState {
+function buildPlayerCombatant(playerState: CombatPlayerState, encounterId: string): CombatantState {
   const actorId = `actor.${playerState.playerId}`;
   const preference = deriveActorPreference(playerState, playerState.playerId);
+  const worn = wornCombatItems(playerState);
   return {
     id: `${encounterId}.combatant.player`,
     displayName: playerState.coreData.playerName,
@@ -1758,10 +1776,9 @@ function buildPlayerCombatant(playerState: PlayerState, encounterId: string): Co
       lastCompletedActionId: null
     },
     equipment: {
-      mainHandItemId: playerState.equipment["slot.weapon.right"]?.itemId ?? null,
-      offHandItemId: playerState.equipment["slot.weapon.left"]?.itemId ?? null,
-      armorItemIds: Object.values(playerState.equipment)
-        .flatMap((item) => (item?.itemId ? [item.itemId] : []))
+      mainHandItemId: worn.mainHandItemId,
+      offHandItemId: worn.offHandItemId,
+      armorItemIds: worn.itemIds
     },
     hooks: buildPlayerHooks(playerState),
     threatRating: resolvePlayerThreatRating(playerState)
@@ -1874,7 +1891,7 @@ function buildMonsterCombatant(
 
 export function createEncounterFromSpawnCandidate(
   gameState: GameState,
-  playerState: PlayerState,
+  playerState: CombatPlayerState,
   candidate: ResolvedSpawnCandidateState,
   tick: number
 ): CombatEncounterState | null {
@@ -2587,7 +2604,7 @@ export function queueManualCombatCommand(
   return encounter;
 }
 
-function syncEncounterToPlayerState(encounter: CombatEncounterState, playerState: PlayerState): void {
+function syncEncounterToPlayerState(encounter: CombatEncounterState, playerState: CombatPlayerState): void {
   const playerCombatant = encounter.combatants.find((combatant) => combatant.kind === "player");
   if (!playerCombatant) {
     return;
@@ -2638,7 +2655,7 @@ function clearEncounterBindings(gameState: GameState): void {
 
 export function tickCombatFoundation(
   gameState: GameState,
-  playerState: PlayerState,
+  playerState: CombatPlayerState,
   spawnCandidates: ResolvedSpawnCandidateState[],
   tick: number,
   sessionState?: SessionState

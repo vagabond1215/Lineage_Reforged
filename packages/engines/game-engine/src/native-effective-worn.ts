@@ -1,19 +1,12 @@
-import itemCatalog from '../../../content/base/items/items.json' with { type: 'json' };
 import type { PlayerResourceModifierState } from '../../../shared/types/src/index.js';
-import { getWornGear, type GearItemInstance, type GearOwner } from './gear-instance-owner.js';
+import type { GearItemInstance } from './gear-instance-owner.js';
+import { projectNativeEffectiveWornFromGear } from './native-worn-projection.js';
 import {
   isNativeTargetCampaignSnapshot,
   type NativeFreshCampaignSnapshot
 } from './native-campaign-rules.js';
 
-type AuthoredItem = {
-  id: string;
-  itemKey: string;
-  name: string;
-  resourceModifiers?: PlayerResourceModifierState[];
-};
-
-const items = new Map((itemCatalog.records as AuthoredItem[]).map(item => [item.id, item]));
+export { projectNativeEffectiveWornFromGear } from './native-worn-projection.js';
 
 export type NativeWornItem = GearItemInstance & { name: string };
 export type NativeEffectiveWorn = {
@@ -28,24 +21,4 @@ export type NativeEffectiveWorn = {
 export function projectNativeEffectiveWorn(snapshot: NativeFreshCampaignSnapshot): NativeEffectiveWorn {
   if (!isNativeTargetCampaignSnapshot(snapshot)) throw new Error('Native campaign is not admitted.');
   return projectNativeEffectiveWornFromGear(snapshot.playerState.gear);
-}
-
-/** Creator can read its completed graph before the campaign snapshot exists. */
-export function projectNativeEffectiveWornFromGear(gear: GearOwner): NativeEffectiveWorn {
-  const worn = getWornGear(gear);
-  const projected = worn.map(instance => {
-    const authored = items.get(instance.itemId);
-    if (!authored || authored.itemKey !== instance.itemKey) throw new Error('Worn item lacks canonical content.');
-    return { ...instance, location: { ...instance.location }, name: authored.name };
-  });
-  const inSlot = (slotId: string) => worn.find(item =>
-    item.location.kind === 'worn' && item.location.slotId === slotId
-  )?.itemId ?? null;
-  return {
-    items: projected,
-    mainHandItemId: inSlot('slot.equipment.weapon.right'),
-    offHandItemId: inSlot('slot.equipment.weapon.left'),
-    combatItemIds: worn.map(item => item.itemId),
-    resourceModifiers: worn.flatMap(instance => items.get(instance.itemId)?.resourceModifiers ?? [])
-  };
 }

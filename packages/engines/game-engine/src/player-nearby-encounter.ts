@@ -121,7 +121,8 @@ export function createNearbyEncounterAdmissionCommand(snapshot: SaveSnapshot, co
     sourceSnapshot: serializeSnapshot(snapshot) };
 }
 
-export function admitNearbyEncounter(snapshot: SaveSnapshot, control: CampaignSessionControl, input: unknown): NearbyEncounterOutcome {
+export function admitNearbyEncounter(snapshot: SaveSnapshot, control: CampaignSessionControl, input: unknown,
+  validateNativeSnapshot?: (snapshot: SaveSnapshot) => boolean): NearbyEncounterOutcome {
   const command = input as NearbyEncounterAdmissionCommand | null;
   if (!command || command.version !== 1 || command.type !== "player.encounter.admit" ||
       typeof command.requestId !== "string" || !command.candidate ||
@@ -164,7 +165,9 @@ export function admitNearbyEncounter(snapshot: SaveSnapshot, control: CampaignSe
     const admission = admitCampaignMutation(control, { mutationId: command.requestId,
       sourceArtifactId: command.sourceArtifactId, sourceRevision: command.sourceRevision,
       ownerKind: "nearby_encounter", accepted: true, sourceSnapshot: snapshot, proposedSnapshot: proposed,
-      resultId: encounter.encounterId });
+      resultId: encounter.encounterId,
+      ...(snapshot.snapshotVersion === 'lineage.save_snapshot.v3' && validateNativeSnapshot
+        ? { validateNativeSnapshot } : {}) });
     return admission.accepted
       ? outcome(admission.snapshot, admission.control, "encounter_admitted", "A nearby encounter has begun.", true)
       : outcome(snapshot, control, admission.reason, "Campaign admission declined the encounter.");
@@ -183,7 +186,8 @@ export function createNearbyEncounterStepCommand(snapshot: SaveSnapshot, control
     sourceSnapshot: serializeSnapshot(snapshot), expectedTick: snapshot.clock.tick, actionType, targetId };
 }
 
-export function executeNearbyEncounterStep(snapshot: SaveSnapshot, control: CampaignSessionControl, input: unknown): NearbyEncounterOutcome {
+export function executeNearbyEncounterStep(snapshot: SaveSnapshot, control: CampaignSessionControl, input: unknown,
+  validateNativeSnapshot?: (snapshot: SaveSnapshot) => boolean): NearbyEncounterOutcome {
   const command = input as NearbyEncounterStepCommand | null;
   if (!command || command.version !== 1 || command.type !== "player.encounter.step" ||
       typeof command.requestId !== "string" || !command.requestId || typeof command.encounterId !== "string" ||
@@ -245,7 +249,9 @@ export function executeNearbyEncounterStep(snapshot: SaveSnapshot, control: Camp
     const admission = admitCampaignMutation(control, { mutationId: command.requestId,
       sourceArtifactId: command.sourceArtifactId, sourceRevision: command.sourceRevision,
       ownerKind: "nearby_encounter", accepted: true, sourceSnapshot: snapshot, proposedSnapshot: proposed,
-      resultId: `result.${command.requestId}` });
+      resultId: `result.${command.requestId}`,
+      ...(snapshot.snapshotVersion === 'lineage.save_snapshot.v3' && validateNativeSnapshot
+        ? { validateNativeSnapshot } : {}) });
     return admission.accepted
       ? outcome(admission.snapshot, admission.control, result, result === "active" ? "Combat advanced one beat." :
         result === "allies_victorious" ? "The foes were defeated." : "Defeated under Normal Stakes; recovery was applied or is pending.", true)

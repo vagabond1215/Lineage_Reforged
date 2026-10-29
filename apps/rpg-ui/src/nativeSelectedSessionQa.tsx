@@ -14,31 +14,95 @@ import { applyNativeSelectedItem, createNativeSelectedSession,
 import { createNativeSelectedQuestCommand, applyNativeSelectedQuest,
   createNativeSelectedTravelCommand, applyNativeSelectedTravel,
   advanceNativeSelectedSurvey } from './game-shell/nativeSelectedGameplay.js';
+import { advanceNativeSelectedExploration, createNativeSelectedEncounterAdmission,
+  admitNativeSelectedEncounter, createNativeSelectedCombatStep,
+  applyNativeSelectedCombatStep } from './game-shell/nativeSelectedCombat.js';
 import './index.css';
 
 async function seed() {
   let owner = await openCleanEpochAccountStore();
   try {
     const gameplay = new URLSearchParams(location.search).has('gameplay');
+    const combat = new URLSearchParams(location.search).has('combat');
     const accountId = `account.native.selected.qa.${crypto.randomUUID()}`;
     const registered = await new CleanEpochAccountAdapter(owner).register({ accountId,
       displayName: 'Native Selected QA', password: 'synthetic-only-password',
       confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
     if (registered.status !== 'ready') throw new Error(registered.message);
     const identity = getLineageIdentityCatalog('lineage.human');
-    const world = gameplay ? { continentId: 'region.myridian_chain', regionId: 'region.starfall_isle',
+    const world = combat ? { continentId: 'region.kaelvar', regionId: 'region.auric_marches',
+      settlementId: 'settlement.stonevein' } : gameplay ? {
+      continentId: 'region.myridian_chain', regionId: 'region.starfall_isle',
       settlementId: 'settlement.starfall_port' } : getDefaultWorldSelection('backstory.local');
     if (!identity?.hairColorOptions[0] || !identity.eyeColorOptions[0] || !identity.skinToneOptions[0])
       throw new Error('Synthetic creator identity is incomplete.');
     const form = { ...createDefaultCharacterCreationFormState('slot-1'),
       playerName: 'Native EpochApp Hunter', hairColorId: identity.hairColorOptions[0].id,
       eyeColorId: identity.eyeColorOptions[0].id, skinToneId: identity.skinToneOptions[0].id,
-      backstoryId: gameplay ? 'backstory.craftsmans_child' : 'backstory.local', continentId: world.continentId,
+      backstoryId: gameplay || combat ? 'backstory.craftsmans_child' : 'backstory.local', continentId: world.continentId,
       regionId: world.regionId, startingSettlementId: world.settlementId,
       startingBundleId: 'starting_bundle.hunter',
       startingBundleChoiceSelections: createDefaultStartingBundleChoiceSelections('starting_bundle.hunter') };
     const started = await new CleanEpochFirstCampaignAdapter(owner, 'native_v3').start(accountId, form);
     if (started.status !== 'ready') throw new Error(started.message);
+    if (combat) {
+      const account = await owner.readSelected(accountId);
+      if (!account) throw new Error('Native combat account is missing.');
+      let session = createNativeSelectedSession({ snapshot: started.value.loaded.snapshot,
+        control: started.value.loaded.sessionControl, sourceSlotId: 'slot-1',
+        accountRevision: account.revision });
+      const originalGear = JSON.stringify(session.snapshot.playerState.gear);
+      for (let attempt = 0; attempt < 40 && !session.snapshot.worldState.nearbyExplorationCandidate; attempt++) {
+        const explored = advanceNativeSelectedExploration(session);
+        if (explored.status !== 'accepted') throw new Error(`Native exploration was ${explored.status}: ${explored.reason}`);
+        session = explored.session;
+      }
+      const command = createNativeSelectedEncounterAdmission(session);
+      if (!command) throw new Error('Ordinary exploration did not produce an authored encounter.');
+      const admitted = admitNativeSelectedEncounter(session, command);
+      if (admitted.status !== 'accepted') throw new Error(`Native encounter was ${admitted.status}: ${admitted.reason}`);
+      session = admitted.session;
+      const player = session.snapshot.gameState.activeEncounter?.combatants.find(item => item.kind === 'player');
+      if (!player?.hooks.itemIds.includes('item.short_bow') || player.equipment.mainHandItemId !== 'item.short_bow')
+        throw new Error('Native combat missed the owner-backed worn Short Bow.');
+      for (let beat = 1; beat < 300 && session.snapshot.gameState.activeEncounter; beat++) {
+        const step = createNativeSelectedCombatStep(session, 'combat.advance', null, `native.qa.combat.${beat}`);
+        if (!step) throw new Error('Active native encounter has no player step.');
+        const advanced = applyNativeSelectedCombatStep(session, step);
+        if (advanced.status !== 'accepted') throw new Error(`Native combat was ${advanced.status}: ${advanced.reason}`);
+        session = advanced.session;
+        if (JSON.stringify(session.snapshot.playerState.gear) !== originalGear)
+          throw new Error('Native combat changed the physical gear graph.');
+      }
+      if (session.snapshot.gameState.combatHistory[session.snapshot.gameState.combatHistory.length - 1]?.result !== 'enemies_victorious' ||
+          session.snapshot.normalDefeatReceipts?.length !== 1 ||
+          session.snapshot.normalDefeatReceipts[0]?.posture !== 'playable')
+        throw new Error('Ordinary combat did not produce the expected safe-settlement defeat.');
+      const priorHead = started.value.loaded.publication.publicationId;
+      owner.close(); let writes = 0;
+      owner = await openCleanEpochAccountStore({ afterWrite: tx => { if (++writes === 1) tx.abort(); } });
+      const interrupted = await saveNativeSelectedSession(owner, session, 'slot-1');
+      if (interrupted.status !== 'blocked' || interrupted.session !== session)
+        throw new Error('Interrupted combat Save changed the selected pair.');
+      owner.close(); owner = await openCleanEpochAccountStore();
+      const stillPrior = await owner.readSlot(accountId, 'slot-1');
+      if (stillPrior.status !== 'ready' || stillPrior.loaded.publication.publicationId !== priorHead)
+        throw new Error('Interrupted combat Save changed the retained account head.');
+      const saved = await saveNativeSelectedSession(owner, session, 'slot-1');
+      if (saved.status !== 'ready') throw new Error(`Native combat Save blocked: ${saved.message}`);
+      owner.close(); owner = await openCleanEpochAccountStore();
+      const restarted = await owner.readSlot(accountId, 'slot-1');
+      const restartedSnapshot: unknown = restarted.status === 'ready' ? restarted.loaded.snapshot : null;
+      if (restarted.status !== 'ready' || !isNativeTargetCampaignSnapshot(restartedSnapshot) ||
+          restarted.loaded.publication.publicationId !== saved.publicationId ||
+          JSON.stringify(restartedSnapshot.playerState.gear) !== originalGear ||
+          restartedSnapshot.gameState.combatHistory[restartedSnapshot.gameState.combatHistory.length - 1]?.result !== 'enemies_victorious' ||
+          restartedSnapshot.normalDefeatReceipts?.[0]?.posture !== 'playable')
+        throw new Error('Native combat Save/restart lost gear, history or defeat receipt.');
+      document.body.dataset.combat = 'pass';
+      document.body.dataset.publicationId = saved.publicationId;
+      document.body.dataset.gearIds = session.snapshot.playerState.gear.instances.map(item => item.itemInstanceId).join(',');
+    }
     if (gameplay) {
       const selected = await owner.readSelected(accountId);
       if (!selected) throw new Error('Native selected account is missing.');
