@@ -9,12 +9,15 @@ export { advancePlayerBodyState, applyConsumableToBodyState, createDefaultPlayer
 export { createRunDifficultyState, loadRunDifficultyBalanceRule, normalizeRunDifficultyState, resolvePrestigeRewardMultiplier, resolveRecoveryGate, resolveRunDifficultyModifiers } from "./difficulty.js";
 export { applyReputationAward, canApplyReputationAward, grantContinentGeographicKnowledge, grantRegionGeographicKnowledge, grantSettlementGeographicKnowledge, loadReputationBalanceRule, normalizePlayerGeographicKnowledge, resolveHistoricalReputationTier, resolveScopedReputation, syncPlayerReputation, upsertGeographicKnowledgeEntry } from "./reputation.js";
 export { applyActionAttributeLoad, applyAttributeTensionToActionProfile, convertPlayerStatGrowthOnRecovery, createDefaultPlayerStatGrowthState, createDefaultResolvedAttributeTensionState, loadStatGrowthBalanceRule, normalizePlayerStatGrowth, resolveAttributeTension, syncPlayerStatGrowth } from "./stat-growth.js";
-export function syncPlayerRuntimeState(playerState, tick, day, incomingEvents = [], runDifficulty) {
+export function syncPlayerRuntimeState(playerState, tick, day, incomingEvents = [], runDifficulty, wornResourceModifiers) {
     syncPlayerStatGrowth(playerState, day);
     syncPlayerEchoProgression(playerState);
     syncPlayerBodyState(playerState, tick, day, runDifficulty);
     syncPlayerReputation(playerState, day);
-    const resourceResolution = resolvePlayerResources(playerState, incomingEvents, tick);
+    const { equipment: _equipment, ...withoutEquipment } = playerState;
+    const resourceResolution = resolvePlayerResources(wornResourceModifiers === undefined ? playerState : {
+        ...withoutEquipment, wornResourceModifiers
+    }, incomingEvents, tick);
     playerState.resources = resourceResolution.resources;
     playerState.resourceRuntime = resourceResolution.resourceRuntime;
     return resourceResolution;

@@ -10,6 +10,8 @@ import { advancePlayerBodyState, syncPlayerRuntimeState } from "../../player-eng
 import { resolveSpawnCandidates } from "../../world-engine/src/spawn/index.js";
 import { hasPendingNormalDefeat } from "./normal-defeat.js";
 import { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
+import { projectNativeEffectiveWornFromGear } from "./native-worn-projection.js";
+import type { NativeFreshCampaignSnapshot } from "./native-campaign-rules.js";
 
 type Context = (typeof contextsJson.records)[number];
 type Catalog = {
@@ -159,7 +161,12 @@ export function executeNearbyExplorationCommand(snapshot: SaveSnapshot, value: u
       metabolicProfile: { intensity: "low", fatigueGain: 2, energyDemand: 3, hydrationDemand: 2, highIntensityLoad: 0 },
       recoveryContext: null, recoveryAssessment: null
     });
-    syncPlayerRuntimeState(next.playerState, nextClock.tick, nextClock.day, [], next.gameState.runDifficulty);
+    const wornModifiers = next.snapshotVersion === 'lineage.save_snapshot.v3'
+      ? projectNativeEffectiveWornFromGear(
+          (next as unknown as NativeFreshCampaignSnapshot).playerState.gear).resourceModifiers
+      : undefined;
+    syncPlayerRuntimeState(next.playerState, nextClock.tick, nextClock.day, [],
+      next.gameState.runDifficulty, wornModifiers);
     next.playerState.resources.stamina.current = Math.max(0, next.playerState.resources.stamina.current - plan.staminaCost);
     const encounterContext: NonNullable<WorldState["encounterContext"]> = {
       regionId: plan.context.localRegionId,

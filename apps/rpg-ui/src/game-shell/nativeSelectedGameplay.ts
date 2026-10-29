@@ -17,7 +17,7 @@ type Outcome = { status: 'accepted' | 'stale' | 'duplicate' | 'rejected';
   session: NativeSelectedSession; reason?: string; stage?: string };
 type ReadOwner = Pick<CleanEpochAccountStore, 'readSelected' | 'readSlot'>;
 
-function sourceValid(session: NativeSelectedSession): boolean {
+export function isNativeSelectedGameplaySource(session: NativeSelectedSession): boolean {
   return isNativeTargetCampaignSnapshot(session.snapshot) &&
     session.control.accountId === session.snapshot.accountId &&
     session.control.campaignId === session.snapshot.campaignIdentity?.campaignId &&
@@ -43,13 +43,13 @@ function admit(session: NativeSelectedSession, mutationId: string,
 
 /** The established quest owner authors the command; this host only binds its accepted result. */
 export function createNativeSelectedQuestCommand(session: NativeSelectedSession, questId: string) {
-  if (!sourceValid(session)) throw new Error('Native selected quest source is invalid.');
+  if (!isNativeSelectedGameplaySource(session)) throw new Error('Native selected quest source is invalid.');
   return createPlayerQuestAcceptanceCommand(session.snapshot as unknown as SaveSnapshot, questId);
 }
 
 export function applyNativeSelectedQuest(session: NativeSelectedSession,
   command: PlayerQuestAcceptanceCommand): Outcome {
-  if (!sourceValid(session)) return { status: 'rejected', session, reason: 'invalid_source' };
+  if (!isNativeSelectedGameplaySource(session)) return { status: 'rejected', session, reason: 'invalid_source' };
   const result = executePlayerQuestAcceptanceCommand(session.snapshot as unknown as SaveSnapshot, command);
   if (!result.accepted) return { status: result.code === 'stale_snapshot' ? 'stale' : 'rejected',
     session, reason: result.code };
@@ -60,13 +60,13 @@ export function applyNativeSelectedQuest(session: NativeSelectedSession,
 
 /** The established travel owner authors the command and all time/resource effects. */
 export function createNativeSelectedTravelCommand(session: NativeSelectedSession, destinationId: string) {
-  if (!sourceValid(session)) throw new Error('Native selected travel source is invalid.');
+  if (!isNativeSelectedGameplaySource(session)) throw new Error('Native selected travel source is invalid.');
   return createPlayerTravelCommand(session.snapshot as unknown as SaveSnapshot, destinationId);
 }
 
 export function applyNativeSelectedTravel(session: NativeSelectedSession,
   command: PlayerTravelCommand): Outcome {
-  if (!sourceValid(session)) return { status: 'rejected', session, reason: 'invalid_source' };
+  if (!isNativeSelectedGameplaySource(session)) return { status: 'rejected', session, reason: 'invalid_source' };
   const result = executePlayerTravelCommand(session.snapshot as unknown as SaveSnapshot, command);
   if (!result.accepted) return { status: result.code === 'stale_snapshot' ||
     result.code === 'stale_origin' ? 'stale' : 'rejected', session, reason: result.code };
@@ -78,7 +78,7 @@ export function applyNativeSelectedTravel(session: NativeSelectedSession,
 /** Each stage binds an exact ready account head; the next stage waits for descendant Save. */
 export async function advanceNativeSelectedSurvey(owner: ReadOwner,
   session: NativeSelectedSession, requestId: string): Promise<Outcome> {
-  if (!sourceValid(session)) return { status: 'rejected', session, reason: 'invalid_source' };
+  if (!isNativeSelectedGameplaySource(session)) return { status: 'rejected', session, reason: 'invalid_source' };
   try {
     const account = await owner.readSelected(session.snapshot.accountId);
     if (!account || account.revision !== session.accountRevision)
