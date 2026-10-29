@@ -20,6 +20,8 @@ import { GameSessionProvider, useGameSession } from '../runtime/GameSessionConte
 import type { TabId } from '../types';
 import { InGameSaveControls } from './components/InGameSaveControls';
 import { NoticeToast } from './components/NoticeToast';
+import { isNativeTargetCampaignSnapshot } from '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
+import { NativeCharacterReviewShell } from './NativeCharacterReviewShell';
 import type { GameShellNotice, SaveSlotId, SaveSlotSummary } from './state.js';
 
 type InGameShellProps = {
@@ -185,6 +187,15 @@ export function InGameShell({
   onRetireCharacter,
   onReturnToMainMenu
 }: InGameShellProps) {
+  if (snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
+    return isNativeTargetCampaignSnapshot(snapshot)
+      ? <NativeCharacterReviewShell snapshot={snapshot} onReturnToMainMenu={onReturnToMainMenu} />
+      : <div role="alert" className="p-4 text-[color:var(--color-text-primary)]">
+          <h1>Native campaign cannot be opened</h1>
+          <p>The current-format campaign failed admission. Its saved record was not changed.</p>
+          <button type="button" onClick={onReturnToMainMenu}>Return to menu</button>
+        </div>;
+  }
   return (
     <GameSessionProvider
       accountProfile={accountProfile}
