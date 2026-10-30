@@ -13,6 +13,9 @@ import { CleanEpochFirstCampaignAdapter } from './src/game-shell/cleanEpochFirst
 import { CleanEpochDescendantAdapter } from './src/game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochTerminalAdapter } from './src/game-shell/cleanEpochTerminalAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './src/game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
+import { createNativeSelectedSession } from './src/game-shell/nativeSelectedSession.js';
+import { publishNativeSelectedPendingDefeat, recoverNativeSelectedPendingDefeat } from
+  './src/game-shell/nativeSelectedPendingDefeat.js';
 import { admitNativeFungibleSessionAction, admitNativeGearSessionAction } from './src/game-shell/nativeSessionItemActions.js';
 import { fingerprintNativeInventory } from './src/game-shell/nativeFungibleActions.js';
 import { resolveNormalDefeat } from '../../packages/engines/game-engine/src/normal-defeat.js';
@@ -244,6 +247,15 @@ async function suite() {
     check((await owner.readCurrentDescendantRecovery(accountId, slotId))?.status ===
       'accepted_pending_consumers' && (await owner.read(accountId))?.revision === 3,
       'pending publication interruption lost accepted artifact');
+    const selectedPending = createNativeSelectedSession({ snapshot: defeated.snapshot,
+      control: defeated.control as unknown as CampaignSessionControl,
+      sourceSlotId: slotId, accountRevision: 3 });
+    const hostPending = await publishNativeSelectedPendingDefeat(owner, selectedPending, slotId);
+    check(hostPending.status === 'ready' &&
+      hostPending.session.snapshot.normalDefeatReceipts?.some(row => row.receiptId === receipt.receiptId &&
+        row.posture === 'recovery_pending') &&
+      JSON.stringify(hostPending.session.snapshot.playerState.gear) === originalGear,
+    'native selected pending host did not resume and read back the exact physical source');
     const result = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending(pendingRequest);
     check(result.status === 'ready', `real native pending defeat did not publish: ${JSON.stringify(result)}`);
     if (result.status !== 'ready') return;
@@ -290,6 +302,14 @@ async function suite() {
     check((await owner.readCurrentDescendantRecovery(accountId, slotId))?.status ===
       'accepted_pending_consumers' && (await owner.read(accountId))?.revision === 4,
       'interrupted real recovery lost its accepted artifact');
+    const selectedRecovery = createNativeSelectedSession({ snapshot: result.value.loaded.snapshot,
+      control: result.value.loaded.sessionControl, sourceSlotId: slotId, accountRevision: 4 });
+    const hostRecovered = await recoverNativeSelectedPendingDefeat(owner, selectedRecovery, slotId);
+    check(hostRecovered.status === 'ready' &&
+      hostRecovered.session.snapshot.normalDefeatReceipts?.some(row => row.receiptId === receipt.receiptId &&
+        row.posture === 'playable') &&
+      JSON.stringify(hostRecovered.session.snapshot.playerState.gear) === originalGear,
+    'native selected recovery host did not resume and read back the exact physical source');
     const recovered = await new CleanEpochNormalDefeatRecoveryAdapter(owner).recover(recoveryRequest);
     check(recovered.status === 'ready', `real recovery did not resume: ${JSON.stringify(recovered)}`);
     if (recovered.status !== 'ready') return;
@@ -418,10 +438,19 @@ async function suite() {
     check(receipt, 'historical HP-zero command has no pending receipt');
     if (!receipt) return;
     const currentHead = head.value.loaded.sessionControl;
+    const observedHead = { artifactId: currentHead.loadedArtifactId,
+      publicationId: currentHead.loadedPublicationId };
+    const selectedFork = createNativeSelectedSession({ snapshot: defeated.snapshot,
+      control: defeated.control as unknown as CampaignSessionControl,
+      sourceSlotId: slotId, accountRevision: 3 });
+    const hostFork = await publishNativeSelectedPendingDefeat(owner, selectedFork, slotId, observedHead);
+    check(hostFork.status === 'ready' &&
+      hostFork.session.snapshot.campaignIdentity?.parentContinuityId === old.campaignIdentity?.continuityId &&
+      JSON.stringify(hostFork.session.snapshot.playerState.gear) === JSON.stringify(start.playerState.gear),
+    'native selected non-head pending host lost the observed destination or physical owner');
     const published = await new CleanEpochNormalDefeatRecoveryAdapter(owner).publishPending({
       accountId, sourceSlotId: slotId, destinationSlotId: slotId, expectedAccountRevision: 3,
-      expectedDestinationAddress: { artifactId: currentHead.loadedArtifactId,
-        publicationId: currentHead.loadedPublicationId },
+      expectedDestinationAddress: observedHead,
       snapshot: defeated.snapshot, control: defeated.control, receiptId: receipt.receiptId });
     check(published.status === 'ready', `non-head pending publication failed: ${JSON.stringify(published)}`);
     if (published.status !== 'ready') return;
