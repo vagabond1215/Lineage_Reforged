@@ -29,7 +29,7 @@ function session() {
     campaignId: snapshot.campaignIdentity.campaignId, artifactId: 'artifact.native.terminal',
     publicationId: 'publication.native.terminal', artifactRevision: 1,
     continuityId: snapshot.campaignIdentity.continuityId,
-    headArtifactId: 'artifact.native.terminal', headRevision: 1 });
+    headArtifactId: 'artifact.native.terminal', headRevision: 1, sourceSnapshot: snapshot });
   return createNativeSelectedSession({ snapshot, control, sourceSlotId: 'slot-1', accountRevision: 2 });
 }
 

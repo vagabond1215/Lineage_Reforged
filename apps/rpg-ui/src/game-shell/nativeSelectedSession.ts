@@ -1,4 +1,5 @@
-import type { CampaignSessionControl } from '../../../../packages/engines/game-engine/src/campaign-session.js';
+import { inspectCampaignSessionSource, type CampaignSessionControl } from
+  '../../../../packages/engines/game-engine/src/campaign-session.js';
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from
   '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
 import { hasPendingNormalDefeat } from '../../../../packages/engines/game-engine/src/normal-defeat.js';
@@ -34,7 +35,8 @@ export function createNativeSelectedSession(input: {
       !control.loadedArtifactId || !control.loadedPublicationId ||
       control.soundingsAdmissionWitness ||
       !SAVE_SLOT_ORDER.some(slot => slot.id === input.sourceSlotId) ||
-      !Number.isSafeInteger(input.accountRevision) || input.accountRevision < 1)
+      !Number.isSafeInteger(input.accountRevision) || input.accountRevision < 1 ||
+      !inspectCampaignSessionSource(control as CampaignSessionControl<NativeFreshCampaignSnapshot>, snapshot).coherent)
     throw new Error('Native selected session control or retained account source is invalid.');
   return { snapshot, control: control as CampaignSessionControl<NativeFreshCampaignSnapshot>,
     sourceSlotId: input.sourceSlotId, accountRevision: input.accountRevision,
@@ -51,7 +53,10 @@ export function applyNativeSelectedItem(session: NativeSelectedSession,
   return result.status === 'accepted'
     ? { status: result.status, session: { ...session, snapshot: result.snapshot,
         control: result.control }, reason: undefined }
-    : { status: result.status, session, reason: result.reason };
+    : { status: result.status,
+        session: result.snapshot === session.snapshot && result.control === session.control
+          ? session : { ...session, snapshot: result.snapshot, control: result.control },
+        reason: result.reason };
 }
 
 export type NativeSelectedSaveResult =
@@ -62,6 +67,9 @@ export type NativeSelectedSaveResult =
 export async function saveNativeSelectedSession(owner: CleanEpochAccountStore,
   session: NativeSelectedSession, destinationSlotId: SaveSlotId,
   expectedDestinationAddress?: Address | null): Promise<NativeSelectedSaveResult> {
+  if (!inspectCampaignSessionSource(session.control, session.snapshot).coherent)
+    return { status: 'blocked', session,
+      message: 'Native selected source and campaign control disagree; reload the campaign.', requiresReload: true };
   if (hasPendingNormalDefeat(session.snapshot)) return { status: 'blocked', session,
     message: 'Pending Normal defeat requires its dedicated recovery publication.', requiresReload: false };
   if (destinationSlotId !== session.sourceSlotId && expectedDestinationAddress === undefined)

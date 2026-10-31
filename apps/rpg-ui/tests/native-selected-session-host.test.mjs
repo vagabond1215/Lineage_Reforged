@@ -12,6 +12,7 @@ const { createNativeNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shel
 const { createCampaignSessionControl } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/campaign-session.ts');
 const { createNativeSelectedSession, applyNativeSelectedItem, saveNativeSelectedSession } =
   await vite.ssrLoadModule('/src/game-shell/nativeSelectedSession.ts');
+const { readNativeSelectedCharacter } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedCharacter.ts');
 
 function hunter() {
   const identity = getLineageIdentityCatalog('lineage.human');
@@ -30,7 +31,7 @@ function control(snapshot) {
     campaignId: snapshot.campaignIdentity.campaignId, artifactId: 'artifact.native.host',
     publicationId: 'publication.native.host', artifactRevision: 1,
     continuityId: snapshot.campaignIdentity.continuityId,
-    headArtifactId: 'artifact.native.host', headRevision: 1 });
+    headArtifactId: 'artifact.native.host', headRevision: 1, sourceSnapshot: snapshot });
 }
 
 test('native selected host keeps accepted item snapshot and campaign control in one state', () => {
@@ -71,4 +72,34 @@ test('cross-slot native Save refuses an unobserved destination before consulting
   assert.equal(result.requiresReload, false);
   assert.strictEqual(result.session, session);
   assert.match(result.message, /observed destination address/);
+});
+
+test('selected item host returns the retained pair when a stale snapshot is paired with newer control', () => {
+  const snapshot = hunter();
+  snapshot.playerState.inventory.bags[0].stacks.push({ itemId: 'item.bread_loaf',
+    itemKey: 'bread_loaf', quantity: 2 });
+  const first = createNativeSelectedSession({ snapshot, control: control(snapshot),
+    sourceSlotId: 'slot-1', accountRevision: 2 });
+  const bow = snapshot.playerState.gear.instances.find(item => item.itemId === 'item.short_bow');
+  const bread = readNativeSelectedCharacter(snapshot).fungibleStacks.find(item => item.itemId === 'item.bread_loaf');
+  assert.ok(bow && bread);
+  const gear = { kind: 'gear', expectedRevision: snapshot.playerState.gear.revision,
+    itemInstanceId: bow.itemInstanceId, destination: { kind: 'carried' } };
+  const used = applyNativeSelectedItem(first, { kind: 'use', target: bread }, 'native.host.order.use');
+  assert.equal(used.status, 'accepted');
+  const afterUse = applyNativeSelectedItem({ ...first, control: used.session.control }, gear,
+    'native.host.order.gear');
+  assert.equal(afterUse.status, 'stale');
+  assert.deepEqual(afterUse.session.snapshot, used.session.snapshot);
+  assert.strictEqual(afterUse.session.control, used.session.control);
+  assert.equal(afterUse.session.snapshot.playerState.inventory.bags[0].stacks.at(-1).quantity, 1);
+
+  const moved = applyNativeSelectedItem(first, gear, 'native.host.order.gear.reverse');
+  assert.equal(moved.status, 'accepted');
+  const afterGear = applyNativeSelectedItem({ ...first, control: moved.session.control },
+    { kind: 'use', target: bread }, 'native.host.order.use.reverse');
+  assert.equal(afterGear.status, 'stale');
+  assert.deepEqual(afterGear.session.snapshot, moved.session.snapshot);
+  assert.equal(afterGear.session.snapshot.playerState.gear.instances.find(item =>
+    item.itemInstanceId === bow.itemInstanceId).location.kind, 'bag');
 });

@@ -1,4 +1,5 @@
-import type { CampaignSessionControl } from '../../../../packages/engines/game-engine/src/campaign-session.js';
+import { inspectCampaignSessionSource, type CampaignSessionControl } from
+  '../../../../packages/engines/game-engine/src/campaign-session.js';
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from
   '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
 import { validatePendingNormalDefeatRecoveryProvenance } from
@@ -22,6 +23,7 @@ function blocked(session: NativeSelectedSession, message: string,
 function pendingReceiptId(session: NativeSelectedSession): string | null {
   const { snapshot, control, sourceAddress, sourceSlotId, accountRevision } = session;
   if (!isNativeTargetCampaignSnapshot(snapshot) ||
+      !inspectCampaignSessionSource(control, snapshot).coherent ||
       control.accountId !== snapshot.accountId ||
       control.campaignId !== snapshot.campaignIdentity?.campaignId ||
       control.loadedArtifactId !== sourceAddress.artifactId ||

@@ -4,7 +4,8 @@ import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from
 import { hasPendingNormalDefeat } from '../../../../packages/engines/game-engine/src/normal-defeat.js';
 import { verifySoundingsAdmissionProvenance } from '../../../../packages/engines/game-engine/src/soundings-admission-witness.js';
 import { serializeSnapshot, deserializeSnapshot } from '../../../../packages/shared/persistence/src/index.js';
-import type { CampaignSessionControl } from '../../../../packages/engines/game-engine/src/campaign-session.js';
+import { inspectCampaignSessionSource, type CampaignSessionControl } from
+  '../../../../packages/engines/game-engine/src/campaign-session.js';
 import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
 import { CampaignStoreError, type CampaignStoreFailureCode, type CampaignStorePublication } from './campaignIndexedDbStore.js';
 import { type CleanEpochAccountStore, type CleanEpochAccountRecord,
@@ -61,6 +62,9 @@ export class CleanEpochTerminalAdapter {
       const { accountId, sourceSlotId, snapshot, control, expectedAccountRevision,
         expectedSourceAddress } = input;
       const native = isNativeTargetCampaignSnapshot(snapshot);
+      if (snapshot.snapshotVersion === 'lineage.save_snapshot.v3' &&
+          !inspectCampaignSessionSource(control, snapshot).coherent)
+        throw new CampaignStoreError('stale_head', 'Native retirement source differs from its campaign control.');
       if ((!native && !isTargetCampaignSnapshot(snapshot)) || !snapshot.campaignIdentity ||
           snapshot.accountId !== accountId || hasPendingNormalDefeat(snapshot as SaveSnapshot) ||
           control.accountId !== accountId || control.campaignId !== snapshot.campaignIdentity.campaignId ||

@@ -1684,7 +1684,7 @@ export class CleanEpochAccountStore {
       const sessionControl = createCampaignSessionControl({ accountId, campaignId: attempt.campaignId,
         artifactId, publicationId: envelope.publicationId, artifactRevision: envelope.headRevision,
         continuityId: envelope.continuityId, headArtifactId: head.campaignHeadArtifactId,
-        headRevision: head.campaignHeadRevision });
+        headRevision: head.campaignHeadRevision, sourceSnapshot: snapshot });
       return { snapshot,
         sessionControl: head.soundingsAdmissionWitness
           ? { ...sessionControl, soundingsAdmissionWitness: head.soundingsAdmissionWitness } : sessionControl,
@@ -1870,7 +1870,8 @@ export class CleanEpochAccountStore {
       const sessionControl = createCampaignSessionControl({ accountId, campaignId: attempt.campaignId,
         artifactId: addressed.artifactId, publicationId: addressed.publicationId,
         artifactRevision: addressed.headRevision, continuityId: addressed.continuityId,
-        headArtifactId: descendant.artifactId, headRevision: descendant.headRevision });
+        headArtifactId: descendant.artifactId, headRevision: descendant.headRevision,
+        sourceSnapshot: snapshot });
       return { slotId, status: "ready", metadata: addressed.metadata, loaded: {
         snapshot, sessionControl: published.witness ? { ...sessionControl, soundingsAdmissionWitness: published.witness } : sessionControl,
         publication: publicationFor(snapshot, addressed.headRevision === 1 ? recovery :
@@ -1890,7 +1891,7 @@ export class CleanEpochAccountStore {
     const sessionControl = createCampaignSessionControl({ accountId, campaignId: attempt.campaignId,
       artifactId: envelope.artifactId, publicationId: envelope.publicationId, artifactRevision: 1,
       continuityId: envelope.continuityId, headArtifactId: published.control.headArtifactId,
-      headRevision: published.control.headRevision });
+      headRevision: published.control.headRevision, sourceSnapshot: snapshot });
     return { slotId, status: "ready", metadata: envelope.metadata, loaded: {
       snapshot, sessionControl: published.witness ? { ...sessionControl, soundingsAdmissionWitness: published.witness } : sessionControl,
       publication: publicationFor(snapshot, recovery), migratedLegacy: false, repairedLegacyDefeat: false

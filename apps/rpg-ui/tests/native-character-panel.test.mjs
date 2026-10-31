@@ -37,7 +37,7 @@ function control(snapshot) {
     campaignId: snapshot.campaignIdentity.campaignId, artifactId: 'artifact.native.shell',
     publicationId: 'publication.native.shell', artifactRevision: 1,
     continuityId: snapshot.campaignIdentity.continuityId,
-    headArtifactId: 'artifact.native.shell', headRevision: 1 });
+    headArtifactId: 'artifact.native.shell', headRevision: 1, sourceSnapshot: snapshot });
 }
 
 test('real InGameShell renders native Hunter without indexing the v2 equipment map', () => {

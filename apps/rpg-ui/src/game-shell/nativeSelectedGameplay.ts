@@ -1,4 +1,5 @@
-import { admitCampaignMutation } from '../../../../packages/engines/game-engine/src/campaign-session.js';
+import { admitCampaignMutation, inspectCampaignSessionSource } from
+  '../../../../packages/engines/game-engine/src/campaign-session.js';
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from
   '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
 import { hasPendingNormalDefeat } from '../../../../packages/engines/game-engine/src/normal-defeat.js';
@@ -17,8 +18,17 @@ type Outcome = { status: 'accepted' | 'stale' | 'duplicate' | 'rejected';
   session: NativeSelectedSession; reason?: string; stage?: string };
 type ReadOwner = Pick<CleanEpochAccountStore, 'readSelected' | 'readSlot'>;
 
+function staleSource(session: NativeSelectedSession): Outcome | null {
+  if (!isNativeTargetCampaignSnapshot(session.snapshot)) return null;
+  const inspected = inspectCampaignSessionSource(session.control, session.snapshot);
+  if (inspected.coherent) return null;
+  return { status: 'stale', session: inspected.snapshot === session.snapshot ? session :
+    { ...session, snapshot: inspected.snapshot }, reason: 'stale_session_source' };
+}
+
 export function isNativeSelectedGameplaySource(session: NativeSelectedSession): boolean {
   return isNativeTargetCampaignSnapshot(session.snapshot) &&
+    inspectCampaignSessionSource(session.control, session.snapshot).coherent &&
     session.control.accountId === session.snapshot.accountId &&
     session.control.campaignId === session.snapshot.campaignIdentity?.campaignId &&
     session.sourceAddress.artifactId === session.control.loadedArtifactId &&
@@ -36,7 +46,9 @@ function admit(session: NativeSelectedSession, mutationId: string,
     validateNativeSnapshot: isNativeTargetCampaignSnapshot
   });
   if (!result.accepted) return { status: result.duplicate ? 'duplicate' :
-    result.reason === 'stale_revision' ? 'stale' : 'rejected', session, reason: result.reason };
+    result.reason === 'stale_revision' ? 'stale' : 'rejected',
+    session: result.snapshot === session.snapshot ? session : { ...session,
+      snapshot: result.snapshot, control: result.control }, reason: result.reason };
   return { status: 'accepted', session: { ...session,
     snapshot: result.snapshot, control: result.control } };
 }
@@ -49,6 +61,8 @@ export function createNativeSelectedQuestCommand(session: NativeSelectedSession,
 
 export function applyNativeSelectedQuest(session: NativeSelectedSession,
   command: PlayerQuestAcceptanceCommand): Outcome {
+  const stale = staleSource(session);
+  if (stale) return stale;
   if (!isNativeSelectedGameplaySource(session)) return { status: 'rejected', session, reason: 'invalid_source' };
   const result = executePlayerQuestAcceptanceCommand(session.snapshot as unknown as SaveSnapshot, command);
   if (!result.accepted) return { status: result.code === 'stale_snapshot' ? 'stale' : 'rejected',
@@ -66,6 +80,8 @@ export function createNativeSelectedTravelCommand(session: NativeSelectedSession
 
 export function applyNativeSelectedTravel(session: NativeSelectedSession,
   command: PlayerTravelCommand): Outcome {
+  const stale = staleSource(session);
+  if (stale) return stale;
   if (!isNativeSelectedGameplaySource(session)) return { status: 'rejected', session, reason: 'invalid_source' };
   const result = executePlayerTravelCommand(session.snapshot as unknown as SaveSnapshot, command);
   if (!result.accepted) return { status: result.code === 'stale_snapshot' ||
@@ -78,6 +94,8 @@ export function applyNativeSelectedTravel(session: NativeSelectedSession,
 /** Each stage binds an exact ready account head; the next stage waits for descendant Save. */
 export async function advanceNativeSelectedSurvey(owner: ReadOwner,
   session: NativeSelectedSession, requestId: string): Promise<Outcome> {
+  const stale = staleSource(session);
+  if (stale) return stale;
   if (!isNativeSelectedGameplaySource(session)) return { status: 'rejected', session, reason: 'invalid_source' };
   try {
     const account = await owner.readSelected(session.snapshot.accountId);

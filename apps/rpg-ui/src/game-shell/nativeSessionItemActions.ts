@@ -1,5 +1,6 @@
 import {
   admitCampaignMutation,
+  inspectCampaignSessionSource,
   type CampaignSessionControl
 } from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import {
@@ -50,9 +51,12 @@ export function admitNativeGearSessionAction(snapshot: NativeFreshCampaignSnapsh
   if (!admittedSource(snapshot, control))
     return { status: 'invalid', snapshot, control, reason: 'Native source/control is invalid.' };
   const action = moveNativeGear(snapshot, request);
-  if (action.status !== 'accepted')
-    return { status: action.status, snapshot, control,
+  if (action.status !== 'accepted') {
+    const current = inspectCampaignSessionSource(control, snapshot);
+    return { status: current.coherent || action.status === 'duplicate' ? action.status : 'stale',
+      snapshot: current.snapshot, control,
       ...(action.reason ? { reason: action.reason } : {}) };
+  }
   return commit(snapshot, control, request.requestId, 'gear', action.snapshot);
 }
 
@@ -63,8 +67,11 @@ export function admitNativeFungibleSessionAction(snapshot: NativeFreshCampaignSn
   if (!admittedSource(snapshot, control))
     return { status: 'invalid', snapshot, control, reason: 'Native source/control is invalid.' };
   const action = consumeNativeFungible(snapshot, request);
-  if (action.status !== 'accepted')
-    return { status: action.status, snapshot, control,
+  if (action.status !== 'accepted') {
+    const current = inspectCampaignSessionSource(control, snapshot);
+    return { status: current.coherent || action.status === 'duplicate' ? action.status : 'stale',
+      snapshot: current.snapshot, control,
       ...(action.reason ? { reason: action.reason } : {}) };
+  }
   return commit(snapshot, control, request.requestId, 'use', action.snapshot);
 }

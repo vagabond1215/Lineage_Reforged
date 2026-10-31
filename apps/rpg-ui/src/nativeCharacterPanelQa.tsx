@@ -31,7 +31,7 @@ const initial = { snapshot: native, control: createCampaignSessionControl({
   accountId: native.accountId, campaignId: native.campaignIdentity.campaignId,
   artifactId: 'artifact.native.panel.qa', publicationId: 'publication.native.panel.qa',
   artifactRevision: 1, continuityId: native.campaignIdentity.continuityId,
-  headArtifactId: 'artifact.native.panel.qa', headRevision: 1
+  headArtifactId: 'artifact.native.panel.qa', headRevision: 1, sourceSnapshot: native
 }) as CampaignSessionControl<NativeFreshCampaignSnapshot> };
 
 function Qa() {
