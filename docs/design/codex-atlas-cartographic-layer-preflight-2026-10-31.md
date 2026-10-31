@@ -4,6 +4,8 @@ Date: 2026-10-31 (America/New_York)
 Status: **CONNECTOR_ONLY / HOLD_NAMED_CONSUMER / NOT_INSTALLED / NO_RUNTIME_OR_CANON_ACCEPTANCE**.
 Source selected `master`: `a596112acf3945f2bf7c625e943f2511d12aa710`. This is an addendum to held Area/Atlas design PR #45, not an update to the installed Codex prompt or running native gear/equipment work.
 
+> **Later user-selected cartography policy (2026-10-31):** Normal players see **only their personally discovered geography** on Your Map; carried or genuinely accessible posted chart sources may be inspected temporarily beyond that boundary, while Study and retained bearings require their own evidence owners. This **supersedes** the unresolved “entire raster as optional out-of-character reference” player-mode alternative below. See [Player-Discovered Cartography](player-discovered-cartography-chart-sources-study-and-uncertain-bearings-decision-2026-10-31.md). A CSS shroud over a client-delivered complete raster is not sufficient. Atlas implementation remains held.
+
 ## 1. Precedence and intent
 
 The explicit user-selected **Current Area as default gameplay screen, Codex → Atlas for broad world geography** is documented on held PR #24 (`current-area-default-gameplay-and-codex-atlas-separation-2026-10-26.md`) and reconciled in held PR #45 (`area-atlas-owner-direction-and-source-to-consumer-reconciliation-2026-10-29.md`). Do **not** create a second World Atlas, World → Area/Atlas sibling views, a new Home, or a new map command system.
