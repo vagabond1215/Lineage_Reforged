@@ -1,11 +1,13 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { isNativeTargetCampaignSnapshot } from '../../../packages/engines/game-engine/src/native-campaign-rules.js';
+import type { CampaignSessionControl } from '../../../packages/engines/game-engine/src/campaign-session.js';
 import { EpochApp } from './EpochApp.js';
 import { CleanEpochAccountAdapter } from './game-shell/cleanEpochAccountAdapter.js';
 import { openCleanEpochAccountStore } from './game-shell/cleanEpochAccountStore.js';
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
+import { CleanEpochTerminalAdapter } from './game-shell/cleanEpochTerminalAdapter.js';
 import { createDefaultCharacterCreationFormState } from './game-shell/characterCreationForm.js';
 import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from './game-shell/characterCreationCatalog.js';
 import { getDefaultWorldSelection } from './game-shell/worldSelectionCatalog.js';
@@ -63,6 +65,14 @@ async function seed() {
           itemInstanceId: bow.itemInstanceId, destination: { kind: 'carried' } },
         'native.terminal.qa.bow.1');
         if (moved.status !== 'accepted') throw new Error(`Terminal item move was ${moved.status}.`);
+        const mismatchedRetirement = await new CleanEpochTerminalAdapter(qaOwner).retire({
+          accountId, sourceSlotId: 'slot-1', expectedAccountRevision: account.revision,
+          snapshot: first.snapshot, control: moved.session.control as unknown as CampaignSessionControl,
+          expectedSourceAddress: first.sourceAddress });
+        if (mismatchedRetirement.status !== 'blocked' ||
+            (await qaOwner.readSelected(accountId))?.revision !== account.revision ||
+            (await qaOwner.readSlot(accountId, 'slot-1')).status !== 'ready')
+          throw new Error('Stale native retirement pair published or changed the account.');
         const saved = await saveNativeSelectedSession(qaOwner, moved.session, 'slot-1');
         if (saved.status !== 'ready') throw new Error(`Terminal source Save blocked: ${saved.message}`);
         const gear = JSON.stringify(saved.session.snapshot.playerState.gear);
@@ -277,6 +287,18 @@ async function seed() {
       if (duplicate.status !== 'duplicate' || duplicate.session !== moved.session ||
           stale.status !== 'stale' || stale.session !== moved.session)
         throw new Error('Native host duplicate or stale request changed the selected pair.');
+      const mismatched = { ...selected, control: moved.session.control };
+      const directStaleSave = await new CleanEpochDescendantAdapter(owner).save({
+        accountId, sourceSlotId: 'slot-1', destinationSlotId: 'slot-1',
+        expectedAccountRevision: account.revision, expectedDestinationAddress: selected.sourceAddress,
+        snapshot: mismatched.snapshot, control: mismatched.control
+      });
+      const hostStaleSave = await saveNativeSelectedSession(owner, mismatched, 'slot-1');
+      if (directStaleSave.status !== 'blocked' || hostStaleSave.status !== 'blocked' ||
+          !hostStaleSave.requiresReload ||
+          (await owner.readSelected(accountId))?.revision !== account.revision ||
+          (await owner.readSlot(accountId, 'slot-1')).status !== 'ready')
+        throw new Error('Stale native snapshot/control pair published or changed the retained head.');
       const staleSave = await saveNativeSelectedSession(owner,
         { ...moved.session, accountRevision: account.revision - 1 }, 'slot-1');
       if (staleSave.status !== 'blocked' || staleSave.session.snapshot !== moved.session.snapshot ||

@@ -9,7 +9,7 @@ const vite = await createServer({ server: { middlewareMode: true }, appType: 'cu
 test.after(() => vite.close());
 const { createNativeNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shell/nativeNewGameSnapshot.ts');
 const { createCampaignSessionControl, admitCampaignMutation } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/campaign-session.ts');
-const { createNativeSelectedSession } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedSession.ts');
+const { createNativeSelectedSession, applyNativeSelectedItem } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedSession.ts');
 const { createNativeSelectedQuestCommand, applyNativeSelectedQuest,
   createNativeSelectedTravelCommand, applyNativeSelectedTravel,
   advanceNativeSelectedSurvey } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedGameplay.ts');
@@ -41,7 +41,7 @@ function control(snapshot) {
     campaignId: snapshot.campaignIdentity.campaignId, artifactId: 'artifact.native.gameplay.1',
     publicationId: 'publication.native.gameplay.1', artifactRevision: 1,
     continuityId: snapshot.campaignIdentity.continuityId,
-    headArtifactId: 'artifact.native.gameplay.1', headRevision: 1 });
+    headArtifactId: 'artifact.native.gameplay.1', headRevision: 1, sourceSnapshot: snapshot });
 }
 function session(snapshot = first()) {
   return createNativeSelectedSession({ snapshot, control: control(snapshot),
@@ -168,6 +168,33 @@ test('native quest and travel use authored commands and retain one physical gear
   const repeatedTravel = applyNativeSelectedTravel(acceptedTravel.session, travel);
   assert.ok(['stale', 'duplicate'].includes(repeatedTravel.status));
   assert.strictEqual(repeatedTravel.session, acceptedTravel.session);
+});
+
+test('selected quest/travel and item callers cannot pair an old snapshot with newer authority', () => {
+  const start = session();
+  const bow = start.snapshot.playerState.gear.instances.find(item => item.itemId === 'item.short_bow');
+  assert.ok(bow);
+  const gear = { kind: 'gear', expectedRevision: start.snapshot.playerState.gear.revision,
+    itemInstanceId: bow.itemInstanceId, destination: { kind: 'carried' } };
+  const questCommand = createNativeSelectedQuestCommand(start, 'quest.ashen_reef_survey');
+  const quest = applyNativeSelectedQuest(start, questCommand);
+  assert.equal(quest.status, 'accepted');
+  const travel = applyNativeSelectedTravel(quest.session,
+    createNativeSelectedTravelCommand(quest.session, 'location.ashen_reef'));
+  assert.equal(travel.status, 'accepted');
+  const staleGear = applyNativeSelectedItem({ ...start, control: travel.session.control }, gear,
+    'native.cross.quest_travel.gear');
+  assert.equal(staleGear.status, 'stale');
+  assert.deepEqual(staleGear.session.snapshot, travel.session.snapshot);
+  assert.strictEqual(staleGear.session.control, travel.session.control);
+
+  const moved = applyNativeSelectedItem(start, gear, 'native.cross.gear.quest');
+  assert.equal(moved.status, 'accepted');
+  const staleQuest = applyNativeSelectedQuest({ ...start, control: moved.session.control }, questCommand);
+  assert.equal(staleQuest.status, 'stale');
+  assert.deepEqual(staleQuest.session.snapshot, moved.session.snapshot);
+  assert.equal(staleQuest.session.snapshot.playerState.gear.instances.find(item =>
+    item.itemInstanceId === bow.itemInstanceId).location.kind, 'bag');
 });
 
 test('native survey requires exact retained head and account revision before one accepted shift', async () => {

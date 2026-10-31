@@ -1,7 +1,7 @@
 import { evaluateAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
 import { createAuthorityId, isTargetCampaignSnapshot, TARGET_SNAPSHOT_FORMAT } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
-import type { CampaignSessionControl } from "../../../../packages/engines/game-engine/src/campaign-session.js";
+import { inspectCampaignSessionSource, type CampaignSessionControl } from "../../../../packages/engines/game-engine/src/campaign-session.js";
 import { hasPendingNormalDefeat, validatePendingNormalDefeatRecoveryProvenance } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
 import { verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
 import { serializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
@@ -31,6 +31,9 @@ function plans(snapshot: SaveSnapshot, slotId: SaveSlotId): CampaignPublicationC
 /** A pending defeat may be published only from its exact accepted session result. */
 export function validatePendingDefeatPublication(snapshot: SaveSnapshot | NativeFreshCampaignSnapshot,
   control: CampaignSessionControl<SaveSnapshot | NativeFreshCampaignSnapshot>, receiptId: string): void {
+  if (snapshot.snapshotVersion === "lineage.save_snapshot.v3" &&
+      !inspectCampaignSessionSource(control, snapshot).coherent)
+    throw new CampaignStoreError("stale_head", "Pending defeat source differs from its campaign control.");
   const receipt = validatePendingNormalDefeatRecoveryProvenance(snapshot, receiptId);
   const retained = control.retainedMutationResults.filter(row => row.mutationId === receipt.sourceMutationId);
   if (receipt.sourceKind !== "accepted_mutation" || !control.hasUnpublishedGameplayState ||
@@ -62,6 +65,9 @@ export class CleanEpochDescendantAdapter {
           snapshot.accountId !== accountId || control.accountId !== accountId ||
           control.campaignId !== snapshot.campaignIdentity.campaignId)
         throw new CampaignStoreError("invalid_record", "Ordinary descendant input requires an open target campaign.");
+      if (snapshot.snapshotVersion === "lineage.save_snapshot.v3" &&
+          !inspectCampaignSessionSource(control, snapshot).coherent)
+        throw new CampaignStoreError("stale_head", "Native Save source differs from its campaign control.");
       if (input.pendingDefeatReceiptId)
         validatePendingDefeatPublication(snapshot, control, input.pendingDefeatReceiptId);
       if (native && control.soundingsAdmissionWitness)

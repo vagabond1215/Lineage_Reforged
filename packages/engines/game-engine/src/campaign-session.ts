@@ -46,6 +46,8 @@ export interface CampaignSessionControl<TSnapshot extends CampaignSnapshot = Sav
   acceptedMutationIds: string[];
   retainedMutationResults: RetainedCampaignMutationResult<TSnapshot>[];
   hasUnpublishedGameplayState: boolean;
+  /** Exact current native source bytes, bound at artifact readback and after each admission. */
+  sourceSnapshotFingerprint?: string;
 }
 
 export type CampaignMutationOwnerKind =
@@ -280,6 +282,7 @@ export function createCampaignSessionControl(params: {
   continuityId: string;
   headArtifactId: string;
   headRevision: number;
+  sourceSnapshot?: CampaignSnapshot;
 }): CampaignSessionControl {
   const atHead =
     params.artifactId === params.headArtifactId &&
@@ -301,8 +304,59 @@ export function createCampaignSessionControl(params: {
     lastAcceptedMutationId: null,
     acceptedMutationIds: [],
     retainedMutationResults: [],
-    hasUnpublishedGameplayState: false
+    hasUnpublishedGameplayState: false,
+    ...(params.sourceSnapshot?.snapshotVersion === 'lineage.save_snapshot.v3'
+      ? { sourceSnapshotFingerprint: JSON.stringify(params.sourceSnapshot) }
+      : {})
   };
+}
+
+function nativeCurrentSource<TSnapshot extends CampaignSnapshot>(
+  control: CampaignSessionControl<TSnapshot>, source: TSnapshot
+): { validControl: boolean; snapshot: TSnapshot } {
+  const retained = control.retainedMutationResults;
+  const current = retained[retained.length - 1]?.snapshot ?? source;
+  const identity = current.campaignIdentity;
+  const expectedContinuity = control.pendingContinuityId ?? control.loadedContinuityId;
+  const loadedAtHead = control.loadedArtifactId === control.campaignHeadArtifactId &&
+    control.loadedHeadRevision === control.campaignHeadRevision;
+  const postureValid = control.posture === 'at_head'
+    ? loadedAtHead && retained.length === 0
+    : control.posture === 'non_head_unmutated'
+      ? !loadedAtHead && retained.length === 0
+      : control.posture === 'head_unpublished'
+        ? loadedAtHead && retained.length > 0 && control.pendingContinuityId === null
+        : control.posture === 'forked_unpublished' && !loadedAtHead &&
+          retained.length > 0 && !!control.pendingContinuityId;
+  const chainValid = retained.length === control.acceptedMutationIds.length &&
+    retained.every((entry, index) =>
+      entry.mutationId === control.acceptedMutationIds[index] &&
+      entry.sessionRevision === control.loadedHeadRevision + index + 1) &&
+    new Set(control.acceptedMutationIds).size === control.acceptedMutationIds.length;
+  const latest = retained[retained.length - 1];
+  const validControl = !!control.sourceSnapshotFingerprint && !!identity &&
+    current.snapshotVersion === 'lineage.save_snapshot.v3' &&
+    control.accountId === current.accountId &&
+    control.campaignId === identity.campaignId &&
+    identity.continuityId === expectedContinuity &&
+    control.sessionRevision === control.loadedHeadRevision + retained.length &&
+    control.lastAcceptedMutationId === (latest?.mutationId ?? null) &&
+    control.hasUnpublishedGameplayState === (retained.length > 0) &&
+    postureValid && chainValid &&
+    control.sourceSnapshotFingerprint === JSON.stringify(current);
+  return { validControl, snapshot: current };
+}
+
+/** Read the native session's latest retained state without admitting a mutation. */
+export function inspectCampaignSessionSource<TSnapshot extends CampaignSnapshot>(
+  control: CampaignSessionControl<TSnapshot>, source: TSnapshot
+): { coherent: boolean; snapshot: TSnapshot } {
+  if (source.snapshotVersion !== 'lineage.save_snapshot.v3')
+    return { coherent: !control.sourceSnapshotFingerprint, snapshot: source };
+  const current = nativeCurrentSource(control, source);
+  return { coherent: current.validControl &&
+    JSON.stringify(source) === control.sourceSnapshotFingerprint,
+    snapshot: current.snapshot };
 }
 
 function buildSurveyPreparationControlFingerprint(
@@ -703,6 +757,16 @@ export function admitCampaignMutation<TSnapshot extends CampaignSnapshot>(
   control: CampaignSessionControl<TSnapshot>,
   submission: CampaignMutationSubmission<TSnapshot>
 ): CampaignMutationAdmission<TSnapshot> {
+  const native = !!control.sourceSnapshotFingerprint ||
+    submission.sourceSnapshot.snapshotVersion === 'lineage.save_snapshot.v3' ||
+    submission.proposedSnapshot.snapshotVersion === 'lineage.save_snapshot.v3';
+  const current = nativeCurrentSource(control, submission.sourceSnapshot);
+  if (native && (!current.validControl ||
+      submission.sourceSnapshot.snapshotVersion !== 'lineage.save_snapshot.v3' ||
+      submission.proposedSnapshot.snapshotVersion !== 'lineage.save_snapshot.v3')) {
+    return { accepted: false, duplicate: false, reason: 'stale_revision',
+      snapshot: current.snapshot, control, resultId: null };
+  }
   if (submission.ownerKind !== "nearby_encounter" &&
       JSON.stringify(submission.sourceSnapshot.authorityLedger?.nearbyEncounters ?? null) !==
       JSON.stringify(submission.proposedSnapshot.authorityLedger?.nearbyEncounters ?? null)) {
@@ -734,10 +798,15 @@ export function admitCampaignMutation<TSnapshot extends CampaignSnapshot>(
       accepted: false,
       duplicate: true,
       reason: "duplicate",
-      snapshot: retained.snapshot,
-      control: restoreRetainedControl(control, retained),
+      snapshot: native ? current.snapshot : retained.snapshot,
+      control: native ? control : restoreRetainedControl(control, retained),
       resultId: retained.resultId
     };
+  }
+
+  if (native && JSON.stringify(submission.sourceSnapshot) !== control.sourceSnapshotFingerprint) {
+    return { accepted: false, duplicate: false, reason: 'stale_revision',
+      snapshot: current.snapshot, control, resultId: null };
   }
 
   // A native command cannot retain an invalid physical graph, even while its
@@ -969,7 +1038,8 @@ export function admitCampaignMutation<TSnapshot extends CampaignSnapshot>(
         ...control.retainedMutationResults,
         retainedResult
       ],
-      hasUnpublishedGameplayState: true
+      hasUnpublishedGameplayState: true,
+      ...(native ? { sourceSnapshotFingerprint: JSON.stringify(nextSnapshot) } : {})
     }
   };
 }

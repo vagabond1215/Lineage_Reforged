@@ -37,7 +37,7 @@ function session(snapshot) {
     campaignId: snapshot.campaignIdentity.campaignId, artifactId: 'artifact.native.selected.reader',
     publicationId: 'publication.native.selected.reader', artifactRevision: 1,
     continuityId: snapshot.campaignIdentity.continuityId,
-    headArtifactId: 'artifact.native.selected.reader', headRevision: 1 });
+    headArtifactId: 'artifact.native.selected.reader', headRevision: 1, sourceSnapshot: snapshot });
 }
 
 test('selected view-model reader accepts a real v3 Hunter without a v2 equipment map', () => {

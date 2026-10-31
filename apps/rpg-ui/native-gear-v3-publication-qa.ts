@@ -487,7 +487,7 @@ async function suite() {
       accountId: source.accountId, campaignId: source.campaignIdentity!.campaignId,
       artifactId: 'artifact.native.qa', publicationId: 'publication.native.qa',
       artifactRevision: 1, continuityId: source.campaignIdentity!.continuityId,
-      headArtifactId: 'artifact.native.qa', headRevision: 1
+      headArtifactId: 'artifact.native.qa', headRevision: 1, sourceSnapshot: source
     }) as CampaignSessionControl<typeof source>;
     const broken = structuredClone(source);
     broken.playerState.gear.instances[0]!.durability = -1;
@@ -520,7 +520,7 @@ async function suite() {
       campaignId: source.campaignIdentity!.campaignId, artifactId: 'artifact.native.prior.qa',
       publicationId: 'publication.native.prior.qa', artifactRevision: 1,
       continuityId: source.campaignIdentity!.continuityId,
-      headArtifactId: 'artifact.native.head.qa', headRevision: 2
+      headArtifactId: 'artifact.native.head.qa', headRevision: 2, sourceSnapshot: source
     }) as CampaignSessionControl<typeof source>;
     const defeated = structuredClone(source);
     defeated.playerState.resources.hp.current = 0;
@@ -562,7 +562,7 @@ async function suite() {
       campaignId: source.campaignIdentity!.campaignId, artifactId: 'artifact.native.source.qa',
       publicationId: 'publication.native.source.qa', artifactRevision: 1,
       continuityId: source.campaignIdentity!.continuityId,
-      headArtifactId: 'artifact.native.source.qa', headRevision: 1
+      headArtifactId: 'artifact.native.source.qa', headRevision: 1, sourceSnapshot: source
     }) as CampaignSessionControl<typeof source>;
     const defeatSubmission = {
       mutationId: 'mutation.native_defeat.qa', sourceArtifactId: sourceControl.loadedArtifactId,
