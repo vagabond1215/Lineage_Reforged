@@ -1,5 +1,7 @@
 # Queued Codex Route: Default Current Area and Codex Atlas Playable UI
 
+> **2026-10-31 QUEUED PROMPT SAFETY GATE:** **Do not copy or install this historical proposed Codex prompt unchanged.** The [central parallel work register](https://github.com/vagabond1215/Lineage_Reforged/blob/909922d2a7c120246a2f51cc5ab9ad68a93d26bd/docs/dev/connector-safe-parallel-progression-register-2026-10-31.md) and later held [user-selected discovered-only Atlas policy](https://github.com/vagabond1215/Lineage_Reforged/blob/4a62348321d96f9606e12f907075f17afc92ffac/docs/design/player-discovered-cartography-chart-sources-study-and-uncertain-bearings-decision-2026-10-31.md) must be applied first. A personal map can display **only personally discovered geometry**, while actually accessible carried/posted charts are separate, scoped inspections; full global backdrop/geometry shipped to the character is rejected. The native-v3 source chain had reached draft #57 after this file was written. Exact selected head, actor visibility, runtime and Save tests remain prerequisites. This is not an active Codex command.
+
 Date: 2026-10-26
 Status: `QUEUED_NOT_INSTALLED; USER_SELECTED_AREA_DIRECTION; IMPLEMENTATION_ROUTE_REVIEW_REQUIRED`
 Source: `master` `a596112acf3945f2bf7c625e943f2511d12aa710` inspected before connector planning; **refresh before execution**. This queued file does **not** supersede `docs/dev/current-codex-prompt.md` or current active PR #20 / PR #22 prompts.
