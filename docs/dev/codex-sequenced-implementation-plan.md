@@ -50,6 +50,20 @@ Active run:
 
 Accepted development milestone: `DEV-0.7.0`; current band `DEV-0.7.x`; Game `0.1.0-prealpha` / `INTEGRATED_LOOP` unchanged.
 
+## 2026-10-26 conditional queue overlay: playable Area, Atlas, and deferred consumer gates
+
+**Status: `QUEUED_NOT_INSTALLED` on draft planning PR #24.** Current in-progress feature branches and `docs/dev/current-codex-prompt.md` / `current-gpt-handoff.md` / `current-codex-output.md` **must not be replaced by this preplanning**. [Deferred-and-outstanding 30-family timing map](../design/deferred-and-outstanding-design-consumer-timing-map-2026-10-26.md) controls current **review timing**, not the historical ordinal roadmap below.
+
+Conditional route:
+1. **Current owner acceptance (G0):** independently finish review/hardening/integration of PR #19 fresh-save, PR #20 native gear, PR #21 policy, PR #22 Echo/Dev, PR #23 hardening. Do not merge automatically or run old-save migration.
+2. **Parallel docs/source prep (G1):** already on PR #24: default **Current Area** named actual place, environment/observation/action hierarchy, short genuine recent results, zero extra Home/World submenu; broad known geography to **Codex → Atlas**. Use [Area detailed plan](../design/current-area-and-atlas-interaction-presentation-detailed-plan-2026-10-26.md) and [queued source prep](queued-current-situation-world-ui-source-prep-prompt-2026-10-26.md).
+3. **Named isolated UI implementation and selected acceptance (G2):** once exact head/owner conflicts are reviewed, consume [queued Area/Atlas implementation prompt](queued-area-atlas-playable-ui-implementation-prompt-2026-10-26.md). Validate real Soundings 5g once, Travel/Explore/encounter/Normal-Stakes, Rest, resources, equipment/Save and selected desktop/mobile. Reopen combat `DEV-0.7.2.13` only by named route decision, never automatically.
+4. **First new physical activity (G3):** source-real observed resource → accepted bounded extract/collect → owner inventory and depletion → optional actual small recipe/use. [Detailed resource activity plan](../design/first-playable-resource-interaction-and-small-craft-loop-preimplementation-plan-2026-10-26.md); requires G0 item/Save and actual resource/attempt owners.
+5. **Later narrow consumers (G4–G6):** one real NPC/station/service, recognition/weather spawn condition, bushcraft/skill trial or ancestry/heir as specifically selected. Deep governance, law, economy, managed agriculture, magic, complex health and family simulation remain evidence gated. Do not bulk-promote historical content catalogs.
+6. **Narrative and visual authoring:** [lore-grounded naming/story/asset gates](../design/lore-grounded-naming-and-area-content-authoring-plan-2026-10-26.md) require actual regional/cultural/economic facts, uniqueness review and editor acceptance before any newly generated names, image or prose become canon.
+
+The 2026-10-26 owner instruction overrides prior separate Home + World layout suggestions; Area is the **default local gameplay scene**, Atlas is wider geography. Future prompts must be branch-specific and `QUEUED_NOT_INSTALLED` until explicitly promoted. This overlay does not modify any active Codex prompt or route, Game version, protected branch or deployed Site.
+
 ## Current Queue Override
 
 - `Version 0.5.357 - Runtime Ownership Transition Readiness Consolidation` is complete and supersedes the older primary post-repair-audit pointer.
