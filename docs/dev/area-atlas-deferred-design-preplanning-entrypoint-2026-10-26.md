@@ -1,5 +1,7 @@
 # Area/Atlas and Deferred-Design Preplanning: Current Entry Point
 
+> **2026-10-31 parallel-work coordination:** Read the [central 60-file parallel progression manifest and precedence register](https://github.com/vagabond1215/Lineage_Reforged/blob/909922d2a7c120246a2f51cc5ab9ad68a93d26bd/docs/dev/connector-safe-parallel-progression-register-2026-10-31.md) **first**. Its T1–T9 statuses, held PR #26/#40/#45/#46 ownership links, later personally-discovered-map policy and Codex-current-source refresh rules control which historical planned tasks are worth resuming. This older Area entrypoint is the detailed domain roadmap, **not a separate live backlog or permission to install queued Codex prompts**.
+
 Date: 2026-10-26
 Status: `PREPLANNING_CONSOLIDATED; REVIEW_HELD; ACTIVE_CODEX_PROMPTS_UNTOUCHED`
 Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; parent draft PR #24. Last inspected default `master` `a596112acf3945f2bf7c625e943f2511d12aa710`.
