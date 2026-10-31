@@ -4,7 +4,7 @@ import { resolveLegacyPreparationSelection } from '../../../packages/engines/gam
 import type { CampaignSessionControl } from '../../../packages/engines/game-engine/src/campaign-session.js';
 import type { SaveSnapshot } from '../../../packages/shared/types/src/index.js';
 import { InGameShell } from './game-shell/InGameShell';
-import { createNativeSelectedSession, type NativeSelectedSession } from './game-shell/nativeSelectedSession.js';
+import { readNativeEpochAppSession } from './game-shell/nativeEpochAppSession.js';
 import { createDefaultCharacterCreationFormState, validateCharacterCreationForm } from './game-shell/characterCreationForm.js';
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
@@ -110,7 +110,6 @@ export function EpochApp() {
   const actionPending = useRef(false);
   const accountIdForRegistration = useRef<string | null>(null);
   const sourceSlot = useRef<SaveSlotId | null>(null);
-  const nativeSelectedSession = useRef<NativeSelectedSession | null>(null);
   const observedAccountRevision = useRef<number | null>(null);
   const menuAccountRevision = useRef<number | null>(null);
   const observedAddresses = useRef<Partial<Record<SaveSlotId, Address | null>>>({});
@@ -251,7 +250,6 @@ export function EpochApp() {
     const found = await inventory(services, accountId);
     menuAccountRevision.current = found.account.revision;
     await captureMenuDeletionSources(services, accountId, found.slots);
-    nativeSelectedSession.current = null;
     if (section) setLauncherSection(section);
     dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: session, accountProfile: found.account.profile,
       slots: slotSummaries(found.slots), notice: typeof message === 'function' ? message(found) : message });
@@ -301,11 +299,11 @@ export function EpochApp() {
     if (!services) throw new Error('Epoch owner is unavailable.');
     const found = await inventory(services, accountId);
     const selected = loaded ?? (() => { throw new Error('Exact slot readback is required.'); })();
-    const nativeSession = selected.snapshot.snapshotVersion === 'lineage.save_snapshot.v3'
-      ? createNativeSelectedSession({ snapshot: selected.snapshot, control: selected.sessionControl,
-        sourceSlotId: slotId, accountRevision: found.account.revision }) : null;
     await captureAddresses(services, accountId, slotId);
-    nativeSelectedSession.current = nativeSession;
+    readNativeEpochAppSession({ snapshot: selected.snapshot,
+      campaignSessionControl: selected.sessionControl, sourceSlotId: slotId,
+      accountRevision: found.account.revision,
+      observedSourceAddress: observedAddresses.current[slotId] });
     observedAccountRevision.current = found.account.revision;
     sourceSlot.current = slotId;
     dispatch({ type: 'ENTER_GAME', launcherSession: session, accountProfile: found.account.profile,
@@ -379,9 +377,11 @@ export function EpochApp() {
   const save = (destinationSlotId: SaveSlotId) => guarded(async () => {
     if (state.screen !== 'IN_GAME' || !services) return;
     if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
-      if (nativeSelectedSession.current?.snapshot !== state.snapshot ||
-          nativeSelectedSession.current.control !== state.campaignSessionControl)
-        throw new Error('Native selected snapshot and campaign control no longer match the retained session. Reload the campaign.');
+      readNativeEpochAppSession({ snapshot: state.snapshot,
+        campaignSessionControl: state.campaignSessionControl, sourceSlotId: sourceSlot.current,
+        accountRevision: observedAccountRevision.current,
+        observedSourceAddress: sourceSlot.current
+          ? observedAddresses.current[sourceSlot.current] : undefined });
       throw new Error('Native v3 Save is held until the selected gameplay and recovery route is activated.');
     }
     const defeatPending = hasPendingNormalDefeat(state.snapshot);
@@ -477,7 +477,6 @@ export function EpochApp() {
     if (window.localStorage.getItem(CLEAN_EPOCH_SESSION_STORAGE_KEY) !== null)
       throw new Error('Epoch session hint could not be cleared.');
     sourceSlot.current = null; observedAccountRevision.current = null;
-    nativeSelectedSession.current = null;
     menuAccountRevision.current = null; observedAddresses.current = {};
     await initialize();
   }, undefined);
