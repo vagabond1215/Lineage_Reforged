@@ -12,6 +12,8 @@ const { createNativeNewGameSnapshot } = await vite.ssrLoadModule('/src/game-shel
 const { createCampaignSessionControl } = await vite.ssrLoadModule('/../../packages/engines/game-engine/src/campaign-session.ts');
 const { createNativeSelectedSession, applyNativeSelectedItem, saveNativeSelectedSession } =
   await vite.ssrLoadModule('/src/game-shell/nativeSelectedSession.ts');
+const { readNativeEpochAppSession } =
+  await vite.ssrLoadModule('/src/game-shell/nativeEpochAppSession.ts');
 const { readNativeSelectedCharacter } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedCharacter.ts');
 
 function hunter() {
@@ -33,6 +35,40 @@ function control(snapshot) {
     continuityId: snapshot.campaignIdentity.continuityId,
     headArtifactId: 'artifact.native.host', headRevision: 1, sourceSnapshot: snapshot });
 }
+
+test('EpochApp derives one native selected pair from current reducer state and observed account source', () => {
+  const snapshot = hunter();
+  const initialControl = control(snapshot);
+  const observedSourceAddress = { artifactId: initialControl.loadedArtifactId,
+    publicationId: initialControl.loadedPublicationId };
+  const input = { snapshot, campaignSessionControl: initialControl,
+    sourceSlotId: 'slot-1', accountRevision: 2, observedSourceAddress };
+  const first = readNativeEpochAppSession(input);
+  assert.strictEqual(first.snapshot, snapshot);
+  assert.strictEqual(first.control, initialControl);
+  const bow = snapshot.playerState.gear.instances.find(item => item.itemId === 'item.short_bow');
+  assert.ok(bow);
+  const moved = applyNativeSelectedItem(first, { kind: 'gear',
+    expectedRevision: snapshot.playerState.gear.revision,
+    itemInstanceId: bow.itemInstanceId, destination: { kind: 'carried' } },
+  'native.epochapp.source.bow');
+  assert.equal(moved.status, 'accepted');
+  const current = readNativeEpochAppSession({ ...input, snapshot: moved.session.snapshot,
+    campaignSessionControl: moved.session.control });
+  assert.strictEqual(current.snapshot, moved.session.snapshot);
+  assert.strictEqual(current.control, moved.session.control);
+  assert.equal(current.snapshot.playerState.gear.instances.find(item =>
+    item.itemInstanceId === bow.itemInstanceId).location.kind, 'bag');
+  assert.throws(() => readNativeEpochAppSession({ ...input,
+    campaignSessionControl: moved.session.control }), /source|control|retained/i);
+  assert.throws(() => readNativeEpochAppSession({ ...input,
+    observedSourceAddress: { ...observedSourceAddress, artifactId: 'artifact.stale' } }),
+  /source|address/i);
+  assert.throws(() => readNativeEpochAppSession({ ...input, accountRevision: null }),
+    /account|revision/i);
+  assert.equal(readNativeEpochAppSession({ ...input,
+    snapshot: { ...snapshot, snapshotVersion: 'lineage.save_snapshot.v2' } }), null);
+});
 
 test('native selected host keeps accepted item snapshot and campaign control in one state', () => {
   const snapshot = hunter();
