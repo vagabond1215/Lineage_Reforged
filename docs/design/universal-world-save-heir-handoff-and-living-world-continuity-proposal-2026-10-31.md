@@ -81,7 +81,45 @@ A player may reasonably want to **back up or export their world** for safekeepin
 
 Do not expose imported world records as trusted game economy/Prestige entitlements without verification. Account-wide achievements and anti-collusion remain separately owned.
 
-## 6. Proposed future source-to-display journey
+## 6. World-first runtime startup: load the world, then load the character
+
+**User question/clarification:** Would selecting and loading a saved world effectively **start a server**, after which the character is loaded into that world? **Recommended design: yes, conceptually.** Load the authoritative **world runtime** first, then attach the selected character or heir. Distinguish an authoritative runtime *service* from having a permanently running dedicated network server process for each solo world. This clarifies order and server boundaries, **not an installed server design**.
+
+### Proposed lifecycle (one world, many possible actor sessions)
+
+1. **Choose an authorized World Save**: Account/World selection returns a world ID, World Save status and permitted mode. The world definition/seed exists before characters. Verify authenticated right to load that world. If new, commit the world before character creation.
+2. **Open or locate its runtime host**: If an authoritative world runtime for that world is already active, attach to **that same** world owner; otherwise start one in a chosen host. A solo prototype can host a server-like simulation **inside the local application process**; a multi-client Living World can use a persistent or on-demand backend world service. Host placement is infrastructure, not a new world identity.
+3. **Load the verified world head**: Read latest accepted world snapshot/checkpoint + event or publication receipts and versioned seed/content provenance. Reconstruct world-specific geography changes, clock, world economy/factions/religion/dungeon/leyline states only from authorized durable source owners. Recover incomplete publications idempotently; acquire a world-appropriate single-writer/ordered-commit lease or equivalent concurrency guard.
+4. **Admit time policy and catch-up**: If **Attended**, restore its accepted time and advance only with live direct attendance or certified finite queued attendance, not a fabricated elapsed wall-clock difference. If **Live**, either reconnect to a still-running world scheduler **or** apply bounded, deterministic, idempotent elapsed-time catch-up before admitting player commands. Offline state must not require an always-on dedicated server process for each world. Any offline queues/gambits must have an approved real scheduler/worker or be processed under a separately accepted catch-up contract; neither exists yet. World clock/head remains singular regardless of connected characters.
+5. **Then select/load the permitted character or heir**: Verify campaign/continuity/character identifiers, heir legitimacy/Prestige/roster eligibility, current world membership and Save/technical recovery. Read character-private inventory, skills, quests, knowledge, revealed geography and recent personal state. Bind this character to the **currently accepted world revision and time**; validate potentially stale location, legal access, owner events, life/aging/stakes and interrupted commands without transferring unrelated characters' secrets.
+6. **Attach character session and render Current Area**: Character commands submit to the authoritative world/domain admission path and update both world and character owners through stable request/receipt/recovery contracts. UI uses current accepted observer context and only the character's actual map discovery; broader Codex → Atlas remains separate. Starting a character must **not** start a second competing simulation of W1.
+7. **Unload character vs suspend world**: Character logout/checkpoint closes only its actor session. The world service may remain running (other active participants, valid finite queues or configured Live worker), be evicted/restarted on demand, or pause under Attended rules. In all cases **the World Save persists**. When the founder dies, the next heir attaches to **the same worldId/head** after real eligibility and inheritance transactions; this is not a server reset or clone.
+
+```text
+WORLD SELECT / WORLD CREATION
+  -> World Save verified / committed
+  -> start-or-join authoritative World Runtime (server-like world owner)
+  -> recover world head + apply admitted clock policy
+  -> select existing character, legitimate heir, or permitted new character
+  -> load & reconcile character Save against current world revision
+  -> attach player session -> Current Area / legal actions
+  -> character disconnects; world survives independently
+```
+
+### Host implementation options, without fragmenting game rules
+
+| Host option | Suitable for | Constraint |
+| --- | --- | --- |
+| **In-process authoritative world runtime** | First single-player / offline-friendly prototype | Still one world owner and authoritative Save path; not a mock simulation. Persist on stop and recover exactly. |
+| **On-demand server-owned world session** | Authenticated online worlds or worlds shared across sessions | World ID maps to one ordered authoritative runtime/lease; support crash restart and no double active writer. Not necessarily one OS process per saved world. |
+| **Always-on scheduled worker / server** | Later Live worlds or world queues that must process between player sessions | Worker admission/event budgets and catch-up/recovery must be proven; no perpetual process assumed for each world. |
+| **Multi-client Living World runtime** | Prestige-enabled permitted concurrent character control | All participants share a server-authoritative world clock, event order and head; actor/character privacy, membership/anti-collusion and owner validation hold across sessions. |
+
+**Core design distinction:** The **World Save is durable data**, the **World Runtime is its authoritative executable simulation**, and the **Character Save is a private actor continuation**. They are not interchangeable. Loading a world may instantiate the simulation, but saving a world does **not** literally save an operating-system server process or memory image. The selected world service may run locally or remotely provided both satisfy the same committed-world identity, deterministic command/event/receipt ordering and Save durability requirements.
+
+**Failure/safety gates:** A half-recovered or invalid world cannot admit character mutation; stale client/campaign snapshots cannot win over its accepted world head; two callers cannot start competing world writers; a character reconnect cannot duplicate a receipt or fast-forward the clock; Live catch-up cannot create free income or irreversible unattended death; paused Attended worlds cannot accidentally advance due solely to reconnect. These are new *future test responsibilities*, not claims that any server already meets them.
+
+## 7. Proposed future source-to-display journey
 
 ```text
 Worlds
@@ -97,7 +135,7 @@ This is one possible launcher structure, **not** a selected UI route or invitati
 
 Avoid UI that says "World Save transferred to B" if it could suggest W1 is removed from A or rewritten. Prefer "Continue this world as B" or "Pass the lineage to B" while W1 remains an identity in its own right.
 
-## 7. Narrow decisions still needed before implementation
+## 8. Narrow decisions still needed before implementation
 
 The user has proposed the **World Save** concept, including use across all modes and inheritance. **This document endorses the idea as a recommendation; it does not assert the user has approved all detailed rules.** Only these questions materially affect the first World Save owner:
 
@@ -111,7 +149,7 @@ The user has proposed the **World Save** concept, including use across all modes
 
 These are **future owner questions**. No user answer is necessary to record the recommendation or to keep connector work safe.
 
-## 8. Proposed acceptance cases, not executed
+## 9. Proposed acceptance cases, not executed
 
 - **WS-01**: Solo initial world commits a re-loadable World Save before founder creation, even if the founder never launches.
 - **WS-02**: Ending founder A does not delete, re-generate or copy W1; an eligible heir B references the identical `worldId`, new character identity and current accepted W1 revision.
@@ -131,7 +169,17 @@ These are **future owner questions**. No user answer is necessary to record the 
 - **WS-16**: Solo Normal/Committed/Ironbound checkpoint and technical recovery rules remain source-owner safe; world backup is not a hidden loophole.
 - **WS-17**: World list can show a permitted world name/mode/current era without leaking undiscovered location names, future plot seed secrets or another character's map.
 
-## 9. File placement and stop rule
+### Additional startup/reconnection tests (future, not executed)
+
+- **WS-18**: World Save verifies and world simulation initializes **before** any character/actor session receives legal command access.
+- **WS-19**: Selecting the same active world from two authorized clients attaches to one ordered authoritative world head, not independent servers or duplicated world state.
+- **WS-20**: An Attended world with no direct attendance or eligible queued work resumes without invented time progress after days offline; an active certified finite queue uses one accepted scheduler.
+- **WS-21**: Live world disconnected for days either has accepted scheduled events or performs bounded idempotent catch-up before actor admission, without duplicate rewards, impossible missed commands or unannounced terminal outcomes.
+- **WS-22**: Reconnect with a stale character Save reconciles its actor state to the latest world head and does not restore stale global clocks, market events or geography.
+- **WS-23**: World host crashes during an event/actor receipt; verified world restart and retry exactly once maintain world and character consistency.
+- **WS-24**: Founder ends; world host may unload; eligible heir opens the same World Save/head and recovers durable effects without regenerating geography, rerolling seed, or inheriting founder's private Atlas.
+
+## 10. File placement and stop rule
 
 This is one **nonduplicative T8-B World Save topology / heir-continuation proposal**. It **extends** the already recorded world-instance identity foundation; it does not supersede its identity graph, detailed WI-01..20 test cases, accepted PR #46 world clock/heir world-time skip direction, PR #45 observed-only Atlas map disclosure, the current Stakes/Save implementation, or the active Codex PR.
 
