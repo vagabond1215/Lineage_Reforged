@@ -27,15 +27,23 @@ async function seed() {
   try {
     const gameplay = new URLSearchParams(location.search).has('gameplay');
     const combat = new URLSearchParams(location.search).has('combat');
+    const route = new URLSearchParams(location.search).get('route');
     const terminal = new URLSearchParams(location.search).has('terminal');
     const accountId = `account.native.selected.qa.${crypto.randomUUID()}`;
     const registered = await new CleanEpochAccountAdapter(owner).register({ accountId,
-      displayName: 'Native Selected QA', password: 'synthetic-only-password',
+      displayName: `Native Selected QA ${accountId.slice(-8)}`, password: 'synthetic-only-password',
       confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
     if (registered.status !== 'ready') throw new Error(registered.message);
+    document.body.dataset.accountId = accountId;
+    if (new URLSearchParams(location.search).has('creator')) {
+      document.body.dataset.seeded = 'creator';
+      createRoot(document.getElementById('root')!).render(<EpochApp
+        candidateNativeV3={new URLSearchParams(location.search).has('candidate')} />);
+      return;
+    }
     const identity = getLineageIdentityCatalog('lineage.human');
-    const world = combat ? { continentId: 'region.kaelvar', regionId: 'region.auric_marches',
-      settlementId: 'settlement.stonevein' } : gameplay ? {
+    const world = combat || route === 'combat' ? { continentId: 'region.kaelvar', regionId: 'region.auric_marches',
+      settlementId: 'settlement.stonevein' } : gameplay || route === 'survey' ? {
       continentId: 'region.myridian_chain', regionId: 'region.starfall_isle',
       settlementId: 'settlement.starfall_port' } : getDefaultWorldSelection('backstory.local');
     if (!identity?.hairColorOptions[0] || !identity.eyeColorOptions[0] || !identity.skinToneOptions[0])
@@ -43,7 +51,7 @@ async function seed() {
     const form = { ...createDefaultCharacterCreationFormState('slot-1'),
       playerName: 'Native EpochApp Hunter', hairColorId: identity.hairColorOptions[0].id,
       eyeColorId: identity.eyeColorOptions[0].id, skinToneId: identity.skinToneOptions[0].id,
-      backstoryId: gameplay || combat ? 'backstory.craftsmans_child' : 'backstory.local', continentId: world.continentId,
+      backstoryId: gameplay || combat || route ? 'backstory.craftsmans_child' : 'backstory.local', continentId: world.continentId,
       regionId: world.regionId, startingSettlementId: world.settlementId,
       startingBundleId: 'starting_bundle.hunter',
       startingBundleChoiceSelections: createDefaultStartingBundleChoiceSelections('starting_bundle.hunter') };
@@ -325,13 +333,15 @@ async function seed() {
       document.body.dataset.publicationId = saved.publicationId;
     }
     document.body.dataset.seeded = 'true';
-    createRoot(document.getElementById('root')!).render(<EpochApp />);
+    createRoot(document.getElementById('root')!).render(<EpochApp
+      candidateNativeV3={new URLSearchParams(location.search).has('candidate')} />);
   } finally { owner.close(); }
 }
 
 if (new URLSearchParams(location.search).has('resume')) {
   document.body.dataset.seeded = 'resume';
-  createRoot(document.getElementById('root')!).render(<EpochApp />);
+  createRoot(document.getElementById('root')!).render(<EpochApp
+    candidateNativeV3={new URLSearchParams(location.search).has('candidate')} />);
 } else seed().catch(error => {
   document.body.dataset.seeded = 'error';
   document.getElementById('root')!.textContent = error instanceof Error ? error.message : String(error);
