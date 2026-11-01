@@ -24,6 +24,8 @@ Use this map to answer five questions before opening a future lane:
 
 When this map conflicts with a newer focused accepted decision or current Codex handoff, use the newer/more specific authority and rebaseline this map later.
 
+> **2026-10-26 current consumer timing supplement:** This older 30-family authority matrix remains the authoritative historical *owner/boundary* register, but its 2026-08-24 `ACTIVE_ELSEWHERE` and missing-Ashen-payout posture should not be read as the **current** executable status. The Soundings 5g completion/Save loop is accepted, PR #19–#23 hold separate gear/Echo/Dev work, and the owner selected default **Current Area** with broader geography in Codex Atlas. All 30 rows have been mapped into the new [current consumer/acceptance gate matrix](deferred-and-outstanding-design-consumer-timing-map-2026-10-26.md). That map changes **timing/review priorities**, not specific schema ownership or authorization. No general system is auto-unblocked. Current Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; no release milestone from docs.
+
 ## 2. Status Vocabulary
 
 | Status | Meaning |

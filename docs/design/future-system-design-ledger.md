@@ -60,6 +60,8 @@ Future cleanup direction:
 - Do not move exact current implementation state into this ledger.
 - Do not move chronological run-note history into this ledger.
 
+> **2026-10-26 current activation sequencing:** Future design criteria in this ledger are not an automatic release schedule. The [deferred consumer/timing map](deferred-and-outstanding-design-consumer-timing-map-2026-10-26.md) classifies 30 mapped deferred families plus current gear/Echo/Dev/Area, and the [lore/naming and area-content plan](lore-grounded-naming-and-area-content-authoring-plan-2026-10-26.md) defines grounded editorial criteria for any new names, area copy and future map art. The owner has selected **Current Area as the default scene**, no separate Home, and **Codex → Atlas** for broad geographic reference. Prior loose "Home/World" UI criteria below should be interpreted through this corrected display direction. No new executable system, draft merge or game version promotion follows from the ledger alone.
+
 ## Authority And Precedence
 
 When sources conflict, use this order:

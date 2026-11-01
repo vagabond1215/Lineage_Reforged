@@ -22,6 +22,8 @@ This file is not:
 
 When this index conflicts with a newer focused accepted decision, current Codex output/handoff, or user-authored product direction, use the newer/more specific authority and update this index in a later connector-safe pass.
 
+> **2026-10-26 timing rebaseline without fabricating decisions:** The [30-family deferred consumer/timing map](deferred-and-outstanding-design-consumer-timing-map-2026-10-26.md) now groups unresolved questions by the first actual UI/gameplay consumer rather than treating all historical `DEFERRED_WITH_TRIGGER` rows as current blockers. **Already owner-selected:** default Current Area instead of separate Home/World; known geography in Codex Atlas; zero starting Echo; default-on Dev menu; clean pre-cutover save policy; humble founders, descendant-earned profession backstories; special narrative-gated World-Stray with bounded future boon. **G3 triggers:** one real resource/attempt/output and optional recipe. **G4+ triggers:** a real station/NPC or typed environment/recognition condition. **G5+ triggers:** ancestry/heir provenance and World-Stray narrative source. Deep law, romance, religion, breeding and magic formula questions remain later. Specific numeric/provenance/asset/biome choices are **not resolved** by this routing note. Review [lore/name editorial plan](lore-grounded-naming-and-area-content-authoring-plan-2026-10-26.md) for genuinely new content authoring.
+
 ## Current Pipeline Context
 
 Current active implementation route:
