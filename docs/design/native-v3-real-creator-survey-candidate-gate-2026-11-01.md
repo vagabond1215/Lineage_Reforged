@@ -1,6 +1,6 @@
 # Native v3 real creator to survey candidate gate — 2026-11-01
 
-Source: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, draft #58 `519389a8e1683f62f2fba007bc6075091222b9c1`, child `codex/native-v3-selected-lifecycle-gate` test commit `4dbd6b146e2f43c157c07ab18ad6a5a29500d522`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`.
+Source: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, draft #58 `519389a8e1683f62f2fba007bc6075091222b9c1`, [draft #59](https://github.com/vagabond1215/Lineage_Reforged/pull/59) child `codex/native-v3-selected-lifecycle-gate` test commit `4dbd6b146e2f43c157c07ab18ad6a5a29500d522`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`.
 
 ## Implemented and verified boundary
 
