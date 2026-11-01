@@ -6,6 +6,7 @@ import type { SaveSnapshot } from '../../../packages/shared/types/src/index.js';
 import { InGameShell } from './game-shell/InGameShell';
 import { readNativeEpochAppSession } from './game-shell/nativeEpochAppSession.js';
 import { saveNativeSelectedSession } from './game-shell/nativeSelectedSession.js';
+import { retireNativeSelectedSession } from './game-shell/nativeSelectedTerminal.js';
 import { applyNativeSelectedQuest, applyNativeSelectedTravel, advanceNativeSelectedSurvey,
   createNativeSelectedQuestCommand, createNativeSelectedTravelCommand } from './game-shell/nativeSelectedGameplay.js';
 import { advanceNativeSelectedExploration, admitNativeSelectedEncounter,
@@ -487,13 +488,30 @@ export function EpochApp({ candidateNativeV3 = false }: { candidateNativeV3?: bo
 
   const retire = () => {
     if (state.screen !== 'IN_GAME' || !services) return;
-    if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
+    if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3' && !nativeCandidate) {
       failed('Retirement Unavailable', 'Native v3 retirement is held until the selected lifecycle route is activated.');
       return;
     }
     if (!window.confirm(`Retire ${state.snapshot.playerState.coreData.playerName}? This closes the campaign, records its final history and empties its save slots after settlement.`)) return;
     void guarded(async () => {
       if (state.screen !== 'IN_GAME' || !services) return;
+      if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
+        const session = readNativeEpochAppSession({ snapshot: state.snapshot,
+          campaignSessionControl: state.campaignSessionControl, sourceSlotId: sourceSlot.current,
+          accountRevision: observedAccountRevision.current,
+          observedSourceAddress: sourceSlot.current
+            ? observedAddresses.current[sourceSlot.current] : undefined });
+        if (!nativeCandidate || !session)
+          throw new Error('Native retirement requires the current selected campaign source.');
+        const result = await retireNativeSelectedSession(services.owner, session);
+        if (result.status === 'blocked') throw new Error(result.message);
+        sourceSlot.current = null; observedAccountRevision.current = null;
+        observedAddresses.current = {};
+        await showMenu(state.launcherSession, state.accountProfile.accountId,
+          { tone: 'success', title: 'Character Retired',
+            detail: `${state.snapshot.playerState.coreData.playerName}'s retirement was recorded and verified. The closed campaign remains in history.` });
+        return;
+      }
       const sourceSlotId = sourceSlot.current;
       const expectedAccountRevision = observedAccountRevision.current;
       const expectedSourceAddress = sourceSlotId ? observedAddresses.current[sourceSlotId] : undefined;
