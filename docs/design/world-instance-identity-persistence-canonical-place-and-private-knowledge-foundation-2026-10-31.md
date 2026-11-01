@@ -1,5 +1,7 @@
 # T8: World-Instance Identity, Durable World Facts, Canonical Places and Private Knowledge
 
+> **2026-10-31 World Save continuation proposal:** The user's new question about persistent **world saves for Living, solo and Attended worlds, handed forward to heirs** is recorded as a strongly recommended **universal World Save / same-world heir-continuation topology** in [Universal World Save and Heir Handoff](universal-world-save-heir-handoff-and-living-world-continuity-proposal-2026-10-31.md). This is a recommended extension, **not yet an accepted Save implementation or final rollback/fork rule**. World ID and authoritative history remain independently durable, while each heir gets a new character/private knowledge owner. The proposal **does not override** this file's source-verified identity and atomic-publication requirements, and does not change the current selected Save or Codex stack.
+
 Date: 2026-10-31 (America/New_York)
 Status: **CONNECTOR-SAFE / SOURCE-VERIFIED WORLD-FIRST INTEGRATION FOUNDATION / OWNER DECISION NEEDED BEFORE IMPLEMENTATION / NOT INSTALLED**.
 Home: held [PR #46](https://github.com/vagabond1215/Lineage_Reforged/pull/46), not a new world schema or execution PR.
