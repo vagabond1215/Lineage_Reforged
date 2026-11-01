@@ -1,6 +1,6 @@
 # Native v3 real creator defeat, terminal and failure gate — 2026-11-01
 
-Source: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; exact draft #59 `760e78d9f649a6c74e5aca677e50c8b2ae9abd0b`; isolated child `codex/native-v3-selected-use-defeat-failure` code commit `a5feaaa04e4679034436469d801f936a9b687b7d`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
+Source: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; exact draft #59 `760e78d9f649a6c74e5aca677e50c8b2ae9abd0b`; isolated child [draft #60](https://github.com/vagabond1215/Lineage_Reforged/pull/60) `codex/native-v3-selected-use-defeat-failure` code commit `a5feaaa04e4679034436469d801f936a9b687b7d`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
 
 ## Bounded implementation
 
