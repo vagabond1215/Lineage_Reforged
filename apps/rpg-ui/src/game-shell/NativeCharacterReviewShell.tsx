@@ -21,7 +21,7 @@ const candidateDestinations: NavItem[] = [
 
 /** Default selected review remains read-only; local QA can bind the candidate owner route. */
 export function NativeCharacterReviewShell({ snapshot, onReturnToMainMenu,
-  control, onSnapshotChange, onSave, onQuickSave, onNativeAction }: {
+  control, onSnapshotChange, onSave, onQuickSave, onNativeAction, onRetireCharacter }: {
   snapshot: NativeFreshCampaignSnapshot;
   onReturnToMainMenu: () => void;
   control?: CampaignSessionControl<NativeFreshCampaignSnapshot>;
@@ -30,6 +30,7 @@ export function NativeCharacterReviewShell({ snapshot, onReturnToMainMenu,
   onSave?: () => void;
   onQuickSave?: () => void;
   onNativeAction?: (action: NativeCandidateAction) => void;
+  onRetireCharacter?: () => void;
 }) {
   const [activeTab, setActiveTab] = useState<'character' | 'inventory' | 'world' | 'quests' | 'activity'>('character');
   const resources = snapshot.playerState.resources;
@@ -60,6 +61,8 @@ export function NativeCharacterReviewShell({ snapshot, onReturnToMainMenu,
               className="rounded border border-[color:var(--color-border-soft)] px-2 py-1 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">Save</button>
             <button type="button" onClick={onQuickSave}
               className="rounded border border-[color:var(--color-border-soft)] px-2 py-1 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">Quick Save</button>
+            {onRetireCharacter && <button type="button" onClick={onRetireCharacter}
+              className="rounded border border-[color:var(--color-border-soft)] px-2 py-1 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-200">Retire Character</button>}
           </>}
         </div>
         <p role="status" className="mt-1 text-xs text-[color:var(--color-text-secondary)]">

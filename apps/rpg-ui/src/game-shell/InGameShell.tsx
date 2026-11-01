@@ -199,7 +199,7 @@ export function InGameShell({
           {...(nativeCandidate ? { control: campaignSessionControl as CampaignSessionControl<NativeFreshCampaignSnapshot>,
             onSnapshotChange: onSnapshotChange as (nextSnapshot: NativeFreshCampaignSnapshot,
               control: CampaignSessionControl<NativeFreshCampaignSnapshot>) => void,
-            onSave, onQuickSave, onNativeAction } : {})} />
+            onSave, onQuickSave, onNativeAction, onRetireCharacter } : {})} />
       : <div role="alert" className="p-4 text-[color:var(--color-text-primary)]">
           <h1>Native campaign cannot be opened</h1>
           <p>The current-format campaign failed admission. Its saved record was not changed.</p>
