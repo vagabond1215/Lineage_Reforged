@@ -3,7 +3,7 @@
 Date: 2026-10-31 (America/New_York)
 Status: **CONNECTOR-SAFE / SOURCE-VERIFIED WORLD-FIRST INTEGRATION FOUNDATION / OWNER DECISION NEEDED BEFORE IMPLEMENTATION / NOT INSTALLED**.
 Home: held [PR #46](https://github.com/vagabond1215/Lineage_Reforged/pull/46), not a new world schema or execution PR.
-Track: **T8, P2 strategic** in the [single parallel progression register](https://github.com/vagabond1215/Lineage_Reforged/pull/24). This is one bounded new owner/identity matrix, **not** another generalized religion/clock/dungeon synopsis.
+Track: **T8, P2 strategic** in the [single parallel progression register](https://github.com/vagabond1215/Lineage_Reforged/blob/connector/barebones-playable-ui-planning-2026-10-26/docs/dev/connector-safe-parallel-progression-register-2026-10-31.md). This is one bounded new owner/identity matrix, **not** another generalized religion/clock/dungeon synopsis.
 Selected `master`: `a596112acf3945f2bf7c625e943f2511d12aa710`. Active native-v3 Codex stack latest observed at draft PR #57 `636ffa5cef6f971ea8b6f02be5b4dd2a2305a848`, **not selected on master**. No runtime, Save, types, migration, clock or content changes.
 
 ## 1. Accepted product direction and precedence
