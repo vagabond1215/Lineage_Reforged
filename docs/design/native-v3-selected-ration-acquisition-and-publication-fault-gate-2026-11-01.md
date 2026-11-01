@@ -1,6 +1,6 @@
 # Native v3 selected ration acquisition and publication fault gate — 2026-11-01
 
-Source: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, draft #60 `9f713750a35fec35a0d0e797d16ed3c3869e061a`; isolated child `codex/native-v3-selected-use-fault-gate`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`.
+Source: `master` `a596112acf3945f2bf7c625e943f2511d12aa710`, draft #60 `9f713750a35fec35a0d0e797d16ed3c3869e061a`; isolated [draft #61](https://github.com/vagabond1215/Lineage_Reforged/pull/61) `codex/native-v3-selected-use-fault-gate`, verified code/test commit `9f431aef13001ef32d7a80593695a86476b6cb0a`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`.
 
 ## Authored acquisition boundary and repair
 
