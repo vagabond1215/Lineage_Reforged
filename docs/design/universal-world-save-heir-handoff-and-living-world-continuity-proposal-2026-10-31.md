@@ -1,5 +1,7 @@
 # Universal World Save, Heir Handoff, and Living-World Continuity
 
+> **2026-11-01 cross-track T7 Chronicle evidence:** [Read-only heir/world-history/character-memory source audit](https://github.com/vagabond1215/Lineage_Reforged/blob/ac9b19a427051e2494ae1c3b7031dd5fb2b4dc90/docs/design/chronicle-heir-handoff-world-history-and-private-memory-source-boundary-2026-11-01.md) on held PR #24 distinguishes actual account run history, current session Chronicle, private discovery and the **future** world event ledger. It finds a concrete selected-master UI copy inconsistency: `accountMetaPresentation.ts` labels a mere `sourceRunId` link **"Descended from"**, while run-end detail correctly says source linkage does **not** prove parentage. **Do not** manufacture an heir, ancestry, world history or private Knowledge from a linked run, and do not activate any Chronicle/Save code from this PR #46 design file. Its selected-client fix is owner-gated.
+
 Date: 2026-10-31 (America/New_York)
 Status: **USER-SUGGESTED DESIGN, STRONGLY RECOMMENDED / CONNECTOR-SAFE PROPOSAL ONLY**. **Not** a running World Save, format, Save migration, selected world time policy or implementation authorization.
 Topic home: held [PR #46](https://github.com/vagabond1215/Lineage_Reforged/pull/46), T8. Resume/source index: [single live parallel-work register](https://github.com/vagabond1215/Lineage_Reforged/blob/connector/barebones-playable-ui-planning-2026-10-26/docs/dev/connector-safe-parallel-progression-register-2026-10-31.md).
