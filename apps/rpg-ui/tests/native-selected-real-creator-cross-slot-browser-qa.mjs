@@ -86,6 +86,7 @@ try {
         version: slot.status === 'ready' ? slot.loaded.snapshot.snapshotVersion : null,
         quickVersion: quick.status === 'ready' ? quick.loaded.snapshot.snapshotVersion : null,
         secondVersion: second.status === 'ready' ? second.loaded.snapshot.snapshotVersion : null,
+        secondPublicationId: second.status === 'ready' ? second.loaded.publication.publicationId : null,
         publicationId: slot.status === 'ready' ? slot.loaded.publication.publicationId : null,
         quickPublicationId: quick.status === 'ready' ? quick.loaded.publication.publicationId : null,
         campaignId: slot.status === 'ready' ? slot.loaded.snapshot.campaignIdentity.campaignId : null,
@@ -145,5 +146,26 @@ try {
   assert.equal(mixed.quickPublicationId, crossSlot.quickPublicationId);
   assert.deepEqual(mixed.gear, initial.gear);
   assert.deepEqual(mixed.quickGear, initial.gear);
+  const obsolete = await evaluate(`(async () => {
+    const { openCleanEpochAccountStore } = await import('/src/game-shell/cleanEpochAccountStore.ts');
+    const { createNativeSelectedSession } = await import('/src/game-shell/nativeSelectedSession.ts');
+    const owner = await openCleanEpochAccountStore();
+    try {
+      const slot = await owner.readSlot(${JSON.stringify(accountId)}, 'slot-2');
+      const account = await owner.readSelected(${JSON.stringify(accountId)});
+      if (slot.status !== 'ready' || !account) throw new Error('Retained v2 slot is missing.');
+      let rejected = false;
+      try { createNativeSelectedSession({ snapshot: slot.loaded.snapshot,
+        control: slot.loaded.sessionControl, sourceSlotId: 'slot-2', accountRevision: account.revision }); }
+      catch (error) { rejected = String(error).includes('incompatible with native v3'); }
+      const preserved = await owner.readSlot(${JSON.stringify(accountId)}, 'slot-2');
+      return { rejected, preserved: preserved.status === 'ready' &&
+        preserved.loaded.publication.publicationId === slot.loaded.publication.publicationId &&
+        preserved.loaded.snapshot.snapshotVersion === 'lineage.save_snapshot.v2' };
+    } finally { owner.close(); }
+  })()`);
+  assert.equal(obsolete.rejected, true, 'retained v2 development save is refused by native v3');
+  assert.equal(obsolete.preserved, true, 'obsolete rejection does not delete the v2 record');
+  assert.equal((await read()).secondPublicationId, mixed.secondPublicationId);
   console.log('PASS real EpochApp native cross-slot Save and mixed v2/v3 slots in one retained account');
 } finally { socket.close(); }

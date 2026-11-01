@@ -66,6 +66,39 @@ test('real native creator uses one authored Bread Loaf with exact receipt, resou
   assert.equal(consumeNativeFungible(restarted, request).status, 'duplicate');
 });
 
+test('authored Storehouse Keys preparation grants a physical native ration that Use conserves', async () => {
+  const native = createNativeNewGameSnapshot(form(), 'account.native.prepared.ration', {
+    appliedLegacyPreparationIds: ['legacy.unlock.preparation.storehouse_keys']
+  });
+  const bag = native.playerState.inventory.bags.find(entry =>
+    entry.stacks.some(stack => stack.itemId === 'item.traveler_ration'));
+  assert.ok(bag);
+  const stackIndex = bag.stacks.findIndex(stack => stack.itemId === 'item.traveler_ration');
+  const ration = bag.stacks[stackIndex];
+  assert.equal(ration.quantity, 1);
+  const initialGear = native.playerState.gear;
+  const request = { requestId: 'native.prepared.ration.use',
+    expectedRevision: native.nativeInventoryUse.revision,
+    expectedInventoryFingerprint: fingerprintNativeInventory(native.playerState.inventory),
+    itemId: ration.itemId, itemKey: ration.itemKey, expectedQuantity: ration.quantity,
+    location: { kind: 'bag', bagId: bag.id, stackIndex } };
+  const used = consumeNativeFungible(native, request);
+  assert.equal(used.status, 'accepted', used.reason);
+  assert.equal(used.snapshot.playerState.inventory.bags.find(entry => entry.id === bag.id)
+    .stacks.some(stack => stack.itemId === ration.itemId), false);
+  assert.deepEqual(used.snapshot.playerState.gear, initialGear);
+  assert.ok(used.snapshot.playerState.bodyState.energyReserve.quick >=
+    native.playerState.bodyState.energyReserve.quick);
+  assert.ok(used.snapshot.playerState.bodyState.hydrationLevel >=
+    native.playerState.bodyState.hydrationLevel);
+  assert.notDeepEqual(used.snapshot.playerState.bodyState, native.playerState.bodyState);
+  assert.equal(used.snapshot.nativeInventoryUse.receipts.length, 1);
+  assert.equal(consumeNativeFungible(used.snapshot, request).status, 'duplicate');
+  const restarted = await readNativeFreshSaveSnapshot(JSON.stringify(used.snapshot));
+  assert.deepEqual(restarted.playerState.inventory, used.snapshot.playerState.inventory);
+  assert.deepEqual(restarted.nativeInventoryUse, used.snapshot.nativeInventoryUse);
+});
+
 test('native Use rejects stale, mismatched and unsupported bag/overflow selections without effects', () => {
   const native = createNativeNewGameSnapshot(form(), 'account.native.use.reject');
   native.playerState.inventory.overflow.push({ ...bread });
