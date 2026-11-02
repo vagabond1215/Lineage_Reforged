@@ -1,0 +1,30 @@
+# Native v3 selected integration readiness review — 2026-11-02
+
+Source: fetched `master` `a596112acf3945f2bf7c625e943f2511d12aa710`; exact draft #61 `adc6fed796339b87fde47edeb105024c255772ad`, #62 `9a878fe0a501d36510735f52e4852b460726bb1f`, and #63 `2558c57da07a37fa2e0aebed77ffbfba37351e08`. The audit branch starts at #63. `master` is an ancestor of #63 (0 master-only / 84 stack-only commits); textual mergeability does not establish acceptance. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. **HOLD_SELECTED_ATOMIC_ACTIVATION.**
+
+## Integration assessment
+
+| Boundary | Source review and evidence | Disposition |
+| --- | --- | --- |
+| Creator and selected source | `EpochApp` selects `CleanEpochFirstCampaignAdapter` format `native_v3` only for the development QA candidate. `readNativeEpochAppSession` derives the native snapshot/control from the current reducer pair and checks source slot, account revision and exact observed artifact/publication address. Normal `main.tsx` still renders v2 `App`. | Local candidate proven; production activation held. |
+| Character, Inventory, gear and Use | `NativeCharacterPanel` reads the native graph; `admitNativeSelectedItemCommand` delegates gear and fungible Use to the established session owners. Fresh 15 selected host/reader/gameplay/terminal and 21 gear/Use/survey/pending owner assertions pass. PR #59/#62 local real-creator browser evidence covers exact bow movement, later legitimately acquired Ration Use, quantities, condition, receipts and Save/restart. | Owner and disposable local caller evidence; authenticated selected action acceptance open. |
+| World, survey, combat and lifecycle | Quest/travel call authored owners; each survey shift checks the retained account revision and head before owner mutation. Nearby exploration/encounter delegates to existing combat owners and validates the native result. Terminal retirement delegates to `CleanEpochTerminalAdapter`. PR #59–#60 local real-creator browser evidence covers Starfall, Ashen Reef four-stage survey, Stonevein Normal defeat and retirement. Pending defeat retains the approved latent owner-tested disposition. | No second gameplay owner found in the reviewed route; authenticated selected lifecycle acceptance open. |
+| Save and failure recovery | Native Save uses `CleanEpochDescendantAdapter` with the selected source and observed destination address, then reads back the publication and account revision. PR #61–#63 local browser evidence covers same/cross-slot, retained v2 rejection without deletion, stale/duplicate requests, before/after transaction abort, UI Retry and post-commit lost acknowledgement. | Local fault matrix supports the route; actual authenticated Save/sign-in/restart and failure behavior remain unverified. |
+| Layout and keyboard | Existing local QA covers 375×667, 768 and 1440 with keyboard focus. The candidate shell uses native `button` controls and focus styles. | Local coverage only; authenticated responsive interaction open. |
+
+The normal Vite entry is `App`. The candidate is enabled only when `candidateNativeV3`, `import.meta.env.DEV` and `/native-selected-session-qa.html` all hold. That QA entry registers a disposable synthetic account. A signed-in v2 account or the disposable QA account cannot satisfy the authenticated native-v3 selected gate. This review did not independently inspect the hosted Site or change deployment. No independently reproduced code defect justified a production patch.
+
+## Fresh checks and limits
+
+- Focused Node tests, run sequentially from `apps/rpg-ui`: selected host/reader/gameplay/terminal **15/15**; gear/Use/survey/pending owner **21/21**.
+- Node UI typecheck passed; content lint passed (**72 files**); direct Vite production build passed (**284 client modules**). The build reported existing dynamic-import and large-chunk warnings.
+- Broad TypeScript remains nonzero: UI **115** diagnostics and workspace **763**, matching #63's recorded counts. No source files changed in this audit, so no new diagnostic can be attributed to the audit. Combined `tsc && vite` is not green.
+- `node --check` on representative browser scripts and `git diff --check origin/master..#63` passed. The review branch requires its own final diff check.
+- A fresh local real-creator browser attempt did **not** run: isolated headless Chrome exited before exposing its debugger port. Prior #61–#63 browser results are inherited evidence, not fresh results from this audit. Windows computer-use initialization also failed before the authorized Brave window could be selected (`failed to write kernel assets`, OS error 3). No authenticated account, credential or browser storage was accessed.
+- Offline npm install lacked a cached package; ordinary npm install failed inside npm. Focused tests used a temporary copy of the installed UI dependencies from this same repository checkout. The copied dependencies, build output and typecheck cache were removed afterward; the tested #63 worktree remained clean.
+
+Applied FP-001 (real caller evidence labeled separately), FP-002 (local green checks do not accept activation), FP-005 (retry and source-loss evidence boundaries), FP-008/009 (exact stack and live head), FP-011/013 (one selected owner pair and physical state), FP-016 (publication placement/rollback), and FP-017 (ordinary selected reachability versus disposable QA). No new reusable failure pattern was identified.
+
+## Next gate
+
+No authorized authenticated native-v3 candidate environment was identified. A separate explicit work order is needed to design and expose a **staging-only** native-v3 route with authenticated account access, isolated from the deployed v2 entry and existing accounts. The route must not use QA synthetic registration as acceptance or silently switch production creator/Save ownership. After staging review, exercise one real account through creator, Character/Inventory, legitimately acquired Use, World/survey, combat/Normal defeat, retirement, Save/sign-in/restart, cross-slot and recovery, then make a separate atomic activation decision. Do not merge, deploy, reset accounts or advance Game version from this audit.
