@@ -8,6 +8,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "typecheck:node": "tsc --noEmit --tsBuildInfoFile ../../.tmp-rpg-ui-node.tsbuildinfo -p tsconfig.node.json",
     "build": "tsc -p tsconfig.json && vite build",
+    "build:native-staging": "vite build --config vite.native-staging.config.ts",
     "preview": "vite preview"
   },
   "dependencies": {

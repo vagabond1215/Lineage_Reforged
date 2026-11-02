@@ -19,7 +19,7 @@ const candidateDestinations: NavItem[] = [
   { id: 'activity', label: 'Activity', icon: 'activity', accent: 'var(--color-character)', hint: 'Nearby activity' }
 ];
 
-/** Default selected review remains read-only; local QA can bind the candidate owner route. */
+/** Default selected review remains read-only; isolated QA/staging entries bind the candidate owner route. */
 export function NativeCharacterReviewShell({ snapshot, onReturnToMainMenu,
   control, onSnapshotChange, onSave, onQuickSave, onNativeAction, onRetireCharacter }: {
   snapshot: NativeFreshCampaignSnapshot;
@@ -66,7 +66,7 @@ export function NativeCharacterReviewShell({ snapshot, onReturnToMainMenu,
           </>}
         </div>
         <p role="status" className="mt-1 text-xs text-[color:var(--color-text-secondary)]">
-          {candidate ? 'Local native v3 candidate under test. Default gameplay activation remains held.' :
+          {candidate ? 'Native v3 candidate under review. Default gameplay activation remains held.' :
             'Native campaign review only. Gameplay actions and Save are held until the full v3 selected route is ready.'}
         </p>
       </header>}
