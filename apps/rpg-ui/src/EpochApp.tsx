@@ -102,10 +102,11 @@ function address(read: Awaited<ReturnType<CleanEpochAccountStore['readSlot']>>):
     publicationId: read.loaded.sessionControl.loadedPublicationId };
 }
 
-export function EpochApp({ candidateNativeV3 = false }: { candidateNativeV3?: boolean } = {}) {
-  // Candidate actions are available only on the disposable local QA page.
-  const nativeCandidate = candidateNativeV3 && import.meta.env.DEV &&
-    window.location.pathname.endsWith('/native-selected-session-qa.html');
+export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
+  { candidateNativeV3?: boolean; stagingNativeV3?: boolean } = {}) {
+  // The staging entry is built separately. Hosting, not this prop, controls access.
+  const nativeCandidate = stagingNativeV3 || (candidateNativeV3 && import.meta.env.DEV &&
+    window.location.pathname.endsWith('/native-selected-session-qa.html'));
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
   const [blockDetail, setBlockDetail] = useState('');
