@@ -1,6 +1,6 @@
 # Native-v3 optimized staging publication and selected acceptance
 
-Date: 2026-11-04. Unversioned native-v3 staging support; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. The separately authorized private publication attempt used exact draft PR #65 head `e4e4e641e763cd1b7c2046a0d8775c06ab9837cd`, stacked on unchanged draft #64 `8932e7422e4aeb406c2c5fbeecacf4e59c834fb6`. **HOLD_STAGING_PUBLICATION / HOLD_SELECTED_ATOMIC_ACTIVATION remain.**
+Date: 2026-11-04. Unversioned native-v3 staging support; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. This record is in docs-only [draft PR #66](https://github.com/vagabond1215/Lineage_Reforged/pull/66), stacked on exact draft PR #65 head `e4e4e641e763cd1b7c2046a0d8775c06ab9837cd`; unchanged draft #64 is `8932e7422e4aeb406c2c5fbeecacf4e59c834fb6`. **HOLD_STAGING_PUBLICATION / HOLD_SELECTED_ATOMIC_ACTIVATION remain.**
 
 ## Exact preflight and publication
 
