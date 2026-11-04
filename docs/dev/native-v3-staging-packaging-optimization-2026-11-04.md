@@ -1,6 +1,6 @@
 # Native-v3 staging packaging optimization
 
-Date: 2026-11-04. Source: draft PR #64 head `8932e7422e4aeb406c2c5fbeecacf4e59c834fb6`; isolated child `codex/native-v3-staging-packaging`. Game `0.1.1-prealpha`; `HOLD_STAGING_PUBLICATION` and `HOLD_SELECTED_ATOMIC_ACTIVATION` remain.
+Date: 2026-11-04. Source: draft PR #64 head `8932e7422e4aeb406c2c5fbeecacf4e59c834fb6`; isolated [draft PR #65](https://github.com/vagabond1215/Lineage_Reforged/pull/65), implementation commit `f5087b0aa6c4c858f85948e1ddf4a610ee2196c8`. Game `0.1.1-prealpha`; `HOLD_STAGING_PUBLICATION` and `HOLD_SELECTED_ATOMIC_ACTIVATION` remain.
 
 ## Change and authority
 
