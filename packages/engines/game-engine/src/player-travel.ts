@@ -19,8 +19,10 @@ import {
   resolveAshenReefSurveyContentVersion
 } from "./ashen-reef-survey-content.js";
 import { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
+import { stageAshenReefSurveyOffer } from "./ashen-reef-survey-offer-staging.js";
 import {
   getCurrentPlayerTravelLocationId,
+  getPlayerPassengerArrivalLocation,
   resolvePlayerTravelPlan,
   type PlayerTravelDestinationFacts,
   type PlayerTravelPlan,
@@ -395,6 +397,13 @@ export function executePlayerTravelCommand(
     const plan = resolvePlayerTravelPlan(snapshot, command.destinationId);
     if (!plan.accepted) return reject(snapshot, plan.code, command.commandId, plan.facts);
 
+    const passengerArrival = plan.originLocationId === "settlement.harbormast_quay" &&
+      plan.facts.id === "settlement.starfall_port"
+      ? getPlayerPassengerArrivalLocation(snapshot) : null;
+    if (plan.originLocationId === "settlement.harbormast_quay" && !passengerArrival) {
+      return reject(snapshot, "incoherent_state", command.commandId, plan.facts);
+    }
+
     const nextSnapshot = cloneSnapshot(snapshot);
     advanceTravelClock(nextSnapshot, plan);
     applyResourceCosts(nextSnapshot, plan.facts);
@@ -412,9 +421,11 @@ export function executePlayerTravelCommand(
       worldMapId: plan.facts.worldMapId
     };
     nextSnapshot.sessionState.currentActivity = plan.facts.arrivalActivity;
-    nextSnapshot.sessionState.knownLocations = nextSnapshot.sessionState.knownLocations.map((entry) =>
-      entry.id === plan.facts.id ? { ...entry, known: true } : entry
-    );
+    nextSnapshot.sessionState.knownLocations = passengerArrival
+      ? [...nextSnapshot.sessionState.knownLocations, passengerArrival]
+      : nextSnapshot.sessionState.knownLocations.map((entry) =>
+        entry.id === plan.facts.id ? { ...entry, known: true } : entry
+      );
 
     if (
       nextSnapshot.sessionState.trackedQuestId === "quest.ashen_reef_survey" &&
@@ -459,7 +470,18 @@ export function executePlayerTravelCommand(
       ...nextSnapshot.sessionState.chronicle
     ].slice(0, 48);
 
-    const committedSnapshot = synchronizeGameplaySnapshot(nextSnapshot);
+    const offeredSnapshot = passengerArrival
+      ? stageAshenReefSurveyOffer(nextSnapshot, {
+        kind: "accepted_passenger_arrival",
+        routeId: "route.starfall_port_harbormast_quay",
+        originLocationId: "settlement.harbormast_quay",
+        destinationId: "settlement.starfall_port",
+        atTick: nextSnapshot.clock.tick
+      }) : null;
+    if (offeredSnapshot && (!offeredSnapshot.accepted || offeredSnapshot.code === "ineligible")) {
+      return reject(snapshot, "transition_failed", command.commandId, plan.facts);
+    }
+    const committedSnapshot = synchronizeGameplaySnapshot(offeredSnapshot?.snapshot ?? nextSnapshot);
     const event = createCompletedEvent(command, plan.originLocationId, plan.facts, committedSnapshot.clock.tick);
     return {
       accepted: true,

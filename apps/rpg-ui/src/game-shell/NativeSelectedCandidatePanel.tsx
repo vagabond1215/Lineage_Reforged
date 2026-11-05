@@ -1,7 +1,8 @@
 import { listLegalPlayerCombatCommands } from '../../../../packages/engines/game-engine/src/combat/index.js';
 import { resolveNearbyExplorationPlan } from '../../../../packages/engines/game-engine/src/player-nearby-exploration.js';
 import { resolvePlayerQuestAcceptancePlan } from '../../../../packages/engines/game-engine/src/player-quest-acceptance.js';
-import { getCurrentPlayerTravelLocationId, resolvePlayerTravelPlan } from '../../../../packages/engines/game-engine/src/player-travel-rules.js';
+import { getCurrentPlayerTravelLocationId, getPlayerPassengerTravelDestinationFacts,
+  resolvePlayerTravelPlan } from '../../../../packages/engines/game-engine/src/player-travel-rules.js';
 import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
 import type { NativeFreshCampaignSnapshot } from '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
 
@@ -52,8 +53,12 @@ export function NativeSelectedCandidatePanel({ snapshot, mode, onAction, hasUnpu
   }
   if (mode === 'world') {
     const currentLocationId = getCurrentPlayerTravelLocationId(source);
-    const destinations = snapshot.sessionState.knownLocations.filter(location =>
+    const passenger = getPlayerPassengerTravelDestinationFacts(source);
+    const knownDestinations = snapshot.sessionState.knownLocations.filter(location =>
       location.known && location.id !== currentLocationId);
+    const destinations = passenger && !knownDestinations.some(location => location.id === passenger.id)
+      ? [...knownDestinations, { id: passenger.id, name: passenger.name }]
+      : knownDestinations;
     return <section className="space-y-3 p-3" aria-label="World">
       <h2 className="text-lg font-semibold">World</h2>
       <p>Current location: {snapshot.playerState.location.siteLabel ??
@@ -64,7 +69,8 @@ export function NativeSelectedCandidatePanel({ snapshot, mode, onAction, hasUnpu
           return <button className={buttonClass} type="button" key={location.id}
             disabled={!plan.accepted} title={plan.accepted ? undefined : plan.reason}
             onClick={() => onAction({ kind: 'travel', id: location.id })}>
-            Travel to {location.name}
+            {passenger?.id === location.id ? `Board passenger passage to ${location.name}` :
+              `Travel to ${location.name}`}
           </button>;
         })}
       </div>

@@ -121,8 +121,33 @@ function isEligibleStarfallNewCampaign(snapshot: SaveSnapshot): boolean {
   );
 }
 
+export interface AshenReefPassengerArrival {
+  kind: "accepted_passenger_arrival";
+  routeId: "route.starfall_port_harbormast_quay";
+  originLocationId: "settlement.harbormast_quay";
+  destinationId: "settlement.starfall_port";
+  atTick: number;
+}
+
+function isEligiblePassengerArrival(snapshot: SaveSnapshot, arrival: AshenReefPassengerArrival): boolean {
+  return arrival.kind === "accepted_passenger_arrival" &&
+    arrival.routeId === "route.starfall_port_harbormast_quay" &&
+    arrival.originLocationId === "settlement.harbormast_quay" &&
+    arrival.destinationId === "settlement.starfall_port" &&
+    arrival.atTick === snapshot.clock.tick &&
+    snapshot.capturedAtTick === snapshot.clock.tick &&
+    snapshot.campaignRules?.source === "new_campaign" &&
+    snapshot.sessionState.flags.includes("character.start.settlement.harbormast_quay") &&
+    snapshot.playerState.flags.includes("player.start.settlement.harbormast_quay") &&
+    snapshot.playerState.location.settlementId === "settlement.starfall_port" &&
+    snapshot.playerState.location.siteLabel === "Starfall Harbormaster's Office" &&
+    snapshot.sessionState.knownLocations.filter(row =>
+      row.id === "settlement.starfall_port" && row.known).length === 1;
+}
+
 export function stageAshenReefSurveyOffer(
-  snapshot: SaveSnapshot
+  snapshot: SaveSnapshot,
+  arrival?: AshenReefPassengerArrival
 ): AshenReefSurveyOfferStagingResult {
   const matches = snapshot.sessionState.questJournal.filter(
     (entry) => entry.id === ASHEN_REEF_SURVEY_RUNTIME_QUEST_ID
@@ -161,7 +186,8 @@ export function stageAshenReefSurveyOffer(
       offer: null
     };
   }
-  if (!isEligibleStarfallNewCampaign(snapshot)) {
+  if (!(arrival ? isEligiblePassengerArrival(snapshot, arrival) :
+    isEligibleStarfallNewCampaign(snapshot))) {
     return { accepted: true, code: "ineligible", snapshot, offer: null };
   }
   const offer = structuredClone(ASHEN_REEF_SURVEY_OFFER);
