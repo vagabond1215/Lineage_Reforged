@@ -1,6 +1,6 @@
 # Native-v3 Harbormast passenger route evidence
 
-Source: isolated child of draft #66 `05d1c8533afe2295d29808a8cd7868a3db263738`. Master observed `a596112acf3945f2bf7c625e943f2511d12aa710`; #64/#65 and the parked routes were not modified. Game `0.1.1-prealpha`. Holds: `HOLD_STAGING_PUBLICATION` and `HOLD_SELECTED_ATOMIC_ACTIVATION`.
+Source: isolated [draft #67](https://github.com/vagabond1215/Lineage_Reforged/pull/67), implementation `a8f108c8ffa2ed7dea47b6d987d61a5cf2f83656`, child of draft #66 `05d1c8533afe2295d29808a8cd7868a3db263738`. Master observed `a596112acf3945f2bf7c625e943f2511d12aa710`; #64/#65 and the parked routes were not modified. Game `0.1.1-prealpha`. Holds: `HOLD_STAGING_PUBLICATION` and `HOLD_SELECTED_ATOMIC_ACTIVATION`.
 
 ## Implemented
 
