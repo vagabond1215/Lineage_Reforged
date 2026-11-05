@@ -21,6 +21,7 @@ import {
 import { synchronizeGameplaySnapshot } from "./gameplay-snapshot-sync.js";
 import { stageAshenReefSurveyOffer } from "./ashen-reef-survey-offer-staging.js";
 import {
+  applyPassengerServiceAtTick,
   getCurrentPlayerTravelLocationId,
   getPlayerPassengerArrivalLocation,
   resolvePlayerTravelPlan,
@@ -284,6 +285,10 @@ function advanceTravelClock(snapshot: SaveSnapshot, plan: Extract<PlayerTravelPl
       recoveryContext: null,
       recoveryAssessment: null
     });
+    snapshot.playerState.bodyState = applyPassengerServiceAtTick(
+      snapshot.playerState.bodyState, plan.originLocationId, plan.facts.id,
+      nextClock.tick, nextClock.day, snapshot.playerState.coreData.lineageId, runDifficulty
+    );
     if (plan.attributeLoadProfile) {
       applyActionAttributeLoad(
         snapshot.playerState,

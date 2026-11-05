@@ -5,13 +5,16 @@ import settlements from "../../../content/base/world/settlements.json" with { ty
 import type {
   ActionAttributeLoadProfileState,
   ActionMetabolicProfileState,
+  ConsumableProfileState,
   CurrentActivityState,
   KnownLocationState,
   PlayerBodyState,
+  RunDifficultyState,
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
 import {
   applyAttributeTensionToActionProfile,
+  applyConsumableToBodyState,
   advancePlayerBodyState,
   syncPlayerRuntimeState
 } from "../../player-engine/src/index.js";
@@ -82,6 +85,27 @@ const HARBORMAST = "settlement.harbormast_quay";
 const STARFALL = "settlement.starfall_port";
 const PASSENGER_ROUTE_ID = "route.starfall_port_harbormast_quay";
 const PASSENGER_MODE_ID = "travel_mode.sea_vessel";
+const PASSENGER_SERVICE: ConsumableProfileState = {
+  calories: 25, protein: 4.5, carbs: 10, fat: 5, hydration: 18, intoxication: 0
+};
+
+/** Four vessel-provided meals and drinks per game day, at the start of each watch. */
+export function applyPassengerServiceAtTick(
+  bodyState: PlayerBodyState,
+  originLocationId: string,
+  destinationId: string,
+  tick: number,
+  day: number,
+  lineageId: string,
+  runDifficulty: RunDifficultyState
+): PlayerBodyState {
+  if (originLocationId !== HARBORMAST || destinationId !== STARFALL || tick % 6 !== 1) {
+    return bodyState;
+  }
+  return applyConsumableToBodyState(bodyState, PASSENGER_SERVICE, {
+    tick, day, lineageId, runDifficulty
+  });
+}
 
 function passengerRouteFacts(snapshot: SaveSnapshot, originLocationId: string, destinationId: string):
   PlayerTravelDestination | null {
@@ -124,8 +148,8 @@ function passengerRouteFacts(snapshot: SaveSnapshot, originLocationId: string, d
     hpCost: 0,
     mpCost: 0,
     staminaCost: 0,
-    // Passage does not provide food, water, rest, or recovery. The existing
-    // body owner still applies its passive losses and daily rollover on every tick.
+    // Passive losses continue. The bounded passenger service is applied separately
+    // through the body intake owner; it is not a rest/recovery context.
     metabolicProfile: { intensity: "low", fatigueGain: 0, energyDemand: 0,
       hydrationDemand: 0, highIntensityLoad: 0 },
     attributeLoadProfile: null,
@@ -359,7 +383,9 @@ function mitigateActionProfile(
 function projectBodyState(
   snapshot: SaveSnapshot,
   ticks: number,
-  metabolicProfile: ActionMetabolicProfileState
+  metabolicProfile: ActionMetabolicProfileState,
+  originLocationId: string,
+  destinationId: string
 ): { projectedBodyState: PlayerBodyState; timeline: PlayerBodyState[] } {
   const nextSnapshot = cloneSnapshot(snapshot);
   const timeline: PlayerBodyState[] = [];
@@ -380,6 +406,10 @@ function projectBodyState(
       recoveryContext: null,
       recoveryAssessment: null
     });
+    nextSnapshot.playerState.bodyState = applyPassengerServiceAtTick(
+      nextSnapshot.playerState.bodyState, originLocationId, destinationId,
+      nextClock.tick, nextClock.day, nextSnapshot.playerState.coreData.lineageId, runDifficulty
+    );
     syncPlayerRuntimeState(nextSnapshot.playerState, nextClock.tick, nextClock.day, [], runDifficulty);
     timeline.push(nextSnapshot.playerState.bodyState);
   }
@@ -504,7 +534,9 @@ export function resolvePlayerTravelPlan(
       ["AGI", "CON", "VIT"],
       ["skill.knowledge.general_lore"]
     );
-    const projection = projectBodyState(snapshot, destination.travelTicks, previewMetabolicProfile);
+    const projection = projectBodyState(
+      snapshot, destination.travelTicks, previewMetabolicProfile, originLocationId, destinationId
+    );
 
     return {
       accepted: true,

@@ -28,6 +28,11 @@ const { readNativeFreshSaveSnapshot, buildNativeGearArtifactPublication } = awai
 const { isNativeTargetCampaignSnapshot } = await
   vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-campaign-rules.ts');
 const { NativeSelectedCandidatePanel } = await vite.ssrLoadModule('/src/game-shell/NativeSelectedCandidatePanel.tsx');
+const { advanceClock } = await vite.ssrLoadModule('/../../packages/shared/time/src/index.ts');
+const { advancePlayerBodyState, applyConsumableToBodyState } = await
+  vite.ssrLoadModule('/../../packages/engines/player-engine/src/index.ts');
+const { applyPassengerServiceAtTick } = await
+  vite.ssrLoadModule('/../../packages/engines/game-engine/src/player-travel-rules.ts');
 
 const STARFALL = 'settlement.starfall_port';
 const HARBORMAST = 'settlement.harbormast_quay';
@@ -62,6 +67,34 @@ test('real Harbormast creator and selected World caller board the authored passa
   const plan = resolvePlayerTravelPlan(created, STARFALL);
   assert.equal(plan.accepted, true, plan.reason);
   assert.equal(plan.facts.travelTicks, 120);
+  assert.equal(plan.timeline.length, 120);
+  for (const index of [22, 46, 70, 94, 118]) {
+    const body = plan.timeline[index];
+    assert.equal(body.dailyCaloriesConsumed, 100);
+    assert.equal(body.dailyProteinConsumed, 18);
+    assert.equal(body.dailyCarbsConsumed, 40);
+    assert.equal(body.dailyFatConsumed, 20);
+    assert.equal(body.dailyHydrationConsumed, 72);
+  }
+  assert.equal(plan.timeline[23].dailyCaloriesConsumed, 0);
+  assert.equal(plan.timeline[24].dailyCaloriesConsumed, 25);
+  assert.ok(plan.timeline[0].hydrationLevel < created.playerState.bodyState.hydrationLevel + 18);
+  assert.ok(plan.timeline[1].hydrationLevel < plan.timeline[0].hydrationLevel);
+  const fields = ['dailyCaloriesConsumed', 'dailyProteinConsumed', 'dailyCarbsConsumed',
+    'dailyFatConsumed', 'dailyHydrationConsumed'];
+  const totals = Object.fromEntries(fields.map(field => [field, 0]));
+  let prior = created.playerState.bodyState;
+  for (const current of plan.timeline) {
+    for (const field of fields) {
+      totals[field] += current[field] >= prior[field]
+        ? current[field] - prior[field] : current[field];
+    }
+    prior = current;
+  }
+  assert.deepEqual(totals, {
+    dailyCaloriesConsumed: 500, dailyProteinConsumed: 90,
+    dailyCarbsConsumed: 200, dailyFatConsumed: 100, dailyHydrationConsumed: 360
+  });
   assert.deepEqual([plan.facts.hpCost, plan.facts.mpCost, plan.facts.staminaCost], [0, 0, 0]);
   const html = renderToStaticMarkup(React.createElement(NativeSelectedCandidatePanel, {
     snapshot: created, mode: 'world', hasUnpublishedState: false, onAction: () => {} }));
@@ -70,6 +103,7 @@ test('real Harbormast creator and selected World caller board the authored passa
   const traveled = applyNativeSelectedTravel(start, command);
   assert.equal(traveled.status, 'accepted', traveled.reason);
   const arrived = traveled.session.snapshot;
+  assert.deepEqual(arrived.playerState.bodyState, plan.projectedBodyState);
   assert.equal(arrived.clock.tick, created.clock.tick + 120);
   assert.equal(arrived.playerState.location.settlementId, STARFALL);
   assert.equal(arrived.playerState.location.siteLabel, "Starfall Harbormaster's Office");
@@ -79,6 +113,10 @@ test('real Harbormast creator and selected World caller board the authored passa
   assert.equal(arrived.sessionState.questJournal.find(row => row.id === QUEST).category, 'contracts');
   assert.deepEqual(arrived.playerState.gear, originalGear);
   assert.deepEqual(arrived.playerState.currency, created.playerState.currency);
+  assert.deepEqual(arrived.playerState.inventory, created.playerState.inventory);
+  assert.equal(arrived.playerState.bodyState.fatigueDebt, created.playerState.bodyState.fatigueDebt);
+  assert.equal(arrived.playerState.resources.hp.current, created.playerState.resources.hp.current);
+  assert.equal(arrived.playerState.resources.mp.current, created.playerState.resources.mp.current);
   assert.equal(isNativeTargetCampaignSnapshot(arrived), true);
   assert.deepEqual(deserializeSnapshot(serializeSnapshot(arrived)), arrived);
   const restarted = await readNativeFreshSaveSnapshot(JSON.stringify(arrived));
@@ -92,7 +130,8 @@ test('real Harbormast creator and selected World caller board the authored passa
   const artifact = JSON.parse(publication.artifactRaw);
   assert.equal(artifact.snapshotFormatId, 'lineage.save_snapshot.v3');
   assert.deepEqual((await readNativeFreshSaveSnapshot(artifact.snapshot)).playerState.gear, originalGear);
-  assert.equal(arrived.playerState.bodyState.resolved.hydrationBand, 'severely_dehydrated');
+  assert.ok(arrived.playerState.bodyState.hydrationLevel > 0);
+  assert.notEqual(arrived.playerState.bodyState.resolved.hydrationBand, 'severely_dehydrated');
   assert.ok(arrived.playerState.resources.hp.current > 0);
   const accepted = applyNativeSelectedQuest(traveled.session,
     createNativeSelectedQuestCommand(traveled.session, QUEST));
@@ -162,5 +201,54 @@ test('the bounded passage uses the same owner for a current v2 Harbormast campai
   assert.equal(result.snapshot.snapshotVersion, created.snapshotVersion);
   assert.equal(result.snapshot.clock.tick, created.clock.tick + 120);
   assert.equal(result.snapshot.sessionState.questJournal.filter(row => row.id === QUEST).length, 1);
+  assert.deepEqual(result.snapshot.playerState.bodyState, resolvePlayerTravelPlan(created, STARFALL).projectedBodyState);
   assert.deepEqual(deserializeSnapshot(serializeSnapshot(result.snapshot)), result.snapshot);
+});
+
+test('onboard service follows four global watches across partial first and final days', () => {
+  const created = createNativeNewGameSnapshot(form(), 'account.passage.offset');
+  const shifted = structuredClone(created);
+  shifted.clock = advanceClock(shifted.clock, 5);
+  shifted.capturedAtTick = shifted.clock.tick;
+  shifted.playerState.saveMeta.totalPlayTicks += 5;
+  shifted.playerState.bodyState = advancePlayerBodyState(shifted.playerState.bodyState, 5, {
+    day: shifted.clock.day, tick: shifted.clock.tick,
+    lineageId: shifted.playerState.coreData.lineageId,
+    runDifficulty: shifted.gameState.runDifficulty
+  });
+  const plan = resolvePlayerTravelPlan(shifted, STARFALL);
+  assert.equal(plan.accepted, true, plan.reason);
+  assert.equal(plan.timeline[17].dailyCaloriesConsumed, 75); // tick 23, three services
+  for (const index of [41, 65, 89, 113]) {
+    assert.equal(plan.timeline[index].dailyCaloriesConsumed, 100);
+    assert.equal(plan.timeline[index].dailyHydrationConsumed, 72);
+  }
+  assert.equal(plan.timeline[119].dailyCaloriesConsumed, 25); // tick 125, one service
+  assert.equal(plan.timeline[119].dailyHydrationConsumed, 18);
+  const result = executePlayerTravelCommand(shifted, createPlayerTravelCommand(shifted, STARFALL));
+  assert.equal(result.accepted, true);
+  assert.deepEqual(result.snapshot.playerState.bodyState, plan.projectedBodyState);
+});
+
+test('passenger service uses lineage intake math without rest or unrelated-route grants', () => {
+  const created = createNativeNewGameSnapshot(form(), 'account.passage.source');
+  const body = created.playerState.bodyState;
+  const difficulty = created.gameState.runDifficulty;
+  const profile = { calories: 25, protein: 4.5, carbs: 10, fat: 5, hydration: 18, intoxication: 0 };
+  for (const lineageId of ['lineage.human', 'lineage.elf', 'lineage.halfling']) {
+    const expected = applyConsumableToBodyState(body, profile, { tick: 1, day: 1,
+      lineageId, runDifficulty: difficulty });
+    assert.deepEqual(applyPassengerServiceAtTick(body, HARBORMAST, STARFALL, 1, 1,
+      lineageId, difficulty), expected);
+  }
+  assert.ok(applyPassengerServiceAtTick(body, HARBORMAST, STARFALL, 1, 1,
+    'lineage.elf', difficulty).dailyHydrationConsumed >
+    applyPassengerServiceAtTick(body, HARBORMAST, STARFALL, 1, 1,
+      'lineage.human', difficulty).dailyHydrationConsumed);
+  assert.strictEqual(applyPassengerServiceAtTick(body, HARBORMAST, STARFALL, 2, 1,
+    'lineage.human', difficulty), body);
+  assert.strictEqual(applyPassengerServiceAtTick(body, 'location.ashen_reef', STARFALL, 1, 1,
+    'lineage.human', difficulty), body);
+  assert.strictEqual(applyPassengerServiceAtTick(body, HARBORMAST, 'location.ashen_reef', 1, 1,
+    'lineage.human', difficulty), body);
 });
