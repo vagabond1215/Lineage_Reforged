@@ -1,0 +1,13 @@
+# Harbormast passenger onboard sustenance
+
+Status: owner-authorized bounded implementation candidate on draft #68, stacked on draft #67. Game `0.1.1-prealpha`; `HOLD_STAGING_PUBLICATION` and `HOLD_SELECTED_ATOMIC_ACTIVATION` remain.
+
+The owner's 2026-11-05 direction supplements the accepted Harbormast Quay to Starfall Port passenger service. Only the exact admitted `route.starfall_port_harbormast_quay` with `travel_mode.sea_vessel` includes vessel-provided potable water and simple meals. It is included in the previously accepted no-fare 120-tick passage. The route owner establishes access; the existing player body-state owner applies intake. No item, inventory stack, purchase, consumable Use event, lodging, rest, healing, or general maritime provision is created.
+
+The explicit game-scale allowance is 100 calories, 18 protein, 40 carbohydrates, 20 fat, 72 hydration, and zero intoxication per 24-tick day. Four ordinary services occur at the start of each six-tick watch, when the new clock tick modulo six equals one. Each provides 25 calories, 4.5 protein, 10 carbohydrates, 5 fat, and 18 hydration. The schedule is anchored to the world clock rather than boarding time: a 120-tick passage receives exactly 20 opportunities, while nonzero departure ticks split the first and final days without extra credit. The body's lineage and difficulty rules still govern applied effects, passive losses and daily rollover.
+
+The travel command and preview both call the same bounded service function after their normal body tick and before runtime synchronization. The service uses `applyConsumableToBodyState` directly with the approved service values; it does not invoke inventory Use or `RecoveryContextState`. Rejected, stale and repeated travel commands never reach the accepted cloned transition. Arrival, offer, gear, currency, Save format and route duration remain under their existing owners.
+
+In the representative fresh Human/Local/Hunter owner test, hydration changes from 80 to approximately 89 rather than zero. Fatigue debt remains 10. HP and MP remain unchanged; Stamina maximum/current rises from 99 to 104 through the existing nutrition-sensitive resource projection, not a direct passage grant or special regeneration. Normal passive fatigue recovery remains active. This is controlled owner evidence, not authenticated hosted acceptance.
+
+This decision supersedes only the prior draft #67 statement that the voyage provides no food or water. Its deferred fare, vessel ownership, interruption, other routes and broader nutrition decisions remain deferred. A new exact artifact requires separate publication approval and authenticated selected-client Save/restart before any atomic activation review.
