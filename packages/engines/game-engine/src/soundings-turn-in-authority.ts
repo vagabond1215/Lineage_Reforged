@@ -66,10 +66,10 @@ export function soundingsCompletionActivity(): CurrentActivityState {
 export function soundingsCompletionNotice() {
   return { tone: "success" as const, title: "Soundings completed — 5 gold received", detail: "The Starfall Harbormaster's Office accepted your survey packet and paid 5 gold." };
 }
-export function soundingsChronicle(result: SoundingsTurnInResultState): ChronicleEventState {
+export function soundingsChronicle(result: Pick<SoundingsTurnInResultState, 'requestId' | 'timeLabel'>): ChronicleEventState {
   return { id: soundingsIds(result.requestId).chronicleId, category: "social", title: "Soundings submitted at Starfall", timeLabel: result.timeLabel, summary: "The Starfall Harbormaster's Office accepted the survey packet and completed the contract.", statusLabel: "Completed · 5 gold received", entities: ["Soundings of Ashen Reef", "Starfall Harbormaster's Office"], results: ["Contract completed", "Payment received: 5 gold"], statChanges: ["+5 gold"], tags: ["Contract", "Starfall"] };
 }
-export function soundingsNotification(result: SoundingsTurnInResultState): NotificationState {
+export function soundingsNotification(result: Pick<SoundingsTurnInResultState, 'requestId' | 'timeLabel'>): NotificationState {
   return { id: soundingsIds(result.requestId).notificationId, ...soundingsCompletionNotice(), timeLabel: result.timeLabel };
 }
 export function buildSoundingsReceipts(result: SoundingsTurnInResultState): SoundingsTurnInConsequenceReceiptState[] {

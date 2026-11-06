@@ -8,6 +8,7 @@ import { readNativeEpochAppSession } from './game-shell/nativeEpochAppSession.js
 import { saveNativeSelectedSession } from './game-shell/nativeSelectedSession.js';
 import { retireNativeSelectedSession } from './game-shell/nativeSelectedTerminal.js';
 import { applyNativeSelectedQuest, applyNativeSelectedTravel, advanceNativeSelectedSurvey,
+  advanceNativeSelectedSoundingsTurnIn,
   createNativeSelectedQuestCommand, createNativeSelectedTravelCommand } from './game-shell/nativeSelectedGameplay.js';
 import { advanceNativeSelectedExploration, admitNativeSelectedEncounter,
   applyNativeSelectedCombatStep, createNativeSelectedCombatStep,
@@ -459,6 +460,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
           createNativeSelectedTravelCommand(session, action.id)); break;
         case 'survey': result = await advanceNativeSelectedSurvey(services.owner,
           session, `survey_request.${crypto.randomUUID()}`); break;
+        case 'turn_in': result = await advanceNativeSelectedSoundingsTurnIn(services.owner,
+          session, `soundings_turn_in_request.${crypto.randomUUID()}`); break;
         case 'explore': result = advanceNativeSelectedExploration(session); break;
         case 'admit': {
           const command = createNativeSelectedEncounterAdmission(session);

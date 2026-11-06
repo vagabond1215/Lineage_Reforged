@@ -4,6 +4,7 @@ import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from
   '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
 import { hasPendingNormalDefeat } from '../../../../packages/engines/game-engine/src/normal-defeat.js';
 import { commitNativeSurveyShift } from '../../../../packages/engines/game-engine/src/native-survey-ledger.js';
+import { executeNativeSoundingsTurnIn } from '../../../../packages/engines/game-engine/src/native-soundings-turn-in.js';
 import { prepareNativeSurveySource, type NativeSurveySourceIdentity } from
   '../../../../packages/engines/game-engine/src/native-survey-source.js';
 import { createPlayerQuestAcceptanceCommand, executePlayerQuestAcceptanceCommand,
@@ -138,6 +139,57 @@ export async function advanceNativeSelectedSurvey(owner: ReadOwner,
       sourceIdentity, witness: prepared.witness }, requestId);
     const admitted = admit(session, mutationId, committed.snapshot);
     return admitted.status === 'accepted' ? { ...admitted, stage: committed.result.stage } : admitted;
+  } catch (error) {
+    return { status: 'rejected', session,
+      reason: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+/** Complete once from the selected exact saved Starfall head; retry never credits again. */
+export async function advanceNativeSelectedSoundingsTurnIn(owner: ReadOwner,
+  session: NativeSelectedSession, requestId: string): Promise<Outcome> {
+  const stale = staleSource(session);
+  if (stale) return stale;
+  if (!isNativeSelectedGameplaySource(session)) return { status: 'rejected', session, reason: 'invalid_source' };
+  try {
+    const account = await owner.readSelected(session.snapshot.accountId);
+    if (!account || account.revision !== session.accountRevision)
+      return { status: 'stale', session, reason: 'account_revision_changed' };
+    const slot = await owner.readSlot(session.snapshot.accountId, session.sourceSlotId);
+    if (slot.status !== 'ready') return { status: 'rejected', session, reason: `slot_${slot.status}` };
+    const retained = slot.loaded;
+    const head = retained.sessionControl;
+    if (!isNativeTargetCampaignSnapshot(retained.snapshot) ||
+        head.loadedArtifactId !== session.sourceAddress.artifactId ||
+        head.loadedPublicationId !== session.sourceAddress.publicationId ||
+        head.campaignId !== session.control.campaignId ||
+        head.campaignHeadRevision !== session.control.campaignHeadRevision ||
+        head.loadedContinuityId !== session.control.loadedContinuityId)
+      return { status: 'stale', session, reason: 'retained_head_changed' };
+    const mutationId = `mutation.native.soundings.${requestId}`;
+    if (session.snapshot.nativeSoundingsTurnIn) {
+      if (session.snapshot.nativeSoundingsTurnIn.requestId !== requestId)
+        return { status: 'rejected', session, reason: 'already_completed' };
+      const retainedResult = session.control.retainedMutationResults.some(row =>
+        row.mutationId === mutationId && JSON.stringify(row.snapshot) === JSON.stringify(session.snapshot));
+      if ((!session.control.hasUnpublishedGameplayState &&
+           JSON.stringify(retained.snapshot) === JSON.stringify(session.snapshot)) ||
+          (session.control.hasUnpublishedGameplayState && retainedResult &&
+           session.control.lastAcceptedMutationId === mutationId))
+        return { status: 'duplicate', session, reason: 'retained_request' };
+      return { status: 'stale', session, reason: 'request_source_changed' };
+    }
+    if (session.control.hasUnpublishedGameplayState || session.control.posture !== 'at_head')
+      return { status: 'rejected', session, reason: 'save_current_stage_first' };
+    if (JSON.stringify(retained.snapshot) !== JSON.stringify(session.snapshot))
+      return { status: 'stale', session, reason: 'selected_snapshot_differs_from_head' };
+    const committed = executeNativeSoundingsTurnIn(retained.snapshot, {
+      accountId: session.snapshot.accountId, campaignId: head.campaignId,
+      continuityId: head.loadedContinuityId, artifactId: head.loadedArtifactId,
+      publicationId: head.loadedPublicationId, revision: head.loadedHeadRevision,
+      slotId: session.sourceSlotId
+    }, requestId);
+    return admit(session, mutationId, committed.snapshot);
   } catch (error) {
     return { status: 'rejected', session,
       reason: error instanceof Error ? error.message : String(error) };

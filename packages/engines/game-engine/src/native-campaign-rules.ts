@@ -5,6 +5,7 @@ import type { GearFit, GearOwner } from './gear-instance-owner.js';
 import { isNativeFungibleUseLedger, type NativeFungibleUseLedger } from './native-fungible-use-ledger.js';
 import { isTargetCampaignSnapshotCore, TARGET_SNAPSHOT_FORMAT } from './campaign-rules.js';
 import { validateNativeSurveyLedger, type NativeSurveyLedger } from './native-survey-ledger.js';
+import { validateNativeSoundingsTurnInSnapshot, type NativeSoundingsTurnInRecord } from './native-soundings-turn-in-record.js';
 import {
   validateNativeGearPhysicalBoundary
 } from './native-gear-physical-boundary.js';
@@ -13,6 +14,7 @@ import {
 export type NativeFreshCampaignSnapshot = NativeGearSaveSnapshot<GearOwner> & {
   nativeInventoryUse: NativeFungibleUseLedger;
   nativeSurvey?: NativeSurveyLedger;
+  nativeSoundingsTurnIn?: NativeSoundingsTurnInRecord;
 };
 
 const emptyLegacyProjection: EquipmentState = {
@@ -41,6 +43,7 @@ export function isNativeTargetCampaignSnapshot(value: unknown): value is NativeF
       survey.projectionRepairs.length > 0 || survey.corrections.length > 0)) return false;
 
     if (!validateNativeSurveyLedger(snapshot)) return false;
+    if (!validateNativeSoundingsTurnInSnapshot(snapshot)) return false;
 
     // Existing nonphysical campaign checks are reused through an ephemeral read-only
     // projection. No v2 equipment map is sourced from or stored beside native gear.

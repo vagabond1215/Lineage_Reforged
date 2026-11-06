@@ -66,6 +66,9 @@ try {
         activeQuests: slot.status === 'ready' ? slot.loaded.snapshot.playerState.activeQuestIds : [],
         location: slot.status === 'ready' ? slot.loaded.snapshot.playerState.location : null,
         inventory: slot.status === 'ready' ? slot.loaded.snapshot.playerState.inventory : null,
+        gold: slot.status === 'ready' ? slot.loaded.snapshot.playerState.currency.gold : null,
+        turnIn: slot.status === 'ready' ? slot.loaded.snapshot.nativeSoundingsTurnIn ?? null : null,
+        quest: slot.status === 'ready' ? slot.loaded.snapshot.sessionState.questJournal.find(row => row.id === 'quest.ashen_reef_survey') ?? null : null,
         gear: slot.status === 'ready' ? slot.loaded.snapshot.playerState.gear : null }; }
     finally { owner.close(); } })()`);
   const initial = await read();
@@ -187,5 +190,95 @@ try {
   assert.equal(returnedReload.publicationId, returned.publicationId);
   assert.equal(returnedReload.location.settlementId, 'settlement.starfall_port');
   assert.equal(returnedReload.surveyCount, 4);
-  console.log('PASS real EpochApp creator Harbormast/Hunter, passenger, selected four survey stages, Reef return, Save and same-account restart');
+  await click('Quests');
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Submit Soundings — 5 gold' && !button.disabled)`);
+  await click('Submit Soundings — 5 gold');
+  await waitFor(`document.body.innerText.includes('completed · Turned in')`);
+  assert.equal((await read()).gold, returnedReload.gold, 'payment remains unpublished until Save');
+  assert.equal(await evaluate(`(async () => {
+    const { CleanEpochAccountStore } = await import('/src/game-shell/cleanEpochAccountStore.ts');
+    const original = CleanEpochAccountStore.prototype.publishDescendant;
+    CleanEpochAccountStore.prototype.publishDescendant = async function (...args) {
+      CleanEpochAccountStore.prototype.publishDescendant = original;
+      const prior = this.afterWrite;
+      this.afterWrite = tx => tx.abort();
+      try { return await original.apply(this, args); }
+      finally { this.afterWrite = prior; document.body.dataset.soundingsFault = 'after-write'; }
+    };
+    return true;
+  })()`), true);
+  await click('Save');
+  await waitFor(`document.body.dataset.soundingsFault === 'after-write'`);
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Retry campaign data')`);
+  const rejectedPayment = await read();
+  assert.equal(rejectedPayment.publicationId, returnedReload.publicationId);
+  assert.equal(rejectedPayment.gold, returnedReload.gold);
+  assert.equal(rejectedPayment.turnIn, null);
+  await click('Retry campaign data');
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.includes('Continue'))`);
+  await evaluate(`[...document.querySelectorAll('button')].find(button => button.textContent.includes('Continue')).click()`);
+  await waitFor(`!!document.querySelector('[data-native-candidate="true"]')`);
+  await click('Quests');
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Submit Soundings — 5 gold' && !button.disabled)`);
+  await click('Submit Soundings — 5 gold');
+  await waitFor(`document.body.innerText.includes('completed · Turned in')`);
+  await click('Save');
+  await waitFor(`(async () => { const o = await (await import('/src/game-shell/cleanEpochAccountStore.ts')).openCleanEpochAccountStore();
+    try { const slot = await o.readSlot(${JSON.stringify(accountId)}, 'slot-1');
+      return slot.status === 'ready' && !!slot.loaded.snapshot.nativeSoundingsTurnIn; }
+    finally { o.close(); } })()`);
+  const paid = await read();
+  assert.equal(paid.gold, returnedReload.gold + 5);
+  assert.equal(paid.quest.category, 'completed');
+  assert.deepEqual(paid.gear, returnedReload.gear);
+  assert.equal(paid.surveyCount, 4);
+  await cdp('Page.navigate', { url: resume });
+  await waitFor(`location.href === ${JSON.stringify(resume)} && document.body.dataset.seeded === 'resume'`);
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.includes('Continue'))`);
+  await evaluate(`[...document.querySelectorAll('button')].find(button => button.textContent.includes('Continue')).click()`);
+  await waitFor(`!!document.querySelector('[data-native-candidate="true"]')`);
+  const paidReload = await read();
+  assert.equal(paidReload.publicationId, paid.publicationId);
+  assert.equal(paidReload.gold, paid.gold);
+  assert.deepEqual(paidReload.turnIn, paid.turnIn);
+  assert.equal(paidReload.quest.category, 'completed');
+  const durableRetry = await evaluate(`(async () => {
+    const { openCleanEpochAccountStore } = await import('/src/game-shell/cleanEpochAccountStore.ts');
+    const { createNativeSelectedSession } = await import('/src/game-shell/nativeSelectedSession.ts');
+    const { advanceNativeSelectedSoundingsTurnIn } = await import('/src/game-shell/nativeSelectedGameplay.ts');
+    const owner = await openCleanEpochAccountStore();
+    try { const slot = await owner.readSlot(${JSON.stringify(accountId)}, 'slot-1');
+      const account = await owner.readSelected(${JSON.stringify(accountId)});
+      const session = createNativeSelectedSession({ snapshot: slot.loaded.snapshot,
+        control: slot.loaded.sessionControl, sourceSlotId: 'slot-1', accountRevision: account.revision });
+      const result = await advanceNativeSelectedSoundingsTurnIn(owner, session,
+        session.snapshot.nativeSoundingsTurnIn.requestId);
+      const current = await owner.readSlot(${JSON.stringify(accountId)}, 'slot-1');
+      return { status: result.status, same: result.session === session,
+        gold: current.loaded.snapshot.playerState.currency.gold,
+        publicationId: current.loaded.publication.publicationId };
+    } finally { owner.close(); }
+  })()`);
+  assert.equal(durableRetry.status, 'duplicate');
+  assert.equal(durableRetry.same, true);
+  assert.equal(durableRetry.gold, paid.gold);
+  assert.equal(durableRetry.publicationId, paid.publicationId);
+  await click('Quests');
+  assert.equal(await evaluate(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Submit Soundings — 5 gold')`), false);
+  await click('Quick Save');
+  await waitFor(`(async () => { const o = await (await import('/src/game-shell/cleanEpochAccountStore.ts')).openCleanEpochAccountStore();
+    try { return (await o.readSlot(${JSON.stringify(accountId)}, 'quick-save')).status === 'ready'; }
+    finally { o.close(); } })()`);
+  const crossSlot = await evaluate(`(async () => { const o = await (await import('/src/game-shell/cleanEpochAccountStore.ts')).openCleanEpochAccountStore();
+    try { const slot = await o.readSlot(${JSON.stringify(accountId)}, 'quick-save');
+      return { gold: slot.loaded.snapshot.playerState.currency.gold,
+        turnIn: slot.loaded.snapshot.nativeSoundingsTurnIn,
+        survey: slot.loaded.snapshot.nativeSurvey,
+        gear: slot.loaded.snapshot.playerState.gear }; }
+    finally { o.close(); } })()`);
+  assert.equal(crossSlot.gold, paid.gold);
+  assert.deepEqual(crossSlot.turnIn, paid.turnIn);
+  assert.deepEqual(crossSlot.gear, paid.gear);
+  assert.equal(crossSlot.survey.results.length, 4);
+  console.log('PASS real EpochApp creator Harbormast/Hunter, passenger, selected four survey stages, Reef return, one Soundings payment, Save and same-account restart');
 } finally { socket.close(); }
