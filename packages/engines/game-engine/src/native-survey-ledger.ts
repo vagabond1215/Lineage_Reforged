@@ -101,7 +101,8 @@ export function validateNativeSurveyLedger(snapshot: NativeFreshCampaignSnapshot
     if (!exactKeys(ledger, ['version', 'results', 'receipts']) ||
       ledger.version !== 2 || !Array.isArray(ledger.results) || !Array.isArray(ledger.receipts) ||
       ledger.results.length < 1 || ledger.results.length > 4 ||
-      ledger.receipts.length !== ledger.results.length || operation.length !== 1) return false;
+      ledger.receipts.length !== ledger.results.length ||
+      operation.length !== (snapshot.nativeSoundingsTurnIn ? 0 : 1)) return false;
     const count = ledger.results.length;
     const expectedMarkers = Array.from({ length: Math.min(count, 3) }, (_, index) =>
       `gameplay.quest.ashen_reef_survey.sector.${index + 1}`);

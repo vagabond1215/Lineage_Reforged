@@ -13,7 +13,8 @@ const { createNativeSelectedSession } = await vite.ssrLoadModule('/src/game-shel
 const { createCampaignSessionControl } = await
   vite.ssrLoadModule('/../../packages/engines/game-engine/src/campaign-session.ts');
 const { createNativeSelectedTravelCommand, applyNativeSelectedTravel,
-  createNativeSelectedQuestCommand, applyNativeSelectedQuest } = await
+  createNativeSelectedQuestCommand, applyNativeSelectedQuest,
+  advanceNativeSelectedSoundingsTurnIn } = await
   vite.ssrLoadModule('/src/game-shell/nativeSelectedGameplay.ts');
 const { readRetainedNativeSurveyMaterial } = await
   vite.ssrLoadModule('/src/game-shell/nativeSurveyRetainedSource.ts');
@@ -27,6 +28,10 @@ const { isNativeTargetCampaignSnapshot } = await
   vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-campaign-rules.ts');
 const { buildNativeGearArtifactPublication, readNativeFreshSaveSnapshot } = await
   vite.ssrLoadModule('/src/game-shell/saveManager.ts');
+const { validateNativeSoundingsRetainedSource } = await
+  vite.ssrLoadModule('/src/game-shell/campaignIndexedDbStore.ts');
+const { resolveNativeSoundingsTurnIn } = await
+  vite.ssrLoadModule('/../../packages/engines/game-engine/src/native-soundings-turn-in.ts');
 
 function freshHarbormast() {
   const identity = getLineageIdentityCatalog('lineage.human');
@@ -113,6 +118,8 @@ test('real native creator, passenger, four retained shifts and selected return r
   assert.equal(stale.status, 'stale');
   assert.strictEqual(stale.session, returned.session);
   const savedReturn = await publish(returned.session.snapshot, before, 7);
+  assert.equal(resolveNativeSoundingsTurnIn(before.snapshot).accepted, false,
+    'Reef survey cannot pay before authorized Starfall return');
   assert.equal(savedReturn.snapshot.playerState.location.settlementId, 'settlement.starfall_port');
   assert.deepEqual(savedReturn.snapshot.playerState.gear, gear);
   assert.deepEqual(savedReturn.snapshot.nativeSurvey, before.snapshot.nativeSurvey);
@@ -122,4 +129,71 @@ test('real native creator, passenger, four retained shifts and selected return r
   const wrongClock = structuredClone(savedReturn.snapshot);
   wrongClock.clock.tick = before.snapshot.clock.tick - 1;
   assert.equal(isNativeTargetCampaignSnapshot(wrongClock), false);
+
+  const goldBefore = savedReturn.snapshot.playerState.currency.gold;
+  const owner = { readSelected: async () => ({ revision: savedReturn.accountRevision }),
+    readSlot: async () => ({ status: 'ready', loaded: {
+      snapshot: savedReturn.snapshot, sessionControl: savedReturn.control } }) };
+  const requestId = 'soundings_turn_in_request.12345678-1234-4123-8123-123456789abc';
+  const turnIn = await advanceNativeSelectedSoundingsTurnIn(owner, savedReturn, requestId);
+  assert.equal(turnIn.status, 'accepted', turnIn.reason);
+  assert.equal(turnIn.session.snapshot.playerState.currency.gold, goldBefore + 5);
+  assert.equal(turnIn.session.snapshot.sessionState.questJournal.find(row =>
+    row.id === 'quest.ashen_reef_survey').category, 'completed');
+  assert.equal(turnIn.session.snapshot.sessionState.trackedQuestId, null);
+  assert.equal(turnIn.session.snapshot.sessionState.operations.some(row =>
+    row.id === 'operation.quest.ashen_reef_survey'), false);
+  assert.equal(turnIn.session.snapshot.sessionState.currentActivity.id, 'activity.soundings.submitted');
+  const result = turnIn.session.snapshot.nativeSoundingsTurnIn;
+  assert.equal(turnIn.session.snapshot.sessionState.chronicle.filter(row =>
+    row.id === result.chronicleId).length, 1);
+  assert.equal(turnIn.session.snapshot.sessionState.notifications.filter(row =>
+    row.id === result.notificationId).length, 1);
+  assert.deepEqual(turnIn.session.snapshot.playerState.resources, savedReturn.snapshot.playerState.resources);
+  assert.deepEqual(turnIn.session.snapshot.playerState.bodyState, savedReturn.snapshot.playerState.bodyState);
+  assert.deepEqual(turnIn.session.snapshot.playerState.skills, savedReturn.snapshot.playerState.skills);
+  assert.deepEqual(turnIn.session.snapshot.playerState.inventory, savedReturn.snapshot.playerState.inventory);
+  assert.deepEqual(turnIn.session.snapshot.playerState.reputation, savedReturn.snapshot.playerState.reputation);
+  assert.deepEqual(turnIn.session.snapshot.playerState.gear, gear);
+  assert.deepEqual(turnIn.session.snapshot.nativeSurvey, savedReturn.snapshot.nativeSurvey);
+  const retry = await advanceNativeSelectedSoundingsTurnIn(owner, turnIn.session, requestId);
+  assert.equal(retry.status, 'duplicate');
+  assert.strictEqual(retry.session, turnIn.session);
+  const conflictingRetry = await advanceNativeSelectedSoundingsTurnIn(owner, turnIn.session,
+    'soundings_turn_in_request.12345678-1234-4123-8123-123456789abd');
+  assert.equal(conflictingRetry.status, 'rejected');
+  assert.strictEqual(conflictingRetry.session, turnIn.session);
+  const staleAccount = await advanceNativeSelectedSoundingsTurnIn({ ...owner,
+    readSelected: async () => ({ revision: savedReturn.accountRevision + 1 }) },
+  savedReturn, 'soundings_turn_in_request.12345678-1234-4123-8123-123456789abe');
+  assert.equal(staleAccount.status, 'stale');
+  assert.strictEqual(staleAccount.session, savedReturn);
+  const returnArtifactRaw = latestPublication.artifactRaw;
+  const publishedTurnIn = await publish(turnIn.session.snapshot, savedReturn, 8);
+  assert.equal(publishedTurnIn.snapshot.playerState.currency.gold, goldBefore + 5);
+  assert.equal(publishedTurnIn.snapshot.nativeSoundingsTurnIn.requestId, requestId);
+  assert.doesNotThrow(() => validateNativeSoundingsRetainedSource(
+    JSON.parse(latestPublication.artifactRaw), publishedTurnIn.snapshot,
+    returnArtifactRaw));
+  const forged = structuredClone(publishedTurnIn.snapshot);
+  forged.playerState.currency.gold += 5;
+  assert.throws(() => validateNativeSoundingsRetainedSource(
+    JSON.parse(latestPublication.artifactRaw), forged, returnArtifactRaw), /replay/);
+  const duplicatePayment = structuredClone(publishedTurnIn.snapshot);
+  duplicatePayment.nativeSoundingsTurnIn.goldBefore += 5;
+  assert.throws(() => validateNativeSoundingsRetainedSource(
+    JSON.parse(latestPublication.artifactRaw), duplicatePayment, returnArtifactRaw), /replay/);
+  const wrongSource = structuredClone(publishedTurnIn.snapshot);
+  wrongSource.nativeSoundingsTurnIn.source.artifactId = 'artifact.elsewhere';
+  assert.throws(() => validateNativeSoundingsRetainedSource(
+    JSON.parse(latestPublication.artifactRaw), wrongSource, returnArtifactRaw), /source identity/);
+  const incomplete = structuredClone(savedReturn.snapshot);
+  incomplete.nativeSurvey.results.pop();
+  incomplete.nativeSurvey.receipts.pop();
+  assert.equal(resolveNativeSoundingsTurnIn(incomplete).accepted, false);
+  const malformed = await advanceNativeSelectedSoundingsTurnIn(owner, savedReturn, 'bad-request');
+  assert.equal(malformed.status, 'rejected');
+  assert.strictEqual(malformed.session, savedReturn);
+  assert.throws(() => validateNativeSoundingsRetainedSource(
+    JSON.parse(latestPublication.artifactRaw), publishedTurnIn.snapshot, null), /retained source/);
 });

@@ -5,11 +5,13 @@ import { getCurrentPlayerTravelLocationId, getPlayerPassengerTravelDestinationFa
   resolvePlayerTravelPlan } from '../../../../packages/engines/game-engine/src/player-travel-rules.js';
 import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
 import type { NativeFreshCampaignSnapshot } from '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
+import { resolveNativeSoundingsTurnIn } from '../../../../packages/engines/game-engine/src/native-soundings-turn-in.js';
 
 export type NativeCandidateAction =
   | { kind: 'quest'; id: string }
   | { kind: 'travel'; id: string }
   | { kind: 'survey' }
+  | { kind: 'turn_in' }
   | { kind: 'explore' }
   | { kind: 'admit' }
   | { kind: 'combat'; actionType: string; targetId: string | null };
@@ -48,6 +50,14 @@ export function NativeSelectedCandidatePanel({ snapshot, mode, onAction, hasUnpu
             getCurrentPlayerTravelLocationId(source) !== 'location.ashen_reef' ? 'Travel to Ashen Reef first.' : undefined}
           onClick={() => onAction({ kind: 'survey' })}>
           Advance Ashen Reef survey shift
+        </button>}
+      {snapshot.nativeSurvey?.results.length === 4 && !snapshot.nativeSoundingsTurnIn &&
+        <button className={buttonClass} type="button"
+          disabled={hasUnpublishedState || !resolveNativeSoundingsTurnIn(snapshot).accepted}
+          title={hasUnpublishedState ? 'Save the current campaign stage first.' :
+            resolveNativeSoundingsTurnIn(snapshot).reason}
+          onClick={() => onAction({ kind: 'turn_in' })}>
+          Submit Soundings — 5 gold
         </button>}
     </section>;
   }
