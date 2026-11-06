@@ -49,7 +49,7 @@ try {
   }
   await chooseStep('3Continent', 'The Myridian Chain');
   await chooseStep('4Region', 'Starfall Isle');
-  await chooseStep('5Settlement', 'Starfall Port');
+  await chooseStep('5Settlement', 'Harbormast Quay');
   await chooseStep('6Backstory', 'Workshop-Raised');
   await chooseStep('7Starting Bundle', 'Hunter Bundle');
   assert.equal(await evaluate(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === '8Finalize' && !button.disabled)`), true);
@@ -71,7 +71,7 @@ try {
   const initial = await read();
   assert.equal(initial.status, 'ready');
   assert.equal(initial.surveyCount, 0);
-  assert.equal(initial.location.settlementId, 'settlement.starfall_port');
+  assert.equal(initial.location.settlementId, 'settlement.harbormast_quay');
   assert.ok(initial.gear.instances.some(item => item.itemId === 'item.short_bow' && item.location.kind === 'worn'));
   const bow = initial.gear.instances.find(item => item.itemId === 'item.short_bow');
   const bowSlot = bow.location.slotId;
@@ -110,6 +110,10 @@ try {
   await cdp('Input.dispatchKeyEvent', { type: 'keyUp', key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9 });
   assert.equal(await evaluate(`document.activeElement?.tagName`), 'BUTTON', 'keyboard Tab reaches a control');
   await cdp('Emulation.clearDeviceMetricsOverride');
+  await click('World');
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Board passenger passage to Starfall Port' && !button.disabled)`);
+  await click('Board passenger passage to Starfall Port');
+  await waitFor(`document.body.innerText.includes("Current location: Starfall Harbormaster's Office")`);
   await click('Quests');
   await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Accept quest')`);
   await click('Accept quest');
@@ -120,7 +124,8 @@ try {
   await waitFor(`document.body.innerText.includes('Current location: Survey Anchorage')`);
   await click('Save');
   await waitFor(`(async () => { const o = await (await import('/src/game-shell/cleanEpochAccountStore.ts')).openCleanEpochAccountStore();
-    try { return (await o.readSlot(${JSON.stringify(accountId)}, 'slot-1')).loaded.snapshot.playerState.location.siteLabel === 'Survey Anchorage'; }
+    try { const slot = await o.readSlot(${JSON.stringify(accountId)}, 'slot-1');
+      return slot.status === 'ready' && slot.loaded.snapshot.playerState.location.siteLabel === 'Survey Anchorage'; }
     finally { o.close(); } })()`);
   const traveled = await read();
   assert.ok(traveled.revision > initial.revision);
@@ -154,5 +159,33 @@ try {
   assert.equal(restarted.surveyCount, 4);
   assert.deepEqual(restarted.gear, itemRoundTrip.gear);
   assert.deepEqual(restarted.inventory, initial.inventory);
-  console.log('PASS real EpochApp creator Starfall/Hunter, selected quest/travel/four survey stages with same-account Save and restart');
+  await click('World');
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.trim() === 'Travel to Starfall Port' && !button.disabled)`);
+  await click('Travel to Starfall Port');
+  await waitFor(`document.body.innerText.includes("Current location: Starfall Harbormaster's Office")`);
+  assert.equal((await read()).location.siteLabel, 'Survey Anchorage',
+    'return remains unpublished until Save');
+  await click('Save');
+  await waitFor(`(async () => { const o = await (await import('/src/game-shell/cleanEpochAccountStore.ts')).openCleanEpochAccountStore();
+    try { const slot = await o.readSlot(${JSON.stringify(accountId)}, 'slot-1');
+      return slot.status === 'ready' && slot.loaded.snapshot.playerState.location.settlementId === 'settlement.starfall_port'; }
+    finally { o.close(); } })()`);
+  for (let attempt = 0; attempt < 200; attempt++) {
+    if ((await read()).revision > restarted.revision) break;
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+  const returned = await read();
+  assert.ok(returned.revision > restarted.revision);
+  assert.equal(returned.surveyCount, 4);
+  assert.deepEqual(returned.gear, itemRoundTrip.gear);
+  await cdp('Page.navigate', { url: resume });
+  await waitFor(`location.href === ${JSON.stringify(resume)} && document.body.dataset.seeded === 'resume'`);
+  await waitFor(`[...document.querySelectorAll('button')].some(button => button.textContent.includes('Continue'))`);
+  await evaluate(`[...document.querySelectorAll('button')].find(button => button.textContent.includes('Continue')).click()`);
+  await waitFor(`!!document.querySelector('[data-native-candidate="true"]')`);
+  const returnedReload = await read();
+  assert.equal(returnedReload.publicationId, returned.publicationId);
+  assert.equal(returnedReload.location.settlementId, 'settlement.starfall_port');
+  assert.equal(returnedReload.surveyCount, 4);
+  console.log('PASS real EpochApp creator Harbormast/Hunter, passenger, selected four survey stages, Reef return, Save and same-account restart');
 } finally { socket.close(); }

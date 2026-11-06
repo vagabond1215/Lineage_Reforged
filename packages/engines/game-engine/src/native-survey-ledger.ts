@@ -1,6 +1,6 @@
 import { resolveExpectedSurveyOwnerEvidence } from './campaign-rules.js';
 import { getAshenReefSurveyContent, CURRENT_ASHEN_REEF_SURVEY_CONTENT_VERSION } from './ashen-reef-survey-content.js';
-import { getWornGear } from './gear-instance-owner.js';
+import { getWornGear, type GearOwner } from './gear-instance-owner.js';
 import { projectNativeEffectiveWornFromGear } from './native-effective-worn.js';
 import { canonicalNativeSurveyJson } from './native-survey-material.js';
 import { executeNativeSurveyShiftCandidate } from './native-survey-shift-candidate.js';
@@ -149,13 +149,17 @@ export function validateNativeSurveyLedger(snapshot: NativeFreshCampaignSnapshot
       !witness.sourceArtifactId || !witness.sourcePublicationId ||
       !Number.isSafeInteger(witness.sourceRevision) || witness.sourceRevision < 1 ||
       witness.expectedTick !== witness.ownerInputs.clock.tick ||
-      witness.ownerInputs.gearRevision !== snapshot.playerState.gear.revision ||
-      canonicalNativeSurveyJson(witness.ownerInputs.worn) !==
-        canonicalNativeSurveyJson(getWornGear(snapshot.playerState.gear))) return false;
+      !Number.isSafeInteger(witness.ownerInputs.gearRevision) ||
+      witness.ownerInputs.gearRevision < 0) return false;
     const { gearRevision: _gearRevision, worn: _worn, ...nonphysical } = witness.ownerInputs;
+    // The retained stage owns historical worn material. A later authorized
+    // descendant may have different gear; the campaign store anchors this
+    // ledger to the immutable stage artifact on publication and readback.
+    const historicalGear: GearOwner = { version: 1, revision: witness.ownerInputs.gearRevision,
+      instances: [...witness.ownerInputs.worn], receipts: [] };
     const expected = resolveExpectedSurveyOwnerEvidence(witness.characterId, result.stage, {
       ...nonphysical,
-      wornResourceModifiers: projectNativeEffectiveWornFromGear(snapshot.playerState.gear).resourceModifiers
+      wornResourceModifiers: projectNativeEffectiveWornFromGear(historicalGear).resourceModifiers
     });
     const equal = (left: unknown, right: unknown) => canonicalNativeSurveyJson(left) === canonicalNativeSurveyJson(right);
     const player = snapshot.playerState;
@@ -167,24 +171,29 @@ export function validateNativeSurveyLedger(snapshot: NativeFreshCampaignSnapshot
       etaLabel: count === 4 ? 'Ready now' : `${4 - count} shift(s)`,
       owner: player.coreData.playerName,
       output: count === 4 ? 'Verified reef chart packet' : 'Field chart updates', priority: 'High' };
-    return equal(result.material, expected) && equal(snapshot.clock, expected.endClock) &&
-      snapshot.capturedAtTick === expected.endClock.tick &&
+    const atStage = equal(snapshot.clock, expected.endClock);
+    const stageState = snapshot.capturedAtTick === expected.endClock.tick &&
       player.saveMeta.totalPlayTicks === witness.ownerInputs.totalPlayTicks + 2 &&
+      witness.ownerInputs.gearRevision === player.gear.revision &&
+      equal(witness.ownerInputs.worn, getWornGear(player.gear)) &&
       equal(player.bodyState, expected.bodyAfter) && equal(player.statGrowth, expected.statGrowthAfter) &&
       equal(player.resources, expected.resourcesAfter) &&
       equal(player.resourceRuntime, expected.resourceRuntimeAfter) &&
-      (skill?.rank ?? 0) === expected.skill.rankAfter &&
-      equal(operation[0], expectedOperation) &&
+      (skill?.rank ?? 0) === expected.skill.rankAfter && equal(operation[0], expectedOperation);
+    const descendantState = snapshot.clock.tick > expected.endClock.tick &&
+      snapshot.capturedAtTick === snapshot.clock.tick &&
+      player.saveMeta.totalPlayTicks > witness.ownerInputs.totalPlayTicks + 2;
+    return equal(result.material, expected) && (atStage ? stageState : descendantState) &&
       ledger.receipts.every(receipt => snapshot.sessionState.notifications.some(row =>
         row.id === receipt.projectionIds.notification) && snapshot.sessionState.chronicle.some(row =>
         row.id === receipt.projectionIds.chronicle)) &&
-      (count !== 4 || (snapshot.sessionState.currentActivity?.id === 'activity.return.survey_packet' &&
+      (count !== 4 || ((!atStage || snapshot.sessionState.currentActivity?.id === 'activity.return.survey_packet') &&
         snapshot.playerState.discoveryChronicle.entries.some(row =>
-          row.id === 'discovery.stormglass_bloom' && row.discoveredAtTick === snapshot.clock.tick) &&
+          row.id === 'discovery.stormglass_bloom' && row.discoveredAtTick === expected.endClock.tick) &&
         snapshot.sessionState.codexEntries.every(row => row.id !== 'flora.unknown_bloom' || row.locked === false))) &&
-      snapshot.sessionState.questJournal.some(row => row.id === 'quest.ashen_reef_survey' &&
+      (!atStage || (snapshot.sessionState.questJournal.some(row => row.id === 'quest.ashen_reef_survey' &&
         row.category === 'active' && row.tracked) &&
-      snapshot.sessionState.trackedQuestId === 'quest.ashen_reef_survey';
+        snapshot.sessionState.trackedQuestId === 'quest.ashen_reef_survey'));
   } catch {
     return false;
   }
