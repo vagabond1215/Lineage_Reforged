@@ -86,4 +86,4 @@ The first executable Codex task should inspect and validate the existing native 
 
 ## Delivery
 
-Companion audit and proposed contract: native-v3-contextual-consumption-authority-audit-2026-11-08.md. Use it as the detailed findings and challenge report. This plan stays source-pinned even if a future PR advances; review against a new head before converting any recommendation into code.
+Companion audit and proposed contract: native-v3-contextual-consumption-authority-audit-2026-11-08.md. Post-review owner decisions and pre-Codex legality/portion/provisions gates: native-v3-contextual-consumption-owner-decisions-and-pre-codex-gates-2026-11-08.md. That later addendum controls the proposed interaction choices following owner review; it does not bypass this plan's documentation-only implementation boundary. Use it as the detailed findings and challenge report. This plan stays source-pinned even if a future PR advances; review against a new head before converting any recommendation into code.
