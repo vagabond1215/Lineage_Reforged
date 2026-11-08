@@ -45,11 +45,15 @@ export function readNativeSelectedCharacter(value: unknown) {
   const describeStack = (stack: InventoryStack, location: NativeFungiblePresentation['location']): NativeFungiblePresentation => {
     const item = items.get(stack.itemId);
     if (!item || item.itemKey !== stack.itemKey) throw new Error('Fungible stack lacks canonical content.');
-    const canUse = !!item.consumableProfileId && consumableProfiles.has(item.consumableProfileId);
+    const hasNutritionProfile = !!item.consumableProfileId && consumableProfiles.has(item.consumableProfileId);
+    const inActiveCombat = snapshot.gameState.activeEncounter?.state === 'active';
+    const canUse = hasNutritionProfile && !inActiveCombat;
     return { ...stack, name: item.name, location, canUse,
       expectedRevision: snapshot.nativeInventoryUse.revision,
       expectedInventoryFingerprint: inventoryFingerprint,
-      ...(!canUse ? { useUnavailableReason: 'No authored consumable effect.' } : {}) };
+      ...(!canUse ? { useUnavailableReason: hasNutritionProfile
+        ? 'Ordinary nutrition Use is unavailable during active combat.'
+        : 'No authored consumable effect.' } : {}) };
   };
   return {
     playerName: snapshot.playerState.coreData.playerName,

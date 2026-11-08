@@ -83,6 +83,11 @@ export function consumeNativeFungible(
   const profile = item?.itemKey === stack.itemKey && item.consumableProfileId
     ? profiles.get(item.consumableProfileId) : null;
   if (!profile) return { status: 'invalid', snapshot, reason: 'Item has no authored consume profile.' };
+  // Ordinary nutrition Use has no combat action or timing owner. Keep accepted
+  // request replays above this check so a retry cannot consume a second unit.
+  if (snapshot.gameState.activeEncounter?.state === 'active') {
+    return { status: 'invalid', snapshot, reason: 'Ordinary nutrition Use is unavailable during active combat.' };
+  }
 
   const nextInventory: PlayerInventoryState = {
     bags: inventory.bags.map(sourceBag => ({ ...sourceBag, stacks: sourceBag.stacks.map(sourceStack => ({ ...sourceStack })) })),
