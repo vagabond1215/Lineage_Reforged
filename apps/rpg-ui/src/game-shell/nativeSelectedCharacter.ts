@@ -4,6 +4,7 @@ import consumableCatalog from '../../../../packages/content/base/items/consumabl
 import { GEAR_SLOT_IDS, type GearFit, type GearItemInstance, type GearSlotId } from
   '../../../../packages/engines/game-engine/src/gear-instance-owner.js';
 import { projectNativeEffectiveWorn } from '../../../../packages/engines/game-engine/src/native-effective-worn.js';
+import { hasPendingNormalDefeat } from '../../../../packages/engines/game-engine/src/normal-defeat.js';
 import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from
   '../../../../packages/engines/game-engine/src/native-campaign-rules.js';
 import type { CampaignSessionControl } from '../../../../packages/engines/game-engine/src/campaign-session.js';
@@ -40,20 +41,22 @@ export function readNativeSelectedCharacter(value: unknown) {
   };
   const gear = snapshot.playerState.gear.instances.map(describeGear);
   const inventoryFingerprint = fingerprintNativeInventory(snapshot.playerState.inventory);
+  const pendingDefeat = hasPendingNormalDefeat(snapshot);
+  const encounterRetained = snapshot.gameState.activeEncounter !== null;
   const bySlot = new Map(gear.filter(item => item.location.kind === 'worn')
     .map(item => [(item.location as { kind: 'worn'; slotId: GearSlotId }).slotId, item]));
   const describeStack = (stack: InventoryStack, location: NativeFungiblePresentation['location']): NativeFungiblePresentation => {
     const item = items.get(stack.itemId);
     if (!item || item.itemKey !== stack.itemKey) throw new Error('Fungible stack lacks canonical content.');
     const hasNutritionProfile = !!item.consumableProfileId && consumableProfiles.has(item.consumableProfileId);
-    const inActiveCombat = snapshot.gameState.activeEncounter?.state === 'active';
-    const canUse = hasNutritionProfile && !inActiveCombat;
+    const canUse = hasNutritionProfile && !pendingDefeat && !encounterRetained;
     return { ...stack, name: item.name, location, canUse,
       expectedRevision: snapshot.nativeInventoryUse.revision,
       expectedInventoryFingerprint: inventoryFingerprint,
-      ...(!canUse ? { useUnavailableReason: hasNutritionProfile
-        ? 'Ordinary nutrition Use is unavailable during active combat.'
-        : 'No authored consumable effect.' } : {}) };
+      ...(!canUse ? { useUnavailableReason: !hasNutritionProfile
+        ? 'No authored consumable effect.'
+        : pendingDefeat ? 'Pending defeat requires recovery before item actions.'
+          : 'Ordinary nutrition Use is unavailable while an encounter is retained.' } : {}) };
   };
   return {
     playerName: snapshot.playerState.coreData.playerName,

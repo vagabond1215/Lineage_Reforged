@@ -85,8 +85,8 @@ export function consumeNativeFungible(
   if (!profile) return { status: 'invalid', snapshot, reason: 'Item has no authored consume profile.' };
   // Ordinary nutrition Use has no combat action or timing owner. Keep accepted
   // request replays above this check so a retry cannot consume a second unit.
-  if (snapshot.gameState.activeEncounter?.state === 'active') {
-    return { status: 'invalid', snapshot, reason: 'Ordinary nutrition Use is unavailable during active combat.' };
+  if (snapshot.gameState.activeEncounter !== null) {
+    return { status: 'invalid', snapshot, reason: 'Ordinary nutrition Use is unavailable while an encounter is retained.' };
   }
 
   const nextInventory: PlayerInventoryState = {
