@@ -1,15 +1,16 @@
 # Native-v3 Contextual Consumption: Source Audit and Proposed UI/Owner Contract
 
 Date: 2026-11-08
-Review state: CONNECTOR_REVIEWED_DOCS_ONLY; implementation contract PROPOSED_PENDING_OWNER_ACCEPTANCE
+Review state: CONNECTOR_REVIEWED_DOCS_ONLY; OWNER_DIRECTION_RECONCILED_IN_ADDENDUM; implementation still not authorized
 Source: draft PR #70 at fad907301d85786feaeed9cf8fecf64bc9d37949
 Companion plan: native-v3-contextual-consumption-first-sequence-plan-2026-11-08.md
+Post-review owner decision addendum (controls the later proposed direction): native-v3-contextual-consumption-owner-decisions-and-pre-codex-gates-2026-11-08.md
 Game: 0.1.1-prealpha; HOLD_SELECTED_ATOMIC_ACTIVATION
 Change scope: documentation only. No gameplay, catalogs, schemas, tests, accounts, hosted deployment or branch integration modified.
 
 ## Executive disposition
 
-The plan passes the architecture, provenance, owner-separation and scope review for connector-safe documentation delivery. It does NOT imply that a generic Eat command, a served-meal item instance, an environmental food source, a pack-opening operation or an enabled native inventory food action is ready to implement without an independent source/owner gate.
+The original plan passes the architecture, provenance, owner-separation and scope review for connector-safe documentation delivery. The subsequently reviewed owner choices are recorded in the addendum; for communal sources this replaces the earlier direct-Eat possibility with **Take Serving first, then Eat**. It does NOT imply that a generic Eat command, a served-meal item instance, an environmental food source, a pack-opening operation or an enabled native inventory food action is ready to implement without an independent source/owner gate.
 
 Preserve the accepted direction: context drives what action is offered, but a specific domain owner validates and executes the command. The ordinary path for a carried edible item is selection in Inventory; a future Current Area inspector may select an actually observed/owned serving or source only after its exact runtime identity and access authority exist. Neither surface owns nutrition. No global Food menu, universal Use executor, or duplicate item store is needed.
 
@@ -67,8 +68,8 @@ These rows separate proposed UI from executable authority. A concrete label is o
 | Owned, ready-to-eat individual food in a bag | Inspect; Eat using owner-appropriate verb; choice only if actual serving size is supported | Existing exact stack Use and nutrition/body owner for current whole-unit semantics | Bounded native implementation exists; exact hosted path not yet proved for eligible food |
 | Sealed Ration Bundle in bag | Inspect; later Open/Unpack, not Eat | Generic item-instance/container owner; creation-time immutable manifest, capacity, access, stack identity and accepted transfer | Deferred: no current manifest or Open command |
 | Served bowl or plated meal on the character's table | Inspect; eventually Eat or Drink when the exact serving is authorized | Persistent meal/serving source, ownership/access and same nutrition outcome owner | Proposed only; Current Area identity/serving owner missing |
-| Communal soup cauldron at an accessible hearth | Inspect; Request/Take Serving, then Eat authorized serving; a direct Eat method only after specific owner decision | Station/source quantity, vessel and access/social, serving/transfer and food consumption owners | Proposed only; cannot derive infinite servings from prose |
-| Unowned food on someone else's table | Inspect or ask permission; acquisition/transfer as appropriate | Property/social/transaction or authorized risky consequence owner | No automatic Take or Eat |
+| Communal soup cauldron at an accessible hearth | Inspect; **Take a physical serving first, then Eat the resulting serving** (owner decision; no direct Eat from shared source) | Station/source quantity, vessel and access/social, serving/transfer and food consumption owners | Owner-reviewed future behavior; not executable; cannot derive infinite servings from prose |
+| Unowned food on someone else's table | Inspect or ask; future unlawful physical Take may be possible and classified as crime, but not executable before a consequence owner | Item transfer/provenance plus property/social/crime authority | Owner-reviewed future behavior; existing missing-owner gate retained |
 | Ingredients at campfire/kitchen | Prepare/Cook through real station and recipe, not an Eat shortcut | Cooking/recipe/process, tools, fuel, work-time, input/output inventory owner | Deferred |
 | Vendor tray or tavern meal for sale | Browse/Ask/Buy first, then obtain an authorized serving | Market/service provider, stock, payment and transfer authority | Not generic Inventory Eat |
 | Food during active encounter or pending defeat | Omit or explain blocked until real combat legality/timing owner exists | Combat turn/queue, target/access, activity and item effect owners | Not authorized by existing nutrition Use |
@@ -92,19 +93,19 @@ An eventual shared nutrition calculation is useful; it is not evidence that one 
 
 ## Unresolved product and owner decisions
 
-**R1. Portion/serving:** whole unit versus variable amount; whether a loaf, prepared bowl or pot is represented by items, portions or source instances; nutrition unit and remainder. Do not hardcode an arbitrary 100%-meal or fake serving scale.
+**R1. Portion/serving:** OWNER DIRECTION RECORDED in addendum: default Eat consumes one whole authored unit; explicit Portion converts a loaf into actual usable slice/chunk units, which may be shown as one stack; amounts and nutrition approximately conserved. Exact canonical output, yield, units, tools and source/output owner remain unimplemented; do not hardcode a fake serving scale.
 
 **R2. Environmental identity:** exact world/interior/furniture/serving ID, persistence and lifecycle. Local-scene documents explicitly do not define these as live Save authority.
 
-**R3. Access and rights:** who owns shared food, when a character may take or directly eat it, whom to ask, whether social refusal or unlawful action has a consequence owner.
+**R3. Access and rights:** OWNER DIRECTION RECORDED: unauthorized Take is physically possible in the eventual world and is crime even if unobserved; current accepted architecture still blocks executable unlawful Take until the crime/social/consequence owner exists. Source ownership, permission, evidence and witness contracts are deferred.
 
-**R4. Container unpack:** fixed manifest, character knowledge, stack compatibility, capacities, packaging disposition and save-stable contents. No opening-time reroll.
+**R4. Container unpack:** EXISTING ACCEPTED DECISION CONFIRMED: resolve exact fixed or constrained-RNG contents when the pack is generated/enters the world, never at opening; retain unknown/category-known/manifest-known character knowledge separately. Instance metadata, capacity, stack compatibility, source catalog and packaging disposition remain implementation gates.
 
-**R5. Action time and encounter state:** accepted action duration/cost, when eating is disabled, interruptions and combat turn economy. Existing nutrition Use does not answer these for future sources.
+**R5. Action time and encounter state:** OWNER DIRECTION RECORDED: no ordinary eating in combat, pending defeat or voluntary action while incapacitated; compatible portable food may be consumed during travel, while liquid/bowl meals need suitable handling facilities. Exact duration, compatible concurrent activities, vehicle permission and external-care rules require owners; existing nutrition Use does not prove them.
 
 **R6. Reachable food candidate:** which source grants a coherent directly edible whole unit to a fresh native-v3 player without fixture injection, out-of-scope legacy entitlement or unapproved shop functionality. Traveler Ration is profile-linked but not yet verified as an ordinary fresh-account option.
 
-**R7. Presentation:** when to show Eat/Drink, Open, Take Serving or a safe blocker; exact action names should come from owner/item support, not itemClass guesses. Current selected UI uses generic Use [item name] and can improve only after owner-backed labels.
+**R7. Presentation:** OWNER DIRECTION RECORDED: selected item or observed source shows natural owner-backed verbs Eat/Drink, Portion/Break/Slice, Open, Take Serving where supported; direct Eat on a communal source is not offered. Current UI still displays generic Use [item name]; do not change without capability/owner support.
 
 ## Codex implementation dependency sequence (NOT authorized here)
 
