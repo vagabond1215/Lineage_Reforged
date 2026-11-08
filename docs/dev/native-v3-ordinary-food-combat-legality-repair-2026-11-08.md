@@ -1,0 +1,21 @@
+# Native-v3 ordinary nutrition Use combat-legality repair
+
+Date: 2026-11-08. Source: draft PR #70 `fad907301d85786feaeed9cf8fecf64bc9d37949`.
+Implementation: `626b70adbd48b8008adac9b73c39264008633466` on draft [PR #72](https://github.com/vagabond1215/Lineage_Reforged/pull/72), stacked on #70. PR #71 `6878141f7d27727a0b443cdbf08abe1a2d51b2d9` is design evidence only and was not changed. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; `HOLD_SELECTED_ATOMIC_ACTIVATION`.
+
+## Reproduction and repair
+
+The retained source test SHA-256 `6B6B24D2A91EF015D7B16BA9B107B8ED40078C27E5FF2C2D73EC829DD0BBFFC7` was copied into `apps/rpg-ui/tests/native-food-combat-legality.test.mjs`. On the unmodified #70 source, both the direct selected item bridge and selected-session wrapper accepted a Traveler Ration during a real authored active encounter: quantity 1 became 0 and daily calories rose by 22 while combat stayed active. Its pending-defeat control passed.
+
+`consumeNativeFungible` now refuses a new ordinary nutrition request when the canonical active encounter has state `active`. The check follows receipt replay, source revision/fingerprint, exact stack and authored nutrition-profile validation, and precedes all inventory, body, resource and receipt mutation. The selected Character reader disables that ordinary Use affordance with an owner-backed reason during active combat. It does not change gear admission or grant any combat item action. Later potions, medicines, antidotes and supplements require a separate combat action, timing, effect and expenditure owner.
+
+## Verification
+
+- Permanent red-to-green test: **3/3**. Direct owner, selected bridge and wrapper all return `invalid` during active combat with the same snapshot/control and no new receipt, time, nutrition, resource or encounter change. A legitimate noncombat Use succeeds; its exact request replays as `duplicate` after combat starts, while a conflicting request ID is `invalid` and a new stale selection is `stale`. Pending Normal-defeat selected callers still reject without mutation.
+- Focused native Character, fungible Use, item/session, gameplay and pending tests: **30/30**. Adjacent v2 Equipment/Inventory and stale-stack tests: **22/22**.
+- Adjacent root combat, equipment and Save tests: **96/97**. The single `combat-status-condition-injury-authority-validation.test.mjs` live-vocabulary assertion fails identically on untouched #70, at `helperEnd > helperStart + 1`; unrelated to this patch.
+- UI Node typecheck passed. Broad UI TypeScript has **194 diagnostic lines on child and 194 on exact parent, zero textual delta**; the existing broad check is not green. Direct native-staging Vite build passed, **286 modules**. `git diff --check` passed.
+
+These are owner and disposable local tests, not a new authenticated staging acceptance. The current first-character starter bundles still lack a proven ordinary directly edible unit; Storehouse Keys in this test is a test-only entitlement to an authored later-character grant. Hosted food acquisition/Use and selected Save/restart remain separate gates. The direct low-level nutrition function is not a general pending-defeat action owner; the selected wrapper and campaign admission enforce that posture. Any broader actor-agency rule needs its own owner review.
+
+No Site, account, Save schema, content, combat resolution, protected branch or Game-version change was made. The private staging deployment and production v2 stay untouched. A new exact artifact and publication would require separate approval; this PR is not activation evidence.
