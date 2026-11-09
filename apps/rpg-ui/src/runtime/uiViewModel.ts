@@ -62,6 +62,7 @@ import {
   buildCalendarClimatePopupViewModel,
   type CalendarClimatePopupViewModel
 } from '../game-shell/calendarClimatePresentation.js';
+import { readNativeSelectedCharacter } from '../game-shell/nativeSelectedCharacter.js';
 
 type WindowDetail = {
   title: string;
@@ -476,6 +477,8 @@ function getInventoryCapacity(inventory: PlayerInventoryState): number {
 }
 
 function getOccupiedEquipmentSlots(snapshot: SaveSnapshot): number {
+  if (snapshot.snapshotVersion === 'lineage.save_snapshot.v3')
+    return readNativeSelectedCharacter(snapshot).slots.filter(slot => slot.item !== null).length;
   return Object.values(snapshot.playerState.equipment).filter((item) => item !== null).length;
 }
 
@@ -866,8 +869,12 @@ function mapDiscoveryEntry(entry: PlayerDiscoveryChronicleEntryState): ListItem 
 
 function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]> {
   const { playerState } = snapshot;
-  const inventoryStackCount = getInventoryStackCount(playerState.inventory);
-  const inventoryItemQuantity = getInventoryItemQuantity(playerState.inventory);
+  const native = snapshot.snapshotVersion === 'lineage.save_snapshot.v3'
+    ? readNativeSelectedCharacter(snapshot) : null;
+  const inventoryStackCount = getInventoryStackCount(playerState.inventory) +
+    (native?.carriedGear.filter(item => item.location.kind === 'bag').length ?? 0);
+  const inventoryItemQuantity = getInventoryItemQuantity(playerState.inventory) +
+    (native?.carriedGear.length ?? 0);
   const inventoryCapacity = getInventoryCapacity(playerState.inventory);
   const attributes = CHARACTER_ATTRIBUTE_ORDER.map((key) => {
     const value = playerState.attributes[key];
@@ -922,7 +929,22 @@ function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]>
     ])
   }));
 
-  const equipment = Object.entries(playerState.equipment)
+  const equipment = native ? native.slots.filter(slot => slot.item !== null).map(({ slotId, item }) => ({
+    id: item!.itemInstanceId,
+    title: item!.name,
+    subtitle: humanizeId(slotId),
+    meta: 'Equipped',
+    status: `${Math.round(item!.durability * 100)}% durability`,
+    tags: ['Equipment'],
+    detailTitle: item!.name,
+    detailSummary: `${item!.name} is worn in ${humanizeId(slotId)}.`,
+    detailGroups: buildDetailGroup('Physical Item', [
+      { label: 'Instance', value: item!.itemInstanceId },
+      { label: 'Item', value: item!.itemId },
+      { label: 'Slot', value: humanizeId(slotId) },
+      { label: 'Durability', value: `${Math.round(item!.durability * 100)}%` }
+    ])
+  })) : Object.entries(playerState.equipment)
     .filter(([, item]) => item !== null)
     .map(([slotId, item]) => ({
       id: item!.itemId,
@@ -1027,7 +1049,23 @@ function buildCharacterLists(snapshot: SaveSnapshot): Record<string, ListItem[]>
         { label: 'Item Key', value: stack.itemKey },
         { label: 'Quantity', value: stack.quantity.toString() }
       ])
-    }))
+    })),
+    ...(native?.carriedGear.map(item => ({
+      id: item.itemInstanceId,
+      title: item.name,
+      subtitle: item.location.kind === 'bag' ? item.location.bagId : 'Overflow',
+      meta: 'x1',
+      status: `${Math.round(item.durability * 100)}% durability`,
+      tags: ['Inventory', 'Physical Gear'],
+      detailTitle: item.name,
+      detailSummary: `${item.name} is a distinct carried item.`,
+      detailGroups: buildDetailGroup('Physical Item', [
+        { label: 'Instance', value: item.itemInstanceId },
+        { label: 'Item', value: item.itemId },
+        { label: 'Location', value: item.location.kind === 'bag' ? item.location.bagId : 'Overflow' },
+        { label: 'Durability', value: `${Math.round(item.durability * 100)}%` }
+      ])
+    })) ?? [])
   ];
 
   const traits = playerState.traits.map((trait) => ({
@@ -1181,8 +1219,12 @@ function buildCharacterWindowDetails(
   snapshot: SaveSnapshot,
   characterLists: Record<string, ListItem[]>
 ): Record<string, WindowDetail> {
-  const inventoryStackCount = getInventoryStackCount(snapshot.playerState.inventory);
-  const inventoryItemQuantity = getInventoryItemQuantity(snapshot.playerState.inventory);
+  const nativeCharacter = snapshot.snapshotVersion === 'lineage.save_snapshot.v3'
+    ? readNativeSelectedCharacter(snapshot) : null;
+  const inventoryStackCount = getInventoryStackCount(snapshot.playerState.inventory) +
+    (nativeCharacter?.carriedGear.filter(item => item.location.kind === 'bag').length ?? 0);
+  const inventoryItemQuantity = getInventoryItemQuantity(snapshot.playerState.inventory) +
+    (nativeCharacter?.carriedGear.length ?? 0);
   const inventoryCapacity = getInventoryCapacity(snapshot.playerState.inventory);
   const occupiedEquipmentSlots = getOccupiedEquipmentSlots(snapshot);
   const originSummary = formatOriginLabel(snapshot.playerState.originProfile);
@@ -1308,7 +1350,7 @@ function buildCharacterWindowDetails(
       ],
       connectedRefs: [
         { label: 'Runtime Source', value: 'playerState.inventory + playerState.currency', tone: 'accent' },
-        { label: 'Support Source', value: 'playerState.equipment', tone: 'neutral' },
+        { label: 'Support Source', value: nativeCharacter ? 'playerState.gear' : 'playerState.equipment', tone: 'neutral' },
         { label: 'Projection Ref', value: 'character.lists.inventory', tone: 'neutral' }
       ],
       missingRefs: [
@@ -1327,7 +1369,7 @@ function buildCharacterWindowDetails(
         { label: 'Inventory Bags', value: snapshot.playerState.inventory.bags.length.toString(), tone: 'accent' }
       ],
       connectedRefs: [
-        { label: 'Runtime Source', value: 'playerState.equipment', tone: 'accent' },
+        { label: 'Runtime Source', value: nativeCharacter ? 'playerState.gear' : 'playerState.equipment', tone: 'accent' },
         { label: 'Fallback Source', value: 'playerState.inventory', tone: 'neutral' },
         { label: 'Projection Ref', value: 'character.lists.equipment', tone: 'neutral' }
       ],
@@ -2076,8 +2118,12 @@ export function createUiViewModel(
   const knownLandCount = visibleGeographicKnowledge.filter((entry) => entry.scope === 'continent').length;
   const knownRegionCount = visibleGeographicKnowledge.filter((entry) => entry.scope === 'region').length;
   const knownSettlementCount = visibleGeographicKnowledge.filter((entry) => entry.scope === 'settlement').length;
-  const inventoryStackCount = getInventoryStackCount(snapshot.playerState.inventory);
-  const inventoryItemQuantity = getInventoryItemQuantity(snapshot.playerState.inventory);
+  const nativeCharacter = snapshot.snapshotVersion === 'lineage.save_snapshot.v3'
+    ? readNativeSelectedCharacter(snapshot) : null;
+  const inventoryStackCount = getInventoryStackCount(snapshot.playerState.inventory) +
+    (nativeCharacter?.carriedGear.filter(item => item.location.kind === 'bag').length ?? 0);
+  const inventoryItemQuantity = getInventoryItemQuantity(snapshot.playerState.inventory) +
+    (nativeCharacter?.carriedGear.length ?? 0);
   const inventoryCapacity = getInventoryCapacity(snapshot.playerState.inventory);
   const occupiedEquipmentSlots = getOccupiedEquipmentSlots(snapshot);
   const discoverySummary = summarizeDiscoveryCategories(snapshot.playerState.discoveryChronicle.entries);

@@ -1,5 +1,7 @@
 # Native V3 → Master Development Integration And Save Consolidation
 
+**Branch-local continuation (2026-11-09):** Checkpoint A is committed as a tested partial candidate on `codex/native-v3-master-integration-2026-11-09`; see [the exact Checkpoint A record](native-v3-master-integration-checkpoint-a-2026-11-09.md). The next execution begins with fresh ref/worktree verification and **Checkpoint B** on that isolated branch. Reconcile any new master/source delta before editing; do not reimport the #73 source tree or repeat unchanged green Checkpoint A suites. This note does not authorize merge, default activation, Site publication or real account/Save mutation.
+
 <!-- repo-scope-guard -->
 > Work only in `vagabond1215/Lineage_Reforged`. Read `AGENTS.md` and all controlling repository-first, branch, exact-source, data and prompt-routing policies. This is a **version-unmodified, staged, isolated implementation** task, not authorization to merge into master, activate the selected v3 app, deploy a Site, delete any account/Save or retire any branch.
 <!-- /repo-scope-guard -->

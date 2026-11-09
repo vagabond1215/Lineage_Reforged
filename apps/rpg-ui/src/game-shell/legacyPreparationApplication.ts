@@ -35,7 +35,7 @@ type LegacyPreparationApplicationParams = {
   preparationIds: string[];
   preparationChoices?: Record<string, string>;
   currency: PlayerCurrencyState;
-  equipment: EquipmentState;
+  equipment?: EquipmentState;
   inventory: PlayerInventoryState;
 };
 
@@ -143,12 +143,12 @@ function isAttributePreparationChoice(
 }
 
 function collectLoadoutItemKeys(
-  equipment: EquipmentState,
+  equipment: EquipmentState | undefined,
   inventory: PlayerInventoryState
 ): Set<string> {
   const keys = new Set<string>();
 
-  for (const item of Object.values(equipment)) {
+  for (const item of Object.values(equipment ?? {})) {
     if (!item) {
       continue;
     }

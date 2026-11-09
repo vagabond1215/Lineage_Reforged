@@ -8,6 +8,8 @@ import type {
   SaveSnapshot,
   SoundingsAdmissionWitness
 } from "../../../../packages/shared/types/src/index.js";
+import type { NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
+import { prepareCharacterAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
 import {
   TARGET_SNAPSHOT_FORMAT,
   createAuthorityId,
@@ -70,6 +72,12 @@ export type StoredSaveEnvelope = {
   headRevision: number;
   terminal: boolean;
   snapshot: string;
+};
+
+/** Unselected native-gear artifact format. The selected v2 envelope stays version 7. */
+export type StoredNativeGearEnvelope = Omit<StoredSaveEnvelope, "version" | "snapshotFormatId"> & {
+  version: 8;
+  snapshotFormatId: "lineage.save_snapshot.v3";
 };
 
 export type StoredCampaignControl = {
@@ -564,6 +572,91 @@ function isSaveSnapshot(value: unknown): value is SaveSnapshot {
     isRecord(value.sessionState) &&
     isRecord(value.sessionState.combatUi)
   );
+}
+
+/** Candidate v3 read admission; publication remains disabled until all writers migrate. */
+export async function isNativeFreshSaveSnapshot(value: unknown): Promise<boolean> {
+  if (!isSaveSnapshot(value)) return false;
+  const { isNativeTargetCampaignSnapshot } = await import(
+    "../../../../packages/engines/game-engine/src/native-campaign-rules.js"
+  );
+  return isNativeTargetCampaignSnapshot(value);
+}
+
+export async function readNativeFreshSaveSnapshot(raw: string): Promise<NativeFreshCampaignSnapshot> {
+  const parsed: unknown = deserializeSnapshot(raw);
+  if (!(await isNativeFreshSaveSnapshot(parsed))) {
+    throw new Error('Native campaign save is incompatible or corrupt; no record was changed.');
+  }
+  return parsed as NativeFreshCampaignSnapshot;
+}
+
+export function isStoredNativeGearEnvelope(value: unknown): value is StoredNativeGearEnvelope {
+  if (!isRecord(value)) return false;
+  return value.version === 8 && value.snapshotFormatId === 'lineage.save_snapshot.v3' &&
+    typeof value.accountId === 'string' && typeof value.slotId === 'string' &&
+    typeof value.savedAt === 'string' && typeof value.snapshot === 'string' &&
+    typeof value.campaignId === 'string' && typeof value.continuityId === 'string' &&
+    typeof value.characterId === 'string' && typeof value.artifactId === 'string' &&
+    typeof value.generationId === 'string' && typeof value.publicationId === 'string' &&
+    Number.isSafeInteger(value.headRevision) && (value.headRevision as number) > 0 &&
+    typeof value.terminal === 'boolean' && isSaveSlotMetadata(value.metadata) &&
+    value.metadata.snapshotVersion === 'lineage.save_snapshot.v3';
+}
+
+/** Prepare immutable v3 bytes for the existing atomic campaign artifact store. */
+export async function buildNativeGearArtifactPublication(
+  snapshot: NativeFreshCampaignSnapshot,
+  slotId: SaveSlotId,
+  input: {
+    artifactId: string;
+    generationId: string;
+    publicationId: string;
+    savedAt: string;
+    expectedHead: { artifactId: string; publicationId: string; revision: number } | null;
+    expectedSlotAddress?: { artifactId: string; publicationId: string } | null;
+    terminal?: boolean;
+  }
+): Promise<import('./campaignIndexedDbStore.js').CampaignStorePublication> {
+  // Admission completes before the caller opens a storage transaction.
+  if (!(await isNativeFreshSaveSnapshot(snapshot)))
+    throw new Error('Native artifact requires a valid fresh v3 campaign.');
+  if (![input.artifactId, input.generationId, input.publicationId, input.savedAt].every(
+        value => typeof value === 'string' && value.trim().length > 0))
+    throw new Error('Native artifact identity or slot is invalid.');
+  const revision = (input.expectedHead?.revision ?? 0) + 1;
+  if (!Number.isSafeInteger(revision) || revision < 1) throw new Error('Native head revision is invalid.');
+  // Character achievements are a deterministic Save-time projection. Use the
+  // artifact's retained timestamp so survey replay can reproduce these bytes.
+  const projected = prepareCharacterAchievementProgress(
+    snapshot as unknown as SaveSnapshot, input.savedAt).snapshot as unknown as NativeFreshCampaignSnapshot;
+  if (!(await isNativeFreshSaveSnapshot(projected)))
+    throw new Error('Native achievement projection changed the fresh v3 campaign.');
+  const campaign = projected.campaignIdentity!;
+  const metadata = {
+    ...buildSaveMetadata(slotId, projected as unknown as SaveSnapshot),
+    lastSavedAt: input.savedAt,
+    snapshotVersion: 'lineage.save_snapshot.v3'
+  };
+  const envelope: StoredNativeGearEnvelope = {
+    version: 8, accountId: projected.accountId, slotId, savedAt: input.savedAt,
+    metadata, snapshotFormatId: 'lineage.save_snapshot.v3',
+    campaignId: campaign.campaignId, continuityId: campaign.continuityId,
+    characterId: projected.playerState.playerId, artifactId: input.artifactId,
+    generationId: input.generationId, publicationId: input.publicationId,
+    headRevision: revision, terminal: input.terminal === true, snapshot: JSON.stringify(projected)
+  };
+  return {
+    accountId: projected.accountId, campaignId: campaign.campaignId, slotId,
+    expectedHead: input.expectedHead,
+    ...(input.expectedSlotAddress === undefined ? {} : { expectedSlotAddress: input.expectedSlotAddress }),
+    artifactRaw: JSON.stringify(envelope),
+    control: { version: 1, accountId: projected.accountId, campaignId: campaign.campaignId,
+      headArtifactId: input.artifactId, headPublicationId: input.publicationId,
+      headRevision: revision, previousHeadArtifactId: input.expectedHead?.artifactId ?? null,
+      previousHeadPublicationId: input.expectedHead?.publicationId ?? null,
+      closed: input.terminal === true, updatedAt: input.savedAt }
+  };
 }
 
 function isSaveSlotMetadata(value: unknown): value is SaveSlotMetadata {

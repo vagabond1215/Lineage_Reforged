@@ -8172,7 +8172,6 @@
         "food.prepared"
       ],
       "stage": "finished",
-      "consumableProfileId": "consume.traveler_ration",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",
@@ -30860,6 +30859,7 @@
         "food.prepared"
       ],
       "stage": "finished",
+      "consumableProfileId": "consume.traveler_ration",
       "valueProfile": {
         "valueMode": "recipe_derived",
         "materialCostModel": "input_rollup",

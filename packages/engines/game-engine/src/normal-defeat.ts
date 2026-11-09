@@ -1,6 +1,7 @@
 import type {
   ChronicleEventState,
   NormalDefeatReceiptState,
+  NativeGearSaveSnapshot,
   NotificationState,
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
@@ -8,8 +9,10 @@ import { advanceClock } from "../../../shared/time/src/index.js";
 import { createEmptyCombatUiState } from "./combat/state.js";
 import { createAuthorityId } from "./campaign-rules.js";
 
-export type NormalDefeatResolution = {
-  snapshot: SaveSnapshot;
+export type NormalDefeatSnapshot = SaveSnapshot | NativeGearSaveSnapshot<unknown>;
+
+export type NormalDefeatResolution<TSnapshot extends NormalDefeatSnapshot = SaveSnapshot> = {
+  snapshot: TSnapshot;
   receipt: NormalDefeatReceiptState;
   duplicate: boolean;
 };
@@ -27,7 +30,7 @@ type AutomaticRecoverySettlementCandidate =
   | { status: "invalid" }
   | { status: "valid"; id: string };
 
-function cloneSnapshot(snapshot: SaveSnapshot): SaveSnapshot {
+function cloneSnapshot<TSnapshot extends NormalDefeatSnapshot>(snapshot: TSnapshot): TSnapshot {
   return structuredClone(snapshot);
 }
 
@@ -48,7 +51,7 @@ function normalizeRecoveryDestinationId(
 }
 
 function requireKnownSafeSettlement(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   destinationId: string,
   sourceLabel: string
 ): string {
@@ -69,7 +72,7 @@ function requireKnownSafeSettlement(
 }
 
 function inspectAutomaticRecoverySettlement(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   value: string | null | undefined,
   sourceLabel: string
 ): AutomaticRecoverySettlementCandidate {
@@ -91,7 +94,7 @@ function inspectAutomaticRecoverySettlement(
 }
 
 function inspectAutomaticCampaignStartSettlement(
-  snapshot: SaveSnapshot
+  snapshot: NormalDefeatSnapshot
 ): AutomaticRecoverySettlementCandidate {
   const startFlags = snapshot.playerState.flags.filter(
     (flag) =>
@@ -112,7 +115,7 @@ function inspectAutomaticCampaignStartSettlement(
   );
 }
 
-function readCampaignStartSettlement(snapshot: SaveSnapshot): string | null {
+function readCampaignStartSettlement(snapshot: NormalDefeatSnapshot): string | null {
   const startFlags = snapshot.playerState.flags.filter(
     (flag) =>
       flag.startsWith("player.start.") &&
@@ -128,7 +131,7 @@ function readCampaignStartSettlement(snapshot: SaveSnapshot): string | null {
 }
 
 function resolveCurrentRecoverySettlement(
-  snapshot: SaveSnapshot
+  snapshot: NormalDefeatSnapshot
 ): string | null {
   const current = normalizeRecoveryDestinationId(
     snapshot.playerState.location.settlementId,
@@ -140,7 +143,7 @@ function resolveCurrentRecoverySettlement(
 }
 
 function resolveCampaignStartRecoverySettlement(
-  snapshot: SaveSnapshot
+  snapshot: NormalDefeatSnapshot
 ): string | null {
   const campaignStart = normalizeRecoveryDestinationId(
     readCampaignStartSettlement(snapshot),
@@ -156,7 +159,7 @@ function resolveCampaignStartRecoverySettlement(
 }
 
 function listKnownSafeRecoverySettlements(
-  snapshot: SaveSnapshot
+  snapshot: NormalDefeatSnapshot
 ): string[] {
   const candidates = snapshot.sessionState.knownLocations
     .filter(
@@ -178,7 +181,7 @@ function listKnownSafeRecoverySettlements(
 }
 
 export function resolvePendingNormalDefeatRecoveryDestinationWithSource(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   explicitDestinationId?: string | null
 ): NormalDefeatRecoveryDestination {
   const requested = normalizeRecoveryDestinationId(
@@ -221,7 +224,7 @@ export function resolvePendingNormalDefeatRecoveryDestinationWithSource(
 }
 
 export function resolvePendingNormalDefeatRecoveryDestination(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   explicitDestinationId?: string | null
 ): string {
   return resolvePendingNormalDefeatRecoveryDestinationWithSource(
@@ -231,7 +234,7 @@ export function resolvePendingNormalDefeatRecoveryDestination(
 }
 
 function resolveInitialDestination(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   explicitDestinationId?: string | null
 ): {
   id: string | null;
@@ -294,7 +297,7 @@ function isFiniteIntegerResource(
   );
 }
 
-function requireExactInitialResources(snapshot: SaveSnapshot): void {
+function requireExactInitialResources(snapshot: NormalDefeatSnapshot): void {
   const { hp, stamina, mp } = snapshot.playerState.resources;
   if (
     !isFiniteIntegerResource(hp, true) ||
@@ -316,7 +319,7 @@ function sameStrings(actual: string[], expected: string[]): boolean {
 }
 
 function isExactChronicleProjection(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState,
   mode: "pending" | "initial_playable" | "repaired"
 ): boolean {
@@ -355,7 +358,7 @@ function isExactChronicleProjection(
 }
 
 function isExactNotificationProjection(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState,
   mode: "pending" | "initial_playable" | "repaired"
 ): boolean {
@@ -385,7 +388,7 @@ function isExactNotificationProjection(
 }
 
 function hasExactReceiptIdentity(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState
 ): boolean {
   const receipts = snapshot.normalDefeatReceipts ?? [];
@@ -400,7 +403,7 @@ function hasExactReceiptIdentity(
 }
 
 function hasExactBaseAuthority(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState
 ): boolean {
   const identity = snapshot.campaignIdentity;
@@ -432,7 +435,7 @@ function hasExactBaseAuthority(
 }
 
 function hasExactOriginalLedger(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState,
   acceptedAtTick: number
 ): boolean {
@@ -457,7 +460,7 @@ function hasExactOriginalLedger(
 }
 
 function listCorrectionEntries(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState
 ) {
   const correctionId = `normal_defeat_recovery.${receipt.receiptId}`;
@@ -469,7 +472,7 @@ function listCorrectionEntries(
 }
 
 function hasExactCompletedRecoveryContinuityLineage(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState,
   completionContinuityId: string
 ): boolean {
@@ -576,7 +579,7 @@ function hasExactCompletedRecoveryContinuityLineage(
 }
 
 export function validatePendingNormalDefeatRecoveryProvenance(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   targetReceiptId?: string
 ): NormalDefeatReceiptState {
   const pendingReceipts = (snapshot.normalDefeatReceipts ?? []).filter(
@@ -634,7 +637,7 @@ export function validatePendingNormalDefeatRecoveryProvenance(
 }
 
 export function validateCompletedNormalDefeatRecoveryProvenance(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   targetReceiptId: string
 ): NormalDefeatReceiptState {
   const matches = (snapshot.normalDefeatReceipts ?? []).filter(
@@ -709,7 +712,7 @@ export function validateCompletedNormalDefeatRecoveryProvenance(
 }
 
 function validateInitialDuplicateEvidence(
-  snapshot: SaveSnapshot,
+  snapshot: NormalDefeatSnapshot,
   receipt: NormalDefeatReceiptState,
   params: {
     sourceMutationId: string;
@@ -782,7 +785,7 @@ function validateInitialDuplicateEvidence(
 }
 
 export function findPendingNormalDefeat(
-  snapshot: SaveSnapshot
+  snapshot: NormalDefeatSnapshot
 ): NormalDefeatReceiptState | null {
   const pendingReceipts = (snapshot.normalDefeatReceipts ?? []).filter(
     (receipt) => receipt.posture === "recovery_pending"
@@ -790,18 +793,18 @@ export function findPendingNormalDefeat(
   return pendingReceipts.length === 1 ? pendingReceipts[0]! : null;
 }
 
-export function hasPendingNormalDefeat(snapshot: SaveSnapshot): boolean {
+export function hasPendingNormalDefeat(snapshot: NormalDefeatSnapshot): boolean {
   return (snapshot.normalDefeatReceipts ?? []).some(
     (receipt) => receipt.posture === "recovery_pending"
   );
 }
 
-export function applyValidatedPendingNormalDefeatRecovery(
-  snapshot: SaveSnapshot,
+export function applyValidatedPendingNormalDefeatRecovery<TSnapshot extends NormalDefeatSnapshot>(
+  snapshot: TSnapshot,
   pendingReceiptId: string,
   destination: NormalDefeatRecoveryDestination,
   completionContinuityId: string
-): NormalDefeatResolution {
+): NormalDefeatResolution<TSnapshot> {
   const nextSnapshot = snapshot;
   const pending = (nextSnapshot.normalDefeatReceipts ?? []).find(
     (receipt) => receipt.receiptId === pendingReceiptId
@@ -878,10 +881,10 @@ export function applyValidatedPendingNormalDefeatRecovery(
   return { snapshot: nextSnapshot, receipt: repaired, duplicate: false };
 }
 
-export function repairPendingNormalDefeat(
-  snapshot: SaveSnapshot,
+export function repairPendingNormalDefeat<TSnapshot extends NormalDefeatSnapshot>(
+  snapshot: TSnapshot,
   explicitDestinationId?: string | null
-): NormalDefeatResolution {
+): NormalDefeatResolution<TSnapshot> {
   const pending = validatePendingNormalDefeatRecoveryProvenance(snapshot);
   const destination =
     resolvePendingNormalDefeatRecoveryDestinationWithSource(
@@ -900,14 +903,14 @@ export function repairPendingNormalDefeat(
   );
 }
 
-export function resolveNormalDefeat(
-  snapshot: SaveSnapshot,
+export function resolveNormalDefeat<TSnapshot extends NormalDefeatSnapshot>(
+  snapshot: TSnapshot,
   params: {
     sourceMutationId: string;
     sourceKind: NormalDefeatReceiptState["sourceKind"];
     explicitDestinationId?: string | null;
   }
-): NormalDefeatResolution {
+): NormalDefeatResolution<TSnapshot> {
   if (!snapshot.campaignIdentity || !snapshot.campaignRules) {
     throw new Error("Normal defeat requires target campaign identity and rules.");
   }

@@ -1,14 +1,20 @@
 import { deserializeSnapshot, serializeSnapshot } from "../../../shared/persistence/src/index.js";
 import { advanceClock } from "../../../shared/time/src/index.js";
+import travelNetworks from "../../../content/base/world/travel_networks.json" with { type: "json" };
+import settlements from "../../../content/base/world/settlements.json" with { type: "json" };
 import type {
   ActionAttributeLoadProfileState,
   ActionMetabolicProfileState,
+  ConsumableProfileState,
   CurrentActivityState,
+  KnownLocationState,
   PlayerBodyState,
+  RunDifficultyState,
   SaveSnapshot
 } from "../../../shared/types/src/index.js";
 import {
   applyAttributeTensionToActionProfile,
+  applyConsumableToBodyState,
   advancePlayerBodyState,
   syncPlayerRuntimeState
 } from "../../player-engine/src/index.js";
@@ -74,6 +80,109 @@ const TRAVEL_ATTRIBUTE_PROFILE: ActionAttributeLoadProfileState = {
   },
   meaningfulInteraction: true
 };
+
+const HARBORMAST = "settlement.harbormast_quay";
+const STARFALL = "settlement.starfall_port";
+const PASSENGER_ROUTE_ID = "route.starfall_port_harbormast_quay";
+const PASSENGER_MODE_ID = "travel_mode.sea_vessel";
+const PASSENGER_SERVICE: ConsumableProfileState = {
+  calories: 25, protein: 4.5, carbs: 10, fat: 5, hydration: 18, intoxication: 0
+};
+
+/** Four vessel-provided meals and drinks per game day, at the start of each watch. */
+export function applyPassengerServiceAtTick(
+  bodyState: PlayerBodyState,
+  originLocationId: string,
+  destinationId: string,
+  tick: number,
+  day: number,
+  lineageId: string,
+  runDifficulty: RunDifficultyState
+): PlayerBodyState {
+  if (originLocationId !== HARBORMAST || destinationId !== STARFALL || tick % 6 !== 1) {
+    return bodyState;
+  }
+  return applyConsumableToBodyState(bodyState, PASSENGER_SERVICE, {
+    tick, day, lineageId, runDifficulty
+  });
+}
+
+function passengerRouteFacts(snapshot: SaveSnapshot, originLocationId: string, destinationId: string):
+  PlayerTravelDestination | null {
+  if (originLocationId !== HARBORMAST || destinationId !== STARFALL ||
+      snapshot.playerState.location.settlementId !== HARBORMAST ||
+      snapshot.gameState.activeEncounter !== null ||
+      snapshot.campaignRules?.source !== "new_campaign" ||
+      !snapshot.sessionState.activeEvents.includes("event.campaign.started") ||
+      !snapshot.sessionState.flags.includes(`character.start.${HARBORMAST}`) ||
+      !snapshot.playerState.flags.includes(`player.start.${HARBORMAST}`) ||
+      snapshot.sessionState.knownLocations.filter(row => row.id === HARBORMAST).length !== 1 ||
+      !snapshot.sessionState.knownLocations.some(row =>
+        row.id === HARBORMAST && row.settlementId === HARBORMAST && row.known)) return null;
+
+  const route = travelNetworks.records.find(network => network.id === "travel_network.first_world")
+    ?.routeRecords.find(row => row.id === PASSENGER_ROUTE_ID);
+  const port = settlements.records.find(row => row.id === STARFALL);
+  const estimate = route?.travelTimeEstimates.find(row => row.modeId === PASSENGER_MODE_ID);
+  const mode = travelNetworks.records.find(network => network.id === "travel_network.first_world")
+    ?.modeProfiles.find(row => row.id === PASSENGER_MODE_ID);
+  if (!route || !port || !port.visualMapRef ||
+      mode?.domain !== "water" ||
+      route.fromSettlementId !== STARFALL || route.toSettlementId !== HARBORMAST ||
+      route.routeType !== "sea_lane" ||
+      !route.availableModeIds.includes(PASSENGER_MODE_ID) ||
+      route.accessRequirements?.length !== 2 ||
+      !route.accessRequirements.includes("water_only") ||
+      !route.accessRequirements.includes("open_sea") ||
+      !estimate || Math.round(estimate.expectedDays * 24) !== 120) return null;
+
+  return {
+    id: STARFALL,
+    name: port.name,
+    regionId: port.regionId,
+    regionLabel: "Starfall Isle",
+    settlementId: STARFALL,
+    siteLabel: "Starfall Harbormaster's Office",
+    worldMapId: port.visualMapRef.mapId,
+    travelTicks: Math.round(estimate.expectedDays * 24),
+    hpCost: 0,
+    mpCost: 0,
+    staminaCost: 0,
+    // Passive losses continue. The bounded passenger service is applied separately
+    // through the body intake owner; it is not a rest/recovery context.
+    metabolicProfile: { intensity: "low", fatigueGain: 0, energyDemand: 0,
+      hydrationDemand: 0, highIntensityLoad: 0 },
+    attributeLoadProfile: null,
+    arrivalActivity: {
+      id: "activity.arrival.starfall_port.passenger",
+      label: "Arriving in Starfall Port",
+      category: "Arrival",
+      detail: "Passenger passage reaches the Starfall Harbormaster's Office."
+    }
+  };
+}
+
+/** The route itself is the public passage offer; only the accepted travel command boards it. */
+export function getPlayerPassengerTravelDestinationFacts(snapshot: SaveSnapshot):
+  PlayerTravelDestinationFacts | null {
+  const origin = getCurrentPlayerTravelLocationId(snapshot);
+  const destination = origin && passengerRouteFacts(snapshot, origin, STARFALL);
+  return destination ? toFacts(destination) : null;
+}
+
+export function getPlayerPassengerArrivalLocation(snapshot: SaveSnapshot): KnownLocationState | null {
+  if (!getPlayerPassengerTravelDestinationFacts(snapshot)) return null;
+  const route = travelNetworks.records.find(network => network.id === "travel_network.first_world")
+    ?.routeRecords.find(row => row.id === PASSENGER_ROUTE_ID);
+  const port = settlements.records.find(row => row.id === STARFALL);
+  if (!route || !port?.visualMapRef) return null;
+  return {
+    id: STARFALL, name: port.name, regionLabel: "Starfall Isle",
+    settlementId: STARFALL, regionId: port.regionId, type: "harbor",
+    x: port.visualMapRef.pixelX, y: port.visualMapRef.pixelY,
+    note: route.notes, known: true
+  };
+}
 
 const PLAYER_TRAVEL_DESTINATIONS: Record<string, PlayerTravelDestination> = {
   "location.saltmere": {
@@ -197,6 +306,8 @@ function resolveTravelDestination(
   if (destinationId !== "settlement.starfall_port") {
     return PLAYER_TRAVEL_DESTINATIONS[destinationId];
   }
+  const passenger = passengerRouteFacts(snapshot, originLocationId, destinationId);
+  if (passenger) return passenger;
   if (originLocationId !== "location.ashen_reef") return undefined;
 
   const soundings = snapshot.sessionState.questJournal.filter(
@@ -272,7 +383,9 @@ function mitigateActionProfile(
 function projectBodyState(
   snapshot: SaveSnapshot,
   ticks: number,
-  metabolicProfile: ActionMetabolicProfileState
+  metabolicProfile: ActionMetabolicProfileState,
+  originLocationId: string,
+  destinationId: string
 ): { projectedBodyState: PlayerBodyState; timeline: PlayerBodyState[] } {
   const nextSnapshot = cloneSnapshot(snapshot);
   const timeline: PlayerBodyState[] = [];
@@ -293,6 +406,10 @@ function projectBodyState(
       recoveryContext: null,
       recoveryAssessment: null
     });
+    nextSnapshot.playerState.bodyState = applyPassengerServiceAtTick(
+      nextSnapshot.playerState.bodyState, originLocationId, destinationId,
+      nextClock.tick, nextClock.day, nextSnapshot.playerState.coreData.lineageId, runDifficulty
+    );
     syncPlayerRuntimeState(nextSnapshot.playerState, nextClock.tick, nextClock.day, [], runDifficulty);
     timeline.push(nextSnapshot.playerState.bodyState);
   }
@@ -313,7 +430,9 @@ export function getPlayerTravelDestinationFacts(locationId: string): PlayerTrave
   return destination ? toFacts(destination) : null;
 }
 
-export function getCurrentPlayerTravelLocationId(snapshot: SaveSnapshot): string | null {
+export function getCurrentPlayerTravelLocationId(
+  snapshot: { playerState: Pick<SaveSnapshot['playerState'], 'location'> }
+): string | null {
   const settlementId = snapshot.playerState.location.settlementId;
 
   if (settlementId === "settlement.aurelis") return "location.saltmere";
@@ -325,6 +444,7 @@ export function getCurrentPlayerTravelLocationId(snapshot: SaveSnapshot): string
       : "settlement.starfall_port";
   }
   if (settlementId === "settlement.sunspire_reach") return "location.crown_bastion";
+  if (settlementId === HARBORMAST) return HARBORMAST;
   return null;
 }
 
@@ -368,7 +488,15 @@ export function resolvePlayerTravelPlan(
     }
 
     const facts = toFacts(destination);
-    if (!snapshot.sessionState.knownLocations.some((entry) => entry.id === destinationId && entry.known)) {
+    const passenger = originLocationId === HARBORMAST && destinationId === STARFALL;
+    if (passenger && snapshot.sessionState.knownLocations.some(entry => entry.id === STARFALL)) {
+      return {
+        accepted: false, code: "incoherent_state",
+        reason: "Passenger arrival conflicts with an existing Starfall location row.",
+        originLocationId, facts, projectedBodyState: null, timeline: []
+      };
+    }
+    if (!passenger && !snapshot.sessionState.knownLocations.some((entry) => entry.id === destinationId && entry.known)) {
       return {
         accepted: false,
         code: "destination_not_known",
@@ -406,7 +534,9 @@ export function resolvePlayerTravelPlan(
       ["AGI", "CON", "VIT"],
       ["skill.knowledge.general_lore"]
     );
-    const projection = projectBodyState(snapshot, destination.travelTicks, previewMetabolicProfile);
+    const projection = projectBodyState(
+      snapshot, destination.travelTicks, previewMetabolicProfile, originLocationId, destinationId
+    );
 
     return {
       accepted: true,

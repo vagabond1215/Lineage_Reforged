@@ -2191,3 +2191,22 @@ ChatGPT in-app browser controlled five exact viewport sizes and Character, Inven
 ### D. Risks / follow-up notes
 
 Smallest repair: Settings and Notifications Escape dismissal and focus return, then repeat controlled fit with a runner that can demonstrate 200% zoom and export screenshots. PRs #6–#16 retained; PR #5 closed without merge and branch intact. No PR lifecycle action, activation, deployment or Game-version change. Suggested commit: `docs(ui): record current-master controlled fit limits and top-bar gap`. Next recommended run is the bounded top-bar keyboard repair plus controlled recheck; separately discuss combat, non-fungible item owner, nutrition, magic, gathering and crafting readiness. Authenticated selected-client interactions and Save/restart remain outstanding.
+## 2026-11-09 — Native-v3 master integration Checkpoint A
+
+**Source run:** unversioned isolated native-v3 integration, parent milestone n/a; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; source master `0522161fb955a9e3128585766723b7f3fc04c4a8`, branch `codex/native-v3-master-integration-2026-11-09`; development impact `supports_current_band`, game-version impact `none`. Classification **`V3_INTEGRATION_PARTIAL`**. [Focused integration record](native-v3-master-integration-checkpoint-a-2026-11-09.md).
+
+### A. Files changed
+
+110 v3 source/content/test/packaging paths imported from verified #73 tip, plus focused record and branch-local register/output/handoff/prompt continuation note. Master coordination and the installed prompt body were retained, not replaced by historical branch versions.
+
+### B. Patch summary
+
+Isolated candidate combines native creator/session, physical gear and fungible owners, campaign/account/Save, survey/Soundings/combat, and guarded candidate UI/staging route. Default App entry and primary Site remain unchanged. Checkpoint B Save format/legacy classification was not attempted.
+
+### C. Tests or checks run
+
+Final focused serial tests **57/57**; Node UI typecheck, default Vite build and synthetic-origin staging build pass. Initial concurrent run had shared Vite optimizer-cache `EPERM`; serial rerun passed. Staged diff check and exact changed-path inventory are required publication checks. No broad TypeScript diagnostic baseline, selected-client browser, hosted Save or deployment acceptance claimed. FP-001 owner/caller and Save route checked by native item/session tests; FP-002 fixture tests are not independent acceptance; FP-009 source/master/final heads recorded separately; FP-016 old survey source/replay and Soundings receipts covered by focused tests.
+
+### D. Risks / follow-up notes
+
+No master merge/default activation. PRs #5–#17 and native-v3 #63–#73 retained without lifecycle action; #71 remains separate docs evidence. The exact next package is Checkpoint B reader classification and safe same-origin legacy metadata/delete scope, followed by independent source/selected review. Suggested commit: `feat(v3): stage isolated native owner integration candidate`. No Game-version decision proposed.

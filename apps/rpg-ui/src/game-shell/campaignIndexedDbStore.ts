@@ -1,12 +1,20 @@
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import type { SaveSnapshot, SoundingsAdmissionWitness } from "../../../../packages/shared/types/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
+import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
+import { commitNativeSurveyShift } from "../../../../packages/engines/game-engine/src/native-survey-ledger.js";
+import { executeNativeSoundingsTurnIn } from "../../../../packages/engines/game-engine/src/native-soundings-turn-in.js";
+import { prepareNativeSurveySource } from "../../../../packages/engines/game-engine/src/native-survey-source.js";
+import { canonicalNativeSurveyJson } from "../../../../packages/engines/game-engine/src/native-survey-material.js";
+import { prepareCharacterAchievementProgress } from "../../../../packages/engines/game-engine/src/achievements.js";
 import { isSoundingsAdmissionWitness, verifySoundingsAdmissionProvenance } from "../../../../packages/engines/game-engine/src/soundings-admission-witness.js";
 import {
   isStoredCampaignControl,
   isStoredSaveEnvelope,
+  isStoredNativeGearEnvelope,
   type StoredCampaignControl,
-  type StoredSaveEnvelope
+  type StoredSaveEnvelope,
+  type StoredNativeGearEnvelope
 } from "./saveManager.js";
 
 /** Isolated foundation. No existing localStorage caller uses this database yet. */
@@ -83,23 +91,106 @@ function storeError(error: unknown, fallback: CampaignStoreFailureCode = "aborte
   return new CampaignStoreError(name === "QuotaExceededError" ? "quota" : fallback, `Campaign store ${name === "QuotaExceededError" ? "quota exceeded" : "transaction aborted"}.`, error);
 }
 
-function validatedEnvelope(raw: string, accountId: string, campaignId: string, slotId?: string): { envelope: StoredSaveEnvelope; snapshot: SaveSnapshot } {
+type CampaignArtifactEnvelope = StoredSaveEnvelope | StoredNativeGearEnvelope;
+type CampaignArtifactSnapshot = SaveSnapshot | NativeFreshCampaignSnapshot;
+function validatedEnvelope(raw: string, accountId: string, campaignId: string, slotId?: string): { envelope: CampaignArtifactEnvelope; snapshot: CampaignArtifactSnapshot } {
   let parsed: unknown;
   try { parsed = JSON.parse(raw); } catch { return fail("invalid_record", "Artifact envelope is malformed JSON."); }
-  if (!isStoredSaveEnvelope(parsed) || !nonblank(parsed.artifactId) || !nonblank(parsed.generationId) || !nonblank(parsed.publicationId) ||
+  if (!(isStoredSaveEnvelope(parsed) || isStoredNativeGearEnvelope(parsed)) || !nonblank(parsed.artifactId) || !nonblank(parsed.generationId) || !nonblank(parsed.publicationId) ||
       parsed.accountId !== accountId || parsed.campaignId !== campaignId || (slotId !== undefined && parsed.slotId !== slotId) ||
       parsed.metadata.slotId !== parsed.slotId || !Number.isSafeInteger(parsed.headRevision) || parsed.headRevision < 1) {
     return fail("invalid_record", "Artifact envelope version or identity is invalid.");
   }
   try {
     const snapshot = deserializeSnapshot(parsed.snapshot);
-    if (!isTargetCampaignSnapshot(snapshot) || snapshot.accountId !== accountId ||
+    if (!(parsed.version === 7 ? isTargetCampaignSnapshot(snapshot) : isNativeTargetCampaignSnapshot(snapshot)) || snapshot.accountId !== accountId ||
         snapshot.campaignIdentity?.campaignId !== campaignId || snapshot.campaignIdentity?.continuityId !== parsed.continuityId ||
         snapshot.playerState.playerId !== parsed.characterId || snapshot.snapshotVersion !== parsed.snapshotFormatId) {
       return fail("invalid_record", "Artifact snapshot does not match its envelope.");
     }
     return { envelope: parsed, snapshot };
   } catch { return fail("invalid_record", "Artifact snapshot cannot be decoded."); }
+}
+
+/** Pure retained-artifact replay used at both native publication and readback. */
+export function validateNativeSurveyRetainedSource(
+  envelope: CampaignArtifactEnvelope,
+  snapshot: CampaignArtifactSnapshot,
+  retainedRaw: string | null
+): void {
+  if (envelope.version !== 8) return;
+  const ledger = (snapshot as NativeFreshCampaignSnapshot).nativeSurvey;
+  if (!ledger) return;
+  const result = ledger.results[ledger.results.length - 1];
+  const witness = result?.sourceWitness;
+  if (!witness || witness.sourceRevision + 1 !== envelope.headRevision ||
+      witness.sourceArtifactId === envelope.artifactId || !retainedRaw)
+    fail("invalid_record", "Native survey result lacks its immediate retained source.");
+  const source = validatedEnvelope(retainedRaw, envelope.accountId, envelope.campaignId);
+  if (source.envelope.version !== 8 || source.envelope.terminal ||
+      source.envelope.artifactId !== witness.sourceArtifactId ||
+      source.envelope.publicationId !== witness.sourcePublicationId ||
+      source.envelope.headRevision !== witness.sourceRevision ||
+      source.envelope.slotId !== envelope.slotId ||
+      source.envelope.continuityId !== envelope.continuityId ||
+      source.envelope.characterId !== envelope.characterId ||
+      ((source.snapshot as NativeFreshCampaignSnapshot).nativeSurvey?.results.length ?? 0) !==
+        ledger.results.length - 1)
+    fail("invalid_record", "Native survey source does not contain the exact preceding v3 stage.");
+  const identity = {
+    accountId: envelope.accountId, campaignId: envelope.campaignId,
+    continuityId: envelope.continuityId, artifactId: witness.sourceArtifactId,
+    publicationId: witness.sourcePublicationId, revision: witness.sourceRevision
+  };
+  const preparation = prepareNativeSurveySource(source.snapshot, identity);
+  if (!preparation.accepted ||
+      canonicalNativeSurveyJson(preparation.witness) !== canonicalNativeSurveyJson(witness))
+    fail("invalid_record", "Native survey witness differs from its retained source.");
+  const replayed = commitNativeSurveyShift({ snapshot: source.snapshot as NativeFreshCampaignSnapshot,
+    sourceIdentity: identity, witness: preparation.witness }, result.requestId);
+  const projected = prepareCharacterAchievementProgress(
+    replayed.snapshot as unknown as SaveSnapshot, envelope.savedAt).snapshot;
+  if (canonicalNativeSurveyJson(projected) !== canonicalNativeSurveyJson(snapshot))
+    fail("invalid_record", "Native survey result differs from retained-source replay.");
+}
+
+/** First native payment is replayed from its immutable predecessor, never from a supplied receipt alone. */
+export function validateNativeSoundingsRetainedSource(
+  envelope: CampaignArtifactEnvelope,
+  snapshot: CampaignArtifactSnapshot,
+  retainedRaw: string | null
+): void {
+  if (envelope.version !== 8) return;
+  const record = (snapshot as NativeFreshCampaignSnapshot).nativeSoundingsTurnIn;
+  if (!record) return;
+  if (record.source.revision + 1 !== envelope.headRevision || !retainedRaw ||
+      record.source.artifactId === envelope.artifactId)
+    fail("invalid_record", "Native Soundings payment lacks its immediate retained source.");
+  const source = validatedEnvelope(retainedRaw, envelope.accountId, envelope.campaignId);
+  if (source.envelope.version !== 8 || source.envelope.terminal ||
+      source.envelope.artifactId !== record.source.artifactId ||
+      source.envelope.publicationId !== record.source.publicationId ||
+      source.envelope.headRevision !== record.source.revision ||
+      source.envelope.slotId !== record.source.slotId ||
+      source.envelope.continuityId !== record.source.continuityId ||
+      source.envelope.characterId !== envelope.characterId ||
+      source.envelope.accountId !== record.source.accountId ||
+      source.envelope.campaignId !== record.source.campaignId ||
+      (source.snapshot as NativeFreshCampaignSnapshot).nativeSoundingsTurnIn)
+    fail("invalid_record", "Native Soundings source identity is conflicting or already paid.");
+  const replay = executeNativeSoundingsTurnIn(source.snapshot as NativeFreshCampaignSnapshot,
+    record.source, record.requestId);
+  const projected = prepareCharacterAchievementProgress(
+    replay.snapshot as unknown as SaveSnapshot, envelope.savedAt).snapshot;
+  if (!equal(record, replay.result) || !equal(projected, snapshot))
+    fail("invalid_record", "Native Soundings payment differs from retained-source replay.");
+}
+function validatedLegacyEnvelope(raw: string, accountId: string, campaignId: string):
+  { envelope: StoredSaveEnvelope; snapshot: SaveSnapshot } {
+  const result = validatedEnvelope(raw, accountId, campaignId);
+  if (result.envelope.version !== 7 || !isTargetCampaignSnapshot(result.snapshot as SaveSnapshot))
+    fail("invalid_record", "Soundings witness refers to a non-v2 artifact.");
+  return result as { envelope: StoredSaveEnvelope; snapshot: SaveSnapshot };
 }
 
 function artifactRecord(value: unknown, accountId: string, artifactId: string): value is ArtifactRecord {
@@ -140,14 +231,14 @@ async function validateFirstDescendantWitnessSource(tx: IDBTransaction, witness:
       retained.campaignId !== first.campaignId || retained.publicationId !== witness.sourcePublicationId ||
       retained.headRevision > witness.sourceRevision || retained.headRevision >= first.headRevision)
     fail("invalid_record", "First Soundings witness lacks its exact retained source artifact.");
-  const source = validatedEnvelope(retained.raw, first.accountId, first.campaignId);
+  const source = validatedLegacyEnvelope(retained.raw, first.accountId, first.campaignId);
   if (source.envelope.characterId !== first.characterId ||
       source.envelope.continuityId !== witness.sourceContinuityId ||
       verifySoundingsAdmissionProvenance(source.snapshot) !== "not_completed")
     fail("invalid_record", "First Soundings witness source authority is invalid.");
 }
 
-function validateRequest(input: CampaignStorePublication): { envelope: StoredSaveEnvelope; snapshot: SaveSnapshot; requestId: string | null } {
+function validateRequest(input: CampaignStorePublication): { envelope: CampaignArtifactEnvelope; snapshot: CampaignArtifactSnapshot; requestId: string | null } {
   if (![input.accountId, input.campaignId, input.slotId].every(nonblank)) fail("invalid_record", "Publication identity is blank.");
   const { envelope, snapshot } = validatedEnvelope(input.artifactRaw, input.accountId, input.campaignId, input.slotId);
   const control = input.control;
@@ -160,12 +251,15 @@ function validateRequest(input: CampaignStorePublication): { envelope: StoredSav
     fail("invalid_record", "Publication control and expected predecessor do not match artifact authority.");
   }
   const requestId = snapshot.authorityLedger?.soundingsTurnIn?.requests[0]?.requestId ?? null;
+  if (envelope.version === 8 && (requestId || input.witness ||
+      snapshot.authorityLedger?.soundingsTurnIn?.version === 2))
+    fail("invalid_record", "Native gear publication has no v3 Soundings witness owner.");
   if (input.witness && (!isSoundingsAdmissionWitness(input.witness) || input.witness.posture !== "applied" ||
       input.witness.accountId !== input.accountId || input.witness.campaignId !== input.campaignId || input.witness.requestId !== requestId)) {
     fail("invalid_record", "Supplied Soundings witness is invalid.");
   }
   if (snapshot.authorityLedger?.soundingsTurnIn?.version === 2 && !requestId) fail("invalid_record", "Soundings v2 request is missing.");
-  if (!requestId && verifySoundingsAdmissionProvenance(snapshot) !== "not_completed") fail("invalid_record", "Artifact Soundings authority is invalid.");
+  if (!requestId && verifySoundingsAdmissionProvenance(snapshot as SaveSnapshot) !== "not_completed") fail("invalid_record", "Artifact Soundings authority is invalid.");
   return { envelope, snapshot, requestId };
 }
 
@@ -250,7 +344,9 @@ export class CampaignIndexedDbStore {
           artifact.headRevision !== control.value.headRevision) {
         fail("invalid_record", "Stored head, artifact and slot disagree.");
       }
-      const { snapshot } = validatedEnvelope(artifact.raw, accountId, campaignId);
+      const { snapshot, envelope } = validatedEnvelope(artifact.raw, accountId, campaignId);
+      await this.verifyNativeSurveyInTransaction(tx, envelope, snapshot);
+      await this.verifyNativeSoundingsInTransaction(tx, envelope, snapshot);
       const requestId = snapshot.authorityLedger?.soundingsTurnIn?.requests[0]?.requestId;
       let witness: SoundingsAdmissionWitness | null = null;
       const retainedWitnesses = await requestValue(tx.objectStore("witnesses").index("byAccountCampaign").getAll([accountId, campaignId]) as IDBRequest<unknown[]>);
@@ -267,9 +363,10 @@ export class CampaignIndexedDbStore {
           if (!witness || witness.posture !== "applied") fail("invalid_record", "Soundings first-publication witness is missing.");
           const first = await requestValue(tx.objectStore("artifacts").get([accountId, witness.firstDurableArtifactId]) as IDBRequest<unknown>);
           if (!artifactRecord(first, accountId, witness.firstDurableArtifactId)) fail("invalid_record", "Soundings first artifact is missing.");
-          validateWitness(witness, validatedEnvelope(first.raw, accountId, campaignId).snapshot, validatedEnvelope(first.raw, accountId, campaignId).envelope);
-          await validateFirstDescendantWitnessSource(tx, witness, validatedEnvelope(first.raw, accountId, campaignId).envelope);
-          if (verifySoundingsAdmissionProvenance(snapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") fail("invalid_record", "Current Soundings provenance conflicts with retained witness.");
+          const admittedFirst = validatedLegacyEnvelope(first.raw, accountId, campaignId);
+          validateWitness(witness, admittedFirst.snapshot, admittedFirst.envelope);
+          await validateFirstDescendantWitnessSource(tx, witness, admittedFirst.envelope);
+          if (!isTargetCampaignSnapshot(snapshot as SaveSnapshot) || verifySoundingsAdmissionProvenance(snapshot as SaveSnapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") fail("invalid_record", "Current Soundings provenance conflicts with retained witness.");
         }
       }
       return { artifactRaw: artifact.raw, control: control.value, slotRaw: slot.raw, witness };
@@ -320,17 +417,24 @@ export class CampaignIndexedDbStore {
       }
       if (requestId && existingWitness !== undefined && !witnessRecord(existingWitness, input.accountId, input.campaignId, requestId)) fail("invalid_record", "Stored witness is malformed.");
       if (retainedWitnesses.length > (requestId ? 1 : 0) || (!requestId && retainedWitnesses.length)) fail("invalid_record", "Campaign cannot discard or multiply retained Soundings provenance.");
+      let nativePredecessor: NativeFreshCampaignSnapshot | null = null;
       if (current) {
         const prior = await requestValue(tx.objectStore("artifacts").get([input.accountId, current.value.headArtifactId]) as IDBRequest<unknown>);
         if (!artifactRecord(prior, input.accountId, current.value.headArtifactId) || prior.campaignId !== input.campaignId ||
             prior.publicationId !== current.value.headPublicationId || prior.headRevision !== current.value.headRevision) {
           fail("invalid_record", "Stored predecessor head has no verified immutable artifact.");
         }
+        const predecessor = validatedEnvelope(prior.raw, input.accountId, input.campaignId);
+        if (predecessor.envelope.version !== envelope.version)
+          fail("conflict", "Campaign snapshot epoch changed across an existing head.");
+        if (envelope.version === 8) nativePredecessor = predecessor.snapshot as NativeFreshCampaignSnapshot;
       }
       if (existingArtifact && existingArtifact.raw !== input.artifactRaw) fail("conflict", "Immutable artifact ID has conflicting bytes.");
       if (existingWitness && appliedWitness && !equal((existingWitness as WitnessRecord).value, appliedWitness)) fail("conflict", "Immutable Soundings witness conflicts.");
       if (current && equal(current.value, input.control)) {
         if (!existingArtifact || !address || address.raw !== input.artifactRaw || address.campaignId !== input.campaignId) fail("conflict", "Same-head retry has incomplete or conflicting records.");
+        await this.verifyNativeSurveyInTransaction(tx, envelope, snapshot);
+        await this.verifyNativeSoundingsInTransaction(tx, envelope, snapshot);
         await this.verifySoundingsInTransaction(tx, acceptedInput, envelope, snapshot, requestId, existingWitness, !!sessionWitness);
         await completion;
         const readback = await this.exactReadback(acceptedInput);
@@ -341,6 +445,22 @@ export class CampaignIndexedDbStore {
           (current?.value.headPublicationId ?? null) !== (expected?.publicationId ?? null) ||
           (current?.value.headRevision ?? 0) !== (expected?.revision ?? 0)) fail("stale_head", "Campaign head changed after publication source was captured.");
       if (current?.value.closed) fail("conflict", "Closed campaign cannot advance.");
+      if (nativePredecessor) {
+        if (nativePredecessor.nativeSoundingsTurnIn &&
+            !equal(nativePredecessor.nativeSoundingsTurnIn,
+              (snapshot as NativeFreshCampaignSnapshot).nativeSoundingsTurnIn))
+          fail("invalid_record", "Native descendant changed retained Soundings payment.");
+        const before = nativePredecessor.nativeSurvey;
+        const after = (snapshot as NativeFreshCampaignSnapshot).nativeSurvey;
+        const beforeCount = before?.results.length ?? 0;
+        const afterCount = after?.results.length ?? 0;
+        if (afterCount < beforeCount || afterCount > beforeCount + 1 ||
+            (afterCount === beforeCount && !equal(before, after)) ||
+            (afterCount === beforeCount + 1 &&
+              (!equal(before?.results ?? [], after?.results.slice(0, beforeCount)) ||
+               !equal(before?.receipts ?? [], after?.receipts.slice(0, beforeCount)))))
+          fail("invalid_record", "Native descendant changed retained survey history.");
+      }
       if (input.expectedSlotAddress !== undefined) {
         const wanted = input.expectedSlotAddress;
         if (wanted !== null && (!nonblank(wanted.artifactId) || !nonblank(wanted.publicationId)))
@@ -352,6 +472,8 @@ export class CampaignIndexedDbStore {
           fail("conflict", "Destination belongs to another campaign.");
       } else if (address && (address.campaignId !== input.campaignId || (expected && address.artifactId !== expected.artifactId)))
         fail("conflict", "Slot points to another verified publication.");
+      await this.verifyNativeSurveyInTransaction(tx, envelope, snapshot);
+      await this.verifyNativeSoundingsInTransaction(tx, envelope, snapshot);
       await this.verifySoundingsInTransaction(tx, acceptedInput, envelope, snapshot, requestId, existingWitness, !!sessionWitness);
       const writes: { family: Family; value: ArtifactRecord | ControlRecord | SlotRecord | WitnessRecord }[] = [
         { family: "artifacts", value: { version: 1, accountId: input.accountId, campaignId: input.campaignId, artifactId: envelope.artifactId, generationId: envelope.generationId, publicationId: envelope.publicationId, slotId: input.slotId, headRevision: envelope.headRevision, raw: input.artifactRaw } },
@@ -375,28 +497,110 @@ export class CampaignIndexedDbStore {
     return { status: "committed", readback: await this.exactReadback(acceptedInput) };
   }
 
-  private async verifySoundingsInTransaction(tx: IDBTransaction, input: CampaignStorePublication, envelope: StoredSaveEnvelope, snapshot: SaveSnapshot, requestId: string | null, existing: unknown, sessionIntroduced: boolean): Promise<void> {
+  private async verifySoundingsInTransaction(tx: IDBTransaction, input: CampaignStorePublication, envelope: CampaignArtifactEnvelope, snapshot: CampaignArtifactSnapshot, requestId: string | null, existing: unknown, sessionIntroduced: boolean): Promise<void> {
     if (!requestId) return;
+    if (envelope.version !== 7 || !isTargetCampaignSnapshot(snapshot as SaveSnapshot))
+      fail("invalid_record", "Native gear Soundings requires its own witness contract.");
+    const legacySnapshot = snapshot as SaveSnapshot;
     const version = snapshot.authorityLedger?.soundingsTurnIn?.version;
     if (version !== 2) {
-      if (existing || input.witness || verifySoundingsAdmissionProvenance(snapshot) !== "legacy_unverified") fail("invalid_record", "Soundings authority cannot downgrade retained provenance.");
+      if (existing || input.witness || verifySoundingsAdmissionProvenance(legacySnapshot) !== "legacy_unverified") fail("invalid_record", "Soundings authority cannot downgrade retained provenance.");
       return;
     }
     const witness = input.witness ?? (witnessRecord(existing, input.accountId, input.campaignId, requestId) ? existing.value : null);
     if (!witness) fail("invalid_record", "Soundings v2 publication requires an applied witness.");
     if (witness.posture !== "applied") fail("invalid_record", "Soundings witness must be applied.");
     let first: { envelope: StoredSaveEnvelope; snapshot: SaveSnapshot };
-    if (witness.firstDurableArtifactId === envelope.artifactId) first = { envelope, snapshot };
+    if (witness.firstDurableArtifactId === envelope.artifactId) first = { envelope, snapshot: legacySnapshot };
     else {
       const retained = await requestValue(tx.objectStore("artifacts").get([input.accountId, witness.firstDurableArtifactId]) as IDBRequest<unknown>);
       if (!artifactRecord(retained, input.accountId, witness.firstDurableArtifactId)) fail("invalid_record", "Retained Soundings first artifact is missing or malformed.");
-      first = validatedEnvelope(retained.raw, input.accountId, input.campaignId);
+      first = validatedLegacyEnvelope(retained.raw, input.accountId, input.campaignId);
     }
     validateWitness(witness, first.snapshot, first.envelope);
     await validateFirstDescendantWitnessSource(tx, witness, first.envelope);
-    if (verifySoundingsAdmissionProvenance(snapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") fail("invalid_record", "Soundings descendant conflicts with retained provenance.");
+    if (verifySoundingsAdmissionProvenance(legacySnapshot, { soundingsAdmissionWitness: witness, retainedMutationResults: [] }) !== "verified") fail("invalid_record", "Soundings descendant conflicts with retained provenance.");
     if (input.witness && witness.firstDurableArtifactId !== envelope.artifactId && !existing) fail("invalid_record", "Publication cannot introduce unrelated first provenance.");
     if (input.expectedHead && !existing && !sessionIntroduced) fail("invalid_record", "First descendant provenance requires session evidence.");
+  }
+
+  /** First native shift must replay from its immutable v3 predecessor inside the publication transaction. */
+  private async verifyNativeSurveyInTransaction(tx: IDBTransaction, envelope: CampaignArtifactEnvelope, snapshot: CampaignArtifactSnapshot): Promise<void> {
+    if (envelope.version !== 8) return;
+    let currentEnvelope: CampaignArtifactEnvelope = envelope;
+    let currentSnapshot: CampaignArtifactSnapshot = snapshot;
+    const seen = new Set<string>();
+    while (currentEnvelope.version === 8 && (currentSnapshot as NativeFreshCampaignSnapshot).nativeSurvey) {
+      const ledger = (currentSnapshot as NativeFreshCampaignSnapshot).nativeSurvey!;
+      const result = ledger.results[ledger.results.length - 1];
+      const witness = result?.sourceWitness;
+      if (!witness || witness.sourceArtifactId === currentEnvelope.artifactId ||
+          seen.has(witness.sourceArtifactId) || seen.size >= 4)
+        fail("invalid_record", "Native survey result lacks its immediate retained source.");
+      if (witness.sourceRevision + 1 < currentEnvelope.headRevision) {
+        // Ordinary descendants may carry a completed ledger without re-running
+        // its command. Anchor the complete ledger to its exact retained stage.
+        const rows = await requestValue(tx.objectStore("artifacts").index("byAccountCampaign")
+          .getAll([currentEnvelope.accountId, currentEnvelope.campaignId]) as IDBRequest<unknown[]>);
+        const stageRows = rows.filter(row => record(row) && row.headRevision === witness.sourceRevision + 1);
+        if (stageRows.length !== 1 || !artifactRecord(stageRows[0], currentEnvelope.accountId,
+            (stageRows[0] as ArtifactRecord).artifactId))
+          fail("invalid_record", "Native survey stage artifact is missing or ambiguous.");
+        const stage = validatedEnvelope((stageRows[0] as ArtifactRecord).raw,
+          currentEnvelope.accountId, currentEnvelope.campaignId);
+        if (stage.envelope.version !== 8 || stage.envelope.terminal ||
+            stage.envelope.continuityId !== currentEnvelope.continuityId ||
+            stage.envelope.characterId !== currentEnvelope.characterId ||
+            !equal((stage.snapshot as NativeFreshCampaignSnapshot).nativeSurvey, ledger))
+          fail("invalid_record", "Native descendant survey ledger differs from its retained stage.");
+        currentEnvelope = stage.envelope;
+        currentSnapshot = stage.snapshot;
+        continue;
+      }
+      if (witness.sourceRevision + 1 !== currentEnvelope.headRevision)
+        fail("invalid_record", "Native survey result lacks its immediate retained source.");
+      seen.add(witness.sourceArtifactId);
+      const retained = await requestValue(tx.objectStore("artifacts").get([currentEnvelope.accountId, witness.sourceArtifactId]) as IDBRequest<unknown>);
+      if (!artifactRecord(retained, currentEnvelope.accountId, witness.sourceArtifactId) ||
+          retained.campaignId !== currentEnvelope.campaignId ||
+          retained.publicationId !== witness.sourcePublicationId ||
+          retained.headRevision !== witness.sourceRevision || retained.slotId !== currentEnvelope.slotId)
+        fail("invalid_record", "Native survey retained source artifact is missing or conflicting.");
+      validateNativeSurveyRetainedSource(currentEnvelope, currentSnapshot, retained.raw);
+      const prior = validatedEnvelope(retained.raw, currentEnvelope.accountId, currentEnvelope.campaignId);
+      currentEnvelope = prior.envelope;
+      currentSnapshot = prior.snapshot;
+    }
+  }
+
+  private async verifyNativeSoundingsInTransaction(tx: IDBTransaction,
+    envelope: CampaignArtifactEnvelope, snapshot: CampaignArtifactSnapshot): Promise<void> {
+    if (envelope.version !== 8) return;
+    const record = (snapshot as NativeFreshCampaignSnapshot).nativeSoundingsTurnIn;
+    if (!record) return;
+    let firstEnvelope = envelope;
+    let firstSnapshot = snapshot;
+    if (record.source.revision + 1 < envelope.headRevision) {
+      const rows = await requestValue(tx.objectStore("artifacts").index("byAccountCampaign")
+        .getAll([envelope.accountId, envelope.campaignId]) as IDBRequest<unknown[]>);
+      const matches = rows.filter(row => row !== null && typeof row === "object" &&
+        artifactRecord(row, envelope.accountId, (row as ArtifactRecord).artifactId) &&
+        (row as ArtifactRecord).headRevision === record.source.revision + 1);
+      if (matches.length !== 1) fail("invalid_record", "Native Soundings first payment artifact is missing or ambiguous.");
+      const first = validatedEnvelope((matches[0] as ArtifactRecord).raw,
+        envelope.accountId, envelope.campaignId);
+      if (first.envelope.version !== 8 || first.envelope.terminal ||
+          first.envelope.continuityId !== envelope.continuityId ||
+          first.envelope.characterId !== envelope.characterId ||
+          !equal((first.snapshot as NativeFreshCampaignSnapshot).nativeSoundingsTurnIn, record))
+        fail("invalid_record", "Native descendant conflicts with retained Soundings payment.");
+      firstEnvelope = first.envelope;
+      firstSnapshot = first.snapshot;
+    }
+    const retained = await requestValue(tx.objectStore("artifacts")
+      .get([envelope.accountId, record.source.artifactId]) as IDBRequest<unknown>);
+    validateNativeSoundingsRetainedSource(firstEnvelope, firstSnapshot,
+      artifactRecord(retained, envelope.accountId, record.source.artifactId) ? retained.raw : null);
   }
 
   private async exactReadback(input: CampaignStorePublication): Promise<CampaignStoreReadback> {

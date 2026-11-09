@@ -4,6 +4,16 @@ import { resolveLegacyPreparationSelection } from '../../../packages/engines/gam
 import type { CampaignSessionControl } from '../../../packages/engines/game-engine/src/campaign-session.js';
 import type { SaveSnapshot } from '../../../packages/shared/types/src/index.js';
 import { InGameShell } from './game-shell/InGameShell';
+import { readNativeEpochAppSession } from './game-shell/nativeEpochAppSession.js';
+import { saveNativeSelectedSession } from './game-shell/nativeSelectedSession.js';
+import { retireNativeSelectedSession } from './game-shell/nativeSelectedTerminal.js';
+import { applyNativeSelectedQuest, applyNativeSelectedTravel, advanceNativeSelectedSurvey,
+  advanceNativeSelectedSoundingsTurnIn,
+  createNativeSelectedQuestCommand, createNativeSelectedTravelCommand } from './game-shell/nativeSelectedGameplay.js';
+import { advanceNativeSelectedExploration, admitNativeSelectedEncounter,
+  applyNativeSelectedCombatStep, createNativeSelectedCombatStep,
+  createNativeSelectedEncounterAdmission } from './game-shell/nativeSelectedCombat.js';
+import type { NativeCandidateAction } from './game-shell/NativeSelectedCandidatePanel.js';
 import { createDefaultCharacterCreationFormState, validateCharacterCreationForm } from './game-shell/characterCreationForm.js';
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
@@ -93,7 +103,11 @@ function address(read: Awaited<ReturnType<CleanEpochAccountStore['readSlot']>>):
     publicationId: read.loaded.sessionControl.loadedPublicationId };
 }
 
-export function EpochApp() {
+export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
+  { candidateNativeV3?: boolean; stagingNativeV3?: boolean } = {}) {
+  // The staging entry is built separately. Hosting, not this prop, controls access.
+  const nativeCandidate = stagingNativeV3 || (candidateNativeV3 && import.meta.env.DEV &&
+    window.location.pathname.endsWith('/native-selected-session-qa.html'));
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
   const [blockDetail, setBlockDetail] = useState('');
@@ -204,7 +218,8 @@ export function EpochApp() {
       if (generation !== initializationGeneration.current) { owner.close(); return; }
       const accounts = new CleanEpochAccountAdapter(owner);
       const next: Services = { owner, accounts, launcher: new CleanEpochLauncherRead(owner, accounts),
-        first: new CleanEpochFirstCampaignAdapter(owner), descendant: new CleanEpochDescendantAdapter(owner),
+        first: new CleanEpochFirstCampaignAdapter(owner, nativeCandidate ? 'native_v3' : 'v2'),
+        descendant: new CleanEpochDescendantAdapter(owner),
         normalDefeat: new CleanEpochNormalDefeatRecoveryAdapter(owner),
         legacy: new CleanEpochLegacyActionAdapter(owner),
         terminal: new CleanEpochTerminalAdapter(owner) };
@@ -299,6 +314,10 @@ export function EpochApp() {
     const found = await inventory(services, accountId);
     const selected = loaded ?? (() => { throw new Error('Exact slot readback is required.'); })();
     await captureAddresses(services, accountId, slotId);
+    readNativeEpochAppSession({ snapshot: selected.snapshot,
+      campaignSessionControl: selected.sessionControl, sourceSlotId: slotId,
+      accountRevision: found.account.revision,
+      observedSourceAddress: observedAddresses.current[slotId] });
     observedAccountRevision.current = found.account.revision;
     sourceSlot.current = slotId;
     dispatch({ type: 'ENTER_GAME', launcherSession: session, accountProfile: found.account.profile,
@@ -309,6 +328,8 @@ export function EpochApp() {
 
   const recoverLoaded = async (accountId: string, slotId: SaveSlotId, expectedAccountRevision: number,
     loaded: { snapshot: SaveSnapshot; sessionControl: CampaignSessionControl }) => {
+    // The native selected review is read-only; v2 defeat recovery must never consume a v3 record.
+    if (loaded.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') return loaded;
     if (!services || !hasPendingNormalDefeat(loaded.snapshot)) return loaded;
     const recovered = await services.normalDefeat.recover({ accountId, sourceSlotId: slotId,
       destinationSlotId: slotId, expectedDestinationAddress: {
@@ -369,6 +390,32 @@ export function EpochApp() {
 
   const save = (destinationSlotId: SaveSlotId) => guarded(async () => {
     if (state.screen !== 'IN_GAME' || !services) return;
+    if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
+      const session = readNativeEpochAppSession({ snapshot: state.snapshot,
+        campaignSessionControl: state.campaignSessionControl, sourceSlotId: sourceSlot.current,
+        accountRevision: observedAccountRevision.current,
+        observedSourceAddress: sourceSlot.current
+          ? observedAddresses.current[sourceSlot.current] : undefined });
+      if (!session || !nativeCandidate)
+        throw new Error('Native v3 Save is held until the selected gameplay and recovery route is activated.');
+      const destination = observedAddresses.current[destinationSlotId];
+      if (destination === undefined)
+        throw new Error('Destination address was not observed when this native session loaded.');
+      const result = await saveNativeSelectedSession(services.owner, session,
+        destinationSlotId, destination);
+      if (result.status === 'blocked') throw new Error(result.message);
+      const found = await inventory(services, state.accountProfile.accountId);
+      await captureAddresses(services, state.accountProfile.accountId, destinationSlotId);
+      observedAccountRevision.current = found.account.revision;
+      sourceSlot.current = destinationSlotId;
+      dispatch({ type: 'COMPLETE_IN_GAME_SAVE', launcherSession: state.launcherSession,
+        accountProfile: found.account.profile, slots: slotSummaries(found.slots),
+        activeSlotId: destinationSlotId, snapshot: result.session.snapshot as unknown as SaveSnapshot,
+        campaignSessionControl: result.session.control as unknown as CampaignSessionControl,
+        notice: { tone: 'success', title: 'Game Data Saved',
+          detail: `Saved to ${getSaveSlotLabel(destinationSlotId)} and verified its exact ready address.` } });
+      return;
+    }
     const defeatPending = hasPendingNormalDefeat(state.snapshot);
     const sourceSlotId = sourceSlot.current;
     const expectedDestinationAddress = observedAddresses.current[destinationSlotId];
@@ -396,11 +443,79 @@ export function EpochApp() {
         detail: `Saved to ${getSaveSlotLabel(destinationSlotId)} and verified its exact ready address.` } });
   }, undefined);
 
+  const nativeAction = (action: NativeCandidateAction) => void guarded(async () => {
+    if (!nativeCandidate || state.screen !== 'IN_GAME' || !services) return;
+    try {
+      const session = readNativeEpochAppSession({ snapshot: state.snapshot,
+        campaignSessionControl: state.campaignSessionControl, sourceSlotId: sourceSlot.current,
+        accountRevision: observedAccountRevision.current,
+        observedSourceAddress: sourceSlot.current
+          ? observedAddresses.current[sourceSlot.current] : undefined });
+      if (!session) throw new Error('Native selected session is unavailable.');
+      let result;
+      switch (action.kind) {
+        case 'quest': result = applyNativeSelectedQuest(session,
+          createNativeSelectedQuestCommand(session, action.id)); break;
+        case 'travel': result = applyNativeSelectedTravel(session,
+          createNativeSelectedTravelCommand(session, action.id)); break;
+        case 'survey': result = await advanceNativeSelectedSurvey(services.owner,
+          session, `survey_request.${crypto.randomUUID()}`); break;
+        case 'turn_in': result = await advanceNativeSelectedSoundingsTurnIn(services.owner,
+          session, `soundings_turn_in_request.${crypto.randomUUID()}`); break;
+        case 'explore': result = advanceNativeSelectedExploration(session); break;
+        case 'admit': {
+          const command = createNativeSelectedEncounterAdmission(session);
+          if (!command) throw new Error('No authored encounter is available.');
+          result = admitNativeSelectedEncounter(session, command);
+          break;
+        }
+        case 'combat': {
+          const command = createNativeSelectedCombatStep(session, action.actionType,
+            action.targetId, crypto.randomUUID());
+          if (!command) throw new Error('The combat action is not available.');
+          result = applyNativeSelectedCombatStep(session, command);
+          break;
+        }
+      }
+      if (result.status !== 'accepted') {
+        failed('Native Action Unavailable', result.reason ?? result.status);
+        return;
+      }
+      dispatch({ type: 'UPDATE_IN_GAME_SNAPSHOT', launcherSession: state.launcherSession,
+        accountProfile: state.accountProfile, slots: state.slots,
+        snapshot: result.session.snapshot as unknown as SaveSnapshot,
+        campaignSessionControl: result.session.control as unknown as CampaignSessionControl });
+    } catch (error) {
+      failed('Native Action Unavailable', error instanceof Error ? error.message : String(error));
+    }
+  }, undefined);
+
   const retire = () => {
     if (state.screen !== 'IN_GAME' || !services) return;
+    if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3' && !nativeCandidate) {
+      failed('Retirement Unavailable', 'Native v3 retirement is held until the selected lifecycle route is activated.');
+      return;
+    }
     if (!window.confirm(`Retire ${state.snapshot.playerState.coreData.playerName}? This closes the campaign, records its final history and empties its save slots after settlement.`)) return;
     void guarded(async () => {
       if (state.screen !== 'IN_GAME' || !services) return;
+      if (state.snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
+        const session = readNativeEpochAppSession({ snapshot: state.snapshot,
+          campaignSessionControl: state.campaignSessionControl, sourceSlotId: sourceSlot.current,
+          accountRevision: observedAccountRevision.current,
+          observedSourceAddress: sourceSlot.current
+            ? observedAddresses.current[sourceSlot.current] : undefined });
+        if (!nativeCandidate || !session)
+          throw new Error('Native retirement requires the current selected campaign source.');
+        const result = await retireNativeSelectedSession(services.owner, session);
+        if (result.status === 'blocked') throw new Error(result.message);
+        sourceSlot.current = null; observedAccountRevision.current = null;
+        observedAddresses.current = {};
+        await showMenu(state.launcherSession, state.accountProfile.accountId,
+          { tone: 'success', title: 'Character Retired',
+            detail: `${state.snapshot.playerState.coreData.playerName}'s retirement was recorded and verified. The closed campaign remains in history.` });
+        return;
+      }
       const sourceSlotId = sourceSlot.current;
       const expectedAccountRevision = observedAccountRevision.current;
       const expectedSourceAddress = sourceSlotId ? observedAddresses.current[sourceSlotId] : undefined;
@@ -616,10 +731,22 @@ export function EpochApp() {
     clockTitle={clockNow.toString()} clockNow={clockNow} />;
   else content = <InGameShell {...common} accountProfile={current.accountProfile} snapshot={current.snapshot}
     campaignSessionControl={current.campaignSessionControl} slots={current.slots}
+    nativeCandidate={nativeCandidate}
+    onNativeAction={nativeAction}
     activeSlotId={current.activeSlotId} hasUnsavedChanges={current.hasUnsavedChanges}
-    onSnapshotChange={(snapshot, campaignSessionControl) => dispatch({ type: 'UPDATE_IN_GAME_SNAPSHOT',
-      launcherSession: current.launcherSession, accountProfile: current.accountProfile, slots: current.slots,
-      snapshot, campaignSessionControl })}
+    onSnapshotChange={(snapshot, campaignSessionControl) => {
+      if (snapshot.snapshotVersion === 'lineage.save_snapshot.v3') {
+        if (!nativeCandidate) return;
+        try { readNativeEpochAppSession({ snapshot, campaignSessionControl,
+          sourceSlotId: sourceSlot.current, accountRevision: observedAccountRevision.current,
+          observedSourceAddress: sourceSlot.current
+            ? observedAddresses.current[sourceSlot.current] : undefined }); }
+        catch (error) { failed('Native Session Changed', error instanceof Error ? error.message : String(error)); return; }
+      }
+      dispatch({ type: 'UPDATE_IN_GAME_SNAPSHOT',
+        launcherSession: current.launcherSession, accountProfile: current.accountProfile,
+        slots: current.slots, snapshot, campaignSessionControl });
+    }}
     onSave={() => void save(current.activeSlotId)} onQuickSave={() => void save('quick-save')}
     onRetireCharacter={retire}
     onReturnToMainMenu={() => {
