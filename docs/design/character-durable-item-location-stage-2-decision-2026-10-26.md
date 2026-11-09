@@ -1,5 +1,7 @@
 # Character equipment Stage 2: item-location conversion gate
 
+**2026-11-09 pre-alpha v3-first policy supersession:** The historical Stage 2 findings (merged-copy durability ambiguity, dual physical owner risk and runtime no-duplication needs) remain valid **for the old live v2 representation**, but the old-source requirement below to keep v2 development Saves *playable* through a v3 conversion is no longer a product prerequisite. See [Pre-Alpha Save Format Compatibility And Native-v3 Development Cutover Policy](prealpha-save-format-compatibility-and-native-v3-cutover-policy-2026-11-09.md). Owner direction allows fresh native-v3 campaigns with incompatible old Saves visible only for supported metadata/delete use. **Do not execute this old conversion route as a v3 integration gate without a fresh explicit selection.** Continue to require coherent single native-v3 item authority and reliable new-format Save/restart; an old v2 item can be rejected as incompatible rather than assigned an invented instance identity. Original October decision text remains below as historical source evidence.
+
 Date: 2026-10-26
 Status: `SOURCE_AMBIGUITY_PROVEN; LIVE_INSTANCE_OWNER_HELD`
 Game version: `0.1.1-prealpha`; development route: unversioned owner support
