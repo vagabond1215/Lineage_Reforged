@@ -62,3 +62,7 @@ Do not touch active native-v3, staging, publication, rollback, account, Save, or
 - **Retirement:** **not authorized or ready in this pass**. Recheck exact status, source refs, local process consumers, evidence copy, and published manifest before seeking a separate worktree-removal decision.
 
 `BATCH_A_PARTIAL_PRESERVATION` is the final result. `HOLD_SELECTED_ATOMIC_ACTIVATION` remains unchanged.
+
+## November 9 diagnostic preservation update
+
+The exact 32,471-byte historical diagnostic from detached master `f56229dde859b9374a54368bd8a8fd2a9872daa1` is retained at [`evidence/combined-ui-master-baseline-typecheck-2026-10-22.txt`](evidence/combined-ui-master-baseline-typecheck-2026-10-22.txt), SHA-256 `35FB9E77898EDFFF5C673F3216175FC5212953C8E8A480C5EDC804C8DD6291F2`. It records the October 22 `tsc --noEmit -p tsconfig.json` diagnostic signature used by the combined Character/top-bar rehearsal. It is historical comparison evidence, not a current TypeScript baseline or selected-client acceptance. The independent local archive identified above remains a second copy. The original Batch A status above describes its November 8 local-only snapshot; this update does not change that historical result or `HOLD_SELECTED_ATOMIC_ACTIVATION`.
