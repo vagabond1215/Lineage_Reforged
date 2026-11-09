@@ -5,6 +5,9 @@ Date: 2026-07-21
 Scope: difficulty naming, RPG abstraction, harsh-world systems, Hardcore semantics, save/death stakes, and nutrition placement  
 Implementation authorization: none
 
+
+> **2026-11-09 later owner direction:** See [Core World Entries, Hardcore, Prestige Rewards, And Succession](core-world-entry-hardcore-prestige-and-succession-product-direction-2026-11-09.md). The player's **Hardcore** option is intended as a coherent qualitative gameplay commitment (Core wilderness isolation, additional grounded survival and **irreversible actual character death**), not a numerical difficulty preset. This user-facing composition must later be reconciled with the distinct technical `difficultyPreset`, `worldRules` and restricted `stakesRules` owners. Neither the legacy `hardcore` Boolean nor selecting Forsaken/Grim World by itself establishes a permitted live restricted-Stakes mode. Separate rules authority and explicit selection remain essential; do not implement or silently couple them from this note.
+
 ## 1. Decision Summary
 
 Lineage: Reforged will separate three concerns that games often collapse into one menu:
