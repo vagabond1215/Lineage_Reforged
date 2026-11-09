@@ -2210,3 +2210,22 @@ Final focused serial tests **57/57**; Node UI typecheck, default Vite build and 
 ### D. Risks / follow-up notes
 
 No master merge/default activation. PRs #5–#17 and native-v3 #63–#73 retained without lifecycle action; #71 remains separate docs evidence. The exact next package is Checkpoint B reader classification and safe same-origin legacy metadata/delete scope, followed by independent source/selected review. Suggested commit: `feat(v3): stage isolated native owner integration candidate`. No Game-version decision proposed.
+## 2026-11-09 — Native-v3 Checkpoint B admission repair
+
+**Source run:** unversioned support on isolated `codex/native-v3-master-integration-2026-11-09` from `bf5e2021`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. Classification `V3_SAVE_CLASSIFICATION_BLOCKED` for full Checkpoint B. [Focused result](native-v3-master-integration-checkpoint-b-admission-2026-11-09.md).
+
+### A. Files changed
+
+`EpochApp.tsx`, launcher state, Main Menu, Load Game, one focused native host regression, focused record, prompt continuation, this output, handoff and branch register.
+
+### B. Patch summary
+
+Native candidate v2 and future Save formats cannot activate or enter gameplay; v2 default remains unchanged. Malformed current-format provenance and safe old-account metadata/deletion remain open without an unsafe alternate writer.
+
+### C. Tests or checks run
+
+Focused 7/7; Node UI typecheck and default Vite build pass; broad UI TypeScript 115 diagnostics on branch and 115 on master. FP-002: fixture evidence is not selected acceptance. FP-003: no guessed repair or bypass of malformed owner data. FP-009: branch and master heads distinguished. No original PR disposition change.
+
+### D. Risks / follow-up notes
+
+Next exact package is authoritative per-slot damaged/unavailable provenance with synthetic noninterference tests. Legacy delete remains `LEGACY_DELETE_SCOPE_UNAVAILABLE` pending key-family proof. No merge, activation, deployment, Game-version decision or PR lifecycle action. Suggested commit: `fix(v3): block unsupported native candidate Saves`.

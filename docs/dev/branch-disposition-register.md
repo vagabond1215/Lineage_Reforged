@@ -1250,3 +1250,6 @@ Live GitHub exact-head check: native-v3 PR #70 `fad907301d85786feaeed9cf8fecf64b
 ## 2026-11-09 isolated native-v3 integration Checkpoint A
 
 From verified `origin/master` `0522161f`, the new branch `codex/native-v3-master-integration-2026-11-09` stages the #73 native runtime/test source as a [tested partial candidate](native-v3-master-integration-checkpoint-a-2026-11-09.md). Original native-v3 PRs #63–#73, separate #71 docs prework, historical UI PRs, protected refs and PR #5 closed/unmerged branch remain retained. No merge, retarget, rebase, closure or deletion was due or performed. Reinspect exact heads and overlap before Checkpoint B or independent integration acceptance; no source branch is exhausted by this candidate.
+## 2026-11-09 native-v3 Checkpoint B admission checkpoint
+
+On isolated `codex/native-v3-master-integration-2026-11-09`, the [bounded admission repair](native-v3-master-integration-checkpoint-b-admission-2026-11-09.md) closes native candidate v2/future Play but leaves full Save classification held. Original PRs #63–#73, #71 separate docs prework, historical UI PRs, protected refs and PR #5 closed/unmerged branch retain prior dispositions. No merge, rebase, retarget, closure or deletion was due or performed. Review trigger: authoritative per-slot damaged/unavailable provenance and independent selected integration acceptance.

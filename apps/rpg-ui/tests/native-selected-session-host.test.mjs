@@ -14,7 +14,26 @@ const { createNativeSelectedSession, applyNativeSelectedItem, saveNativeSelected
   await vite.ssrLoadModule('/src/game-shell/nativeSelectedSession.ts');
 const { readNativeEpochAppSession } =
   await vite.ssrLoadModule('/src/game-shell/nativeEpochAppSession.ts');
+const { slotSummaries } = await vite.ssrLoadModule('/src/EpochApp.tsx');
+const { SAVE_SLOT_ORDER } = await vite.ssrLoadModule('/src/game-shell/state.ts');
 const { readNativeSelectedCharacter } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedCharacter.ts');
+
+test('native candidate projects v2 as incompatible and future formats as unsupported without changing source slots', () => {
+  const source = SAVE_SLOT_ORDER.map((slot, index) => ({ slotId: slot.id,
+    status: index < 3 ? 'ready' : 'empty',
+    metadata: index < 3 ? { snapshotVersion: [
+      'lineage.save_snapshot.v3', 'lineage.save_snapshot.v2', 'lineage.save_snapshot.v4'][index],
+      characterName: `Character ${index}`, totalPlayTicks: 0 } : null }));
+  const before = JSON.stringify(source);
+  const candidate = slotSummaries(source, true);
+  assert.deepEqual(candidate.slice(0, 3).map(slot => [slot.status, slot.hasSave]),
+    [['ready', true], ['incompatible', false], ['unsupported', false]]);
+  assert.equal(candidate[3].status, 'empty');
+  assert.equal(JSON.stringify(source), before);
+  const defaultApp = slotSummaries(source, false);
+  assert.equal(defaultApp[1].status, 'ready');
+  assert.equal(defaultApp[1].hasSave, true);
+});
 
 function hunter() {
   const identity = getLineageIdentityCatalog('lineage.human');

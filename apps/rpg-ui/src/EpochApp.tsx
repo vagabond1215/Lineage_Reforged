@@ -72,16 +72,20 @@ const blockedNotice = (detail: string): GameShellNotice => ({ tone: 'warning', t
 const heldNotice = (action: string): GameShellNotice => ({ tone: 'warning', title: `${action} Unavailable`,
   detail: 'This account or campaign action awaits the G9 lifecycle owner. Your campaign data was not changed.' });
 
-function slotSummaries(raw: CleanEpochSlotSummary[]): SaveSlotSummary[] {
+export function slotSummaries(raw: CleanEpochSlotSummary[], nativeCandidate = false): SaveSlotSummary[] {
   const byId = new Map(raw.map(slot => [slot.slotId, slot]));
   if (byId.size !== SAVE_SLOT_ORDER.length) throw new Error('Epoch slot inventory is incomplete.');
   return SAVE_SLOT_ORDER.map(slot => {
     const read = byId.get(slot.id);
     if (!read) throw new Error(`Epoch slot ${slot.id} is missing.`);
     const metadata = read.metadata;
-    const ready = read.status === 'ready' && metadata !== null;
+    const formatStatus = nativeCandidate && read.status === 'ready' && metadata
+      ? metadata.snapshotVersion === 'lineage.save_snapshot.v3' ? 'ready'
+        : metadata.snapshotVersion === 'lineage.save_snapshot.v2' ? 'incompatible' : 'unsupported'
+      : read.status;
+    const ready = formatStatus === 'ready' && metadata !== null;
     if (read.status === 'ready' && !metadata) throw new Error(`Ready slot ${slot.id} lacks metadata.`);
-    return { ...slot, status: read.status,
+    return { ...slot, status: formatStatus,
       hasSave: ready, metadata, playerName: metadata?.characterName ?? null,
       lineageLabel: metadata?.lineageLabel ?? null, sexLabel: metadata?.sexLabel ?? null,
       classLabel: metadata?.classLabel ?? null, backstoryLabel: metadata?.backstoryLabel ?? null,
@@ -233,7 +237,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
         menuAccountRevision.current = found.account.revision;
         await captureMenuDeletionSources(next, found.account.accountId, found.slots);
         dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: selected.value.session,
-          accountProfile: found.account.profile, slots: slotSummaries(found.slots), notice: null });
+          accountProfile: found.account.profile, slots: slotSummaries(found.slots, nativeCandidate), notice: null });
       }
       if (generation !== initializationGeneration.current) { owner.close(); return; }
       activeOwner.current = owner;
@@ -266,7 +270,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
     await captureMenuDeletionSources(services, accountId, found.slots);
     if (section) setLauncherSection(section);
     dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: session, accountProfile: found.account.profile,
-      slots: slotSummaries(found.slots), notice: typeof message === 'function' ? message(found) : message });
+      slots: slotSummaries(found.slots, nativeCandidate), notice: typeof message === 'function' ? message(found) : message });
   };
 
   const signIn = (options: { accountId: string; password: string; stayLoggedIn: boolean }): Promise<LauncherAuthResult> =>
@@ -314,14 +318,16 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
     const found = await inventory(services, accountId);
     const selected = loaded ?? (() => { throw new Error('Exact slot readback is required.'); })();
     await captureAddresses(services, accountId, slotId);
-    readNativeEpochAppSession({ snapshot: selected.snapshot,
+    const nativeSession = readNativeEpochAppSession({ snapshot: selected.snapshot,
       campaignSessionControl: selected.sessionControl, sourceSlotId: slotId,
       accountRevision: found.account.revision,
       observedSourceAddress: observedAddresses.current[slotId] });
+    if (nativeCandidate && !nativeSession)
+      throw new Error('This Save format is incompatible with the native-v3 candidate. Its data was not changed.');
     observedAccountRevision.current = found.account.revision;
     sourceSlot.current = slotId;
     dispatch({ type: 'ENTER_GAME', launcherSession: session, accountProfile: found.account.profile,
-      slots: slotSummaries(found.slots), slotId, snapshot: selected.snapshot,
+      slots: slotSummaries(found.slots, nativeCandidate), slotId, snapshot: selected.snapshot,
       campaignSessionControl: selected.sessionControl,
       notice: { tone: 'accent', title: 'Campaign Ready', detail: `${getSaveSlotLabel(slotId)} read back from the campaign store.` } });
   };
@@ -356,6 +362,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
     const found = await inventory(services, state.accountProfile.accountId);
     const slot = found.slots.find(entry => entry.slotId === slotId);
     if (!slot) throw new Error('Selected slot is missing.');
+    if (nativeCandidate && slot.status === 'ready' && slot.metadata?.snapshotVersion !== 'lineage.save_snapshot.v3')
+      throw new Error('This Save format is incompatible with the native-v3 candidate. Its data was not changed.');
     if (slot.status === 'ready') {
       const result = await services.launcher.load(found.account.accountId, found.account.revision, slotId);
       if (result.status === 'blocked') throw new Error(result.message);
@@ -367,7 +375,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
       await enter(state.launcherSession, found.account.accountId, slotId, resumed.value.loaded);
     } else if (slot.status === 'empty') {
       dispatch({ type: 'OPEN_CHARACTER_CREATION', launcherSession: state.launcherSession,
-        accountProfile: found.account.profile, slots: slotSummaries(found.slots),
+        accountProfile: found.account.profile, slots: slotSummaries(found.slots, nativeCandidate),
         form: createDefaultCharacterCreationFormState(slotId), notice: null });
     } else throw new Error(`Slot is ${slot.status}; resolve retained authority before continuing.`);
   }, undefined);
@@ -409,7 +417,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
       observedAccountRevision.current = found.account.revision;
       sourceSlot.current = destinationSlotId;
       dispatch({ type: 'COMPLETE_IN_GAME_SAVE', launcherSession: state.launcherSession,
-        accountProfile: found.account.profile, slots: slotSummaries(found.slots),
+        accountProfile: found.account.profile, slots: slotSummaries(found.slots, nativeCandidate),
         activeSlotId: destinationSlotId, snapshot: result.session.snapshot as unknown as SaveSnapshot,
         campaignSessionControl: result.session.control as unknown as CampaignSessionControl,
         notice: { tone: 'success', title: 'Game Data Saved',
@@ -437,7 +445,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
     observedAccountRevision.current = found.account.revision;
     sourceSlot.current = destinationSlotId;
     dispatch({ type: 'COMPLETE_IN_GAME_SAVE', launcherSession: state.launcherSession,
-      accountProfile: found.account.profile, slots: slotSummaries(found.slots), activeSlotId: state.activeSlotId,
+      accountProfile: found.account.profile, slots: slotSummaries(found.slots, nativeCandidate), activeSlotId: state.activeSlotId,
       snapshot: result.value.loaded.snapshot, campaignSessionControl: result.value.loaded.sessionControl,
       notice: { tone: 'success', title: defeatPending ? 'Defeat Recovery Saved' : 'Game Data Saved',
         detail: `Saved to ${getSaveSlotLabel(destinationSlotId)} and verified its exact ready address.` } });
