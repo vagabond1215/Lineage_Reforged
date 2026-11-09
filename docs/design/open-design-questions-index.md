@@ -2,7 +2,7 @@
 
 Source route: ChatGPT via GitHub Connector  
 Date: 2026-08-20
-Last refreshed: 2026-09-14
+Last refreshed: 2026-11-09 (focused owner-direction reconciliation; older tabular audit and counts retained historically)
 Status: connector-side durable question index; documentation only; not an implementation handoff
 
 ## Purpose
@@ -21,6 +21,14 @@ This file is not:
 - evidence that a deferred question must be answered before its named trigger exists.
 
 When this index conflicts with a newer focused accepted decision, current Codex output/handoff, or user-authored product direction, use the newer/more specific authority and update this index in a later connector-safe pass.
+
+## 2026-11-09 Current Owner-Direction Override
+
+This index's old Soundings/current-pipeline snapshot and baseline category counts below are **historical**, not today's active route. The installed task is [native-v3 → master isolated development integration](../dev/current-codex-prompt.md), with merge/activation/deployment held. The latest [Core World Entry, Hardcore, Prestige And Succession owner direction](core-world-entry-hardcore-prestige-and-succession-product-direction-2026-11-09.md) resolves formerly open Core tutorial (mandatory for eligible Core), narrative scenario multiplicity, environmental applicability, Hardcore wilderness and irreversible actual death, no synthetic heirs, maturity-based rather than fixed-age eligibility, globally synchronized Living World skips and estate evolution. Surprise Me may reward eligible final Prestige, capped and later upgradable, but 1%/100 are only balance examples.
+
+**OPEN FOR THE NEXT CORE AUTHORING CONTRACT (focused, not owner product indecision):** identify actual first playable starting sites, eligible scene/character/environment predicates, 6–8 small authored scenarios with geographic coverage and true commands; settle per-character versus per-account tutorial reward eligibility and availability without farming; specify supported local item acquisition, narrative reply, deterministic selection and receipt ownership. This is parallel **docs-only** preparation, not an installation of a new implementation package.
+
+**DEFERRED UNTIL THEIR NAMED OWNERS ARE SELECTED:** final Prestige/Legacy/Family currency and multiplier order, Surprise Me rate/cap upgrade curve and thresholds; world time-skip exit classification and non-normal-time admission; exactly which Grim modules activate under the future Hardcore player-facing composition; actual offspring maturity stages and physical eligibility, gestation and kinship facts; live businesses/rents/deposits/liabilities/guardian estate administration and transfers; temporary spouse control and Living World successor/world ownership. Do not reopen fixed age 15, unconstrained rerolling, skippable Core onboarding, or Hardcore as merely a difficulty scalar.
 
 ## Current Pipeline Context
 
@@ -87,7 +95,7 @@ No unresolved product/design question in this index blocks the installed Soundin
 | Question | Current posture | Disposition |
 | --- | --- | --- |
 | What should the first builder-adjacent playable slice be: bushcraft only, camp utility, survival shelter, or another deliberately small scope? | Substantial building is explicitly not early; bushcraft is the allowed early edge, but the first builder slice is still a product choice. | `OPEN_STRATEGIC` |
-| How should the Hardcore toggle modify each difficulty mode? | The toggle and difficulty modes exist as accepted direction; exact mechanical effects remain unsettled. | `OPEN_STRATEGIC` |
+| How should the future player-facing Hardcore selection compose Grim World, wilderness Core starts, and restricted no-rollback/permanent-death Stakes while retaining independently tuned difficulty? | Product direction is **settled**: Hardcore is a qualitative mode with irreversible actual death, not a scalar. Exact technical mapping/availability and Grim module implementation need a later campaign-rules owner contract. | `DEFERRED_WITH_TRIGGER` |
 | How should Prestige gain scale inversely with selected difficulty? | The inverse relationship is accepted; exact formula/caps are not. | `OPEN_STRATEGIC` |
 | When a generated NPC becomes persistent, should its placeholder-derived traits freeze, be promoted into a fuller profile, or be selectively regenerated? | Disposable-until-promoted NPC posture is accepted; promotion profile semantics remain unresolved. | `OPEN_STRATEGIC` |
 | Beyond storage location, which facts should force item-stack separation: condition, ownership, quality, provenance, or another identity boundary? | Weight/bulk and container location are accepted; additional stack identity semantics require a future inventory owner decision. | `OPEN_STRATEGIC` |
@@ -132,7 +140,7 @@ Trigger: reopen only when family lifecycle/heir/maturation runtime ownership is 
 
 | Question | Current posture | Disposition |
 | --- | --- | --- |
-| What exact adult ages should each race/culture use? | Data-driven race/culture variation is accepted; values require authored maturation content. | `DEFERRED_WITH_TRIGGER` |
+| What authoritative maturity/development and physical-capability states make an actual offspring eligible for independent playable-heir control? | Owner direction **rejects a fixed universal numerical age** (15 was illustrative). Internal elapsed time may inform stages and lineage-specific progression; eligibility must derive from actual maturation evidence. | `DEFERRED_WITH_TRIGGER` |
 | Should offspring stat growth apply semi-annually, quarterly, monthly, or another cadence? | Smaller increments are accepted; cadence should follow the eventual maturation owner's accuracy/cost. | `DEFERRED_WITH_TRIGGER` |
 | Should quarter-by-quarter offspring status be the default unless day-by-day proves simpler? | Quarterly is historical preference, not implementation authority. | `DEFERRED_WITH_TRIGGER` |
 | What RNG weighting range should both-parent stat inheritance use? | Parent-weighted inheritance is accepted; range is balance/runtime work. | `DEFERRED_WITH_TRIGGER` |
