@@ -43,6 +43,25 @@ Deletion requires a user-selected **exact account** or clearly labeled **clear o
 
 **Browser origin constraint:** A Site at one origin cannot enumerate or delete IndexedDB/localStorage belonging to another origin. The old v2 primary Site and an independent v3 staging Site may therefore each have separate data. Closing/deleting a provider Site does not itself prove deletion of browser storage for that origin. Site project retirement remains governed by the exact-provider-ID and dependency-review [cleanup hold](../dev/native-v3-spare-staging-site-cleanup-hold-2026-11-09.md), not this Save policy.
 
+## Source-backed v2/v3 format and classification consolidation
+
+Connector read-only cross-check at `master` `2d04c85affa3e22586113e894b822063b498383b` and the then-current native-v3 draft #73 head `72df5d6fb01c12447a0a131dfae6975b20dd2a53`. These are **source facts, not executed runtime or selected-browser acceptance**:
+
+| Authority layer | Existing source/identity | Integration consequence |
+| --- | --- | --- |
+| Native campaign snapshot | `nativeNewGameSnapshot.ts` creates `lineage.save_snapshot.v3`; `nativeEpochAppSession.ts` admits only that snapshot version to the selected native session | Preserve and validate the canonical v3 snapshot discriminator. Do not create a second `saveFormatVersion` field merely for presentation. |
+| Published Save artifact | `saveManager.ts` on draft supports native stored envelope **version 8** alongside historical v2 **version 7** | An old envelope being recognized by low-level storage does **not** authorize old-format Play in the v3-selected launcher. Reject unsupported play by explicit policy at the correct admission boundary. |
+| Browser database | `CLEAN_EPOCH_DATABASE_NAME = "lineage.campaigns.epoch1"` and `CLEAN_EPOCH_DATABASE_VERSION = 7` in `cleanEpochAccountStore.ts` | Database schema version 7 is **not** Save envelope version 7 and is **not** game release v0.7. Use separate fields in diagnostics. |
+| Campaign storage foundation | `CAMPAIGN_DATABASE_VERSION = 3` in `campaignIndexedDbStore.ts`; error codes include `invalid_record`, `unavailable`, `blocked_upgrade`, `quota`, `aborted`, `stale_head`, `conflict`, `readback_failed` | Map errors from the authoritative reader. Do not assume all `invalid_record` errors are corruption: preserve explicit compatibility and version-check evidence before classification. |
+| v2 Save inspection | Current-master `saveManager.ts` already has `incompatible` and `corrupt` inspection outcomes | Reuse concepts where appropriate, but do not claim v3 launcher, metadata-only legacy inventory or deletion UX is already complete. |
+| Game release | Root `GAME_VERSION = 0.1.1-prealpha` | Keep a release provenance label separate from technical format/epoch; release mismatch **alone** is not incompatibility. |
+
+**Do not create another general Save-version registry just for this consolidation.** The implementation package should nominate the existing canonical format validator/reader and the UI metadata projection that interprets it. Distinguish supported current v3, recognized obsolete v2, unrecognized newer/unknown, known-format damaged, transient unavailable, and recoverable pending. A raw parse failure is not safe evidence of a particular past format. No legacy gameplay account import or legacy-version conversion is a requirement.
+
+The exact v2 and v3 databases may be **different origins as well as different storage namespaces**. Current-origin metadata-only legacy inventory is an optional bounded capability; cross-origin data cannot be enumerated or deleted by the primary Site. Before advertising `Delete account`, identify the complete account-owned key/index/artifact graph, current-origin reachability and exact deletion owner, with no collateral impact on active v3 accounts. A failed storage read is not an empty inventory.
+
+**Review boundary:** draft #70/#72/#73 form a stacked v3 gameplay/Save candidate, while draft #71 is separate documentation prework. Native-v3 source integration, default route activation, Site deployment and deletion of any Site are distinct operations. This crosswalk does not approve any of them.
+
 ## Native-v3 integration sequence affected by this decision
 
 1. Reconcile stacked native-v3 code and current master on an isolated integration branch. Preserve one coherent v3 item/account/Save owner, compile and run focused owner/caller tests; do not apply a historical branch blindly to master.
