@@ -4,6 +4,9 @@ Date: 2026-07-22
 
 Status: accepted focused design authority; documentation only; no runtime, save, death, Chronicle, Prestige, succession, UI, schema, or balance implementation is authorized
 
+
+> **2026-11-09 owner clarification:** [Latest Core/Hardcore and succession product direction](core-world-entry-hardcore-prestige-and-succession-product-direction-2026-11-09.md) confirms actual Hardcore death is immediate, permanently terminal and never recoverable through an earlier Save/autosave. It **does not** extinguish a real, independently known offspring/heir, available Prestige heir capacity or a persistent Living World. Actual heir control waits for validated physical/developmental maturity and eligibility, not universal age 15. Pending succession may drive a **world-level**, never individual, time-skip only after all participating characters leave normal time, ending at the earliest exit point. Estate financial/operational facts change during elapsed world time and require lawful custody/reconciliation before handoff. These are accepted product rules, not acceptance of a new Stakes id, inheritance schema, clock owner, spouse-control implementation or payout formula.
+
 ## 1. Purpose
 
 Define the accepted direction for a future restricted-Stakes campaign mode commonly described as Hardcore without conflating it with:
