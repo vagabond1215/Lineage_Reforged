@@ -7,6 +7,12 @@ Source checkpoint at authoring: `42a12460360485d1bee4c4852ef8d8f904a27601`
 
 This is an **owner-directed playability priority**, not a new engine/runtime/Save contract, authored canon acceptance, implementation authorization, selected-client acceptance, Game-version publication, or replacement for the active Codex task. It changes **what should be prioritized next**, not which old branches or held prompts may be executed. Use current master, the more specific accepted authorities and the [current Codex prompt](../dev/current-codex-prompt.md) before selecting a package. Do not infer that the illustrative scenes, merchants, guild representatives, yields, prices, recipes, ranks or encounters below already exist as playable content.
 
+## 2026-11-09 Pre-Alpha Save Compatibility Clarification
+
+**Later explicit owner direction:** [Pre-Alpha Save Format Compatibility And Native-v3 Development Cutover Policy](prealpha-save-format-compatibility-and-native-v3-cutover-policy-2026-11-09.md) takes priority over any implication in the S0 notes below that old **v2 development** accounts, Saves or ambiguous old gear must be migrated to v3. **No old development-save backward compatibility is required**; new native-v3 fresh campaign and current-format transactional Save integrity remain mandatory. Where safely readable, legacy accounts may remain visible **delete-only**; incompatible, newer unsupported and corrupt Saves must be distinguished and blocked from Play/Continue, never silently deleted, converted, loaded or overwritten. An unavailable store is a Retry condition, not proof of corruption. The Game release label and technical Save/account format versions remain separate.
+
+**Implementation implication:** assess **native-v3 coherent integration on master** before launching a second complete legacy non-fungible gear migration. The currently installed older gear migration prompt is not automatically canceled or executed; select and revise the active implementation route deliberately after exact-source review. Source merge, default activation, provider Site deployment and redundant-Site deletion remain four independently verified operations. The existing design below remains the *regional gameplay target*; any S0 old-save-migration requirement is superseded by this clarification. Do not relax current-v3 duplication, payment, quest, Save/restart or data-integrity tests.
+
 ## 1. North star and explicit UI constraint
 
 Build a repeatable **single-region ordinary playthrough**:
