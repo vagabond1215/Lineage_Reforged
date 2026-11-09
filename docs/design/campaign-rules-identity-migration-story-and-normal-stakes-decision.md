@@ -8,6 +8,9 @@ Scope: canonical campaign-rule identity, creation locks, availability gates, Nor
 
 Implementation authorization: none. This decision does not authorize runtime, schema, save, migration, UI, test, balance, nutrition, attribute, Grim module, restricted-Stakes, death, succession, Prestige, content, or gameplay changes.
 
+
+> **2026-11-09 current-direction note:** The owner requires the eventual **player-facing Hardcore** selection to provide materially different world/survival gameplay including an isolated Core wilderness entry **and permanent actual character death**, not just harsher difficulty numbers. See [Core World Entries, Hardcore, Prestige Rewards, And Succession](core-world-entry-hardcore-prestige-and-succession-product-direction-2026-11-09.md). This creates a **future composite campaign-rules contract** to reconcile against this accepted initial `normal_stakes`-only shape. It neither makes a deferred restricted-Stakes identifier currently valid nor makes `runDifficulty.hardcore`, Grim World alone or Forsaken a terminal-death proxy; do not mutate active Saves or game rules from this note.
+
 ## 1. Purpose And Source Evidence
 
 This decision consumes the completed `Difficulty Preset, Grim World, And Stakes Separation Contract Planning Audit` and accepts one owner-aware contract for the initial campaign-rules identity.
