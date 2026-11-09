@@ -2092,3 +2092,23 @@ Files changed: clean epoch IndexedDB owner and terminal adapter; selected App an
 Checks run: native G9E **10/10**, hardened G9D **14/14**, adjacent browser **130/130**, focused Node **174/174**, Node UI-config typecheck and app-local Vite build **PASS**, selected-App synthetic delete/quota/retry, same-slot replacement publication and stale second-tab rejection, diff check. Broad UI typecheck retains **137 known diagnostics**; one unchanged Main Menu layout diagnostic, zero introduced in G9E code. Full workspace `npm test` was stopped after unrelated failures; no full-workspace pass claimed. FP-001/002/003/004/005/006/008/009/011/012/013/014/015/017 applied; caller, rollback, contention, retained evidence, exact retry/readback and synthetic-source limits are detailed in the focused record.
 
 Branch/PR lifecycle: one local/six hosted refs, zero open PRs. Readiness and prompt audit remain protected; administration, character-creator planning and new creator implementation branch `9f246be8` remain held for named consumers. No integration, deletion or PR action due; exact review triggers in the branch register. Suggested commit `feat(persistence): retain slot generations through address deletion`. Risks/follow-up: G9F account-wide reset/delete and session invalidation next; G10 activation, capacity/backup, death callers, combat, planned parent and Game-version acceptance held. No separate game-version decision proposed.
+
+## 2026-11-09 — historical PR #9 binary screenshot preservation
+
+**Source run:** unversioned historical UI evidence preservation. Source `master`/`origin/master` `dabdf27deb7593b8f59928200d53add371e39e9c`; PR #9 `69215b6fa6b4bcc805363171541120645f365d8c`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`; parent milestone n/a; development impact `none`; game-version impact `none`.
+
+### A. Files changed
+
+Eight PNGs in `docs/dev/mobile-shell-evidence/`, plus this output, current handoff and branch disposition register. Suggested commit: `docs(ui): preserve PR9 mobile shell screenshots`.
+
+### B. Patch summary
+
+Preserved only the eight historical PR #9 screenshots as binary evidence, at the exact destinations and Git blob IDs in [the focused inventory](historical-ui-prs-5-9-connector-preservation-and-retirement-preflight-2026-11-09.md). No source, fixture, test, dependency, account, Save, staging or deployment content changed. `HOLD_SELECTED_ATOMIC_ACTIVATION` persists.
+
+### C. Tests or checks run
+
+Fetched/pruned and fast-forwarded a tracked-clean local `master`; verified exact PR head, eight source Git blobs, eight absent destinations, eight destination `git hash-object` matches. Final changed-path inventory and `git diff --check` passed; remote master and committed blob readback are required after push. No build, gameplay test or selected-client probe is warranted for this evidence-only run.
+
+### D. Risks / follow-up notes
+
+FP-002, FP-008, FP-009 and FP-016: historical fixture screenshots do not establish selected acceptance, semantic mergeability, current live UI placement or Save/restart. PR #9 retains `HOLD_NAMED_CONSUMER` for exact-main responsive, keyboard/focus, popup/clipping, selected Save/restart and separate lifecycle disposition; #15 is downstream. PRs #5–#8 and other retained/protected refs are unchanged. No branch integration, PR closure or deletion. Next run: exact-main selected UI acceptance and evidence-backed retirement review; no Game-version decision.
