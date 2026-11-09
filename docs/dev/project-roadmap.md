@@ -2,6 +2,15 @@
 
 Last reviewed: 2026-09-14 during Soundings owner-contract and durable-completion route reconciliation
 
+
+## 2026-11-09 Player-First Regional Playthrough Priority
+
+**Owner-directed future playability target:** [Functional Regional Playthrough Skeleton — Product Priority And Implementation Roadmap](../design/functional-regional-playthrough-skeleton-priority-and-roadmap-2026-11-09.md). Build one real regional character journey: creator → fact-grounded intro/current situation → ordinary exploration → gather/hunt → craft → buy/sell from present NPC provider → qualify for and use a guild → fulfill a request → choose and resolve combat → gain visible skill/guild progress → save/restart/continue. The focused design record owns the P0/P1/P2 dependency map, small authored-content budget, explicit authoring questions, acceptance gates and deferred scope.
+
+**Current priority:** Safe non-fungible item/Save ownership and existing combat result/victory closure remain separate P0 prerequisites; the first *new* player-facing candidate is a narrow LocalSceneContext/Current Situation integration over existing commands, then one verified resource acquisition, player crafting transaction, merchant transaction and actual guild membership/contract consequence. Select exactly one next package after an exact-master gap and authoring-decision review. The first guild may be the Herbalists Guild **only if** real local presence, authorized clerk and authored policy are established. Do not treat canonical guild descriptions, static resource/catalog/recipe data, or civilization markets as existing executable player commands.
+
+**UI and release guard:** Functional desktop use, truthful result/Save accessibility and minimal blocking repairs suffice; cosmetic/responsive overhaul is deferred while gameplay expands. Game `0.1.1-prealpha`, `INTEGRATED_LOOP`, independent Game-version/selected acceptance requirements and native-v3 holds remain unchanged. This entry is **product prioritization only**; it does not approve content/canon, authorize any implementation, replace `docs/dev/current-codex-prompt.md`, revive parked prompts, change protected PR/ref lifecycle or supersede current exact handoff/branch policy. The dated runtime-transition section below is retained for historical continuity, not a claim that its old active-run line is today's installed task.
+
 ## Current Runtime Transition Override
 
 - Latest implemented and accepted primary: `Version 0.6.11 - Ashen Reef Survey Ordinary Reachability And Representative Loop Evidence` at `3ca23d6864541a899ea61a6bf26257665f754e78`; independent `0.6.11.1` returned `PARENT_ACCEPTED` and `REPRESENTATIVE_LOOP_ACCEPTED`.
