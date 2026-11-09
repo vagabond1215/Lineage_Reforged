@@ -2172,3 +2172,22 @@ From `apps/rpg-ui`, seven focused `node --test` files passed **31/31**, exit 0. 
 ### D. Risks / follow-up notes
 
 FP-001/002/008/009/015/016: source/test proof does not establish physical viewport fit or authenticated selected actions/Save. PRs #10–#16 retain `HOLD_NAMED_CONSUMER`, with current controlled viewport/focus review then authorized exact-master selected acceptance as triggers. #5 remains closed with ref retained; no branch/PR integration, rebase, retarget, closure or deletion. Next run: bounded controlled shell/top-bar fit, then separately authorized selected review. No Game-version decision.
+## 2026-11-09 — Current-master mobile shell and top-bar controlled fit
+
+**Source run:** unversioned controlled-browser visual audit; local synchronized `master`/`origin/master` `bd94bbc74b1573b98563b95319f8446ddd3cc165`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `none`, game-version impact `none`.
+
+### A. Files changed
+
+[Focused fit record](current-master-mobile-shell-topbar-controlled-fit-2026-11-09.md), branch register, this output and handoff. The installed non-fungible gear prompt is unchanged.
+
+### B. Patch summary
+
+PR #15 mobile shell CSS: `CONTROLLED_LAYOUT_BLOCKED` because 100% viewport navigation fit was observed but representative 200% zoom and screenshot archive were unavailable. PR #16 top-status layout CSS: `CONTROLLED_LAYOUT_GAP_FOUND` because Settings and Notifications remain open after Escape at 320×667 and 375×667. No runtime repair was made. Synthetic fixture behavior is not selected-client acceptance.
+
+### C. Checks or observations
+
+ChatGPT in-app browser controlled five exact viewport sizes and Character, Inventory, World and Activity routes. No document-level horizontal overflow; bounded Character scrolling was measured. Condition and calendar disclosures fit narrow viewports, dismissed on Escape and restored trigger focus. Settings Save was visible at 320×667. Browser zoom keys did not change scale. Browser tool screenshot bytes could not be saved to repository artifacts. `git diff --check` and changed-path review are publication checks. FP-002 and FP-009 applied; controlled state was not promoted to parent/selected acceptance and source/push/readback identities are kept distinct.
+
+### D. Risks / follow-up notes
+
+Smallest repair: Settings and Notifications Escape dismissal and focus return, then repeat controlled fit with a runner that can demonstrate 200% zoom and export screenshots. PRs #6–#16 retained; PR #5 closed without merge and branch intact. No PR lifecycle action, activation, deployment or Game-version change. Suggested commit: `docs(ui): record current-master controlled fit limits and top-bar gap`. Next recommended run is the bounded top-bar keyboard repair plus controlled recheck; separately discuss combat, non-fungible item owner, nutrition, magic, gathering and crafting readiness. Authenticated selected-client interactions and Save/restart remain outstanding.
