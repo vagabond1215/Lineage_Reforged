@@ -14,8 +14,42 @@ const { createNativeSelectedSession, applyNativeSelectedItem, saveNativeSelected
   await vite.ssrLoadModule('/src/game-shell/nativeSelectedSession.ts');
 const { readNativeEpochAppSession } =
   await vite.ssrLoadModule('/src/game-shell/nativeEpochAppSession.ts');
-const { slotSummaries } = await vite.ssrLoadModule('/src/EpochApp.tsx');
+const { slotSummaries, admitBeforeRecovery } = await vite.ssrLoadModule('/src/EpochApp.tsx');
 const { SAVE_SLOT_ORDER } = await vite.ssrLoadModule('/src/game-shell/state.ts');
+const { CleanEpochLauncherRead } = await vite.ssrLoadModule('/src/game-shell/cleanEpochLauncherRead.ts');
+const { CampaignStoreError } = await vite.ssrLoadModule('/src/game-shell/campaignIndexedDbStore.ts');
+
+test('failed account inventory preserves a healthy neighbor and distinguishes invalid data from unavailable storage', async () => {
+  const neighbor = { slotId: 'slot-2', snapshotVersion: 'lineage.save_snapshot.v3', artifactId: 'untouched' };
+  const before = JSON.stringify(neighbor);
+  let writes = 0;
+  for (const code of ['invalid_record', 'unavailable']) {
+    const owner = { readSelected: async () => ({ revision: 1 }),
+      listSlots: async () => { throw new CampaignStoreError(code, 'Read failed.'); },
+      write: () => { writes++; } };
+    const read = await new CleanEpochLauncherRead(owner, {}).inventory('account.synthetic', 1);
+    assert.equal(read.status, 'blocked');
+    assert.equal(read.code, code);
+    assert.equal(JSON.stringify(neighbor), before);
+    assert.equal(writes, 0);
+  }
+});
+
+test('native Load rejects a pending v2 Save before the recovery callback can write', async () => {
+  const pendingV2 = { snapshot: { snapshotVersion: 'lineage.save_snapshot.v2',
+    normalDefeatReceipts: [{ posture: 'recovery_pending' }] } };
+  const source = JSON.stringify(pendingV2);
+  let recoverCalls = 0;
+  const recover = async () => { recoverCalls++; return pendingV2; };
+  await assert.rejects(admitBeforeRecovery(true, pendingV2, recover), /incompatible/);
+  assert.equal(recoverCalls, 0);
+  assert.equal(JSON.stringify(pendingV2), source);
+  const v3 = { snapshot: { snapshotVersion: 'lineage.save_snapshot.v3' } };
+  assert.equal(await admitBeforeRecovery(true, v3, recover), v3);
+  assert.equal(recoverCalls, 0);
+  assert.equal(await admitBeforeRecovery(false, pendingV2, recover), pendingV2);
+  assert.equal(recoverCalls, 1);
+});
 const { readNativeSelectedCharacter } = await vite.ssrLoadModule('/src/game-shell/nativeSelectedCharacter.ts');
 
 test('native candidate projects v2 as incompatible and future formats as unsupported without changing source slots', () => {

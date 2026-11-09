@@ -2229,3 +2229,22 @@ Focused 7/7; Node UI typecheck and default Vite build pass; broad UI TypeScript 
 ### D. Risks / follow-up notes
 
 Next exact package is authoritative per-slot damaged/unavailable provenance with synthetic noninterference tests. Legacy delete remains `LEGACY_DELETE_SCOPE_UNAVAILABLE` pending key-family proof. No merge, activation, deployment, Game-version decision or PR lifecycle action. Suggested commit: `fix(v3): block unsupported native candidate Saves`.
+## 2026-11-09 — Native-v3 admission-before-recovery closure
+
+**Source run:** unversioned isolated Checkpoint B support from branch head `5c27d3b8`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. [Focused result](native-v3-checkpoint-b-admission-before-recovery-result-2026-11-09.md). Classification `V3_FOUNDATION_READY_FOR_INDEPENDENT_MERGE_REVIEW` with per-slot damage UX and legacy delete scope deferred.
+
+### A. Files changed
+
+`EpochApp.tsx`, one native host regression suite, focused record, branch-local prompt/output/handoff/register.
+
+### B. Patch summary
+
+Native Load and Characters activation require v3 admission before any v2 Normal-Stakes recovery callback. V2 default behavior is retained. No Save/store writer or validator changed.
+
+### C. Tests or checks run
+
+Focused 8/8, Node UI typecheck, direct default Vite build, `git diff --check`. Master advanced from integration base by 12 docs paths and zero runtime paths. FP-001: command-before-writer guard tested; FP-002: synthetic evidence remains distinct from selected acceptance; FP-003: indeterminate graph faults fail closed; FP-009: branch/master/source heads tracked separately. No broad or hosted test repeated.
+
+### D. Risks / follow-up notes
+
+Per-slot Damaged label is deferred because shared graph failures cannot be attributed safely. Legacy delete remains `LEGACY_DELETE_SCOPE_UNAVAILABLE`. Next: independent exact-source merge review and disposable current-v3 Save/restart; no merge or activation authorized. Original PRs/refs retained. Suggested commit: `fix(v3): admit native Save before legacy recovery`.

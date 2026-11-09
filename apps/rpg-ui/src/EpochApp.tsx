@@ -107,6 +107,17 @@ function address(read: Awaited<ReturnType<CleanEpochAccountStore['readSlot']>>):
     publicationId: read.loaded.sessionControl.loadedPublicationId };
 }
 
+/** Native candidate admission must precede any legacy recovery writer. */
+export async function admitBeforeRecovery<T extends { snapshot: { snapshotVersion: string } }>(
+  nativeCandidate: boolean, loaded: T, recover: () => Promise<T>): Promise<T> {
+  if (nativeCandidate) {
+    if (loaded.snapshot.snapshotVersion !== 'lineage.save_snapshot.v3')
+      throw new Error('This Save format is incompatible with the native-v3 candidate. Its data was not changed.');
+    return loaded;
+  }
+  return recover();
+}
+
 export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
   { candidateNativeV3?: boolean; stagingNativeV3?: boolean } = {}) {
   // The staging entry is built separately. Hosting, not this prop, controls access.
@@ -354,7 +365,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
       const result = await services.launcher.load(accountId, found.account.revision, slotId);
       if (result.status === 'blocked') throw new Error(result.message);
       await enter(session, accountId, slotId,
-        await recoverLoaded(accountId, slotId, result.value.account.revision, result.value.slot.loaded));
+        await admitBeforeRecovery(nativeCandidate, result.value.slot.loaded,
+          () => recoverLoaded(accountId, slotId, result.value.account.revision, result.value.slot.loaded)));
     }, undefined);
 
   const activateSlot = (slotId: ManualSaveSlotId) => guarded(async () => {
@@ -368,7 +380,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
       const result = await services.launcher.load(found.account.accountId, found.account.revision, slotId);
       if (result.status === 'blocked') throw new Error(result.message);
       await enter(state.launcherSession, found.account.accountId, slotId,
-        await recoverLoaded(found.account.accountId, slotId, result.value.account.revision, result.value.slot.loaded));
+        await admitBeforeRecovery(nativeCandidate, result.value.slot.loaded,
+          () => recoverLoaded(found.account.accountId, slotId, result.value.account.revision, result.value.slot.loaded)));
     } else if (slot.status === 'prepared') {
       const resumed = await services.first.resume(found.account.accountId, slotId);
       if (resumed.status === 'blocked') throw new Error(resumed.message);
