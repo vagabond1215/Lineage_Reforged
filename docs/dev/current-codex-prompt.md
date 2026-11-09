@@ -1,5 +1,7 @@
 # Native V3 → Master Development Integration And Save Consolidation
 
+**Branch-local Checkpoint B source preflight (2026-11-09):** Read [the focused connector source map](native-v3-master-integration-checkpoint-b-connector-preflight-2026-11-09.md) after fresh ref/worktree checks. It identifies the native-mode v2 admission gap at `EpochApp.enter`, exact existing reader/status/deletion owners, and a **small pre-alpha test matrix**. Reuse existing clean-epoch account deletion; do not weaken its credentials/graph checks, invent a parallel Save registry, or make unsafe legacy account deletion a merge gate. This is source mapping only, **not** executed Checkpoint B code or tests. Preserve the current prompt's authorization limits.
+
 **Branch-local continuation (2026-11-09):** Checkpoint A is committed as a tested partial candidate on `codex/native-v3-master-integration-2026-11-09`; see [the exact Checkpoint A record](native-v3-master-integration-checkpoint-a-2026-11-09.md). The next execution begins with fresh ref/worktree verification and **Checkpoint B** on that isolated branch. Reconcile any new master/source delta before editing; do not reimport the #73 source tree or repeat unchanged green Checkpoint A suites. This note does not authorize merge, default activation, Site publication or real account/Save mutation.
 
 <!-- repo-scope-guard -->
