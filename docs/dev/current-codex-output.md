@@ -2112,3 +2112,23 @@ Fetched/pruned and fast-forwarded a tracked-clean local `master`; verified exact
 ### D. Risks / follow-up notes
 
 FP-002, FP-008, FP-009 and FP-016: historical fixture screenshots do not establish selected acceptance, semantic mergeability, current live UI placement or Save/restart. PR #9 retains `HOLD_NAMED_CONSUMER` for exact-main responsive, keyboard/focus, popup/clipping, selected Save/restart and separate lifecycle disposition; #15 is downstream. PRs #5–#8 and other retained/protected refs are unchanged. No branch integration, PR closure or deletion. Next run: exact-main selected UI acceptance and evidence-backed retirement review; no Game-version decision.
+
+## 2026-11-09 — historical UI PR #5 retirement-gate review
+
+**Source run:** unversioned documentation-first historical consolidation; parent milestone n/a; fetched/pruned `master`/`origin/master` `a2f6ab0e641242063d7bd6862f7c0896d95d921f`, PR #5 `8980ea3875491bf631a18926feb75f90ffa1b55f`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development-milestone impact `none`, game-version impact `none`.
+
+### A. Files changed
+
+[Focused decision](historical-ui-pr5-retirement-gate-and-consumer-transfer-review-2026-11-09.md), this output, current handoff and branch register. Suggested commit: `docs(ui): record PR5 retirement gate and selected consumers`.
+
+### B. Patch summary
+
+Verified all sixteen PR #5 source blobs, evaluated the twelve not already archived, and assigned the remaining selected-client obligations to a future unversioned exact-master acceptance review without claiming they passed. PR #5 remains `HOLD_NAMED_CONSUMER`; no PR or branch mutation, source implementation, active prompt or Game-version change.
+
+### C. Checks run
+
+Fetched/pruned refs, tracked-clean status, exact head/source blob comparisons, current UI caller and focused evidence inspection, and GitHub issue-comment/review/thread checks. Markdown links and `git diff --check` passed; staged changed-path review precedes commit, and remote readback follows push. No runtime test or selected gameplay in this documentation-only run.
+
+### D. Risks / follow-up notes
+
+FP-002/008/009/016: current source and controlled fixtures do not pass selected acceptance or justify semantic branch integration; exact ref and current placement remain separate. PRs #5–#16 are retained, with #5 next trigger the dedicated selected review and independent twelve-document approval before any closure proposal. Branch register records disposition; no merge, rebase, retarget, closure or deletion. Next run: authorized exact-master selected UI acceptance, then separate lifecycle review; no separate Game-version decision.

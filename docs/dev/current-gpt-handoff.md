@@ -463,3 +463,7 @@ Preserve the known 137 broad UI diagnostics, accepted Soundings closure, Game/ve
 ## 2026-11-09 — historical PR #9 PNG evidence handoff
 
 At synchronized `master`/`origin/master` `dabdf27deb7593b8f59928200d53add371e39e9c`, eight PR #9 PNGs were copied byte-exact from retained head `69215b6fa6b4bcc805363171541120645f365d8c` to `docs/dev/mobile-shell-evidence/`; all source/destination Git blob IDs match [the focused inventory](historical-ui-prs-5-9-connector-preservation-and-retirement-preflight-2026-11-09.md). This historical controlled-fixture evidence does not prove selected gameplay or Save/restart. PR #9 remains `HOLD_NAMED_CONSUMER`; next is a separate exact-main responsive/keyboard/Save acceptance and lifecycle review. Current installed prompt and `HOLD_SELECTED_ATOMIC_ACTIVATION` remain unchanged.
+
+## 2026-11-09 — historical UI PR #5 retirement-gate handoff
+
+[Focused decision](historical-ui-pr5-retirement-gate-and-consumer-transfer-review-2026-11-09.md): twelve remaining PR #5 documents have exact source-blob dispositions, and open Character/item, resource/condition and responsive-shell acceptance obligations are assigned to a future unversioned exact-master selected review. This is a transfer of review ownership, not a passed acceptance result. PR #5 remains `HOLD_NAMED_CONSUMER` until independent approval and separate closure/ref-deletion decisions. The installed Codex prompt, Game `0.1.1-prealpha` and `HOLD_SELECTED_ATOMIC_ACTIVATION` remain unchanged.
