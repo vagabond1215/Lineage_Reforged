@@ -4,7 +4,10 @@ import { isNativeTargetCampaignSnapshot } from '../../../packages/engines/game-e
 import type { CampaignSessionControl } from '../../../packages/engines/game-engine/src/campaign-session.js';
 import { EpochApp } from './EpochApp.js';
 import { CleanEpochAccountAdapter } from './game-shell/cleanEpochAccountAdapter.js';
+import { CleanEpochLegacyActionAdapter } from './game-shell/cleanEpochLegacyActionAdapter.js';
 import { openCleanEpochAccountStore } from './game-shell/cleanEpochAccountStore.js';
+import { grantLegacy } from '../../../packages/engines/game-engine/src/legacy-account.js';
+import { resolveLegacyPreparationSelection } from '../../../packages/engines/game-engine/src/legacy-unlocks.js';
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochTerminalAdapter } from './game-shell/cleanEpochTerminalAdapter.js';
@@ -35,6 +38,62 @@ async function seed() {
       confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
     if (registered.status !== 'ready') throw new Error(registered.message);
     document.body.dataset.accountId = accountId;
+    if (new URLSearchParams(location.search).has('food-owner-bound') &&
+        new URLSearchParams(location.search).has('creator')) {
+      // This QA-only route supplies synthetic prerequisites, then exercises the
+      // real account CAS, Legacy purchase/selection and native creator owners.
+      const earned = grantLegacy(registered.value.account.profile, { amount: 6,
+        summary: 'Synthetic local food acceptance prerequisite', sourceType: 'synthetic_audit',
+        sourceId: 'native-selected-food-qa', recordedAt: new Date().toISOString() });
+      if (!earned.ok) throw new Error('Synthetic Legacy prerequisite was rejected.');
+      const granted = await new CleanEpochAccountAdapter(owner).updateProfile(accountId,
+        registered.value.account.revision, earned.profile);
+      if (granted.status !== 'ready') throw new Error(granted.message);
+      const legacy = new CleanEpochLegacyActionAdapter(owner);
+      const prepared = await legacy.apply({ accountId, expectedRevision: granted.value.revision,
+        expectedProfile: granted.value.profile,
+        action: { kind: 'purchase', unlockId: 'legacy.unlock.lineage.prepared_lineage',
+          recordedAt: new Date().toISOString() } });
+      if (prepared.status !== 'ready') throw new Error(prepared.message);
+      const keys = await legacy.apply({ accountId, expectedRevision: prepared.account.revision,
+        expectedProfile: prepared.account.profile,
+        action: { kind: 'purchase', unlockId: 'legacy.unlock.preparation.storehouse_keys',
+          recordedAt: new Date().toISOString() } });
+      if (keys.status !== 'ready') throw new Error(keys.message);
+      const selected = await legacy.apply({ accountId, expectedRevision: keys.account.revision,
+        expectedProfile: keys.account.profile,
+        action: { kind: 'select', unlockId: 'legacy.unlock.preparation.storehouse_keys' } });
+      if (selected.status !== 'ready' || !resolveLegacyPreparationSelection(selected.account.profile)
+        .selectedUnlockIds.includes('legacy.unlock.preparation.storehouse_keys'))
+        throw new Error('Storehouse Keys preparation was not selected.');
+      document.body.dataset.foodPrerequisite = 'synthetic-points-owner-purchase';
+      const capture = document.createElement('button');
+      capture.textContent = 'Capture food QA state';
+      capture.style.cssText = 'position:fixed;right:0;bottom:0;z-index:10000';
+      const evidence = document.createElement('pre');
+      evidence.id = 'food-qa-evidence';
+      evidence.style.cssText = 'position:fixed;right:0;bottom:2rem;z-index:10000;max-width:40vw;max-height:35vh;overflow:auto;background:#111;color:#fff';
+      capture.onclick = async () => {
+        const readOwner = await openCleanEpochAccountStore();
+        try {
+          const source = await readOwner.readSlot(accountId, 'slot-1');
+          const account = await readOwner.readSelected(accountId);
+          const candidate: unknown = source.status === 'ready' ? source.loaded.snapshot : null;
+          if (source.status !== 'ready' || !account || !isNativeTargetCampaignSnapshot(candidate))
+            throw new Error('Food QA selected native source is unavailable.');
+          const snapshot = candidate;
+          evidence.textContent = JSON.stringify({ accountId, accountRevision: account.revision,
+            publicationId: source.loaded.publication.publicationId,
+            loadedHeadRevision: source.loaded.sessionControl.loadedHeadRevision,
+            inventory: snapshot.playerState.inventory, body: snapshot.playerState.bodyState,
+            resources: snapshot.playerState.resources, useLedger: snapshot.nativeInventoryUse,
+            gear: snapshot.playerState.gear, wallet: snapshot.playerState.currency,
+            quests: snapshot.playerState.activeQuestIds, encounter: snapshot.gameState.activeEncounter,
+            legacy: account.profile.legacy }, null, 2);
+        } finally { readOwner.close(); }
+      };
+      document.body.append(capture, evidence);
+    }
     if (new URLSearchParams(location.search).has('creator')) {
       document.body.dataset.seeded = 'creator';
       createRoot(document.getElementById('root')!).render(<EpochApp
