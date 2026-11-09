@@ -2132,3 +2132,23 @@ Fetched/pruned refs, tracked-clean status, exact head/source blob comparisons, c
 ### D. Risks / follow-up notes
 
 FP-002/008/009/016: current source and controlled fixtures do not pass selected acceptance or justify semantic branch integration; exact ref and current placement remain separate. PRs #5–#16 are retained, with #5 next trigger the dedicated selected review and independent twelve-document approval before any closure proposal. Branch register records disposition; no merge, rebase, retarget, closure or deletion. Next run: authorized exact-master selected UI acceptance, then separate lifecycle review; no separate Game-version decision.
+
+## 2026-11-09 — PR #5 independent lifecycle approval
+
+**Source run:** unversioned documentation-only review; parent milestone n/a. Fetched/pruned tracked-clean `master`/`origin/master` `f545e782e33713b4946f630ffd8b9570bb73fe3a`; PR #5 `8980ea3875491bf631a18926feb75f90ffa1b55f`, merge base `f56229dd`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development and Game-version impacts `none`.
+
+### A. Files changed
+
+[Independent decision](historical-ui-pr5-independent-lifecycle-approval-2026-11-09.md), branch register, this output and current handoff. Suggested commit: `docs(ui): approve PR5 evidence supersession and consumer transfer`.
+
+### B. Patch summary
+
+Independently verified all sixteen PR #5 source blobs and four exact master archives, approved twelve remaining document dispositions and eight shared-path supersession, and approved transfer of unfinished selected checks to a named exact-master review. PR #5 changes from `HOLD_NAMED_CONSUMER` to `SUPERSEDED_PRESERVE_EVIDENCE`; no closure or deletion was executed. Installed prompt and active native-v3 route unchanged.
+
+### C. Tests or checks run
+
+Fetched/pruned refs; verified master, PR head and merge base; read GitHub open/comment/review/thread state; compared source/archive Git blobs, shared-path diff, current UI authority and selected evidence. Markdown links, changed-path inventory and staged `git diff --check` verified before publication; remote readback required after push. No build, gameplay test or selected action was run.
+
+### D. Risks / follow-up notes
+
+FP-002/008/009/016: the transfer is a coordination decision, not selected acceptance or proof of current UI placement. PR #5 next trigger: separately authorized exact-head closure review; remote deletion separately after closure/no-consumer verification. #6–#16 and protected refs remain retained. No merge, rebase, retarget, PR closure or deletion. Next recommended run is selected exact-master UI acceptance when authorized access exists, or a separate PR #5 closure action; no Game-version decision.

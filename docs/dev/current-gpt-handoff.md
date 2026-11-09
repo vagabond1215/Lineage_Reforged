@@ -467,3 +467,7 @@ At synchronized `master`/`origin/master` `dabdf27deb7593b8f59928200d53add371e39e
 ## 2026-11-09 — historical UI PR #5 retirement-gate handoff
 
 [Focused decision](historical-ui-pr5-retirement-gate-and-consumer-transfer-review-2026-11-09.md): twelve remaining PR #5 documents have exact source-blob dispositions, and open Character/item, resource/condition and responsive-shell acceptance obligations are assigned to a future unversioned exact-master selected review. This is a transfer of review ownership, not a passed acceptance result. PR #5 remains `HOLD_NAMED_CONSUMER` until independent approval and separate closure/ref-deletion decisions. The installed Codex prompt, Game `0.1.1-prealpha` and `HOLD_SELECTED_ATOMIC_ACTIVATION` remain unchanged.
+
+## 2026-11-09 — PR #5 independent lifecycle approval
+
+The [independent review](historical-ui-pr5-independent-lifecycle-approval-2026-11-09.md) approves PR #5's twelve remaining historical-document dispositions and the transfer of unfinished selected checks to a future Historical UI Exact-Master Selected Acceptance Review. Change PR #5 to `SUPERSEDED_PRESERVE_EVIDENCE`; `TRANSFER_APPROVED; SELECTED_ACCEPTANCE_OUTSTANDING`. PR closure and branch deletion were not executed and require separate exact-ref actions. Current installed prompt, Game `0.1.1-prealpha`, native-v3 activation hold and other PR dispositions remain unchanged.
