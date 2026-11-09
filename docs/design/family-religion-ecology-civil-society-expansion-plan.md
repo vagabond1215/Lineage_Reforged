@@ -10,6 +10,9 @@ This document records additional design decisions that extend `docs/design/offsp
 
 It is not runtime code, a schema, content data, save data, or permission to implement gameplay behavior.
 
+
+> **2026-11-09 maturation clarification:** [Latest owner Core/Hardcore and succession product direction](core-world-entry-hardcore-prestige-and-succession-product-direction-2026-11-09.md) supersedes any implication that a fixed numeric `adult age` is the primary playable-heir gate. Model actual developmental/maturity stage and functional capabilities; elapsed time and ancestry may influence transition, while legal/social adulthood, reproductive eligibility and player-control eligibility remain distinct rules. Age 15 is not accepted as a universal threshold. Living World succession time-skips are globally synchronized and estates continue to change during absence. Existing hypothetical age-based growth examples remain illustrative historical planning, not an approved implementation formula.
+
 ## Religion, Family Affiliation, And Renown
 
 Religion should be varied by race, culture, family, region, settlement, kingdom, and local power structure.
