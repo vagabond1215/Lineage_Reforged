@@ -1,5 +1,7 @@
 # Development-Only Clean Persistence Epoch Route Decision
 
+**2026-11-09 owner clarification for legacy account visibility:** The earlier permission to discard all old development data **does not require automatically deleting it at v3 startup**. The newer [Pre-Alpha Save Format Compatibility And Native-v3 Development Cutover Policy](prealpha-save-format-compatibility-and-native-v3-cutover-policy-2026-11-09.md) prefers showing legacy accounts for explicit **delete-only** action when safely discoverable within the current browser origin. Old gameplay/account format migration is still **not required**; incompatible Saves cannot Play or overwrite new v3 state. A scoped delete operation must protect current v3 data; unavailable storage must not be treated as empty, incompatible or corrupt. This later direction supersedes only the old implicit reset-and-erase UX expectation; the historic clean-epoch decision and current epoch durability guarantees remain otherwise intact.
+
 Date: 2026-09-29. Inspected clean synchronized `master` at `18ef8008e398cf13c316374a403d7069e7fedc7d`. Unversioned owner-policy decision supporting planned `DEV-0.7.1`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`, accepted `DEV-0.7.0` unchanged.
 
 ## Decision and scope
