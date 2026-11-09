@@ -12,6 +12,9 @@ It exists because family continuity must not be fabricated from account state, l
 
 This document is not runtime code, a schema, a content catalog, a save shape, or permission to implement broad family simulation.
 
+
+> **2026-11-09 later owner direction:** [Core World Entry, Hardcore, Prestige And Succession product direction](core-world-entry-hardcore-prestige-and-succession-product-direction-2026-11-09.md) reinforces that heir slots are **capacity, not fabricated children**: actual adult in-world parentage/offspring evidence (or separately authorized adoption) is required. Hardcore permanent death of the parent does **not** cancel valid known heirs or unlocked slot capacity. An heir's **developmental maturity and physical functional eligibility**, not a universal chronological age (15 was illustrative), governs future independent character control. If a known heir is not ready, succession is pending until **authoritative world time** reaches eligibility; Living World acceleration waits until all participating playable characters are out of normal time and stops at the earliest exit. During waiting, real operated/unoperated businesses, contractual deposits, rent, stipends, debts and property may change; reconcile actual estate before lawful transfer. High-cost temporary surviving-spouse play is deferred and separate from married-in creation. These clarifications do not implement descendants, legal custody, time, economic simulation or inheritance.
+
 ## Core Decision
 
 Characters do not automatically create a family record.
