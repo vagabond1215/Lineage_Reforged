@@ -471,3 +471,7 @@ At synchronized `master`/`origin/master` `dabdf27deb7593b8f59928200d53add371e39e
 ## 2026-11-09 — PR #5 independent lifecycle approval
 
 The [independent review](historical-ui-pr5-independent-lifecycle-approval-2026-11-09.md) approves PR #5's twelve remaining historical-document dispositions and the transfer of unfinished selected checks to a future Historical UI Exact-Master Selected Acceptance Review. Change PR #5 to `SUPERSEDED_PRESERVE_EVIDENCE`; `TRANSFER_APPROVED; SELECTED_ACCEPTANCE_OUTSTANDING`. PR closure and branch deletion were not executed and require separate exact-ref actions. Current installed prompt, Game `0.1.1-prealpha`, native-v3 activation hold and other PR dispositions remain unchanged.
+
+## 2026-11-09 — PRs #10–#16 semantic-equivalence handoff
+
+[Exact-master audit](historical-ui-prs-10-16-exact-master-semantic-equivalence-audit-2026-11-09.md) at `02954053` reviewed the nine differing source/test paths and passed 31/31 focused owner/UI tests. Source-backed owner and selection behavior remains represented; CSS physical fit needs a bounded controlled viewport/focus sample, and selected actions/Save/restart remain separately held. PRs #10–#16 retain `HOLD_NAMED_CONSUMER`; closed PR #5 and its remote ref remain unchanged. Current installed prompt, Game version and `HOLD_SELECTED_ATOMIC_ACTIVATION` are unchanged.

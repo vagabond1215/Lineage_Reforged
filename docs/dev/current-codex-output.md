@@ -2152,3 +2152,23 @@ Fetched/pruned refs; verified master, PR head and merge base; read GitHub open/c
 ### D. Risks / follow-up notes
 
 FP-002/008/009/016: the transfer is a coordination decision, not selected acceptance or proof of current UI placement. PR #5 next trigger: separately authorized exact-head closure review; remote deletion separately after closure/no-consumer verification. #6–#16 and protected refs remain retained. No merge, rebase, retarget, PR closure or deletion. Next recommended run is selected exact-master UI acceptance when authorized access exists, or a separate PR #5 closure action; no Game-version decision.
+
+## 2026-11-09 — historical UI PRs #10–#16 exact-master semantic audit
+
+**Source run:** unversioned historical UI review, parent milestone n/a; fetched/pruned tracked-clean `master`/`origin/master` `029540530d38069994af461df21abaa41d9fa363`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development and Game-version impacts `none`.
+
+### A. Files changed
+
+[Focused audit](historical-ui-prs-10-16-exact-master-semantic-equivalence-audit-2026-11-09.md), branch register, this output and handoff. Suggested commit: `docs(ui): audit exact-master historical UI semantics`.
+
+### B. Patch summary
+
+Reviewed nine changed-blob current UI/owner/test paths against exact PR #10–#16 heads and current authority. Exact owner targeting, stale rejection, row selection and top-bar projection remain represented; two CSS physical-fit rows require controlled browser verification. No source/test edit, PR lifecycle change or selected acceptance claim. Active installed prompt and `HOLD_SELECTED_ATOMIC_ACTIVATION` unchanged.
+
+### C. Tests or checks run
+
+From `apps/rpg-ui`, seven focused `node --test` files passed **31/31**, exit 0. Vite middleware tests closed their own servers; port-24678 and React SSR warnings were nonfatal. Exact Git blob/PR head comparisons, GitHub open state, current callers, changed paths, Markdown links and staged `git diff --check` inspected. No broad suite, build, typecheck, controlled browser or selected gameplay run; publication remote readback required after push.
+
+### D. Risks / follow-up notes
+
+FP-001/002/008/009/015/016: source/test proof does not establish physical viewport fit or authenticated selected actions/Save. PRs #10–#16 retain `HOLD_NAMED_CONSUMER`, with current controlled viewport/focus review then authorized exact-master selected acceptance as triggers. #5 remains closed with ref retained; no branch/PR integration, rebase, retarget, closure or deletion. Next run: bounded controlled shell/top-bar fit, then separately authorized selected review. No Game-version decision.
