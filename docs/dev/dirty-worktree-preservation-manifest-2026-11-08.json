@@ -1,0 +1,2237 @@
+{
+  "schema": "lineage-dirty-worktree-preservation/v1",
+  "capturedLocal": "2026-11-08T23:20:10.393495-05:00",
+  "repository": "vagabond1215/Lineage_Reforged",
+  "masterCommit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+  "scope": "Batch A composition identity only; no selected-client acceptance, implementation authority, or worktree retirement",
+  "reconstructionRule": "Create a detached checkout at baseCommit. Materialize each changed path from chosenSource.commit and relativePath using Git checkout semantics; for localEvidence use its separately verified exact bytes. Recreate intentToAdd index entries only for marked paths. Verify each file's raw SHA-256, Git blob, mode, statusXY, and full status inventory before treating the reconstruction as exact. Ignored dist is excluded and requires an independent build.",
+  "worktrees": [
+    {
+      "path": "C:\\Codex\\EoL\\.combined-ui-master-baseline",
+      "detached": true,
+      "baseCommit": "f56229dde859b9374a54368bd8a8fd2a9872daa1",
+      "head": "f56229dde859b9374a54368bd8a8fd2a9872daa1",
+      "headMatchesRetainedPR": [],
+      "statusXYOrder": [
+        {
+          "xy": "??",
+          "path": "baseline-typecheck.txt"
+        }
+      ],
+      "statusSha256": "D7F1049450DEC515083C053E9E6FED6B87ABDADF371436DAC57F051905B41F35",
+      "stagedPathCount": 0,
+      "sourceDependencies": {
+        "packageLockPath": "apps/rpg-ui/package-lock.json",
+        "packageLockBlobAtBase": "62f7641444dc551ab52d4e2d0f8f1b98955a6ed7",
+        "nodeModulesJunction": "C:\\Codex\\EoL\\.combined-ui-master-baseline\\apps\\rpg-ui\\node_modules",
+        "nodeModulesTarget": "C:\\Codex\\EoL\\apps\\rpg-ui\\node_modules",
+        "ignoredDistPresent": false,
+        "ignoredDistReparse": false
+      },
+      "files": [
+        {
+          "relativePath": "baseline-typecheck.txt",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 32471,
+          "sha256": "35FB9E77898EDFFF5C673F3216175FC5212953C8E8A480C5EDC804C8DD6291F2",
+          "gitBlob": "7f9d9bae4bd1fe1d5f3826cfa3ad553c944e33a3",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [],
+          "localEvidence": {
+            "path": "C:\\Codex\\artifacts\\Lineage_Reforged\\dirty-worktree-evidence-2026-11-08\\combined-ui-master-baseline\\baseline-typecheck.txt",
+            "lengthBytes": 32471,
+            "sha256": "35FB9E77898EDFFF5C673F3216175FC5212953C8E8A480C5EDC804C8DD6291F2"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        }
+      ],
+      "historicalConsumer": "October 22 combined Character/top-bar rehearsal diagnostic comparison",
+      "outstandingGate": "Exact baseline bytes preserved locally; no selected-client acceptance inferred",
+      "headReachableFromMaster": true
+    },
+    {
+      "path": "C:\\Codex\\EoL\\.inventory-bag-exact-composed",
+      "detached": true,
+      "baseCommit": "2d140c4a2693345fa4f8188bb9e2e625b186538f",
+      "head": "2d140c4a2693345fa4f8188bb9e2e625b186538f",
+      "headMatchesRetainedPR": [
+        {
+          "pr": 11,
+          "ref": "refs/remotes/origin/codex/equipment-inventory-ux-stacked",
+          "commit": "2d140c4a2693345fa4f8188bb9e2e625b186538f"
+        }
+      ],
+      "statusXYOrder": [
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/SideNav.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/TopStatusBar.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/layout/AppLayout.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/features/characterPanelState.ts"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/game-shell/newGameSnapshot.ts"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/combined-ui-check.html"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/rehearsal/combined-ui-check.tsx"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/components/ui/TopResourceMeter.tsx"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.js"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.ts"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/styles/mobile-shell.css"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/equipment-slot-reequip.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/inventory-consume-stale-guard.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/inventory-exact-bag-target.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/mobile-shell-navigation.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/top-status-bar-render.test.mjs"
+        }
+      ],
+      "statusSha256": "01F975CB6599007C5D0A876250ABC4D11F1CBB9078CBE365086A8E1A6304C760",
+      "stagedPathCount": 0,
+      "sourceDependencies": {
+        "packageLockPath": "apps/rpg-ui/package-lock.json",
+        "packageLockBlobAtBase": "62f7641444dc551ab52d4e2d0f8f1b98955a6ed7",
+        "nodeModulesJunction": "C:\\Codex\\EoL\\.inventory-bag-exact-composed\\apps\\rpg-ui\\node_modules",
+        "nodeModulesTarget": "C:\\Codex\\EoL\\apps\\rpg-ui\\node_modules",
+        "ignoredDistPresent": true,
+        "ignoredDistReparse": false
+      },
+      "files": [
+        {
+          "relativePath": "apps/rpg-ui/src/components/SideNav.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 2603,
+          "sha256": "9C3F188CB9AF2EF10ADC1B69E97AC2217A46CFA6E61C592FE11EE800FCCAEF3A",
+          "gitBlob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "a1b181fa70288e00b280be96642e3aed0b3805af"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "a1b181fa70288e00b280be96642e3aed0b3805af",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/TopStatusBar.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 14645,
+          "sha256": "FC5E2892F40D4E2758B721A3633C016A243AF60CDD25D4BE8C0162A7C87266CF",
+          "gitBlob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "f0045d250ae1d4829bec203dbd694726b5917497"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "f0045d250ae1d4829bec203dbd694726b5917497",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/layout/AppLayout.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 792,
+          "sha256": "EE5504F9876ACE1D441B813B43657097DA2CFAFA5CDE9839CE6AB52AD7531380",
+          "gitBlob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "04becd6624240a2ef0245bc6fe8fc14b86b9ea4e"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "04becd6624240a2ef0245bc6fe8fc14b86b9ea4e",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/features/characterPanelState.ts",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 39440,
+          "sha256": "93D17DFAC109697348464AA94A5FB7DEAC2119A610A07424F7937F0AB09EC34E",
+          "gitBlob": "d5c41d584bd649767062feb5587e57f8effb3cc0",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "8e81c955f2107d4ad1a968a96e67c340fc30e7dc"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "8e81c955f2107d4ad1a968a96e67c340fc30e7dc",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "d5c41d584bd649767062feb5587e57f8effb3cc0"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+            "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+            "pr": 13,
+            "mode": "100644",
+            "blob": "d5c41d584bd649767062feb5587e57f8effb3cc0"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/newGameSnapshot.ts",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 47344,
+          "sha256": "1DCB72F6BB28EDDF118E158921BB071178E83F5F3F11F0D5F1BDCEF89D6AEFD5",
+          "gitBlob": "bed78ff9a1628c92f844cbde5df0949838d50413",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "4f1fa21c76ccc282559df588b35ec0585506857e"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "4f1fa21c76ccc282559df588b35ec0585506857e",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/combined-ui-check.html",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 314,
+          "sha256": "D28F24BAAB95D0861324853ED24D0028F5E8430AB3D6DCF40B1FAD1207D753AF",
+          "gitBlob": "c476685c84b47f90e351cc66afec4a720b5c1249",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "c476685c84b47f90e351cc66afec4a720b5c1249"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/compact-landscape-domain-rail",
+              "commit": "7cb72c3d05667ca92821246d0455c0e6c00eb43c",
+              "pr": 15,
+              "mode": "100644",
+              "blob": "c476685c84b47f90e351cc66afec4a720b5c1249"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "c476685c84b47f90e351cc66afec4a720b5c1249"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/rehearsal/combined-ui-check.tsx",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 3750,
+          "sha256": "F35B47A47F857858665A3677A3982C41C0D11F06D379AA76E99580646D83FB7E",
+          "gitBlob": "e8a529b11bac5d743577604cf5f42599f5e369e3",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "e8a529b11bac5d743577604cf5f42599f5e369e3"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/compact-landscape-domain-rail",
+              "commit": "7cb72c3d05667ca92821246d0455c0e6c00eb43c",
+              "pr": 15,
+              "mode": "100644",
+              "blob": "e8a529b11bac5d743577604cf5f42599f5e369e3"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "e8a529b11bac5d743577604cf5f42599f5e369e3"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/ui/TopResourceMeter.tsx",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 2037,
+          "sha256": "EA9659B9FE7C9F2DF9FD5F9B48FF61B79FC31DA4FD3D827E2F1455AAD42E6C69",
+          "gitBlob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.js",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1214,
+          "sha256": "EF8152BFAA594172594F97592B2AD7026388448951B99815D7E11E142E5DFEA5",
+          "gitBlob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.ts",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1762,
+          "sha256": "57C59E25B1643726CF3CA0F5C82AA0FEA25E1818CFA78ADB168EB7F6640FABFF",
+          "gitBlob": "015819cfcf143b0e6b715028218b955ee2624db1",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/styles/mobile-shell.css",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1057,
+          "sha256": "4FA62D594C6E2621E2153D6E8C8E23550AB77349EF024F15BBC115DBDA1A659D",
+          "gitBlob": "068566925daa452c0fe3edb39b638f1568b0c2cd",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "068566925daa452c0fe3edb39b638f1568b0c2cd"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "068566925daa452c0fe3edb39b638f1568b0c2cd"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/equipment-slot-reequip.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 8024,
+          "sha256": "2530400FE2BF5AFD1BB4561BB7FBEE68A9FA1EAD20B4CE714657ADC4B660FBBC",
+          "gitBlob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/inventory-consume-stale-guard.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 6637,
+          "sha256": "1E2A12F3BD87B8067B921923C6A136A8FD65F9BE102FE7748B5CF189C6CBDB98",
+          "gitBlob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/inventory-exact-bag-target.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 8650,
+          "sha256": "91AEFFD229824A26F4EC39317DCDC1C707B8F550F3C2230B84BB268DDD0F2CB3",
+          "gitBlob": "40550e3f78c40356c61a661f7965b976accc0f3d",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/mobile-shell-navigation.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1480,
+          "sha256": "B4D416FBD5BC327E617788B6619609B37128EE414EDF00236FDA4BB3C89778A9",
+          "gitBlob": "8acc53bc130255423f9c0004fafa0190f40fc3b6",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "8acc53bc130255423f9c0004fafa0190f40fc3b6"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "8acc53bc130255423f9c0004fafa0190f40fc3b6"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/top-status-bar-render.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 4558,
+          "sha256": "01545AABB36A9D8343B9598C0AE55705BCA74542078413D99E5B4AA554E32630",
+          "gitBlob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        }
+      ],
+      "historicalConsumer": "Historical PR #11/#13 equipment and exact-bag composition review",
+      "outstandingGate": "Exact-main selected Equipment/Inventory action and Save/restart acceptance remains held",
+      "headReachableFromMaster": false
+    },
+    {
+      "path": "C:\\Codex\\EoL\\.inventory-ui-selection-composed",
+      "detached": true,
+      "baseCommit": "2d140c4a2693345fa4f8188bb9e2e625b186538f",
+      "head": "2d140c4a2693345fa4f8188bb9e2e625b186538f",
+      "headMatchesRetainedPR": [
+        {
+          "pr": 11,
+          "ref": "refs/remotes/origin/codex/equipment-inventory-ux-stacked",
+          "commit": "2d140c4a2693345fa4f8188bb9e2e625b186538f"
+        }
+      ],
+      "statusXYOrder": [
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/SideNav.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/TopStatusBar.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/layout/AppLayout.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/features/CharacterPanel.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/features/characterPanelState.ts"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/game-shell/newGameSnapshot.ts"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/tests/equipment-inventory-presentation.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/components/ui/TopResourceMeter.tsx"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.js"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.ts"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/src/styles/mobile-shell.css"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/equipment-slot-reequip.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/inventory-consume-stale-guard.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/inventory-exact-bag-target.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/inventory-selection-identity.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/mobile-shell-navigation.test.mjs"
+        },
+        {
+          "xy": "??",
+          "path": "apps/rpg-ui/tests/top-status-bar-render.test.mjs"
+        }
+      ],
+      "statusSha256": "FE83AEC25BF4444FB1D8FD5FB4AC0ED14EA5E1795402F15FE0C2DF9015DED987",
+      "stagedPathCount": 0,
+      "sourceDependencies": {
+        "packageLockPath": "apps/rpg-ui/package-lock.json",
+        "packageLockBlobAtBase": "62f7641444dc551ab52d4e2d0f8f1b98955a6ed7",
+        "nodeModulesJunction": "C:\\Codex\\EoL\\.inventory-ui-selection-composed\\apps\\rpg-ui\\node_modules",
+        "nodeModulesTarget": "C:\\Codex\\EoL\\apps\\rpg-ui\\node_modules",
+        "ignoredDistPresent": true,
+        "ignoredDistReparse": false
+      },
+      "files": [
+        {
+          "relativePath": "apps/rpg-ui/src/components/SideNav.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 2603,
+          "sha256": "9C3F188CB9AF2EF10ADC1B69E97AC2217A46CFA6E61C592FE11EE800FCCAEF3A",
+          "gitBlob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "a1b181fa70288e00b280be96642e3aed0b3805af"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "a1b181fa70288e00b280be96642e3aed0b3805af",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/TopStatusBar.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 14645,
+          "sha256": "FC5E2892F40D4E2758B721A3633C016A243AF60CDD25D4BE8C0162A7C87266CF",
+          "gitBlob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "f0045d250ae1d4829bec203dbd694726b5917497"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "f0045d250ae1d4829bec203dbd694726b5917497",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/layout/AppLayout.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 792,
+          "sha256": "EE5504F9876ACE1D441B813B43657097DA2CFAFA5CDE9839CE6AB52AD7531380",
+          "gitBlob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "04becd6624240a2ef0245bc6fe8fc14b86b9ea4e"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "04becd6624240a2ef0245bc6fe8fc14b86b9ea4e",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/features/CharacterPanel.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 39741,
+          "sha256": "044D0BCE7E9AD127330F9711DF109EFFC9D879030AE353EE1A6BB0D3EA144B28",
+          "gitBlob": "ee869859d402fe5d2aa5a3f861ca48ded1aa930a",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "dd7028463c5f6d41dd3ed0b5d9b64d6ff71b482e"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "dd7028463c5f6d41dd3ed0b5d9b64d6ff71b482e",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/inventory-ui-selection-safety",
+              "commit": "ce2fc143e7e5672c986d162d6ed714bad243ac46",
+              "pr": 14,
+              "mode": "100644",
+              "blob": "ee869859d402fe5d2aa5a3f861ca48ded1aa930a"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/inventory-ui-selection-safety",
+            "commit": "ce2fc143e7e5672c986d162d6ed714bad243ac46",
+            "pr": 14,
+            "mode": "100644",
+            "blob": "ee869859d402fe5d2aa5a3f861ca48ded1aa930a"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/features/characterPanelState.ts",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 39440,
+          "sha256": "93D17DFAC109697348464AA94A5FB7DEAC2119A610A07424F7937F0AB09EC34E",
+          "gitBlob": "d5c41d584bd649767062feb5587e57f8effb3cc0",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "8e81c955f2107d4ad1a968a96e67c340fc30e7dc"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "8e81c955f2107d4ad1a968a96e67c340fc30e7dc",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "d5c41d584bd649767062feb5587e57f8effb3cc0"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+            "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+            "pr": 13,
+            "mode": "100644",
+            "blob": "d5c41d584bd649767062feb5587e57f8effb3cc0"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/newGameSnapshot.ts",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 47344,
+          "sha256": "1DCB72F6BB28EDDF118E158921BB071178E83F5F3F11F0D5F1BDCEF89D6AEFD5",
+          "gitBlob": "bed78ff9a1628c92f844cbde5df0949838d50413",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "4f1fa21c76ccc282559df588b35ec0585506857e"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "4f1fa21c76ccc282559df588b35ec0585506857e",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/equipment-inventory-presentation.test.mjs",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 8643,
+          "sha256": "65AF684EC880B22DD0E538493E192E43FA248811CFAF822EE7E7E8F8EC432357",
+          "gitBlob": "e5225aeebcc1389302b6a7cbcccef9db222136d6",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "803b0c4bdbcaa808ad7054d6fcf47356ac75244a"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "803b0c4bdbcaa808ad7054d6fcf47356ac75244a",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/inventory-ui-selection-safety",
+              "commit": "ce2fc143e7e5672c986d162d6ed714bad243ac46",
+              "pr": 14,
+              "mode": "100644",
+              "blob": "e5225aeebcc1389302b6a7cbcccef9db222136d6"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/inventory-ui-selection-safety",
+            "commit": "ce2fc143e7e5672c986d162d6ed714bad243ac46",
+            "pr": 14,
+            "mode": "100644",
+            "blob": "e5225aeebcc1389302b6a7cbcccef9db222136d6"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/ui/TopResourceMeter.tsx",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 2037,
+          "sha256": "EA9659B9FE7C9F2DF9FD5F9B48FF61B79FC31DA4FD3D827E2F1455AAD42E6C69",
+          "gitBlob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.js",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1214,
+          "sha256": "EF8152BFAA594172594F97592B2AD7026388448951B99815D7E11E142E5DFEA5",
+          "gitBlob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.ts",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1762,
+          "sha256": "57C59E25B1643726CF3CA0F5C82AA0FEA25E1818CFA78ADB168EB7F6640FABFF",
+          "gitBlob": "015819cfcf143b0e6b715028218b955ee2624db1",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/styles/mobile-shell.css",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1057,
+          "sha256": "4FA62D594C6E2621E2153D6E8C8E23550AB77349EF024F15BBC115DBDA1A659D",
+          "gitBlob": "068566925daa452c0fe3edb39b638f1568b0c2cd",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "068566925daa452c0fe3edb39b638f1568b0c2cd"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "068566925daa452c0fe3edb39b638f1568b0c2cd"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/equipment-slot-reequip.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 8024,
+          "sha256": "2530400FE2BF5AFD1BB4561BB7FBEE68A9FA1EAD20B4CE714657ADC4B660FBBC",
+          "gitBlob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/inventory-consume-stale-guard.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 6637,
+          "sha256": "1E2A12F3BD87B8067B921923C6A136A8FD65F9BE102FE7748B5CF189C6CBDB98",
+          "gitBlob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/inventory-exact-bag-target.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 8817,
+          "sha256": "55EC57768862CD9469FAB3A14CD96E785DE7DA4C3407EF4F569403981B37E342",
+          "gitBlob": "40550e3f78c40356c61a661f7965b976accc0f3d",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/inventory-selection-identity.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 7834,
+          "sha256": "FA31E707EF126354B994A0473F915E4ED5CC873D5B0A51345D4752D887AD837E",
+          "gitBlob": "6f01200175b4fe1d255f90aab35d4dcca2df0779",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "6f01200175b4fe1d255f90aab35d4dcca2df0779"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-ui-selection-safety",
+              "commit": "ce2fc143e7e5672c986d162d6ed714bad243ac46",
+              "pr": 14,
+              "mode": "100644",
+              "blob": "6f01200175b4fe1d255f90aab35d4dcca2df0779"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "6f01200175b4fe1d255f90aab35d4dcca2df0779"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/mobile-shell-navigation.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 1480,
+          "sha256": "B4D416FBD5BC327E617788B6619609B37128EE414EDF00236FDA4BB3C89778A9",
+          "gitBlob": "8acc53bc130255423f9c0004fafa0190f40fc3b6",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "8acc53bc130255423f9c0004fafa0190f40fc3b6"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "8acc53bc130255423f9c0004fafa0190f40fc3b6"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/top-status-bar-render.test.mjs",
+          "statusXY": "??",
+          "disposition": "untracked",
+          "lengthBytes": 4558,
+          "sha256": "01545AABB36A9D8343B9598C0AE55705BCA74542078413D99E5B4AA554E32630",
+          "gitBlob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": null,
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        }
+      ],
+      "historicalConsumer": "Historical PR #11/#14 UI selection identity and composition review",
+      "outstandingGate": "Exact-main selected UI/action and Save/restart acceptance remains held",
+      "headReachableFromMaster": false
+    },
+    {
+      "path": "C:\\Codex\\EoL\\.ui-stack-readiness-review",
+      "detached": true,
+      "baseCommit": "ce2fc143e7e5672c986d162d6ed714bad243ac46",
+      "head": "ce2fc143e7e5672c986d162d6ed714bad243ac46",
+      "headMatchesRetainedPR": [
+        {
+          "pr": 14,
+          "ref": "refs/remotes/origin/codex/inventory-ui-selection-safety",
+          "commit": "ce2fc143e7e5672c986d162d6ed714bad243ac46"
+        }
+      ],
+      "statusXYOrder": [
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/SideNav.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/TopStatusBar.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/components/layout/AppLayout.tsx"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/src/components/ui/TopResourceMeter.tsx"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/features/characterPanelState.ts"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.js"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.ts"
+        },
+        {
+          "xy": " M",
+          "path": "apps/rpg-ui/src/game-shell/newGameSnapshot.ts"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/src/styles/mobile-shell.css"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/tests/equipment-slot-reequip.test.mjs"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/tests/inventory-consume-stale-guard.test.mjs"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/tests/inventory-exact-bag-target.test.mjs"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/tests/mobile-shell-navigation.test.mjs"
+        },
+        {
+          "xy": " A",
+          "path": "apps/rpg-ui/tests/top-status-bar-render.test.mjs"
+        }
+      ],
+      "statusSha256": "6BD4FE7D6402C4273E20208ECB4A8C6E83173B3D71AE457D225A284BA4753027",
+      "stagedPathCount": 0,
+      "sourceDependencies": {
+        "packageLockPath": "apps/rpg-ui/package-lock.json",
+        "packageLockBlobAtBase": "62f7641444dc551ab52d4e2d0f8f1b98955a6ed7",
+        "nodeModulesJunction": "C:\\Codex\\EoL\\.ui-stack-readiness-review\\apps\\rpg-ui\\node_modules",
+        "nodeModulesTarget": "C:\\Codex\\EoL\\apps\\rpg-ui\\node_modules",
+        "ignoredDistPresent": true,
+        "ignoredDistReparse": false
+      },
+      "files": [
+        {
+          "relativePath": "apps/rpg-ui/src/components/SideNav.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 2603,
+          "sha256": "9C3F188CB9AF2EF10ADC1B69E97AC2217A46CFA6E61C592FE11EE800FCCAEF3A",
+          "gitBlob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "a1b181fa70288e00b280be96642e3aed0b3805af"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "a1b181fa70288e00b280be96642e3aed0b3805af",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "f4e8ca8ad4410331c12af8cdc48f924eb69c3cbe"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/TopStatusBar.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 14645,
+          "sha256": "FC5E2892F40D4E2758B721A3633C016A243AF60CDD25D4BE8C0162A7C87266CF",
+          "gitBlob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "f0045d250ae1d4829bec203dbd694726b5917497"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "f0045d250ae1d4829bec203dbd694726b5917497",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "8ba5209d8d4ac3406b03cb6102ea5f6a64ec2812"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/layout/AppLayout.tsx",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 792,
+          "sha256": "EE5504F9876ACE1D441B813B43657097DA2CFAFA5CDE9839CE6AB52AD7531380",
+          "gitBlob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "04becd6624240a2ef0245bc6fe8fc14b86b9ea4e"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "04becd6624240a2ef0245bc6fe8fc14b86b9ea4e",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "d20819bfd5f866ef65cb1764bfb9a13cf1eb1b75"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/components/ui/TopResourceMeter.tsx",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 2037,
+          "sha256": "EA9659B9FE7C9F2DF9FD5F9B48FF61B79FC31DA4FD3D827E2F1455AAD42E6C69",
+          "gitBlob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "6cfd49b6b11cbf62838f7b6f442ae22b9e3bb808"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/features/characterPanelState.ts",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 39440,
+          "sha256": "93D17DFAC109697348464AA94A5FB7DEAC2119A610A07424F7937F0AB09EC34E",
+          "gitBlob": "d5c41d584bd649767062feb5587e57f8effb3cc0",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "8e81c955f2107d4ad1a968a96e67c340fc30e7dc"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "8e81c955f2107d4ad1a968a96e67c340fc30e7dc",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "d5c41d584bd649767062feb5587e57f8effb3cc0"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+            "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+            "pr": 13,
+            "mode": "100644",
+            "blob": "d5c41d584bd649767062feb5587e57f8effb3cc0"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.js",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 1214,
+          "sha256": "EF8152BFAA594172594F97592B2AD7026388448951B99815D7E11E142E5DFEA5",
+          "gitBlob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "17514be557d6f6e342e7a2b0298fadd1124aaf5c"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/equipmentSlotEligibility.ts",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 1762,
+          "sha256": "57C59E25B1643726CF3CA0F5C82AA0FEA25E1818CFA78ADB168EB7F6640FABFF",
+          "gitBlob": "015819cfcf143b0e6b715028218b955ee2624db1",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "015819cfcf143b0e6b715028218b955ee2624db1"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/game-shell/newGameSnapshot.ts",
+          "statusXY": " M",
+          "disposition": "modified",
+          "lengthBytes": 47344,
+          "sha256": "1DCB72F6BB28EDDF118E158921BB071178E83F5F3F11F0D5F1BDCEF89D6AEFD5",
+          "gitBlob": "bed78ff9a1628c92f844cbde5df0949838d50413",
+          "filesystemAttributes": "normal-file",
+          "headEntry": {
+            "mode": "100644",
+            "blob": "4f1fa21c76ccc282559df588b35ec0585506857e"
+          },
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "4f1fa21c76ccc282559df588b35ec0585506857e",
+            "stage": 0
+          },
+          "intentToAdd": false,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "bed78ff9a1628c92f844cbde5df0949838d50413"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/src/styles/mobile-shell.css",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 1057,
+          "sha256": "4FA62D594C6E2621E2153D6E8C8E23550AB77349EF024F15BBC115DBDA1A659D",
+          "gitBlob": "068566925daa452c0fe3edb39b638f1568b0c2cd",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "068566925daa452c0fe3edb39b638f1568b0c2cd"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "068566925daa452c0fe3edb39b638f1568b0c2cd"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/equipment-slot-reequip.test.mjs",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 8024,
+          "sha256": "2530400FE2BF5AFD1BB4561BB7FBEE68A9FA1EAD20B4CE714657ADC4B660FBBC",
+          "gitBlob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/equipment-slot-reequip-repair",
+              "commit": "9f390e03a26011213dee53929da309f470adba62",
+              "pr": 10,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "2147a3efb3a956f4c7ae3c49fb797ee35f6e0562"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/inventory-consume-stale-guard.test.mjs",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 6637,
+          "sha256": "1E2A12F3BD87B8067B921923C6A136A8FD65F9BE102FE7748B5CF189C6CBDB98",
+          "gitBlob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-consume-stale-guard",
+              "commit": "7b6dccf592adbbef05361bb501fceb461dd1f5e5",
+              "pr": 12,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "7d90c083982cfade5f2a6480c536c8a39fa4acdf"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/inventory-exact-bag-target.test.mjs",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 8817,
+          "sha256": "55EC57768862CD9469FAB3A14CD96E785DE7DA4C3407EF4F569403981B37E342",
+          "gitBlob": "40550e3f78c40356c61a661f7965b976accc0f3d",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/heads/master",
+              "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+              "pr": null,
+              "mode": "100644",
+              "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+            },
+            {
+              "ref": "refs/remotes/origin/codex/inventory-bag-exact-target-repair",
+              "commit": "c9581eb9834d9c1374560b3a4b26bbdf1dae210d",
+              "pr": 13,
+              "mode": "100644",
+              "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/heads/master",
+            "commit": "a596112acf3945f2bf7c625e943f2511d12aa710",
+            "pr": null,
+            "mode": "100644",
+            "blob": "40550e3f78c40356c61a661f7965b976accc0f3d"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/mobile-shell-navigation.test.mjs",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 1480,
+          "sha256": "B4D416FBD5BC327E617788B6619609B37128EE414EDF00236FDA4BB3C89778A9",
+          "gitBlob": "8acc53bc130255423f9c0004fafa0190f40fc3b6",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+              "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+              "pr": 9,
+              "mode": "100644",
+              "blob": "8acc53bc130255423f9c0004fafa0190f40fc3b6"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/mobile-shell-usable-height",
+            "commit": "69215b6fa6b4bcc805363171541120645f365d8c",
+            "pr": 9,
+            "mode": "100644",
+            "blob": "8acc53bc130255423f9c0004fafa0190f40fc3b6"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        },
+        {
+          "relativePath": "apps/rpg-ui/tests/top-status-bar-render.test.mjs",
+          "statusXY": " A",
+          "disposition": "intent-to-add",
+          "lengthBytes": 4558,
+          "sha256": "01545AABB36A9D8343B9598C0AE55705BCA74542078413D99E5B4AA554E32630",
+          "gitBlob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8",
+          "filesystemAttributes": "normal-file",
+          "headEntry": null,
+          "indexEntry": {
+            "mode": "100644",
+            "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+            "stage": 0
+          },
+          "intentToAdd": true,
+          "matchingSources": [
+            {
+              "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+              "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+              "pr": 8,
+              "mode": "100644",
+              "blob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8"
+            }
+          ],
+          "chosenSource": {
+            "ref": "refs/remotes/origin/codex/persistent-top-bar-ui",
+            "commit": "20825cce24703e5066fb827075d5f310e847fb34",
+            "pr": 8,
+            "mode": "100644",
+            "blob": "88d2a24d9669a894ea082c40a55a05a0da81d2b8"
+          },
+          "filesystemModeOctal": "0o100666",
+          "windowsFileAttributes": 32
+        }
+      ],
+      "historicalConsumer": "Historical PR #14 UI stack readiness and composition review",
+      "outstandingGate": "Selected responsive/keyboard/action/Save review remains held",
+      "headReachableFromMaster": false
+    }
+  ]
+}
