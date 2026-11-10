@@ -2363,3 +2363,23 @@ Fresh same-origin disposable browser fixture PASS; focused Node 15/15; Node UI t
 ### D. Risks / follow-up notes
 
 FP-001/002/003/004/005/009: actual inventory caller, retained owner graph, blocked reads, completion, retry, restart, neighboring source and distinct base/final identities verified. This synthetic local review is not hosted selected-client or default-activation acceptance. Fresh GitHub connector inventory: 68 open PRs #6–#73; #5 remains closed/unmerged with branch retained. This run changes no PR disposition, merges/deletes no branch and consumes no original PR retirement trigger. Suggested commit: `test(v3): verify terminal recovery format boundary`. Next: fresh exact-source recovery branch merge proposal and separate authorization; no Game-version decision.
+
+## 2026-11-10 — Native-v3 pending recovery exact-source merge decision
+
+**Source run:** unversioned coordination on `codex/native-v3-pre-admission-recovery-2026-11-10` at reviewed `c6794b0fc8b9cbf4f4b4cb28dae09b9b42d3e395`; fetched live `origin/master` `323470656de02b882083671db51341f9b0935d67`, common base `6fb1f233b47b7e9e5e805c1a4f21b5f49b4ce424`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `none`, game-version impact `none`. [Exact-source decision](native-v3-pending-recovery-exact-source-merge-decision-2026-11-10.md).
+
+### A. Files changed
+
+Focused exact-source decision, current output/handoff/prompt and branch register only. No runtime or test edit.
+
+### B. Patch summary
+
+`SOURCE_MERGE_READY_AWAITING_AUTHORIZATION`. Git's conflict-free combined tree `e20b941e0a34a82f772a4e8ccf5b4f4982ac0256` has 1,987 paths, 12 changed paths from the common base, zero side overlap, the exact tested branch production/QA blobs and both newer master-only docs. A raw merge would leave a stale merge-decision prompt, so the proposed authorized merge must reconcile active coordination in the same master commit. No merge or activation occurred.
+
+### C. Tests or checks run
+
+Fresh fetch/prune, remote-head query, merge base/ahead-behind, exact `git merge-tree --write-tree`, path counts, blob equality, normal-entry/Game-version/Save-policy identity and `git diff --check` PASS. Prior independent branch validation at exact source blobs: focused Node 15/15, Node UI typecheck and direct Vite build PASS; broad UI typecheck 115/115 baseline diagnostics. No new executable suite was run because both master-only commits are documentation and the merged runtime blobs equal the already tested candidate; this is not fresh merged-client acceptance.
+
+### D. Risks / follow-up notes
+
+FP-001/002/008/009: actual caller and held entry identities, prior selected-evidence limit, branch lifecycle and exact base/remote/combined identities checked. Fresh GitHub connector inventory: 68 open PRs #6–#73, including draft #63–#73 at their inspected heads; PR #5 remains closed/unmerged. No PR action or branch disposition change occurred; the recovery branch remains a retained integration candidate until explicit approval and post-merge readback. Suggested commit: `docs(v3): record exact recovery source merge decision`. Next: user decision on source-only merge of this exact branch into current master, then separate normal-entry activation readiness; no Game-version decision.
