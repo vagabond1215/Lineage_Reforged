@@ -2717,5 +2717,5 @@ function LegacyApp() {
 // The legacy caller is retained only as a reference until the G10 storage audit.
 // The selected application path is the awaited clean-epoch caller.
 export default function App() {
-  return <EpochApp />;
+  return <EpochApp developmentNativeV3 />;
 }

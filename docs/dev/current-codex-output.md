@@ -2423,3 +2423,85 @@ Fresh fetch/prune, local/master delta (one connector document), normal/QA/stagin
 ### D. Risks / follow-up notes
 
 No ordinary-index v3 behavior is yet implemented or witnessed; local development source selection needs separate explicit approval. Hosted/default Site, authenticated selected acceptance, real accounts/Saves, Game version and PR retirement remain held. Fresh open PR inventory: #6–#73 (68); #5 closed/unmerged. Recovery branch remains `HOLD_NAMED_CONSUMER`; no PR or branch action was due. Suggested commit: `docs(v3): record local ordinary-entry activation readiness`. Next recommended run: unversioned local ordinary-entry source activation approval gate; no Game-version decision.
+
+## 2026-11-10 — Native-v3 local ordinary-entry source switch and witness
+
+**Source run:** unversioned authorized isolated source selection on `codex/native-v3-local-ordinary-entry-2026-11-10` from synchronized master `024e58ed96e4811427a457755dd3635eef3ebf37`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused witness](native-v3-local-ordinary-entry-source-witness-2026-11-10.md). User authorization: **development source switch only**.
+
+### A. Files changed
+
+`App.tsx`, `EpochApp.tsx`, focused ordinary-entry routing test, focused witness, current prompt/output/handoff and branch register. No Save/account owner, schema, dependency, staging, Site or Game-version file changed.
+
+### B. Patch summary
+
+Ordinary `App` requests a new native selector bounded to Vite `DEV`, loopback hostname and exact `/` or `/index.html` pathname. QA pathname/staging origin controls remain separate. The branch is a held source candidate; compiled production default and master remain v2. The next prompt requires independent source and compiled-preview review before a separate merge decision.
+
+### C. Tests or checks run
+
+Routing test red **0/1** before source edit and green **1/1** after; focused recovery/selected host **16/16**, adjacent item/pending/gameplay host **13/13**, total **29/29**. Node UI typecheck PASS, direct Vite build PASS (287 client modules). Broad UI TypeScript: master **115** and branch **115** diagnostics, zero delta and zero changed-file diagnostics. One controlled in-app browser at ordinary loopback `/` used a synthetic account: creator v3, real Unequip, rendered Save, full reload/sign-in/Continue. Owner backup comparison: account revision 2→3, head 1→2, new publication, byte-exact predecessor, conserved physical IDs/durabilities, Short Bow worn→bag; after restart, all 14 backup-family hashes matched the post-Save export. FP-001/002/003/004/005/009: real entry/owner caller, synthetic limit, recovery/retry/neighbor and exact base/source identities separated. Diff/path/link and remote readback are publication checks.
+
+### D. Risks / follow-up notes
+
+Local synthetic ordinary-index proof is not independent review, authenticated selected-client or hosted acceptance. Source rollback does not make v3 Saves playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION`, hosted Sites, real accounts/Saves, Game version and original PR retirement remain held. Fresh open PR inventory #6–#73 (68); #5 closed/unmerged; no original PR/branch action due. New branch retained for independent exact-source review. Suggested commit: `feat(ui): select native v3 on local development entry`. Next recommended unversioned run: independent local entry and compiled-boundary review; no Game-version decision.
+
+Cleanup: the exact synthetic browser account was deleted after action-time confirmation; the test tab and three task-created backup downloads were removed. The registered Vite server had exited, port 5198 was free, and the task-created dependency junction was removed with its shared target intact. No unnecessary process retained.
+
+## 2026-11-10 — Native-v3 local ordinary-entry independent review
+
+**Source run:** unversioned independent review of `codex/native-v3-local-ordinary-entry-2026-11-10` at inspected `6e78041771dab440dfdf4ab554577e272698eb01`, based on live `origin/master` `024e58ed96e4811427a457755dd3635eef3ebf37`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-local-ordinary-entry-independent-review-2026-11-10.md): **`INDEPENDENT_LOCAL_ENTRY_VERIFIED; HOLD_SELECTED_ATOMIC_ACTIVATION`**.
+
+### A. Files changed
+
+Focused independent record, current prompt/output/handoff and branch register. No runtime UI, test, owner, Save, account, schema, dependency, Site or Game-version edit in this review.
+
+### B. Patch summary
+
+Independently verified local Vite development ordinary `/` entry selects native v3 and compiled Vite preview ordinary `/` remains on v2, each in a fresh synthetic browser origin. Installed a distinct exact-source merge **review** prompt; no merge is authorized or performed.
+
+### C. Tests or checks run
+
+Fresh branch/master/ref and PR delta, eight-path source comparison, real entry/QA/staging/owner source review; focused Node **29/29** pass, Node UI typecheck pass, direct Vite build pass (287 client modules). Broad UI TypeScript is identical **115/115** ordered diagnostics, SHA-256 `6266EB947780095470594B84531FF605713C5D5EA98EA2FCB3E315F694D73719`, zero in changed source. Controlled in-app browser: new synthetic native creator, real Unequip/Save/reload/sign-in/Continue retained one tunic instance in bag; separate compiled preview created a synthetic character and reached the v2 shell. The earlier 14-family export hash witness is supporting branch evidence, not rerun here. FP-001/002/003/004/005/008/009 apply as detailed in the focused decision. Changed paths, links, diff check and remote readback are publication checks.
+
+### D. Risks / follow-up notes
+
+Local synthetic review does not accept hosted/default v3, authenticated selected-client behavior or full native-v3 gameplay. The branch is `CANDIDATE_INTEGRATION; HOLD_EXACT_SOURCE_MERGE_REVIEW`; exact next trigger is a fresh-ref merge review and separate authorization. Original PRs #6–#73 and closed/unmerged #5 retain their dispositions; no integration, deletion or PR action was due. Suggested commit: `docs(v3): independently verify local entry and compiled boundary`. Next recommended unversioned run: exact-source merge review; no Game-version decision. The two exact synthetic accounts were deleted after action-time user approval and both browser tabs closed; registered server and junction cleanup is recorded in the focused decision.
+
+## 2026-11-10 — Native-v3 local ordinary-entry exact-source merge decision
+
+**Source run:** unversioned source-integration decision on candidate `codex/native-v3-local-ordinary-entry-2026-11-10` at `572c99bd2defedb4100f213583a2fb453c960551` against fetched/pruned master `d9c77c222952709ec93945ca39c1a8638eb24530`; merge base `024e58ed96e4811427a457755dd3635eef3ebf37`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-local-ordinary-entry-exact-source-merge-decision-2026-11-10.md): **`SOURCE_MERGE_READY_AWAITING_AUTHORIZATION; HOLD_SELECTED_ATOMIC_ACTIVATION`**.
+
+### A. Files changed
+
+Focused exact-source merge decision, current prompt/output/handoff and branch register. No runtime UI, test, owner, Save, account, schema, dependency, Site or Game-version edit in this review.
+
+### B. Patch summary
+
+Master advanced one creator-catalog commit that changes nine actual base-stat inputs. The conflict-free combined tree `bc5c015c8a097fd69280dba112afd023f027cbcd` retains exact candidate entry source/test blobs and master's creator blob, with no same-path overlap. Prepared an exact source-only merge and active-coordination resolution, but did not merge. Installed a separate approval gate.
+
+### C. Tests or checks run
+
+Fresh Git refs, worktree/branch/PR inventory and complete one-commit master delta; exact blob and combined-tree path verification. Disposable combined-tree validation: UI entry/creator/recovery/host **22/22**, root creator attribute/randomization **4/4**, total **26/26**; Node UI typecheck PASS; direct Vite build PASS, 287 client modules. Prior candidate 29/29 and actual dev-v3/compiled-preview-v2 browser proof remain supporting at their own source head. Broad UI TypeScript was not rerun on the combined tree. `git diff --check origin/master...HEAD` passed; staged diff and remote decision readback are publication checks. FP-001/002/003/004/005/008/009 and their evidence are in the focused decision.
+
+### D. Risks / follow-up notes
+
+No authorization for this branch's source merge has been given. Source rollback cannot make new v3 Saves readable by v2. Hosted/default activation, Sites, selected-client acceptance, real accounts/Saves, Game version and PR retirement remain held. Candidate disposition: `CANDIDATE_INTEGRATION; HOLD_SOURCE_MERGE_AUTHORIZATION`; exact next trigger is explicit source-only approval plus fresh-ref/delta check. Open PRs #6–#73 remain retained; #5 closed/unmerged; no branch/PR integration or deletion occurred. Suggested commit: `docs(v3): prepare exact local-entry source merge gate`. Next recommended unversioned run: authorized source-only merge if approved, otherwise retain gate; no Game-version decision. Cleanup: no persistent process started; temporary combined worktree and its dependency junction removed, shared dependency target intact.
+
+## 2026-11-10 — Native-v3 local ordinary-entry source merge
+
+**Source run:** unversioned explicitly authorized source-only integration. First parent synchronized `origin/master` `d9c77c222952709ec93945ca39c1a8638eb24530`; second parent `codex/native-v3-local-ordinary-entry-2026-11-10` `2a90123e5d3222c5342d4c80b9f3f43a87ef04ba`; merge base `024e58ed96e4811427a457755dd3635eef3ebf37`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused merge record](native-v3-local-ordinary-entry-source-merge-2026-11-10.md): **`LOCAL_ORDINARY_ENTRY_SOURCE_MERGED; HOLD_SELECTED_ATOMIC_ACTIVATION`**. Final merge SHA follows remote readback.
+
+### A. Files changed
+
+Merged `apps/rpg-ui/src/App.tsx`, `EpochApp.tsx` and the ordinary-entry routing test, plus the candidate's three focused records. Reconciled current prompt/output/handoff and branch register and added the focused merge record. Master-only creator catalog is preserved exactly, not edited in this merge.
+
+### B. Patch summary
+
+Ordinary loopback Vite development `/` and `/index.html` now request native v3 on master through the `DEV`/host/path gate. Compiled ordinary entry remains v2; QA and staging entry gates remain separate. The approval-gate prompt is replaced with an exact-master post-merge verification route. The source branch is retained for named selected/hosted consumers; no activation or branch retirement occurred.
+
+### C. Tests or checks run
+
+Fresh fetch/prune and live remote ref readback; no-commit merge tree `f01dafaab752eb84ccc21a9f87bbab32024158ac` exactly matched the staged merge tree before coordination. Prior disposable combined-tree validation after the new master creator-stat commit: 26/26 focused tests, Node UI typecheck and direct Vite build (287 modules) passed. Final merged worktree routing/creator smoke **9/9 PASS**. Candidate independent browser dev-v3/compiled-preview-v2 observations are supporting evidence at their tested source head, not a new master browser witness. Source blob, staged path, link and diff checks and final remote master readback are publication checks. FP-001/002/003/004/005/008/009: actual entry and creator callers, synthetic-vs-selected limit, retained recovery/retry tests, semantic merge delta and exact parent/head identity were applied.
+
+### D. Risks / follow-up notes
+
+This source merge does not accept hosted/default v3, authenticated selected-client Save or full native gameplay. Rollback of the source switch cannot make a new v3 Save playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Original PRs #6–#73 remain retained; #5 closed/unmerged; no PR action. `codex/native-v3-local-ordinary-entry-2026-11-10` becomes `HOLD_NAMED_CONSUMER` for exact-master post-merge and later selected/hosted review; no branch deletion. Suggested commit: `merge(v3): integrate local ordinary-entry source only`. Next recommended unversioned run: exact-master local ordinary-entry post-merge verification; no Game-version decision. Cleanup: task-created integration worktree and dependency junction must be removed after remote readback; no persistent process started.

@@ -164,10 +164,19 @@ export async function recoverPendingInventory(next: Services, accountId: string,
   return result.value;
 }
 
-export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
-  { candidateNativeV3?: boolean; stagingNativeV3?: boolean } = {}) {
-  // The staging entry is built separately. Hosting, not this prop, controls access.
-  const nativeCandidate = stagingNativeV3 || (candidateNativeV3 && import.meta.env.DEV &&
+export function shouldSelectNativeDevelopmentEntry(enabled: boolean, dev: boolean,
+  hostname: string, pathname: string): boolean {
+  return enabled && dev && (hostname === '127.0.0.1' || hostname === 'localhost' || hostname === '[::1]') &&
+    (pathname === '/' || pathname === '/index.html');
+}
+
+export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
+  developmentNativeV3 = false }:
+  { candidateNativeV3?: boolean; stagingNativeV3?: boolean; developmentNativeV3?: boolean } = {}) {
+  // The separately built staging entry enforces its exact origin before this component mounts.
+  const nativeCandidate = stagingNativeV3 || shouldSelectNativeDevelopmentEntry(
+    developmentNativeV3, import.meta.env.DEV, window.location.hostname, window.location.pathname) ||
+    (candidateNativeV3 && import.meta.env.DEV &&
     window.location.pathname.endsWith('/native-selected-session-qa.html'));
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
