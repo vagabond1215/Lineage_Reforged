@@ -1,9 +1,9 @@
 # Native-v3 integration — Checkpoint B connector source preflight
 
-Date: 2026-11-09  
-Repository: `vagabond1215/Lineage_Reforged`  
-Exact inspected isolated branch: `codex/native-v3-master-integration-2026-11-09` at `8263f3eb7d3922bf33d10db9c5c4cff7806ae668`  
-Exact inspected `master`: `0522161fb955a9e3128585766723b7f3fc04c4a8`  
+Date: 2026-11-09
+Repository: `vagabond1215/Lineage_Reforged`
+Exact inspected isolated branch: `codex/native-v3-master-integration-2026-11-09` at `8263f3eb7d3922bf33d10db9c5c4cff7806ae668`
+Exact inspected `master`: `0522161fb955a9e3128585766723b7f3fc04c4a8`
 **Status: `V3_CHECKPOINT_B_SOURCE_PREFLIGHT_COMPLETE; CODE_EXECUTION_OUTSTANDING`.**
 
 This is a **read-only GitHub source and owner-boundary analysis** recorded on the existing isolated branch. It performs no local tests, source modifications, account/Save deletion, activation, PR lifecycle action, Site change or master merge. Codex must recheck both exact refs, the checkout, and the installed [branch-local Codex task](current-codex-prompt.md) before code changes. The executed [Checkpoint A report](native-v3-master-integration-checkpoint-a-2026-11-09.md) remains `V3_INTEGRATION_PARTIAL`, with reported final focused serial 57/57 tests and passing Node UI typecheck and direct/default/staging builds. **Do not repeat those green suites** unless Checkpoint B touches a covered owner/caller or a regression actually appears.

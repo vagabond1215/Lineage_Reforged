@@ -2267,3 +2267,22 @@ Bounded browser smoke exited 0 after creator → Unequip → Save → restart/re
 ### D. Risks / follow-up notes
 
 Next exact package: independent current-ref development-master source merge review and explicit authorization. Preserve master-only Core-entry/Hardcore design docs. No merge, default activation, deployment, PR lifecycle or Game-version change. Suggested commit: `docs(v3): record disposable Save restart witness`.
+## 2026-11-09 — Native-v3 exact-source development-master merge review
+
+**Source run:** unversioned read-only merge review on isolated branch `8ffa4d03` against master `0c0b5c30`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `none`, game-version impact `none`. [Focused review](native-v3-development-master-exact-source-merge-review-2026-11-09.md).
+
+### A. Files changed
+
+Focused review; branch-only prompt/output/handoff/register; seven whitespace-only lines across two connector evidence files. No runtime source changed.
+
+### B. Patch summary
+
+Computed no-conflict combined tree `b4b74bec273660a22f270b0813e265d77a02e540`: 12 master-only docs and 124 branch paths all retained. Flagged the four current coordination files as a semantic post-merge routing decision. No merge performed.
+
+### C. Checks run
+
+Fetched exact refs; merge base `0522161f`, 15 master-only/13 branch-only commits, zero changed-path overlap, combined-tree parent comparisons. Whitespace findings in two branch evidence docs corrected; final diff check required before publication. Prior disposable Save/restart witness remains the runtime evidence; no redundant tests. FP-002: local synthetic witness not hosted selected acceptance; FP-009: source/master/combined-tree identities separated. No other failure-pattern repair applied.
+
+### D. Risks / follow-up notes
+
+The next single decision is explicit source merge authorization with fresh refs and reviewed coordination resolution. Original v3/historical PRs retained. `HOLD_SELECTED_ATOMIC_ACTIVATION`, primary Site, real Saves/accounts and Game version unchanged. Suggested commit: `docs(v3): record exact-source merge review`.
