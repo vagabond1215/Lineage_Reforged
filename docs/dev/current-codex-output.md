@@ -2248,3 +2248,22 @@ Focused 8/8, Node UI typecheck, direct default Vite build, `git diff --check`. M
 ### D. Risks / follow-up notes
 
 Per-slot Damaged label is deferred because shared graph failures cannot be attributed safely. Legacy delete remains `LEGACY_DELETE_SCOPE_UNAVAILABLE`. Next: independent exact-source merge review and disposable current-v3 Save/restart; no merge or activation authorized. Original PRs/refs retained. Suggested commit: `fix(v3): admit native Save before legacy recovery`.
+## 2026-11-09 — Disposable native-v3 Save/restart witness
+
+**Source run:** unversioned isolated local browser evidence on `codex/native-v3-master-integration-2026-11-09` source `00a41dde`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. [Focused record](native-v3-disposable-local-save-restart-witness-2026-11-09.md).
+
+### A. Files changed
+
+Focused witness and branch-local output/handoff/prompt/register only. Temporary browser scripts/profile were removed; no runtime source changed.
+
+### B. Patch summary
+
+One isolated synthetic `EpochApp` journey created native v3, moved one gear instance, saved a new publication and reloaded the same exact gear/publication after full page navigation. This closes the selected **local disposable** witness named by independent source review, not authenticated hosted acceptance.
+
+### C. Tests or checks run
+
+Bounded browser smoke exited 0 after creator → Unequip → Save → restart/readback. The initial longer reference script failed later at optional sign-in selector; the requested core assertions had passed. FP-001: real UI caller to Save and restart; FP-002: synthetic local evidence not promoted to hosted selected acceptance; FP-009: exact branch/master heads kept distinct. No broad suite rerun.
+
+### D. Risks / follow-up notes
+
+Next exact package: independent current-ref development-master source merge review and explicit authorization. Preserve master-only Core-entry/Hardcore design docs. No merge, default activation, deployment, PR lifecycle or Game-version change. Suggested commit: `docs(v3): record disposable Save restart witness`.
