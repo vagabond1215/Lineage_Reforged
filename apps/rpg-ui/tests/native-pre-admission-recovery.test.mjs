@@ -128,3 +128,17 @@ test('native terminal admission does not settle a retained v2 pending source', a
   assert.equal(await terminal.resumePending('account.recovery.test', 'lineage.save_snapshot.v3'), null);
   assert.equal(settlements, 0);
 });
+
+test('terminal admission rejects mismatched retained source and publication before settlement', async () => {
+  const old = await evidence('slot-1', false);
+  const current = await evidence('slot-1', true);
+  let settlements = 0;
+  const terminal = new CleanEpochTerminalAdapter({
+    readPendingTerminalForAccount: async () => ({ sourceSnapshotRaw: old.sourceRaw,
+      envelopeRaw: JSON.stringify({ ...JSON.parse(current.envelopeRaw), terminal: true }) }),
+    completeTerminalSettlement: async () => { settlements++; }
+  });
+  const result = await terminal.resumePending('account.recovery.test', 'lineage.save_snapshot.v3');
+  assert.equal(result.status, 'blocked');
+  assert.equal(settlements, 0);
+});

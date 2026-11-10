@@ -5,7 +5,8 @@ import type { CampaignSessionControl } from '../../../packages/engines/game-engi
 import { EpochApp, recoverPendingInventory } from './EpochApp.js';
 import { CleanEpochAccountAdapter } from './game-shell/cleanEpochAccountAdapter.js';
 import { CleanEpochLegacyActionAdapter } from './game-shell/cleanEpochLegacyActionAdapter.js';
-import { openCleanEpochAccountStore } from './game-shell/cleanEpochAccountStore.js';
+import { CLEAN_EPOCH_DATABASE_NAME, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
+  openCleanEpochAccountStore } from './game-shell/cleanEpochAccountStore.js';
 import { grantLegacy } from '../../../packages/engines/game-engine/src/legacy-account.js';
 import { resolveLegacyPreparationSelection } from '../../../packages/engines/game-engine/src/legacy-unlocks.js';
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
@@ -71,6 +72,10 @@ async function preAdmissionQa() {
     terminal: new CleanEpochTerminalAdapter(owner) } as Parameters<typeof recoverPendingInventory>[0];
   const result = await recoverPendingInventory(services, accountId, true);
   await recoverPendingInventory(services, accountId, true);
+  const neighborLoad = await services.launcher.load(accountId, result.account.revision, 'slot-1');
+  if (neighborLoad.status !== 'ready' ||
+      neighborLoad.value.slot.loaded.snapshot.snapshotVersion !== 'lineage.save_snapshot.v3')
+    throw new Error('Independent v3 neighbor was not loadable.');
   const oldAfter = await owner.readRecovery(accountId, 'slot-2');
   const neighborAfter = await owner.readSlot(accountId, 'slot-1');
   const accountAfter = await owner.readSelected(accountId);
@@ -119,6 +124,159 @@ async function preAdmissionQa() {
       JSON.stringify(await owner.readSelected(pendingNativeAccountId)) !== JSON.stringify(recoveredAccount) ||
       JSON.stringify(await owner.readRecovery(pendingNativeAccountId, 'slot-1')) !== JSON.stringify(recoveredReceipt))
     throw new Error('Native retry duplicated publication or consumer receipts.');
+  const terminal = new CleanEpochTerminalAdapter(owner);
+  const retire = async (retireAccountId: string, slotId: 'slot-1' | 'slot-2') => {
+    const slot = await owner.readSlot(retireAccountId, slotId);
+    const account = await owner.readSelected(retireAccountId);
+    if (slot.status !== 'ready' || !account) throw new Error('Terminal source is not ready.');
+    return terminal.retire({ accountId: retireAccountId, sourceSlotId: slotId,
+      expectedAccountRevision: account.revision, snapshot: slot.loaded.snapshot,
+      control: slot.loaded.sessionControl, expectedSourceAddress: {
+        artifactId: slot.loaded.sessionControl.loadedArtifactId,
+        publicationId: slot.loaded.sessionControl.loadedPublicationId } });
+  };
+  const oldTerminalAccountId = `account.native.old-terminal.${crypto.randomUUID()}`;
+  const oldTerminalRegistration = await accounts.register({ accountId: oldTerminalAccountId,
+    displayName: 'Synthetic old terminal QA', password: 'synthetic-only-password',
+    confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
+  if (oldTerminalRegistration.status !== 'ready') throw new Error(oldTerminalRegistration.message);
+  const oldTerminalStart = await legacy.start(oldTerminalAccountId, form('slot-1'));
+  const oldTerminalNeighbor = await native.start(oldTerminalAccountId, form('slot-2'));
+  if (oldTerminalStart.status !== 'ready' || oldTerminalNeighbor.status !== 'ready')
+    throw new Error('Mixed terminal source fixture failed.');
+  const oldRetired = await retire(oldTerminalAccountId, 'slot-1');
+  if (oldRetired.status !== 'completed' || oldRetired.recovery.addressClosure)
+    throw new Error('V2 terminal fixture did not retain unclosed settlement.');
+  const oldTerminalAccount = await owner.readSelected(oldTerminalAccountId);
+  const oldTerminalNeighborBefore = await owner.readSlot(oldTerminalAccountId, 'slot-2');
+  const oldTerminalInventory = await recoverPendingInventory(services, oldTerminalAccountId, true);
+  if (oldTerminalInventory.slots.find(slot => slot.slotId === 'slot-2')?.status !== 'ready' ||
+      JSON.stringify(await owner.readSelected(oldTerminalAccountId)) !== JSON.stringify(oldTerminalAccount) ||
+      JSON.stringify(await owner.readSlot(oldTerminalAccountId, 'slot-2')) !== JSON.stringify(oldTerminalNeighborBefore) ||
+      JSON.stringify(await owner.readTerminalRecovery(oldTerminalAccountId,
+        oldRetired.recovery.campaignId, oldRetired.recovery.publicationId)) !== JSON.stringify(oldRetired.recovery))
+    throw new Error('Native inventory closed or changed the v2 terminal settlement or v3 neighbor.');
+  const nativeRetired = await retire(pendingNativeAccountId, 'slot-1');
+  if (nativeRetired.status !== 'completed' || nativeRetired.recovery.addressClosure)
+    throw new Error('V3 terminal fixture did not retain unclosed settlement.');
+  const nativeTerminalRevision = nativeRetired.account.revision;
+  await recoverPendingInventory(services, pendingNativeAccountId, true);
+  const nativeClosed = await owner.readTerminalRecovery(pendingNativeAccountId,
+    nativeRetired.recovery.campaignId, nativeRetired.recovery.publicationId);
+  const nativeClosedAccount = await owner.readSelected(pendingNativeAccountId);
+  if (!nativeClosed?.addressClosure || nativeClosed.addressClosure.receipts.length !== 1 ||
+      nativeClosedAccount?.revision !== nativeTerminalRevision + 1 ||
+      nativeClosedAccount.profile.history.runRecords.find(run =>
+        run.characterId === nativeClosed.characterId)?.saveSlotIds.length !== 0)
+    throw new Error('V3 terminal closure lost exact receipt or account revision.');
+  for (const ref of nativeClosed.addressClosure.receipts) {
+    const receipt = await owner.readAddressDeletionReceipt(pendingNativeAccountId,
+      ref.slotId, ref.slotGenerationId);
+    if (receipt?.reason !== 'terminal' || receipt.artifactId !== ref.artifactId ||
+        receipt.publicationId !== ref.publicationId)
+      throw new Error('V3 terminal closure receipt failed independent owner readback.');
+  }
+  await recoverPendingInventory(services, pendingNativeAccountId, true);
+  if (JSON.stringify(await owner.readTerminalRecovery(pendingNativeAccountId,
+        nativeClosed.campaignId, nativeClosed.publicationId)) !== JSON.stringify(nativeClosed) ||
+      JSON.stringify(await owner.readSelected(pendingNativeAccountId)) !== JSON.stringify(nativeClosedAccount))
+    throw new Error('V3 terminal closure retry changed retained archive bytes.');
+  const reopened = await openCleanEpochAccountStore();
+  try {
+    if (JSON.stringify(await reopened.readTerminalRecovery(pendingNativeAccountId,
+      nativeClosed.campaignId, nativeClosed.publicationId)) !== JSON.stringify(nativeClosed))
+      throw new Error('V3 terminal closure did not survive independent owner readback.');
+  } finally { reopened.close(); }
+  const pendingTerminalAccountId = `account.native.old-pending-terminal.${crypto.randomUUID()}`;
+  const pendingTerminalRegistration = await accounts.register({ accountId: pendingTerminalAccountId,
+    displayName: 'Synthetic old pending terminal QA', password: 'synthetic-only-password',
+    confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
+  if (pendingTerminalRegistration.status !== 'ready') throw new Error(pendingTerminalRegistration.message);
+  if ((await legacy.start(pendingTerminalAccountId, form('slot-1'))).status !== 'ready' ||
+      (await native.start(pendingTerminalAccountId, form('slot-2'))).status !== 'ready')
+    throw new Error('Pending v2 terminal neighbor fixture failed.');
+  const settle = owner.completeTerminalSettlement.bind(owner);
+  owner.completeTerminalSettlement = async () => { throw new Error('Synthetic lost terminal settlement acknowledgement'); };
+  try {
+    if ((await retire(pendingTerminalAccountId, 'slot-1')).status !== 'blocked')
+      throw new Error('V2 pending terminal fixture unexpectedly settled.');
+  } finally { owner.completeTerminalSettlement = settle; }
+  const pendingOldTerminal = await owner.readPendingTerminalForAccount(pendingTerminalAccountId);
+  if (pendingOldTerminal?.status !== 'accepted_pending_settlement')
+    throw new Error('V2 pending terminal source was not retained.');
+  const pendingOldAccount = await owner.readSelected(pendingTerminalAccountId);
+  const pendingOldNeighbor = await owner.readSlot(pendingTerminalAccountId, 'slot-2');
+  await recoverPendingInventory(services, pendingTerminalAccountId, true);
+  if (JSON.stringify(await owner.readSelected(pendingTerminalAccountId)) !== JSON.stringify(pendingOldAccount) ||
+      JSON.stringify(await owner.readPendingTerminalForAccount(pendingTerminalAccountId)) !==
+        JSON.stringify(pendingOldTerminal) ||
+      JSON.stringify(await owner.readSlot(pendingTerminalAccountId, 'slot-2')) !== JSON.stringify(pendingOldNeighbor))
+    throw new Error('Native inventory settled pending v2 terminal or changed v3 neighbor.');
+  const pendingDescendantAccountId = `account.native.old-pending-descendant.${crypto.randomUUID()}`;
+  const pendingDescendantRegistration = await accounts.register({ accountId: pendingDescendantAccountId,
+    displayName: 'Synthetic old descendant QA', password: 'synthetic-only-password',
+    confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
+  if (pendingDescendantRegistration.status !== 'ready') throw new Error(pendingDescendantRegistration.message);
+  const oldDescendantFirst = await legacy.start(pendingDescendantAccountId, form('slot-1'));
+  const descendantNeighbor = await native.start(pendingDescendantAccountId, form('slot-2'));
+  const descendantAccount = await owner.readSelected(pendingDescendantAccountId);
+  if (oldDescendantFirst.status !== 'ready' || descendantNeighbor.status !== 'ready' || !descendantAccount)
+    throw new Error('V2 descendant mixed fixture failed.');
+  const completeDescendant = owner.completeDescendantConsumers.bind(owner);
+  owner.completeDescendantConsumers = async () => { throw new Error('Synthetic lost descendant acknowledgement'); };
+  try {
+    const pending = await new CleanEpochDescendantAdapter(owner).save({
+      accountId: pendingDescendantAccountId, sourceSlotId: 'slot-1', destinationSlotId: 'slot-3',
+      expectedAccountRevision: descendantAccount.revision, expectedDestinationAddress: null,
+      snapshot: oldDescendantFirst.value.loaded.snapshot,
+      control: oldDescendantFirst.value.loaded.sessionControl });
+    if (pending.status !== 'blocked') throw new Error('V2 descendant fixture unexpectedly completed.');
+  } finally { owner.completeDescendantConsumers = completeDescendant; }
+  const oldDescendantPending = await owner.readCurrentDescendantRecovery(pendingDescendantAccountId, 'slot-3');
+  const oldDescendantAccount = await owner.readSelected(pendingDescendantAccountId);
+  const oldDescendantNeighbor = await owner.readSlot(pendingDescendantAccountId, 'slot-2');
+  if (oldDescendantPending?.status !== 'accepted_pending_consumers' || oldDescendantNeighbor.status !== 'ready')
+    throw new Error('V2 pending descendant was not retained beside v3.');
+  const descendantInventory = await recoverPendingInventory(services, pendingDescendantAccountId, true);
+  const descendantLoad = await services.launcher.load(pendingDescendantAccountId,
+    descendantInventory.account.revision, 'slot-2');
+  if (descendantLoad.status !== 'ready' ||
+      descendantLoad.value.slot.loaded.snapshot.snapshotVersion !== 'lineage.save_snapshot.v3')
+    throw new Error('V3 neighbor was not loadable beside v2 pending descendant.');
+  if (JSON.stringify(await owner.readCurrentDescendantRecovery(pendingDescendantAccountId, 'slot-3')) !==
+        JSON.stringify(oldDescendantPending) ||
+      JSON.stringify(await owner.readSelected(pendingDescendantAccountId)) !== JSON.stringify(oldDescendantAccount) ||
+      JSON.stringify(await owner.readSlot(pendingDescendantAccountId, 'slot-2')) !==
+        JSON.stringify(oldDescendantNeighbor))
+    throw new Error('Native inventory completed v2 descendant or changed v3 neighbor.');
+  const damagedBefore = JSON.stringify(await owner.readSelected(pendingTerminalAccountId));
+  const damagedNeighbor = JSON.stringify(await owner.readSlot(pendingTerminalAccountId, 'slot-2'));
+  const db = await new Promise<IDBDatabase>((resolve, reject) => {
+    const request = indexedDB.open(CLEAN_EPOCH_DATABASE_NAME);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE, 'readwrite');
+      const store = tx.objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE);
+      const request = store.get([pendingTerminalAccountId, pendingOldTerminal.campaignId,
+        pendingOldTerminal.publicationId]);
+      request.onsuccess = () => {
+        if (!request.result) { tx.abort(); return; }
+        store.put({ ...request.result, sourceSnapshotRaw: 'synthetic-corrupt-source' });
+      };
+      tx.oncomplete = () => resolve();
+      tx.onabort = () => reject(tx.error ?? new Error('Synthetic corruption setup aborted.'));
+      tx.onerror = () => reject(tx.error);
+    });
+  } finally { db.close(); }
+  let malformedBlocked = false;
+  try { await recoverPendingInventory(services, pendingTerminalAccountId, true); }
+  catch { malformedBlocked = true; }
+  if (!malformedBlocked || JSON.stringify(await owner.readSelected(pendingTerminalAccountId)) !== damagedBefore ||
+      JSON.stringify(await owner.readSlot(pendingTerminalAccountId, 'slot-2')) !== damagedNeighbor)
+    throw new Error('Malformed terminal source wrote account or neighboring v3 bytes.');
   document.body.dataset.preAdmission = 'pass';
   document.body.dataset.preAdmissionAccount = accountId;
   document.getElementById('root')!.textContent = 'PASS synthetic same-origin pre-admission recovery';

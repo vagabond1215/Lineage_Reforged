@@ -2343,3 +2343,23 @@ Synthetic same-origin real IndexedDB browser fixture PASS for v2 pending plus v3
 ### D. Risks / follow-up notes
 
 FP-001/002/003/004/005/009: real `EpochApp` inventory function and same-origin owner graph exercised; source/receipt/retry/readback evidence is recorded, while selected-client and activation acceptance remain held. Retained native-v3, historical UI, protected and other held branches/PRs were not changed; no branch or PR action was due beyond this new isolated candidate branch. Exact review trigger: independent source review and real-owner terminal closure/retry fixture before any separate source-merge or default-activation decision. Suggested commit message: `fix(ui): gate native inventory recovery by retained format`. Next run: unversioned independent pending recovery boundary review; no separate Game-version decision proposed.
+
+## 2026-11-10 — Native-v3 pending recovery independent boundary review
+
+**Source run:** unversioned support, branch `codex/native-v3-pre-admission-recovery-2026-11-10` at `22a5bc4b80d34cbd6640a6b86774255ad241ac38`; fetched master `a6c95f5d905ead0dece6f405d1e2d4987d836d15` adds only one connector fixture source map. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Independent evidence](native-v3-pre-admission-pending-recovery-repair-2026-11-10.md).
+
+### A. Files changed
+
+Extended the synthetic same-origin QA caller and focused Node test; updated the focused record, current output/handoff/prompt and branch register. No runtime owner or production source implementation changed.
+
+### B. Patch summary
+
+`INDEPENDENT_RECOVERY_REPAIR_VERIFIED` for this bounded local boundary. Real owner fixtures prove v2 pending first/descendant/terminal and settled-but-unclosed v2 terminal remain unchanged beside loadable v3 slots; lawful v3 terminal closure writes one exact owner deletion receipt and account revision, survives restart and is a no-op on retry. Deliberately malformed terminal source blocks before account or neighbor write. Default v2 call path retains its omitted format filter. No master source merge or activation.
+
+### C. Tests or checks run
+
+Fresh same-origin disposable browser fixture PASS; focused Node 15/15; Node UI typecheck PASS; direct Vite build PASS. Broad UI typecheck 115 branch / 115 unchanged master code diagnostics, zero changed-file diagnostics. Diff/links/changed paths checked before commit. The preceding implementation did not record red-before-green; this review does not infer it.
+
+### D. Risks / follow-up notes
+
+FP-001/002/003/004/005/009: actual inventory caller, retained owner graph, blocked reads, completion, retry, restart, neighboring source and distinct base/final identities verified. This synthetic local review is not hosted selected-client or default-activation acceptance. Fresh GitHub connector inventory: 68 open PRs #6–#73; #5 remains closed/unmerged with branch retained. This run changes no PR disposition, merges/deletes no branch and consumes no original PR retirement trigger. Suggested commit: `test(v3): verify terminal recovery format boundary`. Next: fresh exact-source recovery branch merge proposal and separate authorization; no Game-version decision.
