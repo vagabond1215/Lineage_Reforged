@@ -2305,3 +2305,22 @@ Pre-merge focused owner/Save tests, builds and local synthetic Save/restart are 
 ### D. Risks / follow-up notes
 
 Default native-v3 activation, hosted deployment, real data handling and original PR retirement remain separately held. Per-slot Damaged UX and legacy delete scope remain deferred. Next recommended run: exact-master default-development-app activation **readiness review**, no activation without a separate accepted decision. Suggested commit: `merge(v3): integrate held native development source`.
+## 2026-11-09 — Native-v3 default-development activation readiness
+
+**Source run:** unversioned read-only exact-master review at synchronized `master`/`origin/master` `5209de5fd0b424817f6be7136afdb265298c12ce`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `none`, game-version impact `none`. [Focused decision](native-v3-default-development-activation-readiness-2026-11-09.md): **`ACTIVATION_BLOCKED; HOLD_SELECTED_ATOMIC_ACTIVATION`**.
+
+### A. Files changed
+
+Focused decision, next installed prompt, this output, handoff and branch register. No runtime, test, Save, account, Site or Game-version file changed.
+
+### B. Patch summary
+
+Normal `App` still mounts v2. Native candidate is QA pathname gated; staging has a separate origin guard. Inventory-time descendant/terminal recovery can run before native format admission, and simply skipping old pending slots would trigger the current account-wide pending block. A bounded owner-backed mixed-format repair is now the next route; no activation was attempted.
+
+### C. Tests or checks run
+
+Live master/ref and worktree checked; connector-preflight delta inspected; actual caller and first/descendant/terminal recovery source read. No tests/builds: this is a read-only decision, and the missing mixed-format witness belongs to the repair. FP-001: real entry and pre-admission caller paths traced; FP-002: prior QA fixture does not accept ordinary index; FP-003: fail-closed graph validation retained; FP-009: source merge and current master identities separated.
+
+### D. Risks / follow-up notes
+
+Source-backed ordering risk is not a reproduced unauthorized write. Next: isolated pre-admission recovery repair/test with v2 pending plus healthy v3 neighbor and lawful v3 pending recovery. Original PRs/branches retained; no PR lifecycle action due. Suggested commit: `docs(v3): hold default activation on pending recovery boundary`. No separate Game-version decision.
