@@ -2324,3 +2324,82 @@ Live master/ref and worktree checked; connector-preflight delta inspected; actua
 ### D. Risks / follow-up notes
 
 Source-backed ordering risk is not a reproduced unauthorized write. Next: isolated pre-admission recovery repair/test with v2 pending plus healthy v3 neighbor and lawful v3 pending recovery. Original PRs/branches retained; no PR lifecycle action due. Suggested commit: `docs(v3): hold default activation on pending recovery boundary`. No separate Game-version decision.
+## 2026-11-10 — Native-v3 pre-admission pending recovery repair
+
+**Source run:** unversioned support from synchronized `origin/master` `6fb1f233b47b7e9e5e805c1a4f21b5f49b4ce424`, on `codex/native-v3-pre-admission-recovery-2026-11-10`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused record](native-v3-pre-admission-pending-recovery-repair-2026-11-10.md).
+
+### A. Files changed
+
+`EpochApp.tsx`, clean-epoch account store and terminal adapter, synthetic same-origin QA caller, focused Node test, focused record, current prompt/output/handoff and branch register.
+
+### B. Patch summary
+
+Native inventory now admits retained first/descendant source and publication format before recovery, filters terminal settlement and address closure by validated source format, preserves incompatible v2 pending bytes and leaves an independent ready v3 slot usable. Default v2 recovery remains unfiltered. No default activation, source merge, Site or Game-version change.
+
+### C. Tests or checks run
+
+Synthetic same-origin real IndexedDB browser fixture PASS for v2 pending plus v3 ready, prepared-v2 refusal, unavailable read, and exact-once v3 pending completion with owner readbacks. Focused Node 14/14, Node UI typecheck PASS, direct Vite build PASS. Broad UI typecheck: 115 diagnostics on branch and clean master, zero delta and zero changed-file diagnostics. `git diff --check` PASS. New tests were added after the edit; no red-before-green run is claimed. Real-owner completed-terminal closure remains for independent review.
+
+### D. Risks / follow-up notes
+
+FP-001/002/003/004/005/009: real `EpochApp` inventory function and same-origin owner graph exercised; source/receipt/retry/readback evidence is recorded, while selected-client and activation acceptance remain held. Retained native-v3, historical UI, protected and other held branches/PRs were not changed; no branch or PR action was due beyond this new isolated candidate branch. Exact review trigger: independent source review and real-owner terminal closure/retry fixture before any separate source-merge or default-activation decision. Suggested commit message: `fix(ui): gate native inventory recovery by retained format`. Next run: unversioned independent pending recovery boundary review; no separate Game-version decision proposed.
+
+## 2026-11-10 — Native-v3 pending recovery independent boundary review
+
+**Source run:** unversioned support, branch `codex/native-v3-pre-admission-recovery-2026-11-10` at `22a5bc4b80d34cbd6640a6b86774255ad241ac38`; fetched master `a6c95f5d905ead0dece6f405d1e2d4987d836d15` adds only one connector fixture source map. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Independent evidence](native-v3-pre-admission-pending-recovery-repair-2026-11-10.md).
+
+### A. Files changed
+
+Extended the synthetic same-origin QA caller and focused Node test; updated the focused record, current output/handoff/prompt and branch register. No runtime owner or production source implementation changed.
+
+### B. Patch summary
+
+`INDEPENDENT_RECOVERY_REPAIR_VERIFIED` for this bounded local boundary. Real owner fixtures prove v2 pending first/descendant/terminal and settled-but-unclosed v2 terminal remain unchanged beside loadable v3 slots; lawful v3 terminal closure writes one exact owner deletion receipt and account revision, survives restart and is a no-op on retry. Deliberately malformed terminal source blocks before account or neighbor write. Default v2 call path retains its omitted format filter. No master source merge or activation.
+
+### C. Tests or checks run
+
+Fresh same-origin disposable browser fixture PASS; focused Node 15/15; Node UI typecheck PASS; direct Vite build PASS. Broad UI typecheck 115 branch / 115 unchanged master code diagnostics, zero changed-file diagnostics. Diff/links/changed paths checked before commit. The preceding implementation did not record red-before-green; this review does not infer it.
+
+### D. Risks / follow-up notes
+
+FP-001/002/003/004/005/009: actual inventory caller, retained owner graph, blocked reads, completion, retry, restart, neighboring source and distinct base/final identities verified. This synthetic local review is not hosted selected-client or default-activation acceptance. Fresh GitHub connector inventory: 68 open PRs #6–#73; #5 remains closed/unmerged with branch retained. This run changes no PR disposition, merges/deletes no branch and consumes no original PR retirement trigger. Suggested commit: `test(v3): verify terminal recovery format boundary`. Next: fresh exact-source recovery branch merge proposal and separate authorization; no Game-version decision.
+
+## 2026-11-10 — Native-v3 pending recovery exact-source merge decision
+
+**Source run:** unversioned coordination on `codex/native-v3-pre-admission-recovery-2026-11-10` at reviewed `c6794b0fc8b9cbf4f4b4cb28dae09b9b42d3e395`; fetched live `origin/master` `323470656de02b882083671db51341f9b0935d67`, common base `6fb1f233b47b7e9e5e805c1a4f21b5f49b4ce424`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `none`, game-version impact `none`. [Exact-source decision](native-v3-pending-recovery-exact-source-merge-decision-2026-11-10.md).
+
+### A. Files changed
+
+Focused exact-source decision, current output/handoff/prompt and branch register only. No runtime or test edit.
+
+### B. Patch summary
+
+`SOURCE_MERGE_READY_AWAITING_AUTHORIZATION`. Git's conflict-free combined tree `e20b941e0a34a82f772a4e8ccf5b4f4982ac0256` has 1,987 paths, 12 changed paths from the common base, zero side overlap, the exact tested branch production/QA blobs and both newer master-only docs. A raw merge would leave a stale merge-decision prompt, so the proposed authorized merge must reconcile active coordination in the same master commit. No merge or activation occurred.
+
+### C. Tests or checks run
+
+Fresh fetch/prune, remote-head query, merge base/ahead-behind, exact `git merge-tree --write-tree`, path counts, blob equality, normal-entry/Game-version/Save-policy identity and `git diff --check` PASS. Prior independent branch validation at exact source blobs: focused Node 15/15, Node UI typecheck and direct Vite build PASS; broad UI typecheck 115/115 baseline diagnostics. No new executable suite was run because both master-only commits are documentation and the merged runtime blobs equal the already tested candidate; this is not fresh merged-client acceptance.
+
+### D. Risks / follow-up notes
+
+FP-001/002/008/009: actual caller and held entry identities, prior selected-evidence limit, branch lifecycle and exact base/remote/combined identities checked. Fresh GitHub connector inventory: 68 open PRs #6–#73, including draft #63–#73 at their inspected heads; PR #5 remains closed/unmerged. No PR action or branch disposition change occurred; the recovery branch remains a retained integration candidate until explicit approval and post-merge readback. Suggested commit: `docs(v3): record exact recovery source merge decision`. Next: user decision on source-only merge of this exact branch into current master, then separate normal-entry activation readiness; no Game-version decision.
+
+## 2026-11-10 — Native-v3 pending recovery source-only merge
+
+**Source run:** unversioned source integration on `master`, first parent `323470656de02b882083671db51341f9b0935d67`, second parent `07b87798643f1ecb098697dbcf247e669440e02b`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. The user explicitly authorized this recovery-branch **source merge only**. Final merge SHA follows commit/push readback.
+
+### A. Files changed
+
+Three production owners (`EpochApp`, account store, terminal adapter), one synthetic QA caller and one focused test from the retained recovery branch; its two focused decision/evidence records; this output, handoff, prompt and branch register. Both newer master-only connector documents remain in the combined tree.
+
+### B. Patch summary
+
+Integrated the independently reviewed pre-admission recovery repair into held development source. Replaced the consumed merge-approval prompt with a separate exact-master normal-entry activation **readiness review**. No default v3 entry selection, Site, real account/Save or Game-version change. The recovery branch remains retained for exact post-merge readback and named-consumer review.
+
+### C. Tests or checks run
+
+Fresh remote-head verification, conflict-free merge and changed-path/blob review; merged-tree focused Node tests **15/15**, Node UI typecheck PASS, staged and unstaged `git diff --check` PASS. The three staged production blobs match the independently tested branch (`2cc24ab6`, `a8b185dd`, `0deddc7c`). Prior exact-source direct Vite build PASS; no new build was needed for the docs-only master delta. FP-001/002/003/004/005/008/009: real owner/caller and bounded synthetic recovery/retry/neighbor evidence retained, selected-client limits separated, original PR lifecycle held, exact parent/source identities verified. No new authenticated or hosted witness.
+
+### D. Risks / follow-up notes
+
+`HOLD_SELECTED_ATOMIC_ACTIVATION` remains. The next run is an exact-master normal-entry activation readiness review; implementation, ordinary-index disposable Save/restart, hosted and authenticated selected acceptance each require their own decision/evidence. Original PRs #6–#73 retain prior dispositions; PR #5 remains closed/unmerged with branch intact. No original PR action or branch deletion was due. Suggested commit: `merge(v3): integrate held pending recovery source`. No separate Game-version decision.

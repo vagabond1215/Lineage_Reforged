@@ -516,6 +516,16 @@ function envelopeFromRaw(raw: string): StoredSaveEnvelope | StoredNativeGearEnve
     fail("invalid_record", "First-publication envelope is invalid.");
   return parsed;
 }
+export function retainedRecoverySnapshotVersion(sourceSnapshotRaw: string, envelopeRaw: string): string {
+  const sourceVersion = deserializeSnapshot(sourceSnapshotRaw).snapshotVersion;
+  const publishedVersion = deserializeSnapshot(envelopeFromRaw(envelopeRaw).snapshot).snapshotVersion;
+  if (sourceVersion !== publishedVersion)
+    fail("invalid_record", "Recovery source and publication formats disagree.");
+  return publishedVersion;
+}
+export function terminalRecoverySnapshotVersion(recovery: CleanEpochTerminalRecovery): string {
+  return retainedRecoverySnapshotVersion(recovery.sourceSnapshotRaw, recovery.envelopeRaw);
+}
 function retainedArtifactMatches(value: unknown, envelope: StoredSaveEnvelope | StoredNativeGearEnvelope): boolean {
   return object(value) && value.version === 1 && value.accountId === envelope.accountId &&
     value.campaignId === envelope.campaignId && value.slotId === envelope.slotId &&
@@ -2401,7 +2411,8 @@ export class CleanEpochAccountStore {
     return pending[0] ?? null;
   }
 
-  async closePendingTerminalAddressesForAccount(accountId: string): Promise<number> {
+  async closePendingTerminalAddressesForAccount(accountId: string,
+    requiredSnapshotVersion?: string): Promise<number> {
     if (!nonblank(accountId)) fail("invalid_record", "Terminal closure account is invalid.");
     let rows: unknown[];
     try {
@@ -2416,6 +2427,7 @@ export class CleanEpochAccountStore {
       const recovery = await this.readTerminalRecovery(accountId, raw.campaignId, raw.publicationId);
       if (!recovery) fail("invalid_record", "Terminal closure source disappeared.");
       if (recovery.status !== "settlement_completed" || recovery.addressClosure) continue;
+      if (requiredSnapshotVersion && terminalRecoverySnapshotVersion(recovery) !== requiredSnapshotVersion) continue;
       const account = await this.readSelected(accountId);
       if (!account) fail("invalid_record", "Terminal closure account disappeared.");
       await this.closeTerminalAddresses(accountId, recovery.campaignId, recovery.publicationId,

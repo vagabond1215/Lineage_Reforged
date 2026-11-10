@@ -24,7 +24,8 @@ import { SettingsScreen } from './game-shell/components/SettingsScreen.js';
 import { CleanEpochAccountAdapter, createEpochAccountId } from './game-shell/cleanEpochAccountAdapter.js';
 import { CampaignStoreError } from './game-shell/campaignIndexedDbStore.js';
 import { CLEAN_EPOCH_ARCHIVE_MAX_BYTES, CLEAN_EPOCH_SESSION_STORAGE_KEY, openCleanEpochAccountStore,
-  type CleanEpochAccountStore, type CleanEpochSlotSummary } from './game-shell/cleanEpochAccountStore.js';
+  retainedRecoverySnapshotVersion, type CleanEpochAccountStore,
+  type CleanEpochSlotSummary } from './game-shell/cleanEpochAccountStore.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochNormalDefeatRecoveryAdapter } from './game-shell/cleanEpochNormalDefeatRecoveryAdapter.js';
 import { CleanEpochTerminalAdapter } from './game-shell/cleanEpochTerminalAdapter.js';
@@ -118,6 +119,51 @@ export async function admitBeforeRecovery<T extends { snapshot: { snapshotVersio
   return recover();
 }
 
+/** Inventory recovery runs after a read-only retained-source admission pass. */
+export async function recoverPendingInventory(next: Services, accountId: string,
+  nativeCandidate: boolean): Promise<Inventory> {
+  let result = await next.launcher.inventory(accountId);
+  if (result.status === 'blocked') throw new Error(result.message);
+  for (const slot of result.value.slots) {
+    if (slot.status !== 'pending_consumers') continue;
+    const attempt = await next.owner.readAttempt(accountId, slot.slotId);
+    const firstRecovery = attempt ? await next.owner.readRecovery(accountId, slot.slotId) : null;
+    if (firstRecovery?.status === 'accepted_pending_consumers') {
+      if (nativeCandidate) {
+        const version = retainedRecoverySnapshotVersion(attempt!.snapshotRaw, firstRecovery.envelopeRaw);
+        if (version !== slot.metadata?.snapshotVersion)
+          throw new Error(`Pending slot ${slot.slotId} format evidence disagrees.`);
+        if (version !== 'lineage.save_snapshot.v3') continue;
+      }
+      const resumed = await next.first.resume(accountId, slot.slotId as ManualSaveSlotId);
+      if (resumed.status === 'blocked') throw new Error(resumed.message);
+    } else {
+      // A pending head can make older source addresses appear pending too.
+      const recovery = await next.owner.readCurrentDescendantRecovery(accountId, slot.slotId);
+      if (!recovery) continue;
+      if (nativeCandidate) {
+        const version = retainedRecoverySnapshotVersion(recovery.sourceSnapshotRaw, recovery.envelopeRaw);
+        if (version !== slot.metadata?.snapshotVersion)
+          throw new Error(`Pending slot ${slot.slotId} format evidence disagrees.`);
+        if (version !== 'lineage.save_snapshot.v3') continue;
+      }
+      const resumed = await next.descendant.resumeCurrent(accountId, slot.slotId);
+      if (resumed.status === 'blocked') throw new Error(resumed.message);
+    }
+  }
+  const terminal = await next.terminal.resumePending(accountId,
+    nativeCandidate ? 'lineage.save_snapshot.v3' : undefined);
+  if (terminal?.status === 'blocked') throw new Error(terminal.message);
+  await next.owner.closePendingTerminalAddressesForAccount(accountId,
+    nativeCandidate ? 'lineage.save_snapshot.v3' : undefined);
+  result = await next.launcher.inventory(accountId);
+  if (result.status === 'blocked') throw new Error(result.message);
+  if (result.value.slots.some(slot => slot.status === 'pending_consumers' &&
+      (!nativeCandidate || slot.metadata?.snapshotVersion === 'lineage.save_snapshot.v3')))
+    throw new Error('Retained campaign publication remains pending after recovery.');
+  return result.value;
+}
+
 export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
   { candidateNativeV3?: boolean; stagingNativeV3?: boolean } = {}) {
   // The staging entry is built separately. Hosting, not this prop, controls access.
@@ -188,38 +234,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false }:
     menuDeletionSources.current = captured;
   };
 
-  const completePending = async (next: Services, accountId: string, slots: CleanEpochSlotSummary[]) => {
-    for (const slot of slots) {
-      if (slot.status !== 'pending_consumers') continue;
-      const attempt = await next.owner.readAttempt(accountId, slot.slotId);
-      const firstRecovery = attempt ? await next.owner.readRecovery(accountId, slot.slotId) : null;
-      if (firstRecovery?.status === 'accepted_pending_consumers') {
-        const resumed = await next.first.resume(accountId, slot.slotId as ManualSaveSlotId);
-        if (resumed.status === 'blocked') throw new Error(resumed.message);
-      } else {
-        // A single pending campaign head can make older source addresses appear pending too.
-        // Only the destination address owns the retained descendant recovery.
-        const recovery = await next.owner.readCurrentDescendantRecovery(accountId, slot.slotId);
-        if (!recovery) continue;
-        const resumed = await next.descendant.resumeCurrent(accountId, slot.slotId);
-        if (resumed.status === 'blocked') throw new Error(resumed.message);
-      }
-    }
-  };
-
-  const inventory = async (next: Services, accountId: string): Promise<Inventory> => {
-    let result = await next.launcher.inventory(accountId);
-    if (result.status === 'blocked') throw new Error(result.message);
-    await completePending(next, accountId, result.value.slots);
-    const terminal = await next.terminal.resumePending(accountId);
-    if (terminal?.status === 'blocked') throw new Error(terminal.message);
-    await next.owner.closePendingTerminalAddressesForAccount(accountId);
-    result = await next.launcher.inventory(accountId);
-    if (result.status === 'blocked') throw new Error(result.message);
-    if (result.value.slots.some(slot => slot.status === 'pending_consumers'))
-      throw new Error('Retained campaign publication remains pending after recovery.');
-    return result.value;
-  };
+  const inventory = (next: Services, accountId: string) =>
+    recoverPendingInventory(next, accountId, nativeCandidate);
 
   const initialize = async () => {
     const generation = ++initializationGeneration.current;

@@ -9,7 +9,7 @@ import { inspectCampaignSessionSource, type CampaignSessionControl } from
 import type { SaveSnapshot } from '../../../../packages/shared/types/src/index.js';
 import { CampaignStoreError, type CampaignStoreFailureCode, type CampaignStorePublication } from './campaignIndexedDbStore.js';
 import { type CleanEpochAccountStore, type CleanEpochAccountRecord,
-  type CleanEpochTerminalRecovery } from './cleanEpochAccountStore.js';
+  type CleanEpochTerminalRecovery, terminalRecoverySnapshotVersion } from './cleanEpochAccountStore.js';
 import { projectRetirementSettlement, retirementSettlementFingerprint,
   RETIREMENT_CONSUMERS } from './cleanEpochTerminalProjection.js';
 import { buildNativeGearArtifactPublication, buildSaveMetadata, type CampaignPublicationConsumerPlan,
@@ -48,10 +48,12 @@ export class CleanEpochTerminalAdapter {
     return { status: 'completed', account, recovery: readback };
   }
 
-  async resumePending(accountId: string): Promise<EpochTerminalResult | null> {
+  async resumePending(accountId: string, requiredSnapshotVersion?: string): Promise<EpochTerminalResult | null> {
     try {
       const pending = await this.owner.readPendingTerminalForAccount(accountId);
-      return pending ? await this.complete(pending) : null;
+      return pending && (!requiredSnapshotVersion ||
+        terminalRecoverySnapshotVersion(pending) === requiredSnapshotVersion)
+        ? await this.complete(pending) : null;
     } catch (error) { return blocked(error); }
   }
 
