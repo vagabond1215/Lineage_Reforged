@@ -14,6 +14,10 @@ import type {
 
 export const PLAYER_RESOURCE_KEYS: PlayerResourceKey[] = ["hp", "mp", "stamina"];
 
+type ResourceEquipmentSource =
+  | { equipment: PlayerState["equipment"]; wornResourceModifiers?: never }
+  | { equipment?: never; wornResourceModifiers: readonly PlayerResourceModifierState[] };
+
 const RESOURCE_MAX_ATTRIBUTE_BASELINE = 10;
 
 const RESOURCE_MAX_ATTRIBUTE_SCALING = {
@@ -188,13 +192,15 @@ function collectEventChangeRequests(
 }
 
 function collectActiveModifiers(
-  state: Pick<PlayerState, "equipment" | "resourceRuntime">,
+  state: Pick<PlayerState, "resourceRuntime"> & ResourceEquipmentSource,
   tick: number
 ): PlayerResourceModifierState[] {
   const runtimeModifiers = state.resourceRuntime.modifiers.filter((modifier) => isModifierActive(modifier, tick));
-  const equipmentModifiers = Object.values(state.equipment).flatMap((item) =>
-    item?.resourceModifiers?.filter((modifier) => isModifierActive(modifier, tick)) ?? []
-  );
+  const equipmentModifiers = Array.isArray(state.wornResourceModifiers)
+    ? state.wornResourceModifiers.filter((modifier) => isModifierActive(modifier, tick))
+    : Object.values(state.equipment ?? {}).flatMap((item) =>
+      item?.resourceModifiers?.filter((modifier) => isModifierActive(modifier, tick)) ?? []
+    );
 
   return [...runtimeModifiers, ...equipmentModifiers];
 }
@@ -296,8 +302,8 @@ export function calculateNaturalResourceRegen(
 export function resolvePlayerResources(
   state: Pick<
     PlayerState,
-    "playerId" | "attributes" | "resources" | "originProfile" | "equipment" | "resourceRuntime" | "bodyState"
-  >,
+    "playerId" | "attributes" | "resources" | "originProfile" | "resourceRuntime" | "bodyState"
+  > & ResourceEquipmentSource,
   events: ReadonlyArray<GameEventEnvelope>,
   tick: number
 ): {
@@ -313,7 +319,9 @@ export function resolvePlayerResources(
   };
   const activeModifiers = collectActiveModifiers(
     {
-      equipment: state.equipment,
+      ...(Array.isArray(state.wornResourceModifiers)
+        ? { wornResourceModifiers: state.wornResourceModifiers }
+        : { equipment: state.equipment! }),
       resourceRuntime: runtimeState
     },
     tick

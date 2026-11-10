@@ -2191,3 +2191,117 @@ ChatGPT in-app browser controlled five exact viewport sizes and Character, Inven
 ### D. Risks / follow-up notes
 
 Smallest repair: Settings and Notifications Escape dismissal and focus return, then repeat controlled fit with a runner that can demonstrate 200% zoom and export screenshots. PRs #6–#16 retained; PR #5 closed without merge and branch intact. No PR lifecycle action, activation, deployment or Game-version change. Suggested commit: `docs(ui): record current-master controlled fit limits and top-bar gap`. Next recommended run is the bounded top-bar keyboard repair plus controlled recheck; separately discuss combat, non-fungible item owner, nutrition, magic, gathering and crafting readiness. Authenticated selected-client interactions and Save/restart remain outstanding.
+## 2026-11-09 — Native-v3 master integration Checkpoint A
+
+**Source run:** unversioned isolated native-v3 integration, parent milestone n/a; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; source master `0522161fb955a9e3128585766723b7f3fc04c4a8`, branch `codex/native-v3-master-integration-2026-11-09`; development impact `supports_current_band`, game-version impact `none`. Classification **`V3_INTEGRATION_PARTIAL`**. [Focused integration record](native-v3-master-integration-checkpoint-a-2026-11-09.md).
+
+### A. Files changed
+
+110 v3 source/content/test/packaging paths imported from verified #73 tip, plus focused record and branch-local register/output/handoff/prompt continuation note. Master coordination and the installed prompt body were retained, not replaced by historical branch versions.
+
+### B. Patch summary
+
+Isolated candidate combines native creator/session, physical gear and fungible owners, campaign/account/Save, survey/Soundings/combat, and guarded candidate UI/staging route. Default App entry and primary Site remain unchanged. Checkpoint B Save format/legacy classification was not attempted.
+
+### C. Tests or checks run
+
+Final focused serial tests **57/57**; Node UI typecheck, default Vite build and synthetic-origin staging build pass. Initial concurrent run had shared Vite optimizer-cache `EPERM`; serial rerun passed. Staged diff check and exact changed-path inventory are required publication checks. No broad TypeScript diagnostic baseline, selected-client browser, hosted Save or deployment acceptance claimed. FP-001 owner/caller and Save route checked by native item/session tests; FP-002 fixture tests are not independent acceptance; FP-009 source/master/final heads recorded separately; FP-016 old survey source/replay and Soundings receipts covered by focused tests.
+
+### D. Risks / follow-up notes
+
+No master merge/default activation. PRs #5–#17 and native-v3 #63–#73 retained without lifecycle action; #71 remains separate docs evidence. The exact next package is Checkpoint B reader classification and safe same-origin legacy metadata/delete scope, followed by independent source/selected review. Suggested commit: `feat(v3): stage isolated native owner integration candidate`. No Game-version decision proposed.
+## 2026-11-09 — Native-v3 Checkpoint B admission repair
+
+**Source run:** unversioned support on isolated `codex/native-v3-master-integration-2026-11-09` from `bf5e2021`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. Classification `V3_SAVE_CLASSIFICATION_BLOCKED` for full Checkpoint B. [Focused result](native-v3-master-integration-checkpoint-b-admission-2026-11-09.md).
+
+### A. Files changed
+
+`EpochApp.tsx`, launcher state, Main Menu, Load Game, one focused native host regression, focused record, prompt continuation, this output, handoff and branch register.
+
+### B. Patch summary
+
+Native candidate v2 and future Save formats cannot activate or enter gameplay; v2 default remains unchanged. Malformed current-format provenance and safe old-account metadata/deletion remain open without an unsafe alternate writer.
+
+### C. Tests or checks run
+
+Focused 7/7; Node UI typecheck and default Vite build pass; broad UI TypeScript 115 diagnostics on branch and 115 on master. FP-002: fixture evidence is not selected acceptance. FP-003: no guessed repair or bypass of malformed owner data. FP-009: branch and master heads distinguished. No original PR disposition change.
+
+### D. Risks / follow-up notes
+
+Next exact package is authoritative per-slot damaged/unavailable provenance with synthetic noninterference tests. Legacy delete remains `LEGACY_DELETE_SCOPE_UNAVAILABLE` pending key-family proof. No merge, activation, deployment, Game-version decision or PR lifecycle action. Suggested commit: `fix(v3): block unsupported native candidate Saves`.
+## 2026-11-09 — Native-v3 admission-before-recovery closure
+
+**Source run:** unversioned isolated Checkpoint B support from branch head `5c27d3b8`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. [Focused result](native-v3-checkpoint-b-admission-before-recovery-result-2026-11-09.md). Classification `V3_FOUNDATION_READY_FOR_INDEPENDENT_MERGE_REVIEW` with per-slot damage UX and legacy delete scope deferred.
+
+### A. Files changed
+
+`EpochApp.tsx`, one native host regression suite, focused record, branch-local prompt/output/handoff/register.
+
+### B. Patch summary
+
+Native Load and Characters activation require v3 admission before any v2 Normal-Stakes recovery callback. V2 default behavior is retained. No Save/store writer or validator changed.
+
+### C. Tests or checks run
+
+Focused 8/8, Node UI typecheck, direct default Vite build, `git diff --check`. Master advanced from integration base by 12 docs paths and zero runtime paths. FP-001: command-before-writer guard tested; FP-002: synthetic evidence remains distinct from selected acceptance; FP-003: indeterminate graph faults fail closed; FP-009: branch/master/source heads tracked separately. No broad or hosted test repeated.
+
+### D. Risks / follow-up notes
+
+Per-slot Damaged label is deferred because shared graph failures cannot be attributed safely. Legacy delete remains `LEGACY_DELETE_SCOPE_UNAVAILABLE`. Next: independent exact-source merge review and disposable current-v3 Save/restart; no merge or activation authorized. Original PRs/refs retained. Suggested commit: `fix(v3): admit native Save before legacy recovery`.
+## 2026-11-09 — Disposable native-v3 Save/restart witness
+
+**Source run:** unversioned isolated local browser evidence on `codex/native-v3-master-integration-2026-11-09` source `00a41dde`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. [Focused record](native-v3-disposable-local-save-restart-witness-2026-11-09.md).
+
+### A. Files changed
+
+Focused witness and branch-local output/handoff/prompt/register only. Temporary browser scripts/profile were removed; no runtime source changed.
+
+### B. Patch summary
+
+One isolated synthetic `EpochApp` journey created native v3, moved one gear instance, saved a new publication and reloaded the same exact gear/publication after full page navigation. This closes the selected **local disposable** witness named by independent source review, not authenticated hosted acceptance.
+
+### C. Tests or checks run
+
+Bounded browser smoke exited 0 after creator → Unequip → Save → restart/readback. The initial longer reference script failed later at optional sign-in selector; the requested core assertions had passed. FP-001: real UI caller to Save and restart; FP-002: synthetic local evidence not promoted to hosted selected acceptance; FP-009: exact branch/master heads kept distinct. No broad suite rerun.
+
+### D. Risks / follow-up notes
+
+Next exact package: independent current-ref development-master source merge review and explicit authorization. Preserve master-only Core-entry/Hardcore design docs. No merge, default activation, deployment, PR lifecycle or Game-version change. Suggested commit: `docs(v3): record disposable Save restart witness`.
+## 2026-11-09 — Native-v3 exact-source development-master merge review
+
+**Source run:** unversioned read-only merge review on isolated branch `8ffa4d03` against master `0c0b5c30`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `none`, game-version impact `none`. [Focused review](native-v3-development-master-exact-source-merge-review-2026-11-09.md).
+
+### A. Files changed
+
+Focused review; branch-only prompt/output/handoff/register; seven whitespace-only lines across two connector evidence files. No runtime source changed.
+
+### B. Patch summary
+
+Computed no-conflict combined tree `b4b74bec273660a22f270b0813e265d77a02e540`: 12 master-only docs and 124 branch paths all retained. Flagged the four current coordination files as a semantic post-merge routing decision. No merge performed.
+
+### C. Checks run
+
+Fetched exact refs; merge base `0522161f`, 15 master-only/13 branch-only commits, zero changed-path overlap, combined-tree parent comparisons. Whitespace findings in two branch evidence docs corrected; final diff check required before publication. Prior disposable Save/restart witness remains the runtime evidence; no redundant tests. FP-002: local synthetic witness not hosted selected acceptance; FP-009: source/master/combined-tree identities separated. No other failure-pattern repair applied.
+
+### D. Risks / follow-up notes
+
+The next single decision is explicit source merge authorization with fresh refs and reviewed coordination resolution. Original v3/historical PRs retained. `HOLD_SELECTED_ATOMIC_ACTIVATION`, primary Site, real Saves/accounts and Game version unchanged. Suggested commit: `docs(v3): record exact-source merge review`.
+## 2026-11-09 — Native-v3 development source merged into master
+
+**Source run:** unversioned source-integration decision; starting `master` `0c0b5c3022fffd1e0525a77da9ed8381ed47e10a`, source branch `eb6ceb1482c604c7092e3560473659f855bc4902`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development impact `supports_current_band`, game-version impact `none`. User explicitly authorized **source merge only** after the [exact-source review](native-v3-development-master-exact-source-merge-review-2026-11-09.md).
+
+### A. Files changed
+
+Native-v3 app, engine, content, tests and isolated staging configuration from the reviewed branch; branch evidence documents; this output, handoff, prompt and register reconciled on master. The 12 newer master design/roadmap documents were preserved.
+
+### B. Patch summary
+
+Integrated the native-v3 development source as a held candidate. Default `App` entry, primary Site, protected account/Save data and `GAME_VERSION` did not change. The branch remains retained; no original PR lifecycle action.
+
+### C. Tests or checks run
+
+Pre-merge focused owner/Save tests, builds and local synthetic Save/restart are linked in the branch evidence. Exact combined tree showed zero changed-path overlap and preserved all 12 master-only documents. Final staged whitespace/changed-path review and remote commit readback are publication checks. No broad or hosted suite rerun for the source merge. FP-001 owner/caller and Save/restart evidence retained; FP-002 local synthetic is not hosted selected acceptance; FP-009 source, starting master and final merge identities kept separate.
+
+### D. Risks / follow-up notes
+
+Default native-v3 activation, hosted deployment, real data handling and original PR retirement remain separately held. Per-slot Damaged UX and legacy delete scope remain deferred. Next recommended run: exact-master default-development-app activation **readiness review**, no activation without a separate accepted decision. Suggested commit: `merge(v3): integrate held native development source`.

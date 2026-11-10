@@ -12,6 +12,7 @@ import type {
   NotorietyModifierId,
   PlayerProgression,
   PlayerReputationState,
+  PlayerResourceModifierState,
   ReputationScope,
   RunDifficultyState,
   SaveSnapshot
@@ -157,14 +158,14 @@ function clamp(value: number, minimum: number, maximum: number): number {
 }
 
 function surveySkillRank(
-  inputs: AshenReefSurveyOwnerInputsState,
+  inputs: Pick<AshenReefSurveyOwnerInputsState, 'relevantSkills'>,
   skillId: (typeof SURVEY_RELEVANT_SKILL_IDS)[number]
 ): number {
   return inputs.relevantSkills.find((entry) => entry?.id === skillId)?.rank ?? 0;
 }
 
 export function resolveAshenReefSurveyMetabolicProfile(
-  inputs: AshenReefSurveyOwnerInputsState
+  inputs: Pick<AshenReefSurveyOwnerInputsState, 'attributes' | 'relevantSkills'>
 ): ActionMetabolicProfileState {
   const attributeAverage =
     (inputs.attributes.AGI + inputs.attributes.WIS + inputs.attributes.INT) / 3;
@@ -195,10 +196,16 @@ export function resolveAshenReefSurveyMetabolicProfile(
   };
 }
 
-function resolveExpectedSurveyOwnerEvidence(
+type SurveyMaterialInputs = Omit<AshenReefSurveyOwnerInputsState, 'equipment'> & (
+  | Pick<AshenReefSurveyOwnerInputsState, 'equipment'>
+  | { wornResourceModifiers: readonly PlayerResourceModifierState[]; equipment?: never }
+);
+
+/** Shared survey material math. Physical resource inputs stay format-specific. */
+export function resolveExpectedSurveyOwnerEvidence(
   characterId: string,
   stage: AshenReefSurveyAuthorityState["results"][number]["stage"],
-  inputs: AshenReefSurveyOwnerInputsState
+  inputs: SurveyMaterialInputs
 ) {
   const profile = resolveAshenReefSurveyMetabolicProfile(inputs);
   let clock = clone(inputs.clock);
@@ -246,7 +253,9 @@ function resolveExpectedSurveyOwnerEvidence(
         attributes: inputs.attributes,
         resources,
         originProfile: inputs.originProfile,
-        equipment: inputs.equipment,
+        ...('wornResourceModifiers' in inputs
+          ? { wornResourceModifiers: inputs.wornResourceModifiers! }
+          : { equipment: inputs.equipment }),
         resourceRuntime,
         bodyState
       },
@@ -290,6 +299,7 @@ function resolveExpectedSurveyOwnerEvidence(
     resourcesBefore: clone(inputs.resources),
     resourcesAfterNatural,
     resourcesAfter: resources,
+    resourceRuntimeAfter: resourceRuntime,
     skill: {
       skillId,
       requestedDelta: 1 as const,
@@ -2027,9 +2037,16 @@ export function initializeTargetCampaignSnapshot(
 export function isTargetCampaignSnapshot(
   snapshot: SaveSnapshot
 ): boolean {
+  return isTargetCampaignSnapshotCore(snapshot) && validateAshenReefSurveyAuthority(snapshot);
+}
+
+/** Nonphysical campaign admission reused by fresh native gear without a v2 survey witness. */
+export function isTargetCampaignSnapshotCore(snapshot: SaveSnapshot): boolean {
   const rules = snapshot.campaignRules;
   return (
     snapshot.snapshotVersion === TARGET_SNAPSHOT_FORMAT &&
+    !('gear' in snapshot.playerState) &&
+    validateEquipment(snapshot.playerState.equipment) &&
     rules?.version === CAMPAIGN_RULES_VERSION &&
     rules.policyRevision === STAKES_POLICY_REVISION &&
     (rules.difficultyPreset === "favored" ||
@@ -2063,7 +2080,6 @@ export function isTargetCampaignSnapshot(
     snapshot.authorityLedger?.version === 1 &&
     Array.isArray(snapshot.authorityLedger.entries) &&
     Array.isArray(snapshot.normalDefeatReceipts) &&
-    validateAshenReefSurveyAuthority(snapshot) &&
     validateSoundingsTurnInAuthority(snapshot)
   );
 }

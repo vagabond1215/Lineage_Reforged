@@ -28,6 +28,7 @@ function getSlotStatusLabel(slot: SaveSlotSummary): string {
   if (slot.status === 'incompatible') {
     return 'Incompatible Save Data';
   }
+  if (slot.status === 'unsupported') return 'Unsupported Save Version';
 
   if (slot.status === 'prepared') return 'Prepared Campaign';
   if (slot.status === 'pending_consumers') return 'Recovery Pending';
@@ -119,7 +120,11 @@ export function LoadGameScreen({
                       <div>Tick {slot.capturedAtTick}</div>
                     </div>
                   ) : epochMode && slot.status !== 'empty' ? (
-                    <div className="mt-3 text-sm text-amber-200">{getSlotStatusLabel(slot)}. Return to Characters to resume a prepared campaign or retry recovery.</div>
+                    <div className="mt-3 text-sm text-amber-200">{getSlotStatusLabel(slot)}. {
+                      slot.status === 'incompatible' || slot.status === 'unsupported'
+                        ? 'This Save cannot be played by the native candidate. Its data has not been changed.'
+                        : 'Return to Characters to resume a prepared campaign or retry recovery.'
+                    }</div>
                   ) : slot.status === 'corrupt' ? (
                     <div className="mt-3 rounded-lg border border-[color:var(--color-tone-danger-border)] bg-[color:var(--color-tone-danger-bg)] px-3 py-3 text-sm text-[color:var(--color-tone-danger-text)]">
                       This slot contains malformed or incompatible local data. It cannot be loaded until it is deleted.

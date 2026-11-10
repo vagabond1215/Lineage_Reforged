@@ -25,7 +25,7 @@ export type ManualSaveSlotId = `slot-${ManualSaveSlotNumber}`;
 export type QuickSaveSlotId = 'quick-save';
 export type SaveSlotId = ManualSaveSlotId | QuickSaveSlotId;
 export type SaveSlotKind = 'manual' | 'quick';
-export type SaveSlotStatus = 'empty' | 'ready' | 'corrupt' | 'incompatible' |
+export type SaveSlotStatus = 'empty' | 'ready' | 'corrupt' | 'incompatible' | 'unsupported' |
   'prepared' | 'pending_consumers' | 'closed' | 'descendant_unsupported';
 
 export interface SaveSlotMetadata {

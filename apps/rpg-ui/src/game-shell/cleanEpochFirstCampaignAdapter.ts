@@ -8,8 +8,10 @@ import type { CharacterCreationFormState } from "./characterCreationForm.js";
 import { type CleanEpochAccountStore, type CleanEpochAttemptRecord, type CleanEpochSlotRead } from "./cleanEpochAccountStore.js";
 import { buildNewCampaignAttemptInputFingerprint } from "./newCampaignAttemptCoordinator.js";
 import { createNewGameSnapshot } from "./newGameSnapshot.js";
+import { createNativeNewGameSnapshot } from "./nativeNewGameSnapshot.js";
 import { resolveHeirSourceById } from "./runLifecycle.js";
-import { buildSaveMetadata, type CampaignPublicationConsumerPlan, type StoredSaveEnvelope } from "./saveManager.js";
+import { buildSaveMetadata, buildNativeGearArtifactPublication, type CampaignPublicationConsumerPlan, type StoredSaveEnvelope } from "./saveManager.js";
+import { isNativeTargetCampaignSnapshot, type NativeFreshCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
 
 export type EpochFirstCampaignResult<T> =
   | { status: "ready"; value: T }
@@ -23,8 +25,11 @@ function blocked(error: unknown, accountId: string, slotId: string): EpochFirstC
     accountId, slotId };
 }
 
-function requireCleanCreator(attempt: CleanEpochAttemptRecord): void {
+function requireCleanCreator(attempt: CleanEpochAttemptRecord, format: 'v2' | 'native_v3'): void {
   const snapshot = deserializeSnapshot(attempt.snapshotRaw);
+  if (format === 'v2' ? snapshot.snapshotVersion !== TARGET_SNAPSHOT_FORMAT :
+      !isNativeTargetCampaignSnapshot(snapshot))
+    throw new CampaignStoreError("conflict", "Prepared creator belongs to another snapshot epoch.");
   // A creator snapshot only stages the Soundings offer. Admission can occur after the first playable head.
   // There is no independent first-publication witness in this attempt contract.
   if (verifySoundingsAdmissionProvenance(snapshot) !== "not_completed")
@@ -55,8 +60,9 @@ function matchesRetainedInput(attempt: CleanEpochAttemptRecord, form: CharacterC
   } catch { return false; }
 }
 
-function publicationFromAttempt(attempt: CleanEpochAttemptRecord): CampaignStorePublication {
-  requireCleanCreator(attempt);
+async function publicationFromAttempt(attempt: CleanEpochAttemptRecord, format: 'v2' | 'native_v3'):
+  Promise<CampaignStorePublication> {
+  requireCleanCreator(attempt, format);
   const snapshot = deserializeSnapshot(attempt.snapshotRaw);
   const campaign = snapshot.campaignIdentity;
   if (!campaign || campaign.campaignId !== attempt.campaignId)
@@ -65,6 +71,10 @@ function publicationFromAttempt(attempt: CleanEpochAttemptRecord): CampaignStore
   const generationId = createAuthorityId("generation");
   const publicationId = createAuthorityId("publication");
   const savedAt = attempt.createdAt;
+  if (format === 'native_v3') return buildNativeGearArtifactPublication(
+    snapshot as unknown as NativeFreshCampaignSnapshot, attempt.slotId as StoredSaveEnvelope['slotId'],
+    { artifactId, generationId, publicationId, savedAt, expectedHead: null }
+  );
   const metadata = { ...buildSaveMetadata(attempt.slotId as StoredSaveEnvelope["slotId"], snapshot),
     lastSavedAt: savedAt, snapshotVersion: TARGET_SNAPSHOT_FORMAT };
   const envelope: StoredSaveEnvelope = { version: 7, accountId: attempt.accountId,
@@ -83,7 +93,8 @@ function publicationFromAttempt(attempt: CleanEpochAttemptRecord): CampaignStore
 
 /** Awaited first-campaign caller selected by the local App. */
 export class CleanEpochFirstCampaignAdapter {
-  constructor(private readonly owner: CleanEpochAccountStore) {}
+  constructor(private readonly owner: CleanEpochAccountStore,
+    private readonly format: 'v2' | 'native_v3' = 'v2') {}
 
   async prepare(accountId: string, formInput: CharacterCreationFormState,
     hasSelectableBackstories?: boolean): Promise<EpochFirstCampaignResult<CleanEpochAttemptRecord>> {
@@ -96,7 +107,7 @@ export class CleanEpochFirstCampaignAdapter {
       const inputFingerprint = fingerprint(form, hasSelectableBackstories, selection);
       const retained = await this.owner.readAttempt(accountId, slotId);
       if (retained) {
-        requireCleanCreator(retained);
+        requireCleanCreator(retained, this.format);
         const recovery = await this.owner.readRecovery(accountId, slotId);
         if (!matchesRetainedInput(retained, form, hasSelectableBackstories, inputFingerprint,
           recovery?.status === "consumers_completed"))
@@ -108,7 +119,8 @@ export class CleanEpochFirstCampaignAdapter {
       if (sourceRunId && !source)
         throw new CampaignStoreError("conflict", "Selected lineage source is no longer available.");
       const createdAt = new Date().toISOString();
-      const snapshot = createNewGameSnapshot(form, accountId, {
+      const creator = this.format === 'native_v3' ? createNativeNewGameSnapshot : createNewGameSnapshot;
+      const snapshot = creator(form, accountId, {
         appliedLegacyPreparationIds: selection.selectedUnlockIds,
         appliedLegacyPreparationChoices: selection.selectedChoicePayloads,
         accountProfile: account.profile,
@@ -116,9 +128,9 @@ export class CleanEpochFirstCampaignAdapter {
         ...(source ? { sourceRunId } : {}),
         ...(source && source.lineageId !== form.lineageId ? { crossLineageStart: true } : {})
       });
-      if (verifySoundingsAdmissionProvenance(snapshot) !== "not_completed")
+      if (verifySoundingsAdmissionProvenance(snapshot as import('../../../../packages/shared/types/src/index.js').SaveSnapshot) !== "not_completed")
         throw new CampaignStoreError("invalid_record", "Creator produced completed Soundings without independent witness.");
-      const prepared = prepareCharacterAchievementProgress(snapshot, createdAt).snapshot;
+      const prepared = prepareCharacterAchievementProgress(snapshot as import('../../../../packages/shared/types/src/index.js').SaveSnapshot, createdAt).snapshot;
       const coreFingerprint = JSON.stringify({ slotId, capturedAtTick: prepared.capturedAtTick,
         characterAchievementIds: prepared.playerState.achievements.unlocked.map(entry => entry.achievementId) });
       const preparationFingerprint = JSON.stringify({ selectedPreparationUnlockIds: selection.selectedUnlockIds,
@@ -140,7 +152,7 @@ export class CleanEpochFirstCampaignAdapter {
         if (!(error instanceof CampaignStoreError) || !["conflict", "stale_head"].includes(error.code)) throw error;
         const winner = await this.owner.readAttempt(accountId, slotId);
         if (!winner) throw error;
-        requireCleanCreator(winner);
+        requireCleanCreator(winner, this.format);
         const recovery = await this.owner.readRecovery(accountId, slotId);
         if (!matchesRetainedInput(winner, form, hasSelectableBackstories, inputFingerprint,
           recovery?.status === "consumers_completed")) throw error;
@@ -154,11 +166,11 @@ export class CleanEpochFirstCampaignAdapter {
     try {
       const attempt = await this.owner.readAttempt(accountId, slotId);
       if (!attempt) throw new CampaignStoreError("invalid_record", "Prepared first-campaign attempt is missing.");
-      requireCleanCreator(attempt);
+      requireCleanCreator(attempt, this.format);
       let recovery = await this.owner.readRecovery(accountId, slotId);
       if (!recovery) {
         try { recovery = (await this.owner.publishPreparedAttempt(attempt.attemptId,
-          publicationFromAttempt(attempt))).recovery; }
+          await publicationFromAttempt(attempt, this.format))).recovery; }
         catch (error) {
           recovery = await this.owner.readRecovery(accountId, slotId);
           if (!recovery) throw error;

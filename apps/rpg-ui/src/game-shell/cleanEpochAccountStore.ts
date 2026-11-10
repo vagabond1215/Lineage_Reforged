@@ -11,8 +11,9 @@ import { createDefaultAccountProfileState } from "../../../../packages/engines/g
 import { projectRetirementSettlement, retirementSettlementFingerprint, RETIREMENT_CONSUMERS } from "./cleanEpochTerminalProjection.js";
 import { deserializeSnapshot } from "../../../../packages/shared/persistence/src/index.js";
 import { isTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/campaign-rules.js";
-import { hasPendingNormalDefeat } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
-import { isStoredCampaignControl, isStoredSaveEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope } from "./saveManager.js";
+import { isNativeTargetCampaignSnapshot } from "../../../../packages/engines/game-engine/src/native-campaign-rules.js";
+import { hasPendingNormalDefeat, validatePendingNormalDefeatRecoveryProvenance } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
+import { isStoredCampaignControl, isStoredSaveEnvelope, isStoredNativeGearEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope, type StoredNativeGearEnvelope } from "./saveManager.js";
 import { SAVE_SLOT_ORDER, type SaveSlotId, type SaveSlotMetadata } from "./state.js";
 import {
   CAMPAIGN_DATABASE_NAME,
@@ -322,6 +323,7 @@ export type CleanEpochDescendantRecovery = {
   sourceSnapshotRaw: string;
   envelopeRaw: string;
   witnessRequestId: string | null;
+  pendingDefeatReceiptId?: string;
   consumerPlans: CampaignPublicationConsumerPlan[];
   completedConsumerKinds: CampaignPublicationConsumerKind[];
   completedAccountRevision?: number;
@@ -336,6 +338,7 @@ export type CleanEpochDescendantRequest = {
   sourceSlotId: SaveSlotId;
   sourcePublicationId: string;
   sourceSnapshotRaw: string;
+  pendingDefeatReceiptId?: string;
   consumerPlans: CampaignPublicationConsumerPlan[];
 };
 export type CleanEpochDescendantResult = {
@@ -495,7 +498,8 @@ function validAttempt(value: unknown, accountId: string, slotId: string): value 
   try {
     const snapshot = deserializeSnapshot(value.snapshotRaw);
     return snapshot.accountId === accountId && snapshot.campaignIdentity?.campaignId === value.campaignId &&
-      snapshot.campaignRules?.source === "new_campaign" && isTargetCampaignSnapshot(snapshot);
+      snapshot.campaignRules?.source === "new_campaign" &&
+      (isTargetCampaignSnapshot(snapshot) || isNativeTargetCampaignSnapshot(snapshot));
   } catch { return false; }
 }
 function checkedAttempt(value: unknown, accountId: string, slotId: string): CleanEpochAttemptRecord {
@@ -505,13 +509,14 @@ function checkedAttempt(value: unknown, accountId: string, slotId: string): Clea
 function validSlotId(value: unknown): value is string {
   return typeof value === "string" && (value === "quick-save" || /^slot-[1-9][0-9]*$/.test(value));
 }
-function envelopeFromRaw(raw: string): StoredSaveEnvelope {
+function envelopeFromRaw(raw: string): StoredSaveEnvelope | StoredNativeGearEnvelope {
   let parsed: unknown;
   try { parsed = JSON.parse(raw); } catch { return fail("invalid_record", "First-publication envelope is malformed."); }
-  if (!isStoredSaveEnvelope(parsed)) fail("invalid_record", "First-publication envelope is invalid.");
+  if (!isStoredSaveEnvelope(parsed) && !isStoredNativeGearEnvelope(parsed))
+    fail("invalid_record", "First-publication envelope is invalid.");
   return parsed;
 }
-function retainedArtifactMatches(value: unknown, envelope: StoredSaveEnvelope): boolean {
+function retainedArtifactMatches(value: unknown, envelope: StoredSaveEnvelope | StoredNativeGearEnvelope): boolean {
   return object(value) && value.version === 1 && value.accountId === envelope.accountId &&
     value.campaignId === envelope.campaignId && value.slotId === envelope.slotId &&
     value.artifactId === envelope.artifactId && value.generationId === envelope.generationId &&
@@ -670,6 +675,11 @@ function validDescendantRecovery(value: unknown, accountId: string, campaignId: 
     const envelope = envelopeFromRaw(value.envelopeRaw);
     const snapshot = deserializeSnapshot(envelope.snapshot);
     const source = deserializeSnapshot(value.sourceSnapshotRaw);
+    const pending = hasPendingNormalDefeat(snapshot);
+    if (pending !== (typeof value.pendingDefeatReceiptId === "string") ||
+        (!pending && value.pendingDefeatReceiptId !== undefined)) return false;
+    if (pending) validatePendingNormalDefeatRecoveryProvenance(snapshot,
+      value.pendingDefeatReceiptId as string);
     const requestId = snapshot.authorityLedger?.soundingsTurnIn?.version === 2
       ? snapshot.authorityLedger.soundingsTurnIn.requests[0]?.requestId ?? null : null;
     return envelope.accountId === accountId && envelope.campaignId === campaignId &&
@@ -882,7 +892,7 @@ function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<st
       expected: { artifactId: raw.artifactId, publicationId: raw.publicationId },
       expectedRaw: raw.addressRaw, next: null });
   }
-  const artifactEnvelope = (artifactId: string, campaignId: string): StoredSaveEnvelope => {
+  const artifactEnvelope = (artifactId: string, campaignId: string): StoredSaveEnvelope | StoredNativeGearEnvelope => {
     const raw = artifacts.get(artifactId);
     if (!raw || typeof raw.raw !== "string") fail("invalid_record", "Campaign artifact is missing.");
     const envelope = envelopeFromRaw(raw.raw);
@@ -1674,7 +1684,7 @@ export class CleanEpochAccountStore {
       const sessionControl = createCampaignSessionControl({ accountId, campaignId: attempt.campaignId,
         artifactId, publicationId: envelope.publicationId, artifactRevision: envelope.headRevision,
         continuityId: envelope.continuityId, headArtifactId: head.campaignHeadArtifactId,
-        headRevision: head.campaignHeadRevision });
+        headRevision: head.campaignHeadRevision, sourceSnapshot: snapshot });
       return { snapshot,
         sessionControl: head.soundingsAdmissionWitness
           ? { ...sessionControl, soundingsAdmissionWitness: head.soundingsAdmissionWitness } : sessionControl,
@@ -1860,7 +1870,8 @@ export class CleanEpochAccountStore {
       const sessionControl = createCampaignSessionControl({ accountId, campaignId: attempt.campaignId,
         artifactId: addressed.artifactId, publicationId: addressed.publicationId,
         artifactRevision: addressed.headRevision, continuityId: addressed.continuityId,
-        headArtifactId: descendant.artifactId, headRevision: descendant.headRevision });
+        headArtifactId: descendant.artifactId, headRevision: descendant.headRevision,
+        sourceSnapshot: snapshot });
       return { slotId, status: "ready", metadata: addressed.metadata, loaded: {
         snapshot, sessionControl: published.witness ? { ...sessionControl, soundingsAdmissionWitness: published.witness } : sessionControl,
         publication: publicationFor(snapshot, addressed.headRevision === 1 ? recovery :
@@ -1880,7 +1891,7 @@ export class CleanEpochAccountStore {
     const sessionControl = createCampaignSessionControl({ accountId, campaignId: attempt.campaignId,
       artifactId: envelope.artifactId, publicationId: envelope.publicationId, artifactRevision: 1,
       continuityId: envelope.continuityId, headArtifactId: published.control.headArtifactId,
-      headRevision: published.control.headRevision });
+      headRevision: published.control.headRevision, sourceSnapshot: snapshot });
     return { slotId, status: "ready", metadata: envelope.metadata, loaded: {
       snapshot, sessionControl: published.witness ? { ...sessionControl, soundingsAdmissionWitness: published.witness } : sessionControl,
       publication: publicationFor(snapshot, recovery), migratedLegacy: false, repairedLegacyDefeat: false
@@ -2658,11 +2669,18 @@ export class CleanEpochAccountStore {
         (sessionWitness !== undefined && (!isSoundingsAdmissionWitness(sessionWitness) || sessionWitness.posture !== "session")))
       fail("invalid_record", "Descendant request identity is invalid.");
     const envelope = envelopeFromRaw(input.artifactRaw);
+    const proposedSnapshot = deserializeSnapshot(envelope.snapshot);
+    const pendingDefeat = hasPendingNormalDefeat(proposedSnapshot);
     if (envelope.accountId !== input.accountId || envelope.campaignId !== input.campaignId ||
         envelope.slotId !== input.slotId || envelope.headRevision < 2 || envelope.terminal ||
-        hasPendingNormalDefeat(deserializeSnapshot(envelope.snapshot)))
+        pendingDefeat !== (typeof request.pendingDefeatReceiptId === "string") ||
+        (!pendingDefeat && request.pendingDefeatReceiptId !== undefined))
       fail("invalid_record", "Ordinary descendant artifact is invalid or requires lifecycle settlement.");
-    const snapshot = deserializeSnapshot(envelope.snapshot);
+    if (pendingDefeat) {
+      try { validatePendingNormalDefeatRecoveryProvenance(proposedSnapshot, request.pendingDefeatReceiptId); }
+      catch { fail("invalid_record", "Pending defeat artifact lacks exact receipt provenance."); }
+    }
+    const snapshot = proposedSnapshot;
     const proposed: CleanEpochDescendantRecovery = {
       version: 1, status: "accepted_pending_consumers", accountId: input.accountId,
       campaignId: input.campaignId, slotId: input.slotId, sourceSlotId,
@@ -2673,6 +2691,7 @@ export class CleanEpochAccountStore {
       envelopeRaw: input.artifactRaw,
       witnessRequestId: snapshot.authorityLedger?.soundingsTurnIn?.version === 2
         ? snapshot.authorityLedger.soundingsTurnIn.requests[0]?.requestId ?? null : null,
+      ...(request.pendingDefeatReceiptId ? { pendingDefeatReceiptId: request.pendingDefeatReceiptId } : {}),
       consumerPlans, completedConsumerKinds: [], createdAt: input.control.updatedAt
     };
     if (!validDescendantRecovery(proposed, input.accountId, input.campaignId, envelope.publicationId))

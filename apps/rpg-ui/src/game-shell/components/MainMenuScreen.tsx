@@ -350,15 +350,17 @@ export function MainMenuScreen({
                 {visibleSlots.map((slot) => (
                   <div
                     key={slot.id}
-                    onClick={() => onActivateSlot(slot.id)}
+                    onClick={() => { if (slot.status !== 'incompatible' && slot.status !== 'unsupported') onActivateSlot(slot.id); }}
                     onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
+                      if ((event.key === 'Enter' || event.key === ' ') &&
+                          slot.status !== 'incompatible' && slot.status !== 'unsupported') {
                         event.preventDefault();
                         onActivateSlot(slot.id);
                       }
                     }}
                     role="button"
-                    tabIndex={0}
+                    tabIndex={slot.status === 'incompatible' || slot.status === 'unsupported' ? -1 : 0}
+                    aria-disabled={slot.status === 'incompatible' || slot.status === 'unsupported'}
                     className={`launcher-save-row group relative grid min-h-[4.5rem] overflow-hidden text-left transition ${
                       slot.hasSave
                         ? 'grid-cols-[4.25rem_minmax(0,1fr)_4.25rem]'
@@ -416,7 +418,9 @@ export function MainMenuScreen({
                           className="text-sm font-semibold uppercase tracking-[0.15em] text-[color:var(--color-text-muted)]"
                           style={{ fontFamily: 'var(--font-display)' }}
                         >
-                          {slot.status === 'prepared' ? 'Resume prepared campaign' :
+                          {slot.status === 'incompatible' ? 'Incompatible Save — Play unavailable' :
+                            slot.status === 'unsupported' ? 'Unsupported Save — Play unavailable' :
+                            slot.status === 'prepared' ? 'Resume prepared campaign' :
                             slot.status === 'pending_consumers' ? 'Campaign recovery pending' :
                             slot.status === 'closed' ? 'Campaign closed' :
                             slot.status === 'descendant_unsupported' ? 'Campaign unavailable' : 'Empty'}

@@ -2,6 +2,7 @@ import {
   resolvePlayerResources,
   type PlayerDelta,
   type PlayerTickContext,
+  type PlayerResourceModifierState,
   type RunDifficultyState,
   type TickResult
 } from "../../../shared/types/src/index.js";
@@ -87,13 +88,18 @@ export function syncPlayerRuntimeState(
   tick: number,
   day: number,
   incomingEvents: PlayerTickContext["incomingEvents"] = [],
-  runDifficulty?: Partial<RunDifficultyState> | null
+  runDifficulty?: Partial<RunDifficultyState> | null,
+  wornResourceModifiers?: readonly PlayerResourceModifierState[]
 ) {
   syncPlayerStatGrowth(playerState, day);
   syncPlayerEchoProgression(playerState);
   syncPlayerBodyState(playerState, tick, day, runDifficulty);
   syncPlayerReputation(playerState, day);
-  const resourceResolution = resolvePlayerResources(playerState, incomingEvents, tick);
+  const { equipment: _equipment, ...withoutEquipment } = playerState;
+  const resourceResolution = resolvePlayerResources(
+    wornResourceModifiers === undefined ? playerState : {
+      ...withoutEquipment, wornResourceModifiers
+    }, incomingEvents, tick);
   playerState.resources = resourceResolution.resources;
   playerState.resourceRuntime = resourceResolution.resourceRuntime;
   return resourceResolution;
