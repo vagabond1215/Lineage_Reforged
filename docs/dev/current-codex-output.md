@@ -2445,3 +2445,23 @@ Routing test red **0/1** before source edit and green **1/1** after; focused rec
 Local synthetic ordinary-index proof is not independent review, authenticated selected-client or hosted acceptance. Source rollback does not make v3 Saves playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION`, hosted Sites, real accounts/Saves, Game version and original PR retirement remain held. Fresh open PR inventory #6–#73 (68); #5 closed/unmerged; no original PR/branch action due. New branch retained for independent exact-source review. Suggested commit: `feat(ui): select native v3 on local development entry`. Next recommended unversioned run: independent local entry and compiled-boundary review; no Game-version decision.
 
 Cleanup: the exact synthetic browser account was deleted after action-time confirmation; the test tab and three task-created backup downloads were removed. The registered Vite server had exited, port 5198 was free, and the task-created dependency junction was removed with its shared target intact. No unnecessary process retained.
+
+## 2026-11-10 — Native-v3 local ordinary-entry independent review
+
+**Source run:** unversioned independent review of `codex/native-v3-local-ordinary-entry-2026-11-10` at inspected `6e78041771dab440dfdf4ab554577e272698eb01`, based on live `origin/master` `024e58ed96e4811427a457755dd3635eef3ebf37`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-local-ordinary-entry-independent-review-2026-11-10.md): **`INDEPENDENT_LOCAL_ENTRY_VERIFIED; HOLD_SELECTED_ATOMIC_ACTIVATION`**.
+
+### A. Files changed
+
+Focused independent record, current prompt/output/handoff and branch register. No runtime UI, test, owner, Save, account, schema, dependency, Site or Game-version edit in this review.
+
+### B. Patch summary
+
+Independently verified local Vite development ordinary `/` entry selects native v3 and compiled Vite preview ordinary `/` remains on v2, each in a fresh synthetic browser origin. Installed a distinct exact-source merge **review** prompt; no merge is authorized or performed.
+
+### C. Tests or checks run
+
+Fresh branch/master/ref and PR delta, eight-path source comparison, real entry/QA/staging/owner source review; focused Node **29/29** pass, Node UI typecheck pass, direct Vite build pass (287 client modules). Broad UI TypeScript is identical **115/115** ordered diagnostics, SHA-256 `6266EB947780095470594B84531FF605713C5D5EA98EA2FCB3E315F694D73719`, zero in changed source. Controlled in-app browser: new synthetic native creator, real Unequip/Save/reload/sign-in/Continue retained one tunic instance in bag; separate compiled preview created a synthetic character and reached the v2 shell. The earlier 14-family export hash witness is supporting branch evidence, not rerun here. FP-001/002/003/004/005/008/009 apply as detailed in the focused decision. Changed paths, links, diff check and remote readback are publication checks.
+
+### D. Risks / follow-up notes
+
+Local synthetic review does not accept hosted/default v3, authenticated selected-client behavior or full native-v3 gameplay. The branch is `CANDIDATE_INTEGRATION; HOLD_EXACT_SOURCE_MERGE_REVIEW`; exact next trigger is a fresh-ref merge review and separate authorization. Original PRs #6–#73 and closed/unmerged #5 retain their dispositions; no integration, deletion or PR action was due. Suggested commit: `docs(v3): independently verify local entry and compiled boundary`. Next recommended unversioned run: exact-source merge review; no Game-version decision. The two exact synthetic accounts were deleted after action-time user approval and both browser tabs closed; registered server and junction cleanup is recorded in the focused decision.
