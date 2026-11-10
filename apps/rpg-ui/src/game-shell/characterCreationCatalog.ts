@@ -1393,63 +1393,63 @@ const LINEAGE_PRESENTATIONS: Record<string, LineagePresentation> = {
     label: "Dwarf",
     description:
       "Dwarves are a common but regionally concentrated people, most often found in mountain ranges, deep caverns, and heavily fortified strongholds carved into stone. Their societies are built on endurance, tradition, and craft, with entire lifetimes devoted to perfecting a trade or defending ancestral halls. They excel in resilience, engineering, and defensive warfare, standing unyielding against both time and enemy alike. Though slow to trust outsiders, their loyaltyâ€”once earnedâ€”is as unbreakable as the stone they shape.",
-    stats: "STR 11 / DEX 8 / CON 12 / VIT 12 / AGI 7 / INT 10 / WIS 11 / SPT 10 / CHA 9",
+    stats: "STR 11 / DEX 10 / CON 12 / VIT 11 / AGI 8 / INT 10 / WIS 10 / SPT 9 / CHA 9",
     notes: ["Common in mountain and cavern strongholds, but rarely spread evenly."]
   },
   "lineage.gnome": {
     label: "Gnome",
     description:
       "Gnomes are an uncommon and often elusive people, typically found in hidden enclaves, forest workshops, or tucked within the edges of larger cities where their talents are in demand. Driven by curiosity, they constantly experiment with alchemy, magic, and mechanical invention, often blending the three in unpredictable ways. They excel in problem-solving, tinkering, and magical innovation, pushing boundaries others are too cautious to approach.",
-    stats: "STR 6 / DEX 11 / CON 9 / VIT 9 / AGI 11 / INT 13 / WIS 10 / SPT 11 / CHA 10",
+    stats: "STR 7 / DEX 12 / CON 9 / VIT 9 / AGI 10 / INT 12 / WIS 10 / SPT 11 / CHA 10",
     notes: ["Uncommon, ingenious, and often found where invention is prized."]
   },
   "lineage.halfling": {
     label: "Halfling",
     description:
       "Halflings are a common yet often overlooked people, living in quiet rural communities, riverlands, and farmland nestled near larger civilizations. They favor comfort and simplicity, but beneath that lies a natural resilience and uncanny ability to survive hardship. They excel in stealth, evasion, and adaptability, slipping through danger rather than confronting it directly. Many underestimate halflingsâ€”few make that mistake twice.",
-    stats: "STR 7 / DEX 12 / CON 9 / VIT 10 / AGI 12 / INT 10 / WIS 10 / SPT 9 / CHA 11",
+    stats: "STR 7 / DEX 11 / CON 10 / VIT 10 / AGI 11 / INT 10 / WIS 10 / SPT 10 / CHA 11",
     notes: ["Common in rural lands, river settlements, and quiet farming country."]
   },
   "lineage.elf": {
     label: "Elf",
     description:
       "Elves are an uncommon and ancient people, most often found in secluded forests, hidden sanctuaries, or regions rich with magic. Their long lives grant them deep perspective, and their culture emphasizes mastery, balance, and refinement. They excel in precisionâ€”whether in archery, magic, or movementâ€”and favor skill and discipline over brute strength. Elven settlements are rarely seen, but their influence is quietly felt across the world.",
-    stats: "STR 7 / DEX 13 / CON 8 / VIT 9 / AGI 13 / INT 12 / WIS 11 / SPT 9 / CHA 8",
+    stats: "STR 8 / DEX 12 / CON 8 / VIT 9 / AGI 11 / INT 10 / WIS 10 / SPT 12 / CHA 10",
     notes: ["Uncommon, long-lived, and strongly tied to old forests and magic-rich lands."]
   },
   "lineage.dark_elf": {
     label: "Dark Elf",
     description:
       "Dark Elves are a rare and secretive people, most often found in the deep underground, shadowed forests, or hidden enclaves far from the reach of surface kingdoms. Shaped by harsh environments and internal rivalries, their society values cunning, precision, and quiet power. They are not numerous, but their influence spreads through subtle meansâ€”assassins, spies, mages, and unseen hands that shift events from the dark. Dark Elves excel in stealth, agility, and shadow-aligned magic, favoring speed, control, and calculated strikes over direct confrontation. While often mistrusted or feared, their discipline and mastery make them among the most dangerous individuals in the world when operating within their element.",
-    stats: "STR 6 / DEX 13 / CON 8 / VIT 9 / AGI 13 / INT 12 / WIS 10 / SPT 10 / CHA 9",
+    stats: "STR 8 / DEX 12 / CON 9 / VIT 9 / AGI 11 / INT 11 / WIS 9 / SPT 10 / CHA 11",
     notes: ["Rare, secretive, and most at home in darkness, hidden enclaves, and deep places."]
   },
   "lineage.half_troll": {
     label: "Half Troll",
     description:
       "Half Trolls are rare and often isolated, found in harsh wilderness, frontier territories, or among mercenary groups where strength is valued over origin. Their bodies carry immense power and resilience, allowing them to endure wounds and conditions that would break others. They excel in brute strength and prolonged combat, thriving in drawn-out fights where endurance decides survival. Though often feared or mistrusted, those who master their nature become nearly unstoppable forces.",
-    stats: "STR 14 / DEX 7 / CON 14 / VIT 13 / AGI 6 / INT 7 / WIS 8 / SPT 9 / CHA 12",
+    stats: "STR 14 / DEX 8 / CON 14 / VIT 12 / AGI 7 / INT 9 / WIS 9 / SPT 9 / CHA 8",
     notes: ["Rare, isolated, and most accepted where raw power matters more than origin."]
   },
   "lineage.half_orc": {
     label: "Half Orc",
     description:
       "Half Orcs are an uncommon people, most often found in borderlands, war-torn regions, or mixed settlements where cultures collide. They live between worlds, combining raw physical power with learned discipline. They excel in frontline combat, survival, and intimidation, often rising as warriors, enforcers, or battlefield leaders. While some struggle against prejudice, many carve their place through strength and presence alone.",
-    stats: "STR 13 / DEX 9 / CON 12 / VIT 11 / AGI 9 / INT 9 / WIS 9 / SPT 10 / CHA 8",
+    stats: "STR 13 / DEX 9 / CON 11 / VIT 10 / AGI 9 / INT 10 / WIS 9 / SPT 10 / CHA 9",
     notes: ["Uncommon, strong, and most often found where borders and cultures clash."]
   },
   "lineage.half_goblin": {
     label: "Half Goblin",
     description:
       "Half Goblins are an adaptable and opportunistic people, found most often in trade cities, slums, caravan routes, and unstable frontier regions. Their environment shapes themâ€”they learn quickly, move quickly, and exploit any advantage they can find. They excel in speed, cunning, and improvisation, thriving in chaos where rigid systems fail. Whether as traders, scavengers, or fixers, they survive by staying one step ahead.",
-    stats: "STR 8 / DEX 13 / CON 9 / VIT 9 / AGI 13 / INT 11 / WIS 9 / SPT 8 / CHA 10",
+    stats: "STR 8 / DEX 12 / CON 9 / VIT 9 / AGI 12 / INT 11 / WIS 10 / SPT 9 / CHA 10",
     notes: ["Adaptable and opportunistic, especially in trade cities and unstable frontiers."]
   },
   "lineage.half_merfolk": {
     label: "Half Merfolk",
     description:
       "Half Merfolk are rare and typically found along coastlines, island chains, river deltas, and major ports where land and sea meet. They carry a fluid nature in both body and temperament, moving easily between cultures and environments. They excel in swimming, navigation, and spirit-aligned magic, often serving as traders, guides, or intermediaries between distant peoples. Their presence is calm and compelling, like the tideâ€”subtle, but powerful.",
-    stats: "STR 8 / DEX 11 / CON 9 / VIT 10 / AGI 11 / INT 10 / WIS 11 / SPT 11 / CHA 9",
+    stats: "STR 8 / DEX 10 / CON 10 / VIT 10 / AGI 10 / INT 10 / WIS 10 / SPT 11 / CHA 11",
     notes: ["Rare and most often found where coast, river, and trade traffic converge."]
   }
 };
