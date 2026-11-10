@@ -2324,3 +2324,22 @@ Live master/ref and worktree checked; connector-preflight delta inspected; actua
 ### D. Risks / follow-up notes
 
 Source-backed ordering risk is not a reproduced unauthorized write. Next: isolated pre-admission recovery repair/test with v2 pending plus healthy v3 neighbor and lawful v3 pending recovery. Original PRs/branches retained; no PR lifecycle action due. Suggested commit: `docs(v3): hold default activation on pending recovery boundary`. No separate Game-version decision.
+## 2026-11-10 — Native-v3 pre-admission pending recovery repair
+
+**Source run:** unversioned support from synchronized `origin/master` `6fb1f233b47b7e9e5e805c1a4f21b5f49b4ce424`, on `codex/native-v3-pre-admission-recovery-2026-11-10`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused record](native-v3-pre-admission-pending-recovery-repair-2026-11-10.md).
+
+### A. Files changed
+
+`EpochApp.tsx`, clean-epoch account store and terminal adapter, synthetic same-origin QA caller, focused Node test, focused record, current prompt/output/handoff and branch register.
+
+### B. Patch summary
+
+Native inventory now admits retained first/descendant source and publication format before recovery, filters terminal settlement and address closure by validated source format, preserves incompatible v2 pending bytes and leaves an independent ready v3 slot usable. Default v2 recovery remains unfiltered. No default activation, source merge, Site or Game-version change.
+
+### C. Tests or checks run
+
+Synthetic same-origin real IndexedDB browser fixture PASS for v2 pending plus v3 ready, prepared-v2 refusal, unavailable read, and exact-once v3 pending completion with owner readbacks. Focused Node 14/14, Node UI typecheck PASS, direct Vite build PASS. Broad UI typecheck: 115 diagnostics on branch and clean master, zero delta and zero changed-file diagnostics. `git diff --check` PASS. New tests were added after the edit; no red-before-green run is claimed. Real-owner completed-terminal closure remains for independent review.
+
+### D. Risks / follow-up notes
+
+FP-001/002/003/004/005/009: real `EpochApp` inventory function and same-origin owner graph exercised; source/receipt/retry/readback evidence is recorded, while selected-client and activation acceptance remain held. Retained native-v3, historical UI, protected and other held branches/PRs were not changed; no branch or PR action was due beyond this new isolated candidate branch. Exact review trigger: independent source review and real-owner terminal closure/retry fixture before any separate source-merge or default-activation decision. Suggested commit message: `fix(ui): gate native inventory recovery by retained format`. Next run: unversioned independent pending recovery boundary review; no separate Game-version decision proposed.

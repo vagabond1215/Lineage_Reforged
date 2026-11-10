@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { isNativeTargetCampaignSnapshot } from '../../../packages/engines/game-engine/src/native-campaign-rules.js';
 import type { CampaignSessionControl } from '../../../packages/engines/game-engine/src/campaign-session.js';
-import { EpochApp } from './EpochApp.js';
+import { EpochApp, recoverPendingInventory } from './EpochApp.js';
 import { CleanEpochAccountAdapter } from './game-shell/cleanEpochAccountAdapter.js';
 import { CleanEpochLegacyActionAdapter } from './game-shell/cleanEpochLegacyActionAdapter.js';
 import { openCleanEpochAccountStore } from './game-shell/cleanEpochAccountStore.js';
@@ -11,6 +11,7 @@ import { resolveLegacyPreparationSelection } from '../../../packages/engines/gam
 import { CleanEpochFirstCampaignAdapter } from './game-shell/cleanEpochFirstCampaignAdapter.js';
 import { CleanEpochDescendantAdapter } from './game-shell/cleanEpochDescendantAdapter.js';
 import { CleanEpochTerminalAdapter } from './game-shell/cleanEpochTerminalAdapter.js';
+import { CleanEpochLauncherRead } from './game-shell/cleanEpochLauncherRead.js';
 import { createDefaultCharacterCreationFormState } from './game-shell/characterCreationForm.js';
 import { createDefaultStartingBundleChoiceSelections, getLineageIdentityCatalog } from './game-shell/characterCreationCatalog.js';
 import { getDefaultWorldSelection } from './game-shell/worldSelectionCatalog.js';
@@ -24,6 +25,105 @@ import { advanceNativeSelectedExploration, createNativeSelectedEncounterAdmissio
   applyNativeSelectedCombatStep } from './game-shell/nativeSelectedCombat.js';
 import { retireNativeSelectedSession, resumeNativeSelectedTerminal } from './game-shell/nativeSelectedTerminal.js';
 import './index.css';
+
+async function preAdmissionQa() {
+  const owner = await openCleanEpochAccountStore();
+  try {
+  const accountId = `account.native.pre-admission.${crypto.randomUUID()}`;
+  const identity = getLineageIdentityCatalog('lineage.human');
+  if (!identity) throw new Error('Synthetic lineage identity is unavailable.');
+  const world = getDefaultWorldSelection('backstory.local');
+  const form = (slotId: 'slot-1' | 'slot-2' | 'slot-3') => ({
+    ...createDefaultCharacterCreationFormState(slotId), playerName: `Recovery ${slotId}`,
+    hairColorId: identity.hairColorOptions[0]!.id, eyeColorId: identity.eyeColorOptions[0]!.id,
+    skinToneId: identity.skinToneOptions[0]!.id, backstoryId: 'backstory.local',
+    continentId: world.continentId, regionId: world.regionId,
+    startingSettlementId: world.settlementId, startingBundleId: 'starting_bundle.hunter',
+    startingBundleChoiceSelections: createDefaultStartingBundleChoiceSelections('starting_bundle.hunter') });
+  const accounts = new CleanEpochAccountAdapter(owner);
+  const register = await accounts.register({ accountId, displayName: 'Synthetic pre-admission QA',
+    password: 'synthetic-only-password', confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
+  if (register.status !== 'ready') throw new Error(register.message);
+  const native = new CleanEpochFirstCampaignAdapter(owner, 'native_v3');
+  const legacy = new CleanEpochFirstCampaignAdapter(owner, 'v2');
+  const started = await native.start(accountId, form('slot-1'));
+  if (started.status !== 'ready') throw new Error(started.message);
+  const preparedOld = await legacy.prepare(accountId, form('slot-2'));
+  if (preparedOld.status !== 'ready') throw new Error(preparedOld.message);
+  const complete = owner.completePreparedAttemptConsumers.bind(owner);
+  owner.completePreparedAttemptConsumers = async () => { throw new Error('Synthetic lost consumer acknowledgement'); };
+  try {
+    const pending = await legacy.resume(accountId, 'slot-2');
+    if (pending.status !== 'blocked') throw new Error('V2 pending fixture unexpectedly completed.');
+  } finally { owner.completePreparedAttemptConsumers = complete; }
+  const preparedOnly = await legacy.prepare(accountId, form('slot-3'));
+  if (preparedOnly.status !== 'ready') throw new Error(preparedOnly.message);
+  const nativeOldResume = await native.resume(accountId, 'slot-3');
+  if (nativeOldResume.status !== 'blocked' || await owner.readRecovery(accountId, 'slot-3'))
+    throw new Error('Native first resume published the prepared v2 source.');
+  const oldBefore = await owner.readRecovery(accountId, 'slot-2');
+  const neighborBefore = await owner.readSlot(accountId, 'slot-1');
+  const accountBefore = await owner.readSelected(accountId);
+  if (oldBefore?.status !== 'accepted_pending_consumers' || neighborBefore.status !== 'ready' || !accountBefore)
+    throw new Error('Mixed-format fixture did not retain exact sources.');
+  const services = { owner, accounts, launcher: new CleanEpochLauncherRead(owner, accounts),
+    first: native, descendant: new CleanEpochDescendantAdapter(owner),
+    terminal: new CleanEpochTerminalAdapter(owner) } as Parameters<typeof recoverPendingInventory>[0];
+  const result = await recoverPendingInventory(services, accountId, true);
+  await recoverPendingInventory(services, accountId, true);
+  const oldAfter = await owner.readRecovery(accountId, 'slot-2');
+  const neighborAfter = await owner.readSlot(accountId, 'slot-1');
+  const accountAfter = await owner.readSelected(accountId);
+  if (result.slots.find(slot => slot.slotId === 'slot-1')?.status !== 'ready' ||
+      result.slots.find(slot => slot.slotId === 'slot-2')?.status !== 'pending_consumers' ||
+      JSON.stringify(oldAfter) !== JSON.stringify(oldBefore) ||
+      JSON.stringify(neighborAfter) !== JSON.stringify(neighborBefore) ||
+      JSON.stringify(accountAfter) !== JSON.stringify(accountBefore))
+    throw new Error('Native inventory changed the retained v2 or neighboring v3 bytes.');
+  const unavailableOwner = Object.create(owner) as typeof owner;
+  unavailableOwner.readAttempt = async () => { throw new Error('Synthetic unavailable read'); };
+  const unavailableServices = { ...services, owner: unavailableOwner };
+  let failed = false;
+  try { await recoverPendingInventory(unavailableServices, accountId, true); }
+  catch (error) { failed = error instanceof Error && error.message.includes('Synthetic unavailable read'); }
+  if (!failed || JSON.stringify(await owner.readRecovery(accountId, 'slot-2')) !== JSON.stringify(oldBefore) ||
+      JSON.stringify(await owner.readSlot(accountId, 'slot-1')) !== JSON.stringify(neighborBefore))
+    throw new Error('Unavailable source read changed retained bytes.');
+  const pendingNativeAccountId = `account.native.pending-recovery.${crypto.randomUUID()}`;
+  const pendingNativeRegistration = await accounts.register({ accountId: pendingNativeAccountId,
+    displayName: 'Synthetic native pending QA', password: 'synthetic-only-password',
+    confirmPassword: 'synthetic-only-password', stayLoggedIn: true });
+  if (pendingNativeRegistration.status !== 'ready') throw new Error(pendingNativeRegistration.message);
+  const pendingNative = await native.prepare(pendingNativeAccountId, form('slot-1'));
+  if (pendingNative.status !== 'ready') throw new Error(pendingNative.message);
+  owner.completePreparedAttemptConsumers = async () => { throw new Error('Synthetic native lost acknowledgement'); };
+  try {
+    const pending = await native.resume(pendingNativeAccountId, 'slot-1');
+    if (pending.status !== 'blocked') throw new Error('Native pending fixture unexpectedly completed.');
+  } finally { owner.completePreparedAttemptConsumers = complete; }
+  const nativeRecoveryBefore = await owner.readRecovery(pendingNativeAccountId, 'slot-1');
+  if (nativeRecoveryBefore?.status !== 'accepted_pending_consumers')
+    throw new Error('Native pending fixture was not retained.');
+  const nativeRecovered = await recoverPendingInventory(services, pendingNativeAccountId, true);
+  if (nativeRecovered.slots.find(slot => slot.slotId === 'slot-1')?.status !== 'ready')
+    throw new Error('Native pending recovery did not reach ready readback.');
+  const recoveredSlot = await owner.readSlot(pendingNativeAccountId, 'slot-1');
+  const recoveredAccount = await owner.readSelected(pendingNativeAccountId);
+  const recoveredReceipt = await owner.readRecovery(pendingNativeAccountId, 'slot-1');
+  if (recoveredSlot.status !== 'ready' || !recoveredAccount ||
+      recoveredReceipt?.status !== 'consumers_completed' ||
+      recoveredReceipt.envelopeRaw !== nativeRecoveryBefore.envelopeRaw)
+    throw new Error('Native recovered source or receipt changed unexpectedly.');
+  await recoverPendingInventory(services, pendingNativeAccountId, true);
+  if (JSON.stringify(await owner.readSlot(pendingNativeAccountId, 'slot-1')) !== JSON.stringify(recoveredSlot) ||
+      JSON.stringify(await owner.readSelected(pendingNativeAccountId)) !== JSON.stringify(recoveredAccount) ||
+      JSON.stringify(await owner.readRecovery(pendingNativeAccountId, 'slot-1')) !== JSON.stringify(recoveredReceipt))
+    throw new Error('Native retry duplicated publication or consumer receipts.');
+  document.body.dataset.preAdmission = 'pass';
+  document.body.dataset.preAdmissionAccount = accountId;
+  document.getElementById('root')!.textContent = 'PASS synthetic same-origin pre-admission recovery';
+  } finally { owner.close(); }
+}
 
 async function seed() {
   let owner = await openCleanEpochAccountStore();
@@ -397,7 +497,12 @@ async function seed() {
   } finally { owner.close(); }
 }
 
-if (new URLSearchParams(location.search).has('resume')) {
+if (new URLSearchParams(location.search).has('pre-admission')) {
+  preAdmissionQa().catch(error => {
+    document.body.dataset.preAdmission = 'error';
+    document.getElementById('root')!.textContent = error instanceof Error ? error.message : String(error);
+  });
+} else if (new URLSearchParams(location.search).has('resume')) {
   document.body.dataset.seeded = 'resume';
   createRoot(document.getElementById('root')!).render(<EpochApp
     candidateNativeV3={new URLSearchParams(location.search).has('candidate')} />);
