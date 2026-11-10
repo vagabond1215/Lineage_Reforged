@@ -2443,3 +2443,5 @@ Routing test red **0/1** before source edit and green **1/1** after; focused rec
 ### D. Risks / follow-up notes
 
 Local synthetic ordinary-index proof is not independent review, authenticated selected-client or hosted acceptance. Source rollback does not make v3 Saves playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION`, hosted Sites, real accounts/Saves, Game version and original PR retirement remain held. Fresh open PR inventory #6–#73 (68); #5 closed/unmerged; no original PR/branch action due. New branch retained for independent exact-source review. Suggested commit: `feat(ui): select native v3 on local development entry`. Next recommended unversioned run: independent local entry and compiled-boundary review; no Game-version decision.
+
+Cleanup: the exact synthetic browser account was deleted after action-time confirmation; the test tab and three task-created backup downloads were removed. The registered Vite server had exited, port 5198 was free, and the task-created dependency junction was removed with its shared target intact. No unnecessary process retained.
