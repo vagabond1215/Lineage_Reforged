@@ -2423,3 +2423,23 @@ Fresh fetch/prune, local/master delta (one connector document), normal/QA/stagin
 ### D. Risks / follow-up notes
 
 No ordinary-index v3 behavior is yet implemented or witnessed; local development source selection needs separate explicit approval. Hosted/default Site, authenticated selected acceptance, real accounts/Saves, Game version and PR retirement remain held. Fresh open PR inventory: #6–#73 (68); #5 closed/unmerged. Recovery branch remains `HOLD_NAMED_CONSUMER`; no PR or branch action was due. Suggested commit: `docs(v3): record local ordinary-entry activation readiness`. Next recommended run: unversioned local ordinary-entry source activation approval gate; no Game-version decision.
+
+## 2026-11-10 — Native-v3 local ordinary-entry source switch and witness
+
+**Source run:** unversioned authorized isolated source selection on `codex/native-v3-local-ordinary-entry-2026-11-10` from synchronized master `024e58ed96e4811427a457755dd3635eef3ebf37`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused witness](native-v3-local-ordinary-entry-source-witness-2026-11-10.md). User authorization: **development source switch only**.
+
+### A. Files changed
+
+`App.tsx`, `EpochApp.tsx`, focused ordinary-entry routing test, focused witness, current prompt/output/handoff and branch register. No Save/account owner, schema, dependency, staging, Site or Game-version file changed.
+
+### B. Patch summary
+
+Ordinary `App` requests a new native selector bounded to Vite `DEV`, loopback hostname and exact `/` or `/index.html` pathname. QA pathname/staging origin controls remain separate. The branch is a held source candidate; compiled production default and master remain v2. The next prompt requires independent source and compiled-preview review before a separate merge decision.
+
+### C. Tests or checks run
+
+Routing test red **0/1** before source edit and green **1/1** after; focused recovery/selected host **16/16**, adjacent item/pending/gameplay host **13/13**, total **29/29**. Node UI typecheck PASS, direct Vite build PASS (287 client modules). Broad UI TypeScript: master **115** and branch **115** diagnostics, zero delta and zero changed-file diagnostics. One controlled in-app browser at ordinary loopback `/` used a synthetic account: creator v3, real Unequip, rendered Save, full reload/sign-in/Continue. Owner backup comparison: account revision 2→3, head 1→2, new publication, byte-exact predecessor, conserved physical IDs/durabilities, Short Bow worn→bag; after restart, all 14 backup-family hashes matched the post-Save export. FP-001/002/003/004/005/009: real entry/owner caller, synthetic limit, recovery/retry/neighbor and exact base/source identities separated. Diff/path/link and remote readback are publication checks.
+
+### D. Risks / follow-up notes
+
+Local synthetic ordinary-index proof is not independent review, authenticated selected-client or hosted acceptance. Source rollback does not make v3 Saves playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION`, hosted Sites, real accounts/Saves, Game version and original PR retirement remain held. Fresh open PR inventory #6–#73 (68); #5 closed/unmerged; no original PR/branch action due. New branch retained for independent exact-source review. Suggested commit: `feat(ui): select native v3 on local development entry`. Next recommended unversioned run: independent local entry and compiled-boundary review; no Game-version decision.
