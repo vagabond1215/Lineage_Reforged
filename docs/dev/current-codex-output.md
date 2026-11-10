@@ -2465,3 +2465,23 @@ Fresh branch/master/ref and PR delta, eight-path source comparison, real entry/Q
 ### D. Risks / follow-up notes
 
 Local synthetic review does not accept hosted/default v3, authenticated selected-client behavior or full native-v3 gameplay. The branch is `CANDIDATE_INTEGRATION; HOLD_EXACT_SOURCE_MERGE_REVIEW`; exact next trigger is a fresh-ref merge review and separate authorization. Original PRs #6–#73 and closed/unmerged #5 retain their dispositions; no integration, deletion or PR action was due. Suggested commit: `docs(v3): independently verify local entry and compiled boundary`. Next recommended unversioned run: exact-source merge review; no Game-version decision. The two exact synthetic accounts were deleted after action-time user approval and both browser tabs closed; registered server and junction cleanup is recorded in the focused decision.
+
+## 2026-11-10 — Native-v3 local ordinary-entry exact-source merge decision
+
+**Source run:** unversioned source-integration decision on candidate `codex/native-v3-local-ordinary-entry-2026-11-10` at `572c99bd2defedb4100f213583a2fb453c960551` against fetched/pruned master `d9c77c222952709ec93945ca39c1a8638eb24530`; merge base `024e58ed96e4811427a457755dd3635eef3ebf37`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-local-ordinary-entry-exact-source-merge-decision-2026-11-10.md): **`SOURCE_MERGE_READY_AWAITING_AUTHORIZATION; HOLD_SELECTED_ATOMIC_ACTIVATION`**.
+
+### A. Files changed
+
+Focused exact-source merge decision, current prompt/output/handoff and branch register. No runtime UI, test, owner, Save, account, schema, dependency, Site or Game-version edit in this review.
+
+### B. Patch summary
+
+Master advanced one creator-catalog commit that changes nine actual base-stat inputs. The conflict-free combined tree `bc5c015c8a097fd69280dba112afd023f027cbcd` retains exact candidate entry source/test blobs and master's creator blob, with no same-path overlap. Prepared an exact source-only merge and active-coordination resolution, but did not merge. Installed a separate approval gate.
+
+### C. Tests or checks run
+
+Fresh Git refs, worktree/branch/PR inventory and complete one-commit master delta; exact blob and combined-tree path verification. Disposable combined-tree validation: UI entry/creator/recovery/host **22/22**, root creator attribute/randomization **4/4**, total **26/26**; Node UI typecheck PASS; direct Vite build PASS, 287 client modules. Prior candidate 29/29 and actual dev-v3/compiled-preview-v2 browser proof remain supporting at their own source head. Broad UI TypeScript was not rerun on the combined tree. `git diff --check origin/master...HEAD` passed; staged diff and remote decision readback are publication checks. FP-001/002/003/004/005/008/009 and their evidence are in the focused decision.
+
+### D. Risks / follow-up notes
+
+No authorization for this branch's source merge has been given. Source rollback cannot make new v3 Saves readable by v2. Hosted/default activation, Sites, selected-client acceptance, real accounts/Saves, Game version and PR retirement remain held. Candidate disposition: `CANDIDATE_INTEGRATION; HOLD_SOURCE_MERGE_AUTHORIZATION`; exact next trigger is explicit source-only approval plus fresh-ref/delta check. Open PRs #6–#73 remain retained; #5 closed/unmerged; no branch/PR integration or deletion occurred. Suggested commit: `docs(v3): prepare exact local-entry source merge gate`. Next recommended unversioned run: authorized source-only merge if approved, otherwise retain gate; no Game-version decision. Cleanup: no persistent process started; temporary combined worktree and its dependency junction removed, shared dependency target intact.

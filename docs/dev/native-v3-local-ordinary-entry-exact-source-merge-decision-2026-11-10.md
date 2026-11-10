@@ -1,0 +1,30 @@
+# Native-v3 local ordinary-entry exact-source merge decision
+
+Date: 2026-11-10 (America/New_York). Run class: unversioned source-integration decision. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. **`SOURCE_MERGE_READY_AWAITING_AUTHORIZATION; HOLD_SELECTED_ATOMIC_ACTIVATION`**. No merge is authorized by this review.
+
+## Exact refs and delta
+
+After fetch/prune, live `origin/master` was `d9c77c222952709ec93945ca39c1a8638eb24530`; live candidate `origin/codex/native-v3-local-ordinary-entry-2026-11-10` and clean local HEAD were `572c99bd2defedb4100f213583a2fb453c960551`. Merge base was `024e58ed96e4811427a457755dd3635eef3ebf37`: master one unique commit ahead and candidate three unique commits ahead. The new master commit changed only `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts`, balancing nine lineage `stats` strings. These strings feed `LINEAGE_BASE_ATTRIBUTES` through `parseLineageStatBlock`, so this is a real creator-input delta, not presentation-only text. Candidate unique paths are `App.tsx`, `EpochApp.tsx`, the ordinary-entry routing test, two focused records and the four active coordination files; there is no same-path overlap. All other master policy and coordination paths were unchanged since the candidate's base. Inventory: 46 registered worktrees, 82 remote branches, 68 open PRs #6–#73; PR #5 is closed/unmerged. No PR or branch lifecycle action was due.
+
+Git's no-commit combined tree `bc5c015c8a097fd69280dba112afd023f027cbcd` had no conflict and 1,993 tracked paths. Its only delta from master is the candidate's nine paths; its only delta from the candidate is master's creator catalog. Exact combined blob checks:
+
+| Path | Source retained | Git blob |
+| --- | --- | --- |
+| `apps/rpg-ui/src/App.tsx` | candidate | `74598ac46504564df19e97017cb003d04760326c` |
+| `apps/rpg-ui/src/EpochApp.tsx` | candidate | `1a47e74816b28311159850fc837f431006ec36cc` |
+| `apps/rpg-ui/tests/native-ordinary-development-entry.test.mjs` | candidate | `1dfac653f93cf329c88d0a65a40a6e8891f513da` |
+| `apps/rpg-ui/src/game-shell/characterCreationCatalog.ts` | master | `ccab8af8cbc1e26fc84453244e01e6f624581391` |
+
+The combined tree also retains the candidate prompt/output/handoff/register and both focused records verbatim. These coordination files must be **reconciled in an authorized merge commit**: replace the pre-merge approval prompt with an exact-master post-merge local-development route, append the actual merge parents, tests and live remote readback to output/handoff/register, and mark this branch retained for named selected/hosted consumers. Do not leave the approval gate installed as though the source were still unmerged. The lineage-balance master commit and all unrelated paths must survive exactly. The source-only integration must not activate hosted/default v3 or change selected-client holds.
+
+## Semantic and executable check
+
+Ordinary `index.html` imports `main.tsx`, which mounts `App`; the candidate passes `developmentNativeV3` only there. `EpochApp` requires Vite `DEV`, loopback hostname and exact `/` or `/index.html`. QA selection still requires its separate pathname and candidate prop; staging still requires its exact-origin entry. In a compiled build, `DEV=false` leaves ordinary entry on v2. The selector consistently gates native creator, inventory/recovery, Load, action and Save. Rollback of the source switch would not make a newly created v3 Save readable by v2. The new master stat inputs affect both creator modes but change no selector, Save format or recovery code.
+
+The prior [independent review](native-v3-local-ordinary-entry-independent-review-2026-11-10.md) supplied 29/29 focused tests, Node typecheck, direct Vite build, and separate actual controlled-browser ordinary development-v3 versus compiled-preview-v2 observations at candidate `6e780417`; those observations are supporting evidence, not a new combined-tree browser claim. Because master changed creator inputs, a disposable detached worktree at temporary no-ref commit `ca1dd38a649b21eb8e4e38aaed408831035a2818` with exact combined tree reran entry, creator resource, selected-host and pre-admission tests **22/22**, plus root creator attribute/randomization tests **4/4**: combined **26/26 PASS**. Combined Node UI typecheck PASS; direct Vite build PASS (287 client modules). Broad UI TypeScript was not rerun on this combined tree; the candidate/master prior comparison was 115/115 identical diagnostics before the new string-only catalog commit. Test Vite reported pre-existing port 24678 occupied; no unrelated listener was touched. `git diff --check origin/master...HEAD` passed. The task-created validation worktree and dependency junction were removed; shared dependencies remained intact. No persistent process was started.
+
+FP-001: actual ordinary entry and creator consumers were inspected and the combined creator tests rerun. FP-002: local synthetic and test evidence do not accept hosted or authenticated selected-client behavior. FP-003/004/005: retained mixed-format pending, terminal, stale-pair and retry gates remain covered by focused combined tests; no new owner failure was observed. FP-008: creator stat semantics, source blobs and coordination were reviewed beyond Git's conflict result. FP-009: base, candidate, master, combined tree and later published decision head are distinct identities.
+
+## Authorization and retained boundaries
+
+The smallest reviewable integration is one **source-only merge** of the exact candidate branch into fresh master, with active coordination reconciled in the same merge commit and focused post-merge validation/readback. It needs separate explicit owner authorization. If either ref changes, inspect the complete delta and recompute the combined tree before action; this decision is not a standing merge approval. No original PR merge, retarget, closure, rebase or branch deletion; no Sites/deployment, hosted/default activation, real account/Save, Game-version or selected-client acceptance. PRs #6–#73 remain retained; #5 stays closed without merge and its branch intact. `HOLD_SELECTED_ATOMIC_ACTIVATION` remains.
