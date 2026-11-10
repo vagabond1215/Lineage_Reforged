@@ -2403,3 +2403,23 @@ Fresh remote-head verification, conflict-free merge and changed-path/blob review
 ### D. Risks / follow-up notes
 
 `HOLD_SELECTED_ATOMIC_ACTIVATION` remains. The next run is an exact-master normal-entry activation readiness review; implementation, ordinary-index disposable Save/restart, hosted and authenticated selected acceptance each require their own decision/evidence. Original PRs #6–#73 retain prior dispositions; PR #5 remains closed/unmerged with branch intact. No original PR action or branch deletion was due. Suggested commit: `merge(v3): integrate held pending recovery source`. No separate Game-version decision.
+
+## 2026-11-10 — Native-v3 normal-entry development activation readiness
+
+**Source run:** unversioned read-only decision on synchronized `master`/`origin/master` `ba4bb1b9ff0b50f58551d41e985a20b8fdcae1db`; prior recovery source merge `8af9ad412ee2471a3e7f249c4924046e97314ba1`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `none`, game-version impact `none`. [Focused record](native-v3-normal-entry-development-activation-readiness-2026-11-10.md): **`ACTIVATION_READINESS_SUPPORTED; HOLD_SELECTED_ATOMIC_ACTIVATION`** for a separately authorized local-development ordinary-entry source package only.
+
+### A. Files changed
+
+Focused readiness record, current prompt, this output, GPT handoff and branch register. No runtime UI, owner, test, dependency, Save, account, Site or Game-version edit.
+
+### B. Patch summary
+
+The prior mixed-format pre-admission recovery blocker is repaired at the exact production caller and independently witnessed for synthetic local owner state. Ordinary `index.html` still mounts v2; the QA candidate flag cannot select it. Installed the next explicit approval gate for a development-only ordinary-entry source switch on an isolated branch, with ordinary-index disposable Save/restart required before any source-selection claim.
+
+### C. Tests or checks run
+
+Fresh fetch/prune, local/master delta (one connector document), normal/QA/staging entry and retained recovery owner source review, exact production blob comparison, GitHub repository PR inventory, and focused exact-master Node tests **15/15 PASS**. Prior exact-source Node typecheck/direct Vite build are supporting evidence only; no new build or browser campaign was run. FP-001/002/003/004/005/008/009: real entry/inventory path, synthetic-vs-selected limit, retained recovery/retry/neighbor evidence, held branch lifecycle and exact head identities reviewed. Publication checks: changed paths, link resolution, `git diff --check` and remote readback.
+
+### D. Risks / follow-up notes
+
+No ordinary-index v3 behavior is yet implemented or witnessed; local development source selection needs separate explicit approval. Hosted/default Site, authenticated selected acceptance, real accounts/Saves, Game version and PR retirement remain held. Fresh open PR inventory: #6–#73 (68); #5 closed/unmerged. Recovery branch remains `HOLD_NAMED_CONSUMER`; no PR or branch action was due. Suggested commit: `docs(v3): record local ordinary-entry activation readiness`. Next recommended run: unversioned local ordinary-entry source activation approval gate; no Game-version decision.
