@@ -13,6 +13,19 @@ The user started Vite themselves from the L1 worktree with `npm run dev -- --hos
 - Continue visibly opens the unavailable Worlds screen with a truthful `World Library not ready` message and Back control. The user explicitly reports **Back and Logout work as expected**.
 - The user reported, and screenshots show, text overlapping the lower part of the existing logo on several Welcome/Worlds states. This is a **known, deferred cosmetic/layout issue** during prototype development, subject to retaining readable, operable essential controls. It is not permission to hide a broken login or inaccessible primary interaction.
 
+### Additional owner manual account-flow observations
+
+The user separately reports the following results from the visible Welcome/login user interface on the local feature-gated branch:
+
+| Visible check | User observation | Evidence limit |
+| --- | --- | --- |
+| Persistent login | **Works**, with the expected signed-in Welcome visible | Does not establish the retained hint's storage/readback, lifecycle generation, or restart semantics beyond the interactions actually exercised |
+| Logout | **Works correctly** in the visible UI | Does not independently establish session-hint removal readback, underlying account/Save retention, or clearing of all stale references |
+| Invalid password | **Login is blocked**, with no visible authentication success | Does not independently prove verifier integrity, metadata immutability, or account revision behavior |
+| Switching accounts | **Works appropriately** for the displayed account identity | Does not independently verify isolation of hidden account metadata, slot inventories, IndexedDB owner keys or campaign/Save data |
+
+These are credible **user-reported manual functional smoke results**, not connector/browser automation, storage inspection, backend metadata tests, or a formal complete acceptance matrix. They support the visible behavior of applicable portions of **L1-A03/A05/A10/A11** without proving the entire negative/integrity criteria. No account IDs, passwords, verifier fields or user data were accessed through this Connector.
+
 The earlier Codex report supplied **15 focused Node test passes**, passing `typecheck:node`, baseline-blocked broad UI typecheck without named modified-file diagnostics, and a passing direct Vite build. Those results are **Codex-reported, not independently re-executed by Connector**; their exact code revision/branch is not remotely inspectable while local changes remain uncommitted. Computer Use halted because it could not confidently determine the Edge URL, so no tool-driven L1-A01–A15 browser acceptance was recorded.
 
 ## Evidence boundaries and functional next checks
@@ -22,8 +35,8 @@ The observations provisionally support the visible route and navigation portions
 Prioritize the remaining safety and utility checks over cosmetic layout iteration:
 
 1. Confirm feature OFF retains the normal, actually working Save/character path, not just the menu screenshot.
-2. Confirm verified session persistence/reload with stay-signed-in on/off; wrong-password rejection; logout hint clearance; stale/invalidated session blocks Continue.
-3. Confirm two-account isolation, damaged/blocked IndexedDB and pending/corrupt slot behavior remain fail-closed and do not invent empty Worlds or alter user Saves.
+2. Preserve the user's **visible** confirmations of persistent login, wrong-password rejection, logout and account switching. Verify session-hint storage/removal readback and lifecycle generation; test stay-signed-in **both on and off** and invalidated/stale session blocked on Continue, without treating the UI smoke as backend acceptance.
+3. Verify **underlying** two-account metadata/slot/campaign isolation (visible account switching was user-confirmed), plus damaged/blocked IndexedDB and pending/corrupt slot behavior: remain fail-closed, never invent empty Worlds or alter user Saves.
 4. Confirm keyboard access, readable/form-associated errors, basic narrow-screen primary controls, and appropriate disabled/busy behavior. Fine-grained spacing, ornate logo treatment, alignment, and decorative hierarchy can be revisited when World Library and character entry are functional.
 5. Preserve and commit/push **only** the isolated L1 implementation branch once its local source diff is reviewed, even if browser acceptance stays held. Then use GitHub Connector for independent code/test review and focused coordination. If formal L1 checks remain pending, retain `L1_CODE_READY_BROWSER_HELD` or a more precise named hold; do not claim `L1_ACCEPTED_ISOLATED`.
 
