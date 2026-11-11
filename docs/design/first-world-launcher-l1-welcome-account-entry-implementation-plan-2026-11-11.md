@@ -1,11 +1,13 @@
 # L1 Implementation Plan: Branded Welcome / Account Gate Before World and Save Selection
 
 Date: 2026-11-11  
-Status: **fully scoped planned segment; local-only Codex L1 route authorized/installed 2026-11-11, NOT yet executed; L0 local-entry baseline accepted; L1-E0 local safety and account/Save owner preflight still mandatory**  
+Status: **local L1 proof of concept implemented but uncommitted/unpublished; `L1_CODE_READY_BROWSER_HELD`, partial manual functional smoke only; L0 local-entry baseline accepted; formal L1 acceptance still pending**  
 Parent process: [First World Launcher Implementation Process Map](first-world-launcher-implementation-process-map-2026-11-11.md)  
 Product target: [Welcome, World Library, Character Entry and Loading](welcome-world-library-character-entry-and-loading-plan-2026-11-11.md)  
 Successor: **L2 World identity / persistence owner contract**, not general UI rework.  
 External baseline: [L0 accepted local-entry handoff](../dev/first-world-launcher-l0-local-entry-handoff-2026-11-11.md). Installed separate [L1 Codex local-only task](../dev/current-codex-prompt.md), backed by [connector source preflight](../dev/first-world-launcher-l1-connector-source-preflight-2026-11-11.md); L0 version-selection task is complete and must not be rerun.
+
+> **2026-11-11 owner POC priority:** [Manual browser observations and open checks](../dev/first-world-launcher-l1-manual-poc-observations-2026-11-11.md) document that the existing launcher, signed-out/authenticated Welcome and Continue → unavailable Worlds → Back/Logout render/work in the user's direct Brave tests. The current L1 branch is local and **not yet committed or pushed**. Do **not** spend a blocking implementation pass on decorative logo overlap, perfect spacing or polished presentation while this test-only feature remains off by default. Such cosmetic imperfections are tracked for later design refinement. **Do** preserve genuinely legible and operable login/Continue/Back/Logout, accessible keyboard/form error behavior, verified session identity, fail-closed storage errors and zero unwanted account/Save mutations. No screenshots alone close the L1-A01…A15 acceptance matrix, which still requires the applicable functional/negative proof and exact-source branch review.
 
 > **Segment objective:** give every app launch a distinct branded **Welcome** before character Save slots. A signed-out player can select/create and sign into an existing local account with the current verified owner; a persistently signed-in player sees the verified account display name and **Continue / Logout**. **Continue never directly loads a Save** in the new flow. Because no durable World Library yet exists, this segment is **not a production navigation cutover**. All new wiring stays behind a disabled-by-default, test-only feature gate. The real Continue → World Library list/create path is completed and activated in L3-L4.
 
