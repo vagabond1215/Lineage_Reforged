@@ -1,5 +1,8 @@
 # Unified Shell And Creator Refinement Plan
 
+> **2026-11-11 supersession notice (product navigation/creator only):** This remains historical, useful for launcher/creator visual-shell composition, fixed-width readable navigation, source-labeled stat previews and accessibility. Its proposed **Review page**, separate **Starting Bundle step**, optional/unselected Backstory assumptions, and **Full Randomize that only fills the form** are no longer the chosen creator flow. Use [Welcome, World Library, Character Entry and Loading](welcome-world-library-character-entry-and-loading-plan-2026-11-11.md) and its [design-intent audit](launcher-world-character-design-intent-audit-2026-11-11.md) for the controlling product sequence: Welcome -> Worlds -> world-scoped character roster/creator -> actual World Entry; four creator tabs, no Review, one top-bar Start Journey, and **Surprise Me atomically submits a fully legal character**. This notice does not alter live code, the technical Save/trait/backstory owner, or the active Codex route.
+
+
 ## Purpose
 
 This plan inserts a focused creator/main-shell refinement track before returning to `Version 0.5.86 - Combat Equipment Mapping Audit`.
