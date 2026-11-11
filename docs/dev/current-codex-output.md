@@ -2668,3 +2668,22 @@ B. Patch summary: ordinary-created synthetic campaigns visibly reached native-v3
 C. Checks: fresh fetch/source identity, registered launches, direct no-proxy HTTP 200, exact-source Vite build, controlled-browser creator-to-game observations, scoped cleanup and diff hygiene. FP-002: bounded entry acceptance is not full gameplay/Save/hosted acceptance. FP-009: exact source recorded. Branch/PR action: none due; retained branch review trigger is separate selected/hosted acceptance.
 
 D. Follow-up: synthetic browser-origin data may persist. Next run is a separately scoped selected/hosted acceptance decision, with no automatic activation. Suggested commit: `docs(v3): accept exact-master ordinary-entry browser selection`. Cleanup: two servers stopped, zero registered live, tabs closed, PTY exited.
+## 2026-11-11 — First-world launcher L0 connector-safe closure
+
+**Source run:** unversioned GitHub Connector documentary acceptance against `master` `3eab2da23a87e9c711d756af84dc7f1e1fff43ba`, consuming actual earlier Codex browser observations at executable source `86ed38bbe133104d451917784c27877a10089b7d`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a; development impact `none`, game-version impact `none`. Focused [L0 handoff](first-world-launcher-l0-local-entry-handoff-2026-11-11.md).
+
+### A. Files changed
+
+New L0 acceptance/handoff decision; focused L1 implementation-plan and launcher process-map status correction; coordination handoff/output/branch register. No runtime, test, dependency, account/Save, deployment or local process-control change.
+
+### B. Patch summary
+
+Decision `L0_ACCEPTED_LOCAL_ENTRY_BASELINE`: registered direct-HTTP and controlled-browser development native-v3 / compiled-preview v2 ordinary-entry selection and scoped server cleanup satisfy the external L0 entry baseline only. `L1_ENTRY_PREFLIGHT_ELIGIBLE_NOT_IMPLEMENTING`: L1 still requires fresh owner and test-baseline review, separate execution authority, disabled-by-default feature gating and an isolated source branch. Completed native-v3 Codex prompt deliberately left intact.
+
+### C. Checks or evidence reviewed
+
+GitHub exact ref and no-delta since prior inspection; browser acceptance record with distinct native-v3 and v2 rendered shells; prior exact-master focused source tests, Node UI typecheck, direct Vite build; process-map L0 and L1 plan entry clauses; post-write exact GitHub file readback and source-only documentary diff. **No** Connector-local tests, build, browser, shell, network, PID cleanup or user-data operations. FP-002: acceptance limited to observed browser entry selection; FP-009: source SHA and evidence origin distinguished.
+
+### D. Risks, lifecycle and next trigger
+
+Synthetic origin account/campaign data may persist after tabs closed; local ignored process-control retry is not a tracked durable fix. Selected/hosted acceptance, full gameplay/Save-restart and staging are outside L0; `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Original PRs and protected branches retain disposition; `codex/native-v3-local-ordinary-entry-2026-11-10` stays `HOLD_NAMED_CONSUMER` for selected/hosted review. No branch/PR action was due. Next separately authorized run: L1-E0 account/session/Save source-owner preflight, then narrow feature-gated L1 only if every entry condition passes. Suggested commit: `docs(launcher): record L0 local-entry acceptance in coordination`. Scoped cleanup: no processes or tabs started by this Connector pass.
