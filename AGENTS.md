@@ -148,6 +148,13 @@
 - Tell the user explicitly when they should include files, move files, upload files, transfer a research brief, pull/sync/push, activate a plugin, authorize a connector, or otherwise change files or access before running a prompt.
 - If no manual file, access, plugin, authorization, or transfer action is needed, omit that language entirely.
 
+## Task-Owned Process Lifetime And Cleanup
+
+- For browser, preview, server, or other long-running validation, define the task lifetime and exact owner of every process, listening port, disposable account, browser tab, file, and dependency junction. An individual shell command ending is **not** proof that the validation task has ended.
+- Keep an approved task-owned server and its required dependencies alive through startup, listener and HTTP proof, controlled browser work, restart/readback, and capture of required evidence. Do not call cleanup, StopSession, kill, unregister, close a required tab, or remove a required junction **between dependent task steps**. Inspect local process-control and command-supervisor lifetimes before relying on cross-command persistence.
+- If a server ends unexpectedly, capture its logs, exit status when available, session identity and last observed reachability; classify the environment/lifetime blocker rather than infer a game defect, silently rerun unverified processes, or substitute source tests for browser acceptance.
+- After the last dependent observation, or after an abort/blocker is recorded, stop and verify **only exactly identified task-owned** processes and remove only scoped disposable artifacts. Never kill all Node processes or free a port by terminating an unknown owner. If process-tree inspection or cleanup readback is blocked, disclose that limitation rather than claim complete cleanup. Never disable mandatory final cleanup to make a test pass.
+
 ## Development Discipline
 
 - Prefer the smallest coherent patch that solves the requested task.
