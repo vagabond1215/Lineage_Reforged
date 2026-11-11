@@ -1,11 +1,11 @@
 # L1 Implementation Plan: Branded Welcome / Account Gate Before World and Save Selection
 
 Date: 2026-11-11  
-Status: **fully scoped planned segment; NOT yet executing. L0 local entry baseline ACCEPTED 2026-11-11; L1-E0 still requires fresh account/Save owner preflight and separate implementation authorization**  
+Status: **fully scoped planned segment; local-only Codex L1 route authorized/installed 2026-11-11, NOT yet executed; L0 local-entry baseline accepted; L1-E0 local safety and account/Save owner preflight still mandatory**  
 Parent process: [First World Launcher Implementation Process Map](first-world-launcher-implementation-process-map-2026-11-11.md)  
 Product target: [Welcome, World Library, Character Entry and Loading](welcome-world-library-character-entry-and-loading-plan-2026-11-11.md)  
 Successor: **L2 World identity / persistence owner contract**, not general UI rework.  
-External baseline: [L0 accepted local-entry handoff](../dev/first-world-launcher-l0-local-entry-handoff-2026-11-11.md). The [native-v3 Codex prompt](../dev/current-codex-prompt.md) is marked completed; do not rerun or replace it as part of this documentation-only pass.
+External baseline: [L0 accepted local-entry handoff](../dev/first-world-launcher-l0-local-entry-handoff-2026-11-11.md). Installed separate [L1 Codex local-only task](../dev/current-codex-prompt.md), backed by [connector source preflight](../dev/first-world-launcher-l1-connector-source-preflight-2026-11-11.md); L0 version-selection task is complete and must not be rerun.
 
 > **Segment objective:** give every app launch a distinct branded **Welcome** before character Save slots. A signed-out player can select/create and sign into an existing local account with the current verified owner; a persistently signed-in player sees the verified account display name and **Continue / Logout**. **Continue never directly loads a Save** in the new flow. Because no durable World Library yet exists, this segment is **not a production navigation cutover**. All new wiring stays behind a disabled-by-default, test-only feature gate. The real Continue → World Library list/create path is completed and activated in L3-L4.
 
@@ -17,7 +17,7 @@ Required:
 1. Verify installed `docs/dev/current-codex-prompt.md` status at execution time and the exact synchronized `master` SHA; inspect worktree and other active task owners.
 2. L0 must have **ACCEPTED** a registered, retained and independently reachable Vite process; observed direct and controlled-browser ordinary development entry on exact master and correct compiled preview selection. This prerequisite is **now met for the local-entry baseline only** by the [2026-11-11 L0 handoff](../dev/first-world-launcher-l0-local-entry-handoff-2026-11-11.md) and its [version-specific browser evidence](../dev/native-v3-exact-master-version-selection-accepted-2026-11-11.md). Do not promote this into full gameplay/Save acceptance, selected-client activation or hosting approval.
 3. Confirm current native-v3 account/session/Save read/write source contracts and existing tests; record baseline typecheck/build issues before modifications, using synthetic/disposable account storage and authorized loopback only.
-4. Confirm L1 is independently scheduled/authorized **after** the prior Codex prompt's completed L0 gate. This L0 documentation handoff is not L1 source implementation authorization; do not replace the completed prompt or create a competing execution route without the separately approved L1 task. Do not switch activation/deployment flags or change the hosted Site.
+4. Confirm the separately authorized [installed L1 local-only Codex task](../dev/current-codex-prompt.md) remains current and no competing task owns its source; authorization does not waive other L1 entry checks. Codex handles only isolated source/tests/browser and branch commit; Connector handles later documentation and independent review. Do not switch activation/deployment flags or change the hosted Site.
 5. Record bounded changed-file list, source/branch identity, expected UI gate and rollback instructions.
 
 **If any condition fails:** result is `L1_ENTRY_HELD` with exact missing evidence. No UI, state, account, Save or Dev server modifications. No generic retries of an unchanged blocked environment.
