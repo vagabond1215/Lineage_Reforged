@@ -2706,3 +2706,22 @@ Connector: exact master, recent commits and nontruncated tree; native account ad
 ### D. Risks and next
 
 Codex must independently verify no active/conflicting owner work, baseline tests and disposable browser scope. `HOLD_SELECTED_ATOMIC_ACTIVATION`, `HOLD_STAGING_PUBLICATION` and all protected branch/PR dispositions remain. Exact next trigger: Codex's remote isolated L1 source/test commit and local evidence packet; Connector then publishes an independent L1 decision. Suggested commit: `docs(codex): install minimal L1 local-only implementation task`. No processes or tabs started in this pass.
+## 2026-11-11 — Published L1 candidate independent Connector review
+
+**Source run:** unversioned GitHub Connector review on `master` `675ec20843a00cb6d80a6326784ac89263d25bef` of remote candidate `codex/l1-branded-welcome-account-entry-2026-11-11` `14aa6380a3a6bb4aae35e0712169c302758d97d5`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent L0 accepted; game-version impact `none`.
+
+### A. Files changed
+
+The **candidate branch** changes only `EpochApp.tsx`, `LocalAccountAccessScreen.tsx`, new `WelcomeScreen.tsx`, `game-shell/state.ts` and new `launcher-welcome-routing.test.mjs`. This **Connector review** changes only [focused decision](first-world-launcher-l1-isolated-branch-source-review-2026-11-11.md), L1 manual evidence and plan status, output/handoff/branch register; no candidate source or dependencies edited by Connector.
+
+### B. Patch summary
+
+Independent source audit verifies strict DEV loopback `?welcomeL1=1` opt-in; reused native account, launcher and session owners; conditional bootstrap/login/registration into ephemeral Welcome; fresh validated-session/inventory read on Continue; truthful unavailable Worlds/Back; preserved feature-off MAIN_MENU and Save owners. Three new reducer test cases; **15/15 focused tests** were Codex-reported on the push turn. User Brave observations show visible persistence/login/logout/account switch and navigation. Decision: **`L1_BRANCH_SOURCE_REVIEWED; L1_CODE_READY_BROWSER_HELD; HOLD_L1_INTEGRATION_AND_FULL_ACCEPTANCE`**; not merge-ready or stage accepted.
+
+### C. Checks and provenance
+
+GitHub checked remote branch ref equals exact candidate SHA, sole parent equals inspected master, one-commit/five-file diff and full source/test code. Codex reports 15/15 focused Node tests, Node typecheck passed, direct Vite build passed; broad UI typecheck remains baseline-blocked and has no reported changed-UI diagnostics. Manually user-started Vite returned HTTP 200, user provided real Brave screenshots/interactions; these do not prove hidden storage invariants. Connector did **not** execute shell, Node tests, build, Vite, browser, local PID checks or any user data.
+
+### D. Risks / next gate
+
+Need exact-branch negative-integrity evidence for retained session and hint removal readback, stay-logged-in false after restart, credential failure account revisions, two-account metadata and Save/slot isolation, stale/pending/corrupt/blocked storage, and feature-off **functional Save journey**. Complete applicable L1-A01…A15 outcomes and browser/keyboard access. Decorative logo overlap deferred unless it blocks functional access. Candidate branch retained unmerged, no PR/branch action. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` unchanged. Next Codex slice should be narrow local negative/test verification on existing candidate, not broad implementation or doc coordination. User-owned Vite server remains running outside agent cleanup. Suggested Connector commit: `docs(launcher): record held L1 candidate review`.
