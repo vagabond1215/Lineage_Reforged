@@ -8,6 +8,7 @@ import type {
 } from "../launcherAuthManager.js";
 import type { GameShellNotice } from "../state.js";
 import { NoticeBanner } from "./NoticeBanner.js";
+import { ShellBrandLogo } from "./ShellBrandLogo.js";
 
 type LocalAccountAccessScreenProps = {
   mode: "pick_account" | "create_first_account";
@@ -37,6 +38,7 @@ type LocalAccountAccessScreenProps = {
   onImportArchive?: (file: File) => Promise<{ ok: boolean; message: string }>;
   themeMode: "dark" | "light";
   onToggleThemeMode: () => void;
+  welcomeBranding?: boolean;
 };
 
 function formatLastPlayedAt(lastPlayedAt: string | undefined): string {
@@ -68,7 +70,8 @@ export function LocalAccountAccessScreen({
   onCreateAccount,
   onImportArchive,
   themeMode,
-  onToggleThemeMode
+  onToggleThemeMode,
+  welcomeBranding = false
 }: LocalAccountAccessScreenProps) {
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(mode === "create_first_account");
@@ -205,8 +208,14 @@ export function LocalAccountAccessScreen({
   };
 
   return (
-    <div className="h-screen overflow-auto p-4 sm:p-6">
+    <div className={welcomeBranding
+      ? "min-h-screen overflow-auto bg-[radial-gradient(ellipse_at_top,#34463c55,transparent_65%)] p-4 sm:p-6"
+      : "h-screen overflow-auto p-4 sm:p-6"}>
       <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4">
+        {welcomeBranding && <div className="mx-auto flex max-w-xl flex-col items-center gap-4 py-8 text-center">
+          <ShellBrandLogo className="max-h-36 justify-center" />
+          <p className="text-sm uppercase tracking-[0.25em] text-[color:var(--color-text-soft)]">Welcome to Lineage: Reforged</p>
+        </div>}
         <div className="sticky top-0 z-30">
           <div className="rounded-[30px] border border-[color:var(--color-border)] bg-[color:var(--color-panel)] px-4 py-3 shadow-panel">
             <div className="relative flex min-h-[3.75rem] items-center justify-between gap-3">
@@ -236,7 +245,7 @@ export function LocalAccountAccessScreen({
 
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 <h1 className="text-center text-[clamp(2rem,4vw,3rem)] font-semibold tracking-[0.06em] text-[color:var(--color-text-strong)]">
-                  Account Login
+                  {welcomeBranding ? 'Welcome' : 'Account Login'}
                 </h1>
               </div>
 

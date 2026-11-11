@@ -14,6 +14,8 @@ import type {
 
 export type AppScreen =
   | 'ACCOUNT_ACCESS'
+  | 'WELCOME_AUTHENTICATED'
+  | 'WORLD_LIBRARY_GATE'
   | 'MAIN_MENU'
   | 'CHARACTER_CREATION'
   | 'LOAD_GAME'
@@ -105,6 +107,14 @@ export type MainMenuState = SignedInGameShellBaseState & {
   screen: 'MAIN_MENU';
 };
 
+export type WelcomeAuthenticatedState = SignedInGameShellBaseState & {
+  screen: 'WELCOME_AUTHENTICATED';
+};
+
+export type WorldLibraryGateState = SignedInGameShellBaseState & {
+  screen: 'WORLD_LIBRARY_GATE';
+};
+
 export type CharacterCreationState = SignedInGameShellBaseState & {
   screen: 'CHARACTER_CREATION';
   form: CharacterCreationFormState;
@@ -131,12 +141,23 @@ export type InGameState = SignedInGameShellBaseState & {
 export type GameShellState =
   | AccountAccessState
   | MainMenuState
+  | WelcomeAuthenticatedState
+  | WorldLibraryGateState
   | CharacterCreationState
   | LoadGameState
   | SettingsState
   | InGameState;
 
 export type GameShellAction =
+  | {
+      type: 'SHOW_AUTHENTICATED_WELCOME';
+      launcherSession: LauncherRuntimeSession;
+      accountProfile: AccountProfileState;
+      slots: SaveSlotSummary[];
+      notice: GameShellNotice | null;
+    }
+  | { type: 'OPEN_WORLD_LIBRARY_GATE' }
+  | { type: 'RETURN_TO_AUTHENTICATED_WELCOME' }
   | {
       type: 'SHOW_ACCOUNT_ACCESS';
       accessMode: 'pick_account' | 'create_first_account';
@@ -348,6 +369,15 @@ export function gameShellReducer(
   action: GameShellAction
 ): GameShellState {
   switch (action.type) {
+    case 'SHOW_AUTHENTICATED_WELCOME':
+      return { screen: 'WELCOME_AUTHENTICATED', launcherSession: action.launcherSession,
+        accountProfile: action.accountProfile, slots: action.slots, notice: action.notice };
+    case 'OPEN_WORLD_LIBRARY_GATE':
+      return state.screen === 'WELCOME_AUTHENTICATED'
+        ? { ...state, screen: 'WORLD_LIBRARY_GATE', notice: null } : state;
+    case 'RETURN_TO_AUTHENTICATED_WELCOME':
+      return state.screen === 'WORLD_LIBRARY_GATE'
+        ? { ...state, screen: 'WELCOME_AUTHENTICATED', notice: null } : state;
     case 'SHOW_ACCOUNT_ACCESS':
       return {
         screen: 'ACCOUNT_ACCESS',
