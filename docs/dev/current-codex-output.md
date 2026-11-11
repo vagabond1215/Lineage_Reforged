@@ -2687,3 +2687,22 @@ GitHub exact ref and no-delta since prior inspection; browser acceptance record 
 ### D. Risks, lifecycle and next trigger
 
 Synthetic origin account/campaign data may persist after tabs closed; local ignored process-control retry is not a tracked durable fix. Selected/hosted acceptance, full gameplay/Save-restart and staging are outside L0; `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Original PRs and protected branches retain disposition; `codex/native-v3-local-ordinary-entry-2026-11-10` stays `HOLD_NAMED_CONSUMER` for selected/hosted review. No branch/PR action was due. Next separately authorized run: L1-E0 account/session/Save source-owner preflight, then narrow feature-gated L1 only if every entry condition passes. Suggested commit: `docs(launcher): record L0 local-entry acceptance in coordination`. Scoped cleanup: no processes or tabs started by this Connector pass.
+## 2026-11-11 — L1 connector preflight and Codex-only task install
+
+**Run:** unversioned GitHub Connector preparation on `master` `c1441640f586fdb137a78704690d9cb29f781adc`; Game `0.1.1-prealpha`, `INTEGRATED_LOOP`; parent L0 accepted, development impact `none`, game-version impact `none`.
+
+### A. Files changed
+
+New [L1 source preflight](first-world-launcher-l1-connector-source-preflight-2026-11-11.md), installed [local-only L1 Codex prompt](current-codex-prompt.md), L1/process-map references, GPT handoff and output only. Existing branch register remains unchanged until a remote L1 branch and disposition exist.
+
+### B. Patch summary
+
+Separates implementation responsibilities: Codex locally inspects current owner/test baselines, performs only feature-gated L1 source/test/browser work on a new isolated branch and pushes it; GitHub Connector independently reads that branch and updates the design, output, handoff and branch register after receiving evidence. L0 does not need repeating. If local preflight fails, no source edits. This is an L1 execution prompt installation, **not** L1 source implementation or acceptance.
+
+### C. Checks
+
+Connector: exact master, recent commits and nontruncated tree; native account adapter, launcher read, game-shell state, EpochApp, account component, brand asset and UI package scripts; branch-list check (81 returned, no L1-named branch); exact commit/readback and documentary diff. **Not performed:** local worktree inspection, tests, build, Vite, browser, real account/Save, process cleanup. Previous L0 evidence and safeguards reused as citations; not executed again.
+
+### D. Risks and next
+
+Codex must independently verify no active/conflicting owner work, baseline tests and disposable browser scope. `HOLD_SELECTED_ATOMIC_ACTIVATION`, `HOLD_STAGING_PUBLICATION` and all protected branch/PR dispositions remain. Exact next trigger: Codex's remote isolated L1 source/test commit and local evidence packet; Connector then publishes an independent L1 decision. Suggested commit: `docs(codex): install minimal L1 local-only implementation task`. No processes or tabs started in this pass.
