@@ -2562,3 +2562,22 @@ Fresh fetch and exact master SHA; process-control identity/status, independent P
 ### D. Risks / follow-up notes
 
 Browser-network HTTP access is unresolved. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Next unversioned trigger: actual HTTP response in the controlled browser network context before both ordinary-entry checks. Suggested commit: `docs(v3): record exact-master browser network hold`. Cleanup: task PID stopped and absent, PTY exited; CIM descendant inspection unavailable.
+## 2026-11-11 — Exact-master HTTP response-path isolation
+
+**Source run:** unversioned diagnostic on synchronized `master` `097970f4e5266c2862d09b4cbfe80cded8adcc26`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`. [Focused record](native-v3-exact-master-http-response-path-isolation-2026-11-11.md): `LOOPBACK_TCP_ACCESS_BLOCKED_IN_EXECUTION_ENVIRONMENT`.
+
+### A. Files changed
+
+Focused decision and current output/handoff/branch register only. Temporary minimal-server script removed after use.
+
+### B. Patch summary
+
+Registered Vite and minimal Node servers both owned loopback listeners, but direct no-proxy HTTP and TCP connection attempts timed out before any response. No browser or compiled-preview check, source change, account/Save, deployment or activation.
+
+### C. Tests or checks run
+
+Fresh fetch/exact SHA; registered PID/start/status; port-owner query; `curl --noproxy '*'` with bounded timings for both servers; direct bounded TCP connects; proxy-environment presence checks; exact StopSession/PID cleanup and diff hygiene. FP-002: listener evidence does not accept browser behavior. FP-009: exact master and process identities recorded. Branch/PR review: no disposition or action due.
+
+### D. Risks / follow-up notes
+
+Host loopback policy remains unlocated; no security control was changed. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Next trigger: actual HTTP response in an approved controlled-browser network context. Suggested commit: `docs(v3): isolate exact-master loopback HTTP timeout`. Cleanup: both task PIDs stopped and absent; PTY exited; CIM descendant inspection unavailable.

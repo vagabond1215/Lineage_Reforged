@@ -1317,3 +1317,6 @@ Fetched/fast-forwarded master `f9a26116` and [isolated process survival from HTT
 ## 2026-11-11 exact-master browser-network hold
 
 At fetched `master` `190ebd4c`, the [focused retry](native-v3-exact-master-browser-network-hold-2026-11-11.md) retained a registered Vite process and listener, but controlled-browser HTTP timed out. Both ordinary-entry browser gates remain open. `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER`; other protected/native-v3 refs and PR dispositions remain unchanged. No integration, deletion or PR action was due. Reinspect live refs only when actual exact-master browser HTTP access enables the named consumer review.
+## 2026-11-11 exact-master HTTP response-path isolation
+
+The [focused diagnostic](native-v3-exact-master-http-response-path-isolation-2026-11-11.md) found the same pre-response TCP timeout for registered Vite and minimal Node servers on synchronized `master` `097970f4`. Exact-master browser acceptance remains open. `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect refs when an approved environment yields real loopback HTTP and the named browser consumer can run.
