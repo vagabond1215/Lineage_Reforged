@@ -1332,3 +1332,6 @@ The [focused diagnostic](native-v3-full-access-environment-readiness-2026-11-11.
 ## 2026-11-11 exact-master browser entry reachability
 
 The [focused gate](native-v3-exact-master-entry-browser-gate-2026-11-11.md) reached both ordinary development and compiled-preview `/` pages on current master, but shared login UI did not prove version selection. `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect after version-specific selected browser evidence.
+## 2026-11-11 exact-master entry selection observed
+
+[Version-specific browser evidence](native-v3-exact-master-version-selection-accepted-2026-11-11.md) on source `86ed38bb` closes the local development-v3 and compiled-preview-v2 ordinary-entry checks. Source branch `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER` for later selected/hosted review; protected refs and PRs unchanged. No integration, deletion or PR action due. Reinspect at a separately authorized selected/hosted acceptance decision.

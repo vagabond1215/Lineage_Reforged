@@ -1,5 +1,7 @@
 # Native-v3 Registered Vite Launch And Exact-Master Ordinary-Entry Gate
 
+**Completed 2026-11-11:** [Exact-master version-specific browser evidence](native-v3-exact-master-version-selection-accepted-2026-11-11.md) closes this local entry gate on source `86ed38bb`. Do not rerun it automatically. Await a separately scoped selected/hosted acceptance decision; both activation and publication holds remain. The body below preserves the executed scope.
+
 **Run class:** unversioned exact-master environment and browser gate; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. Read the [Full Access readiness and Vite registration decision](native-v3-full-access-environment-readiness-2026-11-11.md), the [process-lifetime diagnostic](native-v3-exact-master-process-lifetime-diagnostic-2026-11-11.md), and current cleanup safeguards before execution. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain.
 
 Fetch and safely synchronize the authenticated Lineage checkout with current `origin/master`; record exact source identity and preserve unrelated work. Use an approved execution environment with direct and controlled-browser loopback access. Full Access passed both readiness checks on 2026-11-11; the earlier restricted sandbox failed them. The interactive `pwsh -NoExit` PTY already demonstrated cross-command process survival. Do not repeat those investigations without a changed environment or contrary evidence.

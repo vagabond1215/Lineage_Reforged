@@ -1,0 +1,13 @@
+# Exact-master ordinary-entry version selection
+
+Date: 2026-11-11 (America/New_York). Unversioned browser gate on freshly fetched synchronized `master`/`origin/master` `86ed38bbe133104d451917784c27877a10089b7d`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`.
+
+**Decision: `EXACT_MASTER_DEVELOPMENT_V3_AND_COMPILED_PREVIEW_V2_OBSERVED`.** The tracked tree was clean before this documentation pass; unrelated untracked worktrees were preserved. No runtime source changed. The previously repaired local process-control manager registered both servers successfully in retained interactive PowerShell session `native-v3-version-proof-20261111`.
+
+Development: registered Node PID 3236, UTC start `2026-11-11T18:51:19.9634522Z`, strict `127.0.0.1:5234`, ordinary `/`, direct no-proxy HTTP 200. Controlled IAB created an isolated synthetic account and used ordinary character creation, Randomize Character, Finalize and Begin Journey. Voren Velourne entered a rendered game screen explicitly stating `Native v3 candidate under review. Default gameplay activation remains held.`, with Native Character and Native equipment positions. This is visible runtime-selection evidence beyond shared login/creator screens.
+
+Compiled preview: direct exact-source Vite build passed. Registered Node PID 24372, UTC start `2026-11-11T18:52:19.2784580Z`, strict `127.0.0.1:5235`, `--outDir dist/client`, ordinary `/`, direct no-proxy HTTP 200. A separate synthetic account followed ordinary creation through Begin Journey. Draven Vesperthorn entered the distinct v2 InGameShell: calendar/climate top bar, energy/hydration preview, Character/Inventory/World/Activity/Codex/Quests/Chronicle destinations, illustrated Character sheet and Manage Equipment. The browser also showed `Campaign Ready Slot 1 read back from the campaign store.` This confirms compiled ordinary entry selected v2.
+
+These observations close only the two exact-master entry-selection checks. They do not accept full gameplay, Save/restart, hosted/default native-v3 activation or staging publication. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. No real account/Save, hosted Site, Game-version or PR lifecycle changed. Synthetic campaigns remain scoped to disposable browser origins; their storage may persist after tab closure.
+
+Cleanup: both task browser tabs closed. Process-control StopSession reported both exact PIDs stopped, zero registered live processes, and available process-tree inspection. The retained PowerShell session exited. No task server retained. Next: a separately scoped selected/hosted acceptance decision; do not infer authorization to activate or publish.

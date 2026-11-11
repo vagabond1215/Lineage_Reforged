@@ -2657,3 +2657,14 @@ Fresh fetch/fast-forward; exact process registration and loopback HTTP 200 for b
 ### D. Risks / follow-up notes
 
 Need browser-visible version-specific state on isolated origins. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Suggested commit: `docs(v3): record exact-master browser entry reachability`. Cleanup: two registered servers stopped, tabs closed, shell exited; synthetic origin data may persist in browser storage.
+## 2026-11-11 — Exact-master ordinary-entry version selection observed
+
+Source: unversioned gate, synchronized `master` `86ed38bb`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent n/a, development impact `none`, game-version impact `none`. [Focused evidence](native-v3-exact-master-version-selection-accepted-2026-11-11.md).
+
+A. Files changed: focused record and output/handoff/register; no runtime source.
+
+B. Patch summary: ordinary-created synthetic campaigns visibly reached native-v3 development and compiled v2 shells on separate origins. Both entry-selection checks pass; activation/publication holds remain.
+
+C. Checks: fresh fetch/source identity, registered launches, direct no-proxy HTTP 200, exact-source Vite build, controlled-browser creator-to-game observations, scoped cleanup and diff hygiene. FP-002: bounded entry acceptance is not full gameplay/Save/hosted acceptance. FP-009: exact source recorded. Branch/PR action: none due; retained branch review trigger is separate selected/hosted acceptance.
+
+D. Follow-up: synthetic browser-origin data may persist. Next run is a separately scoped selected/hosted acceptance decision, with no automatic activation. Suggested commit: `docs(v3): accept exact-master ordinary-entry browser selection`. Cleanup: two servers stopped, zero registered live, tabs closed, PTY exited.
