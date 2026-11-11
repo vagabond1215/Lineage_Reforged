@@ -102,47 +102,18 @@ After a connector write:
 
 Select the current supported Codex model, execution environment, and reasoning level from a fresh capability/resource preflight. Do not hard-code one model or reasoning tier as the permanent default.
 
-### 5.1 Current Codex Model Snapshot — 2026-09-06
+### 5.1 Current Codex Picker Snapshot (user-confirmed 2026-11-11)
 
-This is dated operational routing guidance, not permanent availability authority. Before every recommendation, inspect the currently visible Codex picker. If the picker differs from this snapshot, the current picker wins and this section should be refreshed.
+This is a dated UI snapshot, not permanent availability authority. Recheck the live Codex picker and approval setting for every new run.
 
-User-confirmed selectable Codex models on 2026-09-06:
+- Visible models: `Default`, `GPT-6.1 Sol`, `GPT-6 Astra`, `GPT-6.1 Terra`, `GPT-6 Sol`, `GPT-6 Luna`, `GPT-5.6 Sol`, `GPT-5.6 Terra`, `GPT-5.6 Luna`. `Default` is an automatic selection, not a fixed model.
+- Reported thinking levels: `Light`, `Medium`, `High`, `Extra High`, `Maximum`, `Ultra`. Use `Medium` for bounded routine work and `High` for hard debugging, process ownership or consequential acceptance. **Do not recommend efforts above High without a concrete task-level need.** Actual level availability may vary by model.
+- Visible approval choices: `Ask for approval`, `Approve for me`, and `Full access`. The latter grants unrestricted internet and computer-file access and is **not** a model or thinking level.
+- On the current native-v3 exact-master acceptance route, the [2026-11-11 Full Access diagnostic](native-v3-full-access-environment-readiness-2026-11-11.md) established direct loopback HTTP 200 and matching controlled-browser output. Vite process **identity registration** is now the unresolved gate. For this bounded Windows process-control investigation and subsequent browser verification, prefer user-confirmed `GPT-6.1 Sol` at `High`; `Extra High`, `Maximum` and `Ultra` are not justified by present evidence.
+- In the specific previously blocked environment, `Full access` is the only **demonstrated** working loopback profile. The user must explicitly select it for a bounded, trusted session and restore their usual setting afterward. Keep all work restricted to the authorized repository and task-owned processes, do not inspect unrelated files or credentials, do not disable host/browser security, and do not expose the test server publicly. Full Access is **not** a cure for the separate Vite registration failure. Less permissive access might work in another context, but has not been demonstrated for this environment.
+- For other tasks, select available Terra-class models with `Medium` for routine work, Sol-class models with `High` for demanding debugging, and Astra only when exceptional architectural complexity benefits from it. Match complexity, tools, permission, and quota rather than generation alone.
 
-- `GPT-6 Astra`
-- `GPT-5.6 Sol`
-- `GPT-5.6 Terra`
-- `GPT-5.6 Luna`
-- `GPT-5.5`
-- `GPT-5.4 Mini`
-
-User-confirmed thinking levels:
-
-- `Light`
-- `Medium`
-- `High`
-- `Extra High`
-- `Ultra`
-
-When these choices remain visible, use this baseline:
-
-| Model | Preferred use | Normal thinking posture |
-| --- | --- | --- |
-| `GPT-6 Astra` | Hardest end-to-end engineering, architecture, ambiguous multi-system debugging, large or risky refactors, difficult acceptance work, and tool-heavy orchestration where maximum capability materially changes confidence. Do not spend Astra on routine work merely because it is strongest. | `High` for bounded difficult work; `Extra High` for architecture or risky multi-owner work; `Ultra` only for the hardest decision-dense or adversarial work after scope has been reduced as far as practical. |
-| `GPT-5.6 Sol` | Primary high-capability default for complex repository work when Astra is unnecessary: substantial implementation, difficult debugging, cross-file reasoning, reviews, and implementation planning. | Usually `High`; use `Medium` for well-bounded work and `Extra High` for unusually difficult or risky work. |
-| `GPT-5.6 Terra` | Balanced everyday Codex default for ordinary bounded implementation, test fixes, moderate refactors, documentation/code coordination, and work where capability, latency, and quota balance matter. | Usually `Medium`; raise to `High` for nontrivial integration or debugging; use `Extra High` only when the task still fits Terra and deeper reasoning is more efficient than switching models. |
-| `GPT-5.6 Luna` | Fast, low-overhead execution for narrow deterministic edits, routine tests, simple bugs, repetitive cleanup, straightforward code generation, and inexpensive subagent work. | Usually `Light` or `Medium`; use `High` only for a tightly scoped task when switching models would add more overhead than value. |
-| `GPT-5.5` | Compatibility/fallback route for complex agentic coding when an existing prompt, evaluation, or task-specific evidence favors it. For new recommendations, normally prefer Astra/Sol for maximum capability or Terra for balanced work. | Usually `High`; `Extra High` for difficult legacy or tuned workflows. |
-| `GPT-5.4 Mini` | Legacy lightweight fallback when it is still visible in the current picker. For new lightweight recommendations normally prefer `GPT-5.6 Luna` unless repository-specific evidence favors 5.4 Mini. | `Light` or `Medium`. |
-
-Thinking-level semantics:
-
-- `Light` — rote, low-risk, deterministic work with little ambiguity.
-- `Medium` — normal implementation, documentation, test repair, and ordinary debugging.
-- `High` — nontrivial multi-file implementation, integration work, difficult failure analysis, or meaningful architectural interaction.
-- `Extra High` — architecture, persistence/migration, subtle concurrency/security/integrity work, difficult acceptance, or broad dependency reasoning.
-- `Ultra` — reserve for the hardest repository-wide/end-to-end reasoning, adversarial acceptance, or exceptionally ambiguous high-consequence work. Reduce package size before choosing Ultra; Ultra is not a substitute for decomposition.
-
-Do not choose a model solely by nominal generation. Match model, thinking level, repository access, validation authority, package size, and quota posture to the actual task. If a model does not expose one of the listed thinking levels in the current Codex UI, use only the levels actually available for that model.
+Keep run-specific model, effort, and approval selections **outside** `docs/dev/current-codex-prompt.md`; the installed prompt should contain durable validation and safety requirements.
 
 ### 5.2 Highest-Cost / Highest-Reasoning Tier
 
@@ -292,6 +263,10 @@ When the user asks for the current prompt without requesting a change:
 2. give the selected mode line in chat;
 3. reproduce the exact prompt body;
 4. do not silently edit or summarize it.
+
+### 8.4 Short Codex Command Requests
+
+For `codex command please`, `Codex command`, or an equivalent short-launch request, inspect the live repository head and installed prompt, then give **one short command** to synchronize and execute `docs/dev/current-codex-prompt.md`. Do not reproduce the full installed prompt unless the user expressly requests it or the file is inaccessible. Separately specify the exact visible model, reasoning effort, approval/access level, required tools, material broad-access risk and any blocked capabilities. The short launch instruction never replaces the durable prompt.
 
 ## 9. Token And Work-Quality Optimization
 
