@@ -1320,3 +1320,6 @@ At fetched `master` `190ebd4c`, the [focused retry](native-v3-exact-master-brows
 ## 2026-11-11 exact-master HTTP response-path isolation
 
 The [focused diagnostic](native-v3-exact-master-http-response-path-isolation-2026-11-11.md) found the same pre-response TCP timeout for registered Vite and minimal Node servers on synchronized `master` `097970f4`. Exact-master browser acceptance remains open. `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect refs when an approved environment yields real loopback HTTP and the named browser consumer can run.
+## 2026-11-11 installed environment-readiness route
+
+The [current prompt](current-codex-prompt.md) now requires minimal-server direct and controlled-browser HTTP readiness before the exact-master ordinary-entry browser consumer. `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect when an approved environment passes the readiness gate.

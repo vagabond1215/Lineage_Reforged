@@ -2581,3 +2581,22 @@ Fresh fetch/exact SHA; registered PID/start/status; port-owner query; `curl --no
 ### D. Risks / follow-up notes
 
 Host loopback policy remains unlocated; no security control was changed. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Next trigger: actual HTTP response in an approved controlled-browser network context. Suggested commit: `docs(v3): isolate exact-master loopback HTTP timeout`. Cleanup: both task PIDs stopped and absent; PTY exited; CIM descendant inspection unavailable.
+## 2026-11-11 — Installed environment-readiness gate
+
+**Source run:** unversioned documentation routing on synchronized `master` `8a0d0e6c89b4967316e3d04f6a558fe613c8c52b`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`.
+
+### A. Files changed
+
+Current prompt, output, handoff and branch register.
+
+### B. Patch summary
+
+Replaced the stale process-lifetime-first retry with an environment-readiness gate: minimal registered loopback server must return direct HTTP and controlled-browser evidence before Vite, development-v3 and compiled-preview-v2 checks. Preserved ownership and cleanup safeguards. No runtime, account, Save, Site, Game-version or PR action.
+
+### C. Tests or checks run
+
+Fresh fetch/exact head, current diagnostic and routing authority review, prompt-link and diff hygiene. No server, browser, build or source test was run. FP-002: listener/source facts are not browser acceptance. FP-009: exact source and later gate remain distinct. Branch/PR lifecycle: no disposition change or action due.
+
+### D. Risks / follow-up notes
+
+Current execution context previously timed out before TCP connection to both Vite and minimal Node; next run requires an approved context with actual direct and browser HTTP responses. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Suggested commit: `docs(v3): install environment-readiness browser gate`. Cleanup: no persistent resource started.
