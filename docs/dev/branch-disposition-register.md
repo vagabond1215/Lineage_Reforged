@@ -1311,3 +1311,6 @@ With separate explicit user authorization, candidate `codex/native-v3-local-ordi
 ## 2026-11-11 exact-master ordinary-entry browser blocker
 
 `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`. The [exact-master retry](native-v3-exact-master-ordinary-entry-verification-2026-11-11.md) was blocked before browser acceptance by unreachable loopback Vite; source/build checks do not consume the browser gate. Original PRs #6–#73 and #5 closed/unmerged retain prior dispositions. No integration, PR action or branch deletion was due. Review trigger: reachable task-owned loopback server, then exact-master development and compiled-preview ordinary-entry browser observations.
+## 2026-11-11 exact-master process-lifetime diagnostic
+
+Fetched/fast-forwarded master `f9a26116` and [isolated process survival from HTTP access](native-v3-exact-master-process-lifetime-diagnostic-2026-11-11.md). The browser gate is still open. `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Review retained refs only after the exact-master HTTP and ordinary-entry browser gates are resolved.

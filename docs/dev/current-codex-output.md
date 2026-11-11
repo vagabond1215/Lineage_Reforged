@@ -2524,3 +2524,22 @@ Prior same-head focused UI entry/recovery tests 6/6, Node UI typecheck and direc
 ### D. Risks / follow-up notes
 
 Source rollback cannot make new v3 Saves playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Source branch `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`; original PRs #6–#73 and closed/unmerged #5 retain prior dispositions. No branch or PR action was due. Next unversioned run: retry two exact-master browser entries only after verified loopback accessibility. Suggested commit: `docs(v3): record exact-master loopback verification blocker`. Cleanup: task-owned server exited; `StopSession` found zero live registered processes; CIM descendant inspection unavailable.
+## 2026-11-11 — Exact-master process-lifetime diagnostic
+
+**Source run:** unversioned diagnostic on fetched and fast-forwarded `master` `f9a26116369a857e8391471f5d0f0f33252f8ff8`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`. [Focused record](native-v3-exact-master-process-lifetime-diagnostic-2026-11-11.md).
+
+### A. Files changed
+
+Focused process-lifetime record, this output, handoff and branch register. No production, manager, dependency or generated source changed.
+
+### B. Patch summary
+
+An interactive PTY retained a registered exact-master Vite process across commands, but HTTP remained inaccessible; both browser gates remain open. No browser, account, Save, activation, deployment or Game-version action occurred.
+
+### C. Tests or checks run
+
+Fetch/fast-forward and exact SHA; Windows job membership; registered PID/start-time and process survival across a command boundary; port-owner inspection; sandboxed and escalated HTTP probes; StopSession and PID/status readback. No test suite or build run. FP-002: listener/source evidence is not browser acceptance. FP-009: exact master and process identities recorded. Branch/PR lifecycle: no action due; retained refs remain held.
+
+### D. Risks / follow-up notes
+
+HTTP denial/timeout is unresolved. CIM descendant inspection was unavailable. Next unversioned run: prove HTTP in the retained interactive context before either browser entry. Suggested commit: `docs(v3): record exact-master process-lifetime diagnostic`. Cleanup: registered server stopped and verified absent; interactive shell exited.
