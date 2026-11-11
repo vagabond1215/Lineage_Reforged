@@ -1329,3 +1329,6 @@ The [current-master gate](native-v3-environment-readiness-gate-2026-11-11.md) fo
 ## 2026-11-11 Full Access readiness and Vite registration hold
 
 The [focused diagnostic](native-v3-full-access-environment-readiness-2026-11-11.md) passed direct and controlled-browser loopback readiness on `87901fd1`, but process-control Vite registration blocked both exact-master entry checks. `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect when a verified registered Vite launch enables the named browser consumer.
+## 2026-11-11 exact-master browser entry reachability
+
+The [focused gate](native-v3-exact-master-entry-browser-gate-2026-11-11.md) reached both ordinary development and compiled-preview `/` pages on current master, but shared login UI did not prove version selection. `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect after version-specific selected browser evidence.

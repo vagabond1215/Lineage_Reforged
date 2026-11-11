@@ -2638,3 +2638,22 @@ Fresh fetch/fast-forward and SHA; exact minimal-server registration/port owner; 
 ### D. Risks / follow-up notes
 
 Local process-control Vite launch identity remains unresolved. Next unversioned trigger: scoped registration repair or approved registered launch method, then both exact-master browser entries. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Suggested commit: `docs(v3): record Full Access readiness and Vite registration hold`. Cleanup: three exact task PIDs stopped/absent; task tab closed; PTY exited; temporary script removed. No local permission setting changed.
+## 2026-11-11 — Registered exact-master browser entry reachability
+
+**Source run:** unversioned gate on synchronized `master` `4537e564b539b8fc15d50904f05f4334eb592669`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-exact-master-entry-browser-gate-2026-11-11.md).
+
+### A. Files changed
+
+Focused record and current output/handoff/branch register; ignored local process-control timing retry. No tracked runtime source.
+
+### B. Patch summary
+
+Registered Vite development and preview servers and opened both ordinary `/` entries in controlled IAB. Both rendered shared Account Login; synthetic development account reached Character creation. No browser-visible version discriminator was observed, so native-v3/v2 selection remains unaccepted.
+
+### C. Tests or checks run
+
+Fresh fetch/fast-forward; exact process registration and loopback HTTP 200 for both servers; direct Vite build pass; controlled IAB entry observations; diff hygiene and scoped cleanup. FP-002: source route and shared login do not pass selected browser acceptance. FP-009: exact source and process identities recorded. No branch/PR action due.
+
+### D. Risks / follow-up notes
+
+Need browser-visible version-specific state on isolated origins. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Suggested commit: `docs(v3): record exact-master browser entry reachability`. Cleanup: two registered servers stopped, tabs closed, shell exited; synthetic origin data may persist in browser storage.

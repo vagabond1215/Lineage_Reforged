@@ -1,0 +1,13 @@
+# Native-v3 exact-master entry browser gate
+
+Date: 2026-11-11 (America/New_York). Unversioned verification on fetched, fast-forwarded `master`/`origin/master` `4537e564b539b8fc15d50904f05f4334eb592669`. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`.
+
+**Decision: `REGISTERED_SERVERS_AND_BROWSER_ENTRIES_REACHABLE; NATIVE_V3_AND_V2_SELECTION_NOT_VISIBLY_PROVEN`.** The tracked tree was clean before the documentation record; unrelated untracked worktrees were preserved. A narrow timing retry in the ignored local `.codex-local/process-control.ps1` manager resolved the observed launch-identity race without removing its protection: it waits up to one second for process path/start time before registration. No tracked gameplay source or dependency changed.
+
+Vite development was registered as PID 25536, start `2026-11-11T18:42:21.1848202Z`, executable `C:\Program Files\nodejs\node.exe`, strict `127.0.0.1:5230`, and remained live across commands. Direct no-proxy HTTP returned `200 OK`, HTML, 566 bytes; the listener belonged to PID 25536. Controlled IAB ordinary `/` displayed the Account Login page. A synthetic local account was created on this disposable origin, and the browser reached the Character creation screen. No character/campaign or Save was created.
+
+Direct exact-source Vite build passed, including client and server outputs. Compiled preview was separately registered as PID 22664 under the same task session on strict `127.0.0.1:5231` with `--outDir dist/client`. Direct HTTP returned 200. Controlled IAB ordinary `/` displayed the Account Login page. The account screens are shared and expose no visible version discriminator, so these browser observations do **not** independently prove native-v3 selection in development or v2 selection in compiled preview. The source condition in `App.tsx`/`EpochApp.tsx` supports the expected routing but is not substituted for browser acceptance. Both selection gates remain open.
+
+`HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. No real account/Save, hosted Site, Game-version, PR or branch action occurred. The exact next check needs a browser-visible native-specific and v2-specific state, using isolated synthetic origins and current master; no source-only acceptance. The local manager timing fix remains ignored/untracked and should receive separate review if it is to become durable tracked authority.
+
+Cleanup: both task-created IAB tabs closed. Process-control `StopSession` stopped PIDs 25536 and 22664 after exact identity checks, then reported zero live registered processes and available process-tree inspection. The interactive shell exited. No task-owned server remains.
