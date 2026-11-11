@@ -1,5 +1,7 @@
 # Welcome, World Library, Character Entry, and World Loading: Consolidated Product and Owner Plan
 
+> **2026-11-11 implementation sequencing:** Use the [gated implementation process map](first-world-launcher-implementation-process-map-2026-11-11.md) for all stage entry/exit, stop, evidence, cleanup and handoff rules. The first narrowly scoped executable plan is [L1 Branded Welcome / Account Gate](first-world-launcher-l1-welcome-account-entry-implementation-plan-2026-11-11.md), **held until the currently installed exact-master Vite/browser gate passes**. This document is a product/owner target, not permission to bypass native-v3 activation or expose a fake World Library.
+
 Date: 2026-11-11  
 Status: **owner-directed product flow; detailed proposed contracts; documentation only; implementation NOT authorized by this file**  
 Scope: First authored World, native-v3 launcher integration, worlds/characters, creator, saves, starting locality.  
