@@ -1314,3 +1314,6 @@ With separate explicit user authorization, candidate `codex/native-v3-local-ordi
 ## 2026-11-11 exact-master process-lifetime diagnostic
 
 Fetched/fast-forwarded master `f9a26116` and [isolated process survival from HTTP access](native-v3-exact-master-process-lifetime-diagnostic-2026-11-11.md). The browser gate is still open. `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Review retained refs only after the exact-master HTTP and ordinary-entry browser gates are resolved.
+## 2026-11-11 exact-master browser-network hold
+
+At fetched `master` `190ebd4c`, the [focused retry](native-v3-exact-master-browser-network-hold-2026-11-11.md) retained a registered Vite process and listener, but controlled-browser HTTP timed out. Both ordinary-entry browser gates remain open. `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER`; other protected/native-v3 refs and PR dispositions remain unchanged. No integration, deletion or PR action was due. Reinspect live refs only when actual exact-master browser HTTP access enables the named consumer review.

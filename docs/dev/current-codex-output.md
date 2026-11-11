@@ -2543,3 +2543,22 @@ Fetch/fast-forward and exact SHA; Windows job membership; registered PID/start-t
 ### D. Risks / follow-up notes
 
 HTTP denial/timeout is unresolved. CIM descendant inspection was unavailable. Next unversioned run: prove HTTP in the retained interactive context before either browser entry. Suggested commit: `docs(v3): record exact-master process-lifetime diagnostic`. Cleanup: registered server stopped and verified absent; interactive shell exited.
+## 2026-11-11 — Exact-master browser network hold
+
+**Source run:** unversioned exact-master retry on synchronized `master` `190ebd4cc57684f163185eb3de675a0d8302b7ac`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-exact-master-browser-network-hold-2026-11-11.md): `EXACT_MASTER_BROWSER_VERIFICATION_BLOCKED_BY_HTTP_NETWORK_CONTEXT`.
+
+### A. Files changed
+
+Focused decision and current output/handoff/branch register only.
+
+### B. Patch summary
+
+Registered Vite PID 3520 survived the browser attempt and owned the strict port-5213 listener. Controlled IAB ordinary `/` timed out before an HTTP response; development-v3 selection was not observed. Compiled-preview build/server/browser were not attempted. No production, account, Save, Site, Game-version, PR or branch action.
+
+### C. Tests or checks run
+
+Fresh fetch and exact master SHA; process-control identity/status, independent PID/start-time/listener ownership, IAB HTTP attempt (`net::ERR_CONNECTION_TIMED_OUT`), sandboxed HTTP permission denial, elevated six-second HTTP timeout, scoped StopSession and PID/status readback; diff hygiene. No source test or build. FP-002: listener and source evidence do not pass browser acceptance. FP-009: exact master and task process identities separated. Branch/PR lifecycle: no action due; retained dispositions unchanged.
+
+### D. Risks / follow-up notes
+
+Browser-network HTTP access is unresolved. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Next unversioned trigger: actual HTTP response in the controlled browser network context before both ordinary-entry checks. Suggested commit: `docs(v3): record exact-master browser network hold`. Cleanup: task PID stopped and absent, PTY exited; CIM descendant inspection unavailable.
