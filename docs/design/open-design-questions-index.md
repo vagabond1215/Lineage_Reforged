@@ -1,5 +1,8 @@
 # Open Design Questions Index
 
+> **2026-11-11 launcher/world/character current-focus override:** The controlling current product-navigation and first-world plan is [Welcome, World Library, Character Entry and Loading](welcome-world-library-character-entry-and-loading-plan-2026-11-11.md), with [document-disposition audit](launcher-world-character-design-intent-audit-2026-11-11.md). Owner selection: separate branded Welcome/Login before slots; valid persisted session shows named Welcome with Continue/Logout; Continue opens distinct World Library; selected/created durable **authored First World** precedes world-scoped character selection/creation; creator has no Review page and Surprise Me commits a legal entire choice; World Entry must spawn at a real reproducible site with actual local actions. Defer player world editing (not planned), extra geographic maps, generation seeds/templates, era/time-skip transformations, Living World concurrency and Prestige prices behind **WIP / Coming Soon**. The older Soundings-specific “Current Pipeline Context”, 2026-08-20 metrics and historical question rows below are not the current implementation route. The only active executable handoff is [current Codex prompt](../dev/current-codex-prompt.md), whose activation/publication holds this documentation does not reopen.
+
+
 Source route: ChatGPT via GitHub Connector  
 Date: 2026-08-20
 Last refreshed: 2026-11-09 (focused owner-direction reconciliation; older tabular audit and counts retained historically)
