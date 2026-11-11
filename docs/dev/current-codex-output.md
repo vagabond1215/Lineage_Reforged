@@ -2600,3 +2600,22 @@ Fresh fetch/exact head, current diagnostic and routing authority review, prompt-
 ### D. Risks / follow-up notes
 
 Current execution context previously timed out before TCP connection to both Vite and minimal Node; next run requires an approved context with actual direct and browser HTTP responses. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Suggested commit: `docs(v3): install environment-readiness browser gate`. Cleanup: no persistent resource started.
+## 2026-11-11 — Environment-readiness gate held
+
+**Source run:** unversioned gate on freshly fetched `master`/`origin/master` `967a4ac8693f8b98d33d4496cff0b66fcb13f742`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-environment-readiness-gate-2026-11-11.md): `ENVIRONMENT_READINESS_BLOCKED`.
+
+### A. Files changed
+
+Focused decision and current output/handoff/branch register only.
+
+### B. Patch summary
+
+The same sandbox/browser environment remains available, with no cloud execution environment. The prior registered minimal server's direct TCP timeout is still the controlling failed prerequisite; the installed prompt forbids an identical retry. No process, browser, build, account, Save, Site or activation action.
+
+### C. Tests or checks run
+
+Fresh fetch and exact head/status; installed prompt, prior network diagnostic and cleanup safeguard review; available execution-environment inventory; diff hygiene. FP-002: no browser acceptance inferred from prior listeners. FP-009: current head distinguished from prior diagnostic head. Branch/PR lifecycle: no action due or disposition change.
+
+### D. Risks / follow-up notes
+
+`HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Next trigger: approved environment with direct and controlled-browser HTTP responses from one registered minimal loopback server. Suggested commit: `docs(v3): record environment-readiness hold`. Cleanup: no task-owned resources started.
