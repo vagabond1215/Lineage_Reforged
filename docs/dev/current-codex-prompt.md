@@ -1,3 +1,38 @@
+# ACTIVE: L1 account/session/Save integrity proof and exact-source browser witness
+
+**Installed 2026-11-11 by GitHub Connector (coordination only; NOT executed).** Scope is the previously authorized **narrow L1 validation**, not another Welcome implementation. Read [bounded L1 integrity validation](first-world-launcher-l1-account-session-save-integrity-validation-2026-11-11.md), [independent source review](first-world-launcher-l1-isolated-branch-source-review-2026-11-11.md), [L1-A01–A15 acceptance plan](../design/first-world-launcher-l1-welcome-account-entry-implementation-plan-2026-11-11.md), and [manual browser observations](first-world-launcher-l1-manual-poc-observations-2026-11-11.md).
+
+**Pin candidate:** `codex/l1-branded-welcome-account-entry-2026-11-11` at `14aa6380a3a6bb4aae35e0712169c302758d97d5`, based on `675ec20843a00cb6d80a6326784ac89263d25bef`. GitHub Connector confirmed the candidate branch remained at that SHA and current master advanced only through documentation as of this installation. **Do not fast-forward, rebase, cherry-pick, merge, repoint or rewrite the candidate merely because master changed.** Recheck exact refs and stop if conflicting live ownership or changed source is detected.
+
+## V0: local preflight and noninterference (no edits before passing)
+
+1. Read local checkout/worktrees, registered processes/browser tabs, and source paths. Verify the candidate SHA, target entry route and feature-gate semantics. Work in a **separate task-owned checkout/worktree**, using synthetic browser data on a **different origin/port**. Keep the user's `127.0.0.1:5240` Vite server, signed-in browser tab, profiles and Saves completely untouched. Never clear origin-wide storage on a shared/user-owned origin; never terminate an unknown process.
+2. Prove baseline direct HTTP and exact-source browser identity for the task-owned server before interpreting any UI as this commit. Do not repeat L0 version-selection acceptance or substitute a screenshot of an unverified server.
+3. Record baseline for `node --test tests/unit/launcher-welcome-routing.test.mjs tests/unit/launcher-auth.test.mjs`, the relevant **native epoch**, not legacy-only, account/launcher/browser QA harness, `npm --prefix ./apps/rpg-ui run typecheck:node`, UI broad typecheck with unchanged-baseline comparison, and direct Vite build. Identify actual harness entry/host URL before running browser-oriented `.ts` QA.
+4. If the environment, baseline, fixture isolation, exact SHA or server registration cannot be proven, **STOP at `L1_INTEGRITY_ENTRY_HELD`** with facts; do not change account/Save/runtime source to compensate.
+
+## V1: focused synthetic evidence; preserve data
+
+Use exactly task-scoped new accounts with redacted identifiers. Snapshot complete retained owner account revision and lifecycle generation, per-account profile/credential fingerprints (never log the password or verifier), slot status/head, immutable artifacts, pending receipts and archive/Save digests **before and after** navigation. Compare against two separate synthetic accounts. Distinguish legitimate recovery settlement writes from unauthorized new writes.
+
+- Signed-out/create, existing picker, valid/invalid credentials, mismatched creation, persistent TRUE and FALSE, restart semantics, hint write/readback, logout hint removal readback and stable account revision.
+- Same-account generation invalidation and cross-tab **persistent hint removal/replacement** after Welcome renders; check whether Continue is blocked. In the current source, `validateSession()` checks lifecycle generation but **does not reread the persisted hint**; this is a source-derived A07 risk requiring a reproducible browser/owner witness. Nonpersistent same-tab sessions must remain usable without a stored hint.
+- Two-account isolation including retained slot and artifact identities; malformed/stale hint, denied IndexedDB, incompatible/corrupt slot, accepted pending-consumer recovery, and unavailable store fail-closed. Do not mistake blocked inventory for an empty World Library.
+- Feature-ON Welcome → Continue → truthful unavailable Worlds → Back → Logout with no new campaign entry, publication or clock change. Independently prove feature-OFF **actual** MAIN_MENU → native-v3 current-format Save → reload/readback on a clean synthetic fixture, not merely the menu's appearance.
+- Keyboard/tab/Enter/error association, disabled/busy controls and viewports 375/768/1280 px, prioritizing operable essential controls over cosmetic logo spacing.
+
+## V2: result contract and conditional repair stop
+
+Return every `L1-A01`–`L1-A15` with `PASS`, `FAIL` or `NOT_RUN`, each tied to executed command/browser step, SHA, account/Save digest comparison, and the exact observed result. Include baseline typecheck deltas, cleanup receipts for task-owned fixtures only, and all holds. Do not claim an entire row from source, static tests, or screenshots alone.
+
+**If a data-integrity failure is reproduced:** record the failing red test and exact owner/caller boundary, then **STOP for a separately scoped minimal repair approval**. Do not silently modify `CleanEpochAccountAdapter`, account/IndexedDB stores, Save schemas, current candidate history or feature selection. Any approved repair must be isolated, prove no regression of `stayLoggedIn=false` and normal Save route, and receive independent Connector review. No UI polish detour.
+
+**Exit:** return `L1_INTEGRITY_EVIDENCE_READY_FOR_CONNECTOR_REVIEW` only if all applicable named rows are supported; otherwise `L1_CODE_READY_BROWSER_HELD` with exact pending/failing rows. Do not self-declare `L1_ACCEPTED_ISOLATED`; no merge, PR action, branch deletion, deployment, Site change, `GAME_VERSION` change, selected/native-v3 default activation, World registry or L2 runtime implementation. Preserve `HOLD_L1_INTEGRATION_AND_FULL_ACCEPTANCE`, `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION`.
+
+---
+
+# Historical completed implementation prompt (preserved verbatim)
+
 # L1 Branded Welcome / Account Entry: Codex Local Implementation Only
 
 **Implementation published 2026-11-11:** The local source/test implementation was completed and pushed as remote `codex/l1-branded-welcome-account-entry-2026-11-11` `14aa6380a3a6bb4aae35e0712169c302758d97d5`, independently [source-reviewed by GitHub Connector](first-world-launcher-l1-isolated-branch-source-review-2026-11-11.md). **Do not automatically rerun the implementation, replace it, merge the branch, or claim L1 acceptance.** Current decision: `L1_CODE_READY_BROWSER_HELD; HOLD_L1_INTEGRATION_AND_FULL_ACCEPTANCE`. Await a separately authorized **narrow local account/session/Save negative-integrity and exact-source browser evidence task**, preserving the user-owned Vite server and unrelated work. This completed prompt body remains below as historical execution authority. Both activation and publication holds remain.
