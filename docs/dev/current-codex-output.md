@@ -2725,3 +2725,19 @@ GitHub checked remote branch ref equals exact candidate SHA, sole parent equals 
 ### D. Risks / next gate
 
 Need exact-branch negative-integrity evidence for retained session and hint removal readback, stay-logged-in false after restart, credential failure account revisions, two-account metadata and Save/slot isolation, stale/pending/corrupt/blocked storage, and feature-off **functional Save journey**. Complete applicable L1-A01…A15 outcomes and browser/keyboard access. Decorative logo overlap deferred unless it blocks functional access. Candidate branch retained unmerged, no PR/branch action. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` unchanged. Next Codex slice should be narrow local negative/test verification on existing candidate, not broad implementation or doc coordination. User-owned Vite server remains running outside agent cleanup. Suggested Connector commit: `docs(launcher): record held L1 candidate review`.
+
+## 2026-11-11 — L1 integrity QA execution gate installed
+
+**Source and scope:** GitHub Connector reverified isolated L1 Welcome candidate `14aa6380a3a6bb4aae35e0712169c302758d97d5` unchanged; `master` source difference since candidate base `675ec208` remained documentation-only. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; development milestone impact `none`, Game-version impact `none`. [Existing source/integrity review](first-world-launcher-l1-account-session-save-integrity-validation-2026-11-11.md).
+
+### A. Scope executed by Connector
+
+Installed the next **narrow and unexecuted** Codex work order at [`current-codex-prompt.md`](current-codex-prompt.md) with exact commit, separate task-owned origin/worktree, before/after synthetic two-account account/session/Save fingerprints, persistent/nonpersistent and cross-tab invalidation, pending/incompatible/blocked store behavior, actual feature-OFF Save/restart, and all L1-A01–A15 evidence requirements. Preserved the completed original implementation prompt as history. Synchronized the focused validation record and branch/handoff dispositions; no runtime/UI test or candidate patch.
+
+### B. Checks and limits
+
+GitHub commit/file/compare reads and approved documentation write/readback only. Connector did **not** execute native-epoch browser QA, Node tests, typecheck, Vite, Save reload, session manipulation or storage comparison. Existing A01–A15 statuses remain 0 accepted, 10 partial, 5 not run. The source-derived `validateSession` persistent-hint revalidation gap requires an actual isolated negative witness before any repair.
+
+### C. Decision
+
+`L1_CODE_READY_BROWSER_HELD; HOLD_L1_INTEGRATION_AND_FULL_ACCEPTANCE`. Keep L1 candidate branch, user-owned `127.0.0.1:5240` server, other account/Save data, protected branches and PR dispositions untouched. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` persist; no L2 dependent implementation, merger, deployment or Game-version change. Next action is explicitly invoked **local** Codex evidence execution, not a repeated Welcome UI implementation.
