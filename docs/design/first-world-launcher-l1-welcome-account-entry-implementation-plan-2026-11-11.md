@@ -1,11 +1,13 @@
 # L1 Implementation Plan: Branded Welcome / Account Gate Before World and Save Selection
 
 Date: 2026-11-11  
-Status: **local L1 proof of concept implemented but uncommitted/unpublished; `L1_CODE_READY_BROWSER_HELD`, partial manual functional smoke only; L0 local-entry baseline accepted; formal L1 acceptance still pending**  
+Status: **L1 isolated functional proof of concept committed and published at `14aa6380`; independent source review complete; `L1_CODE_READY_BROWSER_HELD`, partial user-performed browser smoke; backend/Save integrity and formal L1 acceptance still pending**  
 Parent process: [First World Launcher Implementation Process Map](first-world-launcher-implementation-process-map-2026-11-11.md)  
 Product target: [Welcome, World Library, Character Entry and Loading](welcome-world-library-character-entry-and-loading-plan-2026-11-11.md)  
 Successor: **L2 World identity / persistence owner contract**, not general UI rework.  
 External baseline: [L0 accepted local-entry handoff](../dev/first-world-launcher-l0-local-entry-handoff-2026-11-11.md). Installed separate [L1 Codex local-only task](../dev/current-codex-prompt.md), backed by [connector source preflight](../dev/first-world-launcher-l1-connector-source-preflight-2026-11-11.md); L0 version-selection task is complete and must not be rerun.
+
+> **2026-11-11 source handoff:** [Remote L1 branch and independent five-file Connector source review](../dev/first-world-launcher-l1-isolated-branch-source-review-2026-11-11.md). The branch is **unmerged** and its three new reducer test cases are not the full L1-A01…A15 integrity matrix. Prioritize a bounded native-v3 session/owner/Save negative-test pass and remaining working legacy Save/browser proof. The user's Vite terminal remains user-owned. Decorative polish is still deferred; do not lower fail-closed account/Save requirements or infer `L1_ACCEPTED_ISOLATED`.
 
 > **2026-11-11 owner POC priority:** [Manual browser observations and open checks](../dev/first-world-launcher-l1-manual-poc-observations-2026-11-11.md) document that the existing launcher, signed-out/authenticated Welcome and Continue → unavailable Worlds → Back/Logout render/work in the user's direct Brave tests. The current L1 branch is local and **not yet committed or pushed**. Do **not** spend a blocking implementation pass on decorative logo overlap, perfect spacing or polished presentation while this test-only feature remains off by default. Such cosmetic imperfections are tracked for later design refinement. **Do** preserve genuinely legible and operable login/Continue/Back/Logout, accessible keyboard/form error behavior, verified session identity, fail-closed storage errors and zero unwanted account/Save mutations. No screenshots alone close the L1-A01…A15 acceptance matrix, which still requires the applicable functional/negative proof and exact-source branch review.
 
