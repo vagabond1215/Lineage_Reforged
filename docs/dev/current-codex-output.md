@@ -2505,3 +2505,22 @@ Fresh fetch/prune and live remote ref readback; no-commit merge tree `f01dafaab7
 ### D. Risks / follow-up notes
 
 This source merge does not accept hosted/default v3, authenticated selected-client Save or full native gameplay. Rollback of the source switch cannot make a new v3 Save playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Original PRs #6–#73 remain retained; #5 closed/unmerged; no PR action. `codex/native-v3-local-ordinary-entry-2026-11-10` becomes `HOLD_NAMED_CONSUMER` for exact-master post-merge and later selected/hosted review; no branch deletion. Suggested commit: `merge(v3): integrate local ordinary-entry source only`. Next recommended unversioned run: exact-master local ordinary-entry post-merge verification; no Game-version decision. Cleanup: task-created integration worktree and dependency junction must be removed after remote readback; no persistent process started.
+## 2026-11-11 — Exact-master ordinary-entry browser verification blocked
+
+**Source run:** unversioned post-merge verification on `master`/`origin/master` `8a7f348bda94167fc6d9de50bef7f8b3bd120236`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`. [Focused decision](native-v3-exact-master-ordinary-entry-verification-2026-11-11.md): `EXACT_MASTER_BROWSER_VERIFICATION_BLOCKED_BY_LOOPBACK_ENVIRONMENT`.
+
+### A. Files changed
+
+Focused verification decision and current coordination documents only. No runtime, test, account/Save, Site or Game-version edit.
+
+### B. Patch summary
+
+Recorded that exact-master source/test/build checks pass but the requested browser acceptance could not start because the registered Vite server never became reachable on loopback. Retained both activation and staging holds.
+
+### C. Tests or checks run
+
+Prior same-head focused UI entry/recovery tests 6/6, Node UI typecheck and direct Vite production build (287 modules) passed. Current retry: process registration and live status; sandboxed HTTP GET socket permission denial; escalated GET connection refused; process exited; no port 5201 listener reported. No development or compiled-preview browser claim. FP-001/002/008/009: caller evidence separated from browser acceptance; exact master and retained branch/PR gate preserved.
+
+### D. Risks / follow-up notes
+
+Source rollback cannot make new v3 Saves playable in v2. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Source branch `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`; original PRs #6–#73 and closed/unmerged #5 retain prior dispositions. No branch or PR action was due. Next unversioned run: retry two exact-master browser entries only after verified loopback accessibility. Suggested commit: `docs(v3): record exact-master loopback verification blocker`. Cleanup: task-owned server exited; `StopSession` found zero live registered processes; CIM descendant inspection unavailable.
