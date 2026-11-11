@@ -1,0 +1,36 @@
+# L1 isolated Welcome branch: independent Connector source review
+
+Date: 2026-11-11 (America/New_York). Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. **Review base:** remote `master` `675ec20843a00cb6d80a6326784ac89263d25bef`. **Candidate:** remote `codex/l1-branded-welcome-account-entry-2026-11-11` `14aa6380a3a6bb4aae35e0712169c302758d97d5`, whose sole parent is that master SHA. GitHub branch-list and exact commit readback agree; candidate is exactly **one commit ahead** of master. The source review was Connector-only: no local source execution, browser automation, user data, or servers were accessed.
+
+**Decision: `L1_BRANCH_SOURCE_REVIEWED; L1_CODE_READY_BROWSER_HELD; L1_ACCEPTANCE_NOT_YET_PROVEN`.** The branch is suitable as a **retained, isolated functional proof of concept** for targeted integrity and browser QA. It is **not** accepted for master integration, hosted/default activation, Save migration, World Library cutover, or subsequent dependent implementation yet. Do not rewrite the prototype for cosmetic logo-spacing polish. The separately [recorded manual POC observations](first-world-launcher-l1-manual-poc-observations-2026-11-11.md) are positive but incomplete.
+
+## Exact source and test diff
+
+The one commit `feat(launcher): add gated L1 welcome account entry` changes exactly five files: `apps/rpg-ui/src/EpochApp.tsx`, `apps/rpg-ui/src/game-shell/components/LocalAccountAccessScreen.tsx`, new `apps/rpg-ui/src/game-shell/components/WelcomeScreen.tsx`, `apps/rpg-ui/src/game-shell/state.ts`, and new `tests/unit/launcher-welcome-routing.test.mjs`. No account adapter, IndexedDB/account store, Save/campaign schema, dependency, hosted route, `GAME_VERSION`, PR, or master source change appears in this diff.
+
+- `EpochApp.tsx` enables the L1 UI only when `nativeCandidate`, Vite `DEV`, loopback hostname (`127.0.0.1` or `localhost`) and `?welcomeL1=1` all match. Normal and compiled/default routes therefore stay unselected by this **source condition**; exact published browser acceptance is a separate gate. Bootstrap, sign-in and registration reuse existing `CleanEpochAccountAdapter` and revision-aware launcher inventory. Continue revalidates the owner session, account ID and profile against a fresh inventory read before transitioning to a temporary unavailable Worlds screen. It contains no new `loadLatest`, `enter`, `prepare`, world-clock, or Save-publication call in that transition.
+- `state.ts` adds typed ephemeral `WELCOME_AUTHENTICATED` and `WORLD_LIBRARY_GATE` states. The reducer accepts Open Worlds only from authenticated Welcome and Back only from the Worlds gate; existing menu, character, load and in-game cases are retained. The reducer alone does **not** independently validate credentials; this is performed in the application's session owner.
+- `LocalAccountAccessScreen.tsx` adds a presentation flag, reused brand logo and Welcome heading while retaining the existing account picker, password/form callbacks, import-backup and account-deletion wiring. The new `WelcomeScreen.tsx` renders the verified-profile display name, Continue/Logout and truthful `World Library not ready` with Back.
+- The new routing test file contains **three `node:test` cases**: illegal signed-out/legacy Worlds transitions, authenticated Welcome → Worlds → Back, and signed-out presentation after `SHOW_ACCOUNT_ACCESS`. Codex separately reported **15/15 focused tests passing** on the pushed implementation. The 15/15 count is a **reported local suite result**, not fifteen newly added tests or a full L1-A01…A15 acceptance run. Node typecheck was reported passing; broad UI typecheck has preexisting diagnostics; direct Vite build and direct manual HTTP 200 were reported passing. Connector did not rerun or compare those diagnostics.
+
+## User-visible evidence versus integrity acceptance
+
+User-provided direct Brave screenshots/manual observations demonstrate: normal feature-OFF launcher renders, feature-ON signed-out and authenticated Welcome displays an appropriate account name, Continue reaches the unavailable Worlds boundary, Back works, Logout works, persistent login works, invalid passwords visibly block login and account switching shows the expected visible identity. This is **manual functional smoke**, not an automatic acceptance of the entire L1-A01…A15 matrix.
+
+The following remain **unverified** and should be prioritized over cosmetic polish:
+
+1. Retained-session hint and logout-removal **storage readback**, stay-signed-in **OFF** behavior after full restart, rejected-credential account revision/metadata immutability, and invalidated/stale hint fail-closed behavior.
+2. Actual two-account **IndexedDB metadata, Save/slot, campaign and selected-owner isolation**, without relying on account-name display alone.
+3. Pending/corrupt/incompatible Save and unavailable IndexedDB error paths; no false empty Worlds, no unintended account/Save writes and no pending-consumer recovery regression.
+4. Feature-OFF **working Save/character flow**, not only a menu screenshot; selected branch build/browser witness tied to exact committed SHA; keyboard/form error access and usable primary controls. Logo overlap and decorative layout polish are deferred unless they prevent a required operation.
+5. Source and test outcome evidence for **all applicable L1-A01…A15 rows**, with explicit `PASS`/`FAIL`/`NOT_RUN` labels. Missing required evidence stays `HOLD`.
+
+The user-owned PowerShell Vite process serving `127.0.0.1:5240` and synthetic browser storage must **not** be stopped, cleaned, or repointed by Connector. If follow-up Codex tests run, use independently scoped synthetic fixtures and do not alter unrelated worktrees. Earlier Computer Use/Edge browser URL-identity restrictions were tool-side blockers; user-operated Brave screenshots support only observed behavior.
+
+## Disposition, next local boundary, and connector responsibilities
+
+Retain branch `codex/l1-branded-welcome-account-entry-2026-11-11` at reviewed `14aa6380a3a6bb4aae35e0712169c302758d97d5`; **`HOLD_L1_INTEGRATION_AND_FULL_ACCEPTANCE`** until focused backend/Save invariants and relevant user-browser evidence pass. No merge, PR creation/retirement or branch deletion is due. This does not block **connector-safe planning/research** of L2 World identity; it does block dependent **L2 implementation entry** under the current [L1 process map](../design/first-world-launcher-implementation-process-map-2026-11-11.md) until L1 reaches accepted isolated status.
+
+Next necessary Codex work, if authorized, is a **small targeted native-v3 account/session/Save negative-integrity test slice on the existing branch**, not reimplementation, visual polishing or broad coordination rewrites. Manual browser checks may continue through the user-owned server. Connector can review the next pushed test evidence and update stage disposition; it cannot itself validate local IndexedDB state, run Vite or certify user browser interactions.
+
+Retain `HOLD_SELECTED_ATOMIC_ACTIVATION`, `HOLD_STAGING_PUBLICATION`, source/recovery/protected branch dispositions, and all existing PR dispositions. No hosted/default activation or Game version increase. Preserve exact test evidence and known baseline failures.
