@@ -1,5 +1,7 @@
 # Launcher, World, Character, and First-World Start: Design-Intent Disposition Audit
 
+> **2026-11-11 implementation-plan audit follow-up:** Implementation sequencing is now independently tracked in the [First World Launcher process map](first-world-launcher-implementation-process-map-2026-11-11.md) and the [L1 Welcome implementation plan](first-world-launcher-l1-welcome-account-entry-implementation-plan-2026-11-11.md). The former identifies current-stage gates and fail-stop criteria; the latter reuses native-v3 auth and retains an isolated feature-gated launcher path until a genuine World Registry exists. Prior historical behavior notes remain as evidence, not active implementation tasks.
+
 Date: 2026-11-11  
 Scope: source-checked design intents related to account entry, world selection/creation, character selection/creator, Save/load and actual local start generation.  
 Status: **documentation audit and targeted supersession record only**.  
