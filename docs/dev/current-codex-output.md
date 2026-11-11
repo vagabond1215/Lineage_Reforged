@@ -2619,3 +2619,22 @@ Fresh fetch and exact head/status; installed prompt, prior network diagnostic an
 ### D. Risks / follow-up notes
 
 `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Next trigger: approved environment with direct and controlled-browser HTTP responses from one registered minimal loopback server. Suggested commit: `docs(v3): record environment-readiness hold`. Cleanup: no task-owned resources started.
+## 2026-11-11 — Full Access environment readiness passed; Vite registration held
+
+**Source run:** unversioned bounded diagnostic on fetched/fast-forwarded `master` `87901fd12184c07e87b5c145d879b1d76f8b101a`; Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; parent milestone n/a, development impact `none`, game-version impact `none`. [Focused record](native-v3-full-access-environment-readiness-2026-11-11.md): `SHELL_AND_BROWSER_LOOPBACK_READY; VITE_REGISTRATION_BLOCKED`.
+
+### A. Files changed
+
+Focused record and current output/handoff/branch register only. No source or manager change.
+
+### B. Patch summary
+
+Full Access allowed registered minimal-server direct TCP, no-proxy HTTP 200 and matching controlled-browser body. Two Vite launches failed process-control identity registration; their independently verified exact PIDs were stopped without browser use. Development-v3 and compiled-preview-v2 gates remain open.
+
+### C. Tests or checks run
+
+Fresh fetch/fast-forward and SHA; exact minimal-server registration/port owner; direct TCP, no-proxy HTTP header/body; controlled IAB visible response; exact unverified Vite PID/CIM checks and scoped cleanup; diff hygiene. No build or game tests. FP-002: readiness does not accept Vite browser selection. FP-009: exact source and process identities recorded. Branch/PR lifecycle: no action due or disposition change.
+
+### D. Risks / follow-up notes
+
+Local process-control Vite launch identity remains unresolved. Next unversioned trigger: scoped registration repair or approved registered launch method, then both exact-master browser entries. `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` remain. Suggested commit: `docs(v3): record Full Access readiness and Vite registration hold`. Cleanup: three exact task PIDs stopped/absent; task tab closed; PTY exited; temporary script removed. No local permission setting changed.

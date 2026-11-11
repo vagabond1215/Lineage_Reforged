@@ -1326,3 +1326,6 @@ The [current prompt](current-codex-prompt.md) now requires minimal-server direct
 ## 2026-11-11 environment-readiness gate held
 
 The [current-master gate](native-v3-environment-readiness-gate-2026-11-11.md) found no changed execution/browser context and correctly stopped before an identical loopback retry. Exact-master browser acceptance remains open. `codex/native-v3-local-ordinary-entry-2026-11-10` retains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect after approved direct and browser HTTP readiness.
+## 2026-11-11 Full Access readiness and Vite registration hold
+
+The [focused diagnostic](native-v3-full-access-environment-readiness-2026-11-11.md) passed direct and controlled-browser loopback readiness on `87901fd1`, but process-control Vite registration blocked both exact-master entry checks. `codex/native-v3-local-ordinary-entry-2026-11-10` remains `HOLD_NAMED_CONSUMER`; protected/native-v3 refs and PRs retain prior dispositions. No integration, deletion or PR action was due. Reinspect when a verified registered Vite launch enables the named browser consumer.
