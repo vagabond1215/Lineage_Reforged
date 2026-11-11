@@ -1,5 +1,8 @@
 # User Design Decisions Intake - Relationships, Survival, Travel, Family
 
+> **2026-11-11 world-library interpretation notice:** The historical “at first start, each character should have a separate world” expresses the initial **Individual World** isolation requirement. The newer owner-selected UX has a distinct authenticated **World Library** before character Save slots. Each world must be a durable instance of the authored **First World**, distinct from character/campaign/slot identity; at first this can remain dedicated to one playable character/legitimate heirs. Multiple characters in one shared **Living World** remain a separate deferred time/Save-owner feature. The player will **not** paint/edit the world, and extra maps/seed variants/time-skip transformations remain Coming Soon or future Prestige options. See the [2026-11-11 consolidated plan](welcome-world-library-character-entry-and-loading-plan-2026-11-11.md) and [disposition audit](launcher-world-character-design-intent-audit-2026-11-11.md). This adds a narrow supersession note without erasing the historical decisions below.
+
+
 Source route: ChatGPT via GitHub Connector  
 Date: 2026-06-17  
 Status: connector-side user-decision intake; documentation only; not an implementation handoff
