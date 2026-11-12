@@ -15,6 +15,7 @@ import verifiedRemovedUrl from '../../docs/design/first-world-offshore-square-ar
 import {buildBoundaryCatalog, newBoundaryDraft, cleanBoundaryDraft, copyPoints, boundaryPart,
   boundaryParts, setBoundaryPoints, excludeBoundary, resetBoundary, addCustomBoundary,
   segmentIndex} from './world-map-review-boundaries.mjs';
+import {buildMixedLandmassCatalog,cleanMixedDecision} from './world-map-review-mixed-landmasses.mjs';
 
 const $ = (id) => document.getElementById(id);
 const FRAME = { width: 2048, height: 1152 };
@@ -26,7 +27,8 @@ const view = { scale: 1, tx: 0, ty: 0 };
 let settlements = [], routes = [], hexes = [], edges = [], regions = [], localities = [];
 let settlementById = new Map(), regionById = new Map(), routesById = new Map(), featureById = new Map();
 let selection = null, pointerAction = null, boundaryCatalog = null, drawingPoints = [], landmaskObjectUrl = null;
-const checks = ['showSettlements','showLabels','showRoutes','showFlows','showHexEdges','showPoints','showRivers','showContinents','showRegions','showSuspectSquares','showSourceCoastline','showOriginalBoundary','showRegionLabels','showLocalities','showGrid'];
+let mixedLandmasses = [], mixedById = new Map();
+const checks = ['showSettlements','showLabels','showRoutes','showFlows','showHexEdges','showPoints','showRivers','showContinents','showRegions','showSuspectSquares','showSourceCoastline','showMixedLandmass','showOriginalBoundary','showRegionLabels','showLocalities','showGrid'];
 const atlas = $('atlas'), landmaskImage = $('landmaskImage'), overlay = $('overlay'), viewport = $('viewport'), stage = $('stage');
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const fmt = (n) => Number.isFinite(n) ? Number(n).toLocaleString(undefined,{maximumFractionDigits:1}) : 'unknown';
@@ -84,8 +86,10 @@ function sanitizeDraft(raw) {
         (kind === 'locality' && localities.some(x=>x.id===key)) ||
         (kind === 'boundary' && ['region','continent'].includes(parts[0]) &&
           (boundaryCatalog.parts.has(parts.slice(1).join(':')) ||
-           Boolean(raw?.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')])))) {
+           Boolean(raw?.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')])) ||
+        (kind === 'mixed-coast' && mixedById.has(key))) {
       reviews[id] = {status:['unreviewed','candidate','conflict','checked'].includes(r?.status) ? r.status : 'unreviewed',notes:String(r?.notes || '').slice(0,10000)};
+      if(kind==='mixed-coast') reviews[id].decision=cleanMixedDecision(r?.decision);
     }
   }
   return {moved,waypoints,reviews,boundary:cleanBoundaryDraft(raw?.boundary,boundaryCatalog)};
@@ -100,6 +104,7 @@ function updateDraftSummary() {
     Object.values(state.boundary.custom.region).length+Object.values(state.boundary.custom.continent).length;
   $('draftSummary').textContent = Object.keys(state.moved).length + ' moved · ' + count + ' routes · ' + altered + ' boundary parts';
   if(boundaryCatalog&&$('squareCandidateList'))renderSquareCandidateQueue();
+  if(mixedLandmasses.length)renderMixedQueue();
 }
 function setTransform() {
   stage.style.transform = 'translate(' + view.tx + 'px,' + view.ty + 'px) scale(' + view.scale + ')';
@@ -475,6 +480,7 @@ function selectionPoint() {
   }
   if(selection.kind==='region') return centroid(settlements.filter(s=>s.regionId===selection.id||s.macroRegionId===selection.id).map(position).filter(Boolean));
   if(selection.kind==='boundary')return centroid(activeBoundary()?.points||[]);
+  if(selection.kind==='mixed-coast'){const b=mixedById.get(selection.id)?.bounds;return b?{x:(b.minX+b.maxX)/2,y:(b.minY+b.maxY)/2}:null;}
   if(selection.kind==='boundary-owner') {
     const parts=boundaryParts(boundaryCatalog,state.boundary,selection.scope,selection.id).filter(p=>!p.excluded);
     const pts=parts.flatMap(p=>p.points);
@@ -487,6 +493,7 @@ function selectionPoint() {
 }
 function focusSelection() {
   if(selection?.kind==='route') {const route=selectedRoute();if(route)focusRoute(route);}
+  else if(selection?.kind==='mixed-coast') focusMixedBounds(mixedById.get(selection.id)?.bounds);
   else {const p=selectionPoint();if(p)centerOn(p,Math.max(view.scale,.85));}
 }
 function selectionKey() {return selection ? selection.kind+':'+(selection.scope?selection.scope+':':'')+selection.id : '';}
@@ -494,14 +501,16 @@ function select(kind,id,scope=null) {
   selection=kind&&id?{kind,id,scope}:null;
   const review=state.reviews[selectionKey()]||{};
   $('reviewStatus').value=review.status||'unreviewed';
+  $('mixedDecision').disabled=selection?.kind!=='mixed-coast';
+  $('mixedDecision').value=selection?.kind==='mixed-coast'?cleanMixedDecision(review.decision):'undecided';
   $('reviewNotes').value=review.notes||'';
   $('reviewStatus').disabled=!selection;
   $('reviewNotes').disabled=!selection;
   if(selection?.kind!=='route')$('addCheckpoint').checked=false;
   $('selectionSummary').textContent=selection ?
     (kind==='boundary'?boundaryPart(boundaryCatalog,state.boundary,scope,id)?.name||id:
-      kind==='boundary-owner'?nameOf(id):nameOf(id)) : 'None';
-  renderInspector();renderBoundaryPartList();renderRoutesList();renderOverlay();
+      kind==='boundary-owner'?nameOf(id):kind==='mixed-coast'?id.split('.').at(-1):nameOf(id)) : 'None';
+  renderInspector();renderBoundaryPartList();renderRoutesList();renderMixedQueue();renderOverlay();
 }
 function renderInspector() {
   const c=$('inspectorContents');
@@ -592,7 +601,7 @@ function insertCheckpoint(route,point) {
   save();select('route',route.id);
 }
 function renderAll() {
-  renderOverlay();renderBoundaryPartList();renderSquareCandidateQueue();
+  renderOverlay();renderBoundaryPartList();renderSquareCandidateQueue();renderMixedQueue();
   renderRoutesList();renderSearch();renderInspector();
 }
 function registerRasterImage() {
@@ -674,6 +683,7 @@ function loadDraft() {
 function writeNotes() {
   if(!selection)return;
   state.reviews[selectionKey()]={status:$('reviewStatus').value,notes:$('reviewNotes').value};
+  if(selection.kind==='mixed-coast')state.reviews[selectionKey()].decision=cleanMixedDecision($('mixedDecision').value);
   save();
 }
 function exportDraft() {
@@ -774,6 +784,8 @@ function events() {
   $('search').oninput=renderSearch;
   $('reviewStatus').onchange=writeNotes;
   $('reviewNotes').oninput=writeNotes;
+  $('mixedDecision').onchange=writeNotes;
+  $('mixedFilter').onchange=renderMixedQueue;
   for(const id of checks)$(id).onchange=renderOverlay;
   viewport.addEventListener('wheel',(e)=>{
     e.preventDefault();const bounds=viewport.getBoundingClientRect();
@@ -826,7 +838,7 @@ function events() {
     }else if(kind==='settlement' && id){
       select('settlement',id);
       if(checked('moveAnchors'))pointerAction={type:'settlement',id};
-    }else if(kind==='route'||kind==='feature'||kind==='region'||kind==='locality') {
+    }else if(kind==='route'||kind==='feature'||kind==='region'||kind==='locality'||kind==='mixed-coast') {
       if(id)select(kind,id);
     }else {
       pointerAction={type:'pan',x:e.clientX,y:e.clientY,tx:view.tx,ty:view.ty};
@@ -908,6 +920,11 @@ async function boot() {
     const effectiveParts=(visual.regionFootprints||[]).filter(f=>!accepted.has(f.id));
     if(effectiveParts.length!==159)throw Error('Expected 159 effective footprint parts, got '+effectiveParts.length);
     boundaryCatalog=buildBoundaryCatalog(regions,effectiveParts);
+    const mixedAudit=buildMixedLandmassCatalog(regions,effectiveParts,visual.coastlines||[]);
+    mixedLandmasses=mixedAudit.conflicts;
+    mixedById=new Map(mixedLandmasses.map(item=>[item.id,item]));
+    $('mixedCount').textContent=mixedAudit.mixedCount+' mixed · '+mixedAudit.edgeStripCount+' edge';
+    $('mixedSummary').textContent=mixedAudit.mixedCount+' traced mixed-owner landmasses; '+mixedAudit.edgeStripCount+' map-edge diagnostics. Sampled 2px source polygons, not independent PNG terrain.';
     $('artifactRemovalSummary').textContent='42 verified offshore square footprints excluded from both map layers';
     populateBoundaryOwners();
     $('squareCount').textContent=boundaryCatalog.suspected.length+' remaining';
