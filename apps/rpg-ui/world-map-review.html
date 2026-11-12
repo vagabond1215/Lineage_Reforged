@@ -29,10 +29,40 @@
         <label><input id="showHexEdges" type="checkbox"> Coarse hex edges (inferred centers)</label>
         <label><input id="showPoints" type="checkbox" checked> Passes & crossings</label>
         <label><input id="showRivers" type="checkbox"> Rivers & ranges</label>
-        <label><input id="showRegions" type="checkbox"> Region footprint outlines</label>
+        <label><input id="showContinents" type="checkbox" checked> Continent / island-system outlines <small>9 macro areas</small></label>
+        <label><input id="showRegions" type="checkbox"> Subregion footprint outlines <small>28 identities</small></label>
+        <label><input id="showSuspectSquares" type="checkbox" checked> Flag 8×8 square candidates <small id="squareCount"></small></label>
+        <label><input id="showSourceCoastline" type="checkbox"> Source coastlines (unaltered)</label>
         <label><input id="showRegionLabels" type="checkbox"> Approximate region labels</label>
         <label><input id="showLocalities" type="checkbox"> Locality centroids (inferred)</label>
         <label><input id="showGrid" type="checkbox"> Pixel reference grid</label>
+      </div>
+      <div class="sidebar-section boundary-section">
+        <h2>Continent &amp; region review</h2>
+        <label class="field-label" for="boundaryScope">Boundary layer to work on</label>
+        <select id="boundaryScope">
+          <option value="continent">Continent / island system</option>
+          <option value="region">Subregion</option>
+        </select>
+        <label class="field-label" for="boundaryOwner">Geographic identity</label>
+        <select id="boundaryOwner"></select>
+        <div class="help" id="boundaryOwnership">Continents are assembled from child subregion footprint parts. Island systems retain their independent footprints.</div>
+        <div id="boundaryPartList" class="boundary-part-list"></div>
+        <label class="toggle"><input type="checkbox" id="editBoundary"> Edit selected boundary part</label>
+        <label class="field-label" for="boundaryTool">Editing action</label>
+        <select id="boundaryTool">
+          <option value="vertex">Move vertices (Shift-click edge adds; Alt-click handle removes)</option>
+          <option value="translate">Move whole selected polygon</option>
+          <option value="draw">Draw new polygon (click vertices on map)</option>
+        </select>
+        <div class="boundary-actions">
+          <button id="finishBoundary" class="wide">Finish new polygon</button>
+          <button id="cancelBoundary" class="wide">Cancel drawing</button>
+          <button id="toggleBoundaryPart" class="wide">Exclude selected part from draft</button>
+          <button id="resetBoundaryPart" class="wide">Reset selected boundary part</button>
+        </div>
+        <label class="toggle"><input type="checkbox" id="showOriginalBoundary" checked> Show original boundary when edited</label>
+        <div class="help">8×8 source squares are review candidates, not automatic deletions. Boundary changes stay separate for continent and region layers. No new landmask is generated here.</div>
       </div>
       <div class="sidebar-section">
         <h2>Locate an anchor</h2>
@@ -81,7 +111,7 @@
     <aside class="inspector">
       <div class="section-heading"><h2>Inspector</h2><span class="small">Source ⇢ draft</span></div>
       <div id="inspectorContents" class="inspector-content">
-        <p>Select a settlement, route, or geographic marker to inspect source identity and draft placement.</p>
+        <p>Select a settlement, route, continent, subregion or boundary part to inspect source identity and draft placement.</p>
       </div>
       <div class="sidebar-section notes-panel">
         <label for="reviewStatus">Review classification</label>
@@ -89,6 +119,10 @@
         <label for="reviewNotes">Review notes (local only)</label>
         <textarea id="reviewNotes" rows="6" placeholder="Coastline, sea access, route checkpoints, outlier rationale, evidence…"></textarea>
         <small>Notes and classifications export with draft geometry. “Checked” does not approve game content.</small>
+      </div>
+      <div class="sidebar-section">
+        <h2>Independent landmask witness</h2>
+        <div class="help">The original atlas and coastlines are reference evidence. Draft continent/region changes never feed back into land detection or settlement validation.</div>
       </div>
       <div class="sidebar-section">
         <h2>Unplaced semantic identities</h2>
