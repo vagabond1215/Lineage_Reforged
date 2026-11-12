@@ -11,6 +11,7 @@ import hexEdgesUrl from '../../packages/content/base/world/world_hex_edges.json?
 import routesUrl from '../../packages/content/base/world/travel_networks.json?url';
 import featuresUrl from '../../packages/content/base/world/world_map_features.json?url';
 import semanticUrl from '../../packages/content/base/world/map_features.json?url';
+import verifiedRemovedUrl from '../../docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json?url';
 import {buildBoundaryCatalog, newBoundaryDraft, cleanBoundaryDraft, copyPoints, boundaryPart,
   boundaryParts, setBoundaryPoints, excludeBoundary, resetBoundary, addCustomBoundary,
   segmentIndex} from './world-map-review-boundaries.mjs';
@@ -224,6 +225,7 @@ function renderBoundaryPartList() {
 function renderSquareCandidateQueue() {
   const list=$('squareCandidateList');list.replaceChildren();
   $('squareQueueCount').textContent=boundaryCatalog.suspected.length;
+  if(boundaryCatalog.suspected.length===0){list.textContent='All 42 owner-verified offshore squares excluded. No active square candidates remain.';return;}
   const parts=[...boundaryCatalog.suspected].sort((a,b)=>
     (boundaryCatalog.byRegion.get(a.ownerId)?.name||'').localeCompare(boundaryCatalog.byRegion.get(b.ownerId)?.name||'') ||
     a.id.localeCompare(b.id));
@@ -889,7 +891,8 @@ async function boot() {
     const paths=[
       [mapUrl,'map'],[settlementsUrl,'settlements'],[regionsUrl,'regions'],
       [localitiesUrl,'localities'],[hexUrl,'hexes'],[hexEdgesUrl,'edges'],
-      [routesUrl,'travel'],[featuresUrl,'features'],[semanticUrl,'semantic']
+      [routesUrl,'travel'],[featuresUrl,'features'],[semanticUrl,'semantic'],
+      [verifiedRemovedUrl,'verifiedRemoved']
     ];
     await Promise.all(paths.map(([url,name])=>loadJson(url,name)));
     settlements=sources.settlements.records;regions=sources.regions.records;localities=sources.localities.records;
@@ -899,7 +902,13 @@ async function boot() {
     regionById=new Map(regions.map(r=>[r.id,r]));
     routesById=new Map(routes.map(r=>[r.id,r]));
     const visual=sources.features.records[0]||{};
-    boundaryCatalog=buildBoundaryCatalog(regions,visual.regionFootprints||[]);
+    const removals=sources.verifiedRemoved?.removedSourceFeatureIds || [];
+    const accepted=new Set(removals);
+    if(removals.length!==42||accepted.size!==42)throw Error('Expected 42 owner-verified removal identities.');
+    const effectiveParts=(visual.regionFootprints||[]).filter(f=>!accepted.has(f.id));
+    if(effectiveParts.length!==159)throw Error('Expected 159 effective footprint parts, got '+effectiveParts.length);
+    boundaryCatalog=buildBoundaryCatalog(regions,effectiveParts);
+    $('artifactRemovalSummary').textContent='42 verified offshore square footprints excluded from both map layers';
     populateBoundaryOwners();
     $('squareCount').textContent=boundaryCatalog.suspected.length+' remaining';
     featureById=new Map(['riverFeatures','mountainFeatures','passFeatures','crossingFeatures'].flatMap(k=>visual[k]||[]).map(f=>[f.id,f]));
