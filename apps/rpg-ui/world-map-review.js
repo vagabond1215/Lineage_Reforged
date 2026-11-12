@@ -396,11 +396,39 @@ function insertCheckpoint(route,point) {
   save();select('route',route.id);
 }
 function renderAll() {renderOverlay();renderRoutesList();renderSearch();renderInspector();}
+function registerRasterImage() {
+  const width=atlas.naturalWidth,height=atlas.naturalHeight;
+  const legacy=sources.map.records[0]?.assetReferenceRectPx;
+  atlas.style.width=FRAME.width+'px';
+  atlas.style.height=FRAME.height+'px';
+  atlas.style.left='0px';
+  atlas.style.top='0px';
+  if(width===FRAME.width && height===FRAME.height) {
+    $('loadStatus').textContent=settlements.length+' points · '+routes.length+' routes · native-frame image';
+    return;
+  }
+  if(legacy && width>=legacy.x+legacy.width && height>=legacy.y+legacy.height &&
+     legacy.width>0 && legacy.height>0) {
+    // Explicitly conditional: never crop a normalized 2048×1152 raster twice.
+    const sx=FRAME.width/legacy.width,sy=FRAME.height/legacy.height;
+    atlas.style.width=(width*sx)+'px';
+    atlas.style.height=(height*sy)+'px';
+    atlas.style.left=(-legacy.x*sx)+'px';
+    atlas.style.top=(-legacy.y*sy)+'px';
+    $('loadStatus').textContent='SOURCE-RECT PREVIEW: verify crop and coastline visually';
+    $('layerBadge').textContent+=' / SOURCE-RECT PROVISIONAL';
+    return;
+  }
+  $('loadStatus').textContent='RASTER DIMENSION HOLD '+width+'×'+height;
+  $('layerBadge').textContent+=' / REGISTRATION UNRESOLVED';
+}
 function switchBase() {
   const height=$('baseLayer').value==='height';
-  atlas.src=height?heightUrl:biomeUrl;
+  atlas.onload=registerRasterImage;
+  atlas.onerror=()=>$('loadStatus').textContent='Raster image failed to load';
   atlas.alt='Original First World '+(height?'elevation':'biome')+' raster';
   $('layerBadge').textContent=(height?'ELEVATION':'BIOME')+' / ORIGINAL';
+  atlas.src=height?heightUrl:biomeUrl;
 }
 function loadDraft() {
   try {const raw=JSON.parse(localStorage.getItem(KEY)||'{}');Object.assign(state,sanitizeDraft(raw));}
@@ -547,12 +575,6 @@ async function boot() {
     $('countRoutes').textContent=routes.length;
     $('loadStatus').textContent=settlements.length+' points · '+routes.length+' routes';
     loadDraft();events();renderAll();annotateUnplaced();switchBase();fitAtlas();
-    atlas.onload=()=>{
-      if(atlas.naturalWidth!==FRAME.width || atlas.naturalHeight!==FRAME.height){
-        $('loadStatus').textContent='IMAGE DIMENSION HOLD '+atlas.naturalWidth+'×'+atlas.naturalHeight;
-      }
-    };
-    atlas.onerror=()=>$('loadStatus').textContent='Raster image failed to load';
     $('busy').classList.add('hidden');
   }catch(err){
     $('busy').textContent='Unable to load canonical map evidence: '+err.message+'. Serve from the repository’s Vite app, not file://.';
