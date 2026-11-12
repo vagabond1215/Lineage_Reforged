@@ -1,5 +1,7 @@
 # L1 Implementation Plan: Branded Welcome / Account Gate Before World and Save Selection
 
+> **2026-11-12 source merged to development master:** With explicit owner authorization, the original gated L1 Welcome implementation and the additive Chronicle/Persistent text-card UI preview were integrated via PR [#75](https://github.com/vagabond1215/Lineage_Reforged/pull/75) at `ef0181fae2850dcb2f19f61d75d711ee90941117`. The new [mode/currency/World-owned Hardcore intent](world-progression-modes-hardcore-time-and-cross-mode-currencies-intent-2026-11-12.md) remains design-only. This source integration is **not** `L1_ACCEPTED_ISOLATED`; A01–A15 and feature-OFF actual Save/reload still require exact-current-main executable evidence. Main is now the default work target, rather than the original isolated branch. Previous branch-hold and pre-integration instructions below are dated historical notes; active work order is [`current-codex-prompt.md`](../dev/current-codex-prompt.md). The feature remains OFF without loopback DEV opt-in; selected/default activation and staging publication remain held.
+
 Date: 2026-11-11  
 Status: **L1 isolated functional proof of concept committed and published at `14aa6380`; independent source review complete; `L1_CODE_READY_BROWSER_HELD`, partial user-performed browser smoke; backend/Save integrity and formal L1 acceptance still pending**  
 Parent process: [First World Launcher Implementation Process Map](first-world-launcher-implementation-process-map-2026-11-11.md)  
