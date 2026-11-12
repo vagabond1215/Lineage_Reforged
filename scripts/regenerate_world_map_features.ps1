@@ -695,29 +695,6 @@ function Add-PolygonToMaskBitmap {
     }
 }
 
-function Add-PointBufferToMaskBitmap {
-    param(
-        [System.Drawing.Bitmap]$MaskBitmap,
-        [int]$PixelX,
-        [int]$PixelY,
-        [int]$Radius = 2
-    )
-
-    $graphics = [System.Drawing.Graphics]::FromImage($MaskBitmap)
-    try {
-        $graphics.FillEllipse(
-            [System.Drawing.Brushes]::White,
-            [single]($PixelX - $Radius),
-            [single]($PixelY - $Radius),
-            [single](($Radius * 2) + 1),
-            [single](($Radius * 2) + 1)
-        )
-    }
-    finally {
-        $graphics.Dispose()
-    }
-}
-
 $referenceBitmap = New-ScaledBitmap -Path $sourcePath -SourceRect $sourceRect -Width $sampleWidth -Height $sampleHeight
 $landMask = [RasterGeometry]::CreateLandMask($referenceBitmap)
 $waterMask = [RasterGeometry]::CreateWaterMask($referenceBitmap)
@@ -796,13 +773,8 @@ try {
             $baseFeature = $regionBaseFeatures[$regionId]
             $regionMasksById[$regionId] = $partitionedMasks[$regionIndex]
 
-            foreach ($settlement in @($settlementRecords | Where-Object { [string]$_.regionId -eq $regionId -and [string]$_.mapLocation.siteClass -ne 'underwater' })) {
-                Add-PointBufferToMaskBitmap `
-                    -MaskBitmap $regionMasksById[$regionId] `
-                    -PixelX ([int][Math]::Round($settlement.mapLocation.pixelX / $sampleScale)) `
-                    -PixelY ([int][Math]::Round($settlement.mapLocation.pixelY / $sampleScale)) `
-                    -Radius 2
-            }
+            # The derived landmask is independent of settlement anchors. Do not stamp
+            # settlement-centered land patches; offshore coordinates must stay detectable.
 
             $partitionFeatures = @(Convert-MaskToFeatures -BaseFeature $baseFeature -MaskBitmap $partitionedMasks[$regionIndex] -MinArea 12)
             if ($partitionFeatures.Count -eq 0) {
@@ -893,15 +865,8 @@ try {
                 }
             }
 
-            if ($null -ne $workingMask) {
-                foreach ($settlement in @($zoneSettlements)) {
-                    Add-PointBufferToMaskBitmap `
-                        -MaskBitmap $workingMask `
-                        -PixelX ([int][Math]::Round($settlement.mapLocation.pixelX / $sampleScale)) `
-                        -PixelY ([int][Math]::Round($settlement.mapLocation.pixelY / $sampleScale)) `
-                        -Radius 2
-                }
-            }
+            # Preserve the true raster/zone mask here. Settlement anchors must not
+            # create biomes or land where the raster evidence says there is water.
 
             if ($null -eq $workingMask -or -not [RasterGeometry]::MaskHasPixels($workingMask)) {
                 $newBiomeZones.Add($zone)
