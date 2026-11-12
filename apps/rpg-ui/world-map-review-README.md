@@ -65,7 +65,7 @@ Do not force the worktree checkout if it has uncommitted local edits. Export map
 
 ## Required local witness before map/route acceptance
 
-1. Inspect the browser developer console and confirm that nine canonical JSON files and both original image layers load without parse, CORS or asset errors. Confirm actual natural image width and height match 2048×1152, or stop at a raster-transform gate.
+1. Inspect the browser developer console and confirm that the nine canonical JSON sources, the accepted-removal manifest, and both original image layers load without parse, CORS or asset errors. Confirm actual natural image width and height match 2048×1152, or stop at a raster-transform gate.
 2. Check source anchor pixels: Aurelis (300,395), Starfall Port (825,245), Seabanner (345,825), Highcrown (1560,255). After zooming and resizing, hover cursor coordinates must match the marker under the pointer within one image pixel.
 3. Confirm 88 settlements, 20 named routes, 47 source-locality records, **159 retained region footprint parts**, 5 continent + 4 island macro owners and 28 subregion identities (12 without direct polygons). The residual 8×8 square candidate counter must be **zero** and the removal manifest must list exactly 42 original IDs. No label derived from an inferred centroid may be mistaken for a declared geographic marker.
 4. Enable the continent outline on its own, then enable the region outline. Verify source coastlines remain aligned when toggled and that continent preview edits do not rewrite the region preview or source coastline.
