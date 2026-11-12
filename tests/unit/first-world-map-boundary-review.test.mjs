@@ -96,7 +96,7 @@ test('Vite HTML exposes independent review scope and explicit non-authority cont
   const js=readFileSync(join(ROOT,'apps/rpg-ui/world-map-review.js'),'utf8');
   for(const id of ['showContinents','showRegions','showSuspectSquares',
     'showSourceCoastline','boundaryScope','boundaryOwner','boundaryPartList',
-    'editBoundary','boundaryTool','finishBoundary','cancelBoundary',
+    'editBoundary','boundaryTool','finishBoundary','cancelBoundary','landmaskFile','landmaskOpacity','landmaskImage',
     'toggleBoundaryPart','resetBoundaryPart','showOriginalBoundary']){
       assert.match(html,new RegExp('id="'+id+'"'));
   }
@@ -104,4 +104,6 @@ test('Vite HTML exposes independent review scope and explicit non-authority cont
   assert.match(js,/drawBoundaryScope\('region'\)/);
   assert.match(js,/boundary:state\.boundary/);
   assert.match(js,/drawSuspectSquares/);
+  assert.match(js,/loadLandmaskFile/);
+  assert.match(js,/preview\.naturalWidth!==FRAME\.width/);
 });
