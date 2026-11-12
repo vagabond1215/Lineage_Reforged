@@ -90,6 +90,34 @@ test('local authored grid is rectangular and completely walk-connected from the 
   assert.equal(grid.palette['#'].walkable, false, 'building footprints are not assumed interiors');
 });
 
+test('regional guild/ecology references are real static content but not live instances', () => {
+  const settlement = find(records('packages/content/base/world/settlements.json'),
+    identity.startSettlementId);
+  const guilds = template.sourceGeography.regionalEconomy.descriptiveGuildPresence;
+  assert.equal(guilds.length, 6);
+  for (const guild of guilds) {
+    const source = settlement.guildPresence.find(row => row.name === guild.name);
+    assert.ok(source, `not an authored Starfall guild: ${guild.name}`);
+    assert.equal(source.guildType, guild.trade);
+    assert.ok(guild.functions.every(fn => source.functions.includes(fn)));
+  }
+  for (const [refList, sourcePath, prefix] of [
+    [template.sourceGeography.candidateFloraRefsNotSpawned,
+      'packages/content/base/world/flora.json', 'flora.'],
+    [template.sourceGeography.candidateFaunaRefsNotSpawned,
+      'packages/content/base/world/fauna.json', 'fauna.']
+  ]) {
+    const source = records(sourcePath);
+    assert.equal(refList.length, 4);
+    for (const id of refList) {
+      assert.ok(id.startsWith(prefix) && find(source, id),
+        `candidate ecological identity is not sourced: ${id}`);
+    }
+  }
+  assert.deepEqual(template.localAreaBlueprint.placedNpcInstances, []);
+  assert.deepEqual(template.localAreaBlueprint.placedResourceInstances, []);
+});
+
 test('a fresh Starfall seed is empty, and unsupported services/spawns remain unavailable', () => {
   const init = template.proposedInstanceSeed;
   for (const key of ['accountId', 'worldInstanceId', 'creationIntentId', 'createdAt',
