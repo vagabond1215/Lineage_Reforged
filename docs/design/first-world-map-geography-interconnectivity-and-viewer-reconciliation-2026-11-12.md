@@ -35,7 +35,7 @@ Related policy: [SDT v1 draft](first-world-settlement-distribution-and-territori
 
 ## 3. Spatial reference, scale, and viewer projection
 
-The world map's intended source frame is 2048 (x, west to east) × 1152 (y, north to south), about **9.765625 km per reference pixel**. This is a macro atlas, **not** a 24-km gameplay hex grid or a 28×18 Starfall local area. `world_maps.scaleProfile.assetReferenceRectPx` additionally retains a `(60,60,3976,2235)` source-art rectangle; it must **not** be reapplied to already normalized 2048×1152 images without a proven source-to-output transform.
+The world map's intended source frame is 2048 (x, west to east) × 1152 (y, north to south), about **9.765625 km per reference pixel**. This is a macro atlas, **not** a 24-km gameplay hex grid or a 28×18 Starfall local area. `world_maps.records[0].assetReferenceRectPx` additionally retains a `(60,60,3976,2235)` source-art rectangle; it must **not** be reapplied to already normalized 2048×1152 images without a proven source-to-output transform.
 
 ### Confirmed UI mismatch (code-path, not selected-browser proof)
 
