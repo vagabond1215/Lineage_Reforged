@@ -1,0 +1,371 @@
+{
+  "format": "lineage-reborn.starfall-world-seed.v1",
+  "templateId": "world_template.first_world.starfall_port.chronicle_v1",
+  "templateVersion": 1,
+  "lifecycle": "authored_draft_unregistered",
+  "runtimeEligible": false,
+  "purpose": "World Creation source blueprint and proposed empty-instance Save seed. This is not a native-v3 Save artifact until the L2 owner/storage contract accepts it.",
+  "immutableIdentity": {
+    "worldBlueprintId": "world_map.first_world",
+    "progressionMode": "chronicle",
+    "worldKind": "individual",
+    "startRegionId": "region.starfall_isle",
+    "startLocalityBandId": "region_locality.myridian_ports",
+    "startWorldHexId": "world_hex.myridian_ports",
+    "startSettlementId": "settlement.starfall_port",
+    "localAreaTemplateId": "area_template.starfall_port.harbor_approach_v1"
+  },
+  "sourceGeography": {
+    "parentMacroRegionId": "region.myridian_chain",
+    "parentMacroRegionName": "The Myridian Chain",
+    "regionName": "Starfall Isle",
+    "localityName": "Starfall Ports",
+    "settlementName": "Starfall Port",
+    "mapRasterReference": {
+      "x": 825,
+      "y": 245,
+      "units": "world_map.first_world pixels",
+      "role": "macro-map anchor only, never a local walkable tile"
+    },
+    "macroBiome": "mixed_forest_archipelago",
+    "macroTerrain": "archipelago_port",
+    "elevationBand": "upland",
+    "climateTendencies": [
+      "mild_wet_maritime",
+      "fog_prone_harbors"
+    ],
+    "actualCurrentWeather": null,
+    "landscapeFeatures": [
+      "sheltered natural harbors",
+      "coastal uplands",
+      "mixed forest",
+      "marine shelf"
+    ],
+    "regionalEconomy": {
+      "strengths": [
+        "brokerage",
+        "ship_repair",
+        "customs_services",
+        "salt_fish",
+        "ferry_trade"
+      ],
+      "importPressures": [
+        "grain",
+        "bulk_timber",
+        "forged_metal",
+        "cloth"
+      ],
+      "guildOrTradesDescriptiveOnly": [
+        "merchants",
+        "teamsters",
+        "shipwrights",
+        "fishers",
+        "scribes and factors",
+        "adventurers"
+      ]
+    },
+    "sourceHex": {
+      "hazardTags": [
+        "wildlife_risk",
+        "bandit_risk"
+      ],
+      "resourceAffinityTags": [
+        "fish",
+        "shellfish",
+        "salt",
+        "luxury_goods",
+        "dyes",
+        "spices",
+        "interregional_trade",
+        "shipbuilding",
+        "customs"
+      ]
+    },
+    "candidateRegionalFloraNotSpawned": [
+      "coconut palm",
+      "orange tree",
+      "flax",
+      "river reed"
+    ],
+    "candidateRegionalFaunaNotSpawned": [
+      "cod",
+      "oyster",
+      "crab",
+      "reef lobster"
+    ],
+    "anchoredNeighborSettlementIds": [
+      "settlement.harbormast_quay",
+      "settlement.foammarket_ferry"
+    ],
+    "note": "Neighboring settlements share the macro hex; this does not establish foot adjacency or an operable travel edge."
+  },
+  "travelLinks": [
+    {
+      "id": "world_hex_edge.myridian_ports_myridian_pearl_shoals",
+      "kind": "macro_hex_road",
+      "toHexId": "world_hex.myridian_pearl_shoals",
+      "allowedModeIds": [
+        "travel_mode.foot",
+        "travel_mode.horseback",
+        "travel_mode.pack_animal",
+        "travel_mode.wagon"
+      ],
+      "localExitEnabled": false
+    },
+    {
+      "id": "world_hex_edge.myridian_ports_myridian_beacon_bastions",
+      "kind": "macro_hex_road",
+      "toHexId": "world_hex.myridian_beacon_bastions",
+      "allowedModeIds": [
+        "travel_mode.foot",
+        "travel_mode.horseback",
+        "travel_mode.pack_animal",
+        "travel_mode.wagon"
+      ],
+      "localExitEnabled": false
+    },
+    {
+      "id": "route.starfall_port_harbormast_quay",
+      "kind": "intersettlement_sea_route",
+      "toSettlementId": "settlement.harbormast_quay",
+      "allowedModeIds": [
+        "travel_mode.sea_vessel"
+      ],
+      "localExitEnabled": false
+    },
+    {
+      "id": "lane.brineharbor_starfall_port",
+      "kind": "interport_sea_lane",
+      "toSettlementId": "settlement.brineharbor",
+      "allowedModeIds": [
+        "travel_mode.sea_vessel"
+      ],
+      "localExitEnabled": false
+    },
+    {
+      "id": "lane.starfall_port_blueflow",
+      "kind": "interport_sea_lane",
+      "toSettlementId": "settlement.blueflow",
+      "allowedModeIds": [
+        "travel_mode.sea_vessel"
+      ],
+      "localExitEnabled": false
+    }
+  ],
+  "localAreaBlueprint": {
+    "id": "area_template.starfall_port.harbor_approach_v1",
+    "identityStatus": "new_authored_proposal",
+    "description": "Proposed safe open-air quay approach in Starfall Port. Geometry is an authored 28×18 local tile grid, NOT inferred from the global map raster. No interior, staffed provider, active quest or harvestable spawn exists by implication.",
+    "grid": {
+      "width": 28,
+      "height": 18,
+      "coordinateOrigin": "top_left",
+      "orthogonal": true,
+      "orientation": "illustrative_only_not_georeferenced",
+      "tileSizeMeters": null,
+      "palette": {
+        ".": {
+          "name": "open ground",
+          "walkable": true,
+          "interactable": false
+        },
+        "r": {
+          "name": "maintained road",
+          "walkable": true,
+          "interactable": false
+        },
+        "b": {
+          "name": "quay boardwalk",
+          "walkable": true,
+          "interactable": false
+        },
+        "f": {
+          "name": "wooded verge",
+          "walkable": true,
+          "interactable": false
+        },
+        "#": {
+          "name": "uninstantiated building footprint",
+          "walkable": false,
+          "interactable": false
+        },
+        "^": {
+          "name": "rocky upland",
+          "walkable": false,
+          "interactable": false
+        },
+        "~": {
+          "name": "open water",
+          "walkable": false,
+          "interactable": false
+        }
+      },
+      "rows": [
+        "^^^^^^......ffffff.....~~~~~",
+        "^^^^^^....r.ffffff.....~~~~~",
+        "^^^^^^....r.ffffff.....~~~~~",
+        "fffff.....r.fffff###...~~~~~",
+        "fffff.....r.fffff###...~~~~~",
+        "fffff.rrrrrrrrrr.....~~~~~~~",
+        "fffff###..r.###.r....~~~~~~~",
+        "fffff###..r.###.r....~~~~~~~",
+        "..........r.....r....~~~~~~~",
+        "rrrrrrrrrrrrrrrrrrbbbbbbbbb~",
+        "..........r.....r....~~~~~~~",
+        ".....####.r.###.r....~~~~~~~",
+        ".....####.r.###.r....~~~~~~~",
+        "..........r.###.r......~~~~~",
+        "..........r............~~~~~",
+        "^^^^^^....r............~~~~~",
+        "^^^^^^....r............~~~~~",
+        "^^^^^^.................~~~~~"
+      ]
+    },
+    "entry": {
+      "x": 10,
+      "y": 9,
+      "facing": "east",
+      "label": "Harbor approach",
+      "safeUntilActualHazardsApproved": true
+    },
+    "landmarkMarkers": [
+      {
+        "id": "draft_marker.starfall.harbor_approach",
+        "x": 10,
+        "y": 9,
+        "label": "Harbor approach",
+        "kind": "navigational_marker_only",
+        "usable": false
+      },
+      {
+        "id": "draft_marker.starfall.quay_end",
+        "x": 24,
+        "y": 9,
+        "label": "Quay outlook",
+        "kind": "navigational_marker_only",
+        "usable": false
+      },
+      {
+        "id": "draft_marker.starfall.wooded_verge",
+        "x": 3,
+        "y": 5,
+        "label": "Wooded approach",
+        "kind": "navigational_marker_only",
+        "usable": false
+      }
+    ],
+    "exitCandidates": [
+      {
+        "x": 0,
+        "y": 9,
+        "label": "Westward track",
+        "targetTemplateId": null,
+        "status": "disabled_until_area_transition_authorized"
+      },
+      {
+        "x": 10,
+        "y": 1,
+        "label": "Upland approach",
+        "targetTemplateId": null,
+        "status": "disabled_until_area_transition_authorized"
+      },
+      {
+        "x": 26,
+        "y": 9,
+        "label": "Quay edge",
+        "targetTemplateId": null,
+        "status": "disabled_until_authorized_vessel_or_boarding"
+      }
+    ],
+    "placedNpcInstances": [],
+    "placedResourceInstances": [],
+    "placedMonsterInstances": [],
+    "activeEncounterSpawnZones": [],
+    "candidateSpawnBands": [
+      {
+        "name": "wooded upland verge",
+        "tiles": [
+          "f",
+          "^"
+        ],
+        "basis": "macro hex wildlife/bandit risks only",
+        "status": "requires_owned_spawn_profile_and_exact_geometric_zone"
+      },
+      {
+        "name": "shore and harbor margin",
+        "tiles": [
+          "b",
+          "~"
+        ],
+        "basis": "marine/shore habitat only",
+        "status": "requires_owned_spawn_profile_and_exact_geometric_zone"
+      }
+    ],
+    "craftingStations": [],
+    "serviceProviders": [],
+    "interactableSiteInstances": [],
+    "localWeatherOverride": null
+  },
+  "proposedInstanceSeed": {
+    "accountId": null,
+    "worldInstanceId": null,
+    "creationIntentId": null,
+    "createdAt": null,
+    "displayName": null,
+    "sourceTemplateId": "world_template.first_world.starfall_port.chronicle_v1",
+    "sourceTemplateVersion": 1,
+    "sourceManifestFingerprint": null,
+    "worldRevision": 0,
+    "rules": {
+      "progressionMode": "chronicle",
+      "worldKind": "individual",
+      "hardcore": false,
+      "difficultyPreset": null,
+      "worldRules": null,
+      "stakesRules": null,
+      "pausePolicy": "allow",
+      "timePolicy": {
+        "speedMultiplier": 1,
+        "worldTimeEpoch": null,
+        "allowsPlayerTimeSkip": false,
+        "policyVersion": null
+      }
+    },
+    "clock": {
+      "elapsedWorldSeconds": 0,
+      "paused": false,
+      "lastAuthoritativeUpdateAt": null
+    },
+    "characterAssociations": [],
+    "campaignSaveAssociations": [],
+    "materializedAreaInstances": [],
+    "areaMutationRecords": [],
+    "spawnedEntityRecords": [],
+    "resourceDepletionRecords": [],
+    "scheduledActionRecords": [],
+    "pendingPublicationReceipts": [],
+    "committedWorldEvents": [],
+    "inventoryMutationRecords": []
+  },
+  "pendingOwners": [
+    "World creation/registry and persistent world-to-account identity in accepted native-v3 transactional owner",
+    "World content manifest/version, calendar and authoritative clock epoch policy",
+    "World-to-campaign/character/Save association and crash-safe initial publication",
+    "Local-grid collision/area instance renderer and actual travel exit connections",
+    "Existing settlement static site/actor/station ownership for interactive providers",
+    "Location-validated, conservation-safe flora/fauna harvestables",
+    "Myridian encounter spawn profile and actual geometric encounter admission",
+    "World weather owner and exact current local weather",
+    "Hardcore and other World creation rules beyond the safe Chronicle default"
+  ],
+  "provenance": [
+    "packages/content/base/world/world_maps.json",
+    "packages/content/base/world/regions.json",
+    "packages/content/base/world/region_localities.json",
+    "packages/content/base/world/world_hexes.json",
+    "packages/content/base/world/world_hex_edges.json",
+    "packages/content/base/world/travel_networks.json",
+    "packages/content/base/world/spawn_profiles.json",
+    "docs/design/welcome-world-library-character-entry-and-loading-plan-2026-11-11.md"
+  ]
+}
