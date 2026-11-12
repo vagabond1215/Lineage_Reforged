@@ -24,9 +24,9 @@ const state = { moved: {}, waypoints: {}, reviews: {}, boundary: newBoundaryDraf
 const view = { scale: 1, tx: 0, ty: 0 };
 let settlements = [], routes = [], hexes = [], edges = [], regions = [], localities = [];
 let settlementById = new Map(), regionById = new Map(), routesById = new Map(), featureById = new Map();
-let selection = null, pointerAction = null, boundaryCatalog = null, drawingPoints = [];
+let selection = null, pointerAction = null, boundaryCatalog = null, drawingPoints = [], landmaskObjectUrl = null;
 const checks = ['showSettlements','showLabels','showRoutes','showFlows','showHexEdges','showPoints','showRivers','showContinents','showRegions','showSuspectSquares','showSourceCoastline','showOriginalBoundary','showRegionLabels','showLocalities','showGrid'];
-const atlas = $('atlas'), overlay = $('overlay'), viewport = $('viewport'), stage = $('stage');
+const atlas = $('atlas'), landmaskImage = $('landmaskImage'), overlay = $('overlay'), viewport = $('viewport'), stage = $('stage');
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const fmt = (n) => Number.isFinite(n) ? Number(n).toLocaleString(undefined,{maximumFractionDigits:1}) : 'unknown';
 const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -614,6 +614,43 @@ function switchBase() {
   $('layerBadge').textContent=(height?'ELEVATION':'BIOME')+' / ORIGINAL';
   atlas.src=height?heightUrl:biomeUrl;
 }
+function clearLandmask() {
+  if(landmaskObjectUrl){URL.revokeObjectURL(landmaskObjectUrl);landmaskObjectUrl=null;}
+  landmaskImage.removeAttribute('src');landmaskImage.style.display='none';
+  $('landmaskStatus').textContent='No landmask loaded. Source coastline remains independent.';
+  $('landmaskFile').value='';
+}
+function landmaskOpacity() {
+  landmaskImage.style.opacity=String(clamp(Number($('landmaskOpacity').value)/100,0,1));
+}
+function loadLandmaskFile(event) {
+  const file=event.target.files?.[0];
+  if(!file)return;
+  if(!['image/png','image/webp'].includes(file.type) || file.size>20_000_000) {
+    alert('Choose a PNG or WebP image no larger than 20 MB.');event.target.value='';return;
+  }
+  const url=URL.createObjectURL(file);
+  const preview=new Image();
+  preview.onload=()=>{
+    if(preview.naturalWidth!==FRAME.width || preview.naturalHeight!==FRAME.height){
+      URL.revokeObjectURL(url);
+      $('landmaskStatus').textContent='Registration hold: '+preview.naturalWidth+'×'+preview.naturalHeight+
+        '. Prepare a 2048×1152 map-frame image before overlay.';
+      alert('Landmask dimensions are not 2048×1152. No stretching or implicit crop will be applied.');
+      return;
+    }
+    if(landmaskObjectUrl)URL.revokeObjectURL(landmaskObjectUrl);
+    landmaskObjectUrl=url;
+    landmaskImage.src=url;landmaskImage.style.display='block';
+    landmaskOpacity();
+    $('landmaskStatus').textContent=file.name+' · 2048×1152 local reference only';
+  };
+  preview.onerror=()=>{
+    URL.revokeObjectURL(url);
+    $('landmaskStatus').textContent='Could not decode landmask preview.';
+  };
+  preview.src=url;
+}
 function loadDraft() {
   try {const raw=JSON.parse(localStorage.getItem(KEY)||'{}');Object.assign(state,sanitizeDraft(raw));}
   catch {Object.assign(state,{moved:{},waypoints:{},reviews:{},boundary:newBoundaryDraft()});}
@@ -672,6 +709,12 @@ function annotateUnplaced() {
 }
 function events() {
   $('baseLayer').onchange=switchBase;
+  $('landmaskFile').onchange=loadLandmaskFile;
+  $('landmaskOpacity').oninput=landmaskOpacity;
+  $('clearLandmask').onclick=clearLandmask;
+  window.addEventListener('beforeunload',()=>{
+    if(landmaskObjectUrl)URL.revokeObjectURL(landmaskObjectUrl);
+  });
   $('fit').onclick=fitAtlas;
   $('zoomIn').onclick=()=>zoom(1.25);
   $('zoomOut').onclick=()=>zoom(.8);
