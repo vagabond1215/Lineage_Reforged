@@ -13,7 +13,7 @@ import featuresUrl from '../../packages/content/base/world/world_map_features.js
 import semanticUrl from '../../packages/content/base/world/map_features.json?url';
 import {buildBoundaryCatalog, newBoundaryDraft, cleanBoundaryDraft, copyPoints, boundaryPart,
   boundaryParts, setBoundaryPoints, excludeBoundary, resetBoundary, addCustomBoundary,
-  squareCandidate, segmentIndex} from './world-map-review-boundaries.mjs';
+  segmentIndex} from './world-map-review-boundaries.mjs';
 
 const $ = (id) => document.getElementById(id);
 const FRAME = { width: 2048, height: 1152 };
@@ -83,7 +83,7 @@ function sanitizeDraft(raw) {
         (kind === 'locality' && localities.some(x=>x.id===key)) ||
         (kind === 'boundary' && ['region','continent'].includes(parts[0]) &&
           (boundaryCatalog.parts.has(parts.slice(1).join(':')) ||
-           Boolean(state.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')])))) {
+           Boolean(raw?.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')])))) {
       reviews[id] = {status:['unreviewed','candidate','conflict','checked'].includes(r?.status) ? r.status : 'unreviewed',notes:String(r?.notes || '').slice(0,10000)};
     }
   }
@@ -195,7 +195,6 @@ function populateBoundaryOwners() {
 function renderBoundaryPartList() {
   const scope=boundaryScope(),ownerId=boundaryOwner(),parts=boundaryParts(boundaryCatalog,state.boundary,scope,ownerId);
   const list=$('boundaryPartList');list.replaceChildren();
-  const ownKind=boundaryCatalog.byRegion.get(ownerId)?.regionType;
   $('boundaryOwnership').textContent=scope==='continent'
     ? 'Macro contours combine mainland child-subregion footprints or directly owned island-system parts. Editing this preview does not change the subregion layer.'
     : (parts.length?'Existing generated footprints; offshore squares are only candidates for exclusion.':
