@@ -86,7 +86,7 @@ function sanitizeDraft(raw) {
         (kind === 'locality' && localities.some(x=>x.id===key)) ||
         (kind === 'boundary' && ['region','continent'].includes(parts[0]) &&
           (boundaryCatalog.parts.has(parts.slice(1).join(':')) ||
-           Boolean(raw?.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')])) ||
+           Boolean(raw?.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')]))) ||
         (kind === 'mixed-coast' && mixedById.has(key))) {
       reviews[id] = {status:['unreviewed','candidate','conflict','checked'].includes(r?.status) ? r.status : 'unreviewed',notes:String(r?.notes || '').slice(0,10000)};
       if(kind==='mixed-coast') reviews[id].decision=cleanMixedDecision(r?.decision);
