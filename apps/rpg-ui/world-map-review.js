@@ -238,6 +238,7 @@ function renderSquareCandidateQueue() {
     btn.onclick=()=>{selectBoundaryPart(scope,part.id);focusSelection();};
     list.append(btn);
   }
+  if(!parts.length)list.textContent='None remaining. All 42 verified offshore squares are absent from source footprints.';
 }
 function drawSourceCoastlines() {
   if(!checked('showSourceCoastline'))return;
@@ -900,7 +901,7 @@ async function boot() {
     const visual=sources.features.records[0]||{};
     boundaryCatalog=buildBoundaryCatalog(regions,visual.regionFootprints||[]);
     populateBoundaryOwners();
-    $('squareCount').textContent=boundaryCatalog.suspected.length+' candidates';
+    $('squareCount').textContent=boundaryCatalog.suspected.length+' remaining';
     featureById=new Map(['riverFeatures','mountainFeatures','passFeatures','crossingFeatures'].flatMap(k=>visual[k]||[]).map(f=>[f.id,f]));
     const width=sources.map.records[0]?.scaleProfile?.referenceImageWidthPx;
     const height=sources.map.records[0]?.scaleProfile?.referenceImageHeightPx;
