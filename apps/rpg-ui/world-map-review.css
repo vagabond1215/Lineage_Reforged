@@ -27,3 +27,7 @@ input[type=text],input:not([type]),select,textarea{background:#101d2a;border:1px
 .stage svg .boundary-shape{pointer-events:visiblePainted;cursor:pointer}
 .stage svg .boundary-shape.excluded{cursor:help}
 .stage svg .square-candidate{pointer-events:all;cursor:pointer}
+
+.landmask{position:absolute;left:0;top:0;width:2048px;height:1152px;max-width:none;max-height:none;object-fit:fill;border:none;opacity:.45;display:none;pointer-events:none}
+#landmaskFile{font-size:11px;max-width:100%;margin-top:8px}
+#landmaskOpacity{display:block;width:100%;margin-top:8px;accent-color:#85d5cd;cursor:pointer}
