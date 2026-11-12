@@ -736,12 +736,7 @@ try {
     }
 
     foreach ($settlement in @($settlementRecords)) {
-        $siteClass = if ($null -ne $settlement.mapLocation -and $settlement.mapLocation.PSObject.Properties.Name -contains 'siteClass') {
-            [string]$settlement.mapLocation.siteClass
-        }
-        else {
-            'surface'
-        }
+        $siteClass = [string]$settlement.siteClass
         if ($siteClass -eq 'underwater' -or $siteClass -eq 'subterranean') {
             continue
         }
@@ -751,7 +746,16 @@ try {
             continue
         }
 
-        $regionAnchorLookup[$regionId].Add((New-Object System.Drawing.Point -ArgumentList ([int][Math]::Round($settlement.mapLocation.pixelX / $sampleScale)), ([int][Math]::Round($settlement.mapLocation.pixelY / $sampleScale))))
+        # Current settlement authority is visualMapRef, not the obsolete mapLocation.
+        # An offshore settlement may be retained as an authored place, but must never
+        # attract land partition ownership or create a landmask island.
+        $anchor = $settlement.visualMapRef
+        if ($null -eq $anchor -or [string]$anchor.mapId -ne [string]$worldMapRecord.id) { continue }
+        $sx = [int][Math]::Round(([double]$anchor.pixelX / $sampleScale))
+        $sy = [int][Math]::Round(([double]$anchor.pixelY / $sampleScale))
+        if ($sx -lt 0 -or $sy -lt 0 -or $sx -ge $sampleWidth -or $sy -ge $sampleHeight) { continue }
+        if ($landMask.GetPixel($sx, $sy).R -le 127) { continue }
+        $regionAnchorLookup[$regionId].Add((New-Object System.Drawing.Point -ArgumentList $sx, $sy))
     }
 
     $orderedRegionIds = @($regionBaseFeatures.Keys | Sort-Object)
@@ -836,10 +840,9 @@ try {
         $disposeWorkingMask = $false
 
         try {
-            $zoneSettlements = @($settlementRecords | Where-Object {
-                    (([string]$_.mapLocation.biomeZoneId) -eq ([string]$zone.id) -or ([string]$_.mapLocation.biomeZoneId).StartsWith(([string]$zone.id) + '.part_')) -and
-                    ([string]$_.mapLocation.siteClass -ne 'underwater')
-                })
+            # Never repair a biome mask by stamping settlement-centered pixels.
+            # Independent biome/land raster geometry must be able to reveal a
+            # misplaced authored settlement without laundering its coordinates.
             if ($biomeId -match '^biome\.marine\.') {
                 $currentMask = New-PolygonMaskBitmap -Points (Convert-ToSamplePoints -Points $zone.points) -Width $sampleWidth -Height $sampleHeight
                 $workingMask = [RasterGeometry]::IntersectMasks($currentMask, $waterMask)
