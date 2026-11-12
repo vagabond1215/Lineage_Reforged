@@ -108,14 +108,14 @@ function fitAtlas() {
   view.scale = Math.min(w / FRAME.width, h / FRAME.height) * 0.985;
   view.tx = (w - FRAME.width * view.scale) / 2;
   view.ty = (h - FRAME.height * view.scale) / 2;
-  setTransform();
+  setTransform();if(boundaryCatalog)renderOverlay();
 }
 function zoom(factor, screenX=viewport.clientWidth/2, screenY=viewport.clientHeight/2) {
   const next = clamp(view.scale * factor, 0.11, 8);
   const ratio = next / view.scale;
   view.tx = screenX - (screenX-view.tx)*ratio;
   view.ty = screenY - (screenY-view.ty)*ratio;
-  view.scale = next; setTransform();
+  view.scale = next; setTransform();if(boundaryCatalog)renderOverlay();
 }
 function worldPoint(event) {
   const bounds = viewport.getBoundingClientRect();
@@ -436,13 +436,20 @@ function renderSearch() {
   if(!term)return;
   const options=[
     ...settlements.map(s=>({kind:'settlement',id:s.id,name:s.name,meta:'Settlement · '+nameOf(s.regionId)})),
-    ...regions.map(r=>({kind:'region',id:r.id,name:r.name,meta:'Region · approximate center'})),
+    ...regions.map(r=>({kind:r.regionType==='ocean'?'region':'boundary-owner',
+      scope:r.regionType==='continent'||r.regionType==='island_system'?'continent':'region',
+      id:r.id,name:r.name,meta:r.regionType+' · '+(r.regionType==='ocean'?'no polygon':'boundary review')})),
     ...localities.map(l=>({kind:'locality',id:l.id,name:l.name,meta:'Locality · centroid inferred'}))
   ].filter(o=>o.name?.toLowerCase().includes(term)).slice(0,30);
   for(const o of options) {
     const btn=document.createElement('button');btn.className='result-item';
     btn.innerHTML='<strong>'+escapeHtml(o.name)+'</strong><span>'+escapeHtml(o.meta)+'</span>';
-    btn.onclick=()=>{select(o.kind,o.id);focusSelection();};
+    btn.onclick=()=>{
+      if(o.kind==='boundary-owner') {
+        $('boundaryScope').value=o.scope;populateBoundaryOwners();$('boundaryOwner').value=o.id;
+      }
+      select(o.kind,o.id,o.scope||null);focusSelection();
+    };
     box.append(btn);
   }
   if (!options.length) box.textContent='No matching authored identity.';
@@ -455,6 +462,14 @@ function selectionPoint() {
     return item?.point || centroid(item?.points||[]);
   }
   if(selection.kind==='region') return centroid(settlements.filter(s=>s.regionId===selection.id||s.macroRegionId===selection.id).map(position).filter(Boolean));
+  if(selection.kind==='boundary')return centroid(activeBoundary()?.points||[]);
+  if(selection.kind==='boundary-owner') {
+    const parts=boundaryParts(boundaryCatalog,state.boundary,selection.scope,selection.id).filter(p=>!p.excluded);
+    const pts=parts.flatMap(p=>p.points);
+    if(!pts.length)return null;
+    const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);
+    return {x:(Math.min(...xs)+Math.max(...xs))/2,y:(Math.min(...ys)+Math.max(...ys))/2};
+  }
   if(selection.kind==='locality')return centroid(settlements.filter(s=>s.regionLocalityId===selection.id||s.localityBandId===selection.id).map(position).filter(Boolean));
   return null;
 }
@@ -462,17 +477,19 @@ function focusSelection() {
   if(selection?.kind==='route') {const route=selectedRoute();if(route)focusRoute(route);}
   else {const p=selectionPoint();if(p)centerOn(p,Math.max(view.scale,.85));}
 }
-function selectionKey() {return selection ? selection.kind+':'+selection.id : '';}
-function select(kind,id) {
-  selection=kind&&id?{kind,id}:null;
+function selectionKey() {return selection ? selection.kind+':'+(selection.scope?selection.scope+':':'')+selection.id : '';}
+function select(kind,id,scope=null) {
+  selection=kind&&id?{kind,id,scope}:null;
   const review=state.reviews[selectionKey()]||{};
   $('reviewStatus').value=review.status||'unreviewed';
   $('reviewNotes').value=review.notes||'';
   $('reviewStatus').disabled=!selection;
   $('reviewNotes').disabled=!selection;
   if(selection?.kind!=='route')$('addCheckpoint').checked=false;
-  $('selectionSummary').textContent=selection ? (nameOf(id) || id) : 'None';
-  renderInspector();renderRoutesList();renderOverlay();
+  $('selectionSummary').textContent=selection ?
+    (kind==='boundary'?boundaryPart(boundaryCatalog,state.boundary,scope,id)?.name||id:
+      kind==='boundary-owner'?nameOf(id):nameOf(id)) : 'None';
+  renderInspector();renderBoundaryPartList();renderRoutesList();renderOverlay();
 }
 function renderInspector() {
   const c=$('inspectorContents');
@@ -503,6 +520,33 @@ function renderInspector() {
       box('Draft points',pts.length)+'</dl>'+
       '<div class="route-pts"><strong>Route editing</strong><p>Enable “Click map to insert checkpoint”, click near the desired segment, then drag its yellow waypoint. Click any route or its list entry to select it. Checkpoint order follows the nearest currently drawn segment.</p>'+
       (pts.length?'<ol>'+pts.map(p=>'<li>'+fmt(p.x)+', '+fmt(p.y)+'</li>').join('')+'</ol>':'<p>No authored waypoints; displaying a straight endpoint chord.</p>')+'</div>';
+  } else if(kind==='boundary'){
+    const p=boundaryPart(boundaryCatalog,state.boundary,selection.scope,id);if(!p)return;
+    const ownerId=p.custom?p.ownerId:(selection.scope==='continent'?p.macroId:p.ownerId);
+    const original=boundaryCatalog.parts.get(id);
+    const square=p.squareCandidate?'8×8 source square candidate: visually inspect against independent landmask. Do not assume it represents real land.':'No automatic artifact classification for this part.';
+    c.innerHTML='<h3>'+escapeHtml(p.name)+'</h3>'+
+      '<p class="warning">Review geometry only. Excluding a part changes this overlay, not the authoritative coastline, landmask, settlement records or gameplay.</p>'+
+      '<dl>'+box('Layer',selection.scope)+box('Source ID',p.id)+box('Owner',nameOf(ownerId))+
+      box('Source vertices',original?.points.length??'new draft')+
+      box('Draft vertices',p.points.length)+box('Excluded in draft',p.excluded?'Yes':'No')+
+      box('Classification',p.squareCandidate?'Exact 8×8 square candidate':'Not a square candidate')+
+      box('Geometry',p.custom?'New review polygon':p.edited?'Modified preview':'Unmodified source')+'</dl>'+
+      '<p>'+escapeHtml(square)+'</p><div class="boundary-edit-hint">'+
+      'Select this part in the sidebar, enable boundary editing, then drag vertices at closer zoom; Shift-click its boundary to add a vertex. Alt-click a vertex to remove it. Use Move whole polygon for translation. The original is retained for comparison.</div>';
+  } else if(kind==='boundary-owner'){
+    const owner=boundaryCatalog.byRegion.get(id);if(!owner)return;
+    const parts=boundaryParts(boundaryCatalog,state.boundary,selection.scope,id);
+    c.innerHTML='<h3>'+escapeHtml(owner.name)+'</h3><dl>'+
+      box('Identity',owner.id)+box('Source type',owner.regionType)+
+      box('Source-part count',parts.filter(p=>p.source).length)+
+      box('Added draft parts',parts.filter(p=>p.custom).length)+
+      box('Excluded draft parts',parts.filter(p=>p.excluded).length)+
+      box('8×8 candidates',parts.filter(p=>p.squareCandidate).length)+'</dl><p>'+
+      escapeHtml(owner.summary||'')+'</p>'+
+      '<p class="warning">'+(parts.length?
+      'This layer is a collection of individual footprint parts. It is not a solid bounding-box territory.':
+      'No independent source footprint exists here. Any new polygon is an unverified proposed review shape.')+'</p>';
   } else if(kind==='feature'){
     const f=featureById.get(id);if(!f)return;
     c.innerHTML='<h3>'+escapeHtml(f.name)+'</h3><dl>'+box('Source ID',f.id)+box('Region links',(f.regionIds||[]).map(nameOf).join(', '))+
@@ -572,7 +616,7 @@ function switchBase() {
 }
 function loadDraft() {
   try {const raw=JSON.parse(localStorage.getItem(KEY)||'{}');Object.assign(state,sanitizeDraft(raw));}
-  catch {Object.assign(state,{moved:{},waypoints:{},reviews:{}});}
+  catch {Object.assign(state,{moved:{},waypoints:{},reviews:{},boundary:newBoundaryDraft()});}
   updateDraftSummary();
 }
 function writeNotes() {
@@ -581,10 +625,10 @@ function writeNotes() {
   save();
 }
 function exportDraft() {
-  const payload={schemaVersion:1,source:'Lineage_Reforged First World map reference 2048x1152',createdAt:new Date().toISOString(),
-    caveat:'Review overlays only: NOT authoritative settlement coordinates, runtime paths, travel modes or Save data.',
+  const payload={schemaVersion:2,source:'Lineage_Reforged First World map reference 2048x1152',createdAt:new Date().toISOString(),
+    caveat:'Review overlays only: NOT authoritative landmask, continent/subregion boundaries, settlements, routes or Save data.',
     movedSettlementPixels:state.moved,routeWaypoints:state.waypoints,reviews:state.reviews,
-    moved:state.moved,waypoints:state.waypoints};
+    boundary:state.boundary,moved:state.moved,waypoints:state.waypoints};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download='first-world-map-review-'+new Date().toISOString().slice(0,10)+'.json';
@@ -595,20 +639,28 @@ async function importDraft(event) {
   try {
     if(file.size>2_000_000)throw new Error('Review file is too large');
     const data=JSON.parse(await file.text());
-    if(data.schemaVersion!==1 && data.version!==1)throw new Error('Unsupported review schema version');
+    if(![1,2].includes(data.schemaVersion) && ![1,2].includes(data.version))
+      throw new Error('Unsupported review schema version');
     if(!confirm('Replace this browser’s review-only markers, waypoints and notes with the imported draft?'))return;
-    replaceDraft({moved:data.moved||data.movedSettlementPixels,waypoints:data.waypoints||data.routeWaypoints,reviews:data.reviews});
+    replaceDraft({moved:data.moved||data.movedSettlementPixels,
+      waypoints:data.waypoints||data.routeWaypoints,reviews:data.reviews,boundary:data.boundary});
   }catch(err){alert('Import rejected: '+err.message);}finally{event.target.value='';}
 }
 function resetSelected() {
   if(!selection)return;
   if(selection.kind==='settlement')delete state.moved[selection.id];
   if(selection.kind==='route')delete state.waypoints[selection.id];
+  if(selection.kind==='boundary'){
+    resetBoundary(boundaryCatalog,state.boundary,selection.scope,selection.id);
+    save();select('boundary-owner',boundaryOwner(),boundaryScope());return;
+  }
   if(selection.kind==='settlement'||selection.kind==='route'){save();select(selection.kind,selection.id);}
 }
 function resetAll() {
   if(!confirm('Clear every local coordinate override, route checkpoint and review note? Source data will not change.'))return;
-  Object.assign(state,{moved:{},waypoints:{},reviews:{}});save();select(null,null);
+  drawingPoints=[];
+  Object.assign(state,{moved:{},waypoints:{},reviews:{},boundary:newBoundaryDraft()});
+  save();select(null,null);
 }
 function annotateUnplaced() {
   const semantic=sources.semantic?.records||[];
@@ -707,6 +759,9 @@ async function boot() {
     regionById=new Map(regions.map(r=>[r.id,r]));
     routesById=new Map(routes.map(r=>[r.id,r]));
     const visual=sources.features.records[0]||{};
+    boundaryCatalog=buildBoundaryCatalog(regions,visual.regionFootprints||[]);
+    populateBoundaryOwners();
+    $('squareCount').textContent=boundaryCatalog.suspected.length+' candidates';
     featureById=new Map(['riverFeatures','mountainFeatures','passFeatures','crossingFeatures'].flatMap(k=>visual[k]||[]).map(f=>[f.id,f]));
     const width=sources.map.records[0]?.scaleProfile?.referenceImageWidthPx;
     const height=sources.map.records[0]?.scaleProfile?.referenceImageHeightPx;
