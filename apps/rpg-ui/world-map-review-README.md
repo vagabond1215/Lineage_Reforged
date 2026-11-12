@@ -1,7 +1,7 @@
 # First World cartographic review workbench (Vite, review-only)
 
 Date: 2026-11-12
-Status: **CONNECTOR-PREPARED / LOCAL EXECUTION AND RASTER WITNESS REQUIRED**
+Status: **42-ID PHYSICAL CLEANUP PUSHED (73502017); MIXED-LANDMASS QUEUE CONNECTOR-PREPARED, NATIVE/BROWSER ACCEPTANCE HELD**
 Base: master `343d14ce79b17b5ad9badc06c65f986ebfd7ecf2`.
 Parent evidence: [First World geographic reconciliation](https://github.com/vagabond1215/Lineage_Reforged/blob/connector/first-world-settlement-distribution-policy-pilots-2026-11-12/docs/design/first-world-map-geography-interconnectivity-and-viewer-reconciliation-2026-11-12.md), presently in [draft PR #76](https://github.com/vagabond1215/Lineage_Reforged/pull/76).
 No content source, world simulation, Save, runtime, world_map image, active L2 contract or game version is edited.
@@ -56,10 +56,10 @@ Do not force the worktree checkout if it has uncommitted local edits. Export map
 - Optional 49 hex edges are shown between **inferred settlement-anchor centroids**, not physical path centerlines.
 - **Continent / island-system layer:** Five continent identities are drawn as the original polygons of their child subregions, while four island systems use their directly owned footprint parts. This is a display grouping of the **159 retained footprint parts**, not a computed solid union or geographical bounding box. Each macro-layer part is editable in an independent draft.
 - **Subregion layer:** The 28 authored subregions are separately selectable; 16 continental subregions have direct footprint parts, while the 12 island-system subregions currently lack independent polygons. Review-only polygons can be manually drawn for these unbounded identities. The four oceans have no source ocean polygons and are intentionally not drawn as territories.
-- **Accepted offshore-square cleanup (2026-11-12):** User visually confirmed every one of the **42 exact 8×8 source footprint parts** was outside the landmass; all 42 are excluded from the **effective viewer footprint set**, reducing **201 raw to 159 displayed**. GitHub's connected editor could not push the 9.3 MB canonical source change, so the physical JSON deletion remains a **local execution gate** using the checked-in deterministic cleanup command. Both continent and subregion overlays exclude them now. The review queue now reports **0 residual squares** and remains available to catch regressions. No other small islands were removed. Accepted removed IDs and the originating blob are listed in `docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json`.
+- **Accepted offshore-square cleanup (2026-11-12):** User visually confirmed every one of the **42 exact 8×8 source footprint parts** was outside the landmass; all 42 are excluded from the **effective viewer footprint set**, reducing **201 raw to 159 displayed**. The physical JSON deletion was performed and pushed at commit 73502017; the read-only removal check verifies 159 surviving source parts and zero approved artifacts. Both continent and subregion overlays exclude them now. The review queue now reports **0 residual squares** and remains available to catch regressions. No other small islands were removed. Accepted removed IDs and the originating blob are listed in `docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json`.
 - **Boundary editing:** Select Continent or Region, select an owner and individual part, enable Edit, and zoom in. In vertex mode drag handles, Shift-click the selected edge to insert a vertex, or Alt-click a handle to remove one (minimum three vertices). Translate mode drags the whole selected polygon. Draw mode collects map clicks into a new manual polygon, finished from the sidebar. Exclude/Restore hides a part from the *effective draft* while leaving a faint review ghost; Reset discards the selected part's draft changes. The two layers are intentionally independent to avoid an accidental propagation or new land claim.
 - **Optional independent landmask:** Load a local prepared 2048×1152 PNG/WebP with the sidebar's file picker. It appears over the atlas with adjustable opacity; other sizes are rejected rather than stretched or implicitly cropped. The imported image is kept in browser memory and is neither uploaded nor saved in the review JSON. This is a visual comparison input, never an input to settlement validation or canonical geography generation.
-- The effective viewer geometry has 159 retained region footprint parts (the large raw source still needs the deletion command), 68 separate coastline polygon parts, 8 rivers, 5 mountain line features, 4 pass markers and 6 crossing markers. The source coastline layer can be shown **unaltered** to compare against edited boundaries. Region label points and 47 locality display positions are derived from member settlement centroids when available; they are never promoted to source coordinates.
+- The effective viewer geometry has 159 retained region footprint parts (the raw source now also has 159 retained parts), 68 separate coastline polygon parts, 8 rivers, 5 mountain line features, 4 pass markers and 6 crossing markers. The source coastline layer can be shown **unaltered** to compare against edited boundaries. Region label points and 47 locality display positions are derived from member settlement centroids when available; they are never promoted to source coordinates.
 - Planned semantic features without a reference visual geometry remain in an **unplaced list**. A label or descriptive place relation cannot conjure a point or coastline.
 - Local marker repositioning, route checkpoints, continent/region draft shapes, individual part exclusions and notes persist in browser `localStorage`. Export/import schema v2 JSON to share them, with backward-compatible v1 review imports. The optional local landmask image itself is not persisted or exported. There is no write path to canonical image masks, region feature data, runtime state or Saves.
 
@@ -80,17 +80,16 @@ Do not force the worktree checkout if it has uncommitted local edits. Export map
 
 ## Accepted source removal and regeneration prevention (2026-11-12)
 
-The owner's direct manual review accepts all 42 exact 8×8 squares as offshore artifacts. The effective map overlays now omit all 42 IDs via the accepted manifest. The canonical 9.3 MB `world_map_features.json` **still requires physical removal from a local checkout**. `scripts/regenerate_world_map_features.ps1` no longer stamps settlement-centered buffers into region masks or biome-zone masks, preventing the known artificial-land source path from reappearing. The accepted-ID manifest provides provenance for the exact deletion set. The coastline extraction remains untouched. Existing offshore settlement anchors and legal travel access remain separate unresolved placement issues; don't reinterpret a cleaned landmask as approving them.
+The owner's direct manual review accepts all 42 exact 8×8 squares as offshore artifacts. The effective map overlays now omit all 42 IDs via the accepted manifest. The canonical world_map_features.json was physically cleaned in commit 73502017. `scripts/regenerate_world_map_features.ps1` no longer stamps settlement-centered buffers into region masks or biome-zone masks, preventing the known artificial-land source path from reappearing. The accepted-ID manifest provides provenance for the exact deletion set. The coastline extraction remains untouched. Existing offshore settlement anchors and legal travel access remain separate unresolved placement issues; don't reinterpret a cleaned landmask as approving them.
 
 After pulling the branch, rerun both focused Node tests and visually compare source coastlines and the base image. If a broader settlement-to-region audit surfaces new misses, report them instead of manufacturing land under the offending marker. No runtime/Save migration or map-scale change is approved here.
 
 
-## Canonical source cleanup gate (required before accepting the patch)
+## Canonical source cleanup verification (completed at 73502017; rerun on future source changes)
 
 Run from the review worktree root, not from the protected gameplay checkout:
 
 ```powershell
-node scripts/remove-verified-offshore-footprints.mjs --write --json
 node scripts/remove-verified-offshore-footprints.mjs --check --json
 node scripts/audit-first-world-continent-region-footprints.mjs --json
 node --test tests/unit/first-world-map-review-witness.test.mjs tests/unit/first-world-map-boundary-review.test.mjs
@@ -98,6 +97,23 @@ git diff --check
 git diff --stat
 ```
 
-The first command performs **exact 42-ID targeted, formatting-preserving JSON removal** with geometry/landmask preconditions; the second fails until the removal is done. This data-file step has not yet been executed/pushed from this connector. Commit and push it only after local validation. Existing coastline shapes, biome/climate layers, settlements, routes, Save and original images must remain unchanged.
+The approved 42-ID physical removal was committed and pushed at 73502017, with 159 source footprints retained. The read-only --check confirms that deletion stays applied. Do not re-run --write unless separately authorized. Existing coastline shapes, biome/climate layers, settlements, routes, Save and original images must remain unchanged.
 
 The continent/region audit is read-only; it evaluates effective 159-part geometry whether the physical source cleanup has run or not. Mixed-ownership coastline components and overlapping macro boundaries are **review candidates**, not authority to redraw the world automatically.
+
+
+## Mixed-landmass review queue (connector-prepared, browser gate held)
+
+The sidebar's **Mixed-landmass conflict queue** derives its inventory from 68 unchanged source coastline polygons and 159 retained source region footprints. A deterministic 2×2 reference-pixel scanline-center comparison currently reports **8 substantive mixed traces** (parts 3, 51, 10, 45, 58, 31, 8, 41) plus **2 frame-edge diagnostics** (parts 1, 2).
+
+Select a case to center/zoom its bounding extent and enable the source coastline, macro outlines and subregion outlines. The selected original coastline is highlighted in yellow; original macro-owner footprint polygons are color-coded and clipped inside the selected coastline. The inspector displays sampled owner/subregion areas, direct owner overlap and the coordinate bounds. The colors do not prove actual physical connectivity, nor do they fill an artificial bounding-box landmass.
+
+Use **Selected coastline disposition** and the existing **Review classification** and **Review notes** controls. Their entries persist in browser localStorage and schema-v2 JSON under review keys prefixed mixed-coast:, with invalid keys/decisions rejected on import. Existing v1/v2 import shapes remain compatible. Export before changing browser profiles or worktrees. Nothing writes to source geometry, rasters, settlements, travel routes, runtime, or Save.
+
+One source coastline component containing several owners is different from direct polygon overlap. About 20 px² of sampled cross-macro overlap is on coastline part 3 (Valtherion and Dawnreach). Parts 1 and 2 are map-edge strips, not actual inland bridges. Sampling 2px cells also cannot prove whether a narrow real-water channel is present in the original PNG.
+
+Focused native witness:
+
+    node --test tests/unit/first-world-map-review-witness.test.mjs tests/unit/first-world-map-boundary-review.test.mjs tests/unit/first-world-map-mixed-landmass-review.test.mjs
+
+Then run the isolated Vite build and interactive browser test. Select parts 51 and 3; verify coastline, color owners, geographic descriptions, review notes/disposition, export/reload/import, and unchanged pre-existing settlement/route/boundary drafts. Toggle elevation and confirm registration remains provisional until independently accepted. Keep PR #77 and this implementation draft pending local build/browser acceptance.

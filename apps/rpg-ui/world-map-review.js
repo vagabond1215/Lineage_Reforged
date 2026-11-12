@@ -15,6 +15,7 @@ import verifiedRemovedUrl from '../../docs/design/first-world-offshore-square-ar
 import {buildBoundaryCatalog, newBoundaryDraft, cleanBoundaryDraft, copyPoints, boundaryPart,
   boundaryParts, setBoundaryPoints, excludeBoundary, resetBoundary, addCustomBoundary,
   segmentIndex} from './world-map-review-boundaries.mjs';
+import {buildMixedLandmassCatalog,cleanMixedDecision} from './world-map-review-mixed-landmasses.mjs';
 
 const $ = (id) => document.getElementById(id);
 const FRAME = { width: 2048, height: 1152 };
@@ -26,7 +27,8 @@ const view = { scale: 1, tx: 0, ty: 0 };
 let settlements = [], routes = [], hexes = [], edges = [], regions = [], localities = [];
 let settlementById = new Map(), regionById = new Map(), routesById = new Map(), featureById = new Map();
 let selection = null, pointerAction = null, boundaryCatalog = null, drawingPoints = [], landmaskObjectUrl = null;
-const checks = ['showSettlements','showLabels','showRoutes','showFlows','showHexEdges','showPoints','showRivers','showContinents','showRegions','showSuspectSquares','showSourceCoastline','showOriginalBoundary','showRegionLabels','showLocalities','showGrid'];
+let mixedLandmasses = [], mixedById = new Map();
+const checks = ['showSettlements','showLabels','showRoutes','showFlows','showHexEdges','showPoints','showRivers','showContinents','showRegions','showSuspectSquares','showSourceCoastline','showMixedLandmass','showOriginalBoundary','showRegionLabels','showLocalities','showGrid'];
 const atlas = $('atlas'), landmaskImage = $('landmaskImage'), overlay = $('overlay'), viewport = $('viewport'), stage = $('stage');
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const fmt = (n) => Number.isFinite(n) ? Number(n).toLocaleString(undefined,{maximumFractionDigits:1}) : 'unknown';
@@ -84,8 +86,10 @@ function sanitizeDraft(raw) {
         (kind === 'locality' && localities.some(x=>x.id===key)) ||
         (kind === 'boundary' && ['region','continent'].includes(parts[0]) &&
           (boundaryCatalog.parts.has(parts.slice(1).join(':')) ||
-           Boolean(raw?.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')])))) {
+           Boolean(raw?.boundary?.custom?.[parts[0]]?.[parts.slice(1).join(':')]))) ||
+        (kind === 'mixed-coast' && mixedById.has(key))) {
       reviews[id] = {status:['unreviewed','candidate','conflict','checked'].includes(r?.status) ? r.status : 'unreviewed',notes:String(r?.notes || '').slice(0,10000)};
+      if(kind==='mixed-coast') reviews[id].decision=cleanMixedDecision(r?.decision);
     }
   }
   return {moved,waypoints,reviews,boundary:cleanBoundaryDraft(raw?.boundary,boundaryCatalog)};
@@ -100,6 +104,7 @@ function updateDraftSummary() {
     Object.values(state.boundary.custom.region).length+Object.values(state.boundary.custom.continent).length;
   $('draftSummary').textContent = Object.keys(state.moved).length + ' moved · ' + count + ' routes · ' + altered + ' boundary parts';
   if(boundaryCatalog&&$('squareCandidateList'))renderSquareCandidateQueue();
+  if(mixedLandmasses.length)renderMixedQueue();
 }
 function setTransform() {
   stage.style.transform = 'translate(' + view.tx + 'px,' + view.ty + 'px) scale(' + view.scale + ')';
@@ -242,6 +247,82 @@ function renderSquareCandidateQueue() {
   }
   if(!parts.length)list.textContent='None remaining. All 42 verified offshore squares are absent from source footprints.';
 }
+
+const MIXED_OWNER_COLORS=['#ffd17a','#7fd8df','#db94e8','#8ded9c','#f3a7a7','#c3b1ff'];
+function mixedReview(id) {return state.reviews['mixed-coast:'+id]||{};}
+function renderMixedQueue() {
+  const list=$('mixedConflictList');
+  if(!list)return;
+  list.replaceChildren();
+  const filter=$('mixedFilter').value;
+  for(const item of mixedLandmasses) {
+    const status=mixedReview(item.id).status||'unreviewed';
+    if(filter==='edge'&&item.kind!=='map-edge-strip')continue;
+    if(filter!=='all'&&filter!=='edge'&&status!==filter)continue;
+    const button=document.createElement('button');
+    button.className='mixed-conflict-item'+(item.kind==='map-edge-strip'?' edge':'')+
+      (selection?.kind==='mixed-coast'&&selection.id===item.id?' active':'');
+    const names=item.owners.filter(o=>item.materialOwnerIds.includes(o.id)).map(o=>o.name).join(' + ');
+    button.innerHTML='<strong>'+escapeHtml(item.id.split('.').at(-1))+' · '+
+      escapeHtml(item.kind==='map-edge-strip'?'Map-edge diagnostic':'Mixed traced mass')+
+      '</strong><small>'+escapeHtml(names)+'</small><small>'+
+      fmt(item.areaPx2)+' px² · '+escapeHtml(status.replaceAll('_',' '))+'</small>';
+    button.onclick=()=>{
+      $('showMixedLandmass').checked=true;
+      $('showSourceCoastline').checked=true;
+      $('showContinents').checked=true;
+      $('showRegions').checked=true;
+      $('editBoundary').checked=false;
+      select('mixed-coast',item.id);
+      focusSelection();
+    };
+    list.append(button);
+  }
+  if(!list.childElementCount)list.textContent='No cases for the selected filter.';
+}
+function focusMixedBounds(b) {
+  if(!b)return;
+  const width=Math.max(1,b.maxX-b.minX),height=Math.max(1,b.maxY-b.minY);
+  const scale=clamp(Math.min(viewport.clientWidth/(width+100),viewport.clientHeight/(height+100))*.9,.18,4);
+  centerOn({x:(b.minX+b.maxX)/2,y:(b.minY+b.maxY)/2},scale);
+  renderOverlay();
+}
+function intersectsBounds(points,b) {
+  if(!points?.length||!b)return false;
+  let x1=Infinity,y1=Infinity,x2=-Infinity,y2=-Infinity;
+  for(const p of points){
+    x1=Math.min(x1,p.x);y1=Math.min(y1,p.y);
+    x2=Math.max(x2,p.x);y2=Math.max(y2,p.y);
+  }
+  return x1<=b.maxX&&x2>=b.minX&&y1<=b.maxY&&y2>=b.minY;
+}
+function drawMixedLandmass() {
+  if(!checked('showMixedLandmass')||selection?.kind!=='mixed-coast')return;
+  const item=mixedById.get(selection.id);
+  const coast=(sources.features?.records?.[0]?.coastlines||[]).find(f=>f.id===item?.id);
+  if(!item||!coast)return;
+  const layer=group('mixed-landmass-comparison');
+  const defs=addSvg('defs',{},layer),clipId='selected-mixed-coastline-clip';
+  const clip=addSvg('clipPath',{id:clipId,clipPathUnits:'userSpaceOnUse'},defs);
+  addSvg('path',{d:polygonPath(coast.points)},clip);
+  // Source owner polygons are clipped to the selected traced coastline.
+  // Neither boundary drafts nor the original coastline are mutated.
+  const material=item.owners.filter(o=>item.materialOwnerIds.includes(o.id));
+  material.forEach((owner,index)=>{
+    const color=MIXED_OWNER_COLORS[index%MIXED_OWNER_COLORS.length];
+    for(const part of boundaryCatalog.parts.values()) {
+      if(part.macroId!==owner.id || !intersectsBounds(part.points,item.bounds))continue;
+      const shape=addSvg('path',{d:polygonPath(part.points),
+        fill:color,'fill-opacity':.22,stroke:color,'stroke-opacity':.95,
+        'stroke-width':4,'clip-path':'url(#'+clipId+')'},layer);
+      addSvg('title',{},shape,'Source owner '+owner.name+' · '+part.name);
+    }
+  });
+  addSvg('path',{d:polygonPath(coast.points),fill:'none',stroke:'#ffef91',
+    'stroke-width':5,'stroke-dasharray':'13 7','stroke-opacity':1,
+    class:'mixed-coast-outline','data-kind':'mixed-coast','data-id':item.id},layer);
+}
+
 function drawSourceCoastlines() {
   if(!checked('showSourceCoastline'))return;
   const layer=group('source-coastline-reference');
@@ -426,7 +507,7 @@ function drawLocalities() {
 }
 function renderOverlay() {
   overlay.replaceChildren();
-  drawSourceCoastlines();drawBoundaryScope('continent');drawBoundaryScope('region');
+  drawSourceCoastlines();drawBoundaryScope('continent');drawBoundaryScope('region');drawMixedLandmass();
   drawGrid();drawCoarseHexEdges();drawTradeRelationships();drawLinearFeatures();drawRoutes();
   drawSuspectSquares();drawSettlements();drawRegionLabels();drawLocalities();drawPoints();
   drawBoundaryHandles();
@@ -475,6 +556,7 @@ function selectionPoint() {
   }
   if(selection.kind==='region') return centroid(settlements.filter(s=>s.regionId===selection.id||s.macroRegionId===selection.id).map(position).filter(Boolean));
   if(selection.kind==='boundary')return centroid(activeBoundary()?.points||[]);
+  if(selection.kind==='mixed-coast'){const b=mixedById.get(selection.id)?.bounds;return b?{x:(b.minX+b.maxX)/2,y:(b.minY+b.maxY)/2}:null;}
   if(selection.kind==='boundary-owner') {
     const parts=boundaryParts(boundaryCatalog,state.boundary,selection.scope,selection.id).filter(p=>!p.excluded);
     const pts=parts.flatMap(p=>p.points);
@@ -487,6 +569,7 @@ function selectionPoint() {
 }
 function focusSelection() {
   if(selection?.kind==='route') {const route=selectedRoute();if(route)focusRoute(route);}
+  else if(selection?.kind==='mixed-coast') focusMixedBounds(mixedById.get(selection.id)?.bounds);
   else {const p=selectionPoint();if(p)centerOn(p,Math.max(view.scale,.85));}
 }
 function selectionKey() {return selection ? selection.kind+':'+(selection.scope?selection.scope+':':'')+selection.id : '';}
@@ -494,14 +577,16 @@ function select(kind,id,scope=null) {
   selection=kind&&id?{kind,id,scope}:null;
   const review=state.reviews[selectionKey()]||{};
   $('reviewStatus').value=review.status||'unreviewed';
+  $('mixedDecision').disabled=selection?.kind!=='mixed-coast';
+  $('mixedDecision').value=selection?.kind==='mixed-coast'?cleanMixedDecision(review.decision):'undecided';
   $('reviewNotes').value=review.notes||'';
   $('reviewStatus').disabled=!selection;
   $('reviewNotes').disabled=!selection;
   if(selection?.kind!=='route')$('addCheckpoint').checked=false;
   $('selectionSummary').textContent=selection ?
     (kind==='boundary'?boundaryPart(boundaryCatalog,state.boundary,scope,id)?.name||id:
-      kind==='boundary-owner'?nameOf(id):nameOf(id)) : 'None';
-  renderInspector();renderBoundaryPartList();renderRoutesList();renderOverlay();
+      kind==='boundary-owner'?nameOf(id):kind==='mixed-coast'?id.split('.').at(-1):nameOf(id)) : 'None';
+  renderInspector();renderBoundaryPartList();renderRoutesList();renderMixedQueue();renderOverlay();
 }
 function renderInspector() {
   const c=$('inspectorContents');
@@ -546,6 +631,27 @@ function renderInspector() {
       box('Geometry',p.custom?'New review polygon':p.edited?'Modified preview':'Unmodified source')+'</dl>'+
       '<p>'+escapeHtml(square)+'</p><div class="boundary-edit-hint">'+
       'Select this part in the sidebar, enable boundary editing, then drag vertices at closer zoom; Shift-click its boundary to add a vertex. Alt-click a vertex to remove it. Use Move whole polygon for translation. The original is retained for comparison.</div>';
+  } else if(kind==='mixed-coast'){
+    const item=mixedById.get(id);if(!item)return;
+    const material=item.owners.filter(o=>item.materialOwnerIds.includes(o.id));
+    const owners=material.map((o,i)=>'<li><span class="swatch" style="background:'+
+      MIXED_OWNER_COLORS[i%MIXED_OWNER_COLORS.length]+'"></span>'+
+      escapeHtml(o.name)+' · '+fmt(o.areaPx2)+' px² ('+fmt(o.sharePercent)+'%)</li>').join('');
+    const minor=item.owners.filter(o=>!item.materialOwnerIds.includes(o.id));
+    c.innerHTML='<h3>'+escapeHtml(item.id.split('.').at(-1))+'</h3>'+
+      '<p class="warning">Two-pixel source-vector sampling only. A connected trace does not establish real land connectivity or authorize a border or settlement change.</p>'+
+      '<dl>'+box('Coastline source',item.id)+box('Trace class',item.kind)+
+      box('Trace sampled area',fmt(item.areaPx2)+' px²')+
+      box('Source vertices',item.sourceVertices)+
+      box('Bounds',fmt(item.bounds.minX)+','+fmt(item.bounds.minY)+' to '+
+        fmt(item.bounds.maxX)+','+fmt(item.bounds.maxY))+
+      box('Cross-owner overlap',fmt(item.directMacroOverlapAreaPx2)+' px² sampled')+'</dl>'+
+      '<h4>Material macro owners in this trace</h4><ul class="mixed-owner-legend">'+owners+'</ul>'+
+      (minor.length?'<p class="mixed-review-caution">Smaller owner samples: '+
+        minor.map(o=>escapeHtml(o.name)+' ('+fmt(o.areaPx2)+' px²)').join(', ')+'</p>':'')+
+      '<h4>Subregions sampled within trace</h4><ul>'+
+      item.subregions.map(o=>'<li>'+escapeHtml(o.name)+' · '+fmt(o.areaPx2)+' px²</li>').join('')+'</ul>'+
+      '<p class="mixed-review-caution">Compare both original rasters and the unchanged source coastline before classifying any trace connection or owner assignment. Colored overlays show source footprints clipped for visual comparison. Independent landmask remains unverified.</p>';
   } else if(kind==='boundary-owner'){
     const owner=boundaryCatalog.byRegion.get(id);if(!owner)return;
     const parts=boundaryParts(boundaryCatalog,state.boundary,selection.scope,id);
@@ -592,7 +698,7 @@ function insertCheckpoint(route,point) {
   save();select('route',route.id);
 }
 function renderAll() {
-  renderOverlay();renderBoundaryPartList();renderSquareCandidateQueue();
+  renderOverlay();renderBoundaryPartList();renderSquareCandidateQueue();renderMixedQueue();
   renderRoutesList();renderSearch();renderInspector();
 }
 function registerRasterImage() {
@@ -674,6 +780,7 @@ function loadDraft() {
 function writeNotes() {
   if(!selection)return;
   state.reviews[selectionKey()]={status:$('reviewStatus').value,notes:$('reviewNotes').value};
+  if(selection.kind==='mixed-coast')state.reviews[selectionKey()].decision=cleanMixedDecision($('mixedDecision').value);
   save();
 }
 function exportDraft() {
@@ -774,6 +881,8 @@ function events() {
   $('search').oninput=renderSearch;
   $('reviewStatus').onchange=writeNotes;
   $('reviewNotes').oninput=writeNotes;
+  $('mixedDecision').onchange=writeNotes;
+  $('mixedFilter').onchange=renderMixedQueue;
   for(const id of checks)$(id).onchange=renderOverlay;
   viewport.addEventListener('wheel',(e)=>{
     e.preventDefault();const bounds=viewport.getBoundingClientRect();
@@ -826,7 +935,7 @@ function events() {
     }else if(kind==='settlement' && id){
       select('settlement',id);
       if(checked('moveAnchors'))pointerAction={type:'settlement',id};
-    }else if(kind==='route'||kind==='feature'||kind==='region'||kind==='locality') {
+    }else if(kind==='route'||kind==='feature'||kind==='region'||kind==='locality'||kind==='mixed-coast') {
       if(id)select(kind,id);
     }else {
       pointerAction={type:'pan',x:e.clientX,y:e.clientY,tx:view.tx,ty:view.ty};
@@ -908,6 +1017,11 @@ async function boot() {
     const effectiveParts=(visual.regionFootprints||[]).filter(f=>!accepted.has(f.id));
     if(effectiveParts.length!==159)throw Error('Expected 159 effective footprint parts, got '+effectiveParts.length);
     boundaryCatalog=buildBoundaryCatalog(regions,effectiveParts);
+    const mixedAudit=buildMixedLandmassCatalog(regions,effectiveParts,visual.coastlines||[]);
+    mixedLandmasses=mixedAudit.conflicts;
+    mixedById=new Map(mixedLandmasses.map(item=>[item.id,item]));
+    $('mixedCount').textContent=mixedAudit.mixedCount+' mixed · '+mixedAudit.edgeStripCount+' edge';
+    $('mixedSummary').textContent=mixedAudit.mixedCount+' traced mixed-owner landmasses; '+mixedAudit.edgeStripCount+' map-edge diagnostics. Sampled 2px source polygons, not independent PNG terrain.';
     $('artifactRemovalSummary').textContent='42 verified offshore square footprints excluded from both map layers';
     populateBoundaryOwners();
     $('squareCount').textContent=boundaryCatalog.suspected.length+' remaining';
