@@ -1,3 +1,9 @@
+## Supersession: integrated on main with acceptance still held (2026-11-12)
+
+The previous **hold-on-source-merge** decision was superseded by the owner's explicit instruction to integrate into active development main. PR #75 merged original gated L1 and the additive Chronicle/Persistent mode-card preview source as `master` `ef0181fae2850dcb2f19f61d75d711ee90941117`. Original source and preview branches are retained as historical evidence. **Only source integration is accepted**, not the 15-row L1 account/session/Save/browser acceptance, selected default activation, staging or hosted rollout. Main-first current task: [current Codex prompt](current-codex-prompt.md) and [mode-card integration record](first-world-launcher-l1-mode-selection-preview-2026-11-12.md). Below describes the earlier review at its own historical source time and must not be read as the current branch disposition.
+
+---
+
 # L1 isolated Welcome branch: independent Connector source review
 
 Date: 2026-11-11 (America/New_York). Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`. **Review base:** remote `master` `675ec20843a00cb6d80a6326784ac89263d25bef`. **Candidate:** remote `codex/l1-branded-welcome-account-entry-2026-11-11` `14aa6380a3a6bb4aae35e0712169c302758d97d5`, whose sole parent is that master SHA. GitHub branch-list and exact commit readback agree; candidate is exactly **one commit ahead** of master. The source review was Connector-only: no local source execution, browser automation, user data, or servers were accessed.
