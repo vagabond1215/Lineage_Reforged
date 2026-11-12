@@ -320,7 +320,7 @@ function drawMixedLandmass() {
   });
   addSvg('path',{d:polygonPath(coast.points),fill:'none',stroke:'#ffef91',
     'stroke-width':5,'stroke-dasharray':'13 7','stroke-opacity':1,
-    class:'clickable','data-kind':'mixed-coast','data-id':item.id},layer);
+    class:'mixed-coast-outline','data-kind':'mixed-coast','data-id':item.id},layer);
 }
 
 function drawSourceCoastlines() {
