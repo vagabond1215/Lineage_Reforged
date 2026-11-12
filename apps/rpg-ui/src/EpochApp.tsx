@@ -18,6 +18,7 @@ import { createDefaultCharacterCreationFormState, validateCharacterCreationForm 
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
 import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen.js';
+import { WelcomeScreen } from './game-shell/components/WelcomeScreen.js';
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen.js';
 import { NoticeToast } from './game-shell/components/NoticeToast.js';
 import { SettingsScreen } from './game-shell/components/SettingsScreen.js';
@@ -178,6 +179,10 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     developmentNativeV3, import.meta.env.DEV, window.location.hostname, window.location.pathname) ||
     (candidateNativeV3 && import.meta.env.DEV &&
     window.location.pathname.endsWith('/native-selected-session-qa.html'));
+  // Ephemeral, loopback-only QA opt-in. No account or Save preference is persisted.
+  const welcomeEnabled = nativeCandidate && import.meta.env.DEV &&
+    (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') &&
+    new URLSearchParams(window.location.search).get('welcomeL1') === '1';
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
   const [blockDetail, setBlockDetail] = useState('');
@@ -272,7 +277,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
         const found = await inventory(next, selected.value.inventory.account.accountId);
         menuAccountRevision.current = found.account.revision;
         await captureMenuDeletionSources(next, found.account.accountId, found.slots);
-        dispatch({ type: 'SHOW_MAIN_MENU', launcherSession: selected.value.session,
+        dispatch({ type: welcomeEnabled ? 'SHOW_AUTHENTICATED_WELCOME' : 'SHOW_MAIN_MENU', launcherSession: selected.value.session,
           accountProfile: found.account.profile, slots: slotSummaries(found.slots, nativeCandidate), notice: null });
       }
       if (generation !== initializationGeneration.current) { owner.close(); return; }
@@ -309,6 +314,16 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       slots: slotSummaries(found.slots, nativeCandidate), notice: typeof message === 'function' ? message(found) : message });
   };
 
+  const showWelcomeAfterAuth = async (session: LauncherRuntimeSession, accountId: string,
+    message: GameShellNotice) => {
+    if (!services) throw new Error('Epoch owner is unavailable.');
+    const found = await inventory(services, accountId);
+    menuAccountRevision.current = found.account.revision;
+    await captureMenuDeletionSources(services, accountId, found.slots);
+    dispatch({ type: 'SHOW_AUTHENTICATED_WELCOME', launcherSession: session,
+      accountProfile: found.account.profile, slots: slotSummaries(found.slots, nativeCandidate), notice: message });
+  };
+
   const signIn = (options: { accountId: string; password: string; stayLoggedIn: boolean }): Promise<LauncherAuthResult> =>
     guarded(async () => {
       if (!services) throw new Error('Epoch owner is unavailable.');
@@ -319,7 +334,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
         }
         throw new Error(result.message);
       }
-      await showMenu(result.value.session, result.value.account.accountId,
+      await (welcomeEnabled ? showWelcomeAfterAuth : showMenu)(result.value.session, result.value.account.accountId,
         { tone: 'success', title: 'Signed In', detail: `${result.value.account.profile.displayName} is signed in.` });
       return { ok: true, session: result.value.session, accountProfile: result.value.account.profile };
     }, { ok: false, message: 'Account operation is already pending or blocked.' });
@@ -336,7 +351,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
         throw new Error(result.message);
       }
       accountIdForRegistration.current = null;
-      await showMenu(result.value.session, accountId,
+      await (welcomeEnabled ? showWelcomeAfterAuth : showMenu)(result.value.session, accountId,
         { tone: 'success', title: 'Account Created', detail: `${result.value.account.profile.displayName} is ready.` });
       return { ok: true, session: result.value.session, accountProfile: result.value.account.profile };
     }, { ok: false, message: 'Account operation is already pending or blocked.' });
@@ -623,6 +638,17 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     await initialize();
   }, undefined);
 
+  const continueToWorlds = () => void guarded(async () => {
+    if (!welcomeEnabled || state.screen !== 'WELCOME_AUTHENTICATED' || !services) return;
+    const account = await services.accounts.validateSession(state.launcherSession);
+    if (account.accountId !== state.accountProfile.accountId)
+      throw new Error('The selected account changed. Sign in again.');
+    const found = await inventory(services, account.accountId);
+    if (found.account.profile.displayName !== state.accountProfile.displayName)
+      throw new Error('The account profile changed. Refresh before continuing.');
+    dispatch({ type: 'OPEN_WORLD_LIBRARY_GATE' });
+  }, undefined);
+
   const applyLegacy = (action: EpochLegacyAction) => void guarded(async () => {
     if (state.screen !== 'MAIN_MENU' || !services) return;
     const expectedRevision = menuAccountRevision.current;
@@ -647,6 +673,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   const common = { notice: current.screen === 'IN_GAME' ? current.notice : null, onDismissNotice: dismissNotice };
   let content;
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
+    welcomeBranding={welcomeEnabled}
     allowAccountDeletion
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}
     onImportArchive={file => guarded(async () => {
@@ -687,6 +714,10 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       return { ok: true, accountId: result.value.accountId, displayName: result.value.displayName };
     }, { ok: false, message: 'Account operation is already pending or blocked.' })}
     themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')} />;
+  else if (current.screen === 'WELCOME_AUTHENTICATED' || current.screen === 'WORLD_LIBRARY_GATE')
+    content = <WelcomeScreen profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
+      busy={busy} onContinue={continueToWorlds}
+      onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })} onLogout={logout} />;
   else if (current.screen === 'MAIN_MENU') content = <MainMenuScreen {...common}
     accountProfile={current.accountProfile} slots={current.slots} activeSection={launcherSection}
     allowDeleteSlot addressOnlyDeletion
