@@ -16,26 +16,32 @@ const originalFootprints=coastlineSource.regionFootprints;
 const catalog=buildBoundaryCatalog(regions,originalFootprints);
 
 test('both continent and subregion overlays follow source identity, not filled bboxes',()=>{
-  assert.equal(originalFootprints.length,201);
-  assert.equal(catalog.parts.size,201);
+  assert.equal(originalFootprints.length,159);
+  assert.equal(catalog.parts.size,159);
   assert.equal(catalog.macros.length,9); // 5 continents + 4 island systems
   assert.equal(catalog.namedRegions.length,28);
   assert.ok(catalog.macroIds.get('region.kaelvar').length>0);
   assert.equal(catalog.regionIds.get('region.kaelvar').length,0);
   assert.equal(catalog.regionIds.get('region.starfall_isle').length,0);
   assert.equal(catalog.regionIds.get('region.nacre_shelf').length,0);
-  assert.equal(catalog.macroIds.get('region.myridian_chain').length,40);
+  assert.equal(catalog.macroIds.get('region.myridian_chain').length,36);
   assert.equal(coastlineSource.coastlines.length,68);
 });
 
-test('exact 8-by-8 square parts are flagged, but never silently removed',()=>{
-  assert.equal(catalog.suspected.length,42);
-  assert.ok(catalog.suspected.every(p=>squareCandidate(p.points)));
-  const d=newBoundaryDraft();
-  const owner=catalog.suspected[0];
-  assert.ok(owner);
-  assert.equal(boundaryPart(catalog,d,'region',owner.id)?.excluded,false);
-  assert.equal(boundaryPart(catalog,d,'continent',owner.id)?.excluded,false);
+test('all 42 user-verified offshore square artifacts are absent from both hierarchy overlays',()=>{
+  const accepted=JSON.parse(readFileSync(join(ROOT,'docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json'),'utf8'));
+  const excluded=accepted.removedSourceFeatureIds;
+  assert.equal(excluded.length,42);
+  assert.equal(new Set(excluded).size,42);
+  assert.equal(catalog.suspected.length,0);
+  assert.ok(originalFootprints.every(f=>!squareCandidate(f.points)));
+  const macroMembers=new Set([...catalog.macroIds.values()].flat());
+  const regionMembers=new Set([...catalog.regionIds.values()].flat());
+  for(const id of excluded){
+    assert.equal(catalog.parts.has(id),false,id+' still in source');
+    assert.equal(macroMembers.has(id),false,id+' still in continent/island layer');
+    assert.equal(regionMembers.has(id),false,id+' still in subregion layer');
+  }
 });
 
 test('exclusion and vertex edits affect only chosen review layer, never source vertices',()=>{
