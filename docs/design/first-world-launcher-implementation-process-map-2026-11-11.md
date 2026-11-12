@@ -1,5 +1,7 @@
 # First World Launcher, Character Entry, and World Loading: Gated Implementation Process Map
 
+> **2026-11-12 Starfall World seed baseline:** The owner prioritized a real Chronicle → World → Character → In Game skeleton before full Save-path validation from the new Welcome. A [concrete Starfall World seed](starfall-first-world-save-template-and-local-area-seed-2026-11-12.md) now exists on `master` with a 28×18 connected drafted walkable harbor exterior, canonical world/region/locality/hex/settlement/road/sea references, and character-free proposed World-state defaults. It is explicitly **not** a registered native-v3 Save, a World instance or a live playable area. Next gate is **L2 World registry/Save-owner contract**, followed by L3 persistent empty World and L4 World Library/Create UI; defer the otherwise unreachable new-Welcome Save-reload journey until L5/L9 integration exists. Existing L1 auth/feature-OFF smoke and later full integrity gates remain necessary; do not treat blocked navigation as a storage corruption result or fabricate a Save.
+
 Date: 2026-11-11  
 Status: **implementation planning, not active authorization**  
 First executable segment: [L1 Welcome / Account Gate Implementation Plan](first-world-launcher-l1-welcome-account-entry-implementation-plan-2026-11-11.md)  
