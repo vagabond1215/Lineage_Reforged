@@ -37,6 +37,15 @@
         <label><input id="showLocalities" type="checkbox"> Locality centroids (inferred)</label>
         <label><input id="showGrid" type="checkbox"> Pixel reference grid</label>
       </div>
+      <div class="sidebar-section">
+        <h2>Independent landmask reference</h2>
+        <label class="field-label" for="landmaskFile">Overlay a locally prepared 2048×1152 PNG/WebP</label>
+        <input id="landmaskFile" type="file" accept="image/png,image/webp">
+        <label class="field-label" for="landmaskOpacity">Reference opacity</label>
+        <input id="landmaskOpacity" type="range" min="0" max="100" value="45">
+        <button id="clearLandmask" class="wide">Clear local landmask</button>
+        <div id="landmaskStatus" class="help">No landmask loaded. Source coastline remains independent.</div>
+      </div>
       <div class="sidebar-section boundary-section">
         <h2>Continent &amp; region review</h2>
         <label class="field-label" for="boundaryScope">Boundary layer to work on</label>
@@ -96,6 +105,7 @@
       <div id="viewport" class="viewport" tabindex="0" aria-label="Interactive First World map. Mouse wheel to zoom, drag background to pan, F to fit.">
         <div id="stage" class="stage" style="width:2048px;height:1152px">
           <img id="atlas" class="atlas" alt="Original First World biome raster" draggable="false">
+          <img id="landmaskImage" class="landmask" alt="Optional local independent landmask, visual reference only" draggable="false">
           <svg id="overlay" viewBox="0 0 2048 1152" width="2048" height="1152" xmlns="http://www.w3.org/2000/svg" aria-label="World map evidence overlays"></svg>
         </div>
         <div class="map-badges"><span class="status-mark">NON-AUTHORITATIVE REVIEW</span><span id="layerBadge">BIOME / ORIGINAL</span></div>
