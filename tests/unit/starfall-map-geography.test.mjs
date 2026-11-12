@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 
 const ROOT = new URL("../../packages/content/base/world/", import.meta.url);
 const load = (path) =>
@@ -112,4 +113,19 @@ test("Foammarket's ferry is a mapped crossing with Pearlwake trade, not a confir
     row.fromSettlementId === f.settlementId || row.toSettlementId === f.settlementId), false);
   assert.equal(f.executableTravelRouteId, null);
   assert.equal(f.confirmedVesselTerminalSettlementIds, null);
+});
+
+
+test("the PNG audit actually decodes both original rasters at Starfall macro cross-sections", () => {
+  const run = spawnSync(process.execPath, ["scripts/audit-starfall-raster.mjs"], {
+    cwd: new URL("../../", import.meta.url), encoding: "utf8", timeout: 90000
+  });
+  assert.equal(run.error, undefined, run.error?.message);
+  assert.equal(run.status, 0, run.stderr || "raster audit failed");
+  assert.match(run.stdout, /"layer": "biome"/);
+  assert.match(run.stdout, /"layer": "elevation"/);
+  assert.equal((run.stdout.match(/"starfallMacroCrossSections"/g) ?? []).length, 2);
+  assert.equal((run.stdout.match(/"mapScaleKilometersPerPixel": 9\.765625/g) ?? []).length, 2);
+  assert.equal((run.stdout.match(/"eastWestAtY245"/g) ?? []).length, 2);
+  assert.equal((run.stdout.match(/"northSouthAtX825"/g) ?? []).length, 2);
 });
