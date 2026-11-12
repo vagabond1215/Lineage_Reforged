@@ -13,6 +13,9 @@ const IMAGE_PATHS = {
   biome: "packages/content/base/world/map_assets/First World Biome.png",
   elevation: "packages/content/base/world/map_assets/First World Elevation.png"
 };
+// World-scale cross-sections are diagnostic, not a tile-level shoreline map.
+// One reference pixel covers approximately 9.765625 km at authored world scale.
+const MACRO_OFFSETS_PX = [-16, -8, -4, -2, -1, 0, 1, 2, 4, 8, 16];
 const SAMPLES = [
   ["Starfall Port", 825, 245],
   ["Harbormast Quay", 905, 270],
@@ -111,8 +114,17 @@ for (const [name, path] of Object.entries(IMAGE_PATHS)) {
     sourcePath: path,
     width: png.width, height: png.height,
     bitDepth: png.bitDepth, colorType: png.colorType,
-    note: "Raw PNG channel witness only. Not an elevation in meters, local slope, coastline delineation or actual walkable geometry.",
-    samples: SAMPLES.map(([label, x, y]) => ({ label, x, y, ...png.sample(x, y) }))
+    mapScaleKilometersPerPixel: 9.765625,
+    note: "Raw channels and world-scale cross-sections only. No height-to-meter calibration, verified sea level, harbor-scale coastline, slope or walkable geometry.",
+    samples: SAMPLES.map(([label, x, y]) => ({ label, x, y, ...png.sample(x, y) })),
+    starfallMacroCrossSections: {
+      eastWestAtY245: MACRO_OFFSETS_PX.map((offsetPx) => ({
+        offsetPx, x: 825 + offsetPx, y: 245, ...png.sample(825 + offsetPx, 245)
+      })),
+      northSouthAtX825: MACRO_OFFSETS_PX.map((offsetPx) => ({
+        offsetPx, x: 825, y: 245 + offsetPx, ...png.sample(825, 245 + offsetPx)
+      }))
+    }
   };
   process.stdout.write(JSON.stringify({ layer: name, ...witness }, null, 2) + "\n");
 }
