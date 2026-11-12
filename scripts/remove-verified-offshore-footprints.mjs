@@ -15,9 +15,9 @@ import {fileURLToPath} from 'node:url';
 
 const ROOT=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const FEATURE=resolve(ROOT,'packages/content/base/world/world_map_features.json');
-const MANIFEST=resolve(ROOT,'docs/design/first-world-verified-offshore-footprint-removals-2026-11-12.json');
+const MANIFEST=resolve(ROOT,'docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json');
 const manifest=JSON.parse(readFileSync(MANIFEST,'utf8'));
-const approved=new Set(manifest.excludedFeatureIds);
+const approved=new Set(manifest.removedSourceFeatureIds);
 const argv=process.argv.slice(2);
 const write=argv.includes('--write');
 const check=argv.includes('--check');
@@ -25,7 +25,7 @@ if((!write&&!check)||(write&&check)||argv.some(a=>!['--write','--check','--json'
   console.error('Usage: node scripts/remove-verified-offshore-footprints.mjs --check|--write [--json]');
   process.exit(2);
 }
-if(approved.size!==42||manifest.excludedFeatureIds.length!==42)
+if(approved.size!==42||manifest.removedSourceFeatureIds.length!==42)
   throw Error('The owner-approved 42-ID exclusion manifest has changed; review required.');
 const raw=readFileSync(FEATURE,'utf8');
 const doc=JSON.parse(raw.replace(/^\uFEFF/,''));
@@ -33,8 +33,8 @@ const record=doc.records.find(x=>x.mapId==='world_map.first_world');
 if(!record)throw Error('First World source record missing');
 const footprints=record.regionFootprints;
 const byId=new Map(footprints.map(f=>[f.id,f]));
-const remaining=manifest.excludedFeatureIds.filter(id=>byId.has(id));
-const missingFromSource=manifest.excludedFeatureIds.filter(id=>!byId.has(id));
+const remaining=manifest.removedSourceFeatureIds.filter(id=>byId.has(id));
+const missingFromSource=manifest.removedSourceFeatureIds.filter(id=>!byId.has(id));
 function isExactSquare(points){
  if(!Array.isArray(points)||points.length!==4)return false;
  const xs=[...new Set(points.map(p=>p.x))],ys=[...new Set(points.map(p=>p.y))];
