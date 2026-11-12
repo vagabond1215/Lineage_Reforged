@@ -1,5 +1,7 @@
 # Starfall First World: authored local-area and empty World Save seed
 
+> **2026-11-12 mapped biome and economy extension:** The [base economy and geography alignment record](starfall-base-economy-and-map-alignment-2026-11-12.md) now verifies Starfall's map anchor (825,245) falls in `map_biome.first_world.myridian_chain_chaparral.part_8` (`biome.shrublands.chaparral`) and the Myridian island footprint. `world_hex.myridian_ports` independently describes `mixed_forest_archipelago`. The 28×18 local grid is still proposed and **not** aligned to measured raster elevation/coastline; `scripts/audit-starfall-raster.mjs` is the next binary-source witness. Foammarket Ferry trades with Pearlwake but does not yet have a two-terminal registered passenger route. The World JSON carries only a null-state pointer to the **read-only Starfall economy preview** that reuses existing civilization-market and settlement simulation rather than inventing shops/prices/stock. This record supersedes any implication below that the macro biome supplies exact local height or walkable shore geometry.
+
 Date: 2026-11-12  
 Status: **Static template authored on master; NOT runtime-registered or accepted as a native-v3 Save artifact.**  
 Requested goal: Start a real Chronicle World creation skeleton grounded at Starfall Port, with reproducible local terrain, canonical nearby geography, an empty World state and no fabricated gameplay entities.  
