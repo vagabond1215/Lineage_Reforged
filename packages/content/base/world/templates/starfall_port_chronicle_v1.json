@@ -181,7 +181,51 @@
       "fauna.oyster",
       "fauna.crab",
       "fauna.reef_lobster"
-    ]
+    ],
+    "rasterAlignment": {
+      "referenceMapId": "world_map.first_world",
+      "mapWidthPx": 2048,
+      "mapHeightPx": 1152,
+      "settlementPixelCenter": {
+        "x": 825.5,
+        "y": 245.5
+      },
+      "heightRasterPath": "packages/content/base/world/map_assets/First World Elevation.png",
+      "biomeRasterPath": "packages/content/base/world/map_assets/First World Biome.png",
+      "sourceGeometryPath": "packages/content/base/world/world_map_features.json",
+      "sourceRegionFootprintPartId": "feature.region_myridian_chain.part_7",
+      "visualBiomeZoneId": "map_biome.first_world.myridian_chain_chaparral",
+      "visualBiomePartId": "map_biome.first_world.myridian_chain_chaparral.part_8",
+      "visualBiomeId": "biome.shrublands.chaparral",
+      "visualBiomePartBoundsPx": {
+        "minX": 780,
+        "maxX": 852,
+        "minY": 140,
+        "maxY": 250
+      },
+      "visualClimateZoneId": "map_climate.first_world.myridian_chain",
+      "climateProfileId": "climate.mild_winter",
+      "geometryPointInPolygonChecked": true,
+      "elevationSample": null,
+      "elevationUnits": null,
+      "heightRasterInspectionStatus": "pending_pixel_and_shoreline_sampling_from_original_png",
+      "localAreaFootprintOnRaster": null,
+      "status": "macro_anchor_verified_local_extent_and_height_unverified",
+      "note": "World-map biome identifies chaparral at the port anchor; the world hex separately carries mixed_forest_archipelago. The proposed 28x18 local area is NOT a measured crop of the global biome/height image."
+    },
+    "unresolvedFerryConnection": {
+      "settlementId": "settlement.foammarket_ferry",
+      "crossingFeatureId": "feature.crossing_foammarket_ferry",
+      "crossingMapPixel": {
+        "x": 760,
+        "y": 355
+      },
+      "documentedTradePartnerSettlementId": "settlement.pearlwake",
+      "confirmedVesselTerminalSettlementIds": null,
+      "executableTravelRouteId": null,
+      "status": "trade_link_only_no_passenger_route",
+      "note": "The canonical crossing says inter-island ferry and the settlement trade relation points toward Pearlwake. Neither resolves two ferry terminal landing sites; the Myridian Ports-to-Pearl Shoals hex road is not proof of a foot bridge or ferry schedule."
+    }
   },
   "travelLinks": [
     {
@@ -429,7 +473,33 @@
     "scheduledActionRecords": [],
     "pendingPublicationReceipts": [],
     "committedWorldEvents": [],
-    "inventoryMutationRecords": []
+    "inventoryMutationRecords": [],
+    "economyBootstrap": {
+      "owner": "existing_civilization_economy_engine_only",
+      "status": "read_only_preview_until_world_save_owner_is_approved",
+      "localSettlementIds": [
+        "settlement.starfall_port",
+        "settlement.harbormast_quay",
+        "settlement.foammarket_ferry"
+      ],
+      "externalTradeContextSettlementIds": [
+        "settlement.pearlwake",
+        "settlement.chainlight_bastion"
+      ],
+      "focusGoods": [
+        "fish",
+        "grain",
+        "rope",
+        "timber",
+        "metal"
+      ],
+      "stockSnapshot": null,
+      "productionRates": null,
+      "prices": null,
+      "lastEconomyTick": null,
+      "sourceSettlementReferencesNotCloned": true,
+      "note": "Not a secondary persistent market authority. Initial profile is derived from canonical settlement/region/locality content with existing civilization-engine code when the World owner supplies its authoritative clock."
+    }
   },
   "pendingOwners": [
     "World creation/registry and persistent world-to-account identity in accepted native-v3 transactional owner",
