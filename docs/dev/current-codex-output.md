@@ -2751,3 +2751,19 @@ After installing the new Codex work order, Connector executed twelve **read-only
 **Owner decision and Connector-only documentation reconciliation.** Multiple tabs are permitted; the epoch session hint is not an exclusive lease. The older source-derived concern that `validateSession` does not reread the hint must **not** be treated as an A07 failure or used to authorize a singleton-session patch. Genuine account reset/delete/generation mismatch still invalidates a stale session. Same account + explicitly selected Save must preserve the same owner-backed slot/campaign/head; a durable `worldInstanceId` is not yet implemented in L1.
 
 The intended later World coordinator sends ordered/versioned accepted state updates to subscribed tabs. Shared Vite hosting/browser IndexedDB alone do not deliver server-authoritative game updates. When paused, the simulation clock may freeze but transactions/revisions do not; concurrent commands need serialized expected-head acceptance, one commit and one effect, and a non-destructive stale-edit reload prompt only on conflict. Real fan-out, pause and ticking conflict tests require a functional gameplay slice and are **deferred**, not L1 failures. [Revised L1 matrix](../design/first-world-launcher-l1-welcome-account-entry-implementation-plan-2026-11-11.md), [world contract](../design/welcome-world-library-character-entry-and-loading-plan-2026-11-11.md) and [active Codex task](current-codex-prompt.md) updated. **No tests or browser/Save actions executed, no runtime or L1 candidate modified; acceptance/integration/activation remain held.**
+
+## 2026-11-12 — Owner-approved main integration of L1 and mode-card UI
+
+**Source:** Development `master` first parent `bb17120bca51bd953fb494618d42b75051a1352d`, exact preview `codex/l1-welcome-mode-selection-preview-2026-11-12` `d0393d4ba89ff7a7c893078123b479fddbdd7719`, merged through PR #75 at `ef0181fae2850dcb2f19f61d75d711ee90941117`. Game `0.1.1-prealpha`, development/game-version impacts none.
+
+### A. Files integrated
+
+Six source/test paths: `EpochApp.tsx`, `LocalAccountAccessScreen.tsx`, `WelcomeScreen.tsx`, `state.ts`, `launcher-welcome-routing.test.mjs`, and `launcher-welcome-mode-cards.test.mjs`. The parent/source comparison found zero changed-path overlap: all 31 first-parent commits after the L1 base were design/coordination documents. The merge retained all existing master-only docs. GitHub readback checked the exact app/test blobs and source-gate semantics after merging.
+
+### B. Functionality and evidence
+
+DEV-only loopback `?welcomeL1=1` branded login/verified Welcome now displays responsive Chronicle (delegates to existing truthful unavailable Worlds boundary) and disabled Persistent/Coming Soon cards, Logout and Back. No World registry, account/Save schema, currency ledger, time/Hardcore owner, normal launcher default, selected/hosted Site or Game version changed. Eight source-pattern checks were observed before merge; the 3 mode-card tests and previously authored 3 routing tests **have not been run** on merged main by Connector. No exact-main Node/type/build, browser keyboard/mobile, two-account Save fingerprints, or actual feature-OFF Save/restart witness was run. Source merge **is not full L1 acceptance**.
+
+### C. Current disposition and next
+
+`L1_SOURCE_IN_MASTER_EXECUTABLE_ACCEPTANCE_HELD`; `HOLD_SELECTED_ATOMIC_ACTIVATION`, `HOLD_STAGING_PUBLICATION` continue. The owner prefers main-first work, so [the active Codex prompt](current-codex-prompt.md) targets current `origin/master` and adds new mode-card checks to A01–A15. Original L1 and preview branches retained for exact provenance; no branch deletion/force move or unrelated PR actions. Independently review local executable evidence before accepting/activating the gate. [Merge evidence](first-world-launcher-l1-mode-selection-preview-2026-11-12.md).
