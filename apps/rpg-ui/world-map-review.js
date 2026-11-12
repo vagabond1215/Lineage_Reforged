@@ -247,6 +247,82 @@ function renderSquareCandidateQueue() {
   }
   if(!parts.length)list.textContent='None remaining. All 42 verified offshore squares are absent from source footprints.';
 }
+
+const MIXED_OWNER_COLORS=['#ffd17a','#7fd8df','#db94e8','#8ded9c','#f3a7a7','#c3b1ff'];
+function mixedReview(id) {return state.reviews['mixed-coast:'+id]||{};}
+function renderMixedQueue() {
+  const list=$('mixedConflictList');
+  if(!list)return;
+  list.replaceChildren();
+  const filter=$('mixedFilter').value;
+  for(const item of mixedLandmasses) {
+    const status=mixedReview(item.id).status||'unreviewed';
+    if(filter==='edge'&&item.kind!=='map-edge-strip')continue;
+    if(filter!=='all'&&filter!=='edge'&&status!==filter)continue;
+    const button=document.createElement('button');
+    button.className='mixed-conflict-item'+(item.kind==='map-edge-strip'?' edge':'')+
+      (selection?.kind==='mixed-coast'&&selection.id===item.id?' active':'');
+    const names=item.owners.filter(o=>item.materialOwnerIds.includes(o.id)).map(o=>o.name).join(' + ');
+    button.innerHTML='<strong>'+escapeHtml(item.id.split('.').at(-1))+' · '+
+      escapeHtml(item.kind==='map-edge-strip'?'Map-edge diagnostic':'Mixed traced mass')+
+      '</strong><small>'+escapeHtml(names)+'</small><small>'+
+      fmt(item.areaPx2)+' px² · '+escapeHtml(status.replaceAll('_',' '))+'</small>';
+    button.onclick=()=>{
+      $('showMixedLandmass').checked=true;
+      $('showSourceCoastline').checked=true;
+      $('showContinents').checked=true;
+      $('showRegions').checked=true;
+      $('editBoundary').checked=false;
+      select('mixed-coast',item.id);
+      focusSelection();
+    };
+    list.append(button);
+  }
+  if(!list.childElementCount)list.textContent='No cases for the selected filter.';
+}
+function focusMixedBounds(b) {
+  if(!b)return;
+  const width=Math.max(1,b.maxX-b.minX),height=Math.max(1,b.maxY-b.minY);
+  const scale=clamp(Math.min(viewport.clientWidth/(width+100),viewport.clientHeight/(height+100))*.9,.18,4);
+  centerOn({x:(b.minX+b.maxX)/2,y:(b.minY+b.maxY)/2},scale);
+  renderOverlay();
+}
+function intersectsBounds(points,b) {
+  if(!points?.length||!b)return false;
+  let x1=Infinity,y1=Infinity,x2=-Infinity,y2=-Infinity;
+  for(const p of points){
+    x1=Math.min(x1,p.x);y1=Math.min(y1,p.y);
+    x2=Math.max(x2,p.x);y2=Math.max(y2,p.y);
+  }
+  return x1<=b.maxX&&x2>=b.minX&&y1<=b.maxY&&y2>=b.minY;
+}
+function drawMixedLandmass() {
+  if(!checked('showMixedLandmass')||selection?.kind!=='mixed-coast')return;
+  const item=mixedById.get(selection.id);
+  const coast=(sources.features?.records?.[0]?.coastlines||[]).find(f=>f.id===item?.id);
+  if(!item||!coast)return;
+  const layer=group('mixed-landmass-comparison');
+  const defs=addSvg('defs',{},layer),clipId='selected-mixed-coastline-clip';
+  const clip=addSvg('clipPath',{id:clipId,clipPathUnits:'userSpaceOnUse'},defs);
+  addSvg('path',{d:polygonPath(coast.points)},clip);
+  // Source owner polygons are clipped to the selected traced coastline.
+  // Neither boundary drafts nor the original coastline are mutated.
+  const material=item.owners.filter(o=>item.materialOwnerIds.includes(o.id));
+  material.forEach((owner,index)=>{
+    const color=MIXED_OWNER_COLORS[index%MIXED_OWNER_COLORS.length];
+    for(const part of boundaryCatalog.parts.values()) {
+      if(part.macroId!==owner.id || !intersectsBounds(part.points,item.bounds))continue;
+      const shape=addSvg('path',{d:polygonPath(part.points),
+        fill:color,'fill-opacity':.22,stroke:color,'stroke-opacity':.95,
+        'stroke-width':4,'clip-path':'url(#'+clipId+')'},layer);
+      addSvg('title',{},shape,'Source owner '+owner.name+' · '+part.name);
+    }
+  });
+  addSvg('path',{d:polygonPath(coast.points),fill:'none',stroke:'#ffef91',
+    'stroke-width':5,'stroke-dasharray':'13 7','stroke-opacity':1,
+    class:'clickable','data-kind':'mixed-coast','data-id':item.id},layer);
+}
+
 function drawSourceCoastlines() {
   if(!checked('showSourceCoastline'))return;
   const layer=group('source-coastline-reference');
@@ -431,7 +507,7 @@ function drawLocalities() {
 }
 function renderOverlay() {
   overlay.replaceChildren();
-  drawSourceCoastlines();drawBoundaryScope('continent');drawBoundaryScope('region');
+  drawSourceCoastlines();drawBoundaryScope('continent');drawBoundaryScope('region');drawMixedLandmass();
   drawGrid();drawCoarseHexEdges();drawTradeRelationships();drawLinearFeatures();drawRoutes();
   drawSuspectSquares();drawSettlements();drawRegionLabels();drawLocalities();drawPoints();
   drawBoundaryHandles();
