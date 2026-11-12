@@ -98,6 +98,7 @@ function updateDraftSummary() {
   const altered=Object.values(state.boundary.region).length+Object.values(state.boundary.continent).length+
     Object.values(state.boundary.custom.region).length+Object.values(state.boundary.custom.continent).length;
   $('draftSummary').textContent = Object.keys(state.moved).length + ' moved · ' + count + ' routes · ' + altered + ' boundary parts';
+  if(boundaryCatalog&&$('squareCandidateList'))renderSquareCandidateQueue();
 }
 function setTransform() {
   stage.style.transform = 'translate(' + view.tx + 'px,' + view.ty + 'px) scale(' + view.scale + ')';
@@ -221,6 +222,24 @@ function renderBoundaryPartList() {
   $('finishBoundary').disabled=!checked('editBoundary')||$('boundaryTool').value!=='draw'||drawingPoints.length<3;
   $('cancelBoundary').disabled=!drawingPoints.length;
 }
+function renderSquareCandidateQueue() {
+  const list=$('squareCandidateList');list.replaceChildren();
+  $('squareQueueCount').textContent=boundaryCatalog.suspected.length;
+  const parts=[...boundaryCatalog.suspected].sort((a,b)=>
+    (boundaryCatalog.byRegion.get(a.ownerId)?.name||'').localeCompare(boundaryCatalog.byRegion.get(b.ownerId)?.name||'') ||
+    a.id.localeCompare(b.id));
+  for(const part of parts) {
+    const type=boundaryCatalog.byRegion.get(part.ownerId)?.regionType;
+    const scope=type==='island_system'||type==='continent'?'continent':'region';
+    const current=boundaryPart(boundaryCatalog,state.boundary,scope,part.id);
+    const btn=document.createElement('button');
+    btn.className='boundary-part-item candidate'+(current?.excluded?' excluded':'');
+    btn.innerHTML='<strong>'+escapeHtml(boundaryCatalog.byRegion.get(part.ownerId)?.name||part.ownerId)+
+      '</strong><small>'+escapeHtml(part.name)+' · '+(current?.excluded?'excluded in draft':'review needed')+'</small>';
+    btn.onclick=()=>{selectBoundaryPart(scope,part.id);focusSelection();};
+    list.append(btn);
+  }
+}
 function drawSourceCoastlines() {
   if(!checked('showSourceCoastline'))return;
   const layer=group('source-coastline-reference');
@@ -294,15 +313,6 @@ function drawBoundaryHandles() {
       addSvg('circle',{cx:p.x,cy:p.y,r:6,fill:'#fffc9e',stroke:'#152734','stroke-width':2},layer);
       addSvg('text',{x:p.x+10,y:p.y-8,fill:'#fff8ca','font-size':14},layer,''+(index+1));
     }
-  }
-}
-function drawRegions() {
-  if (!checked('showRegions')) return;
-  const layer=group('region-footprints');
-  for (const feature of sources.features?.records?.[0]?.regionFootprints || []) {
-    if (!feature.points?.length) continue;
-    addSvg('path',{d:polygonPath(feature.points),fill:'#b3d3be','fill-opacity':.07,stroke:'#e0e2ad','stroke-width':2,'stroke-opacity':.64,'vector-effect':'none',class:'clickable','data-kind':'region','data-id':feature.regionIds?.[0] || ''},layer)
-      .append(addSvg('title',{},document.createDocumentFragment(), feature.name || 'Region footprint'));
   }
 }
 function drawLinearFeatures() {
@@ -579,7 +589,10 @@ function insertCheckpoint(route,point) {
   state.waypoints[route.id].splice(index,0,rounded);
   save();select('route',route.id);
 }
-function renderAll() {renderOverlay();renderBoundaryPartList();renderRoutesList();renderSearch();renderInspector();}
+function renderAll() {
+  renderOverlay();renderBoundaryPartList();renderSquareCandidateQueue();
+  renderRoutesList();renderSearch();renderInspector();
+}
 function registerRasterImage() {
   const width=atlas.naturalWidth,height=atlas.naturalHeight;
   const legacy=sources.map.records[0]?.assetReferenceRectPx;
