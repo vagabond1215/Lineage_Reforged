@@ -7,3 +7,23 @@ input[type=text],input:not([type]),select,textarea{background:#101d2a;border:1px
 .map-badges{position:absolute;top:12px;left:13px;display:flex;gap:8px;align-items:center;pointer-events:none}.map-badges span{padding:5px 8px;background:#06111bd8;border:1px solid #40515d;border-radius:4px;color:#d9e7ec;font-size:10px;font-weight:750;letter-spacing:.08em}.map-badges .status-mark{color:#f0bf8b}.compass{position:absolute;right:13px;top:13px;padding:7px 10px;border-radius:4px;background:#06111bd8;color:#eaf2f4;font-weight:750}.compass span{display:block;font-size:10px;color:#aec0c8;font-weight:400;margin-top:2px}.busy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#08121de5;color:#e5f5f4;font-size:15px}.busy.hidden{display:none}
 .statusbar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:45px;background:#111e2a;padding:8px 15px;border-top:1px solid #273b49;font-size:11px}.statusbar>div{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.statusbar strong{color:#84d6c6;margin-right:7px}.result-list,.route-list{max-height:240px;overflow:auto}.result-list{margin-top:8px}.result-item,.route-item{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:4px;margin-bottom:2px;padding:7px;display:block}.result-item:hover,.route-item:hover,.route-item.active{border-color:#436777;background:#20374a}.result-item strong,.route-item strong{display:block;font-weight:650;font-size:12px}.result-item span,.route-item span{display:block;font-size:10px;color:#9fb4c4;margin-top:3px}.route-kind{display:inline-block;color:#cbe8e1!important;letter-spacing:.04em;text-transform:uppercase}.inspector-content{font-size:12px;line-height:1.5;overflow-wrap:anywhere}.inspector-content h3{font-size:17px;margin:10px 0;color:#f3f7f5}.inspector-content dl{display:grid;grid-template-columns:90px 1fr;gap:8px;border-top:1px solid #2e4755;padding-top:12px}.inspector-content dt{color:#8eabbc}.inspector-content dd{margin:0}.inspector-content .warning{padding:10px 12px;border-left:3px solid #e7aa6b;background:#2b261f;color:#f5d5a9}.inspector-content .route-pts{padding:10px;border:1px solid #344b5a;border-radius:6px}.notes-panel label{display:block;font-size:11px;color:#c5d4db;margin:10px 0 5px}.notes-panel textarea{font-size:12px;line-height:1.5}.notes-panel select{margin:0}.notes-panel small{display:block;margin-top:7px;line-height:1.4}
 @media(max-width:1100px){.app{grid-template-columns:235px minmax(320px,1fr)}.inspector{display:none}}@media(max-width:700px){body{overflow:auto}.topbar{height:auto;min-height:76px;align-items:flex-start;padding:12px;flex-direction:column}.bar-actions{gap:5px}.app{height:calc(100vh - 124px);grid-template-columns:1fr;grid-template-rows:minmax(300px,1fr) 270px}.sidebar{grid-row:2;padding:12px}.center{grid-row:1}.statusbar{font-size:10px}.app .sidebar-section{margin-top:14px}.identity h1{font-size:17px}}
+
+/* Boundary-review only controls; no authority conveyed by preview fill colors. */
+.boundary-section{border-top-color:#385a57}
+.boundary-part-list{max-height:210px;overflow:auto;margin:9px 0;padding:5px;border:1px solid #334a58;border-radius:6px;background:#0d1822}
+.boundary-part-item{width:100%;text-align:left;padding:6px 8px;margin:2px 0;font-size:11px;background:transparent;border-color:transparent}
+.boundary-part-item strong{display:block;font-size:11px;font-weight:650}
+.boundary-part-item small{display:block;color:#9bb0be;margin-top:2px}
+.boundary-part-item.active{background:#1f4449;border-color:#69a6a8}
+.boundary-part-item.candidate{border-left:3px solid #e0a96d}
+.boundary-part-item.excluded{opacity:.62;text-decoration:line-through}
+.boundary-actions{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:8px}
+.boundary-actions .wide{margin:0;min-width:0;font-size:11px;white-space:normal}
+.boundary-section select{margin-top:5px;margin-bottom:10px}
+.boundary-section .help{margin-top:8px}
+.boundary-legend{font-size:11px;color:#8fd3cd;line-height:1.5}
+.boundary-edit-hint{padding:9px;background:#183137;border:1px solid #427577;border-radius:6px;color:#c1e9e7;margin-top:8px;font-size:11px}
+.stage svg .boundary-handle{pointer-events:all;cursor:move}
+.stage svg .boundary-shape{pointer-events:visiblePainted;cursor:pointer}
+.stage svg .boundary-shape.excluded{cursor:help}
+.stage svg .square-candidate{pointer-events:all;cursor:pointer}
