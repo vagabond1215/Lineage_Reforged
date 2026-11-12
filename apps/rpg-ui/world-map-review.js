@@ -631,6 +631,27 @@ function renderInspector() {
       box('Geometry',p.custom?'New review polygon':p.edited?'Modified preview':'Unmodified source')+'</dl>'+
       '<p>'+escapeHtml(square)+'</p><div class="boundary-edit-hint">'+
       'Select this part in the sidebar, enable boundary editing, then drag vertices at closer zoom; Shift-click its boundary to add a vertex. Alt-click a vertex to remove it. Use Move whole polygon for translation. The original is retained for comparison.</div>';
+  } else if(kind==='mixed-coast'){
+    const item=mixedById.get(id);if(!item)return;
+    const material=item.owners.filter(o=>item.materialOwnerIds.includes(o.id));
+    const owners=material.map((o,i)=>'<li><span class="swatch" style="background:'+
+      MIXED_OWNER_COLORS[i%MIXED_OWNER_COLORS.length]+'"></span>'+
+      escapeHtml(o.name)+' · '+fmt(o.areaPx2)+' px² ('+fmt(o.sharePercent)+'%)</li>').join('');
+    const minor=item.owners.filter(o=>!item.materialOwnerIds.includes(o.id));
+    c.innerHTML='<h3>'+escapeHtml(item.id.split('.').at(-1))+'</h3>'+
+      '<p class="warning">Two-pixel source-vector sampling only. A connected trace does not establish real land connectivity or authorize a border or settlement change.</p>'+
+      '<dl>'+box('Coastline source',item.id)+box('Trace class',item.kind)+
+      box('Trace sampled area',fmt(item.areaPx2)+' px²')+
+      box('Source vertices',item.sourceVertices)+
+      box('Bounds',fmt(item.bounds.minX)+','+fmt(item.bounds.minY)+' to '+
+        fmt(item.bounds.maxX)+','+fmt(item.bounds.maxY))+
+      box('Cross-owner overlap',fmt(item.directMacroOverlapAreaPx2)+' px² sampled')+'</dl>'+
+      '<h4>Material macro owners in this trace</h4><ul class="mixed-owner-legend">'+owners+'</ul>'+
+      (minor.length?'<p class="mixed-review-caution">Smaller owner samples: '+
+        minor.map(o=>escapeHtml(o.name)+' ('+fmt(o.areaPx2)+' px²)').join(', ')+'</p>':'')+
+      '<h4>Subregions sampled within trace</h4><ul>'+
+      item.subregions.map(o=>'<li>'+escapeHtml(o.name)+' · '+fmt(o.areaPx2)+' px²</li>').join('')+'</ul>'+
+      '<p class="mixed-review-caution">Compare both original rasters and the unchanged source coastline before classifying any trace connection or owner assignment. Colored overlays show source footprints clipped for visual comparison. Independent landmask remains unverified.</p>';
   } else if(kind==='boundary-owner'){
     const owner=boundaryCatalog.byRegion.get(id);if(!owner)return;
     const parts=boundaryParts(boundaryCatalog,state.boundary,selection.scope,id);
