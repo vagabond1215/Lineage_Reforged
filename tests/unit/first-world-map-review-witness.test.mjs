@@ -53,7 +53,9 @@ test('raster images are either normalized source frame or explicit legacy source
 });
 
 test('atlas source includes all authored visual classes, including non-point geographic identities', () => {
-  assert.equal(visual.regionFootprints.length,159);
+  const exclusions=JSON.parse(readFileSync(join(repo,'docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json'),'utf8'));
+  const denied=new Set(exclusions.removedSourceFeatureIds);
+  assert.equal(visual.regionFootprints.filter(x=>!denied.has(x.id)).length,159);
   assert.equal(visual.riverFeatures.length,8);
   assert.equal(visual.mountainFeatures.length,5);
   assert.equal(visual.passFeatures.length,4);
