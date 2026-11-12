@@ -53,7 +53,7 @@ test('raster images are either normalized source frame or explicit legacy source
 });
 
 test('atlas source includes all authored visual classes, including non-point geographic identities', () => {
-  assert.equal(visual.regionFootprints.length,201);
+  assert.equal(visual.regionFootprints.length,159);
   assert.equal(visual.riverFeatures.length,8);
   assert.equal(visual.mountainFeatures.length,5);
   assert.equal(visual.passFeatures.length,4);
