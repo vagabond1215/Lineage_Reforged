@@ -1,3 +1,11 @@
+## 2026-11-12 owner-approved development-master source integration
+
+**Superseding disposition:** PR [#75](https://github.com/vagabond1215/Lineage_Reforged/pull/75) was explicitly authorized and merged into development `master` at `ef0181fae2850dcb2f19f61d75d711ee90941117`, with first parent `bb17120bca51bd953fb494618d42b75051a1352d` and source preview head `d0393d4ba89ff7a7c893078123b479fddbdd7719`. Base-to-main comparison before integration showed zero source/test versus master documentation path overlap. GitHub post-merge readback confirmed the exact six source/test paths landed; `WelcomeScreen.tsx` blob `17c68d77bc50cc7914338bd23f23161cb15d08d2`, `EpochApp.tsx` blob `6cdad2916e273e920323515733dbf49893209cf0`, mode-card tests blob `875be8518c9ff768c09da20e0a6683f7a45fdf58`. All master design documents were retained. Development feature is still disabled without explicit loopback `?welcomeL1=1` opt-in; old feature-OFF launcher is preserved.
+
+**Integration is complete, but acceptance is not.** The isolated branch and earlier hold statements below are **historical evidence**, not the current branch disposition. No exact-main Node/typecheck/build, browser, two-account Save negative or end-to-end feature-OFF Save/reload evidence was executed here. `L1_SOURCE_IN_MASTER_EXECUTABLE_ACCEPTANCE_HELD`; `HOLD_SELECTED_ATOMIC_ACTIVATION` and `HOLD_STAGING_PUBLICATION` persist. Owner prefers **main-first ongoing development**; the active [Codex task](current-codex-prompt.md) now targets latest exact `origin/master`. Neither historical candidate branch was deleted.
+
+---
+
 # L1 Welcome Mode Selection: isolated UI preview and design recording
 
 Date: 2026-11-12 (America/New_York)  
