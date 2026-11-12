@@ -3,7 +3,7 @@
 Date: 2026-11-12
 Status: **CONNECTOR-PREPARED / LOCAL EXECUTION AND RASTER WITNESS REQUIRED**
 Base: master `343d14ce79b17b5ad9badc06c65f986ebfd7ecf2`.
-Parent evidence: [First World geographic reconciliation](../../docs/design/first-world-map-geography-interconnectivity-and-viewer-reconciliation-2026-11-12.md), presently in [draft PR #76](https://github.com/vagabond1215/Lineage_Reforged/pull/76).
+Parent evidence: [First World geographic reconciliation](https://github.com/vagabond1215/Lineage_Reforged/blob/connector/first-world-settlement-distribution-policy-pilots-2026-11-12/docs/design/first-world-map-geography-interconnectivity-and-viewer-reconciliation-2026-11-12.md), presently in [draft PR #76](https://github.com/vagabond1215/Lineage_Reforged/pull/76).
 No content source, world simulation, Save, runtime, world_map image, active L2 contract or game version is edited.
 
 ## Why a local Vite page
