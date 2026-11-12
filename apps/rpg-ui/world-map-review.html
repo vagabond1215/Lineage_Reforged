@@ -57,6 +57,10 @@
         <select id="boundaryOwner"></select>
         <div class="help" id="boundaryOwnership">Continents are assembled from child subregion footprint parts. Island systems retain their independent footprints.</div>
         <div id="boundaryPartList" class="boundary-part-list"></div>
+        <details class="candidate-queue">
+          <summary>Review exact-square candidates (<span id="squareQueueCount">42</span>)</summary>
+          <div id="squareCandidateList" class="boundary-part-list"></div>
+        </details>
         <label class="toggle"><input type="checkbox" id="editBoundary"> Edit selected boundary part</label>
         <label class="field-label" for="boundaryTool">Editing action</label>
         <select id="boundaryTool">
