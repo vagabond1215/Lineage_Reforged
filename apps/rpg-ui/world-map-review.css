@@ -31,3 +31,18 @@ input[type=text],input:not([type]),select,textarea{background:#101d2a;border:1px
 .landmask{position:absolute;left:0;top:0;width:2048px;height:1152px;max-width:none;max-height:none;object-fit:fill;border:none;opacity:.45;display:none;pointer-events:none}
 #landmaskFile{font-size:11px;max-width:100%;margin-top:8px}
 #landmaskOpacity{display:block;width:100%;margin-top:8px;accent-color:#85d5cd;cursor:pointer}
+
+
+/* Mixed-landmass sampling is diagnostic only, never a terrain classification. */
+.mixed-landmass-section{border-top-color:#80684b}
+.mixed-landmass-section h2 small{font-weight:450;letter-spacing:0;text-transform:none}
+.mixed-conflict-list{max-height:300px;overflow:auto;margin:9px 0;padding:5px;border:1px solid #4b4b4a;border-radius:6px;background:#0d1822}
+.mixed-conflict-item{display:block;width:100%;text-align:left;margin:2px 0;padding:7px 9px;background:transparent;border-color:transparent;border-left:3px solid #b78b60;font-size:11px}
+.mixed-conflict-item strong{display:block;font-size:12px}
+.mixed-conflict-item small{display:block;margin-top:4px;color:#a9bec9;line-height:1.4}
+.mixed-conflict-item.edge{border-left-color:#738ca1}
+.mixed-conflict-item.active{border-color:#e0ad75;background:#283340}
+.mixed-owner-legend{list-style:none;margin:10px 0;padding:0}
+.mixed-owner-legend li{margin:6px 0;line-height:1.55}
+.mixed-owner-legend .swatch{display:inline-block;width:10px;height:10px;margin-right:7px;border:1px solid #d5dfe2}
+.mixed-review-caution{font-size:11px;line-height:1.45;color:#dcb993}
