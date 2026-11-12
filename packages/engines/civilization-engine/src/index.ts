@@ -25,6 +25,13 @@ import {
 } from "./trade-runtime.js";
 
 export {
+  buildStarfallBaseEconomyPreview,
+  STARFALL_ECONOMY_FOCUS,
+  STARFALL_STARTING_SETTLEMENT_IDS,
+  STARFALL_EXTERNAL_TRADE_CONTEXT_IDS
+} from "./starfall-base-economy.js";
+
+export {
   buildSettlementMarketStates,
   resolveCraftAtSettlement,
   resolveItemValueAtSettlement,
