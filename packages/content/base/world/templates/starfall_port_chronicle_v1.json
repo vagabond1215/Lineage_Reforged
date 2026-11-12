@@ -62,6 +62,62 @@
         "fishers",
         "scribes and factors",
         "adventurers"
+      ],
+      "descriptiveGuildPresence": [
+        {
+          "name": "Merchants Exchange",
+          "trade": "merchant_guild",
+          "functions": [
+            "banking",
+            "warehousing",
+            "contract_broking"
+          ]
+        },
+        {
+          "name": "Teamsters Chapterhouse",
+          "trade": "teamsters_guild",
+          "functions": [
+            "haulage",
+            "convoy_scheduling",
+            "pack_train_hiring"
+          ]
+        },
+        {
+          "name": "Shipwrights Guildhouse",
+          "trade": "shipwrights_guild",
+          "functions": [
+            "hull_contracts",
+            "dock_labor",
+            "timber_allotment"
+          ]
+        },
+        {
+          "name": "Fishers Hall",
+          "trade": "fishers_guild",
+          "functions": [
+            "catch_auctions",
+            "net_licensing",
+            "salting_rooms"
+          ]
+        },
+        {
+          "name": "Scribes and Factors Hall",
+          "trade": "scribes_guild",
+          "functions": [
+            "ledgerkeeping",
+            "charters",
+            "record_copying"
+          ]
+        },
+        {
+          "name": "Starfall Adventurers Hall",
+          "trade": "adventurers_guild",
+          "functions": [
+            "escort_contracts",
+            "bounty_board",
+            "salvage_recovery"
+          ]
+        }
       ]
     },
     "sourceHex": {
@@ -97,7 +153,35 @@
       "settlement.harbormast_quay",
       "settlement.foammarket_ferry"
     ],
-    "note": "Neighboring settlements share the macro hex; this does not establish foot adjacency or an operable travel edge."
+    "note": "Neighboring settlements share the macro hex; this does not establish foot adjacency or an operable travel edge.",
+    "cityProfile": {
+      "settlementType": "port_city",
+      "populationTotal": 28000,
+      "administrativeRole": "regional",
+      "harborTier": 4,
+      "marketTier": 4,
+      "roadTier": 3,
+      "waterTier": 2,
+      "fortificationTier": 2,
+      "identityTags": [
+        "archipelago_port_city",
+        "naval_hub",
+        "trade_brokerage"
+      ],
+      "note": "Canonical settlement static profile; no population/NPC simulation spawned by this template."
+    },
+    "candidateFloraRefsNotSpawned": [
+      "flora.coconut_palm",
+      "flora.orange_tree",
+      "flora.flax",
+      "flora.river_reed"
+    ],
+    "candidateFaunaRefsNotSpawned": [
+      "fauna.cod",
+      "fauna.oyster",
+      "fauna.crab",
+      "fauna.reef_lobster"
+    ]
   },
   "travelLinks": [
     {
@@ -366,6 +450,9 @@
     "packages/content/base/world/world_hex_edges.json",
     "packages/content/base/world/travel_networks.json",
     "packages/content/base/world/spawn_profiles.json",
-    "docs/design/welcome-world-library-character-entry-and-loading-plan-2026-11-11.md"
+    "docs/design/welcome-world-library-character-entry-and-loading-plan-2026-11-11.md",
+    "packages/content/base/world/settlements.json",
+    "packages/content/base/world/flora.json",
+    "packages/content/base/world/fauna.json"
   ]
 }
