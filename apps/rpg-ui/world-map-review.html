@@ -47,6 +47,32 @@
         <button id="clearLandmask" class="wide">Clear local landmask</button>
         <div id="landmaskStatus" class="help">No landmask loaded. Source coastline remains independent.</div>
       </div>
+      <div class="sidebar-section mixed-landmass-section">
+        <h2>Mixed-landmass conflict queue <small id="mixedCount">Loading…</small></h2>
+        <div class="help">Source-vector evidence only. A shared traced coastline does not establish a real land bridge, erroneous border, or accepted map correction.</div>
+        <label class="toggle"><input type="checkbox" id="showMixedLandmass" checked> Highlight selected coastline and source macro owners</label>
+        <label class="field-label" for="mixedFilter">Queue filter</label>
+        <select id="mixedFilter">
+          <option value="all">All mixed traces and edge diagnostics</option>
+          <option value="unreviewed">Unreviewed</option>
+          <option value="candidate">Candidate adjustment</option>
+          <option value="conflict">Potential conflict</option>
+          <option value="checked">Visual check completed</option>
+          <option value="edge">Map-edge diagnostics only</option>
+        </select>
+        <div class="help" id="mixedSummary">Scanning original coastline parts against the 159 retained footprints…</div>
+        <div id="mixedConflictList" class="mixed-conflict-list" role="list"></div>
+        <label class="field-label" for="mixedDecision">Selected coastline disposition (draft only)</label>
+        <select id="mixedDecision" disabled>
+          <option value="undecided">Undecided</option>
+          <option value="needs_raster_witness">Needs independent raster witness</option>
+          <option value="suspected_trace_connection">Suspected coastline-trace connection</option>
+          <option value="suspected_owner_boundary">Suspected owner/border mismatch</option>
+          <option value="possible_real_land_connection">Possible genuine land connection</option>
+          <option value="visually_checked_no_change">Visually checked, retain as drawn</option>
+        </select>
+        <div class="help">Disposition, classification and notes are stored only in review JSON. They do not modify canonical polygon ownership.</div>
+      </div>
       <div class="sidebar-section boundary-section">
         <h2>Continent &amp; region review</h2>
         <label class="field-label" for="boundaryScope">Boundary layer to work on</label>
