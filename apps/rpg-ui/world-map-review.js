@@ -414,7 +414,7 @@ function drawLocalities() {
 }
 function renderOverlay() {
   overlay.replaceChildren();
-  drawRegions();drawSourceCoastlines();drawBoundaryScope('continent');drawBoundaryScope('region');
+  drawSourceCoastlines();drawBoundaryScope('continent');drawBoundaryScope('region');
   drawGrid();drawCoarseHexEdges();drawTradeRelationships();drawLinearFeatures();drawRoutes();
   drawSuspectSquares();drawSettlements();drawRegionLabels();drawLocalities();drawPoints();
   drawBoundaryHandles();
@@ -679,6 +679,39 @@ function events() {
   $('importReview').onchange=importDraft;
   $('resetSelected').onclick=resetSelected;
   $('resetAll').onclick=resetAll;
+  $('boundaryScope').onchange=()=>{
+    drawingPoints=[];populateBoundaryOwners();
+    if(boundaryScope()==='continent')$('showContinents').checked=true;
+    else $('showRegions').checked=true;
+    select('boundary-owner',boundaryOwner(),boundaryScope());
+  };
+  $('boundaryOwner').onchange=()=>{
+    drawingPoints=[];select('boundary-owner',boundaryOwner(),boundaryScope());
+  };
+  $('editBoundary').onchange=()=>{
+    if(!checked('editBoundary'))drawingPoints=[];
+    else if(boundaryScope()==='continent')$('showContinents').checked=true;
+    else $('showRegions').checked=true;
+    renderBoundaryPartList();renderOverlay();
+  };
+  $('boundaryTool').onchange=()=>{drawingPoints=[];renderBoundaryPartList();renderOverlay();};
+  $('finishBoundary').onclick=()=>{
+    if(!checked('editBoundary')||$('boundaryTool').value!=='draw'||drawingPoints.length<3)return;
+    const id=addCustomBoundary(boundaryCatalog,state.boundary,boundaryScope(),boundaryOwner(),drawingPoints);
+    if(!id){alert('Cannot create this polygon. Check its owner and three or more in-frame vertices.');return;}
+    drawingPoints=[];save();selectBoundaryPart(boundaryScope(),id);
+  };
+  $('cancelBoundary').onclick=()=>{drawingPoints=[];renderBoundaryPartList();renderOverlay();};
+  $('toggleBoundaryPart').onclick=()=>{
+    const part=activeBoundary();if(!part)return;
+    excludeBoundary(boundaryCatalog,state.boundary,selection.scope,selection.id,!part.excluded);
+    save();renderAll();
+  };
+  $('resetBoundaryPart').onclick=()=>{
+    const part=activeBoundary();if(!part)return;
+    resetBoundary(boundaryCatalog,state.boundary,selection.scope,selection.id);
+    save();select('boundary-owner',boundaryOwner(),boundaryScope());
+  };
   $('routeFilter').onchange=()=>{renderRoutesList();renderOverlay();};
   $('search').oninput=renderSearch;
   $('reviewStatus').onchange=writeNotes;
@@ -692,11 +725,44 @@ function events() {
     if(e.button!==0 && e.pointerType==='mouse')return;
     const target=e.target.closest?.('[data-kind]');
     const point=worldPoint(e);
+    const edit=checked('editBoundary'),editTool=$('boundaryTool').value;
+    if(edit&&editTool==='draw'&&within(point)){
+      drawingPoints.push({x:Math.round(point.x),y:Math.round(point.y)});
+      renderBoundaryPartList();renderOverlay();return;
+    }
     if(checked('addCheckpoint') && selectedRoute() && within(point)) {
       insertCheckpoint(selectedRoute(),point);return;
     }
     const kind=target?.getAttribute('data-kind'),id=target?.getAttribute('data-id');
-    if(kind==='checkpoint' && id){
+    if(kind==='boundary-vertex'&&id&&edit&&editTool==='vertex'){
+      const scope=target.getAttribute('data-scope'),index=Number(target.getAttribute('data-index'));
+      selectBoundaryPart(scope,id);
+      const part=activeBoundary();
+      if(e.altKey&&part?.points?.length>3){
+        const pts=copyPoints(part.points);pts.splice(index,1);
+        setBoundaryPoints(boundaryCatalog,state.boundary,scope,id,pts);
+        save();renderAll();return;
+      }
+      if(part&&!part.excluded)pointerAction={type:'boundary-vertex',scope,id,index};
+    }else if(kind==='boundary'&&id){
+      const scope=target.getAttribute('data-scope');
+      selectBoundaryPart(scope,id);
+      const part=activeBoundary();
+      if(edit&&part&&!part.excluded&&within(point)){
+        if(editTool==='vertex'&&e.shiftKey){
+          const pts=copyPoints(part.points);
+          if(pts.length<2000){
+            const index=segmentIndex(pts,point,true);
+            pts.splice(index+1,0,{x:Math.round(point.x),y:Math.round(point.y)});
+            setBoundaryPoints(boundaryCatalog,state.boundary,scope,id,pts);
+            save();renderAll();
+          }
+          return;
+        }
+        if(editTool==='translate')pointerAction={type:'boundary-translate',scope,id,
+          start:point,sourcePoints:copyPoints(part.points)};
+      }
+    }else if(kind==='checkpoint' && id){
       select('route',id);
       pointerAction={type:'checkpoint',id,index:Number(target.getAttribute('data-index'))};
     }else if(kind==='settlement' && id){
@@ -724,13 +790,31 @@ function events() {
       if(pointerAction.type==='settlement')state.moved[pointerAction.id]=rounded;
       if(pointerAction.type==='checkpoint' && state.waypoints[pointerAction.id]?.[pointerAction.index])
         state.waypoints[pointerAction.id][pointerAction.index]=rounded;
+      if(pointerAction.type==='boundary-vertex'){
+        const part=boundaryPart(boundaryCatalog,state.boundary,pointerAction.scope,pointerAction.id);
+        if(part?.points[pointerAction.index]){
+          const pts=copyPoints(part.points);
+          pts[pointerAction.index]=rounded;
+          setBoundaryPoints(boundaryCatalog,state.boundary,pointerAction.scope,pointerAction.id,pts);
+        }
+      }
+      if(pointerAction.type==='boundary-translate'){
+        const pts=pointerAction.sourcePoints;
+        const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);
+        const dx=clamp(Math.round(p.x-pointerAction.start.x),
+          -Math.min(...xs),2047-Math.max(...xs));
+        const dy=clamp(Math.round(p.y-pointerAction.start.y),
+          -Math.min(...ys),1151-Math.max(...ys));
+        setBoundaryPoints(boundaryCatalog,state.boundary,pointerAction.scope,pointerAction.id,
+          pts.map(p=>({x:p.x+dx,y:p.y+dy})));
+      }
       renderOverlay();
-      if(selection?.kind==='settlement')renderInspector();
+      if(['settlement','boundary'].includes(selection?.kind))renderInspector();
     }
   });
   const endPointer=()=>{
     if(!pointerAction)return;
-    if(pointerAction.type!=='pan'){save();renderInspector();}
+    if(pointerAction.type!=='pan'){save();renderInspector();renderBoundaryPartList();}
     pointerAction=null;viewport.classList.remove('panning');
   };
   viewport.addEventListener('pointerup',endPointer);
