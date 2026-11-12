@@ -46,3 +46,5 @@ input[type=text],input:not([type]),select,textarea{background:#101d2a;border:1px
 .mixed-owner-legend li{margin:6px 0;line-height:1.55}
 .mixed-owner-legend .swatch{display:inline-block;width:10px;height:10px;margin-right:7px;border:1px solid #d5dfe2}
 .mixed-review-caution{font-size:11px;line-height:1.45;color:#dcb993}
+
+.stage svg .mixed-coast-outline{pointer-events:visibleStroke;cursor:pointer}
