@@ -33,6 +33,10 @@ Point-in-polygon uses settlement pixel centers (x+0.5,y+0.5). Matching the speci
 
 The full settlement marker population is **1,763,400** while the nine macro regions estimate **365 million** residents. These are NOT comparable coverage counts without specifying whether settlements are representative named nodes or a complete census. The gap strongly indicates uninstantiated hinterlands/rural communities, but it does not authorize distributing 363 million people to new individual points.
 
+## Connector execution witness
+
+The exact checked-in \`scripts/audit-settlement-map-consistency.mjs\` body was evaluated in the GitHub-connected JavaScript environment with the eight canonical JSON source objects supplied in memory (the Node \`readFileSync\` boundary was replaced only for that execution). Actual result: \`SOURCE_RELATIONSHIPS_VALID_WITH_DESIGN_WARNINGS\`, **88 records, 0 hard failures, 61 advisories** (37 climate overlaps, 3 subterranean dual-biome overlays, 20 nonfavored-type preferences and 1 locality max-population-band mismatch). The script body also passed a negative diagnostic: corrupting Aurelis from x=300 to x=2048 yielded \`HARD_SOURCE_FAILURE\`, exit status 1 and the expected out-of-map/footprint/biome/climate errors. This is stronger than file-shape review, but **not** a native Node CLI run, full content lint, build, binary raster decode, or playable runtime validation.
+
 ## Priority 0: map and travel safety
 
 1. **Macro coast must be verified before moving or approving any coastal capital.** The authoring includes map-polygon containment, not an independent shoreline-distance/sea-level witness. A preliminary nearest-distance check against the `coastlines` feature polylines yields very large separations for Seabanner and Tidecrown; that could indicate incomplete coastline traces or mismatched coordinates. Verify against both ORIGINAL PNGs and coastline feature topology, rather than auto-moving either city. Also inspect Aurelis, Aurora Anchorage and Icehook Jetty. A world atlas pixel is almost 10 km wide, so the same source cannot resolve individual docks.
