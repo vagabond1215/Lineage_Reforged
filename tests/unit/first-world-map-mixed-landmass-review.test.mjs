@@ -43,7 +43,8 @@ test('material mixed ownership is separate from overlapping macro regions',()=>{
     ['region.valtherion','region.myridian_chain','region.dawnreach_isles']);
   assert.deepEqual(get(41).materialOwnerIds,
     ['region.dawnreach_isles','region.valtherion']);
-  assert.ok(get(41).directMacroOverlapAreaPx2>0);
+  assert.equal(get(3).directMacroOverlapAreaPx2,20);
+  assert.equal(get(41).directMacroOverlapAreaPx2,0);
   assert.ok(get(51).areaPx2>get(45).areaPx2);
   assert.ok(get(10).subregions.some(s=>s.id==='region.windward_spine'));
 });
