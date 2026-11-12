@@ -466,6 +466,18 @@ $worldMapData = Get-Content -LiteralPath $worldMapsPath -Raw | ConvertFrom-Json
 $featureData = Get-Content -LiteralPath $featurePath -Raw | ConvertFrom-Json
 $regionData = Get-Content -LiteralPath $regionPath -Raw | ConvertFrom-Json
 $settlementData = Get-Content -LiteralPath $settlementPath -Raw | ConvertFrom-Json
+# These 42 IDs are owner-verified false offshore land squares; they must never
+# seed land partitions even when an older 201-part source is passed in.
+$artifactManifestPath = Join-Path $workspaceRoot 'docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json'
+$artifactManifest = Get-Content -LiteralPath $artifactManifestPath -Raw | ConvertFrom-Json
+$verifiedExcludedIds = New-Object 'System.Collections.Generic.HashSet[string]'
+foreach ($id in @($artifactManifest.removedSourceFeatureIds)) {
+    [void]$verifiedExcludedIds.Add([string]$id)
+}
+if ($verifiedExcludedIds.Count -ne 42) {
+    throw 'Verified offshore footprint exclusion manifest is not the accepted 42-ID set.'
+}
+
 
 $worldMapRecord = @($worldMapData.records)[0]
 $featureRecord = @($featureData.records)[0]
@@ -718,6 +730,7 @@ try {
     $regionAnchorLookup = @{}
 
     foreach ($footprint in @($featureRecord.regionFootprints)) {
+        if ($verifiedExcludedIds.Contains([string]$footprint.id)) { continue }
         foreach ($regionId in @($footprint.regionIds)) {
             $regionId = [string]$regionId
             if (-not $regionBaseFeatures.ContainsKey($regionId)) {
