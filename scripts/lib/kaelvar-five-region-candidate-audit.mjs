@@ -1,7 +1,7 @@
 /**
  * Fail-closed audit for master-hosted but noncanonical Kaelvar five-region
  * authored content. It validates catalog-shaped records without publishing
- * new region IDs, localities, hexes, settlement coordinates or borders.
+ * new region IDs, localities, environmental polygons, settlement coordinates or borders.
  */
 const fail = x => {throw Error('Kaelvar five-region candidate HOLD: '+x);};
 const unique = (values,what) => {
@@ -21,15 +21,14 @@ const allChildren = [
 ];
 export function validateKaelvarFiveRegionCandidates({
   regionPack,localityPack,ecologyPack,
-  activeRegions,activeLocalities,activeWorldHexes,activeSettlements,
+  activeRegions,activeLocalities,activeSettlements,
 }){
   for(const [data,label] of [[regionPack,'region'],[localityPack,'locality'],
     [ecologyPack,'ecology']])
     if(!data||data.schemaVersion!==1||!Array.isArray(activeRegions)||
-      !Array.isArray(activeLocalities)||!Array.isArray(activeWorldHexes)||
-      !Array.isArray(activeSettlements))fail('invalid '+label+' source/schema');
+      !Array.isArray(activeLocalities)||!Array.isArray(activeSettlements))fail('invalid '+label+' source/schema');
   if(regionPack.status!=='MAINLINE_AUTHORED_PROPOSALS_NOT_ACTIVE_REGION_RECORDS'||
-    localityPack.status!=='MAINLINE_DESIGN_ONLY_NOT_ACTIVE_LOCALITY_HEX_OR_SETTLEMENT_CONTENT'||
+    localityPack.status!=='MAINLINE_COORDINATE_FIRST_CANDIDATES_NO_ACTIVE_PUBLICATION'||
     ecologyPack.status!=='MAINLINE_DESIGN_ONLY_NO_ACTIVE_SPAWNS_ROUTES_OR_CANONICAL_MASKS'||
     regionPack.canonicalWritable!==false||
     localityPack.approval?.canonicalWritable!==false||
@@ -37,15 +36,15 @@ export function validateKaelvarFiveRegionCandidates({
     ecologyPack.publicationHolds?.northeastLargeIslandIndivisible!==true)
     fail('premature world publication or island split');
   const rs=regionPack.newRegionRecords,ls=localityPack.localityRecords,
-    hs=localityPack.worldHexCandidateRecords,ss=localityPack.settlementConcepts,
+    zones=localityPack.environmentZoneCandidateRecords,ss=localityPack.settlementConcepts,
     es=ecologyPack.profiles;
-  if(rs?.length!==2||ls?.length!==8||hs?.length!==8||ss?.length!==8||
+  if(rs?.length!==2||ls?.length!==8||zones?.length!==8||ss?.length!==8||
      es?.length!==2||!exactly(rs.map(r=>r.id),expected)||
      !exactly(es.map(r=>r.regionId),expected))
-    fail('two region, eight locality/hex/seed and ecology inventory required');
+    fail('two region, eight locality/environment-zone/seed and ecology inventory required');
   unique(rs.map(x=>x.id),'region IDs');
   unique(ls.map(x=>x.id),'locality IDs');
-  unique(hs.map(x=>x.id),'world hex IDs');
+  unique(zones.map(x=>x.id),'environment zone IDs');
   unique(ss.map(x=>x.candidateId),'settlement concept IDs');
   const originalThree=['region.auric_marches','region.verdant_thalos',
     'region.shattercap_isles'];
@@ -106,7 +105,6 @@ export function validateKaelvarFiveRegionCandidates({
       fail('region under-authored: '+r.id);
   }
   const activeLocalityIds=new Set(activeLocalities.map(x=>x.id));
-  const activeHexIds=new Set(activeWorldHexes.map(x=>x.id));
   const localityById=new Map(ls.map(x=>[x.id,x]));
   for(const l of ls){
     keys(l,activeLocalities[0],'locality '+l.id);
@@ -118,14 +116,35 @@ export function validateKaelvarFiveRegionCandidates({
        Object.keys(l.routeAccessModifier||{}).length!==6)
       fail('locality fields or parent invalid: '+l.id);
   }
-  for(const h of hs){
-    keys(h,activeWorldHexes[0],'world hex '+h.id);
-    if(activeHexIds.has(h.id)||!expected.includes(h.regionId)||
-       localityById.get(h.localityBandId)?.regionId!==h.regionId||
-       h.anchoredSettlementIds?.length!==0||
-       Object.keys(h.frictionByMode||{}).length!==6||
-       !Number.isFinite(h.habitabilityScore))
-      fail('unapproved or incomplete world hex: '+h.id);
+  if(localityPack.approval?.noLegacyGridPublication!==true||
+     localityPack.approval?.coordinatePlacementApproved!==false||
+     localityPack.approval?.wholeNortheasternIslandUnassigned!==true)
+    fail('coordinate-first locality contract or island holds removed');
+  const requiredZoneFields=[
+    'id','slug','regionId','regionLocalityId','mapId',
+    'coordinateSpaceId','geometryRef','placementStatus',
+    'associatedPhysicalComponentIds','habitatEvidenceStatus',
+    'biomeFamilyCandidate','elevationBandCandidate','terrainType',
+    'freshwaterTypeCandidate','habitationScoreCandidate',
+    'traversalFrictionByModeCandidate','barrierTags','hazardTags',
+    'resourceAffinityTags',
+  ];
+  for(const z of zones){
+    for(const key of requiredZoneFields)
+      if(!(key in z))fail('environment zone missing '+key+': '+z.id);
+    if(!z.id.startsWith('environment_zone.')||
+       !z.id.endsWith(z.slug)||!expected.includes(z.regionId)||
+       localityById.get(z.regionLocalityId)?.regionId!==z.regionId||
+       z.mapId!=='world_map.first_world'||
+       z.coordinateSpaceId!=='world_map.first_world.reference'||
+       z.geometryRef!==null||z.placementStatus!=='UNPLACED_NO_POLYGON'||
+       !Array.isArray(z.associatedPhysicalComponentIds)||
+       z.associatedPhysicalComponentIds.length!==0||
+       z.habitatEvidenceStatus!=='DESCRIPTIVE_NOT_SOURCE_CALIBRATED'||
+       Object.keys(z.traversalFrictionByModeCandidate||{}).length!==6||
+       !Number.isFinite(z.habitationScoreCandidate)||
+       Object.keys(z).some(k=>/^(?:hex|worldHex|anchoredSettlement)/i.test(k)))
+      fail('unapproved or incomplete environment zone: '+z.id);
   }
   for(const s of ss){
     if(!expected.includes(s.regionId)||
@@ -148,13 +167,12 @@ export function validateKaelvarFiveRegionCandidates({
         fail('habitat incomplete: '+h.id);
   }
   if(ecologyPack.publicationHolds?.canonicalRegionCatalogUnchanged!==true||
-     ecologyPack.publicationHolds?.canonicalWorldHexesUnchanged!==true||
      ecologyPack.publicationHolds?.canonicalSettlementsUnchanged!==true)
     fail('active world content publication guard removed');
   return {
     status:'FIVE_REGION_AUTHORING_COMPLETE_CANONICAL_HELD',
     newRegionCount:rs.length,newLocalityCount:ls.length,
-    candidateHexCount:hs.length,unplacedSettlementConceptCount:ss.length,
+    candidateEnvironmentZoneCount:zones.length,unplacedSettlementConceptCount:ss.length,
     ecologicalHabitatCount:es.reduce((n,r)=>n+r.ecology.habitats.length,0),
     fiveRegionPopulationMillions:sum(nextPopulation),
     sourceThreeRegionPopulationMillions:sum(oldPopulation),
