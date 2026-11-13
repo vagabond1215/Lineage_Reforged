@@ -163,3 +163,94 @@ transfer, or undocumented polygon edits.
 
 No canonical geography, application runtime, game data or
 original raster assets were changed during this phase.
+
+## Owner-rendered Kaelvar locality SVG: visual disposition (2026-11-12)
+
+The owner supplied a Brave screenshot of the source-registered
+`--svg-kaelvar` two-panel map. It shows the original biome
+image alongside translucent highlights for the *current* Auric
+Marches Part 4, Shattercap Isles Parts 7 and 15, Verdant
+Thalos Part 1, and Windward Spine Part 1 source polygons.
+The SVG visibly rendered and aligns with the map coastline.
+
+**Observed spatial arrangement:**
+
+- Auric Marches occupies a large western and west-central
+  mainland block, broadly consistent with its
+  `kaelvar_western_interior` authoring.
+- Shattercap Part 7 spreads across a very large northern
+  and eastern *mainland* region. Its coastal fringe could
+  partly fit a `kaelvar_northern_coast` position label,
+  but its extensive interior and southeast extent require
+  review against the authored *broken northern island
+  fringe* and cold-maritime/island ecology.
+- Shattercap Part 15 occupies a southeastern mainland area
+  directly north/west of Windward Part 1, far from a
+  self-evident separate northern island group. This is a
+  high-priority **intra-Kaelvar placement anomaly**.
+- Verdant Thalos covers a substantial southern peninsula
+  area, but stops short of the far southeastern coastal
+  section occupied by Shattercap and foreign Windward.
+  Its precise eastern boundary is unapproved.
+- Windward Part 1 highlights the far southeastern peninsula,
+  aligning with the independently measured 3,673
+  terrain-candidate cells and previously confirmed
+  Serathyl foreign-region intrusion candidate.
+
+These are **visual observations of current polygon labels**,
+not verified biome or political borders. The overlay colors
+are translucent and some source footprints overlap;
+render-layer order does not establish unique ownership.
+The biome panel shows yellow/green and deeper green terrain
+but **no independently approved source-biome legend**.
+No conclusion about desert, high alpine, farmland or specific
+forest subtypes may be derived from that palette alone.
+The elevation color ramp is also not physically calibrated.
+
+### Consequence for the revision plan
+
+A single Windward-to-Verdant ownership transfer is now
+**insufficient**. The first Kaelvar implementation should be
+a coherent **continent-constrained child-region reconstruction**,
+rather than isolated same-area polygon edits. Treat existing
+borders as provenance and authored ecology/location as design
+constraints, while retaining independently verified water
+features and physical islands.
+
+**Proposed review order (no canonical edits):**
+
+1. Use `--kaelvar-locality` JSON to inspect **all**
+   Shattercap footprint parts, their terrain-only component
+   memberships, full source-grid bounds and centroids.
+   Determine which parts genuinely represent detached
+   northern islands versus large mainland coverage.
+2. Review Coast 10 with the original biome and elevation
+   overlays. Confirm river/estuary crossings and the
+   12-pixel secondary terrain fragment; keep Coast 40
+   a separate sovereignty decision.
+3. Establish independent source color categories and
+   elevation/relief interpretation. Evaluate contiguous
+   coastal, lowland, upland, dry-interior and forested
+   areas, with transitional ecotone buffers rather than
+   exact single-biome purity.
+4. Prepare **at least two source-aligned candidate
+   territorial layouts** for the entire Kaelvar southern/
+   northern transition, showing unchanged land/coasts,
+   Shattercap's plausible northern coastal/island band,
+   Auric's western dry-interior role, Verdant's southern
+   fertile-coastal role, and an unresolved/explicitly
+   justified destination for all former Windward cells.
+   Candidate boundaries must be driven by geographic
+   evidence, **not** equal areas or nearest anchors.
+5. For each candidate, quantify physical component
+   preservation, land/ink/water counts, biome/height
+   suitability and ecotone fractions, conflicting region
+   labels, gaps/overlaps, settlement/route dependency
+   impacts and stable source polygon IDs. Require owner
+   signoff before any canonical data write.
+
+**Visual gate:** `SOURCE_RENDER_PASS__SHATTERCAP_MAINLAND_POSITION_HOLD`.
+The all-Shattercap JSON report and source-aligned proposal
+are still needed. No auto-promotion of screenshot color
+overlays to approved geographic boundaries or any
+canonical modification is authorized.
