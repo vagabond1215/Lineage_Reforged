@@ -174,3 +174,37 @@ a need to revise the authored lore rather than move every land cell.
   quantified, serious interior mismatches have dispositions,
   parent/child landmass topology is valid, and all revised regions
   are accepted against descriptions and physical geography.
+
+## Source swatch land-mask warning (owner visual witness, 2026-11-12)
+
+The first owner-generated 48-cluster SVG covers colors **already admitted
+as land by the current provisional RGB threshold**, not independently
+confirmed land. Its swatch labels are **averages within 4-bit RGB buckets**,
+not exact unique source RGB color values.
+
+The source displays large light-green, bright-green and yellow RGB groups.
+The reported provisional-land fractions also include a near-black bucket
+(~7.75%), a dark-blue bucket (~1.49%), and a turquoise/cyan bucket
+(~0.94%). Their combined share is ~10.18% **of the provisional land
+mask**, not a proven sea area. The old mask considers near-black
+and some blue/cyan inputs land because it identifies water only when
+B > 150, B-G > 25, and B-R > 80. Those buckets could contain water,
+map annotations, mountains, shadows or other intentional artwork.
+Do **not** reclassify them wholesale based on a swatch or average RGB.
+
+**Additional mandatory L0 gate:** calibrate land/water and no-data
+classification against the original visually inspected source image
+and any legend or source-layer conventions. Sample candidate clusters
+both inside large coast polygons and in obvious open-ocean/background
+reference areas; distinguish isolated map text from physical terrain,
+avoid converting rivers or inland lakes to arbitrary dry land, and
+compare corrected mask connectivity and offshore island components.
+Preserve the original SHA, method, and provisional mask as reproducible
+baseline. Recalculate the counts for components 25, 82, 91 and all
+continents after an approved threshold or source color lookup.
+Until then, prior 585,834 land-pixel and 167/160 component counts are
+**provisional threshold observations, not final coastal truth**.
+
+The source swatches are not yet a classified land-biome map.
+Only after L0 source palette verification should E1–E6 biome/elevation
+suitability and candidate boundaries advance.
