@@ -170,7 +170,9 @@ const chunk=(type,bytes)=>{
 /** Valid embedded lossless RGBA PNG. No network fetch, no filesystem writes. */
 export function embeddedCropPng(rgba,width,height,roi) {
   if(rgba?.length!==width*height*4||!roi||roi.minX<0||roi.minY<0||
-    roi.maxX>width||roi.maxY>height||roi.width<1||roi.height<1)
+    ![roi.minX,roi.minY,roi.maxX,roi.maxY,roi.width,roi.height].every(Number.isInteger)||
+    roi.maxX>width||roi.maxY>height||roi.width<1||roi.height<1||
+    roi.width!==roi.maxX-roi.minX||roi.height!==roi.maxY-roi.minY)
     throw Error('Embedded crop PNG registration mismatch');
   const scan=Buffer.alloc(roi.height*(1+roi.width*4));
   for(let y=0;y<roi.height;y++){
