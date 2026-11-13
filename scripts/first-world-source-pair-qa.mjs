@@ -9,6 +9,8 @@
  * node scripts/first-world-source-pair-qa.mjs --svg-coast10 > coast10-source-ecology.svg
  * node scripts/first-world-source-pair-qa.mjs --kaelvar-locality > kaelvar-locality.json
  * node scripts/first-world-source-pair-qa.mjs --svg-kaelvar > kaelvar-locality.svg
+ * node scripts/first-world-source-pair-qa.mjs --shattercap-union > shattercap-union.json
+ * node scripts/first-world-source-pair-qa.mjs --svg-shattercap > shattercap-inventory.svg
  */
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
@@ -25,10 +27,12 @@ import {coast10ReviewBounds,buildCoast10EnvironmentReview,coast10ReviewSvg}
   from './lib/first-world-coast10-ecology-review.mjs';
 import {collectKaelvarLocality,kaelvarLocalitySvg,KAELVAR_LOCALITY_IDS}
   from './lib/first-world-kaelvar-locality-review.mjs';
+import {buildShattercapUnionEvidence,shattercapInventorySvg}
+  from './lib/first-world-shattercap-union.mjs';
 
 const args=process.argv.slice(2);
-if(args.length!==1 || !['--check','--svg-qa','--connectivity','--coast10-review','--svg-coast10','--kaelvar-locality','--svg-kaelvar'].includes(args[0])){
-  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa|--connectivity|--coast10-review|--svg-coast10|--kaelvar-locality|--svg-kaelvar');
+if(args.length!==1 || !['--check','--svg-qa','--connectivity','--coast10-review','--svg-coast10','--kaelvar-locality','--svg-kaelvar','--shattercap-union','--svg-shattercap'].includes(args[0])){
+  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa|--connectivity|--coast10-review|--svg-coast10|--kaelvar-locality|--svg-kaelvar|--shattercap-union|--svg-shattercap');
   process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -86,6 +90,40 @@ const suspectKeys=[
 ];
 for(const id of suspectKeys)
   if(!rows.some(r=>r.id===id))throw Error('Missing Coast 10/40 candidate: '+id);
+if(args[0]==='--shattercap-union'||args[0]==='--svg-shattercap'){
+  const topology=buildSourcePairTopologySensitivity({
+    width,height,classification:pair.classification,
+  });
+  const auric=footprints.find(p=>p.id==='feature.region_auric_marches.part_4');
+  if(!auric)throw Error('Auric mainland source reference missing');
+  const auricComponent=summarizeSourcePairPilotFootprints({
+    width,height,classification:pair.classification,topology,footprints,
+    selectedIds:[auric.id],
+  })[0].terrainOnlyFourComponents[0];
+  if(!auricComponent)throw Error('Auric source has no independent terrain landmass');
+  const mainlandReferenceId=auricComponent.componentId;
+  if(args[0]==='--svg-shattercap'){
+    const preview=shattercapInventorySvg({
+      width,height,classification:pair.classification,
+      terrainLabels:topology.grids.terrainOnly.four.labels,
+      biomeRgba,footprints,mainlandReferenceId,
+    });
+    process.stdout.write(preview.svg);
+  }else{
+    const report=buildShattercapUnionEvidence({
+      width,height,classification:pair.classification,
+      terrainLabels:topology.grids.terrainOnly.four.labels,
+      footprints,mainlandReferenceId,
+    });
+    if(report.selectedFootprintCount!==15)
+      throw Error('Shattercap audited source footprint count drifted');
+    process.stdout.write(JSON.stringify({
+      ...report,sourceIdentity,sourceImages:metadata,
+      referenceGrid:{width,height},crop,sourceGeometryWritable:false,
+    },null,2)+'\n');
+  }
+  process.exit(0);
+}
 if(args[0]==='--kaelvar-locality'||args[0]==='--svg-kaelvar'){
   if(args[0]==='--svg-kaelvar'){
     const preview=kaelvarLocalitySvg({
