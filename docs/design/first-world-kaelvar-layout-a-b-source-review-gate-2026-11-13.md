@@ -2,7 +2,7 @@
 
 Date: 2026-11-13
 Branch: `connector/first-world-raster-macro-evidence-pilot-2026-11-12`
-Status: **REVIEW-WINDOW IMPLEMENTATION COMMITTED; ORIGINAL-SOURCE NATIVE TESTS AND POLITICAL BORDERS HELD**
+Status: **NATIVE JSON GATE PASSED (51/51 TESTS); FOUR-PANEL SVG VISUAL AND ECOLOGICAL/POLITICAL APPROVAL HELD**
 PR: #79, draft. Source basis: audited geometry at `41a8ab1d`; 2048×1152 paired original biome/elevation rasters within crop (60,60,3976,2235).
 
 ## Intent and epistemic boundary
@@ -182,6 +182,33 @@ git status --short
 ```
 
 Return **HEAD SHA**, Node TAP test totals/failures, `$r.sourceImages` with the two hashes, current `oldInkIncludedComponent` and `terrainOnlyMainlandComponent` summaries, Shattercap retained component rows and full source ID ledger, the Layout A/B output, and a screenshot of the four-panel SVG with its legend visible. The JSON/SVG stay outside the repository; the worktree should remain clean.
+
+## Owner-native verification checkpoint: 2026-11-13
+
+Native PowerShell report from clean detached worktree at implementation commit
+`1bc6d01e1af7230b05defd9c21fef9ed9a3bbf5a`:
+
+- **PASS:** all three new files passed `node --check`; seven suites produced **51 tests passed, 0 failed, 0 skipped**. Original source-pair registered JSON `--compare` generated successfully.
+- **PASS:** source biome PNG SHA-256 `9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12`; elevation PNG SHA-256 `02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d`. Both original native images are 4096 × 2355, registered to the 2048 × 1152 working grid without changing the source.
+- **PASS:** shared-ink-inclusive Coast 10 component 25: 86,417 candidate land cells, 1,362 unclaimed, 88 same-macro child overlap.
+- **PASS:** **terrain-only** component 30: 79,419 terrain candidates, 204 unclaimed, 84 same-macro child overlap. These **different** overlap/unclaimed numbers are expected classification-scenario measurements, not unexplained drift. Component 30 is a physical reference, not all approved Kaelvar political territory.
+- **PASS:** deduplicated Shattercap union 30,938 terrain candidates, 27,245 on component 30 and 3,693 on **18 separately retained detached components**, Shattercap internal overlap 0. Part 1: 684 shared-blue source cells, 0 terrain. Windward Part 1: 3,661 mainland + 12 detached.
+- **PASS:** independent raw 4-bit RGB 4-neighbor source-color connectivity yielded **2,697 patches** covering the 79,419-cell physical reference; no semantic biome interpretation follows from these bins. They are color quantization diagnostics that may split continuous natural vegetation gradients.
+- Layout B's **30,906 mainland terrain cells** are the union of existing Shattercap Parts 7/15 and Windward Part 1 **test windows**, not a fourth-region mask or area. Layout A/B have `proposedPolygons=null`, `approvedUnassignedArea=null`, no owner approval.
+- **PASS:** PowerShell post-run `git status --porcelain` clean and exact implementation HEAD unchanged. Canonical geography, original PNGs, settlements/routes, generator, gameplay, runtime, Saves and master remained untouched.
+
+**Precise gate split:** K1 JSON / native regression **PASS**. K1 four-panel original-source SVG **NOT YET VISUALLY REVIEWED**. E0 shoreline/river ink, E1 biome legend, E2 elevation, E3–E4 ecology/ecotones, E5 dependency review and E6 owner political approvals remain **HOLD**. Do not claim that the native report by itself chooses Layout A or Layout B or authorizes masks.
+
+### Next local action: K1 four-panel render
+
+From the clean detached worktree at the *current* PR #79 head, run
+`node scripts/first-world-kaelvar-candidate-comparison.mjs --svg` to a file
+**outside the repo**, verify all four panels (existing source labels, A review,
+B eligibility review, uncalibrated elevation), inspect source registration and
+the current-footprint dashed outlines against the original coastline artwork,
+and return a screenshot with the legend. If the SVG differs, record a failure
+rather than repairing land colors by hand. Future K2 cannot start until source
+color and height semantics receive independent assessment and approval.
 
 ## Subsequent handoff after native K1 pass
 
