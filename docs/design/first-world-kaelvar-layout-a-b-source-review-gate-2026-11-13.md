@@ -286,6 +286,25 @@ raster or a committed canonical artifact.
 followed by owner review; the code and PR must remain draft/read-only
 until exact accepted candidates exist.
 
+## K2 read-only implementation continuation (2026-11-13)
+
+The next planned source calibration **evidence tooling** is now committed
+in `scripts/lib/first-world-kaelvar-k2-source-probes.mjs`, reusing the
+existing full-source registered comparison CLI's `--k2-evidence` and
+`--k2-svg` modes. A new synthetic regression suite is
+`tests/unit/first-world-kaelvar-k2-source-probes.test.mjs`.
+
+The exact K2 entry/exit gates, all nine source-ID-specific sampling anchors,
+seven exact-RGB diagnostic transects, source PNG SHA-256 drift guards,
+three-panel review SVG and PowerShell 7 native verification runbook live in
+`docs/design/first-world-kaelvar-k2-source-calibration-evidence-gate-2026-11-13.md`.
+
+**Do not mark palette, elevation, shore, river or political border calibration
+as complete.** This stage only exposes independent original PNG
+source evidence and preserves unknown classes. K2 native full-source
+tests/rendering, owner semantic interpretation, ecotones and region
+ownership approval remain separate required gates.
+
 ## Subsequent handoff after native K1 pass
 
 1. Inspect a source-crop RGB/relief transect through northern Shattercap versus the southeast and the Windward peninsula, with exact source grid coordinates. Note whether continuous color clusters track actual terrain, river ink or map decoration.
