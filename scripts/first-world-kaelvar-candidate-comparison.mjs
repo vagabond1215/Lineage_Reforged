@@ -20,9 +20,11 @@ import {buildSelectedComponentReview} from './lib/first-world-component-review.m
 import {buildShattercapUnionEvidence} from './lib/first-world-shattercap-union.mjs';
 import {buildKaelvarCandidateComparison,kaelvarCandidateComparisonSvg}
   from './lib/first-world-kaelvar-candidate-comparison.mjs';
+import {buildKaelvarK2SourceProbes,kaelvarK2SourceProbeSvg}
+  from './lib/first-world-kaelvar-k2-source-probes.mjs';
 
-if(process.argv.length!==3||!['--compare','--svg'].includes(process.argv[2])){
-  console.error('Usage: --compare|--svg (stdout-only read-only evidence)');
+if(process.argv.length!==3||!['--compare','--svg','--k2-evidence','--k2-svg'].includes(process.argv[2])){
+  console.error('Usage: --compare|--svg|--k2-evidence|--k2-svg (stdout-only read-only evidence)');
   process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -85,6 +87,30 @@ const blueEdge=current.sourcePartProvenance.find(r=>
 if(!blueEdge||blueEdge.polygonCells!==684||blueEdge.terrainCandidateCells!==0||
   blueEdge.sharedInkUnresolvedCells!==0||blueEdge.sharedBlueCandidateCells!==684)
   throw Error('Shattercap Part 1 blue-edge source-artifact review witness drift');
+if(process.argv[2]==='--k2-evidence'||process.argv[2]==='--k2-svg'){
+  const expected={
+    biome:'9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12',
+    elevation:'02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d',
+  };
+  for(const layer of ['biome','elevation'])
+    if(metadata[layer].sha256!==expected[layer])
+      throw Error('K2 original PNG source hash drift: '+layer);
+  if(mainlandReferenceId!==30 ||
+    current.existing.referenceTerrainOnlyPhysicalComponentCells!==79419)
+    throw Error('K2 Auric-referenced terrain-only physical component drift');
+  if(process.argv[2]==='--k2-svg'){
+    process.stdout.write(kaelvarK2SourceProbeSvg(inputs).svg);
+  }else{
+    const result=buildKaelvarK2SourceProbes(inputs);
+    process.stdout.write(JSON.stringify({
+      ...result,sourceIdentity,sourceImages:metadata,registeredCrop:crop,
+      reviewedK1PhysicalReferenceCellCount:79419,
+      originalSourcePairCounts:sourcePair.candidateClasses,
+      sourceGeometryWritable:false,ownerApprovalRequired:true,
+    },null,2)+'\\n');
+  }
+  process.exit(0);
+}
 const originalInkComponent=buildSelectedComponentReview({
   width,height,landMask:topology.grids.sharedInkIncluded.mask,
   fourLabels:topology.grids.sharedInkIncluded.four.labels,
