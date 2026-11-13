@@ -28,6 +28,35 @@ test('Pending Kaelvar ledger preserves parent/child hierarchy, all 18 detached c
   assert.equal(result.placementApproved,false);
   assert.equal(result.canonicalWritable,false);
 });
+test('Accepted offshore exclusions support either already-clean 159 or historical 201 source without changing the manifest',()=>{
+  const clean=inputs();
+  const actual=validateLandmassProposalLedger(clean);
+  assert.equal(actual.sourceExclusionState,'SOURCE_ALREADY_CLEAN');
+  assert.equal(actual.physicalSourceFootprints,159);
+  assert.equal(actual.effectiveSourceFootprints,159);
+  assert.equal(actual.appliedExclusionCount,0);
+  const legacy=inputs();
+  legacy.sourceFootprints=[
+    ...legacy.sourceFootprints,
+    ...legacy.approvedExclusionIds.map(id=>({id,regionIds:['region.shattercap_isles']})),
+  ];
+  const historical=validateLandmassProposalLedger(legacy);
+  assert.equal(historical.sourceExclusionState,'LEGACY_201_SOURCE_FILTERED_IN_MEMORY');
+  assert.equal(historical.physicalSourceFootprints,201);
+  assert.equal(historical.appliedExclusionCount,42);
+  assert.equal(historical.effectiveSourceFootprints,159);
+});
+test('Partially restored exclusions or missing retained source footprints fail closed',()=>{
+  const partlyRestored=inputs();
+  partlyRestored.sourceFootprints.push({
+    id:partlyRestored.approvedExclusionIds[0],regionIds:['region.shattercap_isles'],
+  });
+  assert.throws(()=>validateLandmassProposalLedger(partlyRestored),/partially applied accepted exclusion/);
+  const missingRetained=inputs();
+  missingRetained.sourceFootprints=missingRetained.sourceFootprints.filter(
+    p=>p.id!=='feature.region_auric_marches.part_4');
+  assert.throws(()=>validateLandmassProposalLedger(missingRetained),/effective footprint count drift/);
+});
 test('Windward source claim cannot be given to Kaelvar or treated as placed',()=>{
   const x=inputs();
   x.ledger.displacedSourceClaims[0].reconciliationParentRegionId='region.kaelvar';
@@ -117,5 +146,7 @@ test('Read-only runner requires --check and does not write, mutate or generate g
   assert.match(script,/--check/);
   assert.match(script,/verifyAuditedTextBlob/);
   assert.match(script,/createHash/);
+  assert.match(script,/e3297ead12a6a5ce045418140b043c3fa2b8fcb3/);
+  assert.match(script,/\[159,201\]/);
   assert.doesNotMatch(script,/writeFileSync|appendFileSync|renameSync|unlinkSync|spawnSync|execSync|process\.stdout\.write\(.*svg/);
 });
