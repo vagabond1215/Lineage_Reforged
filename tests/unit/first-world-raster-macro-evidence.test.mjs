@@ -8,6 +8,8 @@ import {decodeSourcePng,registeredSourceMask,labelLandComponents,diagonalJoinEvi
   from '../../scripts/lib/first-world-source-png.mjs';
 import {planReviewedMacroOwnership,rasterizePolygon}
   from '../../scripts/lib/first-world-reviewed-macro-planner.mjs';
+import {gitBlobSha,verifyAuditedTextBlob}
+  from '../../scripts/lib/first-world-source-identity.mjs';
 
 function pngRGB(width,height,pixels){
   const signature=Buffer.from([137,80,78,71,13,10,26,10]);
@@ -157,4 +159,23 @@ test('review ledger retains 15 pending foreign-coast candidates and both pilot c
     c.classification==='previously_confirmed_owner_intrusion'));
   assert.ok(doc.reviewedDecisions.every(d=>d.status==='pending'));
   assert.ok(doc.reviewedDecisions.every(d=>d.maskPolygons.length===0));
+});
+
+test('audited geometry identity accepts only exact source or pure platform line-ending conversion',()=>{
+  const canonical=Buffer.from('{\n  "records": [1,2]\n}\n','utf8');
+  const target=gitBlobSha(canonical);
+  const exact=verifyAuditedTextBlob(canonical,target);
+  assert.equal(exact.mode,'exact_bytes');
+  assert.equal(exact.verifiedSha,target);
+  const crlf=Buffer.from(canonical.toString('utf8').replace(/\n/g,'\r\n'),'utf8');
+  const converted=verifyAuditedTextBlob(crlf,target);
+  assert.equal(converted.mode,'checkout_crlf_to_lf');
+  assert.notEqual(converted.checkoutSha,target);
+  const canonicalCRLF=gitBlobSha(crlf);
+  assert.equal(verifyAuditedTextBlob(canonical,canonicalCRLF).mode,'checkout_lf_to_crlf');
+  assert.throws(()=>verifyAuditedTextBlob(
+    Buffer.from(crlf.toString('utf8').replace('[1,2]','[1,3]'), 'utf8'),target),
+    /Geometry blob changed/);
+  assert.throws(()=>verifyAuditedTextBlob(Buffer.from([0xff,0xfe]),target),
+    /non-UTF8/);
 });
