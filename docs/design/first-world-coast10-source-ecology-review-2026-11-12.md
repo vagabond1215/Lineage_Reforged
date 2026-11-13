@@ -163,3 +163,54 @@ geography and explicit review.
 This completes a **diagnostic source layer**, not the
 continent-region-biome suitability audit or physical
 boundary reconstruction.
+
+## Owner-rendered Coast 10 visual review, 2026-11-12
+
+The owner supplied a Brave screenshot of the three-panel
+`--svg-coast10` output. The original biome, original elevation, and
+source-pair terrain/ink views are visibly aligned in the selected crop.
+This confirms the SVG preview **rendered** in the browser, not that
+the independent ecological calibration is complete. The accompanying
+`--coast10-review` JSON numeric profile has **not yet been supplied**.
+
+**Observed directly from the screenshot:**
+
+- The Windward Spine Part 1 dashed white source border traverses a
+  coherent southeastern coastal peninsula in a long diagonal, meeting
+  the shore at either end. No conspicuous continuous deep-water channel
+  follows that administrative divider.
+- The original biome panel shows a mostly green peninsula with
+  variation toward deeper greens in the southeast. Those source
+  colors are **not calibrated habitat categories**.
+- The elevation panel is comparatively light/cream over much of the
+  peninsula and warmer salmon/peach farther northwest. This suggests
+  a relative topographic contrast **only if** the source colored
+  ramp maps to relative height as intended. There is no evident
+  sharp ridge exactly along the dotted regional boundary, but no
+  calibrated slope/height proof yet.
+- Shared magenta source artwork follows shore edges and several
+  interior water/ink features. These must remain uncertain rather
+  than erased as water or filled as land.
+- The highlighted southeastern source terrain is substantial, not
+  merely shoreline ink. A separate 12-terrain-pixel piece already
+  measured in the earlier crosswalk needs focused pixel review and
+  must not be pruned.
+
+**Visual QA disposition:** `RENDER_PASS__POLITICAL_AND_ECOLOGICAL_HOLD`.
+The screenshot supports a proposed *review* of the diagonal Windward
+partition, not a definitive biome identity, numerical terrain height,
+or destination Kaelvar child. Do not assume bright candidate-terrain
+fill equals a particular forest biome or that every coastal
+administrative border must track an ecotone.
+
+**Next evidence gate:** inspect native `--coast10-review` JSON for the
+per-footprint source-color distribution overlap, raw elevation
+brightness percentiles, authored profiles, and exact crosswalk. Then
+calibrate the source palette and colored elevation ramp. Plan a
+candidate Kaelvar child-region boundary using contiguous geography,
+river/estuary features and realistic ecotone margins, with a
+before/after visual and explicit owner approval. Keep Coast 40 as a
+separate island jurisdiction case.
+
+No source rasters, polygons, generator, routes or game runtime were
+changed during this screenshot review.
