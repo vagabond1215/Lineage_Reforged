@@ -36,15 +36,18 @@ export function classifySourcePair({width,height,biomeRgba,elevationRgba}) {
   const classification=new Uint8Array(total);
   const counts=new Uint32Array(names.length);
   const unknownColors=new Map();
-  let legacyLandPixels=0;
+  let legacyLandPixels=0,sharedPartialAlphaPixels=0,alphaMismatchPixels=0;
   for(let i=0;i<total;i++){
     const p=i*4,r=biomeRgba[p],g=biomeRgba[p+1],b=biomeRgba[p+2];
     const blue=b>150 && b-g>25 && b-r>80;
     if(!blue)legacyLandPixels++;
     const shared=r===elevationRgba[p]&&g===elevationRgba[p+1]&&
       b===elevationRgba[p+2];
+    const biomeAlpha=biomeRgba[p+3],elevationAlpha=elevationRgba[p+3];
+    if(biomeAlpha<255 && biomeAlpha===elevationAlpha)sharedPartialAlphaPixels++;
+    if(biomeAlpha!==elevationAlpha)alphaMismatchPixels++;
     let c;
-    if(biomeRgba[p+3]<255||elevationRgba[p+3]<255)
+    if(biomeAlpha!==elevationAlpha || biomeAlpha===0)
       c=SourcePairClass.ALPHA_UNRESOLVED;
     else if(blue)
       c=shared?SourcePairClass.SHARED_BLUE_CANDIDATE:
@@ -85,6 +88,7 @@ export function classifySourcePair({width,height,biomeRgba,elevationRgba}) {
       schemaVersion:1,policy:'SOURCE_PAIR_DIAGNOSTIC_NO_REALLOCATIONS',
       imageReferencePixels:total,legacyThresholdLandPixels:legacyLandPixels,
       legacyThresholdBluePixels:total-legacyLandPixels,
+      sharedPartialAlphaPixels,alphaMismatchPixels,
       candidateClasses:summaryFromCounts(counts,total),
       sharedNonblueNeighborContext:neighbors,
       sharedNonblueTopSourceRgb:[...unknownColors.entries()]
@@ -93,7 +97,7 @@ export function classifySourcePair({width,height,biomeRgba,elevationRgba}) {
       unresolvedRasterPixels:uncertain,
       adjudicatedRasterPixels:0,
       sourceGeometryWritable:false,
-      warning:'Shared blue, divergent terrain, and shared ink are pixel evidence classes, NOT final land/water, height or biome labels.',
+      warning:'Matching partial alpha is coast anti-alias evidence, not missing data. Shared blue, divergent terrain, and shared ink are pixel evidence classes, NOT final land/water, height or biome labels.',
     },
   };
 }
