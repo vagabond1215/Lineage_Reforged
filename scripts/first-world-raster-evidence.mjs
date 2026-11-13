@@ -171,7 +171,7 @@ const report={
 };
 function pilotSvg(coasts=pilotCoasts,pad=14,magnification=2){
   const pts=coasts.flatMap(c=>c.points);
-  minX=Math.max(0,Math.floor(Math.min(...pts.map(p=>p.x))-pad)),
+  const minX=Math.max(0,Math.floor(Math.min(...pts.map(p=>p.x))-pad)),
     maxX=Math.min(WIDTH,Math.ceil(Math.max(...pts.map(p=>p.x))+pad)),
     minY=Math.max(0,Math.floor(Math.min(...pts.map(p=>p.y))-pad)),
     maxY=Math.min(HEIGHT,Math.ceil(Math.max(...pts.map(p=>p.y))+pad));
