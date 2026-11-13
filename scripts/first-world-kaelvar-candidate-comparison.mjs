@@ -75,6 +75,16 @@ if(process.argv[2]==='--svg'){
   process.exit(0);
 }
 const current=buildKaelvarCandidateComparison(inputs);
+const windward1=current.sourcePartProvenance.find(r=>
+  r.sourcePartId==='feature.region_windward_spine.part_1');
+if(!windward1||windward1.terrainCandidateCells!==3673||
+  windward1.mainlandTerrainCells!==3661||windward1.detachedTerrainCells!==12)
+  throw Error('Windward Part 1 independent 3661+12 terrain witness drift');
+const blueEdge=current.sourcePartProvenance.find(r=>
+  r.sourcePartId==='feature.region_shattercap_isles.part_1');
+if(!blueEdge||blueEdge.polygonCells!==684||blueEdge.terrainCandidateCells!==0||
+  blueEdge.sharedInkUnresolvedCells!==0||blueEdge.sharedBlueCandidateCells!==684)
+  throw Error('Shattercap Part 1 blue-edge source-artifact review witness drift');
 const originalInkComponent=buildSelectedComponentReview({
   width,height,landMask:topology.grids.sharedInkIncluded.mask,
   fourLabels:topology.grids.sharedInkIncluded.four.labels,
