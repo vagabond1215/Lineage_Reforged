@@ -195,3 +195,15 @@ or a proposal to move all of the island into either macro.
 the mainland's recovered land nor the island's administrative split has a
 signed destination subregion. Do not treat the owner's component report
 as permission for automatic polygon transfer or overwrite the canonical map.
+
+### Coast 40 SVG visibility correction
+
+The first owner-viewed 12x Coast 40 close-up displayed thick white selected-region
+strokes over much of the island and browser white outside the SVG canvas.
+This is a **presentation issue**, not evidence of missing land or an accepted
+ownership transfer. The close-up now uses screen-pixel-consistent,
+`vector-effect="non-scaling-stroke"` blue/red region and gold coastline
+hairlines and omits the broad white selection border. Re-generate the SVG
+after fetching the latest draft commit; do not use the earlier white-filled
+preview as proof of source terrain or polygon overlap. The exact component
+ownership matrix remains the required next evidence gate.
