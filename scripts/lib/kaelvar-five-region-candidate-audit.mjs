@@ -143,7 +143,7 @@ export function validateKaelvarFiveRegionCandidates({
        z.habitatEvidenceStatus!=='DESCRIPTIVE_NOT_SOURCE_CALIBRATED'||
        Object.keys(z.traversalFrictionByModeCandidate||{}).length!==6||
        !Number.isFinite(z.habitationScoreCandidate)||
-       Object.keys(z).some(k=>/^(?:hex|worldHex|anchoredSettlement)/i.test(k)))
+       Object.keys(z).some(k=>![...requiredZoneFields,'notes'].includes(k)))
       fail('unapproved or incomplete environment zone: '+z.id);
   }
   for(const s of ss){
