@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "type": "first-world-landmass-first-kaelvar-proposal-ledger.v1",
+  "status": "R0_R2_REVIEW_PENDING_NO_PROPOSED_MASKS",
+  "immutableEvidence": {
+    "evidenceBranchHead": "da45c0d21c15f403bcd173016ed2e88149e98f30",
+    "sourceGeometryGitBlob": "ec59ed66b7eaee4502dc56709a2f266b17b3cb17",
+    "biomePngSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationPngSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "sourceSize": {
+      "width": 4096,
+      "height": 2355
+    },
+    "crop": {
+      "x": 60,
+      "y": 60,
+      "width": 3976,
+      "height": 2235
+    },
+    "grid": {
+      "width": 2048,
+      "height": 1152
+    },
+    "acceptedOffshoreExclusionCount": 42,
+    "effectiveSourceFootprints": 159,
+    "coastlineRecords": 68,
+    "terrainOnlyComponentNamespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+    "terrainOnlyMainlandReferenceComponentId": 30,
+    "terrainOnlyMainlandCandidateCells": 79419,
+    "shattercapUnionCandidateCells": 30938,
+    "shattercapOnMainlandCandidateCells": 27245,
+    "shattercapDetachedCandidateCells": 3693
+  },
+  "parentMacroRegionId": "region.kaelvar",
+  "parentStatus": "CANDIDATE_AWAITING_OWNER_REVIEW",
+  "regionPlacementSpecifications": [
+    {
+      "regionId": "region.auric_marches",
+      "parentRegionId": "region.kaelvar",
+      "positionLabel": "kaelvar_western_interior",
+      "status": "PLACEMENT_SPEC_PENDING",
+      "expectedLandforms": [
+        "western interior",
+        "dry scrub and steppe",
+        "mineral uplands",
+        "caravan and mining corridors"
+      ],
+      "proposedMaskIds": []
+    },
+    {
+      "regionId": "region.verdant_thalos",
+      "parentRegionId": "region.kaelvar",
+      "positionLabel": "kaelvar_southern_peninsula",
+      "status": "PLACEMENT_SPEC_PENDING",
+      "expectedLandforms": [
+        "southern coastal peninsula",
+        "fertile low hills and rivers",
+        "Mediterranean woodland and mixed forest",
+        "agricultural ports"
+      ],
+      "proposedMaskIds": []
+    },
+    {
+      "regionId": "region.shattercap_isles",
+      "parentRegionId": "region.kaelvar",
+      "positionLabel": "kaelvar_northern_coast",
+      "status": "PLACEMENT_SPEC_PENDING",
+      "expectedLandforms": [
+        "northern rugged islands and rocky shoals",
+        "cool maritime conifer fringe",
+        "beacon cliffs and harbors"
+      ],
+      "proposedMaskIds": []
+    }
+  ],
+  "sourceFootprintReviews": [
+    {
+      "sourceFeatureId": "feature.region_shattercap_isles.part_1",
+      "authoredRegionId": "region.shattercap_isles",
+      "proposalDisposition": "NON_TERRAIN_BLUE_EDGE_REVIEW",
+      "reassignmentApproved": false,
+      "notes": "684 blue candidates, no terrain; retain source, do not amend 42 exclusions"
+    },
+    {
+      "sourceFeatureId": "feature.region_shattercap_isles.part_7",
+      "authoredRegionId": "region.shattercap_isles",
+      "proposalDisposition": "WITHHELD_PENDING_LOCATION_RECONSTRUCTION",
+      "reassignmentApproved": false,
+      "notes": "Extensive source footprint on mainland; no whole-part political transfer inferred"
+    },
+    {
+      "sourceFeatureId": "feature.region_shattercap_isles.part_15",
+      "authoredRegionId": "region.shattercap_isles",
+      "proposalDisposition": "WITHHELD_PENDING_LOCATION_RECONSTRUCTION",
+      "reassignmentApproved": false,
+      "notes": "Extensive source footprint on mainland; no whole-part political transfer inferred"
+    },
+    {
+      "sourceFeatureId": "feature.region_windward_spine.part_1",
+      "authoredRegionId": "region.windward_spine",
+      "proposalDisposition": "UNPLACED_PENDING_PARENT_RECONCILIATION",
+      "reassignmentApproved": false,
+      "notes": "Serathyl child; 3661 main component terrain candidates and 12 detached candidates; Kaelvar assignment forbidden"
+    },
+    {
+      "sourceFeatureId": "feature.region_windward_spine.part_2",
+      "authoredRegionId": "region.windward_spine",
+      "proposalDisposition": "COAST40_SEPARATE_REVIEW",
+      "reassignmentApproved": false,
+      "notes": "Distinct Coast 40 physical island source claim; Serathyl identity preserved"
+    },
+    {
+      "sourceFeatureId": "feature.region_verdant_thalos.part_6",
+      "authoredRegionId": "region.verdant_thalos",
+      "proposalDisposition": "COAST40_SEPARATE_REVIEW",
+      "reassignmentApproved": false,
+      "notes": "Coast 40 competing claim; no sovereign owner inferred"
+    }
+  ],
+  "displacedSourceClaims": [
+    {
+      "regionId": "region.windward_spine",
+      "authoredParentRegionId": "region.serathyl",
+      "sourceFeatureId": "feature.region_windward_spine.part_1",
+      "status": "UNPLACED_PENDING_PARENT_RECONCILIATION",
+      "reconciliationParentRegionId": "region.serathyl"
+    }
+  ],
+  "detachedTerrainOnlyComponents": [
+    {
+      "componentId": 24,
+      "sourceTerrainCandidateCells": 1893,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 90,
+      "sourceTerrainCandidateCells": 1013,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 91,
+      "sourceTerrainCandidateCells": 220,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 34,
+      "sourceTerrainCandidateCells": 118,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 21,
+      "sourceTerrainCandidateCells": 115,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 25,
+      "sourceTerrainCandidateCells": 80,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 28,
+      "sourceTerrainCandidateCells": 64,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 47,
+      "sourceTerrainCandidateCells": 37,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 38,
+      "sourceTerrainCandidateCells": 22,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 20,
+      "sourceTerrainCandidateCells": 20,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 71,
+      "sourceTerrainCandidateCells": 18,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 26,
+      "sourceTerrainCandidateCells": 17,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 55,
+      "sourceTerrainCandidateCells": 16,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 95,
+      "sourceTerrainCandidateCells": 16,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 35,
+      "sourceTerrainCandidateCells": 14,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 51,
+      "sourceTerrainCandidateCells": 13,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 96,
+      "sourceTerrainCandidateCells": 9,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    },
+    {
+      "componentId": 78,
+      "sourceTerrainCandidateCells": 8,
+      "status": "PARENT_AND_CHILD_SOVEREIGNTY_PENDING",
+      "proposedRegionId": null
+    }
+  ],
+  "coast40": {
+    "status": "INDEPENDENT_PARENT_AND_ISLAND_SOVEREIGNTY_REVIEW",
+    "sourceFeatureIds": [
+      "feature.region_windward_spine.part_2",
+      "feature.region_verdant_thalos.part_6"
+    ],
+    "proposedRegionId": null
+  },
+  "layouts": {
+    "layoutA": {
+      "status": "THREE_AUTHORED_CHILDREN_PROPOSAL_PENDING",
+      "regionIds": [
+        "region.auric_marches",
+        "region.verdant_thalos",
+        "region.shattercap_isles"
+      ],
+      "proposedMasks": [],
+      "unassignedTerrainCells": null
+    },
+    "layoutB": {
+      "status": "EASTERN_CHILD_ELIGIBILITY_ONLY",
+      "proposedFourthRegionId": null,
+      "proposedMasks": [],
+      "sourceTestWindowIsNotProposedArea": true
+    }
+  },
+  "ownerApprovalRef": null,
+  "canonicalWritable": false,
+  "placementApproved": false,
+  "modifiesGameplay": false
+}
