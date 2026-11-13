@@ -55,6 +55,18 @@ test('any conflicting blue or alpha value fails closed without automatic reclass
   }),/registration mismatch/);
 });
 
+test('matched partially transparent pixels retain paired RGB evidence',()=>{
+  const biome=rgb([[64,126,255,220],[30,200,80,230],[0,0,0,195]]);
+  const elevation=rgb([[64,126,255,220],[249,236,208,230],[0,0,0,195]]);
+  const result=classifySourcePair({
+    width:3,height:1,biomeRgba:biome,elevationRgba:elevation,
+  });
+  assert.deepEqual([...result.classification],[0,1,2]);
+  assert.equal(result.report.sharedPartialAlphaPixels,3);
+  assert.equal(result.report.alphaMismatchPixels,0);
+  assert.equal(result.report.candidateClasses.ALPHA_UNRESOLVED.pixels,0);
+});
+
 test('per-feature candidate pixels preserve region provenance and do not imply transfer',()=>{
   const result=example();
   const regions=new Map([
