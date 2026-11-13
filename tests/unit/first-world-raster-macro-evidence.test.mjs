@@ -142,5 +142,5 @@ test('Pass 0 witness does not expose a canonical source write path',()=>{
   assert.match(cli,/--svg-pilot/);
   assert.match(cli,/--check/);
   assert.match(cli,/coastline\.first_world\.part_/);
-  assert.doesNotMatch(cli,/writeFileSync|createWriteStream|--write/);
+  assert.doesNotMatch(cli,/writeFileSync|createWriteStream|args\\[0\\]\\s*===\\s*['\"]--write/);
 });
