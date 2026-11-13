@@ -49,6 +49,14 @@ test('A/B hold is identical until explicitly approved borders; B has no fabricat
   assert.equal(r.layoutB.proposedPolygons,null);
   assert.equal(r.layoutB.id,'UNAPPROVED_EASTERN_MAINLAND_CANDIDATE');
   assert.equal(r.layoutB.easternSourceFootprintTestWindowMainlandCells,3);
+  assert.equal(r.existing.referenceTerrainOnlyPhysicalComponentCells,52);
+  assert.equal(r.existing.referenceComponentIsNotApprovedKaelvarPoliticalBoundary,true);
+  assert.equal(r.existing.originalKaelvarChildOverlapTerrainCells,1);
+  assert.equal(r.independentSourceRgb4Patches.terrainCandidateCellsInReferenceComponent,52);
+  assert.ok(r.independentSourceRgb4Patches.connectedSourceColorPatchCount>=1);
+  assert.ok(r.independentSourceRgb4Patches.largestRawPatches.every(p=>
+    p.sourceRgb4Bin.startsWith('#') && p.terrainCandidateCells>0));
+  assert.match(r.independentSourceRgb4Patches.caveat,/not approved biomes/i);
   assert.equal(r.overlaysAreOriginalSourceFootprintsNotNewBorders,true);
   assert.equal(r.sourceWritable,false);
   assert.equal(JSON.stringify(footprints),unchanged);
