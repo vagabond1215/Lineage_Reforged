@@ -202,3 +202,67 @@ allowing realistic ecotones and independent land-use
 validation. Only an explicit review of that evidence
 can approve final region masks, followed by migration
 impact testing for settlements, routes and gameplay.
+
+## Owner-rendered all-15 Shattercap island locator review (2026-11-13)
+
+The owner supplied a browser screenshot of
+`first-world-shattercap-inventory.svg` showing both aligned
+source-biome and numbered-footprint panels. This verifies the SVG
+**rendered**; the accompanying **deduplicated numeric JSON has not
+been supplied**, and six newly added native tests have not been
+reported in this conversation.
+
+**Visual observations, not accepted territorial decisions:**
+
+- **Part 7:** broad orange northern/eastern *connected mainland*
+  wedge, well beyond an obvious offshore island fringe. Large-scale
+  authored-geography mismatch remains a high-priority candidate.
+- **Part 15:** separate orange southeastern mainland source
+  polygon, requiring joint review with Verdant Thalos and the
+  foreign Windward Spine peninsula.
+- **Part 4:** prominent teal detached northeastern island;
+  strong physical-island preservation candidate. Political/ecology
+  assignment still unapproved.
+- **Parts 2/3/5/6/8/9:** northern small-island or coastal fragments
+  to retain pending fine-grained component and source-color review.
+- **Parts 16/17:** eastern/southeastern detached island geography.
+  Detached physical land is not automatically a *northern* Shattercap
+  regional possession; preserve physical features, hold jurisdiction.
+- **Part 1:** the numbered label and thin polygon line appear
+  pressed against or partially clipped at the panel's upper
+  edge. The previous native locality data showed **zero
+  terrain candidates** in this source polygon. This is a
+  **possible source-geometry/artwork artifact requiring**
+  separate original-polygon bounds and blue/ink pixel review,
+  not proof of an invalid polygon or permission to remove it.
+- **Parts 11/13/14:** tiny or difficult-to-see candidate
+  marks over ocean/shoreline in the screenshot, needing their
+  exact per-part source-pair classification. Do not infer
+  no land from screen visibility or label placement.
+- The locator does not display an obvious large purple
+  duplicate-coverage patch; this is **not** quantitative
+  proof of zero polygon overlap.
+
+**Next exact gate:** inspect
+`first-world-shattercap-union.json` fields
+`summedFootprintTerrainCells`, `deduplicatedTerrainCells`,
+`sourcePolygonOverlapCells`,
+`terrainCellsOnReferenceMainland`,
+`terrainCellsOffReferenceMainland`,
+`componentRows`, and the per-part row for Part 1. They
+settle source-terrain area accounting without assigning
+ownership. Do not use the old summed 88.06% as a deduplicated
+region-area ratio until that report is verified.
+
+**Required boundary design constraint:** northern Shattercap
+islands and legitimate northern mainland coastal access may
+remain; broad eastern mainland and southern peninsula must be
+validated against both the original biome and elevation maps
+and their *independently approved* interpretation. Ecotones
+are allowed. Generate side-by-side candidate region layouts
+with an explicit unresolved territory class and no default
+assignment to Verdant, Auric or a newly invented region.
+
+**Disposition:** `ISLAND_LOCATOR_RENDER_PASS__UNION_AND_ARTIFACT_REVIEW_HELD`.
+No geography, imagery, routes, Saves, settlements or runtime
+changes authorized.
