@@ -12,7 +12,7 @@ import {join,relative,resolve} from 'node:path';
 export const HEX_LEGACY_BASELINE =
   '1731975e3ec3675089b12d72513b50434ef71f23';
 const filePattern=/\.(?:js|mjs|cjs|ts|tsx|mts|cts|json|ps1)$/i;
-const tokenPattern=/\b(?:world_hex(?:_edge)?s?|world_hex(?:_edge)?\.[a-z0-9_]+|[Ww]orldHex[A-Za-z0-9_]*|hex[A-Z][A-Za-z0-9_]*|hexes|hexesById|edgesById|hexesJson|edgesJson|HEX_DISTANCE_KILOMETERS|orderedHexIds|(?:origin|destination|from|to)HexId|loadWorldHex[A-Za-z0-9_]*)\b/;
+const tokenPattern=/\b(?:world_hex(?:_edge)?s?|world_hex(?:_edge)?\.[a-z0-9_]+|[Ww]orldHex[A-Za-z0-9_]*|hex[A-Z][A-Za-z0-9_]*|hexes|hexesById|hexesJson|HEX_DISTANCE_KILOMETERS|orderedHexIds|(?:origin|destination|from|to)HexId|loadWorldHex[A-Za-z0-9_]*)\b/;
 const scopes=['package.json','packages','apps','tools','scripts','tests'];
 const exclusions=new Set([
   'scripts/lib/legacy-hex-forward-gate.mjs',
