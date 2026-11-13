@@ -107,7 +107,7 @@ if(process.argv[2]==='--k2-evidence'||process.argv[2]==='--k2-svg'){
       reviewedK1PhysicalReferenceCellCount:79419,
       originalSourcePairCounts:sourcePair.candidateClasses,
       sourceGeometryWritable:false,ownerApprovalRequired:true,
-    },null,2)+'\\n');
+    },null,2)+'\n');
   }
   process.exit(0);
 }
