@@ -17,7 +17,7 @@ The previously accepted R3 source-aligned Layout A witness (PR #81, `0db193e3fc3
 | File | Contents | Comparable active authority |
 | --- | --- | --- |
 | `docs/design/kaelvar-five-region-candidate-region-records-2026-11-13.json` | Two full subregion records with IDs, slugs, parent, map, position, summary, tags, all eight environment fields, eight simulation fields, population and economy profiles, settlement targets and generation rules, plus demographic distributions, civilization and strategic notes | `packages/content/base/world/regions.json` |
-| `docs/design/kaelvar-five-region-locality-hex-and-settlement-candidates-2026-11-13.json` | Four full locality records, four matching semantic world hex records and four unplaced settlement concepts **per new region**, with complete resource catchments, settlement suitability, travel modifiers, industry lists, world-hex barriers, hazards and resource affinities | `region_localities.json`, `world_hexes.json`, `settlements.json` |
+| `docs/design/kaelvar-five-region-locality-environment-and-settlement-candidates-2026-11-13.json` | Four full locality records, four matching coordinate-first environmental-zone proposals and four unplaced settlement concepts **per new region**, with complete resource catchments, settlement suitability, travel modifiers, industry lists, zone-specific barriers, hazards and resource affinities | `region_localities.json`, future coordinate environment-zone authority, `settlements.json` |
 | `docs/design/kaelvar-five-region-ecology-and-generation-candidates-2026-11-13.json` | Eight habitat profiles total (four per region), terrain/geology/hydrology hypotheses, temperature and seasonal cycles, flora, fauna, monster archetypes, gathering, natural hazards, crafters, crafting chains, reproducible local-generation behavior, travel dependencies and explicit uncertainty | Later, more granular ecology and procedural-generation authorities, not yet active |
 
 Each region **exceeds** the current existing Kaelvar child completeness in candidate detail: all active field sets are present, and the additional ecosystem, cultural, civilization, climate, population, crafting and wildlife evidence lives in explicit review-only material.
@@ -57,7 +57,7 @@ These numbers are **scenario values only**. No active population, demographics, 
 
 | Gate | Entry | Exit | HOLD / failure |
 | --- | --- | --- | --- |
-| F5-0 candidate content | Existing master catalog shapes, owner-approved name choice | Two records with full region field parity; eight locality/hex pairs; eight settlement concepts; eight habitats | Missing fields, duplicated names or IDs, parent drift, population >40m |
+| F5-0 candidate content | Existing master catalog shapes, owner-approved name choice | Two records with full region field parity; eight locality/environment-zone pairs; eight settlement concepts; eight habitats | Missing fields, duplicated names or IDs, parent drift, population >40m |
 | F5-1 source/geography | Existing 2048 × 1152 source witness and five-region owner sketch | Separate five-region overlay with source feature crosswalk, counted unresolved mainland, whole detached island identities | Using old three-region borders as authority, equal-size fill, unapproved source RGB or island split |
 | F5-2 ecological semantics | Independent original biome/elevation legend, coast/river/ink adjudication | Biome and water source constraints mapped at regional and locality scale | Treating art colors as biome truth, invented springs, heights or marsh coast |
 | F5-3 settlement dependency | F5-1 and F5-2 reviewed, population redistribution accepted | Region/locality/hex/settlement/route/starting-area/spawn/crafting crosswalk, Save compatibility review | Published place without source-safe coordinate or linked route; broken existing Stonevein or harbor record |
@@ -67,7 +67,7 @@ Only F5-0 authored-data preflight is applicable to the files now on `master`. Th
 
 ## Read-only native checks
 
-The audit compares all candidate full fields with existing active templates and checks source parent IDs, names across all active continents/regions/localities/settlements, population arithmetic, race percent totals, locality/hex relationships, eight habitat profiles, unplaced settlement IDs, source identity and island/approval flags.
+The audit compares all candidate full fields with existing active templates and checks source parent IDs, names across all active continents/regions/localities/settlements, population arithmetic, race percent totals, locality/environment-zone relationships, eight habitat profiles, unplaced settlement IDs, source identity and island/approval flags.
 
 ```powershell
 $ErrorActionPreference = 'Stop'
@@ -94,8 +94,16 @@ This content is deliberately a *mainline design pack*. The accepted R3 draft rem
 
 Owner executed isolated detached PowerShell 7 verification at the exact mainline content commit `997d2d7b49c592214cf764270dd00e29c42b3eb0`. All **10/10 native unit tests passed**, with no failures, and the read-only five-region CLI invariant audit passed. Native output: `KAELVAR FIVE-REGION PROFILE GATE PASSED`, `CANONICAL GEOGRAPHY STILL HELD`. The checked worktree remained clean and the HEAD matched the pinned commit.
 
-Validated data: two new **candidate** region records, eight candidate region localities, eight unplaced world-hex candidates, eight unplaced settlement concepts, eight complete ecological habitat descriptions, and the five-region population scenario conserving Kaelvar's 40 million people. The audit result was `FIVE_REGION_AUTHORING_COMPLETE_CANONICAL_HELD` with `canonicalWritable:false` and `ownerGeographyApprovalRequired:true`.
+Validated data: two new **candidate** region records, eight candidate region localities, eight unplaced environmental-zone candidates, eight unplaced settlement concepts, eight complete ecological habitat descriptions, and the five-region population scenario conserving Kaelvar's 40 million people. The audit result was `FIVE_REGION_AUTHORING_COMPLETE_CANONICAL_HELD` with `canonicalWritable:false` and `ownerGeographyApprovalRequired:true`.
 
 **F5-0 exit ACCEPTED.** This supersedes any earlier language in this document that suggests native acceptance is pending. **F5-1 through F5-4 remain unentered or held:** neither actual world source geometry nor biome palette/height semantics are certified for the five-region model, and neither new region is active in `world.regions`. The large northeastern island remains a whole geographical object with pending sovereignty; the 18 Shattercap detached candidates remain unassigned; Windward stays parented to Serathyl; Coast 40 remains disputed. No equal-area partitions and no automatic allocation of previous Layout A's unassigned mainland cells are authorized.
 
 **Next scoped step:** five-region, unequal-area *reversible* spatial overlay comparing the owner's annotated breakup against the registered source PNGs, with explicit five-child presence only in the proposal domain. Report the count and category of unassigned mainland cells separately from non-Kaelvar/foreign land, keep all discrete islands whole, and require owner visual review before candidate masks or content are promoted to canonical gameplay.
+
+## Coordinate-first amendment, 2026-11-13
+
+**Approved architectural direction: future geography is based on coordinates, polygons, named places and explicit traversal connections, not newly created hexes.** The source, freeze gate, compatibility risks and migration stages C0–C5 are in [the coordinate-first geography migration contract](coordinate-first-world-geography-migration-contract-2026-11-13.md).
+
+Eight previous semantic world-hex *candidates* have been replaced by **eight unpublished, coordinate-first environmental-zone candidates**, retaining ecological and traversal metadata without new legacy hex identities or graph edges. Their geometry references are all `null` until source/parent review. Eight settlement concepts remain unplaced. Current active hex catalogs, edges, routes, encounters and saved game data stay intact temporarily because they remain real runtime dependencies. The prior F5-0 authoring evidence is retained; **the new coordinate-first conversion must pass its own native C0 verification** before acceptance.
+
+This is not permission to delete legacy runtime datasets, use equal-sized boundaries, automatically claim unassigned central desert, split the large northeastern island, assign the other 18 pending detached source components, resolve Coast 40 by proximity, or move Serathyl's Windward Spine into Kaelvar.
