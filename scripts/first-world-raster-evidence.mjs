@@ -45,7 +45,7 @@ if(manifest.schemaVersion!==1||manifest.auditedCommit!=='41a8ab1dd8c35cae12c8b39
   throw Error('Audit or boundary decision ledger drifted; manual review required');
 const rawGeometry=readFileSync(resolve(ROOT,'packages/content/base/world/world_map_features.json'));
 const sourceGeometryBlob=createHash('sha1')
-  .update('blob '+rawGeometry.length+'\\0').update(rawGeometry).digest('hex');
+  .update('blob '+rawGeometry.length+String.fromCharCode(0)).update(rawGeometry).digest('hex');
 if(sourceGeometryBlob!==manifest.sourceGeometryBlob)
   throw Error('Geometry blob changed from audited PR #78 head; rebase evidence before proceeding');
 const sourceParts=feature.regionFootprints;
